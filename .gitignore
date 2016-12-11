@@ -1,0 +1,15 @@
+# NPM
+node_modules/
+npm-debug.log
+
+# Build
+public/
+
+
+# Locales
+locales/
+!locales/en.json
+
+
+# Default
+!.gitkeep
