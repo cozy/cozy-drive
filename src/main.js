@@ -1,7 +1,9 @@
 require('./styles')
 
+import {render, h} from 'preact'
+
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('[role=application]').appendChild(
-    document.createTextNode('Hello World!')
-  )
+  render((
+    <h1>Hello World!</h1>
+  ), document.querySelector('[role=application]'))
 })
