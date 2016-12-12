@@ -8,19 +8,19 @@ const pkg = require(path.resolve(__dirname, '../package.json'))
 const build = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  entry: path.resolve(__dirname, '../src/main.js'),
+  entry: path.resolve(__dirname, '../src/main'),
   output: {
     path: path.resolve(__dirname, '../build'),
     filename: build ? 'app.[hash].js' : 'app.js'
   },
   resolve: {
-    extensions: ['', '.js', '.json']
+    extensions: ['', '.js', '.jsx', '.json']
   },
   devtool: build ? '#cheap-module-source-map' : 'eval',
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.js(x)?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
