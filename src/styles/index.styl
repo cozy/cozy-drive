@@ -1,1 +1,62 @@
 @import 'cozy-ui'
+
+.fil-wrapper
+  @extend $app-2panes-toolbar
+  border-top 1px solid grey-09
+
+// Sidebar
+.fil-sidebar
+  width em(220px)
+  border-right 1px solid grey-09
+  background-color grey-10
+.fil-nav
+  margin em(24px) 0
+  padding 0
+  list-style none
+.fil-nav-item
+  a
+    display block
+    left-padded(24px)
+    line-height em(48px)
+    text-decoration none
+    color grey-08
+    &.active
+    &:hover
+    &:active
+      box-shadow inset 4px 0 0 0 blue2
+      font-weight bold
+
+    // &.fil-cat-files
+    //   background: embedurl(../assets/icons/icon-folder.svg, utf-8)
+
+// Content
+.fil-content
+  top-padded(38px)
+.fil-content-header
+  display flex
+  bottom-spaced(10px)
+.fil-content-title
+  margin 0
+  padding-left em(32px, 24px)
+  font-size(24px)
+.fil-content-toolbar
+  margin-left auto
+.fil-content-table
+  width 100%
+  text-align left
+  color grey-11
+  tr
+    border-bottom 1px solid grey-09
+  th
+  td
+    padding em(8px) em(32px)
+    &.fil-content-file
+      color grey-08
+    .fil-content-ext
+      color grey-11
+  th
+    padding em(8px, 12px) em(32px, 12px)
+    font-size(12px)
+    text-transform uppercase
+
+
