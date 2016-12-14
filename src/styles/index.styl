@@ -16,7 +16,7 @@
 .fil-nav-item
   a
     display block
-    left-padded(24px)
+    left-padded(50px)
     line-height em(48px)
     text-decoration none
     color grey-08
@@ -26,30 +26,60 @@
       box-shadow inset 4px 0 0 0 blue2
       font-weight bold
 
-    // &.fil-cat-files
-    //   background: embedurl(../assets/icons/icon-folder.svg, utf-8)
+  .fil-cat-files
+    background: embedurl("../assets/icons/icon-folder.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-folder-active.svg")
+
+  .fil-cat-recent
+    background: embedurl("../assets/icons/icon-clock.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-clock-active.svg")
+
+  .fil-cat-shared
+    background: embedurl("../assets/icons/icon-share.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-share-active.svg")
+
+  .fil-cat-activity
+    background: embedurl("../assets/icons/icon-dashboard.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-dashboard-active.svg")
+
+  .fil-cat-trash
+    background: embedurl("../assets/icons/icon-trash.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-trash-active.svg")
 
 // Content
 .fil-content
-  top-padded(38px)
+  top-padded(30px)
 .fil-content-header
   display flex
+  align-items center
   bottom-spaced(10px)
+  right-spaced(32px)
+  left-spaced(32px)
 .fil-content-title
   margin 0
-  padding-left em(32px, 24px)
   font-size(24px)
 .fil-content-toolbar
   margin-left auto
+  .coz-btn:last-child
+    margin-right 0
 .fil-content-table
   width 100%
   text-align left
   color grey-11
   tr
     border-bottom 1px solid grey-09
+  tbody tr
+    &:hover
+      background-color grey-10
   th
   td
-    padding em(8px) em(32px)
+    padding em(15px) em(32px)
+    font-size(14px)
     &.fil-content-file
       color grey-08
     .fil-content-ext
@@ -58,5 +88,44 @@
     padding em(8px, 12px) em(32px, 12px)
     font-size(12px)
     text-transform uppercase
+  td.fil-content-file
+    left-padded(77px)
+    font-size(16px)
+
+.fil-file-audio
+  background: embedurl("../assets/icons/icon-type-audio.svg") em(32px) center no-repeat
+
+.fil-file-bin
+  background: embedurl("../assets/icons/icon-type-binary.svg") em(32px) center no-repeat
+
+.fil-file-code
+  background: embedurl("../assets/icons/icon-type-code.svg") em(32px) center no-repeat
+
+.fil-file-files
+  background: embedurl("../assets/icons/icon-type-files.svg") em(32px) center no-repeat
+
+.fil-file-folder
+  background: embedurl("../assets/icons/icon-type-folder.svg") em(32px) center no-repeat
+
+.fil-file-image
+  background: embedurl("../assets/icons/icon-type-image.svg") em(32px) center no-repeat
+
+.fil-file-pdf
+  background: embedurl("../assets/icons/icon-type-pdf.svg") em(32px) center no-repeat
+
+.fil-file-slide
+  background: embedurl("../assets/icons/icon-type-slide.svg") em(32px) center no-repeat
+
+.fil-file-sheet
+  background: embedurl("../assets/icons/icon-type-spreadsheet.svg") em(32px) center no-repeat
+
+.fil-file-text
+  background: embedurl("../assets/icons/icon-type-text.svg") em(32px) center no-repeat
+
+.fil-file-video
+  background: embedurl("../assets/icons/icon-type-video.svg") em(32px) center no-repeat
+
+.fil-file-zip
+  background: embedurl("../assets/icons/icon-type-zip.svg") em(32px) center no-repeat
 
 
