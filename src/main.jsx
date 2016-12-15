@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import './styles'
 
 import { render, h } from 'preact'
