@@ -2,7 +2,6 @@ import { h } from 'preact'
 import { translate } from '../plugins/preact-polyglot'
 
 const App = ({ t }) => (
-  <h1>{ t('welcome') }</h1>
   <div>
     <div class="fil-wrapper">
       <aside class="fil-sidebar">
@@ -30,8 +29,8 @@ const App = ({ t }) => (
         <div class="fil-content-header">
           <h2 class="fil-content-title">{ t('Files') }</h2>
           <div class="fil-content-toolbar" role="toolbar">
-            <button role="button" class="coz-btn coz-btn--regular">{ t('Upload') }</button>
-            <button role="button" class="coz-btn">{ t('More') }</button>
+            <button role="button" class="coz-btn coz-btn--regular coz-btn--upload">{ t('Upload') }</button>
+            <button role="button" class="coz-btn coz-btn--more"><span class="coz-hidden">More</span></button>
           </div>
         </div>
         <table class="fil-content-table" role="contentinfo">
