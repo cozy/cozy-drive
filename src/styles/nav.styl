@@ -1,0 +1,41 @@
+.fil-nav
+  margin em(24px) 0
+  padding 0
+  list-style none
+.fil-nav-item
+  a
+    display block
+    left-padded(50px)
+    line-height em(48px)
+    text-decoration none
+    color grey-08
+    &.active
+    &:hover
+    &:active
+      box-shadow inset 4px 0 0 0 dodger-blue
+      font-weight bold
+
+  .fil-cat-files
+    background: embedurl("../assets/icons/icon-folder.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-folder-active.svg")
+
+  .fil-cat-recent
+    background: embedurl("../assets/icons/icon-clock.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-clock-active.svg")
+
+  .fil-cat-shared
+    background: embedurl("../assets/icons/icon-share.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-share-active.svg")
+
+  .fil-cat-activity
+    background: embedurl("../assets/icons/icon-dashboard.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-dashboard-active.svg")
+
+  .fil-cat-trash
+    background: embedurl("../assets/icons/icon-trash.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-trash-active.svg")

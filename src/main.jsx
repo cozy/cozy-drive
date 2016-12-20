@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 
-import './styles'
+// import './styles'
 
 import { render, h } from 'preact'
 import { I18n } from './plugins/preact-polyglot'

@@ -13,9 +13,9 @@ module.exports = {
       {
         test: /\.styl$/,
         loader: ExtractTextPlugin.extract([
-          'css-loader?importLoaders=1',
+          'css-loader?importLoaders=1&modules',
           'postcss-loader',
-          'stylus-loader'
+          'stylus-loader?paths=node_modules/cozy-ui/stylus/'
         ])
       }
     ]
