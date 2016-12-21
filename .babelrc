@@ -6,9 +6,7 @@
         "browsers": ["last 2 versions"]
       },
       "useBuiltIns": true
-    }]
-  ],
-  "plugins": [
-    ["transform-react-jsx", { "pragma":"h" }]
+    }],
+    "react"
   ]
 }

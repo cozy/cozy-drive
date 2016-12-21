@@ -13,7 +13,7 @@ module.exports = {
       {
         test: /\.styl$/,
         loader: ExtractTextPlugin.extract([
-          'css-loader?importLoaders=1',
+          'css-loader?importLoaders=1&modules',
           'postcss-loader',
           'stylus-loader'
         ])
@@ -24,6 +24,7 @@ module.exports = {
     new ExtractTextPlugin(build ? 'app.[hash].css' : 'app.css')
   ],
   stylus: {
-    use: [require('cozy-ui/stylus')()]
+    use: [ require('cozy-ui/stylus')() ],
+    preferPathResolver: 'webpack',
   }
 }

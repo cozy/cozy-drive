@@ -5,8 +5,7 @@
 
 'use strict'
 
-/** @jsx h */
-import { h, Component } from 'preact'
+import React, { Component } from 'react'
 import Polyglot from 'node-polyglot'
 import en from '../locales/en'
 
@@ -23,18 +22,14 @@ const init = function (context, lang) {
       polyglot.extend(dict)
       polyglot.locale(lang)
     } catch (e) {
-      console.error(`The dict phrases for "${lang}" can't be loaded`)
+      console.warning(`The dict phrases for "${lang}" can't be loaded`)
     }
   }
 
   // Load context locales
   if (context) {
-    try {
-      const dict = require(`../contexts/${context}/locales/${lang}`)
-      polyglot.extend(dict)
-    } catch (e) {
-      console.error(`The dict phrases for context "${context}" can't be loaded`)
-    }
+    const dict = require(`../contexts/${context}/locales/${lang}`)
+    polyglot.extend(dict)
   }
 
   return polyglot
@@ -57,9 +52,13 @@ export class I18n extends Component {
     }
   }
 
-  render ({children}) {
-    return children && children[0] || null
+  render () {
+    return this.props.children && this.props.children[0] || null
   }
+}
+
+I18n.childContextTypes = {
+  t: React.PropTypes.function
 }
 
 // higher order decorator for components that need `t`
