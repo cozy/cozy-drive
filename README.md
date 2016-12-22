@@ -56,6 +56,26 @@ $ yarn run watch
 and point your browser to http://localhost:8080.
 
 
+#### Note about Cozy-ui
+
+[Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
+
+```sh
+git clone https://github.com/cozy/cozy-ui.git
+cd cozy-ui
+yarn link
+```
+
+then go back to your app project and replace the distributed cozy-ui module with the linked one:
+
+```sh
+cd cozy-files-v3
+yarn link cozy-ui
+```
+
+You can now run the watch task and your project will hot-reload each times a cozy-ui source file is touched.
+
+
 ### Run it inside the VM
 
 You can easily view your current running app in your VM, use [cozy-dev]:

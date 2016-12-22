@@ -45,8 +45,7 @@ module.exports = {
       title: pkg.name,
       inject: false,
       minify: {
-        collapseWhitespace: true,
-
+        collapseWhitespace: true
       }
     })
   ]

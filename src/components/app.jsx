@@ -1,6 +1,6 @@
 import styles from '../styles/app'
 
-import { h } from 'preact'
+import React from 'react'
 import { translate } from '../plugins/preact-polyglot'
 
 import Sidebar from './sidebar'

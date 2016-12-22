@@ -24,6 +24,7 @@ module.exports = {
     new ExtractTextPlugin(build ? 'app.[hash].css' : 'app.css')
   ],
   stylus: {
-    use: [require('cozy-ui/stylus')()]
+    use: [ require('cozy-ui/stylus')() ],
+    preferPathResolver: 'webpack',
   }
 }
