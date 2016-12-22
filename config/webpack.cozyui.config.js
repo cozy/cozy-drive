@@ -12,10 +12,10 @@ module.exports = {
     loaders: [
       {
         test: /\.styl$/,
-        loader: ExtractTextPlugin.extract([
-          'css-loader?importLoaders=1&modules',
-          'postcss-loader',
-          'stylus-loader?paths=node_modules/cozy-ui/stylus/'
+        loader: ExtractTextPlugin.extract('style', [
+          'css?importLoaders=1&modules',
+          'postcss',
+          'stylus'
         ])
       }
     ]

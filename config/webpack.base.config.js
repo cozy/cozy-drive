@@ -2,7 +2,6 @@
 
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const classNames = require('classnames')
 
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
