@@ -3,6 +3,8 @@ import styles from '../styles/app'
 import React from 'react'
 import { translate } from '../plugins/preact-polyglot'
 
+import classNames from 'classnames'
+
 import Sidebar from './sidebar'
 import Topbar from './topbar'
 import Table from './table'
