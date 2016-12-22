@@ -1,0 +1,62 @@
+@require 'cozy-ui'
+
+.fil-content-table
+  width      100%
+  text-align left
+  color      grey-11
+  tr
+    border-bottom 1px solid grey-09
+  tbody tr
+    &:hover
+      background-color grey-10
+  th
+  td
+    padding em(15px) em(32px)
+    font-size(14px)
+    &.fil-content-file
+      color grey-08
+    .fil-content-ext
+      color grey-11
+  th
+    padding         em(8px, 12px) em(32px, 12px)
+    font-size(12px)
+    text-transform  uppercase
+  td.fil-content-file
+    left-padded(77px)
+    font-size(16px)
+
+.fil-file-audio
+  background: embedurl("../assets/icons/icon-type-audio.svg") em(32px) center no-repeat
+
+.fil-file-bin
+  background: embedurl("../assets/icons/icon-type-binary.svg") em(32px) center no-repeat
+
+.fil-file-code
+  background: embedurl("../assets/icons/icon-type-code.svg") em(32px) center no-repeat
+
+.fil-file-files
+  background: embedurl("../assets/icons/icon-type-files.svg") em(32px) center no-repeat
+
+.fil-file-folder
+  background: embedurl("../assets/icons/icon-type-folder.svg") em(32px) center no-repeat
+
+.fil-file-image
+  background: embedurl("../assets/icons/icon-type-image.svg") em(32px) center no-repeat
+
+.fil-file-pdf
+  background: embedurl("../assets/icons/icon-type-pdf.svg") em(32px) center no-repeat
+
+.fil-file-slide
+  background: embedurl("../assets/icons/icon-type-slide.svg") em(32px) center no-repeat
+
+.fil-file-sheet
+  background: embedurl("../assets/icons/icon-type-spreadsheet.svg") em(32px) center no-repeat
+
+.fil-file-text
+  background: embedurl("../assets/icons/icon-type-text.svg") em(32px) center no-repeat
+
+.fil-file-video
+  background: embedurl("../assets/icons/icon-type-video.svg") em(32px) center no-repeat
+
+.fil-file-zip
+  background: embedurl("../assets/icons/icon-type-zip.svg") em(32px) center no-repeat
