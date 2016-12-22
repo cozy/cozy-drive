@@ -1,6 +1,6 @@
 import styles from '../styles/sidebar'
 
-import { h } from 'preact'
+import React from 'react'
 
 import Nav from './nav'
 

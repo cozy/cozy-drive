@@ -1,6 +1,6 @@
 import styles from '../styles/table'
 
-import { h } from 'preact'
+import React from 'react'
 import { translate } from '../plugins/preact-polyglot'
 import classNames from 'classnames'
 

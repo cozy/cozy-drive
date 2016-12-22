@@ -1,6 +1,6 @@
 import styles from '../styles/topbar'
 
-import { h } from 'preact'
+import React from 'react'
 
 import Location from './location'
 import Toolbar from './toolbar'
