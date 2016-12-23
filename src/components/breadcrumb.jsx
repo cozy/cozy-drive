@@ -2,9 +2,23 @@ import styles from '../styles/breadcrumb'
 
 import React from 'react'
 import { translate } from '../plugins/preact-polyglot'
+import { withRouter } from 'react-router'
 
-const Location = ({ t }) => (
-  <h2 class={styles['fil-content-title']}>{ t('location.title') }</h2>
-)
+const Breadcrumb = ({ t, router }) => {
+  // extract elements from the pathNames
+  let path = router.location.pathname.match(/\/([^/]*)(.*)/)
 
-export default translate()(Location)
+  // rootName is the first element before file path
+  const rootName = path[1]
+
+  // the remain is the file path
+  const filePath = path[2]
+
+  return (
+    <h2 class={styles['fil-content-title']}>
+      { t(rootName) }
+    </h2>
+  )
+}
+
+export default translate()(withRouter(Breadcrumb))
