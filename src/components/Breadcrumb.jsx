@@ -16,7 +16,7 @@ const Breadcrumb = ({ t, router }) => {
 
   return (
     <h2 class={styles['fil-content-title']}>
-      { t(rootName) }
+      { t(`breadcrumb.title_${rootName}`) }
     </h2>
   )
 }

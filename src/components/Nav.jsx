@@ -14,12 +14,12 @@ const Nav = ({ t }) => (
       </li>
       <li class={styles['fil-nav-item']}>
         <Link to='/recent' class={styles['fil-cat-recent']} activeClassName={styles['active']}>
-          t('nav.item_recent') }
+          { t('nav.item_recent') }
         </Link>
       </li>
       <li class={styles['fil-nav-item']}>
         <Link to='/shared' class={styles['fil-cat-shared']} activeClassName={styles['active']}>
-          { t('nav.item_share') }
+          { t('nav.item_shared') }
         </Link>
       </li>
       <li class={styles['fil-nav-item']}>
