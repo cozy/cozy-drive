@@ -1,4 +1,4 @@
-import styles from '../styles/location'
+import styles from '../styles/breadcrumb'
 
 import React from 'react'
 import { translate } from '../plugins/preact-polyglot'

@@ -2,12 +2,12 @@ import styles from '../styles/topbar'
 
 import React from 'react'
 
-import Location from './location'
 import Toolbar from './toolbar'
+import Breadcrump from './breadcrumb'
 
 const Topbar = () => (
   <div class={styles['fil-content-header']}>
-    <Location />
+    <Breadcrump />
     <Toolbar />
   </div>
 )
