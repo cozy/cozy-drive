@@ -1,12 +1,17 @@
 {
   "name": "cozy-files",
   "version": "3.0.0",
+  "description": "files description",
+  "cozy-type": "static",
+  "cozy-displayName": "Files",
+  "cozy-color": "#297ef2",
+  "icon-path": "",
   "main": "src/main.jsx",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.js",
     "clean": "rm -rf build",
     "copy:manifest": "install -m0644 package.json README.md LICENSE build",
-    "deploy": "git-directory-deploy --directory build/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-files-v3.git",
+    "deploy": "git-directory-deploy --directory build/ --branch built --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-files-v3.git",
     "tx": "tx pull --all || true",
     "postbuild": "npm run copy:manifest",
     "prebuild": "npm-run-all lint clean tx",
@@ -21,7 +26,11 @@
     "type": "git",
     "url": "git+https://github.com/cozy/cozy-files-v3.git"
   },
-  "author": "{github_username}",
+  "author": "Cozy Cloud <contact@cozycloud.cc> (https://cozy.io/)",
+  "contributors": [
+    "m4dz (https://m4dz.net)",
+    "GoOz"
+  ],
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/cozy/cozy-files-v3/issues"
