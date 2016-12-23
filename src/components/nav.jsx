@@ -2,25 +2,35 @@ import styles from '../styles/nav'
 
 import React from 'react'
 import { translate } from '../plugins/preact-polyglot'
-import classNames from 'classnames'
+import { Link } from 'react-router'
 
 const Nav = ({ t }) => (
   <nav>
     <ul class={styles['fil-nav']}>
       <li class={styles['fil-nav-item']}>
-        <a href='#files' class={classNames(styles['fil-cat-files'], styles['active'])}>{ t('nav.item_files') }</a>
+        <Link to='/files' class={styles['fil-cat-files']} activeClassName={styles['active']}>
+          { t('nav.item_files') }
+        </Link>
       </li>
       <li class={styles['fil-nav-item']}>
-        <a href='#recent' class={styles['fil-cat-recent']}>{ t('nav.item_recent') }</a>
+        <Link to='/recent' class={styles['fil-cat-recent']} activeClassName={styles['active']}>
+          t('nav.item_recent') }
+        </Link>
       </li>
       <li class={styles['fil-nav-item']}>
-        <a href='#shared' class={styles['fil-cat-shared']}>{ t('nav.item_share') }</a>
+        <Link to='/shared' class={styles['fil-cat-shared']} activeClassName={styles['active']}>
+          { t('nav.item_share') }
+        </Link>
       </li>
       <li class={styles['fil-nav-item']}>
-        <a href='#activity' class={styles['fil-cat-activity']}>{ t('nav.item_activity') }</a>
+        <Link to='/activity' class={styles['fil-cat-activity']} activeClassName={styles['active']}>
+          { t('nav.item_activity') }
+        </Link>
       </li>
       <li class={styles['fil-nav-item']}>
-        <a href='#trash' class={styles['fil-cat-trash']}>{ t('nav.item_trash') }</a>
+        <Link to='/trash' class={styles['fil-cat-trash']} activeClassName={styles['active']}>
+          { t('nav.item_trash') }
+        </Link>
       </li>
     </ul>
   </nav>
