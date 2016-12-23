@@ -1,3 +1,24 @@
 {
-  "welcome": "Hello World!"
+  "nav": {
+    "item_files": "Files",
+    "item_recent": "Recent",
+    "item_share": "Shared by me",
+    "item_activity": "Activity",
+    "item_trash": "Trash"
+  },
+  "location": {
+    "title": "Files"
+  },
+  "toolbar": {
+    "item_upload": "Upload",
+    "item_more": "More"
+  },
+  "table": {
+    "head_name": "Name",
+    "head_update": "Last update",
+    "head_size": "Size",
+    "head_status": "Status",
+    "row_read_only": "Share (Read only)",
+    "row_read_write": "Share (Read & Write)"
+  }
 }
