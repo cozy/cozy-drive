@@ -30,7 +30,7 @@ Cozy Files makes your file management easy. Main features are:
 Hack
 ----
 
-_:pushpin: Note:_ we recommend to use [Yarn] instead of NPM for package management. Don't hesitate to [install][install-yarn] and use it for your Cozy projects, it's now our main node packages tool for Cozy official apps.
+_:pushpin: Note:_ we recommend to use [Yarn] instead of NPM for package management. Don't hesitate to [install][yarn-install] and use it for your Cozy projects, it's now our main node packages tool for Cozy official apps.
 
 ### Install and run in dev mode
 
