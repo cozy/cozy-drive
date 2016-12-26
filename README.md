@@ -188,6 +188,7 @@ Cozy Files is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [nvm]: https://github.com/creationix/nvm
 [ndenv]: https://github.com/riywo/ndenv
 [cozy-dev]: https://github.com/cozy/cozy-dev/
+[cozy-ui]: https://github.com/cozy/cozy-ui.git
 [mocha]: https://mochajs.org/
 [chai]: http://chaijs.com/
 [sinon]: http://sinonjs.org/
