@@ -62,3 +62,13 @@
 
 .fil-file-zip
   background: embedurl("../assets/icons/icon-type-zip.svg") em(32px) center no-repeat
+
+@media (max-width: (768/basefont)rem)
+  .fil-content-table
+    th
+    td:nth-child(n+2)
+      display none
+
+    td.fil-content-file
+      left-padded(61px)
+      background-position em(16px) center
