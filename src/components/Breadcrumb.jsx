@@ -12,8 +12,8 @@ const Breadcrumb = ({ t, router }) => {
   const rootName = path[1]
 
   // the remainder is the file path
-  const filePath = path[2]
-  const filePathElements = path[2].replace(/\/([^/]*)/, '$1').split('/')
+  // const filePath = path[2]
+  // const filePathElements = path[2].replace(/\/([^/]*)/, '$1').split('/')
 
   return (
     <h2 class={styles['fil-content-title']}>
