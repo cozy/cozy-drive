@@ -1,0 +1,45 @@
+{
+  "name": "Files",
+  "slug": "cozy-files-v3",
+  "icon": "app-icon.svg",
+  "description": "File manager for Cozy v3",
+  "source": "https://github.com/cozy/cozy-files-v3.git@build",
+  "developer": {
+    "name": "Cozy",
+    "url": "https://cozy.io"
+  },
+  "default_locale": "en",
+  "locales": {
+    "fr": {
+      "description": "Gestionnaire de fichiers pour Cozy v3"
+    }
+  },
+  "version": "3.0.0",
+  "licence": "AGPL-3.0",
+  "permissions": {
+    "file/data": {
+      "description": "Required for documents access",
+      "access": "readwrite"
+    },
+    "file/downloads": {
+      "description": "Required for downloads access",
+      "access": "readwrite"
+    },
+    "file/pictures": {
+      "description": "Required for pictures access",
+      "access": "readwrite"
+    },
+    "file/music": {
+      "description": "Required for music access",
+      "access": "readwrite"
+    },
+    "file/videos": {
+      "description": "Required for videos access",
+      "access": "readwrite"
+    },
+    "settings/locale": {
+      "description": "Required to display a localized Ui",
+      "access": "read"
+    }
+  }
+}
