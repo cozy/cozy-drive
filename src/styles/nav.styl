@@ -41,3 +41,31 @@
     background: embedurl("../assets/icons/icon-trash.svg") em(24px) center no-repeat
     &.active
       background-image: embedurl("../assets/icons/icon-trash-active.svg")
+
+@media (max-width: (1023/basefont)rem)
+  .fil-nav
+    display         flex
+    justify-content space-around
+    margin          em(11px) 0 em(6px)
+
+  .fil-nav-item
+    a
+      min-width           em(100px)
+      padding             em(35px) 0 0
+      text-align          center
+      color               grey-11
+      font-size(10px)
+      line-height         1
+      &.active
+      &:hover
+      &:active
+        box-shadow  none
+        font-weight normal
+        color       grey-08
+
+    .fil-cat-files
+    .fil-cat-recent
+    .fil-cat-shared
+    .fil-cat-activity
+    .fil-cat-trash
+      background-position center top

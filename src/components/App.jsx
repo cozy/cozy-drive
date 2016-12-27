@@ -2,12 +2,13 @@ import styles from '../styles/app'
 
 import React from 'react'
 import { translate } from '../plugins/preact-polyglot'
+import classNames from 'classnames'
 
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
 const App = ({ t, children }) => (
-  <div class={styles['fil-wrapper']}>
+  <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
 
     <Sidebar />
 

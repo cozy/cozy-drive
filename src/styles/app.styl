@@ -1,8 +1,11 @@
 @require 'cozy-ui'
 
 .fil-wrapper
-  @extend    $app-2panes-toolbar
+  @extend    $app-2panes-sticky
   border-top 1px solid grey-09
 
 .fil-content
   top-padded(30px)
+
+  @media (max-width: (768/basefont)rem)
+      top-padded(10px)
