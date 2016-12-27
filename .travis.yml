@@ -18,15 +18,16 @@ addons:
     - g++-4.8
     - python3.5
 cache:
+  yarn: true
   directories:
   - node_modules
-before_script:
+before_install:
 - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
 - travis_retry pip3.5 install --user transifex-client
 - install -m0644 .transifexrc.tpl ~/.transifexrc
 - echo "password = $TX_PASSWD" >> ~/.transifexrc
 script:
-- npm run build
-- npm run test
+- yarn test
+- yarn run build
 after_success:
-- test $TRAVIS_BRANCH = "master" && npm run deploy
+- test $TRAVIS_BRANCH = "master" && yarn run deploy
