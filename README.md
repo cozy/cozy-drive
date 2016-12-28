@@ -63,6 +63,7 @@ and point your browser to http://localhost:8082.
 ```sh
 git clone https://github.com/cozy/cozy-ui.git -b v3
 cd cozy-ui
+yarn install
 yarn link
 ```
 
