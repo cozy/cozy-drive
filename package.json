@@ -43,7 +43,6 @@
     "babel-runtime": "^6.0.0",
     "chai": "^3.5.0",
     "copy-webpack-plugin": "^4.0.1",
-    "cozy-ui": "3.0.0",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -75,6 +74,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
+    "cozy-ui": "latest",
     "node-polyglot": "^2.2.0",
     "preact": "^7.1.0",
     "preact-compat": "^3.9.0",
