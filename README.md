@@ -61,7 +61,7 @@ and point your browser to http://localhost:8082.
 [Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
 
 ```sh
-git clone https://github.com/cozy/cozy-ui.git
+git clone https://github.com/cozy/cozy-ui.git -b v3
 cd cozy-ui
 yarn link
 ```
