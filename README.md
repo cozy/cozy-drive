@@ -50,10 +50,10 @@ Cozy's apps use a standard set of _npm scripts_ to run common tasks. You can so 
 
 ```sh
 $ cd cozy-files-v3
-$ yarn run watch
+$ yarn run watch:server
 ```
 
-and point your browser to http://localhost:8080.
+and point your browser to http://localhost:8082.
 
 
 #### Note about Cozy-ui
