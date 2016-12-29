@@ -46,6 +46,8 @@ $ yarn install
 
 :pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version before doing a `yarn install`.
 
+:warning: During its early ages, _cozy-files-v3_ uses an unpublishing version of [cozy-ui], take a look at the [note about cozy-ui](#note-about-cozy-ui) below to install and configure it.
+
 Cozy's apps use a standard set of _npm scripts_ to run common tasks. You can so start you development workflow with:
 
 ```sh
