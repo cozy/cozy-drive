@@ -48,14 +48,7 @@ $ yarn install
 
 :warning: During its early ages, _cozy-files-v3_ uses an unpublishing version of [cozy-ui], take a look at the [note about cozy-ui](#note-about-cozy-ui) below to install and configure it.
 
-Cozy's apps use a standard set of _npm scripts_ to run common tasks. You can so start you development workflow with:
-
-```sh
-$ cd cozy-files-v3
-$ yarn run watch:server
-```
-
-and point your browser to http://localhost:8082.
+Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch, lint, test, build…
 
 
 #### Note about Cozy-ui
@@ -81,7 +74,7 @@ You can now run the watch task and your project will hot-reload each times a coz
 
 ### Run it inside the VM
 
-You can easily view your current running app in your VM, use [cozy-dev]:
+You can easily view your current running app, you can use the [cozy-stack docker image][cozy-stack-docker]:
 
 ```sh
 # in a terminal, run your app in watch mode
@@ -90,14 +83,11 @@ $ yarn run watch
 ```
 
 ```sh
-# in another terminal, install cozy-dev (if you don't already have it)
-# and run the profixy
-$ cd cozy-files-v3
-$ yarn global install cozy-dev
-$ cozy-dev proxify http://localhost:9104 ./build
+# in another terminal, run the docker container
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
 ```
 
-your app is available in your vm dashboard at http://localhost:9104.
+your app is available at http://localhost:8080.
 
 
 ### Tests
@@ -163,6 +153,7 @@ Cozy Files is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [yarn]: https://yarnpkg.com/
 [yarn-install]: https://yarnpkg.com/en/docs/install
 [cozy-ui]: https://github.com/cozy/cozy-ui/
+[cozy-stack-docker]: https://github.com/cozy/cozy-stack/blob/master/docs/client-app-dev.md#with-docker
 [doctypes]: https://dev.cozy.io/#main-document-types
 [bill-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/bill.coffee
 [konnector-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/konnector.coffee
