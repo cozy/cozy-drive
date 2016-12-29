@@ -15,7 +15,7 @@
     "lint": "standard 'src/**/*.js' 'src/**/*.jsx'",
     "test": "jest",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
-    "watch:server": "NODE_ENV=development webpack-dev-server --config webpack.config.js --display-modules --display-chunks --inline --hot"
+    "watch:server": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8082 --display-modules --display-chunks --inline --hot"
   },
   "repository": {
     "type": "git",
