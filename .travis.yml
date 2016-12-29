@@ -26,11 +26,6 @@ before_install:
 - travis_retry pip3.5 install --user transifex-client
 - install -m0644 .transifexrc.tpl ~/.transifexrc
 - echo "password = $TX_PASSWD" >> ~/.transifexrc
-- git clone -b v3 https://github.com/cozy/cozy-ui.git /tmp/cozy-ui
-before_script:
-- cd /tmp/cozy-ui && yarn install && yarn link
-- cd $TRAVIS_BUILD_DIR
-- yarn link cozy-ui
 script:
 - yarn test
 - yarn run build

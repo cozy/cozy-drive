@@ -1290,12 +1290,13 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
-cozy-ui@latest:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-0.1.7.tgz#77949cf67b912f95c9344d7c812a3dc52fa9dbcd"
+cozy-ui@3.0.0-beta1:
+  version "3.0.0-beta1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta1.tgz#0c539f9c5afe6194776ab5857a6a2262249fd0de"
   dependencies:
-    md5 "^2.0.0"
-    normalize.css "^3.0.3"
+    md5 "^2.2.0"
+    normalize.css "5.0.0"
+    stylus "^0.54.0"
 
 cross-spawn@^4.0.0:
   version "4.0.2"
@@ -3426,7 +3427,7 @@ math-expression-evaluator@^1.2.14:
   dependencies:
     lodash.indexof "^4.0.5"
 
-md5@^2.0.0:
+md5@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/md5/-/md5-2.2.1.tgz#53ab38d5fe3c8891ba465329ea23fac0540126f9"
   dependencies:
@@ -3709,9 +3710,9 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-normalize.css@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-3.0.3.tgz#acc00262e235a2caa91363a2e5e3bfa4f8ad05c6"
+normalize.css@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-5.0.0.tgz#7cec875ce8178a5333c4de80b68ea9c18b9d7c37"
 
 npm-run-all@^3.1.0:
   version "3.1.2"
