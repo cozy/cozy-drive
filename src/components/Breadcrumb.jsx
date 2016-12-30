@@ -1,7 +1,7 @@
 import styles from '../styles/breadcrumb'
 
 import React from 'react'
-import { translate } from '../plugins/preact-polyglot'
+import { translate } from '../lib/I18n'
 import { withRouter } from 'react-router'
 
 const Breadcrumb = ({ t, router }) => {

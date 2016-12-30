@@ -75,6 +75,7 @@
   "dependencies": {
     "classnames": "^2.2.0",
     "cozy-ui": "latest",
+    "date-fns": "^1.22.0",
     "node-polyglot": "^2.2.0",
     "preact": "^7.1.0",
     "preact-compat": "^3.9.0",

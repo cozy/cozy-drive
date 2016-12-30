@@ -7,7 +7,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
-import { I18n } from './plugins/preact-polyglot'
+import { I18n } from './lib/I18n'
 
 import filesApp from './reducers'
 
@@ -24,40 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     <I18n context={context} lang={lang}>
       <Provider store={store}>
         <Router history={hashHistory}>
-          <Route component={(props) =>
-            <App {...props} />}
-          >
+          <Route component={App}>
             <Redirect from='/' to='files' />
-            <Route
-              path='files'
-              component={(props) =>
-                <Table {...props} />
-              }
-            />
-            <Route
-              path='recent'
-              component={(props) =>
-                <Table {...props} />
-              }
-            />
-            <Route
-              path='shared'
-              component={(props) =>
-                <Table {...props} />
-              }
-            />
-            <Route
-              path='activity'
-              component={(props) =>
-                <Table {...props} />
-              }
-            />
-            <Route
-              path='trash'
-              component={(props) =>
-                <Table {...props} />
-              }
-            />
+            <Route path='files' component={Table} />
+            <Route path='recent' component={Table} />
+            <Route path='shared' component={Table} />
+            <Route path='activity' component={Table} />
+            <Route path='trash' component={Table} />
           </Route>
         </Router>
       </Provider>

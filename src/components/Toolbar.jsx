@@ -1,7 +1,7 @@
 import styles from '../styles/toolbar'
 
 import React from 'react'
-import { translate } from '../plugins/preact-polyglot'
+import { translate } from '../lib/I18n'
 
 const Toolbar = ({ t }) => (
   <div class={styles['fil-content-toolbar']} role='toolbar'>
