@@ -6,16 +6,16 @@
     "build": "NODE_ENV=production webpack --config webpack.config.js",
     "clean": "rm -rf build",
     "copy:manifest": "install -m0644 package.json README.md LICENSE build",
-    "deploy": "git-directory-deploy --directory build/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-files-v3.git",
+    "deploy": "git-directory-deploy --username Cozy --email contact@cozycloud.cc --directory build/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-files-v3.git",
     "tx": "tx pull --all || true",
     "postbuild": "npm run copy:manifest",
     "prebuild": "npm-run-all lint clean tx",
     "pretest": "npm run lint",
     "prewatch": "npm run clean",
     "lint": "standard 'src/**/*.js' 'src/**/*.jsx'",
-    "test": "jest",
+    "test": "node --harmony_proxies node_modules/.bin/jest",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
-    "watch:server": "NODE_ENV=development webpack-dev-server --config webpack.config.js --display-modules --display-chunks --inline --hot"
+    "watch:server": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8082 --display-modules --display-chunks --inline --hot"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "autoprefixer": "^6.5.0",
     "babel-core": "^6.0.0",
+    "babel-jest": "^18.0.0",
     "babel-loader": "^6.0.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.0.0",
@@ -45,14 +46,14 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
+    "enzyme": "^2.7.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "git-directory-deploy": "^1.5.0",
     "html-webpack-plugin": "^2.24.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^18.0.0",
     "json-loader": "^0.5.0",
-    "mocha": "^3.2.0",
-    "mockery": "^2.0.0",
     "npm-run-all": "^3.1.0",
     "postcss": "^5.2.0",
     "postcss-discard-duplicates": "^2.0.2",
@@ -74,7 +75,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-ui": "latest",
+    "cozy-ui": "3.0.0-beta1",
     "date-fns": "^1.22.0",
     "node-polyglot": "^2.2.0",
     "preact": "^7.1.0",
@@ -82,5 +83,12 @@
     "react-redux": "^5.0.1",
     "react-router": "^3.0.0",
     "redux": "^3.6.0"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js", "jsx", "json", "styl"],
+    "moduleNameMapper": {
+      "\\.(png|gif|jpe?g|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "styles": "identity-obj-proxy"
+    }
   }
 }

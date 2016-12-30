@@ -46,23 +46,37 @@ $ yarn install
 
 :pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version before doing a `yarn install`.
 
-Cozy's apps use a standard set of _npm scripts_ to run common tasks. You can so start you development workflow with:
+:warning: During its early ages, _cozy-files-v3_ uses a beta version of [cozy-ui], take a look at the [note about cozy-ui](#note-about-cozy-ui) below to know hot to install and configure the latest available version.
+
+Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch, lint, test, build…
+
+
+### Run it inside the VM
+
+You can easily view your current running app, you can use the [cozy-stack docker image][cozy-stack-docker]:
 
 ```sh
+# in a terminal, run your app in watch mode
 $ cd cozy-files-v3
 $ yarn run watch
 ```
 
-and point your browser to http://localhost:8080.
+```sh
+# in another terminal, run the docker container
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
+```
+
+your app is available at http://localhost:8080.
 
 
-#### Note about Cozy-ui
+### Note about Cozy-ui
 
 [Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
 
 ```sh
-git clone https://github.com/cozy/cozy-ui.git
+git clone https://github.com/cozy/cozy-ui.git -b v3
 cd cozy-ui
+yarn install
 yarn link
 ```
 
@@ -76,27 +90,6 @@ yarn link cozy-ui
 You can now run the watch task and your project will hot-reload each times a cozy-ui source file is touched.
 
 
-### Run it inside the VM
-
-You can easily view your current running app in your VM, use [cozy-dev]:
-
-```sh
-# in a terminal, run your app in watch mode
-$ cd cozy-files-v3
-$ yarn run watch
-```
-
-```sh
-# in another terminal, install cozy-dev (if you don't already have it)
-# and run the profixy
-$ cd cozy-files-v3
-$ yarn global install cozy-dev
-$ cozy-dev proxify http://localhost:9104 ./build
-```
-
-your app is available in your vm dashboard at http://localhost:9104.
-
-
 ### Tests
 
 Tests are run by [mocha] under the hood, and written using [chai] and [sinon]. You can easily run the tests suite with:
@@ -107,18 +100,6 @@ $ yarn test
 ```
 
 :pushpin: Don't forget to update / create new tests when you contribute to code to keep the app the consistent.
-
-
-## Models
-
-The Cozy datastore stores documents, which can be seen as JSON objects. A `doctype` is simply a declaration of the fields in a given JSON object, to store similar objects in an homogeneous fashion.
-
-Cozy ships a [built-in list of `doctypes`][doctypes] for representation of most of the common documents (Bills, Contacts, Events, ...).
-
-Whenever your app needs to use a given `doctype`, you should:
-
-- Check if this is a standard `doctype` defined in Cozy itself. If this is the case, you should add a model declaration in your app containing at least the fields listed in the [main fields list for this `doctype`][doctypes]. Note that you can extend the Cozy-provided `doctype` with your own customs fields. This is typically what is done in [Konnectors] for the [Bill `doctype`][bill-doctype].
-- If no standards `doctypes` fit your needs, you should define your own `doctype` in your app. In this case, you do not have to put any field you want in your model, but you should crosscheck other cozy apps to try to homogeneize the names of your fields, so that your `doctype` data could be reused by other apps. This is typically the case for the [Konnector `doctype`][konnector-doctype] in [Konnectors].
 
 
 ### Resources
@@ -171,6 +152,8 @@ Cozy Files is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [setup]: https://dev.cozy.io/#set-up-the-development-environment "Cozy dev docs: Set up the Development Environment"
 [yarn]: https://yarnpkg.com/
 [yarn-install]: https://yarnpkg.com/en/docs/install
+[cozy-ui]: https://github.com/cozy/cozy-ui/
+[cozy-stack-docker]: https://github.com/cozy/cozy-stack/blob/master/docs/client-app-dev.md#with-docker
 [doctypes]: https://dev.cozy.io/#main-document-types
 [bill-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/bill.coffee
 [konnector-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/konnector.coffee
