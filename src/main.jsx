@@ -13,6 +13,7 @@ import filesApp from './reducers'
 
 import App from './components/App'
 import Table from './components/Table'
+import Folder from './containers/Folder'
 
 const context = window.context
 const lang = document.documentElement.getAttribute('lang') || 'en'
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <Router history={hashHistory}>
           <Route component={App}>
             <Redirect from='/' to='files' />
-            <Route path='files' component={Table} />
+            <Route path='files(/:file)' component={Folder} />
             <Route path='recent' component={Table} />
             <Route path='shared' component={Table} />
             <Route path='activity' component={Table} />
