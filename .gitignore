@@ -1,6 +1,7 @@
 # NPM
 node_modules/
 npm-debug.log
+__snapshots__
 
 # Build
 build/

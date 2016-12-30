@@ -58,7 +58,7 @@ export class I18n extends Component {
 }
 
 I18n.childContextTypes = {
-  t: React.PropTypes.function
+  t: React.PropTypes.func
 }
 
 // higher order decorator for components that need `t`
