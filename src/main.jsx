@@ -30,25 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route
             path='recent'
             component={(props) =>
-              <Table {...props} />
+              <p style='margin-left: 2em'>Coming soon!</p>
             }
           />
           <Route
             path='shared'
             component={(props) =>
-              <Table {...props} />
+              <p style='margin-left: 2em'>Coming soon!</p>
             }
           />
           <Route
             path='activity'
             component={(props) =>
-              <Table {...props} />
+              <p style='margin-left: 2em'>Coming soon!</p>
             }
           />
           <Route
             path='trash'
             component={(props) =>
-              <Table {...props} />
+              <p style='margin-left: 2em'>Coming soon!</p>
             }
           />
         </Route>
