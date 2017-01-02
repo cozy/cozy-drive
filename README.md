@@ -46,7 +46,7 @@ $ yarn install
 
 :pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version before doing a `yarn install`.
 
-:warning: During its early ages, _cozy-files-v3_ uses a beta version of [cozy-ui], take a look at the [note about cozy-ui](#note-about-cozy-ui) below to know hot to install and configure the latest available version.
+:warning: During its early ages, _cozy-files-v3_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know hot to install and configure the latest available versions.
 
 Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch, lint, test, build…
 
@@ -69,7 +69,7 @@ $ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-ap
 your app is available at http://localhost:8080.
 
 
-### Note about Cozy-ui
+### Living on the edge
 
 [Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
 
@@ -88,6 +88,8 @@ yarn link cozy-ui
 ```
 
 You can now run the watch task and your project will hot-reload each times a cozy-ui source file is touched.
+
+[Cozy-client-js] is our API library that provides an unified API on top of the cozy-stack. If you need to develop / hack cozy-client-js in parallel of your application, you can use the same trick that we used with [cozy-ui]: yarn linking.
 
 
 ### Tests

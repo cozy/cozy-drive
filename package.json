@@ -82,10 +82,17 @@
     "preact-compat": "^3.9.0",
     "react-redux": "^5.0.1",
     "react-router": "^3.0.0",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-logger": "^2.7.4",
+    "redux-thunk": "^2.1.0"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "jsx", "json", "styl"],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "styl"
+    ],
     "moduleNameMapper": {
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"

@@ -1,20 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { fetchFiles } from '../actions'
+
 import Table from '../components/Table'
 
 class Folder extends Component {
-  render() {
-    return <Table {...this.props} />
+  componentWillMount() {
+    this.props.fetchFiles()
+  }
+
+  render({ loading, files }) {
+    if (loading) return <p>Loading</p>
+    return <Table files={files} />
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    files: state.displayedFiles
+    loading: state.ui.loading,
+    files: state.ui.displayedFiles
   }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchFiles: () => {
+    dispatch(fetchFiles(ownProps.file))
+  }
+})
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Folder)

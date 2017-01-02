@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 
 import folder from './folder'
-import displayedFiles from './displayedFiles'
+import ui from './ui'
 
 const filesApp = combineReducers({
   folder,
-  displayedFiles
+  ui
 })
 
 export default filesApp
