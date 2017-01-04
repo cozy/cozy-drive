@@ -7,6 +7,7 @@
       },
       "useBuiltIns": true
     }],
-    "react"
+    "react",
+    "es2015"
   ]
 }

@@ -2,7 +2,8 @@ import styles from '../styles/table'
 
 import React from 'react'
 import { translate } from '../lib/I18n'
-import classNames from 'classnames'
+
+import FilenameCell from '../containers/FilenameCell'
 
 const Table = ({ t, f, files = [] }) => (
   <table class={styles['fil-content-table']} role='contentinfo'>
@@ -15,11 +16,9 @@ const Table = ({ t, f, files = [] }) => (
       </tr>
     </thead>
     <tbody>
-      {files.map(file => (
+      {files.map((file, idx) => (
         <tr>
-          <td class={classNames(styles['fil-content-file'], styles['fil-file-folder'])}>
-            {file.name}
-          </td>
+          <FilenameCell index={idx} attributes={file} />
           <td>
             <time datetime=''>{ f(file.created_at, 'MMM D, YYYY') }</time>
           </td>

@@ -6,22 +6,20 @@ import { fetchFiles } from '../actions'
 import Table from '../components/Table'
 
 class Folder extends Component {
-  componentWillMount() {
+  componentWillMount () {
     this.props.fetchFiles()
   }
 
-  render({ loading, files }) {
+  render ({ loading, files }) {
     if (loading) return <p>Loading</p>
     return <Table files={files} />
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    loading: state.ui.loading,
-    files: state.ui.displayedFiles
-  }
-}
+const mapStateToProps = (state, ownProps) => ({
+  loading: state.ui.loading,
+  files: state.files
+})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchFiles: () => {

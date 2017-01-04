@@ -1,6 +1,6 @@
-import { RECEIVE_FILES } from '../actions'
+import { RECEIVE_FILES, UPLOAD_FILE_SUCCESS } from '../actions'
 
-const folder = (state = {}, action) => {
+export const folder = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_FILES:
       return action.folder
@@ -9,4 +9,16 @@ const folder = (state = {}, action) => {
   }
 }
 
-export default folder
+export const files = (state = [], action) => {
+  switch (action.type) {
+    case RECEIVE_FILES:
+      return action.files
+    case UPLOAD_FILE_SUCCESS:
+      return [
+        ...state,
+        action.file
+      ]
+    default:
+      return state
+  }
+}

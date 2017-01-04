@@ -1,8 +1,8 @@
-import { FETCH_FILES, RECEIVE_FILES } from '../actions'
+import { FETCH_FILES, RECEIVE_FILES, ADD_FOLDER } from '../actions'
 
 const initialState = {
   loading: false,
-  displayedFiles: []
+  renaming: false
 }
 
 const ui = (state = initialState, action) => {
@@ -13,8 +13,11 @@ const ui = (state = initialState, action) => {
       })
     case RECEIVE_FILES:
       return Object.assign({}, state, {
-        loading: false,
-        displayedFiles: formatStatsForDisplay(action.folder)
+        loading: false
+      })
+    case ADD_FOLDER:
+      return Object.assign({}, state, {
+        renaming: 0
       })
     default:
       return state
@@ -22,9 +25,3 @@ const ui = (state = initialState, action) => {
 }
 
 export default ui
-
-const formatStatsForDisplay = (folder) => {
-  return folder.relations('contents').map(c => Object.assign({},
-    c.attributes
-  ))
-}
