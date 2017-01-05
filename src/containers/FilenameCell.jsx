@@ -54,7 +54,7 @@ const getClassFromMime = attrs => {
   if (isDir(attrs)) {
     return styles['fil-file-folder']
   }
-  return styles['fil-file-'+attrs.mime.split('/')[0]] || styles['fil-file-files']
+  return styles['fil-file-' + attrs.mime.split('/')[0]] || styles['fil-file-files']
 }
 
 const FilenameCell = ({ renaming, index, attributes, onSubmit }) => {

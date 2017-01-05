@@ -7,7 +7,7 @@ import { uploadFile } from '../actions'
 const styles = {
   parent: {
     position: 'relative',
-    display: 'inline-block'
+    overflow: 'hidden'
   },
   input: {
     position: 'absolute',
@@ -17,25 +17,18 @@ const styles = {
     width: '100%',
     height: '100%',
     zIndex: 1
-  },
-  button: {
-    position: 'relative',
-    zIndex: -1,
-    cursor: 'pointer'
   }
 }
 
 const UploadButton = ({ t, uploadFile }) => (
-  <div style={styles.parent}>
+  <label
+    role='button'
+    className='coz-btn coz-btn--regular coz-btn--upload'
+    style={styles.parent}
+  >
+    { t('toolbar.item_upload') }
     <input type='file' style={styles.input} onChange={e => uploadFile(e.target.files[0])} />
-    <button
-      role='button'
-      className='coz-btn coz-btn--regular coz-btn--upload'
-      style={styles.button}
-    >
-      { t('toolbar.item_upload') }
-    </button>
-  </div>
+  </label>
 )
 
 const mapStateToProps = (state, ownProps) => ({})
