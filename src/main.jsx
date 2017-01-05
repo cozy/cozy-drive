@@ -18,7 +18,10 @@ import App from './components/App'
 import Table from './components/Table'
 import Folder from './containers/Folder'
 
-cozy.init({ url: 'http://cozy.local:8080/' })
+cozy.init({
+  url: 'http://cozy.local:8080/',
+  token: 'TODO'
+})
 
 const context = window.context
 const lang = document.documentElement.getAttribute('lang') || 'en'

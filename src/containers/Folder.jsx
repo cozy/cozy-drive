@@ -10,14 +10,14 @@ class Folder extends Component {
     this.props.fetchFiles()
   }
 
-  render ({ loading, files }) {
-    if (loading) return <p>Loading</p>
+  render ({ isFetching, files }) {
+    if (isFetching) return <p>Loading</p>
     return <Table files={files} />
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  loading: state.ui.loading,
+  isFetching: state.ui.isFetching,
   files: state.files
 })
 

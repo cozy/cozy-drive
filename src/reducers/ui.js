@@ -1,27 +1,52 @@
-import { FETCH_FILES, RECEIVE_FILES, ADD_FOLDER } from '../actions'
+import { combineReducers } from 'redux'
 
-const initialState = {
-  loading: false,
-  renaming: false
-}
+import {
+  FETCH_FILES,
+  RECEIVE_FILES,
+  ADD_FOLDER,
+  CREATE_FOLDER,
+  CREATE_FOLDER_SUCCESS,
+  UPLOAD_FILE,
+  UPLOAD_FILE_SUCCESS
+} from '../actions'
 
-const ui = (state = initialState, action) => {
+const isFetching = (state = false, action) => {
   switch (action.type) {
     case FETCH_FILES:
-      return Object.assign({}, state, {
-        loading: true
-      })
+      return true
     case RECEIVE_FILES:
-      return Object.assign({}, state, {
-        loading: false
-      })
-    case ADD_FOLDER:
-      return Object.assign({}, state, {
-        renaming: 0
-      })
+      return false
     default:
       return state
   }
 }
 
-export default ui
+const isAddingFolder = (state = false, action) => {
+  switch (action.type) {
+    case ADD_FOLDER:
+      return true
+    case CREATE_FOLDER_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
+const isWorking = (state = false, action) => {
+  switch (action.type) {
+    case CREATE_FOLDER:
+    case UPLOAD_FILE:
+      return true
+    case CREATE_FOLDER_SUCCESS:
+    case UPLOAD_FILE_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
+export default combineReducers({
+  isFetching,
+  isAddingFolder,
+  isWorking
+})

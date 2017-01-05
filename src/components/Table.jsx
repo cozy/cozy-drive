@@ -4,6 +4,7 @@ import React from 'react'
 import { translate } from '../lib/I18n'
 
 import FilenameCell from '../containers/FilenameCell'
+import AddFolder from '../containers/AddFolder'
 
 const Table = ({ t, f, files = [] }) => (
   <table class={styles['fil-content-table']} role='contentinfo'>
@@ -16,6 +17,7 @@ const Table = ({ t, f, files = [] }) => (
       </tr>
     </thead>
     <tbody>
+      <AddFolder />
       {files.map((file, idx) => (
         <tr>
           <FilenameCell index={idx} attributes={file} />

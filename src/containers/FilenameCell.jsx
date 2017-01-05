@@ -4,41 +4,7 @@ import classNames from 'classnames'
 
 import styles from '../styles/table'
 import { renameFile } from '../actions'
-
-const ENTER_KEY = 'Enter'
-
-class FilenameInput extends Component {
-  constructor (props) {
-    super(props)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
-  }
-
-  componentDidMount () {
-    this.textInput.focus()
-  }
-
-  handleKeyPress (e) {
-    if (e.key === ENTER_KEY) {
-      this.submit()
-    }
-  }
-
-  submit () {
-    this.props.onSubmit(this.textInput.value)
-  }
-
-  render ({ name }) {
-    return (
-      <input
-        type='text'
-        defaultValue={name}
-        ref={(input) => { this.textInput = input }}
-        onKeyPress={this.handleKeyPress}
-        onBlur={() => this.submit()}
-      />
-    )
-  }
-}
+import FilenameInput from '../components/FilenameInput'
 
 const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0

@@ -6,7 +6,7 @@ import { translate } from '../lib/I18n'
 
 import UploadButton from './UploadButton'
 
-// import { addFolder } from '../actions'
+import { addFolder } from '../actions'
 
 const Toolbar = ({ t, addFolder }) => (
   <div className={styles['fil-content-toolbar']} role='toolbar'>
@@ -25,7 +25,7 @@ const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addFolder: () => {
-    // dispatch(addFolder())
+    dispatch(addFolder())
   }
 })
 

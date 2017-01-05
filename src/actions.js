@@ -42,23 +42,13 @@ export const uploadFile = (file) => {
 
 export const addFolder = () => ({ type: ADD_FOLDER })
 
-const isNew = attributes => attributes.hasOwnProperty('id')
-
-export const renameFile = (fileIdx, newName, attributes) => {
-  if (attributes.isDir) {
-    return renameFolder(fileIdx, newName, attributes)
-  }
-}
-
-const renameFolder = (fileIdx, newName, attributes) => {
+export const createFolder = (newName) => {
   return async (dispatch, getState) => {
-    if (isNew) {
-      dispatch({ type: CREATE_FOLDER })
-      const folder = await cozy.files.createDirectory({
-        name: newName,
-        dirID: getState().folder._id
-      })
-      dispatch({ type: CREATE_FOLDER_SUCCESS, folder })
-    }
+    dispatch({ type: CREATE_FOLDER })
+    const folder = await cozy.files.createDirectory({
+      name: newName,
+      dirID: getState().folder.id
+    })
+    dispatch({ type: CREATE_FOLDER_SUCCESS, folder: extractFileAttributes(folder) })
   }
 }

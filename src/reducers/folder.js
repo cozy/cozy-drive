@@ -1,4 +1,4 @@
-import { RECEIVE_FILES, UPLOAD_FILE_SUCCESS } from '../actions'
+import { RECEIVE_FILES, UPLOAD_FILE_SUCCESS, CREATE_FOLDER_SUCCESS } from '../actions'
 
 export const folder = (state = {}, action) => {
   switch (action.type) {
@@ -17,6 +17,11 @@ export const files = (state = [], action) => {
       return [
         ...state,
         action.file
+      ]
+    case CREATE_FOLDER_SUCCESS:
+      return [
+        ...state,
+        action.folder
       ]
     default:
       return state
