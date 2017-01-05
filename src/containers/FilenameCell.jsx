@@ -40,14 +40,36 @@ class FilenameInput extends Component {
   }
 }
 
+const splitFilename = filename => {
+  let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
+  return {
+    extension: filename.slice(dotIdx + 1),
+    filename: filename.slice(0, dotIdx + 1)
+  }
+}
+
+const isDir = attrs => attrs.type === 'directory'
+
+const getClassFromMime = attrs => {
+  if (isDir(attrs)) {
+    return styles['fil-file-folder']
+  }
+  return styles['fil-file-'+attrs.mime.split('/')[0]] || styles['fil-file-files']
+}
+
 const FilenameCell = ({ renaming, index, attributes, onSubmit }) => {
-  return (
-    <td class={classNames(styles['fil-content-file'], styles['fil-file-folder'])}>
-      {renaming === index
-        ? <FilenameInput name={attributes.name} onSubmit={onSubmit} />
-        : attributes.name}
-    </td>
-  )
+  const { filename, extension } = splitFilename(attributes.name)
+  const classes = classNames(styles['fil-content-file'], getClassFromMime(attributes))
+  if (renaming === index) {
+    return (
+      <td class={classes}>
+        <FilenameInput name={attributes.name} onSubmit={onSubmit} />
+      </td>
+    )
+  }
+  return isDir(attributes)
+    ? <td class={classes}>{attributes.name}</td>
+    : <td class={classes}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></td>
 }
 
 const mapStateToProps = (state, ownProps) => ({
