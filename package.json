@@ -23,8 +23,9 @@
   },
   "author": "Cozy Cloud <contact@cozycloud.cc> (https://cozy.io/)",
   "contributors": [
-    "m4dz (https://m4dz.net)",
-    "GoOz"
+    "CPatchane",
+    "GoOz",
+    "m4dz (https://m4dz.net)"
   ],
   "license": "AGPL-3.0",
   "bugs": {

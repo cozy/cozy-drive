@@ -35,6 +35,8 @@ const store = createStore(
   )
 )
 
+const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
+
 document.addEventListener('DOMContentLoaded', () => {
   render((
     <I18n context={context} lang={lang}>
@@ -43,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route component={App}>
             <Redirect from='/' to='files' />
             <Route path='files(/:file)' component={Folder} />
-            <Route path='recent' component={Folder} />
-            <Route path='shared' component={Folder} />
-            <Route path='activity' component={Folder} />
-            <Route path='trash' component={Folder} />
+            <Route path='recent' component={ComingSoon} />
+            <Route path='shared' component={ComingSoon} />
+            <Route path='activity' component={ComingSoon} />
+            <Route path='trash' component={ComingSoon} />
           </Route>
         </Router>
       </Provider>
