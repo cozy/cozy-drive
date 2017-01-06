@@ -11,6 +11,12 @@ class Folder extends Component {
     this.props.onMount()
   }
 
+  componentWillReceiveProps (newProps) {
+    if (newProps.params.file !== this.props.params.file) {
+      this.props.onRouteChange(newProps.params.file)
+    }
+  }
+
   render (props) {
     return <FileList {...props} />
   }
@@ -23,7 +29,10 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMount: () => {
-    dispatch(fetchFiles(ownProps.file))
+    dispatch(fetchFiles(ownProps.params.file))
+  },
+  onRouteChange: (folderId) => {
+    dispatch(fetchFiles(folderId))
   },
   onFileEdit: (val, attrs) => {
     dispatch(renameFile(val, attrs))

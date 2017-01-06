@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { Link } from 'react-router'
 
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
@@ -69,7 +70,7 @@ class File extends Component {
       )
     }
     return isDir(attributes)
-      ? <td class={classes}>{attributes.name}</td>
+      ? <td class={classes}><Link to={`files/${attributes.id}`}>{attributes.name}</Link></td>
       : <td class={classes}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></td>
   }
 }

@@ -15,9 +15,14 @@ const Breadcrumb = ({ t, router }) => {
   // const filePath = path[2]
   // const filePathElements = path[2].replace(/\/([^/]*)/, '$1').split('/')
 
+  // return (
+  //   <h2 class={styles['fil-content-title']}>
+  //     { t(`breadcrumb.title_${rootName}`) }
+  //   </h2>
+  // )
   return (
     <h2 class={styles['fil-content-title']}>
-      { t(`breadcrumb.title_${rootName}`) }
+      { t(`breadcrumb.title_files`) }
     </h2>
   )
 }
