@@ -31,3 +31,9 @@ desktop.ini
 # Editors / IDEs
 .floo
 .flooignore
+
+# Mobile
+mobile/hooks
+mobile/platforms
+mobile/plugins
+mobile/www
