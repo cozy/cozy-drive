@@ -79,6 +79,7 @@
     "cozy-ui": "3.0.0-beta1",
     "date-fns": "^1.22.0",
     "node-polyglot": "^2.2.0",
+    "node-uuid": "^1.4.7",
     "preact": "^7.1.0",
     "preact-compat": "^3.9.0",
     "react-redux": "^5.0.1",

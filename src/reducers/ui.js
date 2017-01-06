@@ -3,7 +3,6 @@ import { combineReducers } from 'redux'
 import {
   FETCH_FILES,
   RECEIVE_FILES,
-  ADD_FOLDER,
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
@@ -15,17 +14,6 @@ const isFetching = (state = false, action) => {
     case FETCH_FILES:
       return true
     case RECEIVE_FILES:
-      return false
-    default:
-      return state
-  }
-}
-
-const isAddingFolder = (state = false, action) => {
-  switch (action.type) {
-    case ADD_FOLDER:
-      return true
-    case CREATE_FOLDER_SUCCESS:
       return false
     default:
       return state
@@ -45,8 +33,26 @@ const isWorking = (state = false, action) => {
   }
 }
 
+const updating = (state = [], action) => {
+  switch (action.type) {
+    case CREATE_FOLDER:
+      return [
+        ...state,
+        action.id
+      ]
+    case CREATE_FOLDER_SUCCESS:
+      let idx = state.indexOf(action.tempId)
+      return [
+        ...state.slice(0, idx),
+        ...state.slice(idx + 1)
+      ]
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   isFetching,
-  isAddingFolder,
-  isWorking
+  isWorking,
+  updating
 })

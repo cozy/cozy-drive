@@ -1,4 +1,4 @@
-import { RECEIVE_FILES, UPLOAD_FILE_SUCCESS, CREATE_FOLDER_SUCCESS } from '../actions'
+import { RECEIVE_FILES, UPLOAD_FILE_SUCCESS, ADD_FOLDER, CREATE_FOLDER_SUCCESS } from '../actions'
 
 export const folder = (state = {}, action) => {
   switch (action.type) {
@@ -18,11 +18,13 @@ export const files = (state = [], action) => {
         ...state,
         action.file
       ]
-    case CREATE_FOLDER_SUCCESS:
+    case ADD_FOLDER:
       return [
-        ...state,
-        action.folder
+        action.folder,
+        ...state
       ]
+    case CREATE_FOLDER_SUCCESS:
+      return state.map(f => f.id === action.tempId ? action.folder : f)
     default:
       return state
   }

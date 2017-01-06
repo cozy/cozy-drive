@@ -1,29 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchFiles } from '../actions'
+import { fetchFiles, renameFile } from '../actions'
+import { getVisibleFiles } from '../reducers'
 
-import Table from '../components/Table'
+import FileList from '../components/FileList'
 
 class Folder extends Component {
   componentWillMount () {
-    this.props.fetchFiles()
+    this.props.onMount()
   }
 
-  render ({ isFetching, files }) {
-    if (isFetching) return <p>Loading</p>
-    return <Table files={files} />
+  render (props) {
+    return <FileList {...props} />
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
-  files: state.files
+  files: getVisibleFiles(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchFiles: () => {
+  onMount: () => {
     dispatch(fetchFiles(ownProps.file))
+  },
+  onFileEdit: (val, attrs) => {
+    dispatch(renameFile(val, attrs))
   }
 })
 

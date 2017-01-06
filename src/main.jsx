@@ -15,7 +15,6 @@ import { I18n } from './lib/I18n'
 import filesApp from './reducers'
 
 import App from './components/App'
-import Table from './components/Table'
 import Folder from './containers/Folder'
 
 cozy.init({
@@ -44,10 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route component={App}>
             <Redirect from='/' to='files' />
             <Route path='files(/:file)' component={Folder} />
-            <Route path='recent' component={Table} />
-            <Route path='shared' component={Table} />
-            <Route path='activity' component={Table} />
-            <Route path='trash' component={Table} />
+            <Route path='recent' component={Folder} />
+            <Route path='shared' component={Folder} />
+            <Route path='activity' component={Folder} />
+            <Route path='trash' component={Folder} />
           </Route>
         </Router>
       </Provider>

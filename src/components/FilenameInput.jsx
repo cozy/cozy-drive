@@ -5,7 +5,9 @@ const ENTER_KEY = 'Enter'
 export default class FilenameInput extends Component {
   constructor (props) {
     super(props)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.state = {
+      value: name || ''
+    }
   }
 
   componentDidMount () {
@@ -15,25 +17,27 @@ export default class FilenameInput extends Component {
   handleKeyPress (e) {
     if (e.key === ENTER_KEY) {
       this.submit()
+      this.setState({ value: '' })
     }
+  }
+
+  handleChange (e) {
+    this.setState({ value: e.target.value })
   }
 
   submit () {
-    if (this.props.submitting) {
-      return
-    }
-    this.props.onSubmit(this.textInput.value)
+    this.props.onSubmit(this.state.value)
   }
 
-  render ({ name, submitting }) {
+  render ({ isUpdating }, { value }) {
     return (
       <input
         type='text'
-        defaultValue={name || ''}
+        value={value}
         ref={(input) => { this.textInput = input }}
-        disabled={submitting}
-        onKeyPress={this.handleKeyPress}
-        onBlur={() => this.submit()}
+        disabled={isUpdating}
+        onChange={e => this.handleChange(e)}
+        onKeyPress={e => this.handleKeyPress(e)}
       />
     )
   }

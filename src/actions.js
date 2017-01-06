@@ -1,4 +1,5 @@
 import cozy from 'cozy-client-js'
+import { v4 } from 'node-uuid'
 
 export const ROOT_DIR_ID = 'io.cozy.files.root-dir'
 
@@ -40,15 +41,42 @@ export const uploadFile = (file) => {
   }
 }
 
-export const addFolder = () => ({ type: ADD_FOLDER })
+export const addFolder = () => ({
+  type: ADD_FOLDER,
+  folder: {
+    id: v4(),
+    name: '',
+    type: 'directory',
+    created_at: Date.now(),
+    isNew: true
+  }
+})
 
-export const createFolder = (newName) => {
+const isDir = attrs => attrs.type === 'directory'
+
+export const renameFile = (newName, attrs) => {
+  if (isDir(attrs)) {
+    return attrs.isNew === true
+      ? createFolder(newName, attrs.id)
+      : renameFolder(newName, attrs.id)
+  }
+}
+
+export const createFolder = (newName, tempId) => {
   return async (dispatch, getState) => {
-    dispatch({ type: CREATE_FOLDER })
+    dispatch({ type: CREATE_FOLDER, id: tempId })
     const folder = await cozy.files.createDirectory({
       name: newName,
       dirID: getState().folder.id
     })
-    dispatch({ type: CREATE_FOLDER_SUCCESS, folder: extractFileAttributes(folder) })
+    dispatch({
+      type: CREATE_FOLDER_SUCCESS,
+      folder: extractFileAttributes(folder),
+      tempId
+    })
   }
+}
+
+export const renameFolder = (newName, id) => {
+
 }
