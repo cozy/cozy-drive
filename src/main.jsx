@@ -18,7 +18,7 @@ import App from './components/App'
 import Folder from './containers/Folder'
 
 cozy.init({
-  url: 'http://cozy.local:8080/',
+  cozyURL: 'http://cozy.local:8080/',
   token: 'TODO'
 })
 
