@@ -6,10 +6,10 @@ import { withRouter } from 'react-router'
 
 const Breadcrumb = ({ t, router }) => {
   // extract elements from the pathNames
-  let path = router.location.pathname.match(/\/([^/]*)(.*)/)
+  // let path = router.location.pathname.match(/\/([^/]*)(.*)/)
 
   // rootName is the first element before file path
-  const rootName = path[1]
+  // const rootName = path[1]
 
   // the remainder is the file path
   // const filePath = path[2]

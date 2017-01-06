@@ -6,7 +6,7 @@ export default class FilenameInput extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      value: name || ''
+      value: props.name || ''
     }
   }
 
