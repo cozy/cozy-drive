@@ -2,6 +2,7 @@ import cozy from 'cozy-client-js'
 import { v4 } from 'node-uuid'
 
 export const ROOT_DIR_ID = 'io.cozy.files.root-dir'
+export const TRASH_DIR_ID = 'io.cozy.files.trash-dir'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'

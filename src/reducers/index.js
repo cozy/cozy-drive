@@ -3,6 +3,8 @@ import { combineReducers } from 'redux'
 import { folder, files } from './folder'
 import ui from './ui'
 
+import { TRASH_DIR_ID } from '../actions'
+
 const filesApp = combineReducers({
   folder,
   files,
@@ -12,7 +14,7 @@ const filesApp = combineReducers({
 const sortFiles = files => files.sort((a, b) => a.name.localeCompare(b.name))
 
 const getSortedFiles = allFiles => {
-  let folders = allFiles.filter(f => f.type === 'directory')
+  let folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID)
   let files = allFiles.filter(f => f.type !== 'directory')
   return sortFiles(folders).concat(sortFiles(files))
 }
