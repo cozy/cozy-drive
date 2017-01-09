@@ -9,4 +9,4 @@
 <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
   <script src="<%- file %>" defer></script>
 <% }); %>
-<div role="application">
+<div role="application" data-ctx-token="{{.CtxToken}}" data-cozy-stack="{{.Domain}}">

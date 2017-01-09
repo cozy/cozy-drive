@@ -2,7 +2,7 @@ import styles from '../styles/topbar'
 
 import React from 'react'
 
-import Toolbar from './Toolbar'
+import Toolbar from '../containers/Toolbar'
 import Breadcrumb from './Breadcrumb'
 
 const Topbar = () => (

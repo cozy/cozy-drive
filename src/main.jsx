@@ -4,55 +4,54 @@ import './styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
-import { I18n } from './plugins/preact-polyglot'
+import cozy from 'cozy-client-js'
+import { I18n } from './lib/I18n'
+
+import filesApp from './reducers'
 
 import App from './components/App'
-import Table from './components/Table'
+import Folder from './containers/Folder'
+
+cozy.init({
+  cozyURL: 'http://cozy.local:8080/',
+  token: 'TODO'
+})
 
 const context = window.context
 const lang = document.documentElement.getAttribute('lang') || 'en'
 
+const loggerMiddleware = createLogger()
+
+const store = createStore(
+  filesApp,
+  applyMiddleware(
+    thunkMiddleware,
+    loggerMiddleware
+  )
+)
+
+const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
+
 document.addEventListener('DOMContentLoaded', () => {
   render((
     <I18n context={context} lang={lang}>
-      <Router history={hashHistory}>
-        <Route component={(props) =>
-          <App {...props} />}
-        >
-          <Redirect from='/' to='files' />
-          <Route
-            path='files'
-            component={(props) =>
-              <Table {...props} />
-            }
-          />
-          <Route
-            path='recent'
-            component={(props) =>
-              <p style='margin-left: 2em'>Coming soon!</p>
-            }
-          />
-          <Route
-            path='shared'
-            component={(props) =>
-              <p style='margin-left: 2em'>Coming soon!</p>
-            }
-          />
-          <Route
-            path='activity'
-            component={(props) =>
-              <p style='margin-left: 2em'>Coming soon!</p>
-            }
-          />
-          <Route
-            path='trash'
-            component={(props) =>
-              <p style='margin-left: 2em'>Coming soon!</p>
-            }
-          />
-        </Route>
-      </Router>
+      <Provider store={store}>
+        <Router history={hashHistory}>
+          <Route component={App}>
+            <Redirect from='/' to='files' />
+            <Route path='files(/:file)' component={Folder} />
+            <Route path='recent' component={ComingSoon} />
+            <Route path='shared' component={ComingSoon} />
+            <Route path='activity' component={ComingSoon} />
+            <Route path='trash' component={ComingSoon} />
+          </Route>
+        </Router>
+      </Provider>
     </I18n>
   ), document.querySelector('[role=application]'))
 })
