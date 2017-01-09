@@ -24,5 +24,9 @@
     "head_status": "Status",
     "row_read_only": "Share (Read only)",
     "row_read_write": "Share (Read & Write)"
+  },
+  "empty": {
+    "title" : "You don’t have any files in this folder.",
+    "text" : "Click the \"upload\" button to add files to this folder."
   }
 }
