@@ -1336,9 +1336,9 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
-cozy-client-js@^0.0.1:
+"cozy-client-js@https://github.com/cozy/cozy-client-js.git#99b935bff6b3c3b83c58ea0f975b90a13a44c570":
   version "0.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.0.1.tgz#68a5bc5c5ffbc8c9274b423bdd84ca36b3e420d3"
+  resolved "https://github.com/cozy/cozy-client-js.git#99b935bff6b3c3b83c58ea0f975b90a13a44c570"
 
 cozy-ui@3.0.0-beta1:
   version "3.0.0-beta1"
