@@ -23,7 +23,7 @@ const initPolyglot = (context, lang) => {
       polyglot.extend(dict)
       polyglot.locale(lang)
     } catch (e) {
-      console.warning(`The dict phrases for "${lang}" can't be loaded`)
+      console.warn(`The dict phrases for "${lang}" can't be loaded`)
     }
   }
 
@@ -44,7 +44,7 @@ const initFormat = lang => {
     try {
       locales[lang] = require(`date-fns/locale/${lang}`)
     } catch (e) {
-      console.warning(`The "${lang}" locale isn't supported by date-fns`)
+      console.warn(`The "${lang}" locale isn't supported by date-fns`)
     }
   }
   return (date, formatStr) => format(date, formatStr, { locale: locales[lang] })
