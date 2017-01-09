@@ -65,8 +65,14 @@ $ yarn run watch
 # in another terminal, run the docker container
 $ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
 ```
+:warning: Don't forget to add `cozy.local` and `app.cozy.local` to your `/etc/hosts`
 
-your app is available at http://localhost:8080.
+```
+127.0.0.1 cozy.local
+127.0.0.1 app.cozy.local
+```
+
+your app is available at http://app.cozy.local:8080.
 
 
 ### Living on the edge
