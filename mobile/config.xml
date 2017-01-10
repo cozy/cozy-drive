@@ -1,12 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.mobile.sync" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>cozyMobileSync</name>
-    <description>
-        A sample Apache Cordova application that responds to the deviceready event.
-    </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
-    </author>
+<widget id="io.cozy.mobile.sync" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Cozy Files</name>
+    <description>Sync files from your Cozy.</description>
+    <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
