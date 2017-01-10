@@ -46,10 +46,10 @@ class File extends Component {
     })
   }
 
-  render ({ f, attributes }, { editing }) {
+  render ({ f, attributes, isFetching }, { editing }) {
     return (
       <tr>
-        {this.renderFilenameCell(attributes, editing)}
+        {this.renderFilenameCell(attributes, editing, isFetching)}
         <td>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </td>
@@ -59,7 +59,7 @@ class File extends Component {
     )
   }
 
-  renderFilenameCell (attributes, editing) {
+  renderFilenameCell (attributes, editing, isFetching) {
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(styles['fil-content-file'], getClassFromMime(attributes))
     if (editing) {
@@ -70,7 +70,14 @@ class File extends Component {
       )
     }
     return isDir(attributes)
-      ? <td class={classes}><Link to={`files/${attributes.id}`}>{attributes.name}</Link></td>
+      ? (
+        <td class={classes}>
+          <Link to={`/files/${attributes.id}`}>
+            {attributes.name}
+            {isFetching && <div class={styles['fil-loading']} />}
+          </Link>
+        </td>
+      )
       : <td class={classes}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></td>
   }
 }

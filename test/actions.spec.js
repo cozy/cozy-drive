@@ -45,7 +45,10 @@ const mockStore = configureMockStore(middlewares)
 describe('fetchFiles', () => {
   it('should call cozy.files.statById', () => {
     const expectedActions = [
-      { type: FETCH_FILES },
+      {
+        type: FETCH_FILES,
+        folderId: 'io.cozy.files.root-dir'
+      },
       {
         type: RECEIVE_FILES,
         folder: {
