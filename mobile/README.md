@@ -52,3 +52,16 @@ On iOS:
 $ cd mobile
 $ cordova run ios
 ```
+
+
+## :rainbow: Icons
+
+You can generate all icons with [splashicon-generator](https://github.com/eberlitz/splashicon-generator).
+
+Icon: Should be a 1024x1024px with a 5% margin. `res/icon.png`
+
+````sh
+$ npm install -g splashicon-generator
+$ cd mobile
+$ splashicon-generator --imagespath="res"
+```
