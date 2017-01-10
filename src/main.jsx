@@ -8,14 +8,12 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import { Router, Route, Redirect, hashHistory } from 'react-router'
+import { Router, hashHistory } from 'react-router'
 import cozy from 'cozy-client-js'
 import { I18n } from './lib/I18n'
 
 import filesApp from './reducers'
-
-import App from './components/App'
-import Folder from './containers/Folder'
+import AppRoute from './components/AppRoute'
 
 cozy.init({
   cozyURL: 'http://cozy.local:8080/',
@@ -35,22 +33,11 @@ const store = createStore(
   )
 )
 
-const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
-
 document.addEventListener('DOMContentLoaded', () => {
   render((
     <I18n context={context} lang={lang}>
       <Provider store={store}>
-        <Router history={hashHistory}>
-          <Route component={App}>
-            <Redirect from='/' to='files' />
-            <Route path='files(/:file)' component={Folder} />
-            <Route path='recent' component={ComingSoon} />
-            <Route path='shared' component={ComingSoon} />
-            <Route path='activity' component={ComingSoon} />
-            <Route path='trash' component={ComingSoon} />
-          </Route>
-        </Router>
+        <Router history={hashHistory} routes={AppRoute} />
       </Provider>
     </I18n>
   ), document.querySelector('[role=application]'))
