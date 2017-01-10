@@ -11,7 +11,7 @@ module.exports = {
     function () {
       this.plugin('done', (stats) => {
         fs.writeFileSync(
-          path.join(__dirname, '../' + outputFolder + '/assets.json'),
+          path.join(__dirname, '..', outputFolder, 'assets.json'),
           `{"hash":"${stats.hash}"}`
         )
       })

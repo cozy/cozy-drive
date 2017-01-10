@@ -8,12 +8,12 @@ const pkg = require(path.resolve(__dirname, '../package.json'))
 const build = process.env.NODE_ENV === 'production'
 const mobile = process.env.MOBILE || false
 const outputFolder = mobile ? 'mobile/www' : 'build'
-const entryFile = mobile ? '../mobile/src/main' : '../src/main'
+const entryFile = mobile ? 'mobile/src/main' : 'src/main'
 
 module.exports = {
-  entry: path.resolve(__dirname, entryFile),
+  entry: path.resolve(__dirname, '..', entryFile),
   output: {
-    path: path.resolve(__dirname, '../' + outputFolder),
+    path: path.resolve(__dirname, '..', outputFolder),
     filename: build ? 'app.[hash].js' : 'app.js'
   },
   resolve: {
