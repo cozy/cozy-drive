@@ -8,7 +8,6 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
-    <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -16,12 +15,14 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <engine name="android" spec="6.0.0" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
+    <engine name="ios" spec="4.3.1" />
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <engine name="ios" spec="~4.3.1" />
+    <plugin name="cordova-plugin-whitelist" spec="1.3.1" />
 </widget>
