@@ -20259,11 +20259,15 @@
 	      ) : _react2.default.createElement(
 	        'td',
 	        { 'class': classes },
-	        filename,
 	        _react2.default.createElement(
-	          'span',
-	          { 'class': _table2.default['fil-content-ext'] },
-	          extension
+	          'a',
+	          { target: '_blank', href: 'http://cozy.local:8080/files/download/' + attributes.id },
+	          filename,
+	          _react2.default.createElement(
+	            'span',
+	            { 'class': _table2.default['fil-content-ext'] },
+	            extension
+	          )
 	        )
 	      );
 	    }
@@ -33875,4 +33879,4 @@
 /* 499 */
 498
 /******/ ])));
-//# sourceMappingURL=app.338db814bb2070aff37a.js.map
+//# sourceMappingURL=app.d08532754119025b5bb1.js.map
