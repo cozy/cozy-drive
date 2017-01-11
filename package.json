@@ -4,17 +4,19 @@
   "main": "src/main.jsx",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.js",
-    "clean": "rm -rf build",
-    "copy:manifest": "install -m0644 package.json README.md LICENSE build",
+    "build:mobile": "MOBILE=true npm run build",
+    "clean": "rm -rf build && rm -rf mobile/www",
+    "copy:manifest": "[[ $MOBILE == true ]] || install -m0644 package.json README.md LICENSE build",
     "deploy": "git-directory-deploy --username Cozy --email contact@cozycloud.cc --directory build/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-files-v3.git",
     "tx": "tx pull --all || true",
     "postbuild": "npm run copy:manifest",
     "prebuild": "npm-run-all lint clean tx",
     "pretest": "npm run lint",
     "prewatch": "npm run clean",
-    "lint": "standard 'src/**/*.js' 'src/**/*.jsx'",
+    "lint": "standard 'src/**/*.js' 'src/**/*.jsx' 'mobile/src/**/*.js' 'mobile/src/**/*.jsx'",
     "test": "node --harmony_proxies node_modules/.bin/jest",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
+    "watch:mobile": "MOBILE=true npm run watch",
     "watch:server": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8082 --display-modules --display-chunks --inline --hot"
   },
   "repository": {

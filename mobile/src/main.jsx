@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 
-import './styles/main'
+import '../../src/styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
@@ -10,10 +10,10 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import cozy from 'cozy-client-js'
-import { I18n } from './lib/I18n'
+import { I18n } from '../../src/lib/I18n'
 
-import filesApp from './reducers'
-import AppRoute from './components/AppRoute'
+import filesApp from '../../src/reducers'
+import AppRoute from '../../src/components/AppRoute'
 
 cozy.init({
   cozyURL: 'http://cozy.local:8080/',

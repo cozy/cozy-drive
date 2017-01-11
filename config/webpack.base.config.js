@@ -6,11 +6,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
 const build = process.env.NODE_ENV === 'production'
+const mobile = process.env.MOBILE || false
+const outputFolder = mobile ? 'mobile/www' : 'build'
+const entryFile = mobile ? 'mobile/src/main' : 'src/main'
 
 module.exports = {
-  entry: path.resolve(__dirname, '../src/main'),
+  entry: path.resolve(__dirname, '..', entryFile),
   output: {
-    path: path.resolve(__dirname, '../build'),
+    path: path.resolve(__dirname, '..', outputFolder),
     filename: build ? 'app.[hash].js' : 'app.js'
   },
   resolve: {
