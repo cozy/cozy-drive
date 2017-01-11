@@ -44,7 +44,7 @@ $ cd cozy-files-v3
 $ yarn install
 ```
 
-:pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version before doing a `yarn install`.
+:pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version `6` before doing a `yarn install`.
 
 :warning: During its early ages, _cozy-files-v3_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know hot to install and configure the latest available versions.
 
@@ -73,6 +73,11 @@ $ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-ap
 ```
 
 your app is available at http://app.cozy.local:8080.
+
+
+### Run on you mobile phone or your tablet :phone:
+
+[See specific documentation](mobile/README.md).
 
 
 ### Living on the edge
