@@ -23,7 +23,18 @@
     "head_size": "Size",
     "head_status": "Status",
     "row_read_only": "Share (Read only)",
-    "row_read_write": "Share (Read & Write)"
+    "row_read_write": "Share (Read & Write)",
+    "row_size_symbols": {
+      "B": "B",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    }
   },
   "empty": {
     "title" : "You don’t have any files in this folder.",

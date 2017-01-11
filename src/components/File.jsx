@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import filesize from 'filesize'
 import { Link } from 'react-router'
 
 import styles from '../styles/table'
@@ -46,14 +47,18 @@ class File extends Component {
     })
   }
 
-  render ({ f, attributes, isFetching }, { editing }) {
+  render ({ t, f, attributes, isFetching }, { editing }) {
     return (
       <tr>
         {this.renderFilenameCell(attributes, editing, isFetching)}
         <td>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </td>
-        <td>—</td>
+        <td>
+          {isDir(attributes)
+            ? '-'
+            : filesize(attributes.size)}
+        </td>
         <td>—</td>
       </tr>
     )
