@@ -20394,7 +20394,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ENTER_KEY = 'Enter';
+	var ENTER_KEY = 13;
 	
 	var FilenameInput = function (_Component) {
 	  _inherits(FilenameInput, _Component);
@@ -20418,7 +20418,7 @@
 	  }, {
 	    key: 'handleKeyPress',
 	    value: function handleKeyPress(e) {
-	      if (e.key === ENTER_KEY) {
+	      if (e.keyCode === ENTER_KEY) {
 	        this.submit();
 	        this.setState({ value: '' });
 	      }
@@ -33875,4 +33875,4 @@
 /* 499 */
 498
 /******/ ])));
-//# sourceMappingURL=app.9be5f3a650e5ae9626c4.js.map
+//# sourceMappingURL=app.338db814bb2070aff37a.js.map
