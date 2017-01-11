@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-const ENTER_KEY = 'Enter'
+const ENTER_KEY = 13
 
 export default class FilenameInput extends Component {
   constructor (props) {
@@ -15,7 +15,7 @@ export default class FilenameInput extends Component {
   }
 
   handleKeyPress (e) {
-    if (e.key === ENTER_KEY) {
+    if (e.keyCode === ENTER_KEY) {
       this.submit()
       this.setState({ value: '' })
     }
