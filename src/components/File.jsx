@@ -83,7 +83,7 @@ class File extends Component {
           </Link>
         </td>
       )
-      : <td class={classes}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></td>
+      : <td class={classes}><a target='_blank' href={`http://cozy.local:8080/files/download/${attributes.id}`}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></a></td>
   }
 }
 
