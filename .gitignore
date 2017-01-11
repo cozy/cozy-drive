@@ -37,3 +37,10 @@ mobile/hooks
 mobile/platforms
 mobile/plugins
 mobile/www
+mobile/keys
+
+# fastlane
+mobile/fastlane/report.xml
+mobile/fastlane/Error*.png
+mobile/fastlane/Preview.html
+mobile/Preview.html

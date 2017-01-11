@@ -1,0 +1,5 @@
+Cozy.io is a platform that brings all your web services in the same private space. With it, your web apps and your devices can share data easily, providing you with a new experience. You can install Cozy on your own hardware where no one profiles you.
+
+This is the iOS mobile client to your personnal Cozy server. Connect it to your Cozy server and browse through your cozy files from your iOS device.
+
+Use github issues to report bugs and vote for next features : https://github.com/cozy/cozy-mobile/issues
