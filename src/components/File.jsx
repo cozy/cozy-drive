@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import filesize from 'filesize'
 import { Link } from 'react-router'
 
 import styles from '../styles/table'
@@ -46,20 +47,24 @@ class File extends Component {
     })
   }
 
-  render ({ f, attributes }, { editing }) {
+  render ({ t, f, attributes, isFetching }, { editing }) {
     return (
       <tr>
-        {this.renderFilenameCell(attributes, editing)}
+        {this.renderFilenameCell(attributes, editing, isFetching)}
         <td>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </td>
-        <td>—</td>
+        <td>
+          {isDir(attributes)
+            ? '-'
+            : filesize(attributes.size)}
+        </td>
         <td>—</td>
       </tr>
     )
   }
 
-  renderFilenameCell (attributes, editing) {
+  renderFilenameCell (attributes, editing, isFetching) {
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(styles['fil-content-file'], getClassFromMime(attributes))
     if (editing) {
@@ -70,7 +75,14 @@ class File extends Component {
       )
     }
     return isDir(attributes)
-      ? <td class={classes}><Link to={`files/${attributes.id}`}>{attributes.name}</Link></td>
+      ? (
+        <td class={classes}>
+          <Link to={`/files/${attributes.id}`}>
+            {attributes.name}
+            {isFetching && <div class={styles['fil-loading']} />}
+          </Link>
+        </td>
+      )
       : <td class={classes}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></td>
   }
 }

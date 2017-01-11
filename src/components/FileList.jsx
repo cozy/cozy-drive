@@ -6,8 +6,8 @@ import { translate } from '../lib/I18n'
 import Empty from '../components/Empty'
 import File from '../components/File'
 
-const FileList = ({ t, f, files = [], onFileEdit, isFetching }) => {
-  if (isFetching) {
+const FileList = ({ t, f, files, onFileEdit, isFetching, isFirstFetch }) => {
+  if (isFetching && isFirstFetch) {
     return <p>Loading</p>
   }
   return (
@@ -25,7 +25,8 @@ const FileList = ({ t, f, files = [], onFileEdit, isFetching }) => {
           {files.map((file, idx) => (
             <File
               onEdit={onFileEdit}
-              attributes={file} />
+              attributes={file}
+              isFetching={isFetching && isFetching === file.id} />
           ))}
         </tbody>
       </table>

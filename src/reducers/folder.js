@@ -1,5 +1,6 @@
 import { RECEIVE_FILES, UPLOAD_FILE_SUCCESS, ADD_FOLDER, CREATE_FOLDER_SUCCESS } from '../actions'
 
+// reducer for the currently displayed folder properties
 export const folder = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_FILES:
@@ -9,6 +10,7 @@ export const folder = (state = {}, action) => {
   }
 }
 
+// reducer for the full file list of the currently displayed folder
 export const files = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_FILES:

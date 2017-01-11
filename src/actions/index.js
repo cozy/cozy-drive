@@ -16,7 +16,7 @@ const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id }
 
 export const fetchFiles = (folderId = ROOT_DIR_ID) => {
   return async dispatch => {
-    dispatch({ type: FETCH_FILES })
+    dispatch({ type: FETCH_FILES, folderId })
     const folder = await cozy.files.statById(folderId)
     dispatch({
       type: RECEIVE_FILES,

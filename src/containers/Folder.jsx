@@ -7,18 +7,26 @@ import { getVisibleFiles } from '../reducers'
 import FileList from '../components/FileList'
 
 class Folder extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { isFirstFetch: true }
+  }
+
   componentWillMount () {
-    this.props.onMount()
+    if (!this.props.isFetching) {
+      this.props.onMount()
+    }
   }
 
   componentWillReceiveProps (newProps) {
     if (newProps.params.file !== this.props.params.file) {
+      this.setState({ isFirstFetch: false })
       this.props.onRouteChange(newProps.params.file)
     }
   }
 
-  render (props) {
-    return <FileList {...props} />
+  render (props, state) {
+    return <FileList {...props} {...state} />
   }
 }
 

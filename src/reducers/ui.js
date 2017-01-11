@@ -12,7 +12,7 @@ import {
 const isFetching = (state = false, action) => {
   switch (action.type) {
     case FETCH_FILES:
-      return true
+      return action.folderId
     case RECEIVE_FILES:
       return false
     default:
