@@ -45,5 +45,8 @@
     "button": {
         "reload": "Refresh now"
     }
+  },
+  "error": {
+    "fetch_files": "Something went wrong when opening the folder."
   }
 }
