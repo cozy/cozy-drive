@@ -17191,8 +17191,8 @@
 			"row_read_write": "Delen (Lezen en schrijven)"
 		},
 		"empty": {
-			"title": "You don’t have any files in this folder.",
-			"text": "Click the \"upload\" button to add files to this folder."
+			"title": "Er staan geen bestanden in deze map.",
+			"text": "Klik op de \"upload\" knop om bestanden aan deze map toe te voegen."
 		}
 	};
 
@@ -33879,4 +33879,4 @@
 /* 499 */
 498
 /******/ ])));
-//# sourceMappingURL=app.d08532754119025b5bb1.js.map
+//# sourceMappingURL=app.228d895f3dae75b89254.js.map
