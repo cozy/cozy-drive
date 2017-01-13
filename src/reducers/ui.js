@@ -7,8 +7,7 @@ import {
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
-  UPLOAD_FILE_SUCCESS,
-  RELOAD_PAGE
+  UPLOAD_FILE_SUCCESS
 } from '../actions'
 
 const isFetching = (state = false, action) => {
