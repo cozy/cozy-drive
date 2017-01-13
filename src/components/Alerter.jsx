@@ -65,7 +65,7 @@ class Alerter extends Component {
             {error.critical &&
               <p>{t('alert.critical_will_reload', { smart_count: reloadTimer })}</p>
             }
-            <a onClick={reload} className={classNames('coz-btn', styles['coz-btn'])}>
+            <a onClick={reload} className={classNames('coz-btn', 'coz-btn--alert-error')}>
               {t('alert.button.reload')}
             </a>
           </div>
