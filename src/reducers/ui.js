@@ -57,7 +57,6 @@ const updating = (state = [], action) => {
 const error = (state = null, action) => {
   switch (action.type) {
     case FETCH_FILES_FAILURE:
-      console.debug('FETCH_FILES_FAILURE')
       return {
         message: 'error.fetch_files',
         cause: action.error,
