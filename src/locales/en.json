@@ -39,5 +39,14 @@
   "empty": {
     "title" : "You don’t have any files in this folder.",
     "text" : "Click the \"upload\" button to add files to this folder."
+  },
+  "alert": {
+    "critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+    "button": {
+        "reload": "Refresh now"
+    }
+  },
+  "error": {
+    "fetch_files": "Something went wrong when opening the folder."
   }
 }

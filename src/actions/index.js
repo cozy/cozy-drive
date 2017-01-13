@@ -5,6 +5,7 @@ export const ROOT_DIR_ID = 'io.cozy.files.root-dir'
 export const TRASH_DIR_ID = 'io.cozy.files.trash-dir'
 
 export const FETCH_FILES = 'FETCH_FILES'
+export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
 export const ADD_FOLDER = 'ADD_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
@@ -17,7 +18,12 @@ const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id }
 export const fetchFiles = (folderId = ROOT_DIR_ID) => {
   return async dispatch => {
     dispatch({ type: FETCH_FILES, folderId })
-    const folder = await cozy.files.statById(folderId)
+    let folder
+    try {
+      folder = await cozy.files.statById(folderId)
+    } catch (err) {
+      return dispatch({type: FETCH_FILES_FAILURE, error: err})
+    }
     dispatch({
       type: RECEIVE_FILES,
       folder: extractFileAttributes(folder),
