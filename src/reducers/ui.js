@@ -15,7 +15,6 @@ const isFetching = (state = false, action) => {
     case FETCH_FILES:
       return action.folderId
     case FETCH_FILES_FAILURE:
-      return false
     case RECEIVE_FILES:
       return false
     default:

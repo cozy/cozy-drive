@@ -15,8 +15,7 @@ const reload = () => {
 
 const App = ({ t, error, children }) => (
   <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
-    { error &&
-    <Alerter
+    { error && <Alerter
       error={error}
       reload={reload}
       />
