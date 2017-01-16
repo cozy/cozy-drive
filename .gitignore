@@ -1,0 +1,33 @@
+# NPM
+node_modules/
+npm-debug.log
+yarn.lock # Remove this one on your app
+
+
+# Build
+build/
+
+
+# Locales
+**/locales/*
+!**/locales/en.json
+
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+
+# Editors / IDEs
+.floo
+.flooignore
+
+
+# Default
+!.gitkeep

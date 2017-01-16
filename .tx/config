@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[cozy-photos-v3.global]
+file_filter = src/locales/<lang>.json
+source_file = src/locales/en.json
+source_lang = en
+type = KEYVALUEJSON

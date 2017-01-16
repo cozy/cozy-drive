@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<title><%= htmlWebpackPlugin.options.title %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
+  <link rel="stylesheet" href="<%- file %>">
+<% }); %>
+<% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
+  <script src="<%- file %>" defer></script>
+<% }); %>
+<div role="application">
