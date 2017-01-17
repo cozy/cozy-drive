@@ -5,7 +5,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 
-import { I18n } from '../src/plugins/preact-polyglot'
+import { I18n } from '../src/lib/I18n'
 import App from '../src/components/App'
 
 test('Hello world', () => {

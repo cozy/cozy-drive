@@ -5,7 +5,7 @@ import './styles/main'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, hashHistory } from 'react-router'
-import { I18n } from './plugins/preact-polyglot'
+import { I18n } from './lib/I18n'
 
 import AppRoute from './components/AppRoute'
 
