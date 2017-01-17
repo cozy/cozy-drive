@@ -1,5 +1,8 @@
 {
-  "App": {
-    "welcome": "Hello World!"
+  "Nav": {
+    "photos": "Photos",
+    "albums": "Albums",
+    "shared": "Shared by me",
+    "trash": "Trash"
   }
 }
