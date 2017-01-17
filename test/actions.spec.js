@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { FETCH_FILES, RECEIVE_FILES, ROOT_DIR_ID, fetchFiles } from '../src/actions'
+import { OPEN_FOLDER, OPEN_FOLDER_SUCCESS, ROOT_DIR_ID, openFolder } from '../src/actions'
 
 import cozy from 'cozy-client-js'
 
@@ -46,11 +46,11 @@ describe('fetchFiles', () => {
   it('should call cozy.files.statById', () => {
     const expectedActions = [
       {
-        type: FETCH_FILES,
+        type: OPEN_FOLDER,
         folderId: 'io.cozy.files.root-dir'
       },
       {
-        type: RECEIVE_FILES,
+        type: OPEN_FOLDER_SUCCESS,
         folder: {
           id: 'io.cozy.files.root-dir',
           created_at: '0001-01-01T00:00:00Z',
@@ -76,7 +76,7 @@ describe('fetchFiles', () => {
       }
     ]
     const store = mockStore({ })
-    return store.dispatch(fetchFiles())
+    return store.dispatch(openFolder())
       .then(() => {
         expect(cozy.files.statById.mock.calls.length).toBe(1)
         expect(cozy.files.statById.mock.calls[0][0]).toBe(ROOT_DIR_ID)

@@ -22,9 +22,11 @@ const getSortedFiles = allFiles => {
 export const getVisibleFiles = state => {
   const { files, ui } = state
   return getSortedFiles(files).map(f => {
-    return ui.updating.indexOf(f.id) !== -1
-      ? Object.assign({}, f, { isUpdating: true })
-      : f
+    let additionalProps = {
+      isUpdating: ui.updating.indexOf(f.id) !== -1,
+      isOpening: ui.opening === f.id
+    }
+    return Object.assign({}, f, additionalProps)
   })
 }
 
