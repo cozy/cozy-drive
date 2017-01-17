@@ -3,7 +3,7 @@ const initialState = {
 }
 
 export const mobile = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'LOGGED_IN':
       return {loggedIn: true}
   }
