@@ -20663,7 +20663,7 @@
 	        _react2.default.createElement(
 	          'td',
 	          null,
-	          isDir(attributes) ? '-' : (0, _filesize2.default)(attributes.size)
+	          isDir(attributes) ? '-' : (0, _filesize2.default)(attributes.size, { base: 10 })
 	        ),
 	        _react2.default.createElement(
 	          'td',
@@ -34115,4 +34115,4 @@
 /* 501 */
 500
 /******/ ])));
-//# sourceMappingURL=app.eed3902a453efa0c2c1c.js.map
+//# sourceMappingURL=app.7ed0f421c0d84759b9b7.js.map
