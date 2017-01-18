@@ -12866,6 +12866,14 @@
 		},
 		"error": {
 			"fetch_files": "Something went wrong when opening the folder."
+		},
+		"mobile": {
+			"wizard": {
+				"cozy_address": "Your Cozy's address",
+				"next": "Next",
+				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+			}
 		}
 	};
 
@@ -17031,42 +17039,7 @@
 
 /***/ },
 /* 229 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"nav": {
-			"item_files": "Files",
-			"item_recent": "Recent",
-			"item_shared": "Shared by me",
-			"item_activity": "Activity",
-			"item_trash": "Trash"
-		},
-		"breadcrumb": {
-			"title_files": "Files",
-			"title_recent": "Recent",
-			"title_shared": "Shared by me",
-			"title_activity": "Activity",
-			"title_trash": "Trash"
-		},
-		"toolbar": {
-			"item_upload": "Upload",
-			"item_more": "More"
-		},
-		"table": {
-			"head_name": "Name",
-			"head_update": "Last update",
-			"head_size": "Size",
-			"head_status": "Status",
-			"row_read_only": "Share (Read only)",
-			"row_read_write": "Share (Read & Write)"
-		},
-		"empty": {
-			"title": "You don’t have any files in this folder.",
-			"text": "Click the \"upload\" button to add files to this folder."
-		}
-	};
-
-/***/ },
+152,
 /* 230 */
 /***/ function(module, exports) {
 
@@ -17095,11 +17068,39 @@
 			"head_size": "Tamaño",
 			"head_status": "Estatuto",
 			"row_read_only": "Compartir (solo en lectura)",
-			"row_read_write": "Compartir (Lectura & Escritura)"
+			"row_read_write": "Compartir (Lectura & Escritura)",
+			"row_size_symbols": {
+				"B": "B",
+				"KB": "KB",
+				"MB": "MB",
+				"GB": "GB",
+				"TB": "TB",
+				"PB": "PB",
+				"EB": "EB",
+				"ZB": "ZB",
+				"YB": "YB"
+			}
 		},
 		"empty": {
 			"title": "No hay archivos en esta carpeta.",
 			"text": "Haga clic en el botón \"cargar\" para añadir archivos a esta carpeta."
+		},
+		"alert": {
+			"critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+			"button": {
+				"reload": "Refresh now"
+			}
+		},
+		"error": {
+			"fetch_files": "Something went wrong when opening the folder."
+		},
+		"mobile": {
+			"wizard": {
+				"cozy_address": "Your Cozy's address",
+				"next": "Next",
+				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+			}
 		}
 	};
 
@@ -17132,11 +17133,39 @@
 			"head_size": "Taille",
 			"head_status": "État",
 			"row_read_only": "Partagé (lecture seule)",
-			"row_read_write": "Partagé (lecture & écriture)"
+			"row_read_write": "Partagé (lecture & écriture)",
+			"row_size_symbols": {
+				"B": "B",
+				"KB": "KB",
+				"MB": "MB",
+				"GB": "GB",
+				"TB": "TB",
+				"PB": "PB",
+				"EB": "EB",
+				"ZB": "ZB",
+				"YB": "YB"
+			}
 		},
 		"empty": {
 			"title": "Vous n'avez aucun fichier dans ce dossier.",
 			"text": "Cliquez sur le bouton \"Transférer des fichiers\" pour ajouter des fichiers à ce dossier."
+		},
+		"alert": {
+			"critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+			"button": {
+				"reload": "Refresh now"
+			}
+		},
+		"error": {
+			"fetch_files": "Something went wrong when opening the folder."
+		},
+		"mobile": {
+			"wizard": {
+				"cozy_address": "L'adresse de votre Cozy",
+				"next": "Suivant",
+				"description": "Renseignez votre adresse permettant de vous connecter à votre Cozy, comme votreprenom.cozycloud.cc",
+				"cozy_address_placeholder": "georgesabitbol.cozycloud.cc"
+			}
 		}
 	};
 
@@ -17169,17 +17198,45 @@
 			"head_size": "サイズ",
 			"head_status": "ステータス",
 			"row_read_only": "共有 (読み取り専用)",
-			"row_read_write": "共有 (読み書き)"
+			"row_read_write": "共有 (読み書き)",
+			"row_size_symbols": {
+				"B": "B",
+				"KB": "KB",
+				"MB": "MB",
+				"GB": "GB",
+				"TB": "TB",
+				"PB": "PB",
+				"EB": "EB",
+				"ZB": "ZB",
+				"YB": "YB"
+			}
 		},
 		"empty": {
 			"title": "このフォルダーにファイルはありません。",
 			"text": "\"アップロード\" ボタンをクリックして、このフォルダーにファイルを追加します。"
+		},
+		"alert": {
+			"critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+			"button": {
+				"reload": "Refresh now"
+			}
+		},
+		"error": {
+			"fetch_files": "Something went wrong when opening the folder."
+		},
+		"mobile": {
+			"wizard": {
+				"cozy_address": "Your Cozy's address",
+				"next": "Next",
+				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+			}
 		}
 	};
 
 /***/ },
 /* 233 */
-229,
+152,
 /* 234 */
 /***/ function(module, exports) {
 
@@ -17208,17 +17265,45 @@
 			"head_size": "Grootte",
 			"head_status": "Status",
 			"row_read_only": "Delen (alleen lezen)",
-			"row_read_write": "Delen (Lezen en schrijven)"
+			"row_read_write": "Delen (Lezen en schrijven)",
+			"row_size_symbols": {
+				"B": "B",
+				"KB": "KB",
+				"MB": "MB",
+				"GB": "GB",
+				"TB": "TB",
+				"PB": "PB",
+				"EB": "EB",
+				"ZB": "ZB",
+				"YB": "YB"
+			}
 		},
 		"empty": {
 			"title": "Er staan geen bestanden in deze map.",
 			"text": "Klik op de \"upload\" knop om bestanden aan deze map toe te voegen."
+		},
+		"alert": {
+			"critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+			"button": {
+				"reload": "Refresh now"
+			}
+		},
+		"error": {
+			"fetch_files": "Something went wrong when opening the folder."
+		},
+		"mobile": {
+			"wizard": {
+				"cozy_address": "Your Cozy's address",
+				"next": "Next",
+				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+			}
 		}
 	};
 
 /***/ },
 /* 235 */
-229,
+152,
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34115,4 +34200,4 @@
 /* 501 */
 500
 /******/ ])));
-//# sourceMappingURL=app.7ed0f421c0d84759b9b7.js.map
+//# sourceMappingURL=app.c709a16d8c553c93267d.js.map
