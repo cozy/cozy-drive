@@ -57,7 +57,7 @@ class File extends Component {
         <td>
           {isDir(attributes)
             ? '-'
-            : filesize(attributes.size)}
+            : filesize(attributes.size, {base: 10})}
         </td>
         <td>—</td>
       </tr>
