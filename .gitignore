@@ -1,7 +1,6 @@
 # NPM
 node_modules/
 npm-debug.log
-__snapshots__
 yarn-error.log
 
 # Build
