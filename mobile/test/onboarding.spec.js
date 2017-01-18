@@ -15,13 +15,4 @@ describe('OnBoarding Component', () => {
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
-
-  it('should render children if logged in', () => {
-    const component = shallow(
-      <OnBoarding t={()=>{}} onClick={()=>{}} isLoggedIn={true}>
-        <p>Application</p>
-      </OnBoarding>
-    )
-    expect(component.text()).toEqual('Application')
-  })
 })

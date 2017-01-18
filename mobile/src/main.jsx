@@ -35,14 +35,25 @@ const store = createStore(
   )
 )
 
+function requireSetup (nextState, replace) {
+  const { isSetup } = store.getState().mobile
+  if (!isSetup) {
+    replace({
+      pathname: '/onboarding',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   render((
     <I18n context={context} lang={lang}>
       <Provider store={store}>
         <Router history={hashHistory}>
-          <Route component={OnBoarding}>
+          <Route onEnter={requireSetup}>
             {AppRoute}
           </Route>
+          <Route path='onboarding' component={OnBoarding} />
         </Router>
       </Provider>
     </I18n>

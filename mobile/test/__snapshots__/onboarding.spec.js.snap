@@ -1,6 +1,6 @@
 exports[`OnBoarding Component should render the component if not logged in 1`] = `
 <div
-  class="wizard">
+  className="wizard">
   <p />
   <input
     placeholder={undefined}

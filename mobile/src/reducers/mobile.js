@@ -1,11 +1,13 @@
+import { SETUP } from '../actions'
+
 const initialState = {
-  loggedIn: false
+  isSetup: false
 }
 
 export const mobile = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGGED_IN':
-      return {loggedIn: true}
+    case SETUP:
+      return { isSetup: true }
   }
   return state
 }
