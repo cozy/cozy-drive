@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
-import { Link } from 'react-router'
 
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
@@ -47,10 +46,10 @@ class File extends Component {
     })
   }
 
-  render ({ t, f, attributes, isFetching }, { editing }) {
+  render ({ t, f, attributes, onOpen }, { editing }) {
     return (
       <tr>
-        {this.renderFilenameCell(attributes, editing, isFetching)}
+        {this.renderFilenameCell(attributes, onOpen, editing)}
         <td>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </td>
@@ -64,7 +63,7 @@ class File extends Component {
     )
   }
 
-  renderFilenameCell (attributes, editing, isFetching) {
+  renderFilenameCell (attributes, onOpen, editing) {
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(styles['fil-content-file'], getClassFromMime(attributes))
     if (editing) {
@@ -77,10 +76,10 @@ class File extends Component {
     return isDir(attributes)
       ? (
         <td class={classes}>
-          <Link to={`/files/${attributes.id}`}>
+          <a onClick={() => onOpen(attributes.id)}>
             {attributes.name}
-            {isFetching && <div class={styles['fil-loading']} />}
-          </Link>
+            {attributes.isOpening === true && <div class={styles['fil-loading']} />}
+          </a>
         </td>
       )
       : <td class={classes}><a target='_blank' href={`http://cozy.local:8080/files/download/${attributes.id}`}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></a></td>

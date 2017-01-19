@@ -1,31 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
-import { fetchFiles, renameFile } from '../actions'
+import { openFolder, renameFile } from '../actions'
 import { getVisibleFiles } from '../reducers'
 
 import FileList from '../components/FileList'
 
 class Folder extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { isFirstFetch: true }
-  }
-
-  componentWillMount () {
-    if (!this.props.isFetching) {
-      this.props.onMount()
-    }
-  }
-
-  componentWillReceiveProps (newProps) {
-    if (newProps.params.file !== this.props.params.file) {
-      this.setState({ isFirstFetch: false })
-      this.props.onRouteChange(newProps.params.file)
-    }
-  }
-
   render (props, state) {
+    if (props.isFetching === true) {
+      return <p>Loading</p>
+    }
     return <FileList {...props} {...state} />
   }
 }
@@ -36,11 +22,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onMount: () => {
-    dispatch(fetchFiles(ownProps.params.file))
-  },
-  onRouteChange: (folderId) => {
-    dispatch(fetchFiles(folderId))
+  onFolderOpen: (folderId) => {
+    dispatch(openFolder(folderId, false, ownProps.router))
   },
   onFileEdit: (val, attrs) => {
     dispatch(renameFile(val, attrs))
@@ -50,4 +33,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Folder)
+)(withRouter(Folder))

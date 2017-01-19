@@ -47,7 +47,7 @@
     }
   },
   "error": {
-    "fetch_files": "Something went wrong when opening the folder."
+    "open_folder": "Something went wrong when opening the folder."
   },
   "mobile": {
     "wizard": {

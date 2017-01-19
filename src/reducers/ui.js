@@ -2,8 +2,10 @@ import { combineReducers } from 'redux'
 
 import {
   FETCH_FILES,
-  FETCH_FILES_FAILURE,
   RECEIVE_FILES,
+  OPEN_FOLDER,
+  OPEN_FOLDER_SUCCESS,
+  OPEN_FOLDER_FAILURE,
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
@@ -13,8 +15,7 @@ import {
 const isFetching = (state = false, action) => {
   switch (action.type) {
     case FETCH_FILES:
-      return action.folderId
-    case FETCH_FILES_FAILURE:
+      return true
     case RECEIVE_FILES:
       return false
     default:
@@ -29,6 +30,18 @@ const isWorking = (state = false, action) => {
       return true
     case CREATE_FOLDER_SUCCESS:
     case UPLOAD_FILE_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
+const opening = (state = false, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER:
+      return action.folderId
+    case OPEN_FOLDER_SUCCESS:
+    case OPEN_FOLDER_FAILURE:
       return false
     default:
       return state
@@ -55,9 +68,9 @@ const updating = (state = [], action) => {
 
 const error = (state = null, action) => {
   switch (action.type) {
-    case FETCH_FILES_FAILURE:
+    case OPEN_FOLDER_FAILURE:
       return {
-        message: 'error.fetch_files',
+        message: 'error.open_folder',
         cause: action.error,
         critical: true
       }
@@ -69,6 +82,7 @@ const error = (state = null, action) => {
 export default combineReducers({
   isFetching,
   isWorking,
+  opening,
   updating,
   error
 })

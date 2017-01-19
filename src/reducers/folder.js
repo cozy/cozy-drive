@@ -1,9 +1,9 @@
-import { RECEIVE_FILES, UPLOAD_FILE_SUCCESS, ADD_FOLDER, CREATE_FOLDER_SUCCESS } from '../actions'
+import { OPEN_FOLDER_SUCCESS, UPLOAD_FILE_SUCCESS, ADD_FOLDER, CREATE_FOLDER_SUCCESS } from '../actions'
 
 // reducer for the currently displayed folder properties
 export const folder = (state = {}, action) => {
   switch (action.type) {
-    case RECEIVE_FILES:
+    case OPEN_FOLDER_SUCCESS:
       return action.folder
     default:
       return state
@@ -13,7 +13,7 @@ export const folder = (state = {}, action) => {
 // reducer for the full file list of the currently displayed folder
 export const files = (state = [], action) => {
   switch (action.type) {
-    case RECEIVE_FILES:
+    case OPEN_FOLDER_SUCCESS:
       return action.files
     case UPLOAD_FILE_SUCCESS:
       return [

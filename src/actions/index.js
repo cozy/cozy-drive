@@ -5,8 +5,10 @@ export const ROOT_DIR_ID = 'io.cozy.files.root-dir'
 export const TRASH_DIR_ID = 'io.cozy.files.trash-dir'
 
 export const FETCH_FILES = 'FETCH_FILES'
-export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
+export const OPEN_FOLDER = 'OPEN_FOLDER'
+export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
+export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
 export const ADD_FOLDER = 'ADD_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
@@ -15,17 +17,25 @@ export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
-export const fetchFiles = (folderId = ROOT_DIR_ID) => {
+export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
-    dispatch({ type: FETCH_FILES, folderId })
+    if (isInitialFetch) {
+      dispatch({ type: FETCH_FILES, folderId })
+    }
+    dispatch({ type: OPEN_FOLDER, folderId })
     let folder
     try {
       folder = await cozy.files.statById(folderId)
     } catch (err) {
-      return dispatch({type: FETCH_FILES_FAILURE, error: err})
+      return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
+    }
+    if (isInitialFetch) {
+      dispatch({ type: RECEIVE_FILES, folderId })
+    } else if (router) {
+      router.push(`/files/${folderId}`)
     }
     dispatch({
-      type: RECEIVE_FILES,
+      type: OPEN_FOLDER_SUCCESS,
       folder: extractFileAttributes(folder),
       files: folder.relations('contents').map(
         c => extractFileAttributes(c)
