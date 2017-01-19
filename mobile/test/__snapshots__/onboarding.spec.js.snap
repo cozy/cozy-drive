@@ -1,0 +1,14 @@
+exports[`OnBoarding Component should render the component if not logged in 1`] = `
+<div
+  className="wizard">
+  <p />
+  <input
+    placeholder={undefined}
+    type="text" />
+  <p />
+  <button
+    className="coz-btn coz-btn--regular"
+    onClick={[Function]}
+    role="button" />
+</div>
+`;

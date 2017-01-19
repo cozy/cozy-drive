@@ -48,5 +48,13 @@
   },
   "error": {
     "open_folder": "Something went wrong when opening the folder."
+  },
+  "mobile": {
+    "wizard": {
+      "cozy_address": "Your Cozy's address",
+      "next": "Next",
+      "description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+      "cozy_address_placeholder": "johnwayne.cozycloud.cc"
+    }
   }
 }
