@@ -40,10 +40,8 @@ class Alerter extends Component {
     setTimeout(() => {
       this.show()
     }, 10)
-  }
 
-  componentWillReceiveProps (newProps) {
-    const { error, reload } = newProps
+    const { error, reload } = this.props
     const { reloadTimer } = this.state
     if (error && error.critical) {
       setTimeout(() =>
