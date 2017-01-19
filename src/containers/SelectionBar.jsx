@@ -6,9 +6,11 @@ import { translate } from '../lib/I18n'
 
 import { addFolder } from '../actions'
 
-const SelectionBar = ({ t }) => (
+const SelectionBar = ({ t, selectedCount }) => (
   <div className={styles['fil-selectionbar']} role='toolbar'>
-    <span className={styles['fil-selectionbar-count']}>{t('selectionbar.selected_count', { smart_count: 0 })}</span>
+    <span className={styles['fil-selectionbar-count']}>
+      {t('selectionbar.selected_count', { smart_count: selectedCount })}
+    </span>
     <span className={styles['fil-selectionbar-separator']} />
     <button className={styles['fil-action-share']}>{t('selectionbar.share')}</button>
     <button className={styles['fil-action-download']}>{t('selectionbar.download')}</button>
@@ -18,7 +20,9 @@ const SelectionBar = ({ t }) => (
   </div>
 )
 
-const mapStateToProps = (state, ownProps) => ({})
+const mapStateToProps = (state, ownProps) => ({
+  selectedCount: state.ui.selected.length
+})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 

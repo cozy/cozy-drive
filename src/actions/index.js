@@ -14,6 +14,8 @@ export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
+export const SELECT_FILE = 'SELECT_FILE'
+export const UNSELECT_FILE = 'UNSELECT_FILE'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
@@ -93,6 +95,11 @@ export const createFolder = (newName, tempId) => {
     })
   }
 }
+
+export const toggleFileSelection = (id, selected) => ({
+  type: selected ? UNSELECT_FILE : SELECT_FILE,
+  id
+})
 
 export const renameFolder = (newName, id) => {
 

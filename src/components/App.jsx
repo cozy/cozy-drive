@@ -11,6 +11,9 @@ import { openFolder } from '../actions'
 import Alerter from './Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
+import SelectionBar from '../containers/SelectionBar'
+
+import { mustShowSelectionBar } from '../reducers'
 
 const reload = () => {
   window.location.reload()
@@ -29,7 +32,7 @@ class App extends Component {
     }
   }
 
-  render ({ t, error, children }) {
+  render ({ t, error, showSelectionBar, children }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
         { error && <Alerter
@@ -37,6 +40,7 @@ class App extends Component {
           reload={reload}
           />
         }
+        { showSelectionBar && <SelectionBar /> }
 
         <Sidebar />
 
@@ -51,6 +55,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   error: state.ui.error,
+  showSelectionBar: mustShowSelectionBar(state),
   folder: state.folder
 })
 

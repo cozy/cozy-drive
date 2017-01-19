@@ -1,16 +1,21 @@
 import styles from '../styles/table'
 
 import React from 'react'
+import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import Empty from '../components/Empty'
 import File from '../components/File'
 
-const FileList = ({ t, f, files, onFileEdit, onFolderOpen }) => (
+const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFileToggle }) => (
   <div role='contentinfo'>
-    <table class={styles['fil-content-table']}>
+    <table class={classNames(
+      styles['fil-content-table'],
+      { [styles['fil-content-table-selection']]: showSelection }
+    )}>
       <thead>
         <tr>
+          <th></th>
           <th class={styles['fil-content-file']}>{ t('table.head_name') }</th>
           <th>{ t('table.head_update') }</th>
           <th>{ t('table.head_size') }</th>
@@ -22,6 +27,7 @@ const FileList = ({ t, f, files, onFileEdit, onFolderOpen }) => (
           <File
             onEdit={onFileEdit}
             onOpen={onFolderOpen}
+            onToggle={onFileToggle}
             attributes={file}
           />
         ))}

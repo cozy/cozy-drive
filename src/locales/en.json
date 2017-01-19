@@ -36,6 +36,14 @@
       "YB": "YB"
     }
   },
+  "selectionbar": {
+    "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
+    "share": "Share",
+    "download": "Download",
+    "delete": "Remove",
+    "moveto": "Move",
+    "rename": "Rename"
+  },
   "empty": {
     "title" : "You don’t have any files in this folder.",
     "text" : "Click the \"upload\" button to add files to this folder."

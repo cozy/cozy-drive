@@ -9,7 +9,9 @@ import {
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
-  UPLOAD_FILE_SUCCESS
+  UPLOAD_FILE_SUCCESS,
+  SELECT_FILE,
+  UNSELECT_FILE
 } from '../actions'
 
 const isFetching = (state = false, action) => {
@@ -66,6 +68,24 @@ const updating = (state = [], action) => {
   }
 }
 
+const selected = (state = [], action) => {
+  switch (action.type) {
+    case SELECT_FILE:
+      return [
+        ...state,
+        action.id
+      ]
+    case UNSELECT_FILE:
+      let idx = state.indexOf(action.id)
+      return [
+        ...state.slice(0, idx),
+        ...state.slice(idx + 1)
+      ]
+    default:
+      return state
+  }
+}
+
 const error = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_FAILURE:
@@ -84,5 +104,6 @@ export default combineReducers({
   isWorking,
   opening,
   updating,
+  selected,
   error
 })

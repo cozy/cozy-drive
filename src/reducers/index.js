@@ -24,10 +24,13 @@ export const getVisibleFiles = state => {
   return getSortedFiles(files).map(f => {
     let additionalProps = {
       isUpdating: ui.updating.indexOf(f.id) !== -1,
-      isOpening: ui.opening === f.id
+      isOpening: ui.opening === f.id,
+      selected: ui.selected.indexOf(f.id) !== -1
     }
     return Object.assign({}, f, additionalProps)
   })
 }
+
+export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
 
 export default filesApp
