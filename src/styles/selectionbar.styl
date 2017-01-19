@@ -1,0 +1,56 @@
+@require 'cozy-ui'
+
+slate-grey = #5d6165
+
+.fil-selectionbar
+  position fixed
+  display flex
+  justify-content center
+  align-items center
+  width 100%
+  top 0
+  left 0
+  color white
+  background-color slate-grey
+  height em(56px)
+  font-weight bold
+  z-index 1000 // because... you know...
+
+  .fil-selectionbar-separator
+    background-color black
+    border-radius 50%
+    width 4px
+    height 4px
+    margin 0 0.5em 0 2em
+
+  button
+    left-padded(50px)
+    line-height em(48px)
+    color white
+    border none
+    text-transform uppercase
+
+    &.fil-action-share
+      background: embedurl("../assets/icons/icon-share.svg") em(24px) center no-repeat
+    &.fil-action-download
+      background: embedurl("../assets/icons/icon-download.svg") em(24px) center no-repeat
+    &.fil-action-delete
+      background: embedurl("../assets/icons/icon-delete.svg") em(24px) center no-repeat
+    &.fil-action-moveto
+      background: embedurl("../assets/icons/icon-moveto.svg") em(24px) center no-repeat
+    &.fil-action-rename
+      background: embedurl("../assets/icons/icon-rename.svg") em(24px) center no-repeat
+
+@media (max-width: (1023/basefont)rem)
+  .fil-selectionbar
+    height em(48px)
+    justify-content flex-start
+
+    .fil-selectionbar-count
+    .fil-selectionbar-separator
+      display none
+
+    button
+      padding-left 0
+      color transparent
+      width em(68px)
