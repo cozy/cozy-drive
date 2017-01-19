@@ -3,21 +3,23 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from '../../../src/lib/I18n'
 
+import Wizard from '../components/Wizard'
+
 import styles from '../styles/onboarding'
 import { SETUP } from '../actions'
 
-export const OnBoarding = ({t, onClick}) =>
-  (
-    <div className={classnames(styles['wizard'])}>
-      <p>{t('mobile.wizard.cozy_address')}</p>
-      <input type='text' placeholder={t('mobile.wizard.cozy_address_placeholder')} />
-      <p>{t('mobile.wizard.description')}</p>
-      <button role='button' className='coz-btn coz-btn--regular' onClick={onClick}>{t('mobile.wizard.next')}</button>
-    </div>
-  )
+export const SelectServer = ({selectServer, t}) =>
+(
+  <div className={classnames(styles['wizard'])}>
+    <p>{t('mobile.wizard.cozy_address')}</p>
+    <input type='text' placeholder={t('mobile.wizard.cozy_address_placeholder')} />
+    <p>{t('mobile.wizard.description')}</p>
+    <button role='button' className='coz-btn coz-btn--regular' onClick={selectServer}>{t('mobile.wizard.next')}</button>
+  </div>
+)
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => {
+  selectServer: () => {
     dispatch({ type: SETUP })
     const { router, location } = ownProps
     if (location.state && location.state.nextPathname) {
@@ -28,4 +30,23 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default connect(null, mapDispatchToProps)(translate()(OnBoarding))
+const ConnectedSelectServer = connect(null, mapDispatchToProps)(SelectServer)
+
+export const Welcome = ({ nextStep, t }) =>
+(
+  <div className={classnames(styles['wizard'])}>
+    <h1>Welcome</h1>
+    <img src={'path_to_the_icon'} height='120' width='120' />
+    <button role='button' className='coz-btn coz-btn--regular' onClick={nextStep}>{t('mobile.wizard.next')}</button>
+  </div>
+)
+
+const OnBoarding = (props) => {
+  const steps = [
+    Welcome,
+    ConnectedSelectServer
+  ]
+  return <Wizard steps={steps} {...props} />
+}
+
+export default translate()(OnBoarding)

@@ -2,17 +2,24 @@
 
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { shallow } from 'enzyme'
-import { I18n } from '../../src/lib/I18n'
 
-import { OnBoarding } from '../../mobile/src/containers/OnBoarding'
+import Wizard from '../../mobile/src/components/Wizard'
+import { Welcome, SelectServer } from '../../mobile/src/containers/OnBoarding'
 
-describe('OnBoarding Component', () => {
-  it('should render the component if not logged in', () => {
+describe('Wizard Component', () => {
+  it('should render different components', () => {
+    const steps = [
+      Welcome,
+      SelectServer
+    ]
     const component = renderer.create(
-      <OnBoarding t={()=>{}} onClick={()=>{}} isLoggedIn={false} />
+      <Wizard steps={steps} t={() => {}} />
     )
-    const tree = component.toJSON()
+    let tree = component.toJSON()
+    expect(tree).toMatchSnapshot()
+
+    tree.children[2].props.onClick()
+    tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
 })
