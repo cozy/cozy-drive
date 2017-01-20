@@ -1,13 +1,15 @@
 exports[`Wizard Component should render different components 1`] = `
 <div
-  className="wizard">
-  <img
-    height="120"
-    src="path_to_the_icon"
-    width="120" />
-  <h1 />
+  className="wizard welcome">
+  <div
+    className="wizard-main">
+    <img
+      alt="logo"
+      src="test-file-stub" />
+    <h1 />
+  </div>
   <button
-    className="coz-btn coz-btn--regular"
+    className="coz-btn coz-btn--regular wizard-button"
     onClick={[Function]}
     role="button" />
 </div>
@@ -16,13 +18,16 @@ exports[`Wizard Component should render different components 1`] = `
 exports[`Wizard Component should render different components 2`] = `
 <div
   className="wizard">
-  <p />
-  <input
-    placeholder={undefined}
-    type="text" />
-  <p />
+  <div
+    className="wizard-main">
+    <p />
+    <input
+      placeholder={undefined}
+      type="text" />
+    <p />
+  </div>
   <button
-    className="coz-btn coz-btn--regular"
+    className="coz-btn coz-btn--regular wizard-button"
     onClick={undefined}
     role="button" />
 </div>

@@ -13,10 +13,12 @@ import logo from '../../res/icon.png'
 export const SelectServer = ({selectServer, t}) =>
 (
   <div className={classnames(styles['wizard'])}>
-    <p>{t('mobile.wizard.selectServer.cozy_address')}</p>
-    <input type='text' placeholder={t('mobile.wizard.selectServer.cozy_address_placeholder')} />
-    <p>{t('mobile.wizard.selectServer.description')}</p>
-    <button role='button' className='coz-btn coz-btn--regular' onClick={selectServer}>{t('mobile.wizard.selectServer.button')}</button>
+    <div className={classnames(styles['wizard-main'])}>
+      <p>{t('mobile.wizard.selectServer.cozy_address')}</p>
+      <input type='text' placeholder={t('mobile.wizard.selectServer.cozy_address_placeholder')} />
+      <p>{t('mobile.wizard.selectServer.description')}</p>
+    </div>
+    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.wizard.selectServer.button')}</button>
   </div>
 )
 
@@ -37,11 +39,11 @@ const ConnectedSelectServer = connect(null, mapDispatchToProps)(SelectServer)
 export const Welcome = ({ nextStep, t }) =>
 (
   <div className={classnames(styles['wizard'], styles['welcome'])}>
-    <div className={classnames(styles['big-icon-container'])}>
+    <div className={classnames(styles['wizard-main'])}>
       <img src={logo} alt='logo' />
+      <h1>{t('mobile.wizard.welcome.title')}</h1>
     </div>
-    <h1>{t('mobile.wizard.welcome.title')}</h1>
-    <button role='button' className='coz-btn coz-btn--regular' onClick={nextStep}>{t('mobile.wizard.welcome.button')}</button>
+    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={nextStep}>{t('mobile.wizard.welcome.button')}</button>
   </div>
 )
 

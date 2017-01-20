@@ -18,7 +18,7 @@ describe('Wizard Component', () => {
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
 
-    tree.children[2].props.onClick()
+    tree.children[1].props.onClick()
     tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
