@@ -1,13 +1,11 @@
 exports[`Wizard Component should render different components 1`] = `
 <div
   className="wizard">
-  <h1>
-    Welcome
-  </h1>
   <img
     height="120"
-    src="test-file-stub"
+    src="path_to_the_icon"
     width="120" />
+  <h1 />
   <button
     className="coz-btn coz-btn--regular"
     onClick={[Function]}

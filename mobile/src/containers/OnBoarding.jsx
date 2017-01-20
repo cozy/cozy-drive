@@ -35,9 +35,9 @@ const ConnectedSelectServer = connect(null, mapDispatchToProps)(SelectServer)
 export const Welcome = ({ nextStep, t }) =>
 (
   <div className={classnames(styles['wizard'])}>
-    <h1>Welcome</h1>
     <img src={'path_to_the_icon'} height='120' width='120' />
-    <button role='button' className='coz-btn coz-btn--regular' onClick={nextStep}>{t('mobile.wizard.next')}</button>
+    <h1>{t('mobile.wizard.welcome')}</h1>
+    <button role='button' className='coz-btn coz-btn--regular' onClick={nextStep}>{t('mobile.wizard.connect')}</button>
   </div>
 )
 
