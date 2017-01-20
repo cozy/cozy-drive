@@ -8,13 +8,15 @@ import Wizard from '../components/Wizard'
 import styles from '../styles/onboarding'
 import { SETUP } from '../actions'
 
+import logo from '../../res/icon.png'
+
 export const SelectServer = ({selectServer, t}) =>
 (
   <div className={classnames(styles['wizard'])}>
-    <p>{t('mobile.wizard.cozy_address')}</p>
-    <input type='text' placeholder={t('mobile.wizard.cozy_address_placeholder')} />
-    <p>{t('mobile.wizard.description')}</p>
-    <button role='button' className='coz-btn coz-btn--regular' onClick={selectServer}>{t('mobile.wizard.next')}</button>
+    <p>{t('mobile.wizard.selectServer.cozy_address')}</p>
+    <input type='text' placeholder={t('mobile.wizard.selectServer.cozy_address_placeholder')} />
+    <p>{t('mobile.wizard.selectServer.description')}</p>
+    <button role='button' className='coz-btn coz-btn--regular' onClick={selectServer}>{t('mobile.wizard.selectServer.button')}</button>
   </div>
 )
 
@@ -34,10 +36,12 @@ const ConnectedSelectServer = connect(null, mapDispatchToProps)(SelectServer)
 
 export const Welcome = ({ nextStep, t }) =>
 (
-  <div className={classnames(styles['wizard'])}>
-    <img src={'path_to_the_icon'} height='120' width='120' />
-    <h1>{t('mobile.wizard.welcome')}</h1>
-    <button role='button' className='coz-btn coz-btn--regular' onClick={nextStep}>{t('mobile.wizard.connect')}</button>
+  <div className={classnames(styles['wizard'], styles['welcome'])}>
+    <div className={classnames(styles['big-icon-container'])}>
+      <img src={logo} alt='logo' />
+    </div>
+    <h1>{t('mobile.wizard.welcome.title')}</h1>
+    <button role='button' className='coz-btn coz-btn--regular' onClick={nextStep}>{t('mobile.wizard.welcome.button')}</button>
   </div>
 )
 
