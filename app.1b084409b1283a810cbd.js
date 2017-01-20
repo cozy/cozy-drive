@@ -12881,10 +12881,16 @@
 		},
 		"mobile": {
 			"wizard": {
-				"cozy_address": "Your Cozy's address",
-				"next": "Next",
-				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				"welcome": {
+					"title": "Your own private cloud",
+					"button": "Sign in"
+				},
+				"selectServer": {
+					"cozy_address": "Your Cozy's address",
+					"button": "Next",
+					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				}
 			}
 		}
 	};
@@ -17106,14 +17112,20 @@
 			}
 		},
 		"error": {
-			"fetch_files": "Something went wrong when opening the folder."
+			"open_folder": "Something went wrong when opening the folder."
 		},
 		"mobile": {
 			"wizard": {
-				"cozy_address": "Your Cozy's address",
-				"next": "Next",
-				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				"welcome": {
+					"title": "Your own private cloud",
+					"button": "Sign in"
+				},
+				"url": {
+					"cozy_address": "Your Cozy's address",
+					"button": "Next",
+					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				}
 			}
 		}
 	};
@@ -17171,14 +17183,20 @@
 			}
 		},
 		"error": {
-			"fetch_files": "Something went wrong when opening the folder."
+			"open_folder": "Something went wrong when opening the folder."
 		},
 		"mobile": {
 			"wizard": {
-				"cozy_address": "Your Cozy's address",
-				"next": "Next",
-				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				"welcome": {
+					"title": "Your own private cloud",
+					"button": "Sign in"
+				},
+				"url": {
+					"cozy_address": "Your Cozy's address",
+					"button": "Next",
+					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				}
 			}
 		}
 	};
@@ -17236,14 +17254,20 @@
 			}
 		},
 		"error": {
-			"fetch_files": "Something went wrong when opening the folder."
+			"open_folder": "Something went wrong when opening the folder."
 		},
 		"mobile": {
 			"wizard": {
-				"cozy_address": "L'adresse de votre Cozy",
-				"next": "Suivant",
-				"description": "Renseignez votre adresse permettant de vous connecter à votre Cozy, comme votreprenom.cozycloud.cc",
-				"cozy_address_placeholder": "georgesabitbol.cozycloud.cc"
+				"welcome": {
+					"title": "Your own private cloud",
+					"button": "Sign in"
+				},
+				"url": {
+					"cozy_address": "Your Cozy's address",
+					"button": "Next",
+					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				}
 			}
 		}
 	};
@@ -17295,20 +17319,26 @@
 			"text": "\"アップロード\" ボタンをクリックして、このフォルダーにファイルを追加します。"
 		},
 		"alert": {
-			"critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+			"critical_will_reload": "このページは %{smart_count} 秒で自動的に再読み込みします... |||| このページは %{smart_count} 秒で自動的に再読み込みします...",
 			"button": {
-				"reload": "Refresh now"
+				"reload": "今すぐ更新"
 			}
 		},
 		"error": {
-			"fetch_files": "Something went wrong when opening the folder."
+			"open_folder": "Something went wrong when opening the folder."
 		},
 		"mobile": {
 			"wizard": {
-				"cozy_address": "Your Cozy's address",
-				"next": "Next",
-				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				"welcome": {
+					"title": "Your own private cloud",
+					"button": "Sign in"
+				},
+				"url": {
+					"cozy_address": "Your Cozy's address",
+					"button": "Next",
+					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				}
 			}
 		}
 	};
@@ -17368,14 +17398,20 @@
 			}
 		},
 		"error": {
-			"fetch_files": "Something went wrong when opening the folder."
+			"open_folder": "Something went wrong when opening the folder."
 		},
 		"mobile": {
 			"wizard": {
-				"cozy_address": "Your Cozy's address",
-				"next": "Next",
-				"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-				"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				"welcome": {
+					"title": "Your own private cloud",
+					"button": "Sign in"
+				},
+				"url": {
+					"cozy_address": "Your Cozy's address",
+					"button": "Next",
+					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				}
 			}
 		}
 	};
@@ -34323,4 +34359,4 @@
 /* 501 */
 500
 /******/ ])));
-//# sourceMappingURL=app.57c2fa9e637ec89736df.js.map
+//# sourceMappingURL=app.1b084409b1283a810cbd.js.map
