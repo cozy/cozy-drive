@@ -1,14 +1,34 @@
-exports[`OnBoarding Component should render the component if not logged in 1`] = `
+exports[`Wizard Component should render different components 1`] = `
+<div
+  className="wizard welcome">
+  <div
+    className="wizard-main">
+    <img
+      alt="logo"
+      src="test-file-stub" />
+    <h1 />
+  </div>
+  <button
+    className="coz-btn coz-btn--regular wizard-button"
+    onClick={[Function]}
+    role="button" />
+</div>
+`;
+
+exports[`Wizard Component should render different components 2`] = `
 <div
   className="wizard">
-  <p />
-  <input
-    placeholder={undefined}
-    type="text" />
-  <p />
+  <div
+    className="wizard-main">
+    <p />
+    <input
+      placeholder={undefined}
+      type="text" />
+    <p />
+  </div>
   <button
-    className="coz-btn coz-btn--regular"
-    onClick={[Function]}
+    className="coz-btn coz-btn--regular wizard-button"
+    onClick={undefined}
     role="button" />
 </div>
 `;
