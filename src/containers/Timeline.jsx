@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchPhotos } from '../actions'
+import { fetchPhotos } from '../actions/photos'
 
 import PhotosList from '../components/PhotosList'
 import Topbar from '../components/Topbar'

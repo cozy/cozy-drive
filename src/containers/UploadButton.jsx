@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { uploadPhotos } from '../actions'
+import { uploadPhotos } from '../actions/photos'
 
 const styles = {
   parent: {

@@ -13,7 +13,7 @@ import cozy from 'cozy-client-js'
 import { I18n } from './lib/I18n'
 
 import photosApp from './reducers'
-import { indexFilesByDate } from './actions'
+import { indexFilesByDate } from './actions/mango'
 import AppRoute from './components/AppRoute'
 
 cozy.init({

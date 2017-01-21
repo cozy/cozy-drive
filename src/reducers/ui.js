@@ -10,7 +10,7 @@ import {
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   DO_INDEX_FILES_BY_DATE,
   INDEX_FILES_BY_DATE_SUCCESS
-} from '../actions'
+} from '../actions/constants'
 
 const isFetching = (state = false, action) => {
   switch (action.type) {

@@ -3,7 +3,7 @@ import {
   UPLOAD_PHOTOS_SUCCESS,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   UPLOAD_PHOTOS_FAILURE
-} from '../actions'
+} from '../actions/constants'
 
 // reducer for the full photos list
 export const photos = (state = [], action) => {

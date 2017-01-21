@@ -1,4 +1,4 @@
-import { INDEX_FILES_BY_DATE_SUCCESS } from '../actions'
+import { INDEX_FILES_BY_DATE_SUCCESS } from '../actions/constants'
 
 // indexing using cozy-stack mango
 export const mangoIndexByDate = (state = null, action) => {
