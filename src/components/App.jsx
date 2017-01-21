@@ -5,6 +5,7 @@ import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
 import Sidebar from './Sidebar'
+import Alerter from './Alerter'
 
 const App = ({ t, children }) => (
   <div className={classNames(styles['pho-wrapper'], styles['coz-sticky'])}>
@@ -14,6 +15,7 @@ const App = ({ t, children }) => (
     <main className={styles['pho-content']}>
       { children }
     </main>
+    <Alerter t={t} />
   </div>
 )
 
