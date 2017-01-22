@@ -73,7 +73,10 @@ export const uploadPhotos = (photosArray, dirID = COZY_PHOTOS_DIR_ID) => {
     }))
     .then(() => {
       if (!nameConflicts.length && !errors.length) {
-        Alerter.success('Alerter.photos.upload_success')
+        Alerter.success(
+          'Alerter.photos.upload_success',
+          {smart_count: photos.length}
+        )
         dispatch({
           type: UPLOAD_PHOTOS_SUCCESS,
           photos
@@ -81,7 +84,7 @@ export const uploadPhotos = (photosArray, dirID = COZY_PHOTOS_DIR_ID) => {
       } else if (nameConflicts.length && !errors.length) {
         Alerter.info(
           'Alerter.photos.upload_success_conflicts',
-          {smart_count: nameConflicts.length}
+          {smart_count: photos.length, conflictNumber: nameConflicts.length}
         )
         dispatch({
           type: UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
