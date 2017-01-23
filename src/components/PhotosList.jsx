@@ -5,6 +5,7 @@ import { translate } from '../lib/I18n'
 
 import Empty from '../components/Empty'
 import Loading from '../components/Loading'
+import Photo from '../components/Photo'
 
 const getPhotosSectionsByMonth = (f, photos) => {
   let sections = {}
@@ -36,12 +37,7 @@ export const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, is
           <div class={styles['pho-section']} key={sectionName}>
             <h3>{sectionName}</h3>
             {sections[sectionName].map(photo => {
-              return <img
-                class={styles['pho-photo']}
-                height='300'
-                style='margin-right:.5em'
-                src={`http://cozy.local:8080/files/download/${photo._id}`}
-              />
+              return <Photo photo={photo} key={photo._id} />
             })}
           </div>
         )
