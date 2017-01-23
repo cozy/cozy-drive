@@ -14,8 +14,8 @@ export const photos = (state = [], action) => {
     case UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS:
     case UPLOAD_PHOTOS_FAILURE:
       return [
-        ...state,
-        ...action.photos
+        ...action.photos.reverse(),
+        ...state
       ]
     default:
       return state

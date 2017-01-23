@@ -19,6 +19,8 @@ const mockFetchedPhotos = [
   }
 ]
 
+const mockUploadedPhoto = mockFetchedPhotos
+
 const photosFromState = [
   {
     _id: 'f717eb4d94f07737b168d3dbb7002141',
@@ -52,9 +54,9 @@ describe('Photos reducer', () => {
     expect(
       photos([], {
         type: UPLOAD_PHOTOS_SUCCESS,
-        photos: mockFetchedPhotos
+        photos: mockUploadedPhoto
       })
-    ).toEqual(mockFetchedPhotos)
+    ).toEqual(mockUploadedPhoto)
   })
 
   // if UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS with no photos from state -> new photos
@@ -62,9 +64,9 @@ describe('Photos reducer', () => {
     expect(
       photos([], {
         type: UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
-        photos: mockFetchedPhotos
+        photos: mockUploadedPhoto
       })
-    ).toEqual(mockFetchedPhotos)
+    ).toEqual(mockUploadedPhoto)
   })
 
   // if UPLOAD_PHOTOS_FAILURE with no photos from state -> new photos
@@ -72,9 +74,9 @@ describe('Photos reducer', () => {
     expect(
       photos([], {
         type: UPLOAD_PHOTOS_FAILURE,
-        photos: mockFetchedPhotos
+        photos: mockUploadedPhoto
       })
-    ).toEqual(mockFetchedPhotos)
+    ).toEqual(mockUploadedPhoto)
   })
 
   // if UPLOAD_PHOTOS_SUCCESS with photos from state -> new and previous photos
@@ -82,9 +84,9 @@ describe('Photos reducer', () => {
     expect(
       photos(photosFromState, {
         type: UPLOAD_PHOTOS_SUCCESS,
-        photos: mockFetchedPhotos
+        photos: mockUploadedPhoto
       })
-    ).toEqual([...photosFromState, ...mockFetchedPhotos])
+    ).toEqual([...mockUploadedPhoto.reverse(), ...photosFromState])
   })
 
   // if UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS with photos from state -> new and previous photos
@@ -92,9 +94,9 @@ describe('Photos reducer', () => {
     expect(
       photos(photosFromState, {
         type: UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
-        photos: mockFetchedPhotos
+        photos: mockUploadedPhoto
       })
-    ).toEqual([...photosFromState, ...mockFetchedPhotos])
+    ).toEqual([...mockUploadedPhoto.reverse(), ...photosFromState])
   })
 
   // if UPLOAD_PHOTOS_FAILURE with photos from state -> new and previous photos
@@ -102,8 +104,8 @@ describe('Photos reducer', () => {
     expect(
       photos(photosFromState, {
         type: UPLOAD_PHOTOS_FAILURE,
-        photos: mockFetchedPhotos
+        photos: mockUploadedPhoto
       })
-    ).toEqual([...photosFromState, ...mockFetchedPhotos])
+    ).toEqual([...mockUploadedPhoto.reverse(), ...photosFromState])
   })
 })
