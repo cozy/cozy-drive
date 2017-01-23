@@ -20,7 +20,11 @@ const mockMangoIndexByDate = {
 
 jest.mock('cozy-client-js', () => {
   return {
-    defineIndex: jest.fn(() => mockMangoIndexByDate)
+    defineIndex: jest.fn(() => {
+      return new Promise(function (resolve, reject) {
+        resolve(mockMangoIndexByDate)
+      })
+    })
   }
 })
 

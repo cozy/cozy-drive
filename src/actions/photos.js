@@ -18,7 +18,7 @@ import {
 import Alerter from '../components/Alerter'
 
 // used after photo upload (for photo format from response)
-const extractFileAttributes = f => Object.assign({}, f.attributes, { _id: f._id })
+export const extractFileAttributes = f => Object.assign({}, f.attributes, { _id: f._id })
 
 // fetch images using the index created by the app
 export const fetchPhotos = (mangoIndexByDate) => {
@@ -31,16 +31,19 @@ export const fetchPhotos = (mangoIndexByDate) => {
       fields: ['_id', 'created_at', 'name', 'size', 'updated_at'],
       sort: [{ created_at: 'desc' }]
     }
-    let photos
-    try {
-      photos = await cozy.query(mangoIndexByDate, options)
-    } catch (error) {
+    await cozy.query(mangoIndexByDate, options)
+    .then((photos) => {
+      dispatch({
+        type: RECEIVE_PHOTOS,
+        photos
+      })
+    })
+    .catch((error) => {
       Alerter.error('Alerter.photos.fetching_error')
-      return dispatch({type: FETCH_PHOTOS_FAILURE, error})
-    }
-    dispatch({
-      type: RECEIVE_PHOTOS,
-      photos
+      return dispatch({
+        type: FETCH_PHOTOS_FAILURE,
+        error
+      })
     })
   }
 }
