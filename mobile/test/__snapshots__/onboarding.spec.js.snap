@@ -22,8 +22,10 @@ exports[`Wizard Component should render different components 2`] = `
     className="wizard-main">
     <p />
     <input
+      onChange={undefined}
       placeholder={undefined}
-      type="text" />
+      type="text"
+      value={undefined} />
     <p />
   </div>
   <button
