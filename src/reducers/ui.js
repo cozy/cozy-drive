@@ -12,10 +12,10 @@ import {
   INDEX_FILES_BY_DATE_SUCCESS
 } from '../actions/constants'
 
-const isFetching = (state = false, action) => {
+export const isFetching = (state = false, action) => {
   switch (action.type) {
     case FETCH_PHOTOS:
-      return action.mangoIndexByDate
+      return true
     case FETCH_PHOTOS_FAILURE:
     case RECEIVE_PHOTOS:
       return false
@@ -24,7 +24,7 @@ const isFetching = (state = false, action) => {
   }
 }
 
-const isIndexing = (state = false, action) => {
+export const isIndexing = (state = false, action) => {
   switch (action.type) {
     case DO_INDEX_FILES_BY_DATE:
       return true
@@ -35,7 +35,7 @@ const isIndexing = (state = false, action) => {
   }
 }
 
-const isWorking = (state = false, action) => {
+export const isWorking = (state = false, action) => {
   switch (action.type) {
     case UPLOAD_PHOTOS:
       return true
