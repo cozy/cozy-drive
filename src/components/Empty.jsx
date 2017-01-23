@@ -3,7 +3,7 @@ import styles from '../styles/empty'
 import React from 'react'
 import { translate } from '../lib/I18n'
 
-const Empty = ({ t, emptyType }) => {
+export const Empty = ({ t, emptyType }) => {
   return (
     <div>
       {emptyType === 'photos' &&

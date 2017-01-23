@@ -7,10 +7,10 @@ import classNames from 'classnames'
 import Sidebar from './Sidebar'
 import Alerter from './Alerter'
 
-const App = ({ t, children }) => (
+export const App = ({ t, children }) => (
   <div className={classNames(styles['pho-wrapper'], styles['coz-sticky'])}>
 
-    <Sidebar />
+    <Sidebar t={t} />
 
     <main className={styles['pho-content']}>
       { children }

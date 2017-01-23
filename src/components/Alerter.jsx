@@ -139,6 +139,7 @@ export default class Alerter extends Component {
         {this.state.notifications.map(notif => (
           <Alert
             type={notif.type}
+            key={notif.id}
             message={t ? t(notif.msg, notif.options) : notif.msg}
             onClose={this.handleClose.bind(this, notif.id)}
             buttonText={notif.options && notif.options.buttonText}
