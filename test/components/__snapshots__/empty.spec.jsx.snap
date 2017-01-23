@@ -1,0 +1,27 @@
+exports[`Empty component should be displayed with albums text if emptyType is albums 1`] = `
+<div>
+  <div
+    class="pho-empty">
+    <h2>
+      You don\'t have any album yet.
+    </h2>
+    <p>
+      Click the \"New album\" button to create your first album.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Empty component should be displayed with photos text if emptyType is photos 1`] = `
+<div>
+  <div
+    class="pho-empty">
+    <h2>
+      You don\'t have any photos yet.
+    </h2>
+    <p>
+      Click the \"Upload\" button to add photos.
+    </p>
+  </div>
+</div>
+`;

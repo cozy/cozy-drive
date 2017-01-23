@@ -1,0 +1,129 @@
+exports[`Alerter component should be usable with translating t props 1`] = `
+<div
+  className="pho-alerter" />
+`;
+
+exports[`Alerter component should be usable without translating t props 1`] = `
+<div
+  className="pho-alerter" />
+`;
+
+exports[`Alerter component should display correctly a message with a button 1`] = `
+<div
+  className="pho-alerter">
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--success coz-alert--hidden">
+      <p>
+        test success message
+      </p>
+      <a
+        className="coz-btn coz-btn--alert-success"
+        onClick={undefined}>
+        Click me
+      </a>
+    </div>
+  </div>
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--info coz-alert--hidden">
+      <p>
+        test error message
+      </p>
+      <a
+        className="coz-btn coz-btn--alert-info"
+        onClick={undefined}>
+        Click me
+      </a>
+    </div>
+  </div>
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--error coz-alert--hidden">
+      <p>
+        test info message
+      </p>
+      <a
+        className="coz-btn coz-btn--alert-error"
+        onClick={undefined}>
+        Click me
+      </a>
+    </div>
+    <div
+      className="coz-overlay coz-overlay--hidden" />
+  </div>
+</div>
+`;
+
+exports[`Alerter component should display correctly a success, error and an info message 1`] = `
+<div
+  className="pho-alerter">
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--success coz-alert--hidden">
+      <p>
+        test success message
+      </p>
+    </div>
+  </div>
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--error coz-alert--hidden">
+      <p>
+        test error message
+      </p>
+    </div>
+    <div
+      className="coz-overlay coz-overlay--hidden" />
+  </div>
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--info coz-alert--hidden">
+      <p>
+        test info message
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Alerter component should display correctly a success, error and an info translated message 1`] = `
+<div
+  className="pho-alerter">
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--success coz-alert--hidden">
+      <p>
+        Photos
+      </p>
+    </div>
+  </div>
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--error coz-alert--hidden">
+      <p>
+        Photos
+      </p>
+    </div>
+    <div
+      className="coz-overlay coz-overlay--hidden" />
+  </div>
+  <div
+    className="coz-alerter">
+    <div
+      className="coz-alert coz-alert--info coz-alert--hidden">
+      <p>
+        Photos
+      </p>
+    </div>
+  </div>
+</div>
+`;

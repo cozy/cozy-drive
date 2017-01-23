@@ -1,7 +1,6 @@
 import styles from '../styles/empty'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
 
 export const Empty = ({ t, emptyType }) => {
   return (
@@ -22,4 +21,4 @@ export const Empty = ({ t, emptyType }) => {
   )
 }
 
-export default translate()(Empty)
+export default Empty

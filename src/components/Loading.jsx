@@ -1,7 +1,6 @@
 import styles from '../styles/loading'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
 
 export const Loading = ({ t, loadingType }) => {
   return (
@@ -11,4 +10,4 @@ export const Loading = ({ t, loadingType }) => {
   )
 }
 
-export default translate()(Loading)
+export default Loading

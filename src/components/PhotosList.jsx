@@ -9,6 +9,7 @@ import Loading from '../components/Loading'
 const getPhotosSectionsByMonth = (f, photos) => {
   let sections = {}
   photos.map(p => {
+    /* istanbul ignore else */
     if (!sections.hasOwnProperty(f(p.created_at, 'MMMM YYYY'))) {
       sections[f(p.created_at, 'MMMM YYYY')] = []
     }
@@ -17,22 +18,22 @@ const getPhotosSectionsByMonth = (f, photos) => {
   return sections
 }
 
-const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, isFirstFetch }) => {
+export const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, isFirstFetch }) => {
   if (isIndexing) {
-    return <Loading loadingType='photos_indexing' />
+    return <Loading loadingType='photos_indexing' t={t} />
   }
   if (isFetching || isFirstFetch) {
-    return <Loading loadingType='photos_fetching' />
+    return <Loading loadingType='photos_fetching' t={t} />
   }
   if (isWorking) {
-    return <Loading loadingType='photos_upload' />
+    return <Loading loadingType='photos_upload' t={t} />
   }
   const sections = getPhotosSectionsByMonth(f, photos)
   return (
     <div role='contentinfo'>
       {Object.keys(sections).map(sectionName => {
         return (
-          <div class={styles['pho-section']}>
+          <div class={styles['pho-section']} key={sectionName}>
             <h3>{sectionName}</h3>
             {sections[sectionName].map(photo => {
               return <img
@@ -45,7 +46,7 @@ const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, isFirstFe
           </div>
         )
       })}
-      {photos.length === 0 && <Empty emptyType='photos' />}
+      {photos.length === 0 && <Empty emptyType='photos' t={t} />}
     </div>
   )
 }
