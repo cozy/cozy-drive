@@ -76,7 +76,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-client-js": "^0.0.2",
+    "cozy-client-js": "^0.0.3",
     "cozy-ui": "3.0.0-beta1",
     "date-fns": "^1.26.0",
     "node-polyglot": "^2.2.0",
