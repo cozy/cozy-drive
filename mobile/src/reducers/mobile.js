@@ -8,7 +8,7 @@ const initialState = {
 export const mobile = (state = initialState, action) => {
   switch (action.type) {
     case SET_URL:
-      return Object.assign({}, state, { serverUrl: action.url })
+      return Object.assign({}, state, { serverUrl: `http://${action.url}` })
     case SETUP:
       return Object.assign({}, state, { isSetup: true })
   }

@@ -6,7 +6,7 @@ import { translate } from '../../../src/lib/I18n'
 import Wizard from '../components/Wizard'
 
 import styles from '../styles/onboarding'
-import { setupServerUrl, SET_URL } from '../actions'
+import { registerDevice, SET_URL } from '../actions'
 
 import logo from '../../res/icon.png'
 
@@ -25,7 +25,7 @@ export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl}) =>
 const mapDispatchToProps = (dispatch, ownProps) => ({
   selectServer: () => {
     const { router, location } = ownProps
-    dispatch(setupServerUrl(router, location))
+    dispatch(registerDevice(router, location))
   },
   updateServerUrl: (e) => {
     const serverUrl = e.target.value

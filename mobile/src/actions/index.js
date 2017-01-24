@@ -1,14 +1,14 @@
-import cozy, { LocalStorage } from 'cozy-client-js'
+import cozy, { LocalStorage as Storage } from 'cozy-client-js'
 
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
 
-export const setupServerUrl = (router, location) => {
+export const registerDevice = (router, location) => {
   return async (dispatch, getState) => {
     let oauth
     if (window.cordova && window.cordova.InAppBrowser) {
       oauth = {
-        storage: new LocalStorage(),
+        storage: new Storage(),
         clientParams: {
           redirectURI: 'http://localhost',
           softwareID: 'io.cozy.mobile.files',
@@ -24,8 +24,8 @@ export const setupServerUrl = (router, location) => {
 
             return new Promise((resolve) => {
               inAppBrowser.addEventListener('loadstop', ({url}) => {
-                var accessCode = /\?access_code=(.+)$/.exec(url)
-                var state = /\?state=(.+)$/.exec(url)
+                const accessCode = /\?access_code=(.+)$/.test(url)
+                const state = /\?state=(.+)$/.test(url)
 
                 if (accessCode || state) {
                   resolve(url)
@@ -48,21 +48,16 @@ export const setupServerUrl = (router, location) => {
     }
 
     cozy.init({
-      cozyURL: `http://${getState().mobile.serverUrl}`,
+      cozyURL: `${getState().mobile.serverUrl}`,
       oauth: oauth
     })
 
-    try {
-      const creds = await cozy.authorize()
-      console.log('creds', creds)
-      dispatch({ type: SETUP })
-      if (location.state && location.state.nextPathname) {
-        router.replace(location.state.nextPathname)
-      } else {
-        router.replace('/')
-      }
-    } catch (err) {
-      throw err
+    await cozy.authorize()
+    dispatch({ type: SETUP })
+    if (location.state && location.state.nextPathname) {
+      router.replace(location.state.nextPathname)
+    } else {
+      router.replace('/')
     }
   }
 }
