@@ -6,9 +6,12 @@ import cozy from 'cozy-client-js'
 
 import {
   INDEX_FILES_BY_DATE,
-  INDEX_FILES_BY_DATE_SUCCESS,
+  INDEX_FILES_BY_DATE_SUCCESS
+} from '../constants/actionTypes'
+
+import {
   FILE_DOCTYPE
-} from './constants'
+} from '../constants/config'
 
 // Mango: Index files by date (create if not existing) and get its informations
 export const indexFilesByDate = () => {

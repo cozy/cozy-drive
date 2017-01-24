@@ -5,7 +5,10 @@
 import cozy from 'cozy-client-js'
 
 import {
-  COZY_PHOTOS_DIR_ID,
+  COZY_PHOTOS_DIR_ID
+} from '../constants/config'
+
+import {
   FETCH_PHOTOS,
   FETCH_PHOTOS_FAILURE,
   RECEIVE_PHOTOS,
@@ -13,7 +16,7 @@ import {
   UPLOAD_PHOTOS_SUCCESS,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   UPLOAD_PHOTOS_FAILURE
-} from './constants'
+} from '../constants/actionTypes'
 
 import Alerter from '../components/Alerter'
 

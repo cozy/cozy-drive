@@ -10,7 +10,7 @@ import {
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   INDEX_FILES_BY_DATE,
   INDEX_FILES_BY_DATE_SUCCESS
-} from '../../src/actions/constants'
+} from '../../src/constants/actionTypes'
 
 import { isFetching, isIndexing, isWorking } from '../../src/reducers/ui'
 

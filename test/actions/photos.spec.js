@@ -10,7 +10,7 @@ import {
   UPLOAD_PHOTOS_SUCCESS,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   UPLOAD_PHOTOS_FAILURE
-} from '../../src/actions/constants'
+} from '../../src/constants/actionTypes'
 import {
   fetchPhotos,
   uploadPhotos,

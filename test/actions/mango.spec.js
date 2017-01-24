@@ -4,9 +4,11 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import {
   INDEX_FILES_BY_DATE,
-  INDEX_FILES_BY_DATE_SUCCESS,
+  INDEX_FILES_BY_DATE_SUCCESS
+} from '../../src/constants/actionTypes'
+import {
   FILE_DOCTYPE
-} from '../../src/actions/constants'
+} from '../../src/constants/config'
 import { indexFilesByDate } from '../../src/actions/mango'
 
 import cozy from 'cozy-client-js'

@@ -1,6 +1,6 @@
 /* global describe it expect */
 
-import { INDEX_FILES_BY_DATE_SUCCESS } from '../../src/actions/constants'
+import { INDEX_FILES_BY_DATE_SUCCESS } from '../../src/constants/actionTypes'
 
 import { mangoIndexByDate } from '../../src/reducers/mango'
 
