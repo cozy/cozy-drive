@@ -1,0 +1,51 @@
+exports[`Nav component should be rendered correctly 1`] = `
+<nav>
+  <ul
+    className="coz-nav">
+    <li
+      className="coz-nav-item">
+      <Link
+        activeClassName="active"
+        className="pho-cat-photos"
+        onlyActiveOnIndex={false}
+        style={Object {}}
+        to="/photos">
+        Photos
+      </Link>
+    </li>
+    <li
+      className="coz-nav-item">
+      <Link
+        activeClassName="active"
+        className="pho-cat-albums"
+        onlyActiveOnIndex={false}
+        style={Object {}}
+        to="/albums">
+        Albums
+      </Link>
+    </li>
+    <li
+      className="coz-nav-item">
+      <Link
+        activeClassName="active"
+        className="pho-cat-shared"
+        onlyActiveOnIndex={false}
+        style={Object {}}
+        to="/shared">
+        Shared by me
+      </Link>
+    </li>
+    <li
+      className="coz-nav-item">
+      <Link
+        activeClassName="active"
+        className="pho-cat-trash"
+        onlyActiveOnIndex={false}
+        style={Object {}}
+        to="/trash">
+        Trash
+      </Link>
+    </li>
+  </ul>
+</nav>
+`;

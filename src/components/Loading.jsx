@@ -1,13 +1,14 @@
 import styles from '../styles/loading'
 
 import React from 'react'
+import { translate } from '../lib/I18n'
 
 export const Loading = ({ t, loadingType }) => {
   return (
-    <div class={styles['pho-loading']}>
+    <div className={styles['pho-loading']}>
       <p>{t(`Loading.${loadingType}`)}</p>
     </div>
   )
 }
 
-export default Loading
+export default translate()(Loading)

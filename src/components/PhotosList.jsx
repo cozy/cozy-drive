@@ -21,13 +21,13 @@ const getPhotosSectionsByMonth = (f, photos) => {
 
 export const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, isFirstFetch }) => {
   if (isIndexing) {
-    return <Loading loadingType='photos_indexing' t={t} />
+    return <Loading loadingType='photos_indexing' />
   }
   if (isFetching || isFirstFetch) {
-    return <Loading loadingType='photos_fetching' t={t} />
+    return <Loading loadingType='photos_fetching' />
   }
   if (isWorking) {
-    return <Loading loadingType='photos_upload' t={t} />
+    return <Loading loadingType='photos_upload' />
   }
   const sections = getPhotosSectionsByMonth(f, photos)
   return (
@@ -42,7 +42,7 @@ export const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, is
           </div>
         )
       })}
-      {photos.length === 0 && <Empty emptyType='photos' t={t} />}
+      {photos.length === 0 && <Empty emptyType='photos' />}
     </div>
   )
 }

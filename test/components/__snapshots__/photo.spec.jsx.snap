@@ -1,5 +1,5 @@
 exports[`Photo component should render correctly an image according a photo object 1`] = `
 <img
-  class="pho-photo"
+  className="pho-photo"
   src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
 `;

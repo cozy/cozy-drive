@@ -1,7 +1,7 @@
 exports[`Empty component should be displayed with albums text if emptyType is albums 1`] = `
 <div>
   <div
-    class="pho-empty">
+    className="pho-empty">
     <h2>
       You don\'t have any album yet.
     </h2>
@@ -15,7 +15,7 @@ exports[`Empty component should be displayed with albums text if emptyType is al
 exports[`Empty component should be displayed with photos text if emptyType is photos 1`] = `
 <div>
   <div
-    class="pho-empty">
+    className="pho-empty">
     <h2>
       You don\'t have any photos yet.
     </h2>
