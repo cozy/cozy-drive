@@ -8,7 +8,7 @@ import {
   UPLOAD_PHOTOS_SUCCESS,
   UPLOAD_PHOTOS_FAILURE,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
-  DO_INDEX_FILES_BY_DATE,
+  INDEX_FILES_BY_DATE,
   INDEX_FILES_BY_DATE_SUCCESS
 } from '../actions/constants'
 
@@ -26,7 +26,7 @@ export const isFetching = (state = false, action) => {
 
 export const isIndexing = (state = false, action) => {
   switch (action.type) {
-    case DO_INDEX_FILES_BY_DATE:
+    case INDEX_FILES_BY_DATE:
       return true
     case INDEX_FILES_BY_DATE_SUCCESS:
       return false

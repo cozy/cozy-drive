@@ -8,7 +8,7 @@ import {
   UPLOAD_PHOTOS_SUCCESS,
   UPLOAD_PHOTOS_FAILURE,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
-  DO_INDEX_FILES_BY_DATE,
+  INDEX_FILES_BY_DATE,
   INDEX_FILES_BY_DATE_SUCCESS
 } from '../../src/actions/constants'
 
@@ -58,11 +58,11 @@ describe('UI isIndexing reducer', () => {
     ).toBe(false)
   })
 
-  // if DO_INDEX_FILES_BY_DATE -> true
-  it('should handle DO_INDEX_FILES_BY_DATE', () => {
+  // if INDEX_FILES_BY_DATE -> true
+  it('should handle INDEX_FILES_BY_DATE', () => {
     expect(
       isIndexing([], {
-        type: DO_INDEX_FILES_BY_DATE
+        type: INDEX_FILES_BY_DATE
       })
     ).toBe(true)
   })

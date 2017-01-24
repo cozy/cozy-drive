@@ -8,7 +8,7 @@ export const TRASH_DIR_ID = 'io.cozy.files.trash-dir'
 export const FILE_DOCTYPE = 'io.cozy.files'
 
 // index using cozy-stack mango
-export const DO_INDEX_FILES_BY_DATE = 'DO_INDEX_FILES_BY_DATE'
+export const INDEX_FILES_BY_DATE = 'INDEX_FILES_BY_DATE'
 export const INDEX_FILES_BY_DATE_SUCCESS = 'INDEX_FILES_BY_DATE_SUCCESS'
 
 // fetch photos

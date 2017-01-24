@@ -3,7 +3,7 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import {
-  DO_INDEX_FILES_BY_DATE,
+  INDEX_FILES_BY_DATE,
   INDEX_FILES_BY_DATE_SUCCESS,
   FILE_DOCTYPE
 } from '../../src/actions/constants'
@@ -35,7 +35,7 @@ describe('indexFilesByDate', () => {
   it('should call cozy.defineIndex to create an index on fields "class" and "created_at"', () => {
     const expectedActions = [
       {
-        type: DO_INDEX_FILES_BY_DATE
+        type: INDEX_FILES_BY_DATE
       },
       {
         type: INDEX_FILES_BY_DATE_SUCCESS,
