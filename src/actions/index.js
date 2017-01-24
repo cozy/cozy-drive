@@ -16,6 +16,7 @@ export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
+export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
@@ -100,6 +101,23 @@ export const toggleFileSelection = (id, selected) => ({
   type: selected ? UNSELECT_FILE : SELECT_FILE,
   id
 })
+
+export const downloadSelection = () => {
+  return async (dispatch, getState) => {
+    const { selected } = getState().ui
+    dispatch({ type: DOWNLOAD_SELECTION, selected })
+    const response = await cozy.files.downloadById(selected[0])
+    const blob = await response.blob()
+    // Temporary trick to force the "download" of the file
+    const element = document.createElement('a')
+    element.setAttribute('href', window.URL.createObjectURL(blob))
+    element.setAttribute('download', 'foo.png')
+    element.style.display = 'none'
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+  }
+}
 
 export const renameFolder = (newName, id) => {
 
