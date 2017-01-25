@@ -15,7 +15,10 @@
   },
   "toolbar": {
     "item_upload": "Upload",
-    "item_more": "More"
+    "item_more": "More",
+    "menu_upload": "Upload files",
+    "menu_new_folder": "New folder",
+    "menu_select": "Select items"
   },
   "table": {
     "head_name": "Name",
