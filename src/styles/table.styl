@@ -24,11 +24,11 @@
     font-size(12px)
     text-transform  uppercase
   th:first-child
-    padding 0
+    padding em(8px, 12px)
   th.fil-content-file
     padding-left 0
   td.fil-content-file
-    left-padded(45px)
+    padding-left em(45px)
     font-size(16px)
     a
       color grey-08
@@ -36,10 +36,13 @@
       cursor pointer
 
   td.fil-content-file-select
-    //@extends $form-checkbox
     opacity 0
-    width   em(16px)
+    vertical-align baseline
+    width   em(24px)
     padding em(15px) em(8px)
+    span[data-input=checkbox]
+      label
+        padding-left em(24px)
   &.fil-content-table-selection
     td.fil-content-file-select
       opacity 1
