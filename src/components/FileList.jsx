@@ -15,7 +15,7 @@ const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFile
     )}>
       <thead>
         <tr>
-          <th></th>
+          <th />
           <th class={styles['fil-content-file']}>{ t('table.head_name') }</th>
           <th>{ t('table.head_update') }</th>
           <th>{ t('table.head_size') }</th>
