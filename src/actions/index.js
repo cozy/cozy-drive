@@ -118,10 +118,12 @@ export const downloadSelection = () => {
     dispatch({ type: DOWNLOAD_SELECTION, selected })
     const response = await cozy.files.downloadById(selected[0])
     const blob = await response.blob()
+    // TODO: accessing state in action creators is an antipattern
+    const filename = getState().files.find(f => f.id === selected[0]).name
     // Temporary trick to force the "download" of the file
     const element = document.createElement('a')
     element.setAttribute('href', window.URL.createObjectURL(blob))
-    element.setAttribute('download', 'foo.png')
+    element.setAttribute('download', filename)
     element.style.display = 'none'
     document.body.appendChild(element)
     element.click()
