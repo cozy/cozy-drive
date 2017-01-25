@@ -1,0 +1,67 @@
+exports[`PhotosList component should render correctly a loading view if isFetching is true 1`] = `
+<div
+  class="pho-loading">
+  <p>
+    Loading
+  </p>
+</div>
+`;
+
+exports[`PhotosList component should render correctly a loading view if isFirstFetch is true 1`] = `
+<div
+  class="pho-loading">
+  <p>
+    Loading
+  </p>
+</div>
+`;
+
+exports[`PhotosList component should render correctly a loading view if isIndexing is true 1`] = `
+<div
+  class="pho-loading">
+  <p>
+    Your photos are currently being indexed. Please wait.
+  </p>
+</div>
+`;
+
+exports[`PhotosList component should render correctly a loading view if isWorking is true 1`] = `
+<div
+  class="pho-loading">
+  <p>
+    Uploading
+  </p>
+</div>
+`;
+
+exports[`PhotosList component should render correctly a timeline of photos according a photos array 1`] = `
+<div
+  role="contentinfo">
+  <div
+    class="pho-section">
+    <h3>
+      January 0001
+    </h3>
+    <img
+      class="pho-photo"
+      src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
+  </div>
+</div>
+`;
+
+exports[`PhotosList component should render correctly an empty view if photos is empty 1`] = `
+<div
+  role="contentinfo">
+  <div>
+    <div
+      class="pho-empty">
+      <h2>
+        You don\'t have any photos yet.
+      </h2>
+      <p>
+        Click the \"Upload\" button to add photos.
+      </p>
+    </div>
+  </div>
+</div>
+`;

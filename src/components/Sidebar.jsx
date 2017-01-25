@@ -4,9 +4,9 @@ import React from 'react'
 
 import Nav from './Nav'
 
-const Sidebar = () => (
+const Sidebar = ({ t }) => (
   <aside className={styles['coz-sidebar']}>
-    <Nav />
+    <Nav t={t} />
   </aside>
 )
 

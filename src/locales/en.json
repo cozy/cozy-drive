@@ -4,5 +4,29 @@
     "albums": "Albums",
     "shared": "Shared by me",
     "trash": "Trash"
+  },
+  "Empty": {
+    "photos_title": "You don't have any photos yet.",
+    "photos_text":  "Click the \"Upload\" button to add photos.",
+    "albums_title": "You don't have any album yet.",
+    "albums_text": "Click the \"New album\" button to create your first album."
+  },
+  "Toolbar": {
+    "photo_upload": "Upload"
+  },
+  "Loading": {
+    "photos_indexing": "Your photos are currently being indexed. Please wait.",
+    "photos_fetching": "Loading",
+    "photos_upload": "Uploading"
+  },
+  "Alerter": {
+    "photos": {
+      "fetching_error": "An error occurred during photos fetching.",
+      "upload_success": "%{smart_count} photo uploaded with success. |||| %{smart_count} photos uploaded with success.",
+      "upload_success_conflicts":
+        "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
+      "upload_errors": "Errors occurred during the photos upload.",
+      "unexpected_upload_error": "An unexpected server error occurred."
+    }
   }
 }

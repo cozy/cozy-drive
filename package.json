@@ -13,7 +13,7 @@
     "pretest": "npm run lint",
     "prewatch": "npm run clean",
     "lint": "standard 'src/**/*.js' 'src/**/*.jsx'",
-    "test": "node --harmony_proxies node_modules/.bin/jest",
+    "test": "node --harmony_proxies node_modules/.bin/jest --coverage",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "watch:server": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8084 --display-modules --display-chunks --inline --hot"
   },
@@ -76,7 +76,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-client-js": "^0.0.2",
+    "cozy-client-js": "^0.0.3",
     "cozy-ui": "3.0.0-beta1",
     "date-fns": "^1.26.0",
     "node-polyglot": "^2.2.0",

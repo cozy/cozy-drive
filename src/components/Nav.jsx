@@ -1,7 +1,6 @@
 import styles from '../styles/nav'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
 import { Link } from 'react-router'
 
 const Nav = ({ t }) => (
@@ -31,4 +30,4 @@ const Nav = ({ t }) => (
   </nav>
 )
 
-export default translate()(Nav)
+export default Nav

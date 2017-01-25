@@ -1,0 +1,2 @@
+import './mango'
+import './photos'

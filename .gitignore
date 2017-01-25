@@ -31,3 +31,6 @@ desktop.ini
 
 # Default
 !.gitkeep
+
+# Coverage
+coverage/
