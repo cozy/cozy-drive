@@ -45,7 +45,8 @@
     "download": "Download",
     "delete": "Remove",
     "moveto": "Move",
-    "rename": "Rename"
+    "rename": "Rename",
+    "close": "Close"
   },
   "empty": {
     "title" : "You don’t have any files in this folder.",

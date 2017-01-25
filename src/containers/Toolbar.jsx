@@ -7,9 +7,9 @@ import { translate } from '../lib/I18n'
 import UploadButton from './UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { addFolder } from '../actions'
+import { addFolder, showSelectionBar } from '../actions'
 
-const Toolbar = ({ t, addFolder }) => (
+const Toolbar = ({ t, addFolder, showSelectionBar }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
     <UploadButton />
     <MenuButton>
@@ -32,7 +32,7 @@ const Toolbar = ({ t, addFolder }) => (
         </Item>
         <hr />
         <Item>
-          <a className={styles['fil-action-select']}>
+          <a className={styles['fil-action-select']} onClick={showSelectionBar}>
             {t('toolbar.menu_select')}
           </a>
         </Item>
@@ -46,6 +46,9 @@ const mapStateToProps = (state, ownProps) => ({})
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addFolder: () => {
     dispatch(addFolder())
+  },
+  showSelectionBar: () => {
+    dispatch(showSelectionBar())
   }
 })
 

@@ -4,9 +4,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 
-import { downloadSelection } from '../actions'
+import { downloadSelection, hideSelectionBar } from '../actions'
 
-const SelectionBar = ({ t, selectedCount, onDownload }) => (
+const SelectionBar = ({ t, selectedCount, onDownload, onHide }) => (
   <div className={styles['fil-selectionbar']} role='toolbar'>
     <span className={styles['fil-selectionbar-count']}>
       {t('selectionbar.selected_count', { smart_count: selectedCount })}
@@ -17,6 +17,7 @@ const SelectionBar = ({ t, selectedCount, onDownload }) => (
     <button className={styles['fil-action-delete']}>{t('selectionbar.delete')}</button>
     <button className={styles['fil-action-moveto']}>{t('selectionbar.moveto')}</button>
     <button className={styles['fil-action-rename']}>{t('selectionbar.rename')}</button>
+    <button className={styles['fil-action-close']} onClick={onHide}>{t('selectionbar.close')}</button>
   </div>
 )
 
@@ -27,6 +28,9 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onDownload: () => {
     dispatch(downloadSelection())
+  },
+  onHide: () => {
+    dispatch(hideSelectionBar())
   }
 })
 

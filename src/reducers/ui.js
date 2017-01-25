@@ -10,6 +10,8 @@ import {
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
   UPLOAD_FILE_SUCCESS,
+  SHOW_SELECTION_BAR,
+  HIDE_SELECTION_BAR,
   SELECT_FILE,
   UNSELECT_FILE
 } from '../actions'
@@ -68,6 +70,18 @@ const updating = (state = [], action) => {
   }
 }
 
+const showSelectionBar = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_SELECTION_BAR:
+      return true
+    case OPEN_FOLDER:
+    case HIDE_SELECTION_BAR:
+      return false
+    default:
+      return state
+  }
+}
+
 const selected = (state = [], action) => {
   switch (action.type) {
     case SELECT_FILE:
@@ -81,6 +95,9 @@ const selected = (state = [], action) => {
         ...state.slice(0, idx),
         ...state.slice(idx + 1)
       ]
+    case OPEN_FOLDER:
+    case HIDE_SELECTION_BAR:
+      return []
     default:
       return state
   }
@@ -104,6 +121,7 @@ export default combineReducers({
   isWorking,
   opening,
   updating,
+  showSelectionBar,
   selected,
   error
 })
