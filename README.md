@@ -46,6 +46,8 @@ $ yarn install
 
 :pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version before doing a `yarn install`.
 
+:warning: During its early ages, _cozy-photos-v3_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know hot to install and configure the latest available versions.
+
 Cozy's apps use a standard set of _npm scripts_ to run common tasks. You can so start you development workflow with:
 
 ```sh
@@ -56,7 +58,31 @@ $ yarn run watch:server
 and point your browser to http://localhost:8084.
 
 
-#### Note about Cozy-ui
+### Run it inside the VM
+
+You can easily view your current running app, you can use the [cozy-stack docker image][cozy-stack-docker]:
+
+```sh
+# in a terminal, run your app in watch mode
+$ cd cozy-files-v3
+$ yarn run watch
+```
+
+```sh
+# in another terminal, run the docker container
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
+```
+:warning: Don't forget to add `cozy.local` and `app.cozy.local` to your `/etc/hosts`
+
+```
+127.0.0.1 cozy.local
+127.0.0.1 app.cozy.local
+```
+
+your app is available at http://app.cozy.local:8080.
+
+
+#### Living on the edge
 
 [Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
 
@@ -75,49 +101,25 @@ yarn link cozy-ui
 
 You can now run the watch task and your project will hot-reload each times a cozy-ui source file is touched.
 
-
-### Run it inside the VM
-
-You can easily view your current running app in your VM, use [cozy-dev]:
-
-```sh
-# in a terminal, run your app in watch mode
-$ cd cozy-photos-v3
-$ yarn run watch
-```
-
-```sh
-# in another terminal, install cozy-dev (first time) and run the deploy
-$ cd cozy-photos-v3
-$ yarn global install cozy-dev
-$ cozy-dev deploy 8084
-```
-
-your app is available in your vm dashboard at http://localhost:9104.
+[Cozy-client-js] is our API library that provides an unified API on top of the cozy-stack. If you need to develop / hack cozy-client-js in parallel of your application, you can use the same trick that we used with [cozy-ui]: yarn linking.
 
 
 ### Tests
 
-Tests are run by [mocha] under the hood, and written using [chai] and [sinon]. You can easily run the tests suite with:
+Tests are run by [jest] using rendering features from [enzyme]. You can easily run the tests suite with:
 
 ```sh
 $ cd cozy-photos-v3
 $ yarn test
 ```
 
+You can also run the test in a watching mode by using `yarn run test -- --watch`.
+
+Components tests using jest work with snapshots, it allows to assert rendered components in an easier way. After a new feature, __only if you are sure that the new rendered component received from the test is correct__, use `yarn run test -- -u` to update obsolete snapshots.
+
+:warning: __Be careful when you update snapshots, if the rendered components are incorrect__, the related snapshots will be updated with incorrect components and the related __tests will used incorrect snapshots__. And we won't see tests errors about that.
+
 :pushpin: Don't forget to update / create new tests when you contribute to code to keep the app the consistent.
-
-
-## Models
-
-The Cozy datastore stores documents, which can be seen as JSON objects. A `doctype` is simply a declaration of the fields in a given JSON object, to store similar objects in an homogeneous fashion.
-
-Cozy ships a [built-in list of `doctypes`][doctypes] for representation of most of the common documents (Bills, Contacts, Events, ...).
-
-Whenever your app needs to use a given `doctype`, you should:
-
-- Check if this is a standard `doctype` defined in Cozy itself. If this is the case, you should add a model declaration in your app containing at least the fields listed in the [main fields list for this `doctype`][doctypes]. Note that you can extend the Cozy-provided `doctype` with your own customs fields. This is typically what is done in [Konnectors] for the [Bill `doctype`][bill-doctype].
-- If no standards `doctypes` fit your needs, you should define your own `doctype` in your app. In this case, you do not have to put any field you want in your model, but you should crosscheck other cozy apps to try to homogeneize the names of your fields, so that your `doctype` data could be reused by other apps. This is typically the case for the [Konnector `doctype`][konnector-doctype] in [Konnectors].
 
 
 ### Resources
@@ -171,6 +173,8 @@ Cozy Photos is developed by Cozy Cloud and distributed under the [AGPL v3 licens
 [yarn]: https://yarnpkg.com/
 [yarn-install]: https://yarnpkg.com/en/docs/install
 [cozy-ui]: https://github.com/cozy/cozy-ui
+[cozy-client-js]: https://github.com/cozy/cozy-client-js
+[cozy-stack-docker]: https://github.com/cozy/cozy-stack/blob/master/docs/client-app-dev.md#with-docker
 [doctypes]: https://dev.cozy.io/#main-document-types
 [bill-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/bill.coffee
 [konnector-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/konnector.coffee
@@ -188,7 +192,6 @@ Cozy Photos is developed by Cozy Cloud and distributed under the [AGPL v3 licens
 [nvm]: https://github.com/creationix/nvm
 [ndenv]: https://github.com/riywo/ndenv
 [cozy-dev]: https://github.com/cozy/cozy-dev/
-[mocha]: https://mochajs.org/
-[chai]: http://chaijs.com/
-[sinon]: http://sinonjs.org/
+[enzyme]: https://github.com/airbnb/enzyme
+[jest]: https://facebook.github.io/jest/
 [checkbox]: https://help.github.com/articles/basic-writing-and-formatting-syntax/#task-lists
