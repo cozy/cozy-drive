@@ -95,7 +95,12 @@
     th
     td:nth-child(n+3)
       display none
-
     td.fil-content-file
       left-padded(61px)
       background-position em(16px) center
+    td.fil-content-file-select
+      display none
+      padding em(15px) 0 em(15px) em(15px)
+    &.fil-content-table-selection
+      td.fil-content-file-select
+        display table-cell

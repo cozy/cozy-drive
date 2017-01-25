@@ -11,7 +11,6 @@ import { openFolder } from '../actions'
 import Alerter from './Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
-import SelectionBar from '../containers/SelectionBar'
 
 import { mustShowSelectionBar } from '../reducers'
 
@@ -32,7 +31,7 @@ class App extends Component {
     }
   }
 
-  render ({ t, error, showSelectionBar, children }) {
+  render ({ t, error, children }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
         { error && <Alerter
@@ -40,8 +39,6 @@ class App extends Component {
           reload={reload}
           />
         }
-        { showSelectionBar && <SelectionBar /> }
-
         <Sidebar />
 
         <main class={styles['fil-content']}>
@@ -55,7 +52,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   error: state.ui.error,
-  showSelectionBar: mustShowSelectionBar(state),
   folder: state.folder
 })
 

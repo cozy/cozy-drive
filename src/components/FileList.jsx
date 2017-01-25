@@ -7,8 +7,11 @@ import { translate } from '../lib/I18n'
 import Empty from '../components/Empty'
 import File from '../components/File'
 
+import SelectionBar from '../containers/SelectionBar'
+
 const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFileToggle }) => (
   <div role='contentinfo'>
+    { showSelection && <SelectionBar /> }
     <table class={classNames(
       styles['fil-content-table'],
       { [styles['fil-content-table-selection']]: showSelection }

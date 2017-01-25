@@ -26,9 +26,12 @@ slate-grey = #5d6165
   button
     left-padded(50px)
     line-height em(48px)
+    font-size(14px)
+    font-weight bold
     color white
     border none
     text-transform uppercase
+    cursor pointer
 
     &.fil-action-share
       background embedurl("../assets/icons/icon-share.svg") em(24px) center no-repeat
@@ -44,6 +47,7 @@ slate-grey = #5d6165
       background embedurl("../assets/icons/icon-cross.svg") em(24px) center no-repeat
       text-indent -9999px
       position absolute
+      top em(8px)
       right 0
 
 @media (max-width: (1023/basefont)rem)
