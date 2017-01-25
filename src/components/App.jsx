@@ -12,8 +12,6 @@ import Alerter from './Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
-import { mustShowSelectionBar } from '../reducers'
-
 const reload = () => {
   window.location.reload()
 }
