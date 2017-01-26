@@ -10,7 +10,7 @@ import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 
-const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
+const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
   const isRoot = !folder.dir_id
   const isInRoot = folder.parent && !folder.parent.dir_id
   const isLevel2 = folder.parent && folder.parent.dir_id !== ROOT_DIR_ID
@@ -45,7 +45,7 @@ const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
       { !isRoot && // Displays the current folder
         <span>{folder.name}</span>}
 
-      { (opening === folder.dir_id || opening === folderId) && <Spinner /> }
+      { (opening === folder.dir_id || opening === folder.id) && <Spinner /> }
 
     </h2>
   )
