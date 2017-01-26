@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "main": "src/main.jsx",
   "scripts": {
-    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js --bail",
     "build:mobile": "MOBILE=true npm run build",
     "clean": "rm -rf build && rm -rf mobile/www",
     "copy:manifest": "[[ $MOBILE == true ]] || install -m0644 package.json README.md LICENSE build",
