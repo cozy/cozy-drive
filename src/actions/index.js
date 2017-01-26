@@ -124,6 +124,7 @@ export const downloadSelection = () => {
   return async (dispatch, getState) => {
     const { selected } = getState().ui
     dispatch({ type: DOWNLOAD_SELECTION, selected })
+    selected.forEach((id) => dispatch(toggleFileSelection(id, true)))
     const response = await cozy.files.downloadById(selected[0])
     const blob = await response.blob()
     // TODO: accessing state in action creators is an antipattern
