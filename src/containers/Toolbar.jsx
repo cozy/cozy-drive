@@ -17,7 +17,7 @@ const Toolbar = ({ t, addFolder, showSelectionBar }) => (
         role='button'
         className='coz-btn coz-btn--more'
       >
-        <span class='coz-hidden'>{ t('toolbar.item_more') }</span>
+        <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
         <Item>

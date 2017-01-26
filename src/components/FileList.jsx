@@ -12,14 +12,14 @@ import SelectionBar from '../containers/SelectionBar'
 const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFileToggle }) => (
   <div role='contentinfo'>
     { showSelection && <SelectionBar /> }
-    <table class={classNames(
+    <table className={classNames(
       styles['fil-content-table'],
       { [styles['fil-content-table-selection']]: showSelection }
     )}>
       <thead>
         <tr>
           <th />
-          <th class={styles['fil-content-file']}>{ t('table.head_name') }</th>
+          <th className={styles['fil-content-file']}>{ t('table.head_name') }</th>
           <th>{ t('table.head_update') }</th>
           <th>{ t('table.head_size') }</th>
           <th>{ t('table.head_status') }</th>
