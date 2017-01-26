@@ -13,7 +13,7 @@ import Spinner from '../components/Spinner'
 const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
   const isRoot = !folder.dir_id
   const isInRoot = folder.parent && !folder.parent.dir_id
-  const isLevel2 = folder.parent && folder.parent.dir_id !== ROOT_DIR_ID
+  const isLevel2 = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== ROOT_DIR_ID
 
   return (
     <h2 class={styles['fil-content-title']}>
@@ -28,7 +28,7 @@ const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
         > <a>{ t(`breadcrumb.title_files`)}</a> / </span>
       }
 
-      { !isInRoot && isLevel2 &&
+      { isLevel2 &&
         <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}> ... / </span> }
 
       { !isRoot && !isInRoot && folder.parent && // Displays the parent folder
