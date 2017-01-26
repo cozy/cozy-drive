@@ -6,16 +6,16 @@ import { translate } from '../../../src/lib/I18n'
 import Wizard from '../components/Wizard'
 
 import styles from '../styles/onboarding'
-import { SETUP } from '../actions'
+import { registerDevice, SET_URL } from '../actions'
 
 import logo from '../../res/icon.png'
 
-export const SelectServer = ({selectServer, t}) =>
+export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl}) =>
 (
   <div className={classnames(styles['wizard'])}>
     <div className={classnames(styles['wizard-main'])}>
       <p>{t('mobile.wizard.selectServer.cozy_address')}</p>
-      <input type='text' placeholder={t('mobile.wizard.selectServer.cozy_address_placeholder')} />
+      <input type='text' placeholder={t('mobile.wizard.selectServer.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
       <p>{t('mobile.wizard.selectServer.description')}</p>
     </div>
     <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.wizard.selectServer.button')}</button>
@@ -24,17 +24,21 @@ export const SelectServer = ({selectServer, t}) =>
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   selectServer: () => {
-    dispatch({ type: SETUP })
     const { router, location } = ownProps
-    if (location.state && location.state.nextPathname) {
-      router.replace(location.state.nextPathname)
-    } else {
-      router.replace('/')
-    }
+    dispatch(registerDevice(router, location))
+  },
+  updateServerUrl: (e) => {
+    const serverUrl = e.target.value
+    dispatch({ type: SET_URL, url: serverUrl })
   }
 })
 
-const ConnectedSelectServer = connect(null, mapDispatchToProps)(SelectServer)
+const mapStateToProps = (state) => {
+  return ({
+    serverUrl: state.mobile.serverUrl
+  })
+}
+const ConnectedSelectServer = connect(mapStateToProps, mapDispatchToProps)(SelectServer)
 
 export const Welcome = ({ nextStep, t }) =>
 (

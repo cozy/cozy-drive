@@ -1,13 +1,16 @@
-import { SETUP } from '../actions'
+import { SETUP, SET_URL } from '../actions'
 
 const initialState = {
-  isSetup: false
+  isSetup: false,
+  serverUrl: ''
 }
 
 export const mobile = (state = initialState, action) => {
   switch (action.type) {
+    case SET_URL:
+      return Object.assign({}, state, { serverUrl: `http://${action.url}` })
     case SETUP:
-      return { isSetup: true }
+      return Object.assign({}, state, { isSetup: true })
   }
   return state
 }

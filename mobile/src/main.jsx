@@ -9,18 +9,12 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Route, hashHistory } from 'react-router'
-import cozy from 'cozy-client-js'
 import { I18n } from '../../src/lib/I18n'
 
 import filesApp from './reducers'
 import AppRoute from '../../src/components/AppRoute'
 
 import OnBoarding from './containers/OnBoarding'
-
-cozy.init({
-  cozyURL: 'http://cozy.local:8080/',
-  token: 'TODO'
-})
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
