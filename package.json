@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "main": "src/main.jsx",
   "scripts": {
-    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js --bail",
     "clean": "rm -rf build",
     "copy:manifest": "install -m0644 package.json README.md LICENSE build",
     "deploy": "git-directory-deploy --username Cozy --email contact@cozycloud.cc --directory build/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-photos-v3.git",
@@ -76,8 +76,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-client-js": "^0.0.3",
-    "cozy-ui": "3.0.0-beta1",
+    "cozy-client-js": "0.0.4",
+    "cozy-ui": "3.0.0-beta3",
     "date-fns": "^1.26.0",
     "node-polyglot": "^2.2.0",
     "node-uuid": "^1.4.7",
