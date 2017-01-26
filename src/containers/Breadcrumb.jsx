@@ -1,5 +1,7 @@
 import styles from '../styles/breadcrumb'
 
+import { ROOT_DIR_ID } from '../constants/config'
+
 import React from 'react'
 import { translate } from '../lib/I18n'
 import { withRouter } from 'react-router'
@@ -11,7 +13,7 @@ import Spinner from '../components/Spinner'
 const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
   const isRoot = !folder.dir_id
   const isInRoot = folder.parent && !folder.parent.dir_id
-  const isLevel2 = folder.parent && folder.parent.dir_id
+  const isLevel2 = folder.parent && folder.parent.dir_id !== ROOT_DIR_ID
 
   return (
     <h2 class={styles['fil-content-title']}>
