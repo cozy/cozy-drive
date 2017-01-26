@@ -52,15 +52,21 @@ b-item
     &:hover
       text-decoration none
     &.fil-action-upload
-      display none
       background: embedurl("../assets/icons/icon-upload-16.svg") em(16px) center no-repeat
     &.fil-action-newfolder
       background: embedurl("../assets/icons/icon-folder-add-16.svg") em(16px) center no-repeat
     &.fil-action-select
       background: embedurl("../assets/icons/icon-checkbox-16.svg") em(16px) center no-repeat
 
+  a.fil-action-upload,
+  a.fil-action-select,
+  hr // temporary while there is only select after hr
+    display none
+
 
 @media (max-width: (1023/basefont)rem)
   .fil-toolbar-menu
-    a.fil-action-upload
+    a.fil-action-upload,
+    a.fil-action-select,
+    hr // temporary while there is only select after hr
       display block
