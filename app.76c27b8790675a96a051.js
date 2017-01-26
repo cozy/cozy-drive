@@ -17061,76 +17061,7 @@
 
 /***/ },
 /* 229 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"nav": {
-			"item_files": "Files",
-			"item_recent": "Recent",
-			"item_shared": "Shared by me",
-			"item_activity": "Activity",
-			"item_trash": "Trash"
-		},
-		"breadcrumb": {
-			"title_files": "Files",
-			"title_recent": "Recent",
-			"title_shared": "Shared by me",
-			"title_activity": "Activity",
-			"title_trash": "Trash"
-		},
-		"toolbar": {
-			"item_upload": "Upload",
-			"item_more": "More"
-		},
-		"table": {
-			"head_name": "Name",
-			"head_update": "Last update",
-			"head_size": "Size",
-			"head_status": "Status",
-			"row_read_only": "Share (Read only)",
-			"row_read_write": "Share (Read & Write)",
-			"row_size_symbols": {
-				"B": "B",
-				"KB": "KB",
-				"MB": "MB",
-				"GB": "GB",
-				"TB": "TB",
-				"PB": "PB",
-				"EB": "EB",
-				"ZB": "ZB",
-				"YB": "YB"
-			}
-		},
-		"empty": {
-			"title": "You don’t have any files in this folder.",
-			"text": "Click the \"upload\" button to add files to this folder."
-		},
-		"alert": {
-			"critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
-			"button": {
-				"reload": "Refresh now"
-			}
-		},
-		"error": {
-			"open_folder": "Something went wrong when opening the folder."
-		},
-		"mobile": {
-			"wizard": {
-				"welcome": {
-					"title": "Your own private cloud",
-					"button": "Sign in"
-				},
-				"url": {
-					"cozy_address": "Your Cozy's address",
-					"button": "Next",
-					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
-				}
-			}
-		}
-	};
-
-/***/ },
+152,
 /* 230 */
 /***/ function(module, exports) {
 
@@ -17161,15 +17092,15 @@
 			"row_read_only": "Compartir (solo en lectura)",
 			"row_read_write": "Compartir (Lectura & Escritura)",
 			"row_size_symbols": {
-				"B": "B",
-				"KB": "KB",
-				"MB": "MB",
-				"GB": "GB",
-				"TB": "TB",
-				"PB": "PB",
-				"EB": "EB",
-				"ZB": "ZB",
-				"YB": "YB"
+				"B": "O",
+				"KB": "KO",
+				"MB": "MO",
+				"GB": "GO",
+				"TB": "TO",
+				"PB": "PO",
+				"EB": "EO",
+				"ZB": "ZO",
+				"YB": "YO"
 			}
 		},
 		"empty": {
@@ -17177,25 +17108,25 @@
 			"text": "Haga clic en el botón \"cargar\" para añadir archivos a esta carpeta."
 		},
 		"alert": {
-			"critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+			"critical_will_reload": "La página se recargará automáticamente  dentro de %{smart_count} segundo ... |||| La página se recargará automáticament dentro de %{smart_count} segundos ...",
 			"button": {
-				"reload": "Refresh now"
+				"reload": "Actualizar ahora"
 			}
 		},
 		"error": {
-			"open_folder": "Something went wrong when opening the folder."
+			"open_folder": "Algo ha fallado al abrir la carpeta."
 		},
 		"mobile": {
 			"wizard": {
 				"welcome": {
-					"title": "Your own private cloud",
-					"button": "Sign in"
+					"title": "Su propia nube privada",
+					"button": "Iniciar sesión"
 				},
-				"url": {
-					"cozy_address": "Your Cozy's address",
-					"button": "Next",
-					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				"selectServer": {
+					"cozy_address": "Su dirección Cozy",
+					"button": "S",
+					"description": "Esta es la dirección que tiene que usar para conectarse a su cozy, tal como sunombre.cozycloud.cc",
+					"cozy_address_placeholder": "antoniobanderas.cozyclou.cc"
 				}
 			}
 		}
@@ -17259,14 +17190,14 @@
 		"mobile": {
 			"wizard": {
 				"welcome": {
-					"title": "Your own private cloud",
-					"button": "Sign in"
+					"title": "Votre cloud personnel",
+					"button": "Connectez-vous"
 				},
-				"url": {
-					"cozy_address": "Your Cozy's address",
-					"button": "Next",
-					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
+				"selectServer": {
+					"cozy_address": "L'adresse de votre Cozy",
+					"button": "Suivant",
+					"description": "Renseignez votre adresse permettant de vous connecter à votre Cozy, comme votreprenom.cozycloud.cc",
+					"cozy_address_placeholder": "georgesabitbol.cozycloud.cc"
 				}
 			}
 		}
@@ -17325,18 +17256,18 @@
 			}
 		},
 		"error": {
-			"open_folder": "Something went wrong when opening the folder."
+			"open_folder": "フォルダーを開くときに何か問題が発生しました。"
 		},
 		"mobile": {
 			"wizard": {
 				"welcome": {
-					"title": "Your own private cloud",
-					"button": "Sign in"
+					"title": "あなた独自のプライベートクラウド",
+					"button": "サインイン"
 				},
-				"url": {
-					"cozy_address": "Your Cozy's address",
-					"button": "Next",
-					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
+				"selectServer": {
+					"cozy_address": "あなたの Cozy アドレス",
+					"button": "次へ",
+					"description": "これは Cozy に接続するために使用するアドレスです。例 yourname.cozycloud.cc",
 					"cozy_address_placeholder": "johnwayne.cozycloud.cc"
 				}
 			}
@@ -17345,7 +17276,7 @@
 
 /***/ },
 /* 233 */
-229,
+152,
 /* 234 */
 /***/ function(module, exports) {
 
@@ -17406,7 +17337,7 @@
 					"title": "Your own private cloud",
 					"button": "Sign in"
 				},
-				"url": {
+				"selectServer": {
 					"cozy_address": "Your Cozy's address",
 					"button": "Next",
 					"description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
@@ -17418,7 +17349,7 @@
 
 /***/ },
 /* 235 */
-229,
+152,
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34359,4 +34290,4 @@
 /* 501 */
 500
 /******/ ])));
-//# sourceMappingURL=app.1b084409b1283a810cbd.js.map
+//# sourceMappingURL=app.76c27b8790675a96a051.js.map
