@@ -23,10 +23,7 @@ cozy.init({
 })
 
 const context = window.context
-let lang = document.documentElement.getAttribute('lang') || 'en'
-if (navigator && navigator.language) {
-  lang = navigator.language.slice(0, 2)
-}
+const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
 
 const loggerMiddleware = createLogger()
 
