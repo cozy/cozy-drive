@@ -3,7 +3,7 @@ import styles from '../styles/topbar'
 import React from 'react'
 
 import Toolbar from '../containers/Toolbar'
-import Breadcrumb from './Breadcrumb'
+import Breadcrumb from '../containers/Breadcrumb'
 
 const Topbar = () => (
   <div class={styles['fil-content-header']}>

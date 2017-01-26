@@ -9,7 +9,6 @@ import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 
 const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
-
   const isRoot = !folder.dir_id
   const isInRoot = folder.parent && !folder.parent.dir_id
   const isLevel2 = folder.parent && folder.parent.dir_id
@@ -21,13 +20,25 @@ const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
         <span>{ t(`breadcrumb.title_files`)}</span> }
 
       { !isRoot && // Display 'Files /' as the root folder
-      <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])} onClick={() => goToFolder()}>{ t(`breadcrumb.title_files`)} / </span> }
+      <span
+        className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
+        onClick={() => goToFolder()}
+        >
+          { t(`breadcrumb.title_files`)} /
+      </span>
+      }
 
       { !isRoot && isLevel2 && (folder.parent.dir_id !== folderId) &&
-         <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}> ... / </span> }
+        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}> ... / </span> }
 
       { !isRoot && !isInRoot && folder.parent && // Displays the parent folder
-        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])} onClick={() => goToFolder(folder.parent.id)}> {folder.parent.name} / </span> }
+        <span
+          className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
+          onClick={() => goToFolder(folder.parent.id)}
+        >
+          {folder.parent.name} /
+        </span>
+      }
 
       { !isRoot && // Displays the current folder
         <span>{folder.name}</span>}
