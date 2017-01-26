@@ -1,5 +1,7 @@
 import styles from '../styles/breadcrumb'
 
+import { ROOT_DIR_ID } from '../constants/config'
+
 import React from 'react'
 import { translate } from '../lib/I18n'
 import { withRouter } from 'react-router'
@@ -8,10 +10,10 @@ import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 
-const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
+const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
   const isRoot = !folder.dir_id
   const isInRoot = folder.parent && !folder.parent.dir_id
-  const isLevel2 = folder.parent && folder.parent.dir_id
+  const isLevel2 = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== ROOT_DIR_ID
 
   return (
     <h2 class={styles['fil-content-title']}>
@@ -23,12 +25,10 @@ const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
       <span
         className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
         onClick={() => goToFolder()}
-        >
-        <a>{ t(`breadcrumb.title_files`)}</a> /
-      </span>
+        > <a>{ t(`breadcrumb.title_files`)}</a> / </span>
       }
 
-      { !isRoot && isLevel2 && (folder.parent.dir_id !== 'io.cozy.files.root-dir') &&
+      { isLevel2 &&
         <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}> ... / </span> }
 
       { !isRoot && !isInRoot && folder.parent && // Displays the parent folder
@@ -43,7 +43,7 @@ const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
       { !isRoot && // Displays the current folder
         <span>{folder.name}</span>}
 
-      { (opening === folder.dir_id || opening === folderId) && <Spinner /> }
+      { (opening === folder.dir_id || opening === folder.id) && <Spinner /> }
 
     </h2>
   )

@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { OPEN_FOLDER, OPEN_FOLDER_SUCCESS, ROOT_DIR_ID, openFolder } from '../src/actions'
+import { ROOT_DIR_ID } from '../src/constants/config'
+import { OPEN_FOLDER, OPEN_FOLDER_SUCCESS, openFolder } from '../src/actions'
 
 import cozy from 'cozy-client-js'
 
