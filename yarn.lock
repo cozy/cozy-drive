@@ -1378,15 +1378,15 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
-cozy-client-js@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.0.3.tgz#3e9a8f9d30068bfc9d299d63359f9e2d4ba0ad13"
+cozy-client-js@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.0.4.tgz#95f857dd5e5d95556dd923ded46de0f4df7c54ce"
   dependencies:
     pouchdb "6.1.1"
 
-cozy-ui@3.0.0-beta1:
-  version "3.0.0-beta1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta1.tgz#0c539f9c5afe6194776ab5857a6a2262249fd0de"
+cozy-ui@3.0.0-beta3:
+  version "3.0.0-beta3"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta3.tgz#e5bfac544310d8ff6ac81266554d0e92bfdcdf38"
   dependencies:
     md5 "^2.2.0"
     normalize.css "5.0.0"
@@ -4138,7 +4138,7 @@ npm-run-all@^3.1.0:
     shell-quote "^1.6.1"
     string.prototype.padend "^3.0.0"
 
-"npmlog@0 || 1 || 2", "npmlog@0 || 1 || 2 || 3 || 4", npmlog@^2.0.0:
+"npmlog@0 || 1 || 2", npmlog@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-2.0.4.tgz#98b52530f2514ca90d09ec5b22c8846722375692"
   dependencies:
@@ -4146,7 +4146,7 @@ npm-run-all@^3.1.0:
     are-we-there-yet "~1.1.2"
     gauge "~1.2.5"
 
-npmlog@^4.0.1:
+"npmlog@0 || 1 || 2 || 3 || 4", npmlog@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.0.2.tgz#d03950e0e78ce1527ba26d2a7592e9348ac3e75f"
   dependencies:
