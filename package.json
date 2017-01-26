@@ -86,6 +86,7 @@
     "cozy-ui": "3.0.0-beta3",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
+    "localforage": "^1.4.3",
     "node-polyglot": "^2.2.0",
     "node-uuid": "^1.4.7",
     "preact": "^7.1.0",

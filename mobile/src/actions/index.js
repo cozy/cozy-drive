@@ -1,4 +1,5 @@
 import cozy, { LocalStorage as Storage } from 'cozy-client-js'
+import localforage from 'localforage'
 
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
@@ -54,6 +55,7 @@ export const registerDevice = (router, location) => {
 
     await cozy.authorize()
     dispatch({ type: SETUP })
+    localforage.setItem('state', getState().mobile)
     if (location.state && location.state.nextPathname) {
       router.replace(location.state.nextPathname)
     } else {
