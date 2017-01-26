@@ -29,6 +29,7 @@ class App extends Component {
     }
   }
 
+  // render ({ t, error, children, folder }) {
   render ({ t, error, children }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
@@ -41,6 +42,7 @@ class App extends Component {
         <Sidebar />
 
         <main class={styles['fil-content']}>
+          {/* <Topbar folder={folder} /> */}
           <Topbar />
           { children }
         </main>

@@ -29,6 +29,14 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
     } catch (err) {
       return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
     }
+    const parentId = folder.attributes.dir_id
+    let parent
+    try {
+      parent = !!parentId && await cozy.files.statById(parentId)
+    } catch (err) {
+      return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
+    }
+
     if (isInitialFetch) {
       dispatch({ type: RECEIVE_FILES, folderId })
     } else if (router) {
@@ -36,7 +44,8 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
     }
     dispatch({
       type: OPEN_FOLDER_SUCCESS,
-      folder: extractFileAttributes(folder),
+      folder: Object.assign(extractFileAttributes(folder), {
+        parent: extractFileAttributes(parent)}),
       files: folder.relations('contents').map(
         c => extractFileAttributes(c)
       )
