@@ -24,11 +24,11 @@ const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
         className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
         onClick={() => goToFolder()}
         >
-          { t(`breadcrumb.title_files`)} /
+        <a>{ t(`breadcrumb.title_files`)}</a> /
       </span>
       }
 
-      { !isRoot && isLevel2 && (folder.parent.dir_id !== folderId) &&
+      { !isRoot && isLevel2 && (folder.parent.dir_id !== 'io.cozy.files.root-dir') &&
         <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}> ... / </span> }
 
       { !isRoot && !isInRoot && folder.parent && // Displays the parent folder
@@ -36,7 +36,7 @@ const Breadcrumb = ({ t, router, folder, folderId, opening, goToFolder }) => {
           className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
           onClick={() => goToFolder(folder.parent.id)}
         >
-          {folder.parent.name} /
+          <a>{folder.parent.name}</a><span> / </span>
         </span>
       }
 
