@@ -1,0 +1,8 @@
+exports[`Topbar component should be rendered correctly 1`] = `
+<div
+  className="pho-content-toolbar"
+  role="toolbar">
+  <Connect(Component)
+    t={[Function]} />
+</div>
+`;

@@ -6,13 +6,14 @@ import { fetchPhotos } from '../actions/photos'
 import PhotosList from '../components/PhotosList'
 import Topbar from '../components/Topbar'
 
-class Timeline extends Component {
+export class Timeline extends Component {
   constructor (props) {
     super(props)
     this.state = { isFirstFetch: true }
   }
 
   componentWillReceiveProps (nextProps) {
+    /* istanbul ignore else */
     if (!nextProps.isIndexing && this.state.isFirstFetch) {
       this.props.onFirstFetch(nextProps.mangoIndexByDate)
       this.setState({ isFirstFetch: false })
@@ -37,7 +38,7 @@ const mapStateToProps = (state, ownProps) => ({
   mangoIndexByDate: state.mangoIndexByDate
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+export const mapDispatchToProps = (dispatch, ownProps) => ({
   onFirstFetch: (mangoIndexByDate) => {
     dispatch(fetchPhotos(mangoIndexByDate))
   }

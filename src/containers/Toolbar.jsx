@@ -5,7 +5,7 @@ import { translate } from '../lib/I18n'
 
 import UploadButton from './UploadButton'
 
-const Toolbar = ({ t }) => (
+export const Toolbar = ({ t }) => (
   <div className={styles['pho-content-toolbar']} role='toolbar'>
     <UploadButton t={t} />
   </div>
