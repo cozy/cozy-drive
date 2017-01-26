@@ -1440,9 +1440,9 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
-cozy-bar@3.0.0-beta2:
-  version "3.0.0-beta2"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-3.0.0-beta2.tgz#ca72a9d4838090ce517566b735828c20b7f26a11"
+cozy-bar@3.0.0-beta3:
+  version "3.0.0-beta3"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-3.0.0-beta3.tgz#6cbccb32e47bc8b9aea7dc25e9c2f3df9118218c"
   dependencies:
     jssha "^2.2.0"
     node-polyglot "^2.2.2"
@@ -1453,9 +1453,9 @@ cozy-client-js@0.0.4:
   dependencies:
     pouchdb "6.1.1"
 
-cozy-ui@3.0.0-beta3:
-  version "3.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta3.tgz#e5bfac544310d8ff6ac81266554d0e92bfdcdf38"
+cozy-ui@3.0.0-beta4:
+  version "3.0.0-beta4"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta4.tgz#64393e7f74f527b76e6f50c9577dc927b9fdb5a3"
   dependencies:
     md5 "^2.2.0"
     normalize.css "5.0.0"
