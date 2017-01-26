@@ -30,7 +30,7 @@ const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
       </span>
       }
 
-      { !isRoot && isLevel2 && (folder.parent.dir_id !== 'io.cozy.files.root-dir') &&
+      { !isInRoot && isLevel2 &&
         <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}> ... / </span> }
 
       { !isRoot && !isInRoot && folder.parent && // Displays the parent folder
