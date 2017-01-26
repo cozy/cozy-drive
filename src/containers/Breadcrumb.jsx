@@ -25,9 +25,7 @@ const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
       <span
         className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
         onClick={() => goToFolder()}
-        >
-        <a>{ t(`breadcrumb.title_files`)}</a> /
-      </span>
+        > <a>{ t(`breadcrumb.title_files`)}</a> / </span>
       }
 
       { !isInRoot && isLevel2 &&
