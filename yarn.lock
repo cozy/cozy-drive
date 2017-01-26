@@ -884,6 +884,13 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
+bosonic@^2.0.0-beta1:
+  version "2.0.0-beta1"
+  resolved "https://registry.yarnpkg.com/bosonic/-/bosonic-2.0.0-beta1.tgz#600e01eb2caa60fdec0979a0ee54f377cfd826bc"
+  dependencies:
+    document-register-element "^1.2.0"
+    pepjs "^0.4.2"
+
 brace-expansion@^1.0.0:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.6.tgz#7197d7eaa9b87e648390ea61fc66c84427420df9"
@@ -967,7 +974,7 @@ callsites@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-2.0.0.tgz#06eb84f00eea413da86affefacbffb36093b3c50"
 
-camel-case@3.0.x:
+camel-case@3.0.x, camel-case@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-3.0.0.tgz#ca3c3688a4e9cf3a4cda777dc4dcbc713249cf73"
   dependencies:
@@ -1021,6 +1028,10 @@ chalk@^1.0.0, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
     has-ansi "^2.0.0"
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
+
+change-emitter@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/change-emitter/-/change-emitter-0.1.2.tgz#6b88ca4d5d864e516f913421b11899a860aee8db"
 
 character-parser@^2.1.1:
   version "2.2.0"
@@ -1092,7 +1103,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@^2.2.0:
+classnames@^2.2.0, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -1336,13 +1347,13 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
-cozy-client-js@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.0.1.tgz#68a5bc5c5ffbc8c9274b423bdd84ca36b3e420d3"
+cozy-client-js@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.0.2.tgz#2d99b66e3c3dfa8189f8b530d93a0fac43f8862e"
 
-cozy-ui@3.0.0-beta1:
-  version "3.0.0-beta1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta1.tgz#0c539f9c5afe6194776ab5857a6a2262249fd0de"
+cozy-ui@3.0.0-beta2:
+  version "3.0.0-beta2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta2.tgz#b0c9f248f1a27c9c12129eb35a243d3ae739f73e"
   dependencies:
     md5 "^2.2.0"
     normalize.css "5.0.0"
@@ -1635,6 +1646,10 @@ doctrine@^1.2.2:
 doctypes@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/doctypes/-/doctypes-1.1.0.tgz#ea80b106a87538774e8a3a4a5afe293de489e0a9"
+
+document-register-element@^1.2.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/document-register-element/-/document-register-element-1.3.0.tgz#fb3babb523c74662be47be19c6bc33e71990d940"
 
 dom-converter@~0.1:
   version "0.1.4"
@@ -2481,7 +2496,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.2.0:
+hoist-non-react-statics@^1.0.0, hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
@@ -4035,6 +4050,13 @@ parseurl@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.1.tgz#c8ab8c9223ba34888aa64a297b28853bec18da56"
 
+pascal-case@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/pascal-case/-/pascal-case-2.0.0.tgz#39c248bde5a8dc02d5160696bdb01e044d016ee1"
+  dependencies:
+    camel-case "^3.0.0"
+    upper-case-first "^1.1.0"
+
 path-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
@@ -4078,6 +4100,10 @@ pause-stream@0.0.11:
 pbkdf2-compat@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pbkdf2-compat/-/pbkdf2-compat-2.0.1.tgz#b6e0c8fa99494d94e0511575802a59a5c142f288"
+
+pepjs@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/pepjs/-/pepjs-0.4.2.tgz#13264eea894984ff423c83e40d2fa4e1dec1c9fa"
 
 pify@^2.0.0:
   version "2.3.0"
@@ -4378,6 +4404,15 @@ postcss@^5.0.0, postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.
     source-map "^0.5.6"
     supports-color "^3.1.2"
 
+preact-compat@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/preact-compat/-/preact-compat-3.11.0.tgz#be6348945e0c4f2e5b9ed7afb33b1bc095e6c829"
+  dependencies:
+    preact-render-to-string "^3.2.1"
+    preact-transition-group "^1.1.0"
+    proptypes "^0.14.3"
+    standalone-react-addons-pure-render-mixin "^0.1.1"
+
 preact-compat@^3.9.0:
   version "3.9.4"
   resolved "https://registry.yarnpkg.com/preact-compat/-/preact-compat-3.9.4.tgz#55a5d81de637edc18c449bee45804b74bef15b34"
@@ -4643,7 +4678,21 @@ react-addons-test-utils@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-dom@^15.4.0:
+react-bosonic@^1.0.0-beta2:
+  version "1.0.0-beta2"
+  resolved "https://registry.yarnpkg.com/react-bosonic/-/react-bosonic-1.0.0-beta2.tgz#ad8345352d8646c3622217223bc11bedd8d11bc7"
+  dependencies:
+    bosonic "^2.0.0-beta1"
+    classnames "^2.2.5"
+    document-register-element "^1.2.0"
+    preact "^7.1.0"
+    preact-compat "^3.11.0"
+    react "^15.3.2"
+    react-dom "^15.3.2"
+    recompose "^0.20.2"
+    skatejs-react-integration "^1.0.2"
+
+react-dom@^15.3.2, react-dom@^15.4.0:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.1.tgz#d54c913261aaedb17adc20410d029dcc18a1344a"
   dependencies:
@@ -4675,7 +4724,7 @@ react-test-renderer@^15.4.0:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.4.1.tgz#e38cd7057868d4a655d3764689735b4b97260706"
 
-react@^15.4.0:
+react@^15.3.2, react@^15.4.0:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.1.tgz#498e918602677a3983cd0fd206dfe700389a0dd6"
   dependencies:
@@ -4762,6 +4811,15 @@ rechoir@^0.6.2:
   resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
   dependencies:
     resolve "^1.1.6"
+
+recompose@^0.20.2:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.20.2.tgz#113d6ac7e29ca664cfffec16b681ddddf15250bc"
+  dependencies:
+    change-emitter "^0.1.2"
+    fbjs "^0.8.1"
+    hoist-non-react-statics "^1.0.0"
+    symbol-observable "^0.2.4"
 
 redeyed@~1.0.0:
   version "1.0.1"
@@ -5100,6 +5158,13 @@ sinon@^1.17.0:
     samsam "1.1.2"
     util ">=0.10.3 <1"
 
+skatejs-react-integration@^1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/skatejs-react-integration/-/skatejs-react-integration-1.0.3.tgz#ea5080fce56102b70dfecabe25a789fbb66c10e8"
+  dependencies:
+    object-assign "^4.1.0"
+    pascal-case "^2.0.0"
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -5212,6 +5277,10 @@ sshpk@^1.7.0:
     jodid25519 "^1.0.0"
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
+
+standalone-react-addons-pure-render-mixin@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/standalone-react-addons-pure-render-mixin/-/standalone-react-addons-pure-render-mixin-0.1.1.tgz#3c7409f4c79c40de9ac72c616cf679a994f37551"
 
 standard-engine@~5.2.0:
   version "5.2.0"
@@ -5394,6 +5463,10 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+symbol-observable@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-0.2.4.tgz#95a83db26186d6af7e7a18dbd9760a2f86d08f40"
+
 symbol-observable@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
@@ -5575,6 +5648,12 @@ uniqs@^2.0.0:
 unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
+
+upper-case-first@^1.1.0:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/upper-case-first/-/upper-case-first-1.1.2.tgz#5d79bedcff14419518fd2edb0a0507c9b6859115"
+  dependencies:
+    upper-case "^1.1.1"
 
 upper-case@^1.1.1:
   version "1.1.3"

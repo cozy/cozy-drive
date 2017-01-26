@@ -46,9 +46,26 @@ class File extends Component {
     })
   }
 
+  toggle (e) {
+    const { attributes, onToggle } = this.props
+    onToggle(attributes.id, attributes.selected)
+  }
+
   render ({ t, f, attributes, onOpen }, { editing }) {
     return (
       <tr>
+        <td className={styles['fil-content-file-select']}>
+          <span data-input='checkbox'>
+            <input
+              type='checkbox'
+              disabled={isDir(attributes)}
+              checked={attributes.selected}
+             />
+            {isDir(attributes)
+              ? <label />
+              : <label onClick={e => this.toggle(e)} />}
+          </span>
+        </td>
         {this.renderFilenameCell(attributes, onOpen, editing)}
         <td>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
@@ -68,21 +85,28 @@ class File extends Component {
     const classes = classNames(styles['fil-content-file'], getClassFromMime(attributes))
     if (editing) {
       return (
-        <td class={classes}>
+        <td className={classes}>
           <FilenameInput name={attributes.name} onSubmit={val => this.edit(val)} />
         </td>
       )
     }
-    return isDir(attributes)
-      ? (
-        <td class={classes}>
+    if (isDir(attributes)) {
+      return (
+        <td className={classes}>
           <a onClick={() => onOpen(attributes.id)}>
             {attributes.name}
-            {attributes.isOpening === true && <div class={styles['fil-loading']} />}
+            {attributes.isOpening === true && <div className={styles['fil-loading']} />}
           </a>
         </td>
       )
-      : <td class={classes}><a target='_blank' href={`http://cozy.local:8080/files/download/${attributes.id}`}>{filename}<span class={styles['fil-content-ext']}>{extension}</span></a></td>
+    }
+    return (
+      <td className={classes}>
+        <a target='_blank' href={`http://cozy.local:8080/files/download/${attributes.id}`}>
+          {filename}<span className={styles['fil-content-ext']}>{extension}</span>
+        </a>
+      </td>
+    )
   }
 }
 

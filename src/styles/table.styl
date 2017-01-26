@@ -1,4 +1,4 @@
-@require 'cozy-ui'
+@import 'cozy-ui'
 
 .fil-content-table
   border-collapse collapse
@@ -23,49 +23,68 @@
     padding         em(8px, 12px) em(32px, 12px)
     font-size(12px)
     text-transform  uppercase
+  th:first-child
+    padding em(8px, 12px)
+  th.fil-content-file
+    padding-left 0
   td.fil-content-file
-    left-padded(77px)
+    padding-left em(45px)
     font-size(16px)
     a
       color grey-08
       text-decoration none
       cursor pointer
 
+  td.fil-content-file-select
+    opacity 0
+    vertical-align baseline
+    width   em(24px)
+    padding em(15px) em(8px)
+    span[data-input=checkbox]
+      label
+        padding-left em(24px)
+  &.fil-content-table-selection
+    td.fil-content-file-select
+      opacity 1
+  tr:hover
+    td.fil-content-file-select
+      opacity 1
+
 .fil-file-audio
-  background: embedurl("../assets/icons/icon-type-audio.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-audio.svg") 0 center no-repeat
 
 .fil-file-bin
-  background: embedurl("../assets/icons/icon-type-binary.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-binary.svg") 0 center no-repeat
 
 .fil-file-code
-  background: embedurl("../assets/icons/icon-type-code.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-code.svg") 0 center no-repeat
 
 .fil-file-files
-  background: embedurl("../assets/icons/icon-type-files.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-files.svg") 0 center no-repeat
 
 .fil-file-folder
-  background: embedurl("../assets/icons/icon-type-folder.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-folder.svg") 0 center no-repeat
 
 .fil-file-image
-  background: embedurl("../assets/icons/icon-type-image.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-image.svg") 0 center no-repeat
 
 .fil-file-pdf
-  background: embedurl("../assets/icons/icon-type-pdf.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-pdf.svg") 0 center no-repeat
 
 .fil-file-slide
-  background: embedurl("../assets/icons/icon-type-slide.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-slide.svg") 0 center no-repeat
 
 .fil-file-sheet
-  background: embedurl("../assets/icons/icon-type-spreadsheet.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-spreadsheet.svg") 0 center no-repeat
 
 .fil-file-text
-  background: embedurl("../assets/icons/icon-type-text.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-text.svg") 0 center no-repeat
 
 .fil-file-video
-  background: embedurl("../assets/icons/icon-type-video.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-video.svg") 0 center no-repeat
 
 .fil-file-zip
-  background: embedurl("../assets/icons/icon-type-zip.svg") em(32px) center no-repeat
+  background: embedurl("../assets/icons/icon-type-zip.svg") 0 center no-repeat
 
 .fil-loading
   @extend $icon-spinner-small-blue
@@ -74,9 +93,14 @@
 @media (max-width: (768/basefont)rem)
   .fil-content-table
     th
-    td:nth-child(n+2)
+    td:nth-child(n+3)
       display none
-
     td.fil-content-file
       left-padded(61px)
       background-position em(16px) center
+    td.fil-content-file-select
+      display none
+      padding em(15px) 0 em(15px) em(15px)
+    &.fil-content-table-selection
+      td.fil-content-file-select
+        display table-cell

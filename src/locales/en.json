@@ -15,7 +15,10 @@
   },
   "toolbar": {
     "item_upload": "Upload",
-    "item_more": "More"
+    "item_more": "More",
+    "menu_upload": "Upload files",
+    "menu_new_folder": "New folder",
+    "menu_select": "Select items"
   },
   "table": {
     "head_name": "Name",
@@ -35,6 +38,15 @@
       "ZB": "ZB",
       "YB": "YB"
     }
+  },
+  "selectionbar": {
+    "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
+    "share": "Share",
+    "download": "Download",
+    "delete": "Remove",
+    "moveto": "Move",
+    "rename": "Rename",
+    "close": "Close"
   },
   "empty": {
     "title" : "You don’t have any files in this folder.",

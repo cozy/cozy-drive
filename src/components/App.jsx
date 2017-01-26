@@ -37,7 +37,6 @@ class App extends Component {
           reload={reload}
           />
         }
-
         <Sidebar />
 
         <main class={styles['fil-content']}>
