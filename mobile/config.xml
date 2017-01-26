@@ -27,6 +27,9 @@
         <preference name="StatusBarOverlaysWebView" value="false" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <config-file target="*-Info.plist" parent="ITSAppUsesNonExemptEncryption" mode="add">
+            <false/>
+        </config-file>
         <icon height="29" src="res/icons/ios/icon-small.png" width="29" />
         <icon height="58" src="res/icons/ios/icon-small-2x.png" width="58" />
         <icon height="87" src="res/icons/ios/icon-small-3x.png" width="87" />
