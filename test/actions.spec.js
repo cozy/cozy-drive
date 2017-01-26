@@ -56,6 +56,9 @@ describe('fetchFiles', () => {
           created_at: '0001-01-01T00:00:00Z',
           dir_id: '',
           name: '',
+          parent: {
+            id: undefined
+          },
           path: '/',
           tags: null,
           type: 'directory',
