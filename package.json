@@ -20,7 +20,7 @@
     "prewatch:mobile": "npm run clean:mobile",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src/styles --config ./.stylintrc",
-    "lint:js": "standard 'src/**/*.js' 'src/**/*.jsx' 'mobile/src/**/*.js' 'mobile/src/**/*.jsx'",
+    "lint:js": "standard 'src/**/*.js' 'src/**/*.jsx' 'test/**/*.js' 'mobile/src/**/*.js' 'mobile/src/**/*.jsx' 'mobile/test/**/*.js'",
     "test": "node --harmony_proxies node_modules/.bin/jest",
     "watch": "webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "watch:browser": "NODE_ENV=browser:development npm run watch",
@@ -118,5 +118,8 @@
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
     }
+  },
+  "standard": {
+    "env": ["browser", "jest"]
   }
 }
