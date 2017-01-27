@@ -23,7 +23,7 @@
     "watch": "webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "watch:browser": "NODE_ENV=browser:development npm run watch",
     "watch:mobile": "NODE_ENV=mobile:development npm run watch",
-    "watch:server": "NODE_ENV=browser:development webpack-dev-server --config webpack.config.js --port 8082 --display-modules --display-chunks --inline --hot"
+    "watch:standalone": "NODE_ENV=browser:development webpack-dev-server --config webpack.config.js --port 8082 --display-modules --display-chunks --inline --hot"
   },
   "repository": {
     "type": "git",
