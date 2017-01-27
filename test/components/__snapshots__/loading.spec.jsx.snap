@@ -1,6 +1,6 @@
 exports[`Loading component should be displayed with photos_fetching text if loadingType is photos_fetching 1`] = `
 <div
-  class="pho-loading">
+  className="pho-loading">
   <p>
     Loading
   </p>
@@ -9,7 +9,7 @@ exports[`Loading component should be displayed with photos_fetching text if load
 
 exports[`Loading component should be displayed with photos_indexing text if loadingType is photos_indexing 1`] = `
 <div
-  class="pho-loading">
+  className="pho-loading">
   <p>
     Your photos are currently being indexed. Please wait.
   </p>
@@ -18,7 +18,7 @@ exports[`Loading component should be displayed with photos_indexing text if load
 
 exports[`Loading component should be displayed with photos_upload text if loadingType is photos_upload 1`] = `
 <div
-  class="pho-loading">
+  className="pho-loading">
   <p>
     Uploading
   </p>

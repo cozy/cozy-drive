@@ -1,54 +1,11 @@
 exports[`App component only should be mounted correctly 1`] = `
 <div
   className="pho-wrapper coz-sticky">
-  <aside
-    className="coz-sidebar">
-    <nav>
-      <ul
-        className="coz-nav">
-        <li
-          className="coz-nav-item">
-          <a
-            className="pho-cat-photos"
-            onClick={[Function]}
-            style={Object {}}>
-            Photos
-          </a>
-        </li>
-        <li
-          className="coz-nav-item">
-          <a
-            className="pho-cat-albums"
-            onClick={[Function]}
-            style={Object {}}>
-            Albums
-          </a>
-        </li>
-        <li
-          className="coz-nav-item">
-          <a
-            className="pho-cat-shared"
-            onClick={[Function]}
-            style={Object {}}>
-            Shared by me
-          </a>
-        </li>
-        <li
-          className="coz-nav-item">
-          <a
-            className="pho-cat-trash"
-            onClick={[Function]}
-            style={Object {}}>
-            Trash
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+  <Sidebar />
   <main
     className="pho-content" />
-  <div
-    className="pho-alerter" />
+  <Alerter
+    t={[Function]} />
 </div>
 `;
 

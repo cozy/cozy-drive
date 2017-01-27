@@ -1,37 +1,21 @@
 exports[`PhotosList component should render correctly a loading view if isFetching is true 1`] = `
-<div
-  class="pho-loading">
-  <p>
-    Loading
-  </p>
-</div>
+<_translate
+  loadingType="photos_fetching" />
 `;
 
 exports[`PhotosList component should render correctly a loading view if isFirstFetch is true 1`] = `
-<div
-  class="pho-loading">
-  <p>
-    Loading
-  </p>
-</div>
+<_translate
+  loadingType="photos_fetching" />
 `;
 
 exports[`PhotosList component should render correctly a loading view if isIndexing is true 1`] = `
-<div
-  class="pho-loading">
-  <p>
-    Your photos are currently being indexed. Please wait.
-  </p>
-</div>
+<_translate
+  loadingType="photos_indexing" />
 `;
 
 exports[`PhotosList component should render correctly a loading view if isWorking is true 1`] = `
-<div
-  class="pho-loading">
-  <p>
-    Uploading
-  </p>
-</div>
+<_translate
+  loadingType="photos_upload" />
 `;
 
 exports[`PhotosList component should render correctly a timeline of photos according a photos array 1`] = `
@@ -42,9 +26,16 @@ exports[`PhotosList component should render correctly a timeline of photos accor
     <h3>
       January 0001
     </h3>
-    <img
-      class="pho-photo"
-      src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
+    <Photo
+      photo={
+        Object {
+          "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+          "created_at": "0001-01-01T00:00:00Z",
+          "name": "MonImage.jpg",
+          "size": "150000",
+          "updated_at": "0001-01-01T00:00:00Z",
+        }
+      } />
   </div>
 </div>
 `;
@@ -52,16 +43,7 @@ exports[`PhotosList component should render correctly a timeline of photos accor
 exports[`PhotosList component should render correctly an empty view if photos is empty 1`] = `
 <div
   role="contentinfo">
-  <div>
-    <div
-      class="pho-empty">
-      <h2>
-        You don\'t have any photos yet.
-      </h2>
-      <p>
-        Click the \"Upload\" button to add photos.
-      </p>
-    </div>
-  </div>
+  <_translate
+    emptyType="photos" />
 </div>
 `;

@@ -1,0 +1,6 @@
+exports[`Sidebar component should be rendered correctly 1`] = `
+<aside
+  className="coz-sidebar">
+  <_translate />
+</aside>
+`;

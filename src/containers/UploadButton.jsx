@@ -19,7 +19,7 @@ const styles = {
   }
 }
 
-const UploadButton = ({ t, uploadPhotos }) => (
+export const UploadButton = ({ t, uploadPhotos }) => (
   <label
     role='button'
     className='coz-btn coz-btn--regular coz-btn--upload'
@@ -41,7 +41,7 @@ const UploadButton = ({ t, uploadPhotos }) => (
 
 const mapStateToProps = (state, ownProps) => ({})
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+export const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadPhotos: (photo) => {
     dispatch(uploadPhotos(photo))
   }

@@ -4,10 +4,10 @@ import React from 'react'
 
 const STACK_FILES_DOWNLOAD_PATH = 'http://cozy.local:8080/files/download'
 
-export const Photo = ({ photo }) => {
+const Photo = ({ photo }) => {
   return (
     <img
-      class={styles['pho-photo']}
+      className={styles['pho-photo']}
       src={`${STACK_FILES_DOWNLOAD_PATH}/${photo._id}`}
     />
   )

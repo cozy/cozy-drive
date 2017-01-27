@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router'
 import Timeline from '../containers/Timeline'
 
 import App from './App'
-const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
+export const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
 
 const AppRoute = (
   <Route component={App}>

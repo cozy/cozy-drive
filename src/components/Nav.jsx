@@ -1,9 +1,10 @@
 import styles from '../styles/nav'
 
 import React from 'react'
+import { translate } from '../lib/I18n'
 import { Link } from 'react-router'
 
-const Nav = ({ t }) => (
+export const Nav = ({ t }) => (
   <nav>
     <ul className={styles['coz-nav']}>
       <li className={styles['coz-nav-item']}>
@@ -30,4 +31,4 @@ const Nav = ({ t }) => (
   </nav>
 )
 
-export default Nav
+export default translate()(Nav)
