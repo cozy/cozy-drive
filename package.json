@@ -115,7 +115,7 @@
       "styl"
     ],
     "moduleNameMapper": {
-      "\\.(png|gif|jpe?g|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
     }
   }
