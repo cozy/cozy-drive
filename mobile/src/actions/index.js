@@ -3,6 +3,7 @@ import localforage from 'localforage'
 
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
+export const SET_STATE = 'SET_STATE'
 
 export const registerDevice = (router, location) => {
   return async (dispatch, getState) => {

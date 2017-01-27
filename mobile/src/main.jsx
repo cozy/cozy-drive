@@ -18,6 +18,7 @@ import { I18n } from '../../src/lib/I18n'
 
 import filesApp from './reducers'
 import AppRoute from '../../src/components/AppRoute'
+import { SET_STATE } from './actions'
 import App from '../../src/components/App'
 
 import OnBoarding from './containers/OnBoarding'
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   localforage.getItem('state').then(state => {
     if (state) {
-      store.dispatch({ type: 'SET_STATE', state })
+      store.dispatch({ type: SET_STATE, state })
       cozy.init({
         cozyURL: state.serverUrl
       })
