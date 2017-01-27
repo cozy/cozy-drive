@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { folder, files } from './folder'
 import ui from './ui'
 
-import { TRASH_DIR_ID } from '../actions'
+import { TRASH_DIR_ID } from '../constants/config.js'
 
 const filesApp = combineReducers({
   folder,
