@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
-const build = process.env.NODE_ENV === 'production'
-const mobile = process.env.MOBILE || false
+const build = /production$/.test(process.env.NODE_ENV)
+const mobile = /^mobile/.test(process.env.NODE_ENV)
 const outputFolder = mobile ? 'mobile/www' : 'build'
 const entryFolder = mobile ? 'mobile/src' : 'src'
 

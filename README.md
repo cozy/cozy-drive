@@ -58,7 +58,7 @@ You can easily view your current running app, you can use the [cozy-stack docker
 ```sh
 # in a terminal, run your app in watch mode
 $ cd cozy-files-v3
-$ yarn run watch
+$ yarn watch:browser
 ```
 
 ```sh
