@@ -10,6 +10,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import cozy from 'cozy-client-js'
+import 'cozy-bar'
 import { I18n } from './lib/I18n'
 
 import photosApp from './reducers'
@@ -19,6 +20,10 @@ import AppRoute from './components/AppRoute'
 cozy.init({
   cozyURL: 'http://cozy.local:8080/',
   token: 'TODO'
+})
+
+cozy.bar.init({
+  appName: 'Photos'
 })
 
 const context = window.context
