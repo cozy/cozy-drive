@@ -44,7 +44,11 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
     if (isInitialFetch) {
       dispatch({ type: RECEIVE_FILES, folderId })
     } else if (router) {
-      router.push(`/files/${folderId}`)
+      if (folderId === ROOT_DIR_ID) {
+        router.push('/files')
+      } else {
+        router.push(`/files/${folderId}`)
+      }
     }
     dispatch({
       type: OPEN_FOLDER_SUCCESS,
