@@ -10,13 +10,14 @@ import { registerDevice, SET_URL } from '../actions'
 
 import logo from '../../res/icon.png'
 
-export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl}) =>
+export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error}) =>
 (
   <div className={classnames(styles['wizard'])}>
     <div className={classnames(styles['wizard-main'])}>
       <p>{t('mobile.onboarding.serverselection.cozy_address')}</p>
-      <input type='text' placeholder={t('mobile.onboarding.serverselection.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
+      <input className={styles['http-input']} type='url' pattern='https://.+' placeholder={t('mobile.onboarding.serverselection.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
       <p>{t('mobile.onboarding.serverselection.description')}</p>
+      {error && <p style={{color: 'red'}}>{t(error)}</p>}
     </div>
     <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.onboarding.serverselection.button')}</button>
   </div>
@@ -35,7 +36,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const mapStateToProps = (state) => {
   return ({
-    serverUrl: state.mobile.serverUrl
+    serverUrl: state.mobile.serverUrl,
+    error: state.mobile.error
   })
 }
 const ConnectedSelectServer = connect(mapStateToProps, mapDispatchToProps)(SelectServer)
