@@ -143,17 +143,29 @@ export const downloadFile = id => {
     const blob = await response.blob()
     // TODO: accessing state in action creators is an antipattern
     const filename = getState().files.find(f => f.id === id).name
-    // Temporary trick to force the "download" of the file
-    const element = document.createElement('a')
-    element.setAttribute('href', window.URL.createObjectURL(blob))
-    element.setAttribute('download', filename)
-    element.style.display = 'none'
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
+
+    if (window.cordova && window.cordova.file) {
+      saveFileWithCordova(blob, filename)
+    } else {
+      // Temporary trick to force the "download" of the file
+      const element = document.createElement('a')
+      element.setAttribute('href', window.URL.createObjectURL(blob))
+      element.setAttribute('download', filename)
+      element.style.display = 'none'
+      document.body.appendChild(element)
+      element.click()
+      document.body.removeChild(element)
+    }
   }
 }
 
+const saveFileWithCordova = (filedata, filename) => {
+  window.cordova.file.DocumentsDirectory.getFile(filename, {create: true, exclusive: false}, fileentry => {
+    fileentry.createWriter(filewriter => {
+      filewriter.write(filedata)
+    })
+  })
+}
 export const showFileActionMenu = id => ({
   type: SHOW_FILE_ACTIONMENU, id
 })
