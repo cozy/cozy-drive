@@ -15,12 +15,16 @@ export class OnBoardingError extends Error {
 
 export function setUrl (url) {
   return async dispatch => {
-    if (/(.*):\/\/(.*)/.test(url) && !url.startsWith('https://')) {
-      dispatch({ type: ERROR, error: 'mobile.onboarding.serverselection.wrong_address' })
-      throw new OnBoardingError('The only supported protocol is https')
-    }
-    if (!url.startsWith('https://')) {
-      url = `https://${url}`
+    if (__DEVELOPMENT__) {
+      console.warn('development mode: we don\'t check SSL requirement')
+    } else {
+      if (/(.*):\/\/(.*)/.test(url) && !url.startsWith('https://')) {
+        dispatch({ type: ERROR, error: 'mobile.onboarding.serverselection.wrong_address' })
+        throw new OnBoardingError('The only supported protocol is https')
+      }
+      if (!url.startsWith('https://')) {
+        url = `https://${url}`
+      }
     }
     return dispatch({ type: SET_URL, url: url })
   }
