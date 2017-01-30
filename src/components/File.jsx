@@ -6,6 +6,9 @@ import styles from '../styles/table'
 import { translate } from '../lib/I18n'
 import FilenameInput from '../components/FilenameInput'
 
+// Temporary
+const STACK_URL = 'http://cozy.local:8080'
+
 const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
   return {
@@ -52,8 +55,14 @@ class File extends Component {
   }
 
   render ({ t, f, attributes, onOpen }, { editing }) {
+    const onDoubleClickListener = isDir(attributes)
+    ? () => onOpen(attributes.id)
+    // TODO Handle files opening throught the app instead of doing it throught the browser
+    : () => window.open(
+      `${STACK_URL}/files/download/${attributes.id}`,
+      '_blank')
     return (
-      <tr>
+      <tr onDoubleClick={onDoubleClickListener}>
         <td className={styles['fil-content-file-select']}>
           <span data-input='checkbox'>
             <input
@@ -102,8 +111,12 @@ class File extends Component {
     }
     return (
       <td className={classes}>
-        <a target='_blank' href={`http://cozy.local:8080/files/download/${attributes.id}`}>
-          {filename}<span className={styles['fil-content-ext']}>{extension}</span>
+        <a
+          target='_blank'
+          href={`${STACK_URL}/files/download/${attributes.id}`}
+        >
+          {filename}
+          <span className={styles['fil-content-ext']}>{extension}</span>
         </a>
       </td>
     )
