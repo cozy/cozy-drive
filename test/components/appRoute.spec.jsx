@@ -9,7 +9,7 @@ import AppRoute, { ComingSoon } from '../../src/components/AppRoute'
 
 describe('AppRoute component', () => {
   it('should render the four routes: photos, albums, shared and trash', () => {
-    const expectedRoutes = ['photos', 'albums', 'shared', 'trash']
+    const expectedRoutes = ['photos(/:photoId)', 'albums', 'shared', 'trash']
     let expectedRoutesIndex = 0
     // components connected with Redux will be displayed as 'Connect(componentName)'
     const expectedComponents = ['Connect(Timeline)']

@@ -1,8 +1,35 @@
+exports[`Timeline component should be rendered correctly if params from router provided 1`] = `
+<div>
+  <_translate
+    viewName="photos" />
+  <_translate
+    isFetching={true}
+    isFirstFetch={false}
+    isIndexing={false}
+    mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
+    onFirstFetch={[Function]}
+    params={
+      Object {
+        "photoId": "33dda00f0eec15bc3b3c59a615001ac8",
+      }
+    }
+    photos={Array []} />
+  <_translate
+    photoId="33dda00f0eec15bc3b3c59a615001ac8" />
+</div>
+`;
+
 exports[`Timeline component should be rendered correctly without store 1`] = `
 <div>
   <_translate
     viewName="photos" />
-  <_translate />
+  <_translate
+    isFetching={true}
+    isFirstFetch={false}
+    isIndexing={false}
+    mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
+    onFirstFetch={[Function]}
+    photos={Array []} />
 </div>
 `;
 
@@ -26,10 +53,27 @@ exports[`Timeline component should have correct connected provided props 1`] = `
   } />
 `;
 
-exports[`Timeline component should render correctly if it has correct connected props provided 1`] = `
+exports[`Timeline component should render correctly if it has correct connected provided props 1`] = `
 <div>
   <_translate
     viewName="photos" />
-  <_translate />
+  <_translate
+    isFetching={true}
+    isFirstFetch={true}
+    isIndexing={false}
+    isWorking={false}
+    mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
+    onFirstFetch={[Function]}
+    photos={Array []}
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    } />
 </div>
 `;

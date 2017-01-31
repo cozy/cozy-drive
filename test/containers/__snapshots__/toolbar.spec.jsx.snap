@@ -1,4 +1,4 @@
-exports[`Topbar component should be rendered correctly 1`] = `
+exports[`Toolbar component should be rendered correctly 1`] = `
 <div
   className="pho-content-toolbar"
   role="toolbar">
