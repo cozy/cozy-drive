@@ -1,3 +1,5 @@
+/* global __ALLOW_HTTP__ */
+
 import 'babel-polyfill'
 
 import '../../src/styles/main'
@@ -35,6 +37,8 @@ const store = createStore(
 )
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.debug(__ALLOW_HTTP__)
+
   localforage.getItem('state').then(state => {
     if (state) {
       store.dispatch({ type: 'SET_STATE', state })
