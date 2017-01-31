@@ -8,10 +8,12 @@ import Empty from '../components/Empty'
 import File from '../components/File'
 
 import SelectionBar from '../containers/SelectionBar'
+import DeleteConfirmation from '../containers/DeleteConfirmation'
 
-const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFileToggle }) => (
+const FileList = ({ t, f, files, showSelection, showDeleteConfirmation, onFileEdit, onFolderOpen, onFileToggle }) => (
   <div role='contentinfo'>
     { showSelection && <SelectionBar /> }
+    { showDeleteConfirmation && <DeleteConfirmation /> }
     <table className={classNames(
       styles['fil-content-table'],
       { [styles['fil-content-table-selection']]: showSelection }

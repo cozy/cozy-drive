@@ -19,6 +19,7 @@ class Folder extends Component {
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
   showSelection: mustShowSelectionBar(state),
+  showDeleteConfirmation: state.ui.showDeleteConfirmation,
   files: getVisibleFiles(state)
 })
 

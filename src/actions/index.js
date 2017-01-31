@@ -15,6 +15,7 @@ export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
+export const SHOW_DELETE_CONFIRMATION = 'SHOW_DELETE_CONFIRMATION'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
@@ -117,6 +118,10 @@ export const showSelectionBar = () => ({
 
 export const hideSelectionBar = () => ({
   type: HIDE_SELECTION_BAR
+})
+
+export const showDeleteConfirmation = () => ({
+  type: SHOW_DELETE_CONFIRMATION
 })
 
 export const toggleFileSelection = (id, selected) => ({

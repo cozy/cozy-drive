@@ -12,6 +12,7 @@ import {
   UPLOAD_FILE_SUCCESS,
   SHOW_SELECTION_BAR,
   HIDE_SELECTION_BAR,
+  SHOW_DELETE_CONFIRMATION,
   SELECT_FILE,
   UNSELECT_FILE
 } from '../actions'
@@ -82,6 +83,15 @@ const showSelectionBar = (state = false, action) => {
   }
 }
 
+const showDeleteConfirmation = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_DELETE_CONFIRMATION:
+      return true
+    default:
+      return state
+  }
+}
+
 const selected = (state = [], action) => {
   switch (action.type) {
     case SELECT_FILE:
@@ -122,6 +132,7 @@ export default combineReducers({
   opening,
   updating,
   showSelectionBar,
+  showDeleteConfirmation,
   selected,
   error
 })
