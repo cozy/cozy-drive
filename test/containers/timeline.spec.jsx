@@ -31,7 +31,7 @@ describe('Timeline component', () => {
     expect(component.node).toMatchSnapshot()
   })
 
-  it('should be rendered correctly if params from router provided', () => {
+  it('should be rendered correctly with params if params from router provided', () => {
     // render
     const component = shallow(
       <Timeline

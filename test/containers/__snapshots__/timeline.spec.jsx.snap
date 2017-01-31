@@ -1,4 +1,4 @@
-exports[`Timeline component should be rendered correctly if params from router provided 1`] = `
+exports[`Timeline component should be rendered correctly with params if params from router provided 1`] = `
 <div>
   <_translate
     viewName="photos" />
@@ -14,8 +14,6 @@ exports[`Timeline component should be rendered correctly if params from router p
       }
     }
     photos={Array []} />
-  <_translate
-    photoId="33dda00f0eec15bc3b3c59a615001ac8" />
 </div>
 `;
 

@@ -9,7 +9,10 @@ exports[`ViewerToolbar component should be rendered correctly with router 1`] = 
     onClick={[Function]}>
     <div
       className="pho-viewer-toolbar-close-cross" />
-    Close
+    <span
+      className="pho-viewer-toolbar-close-text">
+      Close
+    </span>
   </div>
 </div>
 `;
