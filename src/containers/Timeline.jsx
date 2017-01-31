@@ -5,6 +5,7 @@ import { fetchPhotos } from '../actions/photos'
 
 import PhotosList from '../components/PhotosList'
 import Topbar from '../components/Topbar'
+import Viewer from '../components/Viewer'
 
 export class Timeline extends Component {
   constructor (props) {
@@ -25,6 +26,9 @@ export class Timeline extends Component {
       <div>
         <Topbar viewName='photos' />
         <PhotosList {...props} {...state} />
+        {props && props.params && props.params.photoId &&
+          <Viewer photoId={props.params.photoId} />
+        }
       </div>
     )
   }
