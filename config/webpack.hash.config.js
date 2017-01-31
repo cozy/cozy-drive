@@ -2,7 +2,7 @@
 
 const path = require('path')
 const fs = require('fs')
-const mobile = process.env.MOBILE || false
+const mobile = /^mobile/.test(process.env.NODE_ENV)
 const outputFolder = mobile ? 'mobile/www' : 'build'
 
 module.exports = {

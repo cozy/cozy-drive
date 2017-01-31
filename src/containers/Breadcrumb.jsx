@@ -60,5 +60,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default translate()(connect(
-  mapStateToProps, mapDispatchToProps)(withRouter(Breadcrumb)))
+export default translate()(withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Breadcrumb)))

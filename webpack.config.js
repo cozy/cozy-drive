@@ -2,7 +2,7 @@
 
 const merge = require('webpack-merge')
 
-const build = process.env.NODE_ENV === 'production'
+const build = /production$/.test(process.env.NODE_ENV)
 
 const common = merge(
   require('./config/webpack.base.config'),

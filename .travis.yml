@@ -28,6 +28,6 @@ before_install:
 - echo "password = $TX_PASSWD" >> ~/.transifexrc
 script:
 - yarn test
-- yarn run build
+- yarn build:browser
 after_success:
 - test $TRAVIS_BRANCH = "master" && yarn run deploy
