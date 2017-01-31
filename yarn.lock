@@ -1111,24 +1111,9 @@ cheerio@^0.22.0:
     lodash.reject "^4.4.0"
     lodash.some "^4.4.0"
 
-chokidar@1.5.2:
+chokidar@1.5.2, chokidar@^1.0.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.5.2.tgz#293e728640cc93dd8277424334b3c6d4ad3a348a"
-  dependencies:
-    anymatch "^1.3.0"
-    async-each "^1.0.0"
-    glob-parent "^2.0.0"
-    inherits "^2.0.1"
-    is-binary-path "^1.0.0"
-    is-glob "^2.0.0"
-    path-is-absolute "^1.0.0"
-    readdirp "^2.0.0"
-  optionalDependencies:
-    fsevents "^1.0.0"
-
-chokidar@^1.0.0:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.6.1.tgz#2f4447ab5e96e50fb3d789fd90d4c72e0e4c70c2"
   dependencies:
     anymatch "^1.3.0"
     async-each "^1.0.0"
@@ -1620,7 +1605,7 @@ debug-log@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debug-log/-/debug-log-1.0.1.tgz#2307632d4c04382b8df8a32f70b895046d52745f"
 
-debug@*, debug@2.6.0, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0:
+debug@*, debug@2.6.0, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0, debug@^2.3.3:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.0.tgz#bc596bcabe7617f11d9fa15361eded5608b8499b"
   dependencies:
@@ -2590,21 +2575,21 @@ glob-parent@^2.0.0:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^5.0.15:
-  version "5.0.15"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
+glob@7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.0.4.tgz#3b44afa0943bdc31b2037b934791e2e084bcb7f6"
   dependencies:
+    fs.realpath "^1.0.0"
     inflight "^1.0.4"
     inherits "2"
     minimatch "2 || 3"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@7.0.4:
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.0.4.tgz#3b44afa0943bdc31b2037b934791e2e084bcb7f6"
+glob@^5.0.15:
+  version "5.0.15"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
   dependencies:
-    fs.realpath "^1.0.0"
     inflight "^1.0.4"
     inherits "2"
     minimatch "2 || 3"
@@ -3788,16 +3773,12 @@ lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
 
-lodash.defaults@4.0.1:
+lodash.defaults@4.0.1, lodash.defaults@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.0.1.tgz#05678e612a9716c64b5bf2cecf045131ca3d3402"
   dependencies:
     lodash.assigninwith "^4.0.0"
     lodash.rest "^4.0.0"
-
-lodash.defaults@^4.0.1:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
 lodash.differencewith@^4.5.0:
   version "4.5.0"
@@ -4078,11 +4059,7 @@ mute-stream@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
 
-nan@^2.3.0:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.1.tgz#d5b01691253326a97a2bbee9e61c55d8d60351e2"
-
-nan@~2.4.0:
+nan@^2.3.0, nan@~2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.4.0.tgz#fb3c59d45fe4effe215f0b890f8adf6eb32d2232"
 
@@ -4288,7 +4265,7 @@ npm-run-all@^3.1.0:
     shell-quote "^1.6.1"
     string.prototype.padend "^3.0.0"
 
-"npmlog@0 || 1 || 2", npmlog@^2.0.0:
+"npmlog@0 || 1 || 2", "npmlog@0 || 1 || 2 || 3 || 4", npmlog@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-2.0.4.tgz#98b52530f2514ca90d09ec5b22c8846722375692"
   dependencies:
@@ -4296,7 +4273,7 @@ npm-run-all@^3.1.0:
     are-we-there-yet "~1.1.2"
     gauge "~1.2.5"
 
-"npmlog@0 || 1 || 2 || 3 || 4", npmlog@^4.0.1:
+npmlog@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.0.2.tgz#d03950e0e78ce1527ba26d2a7592e9348ac3e75f"
   dependencies:
@@ -5210,16 +5187,7 @@ read-pkg@^1.0.0, read-pkg@^1.1.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
-readable-stream@1.0, "readable-stream@>=1.0.33-1 <1.1.0-0":
-  version "1.0.34"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.0.34.tgz#125820e34bc842d2f2aaafafe4c2916ee32c157c"
-  dependencies:
-    core-util-is "~1.0.0"
-    inherits "~2.0.1"
-    isarray "0.0.1"
-    string_decoder "~0.10.x"
-
-readable-stream@1.0.33:
+readable-stream@1.0, readable-stream@1.0.33, "readable-stream@>=1.0.33-1 <1.1.0-0", readable-stream@^1.0.33:
   version "1.0.33"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.0.33.tgz#3a360dd66c1b1d7fd4705389860eda1d0f61126c"
   dependencies:
@@ -5228,7 +5196,7 @@ readable-stream@1.0.33:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@1.1, readable-stream@^1.0.33, readable-stream@~1.1.9:
+readable-stream@1.1, readable-stream@~1.1.9:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.13.tgz#f6eef764f514c89e2b9e23146a75ba106756d23e"
   dependencies:
@@ -5237,7 +5205,7 @@ readable-stream@1.1, readable-stream@^1.0.33, readable-stream@~1.1.9:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.0, readable-stream@^2.2.2:
+readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.1.0, readable-stream@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.2.tgz#a9e6fec3c7dda85f8bb1b3ba7028604556fc825e"
   dependencies:
@@ -5249,11 +5217,7 @@ readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.
     string_decoder "~0.10.x"
     util-deprecate "~1.0.1"
 
-readable-stream@~0.0.2:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-0.0.4.tgz#f32d76e3fb863344a548d79923007173665b3b8d"
-
-readable-stream@~2.0.0, readable-stream@~2.0.5:
+readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@~2.0.0, readable-stream@~2.0.5:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
   dependencies:
@@ -5263,6 +5227,10 @@ readable-stream@~2.0.0, readable-stream@~2.0.5:
     process-nextick-args "~1.0.6"
     string_decoder "~0.10.x"
     util-deprecate "~1.0.1"
+
+readable-stream@~0.0.2:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-0.0.4.tgz#f32d76e3fb863344a548d79923007173665b3b8d"
 
 readable-stream@~2.1.4:
   version "2.1.5"
@@ -5565,6 +5533,12 @@ sax@^1.1.4, sax@~1.2.1:
 scope-eval@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/scope-eval/-/scope-eval-0.0.3.tgz#166f2ccd1f3754429dec511805501f9d6923b5ec"
+
+script-ext-html-webpack-plugin@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/script-ext-html-webpack-plugin/-/script-ext-html-webpack-plugin-1.5.0.tgz#9d5813cc723daf0b71f7e4e39ac929c793f647f1"
+  dependencies:
+    debug "^2.3.3"
 
 "semver@2 || 3 || 4 || 5", "semver@2.x || 3.x || 4 || 5", semver@^5.1.0, semver@^5.3.0, semver@~5.3.0:
   version "5.3.0"

@@ -2,6 +2,7 @@
 
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
@@ -36,12 +37,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '..', entryFolder, 'index.ejs'),
+      template: path.resolve(__dirname, '../src/index.ejs'),
       title: pkg.name,
-      inject: false,
+      inject: 'head',
       minify: {
         collapseWhitespace: true
       }
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer'
     })
   ]
 }
