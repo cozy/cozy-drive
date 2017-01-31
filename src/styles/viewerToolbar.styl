@@ -1,18 +1,15 @@
 @require 'cozy-ui'
 
-$toolbar-height = em(96px)
-
-$toolbar-side-width = 11em
-
 .pho-viewer-toolbar
-    height      $toolbar-height
+    height      em(90px)
     flex-shrink 0
     display     flex
     width       100vw
+    z-index     101
 
     &::before
         content     ''
-        width       $toolbar-side-width
+        width       10em
         font-size   14px
         flex-grow   0
 
@@ -22,26 +19,53 @@ $toolbar-side-width = 11em
 
 
     .pho-viewer-toolbar-close
-        width           $toolbar-side-width
+        width           10em
         font-weight     bold
         text-transform  uppercase
-        font-size       14px
         display         flex
         align-items     center
         cursor          pointer
         flex-grow       0
 
+        .pho-viewer-toolbar-close-text
+            font-size 14px
+
         .pho-viewer-toolbar-close-cross
             height   3em
             width    3em
-            &:after, &:before
+            &::after, &::before
                 position         absolute
+                border-radius    3px
                 content          ''
                 height           2.5em
                 width            2px
                 background-color white
                 margin           .2em 1.4em
-            &:after
+            &::after
                 transform rotate(-45deg);
-            &:before
+            &::before
                 transform rotate(45deg);
+
+
+@media (max-width: (1023/basefont)rem)
+    .pho-viewer-toolbar
+        height              em(48px)
+        background-color    alpha(grey-08, .33)
+        position            fixed
+
+        &::before
+            width em(48px)
+
+        .pho-viewer-toolbar-close
+            width em(48/14)
+
+            .pho-viewer-toolbar-close-text
+                display none
+
+            .pho-viewer-toolbar-close-cross
+                margin auto
+                height 1.5em
+                width  1.5em
+                &::after, &::before
+                    height  em(18/14)
+                    margin  .1em .7em

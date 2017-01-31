@@ -1,7 +1,5 @@
 @require 'cozy-ui'
 
-$toolbar-height = em(96px)
-
 .pho-viewer-wrapper
     background      grey-08
     height          100vh
@@ -9,7 +7,7 @@ $toolbar-height = em(96px)
     color           white
     display         flex
     flex-direction  column
-    overflow        hidden
+    // overflow        hidden
     position        fixed
     left            0
     top             0
@@ -17,7 +15,7 @@ $toolbar-height = em(96px)
 
     &::after
         content     ''
-        height      $toolbar-height
+        height      em(90px)
         flex-shrink 0
 
     .pho-viewer-content
@@ -45,3 +43,17 @@ $toolbar-height = em(96px)
                 max-width  100%
                 box-shadow 0 6px 24px 0 rgba(0, 0, 0, 0.5)
                 display    block
+
+
+@media (max-width: (1023/basefont)rem)
+    .pho-viewer-wrapper
+        &::after
+            display none
+
+        .pho-viewer-content
+            .photo-viewer-nav-previous, .photo-viewer-nav-next
+                display none
+
+            .pho-viewer-photo img
+                max-height 100vh
+                box-shadow none
