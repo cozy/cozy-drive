@@ -1,0 +1,47 @@
+@require 'cozy-ui'
+
+$toolbar-height = em(96px)
+
+$toolbar-side-width = 11em
+
+.pho-viewer-toolbar
+    height      $toolbar-height
+    flex-shrink 0
+    display     flex
+    width       100vw
+
+    &::before
+        content     ''
+        width       $toolbar-side-width
+        font-size   14px
+        flex-grow   0
+
+    .pho-viewer-toolbar-actions
+        display flex
+        width   100%
+
+
+    .pho-viewer-toolbar-close
+        width           $toolbar-side-width
+        font-weight     bold
+        text-transform  uppercase
+        font-size       14px
+        display         flex
+        align-items     center
+        cursor          pointer
+        flex-grow       0
+
+        .pho-viewer-toolbar-close-cross
+            height   3em
+            width    3em
+            &:after, &:before
+                position         absolute
+                content          ''
+                height           2.5em
+                width            2px
+                background-color white
+                margin           .2em 1.4em
+            &:after
+                transform rotate(-45deg);
+            &:before
+                transform rotate(45deg);

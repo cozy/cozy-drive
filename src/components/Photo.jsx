@@ -1,14 +1,14 @@
 import styles from '../styles/photo'
 
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
 
 import { STACK_FILES_DOWNLOAD_PATH } from '../constants/config'
 
 export const Photo = ({ photo, router }) => {
   const parentPath = router.location.pathname
   return (
-    <Link to={`/viewer/${photo._id}`}>
+    <Link to={`${parentPath}/${photo._id}`}>
       <img
         className={styles['pho-photo-item']}
         src={`${STACK_FILES_DOWNLOAD_PATH}/${photo._id}`}
@@ -17,4 +17,4 @@ export const Photo = ({ photo, router }) => {
   )
 }
 
-export default Photo
+export default withRouter(Photo)
