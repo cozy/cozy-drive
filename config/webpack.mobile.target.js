@@ -10,6 +10,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../mobile/www')
   },
+  module: {
+    noParse: [
+      /localforage\/dist/
+    ]
+  },
   plugins: [
     new webpack.DefinePlugin({
       __ALLOW_HTTP__: !production,
