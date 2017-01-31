@@ -8,10 +8,13 @@ import Empty from '../components/Empty'
 import File from '../components/File'
 
 import SelectionBar from '../containers/SelectionBar'
+import FileActionMenu from '../containers/FileActionMenu'
 
-const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFileToggle }) => (
+const FileList = ({
+  t, f, files, showSelection, showActionMenu, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
+  }) => (
   <div role='contentinfo'>
-    { showSelection && <SelectionBar /> }
+    {showSelection && <SelectionBar />}
     <table className={classNames(
       styles['fil-content-table'],
       { [styles['fil-content-table-selection']]: showSelection }
@@ -23,6 +26,7 @@ const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFile
           <th>{ t('table.head_update') }</th>
           <th>{ t('table.head_size') }</th>
           <th>{ t('table.head_status') }</th>
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -31,12 +35,14 @@ const FileList = ({ t, f, files, showSelection, onFileEdit, onFolderOpen, onFile
             onEdit={onFileEdit}
             onOpen={onFolderOpen}
             onToggle={onFileToggle}
+            onShowActionMenu={onShowActionMenu}
             attributes={file}
           />
         ))}
       </tbody>
     </table>
     {files.length === 0 && <Empty />}
+    {showActionMenu && <FileActionMenu />}
   </div>
 )
 

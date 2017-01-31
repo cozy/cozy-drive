@@ -18,6 +18,8 @@ export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
+export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
+export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
@@ -139,6 +141,14 @@ export const downloadSelection = () => {
     document.body.removeChild(element)
   }
 }
+
+export const showFileActionMenu = id => ({
+  type: SHOW_FILE_ACTIONMENU, id
+})
+
+export const hideFileActionMenu = () => ({
+  type: HIDE_FILE_ACTIONMENU
+})
 
 export const renameFolder = (newName, id) => {
 

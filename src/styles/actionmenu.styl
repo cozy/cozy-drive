@@ -1,0 +1,25 @@
+@require 'cozy-ui'
+@require './popover'
+
+.fil-actionmenu-backdrop
+    display    block
+    position   fixed
+    z-index    101
+    top        0
+    right      0
+    bottom     0
+    left       0
+    background rgba(50, 54, 63, 0.5)
+
+.fil-actionmenu
+    @extends $popover
+    position fixed
+    bottom   em(9px)
+    width    "calc(100% - %s)" % em(16px)
+    margin   0 em(8px)
+
+    a
+        &.fil-action-openwith
+            background embedurl("../assets/icons/icon-link-out-16.svg") em(16px) center no-repeat
+        &.fil-action-download
+            background embedurl("../assets/icons/icon-download-16.svg") em(16px) center no-repeat

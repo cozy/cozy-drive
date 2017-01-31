@@ -54,7 +54,7 @@ class File extends Component {
     onToggle(attributes.id, attributes.selected)
   }
 
-  render ({ t, f, attributes, onOpen }, { editing }) {
+  render ({ t, f, attributes, onOpen, onShowActionMenu }, { editing }) {
     const onDoubleClickListener = isDir(attributes)
     ? () => onOpen(attributes.id)
     // TODO Handle files opening throught the app instead of doing it throught the browser
@@ -85,6 +85,9 @@ class File extends Component {
             : filesize(attributes.size, {base: 10})}
         </td>
         <td>—</td>
+        <td className={styles['fil-content-file-action']}>
+          <button onClick={onShowActionMenu} />
+        </td>
       </tr>
     )
   }
