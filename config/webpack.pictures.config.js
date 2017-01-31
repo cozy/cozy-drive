@@ -1,6 +1,6 @@
 'use strict'
 
-const build = process.env.NODE_ENV === 'production'
+const build = /production$/.test(process.env.NODE_ENV)
 
 module.exports = {
   module: {
