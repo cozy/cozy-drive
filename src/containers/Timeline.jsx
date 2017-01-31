@@ -21,13 +21,13 @@ export class Timeline extends Component {
     }
   }
 
-  render (props, state) {
+  render () {
     return (
       <div>
         <Topbar viewName='photos' />
-        <PhotosList {...props} {...state} />
-        {props && props.params && props.params.photoId &&
-          <Viewer photoId={props.params.photoId} />
+        <PhotosList {...this.props} {...this.state} />
+        {this.props && this.props.params && this.props.params.photoId &&
+          <Viewer photoId={this.props.params.photoId} />
         }
       </div>
     )
