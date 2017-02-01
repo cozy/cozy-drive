@@ -12,7 +12,7 @@ import FileActionMenu from '../containers/FileActionMenu'
 
 const FileList = ({
   t, f, files, showSelection, showActionMenu, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
-  }) => (
+}) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
     <table className={classNames(
