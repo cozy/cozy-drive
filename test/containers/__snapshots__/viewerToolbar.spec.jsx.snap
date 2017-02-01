@@ -1,0 +1,18 @@
+exports[`ViewerToolbar component should be rendered correctly with router 1`] = `
+<div
+  className="pho-viewer-toolbar"
+  role="viewer-toolbar">
+  <div
+    className="pho-viewer-toolbar-actions" />
+  <div
+    className="pho-viewer-toolbar-close"
+    onClick={[Function]}>
+    <div
+      className="pho-viewer-toolbar-close-cross" />
+    <span
+      className="pho-viewer-toolbar-close-text">
+      Close
+    </span>
+  </div>
+</div>
+`;

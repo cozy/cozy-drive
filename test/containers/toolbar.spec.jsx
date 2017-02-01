@@ -8,7 +8,7 @@ import { shallow } from 'enzyme'
 import { mockT } from '../lib/I18n'
 import { Toolbar } from '../../src/containers/Toolbar'
 
-describe('Topbar component', () => {
+describe('Toolbar component', () => {
   it('should be rendered correctly', () => {
     const component = shallow(
       <Toolbar t={mockT} />

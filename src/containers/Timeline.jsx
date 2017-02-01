@@ -20,11 +20,12 @@ export class Timeline extends Component {
     }
   }
 
-  render (props, state) {
+  render () {
     return (
       <div>
         <Topbar viewName='photos' />
-        <PhotosList {...props} {...state} />
+        <PhotosList {...this.props} {...this.state} />
+        { this.props.children }
       </div>
     )
   }

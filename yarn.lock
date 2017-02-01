@@ -1391,9 +1391,9 @@ cozy-client-js@0.0.4:
   dependencies:
     pouchdb "6.1.1"
 
-cozy-ui@3.0.0-beta3:
-  version "3.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta3.tgz#e5bfac544310d8ff6ac81266554d0e92bfdcdf38"
+cozy-ui@3.0.0-beta4:
+  version "3.0.0-beta4"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta4.tgz#64393e7f74f527b76e6f50c9577dc927b9fdb5a3"
   dependencies:
     md5 "^2.2.0"
     normalize.css "5.0.0"

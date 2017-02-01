@@ -1,16 +1,20 @@
 import styles from '../styles/photo'
 
 import React from 'react'
+import { Link, withRouter } from 'react-router'
 
-const STACK_FILES_DOWNLOAD_PATH = 'http://cozy.local:8080/files/download'
+import { STACK_FILES_DOWNLOAD_PATH } from '../constants/config'
 
-const Photo = ({ photo }) => {
+export const Photo = ({ photo, router }) => {
+  const parentPath = router.location.pathname
   return (
-    <img
-      className={styles['pho-photo']}
-      src={`${STACK_FILES_DOWNLOAD_PATH}/${photo._id}`}
-    />
+    <Link to={`${parentPath}/${photo._id}`}>
+      <img
+        className={styles['pho-photo-item']}
+        src={`${STACK_FILES_DOWNLOAD_PATH}/${photo._id}`}
+      />
+    </Link>
   )
 }
 
-export default Photo
+export default withRouter(Photo)

@@ -28,5 +28,8 @@
       "upload_errors": "Errors occurred during the photos upload.",
       "unexpected_upload_error": "An unexpected server error occurred."
     }
+  },
+  "Viewer": {
+    "close": "Close"
   }
 }

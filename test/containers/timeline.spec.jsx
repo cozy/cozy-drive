@@ -31,6 +31,25 @@ describe('Timeline component', () => {
     expect(component.node).toMatchSnapshot()
   })
 
+  it('should be rendered correctly with params if params from router provided', () => {
+    // render
+    const component = shallow(
+      <Timeline
+        isFetching
+        photos={[]}
+        mangoIndexByDate='_design/54d3474c4efdfe10d790425525e56433857955a1'
+        onFirstFetch={(mangoIndex) => mangoIndex}
+        params={{photoId: '33dda00f0eec15bc3b3c59a615001ac8'}}
+      />
+    )
+    // test componentWillReceiveProps
+    component.setProps({
+      isIndexing: false,
+      mangoIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+    })
+    expect(component.node).toMatchSnapshot()
+  })
+
   it('should have correct connected provided props', () => {
     const store = mockStore({
       ui: {
@@ -49,7 +68,7 @@ describe('Timeline component', () => {
     expect(component.node).toMatchSnapshot()
   })
 
-  it('should render correctly if it has correct connected props provided', () => {
+  it('should render correctly if it has correct connected provided props', () => {
     const store = mockStore({
       ui: {
         isFetching: true,
