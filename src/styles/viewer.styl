@@ -1,48 +1,52 @@
 @require 'cozy-ui'
 
+
 .pho-viewer-wrapper
-    background      grey-08
-    height          100vh
-    width           100vw
-    color           white
-    display         flex
-    flex-direction  column
-    // overflow        hidden
     position        fixed
     left            0
     top             0
     z-index         100
+    display         flex
+    flex-direction  column
+    background      grey-08
+    width           100vw
+    height          100vh
+    overflow        hidden
+    color           white
 
     &::after
-        content     ''
-        height      em(90px)
         flex-shrink 0
+        height      em(90px)
+        content     ''
 
-    .pho-viewer-content
-        display         flex
-        flex-direction  row
-        flex-grow       1
 
-        .photo-viewer-nav-previous, .photo-viewer-nav-next
-            width            em(75px)
-            flex-shrink      0
+.pho-viewer-content
+    display         flex
+    flex-direction  row
+    flex-grow       1
 
-        .pho-viewer-photo
-            flex-grow       1
-            display         flex
-            position        relative
-            justify-content center
-            align-items     center
 
-            img
-                position   absolute
-                top        50%
-                left       50%
-                transform  translate(-50%, -50%)
-                max-height 100%
-                max-width  100%
-                box-shadow 0 6px 24px 0 rgba(0, 0, 0, 0.5)
-                display    block
+.photo-viewer-nav-previous, .photo-viewer-nav-next
+    flex-shrink      0
+    width            em(75px)
+
+
+.pho-viewer-photo
+    position        relative
+    display         flex
+    flex-grow       1
+    justify-content center
+    align-items     center
+
+    img
+        position   absolute
+        top        50%
+        left       50%
+        transform  translate(-50%, -50%)
+        display    block
+        max-width  100%
+        max-height 100%
+        box-shadow 0 6px 24px 0 rgba(0, 0, 0, 0.5)
 
 
 @media (max-width: (1023/basefont)rem)
@@ -50,10 +54,9 @@
         &::after
             display none
 
-        .pho-viewer-content
-            .photo-viewer-nav-previous, .photo-viewer-nav-next
-                display none
+    .photo-viewer-nav-previous, .photo-viewer-nav-next
+            display none
 
-            .pho-viewer-photo img
-                max-height 100vh
-                box-shadow none
+    .pho-viewer-photo img
+        max-height 100vh
+        box-shadow none
