@@ -16,8 +16,10 @@ import { I18n } from '../../src/lib/I18n'
 
 import filesApp from './reducers'
 import AppRoute from '../../src/components/AppRoute'
+import App from '../../src/components/App'
 
 import OnBoarding from './containers/OnBoarding'
+import Settings from './containers/Settings'
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
@@ -57,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <Router history={hashHistory}>
             <Route onEnter={requireSetup}>
               {AppRoute}
+
+              <Route component={App}>
+                <Route path='settings' name='mobile.settings' component={Settings} />}
+              </Route>
             </Route>
             <Route path='onboarding' component={OnBoarding} />
           </Router>

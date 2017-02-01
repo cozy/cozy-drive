@@ -4,7 +4,8 @@
     "item_recent": "Recent",
     "item_shared": "Shared by me",
     "item_activity": "Activity",
-    "item_trash": "Trash"
+    "item_trash": "Trash",
+    "item_settings": "Settings"
   },
   "breadcrumb": {
     "title_files": "Files",
@@ -73,6 +74,12 @@
         "description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
         "cozy_address_placeholder": "johnwayne.cozycloud.cc"
       }
+    },
+    "settings": {
+      "title": "Settings",
+      "about": "About",
+      "app_version": "App Version",
+      "account": "Account"
     },
     "action_menu": {
       "open_with": "Open with",
