@@ -13,6 +13,8 @@ export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
+export const TRASH_FILE = 'TRASH_FILE'
+export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 export const SHOW_DELETE_CONFIRMATION = 'SHOW_DELETE_CONFIRMATION'
@@ -109,6 +111,17 @@ export const createFolder = (newName, tempId) => {
       type: CREATE_FOLDER_SUCCESS,
       folder: extractFileAttributes(folder),
       tempId
+    })
+  }
+}
+
+export const trashFile = (id) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: TRASH_FILE, id: id })
+    const trashed = await cozy.files.trashById(id)
+    dispatch({
+      type: TRASH_FILE_SUCCESS,
+      file: extractFileAttributes(trashed)
     })
   }
 }

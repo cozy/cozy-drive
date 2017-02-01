@@ -5,9 +5,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 
-import { hideDeleteConfirmation, toggleFileSelection } from '../actions'
+import { hideDeleteConfirmation, toggleFileSelection, trashFile } from '../actions'
 
-const DeleteConfirmation = ({ t, selected, onDismiss }) => (
+const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => (
   <div className={styles['fil-deleteconfirmation']}>
     <div className={styles['coz-overlay']}>
       <div className={styles['coz-modal']}>
@@ -33,7 +33,7 @@ const DeleteConfirmation = ({ t, selected, onDismiss }) => (
           <button className={styles['secondary']} onClick={() => onDismiss(selected)}>
             cancel
           </button>
-          <button className={styles['danger']}>
+          <button className={styles['danger']} onClick={() => onConfirm(selected)}>
             delete
           </button>
         </div>
@@ -50,6 +50,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: (selected) => {
     dispatch(hideDeleteConfirmation())
     selected.forEach(item => dispatch(toggleFileSelection(item, true)))
+  },
+  onConfirm: (selected) => {
+    selected.forEach(item => {
+      dispatch(trashFile(item))
+      dispatch(toggleFileSelection(item, true))
+    })
+    dispatch(hideDeleteConfirmation())
   }
 })
 

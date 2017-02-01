@@ -10,6 +10,8 @@ import {
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
   UPLOAD_FILE_SUCCESS,
+  TRASH_FILE,
+  TRASH_FILE_SUCCESS,
   SHOW_SELECTION_BAR,
   HIDE_SELECTION_BAR,
   SHOW_DELETE_CONFIRMATION,
@@ -33,9 +35,11 @@ const isWorking = (state = false, action) => {
   switch (action.type) {
     case CREATE_FOLDER:
     case UPLOAD_FILE:
+    case TRASH_FILE:
       return true
     case CREATE_FOLDER_SUCCESS:
     case UPLOAD_FILE_SUCCESS:
+    case TRASH_FILE_SUCCESS:
       return false
     default:
       return state
