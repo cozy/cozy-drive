@@ -24,12 +24,12 @@ const Menu = ({ t, file, onDownload }) => {
       <hr />
       <Item>
         <a className={styles['fil-action-openwith']}>
-          {t('mobile.actionmenu.open_with')}
+          {t('mobile.action_menu.open_with')}
         </a>
       </Item>
       <Item>
         <a className={styles['fil-action-download']} onClick={() => onDownload(file.id)}>
-          {t('mobile.actionmenu.download')}
+          {t('mobile.action_menu.download')}
         </a>
       </Item>
     </div>
