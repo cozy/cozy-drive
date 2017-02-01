@@ -42,6 +42,11 @@
     &.active
       background-image: embedurl("../assets/icons/icon-trash-active.svg")
 
+  .fil-cat-settings
+    background: embedurl("../assets/icons/icon-settings.svg") em(24px) center no-repeat
+    &.active
+      background-image: embedurl("../assets/icons/icon-settings-active.svg")
+
 @media (max-width: (1023/basefont)rem)
   .fil-nav
     display         flex
@@ -68,4 +73,5 @@
     .fil-cat-shared
     .fil-cat-activity
     .fil-cat-trash
+    .fil-cat-settings
       background-position center top
