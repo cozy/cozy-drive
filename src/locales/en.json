@@ -52,14 +52,11 @@
     "title" : "You don’t have any files in this folder.",
     "text" : "Click the \"upload\" button to add files to this folder."
   },
-  "alert": {
-    "critical_will_reload": "The page will reload automatically in %{smart_count} second... |||| The page will reload automatically in %{smart_count} seconds...",
+  "error": {
+    "open_folder": "Something went wrong when opening the folder.",
     "button": {
         "reload": "Refresh now"
     }
-  },
-  "error": {
-    "open_folder": "Something went wrong when opening the folder."
   },
   "mobile": {
     "wizard": {
