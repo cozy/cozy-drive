@@ -8,6 +8,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../build')
   },
+  externals: {
+    'cozy-client-js': 'cozy'
+  },
   plugins: [
     new webpack.DefinePlugin({
       __TARGET__: JSON.stringify('browser')
