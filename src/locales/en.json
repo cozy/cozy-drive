@@ -48,6 +48,15 @@
     "rename": "Rename",
     "close": "Close"
   },
+  "deleteconfirmation": {
+    "title": "Delete this selection?",
+    "close": "Close",
+    "trash": "It will be moved to the Trash.",
+    "restore": "You can still restore it whenever you want.",
+    "shared": "If you have shared it, people won't be able to access it.",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
   "empty": {
     "title" : "You don’t have any files in this folder.",
     "text" : "Click the \"upload\" button to add files to this folder."
