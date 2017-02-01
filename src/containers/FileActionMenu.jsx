@@ -60,7 +60,10 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onDownload: id => dispatch(downloadFile(id)),
+  onDownload: id => {
+    dispatch(downloadFile(id))
+    dispatch(hideFileActionMenu())
+  },
   onClose: () => dispatch(hideFileActionMenu())
 })
 
