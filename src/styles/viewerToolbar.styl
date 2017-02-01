@@ -9,9 +9,9 @@
     height      em(90px)
 
     &::before
+        content     ''
         flex-grow   0
         width       10em
-        content     ''
         font-size   em(14px)
 
 
@@ -39,13 +39,13 @@
     height   3em
 
     &::after, &::before
+        content     ''
         position         absolute
         margin           .2em 1.4em
         border-radius    3px
         width            2px
         height           2.5em
         background-color white
-        content          ''
 
     &::after
         transform rotate(-45deg);
@@ -57,8 +57,8 @@
 @media (max-width: (1023/basefont)rem)
     .pho-viewer-toolbar
         position            fixed
-        background-color    alpha(grey-08, .33)
         height              em(48px)
+        background-color    alpha(grey-08, .33)
 
         &::before
             width em(48px)
