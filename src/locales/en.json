@@ -73,6 +73,10 @@
         "description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
         "cozy_address_placeholder": "johnwayne.cozycloud.cc"
       }
+    },
+    "action_menu": {
+      "open_with": "Open with",
+      "download": "Download"
     }
   }
 }

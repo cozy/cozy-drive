@@ -5161,9 +5161,9 @@ react-addons-test-utils@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-bosonic@^1.0.0-beta3:
-  version "1.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/react-bosonic/-/react-bosonic-1.0.0-beta3.tgz#693ccf615a88fd7198a00caafeda3a75c96fe149"
+react-bosonic@^1.0.0-beta4:
+  version "1.0.0-beta4"
+  resolved "https://registry.yarnpkg.com/react-bosonic/-/react-bosonic-1.0.0-beta4.tgz#ac8c55dd52a983595a48d295c8ca2090d4990643"
   dependencies:
     bosonic "^2.0.0-beta2"
     classnames "^2.2.5"

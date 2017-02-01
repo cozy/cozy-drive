@@ -18,6 +18,9 @@ export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
+export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
+export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
+export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
@@ -128,11 +131,18 @@ export const downloadSelection = () => {
   return async (dispatch, getState) => {
     const { selected } = getState().ui
     dispatch({ type: DOWNLOAD_SELECTION, selected })
-    selected.forEach((id) => dispatch(toggleFileSelection(id, true)))
-    const response = await cozy.files.downloadById(selected[0])
+    selected.forEach(id => dispatch(toggleFileSelection(id, true)))
+    return downloadFile(selected[0])
+  }
+}
+
+export const downloadFile = id => {
+  return async (dispatch, getState) => {
+    dispatch({ type: DOWNLOAD_FILE, id })
+    const response = await cozy.files.downloadById(id)
     const blob = await response.blob()
     // TODO: accessing state in action creators is an antipattern
-    const filename = getState().files.find(f => f.id === selected[0]).name
+    const filename = getState().files.find(f => f.id === id).name
     // Temporary trick to force the "download" of the file
     const element = document.createElement('a')
     element.setAttribute('href', window.URL.createObjectURL(blob))
@@ -143,6 +153,14 @@ export const downloadSelection = () => {
     document.body.removeChild(element)
   }
 }
+
+export const showFileActionMenu = id => ({
+  type: SHOW_FILE_ACTIONMENU, id
+})
+
+export const hideFileActionMenu = () => ({
+  type: HIDE_FILE_ACTIONMENU
+})
 
 export const renameFolder = (newName, id) => {
 

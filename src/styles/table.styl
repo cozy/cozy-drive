@@ -25,6 +25,9 @@
     text-transform  uppercase
   th:first-child
     padding em(8px, 12px)
+  th:last-child
+  td:last-child
+    display none
   th.fil-content-file
     padding-left 0
   td.fil-content-file
@@ -49,6 +52,14 @@
   tr:hover
     td.fil-content-file-select
       opacity 1
+
+  td.fil-content-file-action
+    width   em(24px)
+    padding em(15px) em(8px)
+    button
+      background embedurl("../assets/icons/icon-dots-16.svg") em(8px) center no-repeat
+      border none
+      padding em(15px) em(16px)
 
 .fil-file-audio
   background: embedurl("../assets/icons/icon-type-audio.svg") 0 center no-repeat
@@ -95,6 +106,8 @@
     th
     td:nth-child(n+3)
       display none
+    td:last-child
+      display table-cell
     td.fil-content-file
       left-padded(61px)
       background-position em(16px) center
