@@ -89,7 +89,7 @@
     "classnames": "^2.2.0",
     "cozy-bar": "3.0.0-beta3",
     "cozy-client-js": "0.0.4",
-    "cozy-ui": "3.0.0-beta4",
+    "cozy-ui": "3.0.0-beta5",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
     "localforage": "^1.4.3",
