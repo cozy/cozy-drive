@@ -146,7 +146,8 @@ export default combineReducers({
   opening,
   updating,
   showSelectionBar,
-  showFileActionMenu,
   selected,
+  showFileActionMenu,
+  actionable,
   error
 })

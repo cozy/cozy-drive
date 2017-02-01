@@ -9,7 +9,7 @@ import FilenameInput from '../components/FilenameInput'
 // Temporary
 const STACK_URL = 'http://cozy.local:8080'
 
-const splitFilename = filename => {
+export const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
   return {
     extension: filename.slice(dotIdx + 1),
@@ -19,7 +19,7 @@ const splitFilename = filename => {
 
 const isDir = attrs => attrs.type === 'directory'
 
-const getClassFromMime = attrs => {
+export const getClassFromMime = (attrs) => {
   if (isDir(attrs)) {
     return styles['fil-file-folder']
   }
@@ -86,7 +86,7 @@ class File extends Component {
         </td>
         <td>—</td>
         <td className={styles['fil-content-file-action']}>
-          <button onClick={onShowActionMenu} />
+          <button onClick={() => onShowActionMenu(attributes.id)} />
         </td>
       </tr>
     )
