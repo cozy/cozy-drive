@@ -1,4 +1,4 @@
-exports[`Wizard Component should render different components 1`] = `
+exports[`Onboarding should render different components 1`] = `
 <div
   className="wizard welcome">
   <div
@@ -15,7 +15,7 @@ exports[`Wizard Component should render different components 1`] = `
 </div>
 `;
 
-exports[`Wizard Component should render different components 2`] = `
+exports[`Onboarding should render different components 2`] = `
 <div
   className="wizard">
   <div
