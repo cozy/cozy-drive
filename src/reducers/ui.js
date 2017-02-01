@@ -13,6 +13,7 @@ import {
   SHOW_SELECTION_BAR,
   HIDE_SELECTION_BAR,
   SHOW_DELETE_CONFIRMATION,
+  HIDE_DELETE_CONFIRMATION,
   SELECT_FILE,
   UNSELECT_FILE
 } from '../actions'
@@ -87,6 +88,8 @@ const showDeleteConfirmation = (state = false, action) => {
   switch (action.type) {
     case SHOW_DELETE_CONFIRMATION:
       return true
+    case HIDE_DELETE_CONFIRMATION:
+      return false
     default:
       return state
   }

@@ -5,16 +5,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 
-//import { downloadSelection, hideSelectionBar, showDeleteConfirmation } from '../actions'
+import { hideDeleteConfirmation, toggleFileSelection } from '../actions'
 
-const DeleteConfirmation = ({ t }) => (
+const DeleteConfirmation = ({ t, selected, onDismiss }) => (
   <div className={styles['fil-deleteconfirmation']}>
     <div className={styles['coz-overlay']}>
       <div className={styles['coz-modal']}>
         <h2 className={styles['coz-modal-title']}>
           Delete this File?
         </h2>
-        <button className={classNames('coz-btn', 'coz-btn--close', styles['coz-modal-close'])}>
+        <button
+          className={classNames('coz-btn', 'coz-btn--close', styles['coz-modal-close'])}
+          onClick={() => onDismiss(selected)}
+          >
           <span className='coz-hidden'>close</span>
         </button>
         <p className={classNames(styles['fil-deleteconfirmation-text'], styles['icon-trash'])}>
@@ -27,7 +30,7 @@ const DeleteConfirmation = ({ t }) => (
           shared
         </p>
         <div className={styles['fil-deleteconfirmation-buttons']}>
-          <button className={styles['secondary']}>
+          <button className={styles['secondary']} onClick={() => onDismiss(selected)}>
             cancel
           </button>
           <button className={styles['danger']}>
@@ -40,9 +43,14 @@ const DeleteConfirmation = ({ t }) => (
 )
 
 const mapStateToProps = (state, ownProps) => ({
+  selected: state.ui.selected
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  onDismiss: (selected) => {
+    dispatch(hideDeleteConfirmation())
+    selected.forEach(item => dispatch(toggleFileSelection(item, true)))
+  }
 })
 
 export default connect(
