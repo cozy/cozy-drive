@@ -22,7 +22,7 @@ export function setUrl (url) {
       console.warn('development mode: we don\'t check SSL requirement')
     }
     if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
-      dispatch({ type: ERROR, error: 'mobile.onboarding.serverselection.wrong_address' })
+      dispatch({ type: ERROR, error: 'mobile.onboarding.server_selection.wrong_address' })
       throw new OnBoardingError(`The only supported protocol is ${scheme}`)
     }
     if (!url.startsWith(scheme)) {

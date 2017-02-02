@@ -14,12 +14,12 @@ export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error
 (
   <div className={classnames(styles['wizard'])}>
     <div className={classnames(styles['wizard-main'])}>
-      <p>{t('mobile.onboarding.serverselection.cozy_address')}</p>
-      <input className={styles['http-input']} type='url' pattern='https://.+' placeholder={t('mobile.onboarding.serverselection.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
-      <p>{t('mobile.onboarding.serverselection.description')}</p>
+      <p>{t('mobile.onboarding.server_selection.cozy_address')}</p>
+      <input type='url' placeholder={t('mobile.onboarding.server_selection.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
+      <p>{t('mobile.onboarding.server_selection.description')}</p>
       {error && <p style={{color: 'red'}}>{t(error)}</p>}
     </div>
-    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.onboarding.serverselection.button')}</button>
+    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.onboarding.server_selection.button')}</button>
   </div>
 )
 

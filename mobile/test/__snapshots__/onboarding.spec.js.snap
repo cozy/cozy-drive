@@ -22,9 +22,7 @@ exports[`Onboarding should render different components 2`] = `
     className="wizard-main">
     <p />
     <input
-      className="http-input"
       onChange={undefined}
-      pattern="https://.+"
       placeholder={undefined}
       type="url"
       value={undefined} />
@@ -44,9 +42,7 @@ exports[`Onboarding should render the SelectServer screen 1`] = `
     className="wizard-main">
     <p />
     <input
-      className="http-input"
       onChange={undefined}
-      pattern="https://.+"
       placeholder={undefined}
       type="url"
       value={undefined} />
