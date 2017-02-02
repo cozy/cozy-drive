@@ -118,6 +118,10 @@
     "moduleNameMapper": {
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
+    },
+    "globals": {
+      "__ALLOW_HTTP__": false,
+      "__TARGET__": "browser"
     }
   },
   "standard": {

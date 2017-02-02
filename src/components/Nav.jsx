@@ -37,7 +37,7 @@ const Nav = ({ t, router }) => {
             { t('nav.item_trash') }
           </Link>
         </li>
-        {__TARGET__ === '"mobile"' &&
+        {__TARGET__ === 'mobile' &&
         <li class={styles['fil-nav-item']}>
           <Link to='/settings' class={styles['fil-cat-settings']} activeClassName={styles['active']}>
             { t('nav.item_settings') }
