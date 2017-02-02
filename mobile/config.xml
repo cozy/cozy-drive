@@ -12,7 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="StatusBarBackgroundColor" value="#297ef2" />
-    <engine name="android" spec="6.1.1" />
+    <engine name="android" spec="6.1.2" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
