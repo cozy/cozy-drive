@@ -13,7 +13,7 @@ import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const FileList = ({
-  t, f, files, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, files, error, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
 }) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
