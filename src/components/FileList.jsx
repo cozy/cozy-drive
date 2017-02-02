@@ -8,11 +8,14 @@ import Empty from '../components/Empty'
 import File from '../components/File'
 
 import SelectionBar from '../containers/SelectionBar'
+import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 
-const FileList = ({ t, f, files, showSelection, showDeleteConfirmation, onFileEdit, onFolderOpen, onFileToggle }) => (
+const FileList = ({
+  t, f, files, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
+}) => (
   <div role='contentinfo'>
-    { showSelection && <SelectionBar /> }
+    {showSelection && <SelectionBar />}
     { showDeleteConfirmation && <DeleteConfirmation /> }
     <table className={classNames(
       styles['fil-content-table'],
@@ -25,6 +28,7 @@ const FileList = ({ t, f, files, showSelection, showDeleteConfirmation, onFileEd
           <th>{ t('table.head_update') }</th>
           <th>{ t('table.head_size') }</th>
           <th>{ t('table.head_status') }</th>
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -33,12 +37,14 @@ const FileList = ({ t, f, files, showSelection, showDeleteConfirmation, onFileEd
             onEdit={onFileEdit}
             onOpen={onFolderOpen}
             onToggle={onFileToggle}
+            onShowActionMenu={onShowActionMenu}
             attributes={file}
           />
         ))}
       </tbody>
     </table>
     {files.length === 0 && <Empty />}
+    {showActionMenu && <FileActionMenu />}
   </div>
 )
 

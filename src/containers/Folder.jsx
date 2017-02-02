@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { openFolder, renameFile, toggleFileSelection } from '../actions'
+import { openFolder, renameFile, toggleFileSelection, showFileActionMenu } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
 
 import FileList from '../components/FileList'
@@ -20,6 +20,7 @@ const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
+  showActionMenu: state.ui.showFileActionMenu,
   files: getVisibleFiles(state)
 })
 
@@ -32,6 +33,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onFileEdit: (val, attrs) => {
     dispatch(renameFile(val, attrs))
+  },
+  onShowActionMenu: (fileId) => {
+    dispatch(showFileActionMenu(fileId))
   }
 })
 

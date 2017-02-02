@@ -9,7 +9,7 @@ import FilenameInput from '../components/FilenameInput'
 // Temporary
 const STACK_URL = 'http://cozy.local:8080'
 
-const splitFilename = filename => {
+export const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
   return {
     extension: filename.slice(dotIdx + 1),
@@ -19,7 +19,7 @@ const splitFilename = filename => {
 
 const isDir = attrs => attrs.type === 'directory'
 
-const getClassFromMime = attrs => {
+export const getClassFromMime = (attrs) => {
   if (isDir(attrs)) {
     return styles['fil-file-folder']
   }
@@ -54,7 +54,7 @@ class File extends Component {
     onToggle(attributes.id, attributes.selected)
   }
 
-  render ({ t, f, attributes, onOpen }, { editing }) {
+  render ({ t, f, attributes, onOpen, onShowActionMenu }, { editing }) {
     const onDoubleClickListener = isDir(attributes)
     ? () => onOpen(attributes.id)
     // TODO Handle files opening throught the app instead of doing it throught the browser
@@ -85,6 +85,9 @@ class File extends Component {
             : filesize(attributes.size, {base: 10})}
         </td>
         <td>—</td>
+        <td className={styles['fil-content-file-action']}>
+          <button onClick={() => onShowActionMenu(attributes.id)} />
+        </td>
       </tr>
     )
   }

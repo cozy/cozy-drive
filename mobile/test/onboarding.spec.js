@@ -6,7 +6,7 @@ import renderer from 'react-test-renderer'
 import Wizard from '../../mobile/src/components/Wizard'
 import { Welcome, SelectServer } from '../../mobile/src/containers/OnBoarding'
 
-describe('Wizard Component', () => {
+describe('Onboarding', () => {
   it('should render different components', () => {
     const steps = [
       Welcome,

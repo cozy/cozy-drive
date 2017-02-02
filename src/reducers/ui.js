@@ -17,7 +17,9 @@ import {
   SHOW_DELETE_CONFIRMATION,
   HIDE_DELETE_CONFIRMATION,
   SELECT_FILE,
-  UNSELECT_FILE
+  UNSELECT_FILE,
+  SHOW_FILE_ACTIONMENU,
+  HIDE_FILE_ACTIONMENU
 } from '../actions'
 
 const isFetching = (state = false, action) => {
@@ -120,6 +122,28 @@ const selected = (state = [], action) => {
   }
 }
 
+const showFileActionMenu = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_FILE_ACTIONMENU:
+      return true
+    case HIDE_FILE_ACTIONMENU:
+      return false
+    default:
+      return state
+  }
+}
+
+const actionable = (state = null, action) => {
+  switch (action.type) {
+    case SHOW_FILE_ACTIONMENU:
+      return action.id
+    case HIDE_FILE_ACTIONMENU:
+      return null
+    default:
+      return state
+  }
+}
+
 const error = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_FAILURE:
@@ -141,5 +165,7 @@ export default combineReducers({
   showSelectionBar,
   showDeleteConfirmation,
   selected,
+  showFileActionMenu,
+  actionable,
   error
 })

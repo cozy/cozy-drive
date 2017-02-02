@@ -31,6 +31,10 @@ export const getVisibleFiles = state => {
   })
 }
 
+export const getFileById = (files, id) => files.find(f => f.id === id)
+
+export const getActionableFile = ({ files, ui }) => getFileById(files, ui.actionable)
+
 export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
 
 export default filesApp
