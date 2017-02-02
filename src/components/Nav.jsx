@@ -1,3 +1,5 @@
+/* global __TARGET__ */
+
 import styles from '../styles/nav'
 
 import React from 'react'
@@ -35,6 +37,13 @@ const Nav = ({ t, router }) => {
             { t('nav.item_trash') }
           </Link>
         </li>
+        {__TARGET__ === '"mobile"' &&
+        <li class={styles['fil-nav-item']}>
+          <Link to='/settings' class={styles['fil-cat-settings']} activeClassName={styles['active']}>
+            { t('nav.item_settings') }
+          </Link>
+        </li>
+        }
       </ul>
     </nav>
   )

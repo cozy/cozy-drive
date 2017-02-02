@@ -1,5 +1,4 @@
 import cozy from 'cozy-client-js'
-import { v4 } from 'node-uuid'
 
 import { ROOT_DIR_ID } from '../constants/config'
 
@@ -23,6 +22,7 @@ export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
+const genId = () => Math.random().toString(36).slice(2)
 
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
@@ -81,7 +81,7 @@ export const uploadFile = (file) => {
 export const addFolder = () => ({
   type: ADD_FOLDER,
   folder: {
-    id: v4(),
+    id: genId(),
     name: '',
     type: 'directory',
     created_at: Date.now(),
