@@ -3,9 +3,39 @@ import localforage from 'localforage'
 
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
+export const SET_STATE = 'SET_STATE'
+export const ERROR = 'ERROR'
+
+export class OnBoardingError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'OnBoardingError'
+  }
+}
+
+export function setUrl (url) {
+  return async dispatch => {
+    let __ALLOW_HTTP__ = __ALLOW_HTTP__ || false
+    let scheme = 'https://'
+    if (__ALLOW_HTTP__) {
+      scheme = 'http://'
+      console.warn('development mode: we don\'t check SSL requirement')
+    }
+    if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
+      dispatch({ type: ERROR, error: 'mobile.onboarding.server_selection.wrong_address' })
+      throw new OnBoardingError(`The only supported protocol is ${scheme}`)
+    }
+    if (!url.startsWith(scheme)) {
+      url = `${scheme}${url}`
+    }
+    return dispatch({ type: SET_URL, url: url })
+  }
+}
 
 export const registerDevice = (router, location) => {
   return async (dispatch, getState) => {
+    await dispatch(setUrl(getState().mobile.serverUrl))
+
     let oauth
     if (window.cordova && window.cordova.InAppBrowser) {
       oauth = {
@@ -40,6 +70,7 @@ export const registerDevice = (router, location) => {
               },
               (err) => {
                 inAppBrowser.close()
+                dispatch(error(err))
                 throw err
               }
             )
@@ -54,7 +85,13 @@ export const registerDevice = (router, location) => {
       oauth: oauth
     })
 
-    await cozy.authorize()
+    try {
+      await cozy.authorize()
+    } catch (err) {
+      dispatch(error(err))
+      throw err
+    }
+
     dispatch({ type: SETUP })
     localforage.setItem('state', getState().mobile)
     if (location.state && location.state.nextPathname) {
@@ -63,4 +100,8 @@ export const registerDevice = (router, location) => {
       router.replace('/')
     }
   }
+}
+
+function error (err) {
+  return { type: ERROR, error: err.message.toLowerCase().split(' ').join('_') }
 }
