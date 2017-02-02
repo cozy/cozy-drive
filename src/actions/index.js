@@ -12,6 +12,7 @@ export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
+export const DELETE_FILE = 'DELETE_FILE'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 export const SELECT_FILE = 'SELECT_FILE'
@@ -111,6 +112,16 @@ export const createFolder = (newName, tempId) => {
       folder: extractFileAttributes(folder),
       tempId
     })
+  }
+}
+
+export const deleteFile = (id, isNew = false) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: DELETE_FILE, id: id })
+
+    if (!isNew) {
+      //@TODO: server side deletion
+    }
   }
 }
 

@@ -49,6 +49,13 @@ class File extends Component {
     })
   }
 
+  abortEdit (accidental) {
+    this.props.onEditAbort(accidental, this.props.attributes)
+    this.setState({
+      editing: false
+    })
+  }
+
   toggle (e) {
     const { attributes, onToggle } = this.props
     onToggle(attributes.id, attributes.selected)
@@ -98,7 +105,7 @@ class File extends Component {
     if (editing) {
       return (
         <td className={classes}>
-          <FilenameInput name={attributes.name} onSubmit={val => this.edit(val)} />
+          <FilenameInput name={attributes.name} onSubmit={val => this.edit(val)} onAbort={() => this.abortEdit()} />
         </td>
       )
     }
