@@ -5,13 +5,14 @@ import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import Empty from '../components/Empty'
+import Oops from '../components/Oops'
 import File from '../components/File'
 
 import SelectionBar from '../containers/SelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 
 const FileList = ({
-  t, f, files, showSelection, showActionMenu, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, files, error, showSelection, showActionMenu, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
 }) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
@@ -30,7 +31,7 @@ const FileList = ({
         </tr>
       </thead>
       <tbody>
-        {files.map((file, idx) => (
+        {!error && files.map((file, idx) => (
           <File
             onEdit={onFileEdit}
             onOpen={onFolderOpen}
@@ -41,6 +42,7 @@ const FileList = ({
         ))}
       </tbody>
     </table>
+    {error && <Oops />}
     {files.length === 0 && <Empty />}
     {showActionMenu && <FileActionMenu />}
   </div>

@@ -1,6 +1,6 @@
 @require 'cozy-ui'
 
-.fil-empty
+$empty
   text-align center
   &:before
     content     ''
@@ -8,7 +8,6 @@
     margin      em(100px) auto 0
     width       em(160px)
     height      em(140px)
-    background  embedurl("../assets/icons/icon-type-folder.svg") center center / cover no-repeat
   h2
     font-size(24px)
     margin         em(33px) auto 0
@@ -20,8 +19,7 @@
     color       grey-11
     line-height 1.5
 
-@media (max-width: (1023/basefont)rem)
-  .fil-empty
+  @media (max-width: (1023/basefont)rem)
     &:before
       width  em(120px)
       height em(105px)
@@ -29,3 +27,8 @@
       margin em(33px) 1.5em 0
     p
       margin em(5px) 1.5em 0
+
+.fil-empty
+  @extends $empty
+  &:before
+    background  embedurl("../assets/icons/icon-type-folder.svg") center center / cover no-repeat

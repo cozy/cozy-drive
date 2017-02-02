@@ -1406,9 +1406,9 @@ cozy-client-js@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.0.7.tgz#910878f98469b665fd39a419be8496ad664e4c5e"
 
-cozy-ui@3.0.0-beta4:
-  version "3.0.0-beta4"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta4.tgz#64393e7f74f527b76e6f50c9577dc927b9fdb5a3"
+cozy-ui@3.0.0-beta5:
+  version "3.0.0-beta5"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta5.tgz#dfafad446b0be35336cc5f8b4b4309ecbd12065a"
   dependencies:
     md5 "^2.2.0"
     normalize.css "5.0.0"
