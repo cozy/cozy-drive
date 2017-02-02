@@ -54,7 +54,7 @@ export const registerDevice = (router, location) => {
             const inAppBrowser = InAppBrowser.open(url, target, options)
 
             return new Promise((resolve) => {
-              inAppBrowser.addEventListener('loadstop', ({url}) => {
+              inAppBrowser.addEventListener('loadstart', ({url}) => {
                 const accessCode = /\?access_code=(.+)$/.test(url)
                 const state = /\?state=(.+)$/.test(url)
 
