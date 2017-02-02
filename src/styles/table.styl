@@ -6,16 +6,16 @@
 
 .fil-content-header
 .fil-content-cell
-    box-sizing: border-box;
-    padding em(15px) em(32px)
+    box-sizing  border-box
+    padding     em(15px) em(32px)
     font-size(14px)
 
 .fil-content-row
-    display flex
-    flex-direction row
-    align-items center
-    width 100%
-    border-bottom 1px solid grey-09
+    display         flex
+    flex-direction  row
+    align-items     center
+    width           100%
+    border-bottom   1px solid grey-09
 
     .fil-content-body &:hover
         background-color grey-10
@@ -35,8 +35,8 @@
   padding em(8px, 12px)
 
 .fil-content-file-action
-    display none
-    text-align right
+    display     none
+    text-align  right
 
 .fil-content-file
     flex 0 0 40%
@@ -45,29 +45,29 @@
     padding-left 0
 
 .fil-content-cell.fil-content-file
-    padding-left em(45px)
+    padding-left   em(45px)
     font-size(16px)
-    white-space nowrap
-    overflow hidden
-    text-overflow ellipsis
+    white-space    nowrap
+    overflow       hidden
+    text-overflow  ellipsis
     a
-        color grey-08
-        text-decoration none
-        cursor pointer
+        color            grey-08
+        text-decoration  none
+        cursor           pointer
 
 .fil-content-date
 .fil-content-size
-    flex: 0 0 15%
+    flex 0 0 15%
 
 .fil-content-status
-    flex: 0 0 25%
+    flex 0 0 25%
 
 .fil-content-file-select
-    flex: 0 0 5%
-    opacity 0
-    min-width   em(32px)
-    max-width   em(48px)
-    padding em(15px) em(8px)
+    flex       0 0 5%
+    opacity    0
+    min-width  em(32px)
+    max-width  em(48px)
+    padding    em(15px) em(8px)
     font-size(14px)
 
 .fil-content-table-selection
@@ -83,49 +83,49 @@
     padding em(15px) em(8px)
 
     button
-        background embedurl("../assets/icons/icon-dots-16.svg") em(8px) center no-repeat
-        border none
-        padding em(15px) em(16px)
+        background  embedurl("../assets/icons/icon-dots-16.svg") em(8px) center no-repeat
+        border      none
+        padding     em(15px) em(16px)
 
 .fil-file-audio
-  background: embedurl("../assets/icons/icon-type-audio.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-audio.svg") 0 center no-repeat
 
 .fil-file-bin
-  background: embedurl("../assets/icons/icon-type-binary.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-binary.svg") 0 center no-repeat
 
 .fil-file-code
-  background: embedurl("../assets/icons/icon-type-code.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-code.svg") 0 center no-repeat
 
 .fil-file-files
-  background: embedurl("../assets/icons/icon-type-files.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-files.svg") 0 center no-repeat
 
 .fil-file-folder
-  background: embedurl("../assets/icons/icon-type-folder.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-folder.svg") 0 center no-repeat
 
 .fil-file-image
-  background: embedurl("../assets/icons/icon-type-image.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-image.svg") 0 center no-repeat
 
 .fil-file-pdf
-  background: embedurl("../assets/icons/icon-type-pdf.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-pdf.svg") 0 center no-repeat
 
 .fil-file-slide
-  background: embedurl("../assets/icons/icon-type-slide.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-slide.svg") 0 center no-repeat
 
 .fil-file-sheet
-  background: embedurl("../assets/icons/icon-type-spreadsheet.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-spreadsheet.svg") 0 center no-repeat
 
 .fil-file-text
-  background: embedurl("../assets/icons/icon-type-text.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-text.svg") 0 center no-repeat
 
 .fil-file-video
-  background: embedurl("../assets/icons/icon-type-video.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-video.svg") 0 center no-repeat
 
 .fil-file-zip
-  background: embedurl("../assets/icons/icon-type-zip.svg") 0 center no-repeat
+  background embedurl("../assets/icons/icon-type-zip.svg") 0 center no-repeat
 
 .fil-loading
   @extend $icon-spinner-small-blue
-  margin-left: 0.5em
+  margin-left 0.5em
 
 @media (max-width: (768/basefont)rem)
     .fil-content-header
@@ -151,8 +151,8 @@
 
     .fil-content-table-selection
         .fil-content-file-select
-            display block
-            flex 0 0 5%
+            display  block
+            flex     0 0 5%
 
         .fil-content-file
             flex 0 0 75%
