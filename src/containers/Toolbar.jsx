@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 
-import UploadButton from './UploadButton'
+import UploadButton from '../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { addFolder, showSelectionBar, uploadFile } from '../actions'
