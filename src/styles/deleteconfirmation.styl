@@ -2,6 +2,9 @@
 
 .fil-deleteconfirmation
     @extends $modals
+    
+    .coz-overlay
+      z-index  1100//above the selection bar
 
 .fil-deleteconfirmation-text
     left-padded(25px)
@@ -20,7 +23,7 @@
 
 .fil-deleteconfirmation-buttons
     @extends $buttons
-    top-spaced(1.5em)
+    top-spaced(2em)
     text-align      right
 
     button
