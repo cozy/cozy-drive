@@ -1,4 +1,5 @@
 import styles from '../styles/toolbar'
+import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -16,6 +17,13 @@ const Toolbar = ({ t, error, addFolder, showSelectionBar, uploadFile }) => (
       onUpload={uploadFile}
       label={t('toolbar.item_upload')}
     />
+    <button
+        role='button'
+        className={classNames('coz-btn', styles['fil-action-newfolder'])}
+        onClick={addFolder}
+      >
+      {t('toolbar.menu_new_folder')}
+    </button>
     <MenuButton>
       <button
         role='button'
