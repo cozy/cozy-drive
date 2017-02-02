@@ -50,6 +50,7 @@ export const registerDevice = (router, location) => {
 
     cozy.init({
       cozyURL: `${getState().mobile.serverUrl}`,
+      offline: {doctypes: ['io.cozy.files'], timer: 15},
       oauth: oauth
     })
 
