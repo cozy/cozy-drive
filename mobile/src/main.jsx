@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state) {
       store.dispatch({ type: SET_STATE, state })
       cozy.init({
-        cozyURL: state.serverUrl
+        cozyURL: state.serverUrl,
+        offline: {doctypes: ['io.cozy.files'], timer: 15}
       })
     }
 
