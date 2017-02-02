@@ -18,6 +18,7 @@ class Folder extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
+  error: state.ui.error,
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
   showActionMenu: state.ui.showFileActionMenu,

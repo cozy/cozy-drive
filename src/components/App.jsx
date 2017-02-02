@@ -8,13 +8,8 @@ import classNames from 'classnames'
 
 import { openFolder } from '../actions'
 
-import Alerter from './Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
-
-const reload = () => {
-  window.location.reload()
-}
 
 class App extends Component {
   componentWillMount () {
@@ -32,11 +27,6 @@ class App extends Component {
   render ({ t, error, children }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
-        { error && <Alerter
-          error={error}
-          reload={reload}
-          />
-        }
         <Sidebar />
 
         <main class={styles['fil-content']}>
@@ -49,7 +39,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  error: state.ui.error,
   folder: state.folder
 })
 
