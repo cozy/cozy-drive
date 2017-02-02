@@ -38,7 +38,7 @@ describe('mobile reducer', () => {
 
   it('shoud add an error with "ERROR', () => {
     const newState = reducer({}, { type: ERROR, error: 'oops' })
-  expect(newState.error).toBeDefined()
+    expect(newState.error).toBeDefined()
   })
 })
 

@@ -1,5 +1,3 @@
-/* global __ALLOW_HTTP__ */
-
 import cozy, { LocalStorage as Storage } from 'cozy-client-js'
 import localforage from 'localforage'
 
@@ -17,6 +15,7 @@ export class OnBoardingError extends Error {
 
 export function setUrl (url) {
   return async dispatch => {
+    let __ALLOW_HTTP__ = __ALLOW_HTTP__ || false
     let scheme = 'https://'
     if (__ALLOW_HTTP__) {
       scheme = 'http://'

@@ -37,7 +37,7 @@ exports[`Onboarding should render different components 2`] = `
 </div>
 `;
 
-exports[`Wizard Component should render the SelectServer screen 1`] = `
+exports[`Onboarding should render the SelectServer screen 1`] = `
 <div
   className="wizard">
   <div
@@ -59,7 +59,7 @@ exports[`Wizard Component should render the SelectServer screen 1`] = `
 </div>
 `;
 
-exports[`Wizard Component should render the welcome screen 1`] = `
+exports[`Onboarding should render the welcome screen 1`] = `
 <div
   className="wizard welcome">
   <div
