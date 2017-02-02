@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import { mobile as reducer } from '../src/reducers/mobile'
-import { SET_STATE, SET_URL, SETUP, ERROR, registerDevice, setUrl, OnBoardingError } from '../src/actions'
+import { SET_STATE, SET_URL, SETUP, ERROR, setUrl, OnBoardingError } from '../src/actions'
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)

@@ -1,3 +1,5 @@
+/* global __ALLOW_HTTP__ */
+
 import cozy, { LocalStorage as Storage } from 'cozy-client-js'
 import localforage from 'localforage'
 
@@ -15,16 +17,17 @@ export class OnBoardingError extends Error {
 
 export function setUrl (url) {
   return async dispatch => {
-    if (__DEVELOPMENT__) {
+    let scheme = 'https://'
+    if (__ALLOW_HTTP__) {
+      scheme = 'http://'
       console.warn('development mode: we don\'t check SSL requirement')
-    } else {
-      if (/(.*):\/\/(.*)/.test(url) && !url.startsWith('https://')) {
-        dispatch({ type: ERROR, error: 'mobile.onboarding.serverselection.wrong_address' })
-        throw new OnBoardingError('The only supported protocol is https')
-      }
-      if (!url.startsWith('https://')) {
-        url = `https://${url}`
-      }
+    }
+    if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
+      dispatch({ type: ERROR, error: 'mobile.onboarding.serverselection.wrong_address' })
+      throw new OnBoardingError(`The only supported protocol is ${scheme}`)
+    }
+    if (!url.startsWith(scheme)) {
+      url = `${scheme}${url}`
     }
     return dispatch({ type: SET_URL, url: url })
   }
