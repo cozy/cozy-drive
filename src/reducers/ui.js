@@ -12,6 +12,7 @@ import {
   UPLOAD_FILE_SUCCESS,
   TRASH_FILE,
   TRASH_FILE_SUCCESS,
+  TRASH_FILE_FAILURE,
   SHOW_SELECTION_BAR,
   HIDE_SELECTION_BAR,
   SHOW_DELETE_CONFIRMATION,
@@ -42,6 +43,7 @@ const isWorking = (state = false, action) => {
     case CREATE_FOLDER_SUCCESS:
     case UPLOAD_FILE_SUCCESS:
     case TRASH_FILE_SUCCESS:
+    case TRASH_FILE_FAILURE:
       return false
     default:
       return state
@@ -149,6 +151,12 @@ const error = (state = null, action) => {
     case OPEN_FOLDER_FAILURE:
       return {
         message: 'error.open_folder',
+        cause: action.error,
+        critical: true
+      }
+    case TRASH_FILE_FAILURE:
+      return {
+        message: 'error.trash_file',
         cause: action.error,
         critical: true
       }

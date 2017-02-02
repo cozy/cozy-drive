@@ -69,7 +69,8 @@
     }
   },
   "error": {
-    "open_folder": "Something went wrong when opening the folder."
+    "open_folder": "Something went wrong when opening the folder.",
+    "trash_file": "Something went wrong when trashing the selection."
   },
   "mobile": {
     "wizard": {
