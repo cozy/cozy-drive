@@ -122,8 +122,9 @@ export const createFolder = (newName, tempId) => {
 export const trashFile = (id) => {
   return async (dispatch, getState) => {
     dispatch({ type: TRASH_FILE, id: id })
+    let trashed
     try {
-      const trashed = await cozy.files.trashById(id)
+      trashed = await cozy.files.trashById(id)
     } catch (err){
       return dispatch({
         type: TRASH_FILE_FAILURE, 
