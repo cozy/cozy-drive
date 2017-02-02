@@ -67,12 +67,9 @@ class File extends Component {
           <span data-input='checkbox'>
             <input
               type='checkbox'
-              disabled={isDir(attributes)}
               checked={attributes.selected}
              />
-            {isDir(attributes)
-              ? <label />
-              : <label onClick={e => this.toggle(e)} />}
+            <label onClick={e => this.toggle(e)} />
           </span>
         </td>
         {this.renderFilenameCell(attributes, onOpen, editing)}
