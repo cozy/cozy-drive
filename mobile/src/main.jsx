@@ -71,4 +71,3 @@ document.addEventListener('DOMContentLoaded', () => {
     ), document.querySelector('[role=application]'))
   })
 })
-
