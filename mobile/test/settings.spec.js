@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render } from 'enzyme'
 import { Settings } from '../../mobile/src/containers/Settings'
 
 describe('Settings', () => {
@@ -7,7 +7,7 @@ describe('Settings', () => {
     const t = key => key
     const version = '1.0.0'
     const SettingsComponent = <Settings t={t} version={version} />
-    const component = shallow(SettingsComponent)
+    const component = render(SettingsComponent)
 
     expect(component.find('#version').text()).toEqual(version)
   })
@@ -15,7 +15,7 @@ describe('Settings', () => {
     const t = key => key
     const serverUrl = 'https://localhost'
     const SettingsComponent = <Settings t={t} serverUrl={serverUrl} />
-    const component = shallow(SettingsComponent)
+    const component = render(SettingsComponent)
 
     expect(component.find('#serverUrl').text()).toEqual(serverUrl)
   })
