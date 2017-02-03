@@ -17,7 +17,7 @@ const FileList = ({
 }) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
-    { showDeleteConfirmation && <DeleteConfirmation /> }
+    {showDeleteConfirmation && <DeleteConfirmation />}
     <table className={classNames(
       styles['fil-content-table'],
       { [styles['fil-content-table-selection']]: showSelection }
