@@ -8,6 +8,12 @@ export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
 
+const WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
+
+function error () {
+  return { type: ERROR, error: WRONG_ADDRESS }
+}
+
 export class OnBoardingError extends Error {
   constructor (message) {
     super(message)
@@ -23,7 +29,7 @@ export function setUrl (url) {
       console.warn('development mode: we don\'t check SSL requirement')
     }
     if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
-      dispatch({ type: ERROR, error: 'mobile.onboarding.server_selection.wrong_address' })
+      dispatch(error())
       throw new OnBoardingError(`The only supported protocol is ${scheme}`)
     }
     if (!url.startsWith(scheme)) {
@@ -71,7 +77,7 @@ export const registerDevice = (router, location) => {
               },
               (err) => {
                 inAppBrowser.close()
-                dispatch(error(err))
+                dispatch(error())
                 throw err
               }
             )
@@ -89,7 +95,7 @@ export const registerDevice = (router, location) => {
     try {
       await cozy.authorize()
     } catch (err) {
-      dispatch(error(err))
+      dispatch(error())
       throw err
     }
 
@@ -101,8 +107,4 @@ export const registerDevice = (router, location) => {
       router.replace('/')
     }
   }
-}
-
-function error (err) {
-  return { type: ERROR, error: err.message.toLowerCase().split(' ').join('_') }
 }
