@@ -7,7 +7,14 @@ import { translate } from '../lib/I18n'
 
 import { hideDeleteConfirmation, toggleFileSelection, trashFile } from '../actions'
 
-const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => (
+const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => {
+  const deleteconfirmationTexts = ['trash','restore','shared'].map(type => (
+    <p className={classNames(styles['fil-deleteconfirmation-text'], styles[`icon-${type}`])}>
+      {t(`deleteconfirmation.${type}`)}
+    </p>
+  ))
+
+  return (
   <div className={styles['fil-deleteconfirmation']}>
     <div className={styles['coz-overlay']}>
       <div className={styles['coz-modal']}>
@@ -20,15 +27,7 @@ const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => (
           >
           <span className='coz-hidden'>{t('deleteconfirmation.close')}</span>
         </button>
-        <p className={classNames(styles['fil-deleteconfirmation-text'], styles['icon-trash'])}>
-          {t('deleteconfirmation.trash')}
-        </p>
-        <p className={classNames(styles['fil-deleteconfirmation-text'], styles['icon-restore'])}>
-          {t('deleteconfirmation.restore')}
-        </p>
-        <p className={classNames(styles['fil-deleteconfirmation-text'], styles['icon-shared'])}>
-          {t('deleteconfirmation.shared')}
-        </p>
+        {deleteconfirmationTexts}
         <div className={styles['fil-deleteconfirmation-buttons']}>
           <button className={styles['secondary']} onClick={() => onDismiss(selected)}>
             {t('deleteconfirmation.cancel')}
@@ -40,7 +39,7 @@ const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => (
       </div>
     </div>
   </div>
-)
+)}
 
 const mapStateToProps = (state, ownProps) => ({
   selected: state.ui.selected
