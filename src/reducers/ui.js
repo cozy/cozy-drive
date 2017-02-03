@@ -6,6 +6,8 @@ import {
   OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
+  ADD_FOLDER,
+  ABORT_ADD_FOLDER,
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
@@ -67,6 +69,18 @@ const updating = (state = [], action) => {
         ...state.slice(0, idx),
         ...state.slice(idx + 1)
       ]
+    default:
+      return state
+  }
+}
+
+const disableFolderCreation = (state = false, action) => {
+  switch (action.type) {
+    case ADD_FOLDER:
+      return true
+    case ABORT_ADD_FOLDER:
+    case CREATE_FOLDER_SUCCESS:
+      return false
     default:
       return state
   }
@@ -145,6 +159,7 @@ export default combineReducers({
   isWorking,
   opening,
   updating,
+  disableFolderCreation,
   showSelectionBar,
   selected,
   showFileActionMenu,

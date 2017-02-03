@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { openFolder, renameFile, deleteFile, toggleFileSelection, showFileActionMenu } from '../actions'
+import { openFolder, renameFile, abortAddFolder, deleteFile, toggleFileSelection, showFileActionMenu } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
 
 import FileList from '../components/FileList'
@@ -35,7 +35,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(renameFile(val, attrs))
   },
   onFileEditAbort: (accidental, attrs) => {
-    if (attrs.isNew) dispatch(deleteFile(attrs.id, attrs.isNew))
+    if (attrs.type === 'directory' && attrs.isNew) {
+      dispatch(abortAddFolder())
+      dispatch(deleteFile(attrs.id, attrs.isNew))
+    }
   },
   onShowActionMenu: (fileId) => {
     dispatch(showFileActionMenu(fileId))

@@ -8,6 +8,7 @@ export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
 export const ADD_FOLDER = 'ADD_FOLDER'
+export const ABORT_ADD_FOLDER = 'ABORT_ADD_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
@@ -88,6 +89,10 @@ export const addFolder = () => ({
     created_at: Date.now(),
     isNew: true
   }
+})
+
+export const abortAddFolder = () => ({
+    type: ABORT_ADD_FOLDER
 })
 
 const isDir = attrs => attrs.type === 'directory'
