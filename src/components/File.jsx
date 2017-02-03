@@ -69,8 +69,8 @@ class File extends Component {
       `${STACK_URL}/files/download/${attributes.id}`,
       '_blank')
     return (
-      <tr onDoubleClick={onDoubleClickListener}>
-        <td className={styles['fil-content-file-select']}>
+      <div className={styles['fil-content-row']} onDoubleClick={onDoubleClickListener}>
+        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
           <span data-input='checkbox'>
             <input
               type='checkbox'
@@ -81,27 +81,27 @@ class File extends Component {
               ? <label />
               : <label onClick={e => this.toggle(e)} />}
           </span>
-        </td>
+        </div>
         {this.renderFilenameCell(attributes, onOpen, editing)}
-        <td>
+        <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
-        </td>
-        <td>
+        </div>
+        <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])}>
           {isDir(attributes)
             ? '-'
             : filesize(attributes.size, {base: 10})}
-        </td>
-        <td>—</td>
-        <td className={styles['fil-content-file-action']}>
+        </div>
+        <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>—</div>
+        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])}>
           <button onClick={() => onShowActionMenu(attributes.id)} />
-        </td>
-      </tr>
+        </div>
+      </div>
     )
   }
 
   renderFilenameCell (attributes, onOpen, editing) {
     const { filename, extension } = splitFilename(attributes.name)
-    const classes = classNames(styles['fil-content-file'], getClassFromMime(attributes))
+    const classes = classNames(styles['fil-content-cell'], styles['fil-content-file'], getClassFromMime(attributes))
     if (editing) {
       return (
         <td className={classes}>
@@ -111,16 +111,16 @@ class File extends Component {
     }
     if (isDir(attributes)) {
       return (
-        <td className={classes}>
+        <div className={classes}>
           <a onClick={() => onOpen(attributes.id)}>
             {attributes.name}
             {attributes.isOpening === true && <div className={styles['fil-loading']} />}
           </a>
-        </td>
+        </div>
       )
     }
     return (
-      <td className={classes}>
+      <div className={classes}>
         <a
           target='_blank'
           href={`${STACK_URL}/files/download/${attributes.id}`}
@@ -128,7 +128,7 @@ class File extends Component {
           {filename}
           <span className={styles['fil-content-ext']}>{extension}</span>
         </a>
-      </td>
+      </div>
     )
   }
 }
