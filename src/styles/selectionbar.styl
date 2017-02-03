@@ -46,7 +46,10 @@ slate-grey = #5d6165
     &.fil-action-close
       background embedurl("../assets/icons/icon-cross.svg") em(24px) center no-repeat
       text-indent -9999px
-      margin-left auto
+      position absolute
+      top 50%
+      right 0
+      transform translateY(-50%)
 
 @media (max-width: (1023/basefont)rem)
   .fil-selectionbar
