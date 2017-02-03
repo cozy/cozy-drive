@@ -10,9 +10,7 @@ export const ERROR = 'ERROR'
 
 const WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
 
-function error () {
-  return { type: ERROR, error: WRONG_ADDRESS }
-}
+const error = () => ({ type: ERROR, error: WRONG_ADDRESS })
 
 export class OnBoardingError extends Error {
   constructor (message) {
@@ -21,7 +19,7 @@ export class OnBoardingError extends Error {
   }
 }
 
-export function setUrl (url) {
+export const setUrl = (url) => {
   return async dispatch => {
     let scheme = 'https://'
     if (__ALLOW_HTTP__) {
@@ -39,6 +37,7 @@ export function setUrl (url) {
   }
 }
 
+// TODO need to refactor this braces hell
 export const registerDevice = (router, location) => {
   return async (dispatch, getState) => {
     await dispatch(setUrl(getState().mobile.serverUrl))
