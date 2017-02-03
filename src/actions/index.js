@@ -1,6 +1,7 @@
 import cozy from 'cozy-client-js'
 
 import { ROOT_DIR_ID } from '../constants/config'
+import { saveFileWithCordova } from '../../mobile/src/lib/filesystem'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -159,13 +160,6 @@ export const downloadFile = id => {
   }
 }
 
-const saveFileWithCordova = (filedata, filename) => {
-  window.cordova.file.DocumentsDirectory.getFile(filename, {create: true, exclusive: false}, fileentry => {
-    fileentry.createWriter(filewriter => {
-      filewriter.write(filedata)
-    })
-  })
-}
 export const showFileActionMenu = id => ({
   type: SHOW_FILE_ACTIONMENU, id
 })
