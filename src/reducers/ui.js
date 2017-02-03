@@ -56,6 +56,17 @@ const opening = (state = false, action) => {
   }
 }
 
+const creating = (state = false, action) => {
+  switch (action.type) {
+    case CREATE_FOLDER:
+      return action.id
+    case CREATE_FOLDER_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
 const updating = (state = [], action) => {
   switch (action.type) {
     case CREATE_FOLDER:
@@ -158,6 +169,7 @@ export default combineReducers({
   isFetching,
   isWorking,
   opening,
+  creating,
   updating,
   disableFolderCreation,
   showSelectionBar,

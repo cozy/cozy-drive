@@ -30,7 +30,7 @@ class File extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      editing: props.attributes.isNew === true
+      editing: props.attributes.isNew === true && props.attributes.isCreating === false
     }
   }
 
@@ -114,7 +114,7 @@ class File extends Component {
         <div className={classes}>
           <a onClick={() => onOpen(attributes.id)}>
             {attributes.name}
-            {attributes.isOpening === true && <div className={styles['fil-loading']} />}
+            {(attributes.isOpening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
           </a>
         </div>
       )

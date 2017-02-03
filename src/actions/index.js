@@ -9,6 +9,7 @@ export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
 export const ADD_FOLDER = 'ADD_FOLDER'
 export const ABORT_ADD_FOLDER = 'ABORT_ADD_FOLDER'
+export const RENAME_FOLDER = 'RENAME_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
@@ -95,21 +96,20 @@ export const abortAddFolder = () => ({
     type: ABORT_ADD_FOLDER
 })
 
-const isDir = attrs => attrs.type === 'directory'
+export const renameFolder = (newName, id) => ({
+  type: RENAME_FOLDER,
+  id,
+  name: newName
+})
 
-export const renameFile = (newName, attrs) => {
-  if (isDir(attrs)) {
-    return attrs.isNew === true
-      ? createFolder(newName, attrs.id)
-      : renameFolder(newName, attrs.id)
-  }
-}
-
-export const createFolder = (newName, tempId) => {
+export const createFolder = (name, tempId) => {
   return async (dispatch, getState) => {
-    dispatch({ type: CREATE_FOLDER, id: tempId })
+    dispatch({
+      type: CREATE_FOLDER,
+      id: tempId
+    })
     const folder = await cozy.files.createDirectory({
-      name: newName,
+      name: name,
       dirID: getState().folder.id
     })
     dispatch({
@@ -120,7 +120,7 @@ export const createFolder = (newName, tempId) => {
   }
 }
 
-export const deleteFile = (id, isNew = false) => {
+export const deleteFileOrFolder = (id, isNew = false) => {
   return async (dispatch, getState) => {
     dispatch({ type: DELETE_FILE, id: id })
 
@@ -177,7 +177,3 @@ export const showFileActionMenu = id => ({
 export const hideFileActionMenu = () => ({
   type: HIDE_FILE_ACTIONMENU
 })
-
-export const renameFolder = (newName, id) => {
-
-}

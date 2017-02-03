@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { openFolder, renameFile, abortAddFolder, deleteFile, toggleFileSelection, showFileActionMenu } from '../actions'
+import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
 
 import FileList from '../components/FileList'
+
+const isDir = attrs => attrs.type === 'directory'
 
 class Folder extends Component {
   render (props, state) {
@@ -32,12 +34,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(toggleFileSelection(id, selected))
   },
   onFileEdit: (val, attrs) => {
-    dispatch(renameFile(val, attrs))
+    if (isDir(attrs)){
+      dispatch(renameFolder(val, attrs.id))
+      if (attrs.isNew) dispatch(createFolder(val, attrs.id))
+    }
   },
   onFileEditAbort: (accidental, attrs) => {
-    if (attrs.type === 'directory' && attrs.isNew) {
+    if (isDir(attrs) && attrs.isNew) {
       dispatch(abortAddFolder())
-      dispatch(deleteFile(attrs.id, attrs.isNew))
+      dispatch(deleteFileOrFolder(attrs.id, attrs.isNew))
     }
   },
   onShowActionMenu: (fileId) => {
