@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 
+import styles from '../styles/filenameinput'
+import { translate } from '../lib/I18n'
+
 const ENTER_KEY = 13
 const ESC_KEY   = 27
 
 const valueIsEmpty = value => value.toString() === ''
 
-export default class FilenameInput extends Component {
+class FilenameInput extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -51,17 +54,26 @@ export default class FilenameInput extends Component {
     this.props.onAbort(accidental)
   }
 
-  render ({ isUpdating }, { value }) {
+  render ({ t, isUpdating }, { value }) {
+
     return (
-      <input
-        type='text'
-        value={value}
-        ref={(input) => { this.textInput = input }}
-        disabled={isUpdating}
-        onChange={e => this.handleChange(e)}
-        onBlur={() => this.handleBlur()}
-        onKeyDown={e => this.handleKeyDown(e)}
-      />
+      <div className={styles['fil-file-name-input']}>
+        <input
+          type='text'
+          value={value}
+          ref={(input) => { this.textInput = input }}
+          disabled={isUpdating}
+          onChange={e => this.handleChange(e)}
+          onBlur={() => this.handleBlur()}
+          onKeyDown={e => this.handleKeyDown(e)}
+          className={this.props.error ? styles['error'] : null}
+        />
+        {this.props.error && <div className={styles['coz-errors']}>
+          {t(this.props.error.message, {folderName: this.props.name})}
+        </div>}
+      </div>
     )
   }
 }
+
+export default translate()(FilenameInput)

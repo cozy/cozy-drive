@@ -11,6 +11,7 @@ export const ADD_FOLDER = 'ADD_FOLDER'
 export const ABORT_ADD_FOLDER = 'ABORT_ADD_FOLDER'
 export const RENAME_FOLDER = 'RENAME_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
+export const CREATE_FOLDER_FAILURE = 'CREATE_FOLDER_FAILURE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
@@ -104,6 +105,15 @@ export const renameFolder = (newName, id) => ({
 
 export const createFolder = (name, tempId) => {
   return async (dispatch, getState) => {
+    let existingFolder = getState().files.find(f => f.id !== tempId && f.type === 'directory' && f.name === name)
+
+    if (existingFolder) {
+      return dispatch({
+        type: CREATE_FOLDER_FAILURE,
+        id: tempId
+      })
+    }
+
     dispatch({
       type: CREATE_FOLDER,
       id: tempId

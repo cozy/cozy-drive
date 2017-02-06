@@ -55,6 +55,7 @@
   },
   "error": {
     "open_folder": "Something went wrong when opening the folder.",
+    "folder_name": "The folder %{folderName} already exists, please choose a new name.",
     "button": {
         "reload": "Refresh now"
     }

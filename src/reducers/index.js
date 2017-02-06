@@ -26,6 +26,7 @@ export const getVisibleFiles = state => {
       isUpdating: ui.updating.indexOf(f.id) !== -1,
       isOpening: ui.opening === f.id,
       isCreating: ui.creating === f.id,
+      creationError: (ui.failedCreation && ui.failedCreation.id === f.id) ? ui.failedCreation : null,
       selected: ui.selected.indexOf(f.id) !== -1
     }
     return Object.assign({}, f, additionalProps)

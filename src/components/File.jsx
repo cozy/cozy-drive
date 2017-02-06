@@ -18,6 +18,7 @@ export const splitFilename = filename => {
 }
 
 const isDir = attrs => attrs.type === 'directory'
+const isEditing = attrs => attrs.isNew === true && (attrs.isCreating === false || attrs.creationError !== null)
 
 export const getClassFromMime = (attrs) => {
   if (isDir(attrs)) {
@@ -30,14 +31,14 @@ class File extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      editing: props.attributes.isNew === true && props.attributes.isCreating === false
+      editing: isEditing(props.attributes)
     }
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.attributes.isNew === true && !this.props.attributes.isNew) {
+    if (isEditing(newProps.attributes) !== this.state.editing) {
       this.setState({
-        editing: true
+        editing: isEditing(newProps.attributes)
       })
     }
   }
@@ -105,7 +106,7 @@ class File extends Component {
     if (editing) {
       return (
         <td className={classes}>
-          <FilenameInput name={attributes.name} onSubmit={val => this.edit(val)} onAbort={() => this.abortEdit()} />
+          <FilenameInput name={attributes.name} error={attributes.creationError} onSubmit={val => this.edit(val)} onAbort={() => this.abortEdit()} />
         </td>
       )
     }

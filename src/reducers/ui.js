@@ -10,6 +10,7 @@ import {
   ABORT_ADD_FOLDER,
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
+  CREATE_FOLDER_FAILURE,
   UPLOAD_FILE,
   UPLOAD_FILE_SUCCESS,
   SHOW_SELECTION_BAR,
@@ -61,7 +62,22 @@ const creating = (state = false, action) => {
     case CREATE_FOLDER:
       return action.id
     case CREATE_FOLDER_SUCCESS:
+    case CREATE_FOLDER_FAILURE:
       return false
+    default:
+      return state
+  }
+}
+
+const failedCreation = (state = null, action) => {
+  switch (action.type) {
+    case CREATE_FOLDER:
+      return null
+    case CREATE_FOLDER_FAILURE:
+      return {
+        message: 'error.folder_name',
+        id: action.id
+      }
     default:
       return state
   }
@@ -170,6 +186,7 @@ export default combineReducers({
   isWorking,
   opening,
   creating,
+  failedCreation,
   updating,
   disableFolderCreation,
   showSelectionBar,
