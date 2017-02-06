@@ -10,7 +10,8 @@ import {
   ABORT_ADD_FOLDER,
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
-  CREATE_FOLDER_FAILURE,
+  CREATE_FOLDER_FAILURE_DUPLICATE,
+  CREATE_FOLDER_FAILURE_GENERIC,
   UPLOAD_FILE,
   UPLOAD_FILE_SUCCESS,
   SHOW_SELECTION_BAR,
@@ -38,6 +39,7 @@ const isWorking = (state = false, action) => {
     case UPLOAD_FILE:
       return true
     case CREATE_FOLDER_SUCCESS:
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
     case UPLOAD_FILE_SUCCESS:
       return false
     default:
@@ -62,7 +64,7 @@ const creating = (state = false, action) => {
     case CREATE_FOLDER:
       return action.id
     case CREATE_FOLDER_SUCCESS:
-    case CREATE_FOLDER_FAILURE:
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
       return false
     default:
       return state
@@ -73,9 +75,14 @@ const failedCreation = (state = null, action) => {
   switch (action.type) {
     case CREATE_FOLDER:
       return null
-    case CREATE_FOLDER_FAILURE:
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
       return {
         message: 'error.folder_name',
+        id: action.id
+      }
+    case CREATE_FOLDER_FAILURE_GENERIC:
+      return {
+        message: 'error.folder_generic',
         id: action.id
       }
     default:
