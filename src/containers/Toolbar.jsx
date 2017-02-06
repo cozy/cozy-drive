@@ -17,14 +17,6 @@ const Toolbar = ({ t, error, addFolder, disableFolderCreation, showSelectionBar,
       onUpload={uploadFile}
       label={t('toolbar.item_upload')}
     />
-    <button
-        role='button'
-      disabled={disableFolderCreation}
-        className={classNames('coz-btn', styles['fil-action-newfolder'])}
-        onClick={addFolder}
-      >
-      {t('toolbar.menu_new_folder')}
-    </button>
     <MenuButton>
       <button
         role='button'
@@ -40,7 +32,11 @@ const Toolbar = ({ t, error, addFolder, disableFolderCreation, showSelectionBar,
           </a>
         </Item>
         <Item>
-          <a className={styles['fil-action-newfolder']} onClick={addFolder}>
+          <a
+            className={styles['fil-action-newfolder']}
+            onClick={addFolder}
+            disabled={disableFolderCreation}
+          >
             {t('toolbar.menu_new_folder')}
           </a>
         </Item>
