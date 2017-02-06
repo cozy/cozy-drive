@@ -41,7 +41,6 @@
     "babel-preset-env": "^1.0.2",
     "babel-preset-react": "^6.16.0",
     "babel-runtime": "^6.0.0",
-    "chai": "^3.5.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
@@ -57,15 +56,12 @@
     "postcss": "^5.2.0",
     "postcss-discard-duplicates": "^2.0.2",
     "postcss-loader": "^1.1.0",
-    "pug": "^2.0.0-beta6",
-    "pug-loader": "^2.3.0",
     "react": "^15.4.0",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.0",
     "react-test-renderer": "^15.4.0",
     "redux-logger": "^2.7.4",
     "redux-mock-store": "^1.2.1",
-    "sinon": "^1.17.0",
     "standard": "^8.6.0",
     "style-loader": "^0.13.0",
     "stylus": "^0.54.0",
@@ -82,9 +78,8 @@
     "cozy-ui": "3.0.0-beta4",
     "date-fns": "^1.26.0",
     "node-polyglot": "^2.2.0",
-    "node-uuid": "^1.4.7",
     "preact": "^7.1.0",
-    "preact-compat": "^3.11.0",
+    "preact-compat": "^3.13.1",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.0",
     "redux": "^3.6.0",
@@ -101,5 +96,11 @@
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
     }
+  },
+  "standard": {
+    "env": [
+      "browser",
+      "jest"
+    ]
   }
 }
