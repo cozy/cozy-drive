@@ -9,6 +9,10 @@ export const getRootPath = () => window.cordova.platformId === 'android'
   ? window.cordova.file.externalRootDirectory
   : window.cordova.file.dataDirectory
 
+export const getTemporaryRootPath = () => window.cordova.platformId === 'android'
+  ? window.cordova.file.externalCacheDirectory
+  : window.cordova.file.cacheDirectory
+
 export const getCozyPath = () => COZY_PATH + '/' + COZY_FILES_PATH + '/'
 
 export const getEntry = (path) => new Promise((resolve, reject) => {
@@ -42,7 +46,9 @@ export const getDirectory = (rootDirEntry, folderName) => new Promise((resolve, 
 
 export const writeFile = (fileEntry, dataObj) => new Promise((resolve, reject) => {
   fileEntry.createWriter(fileWriter => {
-    fileWriter.onwriteend = resolve
+    fileWriter.onwriteend = () => {
+      resolve(fileEntry)
+    }
     fileWriter.onerror = error => {
       console.warn(ERROR_WRITE_FILE)
       console.warn(error)
@@ -54,7 +60,9 @@ export const writeFile = (fileEntry, dataObj) => new Promise((resolve, reject) =
 
 export const saveFile = (dirEntry, fileData, fileName) => new Promise((resolve, reject) => {
   dirEntry.getFile(fileName, { create: true, exclusive: false }, fileEntry => {
-    writeFile(fileEntry, fileData).then(resolve).catch(reject)
+    writeFile(fileEntry, fileData).then(() => {
+      resolve(fileEntry)
+    }).catch(reject)
   }, error => {
     console.warn(ERROR_GET_FILE)
     console.warn(error)
@@ -73,3 +81,12 @@ export const saveFileWithCordova = (fileData, fileName) => new Promise((resolve,
     reject(ERROR_GET_COZY_ENTRY)
   })
 })
+
+export const openFileWithCordova = async (fileData, filename) => {
+  if (window.cordova && window.cordova.plugins.fileOpener2) {
+    const fileMIMEType = fileData.type
+    const dirEntry = await getEntry(getTemporaryRootPath()).catch(console.error.bind(console))
+    const fileEntry = await saveFile(dirEntry, fileData, filename).catch(console.error.bind(console))
+    window.cordova.plugins.fileOpener2.open(fileEntry.nativeURL, fileMIMEType, { error: console.error.bind(console), success: console.log.bind(console) })
+  }
+}

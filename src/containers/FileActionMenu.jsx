@@ -9,9 +9,9 @@ import withGestures from 'react-bosonic/lib/withGestures'
 
 import { splitFilename, getClassFromMime } from '../components/File'
 import { getActionableFile } from '../reducers'
-import { downloadFile, hideFileActionMenu } from '../actions'
+import { downloadFile, hideFileActionMenu, openFileWith } from '../actions'
 
-const Menu = ({ t, file, onDownload }) => {
+const Menu = ({ t, file, onDownload, onOpenWith }) => {
   const { filename, extension } = splitFilename(file.name)
   return (
     <div className={styles['fil-actionmenu']}>
@@ -23,7 +23,7 @@ const Menu = ({ t, file, onDownload }) => {
       </Item>
       <hr />
       <Item>
-        <a className={styles['fil-action-openwith']}>
+        <a className={styles['fil-action-openwith']} onClick={() => onOpenWith(file.id, file.name)}>
           {t('mobile.action_menu.open_with')}
         </a>
       </Item>
@@ -64,7 +64,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(downloadFile(id))
     dispatch(hideFileActionMenu())
   },
-  onClose: () => dispatch(hideFileActionMenu())
+  onClose: () => dispatch(hideFileActionMenu()),
+  onOpenWith: (id, filename) => {
+    dispatch(openFileWith(id, filename))
+    dispatch(hideFileActionMenu())
+  }
 })
 
 export default connect(

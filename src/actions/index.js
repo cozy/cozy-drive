@@ -1,7 +1,7 @@
 import cozy from 'cozy-client-js'
 
 import { ROOT_DIR_ID } from '../constants/config'
-import { saveFileWithCordova } from '../../mobile/src/lib/filesystem'
+import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -26,6 +26,7 @@ export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
 export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
 export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
+export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
@@ -189,6 +190,15 @@ export const downloadFile = id => {
       element.click()
       document.body.removeChild(element)
     }
+  }
+}
+
+export const openFileWith = (id, filename) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: OPEN_FILE_WITH, id })
+    const response = await cozy.files.downloadById(id)
+    const blob = await response.blob()
+    openFileWithCordova(blob, filename)
   }
 }
 
