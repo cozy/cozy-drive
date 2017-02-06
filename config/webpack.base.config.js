@@ -17,7 +17,7 @@ module.exports = {
     filename: build ? 'app.[hash].js' : 'app.js'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['', '.js', '.json', '.css']
   },
   devtool: build ? '#cheap-module-source-map' : 'eval',
   module: {
