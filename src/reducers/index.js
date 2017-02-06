@@ -13,10 +13,16 @@ const filesApp = combineReducers({
 
 const sortFiles = files => files.sort((a, b) => a.name.localeCompare(b.name))
 
+const newFilesFirst = files => files.sort((a, b) => {
+  if (a.isNew && !b.isNew) return -1
+  else if (!a.isNew && b.isNew) return 1
+  else return 0
+})
+
 const getSortedFiles = allFiles => {
   let folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID)
   let files = allFiles.filter(f => f.type !== 'directory')
-  return sortFiles(folders).concat(sortFiles(files))
+  return newFilesFirst(sortFiles(folders)).concat(sortFiles(files))
 }
 
 export const getVisibleFiles = state => {
