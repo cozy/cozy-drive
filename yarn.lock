@@ -4721,9 +4721,9 @@ pouchdb@6.1.1:
     through2 "2.0.1"
     vuvuzela "1.0.3"
 
-preact-compat@^3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/preact-compat/-/preact-compat-3.11.0.tgz#be6348945e0c4f2e5b9ed7afb33b1bc095e6c829"
+preact-compat@^3.13.1:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/preact-compat/-/preact-compat-3.13.1.tgz#efe46e072a8eee0774a41e362b4b253c1d66726a"
   dependencies:
     preact-render-to-string "^3.2.1"
     preact-transition-group "^1.1.0"
