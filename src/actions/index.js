@@ -121,8 +121,9 @@ export const createFolder = (name, tempId) => {
       id: tempId
     })
 
+    let folder
     try{
-      const folder = await cozy.files.createDirectory({
+      folder = await cozy.files.createDirectory({
         name: name,
         dirID: getState().folder.id
       })
