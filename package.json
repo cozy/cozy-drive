@@ -96,5 +96,11 @@
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
     }
+  },
+  "standard": {
+    "env": [
+      "browser",
+      "jest"
+    ]
   }
 }
