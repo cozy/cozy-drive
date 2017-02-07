@@ -27,6 +27,8 @@ export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
 export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
+export const DISPLAY_TOAST = 'DISPLAY_TOAST'
+export const HIDE_TOAST = 'HIDE_TOAST'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
@@ -213,3 +215,7 @@ export const hideFileActionMenu = () => ({
 export const renameFolder = (newName, id) => {
 
 }
+
+export const hideToast = () => ({
+  type: HIDE_TOAST
+})
