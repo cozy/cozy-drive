@@ -11,8 +11,8 @@ export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
 
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
-const OFFLINE_ERROR = 'mobile.offline.error'
-const NO_APP_ERROR = 'mobile.noapp.error'
+const OFFLINE_ERROR = 'mobile.error.offline'
+const NO_APP_ERROR = 'mobile.error.noapp'
 
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
 export const offlineError = () => ({ type: DISPLAY_TOAST, message: OFFLINE_ERROR })

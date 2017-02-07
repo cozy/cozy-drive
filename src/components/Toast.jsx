@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-
-import styles from '../styles/toast.styl'
 import classNames from 'classnames'
 
-export default class extends Component {
+import styles from '../styles/toast.styl'
+import { translate } from '../lib/I18n'
+
+export default translate()(class extends Component {
   componentDidMount () {
     setTimeout(
       () => this.props.hideToast(),
@@ -11,11 +12,11 @@ export default class extends Component {
     )
   }
 
-  render ({ message, criticity = 'critical' }) {
+  render ({ t, message, criticity = 'critical' }) {
     return (
       <div className={classNames(styles['toast'], styles[`toast--${criticity}`])}>
-        <p>{message}</p>
+        <p>{t(message)}</p>
       </div>
     )
   }
-}
+})
