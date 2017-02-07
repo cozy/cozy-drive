@@ -68,7 +68,7 @@
         "reload": "Refresh now"
     }
   },
-  "error": {
+  "notification": {
     "trash_file": "Something went wrong when trashing the selection."
   },
   "mobile": {

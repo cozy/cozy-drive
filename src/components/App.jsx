@@ -8,7 +8,7 @@ import classNames from 'classnames'
 
 import { openFolder } from '../actions'
 
-import Alerter from './Alerter'
+import Alerter from 'cozy-ui/components/Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
@@ -29,12 +29,12 @@ class App extends Component {
     }
   }
 
-  render ({ t, error, children }) {
+  render ({ t, notification, children }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
-        { error && <Alerter
-          error={error}
-          reload={reload}
+        { notification && <Alerter
+          type={notification.type || 'info'}
+          message={t(notification.message)}
           />
         }
         <Sidebar />
@@ -49,7 +49,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  folder: state.folder
+  folder: state.folder,
+  notification: state.ui.notification
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -154,11 +154,18 @@ const error = (state = null, action) => {
         cause: action.error,
         critical: true
       }
+    default:
+      return state
+  }
+}
+
+const notification = (state = null, action) => {
+  switch (action.type) {
     case TRASH_FILE_FAILURE:
       return {
-        message: 'error.trash_file',
+        message: 'notification.trash_file',
         cause: action.error,
-        critical: true
+        type: 'info'
       }
     default:
       return state
@@ -175,5 +182,6 @@ export default combineReducers({
   selected,
   showFileActionMenu,
   actionable,
-  error
+  error,
+  notification
 })
