@@ -8,7 +8,7 @@ import classNames from 'classnames'
 
 import { openFolder } from '../actions'
 
-import Alerter from 'cozy-ui/components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
