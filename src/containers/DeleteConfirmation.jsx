@@ -7,10 +7,16 @@ import { translate } from '../lib/I18n'
 
 import { hideDeleteConfirmation, toggleFileSelection, trashFile } from '../actions'
 
-const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => {
-  const deleteconfirmationTexts = ['trash','restore','shared'].map(type => (
+const DeleteConfirmation = ({ t, selected, selectionContainsDirs, selectionContainsFiles, onConfirm, onDismiss }) => {
+  const translationKeyForWhatToDelete = selectionContainsDirs && selectionContainsFiles ? 'title_what_mixed' : (selectionContainsDirs ? 'title_what_folder' : 'title_what_file')
+  const deleteConfirmationTitle = t('deleteconfirmation.title', {what: t(`deleteconfirmation.${translationKeyForWhatToDelete}`, selected.length)})
+
+  //if it's a mixed selection, we want to use singular, regardless of the actual item count
+  const textPluralizationCounter = selectionContainsDirs && selectionContainsFiles ? 1 : selected.length
+
+  const deleteConfirmationTexts = ['trash','restore','shared'].map(type => (
     <p className={classNames(styles['fil-deleteconfirmation-text'], styles[`icon-${type}`])}>
-      {t(`deleteconfirmation.${type}`)}
+      {t(`deleteconfirmation.${type}`, textPluralizationCounter)}
     </p>
   ))
 
@@ -19,7 +25,7 @@ const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => {
     <div className={styles['coz-overlay']}>
       <div className={styles['coz-modal']}>
         <h2 className={styles['coz-modal-title']}>
-          {t('deleteconfirmation.title')}
+          {deleteConfirmationTitle}
         </h2>
         <button
           className={classNames('coz-btn', 'coz-btn--close', styles['coz-modal-close'])}
@@ -27,7 +33,7 @@ const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => {
           >
           <span className='coz-hidden'>{t('deleteconfirmation.close')}</span>
         </button>
-        {deleteconfirmationTexts}
+        {deleteConfirmationTexts}
         <div className={styles['fil-deleteconfirmation-buttons']}>
           <button className={styles['secondary']} onClick={() => onDismiss(selected)}>
             {t('deleteconfirmation.cancel')}
@@ -41,9 +47,18 @@ const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => {
   </div>
 )}
 
-const mapStateToProps = (state, ownProps) => ({
-  selected: state.ui.selected
-})
+const mapStateToProps = (state, ownProps) => {
+  let selected = state.ui.selected
+  let selectedItems = state.files.filter(file => selected.indexOf(file.id) > -1)
+  let selectionContainsDirs = selectedItems.find(f => f.type === 'directory')
+  let selectionContainsFiles = selectedItems.find(f => f.type !== 'directory')
+
+  return {
+    selected: selected,
+    selectionContainsDirs: selectionContainsDirs,
+    selectionContainsFiles: selectionContainsFiles
+  }
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: (selected) => {
