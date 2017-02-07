@@ -1,11 +1,47 @@
+/* global __ALLOW_HTTP__ */
+
 import cozy, { LocalStorage as Storage } from 'cozy-client-js'
 import localforage from 'localforage'
 
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
+export const SET_STATE = 'SET_STATE'
+export const ERROR = 'ERROR'
 
+const WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
+
+const error = () => ({ type: ERROR, error: WRONG_ADDRESS })
+
+export class OnBoardingError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'OnBoardingError'
+  }
+}
+
+export const setUrl = (url) => {
+  return async dispatch => {
+    let scheme = 'https://'
+    if (__ALLOW_HTTP__) {
+      scheme = 'http://'
+      console.warn('development mode: we don\'t check SSL requirement')
+    }
+    if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
+      dispatch(error())
+      throw new OnBoardingError(`The only supported protocol is ${scheme}`)
+    }
+    if (!url.startsWith(scheme)) {
+      url = `${scheme}${url}`
+    }
+    return dispatch({ type: SET_URL, url: url })
+  }
+}
+
+// TODO need to refactor this braces hell
 export const registerDevice = (router, location) => {
   return async (dispatch, getState) => {
+    await dispatch(setUrl(getState().mobile.serverUrl))
+
     let oauth
     if (window.cordova && window.cordova.InAppBrowser) {
       oauth = {
@@ -24,7 +60,7 @@ export const registerDevice = (router, location) => {
             const inAppBrowser = InAppBrowser.open(url, target, options)
 
             return new Promise((resolve) => {
-              inAppBrowser.addEventListener('loadstop', ({url}) => {
+              inAppBrowser.addEventListener('loadstart', ({url}) => {
                 const accessCode = /\?access_code=(.+)$/.test(url)
                 const state = /\?state=(.+)$/.test(url)
 
@@ -40,6 +76,7 @@ export const registerDevice = (router, location) => {
               },
               (err) => {
                 inAppBrowser.close()
+                dispatch(error())
                 throw err
               }
             )
@@ -54,7 +91,13 @@ export const registerDevice = (router, location) => {
       oauth: oauth
     })
 
-    await cozy.authorize()
+    try {
+      await cozy.authorize()
+    } catch (err) {
+      dispatch(error())
+      throw err
+    }
+
     dispatch({ type: SETUP })
     localforage.setItem('state', getState().mobile)
     if (location.state && location.state.nextPathname) {
