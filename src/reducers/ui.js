@@ -176,6 +176,20 @@ const toastMessage = (state = null, action) => {
   }
 }
 
+const actionMenu = (state = { openWith: false }, action) => {
+  const newState = {}
+  switch (action.type) {
+    case 'SHOW_SPINNER':
+      newState[action.menu] = true
+      return Object.assign({}, state, newState)
+    case 'HIDE_SPINNER':
+      newState[action.menu] = false
+      return Object.assign({}, state, newState)
+    default:
+      return state
+  }
+}
+
 const notification = (state = null, action) => {
   switch (action.type) {
     case TRASH_FILE_FAILURE:
@@ -201,5 +215,6 @@ export default combineReducers({
   actionable,
   error,
   toastMessage,
+  actionMenu,
   notification
 })

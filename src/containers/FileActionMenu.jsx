@@ -9,9 +9,9 @@ import withGestures from 'react-bosonic/lib/withGestures'
 
 import { splitFilename, getClassFromMime } from '../components/File'
 import { getActionableFile } from '../reducers'
-import { downloadFile, hideFileActionMenu, openFileWith } from '../actions'
+import { downloadFile, hideFileActionMenu, openFileWith, actionMenuLoading, actionMenuLoaded } from '../actions'
 
-const Menu = ({ t, file, onDownload, onOpenWith }) => {
+const Menu = ({ t, file, onDownload, onOpenWith, actionMenu }) => {
   const { filename, extension } = splitFilename(file.name)
   return (
     <div className={styles['fil-actionmenu']}>
@@ -25,6 +25,7 @@ const Menu = ({ t, file, onDownload, onOpenWith }) => {
       <Item>
         <a className={styles['fil-action-openwith']} onClick={() => onOpenWith(file.id, file.name)}>
           {t('mobile.action_menu.open_with')}
+          {actionMenu.openWith && <div className={styles['fil-loading']} />}
         </a>
       </Item>
       <Item>
@@ -56,7 +57,8 @@ const FileActionMenu = props => (
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  file: getActionableFile(state)
+  file: getActionableFile(state),
+  actionMenu: state.ui.actionMenu
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -66,8 +68,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onClose: () => dispatch(hideFileActionMenu()),
   onOpenWith: (id, filename) => {
-    dispatch(openFileWith(id, filename))
-    dispatch(hideFileActionMenu())
+    dispatch(actionMenuLoading('openWith'))
+    dispatch(openFileWith(id, filename)).then(() => {
+      dispatch(actionMenuLoaded('openWith'))
+      dispatch(hideFileActionMenu())
+    })
   }
 })
 

@@ -231,3 +231,13 @@ export const renameFolder = (newName, id) => {
 export const hideToast = () => ({
   type: HIDE_TOAST
 })
+
+export const actionMenuLoading = (menu) => ({
+  type: 'SHOW_SPINNER',
+  menu
+})
+
+export const actionMenuLoaded = (menu) => ({
+  type: 'HIDE_SPINNER',
+  menu
+})
