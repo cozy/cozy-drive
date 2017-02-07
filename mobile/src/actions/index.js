@@ -3,14 +3,20 @@
 import cozy, { LocalStorage as Storage } from 'cozy-client-js'
 import localforage from 'localforage'
 
+import { DISPLAY_TOAST } from '../../../src/actions'
+
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
 
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
+const OFFLINE_ERROR = 'mobile.offline.error'
+const NO_APP_ERROR = 'mobile.noapp.error'
 
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
+export const offlineError = () => ({ type: DISPLAY_TOAST, message: OFFLINE_ERROR })
+export const noAppError = () => ({ type: DISPLAY_TOAST, message: NO_APP_ERROR })
 
 export class OnBoardingError extends Error {
   constructor (message) {

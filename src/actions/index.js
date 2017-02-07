@@ -2,6 +2,7 @@ import cozy from 'cozy-client-js'
 
 import { ROOT_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
+import { offlineError, noAppError } from '../../mobile/src/actions'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -197,10 +198,21 @@ export const downloadFile = id => {
 
 export const openFileWith = (id, filename) => {
   return async (dispatch, getState) => {
-    dispatch({ type: OPEN_FILE_WITH, id })
-    const response = await cozy.files.downloadById(id)
-    const blob = await response.blob()
-    openFileWithCordova(blob, filename)
+    if (window.cordova && window.cordova.plugins.fileOpener2) {
+      dispatch({ type: OPEN_FILE_WITH, id })
+      const response = await cozy.files.downloadById(id).catch((error) => {
+        console.error('downloadById', error)
+        dispatch(offlineError())
+        throw error
+      })
+      const blob = await response.blob()
+      openFileWithCordova(blob, filename).catch((error) => {
+        console.error('openFileWithCordova', error)
+        dispatch(noAppError())
+      })
+    } else {
+      dispatch(noAppError())
+    }
   }
 }
 

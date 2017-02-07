@@ -82,11 +82,12 @@ export const saveFileWithCordova = (fileData, fileName) => new Promise((resolve,
   })
 })
 
-export const openFileWithCordova = async (fileData, filename) => {
-  if (window.cordova && window.cordova.plugins.fileOpener2) {
-    const fileMIMEType = fileData.type
-    const dirEntry = await getEntry(getTemporaryRootPath()).catch(console.error.bind(console))
-    const fileEntry = await saveFile(dirEntry, fileData, filename).catch(console.error.bind(console))
-    window.cordova.plugins.fileOpener2.open(fileEntry.nativeURL, fileMIMEType, { error: console.error.bind(console), success: console.log.bind(console) })
-  }
-}
+export const openFileWithCordova = (fileData, filename) => new Promise((resolve, reject) => {
+  const fileMIMEType = fileData.type
+  getEntry(getTemporaryRootPath())
+  .then(dirEntry => saveFile(dirEntry, fileData, filename)
+    .then(fileEntry => window.cordova.plugins.fileOpener2.open(fileEntry.nativeURL, fileMIMEType, { error: reject, success: resolve }))
+    .catch(reject)
+  )
+  .catch(reject)
+})
