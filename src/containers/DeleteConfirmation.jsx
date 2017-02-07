@@ -11,17 +11,16 @@ const DeleteConfirmation = ({ t, selected, selectionContainsDirs, selectionConta
   const translationKeyForWhatToDelete = selectionContainsDirs && selectionContainsFiles ? 'title_what_mixed' : (selectionContainsDirs ? 'title_what_folder' : 'title_what_file')
   const deleteConfirmationTitle = t('deleteconfirmation.title', {what: t(`deleteconfirmation.${translationKeyForWhatToDelete}`, selected.length)})
 
-  //if it's a mixed selection, we want to use singular, regardless of the actual item count
+  // if it's a mixed selection, we want to use singular, regardless of the actual item count
   const textPluralizationCounter = selectionContainsDirs && selectionContainsFiles ? 1 : selected.length
 
-  const deleteConfirmationTexts = ['trash','restore','shared'].map(type => (
+  const deleteConfirmationTexts = ['trash', 'restore', 'shared'].map(type => (
     <p className={classNames(styles['fil-deleteconfirmation-text'], styles[`icon-${type}`])}>
       {t(`deleteconfirmation.${type}`, textPluralizationCounter)}
     </p>
   ))
 
-  return (
-  <div className={styles['fil-deleteconfirmation']}>
+  return (<div className={styles['fil-deleteconfirmation']}>
     <div className={styles['coz-overlay']}>
       <div className={styles['coz-modal']}>
         <h2 className={styles['coz-modal-title']}>
@@ -44,8 +43,8 @@ const DeleteConfirmation = ({ t, selected, selectionContainsDirs, selectionConta
         </div>
       </div>
     </div>
-  </div>
-)}
+  </div>)
+}
 
 const mapStateToProps = (state, ownProps) => {
   let selected = state.ui.selected

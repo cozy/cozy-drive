@@ -126,7 +126,7 @@ export const trashFile = (id) => {
     let trashed
     try {
       trashed = await cozy.files.trashById(id)
-    } catch (err){
+    } catch (err) {
       return dispatch({
         type: TRASH_FILE_FAILURE,
         error: err
