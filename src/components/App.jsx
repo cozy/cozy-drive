@@ -12,10 +12,6 @@ import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
-const reload = () => {
-  window.location.reload()
-}
-
 class App extends Component {
   componentWillMount () {
     this.props.onMount()

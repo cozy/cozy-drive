@@ -31,7 +31,7 @@ const DeleteConfirmation = ({ t, selected, selectionContainsDirs, selectionConta
           className={classNames('coz-btn', 'coz-btn--close', styles['coz-modal-close'])}
           onClick={() => onDismiss(selected)}
           >
-          <span className='coz-hidden'>{t('deleteconfirmation.close')}</span>
+          <span className='coz-hidden'>{t('deleteconfirmation.cancel')}</span>
         </button>
         {deleteConfirmationTexts}
         <div className={styles['fil-deleteconfirmation-buttons']}>
