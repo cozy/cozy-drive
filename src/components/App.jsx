@@ -11,6 +11,7 @@ import { openFolder } from '../actions'
 import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
+import Toast from '../containers/Toast'
 
 class App extends Component {
   componentWillMount () {
@@ -25,7 +26,7 @@ class App extends Component {
     }
   }
 
-  render ({ t, notification, children }) {
+  render ({ t, notification, children, toastMessage }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
         { notification && <Alerter
@@ -38,6 +39,7 @@ class App extends Component {
         <main class={styles['fil-content']}>
           <Topbar />
           { children }
+          { toastMessage && <Toast />}
         </main>
       </div>
     )
@@ -46,6 +48,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   folder: state.folder,
+  toastMessage: state.ui.toastMessage,
   notification: state.ui.notification
 })
 

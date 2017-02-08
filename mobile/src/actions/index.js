@@ -3,14 +3,20 @@
 import cozy, { LocalStorage as Storage } from 'cozy-client-js'
 import localforage from 'localforage'
 
+import { DISPLAY_TOAST } from '../../../src/actions'
+
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
 
-const WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
+const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
+const OFFLINE_ERROR = 'mobile.error.offline'
+const NO_APP_ERROR = 'mobile.error.noapp'
 
-const error = () => ({ type: ERROR, error: WRONG_ADDRESS })
+export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
+export const offlineError = () => ({ type: DISPLAY_TOAST, message: OFFLINE_ERROR })
+export const noAppError = () => ({ type: DISPLAY_TOAST, message: NO_APP_ERROR })
 
 export class OnBoardingError extends Error {
   constructor (message) {
@@ -27,7 +33,7 @@ export const setUrl = (url) => {
       console.warn('development mode: we don\'t check SSL requirement')
     }
     if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
-      dispatch(error())
+      dispatch(wrongAddressError())
       throw new OnBoardingError(`The only supported protocol is ${scheme}`)
     }
     if (!url.startsWith(scheme)) {
@@ -76,7 +82,7 @@ export const registerDevice = (router, location) => {
               },
               (err) => {
                 inAppBrowser.close()
-                dispatch(error())
+                dispatch(wrongAddressError())
                 throw err
               }
             )
@@ -94,7 +100,7 @@ export const registerDevice = (router, location) => {
     try {
       await cozy.authorize()
     } catch (err) {
-      dispatch(error())
+      dispatch(wrongAddressError())
       throw err
     }
 
