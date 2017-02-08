@@ -4,7 +4,7 @@ import styles from '../styles/filenameinput'
 import { translate } from '../lib/I18n'
 
 const ENTER_KEY = 13
-const ESC_KEY   = 27
+const ESC_KEY = 27
 
 const valueIsEmpty = value => value.toString() === ''
 
@@ -25,8 +25,7 @@ class FilenameInput extends Component {
     if (e.keyCode === ENTER_KEY && !valueIsEmpty(this.state.value)) {
       this.setState({ hasBeenSubmitedOrAborted: true })
       this.submit()
-    }
-    else if (e.keyCode === ESC_KEY) {
+    } else if (e.keyCode === ESC_KEY) {
       this.setState({ hasBeenSubmitedOrAborted: true })
       this.abort()
     }
@@ -37,10 +36,10 @@ class FilenameInput extends Component {
   }
 
   handleBlur () {
-    //On top of "normal" blurs, the event happens all the time after a submit or an abort, because this component is removed from the DOM while having the focus.
-    //we want to do things only on "normal" blurs, *not* after a submit/abort
+    // On top of "normal" blurs, the event happens all the time after a submit or an abort, because this component is removed from the DOM while having the focus.
+    // we want to do things only on "normal" blurs, *not* after a submit/abort
     if (!this.state.hasBeenSubmitedOrAborted) {
-      //when it's a regular blur, we want to abort, except is the value is non-empty
+      // when it's a regular blur, we want to abort, except is the value is non-empty
       if (valueIsEmpty(this.state.value)) this.abort(true)
       else this.submit()
     }
@@ -55,7 +54,6 @@ class FilenameInput extends Component {
   }
 
   render ({ t, isUpdating }, { value }) {
-
     return (
       <div className={styles['fil-file-name-input']}>
         <input

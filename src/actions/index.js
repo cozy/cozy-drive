@@ -106,7 +106,7 @@ export const addFolder = () => ({
 })
 
 export const abortAddFolder = () => ({
-    type: ABORT_ADD_FOLDER
+  type: ABORT_ADD_FOLDER
 })
 
 export const renameFolder = (newName, id) => ({
@@ -133,13 +133,12 @@ export const createFolder = (name, tempId) => {
     })
 
     let folder
-    try{
+    try {
       folder = await cozy.files.createDirectory({
         name: name,
         dirID: getState().folder.id
       })
-    }
-    catch(err){
+    } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) dispatch({type: CREATE_FOLDER_FAILURE_DUPLICATE, id: tempId})
       else dispatch({type: CREATE_FOLDER_FAILURE_GENERIC, id: tempId, name})
       return
@@ -157,7 +156,7 @@ export const deleteFileOrFolder = (id, isNew = false) => {
     dispatch({ type: DELETE_FILE, id: id })
 
     if (!isNew) {
-      //@TODO: server side deletion
+      // @TODO: server side deletion
     }
   }
 }

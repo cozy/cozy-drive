@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(toggleFileSelection(id, selected))
   },
   onFileEdit: (val, attrs) => {
-    if (isDir(attrs)){
+    if (isDir(attrs)) {
       dispatch(renameFolder(val, attrs.id))
       if (attrs.isNew) dispatch(createFolder(val, attrs.id))
     }

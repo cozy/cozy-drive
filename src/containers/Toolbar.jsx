@@ -1,5 +1,4 @@
 import styles from '../styles/toolbar'
-import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
