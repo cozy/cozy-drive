@@ -1,14 +1,23 @@
 @require 'cozy-ui'
 
+.fil-content-row
+    width           100%
+    border-bottom   1px solid grey-09
+
+
 .settings
     margin 0 1em
 
-    .settings__category
-        margin-top 2em
-
-
     .settings__subcategory
+        display flex
 
+    .settings__subcategory-title
+        flex-shrink 0
+        color       gray-09
+        font-weight normal
+        font-size(12px)
 
-    .settings__item
-        color gray-11
+    .settings__subcategory-item
+        text-align right
+        flex-grow 1
+

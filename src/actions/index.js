@@ -1,6 +1,7 @@
 import cozy from 'cozy-client-js'
 
 import { ROOT_DIR_ID } from '../constants/config'
+import { saveFileWithCordova } from '../../mobile/src/lib/filesystem'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -17,8 +18,13 @@ export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const DELETE_FILE = 'DELETE_FILE'
+export const TRASH_FILE = 'TRASH_FILE'
+export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
+export const TRASH_FILE_FAILURE = 'TRASH_FILE_FAILURE'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
+export const SHOW_DELETE_CONFIRMATION = 'SHOW_DELETE_CONFIRMATION'
+export const HIDE_DELETE_CONFIRMATION = 'HIDE_DELETE_CONFIRMATION'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
@@ -151,12 +157,39 @@ export const deleteFileOrFolder = (id, isNew = false) => {
   }
 }
 
+export const trashFile = (id) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: TRASH_FILE, id: id })
+    let trashed
+    try {
+      trashed = await cozy.files.trashById(id)
+    } catch (err) {
+      return dispatch({
+        type: TRASH_FILE_FAILURE,
+        error: err
+      })
+    }
+    dispatch({
+      type: TRASH_FILE_SUCCESS,
+      file: extractFileAttributes(trashed)
+    })
+  }
+}
+
 export const showSelectionBar = () => ({
   type: SHOW_SELECTION_BAR
 })
 
 export const hideSelectionBar = () => ({
   type: HIDE_SELECTION_BAR
+})
+
+export const showDeleteConfirmation = () => ({
+  type: SHOW_DELETE_CONFIRMATION
+})
+
+export const hideDeleteConfirmation = () => ({
+  type: HIDE_DELETE_CONFIRMATION
 })
 
 export const toggleFileSelection = (id, selected) => ({
@@ -180,14 +213,19 @@ export const downloadFile = id => {
     const blob = await response.blob()
     // TODO: accessing state in action creators is an antipattern
     const filename = getState().files.find(f => f.id === id).name
-    // Temporary trick to force the "download" of the file
-    const element = document.createElement('a')
-    element.setAttribute('href', window.URL.createObjectURL(blob))
-    element.setAttribute('download', filename)
-    element.style.display = 'none'
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
+
+    if (window.cordova && window.cordova.file) {
+      saveFileWithCordova(blob, filename)
+    } else {
+      // Temporary trick to force the "download" of the file
+      const element = document.createElement('a')
+      element.setAttribute('href', window.URL.createObjectURL(blob))
+      element.setAttribute('download', filename)
+      element.style.display = 'none'
+      document.body.appendChild(element)
+      element.click()
+      document.body.removeChild(element)
+    }
   }
 }
 

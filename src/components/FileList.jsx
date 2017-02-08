@@ -10,12 +10,14 @@ import File from '../components/File'
 
 import SelectionBar from '../containers/SelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
+import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const FileList = ({
-  t, f, files, error, showSelection, showActionMenu, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, files, error, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
 }) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
+    {showDeleteConfirmation && <DeleteConfirmation />}
     <div className={classNames(
       styles['fil-content-table'],
       { [styles['fil-content-table-selection']]: showSelection }
