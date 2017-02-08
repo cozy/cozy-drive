@@ -9,7 +9,6 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
-import cozy from 'cozy-client-js'
 import { I18n } from './lib/I18n'
 
 import filesApp from './reducers'
