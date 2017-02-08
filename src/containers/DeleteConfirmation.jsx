@@ -42,7 +42,7 @@ const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    selected: state.ui.selected,
+    selected: state.ui.selected
   }
 }
 
