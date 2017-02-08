@@ -11,6 +11,7 @@ export const ERROR = 'ERROR'
 const WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
 
 const error = () => ({ type: ERROR, error: WRONG_ADDRESS })
+const genId = () => Math.random().toString(36).slice(2)
 
 export class OnBoardingError extends Error {
   constructor (message) {
@@ -49,7 +50,7 @@ export const registerDevice = (router, location) => {
         clientParams: {
           redirectURI: 'http://localhost',
           softwareID: 'io.cozy.mobile.files',
-          clientName: 'Mobile Cozy Files',
+          clientName: genId(),
           scopes: ['io.cozy.files:GET']
         },
         onRegistered: (client, url) => {
