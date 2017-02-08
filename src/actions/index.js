@@ -192,6 +192,13 @@ export const downloadFile = id => {
   }
 }
 
+const saveFileWithCordova = (filedata, filename) => {
+  window.cordova.file.DocumentsDirectory.getFile(filename, {create: true, exclusive: false}, fileentry => {
+    fileentry.createWriter(filewriter => {
+      filewriter.write(filedata)
+    })
+  })
+}
 export const showFileActionMenu = id => ({
   type: SHOW_FILE_ACTIONMENU, id
 })
