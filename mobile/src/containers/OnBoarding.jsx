@@ -10,15 +10,16 @@ import { registerDevice, SET_URL } from '../actions'
 
 import logo from '../../res/icon.png'
 
-export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl}) =>
+export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error}) =>
 (
   <div className={classnames(styles['wizard'])}>
     <div className={classnames(styles['wizard-main'])}>
-      <p>{t('mobile.wizard.selectServer.cozy_address')}</p>
-      <input type='text' placeholder={t('mobile.wizard.selectServer.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
-      <p>{t('mobile.wizard.selectServer.description')}</p>
+      <p>{t('mobile.onboarding.server_selection.cozy_address')}</p>
+      <input type='url' placeholder={t('mobile.onboarding.server_selection.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
+      <p>{t('mobile.onboarding.server_selection.description')}</p>
+      {error && <p style={{color: 'red'}}>{t(error)}</p>}
     </div>
-    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.wizard.selectServer.button')}</button>
+    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.onboarding.server_selection.button')}</button>
   </div>
 )
 
@@ -35,7 +36,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const mapStateToProps = (state) => {
   return ({
-    serverUrl: state.mobile.serverUrl
+    serverUrl: state.mobile.serverUrl,
+    error: state.mobile.error
   })
 }
 const ConnectedSelectServer = connect(mapStateToProps, mapDispatchToProps)(SelectServer)
@@ -45,9 +47,9 @@ export const Welcome = ({ nextStep, t }) =>
   <div className={classnames(styles['wizard'], styles['welcome'])}>
     <div className={classnames(styles['wizard-main'])}>
       <img src={logo} alt='logo' />
-      <h1>{t('mobile.wizard.welcome.title')}</h1>
+      <h1>{t('mobile.onboarding.welcome.title')}</h1>
     </div>
-    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={nextStep}>{t('mobile.wizard.welcome.button')}</button>
+    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={nextStep}>{t('mobile.onboarding.welcome.button')}</button>
   </div>
 )
 

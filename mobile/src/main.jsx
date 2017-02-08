@@ -1,5 +1,3 @@
-/* global __ALLOW_HTTP__ */
-
 import 'babel-polyfill'
 
 import '../../src/styles/main'
@@ -18,6 +16,7 @@ import { I18n } from '../../src/lib/I18n'
 
 import filesApp from './reducers'
 import AppRoute from '../../src/components/AppRoute'
+import { SET_STATE } from './actions'
 import App from '../../src/components/App'
 
 import OnBoarding from './containers/OnBoarding'
@@ -37,13 +36,12 @@ const store = createStore(
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.debug(__ALLOW_HTTP__)
-
   localforage.getItem('state').then(state => {
     if (state) {
-      store.dispatch({ type: 'SET_STATE', state })
+      store.dispatch({ type: SET_STATE, state })
       cozy.init({
-        cozyURL: state.serverUrl
+        cozyURL: state.serverUrl,
+        offline: {doctypes: ['io.cozy.files'], timer: 15}
       })
     }
 

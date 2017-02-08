@@ -10,27 +10,26 @@ import File from '../components/File'
 
 import SelectionBar from '../containers/SelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
+import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const FileList = ({
-  t, f, files, error, showSelection, showActionMenu, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, files, error, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
 }) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
-    <table className={classNames(
+    {showDeleteConfirmation && <DeleteConfirmation />}
+    <div className={classNames(
       styles['fil-content-table'],
       { [styles['fil-content-table-selection']]: showSelection }
     )}>
-      <thead>
-        <tr>
-          <th />
-          <th className={styles['fil-content-file']}>{ t('table.head_name') }</th>
-          <th>{ t('table.head_update') }</th>
-          <th>{ t('table.head_size') }</th>
-          <th>{ t('table.head_status') }</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody>
+      <div className={styles['fil-content-row']}>
+        <div className={classNames(styles['fil-content-header'], styles['fil-content-file-select'])} />
+        <div className={classNames(styles['fil-content-header'], styles['fil-content-file'])}>{ t('table.head_name') }</div>
+        <div className={classNames(styles['fil-content-header'], styles['fil-content-date'])}>{ t('table.head_update') }</div>
+        <div className={classNames(styles['fil-content-header'], styles['fil-content-size'])}>{ t('table.head_size') }</div>
+        <div className={classNames(styles['fil-content-header'], styles['fil-content-status'])}>{ t('table.head_status') }</div>
+      </div>
+      <div className={styles['fil-content-body']}>
         {!error && files.map((file, idx) => (
           <File
             onEdit={onFileEdit}
@@ -40,8 +39,8 @@ const FileList = ({
             attributes={file}
           />
         ))}
-      </tbody>
-    </table>
+      </div>
+    </div>
     {error && <Oops />}
     {files.length === 0 && <Empty />}
     {showActionMenu && <FileActionMenu />}

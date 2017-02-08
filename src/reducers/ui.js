@@ -10,12 +10,19 @@ import {
   CREATE_FOLDER_SUCCESS,
   UPLOAD_FILE,
   UPLOAD_FILE_SUCCESS,
+  TRASH_FILE,
+  TRASH_FILE_SUCCESS,
+  TRASH_FILE_FAILURE,
   SHOW_SELECTION_BAR,
   HIDE_SELECTION_BAR,
+  SHOW_DELETE_CONFIRMATION,
+  HIDE_DELETE_CONFIRMATION,
   SELECT_FILE,
   UNSELECT_FILE,
   SHOW_FILE_ACTIONMENU,
-  HIDE_FILE_ACTIONMENU
+  HIDE_FILE_ACTIONMENU,
+  DISPLAY_TOAST,
+  HIDE_TOAST
 } from '../actions'
 
 const isFetching = (state = false, action) => {
@@ -33,9 +40,12 @@ const isWorking = (state = false, action) => {
   switch (action.type) {
     case CREATE_FOLDER:
     case UPLOAD_FILE:
+    case TRASH_FILE:
       return true
     case CREATE_FOLDER_SUCCESS:
     case UPLOAD_FILE_SUCCESS:
+    case TRASH_FILE_SUCCESS:
+    case TRASH_FILE_FAILURE:
       return false
     default:
       return state
@@ -78,6 +88,17 @@ const showSelectionBar = (state = false, action) => {
       return true
     case OPEN_FOLDER:
     case HIDE_SELECTION_BAR:
+      return false
+    default:
+      return state
+  }
+}
+
+const showDeleteConfirmation = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_DELETE_CONFIRMATION:
+      return true
+    case HIDE_DELETE_CONFIRMATION:
       return false
     default:
       return state
@@ -140,14 +161,60 @@ const error = (state = null, action) => {
   }
 }
 
+const toastMessage = (state = null, action) => {
+  switch (action.type) {
+    case DISPLAY_TOAST:
+      return {
+        message: action.message,
+        duration: action.duration || 3000,
+        criticity: action.criticity || 'critical'
+      }
+    case HIDE_TOAST:
+      return null
+    default:
+      return state
+  }
+}
+
+const actionMenu = (state = { openWith: false }, action) => {
+  const newState = {}
+  switch (action.type) {
+    case 'SHOW_SPINNER':
+      newState[action.menu] = true
+      return Object.assign({}, state, newState)
+    case 'HIDE_SPINNER':
+      newState[action.menu] = false
+      return Object.assign({}, state, newState)
+    default:
+      return state
+  }
+}
+
+const notification = (state = null, action) => {
+  switch (action.type) {
+    case TRASH_FILE_FAILURE:
+      return {
+        message: 'notification.trash_file',
+        cause: action.error,
+        type: 'info'
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   isFetching,
   isWorking,
   opening,
   updating,
   showSelectionBar,
+  showDeleteConfirmation,
   selected,
   showFileActionMenu,
   actionable,
-  error
+  error,
+  toastMessage,
+  actionMenu,
+  notification
 })
