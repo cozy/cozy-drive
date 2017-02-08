@@ -10,10 +10,15 @@ export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
 export const ADD_FOLDER = 'ADD_FOLDER'
+export const ABORT_ADD_FOLDER = 'ABORT_ADD_FOLDER'
+export const RENAME_FOLDER = 'RENAME_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
+export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
+export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
+export const DELETE_FILE = 'DELETE_FILE'
 export const TRASH_FILE = 'TRASH_FILE'
 export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
 export const TRASH_FILE_FAILURE = 'TRASH_FILE_FAILURE'
@@ -33,6 +38,7 @@ export const HIDE_TOAST = 'HIDE_TOAST'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
+const HTTP_CODE_CONFLICT = 409
 
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
@@ -99,28 +105,60 @@ export const addFolder = () => ({
   }
 })
 
-const isDir = attrs => attrs.type === 'directory'
+export const abortAddFolder = (accidental) => ({
+  type: ABORT_ADD_FOLDER,
+  accidental
+})
 
-export const renameFile = (newName, attrs) => {
-  if (isDir(attrs)) {
-    return attrs.isNew === true
-      ? createFolder(newName, attrs.id)
-      : renameFolder(newName, attrs.id)
-  }
-}
+export const renameFolder = (newName, id) => ({
+  type: RENAME_FOLDER,
+  id,
+  name: newName
+})
 
-export const createFolder = (newName, tempId) => {
+export const createFolder = (name, tempId) => {
   return async (dispatch, getState) => {
-    dispatch({ type: CREATE_FOLDER, id: tempId })
-    const folder = await cozy.files.createDirectory({
-      name: newName,
-      dirID: getState().folder.id
+    let existingFolder = getState().files.find(f => f.id !== tempId && f.type === 'directory' && f.name === name)
+
+    if (existingFolder) {
+      return dispatch({
+        type: CREATE_FOLDER_FAILURE_DUPLICATE,
+        id: tempId,
+        name
+      })
+    }
+
+    dispatch({
+      type: CREATE_FOLDER,
+      id: tempId
     })
+
+    let folder
+    try {
+      folder = await cozy.files.createDirectory({
+        name: name,
+        dirID: getState().folder.id
+      })
+    } catch (err) {
+      if (err.response && err.response.status === HTTP_CODE_CONFLICT) dispatch({type: CREATE_FOLDER_FAILURE_DUPLICATE, id: tempId, name})
+      else dispatch({type: CREATE_FOLDER_FAILURE_GENERIC, id: tempId})
+      return
+    }
     dispatch({
       type: CREATE_FOLDER_SUCCESS,
       folder: extractFileAttributes(folder),
       tempId
     })
+  }
+}
+
+export const deleteFileOrFolder = (id, isNew = false) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: DELETE_FILE, id: id })
+
+    if (!isNew) {
+      // @TODO: server side deletion
+    }
   }
 }
 
@@ -223,10 +261,6 @@ export const showFileActionMenu = id => ({
 export const hideFileActionMenu = () => ({
   type: HIDE_FILE_ACTIONMENU
 })
-
-export const renameFolder = (newName, id) => {
-
-}
 
 export const hideToast = () => ({
   type: HIDE_TOAST

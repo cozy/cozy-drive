@@ -18,6 +18,7 @@ export const splitFilename = filename => {
 }
 
 const isDir = attrs => attrs.type === 'directory'
+const isEditing = attrs => attrs.isNew === true && (attrs.isCreating === false || attrs.creationError !== null)
 
 export const getClassFromMime = (attrs) => {
   if (isDir(attrs)) {
@@ -30,20 +31,27 @@ class File extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      editing: props.attributes.isNew === true
+      editing: isEditing(props.attributes)
     }
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.attributes.isNew === true && !this.props.attributes.isNew) {
+    if (isEditing(newProps.attributes) !== this.state.editing) {
       this.setState({
-        editing: true
+        editing: isEditing(newProps.attributes)
       })
     }
   }
 
   edit (value) {
     this.props.onEdit(value, this.props.attributes)
+    this.setState({
+      editing: false
+    })
+  }
+
+  abortEdit (accidental) {
+    this.props.onEditAbort(accidental, this.props.attributes)
     this.setState({
       editing: false
     })
@@ -94,9 +102,9 @@ class File extends Component {
     const classes = classNames(styles['fil-content-cell'], styles['fil-content-file'], getClassFromMime(attributes))
     if (editing) {
       return (
-        <div className={classes}>
-          <FilenameInput name={attributes.name} onSubmit={val => this.edit(val)} />
-        </div>
+        <td className={classes}>
+          <FilenameInput name={attributes.name} error={attributes.creationError} onSubmit={val => this.edit(val)} onAbort={() => this.abortEdit()} />
+        </td>
       )
     }
     if (isDir(attributes)) {
@@ -104,7 +112,7 @@ class File extends Component {
         <div className={classes}>
           <a onClick={() => onOpen(attributes.id)}>
             {attributes.name}
-            {attributes.isOpening === true && <div className={styles['fil-loading']} />}
+            {(attributes.isOpening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
           </a>
         </div>
       )
