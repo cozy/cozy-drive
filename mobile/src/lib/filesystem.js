@@ -1,7 +1,6 @@
 const ERROR_GET_DIRECTORY = 'Error to get directory'
 const ERROR_WRITE_FILE = 'Error to write file'
 const ERROR_GET_FILE = 'Error to get file'
-const ERROR_GET_COZY_ENTRY = 'Error to get cozy entry'
 const COZY_PATH = 'Cozy'
 const COZY_FILES_PATH = 'Cozy Files'
 
@@ -72,14 +71,8 @@ export const saveFile = (dirEntry, fileData, fileName) => new Promise((resolve, 
 
 export const saveFileWithCordova = (fileData, fileName) => new Promise((resolve, reject) => {
   getCozyEntry()
-  .then(entry => {
-    saveFile(entry, fileData, fileName).then(resolve).catch(reject)
-  })
-  .catch(error => {
-    console.warn(ERROR_GET_COZY_ENTRY)
-    console.warn(error)
-    reject(ERROR_GET_COZY_ENTRY)
-  })
+  .then(entry => saveFile(entry, fileData, fileName).then(resolve).catch(reject))
+  .catch(reject)
 })
 
 export const openFileWithCordova = (fileData, filename) => new Promise((resolve, reject) => {

@@ -31,6 +31,7 @@ const Menu = ({ t, file, onDownload, onOpenWith, actionMenu }) => {
       <Item>
         <a className={styles['fil-action-download']} onClick={() => onDownload(file.id)}>
           {t('mobile.action_menu.download')}
+          {actionMenu.download && <div className={styles['fil-loading']} />}
         </a>
       </Item>
     </div>
@@ -63,16 +64,21 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onDownload: id => {
-    dispatch(downloadFile(id))
-    dispatch(hideFileActionMenu())
+    const clearUI = () => {
+      dispatch(actionMenuLoaded('download'))
+      dispatch(hideFileActionMenu())
+    }
+    dispatch(actionMenuLoading('download'))
+    dispatch(downloadFile(id)).then(clearUI).catch(clearUI)
   },
   onClose: () => dispatch(hideFileActionMenu()),
   onOpenWith: (id, filename) => {
-    dispatch(actionMenuLoading('openWith'))
-    dispatch(openFileWith(id, filename)).then(() => {
+    const clearUI = () => {
       dispatch(actionMenuLoaded('openWith'))
       dispatch(hideFileActionMenu())
-    })
+    }
+    dispatch(actionMenuLoading('openWith'))
+    dispatch(openFileWith(id, filename)).then(clearUI).catch(clearUI)
   }
 })
 

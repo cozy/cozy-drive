@@ -11,12 +11,12 @@ export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
 
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
-const OFFLINE_ERROR = 'mobile.error.offline'
-const NO_APP_ERROR = 'mobile.error.noapp'
+const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
+const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'
 
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
-export const offlineError = () => ({ type: DISPLAY_TOAST, message: OFFLINE_ERROR })
-export const noAppError = () => ({ type: DISPLAY_TOAST, message: NO_APP_ERROR })
+export const openWithOfflineError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_OFFLINE_ERROR })
+export const openWithNoAppError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_NO_APP_ERROR })
 
 export class OnBoardingError extends Error {
   constructor (message) {
