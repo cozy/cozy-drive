@@ -35,6 +35,7 @@ export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const DISPLAY_TOAST = 'DISPLAY_TOAST'
 export const HIDE_TOAST = 'HIDE_TOAST'
+export const NOTIFICATION_CLOSED = 'NOTIFICATION_CLOSED'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
@@ -264,6 +265,10 @@ export const hideFileActionMenu = () => ({
 
 export const hideToast = () => ({
   type: HIDE_TOAST
+})
+
+export const notificationClosed = () => ({
+  type: NOTIFICATION_CLOSED
 })
 
 export const actionMenuLoading = (menu) => ({

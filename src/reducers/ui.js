@@ -26,7 +26,8 @@ import {
   SHOW_FILE_ACTIONMENU,
   HIDE_FILE_ACTIONMENU,
   DISPLAY_TOAST,
-  HIDE_TOAST
+  HIDE_TOAST,
+  NOTIFICATION_CLOSED
 } from '../actions'
 
 const isFetching = (state = false, action) => {
@@ -265,6 +266,8 @@ const notification = (state = null, action) => {
         message: 'notification.folder_generic',
         type: 'info'
       }
+    case NOTIFICATION_CLOSED:
+      return null
     default:
       return state
   }
