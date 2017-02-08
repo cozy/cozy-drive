@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onFileEditAbort: (accidental, attrs) => {
     if (isDir(attrs) && attrs.isNew) {
-      dispatch(abortAddFolder())
+      dispatch(abortAddFolder(accidental))
       dispatch(deleteFileOrFolder(attrs.id, attrs.isNew))
     }
   },

@@ -241,16 +241,20 @@ const notification = (state = null, action) => {
         cause: action.error,
         type: 'info'
       }
-    case CREATE_FOLDER_FAILURE_DUPLICATE:
-      console.log(action)
+    case ABORT_ADD_FOLDER:
       return {
-        message: 'error.folder_name',
+        message: 'notification.folder_abort',
+        type: 'info'
+      }
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
+      return {
+        message: 'notification.folder_name',
         messageData: {folderName: action.name},
         type: 'info'
       }
     case CREATE_FOLDER_FAILURE_GENERIC:
       return {
-        message: 'error.folder_generic',
+        message: 'notification.folder_generic',
         type: 'info'
       }
     default:

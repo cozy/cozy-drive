@@ -105,8 +105,9 @@ export const addFolder = () => ({
   }
 })
 
-export const abortAddFolder = () => ({
-  type: ABORT_ADD_FOLDER
+export const abortAddFolder = (accidental) => ({
+  type: ABORT_ADD_FOLDER,
+  accidental
 })
 
 export const renameFolder = (newName, id) => ({
