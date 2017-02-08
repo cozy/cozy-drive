@@ -68,6 +68,10 @@
     "open_folder": "Something went wrong when opening the folder.",
     "button": {
         "reload": "Refresh now"
+    },
+    "download_file": {
+      "offline": "You should be connected to download this file",
+      "missing": "This file is missing"
     }
   },
   "notification": {
@@ -101,8 +105,10 @@
       "download": "Download"
     },
     "error": {
-      "offline": "You should be connected to open this file",
-      "noapp": "No application can open this file"
+      "open_with": {
+        "offline": "You should be connected to open this file",
+        "noapp": "No application can open this file"
+      }
     }
   }
 }
