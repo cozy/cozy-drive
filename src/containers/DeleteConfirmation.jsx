@@ -7,16 +7,10 @@ import { translate } from '../lib/I18n'
 
 import { hideDeleteConfirmation, toggleFileSelection, trashFile } from '../actions'
 
-const DeleteConfirmation = ({ t, selected, selectionContainsDirs, selectionContainsFiles, onConfirm, onDismiss }) => {
-  const translationKeyForWhatToDelete = selectionContainsDirs && selectionContainsFiles ? 'title_what_mixed' : (selectionContainsDirs ? 'title_what_folder' : 'title_what_file')
-  const deleteConfirmationTitle = t('deleteconfirmation.title', {what: t(`deleteconfirmation.${translationKeyForWhatToDelete}`, selected.length)})
-
-  // if it's a mixed selection, we want to use singular, regardless of the actual item count
-  const textPluralizationCounter = selectionContainsDirs && selectionContainsFiles ? 1 : selected.length
-
+const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss }) => {
   const deleteConfirmationTexts = ['trash', 'restore', 'shared'].map(type => (
     <p className={classNames(styles['fil-deleteconfirmation-text'], styles[`icon-${type}`])}>
-      {t(`deleteconfirmation.${type}`, textPluralizationCounter)}
+      {t(`deleteconfirmation.${type}`, selected.length)}
     </p>
   ))
 
@@ -24,7 +18,7 @@ const DeleteConfirmation = ({ t, selected, selectionContainsDirs, selectionConta
     <div className={styles['coz-overlay']}>
       <div className={styles['coz-modal']}>
         <h2 className={styles['coz-modal-title']}>
-          {deleteConfirmationTitle}
+          {t('deleteconfirmation.title', selected.length)}
         </h2>
         <button
           className={classNames('coz-btn', 'coz-btn--close', styles['coz-modal-close'])}
@@ -47,15 +41,8 @@ const DeleteConfirmation = ({ t, selected, selectionContainsDirs, selectionConta
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let selected = state.ui.selected
-  let selectedItems = state.files.filter(file => selected.indexOf(file.id) > -1)
-  let selectionContainsDirs = selectedItems.find(f => f.type === 'directory')
-  let selectionContainsFiles = selectedItems.find(f => f.type !== 'directory')
-
   return {
-    selected: selected,
-    selectionContainsDirs: selectionContainsDirs,
-    selectionContainsFiles: selectionContainsFiles
+    selected: state.ui.selected,
   }
 }
 
