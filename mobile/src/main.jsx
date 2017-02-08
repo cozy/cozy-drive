@@ -10,7 +10,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Route, hashHistory } from 'react-router'
 import localforage from 'localforage'
-import cozy from 'cozy-client-js'
+import { init } from './lib/cozy_init'
 
 import { I18n } from '../../src/lib/I18n'
 
@@ -39,10 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   localforage.getItem('state').then(state => {
     if (state) {
       store.dispatch({ type: SET_STATE, state })
-      cozy.init({
-        cozyURL: state.serverUrl,
-        offline: {doctypes: ['io.cozy.files'], timer: 15}
-      })
+      init(state.serverUrl)
     }
 
     function requireSetup (nextState, replace) {
