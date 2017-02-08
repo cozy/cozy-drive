@@ -96,6 +96,10 @@
     "action_menu": {
       "open_with": "Open with",
       "download": "Download"
+    },
+    "error": {
+      "offline": "You should be connected to open this file",
+      "noapp": "No application can open this file"
     }
   }
 }

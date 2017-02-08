@@ -20,7 +20,9 @@ import {
   SELECT_FILE,
   UNSELECT_FILE,
   SHOW_FILE_ACTIONMENU,
-  HIDE_FILE_ACTIONMENU
+  HIDE_FILE_ACTIONMENU,
+  DISPLAY_TOAST,
+  HIDE_TOAST
 } from '../actions'
 
 const isFetching = (state = false, action) => {
@@ -159,6 +161,35 @@ const error = (state = null, action) => {
   }
 }
 
+const toastMessage = (state = null, action) => {
+  switch (action.type) {
+    case DISPLAY_TOAST:
+      return {
+        message: action.message,
+        duration: action.duration || 3000,
+        criticity: action.criticity || 'critical'
+      }
+    case HIDE_TOAST:
+      return null
+    default:
+      return state
+  }
+}
+
+const actionMenu = (state = { openWith: false }, action) => {
+  const newState = {}
+  switch (action.type) {
+    case 'SHOW_SPINNER':
+      newState[action.menu] = true
+      return Object.assign({}, state, newState)
+    case 'HIDE_SPINNER':
+      newState[action.menu] = false
+      return Object.assign({}, state, newState)
+    default:
+      return state
+  }
+}
+
 const notification = (state = null, action) => {
   switch (action.type) {
     case TRASH_FILE_FAILURE:
@@ -183,5 +214,7 @@ export default combineReducers({
   showFileActionMenu,
   actionable,
   error,
+  toastMessage,
+  actionMenu,
   notification
 })

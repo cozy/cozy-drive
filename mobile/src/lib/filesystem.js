@@ -9,6 +9,10 @@ export const getRootPath = () => window.cordova.platformId === 'android'
   ? window.cordova.file.externalRootDirectory
   : window.cordova.file.dataDirectory
 
+export const getTemporaryRootPath = () => window.cordova.platformId === 'android'
+  ? window.cordova.file.externalCacheDirectory
+  : window.cordova.file.cacheDirectory
+
 export const getCozyPath = () => COZY_PATH + '/' + COZY_FILES_PATH + '/'
 
 export const getEntry = (path) => new Promise((resolve, reject) => {
@@ -42,7 +46,9 @@ export const getDirectory = (rootDirEntry, folderName) => new Promise((resolve, 
 
 export const writeFile = (fileEntry, dataObj) => new Promise((resolve, reject) => {
   fileEntry.createWriter(fileWriter => {
-    fileWriter.onwriteend = resolve
+    fileWriter.onwriteend = () => {
+      resolve(fileEntry)
+    }
     fileWriter.onerror = error => {
       console.warn(ERROR_WRITE_FILE)
       console.warn(error)
@@ -54,7 +60,9 @@ export const writeFile = (fileEntry, dataObj) => new Promise((resolve, reject) =
 
 export const saveFile = (dirEntry, fileData, fileName) => new Promise((resolve, reject) => {
   dirEntry.getFile(fileName, { create: true, exclusive: false }, fileEntry => {
-    writeFile(fileEntry, fileData).then(resolve).catch(reject)
+    writeFile(fileEntry, fileData).then(() => {
+      resolve(fileEntry)
+    }).catch(reject)
   }, error => {
     console.warn(ERROR_GET_FILE)
     console.warn(error)
@@ -72,4 +80,14 @@ export const saveFileWithCordova = (fileData, fileName) => new Promise((resolve,
     console.warn(error)
     reject(ERROR_GET_COZY_ENTRY)
   })
+})
+
+export const openFileWithCordova = (fileData, filename) => new Promise((resolve, reject) => {
+  const fileMIMEType = fileData.type
+  getEntry(getTemporaryRootPath())
+  .then(dirEntry => saveFile(dirEntry, fileData, filename)
+    .then(fileEntry => window.cordova.plugins.fileOpener2.open(fileEntry.nativeURL, fileMIMEType, { error: reject, success: resolve }))
+    .catch(reject)
+  )
+  .catch(reject)
 })
