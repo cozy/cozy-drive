@@ -48,6 +48,7 @@ const isWorking = (state = false, action) => {
       return true
     case CREATE_FOLDER_SUCCESS:
     case CREATE_FOLDER_FAILURE_DUPLICATE:
+    case CREATE_FOLDER_FAILURE_GENERIC:
     case UPLOAD_FILE_SUCCESS:
     case TRASH_FILE_SUCCESS:
     case TRASH_FILE_FAILURE:
@@ -75,6 +76,7 @@ const creating = (state = false, action) => {
       return action.id
     case CREATE_FOLDER_SUCCESS:
     case CREATE_FOLDER_FAILURE_DUPLICATE:
+    case CREATE_FOLDER_FAILURE_GENERIC:
       return false
     default:
       return state

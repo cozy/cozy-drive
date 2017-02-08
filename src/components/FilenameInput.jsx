@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 
 import styles from '../styles/filenameinput'
-import { translate } from '../lib/I18n'
 
 const ENTER_KEY = 13
 const ESC_KEY = 27
 
 const valueIsEmpty = value => value.toString() === ''
 
-class FilenameInput extends Component {
+export default class FilenameInput extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -53,7 +52,7 @@ class FilenameInput extends Component {
     this.props.onAbort(accidental)
   }
 
-  render ({ t, isUpdating }, { value }) {
+  render ({ isUpdating }, { value }) {
     return (
       <div className={styles['fil-file-name-input']}>
         <input
@@ -70,5 +69,3 @@ class FilenameInput extends Component {
     )
   }
 }
-
-export default translate()(FilenameInput)

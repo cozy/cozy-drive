@@ -140,8 +140,8 @@ export const createFolder = (name, tempId) => {
         dirID: getState().folder.id
       })
     } catch (err) {
-      if (err.response && err.response.status === HTTP_CODE_CONFLICT) dispatch({type: CREATE_FOLDER_FAILURE_DUPLICATE, id: tempId})
-      else dispatch({type: CREATE_FOLDER_FAILURE_GENERIC, id: tempId, name})
+      if (err.response && err.response.status === HTTP_CODE_CONFLICT) dispatch({type: CREATE_FOLDER_FAILURE_DUPLICATE, id: tempId, name})
+      else dispatch({type: CREATE_FOLDER_FAILURE_GENERIC, id: tempId})
       return
     }
     dispatch({
