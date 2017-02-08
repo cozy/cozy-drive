@@ -194,7 +194,13 @@ const notification = (state = null, action) => {
   switch (action.type) {
     case TRASH_FILE_FAILURE:
       return {
-        message: 'notification.trash_file',
+        message: 'notification.trash_file_error',
+        cause: action.error,
+        type: 'info'
+      }
+    case TRASH_FILE_SUCCESS:
+      return {
+        message: 'notification.trash_file_success',
         cause: action.error,
         type: 'info'
       }
