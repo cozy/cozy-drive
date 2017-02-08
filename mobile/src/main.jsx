@@ -10,7 +10,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Route, hashHistory } from 'react-router'
 import localforage from 'localforage'
-import { init } from './lib/cozy_init'
+import { init } from './lib/cozy-helper'
 
 import { I18n } from '../../src/lib/I18n'
 
