@@ -118,7 +118,8 @@ export const createFolder = (name, tempId) => {
     if (existingFolder) {
       return dispatch({
         type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        id: tempId
+        id: tempId,
+        name
       })
     }
 
@@ -135,8 +136,8 @@ export const createFolder = (name, tempId) => {
       })
     }
     catch(err){
-      if (err.response.status === HTTP_CODE_CONFLICT) dispatch({type: CREATE_FOLDER_FAILURE_DUPLICATE, id: tempId})
-      else dispatch({type: CREATE_FOLDER_FAILURE_GENERIC, id: tempId})
+      if (err.response && err.response.status === HTTP_CODE_CONFLICT) dispatch({type: CREATE_FOLDER_FAILURE_DUPLICATE, id: tempId})
+      else dispatch({type: CREATE_FOLDER_FAILURE_GENERIC, id: tempId, name})
       return
     }
     dispatch({

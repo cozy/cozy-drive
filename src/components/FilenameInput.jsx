@@ -68,9 +68,6 @@ class FilenameInput extends Component {
           onKeyDown={e => this.handleKeyDown(e)}
           className={this.props.error ? styles['error'] : null}
         />
-        {this.props.error && <div className={styles['coz-errors']}>
-          {t(this.props.error.message, {folderName: this.props.name})}
-        </div>}
       </div>
     )
   }

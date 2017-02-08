@@ -84,13 +84,8 @@ const failedCreation = (state = null, action) => {
     case CREATE_FOLDER:
       return null
     case CREATE_FOLDER_FAILURE_DUPLICATE:
-      return {
-        message: 'error.folder_name',
-        id: action.id
-      }
     case CREATE_FOLDER_FAILURE_GENERIC:
       return {
-        message: 'error.folder_generic',
         id: action.id
       }
     default:
@@ -213,6 +208,18 @@ const notification = (state = null, action) => {
       return {
         message: 'notification.trash_file',
         cause: action.error,
+        type: 'info'
+      }
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
+      console.log(action)
+      return {
+        message: 'error.folder_name',
+        messageData: {folderName: action.name},
+        type: 'info'
+      }
+    case CREATE_FOLDER_FAILURE_GENERIC:
+      return {
+        message: 'error.folder_generic',
         type: 'info'
       }
     default:
