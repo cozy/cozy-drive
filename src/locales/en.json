@@ -71,7 +71,10 @@
     }
   },
   "notification": {
-    "trash_file": "Something went wrong when trashing the selection."
+    "trash_file": "Something went wrong when trashing the selection.",
+    "folder_name": "The folder %{folderName} already exists, please choose a new name.",
+    "folder_generic": "An error occurred, please try again.",
+    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved."
   },
   "mobile": {
     "onboarding": {

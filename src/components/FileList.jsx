@@ -13,7 +13,7 @@ import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const FileList = ({
-  t, f, files, error, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, files, error, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
 }) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
@@ -33,6 +33,7 @@ const FileList = ({
         {!error && files.map((file, idx) => (
           <File
             onEdit={onFileEdit}
+            onEditAbort={onFileEditAbort}
             onOpen={onFolderOpen}
             onToggle={onFileToggle}
             onShowActionMenu={onShowActionMenu}

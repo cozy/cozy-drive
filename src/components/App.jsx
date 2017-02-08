@@ -31,7 +31,7 @@ class App extends Component {
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
         { notification && <Alerter
           type={notification.type || 'info'}
-          message={t(notification.message)}
+          message={t(notification.message, notification.messageData)}
           />
         }
         <Sidebar />

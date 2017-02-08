@@ -9,7 +9,7 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { addFolder, showSelectionBar, uploadFile } from '../actions'
 
-const Toolbar = ({ t, error, addFolder, showSelectionBar, uploadFile }) => (
+const Toolbar = ({ t, error, addFolder, disableFolderCreation, showSelectionBar, uploadFile }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
     <UploadButton
       disabled={!!error}
@@ -31,7 +31,11 @@ const Toolbar = ({ t, error, addFolder, showSelectionBar, uploadFile }) => (
           </a>
         </Item>
         <Item>
-          <a className={styles['fil-action-newfolder']} onClick={addFolder}>
+          <a
+            className={styles['fil-action-newfolder']}
+            onClick={addFolder}
+            disabled={disableFolderCreation}
+          >
             {t('toolbar.menu_new_folder')}
           </a>
         </Item>
@@ -47,7 +51,8 @@ const Toolbar = ({ t, error, addFolder, showSelectionBar, uploadFile }) => (
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  error: state.ui.error
+  error: state.ui.error,
+  disableFolderCreation: state.ui.disableFolderCreation
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

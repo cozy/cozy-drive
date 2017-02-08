@@ -6,8 +6,12 @@ import {
   OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
+  ADD_FOLDER,
+  ABORT_ADD_FOLDER,
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCESS,
+  CREATE_FOLDER_FAILURE_DUPLICATE,
+  CREATE_FOLDER_FAILURE_GENERIC,
   UPLOAD_FILE,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILE,
@@ -43,6 +47,8 @@ const isWorking = (state = false, action) => {
     case TRASH_FILE:
       return true
     case CREATE_FOLDER_SUCCESS:
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
+    case CREATE_FOLDER_FAILURE_GENERIC:
     case UPLOAD_FILE_SUCCESS:
     case TRASH_FILE_SUCCESS:
     case TRASH_FILE_FAILURE:
@@ -64,6 +70,33 @@ const opening = (state = false, action) => {
   }
 }
 
+const creating = (state = false, action) => {
+  switch (action.type) {
+    case CREATE_FOLDER:
+      return action.id
+    case CREATE_FOLDER_SUCCESS:
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
+    case CREATE_FOLDER_FAILURE_GENERIC:
+      return false
+    default:
+      return state
+  }
+}
+
+const failedCreation = (state = null, action) => {
+  switch (action.type) {
+    case CREATE_FOLDER:
+      return null
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
+    case CREATE_FOLDER_FAILURE_GENERIC:
+      return {
+        id: action.id
+      }
+    default:
+      return state
+  }
+}
+
 const updating = (state = [], action) => {
   switch (action.type) {
     case CREATE_FOLDER:
@@ -77,6 +110,18 @@ const updating = (state = [], action) => {
         ...state.slice(0, idx),
         ...state.slice(idx + 1)
       ]
+    default:
+      return state
+  }
+}
+
+const disableFolderCreation = (state = false, action) => {
+  switch (action.type) {
+    case ADD_FOLDER:
+      return true
+    case ABORT_ADD_FOLDER:
+    case CREATE_FOLDER_SUCCESS:
+      return false
     default:
       return state
   }
@@ -198,6 +243,22 @@ const notification = (state = null, action) => {
         cause: action.error,
         type: 'info'
       }
+    case ABORT_ADD_FOLDER:
+      return {
+        message: 'notification.folder_abort',
+        type: 'info'
+      }
+    case CREATE_FOLDER_FAILURE_DUPLICATE:
+      return {
+        message: 'notification.folder_name',
+        messageData: {folderName: action.name},
+        type: 'info'
+      }
+    case CREATE_FOLDER_FAILURE_GENERIC:
+      return {
+        message: 'notification.folder_generic',
+        type: 'info'
+      }
     default:
       return state
   }
@@ -207,7 +268,10 @@ export default combineReducers({
   isFetching,
   isWorking,
   opening,
+  creating,
+  failedCreation,
   updating,
+  disableFolderCreation,
   showSelectionBar,
   showDeleteConfirmation,
   selected,
