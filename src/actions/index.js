@@ -13,8 +13,13 @@ export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
+export const TRASH_FILE = 'TRASH_FILE'
+export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
+export const TRASH_FILE_FAILURE = 'TRASH_FILE_FAILURE'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
+export const SHOW_DELETE_CONFIRMATION = 'SHOW_DELETE_CONFIRMATION'
+export const HIDE_DELETE_CONFIRMATION = 'HIDE_DELETE_CONFIRMATION'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
@@ -115,12 +120,39 @@ export const createFolder = (newName, tempId) => {
   }
 }
 
+export const trashFile = (id) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: TRASH_FILE, id: id })
+    let trashed
+    try {
+      trashed = await cozy.files.trashById(id)
+    } catch (err) {
+      return dispatch({
+        type: TRASH_FILE_FAILURE,
+        error: err
+      })
+    }
+    dispatch({
+      type: TRASH_FILE_SUCCESS,
+      file: extractFileAttributes(trashed)
+    })
+  }
+}
+
 export const showSelectionBar = () => ({
   type: SHOW_SELECTION_BAR
 })
 
 export const hideSelectionBar = () => ({
   type: HIDE_SELECTION_BAR
+})
+
+export const showDeleteConfirmation = () => ({
+  type: SHOW_DELETE_CONFIRMATION
+})
+
+export const hideDeleteConfirmation = () => ({
+  type: HIDE_DELETE_CONFIRMATION
 })
 
 export const toggleFileSelection = (id, selected) => ({

@@ -8,6 +8,7 @@ import classNames from 'classnames'
 
 import { openFolder } from '../actions'
 
+import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
@@ -24,9 +25,14 @@ class App extends Component {
     }
   }
 
-  render ({ t, error, children }) {
+  render ({ t, notification, children }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
+        { notification && <Alerter
+          type={notification.type || 'info'}
+          message={t(notification.message)}
+          />
+        }
         <Sidebar />
 
         <main class={styles['fil-content']}>
@@ -39,7 +45,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  folder: state.folder
+  folder: state.folder,
+  notification: state.ui.notification
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

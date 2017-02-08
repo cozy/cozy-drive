@@ -1,4 +1,4 @@
-import { OPEN_FOLDER_SUCCESS, UPLOAD_FILE_SUCCESS, ADD_FOLDER, CREATE_FOLDER_SUCCESS } from '../actions'
+import { OPEN_FOLDER_SUCCESS, UPLOAD_FILE_SUCCESS, TRASH_FILE_SUCCESS, ADD_FOLDER, CREATE_FOLDER_SUCCESS } from '../actions'
 
 // reducer for the currently displayed folder properties
 export const folder = (state = {}, action) => {
@@ -20,6 +20,8 @@ export const files = (state = [], action) => {
         ...state,
         action.file
       ]
+    case TRASH_FILE_SUCCESS:
+      return state.map(file => file.id === action.file.id ? action.file : file)
     case ADD_FOLDER:
       return [
         action.folder,
