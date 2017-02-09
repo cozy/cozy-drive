@@ -103,7 +103,7 @@ class File extends Component {
     if (editing) {
       return (
         <td className={classes}>
-          <FilenameInput name={attributes.name} error={attributes.creationError} onSubmit={val => this.edit(val)} onAbort={() => this.abortEdit()} />
+          <FilenameInput name={attributes.name} error={attributes.creationError} onSubmit={val => this.edit(val)} onAbort={accidental => this.abortEdit(accidental)} />
         </td>
       )
     }
