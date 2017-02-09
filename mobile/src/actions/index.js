@@ -10,6 +10,7 @@ export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS'
 
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
 const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
@@ -95,7 +96,4 @@ export const registerDevice = (router, location) => async (dispatch, getState) =
   }
 }
 
-export const updateSettings = (newSettings) => ({
-  type: 'UPDATE_SETTINGS',
-  newSettings
-})
+export const updateSettings = (newSettings) => ({ type: UPDATE_SETTINGS, newSettings })
