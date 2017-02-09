@@ -3,6 +3,7 @@ import cozy from 'cozy-client-js'
 import { ROOT_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
+import { getFilePaths, getFileById } from '../reducers'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -52,28 +53,21 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
       dispatch({ type: FETCH_FILES, folderId })
     }
     dispatch({ type: OPEN_FOLDER, folderId })
-    let folder
+    let folder, parent
     try {
       folder = await cozy.files.statById(folderId)
-    } catch (err) {
-      return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
-    }
-    const parentId = folder.attributes.dir_id
-    let parent
-    try {
+      const parentId = folder.attributes.dir_id
       parent = !!parentId && await cozy.files.statById(parentId)
     } catch (err) {
+      if (!isInitialFetch && router) {
+        router.push(folderId === ROOT_DIR_ID ? '/files' : `/files/${folderId}`)
+      }
       return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
     }
-
     if (isInitialFetch) {
       dispatch({ type: RECEIVE_FILES, folderId })
     } else if (router) {
-      if (folderId === ROOT_DIR_ID) {
-        router.push('/files')
-      } else {
-        router.push(`/files/${folderId}`)
-      }
+      router.push(folderId === ROOT_DIR_ID ? '/files' : `/files/${folderId}`)
     }
     dispatch({
       type: OPEN_FOLDER_SUCCESS,
@@ -212,8 +206,13 @@ export const downloadSelection = () => {
   return async (dispatch, getState) => {
     const { selected } = getState().ui
     dispatch({ type: DOWNLOAD_SELECTION, selected })
-    selected.forEach(id => dispatch(toggleFileSelection(id, true)))
-    return downloadFile(selected[0])
+    if (selected.length === 1 && getFileById(getState().files, selected[0]).type !== 'directory') {
+      return dispatch(downloadFile(selected[0]))
+    }
+    const paths = getFilePaths(getState(), selected)
+    const href = await cozy.files.getArchiveLink(paths)
+    const fullpath = await cozy.fullpath(href)
+    forceFileDownload(fullpath, 'files.zip')
   }
 }
 
@@ -241,16 +240,19 @@ export const downloadFile = id => {
     if (window.cordova && window.cordova.file) {
       saveFileWithCordova(blob, filename)
     } else {
-      // Temporary trick to force the "download" of the file
-      const element = document.createElement('a')
-      element.setAttribute('href', window.URL.createObjectURL(blob))
-      element.setAttribute('download', filename)
-      element.style.display = 'none'
-      document.body.appendChild(element)
-      element.click()
-      document.body.removeChild(element)
+      forceFileDownload(window.URL.createObjectURL(blob), filename)
     }
   }
+}
+
+const forceFileDownload = (href, filename) => {
+  const element = document.createElement('a')
+  element.setAttribute('href', href)
+  element.setAttribute('download', filename)
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
 }
 
 export const openFileWith = (id, filename) => {

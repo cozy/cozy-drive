@@ -915,9 +915,9 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bosonic@^2.0.0-beta2:
-  version "2.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/bosonic/-/bosonic-2.0.0-beta3.tgz#6527bac1e71a2e378435429337b0455566d267c2"
+bosonic@^2.0.0-beta4:
+  version "2.0.0-beta4"
+  resolved "https://registry.yarnpkg.com/bosonic/-/bosonic-2.0.0-beta4.tgz#470f92e761b54856bc2264ebd2b74766f6e4942a"
   dependencies:
     document-register-element "^1.2.0"
     pepjs "^0.4.2"
@@ -5115,11 +5115,11 @@ react-addons-test-utils@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-bosonic@^1.0.0-beta4:
-  version "1.0.0-beta4"
-  resolved "https://registry.yarnpkg.com/react-bosonic/-/react-bosonic-1.0.0-beta4.tgz#ac8c55dd52a983595a48d295c8ca2090d4990643"
+react-bosonic@^1.0.0-beta5:
+  version "1.0.0-beta5"
+  resolved "https://registry.yarnpkg.com/react-bosonic/-/react-bosonic-1.0.0-beta5.tgz#002994ea724a6a0e0803d4272b3b5360df19ad21"
   dependencies:
-    bosonic "^2.0.0-beta2"
+    bosonic "^2.0.0-beta4"
     classnames "^2.2.5"
     document-register-element "^1.2.0"
     preact "^7.1.0"

@@ -23,6 +23,7 @@ import {
   HIDE_DELETE_CONFIRMATION,
   SELECT_FILE,
   UNSELECT_FILE,
+  DOWNLOAD_SELECTION,
   SHOW_FILE_ACTIONMENU,
   HIDE_FILE_ACTIONMENU,
   DISPLAY_TOAST,
@@ -36,6 +37,15 @@ const isFetching = (state = false, action) => {
       return true
     case RECEIVE_FILES:
       return false
+    default:
+      return state
+  }
+}
+
+export const currentFolderId = (state = null, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER:
+      return action.folderId
     default:
       return state
   }
@@ -165,6 +175,7 @@ const selected = (state = [], action) => {
         ...state.slice(idx + 1)
       ]
     case OPEN_FOLDER:
+    case DOWNLOAD_SELECTION:
     case HIDE_SELECTION_BAR:
       return []
     default:
@@ -273,6 +284,7 @@ const alert = (state = null, action) => {
 
 export default combineReducers({
   isFetching,
+  currentFolderId,
   isWorking,
   opening,
   creating,
