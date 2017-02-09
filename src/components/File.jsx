@@ -62,6 +62,11 @@ class File extends Component {
     onToggle(attributes.id, attributes.selected)
   }
 
+  openFolder (e, id) {
+    e.stopPropagation()
+    this.props.onOpen(id)
+  }
+
   render ({ t, f, attributes, onOpen, onShowActionMenu }, { editing }) {
     const onDoubleClickListener = isDir(attributes)
     ? () => onOpen(attributes.id)
@@ -70,14 +75,14 @@ class File extends Component {
       `${STACK_URL}/files/download/${attributes.id}`,
       '_blank')
     return (
-      <div className={styles['fil-content-row']} onDoubleClick={onDoubleClickListener}>
+      <div className={styles['fil-content-row']} onClick={e => this.toggle(e)} onDoubleClick={onDoubleClickListener}>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
           <span data-input='checkbox'>
             <input
               type='checkbox'
               checked={attributes.selected}
              />
-            <label onClick={e => this.toggle(e)} />
+            <label />
           </span>
         </div>
         {this.renderFilenameCell(attributes, onOpen, editing)}
@@ -110,7 +115,7 @@ class File extends Component {
     if (isDir(attributes)) {
       return (
         <div className={classes}>
-          <a onClick={() => onOpen(attributes.id)}>
+          <a onClick={e => this.openFolder(e, attributes.id)}>
             {attributes.name}
             {(attributes.isOpening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
           </a>
