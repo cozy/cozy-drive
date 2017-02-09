@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { translate } from '../../../src/lib/I18n'
 
 import Wizard from '../components/Wizard'
+import BackupPhotosVideos from './BackupPhotosVideos'
 
 import styles from '../styles/onboarding'
 import { registerDevice, SET_URL } from '../actions'
@@ -62,6 +63,7 @@ export const Welcome = ({ nextStep, t }) =>
 const OnBoarding = (props) => {
   const steps = [
     Welcome,
+    BackupPhotosVideos,
     ConnectedSelectServer
   ]
   return <Wizard steps={steps} {...props} />
