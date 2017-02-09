@@ -212,7 +212,6 @@ export const downloadSelection = () => {
   return async (dispatch, getState) => {
     const { selected } = getState().ui
     dispatch({ type: DOWNLOAD_SELECTION, selected })
-    selected.forEach(id => dispatch(toggleFileSelection(id, true)))
     if (selected.length === 1) {
       return dispatch(downloadFile(selected[0]))
     }

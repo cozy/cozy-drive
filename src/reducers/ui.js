@@ -23,6 +23,7 @@ import {
   HIDE_DELETE_CONFIRMATION,
   SELECT_FILE,
   UNSELECT_FILE,
+  DOWNLOAD_SELECTION,
   SHOW_FILE_ACTIONMENU,
   HIDE_FILE_ACTIONMENU,
   DISPLAY_TOAST,
@@ -164,6 +165,7 @@ const selected = (state = [], action) => {
         ...state.slice(idx + 1)
       ]
     case OPEN_FOLDER:
+    case DOWNLOAD_SELECTION:
     case HIDE_SELECTION_BAR:
       return []
     default:
