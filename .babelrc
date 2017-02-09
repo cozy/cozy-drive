@@ -8,5 +8,6 @@
       "useBuiltIns": true
     }],
     "react"
-  ]
+  ],
+  "plugins": ["transform-object-rest-spread"]
 }
