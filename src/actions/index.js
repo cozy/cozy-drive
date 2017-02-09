@@ -2,7 +2,7 @@ import cozy from 'cozy-client-js'
 
 import { ROOT_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
-import { offlineError, noAppError } from '../../mobile/src/actions'
+import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -32,6 +32,8 @@ export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
 export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
 export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
+export const DOWNLOAD_FILE_MISSING = 'error.download_file.missing'
+export const DONWLOAD_FILE_OFFLINE = 'error.download_file.offline'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const DISPLAY_TOAST = 'DISPLAY_TOAST'
 export const HIDE_TOAST = 'HIDE_TOAST'
@@ -40,6 +42,9 @@ export const ALERT_CLOSED = 'ALERT_CLOSED'
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
 const HTTP_CODE_CONFLICT = 409
+
+export const downloadFileMissing = () => ({ type: DISPLAY_TOAST, message: DOWNLOAD_FILE_MISSING })
+export const downloadFileOffline = () => ({ type: DISPLAY_TOAST, message: DONWLOAD_FILE_OFFLINE })
 
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
@@ -212,10 +217,23 @@ export const downloadSelection = () => {
   }
 }
 
+const isMissingFile = (error) => error.status === 404
+const isOffline = (error) => error.message === 'Network request failed'
+
 export const downloadFile = id => {
   return async (dispatch, getState) => {
     dispatch({ type: DOWNLOAD_FILE, id })
-    const response = await cozy.files.downloadById(id)
+    const response = await cozy.files.downloadById(id).catch((error) => {
+      console.error('downloadById', error)
+      if (isMissingFile(error)) {
+        dispatch(downloadFileMissing())
+      } else if (isOffline(error)) {
+        dispatch(downloadFileOffline())
+      } else {
+        dispatch(downloadFileOffline())
+      }
+      throw error
+    })
     const blob = await response.blob()
     // TODO: accessing state in action creators is an antipattern
     const filename = getState().files.find(f => f.id === id).name
@@ -241,16 +259,22 @@ export const openFileWith = (id, filename) => {
       dispatch({ type: OPEN_FILE_WITH, id })
       const response = await cozy.files.downloadById(id).catch((error) => {
         console.error('downloadById', error)
-        dispatch(offlineError())
+        if (isMissingFile(error)) {
+          dispatch(downloadFileMissing())
+        } else if (isOffline(error)) {
+          dispatch(openWithOfflineError())
+        } else {
+          dispatch(openWithOfflineError())
+        }
         throw error
       })
       const blob = await response.blob()
       openFileWithCordova(blob, filename).catch((error) => {
         console.error('openFileWithCordova', error)
-        dispatch(noAppError())
+        dispatch(openWithNoAppError())
       })
     } else {
-      dispatch(noAppError())
+      dispatch(openWithNoAppError())
     }
   }
 }

@@ -1,6 +1,7 @@
 /* global __ALLOW_HTTP__ */
 
-import cozy, { LocalStorage as Storage } from 'cozy-client-js'
+import { init } from '../lib/cozy-helper'
+import cozy from 'cozy-client-js'
 import localforage from 'localforage'
 
 import { DISPLAY_TOAST } from '../../../src/actions'
@@ -11,12 +12,12 @@ export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
 
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
-const OFFLINE_ERROR = 'mobile.error.offline'
-const NO_APP_ERROR = 'mobile.error.noapp'
+const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
+const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'
 
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
-export const offlineError = () => ({ type: DISPLAY_TOAST, message: OFFLINE_ERROR })
-export const noAppError = () => ({ type: DISPLAY_TOAST, message: NO_APP_ERROR })
+export const openWithOfflineError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_OFFLINE_ERROR })
+export const openWithNoAppError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_NO_APP_ERROR })
 
 export class OnBoardingError extends Error {
   constructor (message) {
@@ -25,91 +26,71 @@ export class OnBoardingError extends Error {
   }
 }
 
-export const setUrl = (url) => {
-  return async dispatch => {
-    let scheme = 'https://'
-    if (__ALLOW_HTTP__) {
-      scheme = 'http://'
-      console.warn('development mode: we don\'t check SSL requirement')
+export const checkURL = url => async dispatch => {
+  let scheme = 'https://'
+  if (__ALLOW_HTTP__) {
+    scheme = 'http://'
+    console.warn('development mode: we don\'t check SSL requirement')
+  }
+  if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
+    dispatch(wrongAddressError())
+    throw new OnBoardingError(`The only supported protocol is ${scheme}`)
+  }
+  if (!url.startsWith(scheme)) {
+    url = `${scheme}${url}`
+  }
+  return dispatch({ type: SET_URL, url: url })
+}
+
+const openRegistrationWith = inAppBrowser => new Promise((resolve) => {
+  inAppBrowser.addEventListener('loadstart', ({url}) => {
+    const accessCode = /\?access_code=(.+)$/.test(url)
+    const state = /\?state=(.+)$/.test(url)
+
+    if (accessCode || state) {
+      resolve(url)
     }
-    if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
-      dispatch(wrongAddressError())
-      throw new OnBoardingError(`The only supported protocol is ${scheme}`)
-    }
-    if (!url.startsWith(scheme)) {
-      url = `${scheme}${url}`
-    }
-    return dispatch({ type: SET_URL, url: url })
+  })
+})
+
+const onRegistered = dispatch => (client, url) => {
+  if (window.cordova && window.cordova.InAppBrowser) {
+    const target = '_blank'
+    const options = 'location=yes,hidden=no'
+    const inAppBrowser = window.cordova.InAppBrowser.open(url, target, options)
+    return openRegistrationWith(inAppBrowser)
+    .then(
+      url => {
+        inAppBrowser.close()
+        return url
+      },
+      err => {
+        inAppBrowser.close()
+        dispatch(wrongAddressError())
+        throw err
+      }
+    )
   }
 }
 
-// TODO need to refactor this braces hell
-export const registerDevice = (router, location) => {
-  return async (dispatch, getState) => {
-    await dispatch(setUrl(getState().mobile.serverUrl))
+export const registerDevice = (router, location) => async (dispatch, getState) => {
+  await dispatch(checkURL(getState().mobile.serverUrl))
+  const device = window.cordova ? window.cordova.platformId : null
+  await init(getState().mobile.serverUrl, onRegistered(dispatch), device)
+  try {
+    await cozy.authorize()
+    await cozy.offline.replicateFromCozy('io.cozy.files')
+  } catch (err) {
+    dispatch(wrongAddressError())
+    throw err
+  }
 
-    let oauth
-    if (window.cordova && window.cordova.InAppBrowser) {
-      oauth = {
-        storage: new Storage(),
-        clientParams: {
-          redirectURI: 'http://localhost',
-          softwareID: 'io.cozy.mobile.files',
-          clientName: 'Mobile Cozy Files',
-          scopes: ['io.cozy.files:GET']
-        },
-        onRegistered: (client, url) => {
-          if (window.cordova && window.cordova.InAppBrowser) {
-            const { InAppBrowser } = window.cordova
-            const target = '_blank'
-            const options = 'location=yes,hidden=no'
-            const inAppBrowser = InAppBrowser.open(url, target, options)
-
-            return new Promise((resolve) => {
-              inAppBrowser.addEventListener('loadstart', ({url}) => {
-                const accessCode = /\?access_code=(.+)$/.test(url)
-                const state = /\?state=(.+)$/.test(url)
-
-                if (accessCode || state) {
-                  resolve(url)
-                }
-              })
-            })
-            .then(
-              (url) => {
-                inAppBrowser.close()
-                return url
-              },
-              (err) => {
-                inAppBrowser.close()
-                dispatch(wrongAddressError())
-                throw err
-              }
-            )
-          }
-        }
-      }
-    }
-
-    cozy.init({
-      cozyURL: `${getState().mobile.serverUrl}`,
-      offline: {doctypes: ['io.cozy.files'], timer: 15},
-      oauth: oauth
-    })
-
-    try {
-      await cozy.authorize()
-    } catch (err) {
-      dispatch(wrongAddressError())
-      throw err
-    }
-
-    dispatch({ type: SETUP })
-    localforage.setItem('state', getState().mobile)
-    if (location.state && location.state.nextPathname) {
-      router.replace(location.state.nextPathname)
-    } else {
-      router.replace('/')
-    }
+  // TODO move this outside of this action (may be in the smart component's behavior)
+  dispatch({ type: SETUP })
+  localforage.setItem('state', getState().mobile)
+  if (location.state && location.state.nextPathname) {
+    router.replace(location.state.nextPathname)
+  } else {
+    router.replace('/')
   }
 }
