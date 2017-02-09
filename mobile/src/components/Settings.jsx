@@ -1,6 +1,5 @@
-import styles from '../styles/settings'
-
 import React from 'react'
+import styles from '../styles/settings'
 import { translate } from '../../../src/lib/I18n'
 
 const SubCategory = ({ id, label, value, title }) => (
@@ -17,11 +16,14 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages 
   <div>
     <div className={styles['fil-content-row']} />
     <div className={styles['settings']}>
-      <h3 className={styles['settings__category-title']}>{t('mobile.settings.media_backup')}</h3>
-      <SubCategory id={'backupImages'} label={t('mobile.settings.backup_images_label')} title={t('mobile.settings.backup_images_title')} value={<input type='checkbox' checked={backupImages} onChange={setBackupImages} />} />
-      <h3 className={styles['settings__category-title']}>{t('mobile.settings.about')}</h3>
-      <SubCategory id={'serverUrl'} label={t('mobile.settings.account')} value={<a href={serverUrl}>{serverUrl}</a>} />
-      <SubCategory id={'version'} label={t('mobile.settings.app_version')} value={version} />
+      <h3 className={styles['settings__category-title']}>{t('mobile.settings.media_backup.title')}</h3>
+      <SubCategory id={'backupImages'} title={t('mobile.settings.media_backup.images.title')}
+        label={t('mobile.settings.media_backup.images.label')}
+        value={<input type='checkbox' checked={backupImages} onChange={setBackupImages} />} />
+      <h3 className={styles['settings__category-title']}>{t('mobile.settings.about.title')}</h3>
+      <SubCategory id={'serverUrl'} label={t('mobile.settings.about.account')}
+        value={<a href={serverUrl}>{serverUrl}</a>} />
+      <SubCategory id={'version'} label={t('mobile.settings.about.app_version')} value={version} />
     </div>
   </div>
 )

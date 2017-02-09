@@ -94,12 +94,18 @@
     },
     "settings": {
       "title": "Settings",
-      "about": "About",
-      "app_version": "App Version",
-      "account": "Account",
-      "media_backup": "Media Backup",
-      "backup_images_title": "Backup images",
-      "backup_images_label": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium, ipsum fringilla fermentum blandit, enim."
+      "about": {
+        "title": "About",
+        "app_version": "App Version",
+        "account": "Account"
+      },
+      "media_backup": {
+        "title": "Media Backup",
+        "images": {
+          "title": "Backup images",
+          "label": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium, ipsum fringilla fermentum blandit, enim."
+        }
+      }
     },
     "action_menu": {
       "open_with": "Open with",
