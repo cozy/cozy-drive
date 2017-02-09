@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { folder, files } from './folder'
 import ui from './ui'
 
-import { TRASH_DIR_ID } from '../constants/config.js'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
 const filesApp = combineReducers({
   folder,
@@ -37,6 +37,13 @@ export const getVisibleFiles = state => {
     }
     return Object.assign({}, f, additionalProps)
   })
+}
+
+export const isRootFolder = folder => folder.id === ROOT_DIR_ID
+
+export const getFilePaths = ({ files, folder }, ids) => {
+  return ids.map(id => files.find(f => f.id === id))
+    .map(f => f.type === 'directory' ? f.path : (isRootFolder(folder) ? `/${f.name}` : `${folder.path}/${f.name}`))
 }
 
 export const getFileById = (files, id) => files.find(f => f.id === id)

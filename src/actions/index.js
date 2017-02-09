@@ -3,6 +3,7 @@ import cozy from 'cozy-client-js'
 import { ROOT_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
+import { getFilePaths } from '../reducers'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -212,7 +213,13 @@ export const downloadSelection = () => {
     const { selected } = getState().ui
     dispatch({ type: DOWNLOAD_SELECTION, selected })
     selected.forEach(id => dispatch(toggleFileSelection(id, true)))
-    return downloadFile(selected[0])
+    if (selected.length === 1) {
+      return dispatch(downloadFile(selected[0]))
+    }
+    const paths = getFilePaths(getState(), selected)
+    const href = await cozy.files.getArchiveLink(paths)
+    const fullpath = await cozy.fullpath(href)
+    forceFileDownload(fullpath, 'files.zip')
   }
 }
 
@@ -240,16 +247,19 @@ export const downloadFile = id => {
     if (window.cordova && window.cordova.file) {
       saveFileWithCordova(blob, filename)
     } else {
-      // Temporary trick to force the "download" of the file
-      const element = document.createElement('a')
-      element.setAttribute('href', window.URL.createObjectURL(blob))
-      element.setAttribute('download', filename)
-      element.style.display = 'none'
-      document.body.appendChild(element)
-      element.click()
-      document.body.removeChild(element)
+      forceFileDownload(window.URL.createObjectURL(blob), filename)
     }
   }
+}
+
+const forceFileDownload = (href, filename) => {
+  const element = document.createElement('a')
+  element.setAttribute('href', href)
+  element.setAttribute('download', filename)
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
 }
 
 export const openFileWith = (id, filename) => {
