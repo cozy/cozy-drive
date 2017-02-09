@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
-import { openFolder, notificationClosed } from '../actions'
+import { openFolder, alertClosed } from '../actions'
 
 import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
@@ -26,13 +26,13 @@ class App extends Component {
     }
   }
 
-  render ({ t, notification, children, toastMessage }) {
+  render ({ t, alert, children, toastMessage }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
-        { notification && <Alerter
-          type={notification.type || 'info'}
-          message={t(notification.message, notification.messageData)}
-          onClose={this.props.onNotificationAutoClose}
+        { alert && <Alerter
+          type={alert.type || 'info'}
+          message={t(alert.message, alert.messageData)}
+          onClose={this.props.onAlertAutoClose}
           />
         }
         <Sidebar />
@@ -50,7 +50,7 @@ class App extends Component {
 const mapStateToProps = (state) => ({
   folder: state.folder,
   toastMessage: state.ui.toastMessage,
-  notification: state.ui.notification
+  alert: state.ui.alert
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -60,8 +60,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onRouteChange: (folderId) => {
     dispatch(openFolder(folderId, true))
   },
-  onNotificationAutoClose: () => {
-    dispatch(notificationClosed())
+  onAlertAutoClose: () => {
+    dispatch(alertClosed())
   }
 })
 

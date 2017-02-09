@@ -27,7 +27,7 @@ import {
   HIDE_FILE_ACTIONMENU,
   DISPLAY_TOAST,
   HIDE_TOAST,
-  NOTIFICATION_CLOSED
+  ALERT_CLOSED
 } from '../actions'
 
 const isFetching = (state = false, action) => {
@@ -236,37 +236,35 @@ const actionMenu = (state = { openWith: false }, action) => {
   }
 }
 
-const notification = (state = null, action) => {
+const alert = (state = null, action) => {
   switch (action.type) {
     case TRASH_FILE_FAILURE:
       return {
-        message: 'notification.trash_file_error',
-        cause: action.error,
+        message: 'alert.trash_file_error',
         type: 'info'
       }
     case TRASH_FILE_SUCCESS:
       return {
-        message: 'notification.trash_file_success',
-        cause: action.error,
+        message: 'alert.trash_file_success',
         type: 'info'
       }
     case ABORT_ADD_FOLDER:
       return {
-        message: 'notification.folder_abort',
+        message: 'alert.folder_abort',
         type: 'info'
       }
     case CREATE_FOLDER_FAILURE_DUPLICATE:
       return {
-        message: 'notification.folder_name',
+        message: 'alert.folder_name',
         messageData: {folderName: action.name},
         type: 'info'
       }
     case CREATE_FOLDER_FAILURE_GENERIC:
       return {
-        message: 'notification.folder_generic',
+        message: 'alert.folder_generic',
         type: 'info'
       }
-    case NOTIFICATION_CLOSED:
+    case ALERT_CLOSED:
       return null
     default:
       return state
@@ -289,5 +287,5 @@ export default combineReducers({
   error,
   toastMessage,
   actionMenu,
-  notification
+  alert
 })

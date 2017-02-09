@@ -67,7 +67,7 @@
         "reload": "Refresh now"
     }
   },
-  "notification": {
+  "alert": {
     "trash_file_error": "Something went wrong when trashing the selection.",
     "trash_file_success": "The selection has been moved to the Trash.",
     "folder_name": "The folder %{folderName} already exists, please choose a new name.",
