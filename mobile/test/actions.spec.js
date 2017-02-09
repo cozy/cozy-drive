@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import { mobile as reducer } from '../src/reducers/mobile'
-import { SET_STATE, SET_URL, SETUP, ERROR, setUrl, OnBoardingError } from '../src/actions'
+import { SET_STATE, SET_URL, SETUP, ERROR, checkURL, OnBoardingError } from '../src/actions'
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
@@ -46,7 +46,7 @@ describe('actions', () => {
   it('should accept https://localhost', () => {
     const store = mockStore()
 
-    return store.dispatch(setUrl('https://localhost'))
+    return store.dispatch(checkURL('https://localhost'))
       .then(() => {
         expect(store.getActions()).toEqual([{ type: 'SET_URL', url: 'https://localhost' }])
       })
@@ -55,7 +55,7 @@ describe('actions', () => {
   it('should not accept http://', () => {
     const store = mockStore()
 
-    return store.dispatch(setUrl('http://localhost'))
+    return store.dispatch(checkURL('http://localhost'))
       .then(() => {
       })
       .catch((err) => {
@@ -67,7 +67,7 @@ describe('actions', () => {
   it('should accept url without scheme://', () => {
     const store = mockStore()
 
-    return store.dispatch(setUrl('localhost'))
+    return store.dispatch(checkURL('localhost'))
       .then(() => {
         expect(store.getActions()).toEqual([{ type: 'SET_URL', url: 'https://localhost' }])
       })
