@@ -21,6 +21,6 @@ export const init = (url, onRegister = null, device = 'Device') => {
   cozy.init({
     cozyURL: url,
     offline: {doctypes: ['io.cozy.files'], timer: 15},
-    oauth: onRegister ? getAuth(onRegister, device) : null
+    oauth: getAuth(onRegister, device)
   })
 }
