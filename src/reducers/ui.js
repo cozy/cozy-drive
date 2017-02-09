@@ -241,7 +241,7 @@ const alert = (state = null, action) => {
     case TRASH_FILE_FAILURE:
       return {
         message: 'alert.trash_file_error',
-        type: 'info'
+        type: 'error'
       }
     case TRASH_FILE_SUCCESS:
       return {
@@ -257,12 +257,12 @@ const alert = (state = null, action) => {
       return {
         message: 'alert.folder_name',
         messageData: {folderName: action.name},
-        type: 'info'
+        type: 'error'
       }
     case CREATE_FOLDER_FAILURE_GENERIC:
       return {
         message: 'alert.folder_generic',
-        type: 'info'
+        type: 'error'
       }
     case ALERT_CLOSED:
       return null
