@@ -37,6 +37,7 @@ export const DONWLOAD_FILE_OFFLINE = 'error.download_file.offline'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const DISPLAY_TOAST = 'DISPLAY_TOAST'
 export const HIDE_TOAST = 'HIDE_TOAST'
+export const ALERT_CLOSED = 'ALERT_CLOSED'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
@@ -288,6 +289,10 @@ export const hideFileActionMenu = () => ({
 
 export const hideToast = () => ({
   type: HIDE_TOAST
+})
+
+export const alertClosed = () => ({
+  type: ALERT_CLOSED
 })
 
 export const actionMenuLoading = (menu) => ({

@@ -50,10 +50,7 @@
     "close": "Close"
   },
   "deleteconfirmation": {
-    "title": "Delete %{what}?",
-    "title_what_file": "this file |||| these files",
-    "title_what_folder": "this folder |||| these folders",
-    "title_what_mixed": "this selection",
+    "title": "Delete this element? |||| Delete these elements?",
     "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
     "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
     "shared": "If you have shared it, people won't be able to access it. |||| If you have shared them, people won't be able to access them.",
@@ -74,8 +71,9 @@
       "missing": "This file is missing"
     }
   },
-  "notification": {
-    "trash_file": "Something went wrong when trashing the selection.",
+  "alert": {
+    "trash_file_error": "Something went wrong when trashing the selection.",
+    "trash_file_success": "The selection has been moved to the Trash.",
     "folder_name": "The folder %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
     "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved."
