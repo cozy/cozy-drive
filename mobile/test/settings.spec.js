@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'enzyme'
-import { Settings } from '../../mobile/src/containers/Settings'
+import { Settings } from '../../mobile/src/components/Settings'
 
 describe('Settings', () => {
   it('should contain version number', () => {

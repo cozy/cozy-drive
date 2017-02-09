@@ -99,6 +99,17 @@
         "app_version": "App Version",
         "account": "Account"
       },
+      "unlink": {
+        "title": "Unlink your device from your Cozy",
+        "description": "Unlink your cozy account to this device. All data will be deleted",
+        "button": "Unlink",
+        "confirmation": {
+          "title": "Unlink your device?",
+          "description": "By logging out of your Cozy, you will erase all data synchronized locally by your mobile application.",
+          "cancel": "Cancel",
+          "unlink": "Unlink"
+        }
+      },
       "media_backup": {
         "title": "Media Backup",
         "images": {

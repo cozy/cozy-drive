@@ -1,10 +1,14 @@
-import { SETUP, SET_URL, SET_STATE, ERROR, UPDATE_SETTINGS } from '../actions'
+import {
+  SETUP, SET_URL, SET_STATE, ERROR, UPDATE_SETTINGS,
+  SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION
+} from '../actions'
 
-const initialState = {
+export const initialState = {
   isSetup: false,
   serverUrl: '',
   settings: {
-    backupImages: false
+    backupImages: false,
+    displayUnlinkConfirmation: false
   }
 }
 
@@ -20,6 +24,10 @@ export const mobile = (state = initialState, action) => {
       return Object.assign({}, state, { error: action.error })
     case UPDATE_SETTINGS:
       return Object.assign({}, state, Object.assign({}, state.settings, action.newSettings))
+    case SHOW_UNLINK_CONFIRMATION:
+      return Object.assign({}, state, { settings: { displayUnlinkConfirmation: true } })
+    case HIDE_UNLINK_CONFIRMATION:
+      return Object.assign({}, state, { settings: { displayUnlinkConfirmation: false } })
   }
   return state
 }
