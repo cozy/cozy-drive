@@ -8,16 +8,19 @@
 .settings
     margin 0 1em
 
+    .settings__subcategory-title
+        display       block
+        margin-bottom 0
+        font-weight   normal
+
     .settings__subcategory
         display flex
 
-    .settings__subcategory-title
-        flex-shrink 0
-        color       gray-09
-        font-weight normal
+    .settings__subcategory__label
+        color       gray
         font-size(12px)
 
-    .settings__subcategory-item
+    .settings__subcategory__item
+        flex-grow  1
         text-align right
-        flex-grow 1
 

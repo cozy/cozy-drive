@@ -94,3 +94,8 @@ export const registerDevice = (router, location) => async (dispatch, getState) =
     router.replace('/')
   }
 }
+
+export const updateSettings = (newSettings) => ({
+  type: 'UPDATE_SETTINGS',
+  newSettings
+})
