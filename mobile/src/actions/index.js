@@ -99,6 +99,7 @@ export const registerDevice = (router, location) => {
 
     try {
       await cozy.authorize()
+      await cozy.offline.replicateFromCozy('io.cozy.files')
     } catch (err) {
       dispatch(wrongAddressError())
       throw err
