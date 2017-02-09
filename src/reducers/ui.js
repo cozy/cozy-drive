@@ -261,10 +261,10 @@ const alert = (state = null, action) => {
         type: 'info'
       }
     case ABORT_ADD_FOLDER:
-      return {
+      return action.accidental ? {
         message: 'alert.folder_abort',
         type: 'info'
-      }
+      } : state
     case CREATE_FOLDER_FAILURE_DUPLICATE:
       return {
         message: 'alert.folder_name',
