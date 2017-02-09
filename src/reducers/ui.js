@@ -42,6 +42,15 @@ const isFetching = (state = false, action) => {
   }
 }
 
+export const currentFolderId = (state = null, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER:
+      return action.folderId
+    default:
+      return state
+  }
+}
+
 const isWorking = (state = false, action) => {
   switch (action.type) {
     case CREATE_FOLDER:
@@ -275,6 +284,7 @@ const alert = (state = null, action) => {
 
 export default combineReducers({
   isFetching,
+  currentFolderId,
   isWorking,
   opening,
   creating,

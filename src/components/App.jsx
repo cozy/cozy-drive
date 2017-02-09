@@ -21,7 +21,7 @@ class App extends Component {
   componentWillReceiveProps (newProps) {
     if (this.props.params.file !== undefined && // we're not in the root dir
       newProps.params.file !== this.props.params.file && // the route has changed
-      newProps.params.file !== newProps.folder.id) { // but the folder has not been fetched
+      newProps.params.file !== newProps.folderId) { // but the folder has not been fetched
       this.props.onRouteChange(newProps.params.file)
     }
   }
@@ -48,7 +48,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  folder: state.folder,
+  folderId: state.ui.currentFolderId,
   toastMessage: state.ui.toastMessage,
   alert: state.ui.alert
 })
