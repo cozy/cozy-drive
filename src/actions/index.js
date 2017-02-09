@@ -3,7 +3,7 @@ import cozy from 'cozy-client-js'
 import { ROOT_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
-import { getFilePaths } from '../reducers'
+import { getFilePaths, getFileById } from '../reducers'
 
 export const FETCH_FILES = 'FETCH_FILES'
 export const RECEIVE_FILES = 'RECEIVE_FILES'
@@ -212,7 +212,7 @@ export const downloadSelection = () => {
   return async (dispatch, getState) => {
     const { selected } = getState().ui
     dispatch({ type: DOWNLOAD_SELECTION, selected })
-    if (selected.length === 1) {
+    if (selected.length === 1 && getFileById(getState().files, selected[0]).type !== 'directory') {
       return dispatch(downloadFile(selected[0]))
     }
     const paths = getFilePaths(getState(), selected)
