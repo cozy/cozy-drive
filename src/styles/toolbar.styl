@@ -2,50 +2,50 @@
 @require './popover'
 
 .fil-toolbar
-  margin-left auto
-  .coz-btn:last-child
-    margin-right 0
+    margin-left auto
+    .coz-btn:last-child
+        margin-right 0
 
 // These styles are needed for the menu to work and come directly from bosonic's source
 // TODO: find a better way for bosonic to share its styling
 b-menu-button
-  position relative
+    position relative
 
 b-menu-button > b-listbox
-  display none
-  position absolute
+    display none
+    position absolute
 
 b-menu-button[open] > b-listbox
-  display block
+    display block
 
 b-item
-  display block
+    display block
 
 .fil-toolbar-menu
-  @extends $popover
-  right 0
-  padding 5px 0
-  margin 0
-  margin-top 1px
-  min-width 220px
+    @extends $popover
+    right 0
+    padding 5px 0
+    margin 0
+    margin-top 1px
+    min-width 220px
 
-  a
-    &.fil-action-upload
-      background: embedurl("../assets/icons/icon-upload-16.svg") em(16px) center no-repeat
-    &.fil-action-newfolder
-      background: embedurl("../assets/icons/icon-folder-add-16.svg") em(16px) center no-repeat
-    &.fil-action-select
-      background: embedurl("../assets/icons/icon-checkbox-16.svg") em(16px) center no-repeat
+    a
+        &.fil-action-upload
+            background: embedurl("../assets/icons/icon-upload-16.svg") em(16px) center no-repeat
+        &.fil-action-newfolder
+            background: embedurl("../assets/icons/icon-folder-add-16.svg") em(16px) center no-repeat
+        &.fil-action-select
+            background: embedurl("../assets/icons/icon-checkbox-16.svg") em(16px) center no-repeat
 
-  a.fil-action-upload,
-  a.fil-action-select,
-  hr // temporary while there is only select after hr
-    display none
-
-
-@media (max-width: (1023/basefont)rem)
-  .fil-toolbar-menu
     a.fil-action-upload,
     a.fil-action-select,
     hr // temporary while there is only select after hr
-      display block
+        display none
+
+
+@media (max-width: (1023/basefont)rem)
+    .fil-toolbar-menu
+        a.fil-action-upload,
+        a.fil-action-select,
+        hr // temporary while there is only select after hr
+            display block
