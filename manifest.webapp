@@ -17,9 +17,10 @@
   "version": "3.0.0",
   "licence": "AGPL-3.0",
   "permissions": {
-    "settings/locale": {
-      "description": "Required to display a localized Ui",
-      "access": "read"
+    "files": {
+      "description": "Required for photo access",
+      "type": "io.cozy.files",
+      "methods": ["GET", "POST", "PUT"]
     }
   }
 }
