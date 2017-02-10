@@ -3,7 +3,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin')
 
+const {extractor, production, filename} = require('./webpack.vars')
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
 module.exports = {
@@ -13,7 +15,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.json', '.css']
   },
-  devtool: 'source-map',
+  devtool: '#source-map',
   module: {
     loaders: [
       {
@@ -46,6 +48,17 @@ module.exports = {
     }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
+    }),
+    extractor,
+    new PostCSSAssetsPlugin({
+      test: /\.css$/,
+      plugins: [
+        require('css-mqpacker'),
+        require('postcss-discard-duplicates'),
+        require('postcss-discard-empty')
+      ].concat(
+        production ? require('csswring')({preservehacks: true, removeallcomments: true}) : []
+      )
     })
   ]
 }

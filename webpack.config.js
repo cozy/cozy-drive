@@ -1,9 +1,7 @@
 'use strict'
 
 const merge = require('webpack-merge')
-
-const build = /:production$/.test(process.env.NODE_ENV)
-const target = process.env.NODE_ENV.match(/^(\w+):/)[1]
+const { production, target } = require('./config/webpack.vars')
 
 const common = merge(
   require('./config/webpack.config.base'),
@@ -16,7 +14,7 @@ const common = merge(
   require(`./config/webpack.target.${target}`)
 )
 
-if (build) {
+if (production) {
   module.exports = merge(
     common,
     require('./config/webpack.config.prod')

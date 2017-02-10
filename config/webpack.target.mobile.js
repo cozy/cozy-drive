@@ -3,7 +3,7 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const production = /:production$/.test(process.env.NODE_ENV)
+const {production} = require('./webpack.vars')
 
 module.exports = {
   entry: path.resolve(__dirname, '../mobile/src/main'),
