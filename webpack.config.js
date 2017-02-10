@@ -11,7 +11,8 @@ const common = merge(
   require('./config/webpack.preact.config'),
   require('./config/webpack.cozy-ui.config'),
   require('./config/webpack.pictures.config'),
-  require('./config/webpack.copyfiles.config'),
+  require('./config/webpack.vendors.config'),
+  require('./config/webpack.manifest.config'),
   require(`./config/webpack.${target}.target`)
 )
 
