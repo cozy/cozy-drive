@@ -1,11 +1,5 @@
 @import 'cozy-ui'
 
-.fil-deleteconfirmation
-    @extends $modals
-
-    .coz-overlay
-        z-index  1100//above the selection bar
-
 .fil-deleteconfirmation-text
     left-padded(25px)
     bottom-spaced(1.3em)
@@ -20,14 +14,3 @@
 
     &.icon-shared
         background-image    embedurl("../assets/icons/icon-shared.svg")
-
-.fil-deleteconfirmation-buttons
-    @extends $buttons
-    top-spaced(2em)
-    text-align      right
-
-    button
-        display     inline-block
-        font-size   .9em
-        left-spaced(10px)
-

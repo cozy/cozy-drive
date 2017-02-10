@@ -48,7 +48,7 @@ export default class FilenameInput extends Component {
     this.props.onSubmit(this.state.value)
   }
 
-  abort (accidental) {
+  abort (accidental = false) {
     this.props.onAbort(accidental)
   }
 

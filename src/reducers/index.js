@@ -5,11 +5,13 @@ import ui from './ui'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
-const filesApp = combineReducers({
+export const reducers = {
   folder,
   files,
   ui
-})
+}
+
+const filesApp = combineReducers(reducers)
 
 const sortFiles = files => files.sort((a, b) => a.name.localeCompare(b.name))
 
