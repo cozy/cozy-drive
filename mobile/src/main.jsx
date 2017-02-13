@@ -9,38 +9,43 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Route, hashHistory } from 'react-router'
-import localforage from 'localforage'
-import { init } from './lib/cozy-helper'
 
 import { I18n } from '../../src/lib/I18n'
 
 import filesApp from './reducers'
 import AppRoute from '../../src/components/AppRoute'
-import { SET_STATE } from './actions'
 import App from '../../src/components/App'
 
 import OnBoarding from './containers/OnBoarding'
 import Settings from './containers/Settings'
+
+import { loadState, saveState } from './lib/localStorage'
+import { init } from './lib/cozy-helper'
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
 
 const loggerMiddleware = createLogger()
 
-const store = createStore(
-  filesApp,
-  applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
-  )
-)
-
 document.addEventListener('DOMContentLoaded', () => {
-  localforage.getItem('state').then(state => {
-    if (state) {
-      store.dispatch({ type: SET_STATE, state })
-      init(state.serverUrl)
-    }
+  loadState().then(persistedState => {
+    const store = createStore(
+      filesApp,
+      persistedState,
+      applyMiddleware(
+        thunkMiddleware,
+        loggerMiddleware
+      )
+    )
+
+    store.subscribe(() => {
+      const stateToBeSaved = {
+        mobile: {
+          settings: store.getState().mobile.settings
+        }
+      }
+      saveState(stateToBeSaved)
+    })
 
     function requireSetup (nextState, replace) {
       const url = store.getState().mobile.settings.serverUrl
@@ -50,6 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
           pathname: '/onboarding',
           state: { nextPathname: nextState.location.pathname }
         })
+      } else {
+        init(url)
       }
     }
 

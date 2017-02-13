@@ -20,7 +20,7 @@ export const mobile = (state = initialState, action) => {
     case ERROR:
       return Object.assign({}, state, { error: action.error })
     case UPDATE_SETTINGS:
-      return Object.assign({}, state, Object.assign({}, state.settings, action.newSettings))
+      return Object.assign({}, state, { settings: Object.assign({}, state.settings, action.newSettings) })
     case SHOW_UNLINK_CONFIRMATION:
       return Object.assign({}, state, { settings: { displayUnlinkConfirmation: true } })
     case HIDE_UNLINK_CONFIRMATION:
