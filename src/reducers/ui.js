@@ -26,8 +26,10 @@ import {
   DOWNLOAD_SELECTION,
   SHOW_FILE_ACTIONMENU,
   HIDE_FILE_ACTIONMENU,
-  DISPLAY_TOAST,
-  HIDE_TOAST,
+  OPEN_FILE_E_OFFLINE,
+  OPEN_FILE_E_NO_APP,
+  DOWNLOAD_FILE_E_MISSING,
+  DOWNLOAD_FILE_E_OFFLINE,
   ALERT_CLOSED
 } from '../actions'
 
@@ -219,21 +221,6 @@ const error = (state = null, action) => {
   }
 }
 
-const toastMessage = (state = null, action) => {
-  switch (action.type) {
-    case DISPLAY_TOAST:
-      return {
-        message: action.message,
-        duration: action.duration || 3000,
-        criticity: action.criticity || 'critical'
-      }
-    case HIDE_TOAST:
-      return null
-    default:
-      return state
-  }
-}
-
 const actionMenu = (state = { openWith: false }, action) => {
   const newState = {}
   switch (action.type) {
@@ -276,6 +263,14 @@ const alert = (state = null, action) => {
         message: 'alert.folder_generic',
         type: 'info'
       }
+    case OPEN_FILE_E_OFFLINE:
+    case OPEN_FILE_E_NO_APP:
+    case DOWNLOAD_FILE_E_MISSING:
+    case DOWNLOAD_FILE_E_OFFLINE:
+      return {
+        message: action.message,
+        type: 'error'
+      }
     case ALERT_CLOSED:
       return null
     default:
@@ -298,7 +293,6 @@ export default combineReducers({
   showFileActionMenu,
   actionable,
   error,
-  toastMessage,
   actionMenu,
   alert
 })

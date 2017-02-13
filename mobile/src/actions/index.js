@@ -5,7 +5,7 @@ import cozy from 'cozy-client-js'
 import localforage from 'localforage'
 import initialState from '../reducers/mobile'
 
-import { DISPLAY_TOAST } from '../../../src/actions'
+import { OPEN_FILE_E_OFFLINE, OPEN_FILE_E_NO_APP } from '../../../src/actions'
 
 export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
@@ -20,8 +20,8 @@ const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
 const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'
 
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
-export const openWithOfflineError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_OFFLINE_ERROR })
-export const openWithNoAppError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_NO_APP_ERROR })
+export const openWithOfflineError = () => ({ type: OPEN_FILE_E_OFFLINE, message: OPEN_WITH_OFFLINE_ERROR })
+export const openWithNoAppError = () => ({ type: OPEN_FILE_E_NO_APP, message: OPEN_WITH_NO_APP_ERROR })
 
 export class OnBoardingError extends Error {
   constructor (message) {
