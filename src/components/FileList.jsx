@@ -38,6 +38,7 @@ const FileList = ({
             onToggle={onFileToggle}
             onShowActionMenu={onShowActionMenu}
             attributes={file}
+            showSelection={showSelection}
           />
         ))}
       </div>
