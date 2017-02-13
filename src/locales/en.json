@@ -42,7 +42,7 @@
     }
   },
   "selectionbar": {
-    "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
+    "selected_count": "item selected |||| items selected",
     "share": "Share",
     "download": "Download",
     "delete": "Remove",

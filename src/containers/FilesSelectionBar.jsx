@@ -9,7 +9,8 @@ import { downloadSelection, hideSelectionBar, showDeleteConfirmation } from '../
 const FilesSelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete }) => (
   <div className={styles['fil-selectionbar']} role='toolbar'>
     <span className={styles['fil-selectionbar-count']}>
-      {t('selectionbar.selected_count', { smart_count: selectedCount })}
+      {selectedCount}
+      <span> {t('selectionbar.selected_count', { smart_count: selectedCount })}</span>
     </span>
     <span className={styles['fil-selectionbar-separator']} />
     <button className={styles['fil-action-share']}>{t('selectionbar.share')}</button>
