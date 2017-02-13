@@ -7,7 +7,6 @@ import initialState from '../reducers/mobile'
 
 import { DISPLAY_TOAST } from '../../../src/actions'
 
-export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
@@ -109,7 +108,6 @@ export const registerDevice = (router, location) => async (dispatch, getState) =
   }
 
   // TODO move this outside of this action (may be in the smart component's behavior)
-  dispatch({ type: SETUP })
   localforage.setItem('state', getState().mobile)
   if (location.state && location.state.nextPathname) {
     router.replace(location.state.nextPathname)

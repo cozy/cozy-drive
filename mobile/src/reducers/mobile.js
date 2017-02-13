@@ -1,10 +1,9 @@
 import {
-  SETUP, SET_URL, SET_STATE, ERROR, UPDATE_SETTINGS,
+  SET_URL, SET_STATE, ERROR, UPDATE_SETTINGS,
   SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION
 } from '../actions'
 
 export const initialState = {
-  isSetup: false,
   serverUrl: '',
   settings: {
     backupImages: false,

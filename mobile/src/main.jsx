@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function requireSetup (nextState, replace) {
-      const { isSetup } = store.getState().mobile
+      const url = store.getState().mobile.serverUrl
+      const isSetup = url !== ''
       if (!isSetup) {
         replace({
           pathname: '/onboarding',
