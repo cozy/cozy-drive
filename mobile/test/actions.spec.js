@@ -17,7 +17,7 @@ describe('mobile reducer', () => {
   it('should set an url with "SET_URL"', () => {
     const serverUrl = 'http://localhost'
     const newState = reducer({}, { type: SET_URL, url: serverUrl })
-    expect(newState).toMatchObject({ serverUrl })
+    expect(newState.settings).toMatchObject({ serverUrl })
   })
 
   it('should have no error with "SET_URL"', () => {

@@ -96,9 +96,9 @@ const onRegistered = dispatch => (client, url) => {
 }
 
 export const registerDevice = (router, location) => async (dispatch, getState) => {
-  await dispatch(checkURL(getState().mobile.serverUrl))
+  await dispatch(checkURL(getState().mobile.settings.serverUrl))
   const device = window.cordova ? window.cordova.platformId : null
-  await init(getState().mobile.serverUrl, onRegistered(dispatch), device)
+  await init(getState().mobile.settings.serverUrl, onRegistered(dispatch), device)
   try {
     await cozy.authorize()
     await cozy.offline.replicateFromCozy('io.cozy.files')

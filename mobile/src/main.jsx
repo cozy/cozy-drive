@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function requireSetup (nextState, replace) {
-      const url = store.getState().mobile.serverUrl
+      const url = store.getState().mobile.settings.serverUrl
       const isSetup = url !== ''
       if (!isSetup) {
         replace({

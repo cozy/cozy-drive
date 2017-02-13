@@ -4,8 +4,8 @@ import {
 } from '../actions'
 
 export const initialState = {
-  serverUrl: '',
   settings: {
+    serverUrl: '',
     backupImages: false,
     displayUnlinkConfirmation: false
   }
@@ -16,9 +16,7 @@ export const mobile = (state = initialState, action) => {
     case SET_STATE:
       return action.state
     case SET_URL:
-      return Object.assign({}, state, { serverUrl: action.url, error: null })
-    case SETUP:
-      return Object.assign({}, state, { isSetup: true, error: null })
+      return Object.assign({}, state, { settings: { serverUrl: action.url }, error: null })
     case ERROR:
       return Object.assign({}, state, { error: action.error })
     case UPDATE_SETTINGS:

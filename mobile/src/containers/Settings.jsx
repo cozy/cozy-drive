@@ -6,7 +6,7 @@ import { mediaBackup } from '../actions/media_backup'
 const mapStateToProps = (state, ownProps) => ({
   mediaUploading: state.mediaBackup.uploading,
   version: window.navigator.appInfo ? window.navigator.appInfo.version : 'dev',
-  serverUrl: state.mobile.serverUrl,
+  serverUrl: state.mobile.settings.serverUrl,
   backupImages: state.mobile.settings.backupImages,
   displayUnlinkConfirmation: state.mobile.settings.displayUnlinkConfirmation
 })

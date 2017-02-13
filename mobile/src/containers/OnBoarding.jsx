@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const mapStateToProps = (state) => {
   return ({
-    serverUrl: state.mobile.serverUrl,
+    serverUrl: state.mobile.settings.serverUrl,
     error: state.mobile.error
   })
 }
