@@ -3,6 +3,7 @@
 import { init } from '../lib/cozy-helper'
 import cozy from 'cozy-client-js'
 import localforage from 'localforage'
+import initialState from '../reducers/mobile'
 
 import { DISPLAY_TOAST } from '../../../src/actions'
 
@@ -10,6 +11,9 @@ export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS'
+export const SHOW_UNLINK_CONFIRMATION = 'SHOW_UNLINK_CONFIRMATION'
+export const HIDE_UNLINK_CONFIRMATION = 'HIDE_UNLINK_CONFIRMATION'
 
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
 const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
@@ -24,6 +28,23 @@ export class OnBoardingError extends Error {
     super(message)
     this.name = 'OnBoardingError'
   }
+}
+
+export const showUnlinkConfirmation = () => async dispatch => {
+  return dispatch({ type: SHOW_UNLINK_CONFIRMATION })
+}
+
+export const hideUnlinkConfirmation = () => async dispatch => {
+  return dispatch({ type: HIDE_UNLINK_CONFIRMATION })
+}
+
+export const unlink = () => async dispatch => {
+  dispatch({ type: SET_STATE, initialState })
+  localforage.clear()
+  cozy.offline.destroyDatabase('io.cozy.files')
+  // TODO: unregister client on Gozy
+  // const client = await cozy.auth.getClient()
+  // cozy.auth.unregisterClient(client)
 }
 
 export const checkURL = url => async dispatch => {
@@ -95,7 +116,4 @@ export const registerDevice = (router, location) => async (dispatch, getState) =
   }
 }
 
-export const updateSettings = (newSettings) => ({
-  type: 'UPDATE_SETTINGS',
-  newSettings
-})
+export const updateSettings = (newSettings) => ({ type: UPDATE_SETTINGS, newSettings })
