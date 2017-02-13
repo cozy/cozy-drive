@@ -58,34 +58,38 @@ class File extends Component {
   }
 
   toggle (e) {
+    e.stopPropagation()
     const { attributes, onToggle } = this.props
     onToggle(attributes.id, attributes.selected)
   }
 
-  openFolder (e, id) {
+  open (e, id, isDir = false) {
     e.stopPropagation()
-    this.props.onOpen(id)
+    if (isDir) {
+      this.props.onOpen(id)
+    } else {
+      // TODO Handle files opening throught the app instead of doing it throught the browser
+      window.open(`${STACK_URL}/files/download/${id}`, '_blank')
+    }
   }
 
-  render ({ t, f, attributes, onOpen, onShowActionMenu }, { editing }) {
-    const onDoubleClickListener = isDir(attributes)
-    ? () => onOpen(attributes.id)
-    // TODO Handle files opening throught the app instead of doing it throught the browser
-    : () => window.open(
-      `${STACK_URL}/files/download/${attributes.id}`,
-      '_blank')
+  render ({ t, f, attributes, showSelection, onShowActionMenu }, { editing }) {
+    const isDirectory = isDir(attributes)
+    const rowListeners = showSelection
+    ? { onClick: e => this.toggle(e) }
+    : { onDoubleClick: e => this.open(e, attributes.id, isDirectory) }
     return (
-      <div className={styles['fil-content-row']} onClick={e => this.toggle(e)} onDoubleClick={onDoubleClickListener}>
+      <div className={styles['fil-content-row']} {...rowListeners}>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
           <span data-input='checkbox'>
             <input
               type='checkbox'
               checked={attributes.selected}
              />
-            <label />
+            <label onClick={e => this.toggle(e)} />
           </span>
         </div>
-        {this.renderFilenameCell(attributes, onOpen, editing)}
+        {this.renderFilenameCell(attributes, editing, !showSelection)}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </div>
@@ -102,35 +106,27 @@ class File extends Component {
     )
   }
 
-  renderFilenameCell (attributes, onOpen, editing) {
+  renderFilenameCell (attributes, editing, canOpen) {
+    const isDirectory = isDir(attributes)
     const { filename, extension } = splitFilename(attributes.name)
-    const classes = classNames(styles['fil-content-cell'], styles['fil-content-file'], getClassFromMime(attributes))
+    const classes = classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-file'],
+      getClassFromMime(attributes),
+      { [styles['fil-content-file-openable']]: canOpen }
+    )
     if (editing) {
       return (
-        <td className={classes}>
-          <FilenameInput name={attributes.name} error={attributes.creationError} onSubmit={val => this.edit(val)} onAbort={accidental => this.abortEdit(accidental)} />
-        </td>
-      )
-    }
-    if (isDir(attributes)) {
-      return (
         <div className={classes}>
-          <a onClick={e => this.openFolder(e, attributes.id)}>
-            {attributes.name}
-            {(attributes.isOpening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
-          </a>
+          <FilenameInput name={attributes.name} error={attributes.creationError} onSubmit={val => this.edit(val)} onAbort={accidental => this.abortEdit(accidental)} />
         </div>
       )
     }
     return (
-      <div className={classes}>
-        <a
-          target='_blank'
-          href={`${STACK_URL}/files/download/${attributes.id}`}
-        >
-          {filename}
-          <span className={styles['fil-content-ext']}>{extension}</span>
-        </a>
+      <div className={classes} onClick={canOpen ? e => this.open(e, attributes.id, isDirectory) : undefined}>
+        {filename}
+        {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
+        {(attributes.isOpening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
       </div>
     )
   }
