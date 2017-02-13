@@ -19,6 +19,8 @@ const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
 const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
 const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'
 
+export const setUrl = url => ({ type: SET_URL, url })
+
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
 export const openWithOfflineError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_OFFLINE_ERROR })
 export const openWithNoAppError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_NO_APP_ERROR })
@@ -60,7 +62,7 @@ export const checkURL = url => async dispatch => {
   if (!url.startsWith(scheme)) {
     url = `${scheme}${url}`
   }
-  return dispatch({ type: SET_URL, url: url })
+  return dispatch(setUrl(url))
 }
 
 const openRegistrationWith = inAppBrowser => new Promise((resolve) => {
