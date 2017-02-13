@@ -55,4 +55,7 @@
     <plugin name="cordova-plugin-file" spec="4.3.1" />
     <plugin name="cordova-plugin-appinfo" spec="2.1.1" />
     <plugin name="cordova-plugin-file-opener2" spec="2.0.7" />
+    <plugin name="cordova-plugin-photo-library" spec="1.2.2">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="This app requires access to the photo library." />
+    </plugin>
 </widget>
