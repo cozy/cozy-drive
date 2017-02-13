@@ -120,8 +120,10 @@ export const abortAddFolder = (accidental) => {
     accidental
   }
 
-  if (accidental) action.alert = {
-    message: T_FOLDER_ABORT
+  if (accidental) {
+    action.alert = {
+      message: T_FOLDER_ABORT
+    }
   }
 
   return action
@@ -143,7 +145,7 @@ export const createFolder = (name, tempId) => {
         id: tempId,
         alert: {
           message: T_FOLDER_NAME,
-          messageData: { folderName: name },
+          messageData: { folderName: name }
         }
       })
     }
@@ -160,21 +162,24 @@ export const createFolder = (name, tempId) => {
         dirID: getState().folder.id
       })
     } catch (err) {
-      if (err.response && err.response.status === HTTP_CODE_CONFLICT) dispatch({
-        type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        id: tempId,
-        alert: {
-          message: T_FOLDER_NAME,
-          messageData: { folderName: name },
-        }
-      })
-      else dispatch({
-        type: CREATE_FOLDER_FAILURE_GENERIC,
-        id: tempId,
-        alert: {
-          message: T_FOLDER_GENERIC,
-        }
-      })
+      if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
+        dispatch({
+          type: CREATE_FOLDER_FAILURE_DUPLICATE,
+          id: tempId,
+          alert: {
+            message: T_FOLDER_NAME,
+            messageData: { folderName: name }
+          }
+        })
+      } else {
+        dispatch({
+          type: CREATE_FOLDER_FAILURE_GENERIC,
+          id: tempId,
+          alert: {
+            message: T_FOLDER_GENERIC
+          }
+        })
+      }
       return
     }
     dispatch({

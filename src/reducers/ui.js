@@ -234,14 +234,13 @@ const actionMenu = (state = { openWith: false }, action) => {
 const DEFAULT_ALERT_LEVEL = 'info'
 
 const alert = (state = null, action) => {
-  if (action.alert){
+  if (action.alert) {
     return {
       message: action.alert.message,
       messageData: action.alert.messageData,
-      type: action.alert.type || DEFAULT_ALERT_LEVEL,
+      type: action.alert.type || DEFAULT_ALERT_LEVEL
     }
-  }
-  else if (action.type === ALERT_CLOSED) return null
+  } else if (action.type === ALERT_CLOSED) return null
   else return state
 }
 
