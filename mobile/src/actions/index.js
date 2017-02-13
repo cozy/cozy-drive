@@ -95,7 +95,7 @@ const onRegistered = dispatch => (client, url) => {
   }
 }
 
-export const registerDevice = (router, location) => async (dispatch, getState) => {
+export const registerDevice = () => async (dispatch, getState) => {
   await dispatch(checkURL(getState().mobile.settings.serverUrl))
   const device = window.cordova ? window.cordova.platformId : null
   await init(getState().mobile.settings.serverUrl, onRegistered(dispatch), device)
@@ -105,14 +105,6 @@ export const registerDevice = (router, location) => async (dispatch, getState) =
   } catch (err) {
     dispatch(wrongAddressError())
     throw err
-  }
-
-  // TODO move this outside of this action (may be in the smart component's behavior)
-  localforage.setItem('state', getState().mobile)
-  if (location.state && location.state.nextPathname) {
-    router.replace(location.state.nextPathname)
-  } else {
-    router.replace('/')
   }
 }
 
