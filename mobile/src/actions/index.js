@@ -19,9 +19,11 @@ const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
 const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
 const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'
 
+const ALERT_TYPE_ERROR = 'error'
+
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
-export const openWithOfflineError = () => ({ type: OPEN_FILE_E_OFFLINE, message: OPEN_WITH_OFFLINE_ERROR })
-export const openWithNoAppError = () => ({ type: OPEN_FILE_E_NO_APP, message: OPEN_WITH_NO_APP_ERROR })
+export const openWithOfflineError = () => ({ type: OPEN_FILE_E_OFFLINE, alert: { message: OPEN_WITH_OFFLINE_ERROR, type: ALERT_TYPE_ERROR } })
+export const openWithNoAppError = () => ({ type: OPEN_FILE_E_NO_APP, alert: { message: OPEN_WITH_NO_APP_ERROR, type: ALERT_TYPE_ERROR } })
 
 export class OnBoardingError extends Error {
   constructor (message) {

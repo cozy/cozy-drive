@@ -29,7 +29,7 @@ class App extends Component {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
         { alert && <Alerter
-          type={alert.type || 'info'}
+          type={alert.type}
           message={t(alert.message, alert.messageData)}
           onClose={this.props.onAlertAutoClose}
           />
