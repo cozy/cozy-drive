@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import { mobile as reducer } from '../src/reducers/mobile'
-import { SET_STATE, SET_URL, SETUP, ERROR, checkURL, OnBoardingError } from '../src/actions'
+import { SET_STATE, SET_URL, ERROR, checkURL, OnBoardingError } from '../src/actions'
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
@@ -17,22 +17,12 @@ describe('mobile reducer', () => {
   it('should set an url with "SET_URL"', () => {
     const serverUrl = 'http://localhost'
     const newState = reducer({}, { type: SET_URL, url: serverUrl })
-    expect(newState).toMatchObject({ serverUrl })
+    expect(newState.settings).toMatchObject({ serverUrl })
   })
 
   it('should have no error with "SET_URL"', () => {
     const serverUrl = 'http://localhost'
     const newState = reducer({ error: 'oops' }, { type: SET_URL, url: serverUrl })
-    expect(newState.error).toBeNull()
-  })
-
-  it('should set setup to true with "SETUP"', () => {
-    const newState = reducer({}, { type: SETUP })
-    expect(newState.isSetup).toBeTruthy()
-  })
-
-  it('should have no error with "SETUP"', () => {
-    const newState = reducer({ error: 'oops' }, { type: SETUP })
     expect(newState.error).toBeNull()
   })
 

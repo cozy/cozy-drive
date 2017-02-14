@@ -28,7 +28,11 @@ const UploadButton = ({ label, disabled, onUpload }) => (
       type='file'
       style={styles.input}
       disabled={disabled}
-      onChange={e => onUpload(e.target.files[0])}
+      onChange={e => {
+        if (e.target.files) {
+          onUpload(e.target.files[0])
+        }
+      }}
     />
   </label>
 )

@@ -2,8 +2,9 @@
 
 const path = require('path')
 const fs = require('fs')
-const mobile = /^mobile/.test(process.env.NODE_ENV)
-const outputFolder = mobile ? 'mobile/www' : 'build'
+
+const {target} = require('./webpack.vars')
+const targetConfig = require(`./webpack.target.${target}`)
 
 module.exports = {
   plugins: [
@@ -11,7 +12,7 @@ module.exports = {
     function () {
       this.plugin('done', (stats) => {
         fs.writeFileSync(
-          path.join(__dirname, '..', outputFolder, 'assets.json'),
+          path.join(targetConfig.output.path, 'assets.json'),
           `{"hash":"${stats.hash}"}`
         )
       })

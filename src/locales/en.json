@@ -115,7 +115,8 @@
         "images": {
           "title": "Backup images",
           "label": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium, ipsum fringilla fermentum blandit, enim."
-        }
+        },
+        "launch": "Launch Backup"
       }
     },
     "action_menu": {
