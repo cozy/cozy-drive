@@ -14,18 +14,6 @@ import Topbar from './Topbar'
 import Toast from '../containers/Toast'
 
 class App extends Component {
-  componentWillMount () {
-    this.props.onMount()
-  }
-
-  componentWillReceiveProps (newProps) {
-    if (this.props.params.file !== undefined && // we're not in the root dir
-      newProps.params.file !== this.props.params.file && // the route has changed
-      newProps.params.file !== newProps.folderId) { // but the folder has not been fetched
-      this.props.onRouteChange(newProps.params.file)
-    }
-  }
-
   render ({ t, alert, children, toastMessage }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
@@ -54,12 +42,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onMount: () => {
-    dispatch(openFolder(ownProps.params.file, true))
-  },
-  onRouteChange: (folderId) => {
-    dispatch(openFolder(folderId, true))
-  },
   onAlertAutoClose: () => {
     dispatch(alertClosed())
   }

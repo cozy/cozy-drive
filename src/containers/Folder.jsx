@@ -10,6 +10,18 @@ import FileList from '../components/FileList'
 const isDir = attrs => attrs.type === 'directory'
 
 class Folder extends Component {
+  componentWillMount () {
+    this.props.onMount()
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (this.props.params.file !== undefined && // we're not in the root dir
+      newProps.params.file !== this.props.params.file && // the route has changed
+      newProps.params.file !== newProps.folderId) { // but the folder has not been fetched
+      this.props.onRouteChange(newProps.params.file)
+    }
+  }
+
   render (props, state) {
     if (props.isFetching === true) {
       return <p>Loading</p>
@@ -28,6 +40,12 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  onMount: () => {
+    dispatch(openFolder(ownProps.params.file, true))
+  },
+  onRouteChange: (folderId) => {
+    dispatch(openFolder(folderId, true))
+  },
   onFolderOpen: (folderId) => {
     dispatch(openFolder(folderId, false, ownProps.router))
   },
