@@ -16,15 +16,15 @@ export const mobile = (state = initialState, action) => {
     case SET_STATE:
       return action.state
     case SET_URL:
-      return Object.assign({}, state, { settings: { serverUrl: action.url }, error: null })
+      return { ...state, settings: { serverUrl: action.url }, error: null }
     case ERROR:
-      return Object.assign({}, state, { error: action.error })
+      return { ...state, error: action.error }
     case UPDATE_SETTINGS:
-      return Object.assign({}, state, { settings: Object.assign({}, state.settings, action.newSettings) })
+      return { ...state, settings: Object.assign({}, state.settings, action.newSettings) }
     case SHOW_UNLINK_CONFIRMATION:
-      return Object.assign({}, state, { settings: { displayUnlinkConfirmation: true } })
+      return { ...state, settings: { displayUnlinkConfirmation: true } }
     case HIDE_UNLINK_CONFIRMATION:
-      return Object.assign({}, state, { settings: { displayUnlinkConfirmation: false } })
+      return { ...state, settings: { displayUnlinkConfirmation: false } }
   }
   return state
 }
