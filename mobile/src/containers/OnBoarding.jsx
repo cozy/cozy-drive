@@ -26,7 +26,13 @@ export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error
 const mapDispatchToProps = (dispatch, ownProps) => ({
   selectServer: () => {
     const { router, location } = ownProps
-    dispatch(registerDevice(router, location))
+    dispatch(registerDevice()).then(() => {
+      if (location.state && location.state.nextPathname) {
+        router.replace(location.state.nextPathname)
+      } else {
+        router.replace('/')
+      }
+    })
   },
   updateServerUrl: (e) => {
     const serverUrl = e.target.value
@@ -36,7 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const mapStateToProps = (state) => {
   return ({
-    serverUrl: state.mobile.serverUrl,
+    serverUrl: state.mobile.settings.serverUrl,
     error: state.mobile.error
   })
 }

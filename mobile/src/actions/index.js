@@ -7,7 +7,6 @@ import initialState from '../reducers/mobile'
 
 import { DISPLAY_TOAST } from '../../../src/actions'
 
-export const SETUP = 'SETUP'
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
@@ -18,6 +17,8 @@ export const HIDE_UNLINK_CONFIRMATION = 'HIDE_UNLINK_CONFIRMATION'
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
 const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
 const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'
+
+export const setUrl = url => ({ type: SET_URL, url })
 
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
 export const openWithOfflineError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_OFFLINE_ERROR })
@@ -60,7 +61,7 @@ export const checkURL = url => async dispatch => {
   if (!url.startsWith(scheme)) {
     url = `${scheme}${url}`
   }
-  return dispatch({ type: SET_URL, url: url })
+  return dispatch(setUrl(url))
 }
 
 const openRegistrationWith = inAppBrowser => new Promise((resolve) => {
@@ -91,28 +92,37 @@ const onRegistered = dispatch => (client, url) => {
         throw err
       }
     )
+  } else {
+    /**
+     * for dev purpose:
+     * In oauth workflow, the server displays an authorization page
+     * User must accept to give permission then the server gives an url
+     * with query parameters used by cozy-client-js to initialize itself.
+     *
+     * This hack let developers open the authorization page in a new tab
+     * then get the "access_code" url and paste it in the prompt to let the
+     * application initialize and redirect to other pages.
+     */
+    console.log(url)
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const token = prompt('Paste the url here:')
+        resolve(token)
+      }, 10000)
+    })
   }
 }
 
-export const registerDevice = (router, location) => async (dispatch, getState) => {
-  await dispatch(checkURL(getState().mobile.serverUrl))
+export const registerDevice = () => async (dispatch, getState) => {
+  await dispatch(checkURL(getState().mobile.settings.serverUrl))
   const device = window.cordova ? window.cordova.platformId : null
-  await init(getState().mobile.serverUrl, onRegistered(dispatch), device)
+  await init(getState().mobile.settings.serverUrl, onRegistered(dispatch), device)
   try {
     await cozy.authorize()
     await cozy.offline.replicateFromCozy('io.cozy.files')
   } catch (err) {
     dispatch(wrongAddressError())
     throw err
-  }
-
-  // TODO move this outside of this action (may be in the smart component's behavior)
-  dispatch({ type: SETUP })
-  localforage.setItem('state', getState().mobile)
-  if (location.state && location.state.nextPathname) {
-    router.replace(location.state.nextPathname)
-  } else {
-    router.replace('/')
   }
 }
 
