@@ -28,13 +28,12 @@ export const files = (state = [], action) => {
         ...state,
         action.file
       ]
-    case TRASH_FILE_SUCCESS:
-      return state.map(file => file.id === action.file.id ? action.file : file)
     case ADD_FOLDER:
       return [
         action.folder,
         ...state
       ]
+    case TRASH_FILE_SUCCESS:
     case DELETE_FILE:
       return state.filter(f => f.id !== action.id)
     case RENAME_FOLDER:
