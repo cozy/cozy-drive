@@ -13,7 +13,7 @@ const SubCategory = ({ id, label, value, title }) => (
   </div>
 )
 
-export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink }) => (
+export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup }) => (
   <div>
     <div className={styles['fil-content-row']} />
     <div className={styles['settings']}>
@@ -22,6 +22,10 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
       <SubCategory id={'backupImages'} title={t('mobile.settings.media_backup.images.title')}
         label={t('mobile.settings.media_backup.images.label')}
         value={<input type='checkbox' checked={backupImages} onChange={setBackupImages} />} />
+      <button onclick={launchBackup}>
+        {t('mobile.settings.media_backup.launch')}
+        {mediaUploading && <div className={styles['media-uploading']} />}
+      </button>
 
       <h3 className={styles['settings__category-title']}>{t('mobile.settings.about.title')}</h3>
       <SubCategory id={'serverUrl'} label={t('mobile.settings.about.account')}
