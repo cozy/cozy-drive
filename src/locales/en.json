@@ -114,7 +114,7 @@
         "title": "Media Backup",
         "images": {
           "title": "Backup images",
-          "label": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium, ipsum fringilla fermentum blandit, enim."
+          "label": "Backup your images automatically to your Cozy not to ever lose them and share them easily."
         },
         "launch": "Launch Backup"
       }
