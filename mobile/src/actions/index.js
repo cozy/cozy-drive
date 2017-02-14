@@ -5,7 +5,7 @@ import cozy from 'cozy-client-js'
 import localforage from 'localforage'
 import initialState from '../reducers/mobile'
 
-import { DISPLAY_TOAST } from '../../../src/actions'
+import { OPEN_FILE_E_OFFLINE, OPEN_FILE_E_NO_APP } from '../../../src/actions'
 
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
@@ -18,11 +18,12 @@ const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
 const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
 const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'
 
+const ALERT_TYPE_ERROR = 'error'
 export const setUrl = url => ({ type: SET_URL, url })
 
 export const wrongAddressError = () => ({ type: ERROR, error: WRONG_ADDRESS_ERROR })
-export const openWithOfflineError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_OFFLINE_ERROR })
-export const openWithNoAppError = () => ({ type: DISPLAY_TOAST, message: OPEN_WITH_NO_APP_ERROR })
+export const openWithOfflineError = () => ({ type: OPEN_FILE_E_OFFLINE, alert: { message: OPEN_WITH_OFFLINE_ERROR, type: ALERT_TYPE_ERROR } })
+export const openWithNoAppError = () => ({ type: OPEN_FILE_E_NO_APP, alert: { message: OPEN_WITH_NO_APP_ERROR, type: ALERT_TYPE_ERROR } })
 
 export class OnBoardingError extends Error {
   constructor (message) {

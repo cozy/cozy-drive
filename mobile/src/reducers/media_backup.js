@@ -1,9 +1,11 @@
 import {
-  MEDIA_UPLOAD_START, MEDIA_UPLOAD_END
+  MEDIA_UPLOAD_START, MEDIA_UPLOAD_END,
+  IMAGE_UPLOAD_SUCCESS
 } from '../actions/media_backup'
 
 export const defaultState = {
-  uploading: false
+  uploading: false,
+  uploaded: []
 }
 
 export const mediaBackup = (state = defaultState, action) => {
@@ -12,6 +14,8 @@ export const mediaBackup = (state = defaultState, action) => {
       return { ...state, uploading: true }
     case MEDIA_UPLOAD_END:
       return { ...state, uploading: false }
+    case IMAGE_UPLOAD_SUCCESS:
+      return { ...state, uploaded: [...state.uploaded, action.id] }
   }
   return state
 }
