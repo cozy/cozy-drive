@@ -33,19 +33,21 @@ export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
 export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
 export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
-export const DOWNLOAD_FILE_MISSING = 'error.download_file.missing'
-export const DONWLOAD_FILE_OFFLINE = 'error.download_file.offline'
+export const DOWNLOAD_FILE_E_MISSING = 'DOWNLOAD_FILE_E_MISSING'
+export const DOWNLOAD_FILE_E_OFFLINE = 'DOWNLOAD_FILE_E_OFFLINE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
-export const DISPLAY_TOAST = 'DISPLAY_TOAST'
-export const HIDE_TOAST = 'HIDE_TOAST'
+export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
+export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const ALERT_CLOSED = 'ALERT_CLOSED'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
-export const HTTP_CODE_CONFLICT = 409
 
-export const downloadFileMissing = () => ({ type: DISPLAY_TOAST, message: DOWNLOAD_FILE_MISSING })
-export const downloadFileOffline = () => ({ type: DISPLAY_TOAST, message: DONWLOAD_FILE_OFFLINE })
+const HTTP_CODE_CONFLICT = 409
+const ALERT_TYPE_ERROR = 'error'
+
+export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', type: ALERT_TYPE_ERROR } })
+export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', type: ALERT_TYPE_ERROR } })
 
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
@@ -105,10 +107,20 @@ export const addFolder = () => ({
   }
 })
 
-export const abortAddFolder = (accidental) => ({
-  type: ABORT_ADD_FOLDER,
-  accidental
-})
+export const abortAddFolder = (accidental) => {
+  let action = {
+    type: ABORT_ADD_FOLDER,
+    accidental
+  }
+
+  if (accidental) {
+    action.alert = {
+      message: 'alert.folder_abort'
+    }
+  }
+
+  return action
+}
 
 export const renameFolder = (newName, id) => ({
   type: RENAME_FOLDER,
@@ -124,7 +136,10 @@ export const createFolder = (name, tempId) => {
       return dispatch({
         type: CREATE_FOLDER_FAILURE_DUPLICATE,
         id: tempId,
-        name
+        alert: {
+          message: 'alert.folder_name',
+          messageData: { folderName: name }
+        }
       })
     }
 
@@ -140,8 +155,24 @@ export const createFolder = (name, tempId) => {
         dirID: getState().folder.id
       })
     } catch (err) {
-      if (err.response && err.response.status === HTTP_CODE_CONFLICT) dispatch({type: CREATE_FOLDER_FAILURE_DUPLICATE, id: tempId, name})
-      else dispatch({type: CREATE_FOLDER_FAILURE_GENERIC, id: tempId})
+      if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
+        dispatch({
+          type: CREATE_FOLDER_FAILURE_DUPLICATE,
+          id: tempId,
+          alert: {
+            message: 'alert.folder_name',
+            messageData: { folderName: name }
+          }
+        })
+      } else {
+        dispatch({
+          type: CREATE_FOLDER_FAILURE_GENERIC,
+          id: tempId,
+          alert: {
+            message: 'alert.folder_generic'
+          }
+        })
+      }
       return
     }
     dispatch({
@@ -171,13 +202,18 @@ export const trashFile = (id) => {
     } catch (err) {
       return dispatch({
         type: TRASH_FILE_FAILURE,
-        error: err
+        alert: {
+          message: 'alert.trash_file_error'
+        }
       })
     }
     dispatch({
       type: TRASH_FILE_SUCCESS,
       file: extractFileAttributes(trashed),
-      id
+      id,
+      alert: {
+        message: 'alert.trash_file_success'
+      }
     })
   }
 }
@@ -288,10 +324,6 @@ export const showFileActionMenu = id => ({
 
 export const hideFileActionMenu = () => ({
   type: HIDE_FILE_ACTIONMENU
-})
-
-export const hideToast = () => ({
-  type: HIDE_TOAST
 })
 
 export const alertClosed = () => ({

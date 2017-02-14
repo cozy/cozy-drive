@@ -26,8 +26,6 @@ import {
   DOWNLOAD_SELECTION,
   SHOW_FILE_ACTIONMENU,
   HIDE_FILE_ACTIONMENU,
-  DISPLAY_TOAST,
-  HIDE_TOAST,
   ALERT_CLOSED
 } from '../actions'
 
@@ -219,21 +217,6 @@ const error = (state = null, action) => {
   }
 }
 
-const toastMessage = (state = null, action) => {
-  switch (action.type) {
-    case DISPLAY_TOAST:
-      return {
-        message: action.message,
-        duration: action.duration || 3000,
-        criticity: action.criticity || 'critical'
-      }
-    case HIDE_TOAST:
-      return null
-    default:
-      return state
-  }
-}
-
 const actionMenu = (state = { openWith: false }, action) => {
   const newState = {}
   switch (action.type) {
@@ -248,39 +231,17 @@ const actionMenu = (state = { openWith: false }, action) => {
   }
 }
 
+const DEFAULT_ALERT_LEVEL = 'info'
+
 const alert = (state = null, action) => {
-  switch (action.type) {
-    case TRASH_FILE_FAILURE:
-      return {
-        message: 'alert.trash_file_error',
-        type: 'info'
-      }
-    case TRASH_FILE_SUCCESS:
-      return {
-        message: 'alert.trash_file_success',
-        type: 'info'
-      }
-    case ABORT_ADD_FOLDER:
-      return action.accidental ? {
-        message: 'alert.folder_abort',
-        type: 'info'
-      } : state
-    case CREATE_FOLDER_FAILURE_DUPLICATE:
-      return {
-        message: 'alert.folder_name',
-        messageData: {folderName: action.name},
-        type: 'info'
-      }
-    case CREATE_FOLDER_FAILURE_GENERIC:
-      return {
-        message: 'alert.folder_generic',
-        type: 'info'
-      }
-    case ALERT_CLOSED:
-      return null
-    default:
-      return state
-  }
+  if (action.alert) {
+    return {
+      message: action.alert.message,
+      messageData: action.alert.messageData,
+      type: action.alert.type || DEFAULT_ALERT_LEVEL
+    }
+  } else if (action.type === ALERT_CLOSED) return null
+  else return state
 }
 
 export default combineReducers({
@@ -298,7 +259,6 @@ export default combineReducers({
   showFileActionMenu,
   actionable,
   error,
-  toastMessage,
   actionMenu,
   alert
 })
