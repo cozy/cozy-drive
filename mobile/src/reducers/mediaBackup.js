@@ -2,7 +2,7 @@ import { INIT_STATE } from '../actions'
 import {
   MEDIA_UPLOAD_START, MEDIA_UPLOAD_END,
   IMAGE_UPLOAD_SUCCESS
-} from '../actions/media_backup'
+} from '../actions/mediaBackup'
 
 const initialState = {
   uploading: false,

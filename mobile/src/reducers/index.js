@@ -3,7 +3,7 @@ import {combineReducers} from 'redux'
 import { reducers } from '../../../src/reducers'
 
 import { settings } from './settings'
-import { mediaBackup } from './media_backup'
+import { mediaBackup } from './mediaBackup'
 import { ui } from './ui'
 
 const mobile = combineReducers({

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Settings from '../components/Settings'
 import { setBackupImages, showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions'
-import { mediaBackup } from '../actions/media_backup'
+import { mediaBackup } from '../actions/mediaBackup'
 
 const mapStateToProps = (state, ownProps) => ({
   mediaUploading: state.mobile.mediaBackup.uploading,
