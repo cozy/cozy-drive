@@ -2,6 +2,8 @@ import React from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 
+import { translate } from '../../../../src/lib/I18n'
+
 import styles from '../../styles/onboarding'
 import logo from '../../../res/icon.png'
 
@@ -16,4 +18,4 @@ export const Welcome = ({ nextStep, t }) =>
   </div>
 )
 
-export default connect()(Welcome)
+export default connect()(translate()(Welcome))

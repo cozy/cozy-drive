@@ -1,5 +1,4 @@
 import React from 'react'
-import { translate } from '../../../src/lib/I18n'
 
 import Wizard from '../components/Wizard'
 import Welcome from './onboarding/Welcome'
@@ -15,4 +14,4 @@ const OnBoarding = (props) => {
   return <Wizard steps={steps} {...props} />
 }
 
-export default translate()(OnBoarding)
+export default OnBoarding

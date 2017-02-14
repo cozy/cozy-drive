@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
-import styles from '../../styles/onboarding.styl'
 
+import { translate } from '../../../../src/lib/I18n'
+
+import styles from '../../styles/onboarding.styl'
 import logo from '../../../res/icon.png'
 
 import { UPDATE_SETTINGS } from '../../actions'
@@ -39,4 +41,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BackupPhotosVideos)
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(BackupPhotosVideos))

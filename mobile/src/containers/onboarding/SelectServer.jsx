@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 
+import { translate } from '../../../../src/lib/I18n'
+
 import { registerDevice, SET_URL } from '../../actions'
 import styles from '../../styles/onboarding'
 
@@ -37,4 +39,4 @@ const mapStateToProps = (state) => {
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectServer)
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(SelectServer))
