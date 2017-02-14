@@ -8,7 +8,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import PageTitle from './PageTitle'
 
 const Topbar = ({location}) => {
-  if (/^\/files/.test(location.pathname)) {
+  if (/^\/files/.test(location.pathname) || /^\/trash/.test(location.pathname)) {
     return (
       <div class={styles['fil-content-header']}>
         <Breadcrumb />

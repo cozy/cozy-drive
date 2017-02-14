@@ -49,6 +49,11 @@ export const downloadFileOffline = () => ({ type: DISPLAY_TOAST, message: DONWLO
 
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
+    let routePrefix = '/files'
+    if (router && router.location.pathname.indexOf('/') > -1) {
+      routePrefix = '/' + router.location.pathname.split('/')[1]
+    }
+
     if (isInitialFetch) {
       dispatch({ type: FETCH_FILES, folderId })
     }
@@ -60,14 +65,14 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
       parent = !!parentId && await cozy.files.statById(parentId)
     } catch (err) {
       if (!isInitialFetch && router) {
-        router.push(folderId === ROOT_DIR_ID ? '/files' : `/files/${folderId}`)
+        router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
       }
       return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
     }
     if (isInitialFetch) {
       dispatch({ type: RECEIVE_FILES, folderId })
     } else if (router) {
-      router.push(folderId === ROOT_DIR_ID ? '/files' : `/files/${folderId}`)
+      router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
     }
     dispatch({
       type: OPEN_FOLDER_SUCCESS,
