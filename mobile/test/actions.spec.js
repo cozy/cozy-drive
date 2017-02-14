@@ -30,9 +30,16 @@ describe('mobile reducer', () => {
     const newState = reducer({}, { type: ERROR, error: 'oops' })
     expect(newState.error).toBeDefined()
   })
+
+  it('should update settings', () => {
+    const oldState = { settings: { backupImages: false } }
+    const newState = reducer(oldState, { type: UPDATE_SETTINGS, newSettings: { backupImages: true } })
+    expect(oldState.settings.backupImages).toBeFalsy()
+    expect(newState.settings.backupImages).toBeTruthy()
+  })
 })
 
-describe('actions', () => {
+describe('actions creators', () => {
   it('should accept https://localhost', () => {
     const store = mockStore()
 
