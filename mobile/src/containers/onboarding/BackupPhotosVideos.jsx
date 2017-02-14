@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
-import styles from '../styles/onboarding.styl'
+import styles from '../../styles/onboarding.styl'
 
-import logo from '../../res/icon.png'
+import logo from '../../../res/icon.png'
 
 export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
 (
@@ -13,13 +13,13 @@ export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
       <h1>{t('mobile.onboarding.activation.backupPhotosVideos.title')}</h1>
       <p>{t('mobile.onboarding.activation.backupPhotosVideos.description')}</p>
     </div>
-    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={onActivate}>{t('mobile.onboarding.activation.button')}</button>
     <a onClick={onSkip}>{t('mobile.onboarding.activation.skip')}</a>
-    <div className={classnames(styles['breadcrumb'])}>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
+    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'], styles['wizard-button--with-circles'])} onClick={onActivate}>{t('mobile.onboarding.activation.button')}</button>
+    <div className={classnames(styles['wizard-circles'])}>
+      <span className={classnames(styles['wizard-circles__circle'], styles['wizard-circles__circle--active'])} />
+      <span className={classnames(styles['wizard-circles__circle'])} />
+      <span className={classnames(styles['wizard-circles__circle'])} />
+      <span className={classnames(styles['wizard-circles__circle'])} />
     </div>
   </div>
 )

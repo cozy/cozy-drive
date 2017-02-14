@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-export default class Wizard extends React.Component {
+export default class Wizard extends Component {
   constructor (props) {
     super(props)
 
@@ -17,6 +17,13 @@ export default class Wizard extends React.Component {
 
   render () {
     const Step = this.props.steps[this.state.step]
+    if (!Step) {
+      if (location.state && location.state.nextPathname) {
+        this.props.router.replace(location.state.nextPathname)
+      } else {
+        this.props.router.replace('/')
+      }
+    }
     return <Step nextStep={this.nextStep} {...this.props} />
   }
 }

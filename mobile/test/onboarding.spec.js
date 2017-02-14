@@ -4,7 +4,8 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 
 import Wizard from '../../mobile/src/components/Wizard'
-import { Welcome, SelectServer } from '../../mobile/src/containers/OnBoarding'
+import { SelectServer } from '../../mobile/src/containers/onboarding/SelectServer'
+import { Welcome } from '../../mobile/src/containers/onboarding/Welcome'
 
 describe('Onboarding', () => {
   it('should render different components', () => {
