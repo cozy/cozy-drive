@@ -5,6 +5,8 @@ import styles from '../../styles/onboarding.styl'
 
 import logo from '../../../res/icon.png'
 
+import { UPDATE_SETTINGS } from '../../actions'
+
 export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
 (
   <div className={classnames(styles['wizard'], styles['activation'])}>
@@ -28,11 +30,11 @@ const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: () => {
-    dispatch({ type: 'UPDATE_SETTINGS', newSettings: { backupImages: true } })
+    dispatch({ type: UPDATE_SETTINGS, newSettings: { backupImages: true } })
     ownProps.nextStep()
   },
   onSkip: () => {
-    dispatch({ type: 'UPDATE_SETTINGS', newSettings: { backupImages: false } })
+    dispatch({ type: UPDATE_SETTINGS, newSettings: { backupImages: false } })
     ownProps.nextStep()
   }
 })

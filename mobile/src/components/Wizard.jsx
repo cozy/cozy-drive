@@ -18,8 +18,8 @@ export default class Wizard extends Component {
   render () {
     const Step = this.props.steps[this.state.step]
     if (!Step) {
-      if (location.state && location.state.nextPathname) {
-        this.props.router.replace(location.state.nextPathname)
+      if (this.props.location.state && this.props.location.state.nextPathname) {
+        this.props.router.replace(this.props.location.state.nextPathname)
       } else {
         this.props.router.replace('/')
       }
