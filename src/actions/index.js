@@ -217,6 +217,7 @@ export const trashFile = (id) => {
     dispatch({
       type: TRASH_FILE_SUCCESS,
       file: extractFileAttributes(trashed),
+      id,
       alert: {
         message: T_TRASH_FILE_SUCCESS
       }

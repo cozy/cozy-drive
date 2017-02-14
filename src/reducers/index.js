@@ -22,8 +22,8 @@ const newFilesFirst = files => files.sort((a, b) => {
 })
 
 const getSortedFiles = allFiles => {
-  let folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID && f.dir_id !== TRASH_DIR_ID)
-  let files = allFiles.filter(f => f.type !== 'directory' && f.dir_id !== TRASH_DIR_ID)
+  let folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID)
+  let files = allFiles.filter(f => f.type !== 'directory')
   return newFilesFirst(sortFiles(folders)).concat(sortFiles(files))
 }
 
