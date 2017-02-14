@@ -8,6 +8,7 @@ export const loadState = async () => {
     }
     return persistedState
   } catch (err) {
+    console.warn(err)
     return undefined
   }
 }
@@ -16,6 +17,7 @@ export const saveState = async (state) => {
   try {
     localforage.setItem('state', state)
   } catch (err) {
+    console.warn(err)
     // Errors handling
   }
 }
