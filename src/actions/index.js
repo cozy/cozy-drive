@@ -176,7 +176,8 @@ export const trashFile = (id) => {
     }
     dispatch({
       type: TRASH_FILE_SUCCESS,
-      file: extractFileAttributes(trashed)
+      file: extractFileAttributes(trashed),
+      id
     })
   }
 }
