@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const stateToBeSaved = {
         mobile: {
           settings: store.getState().mobile.settings
+        },
+        mediaBackup: {
+          uploaded: store.getState().mediaBackup.uploaded
         }
       }
       saveState(stateToBeSaved)
