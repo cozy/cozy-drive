@@ -40,21 +40,13 @@ export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const ALERT_CLOSED = 'ALERT_CLOSED'
 
-const T_DOWNLOAD_FILE_MISSING = 'error.download_file.missing'
-const T_DOWNLOAD_FILE_OFFLINE = 'error.download_file.offline'
-const T_FOLDER_ABORT = 'alert.folder_abort'
-const T_FOLDER_NAME = 'alert.folder_name'
-const T_FOLDER_GENERIC = 'alert.folder_generic'
-const T_TRASH_FILE_ERROR = 'alert.trash_file_error'
-const T_TRASH_FILE_SUCCESS = 'alert.trash_file_success'
-
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
 const HTTP_CODE_CONFLICT = 409
 const ALERT_TYPE_ERROR = 'error'
 
-export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: T_DOWNLOAD_FILE_MISSING, type: ALERT_TYPE_ERROR } })
-export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: T_DOWNLOAD_FILE_OFFLINE, type: ALERT_TYPE_ERROR } })
+export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', type: ALERT_TYPE_ERROR } })
+export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', type: ALERT_TYPE_ERROR } })
 
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
@@ -122,7 +114,7 @@ export const abortAddFolder = (accidental) => {
 
   if (accidental) {
     action.alert = {
-      message: T_FOLDER_ABORT
+      message: 'alert.folder_abort'
     }
   }
 
@@ -144,7 +136,7 @@ export const createFolder = (name, tempId) => {
         type: CREATE_FOLDER_FAILURE_DUPLICATE,
         id: tempId,
         alert: {
-          message: T_FOLDER_NAME,
+          message: 'alert.folder_name',
           messageData: { folderName: name }
         }
       })
@@ -167,7 +159,7 @@ export const createFolder = (name, tempId) => {
           type: CREATE_FOLDER_FAILURE_DUPLICATE,
           id: tempId,
           alert: {
-            message: T_FOLDER_NAME,
+            message: 'alert.folder_name',
             messageData: { folderName: name }
           }
         })
@@ -176,7 +168,7 @@ export const createFolder = (name, tempId) => {
           type: CREATE_FOLDER_FAILURE_GENERIC,
           id: tempId,
           alert: {
-            message: T_FOLDER_GENERIC
+            message: 'alert.folder_generic'
           }
         })
       }
@@ -210,7 +202,7 @@ export const trashFile = (id) => {
       return dispatch({
         type: TRASH_FILE_FAILURE,
         alert: {
-          message: T_TRASH_FILE_ERROR
+          message: 'alert.trash_file_error'
         }
       })
     }
@@ -219,7 +211,7 @@ export const trashFile = (id) => {
       file: extractFileAttributes(trashed),
       id,
       alert: {
-        message: T_TRASH_FILE_SUCCESS
+        message: 'alert.trash_file_success'
       }
     })
   }
