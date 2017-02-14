@@ -3,14 +3,15 @@
 import { init } from '../lib/cozy-helper'
 import cozy from 'cozy-client-js'
 import localforage from 'localforage'
-import initialState from '../reducers/mobile'
+import { initialState } from '../reducers/settings'
 
 import { OPEN_FILE_E_OFFLINE, OPEN_FILE_E_NO_APP } from '../../../src/actions'
 
 export const SET_URL = 'SET_URL'
-export const SET_STATE = 'SET_STATE'
 export const ERROR = 'ERROR'
-export const UPDATE_SETTINGS = 'UPDATE_SETTINGS'
+export const INIT_STATE = 'INIT_STATE'
+export const BACKUP_IMAGES_DISABLE = 'BACKUP_IMAGES_DISABLE'
+export const BACKUP_IMAGES_ENABLE = 'BACKUP_IMAGES_ENABLE'
 export const SHOW_UNLINK_CONFIRMATION = 'SHOW_UNLINK_CONFIRMATION'
 export const HIDE_UNLINK_CONFIRMATION = 'HIDE_UNLINK_CONFIRMATION'
 
@@ -32,6 +33,14 @@ export class OnBoardingError extends Error {
   }
 }
 
+export const setBackupImages = (value) => async dispatch => {
+  if (value) {
+    return dispatch({ type: BACKUP_IMAGES_ENABLE })
+  } else {
+    return dispatch({ type: BACKUP_IMAGES_DISABLE })
+  }
+}
+
 export const showUnlinkConfirmation = () => async dispatch => {
   return dispatch({ type: SHOW_UNLINK_CONFIRMATION })
 }
@@ -41,7 +50,7 @@ export const hideUnlinkConfirmation = () => async dispatch => {
 }
 
 export const unlink = () => async dispatch => {
-  dispatch({ type: SET_STATE, initialState })
+  dispatch({ type: INIT_STATE })
   localforage.clear()
   cozy.offline.destroyDatabase('io.cozy.files')
   // TODO: unregister client on Gozy
@@ -126,5 +135,3 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw err
   }
 }
-
-export const updateSettings = (newSettings) => ({ type: UPDATE_SETTINGS, newSettings })

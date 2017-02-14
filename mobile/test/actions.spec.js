@@ -1,19 +1,13 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { mobile as reducer } from '../src/reducers/mobile'
-import { SET_STATE, SET_URL, ERROR, checkURL, OnBoardingError, UPDATE_SETTINGS } from '../src/actions'
+import { mobile as reducer } from '../src/reducers/settings'
+import { SET_URL, ERROR, checkURL, OnBoardingError, UPDATE_SETTINGS } from '../src/actions'
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
 
 describe('mobile reducer', () => {
-  it('should set a new state with "SET_STATE"', () => {
-    const newState = reducer(undefined, { type: SET_STATE, state: { some: 'state' } })
-    expect(newState).not.toBe({ some: 'state' })
-    expect(newState).toEqual({ some: 'state' })
-  })
-
   it('should set an url with "SET_URL"', () => {
     const serverUrl = 'http://localhost'
     const newState = reducer({}, { type: SET_URL, url: serverUrl })
@@ -33,7 +27,7 @@ describe('mobile reducer', () => {
 
   it('should update settings', () => {
     const oldState = { settings: { backupImages: false } }
-    const newState = reducer(oldState, { type: UPDATE_SETTINGS, newSettings: { backupImages: true } })
+    const newState = reducer(oldState, { type: UPDATE_SETTINGS, settings: { backupImages: true } })
     expect(oldState.settings.backupImages).toBeFalsy()
     expect(newState.settings.backupImages).toBeTruthy()
   })

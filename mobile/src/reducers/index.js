@@ -1,11 +1,18 @@
 import {combineReducers} from 'redux'
 
 import { reducers } from '../../../src/reducers'
-import { mobile } from './mobile'
+
+import { settings } from './settings'
 import { mediaBackup } from './media_backup'
+import { ui } from './ui'
+
+const mobile = combineReducers({
+  settings,
+  mediaBackup,
+  ui
+})
 
 export default combineReducers({
   ...reducers,
-  mediaBackup,
   mobile
 })

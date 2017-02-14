@@ -9,7 +9,7 @@ export const IMAGE_UPLOAD_SUCCESS = 'IMAGE_UPLOAD_SUCCESS'
 export const mediaBackup = () => async (dispatch, getState) => {
   dispatch({ type: MEDIA_UPLOAD_START })
   let photos = await getPhotos()
-  const alreadyUploaded = getState().mediaBackup.uploaded
+  const alreadyUploaded = getState().mobile.mediaBackup.uploaded
   for (let photo of photos) {
     if (!alreadyUploaded.includes(photo.id)) {
       const blob = await getBlob(photo)

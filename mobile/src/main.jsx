@@ -41,10 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     store.subscribe(() => {
       const stateToBeSaved = {
         mobile: {
-          settings: store.getState().mobile.settings
-        },
-        mediaBackup: {
-          uploaded: store.getState().mediaBackup.uploaded
+          settings: store.getState().mobile.settings,
+          mediaBackup: {
+            uploaded: store.getState().mobile.mediaBackup.uploaded
+          }
         }
       }
       saveState(stateToBeSaved)
