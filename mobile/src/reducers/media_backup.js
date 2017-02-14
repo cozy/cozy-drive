@@ -5,7 +5,7 @@ import {
 
 export const defaultState = {
   uploading: false,
-  uploaded:[]
+  uploaded: []
 }
 
 export const mediaBackup = (state = defaultState, action) => {

@@ -42,7 +42,7 @@ export const ALERT_CLOSED = 'ALERT_CLOSED'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
-const HTTP_CODE_CONFLICT = 409
+export const HTTP_CODE_CONFLICT = 409
 
 export const downloadFileMissing = () => ({ type: DISPLAY_TOAST, message: DOWNLOAD_FILE_MISSING })
 export const downloadFileOffline = () => ({ type: DISPLAY_TOAST, message: DONWLOAD_FILE_OFFLINE })
