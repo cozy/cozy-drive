@@ -35,6 +35,37 @@ exports[`Onboarding should render different components 2`] = `
 </div>
 `;
 
+exports[`Onboarding should render the BackupPhotosVideos screen 1`] = `
+<div
+  className="wizard activation">
+  <div
+    className="wizard-main">
+    <img
+      alt="logo"
+      src="test-file-stub" />
+    <h1 />
+    <p />
+  </div>
+  <a
+    onClick={undefined} />
+  <button
+    className="coz-btn coz-btn--regular wizard-button wizard-button--with-circles"
+    onClick={undefined}
+    role="button" />
+  <div
+    className="wizard-circles">
+    <span
+      className="wizard-circles__circle wizard-circles__circle--active" />
+    <span
+      className="wizard-circles__circle" />
+    <span
+      className="wizard-circles__circle" />
+    <span
+      className="wizard-circles__circle" />
+  </div>
+</div>
+`;
+
 exports[`Onboarding should render the SelectServer screen 1`] = `
 <div
   className="wizard">

@@ -90,6 +90,14 @@
         "description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
         "cozy_address_placeholder": "johnwayne.cozycloud.cc",
         "wrong_address": "The address doesn't seem to match a Cozy."
+      },
+      "activation": {
+        "backupPhotosVideos": {
+          "title": "Back up Photos & Videos",
+          "description": "lorem ipsum dolor sit amet humanus corpus ex machina"
+        },
+        "button": "Activate",
+        "skip": "SKIP"
       }
     },
     "settings": {
