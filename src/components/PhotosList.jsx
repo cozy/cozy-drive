@@ -3,23 +3,14 @@ import styles from '../styles/photosList'
 import React from 'react'
 import { translate } from '../lib/I18n'
 
-import Empty from '../components/Empty'
-import Loading from '../components/Loading'
-import Photo from '../components/Photo'
+import Empty from './Empty'
+import Loading from './Loading'
+import SelectionBar from '../containers/SelectionBar'
+import Photo from './Photo'
 
-const getPhotosSectionsByMonth = (f, photos) => {
-  let sections = {}
-  photos.map(p => {
-    /* istanbul ignore else */
-    if (!sections.hasOwnProperty(f(p.created_at, 'MMMM YYYY'))) {
-      sections[f(p.created_at, 'MMMM YYYY')] = []
-    }
-    sections[f(p.created_at, 'MMMM YYYY')].push(p)
-  })
-  return sections
-}
-
-export const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, isFirstFetch }) => {
+export const PhotosList = props => {
+  const { t, f, photosByMonth, showSelection, selected, onPhotoToggle } = props
+  const { isIndexing, isFetching, isWorking, isFirstFetch } = props
   if (isIndexing) {
     return <Loading loadingType='photos_indexing' />
   }
@@ -29,20 +20,25 @@ export const PhotosList = ({ t, f, photos, isIndexing, isFetching, isWorking, is
   if (isWorking) {
     return <Loading loadingType='photos_upload' />
   }
-  const sections = getPhotosSectionsByMonth(f, photos)
   return (
     <div role='contentinfo'>
-      {Object.keys(sections).map(sectionName => {
+      {showSelection && <SelectionBar />}
+      {Object.keys(photosByMonth).map(month => {
         return (
-          <div class={styles['pho-section']} key={sectionName}>
-            <h3>{sectionName}</h3>
-            {sections[sectionName].map(photo => {
-              return <Photo photo={photo} key={photo._id} />
-            })}
+          <div class={styles['pho-section']} key={month}>
+            <h3>{f(month, 'MMMM YYYY')}</h3>
+            {photosByMonth[month].map(photo =>
+              <Photo
+                photo={photo}
+                key={photo._id}
+                selected={selected.indexOf(photo._id) !== -1}
+                onToggle={onPhotoToggle}
+              />
+            )}
           </div>
         )
       })}
-      {photos.length === 0 && <Empty emptyType='photos' />}
+      {Object.keys(photosByMonth).length === 0 && <Empty emptyType='photos' />}
     </div>
   )
 }

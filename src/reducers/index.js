@@ -10,4 +10,20 @@ const photosApp = combineReducers({
   mangoIndexByDate
 })
 
+export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
+
+export const getPhotosByMonth = ({ photos }) => {
+  let months = {}
+  photos.map(p => {
+    const month = p.created_at.slice(0, 7) + '-01T00:00'
+    /* istanbul ignore else */
+    if (!months.hasOwnProperty(month)) {
+      months[month] = []
+    }
+    months[month].push(p)
+  })
+  return months
+}
+
+
 export default photosApp

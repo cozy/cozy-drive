@@ -1,0 +1,10 @@
+@require 'cozy-ui'
+
+:local
+    @extend $selectionbar
+
+.pho-action-album-add
+    background-image embedurl("../assets/icons/icon-album-add-active.svg")
+
+    &[disabled]
+        background-image embedurl("../assets/icons/icon-album-add.svg")

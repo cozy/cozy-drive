@@ -9,7 +9,11 @@ import {
   UPLOAD_PHOTOS_FAILURE,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   INDEX_FILES_BY_DATE,
-  INDEX_FILES_BY_DATE_SUCCESS
+  INDEX_FILES_BY_DATE_SUCCESS,
+  SELECT_PHOTO,
+  UNSELECT_PHOTO,
+  SHOW_SELECTION_BAR,
+  HIDE_SELECTION_BAR
 } from '../constants/actionTypes.js'
 
 export const isFetching = (state = false, action) => {
@@ -48,8 +52,45 @@ export const isWorking = (state = false, action) => {
   }
 }
 
+const showSelectionBar = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_SELECTION_BAR:
+      return true
+    // case OPEN_FOLDER:
+    // case DOWNLOAD_SELECTION:
+    case HIDE_SELECTION_BAR:
+      return false
+    default:
+      return state
+  }
+}
+
+const selected = (state = [], action) => {
+  switch (action.type) {
+    case SELECT_PHOTO:
+      return [
+        ...state,
+        action.id
+      ]
+    case UNSELECT_PHOTO:
+      let idx = state.indexOf(action.id)
+      return [
+        ...state.slice(0, idx),
+        ...state.slice(idx + 1)
+      ]
+    // case OPEN_FOLDER:
+    // case DOWNLOAD_SELECTION:
+    case HIDE_SELECTION_BAR:
+      return []
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   isFetching,
   isIndexing,
-  isWorking
+  isWorking,
+  selected,
+  showSelectionBar
 })

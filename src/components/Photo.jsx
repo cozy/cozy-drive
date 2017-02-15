@@ -20,17 +20,29 @@ export class Photo extends Component {
   }
 
   render () {
-    const { photo, router } = this.props
+    const { photo, selected = false, onToggle, router } = this.props
     const { loading, url } = this.state
     const parentPath = router.location.pathname
     return (
       !loading &&
-        <Link to={`${parentPath}/${photo._id}`}>
-          <img
-            className={styles['pho-photo-item']}
-            src={url}
-          />
-        </Link>
+        <div>
+          <span data-input='checkbox'>
+            <input
+              type='checkbox'
+              checked={selected}
+             />
+            <label onClick={e => {
+              e.stopImmediatePropagation()
+              onToggle(photo._id, selected)
+            }} />
+          </span>
+          <Link to={`${parentPath}/${photo._id}`}>
+            <img
+              className={styles['pho-photo-item']}
+              src={url}
+            />
+          </Link>
+        </div>
     )
   }
 }
