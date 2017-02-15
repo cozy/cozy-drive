@@ -10,7 +10,7 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 import { addFolder, showSelectionBar, uploadFile } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
-const Toolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
+const FilesToolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
     <UploadButton
       disabled={!!error || isSelectionBarVisible}
@@ -72,4 +72,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(Toolbar))
+)(translate()(FilesToolbar))

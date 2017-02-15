@@ -6,7 +6,7 @@ import { translate } from '../lib/I18n'
 
 import { downloadSelection, hideSelectionBar, showDeleteConfirmation } from '../actions'
 
-const SelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete }) => (
+const FilesSelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete }) => (
   <div className={styles['fil-selectionbar']} role='toolbar'>
     <span className={styles['fil-selectionbar-count']}>
       {t('selectionbar.selected_count', { smart_count: selectedCount })}
@@ -40,4 +40,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(SelectionBar))
+)(translate()(FilesSelectionBar))

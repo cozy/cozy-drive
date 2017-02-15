@@ -3,7 +3,7 @@ import styles from '../styles/topbar'
 import React from 'react'
 import { withRouter } from 'react-router'
 
-import Toolbar from '../containers/Toolbar'
+import FilesToolbar from '../containers/FilesToolbar'
 import TrashToolbar from '../containers/TrashToolbar'
 import Breadcrumb from '../containers/Breadcrumb'
 import PageTitle from './PageTitle'
@@ -16,7 +16,7 @@ const Topbar = ({location}) => {
     return (
       <div class={styles['fil-content-header']}>
         <Breadcrumb />
-        { isFiles && <Toolbar /> }
+        { isFiles && <FilesToolbar /> }
         { isTrash && <TrashToolbar /> }
       </div>
     )
