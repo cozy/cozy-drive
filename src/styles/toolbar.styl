@@ -7,7 +7,6 @@
         margin-right 0
 
 .fil-toolbar-trash
-    margin-left auto
     @extends $buttons
 
     .coz-btn--delete
@@ -15,6 +14,9 @@
         right-padded      17px
         vertically-padded 12px
         background  embedurl('../assets/icons/icon-trash-danger.svg') em(16px) center no-repeat
+
+    + b-menu-button
+        display none
 
 // These styles are needed for the menu to work and come directly from bosonic's source
 // TODO: find a better way for bosonic to share its styling
@@ -41,11 +43,13 @@ b-item
 
     a
         &.fil-action-upload
-            background: embedurl("../assets/icons/icon-upload-16.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-upload-16.svg") em(16px) center no-repeat
         &.fil-action-newfolder
-            background: embedurl("../assets/icons/icon-folder-add-16.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-folder-add-16.svg") em(16px) center no-repeat
         &.fil-action-select
-            background: embedurl("../assets/icons/icon-checkbox-16.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-checkbox-16.svg") em(16px) center no-repeat
+        &.fil-action-delete
+            background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
 
     a.fil-action-upload,
     a.fil-action-select,
@@ -59,3 +63,9 @@ b-item
         a.fil-action-select,
         hr // temporary while there is only select after hr
             display block
+
+    .fil-toolbar-trash
+        + b-menu-button
+            display block
+        .coz-btn--delete
+            display none
