@@ -9,6 +9,7 @@ import Oops from '../components/Oops'
 import File from '../components/File'
 
 import SelectionBar from '../containers/SelectionBar'
+import TrashSelectionBar from '../containers/TrashSelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 
@@ -17,6 +18,7 @@ const FileList = ({
 }) => (
   <div role='contentinfo'>
     {showSelection && <SelectionBar />}
+    {false && <TrashSelectionBar />}
     {showDeleteConfirmation && <DeleteConfirmation />}
     <div className={classNames(
       styles['fil-content-table'],

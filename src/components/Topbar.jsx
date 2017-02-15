@@ -4,15 +4,20 @@ import React from 'react'
 import { withRouter } from 'react-router'
 
 import Toolbar from '../containers/Toolbar'
+import TrashToolbar from '../containers/TrashToolbar'
 import Breadcrumb from '../containers/Breadcrumb'
 import PageTitle from './PageTitle'
 
 const Topbar = ({location}) => {
-  if (/^\/files/.test(location.pathname) || /^\/trash/.test(location.pathname)) {
+  const isFiles = /^\/files/.test(location.pathname)
+  const isTrash = /^\/trash/.test(location.pathname)
+
+  if (isFiles || isTrash) {
     return (
       <div class={styles['fil-content-header']}>
         <Breadcrumb />
-        <Toolbar />
+        { isFiles && <Toolbar /> }
+        { isTrash && <TrashToolbar /> }
       </div>
     )
   }
