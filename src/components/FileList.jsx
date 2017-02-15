@@ -46,7 +46,7 @@ const FileList = ({
       </div>
     </div>
     {error && <Oops />}
-    {files.length === 0 && <Empty />}
+    {files.length === 0 && <Empty canUpload={!isBrowsingTrash} />}
     {showActionMenu && <FileActionMenu />}
   </div>
 )
