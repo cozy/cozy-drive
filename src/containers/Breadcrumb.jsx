@@ -38,19 +38,24 @@ const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder })
         className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
         onClick={() => goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID)}
         >
-          <a>{ t(topLevelTitle) }</a> /
+          <a>{ t(topLevelTitle) }</a>
+          <span className={styles['separator']}>/</span>
         </span>
       }
 
       { showEllipsis && //show an ellipsis if there are more than 2 levels
-        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}>… /</span> }
+        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}>
+          …
+          <span className={styles['separator']}>/</span>
+        </span> }
 
       { showParentFolder && // Displays the parent folder
         <span
           className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
           onClick={() => goToFolder(folder.parent.id)}
         >
-          <a>{folder.parent.name}</a> /
+          <a>{folder.parent.name}</a>
+          <span className={styles['separator']}>/</span>
         </span>
       }
 
