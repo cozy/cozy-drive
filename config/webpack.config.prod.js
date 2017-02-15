@@ -19,7 +19,8 @@ module.exports = {
     new webpack.DefinePlugin({
       __SERVER__: false,
       __DEVELOPMENT__: false,
-      __DEVTOOLS__: false
+      __DEVTOOLS__: false,
+      __STACK_ASSETS__: true
     })
   ]
 }

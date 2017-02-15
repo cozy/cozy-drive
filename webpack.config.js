@@ -15,10 +15,7 @@ const common = merge(
 )
 
 if (production) {
-  module.exports = merge(
-    common,
-    require('./config/webpack.config.prod')
-  )
+  module.exports = merge(common, require('./config/webpack.config.prod'))
 } else {
-  module.exports = common
+  module.exports = merge(common, require('./config/webpack.config.dev'))
 }

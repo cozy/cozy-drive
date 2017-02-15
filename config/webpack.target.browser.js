@@ -4,7 +4,7 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: path.resolve(__dirname, '../src/main'),
+  entry: [path.resolve(__dirname, '../src/main')],
   output: {
     path: path.resolve(__dirname, '../build')
   },

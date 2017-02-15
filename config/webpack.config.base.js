@@ -20,7 +20,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|cozy-(bar|client-js))/,
         loader: 'babel-loader'
       },
       {
@@ -34,6 +34,9 @@ module.exports = {
           'postcss-loader'
         ])
       }
+    ],
+    noParse: [
+      /localforage\/dist/
     ]
   },
   plugins: [
