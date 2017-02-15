@@ -33,17 +33,17 @@ const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder })
       { (isRoot || isTrash) && // Displays the non-interactive root folder
         <span>{ t(topLevelTitle) }</span> }
 
-      { !isRoot && !isTrash && // show the interactive root format
-      <span
-        className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-        onClick={() => goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID)}
+      { !isRoot && !isTrash && // show the interactive root folder
+        <span
+          className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
+          onClick={() => goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID)}
         >
           <a>{ t(topLevelTitle) }</a>
           <span className={styles['separator']}>/</span>
         </span>
       }
 
-      { showEllipsis && //show an ellipsis if there are more than 2 levels
+      { showEllipsis && // show an ellipsis if there are more than 2 levels
         <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}>
           …
           <span className={styles['separator']}>/</span>

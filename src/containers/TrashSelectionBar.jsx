@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       dispatch(restoreFile(item))
       dispatch(toggleFileSelection(item, true))
     })
-  },
+  }
 })
 
 export default connect(

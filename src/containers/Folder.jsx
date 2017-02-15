@@ -36,7 +36,8 @@ const mapStateToProps = (state, ownProps) => ({
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
   showActionMenu: state.ui.showFileActionMenu,
-  files: getVisibleFiles(state)
+  files: getVisibleFiles(state),
+  folderId: state.ui.currentFolderId
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

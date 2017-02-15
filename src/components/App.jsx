@@ -1,12 +1,11 @@
 import styles from '../styles/app'
 
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
-import { openFolder, alertClosed } from '../actions'
+import { alertClosed } from '../actions'
 
 import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
@@ -34,7 +33,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  folderId: state.ui.currentFolderId,
   alert: state.ui.alert
 })
 
@@ -47,4 +45,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(App)))
+)(App))

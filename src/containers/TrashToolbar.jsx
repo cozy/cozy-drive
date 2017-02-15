@@ -7,10 +7,10 @@ import { translate } from '../lib/I18n'
 
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { addFolder, showSelectionBar, uploadFile } from '../actions'
+import { showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
-const Toolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
+const TrashToolbar = ({ t, error, disableFolderCreation, isSelectionBarVisible, showSelectionBar }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
     <div className={styles['fil-toolbar-trash']}>
       <button className={classNames(styles['danger-outline'], styles['coz-btn--delete'])}>
@@ -51,18 +51,12 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addFolder: () => {
-    dispatch(addFolder())
-  },
   showSelectionBar: () => {
     dispatch(showSelectionBar())
-  },
-  uploadFile: (file) => {
-    dispatch(uploadFile(file))
   }
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(Toolbar))
+)(translate()(TrashToolbar))

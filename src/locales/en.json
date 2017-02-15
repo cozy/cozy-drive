@@ -75,7 +75,7 @@
     }
   },
   "alert": {
-    "try_again": "n error has occurred, please try again in a moment.",
+    "try_again": "An error has occurred, please try again in a moment.",
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
     "folder_name": "The folder %{folderName} already exists, please choose a new name.",

@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { openFolder, createFolder, renameFolder, toggleFileSelection, showFileActionMenu } from '../actions'
+import { openFolder, toggleFileSelection, showFileActionMenu } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar, isBrowsingTrash } from '../reducers'
 import { TRASH_DIR_ID } from '../constants/config'
 
 import FileList from '../components/FileList'
-
-const isDir = attrs => attrs.type === 'directory'
 
 class Folder extends Component {
   componentWillMount () {
@@ -52,12 +50,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onFileToggle: (id, selected) => {
     dispatch(toggleFileSelection(id, selected))
-  },
-  onFileEdit: (val, attrs) => {
-    if (isDir(attrs)) {
-      dispatch(renameFolder(val, attrs.id))
-      if (attrs.isNew) dispatch(createFolder(val, attrs.id))
-    }
   },
   onShowActionMenu: (fileId) => {
     dispatch(showFileActionMenu(fileId))
