@@ -149,6 +149,7 @@ const showSelectionBar = (state = false, action) => {
     case OPEN_FOLDER:
     case DOWNLOAD_SELECTION:
     case HIDE_SELECTION_BAR:
+    case TRASH_FILE_SUCCESS:
     case RESTORE_FILE_SUCCESS:
       return false
     default:
