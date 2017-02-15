@@ -100,7 +100,10 @@ class File extends Component {
         </div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>—</div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])}>
-          <button onClick={() => onShowActionMenu(attributes.id)} />
+          <button className='coz-btn coz-btn--extra' onClick={(e) => {
+            onShowActionMenu(attributes.id)
+            e.stopPropagation()
+          }} />
         </div>
       </div>
     )

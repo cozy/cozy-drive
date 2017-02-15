@@ -133,7 +133,8 @@
     },
     "action_menu": {
       "open_with": "Open with",
-      "download": "Download"
+      "download": "Download",
+      "delete": "Remove"
     },
     "error": {
       "open_with": {
