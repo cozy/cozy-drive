@@ -6,6 +6,16 @@
     .coz-btn:last-child
         margin-right 0
 
+.fil-toolbar-trash
+    margin-left auto
+    @extends $buttons
+
+    .coz-btn--delete
+        left-padded       44px
+        right-padded      17px
+        vertically-padded 12px
+        background  embedurl('../assets/icons/icon-trash-danger.svg') em(16px) center no-repeat
+
 // These styles are needed for the menu to work and come directly from bosonic's source
 // TODO: find a better way for bosonic to share its styling
 b-menu-button

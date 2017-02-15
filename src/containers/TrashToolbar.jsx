@@ -1,18 +1,21 @@
 import styles from '../styles/toolbar'
+import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 
-import UploadButton from '../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { addFolder, showSelectionBar, uploadFile } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
 const Toolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
-  <div className={styles['fil-toolbar']} role='toolbar'>
-    <MenuButton>
+  <div className={styles['fil-toolbar-trash']} role='toolbar'>
+    <button className={classNames(styles['danger-outline'], styles['coz-btn--delete'])}>
+      {t('toolbar.delete_all')}
+    </button>
+    {false && <MenuButton>
       <button
         role='button'
         className='coz-btn coz-btn--more'
@@ -42,7 +45,7 @@ const Toolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionBarVis
           </a>
         </Item>
       </Menu>
-    </MenuButton>
+    </MenuButton>}
   </div>
 )
 

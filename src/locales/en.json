@@ -19,7 +19,8 @@
     "item_more": "More",
     "menu_upload": "Upload files",
     "menu_new_folder": "New folder",
-    "menu_select": "Select items"
+    "menu_select": "Select items",
+    "delete_all": "Delete all"
   },
   "table": {
     "head_name": "Name",
