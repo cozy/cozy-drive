@@ -9,8 +9,9 @@ import { connect } from 'react-redux'
 import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
+import { isBrowsingTrash } from '../reducers'
 
-const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
+const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder }) => {
   const isRoot = folder.id === ROOT_DIR_ID
   const isTrash = folder.id === TRASH_DIR_ID
 
@@ -19,14 +20,12 @@ const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
 
   const showParentFolder = !isRoot && !isTrash && !isInRoot && !isInTrash && folder.parent
 
-  const isSubfolderOfTrash = !isTrash && folder.parent && folder.parent.path && !!folder.parent.path.match(/^\/.cozy_trash/)
-
   const isLevel2Root = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== ROOT_DIR_ID
   const isLevel2Trash = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== TRASH_DIR_ID && !isInTrash
 
-  const showEllipsis = (isSubfolderOfTrash && isLevel2Trash) || (!isSubfolderOfTrash && isLevel2Root)
+  const showEllipsis = (isBrowsingTrash && isLevel2Trash) || (!isBrowsingTrash && isLevel2Root)
 
-  const topLevelTitle = (isTrash || isSubfolderOfTrash) ? 'breadcrumb.title_trash' : 'breadcrumb.title_files'
+  const topLevelTitle = isBrowsingTrash ? 'breadcrumb.title_trash' : 'breadcrumb.title_files'
 
   return (
     <h2 class={styles['fil-content-title']}>
@@ -37,7 +36,7 @@ const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
       { !isRoot && !isTrash && // show the interactive root format
       <span
         className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-        onClick={() => goToFolder(isSubfolderOfTrash ? TRASH_DIR_ID : ROOT_DIR_ID)}
+        onClick={() => goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID)}
         >
           <a>{ t(topLevelTitle) }</a> /
         </span>
@@ -66,6 +65,7 @@ const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
 
 const mapStateToProps = (state) => ({
   folder: state.folder,
+  isBrowsingTrash: isBrowsingTrash(state),
   opening: state.ui.opening
 })
 
