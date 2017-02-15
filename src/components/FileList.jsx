@@ -14,11 +14,11 @@ import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const FileList = ({
-  t, f, files, error, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, files, error, showSelection, isBrowsingTrash, showActionMenu, showDeleteConfirmation, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
 }) => (
   <div role='contentinfo'>
-    {showSelection && <SelectionBar />}
-    {false && <TrashSelectionBar />}
+    {!isBrowsingTrash && showSelection && <SelectionBar />}
+    {isBrowsingTrash && showSelection && <TrashSelectionBar />}
     {showDeleteConfirmation && <DeleteConfirmation />}
     <div className={classNames(
       styles['fil-content-table'],

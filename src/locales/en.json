@@ -45,8 +45,10 @@
     "share": "Share",
     "download": "Download",
     "delete": "Remove",
+    "perma_delete": "Delete permanently",
     "moveto": "Move",
     "rename": "Rename",
+    "restore": "Restore",
     "close": "Close"
   },
   "deleteconfirmation": {
