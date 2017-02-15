@@ -17,6 +17,9 @@ import {
   TRASH_FILE,
   TRASH_FILE_SUCCESS,
   TRASH_FILE_FAILURE,
+  RESTORE_FILE,
+  RESTORE_FILE_SUCCESS,
+  RESTORE_FILE_FAILURE,
   SHOW_SELECTION_BAR,
   HIDE_SELECTION_BAR,
   SHOW_DELETE_CONFIRMATION,
@@ -54,6 +57,7 @@ const isWorking = (state = false, action) => {
     case CREATE_FOLDER:
     case UPLOAD_FILE:
     case TRASH_FILE:
+    case RESTORE_FILE:
       return true
     case CREATE_FOLDER_SUCCESS:
     case CREATE_FOLDER_FAILURE_DUPLICATE:
@@ -61,6 +65,8 @@ const isWorking = (state = false, action) => {
     case UPLOAD_FILE_SUCCESS:
     case TRASH_FILE_SUCCESS:
     case TRASH_FILE_FAILURE:
+    case RESTORE_FILE_SUCCESS:
+    case RESTORE_FILE_FAILURE:
       return false
     default:
       return state
@@ -143,6 +149,7 @@ const showSelectionBar = (state = false, action) => {
     case OPEN_FOLDER:
     case DOWNLOAD_SELECTION:
     case HIDE_SELECTION_BAR:
+    case RESTORE_FILE_SUCCESS:
       return false
     default:
       return state

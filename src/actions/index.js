@@ -23,6 +23,9 @@ export const DELETE_FILE = 'DELETE_FILE'
 export const TRASH_FILE = 'TRASH_FILE'
 export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
 export const TRASH_FILE_FAILURE = 'TRASH_FILE_FAILURE'
+export const RESTORE_FILE = 'RESTORE_FILE'
+export const RESTORE_FILE_SUCCESS = 'RESTORE_FILE_SUCCESS'
+export const RESTORE_FILE_FAILURE = 'RESTORE_FILE_FAILURE'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 export const SHOW_DELETE_CONFIRMATION = 'SHOW_DELETE_CONFIRMATION'
@@ -198,8 +201,8 @@ export const deleteFileOrFolder = (id, isNew = false) => {
   }
 }
 
-export const trashFile = (id) => {
-  return async (dispatch, getState) => {
+export const trashFile = id => {
+  return async dispatch => {
     dispatch({ type: TRASH_FILE, id: id })
     let trashed
     try {
@@ -208,7 +211,7 @@ export const trashFile = (id) => {
       return dispatch({
         type: TRASH_FILE_FAILURE,
         alert: {
-          message: 'alert.trash_file_error'
+          message: 'alert.try_again'
         }
       })
     }
@@ -218,6 +221,31 @@ export const trashFile = (id) => {
       id,
       alert: {
         message: 'alert.trash_file_success'
+      }
+    })
+  }
+}
+
+export const restoreFile = id => {
+  return async dispatch => {
+    dispatch({ type: RESTORE_FILE, id: id })
+    let restored
+    try {
+      restored = await cozy.files.restoreById(id)
+    } catch (err) {
+      return dispatch({
+        type: RESTORE_FILE_FAILURE,
+        alert: {
+          message: 'alert.try_again'
+        }
+      })
+    }
+    dispatch({
+      type: RESTORE_FILE_SUCCESS,
+      file: extractFileAttributes(restored),
+      id,
+      alert: {
+        message: 'alert.restore_file_success'
       }
     })
   }
