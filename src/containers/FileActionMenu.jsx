@@ -19,7 +19,7 @@ const Menu = props => {
       <hr />
       {files.length === 1 && <ItemOpenWith {...props} />}
       {files.length === 1 ? <DownloadFile file={files[0]} {...props} /> : <DownloadSelection {...props} />}
-      {files.length === 1 ? <DeleteFile file={files[0]} {...props} /> : <DeleteSelection {...props} />}
+      {<Delete {...props} />}
     </div>
   )
 }
@@ -74,16 +74,7 @@ const DownloadSelection = ({ t, files, onDownloadSelection, actionMenu }) => (
   </Item>
 )
 
-const DeleteFile = ({ t, file, onDelete, actionMenu }) => (
-  <Item>
-    <a className={styles['fil-action-delete']} onClick={() => onDelete(file.id)}>
-      {t('mobile.action_menu.delete')}
-      {actionMenu.download && <div className={styles['fil-loading']} />}
-    </a>
-  </Item>
-)
-
-const DeleteSelection = ({ t, files, onDelete, actionMenu }) => (
+const Delete = ({ t, files, onDelete, actionMenu }) => (
   <Item>
     <a className={styles['fil-action-delete']} onClick={() => onDelete()}>
       {t('mobile.action_menu.delete')}
@@ -143,14 +134,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(actionMenuLoading('openWith'))
     dispatch(openFileWith(id, filename)).then(clearUI).catch(clearUI)
   },
-  onDelete: id => {
-    const clearUI = () => {
-      dispatch(actionMenuLoaded('delete'))
-      dispatch(hideFileActionMenu())
-      dispatch(hideSelectionBar())
-    }
+  onDelete: () => {
     dispatch(actionMenuLoading('delete'))
-    dispatch(showDeleteConfirmation(id)).then(clearUI).catch(clearUI)
+    dispatch(showDeleteConfirmation())
+    dispatch(actionMenuLoaded('delete'))
   }
 })
 
