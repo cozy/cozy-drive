@@ -27,8 +27,17 @@
 
 
 .photo-viewer-nav-previous, .photo-viewer-nav-next
-    flex-shrink      0
-    width            em(75px)
+    flex-shrink         0
+    width               em(75px)
+    background-position center
+    background-repeat   no-repeat
+    cursor              pointer
+
+.photo-viewer-nav-next
+    background-image embedurl("../assets/icons/icon-arrow-right.svg")
+
+.photo-viewer-nav-previous
+    background-image embedurl("../assets/icons/icon-arrow-left.svg")
 
 
 .pho-viewer-photo
@@ -53,6 +62,9 @@
     .pho-viewer-wrapper
         &::after
             display none
+
+    .photo-viewer-nav-previous, .photo-viewer-nav-next
+        display none
 
     .pho-viewer-photo img
         max-height 100vh

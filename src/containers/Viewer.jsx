@@ -12,17 +12,13 @@ const Viewer = ({ current, previous, next, navigateToPhoto }) => {
   return (<div className={styles['pho-viewer-wrapper']} role='viewer'>
     <ViewerToolbar />
     <div className={styles['pho-viewer-content']}>
-      <div className={styles['photo-viewer-nav-previous']} onClick={() => navigateToPhoto(previous)}>
-        prev
-      </div>
+      <a role='button' className={styles['photo-viewer-nav-previous']} onClick={() => navigateToPhoto(previous)} />
       <div className={styles['pho-viewer-photo']}>
         <img
           src={`${STACK_FILES_DOWNLOAD_PATH}/${current}`}
         />
       </div>
-      <div className={styles['photo-viewer-nav-next']} onClick={() => navigateToPhoto(next)}>
-        next
-      </div>
+      <a role='button' className={styles['photo-viewer-nav-next']} onClick={() => navigateToPhoto(next)} />
     </div>
   </div>)
 }
