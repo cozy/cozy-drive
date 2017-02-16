@@ -3,16 +3,18 @@
 import { init } from '../lib/cozy-helper'
 import cozy from 'cozy-client-js'
 import localforage from 'localforage'
-import initialState from '../reducers/mobile'
 
 import { OPEN_FILE_E_OFFLINE, OPEN_FILE_E_NO_APP } from '../../../src/actions'
 
 export const SET_URL = 'SET_URL'
 export const SET_STATE = 'SET_STATE'
+export const INITIALIZE_STATE = 'INITIALIZE_STATE'
 export const ERROR = 'ERROR'
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS'
 export const SHOW_UNLINK_CONFIRMATION = 'SHOW_UNLINK_CONFIRMATION'
 export const HIDE_UNLINK_CONFIRMATION = 'HIDE_UNLINK_CONFIRMATION'
+
+export const SET_CLIENT = 'SET_CLIENT'
 
 const WRONG_ADDRESS_ERROR = 'mobile.onboarding.server_selection.wrong_address'
 const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
@@ -41,7 +43,7 @@ export const hideUnlinkConfirmation = () => async dispatch => {
 }
 
 export const unlink = () => async dispatch => {
-  dispatch({ type: SET_STATE, initialState })
+  dispatch({ type: INITIALIZE_STATE })
   localforage.clear()
   cozy.offline.destroyDatabase('io.cozy.files')
   // TODO: unregister client on Gozy

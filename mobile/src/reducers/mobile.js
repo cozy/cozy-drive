@@ -1,5 +1,5 @@
 import {
-  SET_URL, SET_STATE, ERROR, UPDATE_SETTINGS,
+  SET_URL, SET_STATE, INITIALIZE_STATE, ERROR, UPDATE_SETTINGS,
   SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION
 } from '../actions'
 
@@ -15,6 +15,8 @@ export const mobile = (state = initialState, action) => {
   switch (action.type) {
     case SET_STATE:
       return action.state
+    case INITIALIZE_STATE:
+      return initialState
     case SET_URL:
       return { ...state, settings: { serverUrl: action.url }, error: null }
     case ERROR:
