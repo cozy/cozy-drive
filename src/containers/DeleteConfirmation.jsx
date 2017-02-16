@@ -36,7 +36,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: (selected, dropSelection) => {
-    console.log(selected)
     dispatch(hideDeleteConfirmation())
     if (dropSelection) selected.forEach(item => dispatch(toggleFileSelection(item.id, true)))
   },
