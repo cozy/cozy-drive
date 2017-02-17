@@ -9,38 +9,39 @@ import Modal from 'cozy-ui/react/Modal'
 import { getActionableFiles } from '../reducers'
 import { hideDeleteConfirmation, toggleFileSelection, hideFileActionMenu, trashFile } from '../actions'
 
-const DeleteConfirmation = ({ t, selected, onConfirm, onDismiss, dropSelection }) => {
+const DeleteConfirmation = ({ t, files, onConfirm, onDismiss, dropSelection }) => {
   const deleteConfirmationTexts = ['trash', 'restore', 'shared'].map(type => (
     <p className={classNames(styles['fil-deleteconfirmation-text'], styles[`icon-${type}`])}>
-      {t(`deleteconfirmation.${type}`, selected.length)}
+      {t(`deleteconfirmation.${type}`, files.length)}
     </p>
   ))
 
   return (<Modal
-    title={t('deleteconfirmation.title', selected.length)}
+    title={t('deleteconfirmation.title', files.length)}
     description={deleteConfirmationTexts}
     cancelText={t('deleteconfirmation.cancel')}
-    cancelAction={() => onDismiss(selected, dropSelection)}
+    cancelAction={() => onDismiss(files, dropSelection)}
     validateType='danger'
     validateText={t('deleteconfirmation.delete')}
-    validateAction={() => onConfirm(selected, dropSelection)}
+    validateAction={() => onConfirm(files, dropSelection)}
    />)
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    selected: getActionableFiles(state),
+    files: getActionableFiles(state),
     dropSelection: state.ui.selected.length > 0
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onDismiss: (selected, dropSelection) => {
+  onDismiss: (files, dropSelection) => {
+    if (dropSelection) files.forEach(item => dispatch(toggleFileSelection(item.id, true)))
     dispatch(hideDeleteConfirmation())
-    if (dropSelection) selected.forEach(item => dispatch(toggleFileSelection(item.id, true)))
+    dispatch(hideFileActionMenu())
   },
-  onConfirm: (selected, dropSelection) => {
-    selected.forEach(item => {
+  onConfirm: (files, dropSelection) => {
+    files.forEach(item => {
       dispatch(trashFile(item.id))
       if (dropSelection) dispatch(toggleFileSelection(item.id, true))
     })
