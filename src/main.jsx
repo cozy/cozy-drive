@@ -17,7 +17,6 @@ import photosApp from './reducers'
 import { indexFilesByDate } from './actions/mango'
 import AppRoute from './components/AppRoute'
 
-
 const context = window.context
 const lang = document.documentElement.getAttribute('lang') || 'en'
 
