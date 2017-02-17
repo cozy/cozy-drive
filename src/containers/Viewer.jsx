@@ -12,12 +12,12 @@ import ViewerToolbar from '../containers/ViewerToolbar'
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
 
-class Viewer extends Component{
+class Viewer extends Component {
   componentDidMount () {
     this.onKeyDownCallback = this.onKeyDown.bind(this)
     document.addEventListener('keydown', this.onKeyDownCallback, false)
 
-    this.gesturesHandler  = new Hammer(this.viewer)
+    this.gesturesHandler = new Hammer(this.viewer)
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
   }
 
@@ -38,7 +38,7 @@ class Viewer extends Component{
 
   render ({ current, previous, next, navigateToPhoto }) {
     return (
-      <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => this.viewer = viewer}>
+      <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar />
         <div className={styles['pho-viewer-content']}>
           <a role='button' className={styles['photo-viewer-nav-previous']} onClick={() => navigateToPhoto(previous)} />
@@ -55,12 +55,12 @@ class Viewer extends Component{
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let set = state.photos.map(photo => photo._id),
-      current = ownProps.params.photoId,
-      currentPhotoIndex = set.indexOf(current)
+  let set = state.photos.map(photo => photo._id)
+  let current = ownProps.params.photoId
+  let currentPhotoIndex = set.indexOf(current)
 
-  let next = set[(currentPhotoIndex + 1) % set.length],
-      previous = set[currentPhotoIndex - 1 > 0 ? currentPhotoIndex - 1 : set.length - 1]
+  let next = set[(currentPhotoIndex + 1) % set.length]
+  let previous = set[currentPhotoIndex - 1 > 0 ? currentPhotoIndex - 1 : set.length - 1]
 
   return {
     current,
@@ -71,8 +71,8 @@ const mapStateToProps = (state, ownProps) => {
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   navigateToPhoto: id => {
-    let url = ownProps.router.location.pathname,
-        parentPath = url.substring(0, url.lastIndexOf('/'))
+    let url = ownProps.router.location.pathname
+    let parentPath = url.substring(0, url.lastIndexOf('/'))
 
     ownProps.router.push(`${parentPath}/${id}`)
   }
