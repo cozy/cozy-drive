@@ -1,10 +1,7 @@
 import { INIT_STATE } from '../actions'
-import {
-  MEDIA_UPLOAD_START, MEDIA_UPLOAD_END,
-  IMAGE_UPLOAD_SUCCESS
-} from '../actions/mediaBackup'
+import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, IMAGE_UPLOAD_SUCCESS } from '../actions/mediaBackup'
 
-const initialState = {
+export const initialState = {
   uploading: false,
   uploaded: []
 }
@@ -23,3 +20,5 @@ export const mediaBackup = (state = initialState, action) => {
       return state
   }
 }
+
+export default mediaBackup
