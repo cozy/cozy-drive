@@ -1,9 +1,7 @@
-import {
-  SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION,
-  INIT_STATE
-} from '../actions'
+import { INIT_STATE } from '../actions'
+import { SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION } from '../actions/unlink'
 
-const initialState = {
+export const initialState = {
   displayUnlinkConfirmation: false
 }
 
@@ -19,3 +17,5 @@ export const ui = (state = initialState, action) => {
       return state
   }
 }
+
+export default ui
