@@ -1,4 +1,4 @@
-import { INIT_STATE } from '../actions'
+import { INIT_STATE } from '../actions'
 import {
   MEDIA_UPLOAD_START, MEDIA_UPLOAD_END,
   IMAGE_UPLOAD_SUCCESS

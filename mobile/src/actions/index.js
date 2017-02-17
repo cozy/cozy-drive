@@ -3,7 +3,6 @@
 import { init } from '../lib/cozy-helper'
 import cozy from 'cozy-client-js'
 import localforage from 'localforage'
-import { initialState } from '../reducers/settings'
 
 import { OPEN_FILE_E_OFFLINE, OPEN_FILE_E_NO_APP } from '../../../src/actions'
 
