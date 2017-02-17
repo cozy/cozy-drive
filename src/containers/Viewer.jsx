@@ -18,8 +18,7 @@ class Viewer extends Component{
     document.addEventListener('keydown', this.onKeyDownCallback, false)
 
     this.gesturesHandler  = new Hammer(this.viewer)
-    this.gesturesHandler.on('swipeleft', () => this.props.navigateToPhoto(this.props.previous))
-    this.gesturesHandler.on('swiperight', () => this.props.navigateToPhoto(this.props.next))
+    this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
   }
 
   componentWillUnmount () {
@@ -30,6 +29,11 @@ class Viewer extends Component{
   onKeyDown (e) {
     if (e.keyCode === KEY_CODE_LEFT) this.props.navigateToPhoto(this.props.previous)
     else if (e.keyCode === KEY_CODE_RIGHT) this.props.navigateToPhoto(this.props.next)
+  }
+
+  onSwipe (e) {
+    if (e.direction === Hammer.DIRECTION_LEFT) this.props.navigateToPhoto(this.props.next)
+    else if (e.direction === Hammer.DIRECTION_RIGHT) this.props.navigateToPhoto(this.props.previous)
   }
 
   render ({ current, previous, next, navigateToPhoto }) {
@@ -66,7 +70,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  navigateToPhoto: (id) => {
+  navigateToPhoto: id => {
     let url = ownProps.router.location.pathname,
         parentPath = url.substring(0, url.lastIndexOf('/'))
 
