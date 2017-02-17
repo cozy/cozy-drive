@@ -8,7 +8,7 @@ import { TRASH_DIR_ID } from '../constants/config'
 
 import FileList from '../components/FileList'
 
-class Folder extends Component {
+class Trash extends Component {
   componentWillMount () {
     this.props.onMount()
   }
@@ -60,4 +60,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Folder))
+)(withRouter(Trash))

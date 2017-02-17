@@ -55,6 +55,7 @@ export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
     let routePrefix = '/files'
+    // We're probably going to push a new route to the history, but we need to find the "base" of the url, eg. /files or /trash.
     if (router && router.location.pathname.indexOf('/') > -1) {
       routePrefix = '/' + router.location.pathname.split('/')[1]
     }
