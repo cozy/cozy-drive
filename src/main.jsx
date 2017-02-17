@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const applicationElement = document.querySelector('[role=application]')
 
   cozy.init({
-    cozyURL: `${document.location.protocol}//${applicationElement.dataset.cozyStack}`,
+    cozyURL: `//${applicationElement.dataset.cozyStack}`,
     token: applicationElement.dataset.token
   })
 
