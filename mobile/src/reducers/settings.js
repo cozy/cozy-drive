@@ -4,9 +4,10 @@ import {
   INIT_STATE
 } from '../actions'
 
-const initialState = {
+export const initialState = {
   serverUrl: '',
-  backupImages: false
+  backupImages: false,
+  error: null
 }
 
 export const settings = (state = initialState, action) => {
@@ -25,3 +26,5 @@ export const settings = (state = initialState, action) => {
       return state
   }
 }
+
+export default settings
