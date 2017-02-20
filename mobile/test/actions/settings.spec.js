@@ -1,5 +1,5 @@
 import { mockStore } from '../../../test/helpers'
-import { SET_URL, checkURL, OnBoardingError } from '../../src/actions/settings'
+import { SET_URL, checkURL, OnBoardingError, setClient, SET_CLIENT } from '../../src/actions/settings'
 
 describe('actions creators', () => {
   it('should accept https://localhost', () => {
@@ -30,5 +30,12 @@ describe('actions creators', () => {
       .then(() => {
         expect(store.getActions()).toEqual([{ type: SET_URL, url: 'https://localhost' }])
       })
+  })
+
+  it('should create SET_CLIENT action', () => {
+    const client = { someParameter: 'Some Value' }
+    const expectedAction = { type: SET_CLIENT, client }
+
+    expect(setClient(client)).toEqual(expectedAction)
   })
 })

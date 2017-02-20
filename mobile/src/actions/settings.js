@@ -8,6 +8,7 @@ export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES_DISABLE = 'BACKUP_IMAGES_DISABLE'
 export const BACKUP_IMAGES_ENABLE = 'BACKUP_IMAGES_ENABLE'
 export const ERROR = 'ERROR'
+export const SET_CLIENT = 'SET_CLIENT'
 
 // url
 
@@ -65,10 +66,12 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
   await init(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
   try {
-    await cozy.authorize()
+    await cozy.authorize().then(({ client }) => dispatch(setClient(client)))
     await cozy.offline.replicateFromCozy('io.cozy.files')
   } catch (err) {
     dispatch(wrongAddressError())
     throw err
   }
 }
+
+export const setClient = client => ({ type: SET_CLIENT, client })
