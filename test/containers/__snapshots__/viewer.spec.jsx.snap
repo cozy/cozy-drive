@@ -1,0 +1,22 @@
+exports[`Viewer component should be displayed correctly with the img src computed from photoId 1`] = `
+<withRouter(Viewer)
+  current="33dda00f0eec15bc3b3c59a615001ac8"
+  navigateToPhoto={[Function]}
+  next="33dda00f0eec15bc3b3c59a615001ac9"
+  params={
+    Object {
+      "photoId": "33dda00f0eec15bc3b3c59a615001ac8",
+    }
+  }
+  previous="33dda00f0eec15bc3b3c59a615001ad0"
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  } />
+`;

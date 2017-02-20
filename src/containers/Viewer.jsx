@@ -12,7 +12,7 @@ import ViewerToolbar from '../containers/ViewerToolbar'
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
 
-class Viewer extends Component {
+export class Viewer extends Component {
   componentDidMount () {
     this.onKeyDownCallback = this.onKeyDown.bind(this)
     document.addEventListener('keydown', this.onKeyDownCallback, false)
