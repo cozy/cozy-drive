@@ -23,3 +23,7 @@ export const SELECT_PHOTO = 'SELECT_PHOTO'
 export const UNSELECT_PHOTO = 'UNSELECT_PHOTO'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
+
+// create albums
+export const ADD_TO_ALBUM = 'ADD_TO_ALBUM'
+export const CANCEL_ADD_TO_ALBUM = 'CANCEL_ADD_TO_ALBUM'

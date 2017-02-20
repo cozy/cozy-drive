@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 
 import {
+  ADD_TO_ALBUM,
+  CANCEL_ADD_TO_ALBUM,
   FETCH_PHOTOS,
   RECEIVE_PHOTOS,
   FETCH_PHOTOS_FAILURE,
@@ -85,10 +87,20 @@ const selected = (state = [], action) => {
   }
 }
 
+export const isAddingToAlbum = (state = false, action) => {
+  switch (action.type) {
+    case ADD_TO_ALBUM:
+      return !!action.id
+    case CANCEL_ADD_TO_ALBUM:
+      return false
+  }
+}
+
 export default combineReducers({
   isFetching,
   isIndexing,
   isWorking,
   selected,
-  showSelectionBar
+  showSelectionBar,
+  isAddingToAlbum
 })

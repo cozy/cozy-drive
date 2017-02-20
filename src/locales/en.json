@@ -35,6 +35,11 @@
     "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
     "add_to_album": "Add to album",
     "close": "Close"
+  },  
+  "Albums": {
+    "add_to_album_modal": {
+      "title": "Add to album"
+    }
   },
   "Viewer": {
     "close": "Close"
