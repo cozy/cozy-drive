@@ -26,9 +26,18 @@
     flex-grow       1
 
 
-.photo-viewer-nav-previous, .photo-viewer-nav-next
-    flex-shrink      0
-    width            em(75px)
+.pho-viewer-nav-previous, .pho-viewer-nav-next
+    flex-shrink         0
+    width               em(75px)
+    background-position center
+    background-repeat   no-repeat
+    cursor              pointer
+
+.pho-viewer-nav-next
+    background-image embedurl('../assets/icons/icon-arrow-right.svg')
+
+.pho-viewer-nav-previous
+    background-image embedurl('../assets/icons/icon-arrow-left.svg')
 
 
 .pho-viewer-photo
@@ -54,7 +63,7 @@
         &::after
             display none
 
-    .photo-viewer-nav-previous, .photo-viewer-nav-next
+    .pho-viewer-nav-previous, .pho-viewer-nav-next
         display none
 
     .pho-viewer-photo img

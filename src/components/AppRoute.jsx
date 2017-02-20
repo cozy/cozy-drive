@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router'
 
 import Timeline from '../containers/Timeline'
-import Viewer from '../components/Viewer'
+import Viewer from '../containers/Viewer'
 
 import App from './App'
 export const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)

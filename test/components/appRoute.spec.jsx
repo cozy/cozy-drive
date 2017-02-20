@@ -22,7 +22,7 @@ describe('AppRoute component', () => {
         routes: { // nested
           ':photoId': {
             path: ':photoId',
-            component: 'Viewer'
+            component: 'Connect(withRouter(Viewer))'
           }
         }
       },
