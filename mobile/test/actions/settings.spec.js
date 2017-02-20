@@ -5,7 +5,7 @@ describe('actions creators', () => {
   it('should accept https://localhost', () => {
     const store = mockStore()
 
-    return store.dispatch(checkURL('https://localhost'))
+    store.dispatch(checkURL('https://localhost'))
       .then(() => {
         expect(store.getActions()).toEqual([{ type: SET_URL, url: 'https://localhost' }])
       })
@@ -14,7 +14,7 @@ describe('actions creators', () => {
   it('should not accept http://', () => {
     const store = mockStore()
 
-    return store.dispatch(checkURL('http://localhost'))
+    store.dispatch(checkURL('http://localhost'))
       .then(() => {
       })
       .catch((err) => {
@@ -26,7 +26,7 @@ describe('actions creators', () => {
   it('should accept url without scheme://', () => {
     const store = mockStore()
 
-    return store.dispatch(checkURL('localhost'))
+    store.dispatch(checkURL('localhost'))
       .then(() => {
         expect(store.getActions()).toEqual([{ type: SET_URL, url: 'https://localhost' }])
       })
