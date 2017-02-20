@@ -32,11 +32,10 @@ describe('actions creators', () => {
       })
   })
 
-  it('should set the new client', () => {
-    const store = mockStore()
-
+  it('should create SET_CLIENT action', () => {
     const client = { someParameter: 'Some Value' }
-    store.dispatch(setClient(client))
-    expect(store.getActions()).toEqual([{ type: SET_CLIENT, client }])
+    const expectedAction = { type: SET_CLIENT, client }
+
+    expect(setClient(client)).toEqual(expectedAction)
   })
 })

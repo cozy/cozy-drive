@@ -66,7 +66,7 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
   await init(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
   try {
-    await cozy.authorize().then(({ client, token }) => dispatch(setClient(client)))
+    await cozy.authorize().then(({ client }) => dispatch(setClient(client)))
     await cozy.offline.replicateFromCozy('io.cozy.files')
   } catch (err) {
     dispatch(wrongAddressError())
@@ -74,6 +74,4 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
 }
 
-export const setClient = (client) => {
-  return { type: SET_CLIENT, client }
-}
+export const setClient = client => ({ type: SET_CLIENT, client })
