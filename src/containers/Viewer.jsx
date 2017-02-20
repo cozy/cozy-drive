@@ -41,13 +41,13 @@ class Viewer extends Component {
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar />
         <div className={styles['pho-viewer-content']}>
-          <a role='button' className={styles['photo-viewer-nav-previous']} onClick={() => navigateToPhoto(previous)} />
+          <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => navigateToPhoto(previous)} />
           <div className={styles['pho-viewer-photo']}>
             <img
               src={`${STACK_FILES_DOWNLOAD_PATH}/${current}`}
             />
           </div>
-          <a role='button' className={styles['photo-viewer-nav-next']} onClick={() => navigateToPhoto(next)} />
+          <a role='button' className={styles['pho-viewer-nav-next']} onClick={() => navigateToPhoto(next)} />
         </div>
       </div>
     )
