@@ -112,6 +112,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     const clearUI = () => {
       dispatch(actionMenuLoaded('download'))
       dispatch(hideFileActionMenu())
+      dispatch(hideSelectionBar())
     }
     dispatch(actionMenuLoading('download'))
     dispatch(downloadFile(id)).then(clearUI).catch(clearUI)
