@@ -92,6 +92,7 @@ export const isAddingToAlbum = (state = false, action) => {
     case ADD_TO_ALBUM:
       return !!action.id
     case CANCEL_ADD_TO_ALBUM:
+    default:
       return false
   }
 }
