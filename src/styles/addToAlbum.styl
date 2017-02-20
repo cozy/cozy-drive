@@ -1,0 +1,30 @@
+@import 'cozy-ui'
+
+:local
+    @extend $modals
+    @extend $form
+
+    // Should be in Cozy-uy you know
+    .coz-modal-section
+        border-top 1px solid grey-09
+        padding    1em 1.5em .5em !important
+
+    .coz-create-album-label
+        display        block
+        margin-bottom  .5em
+
+        text-transform uppercase
+        color          #92a0b2
+        font-size      .75em
+        padding        .55em 0
+
+    .coz-albums-list
+        padding 0
+        list-style-type none
+
+:local
+    @extend $form
+
+    .coz-inline-form
+        @extend $form-text
+        @extend $form-button

@@ -37,8 +37,10 @@
     "close": "Close"
   },  
   "Albums": {
-    "add_to_album_modal": {
-      "title": "Add to album"
+    "add_photos": {
+      "title": "Add to album",
+      "create_label": "Create a new album",
+      "create_button": "Create"
     }
   },
   "Viewer": {
