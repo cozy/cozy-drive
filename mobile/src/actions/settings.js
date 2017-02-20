@@ -43,7 +43,8 @@ export const setBackupImages = (value) => {
 
 // errors
 
-export const wrongAddressError = () => ({ type: ERROR, error: 'mobile.onboarding.server_selection.wrong_address' })
+export const wrongAddressErrorMsg = 'mobile.onboarding.server_selection.wrong_address'
+export const wrongAddressError = () => ({ type: ERROR, error: wrongAddressErrorMsg })
 export class OnBoardingError extends Error {
   constructor (message) {
     super(message)
