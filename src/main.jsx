@@ -17,15 +17,6 @@ import photosApp from './reducers'
 import { indexFilesByDate } from './actions/mango'
 import AppRoute from './components/AppRoute'
 
-cozy.init({
-  cozyURL: 'http://cozy.local:8080/',
-  token: 'TODO'
-})
-
-cozy.bar.init({
-  appName: 'Photos'
-})
-
 const context = window.context
 const lang = document.documentElement.getAttribute('lang') || 'en'
 
@@ -39,15 +30,26 @@ const store = createStore(
   )
 )
 
-// create/get mango index for files by date
-store.dispatch(indexFilesByDate())
-
 document.addEventListener('DOMContentLoaded', () => {
+  const applicationElement = document.querySelector('[role=application]')
+
+  cozy.init({
+    cozyURL: `//${applicationElement.dataset.cozyStack}`,
+    token: applicationElement.dataset.token
+  })
+
+  cozy.bar.init({
+    appName: 'Photos'
+  })
+
+  // create/get mango index for files by date
+  store.dispatch(indexFilesByDate())
+
   render((
     <I18n context={context} lang={lang}>
       <Provider store={store}>
         <Router history={hashHistory} routes={AppRoute} />
       </Provider>
     </I18n>
-  ), document.querySelector('[role=application]'))
+  ), applicationElement)
 })
