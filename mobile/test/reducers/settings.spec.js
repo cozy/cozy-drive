@@ -1,0 +1,37 @@
+import reducer, { initialState } from '../../src/reducers/settings'
+import { INIT_STATE } from '../../src/actions'
+import { SET_URL, ERROR, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE } from '../../src/actions/settings'
+
+describe('ui reducers', () => {
+  it('should return the initial state', () => {
+    expect(reducer(undefined, {}))
+    .toEqual(initialState)
+  })
+
+  it('should handle SET_URL', () => {
+    const url = 'http://localhost'
+    expect(reducer({serverUrl: '', error: 'defined'}, {type: SET_URL, url: url}))
+    .toEqual({serverUrl: url, error: null})
+  })
+
+  it('should handle BACKUP_IMAGES_DISABLE', () => {
+    expect(reducer({backupImages: true}, {type: BACKUP_IMAGES_DISABLE}))
+    .toEqual({backupImages: false})
+  })
+
+  it('should handle BACKUP_IMAGES_ENABLE', () => {
+    expect(reducer({backupImages: false}, {type: BACKUP_IMAGES_ENABLE}))
+    .toEqual({backupImages: true})
+  })
+
+  it('should handle ERROR', () => {
+    const msg = 'error'
+    expect(reducer({error: null}, {type: ERROR, error: msg}))
+    .toEqual({error: msg})
+  })
+
+  it('should handle INIT_STATE', () => {
+    expect(reducer({serverUrl: 'serverUrl', backupImages: true, error: 'error'}, {type: INIT_STATE}))
+    .toEqual(initialState)
+  })
+})

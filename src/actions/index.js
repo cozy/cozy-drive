@@ -46,7 +46,7 @@ export const ALERT_CLOSED = 'ALERT_CLOSED'
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const genId = () => Math.random().toString(36).slice(2)
 
-const HTTP_CODE_CONFLICT = 409
+export const HTTP_CODE_CONFLICT = 409
 const ALERT_TYPE_ERROR = 'error'
 
 export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', type: ALERT_TYPE_ERROR } })

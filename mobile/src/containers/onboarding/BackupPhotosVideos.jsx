@@ -7,7 +7,7 @@ import { translate } from '../../../../src/lib/I18n'
 import styles from '../../styles/onboarding.styl'
 import logo from '../../../res/icon.png'
 
-import { UPDATE_SETTINGS } from '../../actions'
+import { setBackupImages } from '../../actions/settings'
 
 export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
 (
@@ -32,11 +32,11 @@ const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: () => {
-    dispatch({ type: UPDATE_SETTINGS, newSettings: { backupImages: true } })
+    dispatch(setBackupImages(true))
     ownProps.nextStep()
   },
   onSkip: () => {
-    dispatch({ type: UPDATE_SETTINGS, newSettings: { backupImages: false } })
+    dispatch(setBackupImages(false))
     ownProps.nextStep()
   }
 })

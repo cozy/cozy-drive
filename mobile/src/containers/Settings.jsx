@@ -1,14 +1,15 @@
 import { connect } from 'react-redux'
 import Settings from '../components/Settings'
-import { updateSettings, showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions'
-import { mediaBackup } from '../actions/media_backup'
+import { setBackupImages } from '../actions/settings'
+import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
+import { mediaBackup } from '../actions/mediaBackup'
 
 const mapStateToProps = (state, ownProps) => ({
-  mediaUploading: state.mediaBackup.uploading,
+  mediaUploading: state.mobile.mediaBackup.uploading,
   version: window.navigator.appInfo ? window.navigator.appInfo.version : 'dev',
   serverUrl: state.mobile.settings.serverUrl,
   backupImages: state.mobile.settings.backupImages,
-  displayUnlinkConfirmation: state.mobile.settings.displayUnlinkConfirmation
+  displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -20,7 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.router.replace('/onboarding')
   },
   setBackupImages: (e) => {
-    dispatch(updateSettings({ backupImages: e.target.checked }))
+    dispatch(setBackupImages(e.target.checked))
   }
 })
 
