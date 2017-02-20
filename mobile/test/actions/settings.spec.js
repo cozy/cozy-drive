@@ -1,7 +1,39 @@
 import { mockStore } from '../../../test/helpers'
-import { SET_URL, checkURL, OnBoardingError, setClient, SET_CLIENT } from '../../src/actions/settings'
+import {
+  SET_URL, setUrl, checkURL,
+  SET_CLIENT, setClient,
+  BACKUP_IMAGES_ENABLE, BACKUP_IMAGES_DISABLE, enableBackupImages, disableBackupImages, setBackupImages,
+  OnBoardingError, wrongAddressError, ERROR, wrongAddressErrorMsg
+} from '../../src/actions/settings'
 
-describe('actions creators', () => {
+describe('backup images actions creators', () => {
+  it('should create an action to enable backup images', () => {
+    const expectedAction = { type: BACKUP_IMAGES_ENABLE }
+    expect(enableBackupImages()).toEqual(expectedAction)
+    expect(setBackupImages(true)).toEqual(expectedAction)
+  })
+
+  it('should create an action to disable backup images', () => {
+    const expectedAction = { type: BACKUP_IMAGES_DISABLE }
+    expect(disableBackupImages()).toEqual(expectedAction)
+    expect(setBackupImages(false)).toEqual(expectedAction)
+  })
+})
+
+describe('error actions creators', () => {
+  it('should create an action to display wrong address error', () => {
+    const expectedAction = { type: ERROR, error: wrongAddressErrorMsg }
+    expect(wrongAddressError()).toEqual(expectedAction)
+  })
+})
+
+describe('url actions creators', () => {
+  it('should create an action to set server url', () => {
+    const url = 'url'
+    const expectedAction = { type: SET_URL, url }
+    expect(setUrl(url)).toEqual(expectedAction)
+  })
+
   it('should accept https://localhost', () => {
     const store = mockStore()
 

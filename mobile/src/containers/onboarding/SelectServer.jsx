@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import { translate } from '../../../../src/lib/I18n'
 
-import { registerDevice, SET_URL } from '../../actions/settings'
+import { registerDevice, setUrl } from '../../actions/settings'
 import styles from '../../styles/onboarding'
 
 export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error}) =>
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   updateServerUrl: (e) => {
     const serverUrl = e.target.value
-    dispatch({ type: SET_URL, url: serverUrl })
+    dispatch(setUrl(serverUrl))
   }
 })
 
