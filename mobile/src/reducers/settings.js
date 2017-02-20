@@ -1,8 +1,5 @@
-import {
-  ERROR,
-  SET_URL, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE,
-  INIT_STATE
-} from '../actions'
+import { INIT_STATE } from '../actions'
+import { SET_URL, ERROR, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE } from '../actions/settings'
 
 export const initialState = {
   serverUrl: '',

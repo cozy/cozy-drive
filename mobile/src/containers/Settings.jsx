@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Settings from '../components/Settings'
-import { setBackupImages } from '../actions'
+import { setBackupImages } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
 import { mediaBackup } from '../actions/mediaBackup'
 

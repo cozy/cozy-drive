@@ -7,7 +7,7 @@ import { translate } from '../../../../src/lib/I18n'
 import styles from '../../styles/onboarding.styl'
 import logo from '../../../res/icon.png'
 
-import { setBackupImages } from '../../actions'
+import { setBackupImages } from '../../actions/settings'
 
 export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
 (

@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import { translate } from '../../../../src/lib/I18n'
 
-import { registerDevice, SET_URL } from '../../actions'
+import { registerDevice, SET_URL } from '../../actions/settings'
 import styles from '../../styles/onboarding'
 
 export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error}) =>
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const mapStateToProps = (state) => {
   return ({
     serverUrl: state.mobile.settings.serverUrl,
-    error: state.mobile.error
+    error: state.mobile.settings.error
   })
 }
 

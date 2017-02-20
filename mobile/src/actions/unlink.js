@@ -1,5 +1,5 @@
 import cozy from 'cozy-client-js'
-import { initializeState } from './index'
+import { initializeState } from '.'
 import localforage from 'localforage'
 
 // constants

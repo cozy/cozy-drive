@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../../src/reducers/settings'
-import { SET_URL, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE, ERROR } from '../../src/actions'
 import { INIT_STATE } from '../../src/actions'
+import { SET_URL, ERROR, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE } from '../../src/actions/settings'
 
 describe('ui reducers', () => {
   it('should return the initial state', () => {
