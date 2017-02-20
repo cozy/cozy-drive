@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../../src/reducers/settings'
 import { INIT_STATE } from '../../src/actions'
-import { SET_URL, ERROR, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE } from '../../src/actions/settings'
+import { SET_URL, ERROR, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE, SET_CLIENT } from '../../src/actions/settings'
 
 describe('ui reducers', () => {
   it('should return the initial state', () => {
@@ -33,5 +33,10 @@ describe('ui reducers', () => {
   it('should handle INIT_STATE', () => {
     expect(reducer({serverUrl: 'serverUrl', backupImages: true, error: 'error'}, {type: INIT_STATE}))
     .toEqual(initialState)
+  })
+
+  it('should set a client into the state with "SET_CLIENT"', () => {
+    const client = { someParameter: 'Some Value' }
+    expect(reducer(undefined, { type: SET_CLIENT, client }).client).toEqual(client)
   })
 })
