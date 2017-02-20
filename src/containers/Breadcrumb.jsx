@@ -1,6 +1,6 @@
 import styles from '../styles/breadcrumb'
 
-import { ROOT_DIR_ID } from '../constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
 import React from 'react'
 import { translate } from '../lib/I18n'
@@ -9,38 +9,57 @@ import { connect } from 'react-redux'
 import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
+import { isBrowsingTrash } from '../reducers'
 
-const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
-  const isRoot = !folder.dir_id
-  const isInRoot = folder.parent && !folder.parent.dir_id
-  const isLevel2 = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== ROOT_DIR_ID
+const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder }) => {
+  const isRoot = folder.id === ROOT_DIR_ID
+  const isTrash = folder.id === TRASH_DIR_ID
+
+  const isInRoot = folder.parent && folder.parent.id === ROOT_DIR_ID
+  const isInTrash = folder.parent && folder.parent.id === TRASH_DIR_ID
+
+  const showParentFolder = !isRoot && !isTrash && !isInRoot && !isInTrash && folder.parent
+
+  const isLevel2Root = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== ROOT_DIR_ID
+  const isLevel2Trash = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== TRASH_DIR_ID && !isInTrash
+
+  const showEllipsis = (isBrowsingTrash && isLevel2Trash) || (!isBrowsingTrash && isLevel2Root)
+
+  const topLevelTitle = isBrowsingTrash ? 'breadcrumb.title_trash' : 'breadcrumb.title_files'
 
   return (
     <h2 class={styles['fil-content-title']}>
 
-      { isRoot && // Displays 'Files' as the current folder
-        <span>{ t(`breadcrumb.title_files`)}</span> }
+      { (isRoot || isTrash) && // Displays the non-interactive root folder
+        <span>{ t(topLevelTitle) }</span> }
 
-      { !isRoot && // Display 'Files /' as the root folder
-      <span
-        className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-        onClick={() => goToFolder()}
-        > <a>{ t(`breadcrumb.title_files`)}</a> / </span>
+      { !isRoot && !isTrash && // show the interactive root folder
+        <span
+          className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
+          onClick={() => goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID)}
+        >
+          <a>{ t(topLevelTitle) }</a>
+          <span className={styles['separator']}>/</span>
+        </span>
       }
 
-      { isLevel2 &&
-        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}> ... / </span> }
+      { showEllipsis && // show an ellipsis if there are more than 2 levels
+        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}>
+          …
+          <span className={styles['separator']}>/</span>
+        </span> }
 
-      { !isRoot && !isInRoot && folder.parent && // Displays the parent folder
+      { showParentFolder && // Displays the parent folder
         <span
           className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
           onClick={() => goToFolder(folder.parent.id)}
         >
-          <a>{folder.parent.name}</a><span> / </span>
+          <a>{folder.parent.name}</a>
+          <span className={styles['separator']}>/</span>
         </span>
       }
 
-      { !isRoot && // Displays the current folder
+      { !isRoot && !isTrash && // Displays the current folder
         <span>{folder.name}</span>}
 
       { (opening === folder.dir_id || opening === folder.id) && <Spinner /> }
@@ -51,6 +70,7 @@ const Breadcrumb = ({ t, router, folder, opening, goToFolder }) => {
 
 const mapStateToProps = (state) => ({
   folder: state.folder,
+  isBrowsingTrash: isBrowsingTrash(state),
   opening: state.ui.opening
 })
 

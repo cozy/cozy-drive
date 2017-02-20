@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu } from '../actions'
-import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
+import { openFolder, toggleFileSelection, showFileActionMenu } from '../actions'
+import { getVisibleFiles, mustShowSelectionBar, isBrowsingTrash } from '../reducers'
+import { TRASH_DIR_ID } from '../constants/config'
 
 import FileList from '../components/FileList'
 
-const isDir = attrs => attrs.type === 'directory'
-
-class Folder extends Component {
+class Trash extends Component {
   componentWillMount () {
     this.props.onMount()
   }
@@ -34,7 +33,7 @@ const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
   error: state.ui.error,
   showSelection: mustShowSelectionBar(state),
-  showDeleteConfirmation: state.ui.showDeleteConfirmation,
+  isBrowsingTrash: isBrowsingTrash(state),
   showActionMenu: state.ui.showFileActionMenu,
   files: getVisibleFiles(state),
   folderId: state.ui.currentFolderId
@@ -42,7 +41,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMount: () => {
-    dispatch(openFolder(ownProps.params.file, true))
+    dispatch(openFolder(ownProps.params.file || TRASH_DIR_ID, true))
   },
   onRouteChange: (folderId) => {
     dispatch(openFolder(folderId, true))
@@ -53,18 +52,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onFileToggle: (id, selected) => {
     dispatch(toggleFileSelection(id, selected))
   },
-  onFileEdit: (val, attrs) => {
-    if (isDir(attrs)) {
-      dispatch(renameFolder(val, attrs.id))
-      if (attrs.isNew) dispatch(createFolder(val, attrs.id))
-    }
-  },
-  onFileEditAbort: (accidental, attrs) => {
-    if (isDir(attrs) && attrs.isNew) {
-      dispatch(abortAddFolder(accidental))
-      dispatch(deleteFileOrFolder(attrs.id, attrs.isNew))
-    }
-  },
   onShowActionMenu: (fileId) => {
     dispatch(showFileActionMenu(fileId))
   }
@@ -73,4 +60,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Folder))
+)(withRouter(Trash))

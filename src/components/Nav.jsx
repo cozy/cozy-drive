@@ -9,6 +9,7 @@ import { Link, withRouter } from 'react-router'
 
 const Nav = ({ t, router }) => {
   let isBrowsingFiles = router.location.pathname.match(/^\/files/) !== null
+  let isBrowsingTrash = router.location.pathname.match(/^\/trash/) !== null
   return (
     <nav>
       <ul class={styles['fil-nav']}>
@@ -33,7 +34,7 @@ const Nav = ({ t, router }) => {
           </Link>
         </li>
         <li class={styles['fil-nav-item']}>
-          <Link to='/trash' class={styles['fil-cat-trash']} activeClassName={styles['active']}>
+          <Link to='/trash' class={classNames(styles['fil-cat-trash'], { [styles['active']]: isBrowsingTrash })}>
             { t('nav.item_trash') }
           </Link>
         </li>

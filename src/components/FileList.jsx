@@ -8,15 +8,17 @@ import Empty from '../components/Empty'
 import Oops from '../components/Oops'
 import File from '../components/File'
 
-import SelectionBar from '../containers/SelectionBar'
+import FilesSelectionBar from '../containers/FilesSelectionBar'
+import TrashSelectionBar from '../containers/TrashSelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const FileList = ({
-  t, f, files, error, showSelection, showActionMenu, showDeleteConfirmation, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, files, error, showSelection, isBrowsingTrash, showActionMenu, showDeleteConfirmation, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
 }) => (
   <div role='contentinfo'>
-    {showSelection && <SelectionBar />}
+    {!isBrowsingTrash && showSelection && <FilesSelectionBar />}
+    {isBrowsingTrash && showSelection && <TrashSelectionBar />}
     {showDeleteConfirmation && <DeleteConfirmation />}
     <div className={classNames(
       styles['fil-content-table'],
@@ -44,7 +46,7 @@ const FileList = ({
       </div>
     </div>
     {error && <Oops />}
-    {files.length === 0 && <Empty />}
+    {files.length === 0 && <Empty canUpload={!isBrowsingTrash} />}
     {showActionMenu && <FileActionMenu />}
   </div>
 )

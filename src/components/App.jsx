@@ -1,30 +1,17 @@
 import styles from '../styles/app'
 
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
-import { openFolder, alertClosed } from '../actions'
+import { alertClosed } from '../actions'
 
 import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
 class App extends Component {
-  componentWillMount () {
-    this.props.onMount()
-  }
-
-  componentWillReceiveProps (newProps) {
-    if (this.props.params.file !== undefined && // we're not in the root dir
-      newProps.params.file !== this.props.params.file && // the route has changed
-      newProps.params.file !== newProps.folderId) { // but the folder has not been fetched
-      this.props.onRouteChange(newProps.params.file)
-    }
-  }
-
   render ({ t, alert, children }) {
     return (
       <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
@@ -46,17 +33,10 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  folderId: state.ui.currentFolderId,
   alert: state.ui.alert
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onMount: () => {
-    dispatch(openFolder(ownProps.params.file, true))
-  },
-  onRouteChange: (folderId) => {
-    dispatch(openFolder(folderId, true))
-  },
   onAlertAutoClose: () => {
     dispatch(alertClosed())
   }
@@ -65,4 +45,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(App)))
+)(App))

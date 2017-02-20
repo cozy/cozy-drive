@@ -23,6 +23,9 @@ export const DELETE_FILE = 'DELETE_FILE'
 export const TRASH_FILE = 'TRASH_FILE'
 export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
 export const TRASH_FILE_FAILURE = 'TRASH_FILE_FAILURE'
+export const RESTORE_FILE = 'RESTORE_FILE'
+export const RESTORE_FILE_SUCCESS = 'RESTORE_FILE_SUCCESS'
+export const RESTORE_FILE_FAILURE = 'RESTORE_FILE_FAILURE'
 export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 export const SHOW_DELETE_CONFIRMATION = 'SHOW_DELETE_CONFIRMATION'
@@ -51,6 +54,12 @@ export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert
 
 export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
   return async dispatch => {
+    let routePrefix = '/files'
+    // We're probably going to push a new route to the history, but we need to find the "base" of the url, eg. /files or /trash.
+    if (router && router.location.pathname.indexOf('/') > -1) {
+      routePrefix = '/' + router.location.pathname.split('/')[1]
+    }
+
     if (isInitialFetch) {
       dispatch({ type: FETCH_FILES, folderId })
     }
@@ -62,14 +71,14 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
       parent = !!parentId && await cozy.files.statById(parentId)
     } catch (err) {
       if (!isInitialFetch && router) {
-        router.push(folderId === ROOT_DIR_ID ? '/files' : `/files/${folderId}`)
+        router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
       }
       return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
     }
     if (isInitialFetch) {
       dispatch({ type: RECEIVE_FILES, folderId })
     } else if (router) {
-      router.push(folderId === ROOT_DIR_ID ? '/files' : `/files/${folderId}`)
+      router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
     }
     dispatch({
       type: OPEN_FOLDER_SUCCESS,
@@ -193,8 +202,8 @@ export const deleteFileOrFolder = (id, isNew = false) => {
   }
 }
 
-export const trashFile = (id) => {
-  return async (dispatch, getState) => {
+export const trashFile = id => {
+  return async dispatch => {
     dispatch({ type: TRASH_FILE, id: id })
     let trashed
     try {
@@ -203,7 +212,7 @@ export const trashFile = (id) => {
       return dispatch({
         type: TRASH_FILE_FAILURE,
         alert: {
-          message: 'alert.trash_file_error'
+          message: 'alert.try_again'
         }
       })
     }
@@ -213,6 +222,31 @@ export const trashFile = (id) => {
       id,
       alert: {
         message: 'alert.trash_file_success'
+      }
+    })
+  }
+}
+
+export const restoreFile = id => {
+  return async dispatch => {
+    dispatch({ type: RESTORE_FILE, id: id })
+    let restored
+    try {
+      restored = await cozy.files.restoreById(id)
+    } catch (err) {
+      return dispatch({
+        type: RESTORE_FILE_FAILURE,
+        alert: {
+          message: 'alert.try_again'
+        }
+      })
+    }
+    dispatch({
+      type: RESTORE_FILE_SUCCESS,
+      file: extractFileAttributes(restored),
+      id,
+      alert: {
+        message: 'alert.restore_file_success'
       }
     })
   }

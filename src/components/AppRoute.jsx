@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router'
 
 import App from './App'
 import Folder from '../containers/Folder'
+import Trash from '../containers/Trash'
 const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
 
 const AppRoute = (
@@ -12,7 +13,7 @@ const AppRoute = (
     <Route path='recent' component={ComingSoon} />
     <Route path='shared' component={ComingSoon} />
     <Route path='activity' component={ComingSoon} />
-    <Route path='trash' component={ComingSoon} />
+    <Route path='trash(/:file)' component={Trash} />
   </Route>
 )
 
