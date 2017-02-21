@@ -1,3 +1,5 @@
+/* global __SENTRY_TOKEN__ */
+
 import 'babel-polyfill'
 
 import '../../src/styles/main'
@@ -23,7 +25,7 @@ import Settings from './containers/Settings'
 import { loadState, saveState } from './lib/localStorage'
 import { init } from './lib/cozy-helper'
 
-Raven.config('https://29bd1255b6d544a1b65435a634c9ff67@sentry.cozycloud.cc/2').install()
+Raven.config(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`).install()
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
