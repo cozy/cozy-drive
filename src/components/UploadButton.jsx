@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
-
-import { uploadPhotos } from '../actions/photos'
+import { translate } from '../lib/I18n'
 
 const styles = {
   parent: {
@@ -19,9 +17,10 @@ const styles = {
   }
 }
 
-export const UploadButton = ({ t, uploadPhotos }) => (
+export const UploadButton = ({ t, disabled, onUpload }) => (
   <label
     role='button'
+    disabled={disabled}
     className='coz-btn coz-btn--regular coz-btn--upload'
     style={styles.parent}
   >
@@ -30,24 +29,14 @@ export const UploadButton = ({ t, uploadPhotos }) => (
       type='file'
       accept='image/*'
       multiple
+      disabled={disabled}
       style={styles.input}
       onChange={e => {
         // e.target.files is an array-like, transform it to Array instance
         const photosArray = Array.from(e.target.files)
-        uploadPhotos(photosArray)
+        onUpload(photosArray)
       }} />
   </label>
 )
 
-const mapStateToProps = (state, ownProps) => ({})
-
-export const mapDispatchToProps = (dispatch, ownProps) => ({
-  uploadPhotos: (photo) => {
-    dispatch(uploadPhotos(photo))
-  }
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UploadButton)
+export default translate()(UploadButton)

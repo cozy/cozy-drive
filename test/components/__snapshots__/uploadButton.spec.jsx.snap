@@ -1,0 +1,5 @@
+exports[`UploadButton component should be rendered correctly 1`] = `
+<Unknown
+  f={undefined}
+  t={undefined} />
+`;

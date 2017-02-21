@@ -1,8 +1,30 @@
 exports[`Toolbar component should be rendered correctly 1`] = `
 <div
-  className="pho-content-toolbar"
+  className="pho-toolbar"
   role="toolbar">
-  <Connect(Component)
-    t={[Function]} />
+  <_translate
+    disabled={false}
+    onUpload={undefined} />
+  <BMenuButton>
+    <button
+      className="coz-btn coz-btn--more"
+      disabled={false}
+      role="button">
+      <span
+        className="coz-hidden">
+        More
+      </span>
+    </button>
+    <BListbox
+      className="coz-menu">
+      <Item>
+        <a
+          className="pho-action-select"
+          onClick={undefined}>
+          Select photos
+        </a>
+      </Item>
+    </BListbox>
+  </BMenuButton>
 </div>
 `;

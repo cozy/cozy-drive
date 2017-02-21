@@ -1,4 +1,4 @@
-import styles from '../styles/photosList'
+import styles from '../styles/photoList'
 
 import React from 'react'
 import { translate } from '../lib/I18n'
@@ -9,7 +9,7 @@ import SelectionBar from '../containers/SelectionBar'
 import Photo from './Photo'
 
 export const PhotosList = props => {
-  const { t, f, photosByMonth, showSelection, selected, onPhotoToggle } = props
+  const { f, photosByMonth, showSelection, selected, onPhotoToggle } = props
   const { isIndexing, isFetching, isWorking, isFirstFetch } = props
   if (isIndexing) {
     return <Loading loadingType='photos_indexing' />
@@ -21,11 +21,14 @@ export const PhotosList = props => {
     return <Loading loadingType='photos_upload' />
   }
   return (
-    <div role='contentinfo'>
+    <div
+      role='contentinfo'
+      className={showSelection ? styles['pho-list-selection'] : ''}
+    >
       {showSelection && <SelectionBar />}
       {Object.keys(photosByMonth).map(month => {
         return (
-          <div class={styles['pho-section']} key={month}>
+          <div className={styles['pho-section']} key={month}>
             <h3>{f(month, 'MMMM YYYY')}</h3>
             {photosByMonth[month].map(photo =>
               <Photo

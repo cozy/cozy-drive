@@ -25,5 +25,4 @@ export const getPhotosByMonth = ({ photos }) => {
   return months
 }
 
-
 export default photosApp

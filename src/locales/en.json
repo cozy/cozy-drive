@@ -12,7 +12,9 @@
     "albums_text": "Click the \"New album\" button to create your first album."
   },
   "Toolbar": {
-    "photo_upload": "Upload"
+    "photo_upload": "Upload",
+    "more": "More",
+    "select_items": "Select photos"
   },
   "Loading": {
     "photos_indexing": "Your photos are currently being indexed. Please wait.",

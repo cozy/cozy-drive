@@ -1,3 +1,3 @@
-import './mango'
-import './photos'
-import './selection'
+export * from './mango'
+export * from './photos'
+export * from './selection'

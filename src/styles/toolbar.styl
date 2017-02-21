@@ -1,6 +1,22 @@
 @require 'cozy-ui'
 
-.pho-content-toolbar
-  margin-left auto
-  .coz-btn:last-child
-    margin-right 0
+.pho-toolbar
+    margin-left auto
+
+    .coz-btn:last-child
+        margin-right 0
+
+    a
+        &.pho-action-select
+            background embedurl("../assets/icons/icon-checkbox.svg") em(16px) center no-repeat
+
+    a.pho-action-select
+        display none
+
+@media (max-width: (1023/basefont)rem)
+    .pho-toolbar
+        a.pho-action-select
+            display block
+
+:local
+    @extends $menu

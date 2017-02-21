@@ -1,0 +1,30 @@
+@require 'cozy-ui'
+
+.pho-section
+    left-spaced(32px)
+
+.pho-photo
+    position relative
+
+.pho-photo--selected
+    padding          em(10px) em(16px)
+    background-color grey-10
+
+.pho-photo-item
+    height       em(300px)
+    margin-right .5em
+    background   grey-01
+
+.pho-photo-select
+    position absolute
+    top      em(10px)
+    left     em(10px)
+    opacity  0
+
+.pho-photo:hover
+    .pho-photo-select
+        opacity 1
+
+.pho-list-selection
+    .pho-photo-select
+        opacity 1

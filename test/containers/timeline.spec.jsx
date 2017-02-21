@@ -55,7 +55,8 @@ describe('Timeline component', () => {
       ui: {
         isFetching: true,
         isIndexing: false,
-        isWorking: false
+        isWorking: false,
+        selected: []
       },
       photos: [],
       mangoIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
@@ -73,7 +74,8 @@ describe('Timeline component', () => {
       ui: {
         isFetching: true,
         isIndexing: false,
-        isWorking: false
+        isWorking: false,
+        selected: []
       },
       photos: [],
       mangoIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'

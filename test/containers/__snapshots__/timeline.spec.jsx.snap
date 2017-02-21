@@ -38,7 +38,10 @@ exports[`Timeline component should have correct connected provided props 1`] = `
   isWorking={false}
   mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
   onFirstFetch={[Function]}
-  photos={Array []}
+  onPhotoToggle={[Function]}
+  photosByMonth={Object {}}
+  selected={Array []}
+  showSelection={false}
   store={
     Object {
       "clearActions": [Function],
@@ -62,7 +65,10 @@ exports[`Timeline component should render correctly if it has correct connected 
     isWorking={false}
     mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
     onFirstFetch={[Function]}
-    photos={Array []}
+    onPhotoToggle={[Function]}
+    photosByMonth={Object {}}
+    selected={Array []}
+    showSelection={false}
     store={
       Object {
         "clearActions": [Function],

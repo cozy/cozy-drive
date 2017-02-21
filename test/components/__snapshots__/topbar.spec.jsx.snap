@@ -5,6 +5,6 @@ exports[`Topbar component should be rendered correctly according the viewName 1`
     className="pho-content-title">
     Photos
   </h2>
-  <_translate />
+  <Connect(_translate) />
 </div>
 `;

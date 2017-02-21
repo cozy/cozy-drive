@@ -1,6 +1,7 @@
-import styles from '../styles/photo'
+import styles from '../styles/photoList'
 
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 
 import { getPhotoLink } from '../actions/photos'
@@ -25,8 +26,11 @@ export class Photo extends Component {
     const parentPath = router.location.pathname
     return (
       !loading &&
-        <div>
-          <span data-input='checkbox'>
+        <div className={classNames(
+          styles['pho-photo'],
+          { [styles['pho-photo--selected']]: selected }
+        )}>
+          <span className={styles['pho-photo-select']} data-input='checkbox'>
             <input
               type='checkbox'
               checked={selected}

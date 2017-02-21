@@ -1,10 +1,22 @@
 exports[`Photo component should render correctly an image according a photo object and the router path 1`] = `
-<Link
-  onlyActiveOnIndex={false}
-  style={Object {}}
-  to="/mock/33dda00f0eec15bc3b3c59a615001ac8">
-  <img
-    className="pho-photo-item"
-    src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
-</Link>
+<div
+  className="pho-photo">
+  <span
+    className="pho-photo-select"
+    data-input="checkbox">
+    <input
+      checked={false}
+      type="checkbox" />
+    <label
+      onClick={[Function]} />
+  </span>
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/mock/33dda00f0eec15bc3b3c59a615001ac8">
+    <img
+      className="pho-photo-item"
+      src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
+  </Link>
+</div>
 `;
