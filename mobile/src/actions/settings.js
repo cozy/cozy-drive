@@ -58,7 +58,7 @@ export const registerDevice = () => async (dispatch, getState) => {
   await dispatch(checkURL(getState().mobile.settings.serverUrl))
   const device = window.cordova ? window.cordova.platformId : null
   const onRegister = (dispatch) => (client, url) => {
-    onRegistered(client, url)
+    return onRegistered(client, url)
     .then(url => url)
     .catch(err => {
       console.warn(err)
