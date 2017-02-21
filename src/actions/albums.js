@@ -8,7 +8,8 @@ import {
   ADD_TO_ALBUM,
   CANCEL_ADD_TO_ALBUM,
   CREATE_ALBUM_FAILURE,
-  CREATE_ALBUM_SUCCESS
+  CREATE_ALBUM_SUCCESS,
+  INDEX_ALBUMS_BY_NAME_SUCCESS
 } from '../constants/actionTypes'
 
 import {
@@ -39,7 +40,7 @@ export const cancelAddToAlbum = (photos = []) => {
   }
 }
 
-export const createAlbum = (name = null) => {
+export const createAlbum = (name = null, mangoIndex = null) => {
   return async dispatch => {
     if (!name) {
       return dispatch({
@@ -48,7 +49,38 @@ export const createAlbum = (name = null) => {
       })
     }
 
-    await cozy.create(ALBUM_DOCTYPE, {
+    let existingAlbums
+
+    try {
+      mangoIndex = mangoIndex ||
+        await cozy.defineIndex(ALBUM_DOCTYPE, ['name']).then((mangoIndex) => {
+          dispatch({
+            type: INDEX_ALBUMS_BY_NAME_SUCCESS,
+            mangoIndex: mangoIndex
+          })
+
+          return mangoIndex
+        })
+
+      existingAlbums = await cozy.query(mangoIndex, {
+        selector: { name: name },
+        fields: ['_id']
+      })
+    } catch (error) {
+      return dispatch({
+        type: CREATE_ALBUM_FAILURE,
+        error: 'Albums.create.error.fetch'
+      })
+    }
+
+    if (existingAlbums.length) {
+      return dispatch({
+        type: CREATE_ALBUM_FAILURE,
+        error: 'Albums.create.error.already_exists'
+      })
+    }
+
+    return await cozy.create(ALBUM_DOCTYPE, {
       name: name
     }).catch((fetchError) => {
       return dispatch({

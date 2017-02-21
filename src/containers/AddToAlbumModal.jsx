@@ -10,7 +10,7 @@ import Alerter from '../components/Alerter'
 
 import { cancelAddToAlbum, createAlbum } from '../actions/albums'
 
-const AddToAlbumModal = ({t, visible, isCreating, newAlbumName,
+const AddToAlbumModal = ({t, visible, isCreating, mangoIndex,
   onDismiss, onNewAlbumNameChange, onSubmitNewAlbum, albumCreationError }) => {
   if (albumCreationError) {
     Alerter.error(albumCreationError)
@@ -21,7 +21,7 @@ const AddToAlbumModal = ({t, visible, isCreating, newAlbumName,
       cancelAction={() => onDismiss()}
       >
       <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
-        <form onSubmit={onSubmitNewAlbum}>
+        <form onSubmit={onSubmitNewAlbum(mangoIndex)}>
           <label className={styles['coz-create-album-label']}>
             {t('Albums.add_photos.create_label')}
           </label>
@@ -62,7 +62,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     visible: state.ui.isAddingToAlbum,
     isCreating: state.ui.isCreatingAlbum,
-    albumCreationError: state.ui.albumCreationError
+    albumCreationError: state.ui.albumCreationError,
+    mangoIndex: state.mango.albumsIndexByName
   }
 }
 
@@ -70,12 +71,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: () => {
     dispatch(cancelAddToAlbum())
   },
-  onSubmitNewAlbum: (event) => {
-    event.preventDefault()
-    const form = event.target
-    const nameInput = form.querySelector('[name=album-name]')
-    dispatch(createAlbum(nameInput.value))
-  }
+  onSubmitNewAlbum: (mangoIndex) =>
+    (event) => {
+      event.preventDefault()
+      const form = event.target
+      const nameInput = form.querySelector('[name=album-name]')
+      dispatch(createAlbum(nameInput.value, mangoIndex))
+    }
 })
 
 export default connect(

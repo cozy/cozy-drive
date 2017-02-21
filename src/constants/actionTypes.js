@@ -5,6 +5,7 @@
 // index using cozy-stack mango
 export const INDEX_FILES_BY_DATE = 'INDEX_FILES_BY_DATE'
 export const INDEX_FILES_BY_DATE_SUCCESS = 'INDEX_FILES_BY_DATE_SUCCESS'
+export const INDEX_ALBUMS_BY_NAME_SUCCESS = 'INDEX_ALBUMS_BY_NAME_SUCCESS'
 
 // fetch photos
 export const FETCH_PHOTOS = 'FETCH_PHOTOS'

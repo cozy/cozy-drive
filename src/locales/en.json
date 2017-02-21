@@ -44,6 +44,8 @@
     },
     "create": {
       "error": {
+        "fetch": "An error occurs during duplicate check. Please retry.",
+        "already_exists": "An album with that name already exists. Please provide another one.",
         "name_missing": "You have to give a name to your album.",
         "response":{
           "Forbidden": "You don't have permission to create albums."
