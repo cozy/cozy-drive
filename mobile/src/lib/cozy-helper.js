@@ -7,7 +7,7 @@ const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
   softwareID: 'io.cozy.mobile.files',
   clientName: getClientName(device),
-  scopes: ['io.cozy.files:GET']
+  scopes: ['io.cozy.files']
 })
 
 const getAuth = (onRegister, device) => ({
