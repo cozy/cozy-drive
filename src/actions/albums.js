@@ -4,7 +4,9 @@
 
 import {
   ADD_TO_ALBUM,
-  CANCEL_ADD_TO_ALBUM
+  CANCEL_ADD_TO_ALBUM,
+  CREATE_ALBUM,
+  CREATE_ALBUM_FAILURE
 } from '../constants/actionTypes'
 
 // create album
@@ -27,6 +29,15 @@ export const cancelAddToAlbum = (photos = []) => {
     dispatch({
       type: CANCEL_ADD_TO_ALBUM,
       photos: photos
+    })
+  }
+}
+
+export const createAlbum = (name = null) => {
+  return async dispatch => {
+    dispatch({
+      type: CREATE_ALBUM_FAILURE,
+      error: 'Not implemented error'
     })
   }
 }

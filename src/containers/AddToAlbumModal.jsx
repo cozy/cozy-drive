@@ -6,21 +6,31 @@ import { translate } from '../lib/I18n'
 import Modal from 'cozy-ui/react/Modal'
 import classNames from 'classnames'
 
-import { cancelAddToAlbum } from '../actions/albums'
+import Alerter from '../components/Alerter'
 
-const AddToAlbumModal = ({t, visible, onDismiss}) => {
+import { cancelAddToAlbum, createAlbum } from '../actions/albums'
+
+const AddToAlbumModal = ({t, visible, isCreating, newAlbumName,
+  onDismiss, onNewAlbumNameChange, onSubmitNewAlbum, albumCreationError }) => {
+  if (albumCreationError) {
+    Alerter.error(albumCreationError)
+  }
   return visible
     ? (<Modal
       title={t('Albums.add_photos.title')}
       cancelAction={() => onDismiss()}
       >
       <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
-        <form>
+        <form onSubmit={onSubmitNewAlbum}>
           <label className={styles['coz-create-album-label']}>
             {t('Albums.add_photos.create_label')}
           </label>
           <div className={styles['coz-inline-form']}>
-            <input className={styles['coz-input-text']} type='text' />
+            <input
+              className={styles['coz-input-text']}
+              type='text'
+              name='album-name'
+              />
             <button className={styles['coz-btn--regular']}>
               {t('Albums.add_photos.create_button')}
             </button>
@@ -50,13 +60,21 @@ const AddToAlbumModal = ({t, visible, onDismiss}) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    visible: state.ui.isAddingToAlbum
+    visible: state.ui.isAddingToAlbum,
+    isCreating: state.ui.isCreatingAlbum,
+    albumCreationError: state.ui.albumCreationError
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: () => {
     dispatch(cancelAddToAlbum())
+  },
+  onSubmitNewAlbum: (event) => {
+    event.preventDefault()
+    const form = event.target
+    const nameInput = form.querySelector('[name=album-name]')
+    dispatch(createAlbum(nameInput.value))
   }
 })
 

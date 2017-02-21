@@ -27,3 +27,5 @@ export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 // create albums
 export const ADD_TO_ALBUM = 'ADD_TO_ALBUM'
 export const CANCEL_ADD_TO_ALBUM = 'CANCEL_ADD_TO_ALBUM'
+export const CREATE_ALBUM = 'CREATE_ALBUM'
+export const CREATE_ALBUM_FAILURE = 'CREATE_ALBUM_FAILURE'

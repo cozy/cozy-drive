@@ -3,6 +3,8 @@ import { combineReducers } from 'redux'
 import {
   ADD_TO_ALBUM,
   CANCEL_ADD_TO_ALBUM,
+  CREATE_ALBUM,
+  CREATE_ALBUM_FAILURE,
   FETCH_PHOTOS,
   RECEIVE_PHOTOS,
   FETCH_PHOTOS_FAILURE,
@@ -92,8 +94,18 @@ export const isAddingToAlbum = (state = false, action) => {
     case ADD_TO_ALBUM:
       return !!action.id
     case CANCEL_ADD_TO_ALBUM:
-    default:
       return false
+    default:
+      return state
+  }
+}
+
+export const albumCreationError = (state = null, action) => {
+  switch (action.type) {
+    case CREATE_ALBUM_FAILURE:
+      return action.error
+    default:
+      return null
   }
 }
 
@@ -103,5 +115,6 @@ export default combineReducers({
   isWorking,
   selected,
   showSelectionBar,
-  isAddingToAlbum
+  isAddingToAlbum,
+  albumCreationError
 })
