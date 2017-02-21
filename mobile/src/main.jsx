@@ -11,7 +11,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Route, hashHistory } from 'react-router'
-import Raven from 'raven-js'
+import RavenMiddleWare from 'redux-raven-middleware'
 
 import { I18n } from '../../src/lib/I18n'
 
@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       filesApp,
       persistedState,
       applyMiddleware(
+        RavenMiddleWare(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`),
         thunkMiddleware,
         loggerMiddleware
       )
