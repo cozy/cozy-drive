@@ -20,6 +20,9 @@ module.exports = {
       __ALLOW_HTTP__: !production,
       __TARGET__: JSON.stringify('mobile'),
       __SENTRY_TOKEN__: JSON.stringify('29bd1255b6d544a1b65435a634c9ff67')
+    }),
+    new webpack.ProvidePlugin({
+      'cozy.bar': 'cozy-bar/dist/cozy-bar.mobile.js'
     })
   ]
 }
