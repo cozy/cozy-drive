@@ -27,7 +27,8 @@
     "watch:browser": "NODE_ENV=browser:development npm run internal:watch",
     "watch:mobile": "NODE_ENV=mobile:development npm run internal:watch",
     "watch:browser:standalone": "NODE_ENV=browser:development npm run internal:watch:standalone",
-    "watch:mobile:standalone": "NODE_ENV=mobile:development npm run internal:watch:standalone"
+    "watch:mobile:standalone": "NODE_ENV=mobile:development npm run internal:watch:standalone",
+    "cordova:deploy": "NODE_ENV=mobile:development npm run internal:build && cd mobile ; cordova run android --device ; cd .."
   },
   "repository": {
     "type": "git",
