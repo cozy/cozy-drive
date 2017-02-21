@@ -25,8 +25,6 @@ import Settings from './containers/Settings'
 import { loadState, saveState } from './lib/localStorage'
 import { init } from './lib/cozy-helper'
 
-Raven.config(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`).install()
-
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
 
