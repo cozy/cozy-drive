@@ -2,12 +2,18 @@
   Albums related features
 **/
 
+import cozy from 'cozy-client-js'
+
 import {
   ADD_TO_ALBUM,
   CANCEL_ADD_TO_ALBUM,
-  CREATE_ALBUM,
-  CREATE_ALBUM_FAILURE
+  CREATE_ALBUM_FAILURE,
+  CREATE_ALBUM_SUCCESS
 } from '../constants/actionTypes'
+
+import {
+  ALBUM_DOCTYPE
+} from '../constants/config'
 
 // create album
 export const addToAlbum = (id = null, photos = []) => {
@@ -35,9 +41,30 @@ export const cancelAddToAlbum = (photos = []) => {
 
 export const createAlbum = (name = null) => {
   return async dispatch => {
-    dispatch({
-      type: CREATE_ALBUM_FAILURE,
-      error: 'Not implemented error'
+    if (!name) {
+      return dispatch({
+        type: CREATE_ALBUM_FAILURE,
+        error: 'Albums.create.error.name_missing'
+      })
+    }
+
+    await cozy.create(ALBUM_DOCTYPE, {
+      name: name
+    }).catch((fetchError) => {
+      return dispatch({
+        type: CREATE_ALBUM_FAILURE,
+        error: `Albums.create.error.response.${fetchError.response.statusText}`
+      })
+    }).then((album) => {
+      return dispatch({
+        type: CREATE_ALBUM_SUCCESS,
+        album: album
+      })
+    }).catch((error) => {
+      return dispatch({
+        type: CREATE_ALBUM_FAILURE,
+        error: error.message ? error.message : error
+      })
     })
   }
 }

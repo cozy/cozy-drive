@@ -41,6 +41,14 @@
       "title": "Add to album",
       "create_label": "Create a new album",
       "create_button": "Create"
+    },
+    "create": {
+      "error": {
+        "name_missing": "You have to give a name to your album.",
+        "response":{
+          "Forbidden": "You don't have permission to create albums."
+        }
+      }
     }
   },
   "Viewer": {

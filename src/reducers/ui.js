@@ -3,7 +3,6 @@ import { combineReducers } from 'redux'
 import {
   ADD_TO_ALBUM,
   CANCEL_ADD_TO_ALBUM,
-  CREATE_ALBUM,
   CREATE_ALBUM_FAILURE,
   FETCH_PHOTOS,
   RECEIVE_PHOTOS,
