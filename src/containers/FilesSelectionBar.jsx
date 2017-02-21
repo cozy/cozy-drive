@@ -4,12 +4,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 
-import { downloadSelection, hideSelectionBar, showDeleteConfirmation } from '../actions'
+import { downloadSelection, hideSelectionBar, showFileActionMenu, showDeleteConfirmation } from '../actions'
 
-const FilesSelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete }) => (
+const FilesSelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete, onShowActionMenu }) => (
   <div className={styles['fil-selectionbar']} role='toolbar'>
     <span className={styles['fil-selectionbar-count']}>
-      {t('selectionbar.selected_count', { smart_count: selectedCount })}
+      {selectedCount}
+      <span> {t('selectionbar.selected_count', { smart_count: selectedCount })}</span>
     </span>
     <span className={styles['fil-selectionbar-separator']} />
     <button className={styles['fil-action-share']}>{t('selectionbar.share')}</button>
@@ -17,6 +18,7 @@ const FilesSelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete }) =
     <button className={styles['fil-action-delete']} onClick={onDelete}>{t('selectionbar.delete')}</button>
     <button className={styles['fil-action-moveto']}>{t('selectionbar.moveto')}</button>
     <button className={styles['fil-action-rename']}>{t('selectionbar.rename')}</button>
+    <button className='coz-btn coz-btn--extra coz-btn--extra-white' onClick={onShowActionMenu} />
     <button className={styles['fil-action-close']} onClick={onHide}>{t('selectionbar.close')}</button>
   </div>
 )
@@ -28,12 +30,16 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onDownload: () => {
     dispatch(downloadSelection())
+    dispatch(hideSelectionBar())
   },
   onHide: () => {
     dispatch(hideSelectionBar())
   },
   onDelete: () => {
     dispatch(showDeleteConfirmation())
+  },
+  onShowActionMenu: () => {
+    dispatch(showFileActionMenu())
   }
 })
 

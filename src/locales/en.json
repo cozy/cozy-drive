@@ -42,7 +42,7 @@
     }
   },
   "selectionbar": {
-    "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
+    "selected_count": "item selected |||| items selected",
     "share": "Share",
     "download": "Download",
     "delete": "Remove",
@@ -133,7 +133,8 @@
     },
     "action_menu": {
       "open_with": "Open with",
-      "download": "Download"
+      "download": "Download",
+      "delete": "Remove"
     },
     "error": {
       "open_with": {

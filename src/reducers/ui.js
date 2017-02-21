@@ -182,7 +182,6 @@ const selected = (state = [], action) => {
         ...state.slice(idx + 1)
       ]
     case OPEN_FOLDER:
-    case DOWNLOAD_SELECTION:
     case HIDE_SELECTION_BAR:
       return []
     default:
@@ -204,7 +203,7 @@ const showFileActionMenu = (state = false, action) => {
 const actionable = (state = null, action) => {
   switch (action.type) {
     case SHOW_FILE_ACTIONMENU:
-      return action.id
+      return action.id || null
     case HIDE_FILE_ACTIONMENU:
       return null
     default:
