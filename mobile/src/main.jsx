@@ -1,3 +1,5 @@
+/* global __SENTRY_TOKEN__ */
+
 import 'babel-polyfill'
 
 import '../../src/styles/main'
@@ -9,6 +11,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Route, hashHistory } from 'react-router'
+import Raven from 'raven-js'
 
 import { I18n } from '../../src/lib/I18n'
 
@@ -21,6 +24,8 @@ import Settings from './containers/Settings'
 
 import { loadState, saveState } from './lib/localStorage'
 import { init } from './lib/cozy-helper'
+
+Raven.config(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`).install()
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
