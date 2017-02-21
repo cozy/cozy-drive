@@ -2,14 +2,14 @@ import { combineReducers } from 'redux'
 
 import { albums } from './albums'
 import { photos } from './photos'
-import { mangoIndexByDate } from './mango'
+import mango from './mango'
 import ui from './ui'
 
 const photosApp = combineReducers({
   albums,
   photos,
   ui,
-  mangoIndexByDate
+  mango
 })
 
 export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0

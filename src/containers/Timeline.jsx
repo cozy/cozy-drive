@@ -40,7 +40,8 @@ const mapStateToProps = (state, ownProps) => ({
   selected: state.ui.selected,
   showSelection: mustShowSelectionBar(state),
   photosByMonth: getPhotosByMonth(state),
-  mangoIndexByDate: state.mangoIndexByDate
+  photos: state.photos,
+  mangoIndexByDate: state.mango.filesIndexByDate
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({

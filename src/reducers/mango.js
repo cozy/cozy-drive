@@ -1,7 +1,9 @@
+import { combineReducers } from 'redux'
+
 import { INDEX_FILES_BY_DATE_SUCCESS } from '../constants/actionTypes'
 
 // indexing using cozy-stack mango
-export const mangoIndexByDate = (state = null, action) => {
+export const filesIndexByDate = (state = null, action) => {
   switch (action.type) {
     case INDEX_FILES_BY_DATE_SUCCESS:
       return action.mangoIndexByDate
@@ -9,3 +11,7 @@ export const mangoIndexByDate = (state = null, action) => {
       return state
   }
 }
+
+export default combineReducers({
+  filesIndexByDate
+})
