@@ -73,7 +73,7 @@ const mapStateToProps = (state, ownProps) => {
   let currentPhotoIndex = set.indexOf(current)
 
   let next = set[(currentPhotoIndex + 1) % set.length]
-  let previous = set[currentPhotoIndex - 1 > 0 ? currentPhotoIndex - 1 : set.length - 1]
+  let previous = set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]
 
   return {
     current,
