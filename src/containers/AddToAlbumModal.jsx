@@ -7,11 +7,12 @@ import Modal from 'cozy-ui/react/Modal'
 import classNames from 'classnames'
 
 import Alerter from '../components/Alerter'
+import CreateAlbumForm from '../components/CreateAlbumForm'
 
 import { cancelAddToAlbum, createAlbum } from '../actions/albums'
 
 const AddToAlbumModal = ({t, visible, isCreating, mangoIndex,
-  onDismiss, onNewAlbumNameChange, onSubmitNewAlbum, albumCreationError }) => {
+  onDismiss, onSubmitNewAlbum, albumCreationError }) => {
   if (albumCreationError) {
     Alerter.error(albumCreationError)
   }
@@ -21,21 +22,9 @@ const AddToAlbumModal = ({t, visible, isCreating, mangoIndex,
       cancelAction={() => onDismiss()}
       >
       <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
-        <form onSubmit={onSubmitNewAlbum(mangoIndex)}>
-          <label className={styles['coz-create-album-label']}>
-            {t('Albums.add_photos.create_label')}
-          </label>
-          <div className={styles['coz-inline-form']}>
-            <input
-              className={styles['coz-input-text']}
-              type='text'
-              name='album-name'
-              />
-            <button className={styles['coz-btn--regular']}>
-              {t('Albums.add_photos.create_button')}
-            </button>
-          </div>
-        </form>
+        <CreateAlbumForm
+          onSubmitNewAlbum={onSubmitNewAlbum(mangoIndex)}
+          />
       </div>
       <ul className={classNames(styles['coz-modal-section'], styles['coz-albums-list'])}>
         <li className={styles['coz-album']}>
@@ -72,11 +61,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(cancelAddToAlbum())
   },
   onSubmitNewAlbum: (mangoIndex) =>
-    (event) => {
-      event.preventDefault()
-      const form = event.target
-      const nameInput = form.querySelector('[name=album-name]')
-      dispatch(createAlbum(nameInput.value, mangoIndex))
+    (name) => {
+      dispatch(createAlbum(name, mangoIndex))
     }
 })
 
