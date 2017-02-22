@@ -26,23 +26,6 @@ const AddToAlbumModal = ({t, visible, isCreating, mangoIndex,
           onSubmitNewAlbum={onSubmitNewAlbum(mangoIndex)}
           />
       </div>
-      <ul className={classNames(styles['coz-modal-section'], styles['coz-albums-list'])}>
-        <li className={styles['coz-album']}>
-          <img />
-          <strong className={styles['coz-album-name']}>
-            Example album 1
-          </strong>
-        </li>
-        <li className={styles['coz-album']}>
-          <img />
-          <strong className={styles['coz-album-name']}>
-            Example album 2
-          </strong>
-          <p className={styles['coz-album-properties']}>
-            Share (read & write)
-          </p>
-        </li>
-      </ul>
     </Modal>)
     : null
 }
