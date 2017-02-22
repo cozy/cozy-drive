@@ -10,9 +10,9 @@
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <% if(__TARGET__ === 'mobile') { %>
+  <% if (__TARGET__ === 'mobile') { %>
   <script src="cordova.js" defer></script>
-  <% } else { %>
+  <% } else if (__STACK_ASSETS__) { %>
   {{.CozyClientJS}}
   {{.CozyBar}}
   <% } %>

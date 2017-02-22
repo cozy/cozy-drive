@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
 
-  cozy.init({
+  cozy.client.init({
     cozyURL: '//' + data.cozyDomain,
     token: data.cozyToken
   })

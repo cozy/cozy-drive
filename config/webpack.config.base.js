@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin')
 
-const {extractor, production, filename} = require('./webpack.vars')
+const {extractor, production} = require('./webpack.vars')
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|cozy-(bar|client-js))/,
         loader: 'babel-loader'
       },
       {
@@ -29,12 +29,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: [
-          'style-loader',
+        loader: extractor.extract('style', [
           'css-loader?importLoaders=1',
           'postcss-loader'
-        ]
+        ])
       }
+    ],
+    noParse: [
+      /localforage\/dist/
     ]
   },
   plugins: [
