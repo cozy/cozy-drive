@@ -6,8 +6,9 @@ import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import { hideSelectionBar } from '../actions/selection'
+import { addToAlbum } from '../actions/albums'
 
-const SelectionBar = ({ t, selectedCount, onHide }) => (
+const SelectionBar = ({ t, selected, selectedCount, onHide, onAddToAlbum }) => (
   <div
     className={classNames(styles['coz-selectionbar'], {
       [styles['coz-selectionbar--active']]: selectedCount !== 0
@@ -21,6 +22,7 @@ const SelectionBar = ({ t, selectedCount, onHide }) => (
     <button
       disabled={selectedCount === 0}
       className={styles['pho-action-album-add']}
+      onClick={onAddToAlbum(selected)}
     >
       {t('SelectionBar.add_to_album')}
     </button>
@@ -31,12 +33,19 @@ const SelectionBar = ({ t, selectedCount, onHide }) => (
 )
 
 const mapStateToProps = (state, ownProps) => ({
+  selected: state.ui.selected,
   selectedCount: state.ui.selected.length
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onHide: () => {
     dispatch(hideSelectionBar())
+  },
+  onAddToAlbum: (selected) => {
+    return (event) => {
+      event.preventDefault()
+      dispatch(addToAlbum(selected))
+    }
   }
 })
 

@@ -93,7 +93,7 @@ const selected = (state = [], action) => {
 export const isAddingToAlbum = (state = false, action) => {
   switch (action.type) {
     case ADD_TO_ALBUM:
-      return !!action.id
+      return !action.id
     case CANCEL_ADD_TO_ALBUM:
       return false
     default:

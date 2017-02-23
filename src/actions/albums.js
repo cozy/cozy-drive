@@ -17,17 +17,13 @@ import {
 } from '../constants/config'
 
 // create album
-export const addToAlbum = (id = null, photos = []) => {
+export const addToAlbum = (photos = [], id = null) => {
   return async dispatch => {
-    if (id) {
-      // Call cozy client to create album
-    } else {
-      dispatch({
-        type: ADD_TO_ALBUM,
-        id: id,
-        photos: photos
-      })
-    }
+    dispatch({
+      type: ADD_TO_ALBUM,
+      id: id,
+      photos: photos
+    })
   }
 }
 
