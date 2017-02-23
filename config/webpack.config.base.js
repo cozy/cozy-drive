@@ -39,6 +39,11 @@ module.exports = {
       /localforage\/dist/
     ]
   },
+  postcss: () => {
+    return [
+      require('autoprefixer')(['last 2 versions'])
+    ]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/index.ejs'),
