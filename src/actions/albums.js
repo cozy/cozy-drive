@@ -1,8 +1,7 @@
+/* global cozy */
 /**
   Albums related features
 **/
-
-import cozy from 'cozy-client-js'
 
 import {
   ADD_TO_ALBUM,
