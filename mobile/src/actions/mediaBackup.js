@@ -20,7 +20,7 @@ export const mediaBackup = () => async (dispatch, getState) => {
       const blob = await getBlob(photo)
       const options = {
         dirID: 'io.cozy.files.root-dir',
-        name: photo.filename
+        name: photo.fileName
       }
       await cozy.client.files.create(blob, options).then(() => {
         dispatch(successImageUpload(photo))

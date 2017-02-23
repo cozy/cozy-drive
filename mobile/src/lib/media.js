@@ -12,6 +12,9 @@ export const requestAuthorization = async () => {
         (error) => {
           console.warn(error)
           resolve(false)
+        },
+        {
+          read: true
         }
       )
     })
@@ -39,8 +42,9 @@ export const getPhotos = async () => {
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
       window.cordova.plugins.photoLibrary.getLibrary(
-        (library) => resolve(library),
+        (response) => resolve(response.library),
         (err) => {
+          console.warn(err)
           if (err.startsWith('Permission')) {
             requestAuthorization().then(authorization => {
               if (authorization) {
@@ -48,6 +52,9 @@ export const getPhotos = async () => {
               } else {
                 resolve(defaultReturn)
               }
+            }).catch(err => {
+              console.warn(err)
+              resolve(defaultReturn)
             })
           } else {
             console.warn(err)
