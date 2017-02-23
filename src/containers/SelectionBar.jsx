@@ -22,7 +22,7 @@ const SelectionBar = ({ t, selected, selectedCount, onHide, onAddToAlbum }) => (
     <button
       disabled={selectedCount === 0}
       className={styles['pho-action-album-add']}
-      onClick={onAddToAlbum(selected)}
+      onClick={() => onAddToAlbum(selected)}
     >
       {t('SelectionBar.add_to_album')}
     </button>
@@ -42,10 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(hideSelectionBar())
   },
   onAddToAlbum: (selected) => {
-    return (event) => {
-      event.preventDefault()
-      dispatch(addToAlbum(selected))
-    }
+    dispatch(addToAlbum(selected))
   }
 })
 

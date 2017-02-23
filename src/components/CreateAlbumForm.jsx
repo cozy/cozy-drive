@@ -14,11 +14,9 @@ class CreateAlbumForm extends Component {
     }
   }
 
-  onSubmitCurried (onSubmit) {
-    return (event) => {
-      event.preventDefault()
-      onSubmit(this.state.name)
-    }
+  onSubmit (event, callback) {
+    event.preventDefault()
+    callback(this.state.name)
   }
 
   onNameChange (event) {
@@ -31,7 +29,7 @@ class CreateAlbumForm extends Component {
 
   render ({ t, isBusy, hasError, onSubmitNewAlbum }) {
     return (
-      <form onSubmit={this.onSubmitCurried(onSubmitNewAlbum)}>
+      <form onSubmit={(event) => this.onSubmit(event, onSubmitNewAlbum)}>
         <label className={styles['coz-create-album-label']}>
           {t('Albums.create.inline_form.create_label')}
         </label>
@@ -40,7 +38,7 @@ class CreateAlbumForm extends Component {
             className={classNames(styles['coz-input-text'], hasError && styles['error'])}
             type='text'
             name='album-name'
-            onInput={this.onNameChange.bind(this)}
+            onInput={(event) => this.onNameChange(event)}
             disabled={isBusy}
             placeholder={t('Albums.create.inline_form.placeholder')}
             />

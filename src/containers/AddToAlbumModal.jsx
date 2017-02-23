@@ -23,7 +23,7 @@ const AddToAlbumModal = ({t, isCreating, mangoIndex, photos,
       >
       <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
         <CreateAlbumForm
-          onSubmitNewAlbum={onSubmitNewAlbum(mangoIndex, photos)}
+          onSubmitNewAlbum={(name) => onSubmitNewAlbum(name, mangoIndex, photos)}
           hasError={albumCreationError}
           isBusy={isCreating}
           />
@@ -48,10 +48,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   // Removes photos parameter when we will be able to pick an album instead
   // of adding photo to the created one by default.
-  onSubmitNewAlbum: (mangoIndex, photos) =>
-    (name) => {
-      dispatch(createAlbum(name, mangoIndex, photos))
-    }
+  onSubmitNewAlbum: (name, mangoIndex, photos) => {
+    dispatch(createAlbum(name, mangoIndex, photos))
+  }
 })
 
 export default connect(
