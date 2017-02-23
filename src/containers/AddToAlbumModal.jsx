@@ -11,13 +11,13 @@ import CreateAlbumForm from '../components/CreateAlbumForm'
 
 import { cancelAddToAlbum, createAlbum } from '../actions/albums'
 
-const AddToAlbumModal = ({t, visible, isCreating, mangoIndex,
+const AddToAlbumModal = ({t, isCreating, mangoIndex,
   onDismiss, onSubmitNewAlbum, albumCreationError }) => {
   if (albumCreationError) {
     Alerter.error(albumCreationError)
   }
-  return visible
-    ? (<Modal
+  return (
+    <Modal
       title={t('Albums.add_photos.title')}
       cancelAction={() => onDismiss()}
       >
@@ -28,13 +28,12 @@ const AddToAlbumModal = ({t, visible, isCreating, mangoIndex,
           isBusy={isCreating}
           />
       </div>
-    </Modal>)
-    : null
+    </Modal>
+  )
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    visible: state.ui.isAddingToAlbum,
     isCreating: state.ui.isCreatingAlbum,
     albumCreationError: state.ui.albumCreationError,
     mangoIndex: state.mango.albumsIndexByName

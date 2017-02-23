@@ -7,6 +7,7 @@ import { getPhotosByMonth, mustShowSelectionBar } from '../reducers'
 
 import PhotosList from '../components/PhotosList'
 import Topbar from '../components/Topbar'
+import AddToAlbumModal from '../containers/AddToAlbumModal'
 
 export class Timeline extends Component {
   constructor (props) {
@@ -25,6 +26,9 @@ export class Timeline extends Component {
   render () {
     return (
       <div>
+        { this.props.isAddingToAlbum &&
+          <AddToAlbumModal />
+        }
         <Topbar viewName='photos' />
         <PhotosList {...this.props} {...this.state} />
         { this.props.children }
@@ -40,6 +44,7 @@ const mapStateToProps = (state, ownProps) => ({
   selected: state.ui.selected,
   showSelection: mustShowSelectionBar(state),
   photosByMonth: getPhotosByMonth(state),
+  isAddingToAlbum: state.ui.isAddingToAlbum,
   photos: state.photos,
   mangoIndexByDate: state.mango.filesIndexByDate
 })
