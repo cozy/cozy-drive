@@ -11,10 +11,10 @@ import CreateAlbumForm from '../components/CreateAlbumForm'
 
 import { cancelAddToAlbum, createAlbum } from '../actions/albums'
 
-const AddToAlbumModal = ({t, isCreating, mangoIndex,
-  onDismiss, onSubmitNewAlbum, albumCreationError }) => {
-  if (albumCreationError) {
-    Alerter.error(albumCreationError)
+const AddToAlbumModal = ({t, isCreating, mangoIndex, photos,
+  onDismiss, onSubmitNewAlbum, albumCreationError, error }) => {
+  if (error) {
+    Alerter.error(error)
   }
   return (
     <Modal
@@ -23,7 +23,7 @@ const AddToAlbumModal = ({t, isCreating, mangoIndex,
       >
       <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
         <CreateAlbumForm
-          onSubmitNewAlbum={onSubmitNewAlbum(mangoIndex)}
+          onSubmitNewAlbum={onSubmitNewAlbum(mangoIndex, photos)}
           hasError={albumCreationError}
           isBusy={isCreating}
           />
@@ -34,8 +34,10 @@ const AddToAlbumModal = ({t, isCreating, mangoIndex,
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    photos: state.ui.selected,
     isCreating: state.ui.isCreatingAlbum,
     albumCreationError: state.ui.albumCreationError,
+    error: state.ui.albumCreationError || state.ui.addToAlbumError,
     mangoIndex: state.mango.albumsIndexByName
   }
 }
@@ -44,9 +46,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: () => {
     dispatch(cancelAddToAlbum())
   },
-  onSubmitNewAlbum: (mangoIndex) =>
+  // Removes photos parameter when we will be able to pick an album instead
+  // of adding photo to the created one by default.
+  onSubmitNewAlbum: (mangoIndex, photos) =>
     (name) => {
-      dispatch(createAlbum(name, mangoIndex))
+      dispatch(createAlbum(name, mangoIndex, photos))
     }
 })
 

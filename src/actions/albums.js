@@ -5,6 +5,8 @@
 
 import {
   ADD_TO_ALBUM,
+  ADD_TO_ALBUM_FAILURE,
+  ADD_TO_ALBUM_SUCCESS,
   CANCEL_ADD_TO_ALBUM,
   CREATE_ALBUM,
   CREATE_ALBUM_FAILURE,
@@ -17,12 +19,47 @@ import {
 } from '../constants/config'
 
 // create album
-export const addToAlbum = (photos = [], id = null) => {
+export const addToAlbum = (photos = [], album = null) => {
   return async dispatch => {
-    dispatch({
-      type: ADD_TO_ALBUM,
-      id: id,
-      photos: photos
+    if (!album) {
+      return dispatch({
+        type: ADD_TO_ALBUM,
+        photos: photos
+      })
+    }
+
+    album.photos = album.photos || []
+
+    const photosWithNoDuplicates = photos.filter((photo) => {
+      return album.photos.indexOf(photo) === -1
+    })
+
+    if (!photosWithNoDuplicates.length) {
+      return dispatch({
+        type: ADD_TO_ALBUM_FAILURE,
+        error: 'Albums.add_to.error.already_added'
+      })
+    }
+
+    album.photos = album.photos.concat(photosWithNoDuplicates)
+
+    return await cozy.update(ALBUM_DOCTYPE, album, {
+      photos: album.photos
+    }).then(async (album) => {
+      await cozy.addReferencedFiles(
+        album,
+        photosWithNoDuplicates
+      ).then(() => {
+        return dispatch({
+          type: ADD_TO_ALBUM_SUCCESS,
+          album: album
+        })
+      })
+    }).catch((fetchError) => {
+      return dispatch({
+        type: ADD_TO_ALBUM_FAILURE,
+        error: `Albums.add_photos.error.response.${fetchError.response.statusText}`
+      })
     })
   }
 }
@@ -36,7 +73,8 @@ export const cancelAddToAlbum = (photos = []) => {
   }
 }
 
-export const createAlbum = (name = null, mangoIndex = null) => {
+// Temporary parameter photos
+export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
   return async dispatch => {
     if (!name) {
       return dispatch({
@@ -89,6 +127,8 @@ export const createAlbum = (name = null, mangoIndex = null) => {
         error: `Albums.create.error.response.${fetchError.response.statusText}`
       })
     }).then((album) => {
+      addToAlbum(photos, album)(dispatch)
+
       return dispatch({
         type: CREATE_ALBUM_SUCCESS,
         album: album

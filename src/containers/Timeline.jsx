@@ -23,10 +23,10 @@ export class Timeline extends Component {
     }
   }
 
-  render () {
+  render ({ isAddingToAlbum }) {
     return (
       <div>
-        { this.props.isAddingToAlbum &&
+        { isAddingToAlbum &&
           <AddToAlbumModal />
         }
         <Topbar viewName='photos' />

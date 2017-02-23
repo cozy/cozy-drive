@@ -35,10 +35,17 @@
     "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
     "add_to_album": "Add to album",
     "close": "Close"
-  },  
+  },
   "Albums": {
     "add_photos": {
-      "title": "Add to album"
+      "title": "Add to album",
+      "error": {
+        "already_added": "Photos has already been added to this album.",
+        "reference": "Some photos has not been added to the album. Please check and try again.",
+        "response": {
+          "Forbidden": "Application does not have permission to update albums."
+        }
+      }
     },
     "create": {
       "inline_form": {
@@ -51,7 +58,7 @@
         "already_exists": "An album with that name already exists. Please provide another one.",
         "name_missing": "You have to give a name to your album.",
         "response":{
-          "Forbidden": "You don't have permission to create albums."
+          "Forbidden": "Application does not have permission to create albums."
         }
       }
     }
