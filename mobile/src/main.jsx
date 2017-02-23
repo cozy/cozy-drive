@@ -34,6 +34,8 @@ const loggerMiddleware = createLogger()
 
 document.addEventListener('DOMContentLoaded', () => {
   loadState().then(persistedState => {
+    const root = document.querySelector('[role=application]')
+
     const store = createStore(
       filesApp,
       persistedState,
@@ -83,6 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </Router>
         </Provider>
       </I18n>
-    ), document.querySelector('[role=application]'))
+    ), root)
   })
 })

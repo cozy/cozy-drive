@@ -1,4 +1,5 @@
-import cozy from 'cozy-client-js'
+/* global cozy */
+
 import { getPhotos, getBlob } from '../lib/media'
 import { HTTP_CODE_CONFLICT } from '../../../src/actions'
 
@@ -21,7 +22,7 @@ export const mediaBackup = () => async (dispatch, getState) => {
         dirID: 'io.cozy.files.root-dir',
         name: photo.filename
       }
-      await cozy.files.create(blob, options).then(() => {
+      await cozy.client.files.create(blob, options).then(() => {
         dispatch(successImageUpload(photo))
       }).catch(err => {
         if (err.status === HTTP_CODE_CONFLICT) {

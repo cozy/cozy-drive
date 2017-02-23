@@ -1,4 +1,5 @@
 /* global cozy */
+
 import 'babel-polyfill'
 
 import './styles/main'
