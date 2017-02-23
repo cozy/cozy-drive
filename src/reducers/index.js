@@ -16,7 +16,7 @@ export const getPhotosByMonth = ({ photos }) => {
   let months = {}
   photos.map(p => {
     // here we want to get an object whose keys are months in a l10able format
-    // so we only keep the year and month part of the date 
+    // so we only keep the year and month part of the date
     const month = p.created_at.slice(0, 7) + '-01T00:00'
     /* istanbul ignore else */
     if (!months.hasOwnProperty(month)) {

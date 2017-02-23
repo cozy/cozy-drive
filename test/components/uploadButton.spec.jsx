@@ -6,7 +6,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { mockT } from '../lib/I18n'
-import UploadButton from '../../src/components/UploadButton'
+import { UploadButton } from '../../src/components/UploadButton'
 
 describe('UploadButton component', () => {
   it('should be rendered correctly', () => {
