@@ -2,7 +2,7 @@
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const production = /:production$/.test(process.env.NODE_ENV)
+const production = process.env.NODE_ENV === 'production'
 
 module.exports = {
   production: production,
