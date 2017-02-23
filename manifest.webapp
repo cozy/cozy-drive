@@ -24,25 +24,11 @@
   "version": "3.0.0",
   "licence": "AGPL-3.0",
   "permissions": {
-    "file/data": {
-      "description": "Required for documents access",
-      "access": "readwrite"
-    },
-    "file/downloads": {
-      "description": "Required for downloads access",
-      "access": "readwrite"
-    },
-    "file/pictures": {
-      "description": "Required for pictures access",
-      "access": "readwrite"
-    },
-    "file/music": {
-      "description": "Required for music access",
-      "access": "readwrite"
-    },
-    "file/videos": {
-      "description": "Required for videos access",
-      "access": "readwrite"
+    "files": {
+      "description": "Required to access the files",
+      "type": "io.cozy.files",
+      "verbs": ["GET","POST","PUT","DELETE"],
+      "values": ["io.cozy.files.root-dir"]
     },
     "settings/locale": {
       "description": "Required to display a localized Ui",
