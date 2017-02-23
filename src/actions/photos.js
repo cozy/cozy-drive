@@ -34,7 +34,7 @@ export const fetchPhotos = (mangoIndexByDate) => {
       fields: ['_id', 'created_at', 'name', 'size', 'updated_at'],
       descending: true
     }
-    await cozy.client.query(mangoIndexByDate, options)
+    await cozy.client.data.query(mangoIndexByDate, options)
     .then((photos) => {
       dispatch({
         type: RECEIVE_PHOTOS,
