@@ -30,15 +30,18 @@ export class Photo extends Component {
           styles['pho-photo'],
           { [styles['pho-photo--selected']]: selected }
         )}>
-          <span className={styles['pho-photo-select']} data-input='checkbox'>
+          <span
+            className={styles['pho-photo-select']}
+            data-input='checkbox'
+            onClick={e => {
+              e.stopImmediatePropagation()
+              onToggle(photo._id, selected)
+            }}>
             <input
               type='checkbox'
               checked={selected}
              />
-            <label onClick={e => {
-              e.stopImmediatePropagation()
-              onToggle(photo._id, selected)
-            }} />
+            <label />
           </span>
           <Link to={`${parentPath}/${photo._id}`}>
             <img

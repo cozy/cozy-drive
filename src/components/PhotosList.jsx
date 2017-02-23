@@ -8,6 +8,8 @@ import Loading from './Loading'
 import SelectionBar from '../containers/SelectionBar'
 import Photo from './Photo'
 
+import classNames from 'classNames'
+
 export const PhotosList = props => {
   const { f, photosByMonth, showSelection, selected, onPhotoToggle } = props
   const { isIndexing, isFetching, isWorking, isFirstFetch } = props
@@ -28,7 +30,9 @@ export const PhotosList = props => {
       {showSelection && <SelectionBar />}
       {Object.keys(photosByMonth).map(month => {
         return (
-          <div className={styles['pho-section']} key={month}>
+          <div
+            className={classNames(styles['pho-section'], selected.length && styles['pho-section--has-selection'])}
+            key={month}>
             <h3>{f(month, 'MMMM YYYY')}</h3>
             {photosByMonth[month].map(photo =>
               <Photo
