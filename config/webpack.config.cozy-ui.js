@@ -1,8 +1,6 @@
 'use strict'
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
-const build = process.env.NODE_ENV === 'production'
+const { extractor } = require('./webpack.vars')
 
 module.exports = {
   resolve: {
@@ -12,7 +10,7 @@ module.exports = {
     loaders: [
       {
         test: /\.styl$/,
-        loader: ExtractTextPlugin.extract('style', [
+        loader: extractor.extract('style', [
           'css?importLoaders=1&modules',
           'postcss',
           'stylus'
@@ -21,7 +19,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin(build ? 'app.[hash].css' : 'app.css')
+    extractor
   ],
   stylus: {
     use: [ require('cozy-ui/stylus')() ]

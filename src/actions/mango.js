@@ -1,8 +1,8 @@
+/* global cozy */
+
 /**
   Mango index related features (cozy-stack)
 **/
-
-import cozy from 'cozy-client-js'
 
 import {
   INDEX_FILES_BY_DATE,
@@ -18,7 +18,7 @@ export const indexFilesByDate = () => {
   return async dispatch => {
     dispatch({ type: INDEX_FILES_BY_DATE })
     const fields = [ 'class', 'created_at' ]
-    await cozy.defineIndex(FILE_DOCTYPE, fields)
+    await cozy.client.data.defineIndex(FILE_DOCTYPE, fields)
     .then((mangoIndexByDate) => {
       dispatch({
         type: INDEX_FILES_BY_DATE_SUCCESS,
