@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { translate } from '../lib/I18n'
 
-import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu } from '../actions'
+import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar, isBrowsingTrash } from '../reducers'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
+
+import Alerter from 'cozy-ui/react/Alerter'
 
 import Empty from '../components/Empty'
 import Oops from '../components/Oops'
@@ -42,9 +45,15 @@ class Folder extends Component {
       )
     }
     const isTrashContext = props.context === TRASH_CONTEXT
-    const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
+    const { t, alert, showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
     return (
       <div role='contentinfo'>
+        {alert && <Alerter
+          type={alert.type}
+          message={t(alert.message, alert.messageData)}
+          onClose={this.props.onAlertAutoClose}
+          />
+        }
         {!isTrashContext && showSelection && <FilesSelectionBar />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}
@@ -59,6 +68,7 @@ class Folder extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
+  alert: state.ui.alert,
   error: state.ui.error,
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
@@ -102,10 +112,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onShowActionMenu: (fileId) => {
     dispatch(showFileActionMenu(fileId))
+  },
+  onAlertAutoClose: () => {
+    dispatch(alertClosed())
   }
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Folder))
+)(translate()(withRouter(Folder)))

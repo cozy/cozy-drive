@@ -12,7 +12,10 @@ const AppRoute = (
     <Route path='recent' component={ComingSoon} />
     <Route path='shared' component={ComingSoon} />
     <Route path='activity' component={ComingSoon} />
-    <Route path='trash(/:file)' component={props => <Folder context="trash" {...props} />} />
+    <Route path='trash(/:file)' component={props => {
+      console.log('router')
+      return <Folder context="trash" {...props} />
+    }} />
   </Route>
 )
 

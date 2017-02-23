@@ -1,48 +1,19 @@
 import styles from '../styles/app'
 
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
-import { alertClosed } from '../actions'
-
-import Alerter from 'cozy-ui/react/Alerter'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
-class App extends Component {
-  render ({ t, alert, children }) {
-    return (
-      <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
-        { alert && <Alerter
-          type={alert.type}
-          message={t(alert.message, alert.messageData)}
-          onClose={this.props.onAlertAutoClose}
-          />
-        }
-        <Sidebar />
+const App = ({ children }) => (
+  <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
+    <Sidebar />
+    <main class={styles['fil-content']}>
+      <Topbar />
+      { children }
+    </main>
+  </div>
+)
 
-        <main class={styles['fil-content']}>
-          <Topbar />
-          { children }
-        </main>
-      </div>
-    )
-  }
-}
-
-const mapStateToProps = (state) => ({
-  alert: state.ui.alert
-})
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onAlertAutoClose: () => {
-    dispatch(alertClosed())
-  }
-})
-
-export default translate()(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App))
+export default App
