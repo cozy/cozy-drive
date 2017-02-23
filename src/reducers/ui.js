@@ -56,8 +56,6 @@ const showSelectionBar = (state = false, action) => {
   switch (action.type) {
     case SHOW_SELECTION_BAR:
       return true
-    // case OPEN_FOLDER:
-    // case DOWNLOAD_SELECTION:
     case HIDE_SELECTION_BAR:
       return false
     default:
