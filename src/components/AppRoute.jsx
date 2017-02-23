@@ -8,14 +8,11 @@ const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
 const AppRoute = (
   <Route component={App}>
     <Redirect from='/' to='files' />
-    <Route path='files(/:file)' component={props => <Folder context="files" {...props} />} />
+    <Route path='files(/:file)' component={props => <Folder context='files' {...props} />} />
     <Route path='recent' component={ComingSoon} />
     <Route path='shared' component={ComingSoon} />
     <Route path='activity' component={ComingSoon} />
-    <Route path='trash(/:file)' component={props => {
-      console.log('router')
-      return <Folder context="trash" {...props} />
-    }} />
+    <Route path='trash(/:file)' component={props => <Folder context='trash' {...props} />} />
   </Route>
 )
 

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import { translate } from '../lib/I18n'
 
 import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
-import { getVisibleFiles, mustShowSelectionBar, isBrowsingTrash } from '../reducers'
+import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
 import Alerter from 'cozy-ui/react/Alerter'
@@ -20,7 +20,6 @@ import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const isDir = attrs => attrs.type === 'directory'
 
-const FILES_CONTEXT = 'files'
 const TRASH_CONTEXT = 'trash'
 
 class Folder extends Component {

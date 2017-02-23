@@ -1,6 +1,6 @@
 import styles from '../styles/app'
 
-import React, { Component } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 
 import Sidebar from './Sidebar'
