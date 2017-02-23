@@ -92,10 +92,10 @@ const selected = (state = [], action) => {
   }
 }
 
-export const isAddingToAlbum = (state = false, action) => {
+export const showAddToAlbumModal = (state = false, action) => {
   switch (action.type) {
     case ADD_TO_ALBUM:
-      return !action.id
+      return !action.album
     case CANCEL_ADD_TO_ALBUM:
     case ADD_TO_ALBUM_SUCCESS:
       return false
@@ -140,7 +140,7 @@ export default combineReducers({
   isWorking,
   selected,
   showSelectionBar,
-  isAddingToAlbum,
+  showAddToAlbumModal,
   isCreatingAlbum,
   albumCreationError,
   addToAlbumError

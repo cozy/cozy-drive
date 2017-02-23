@@ -23,10 +23,10 @@ export class Timeline extends Component {
     }
   }
 
-  render ({ isAddingToAlbum }) {
+  render ({ showAddToAlbumModal }) {
     return (
       <div>
-        { isAddingToAlbum &&
+        { showAddToAlbumModal &&
           <AddToAlbumModal />
         }
         <Topbar viewName='photos' />
@@ -44,7 +44,7 @@ const mapStateToProps = (state, ownProps) => ({
   selected: state.ui.selected,
   showSelection: mustShowSelectionBar(state),
   photosByMonth: getPhotosByMonth(state),
-  isAddingToAlbum: state.ui.isAddingToAlbum,
+  showAddToAlbumModal: state.ui.showAddToAlbumModal,
   photos: state.photos,
   mangoIndexByDate: state.mango.filesIndexByDate
 })
