@@ -7,6 +7,7 @@ import cozy from 'cozy-client-js'
 import {
   ADD_TO_ALBUM,
   CANCEL_ADD_TO_ALBUM,
+  CREATE_ALBUM,
   CREATE_ALBUM_FAILURE,
   CREATE_ALBUM_SUCCESS,
   INDEX_ALBUMS_BY_NAME_SUCCESS
@@ -48,6 +49,11 @@ export const createAlbum = (name = null, mangoIndex = null) => {
         error: 'Albums.create.error.name_missing'
       })
     }
+
+    dispatch({
+      type: CREATE_ALBUM,
+      name: name
+    })
 
     let existingAlbums
 

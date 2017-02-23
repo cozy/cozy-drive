@@ -1,16 +1,34 @@
 @import 'cozy-ui'
 
 :local
-    $extend form
-      .coz-create-album-label
-          display        block
-          margin-bottom  .5em
+    @extend $form
+    @extend $form-text
+    @extend $form-button
 
-          text-transform uppercase
-          color          #92a0b2
-          font-size      .75em
-          padding        .55em 0
+    .coz-create-album-label
+        display        block
+        margin-bottom  .5em
 
-      .coz-input-text
-          @extend $form-text
-          @extend $form-button
+        text-transform uppercase
+        color          #92a0b2
+        font-size      .75em
+        padding        .55em 0
+
+    .coz-inline-form
+        display     flex
+        align-items stretch
+        width       100%
+
+        .coz-input-text
+            flex-grow    1
+
+        .coz-input-text,
+        .coz-btn
+            font-size  1em
+            height     4em
+            align-self stretch
+
+        .coz-btn
+            margin-right 0
+            padding-left 2.5em
+            padding-right 2.5em

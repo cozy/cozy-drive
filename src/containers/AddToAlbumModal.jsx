@@ -24,6 +24,8 @@ const AddToAlbumModal = ({t, visible, isCreating, mangoIndex,
       <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
         <CreateAlbumForm
           onSubmitNewAlbum={onSubmitNewAlbum(mangoIndex)}
+          hasError={albumCreationError}
+          isBusy={isCreating}
           />
       </div>
     </Modal>)
