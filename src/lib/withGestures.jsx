@@ -10,6 +10,7 @@ const withGestures = (eventHandlers) => {
     return class WithGesturesComponent extends Component {
       componentDidMount () {
         this.hammer = new Hammer(ReactDOM.findDOMNode(this))
+        this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL })
         this.handlers = eventHandlers(this.props)
         if (shouldListenToSwipe(this.handlers)) {
           this.hammer.on('swipe', e => this.onSwipe(e))
