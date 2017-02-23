@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 import { Item } from 'react-bosonic/lib/Menu'
-import withGestures from 'react-bosonic/lib/withGestures'
+import withGestures from '../lib/withGestures'
 
 import { splitFilename, getClassFromMime } from '../components/File'
 import { getActionableFiles } from '../reducers'

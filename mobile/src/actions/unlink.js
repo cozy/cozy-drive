@@ -1,4 +1,5 @@
-import cozy from 'cozy-client-js'
+/* global cozy */
+
 import { initializeState } from '.'
 import localforage from 'localforage'
 
@@ -13,12 +14,12 @@ export const hideUnlinkConfirmation = () => ({ type: HIDE_UNLINK_CONFIRMATION })
 // action creators async
 export const unlink = () => {
   localforage.clear()
-  if (cozy.offline) {
-    cozy.offline.destroyDatabase('io.cozy.files')
+  if (cozy.client.offline.destroyDatabase) {
+    cozy.client.offline.destroyDatabase('io.cozy.files')
   }
   // TODO: unregister client on Gozy
-  // const client = await cozy.auth.getClient()
-  // cozy.auth.unregisterClient(client)
+  // const client = await cozy.client.auth.getClient()
+  // cozy.client.auth.unregisterClient(client)
 
   return initializeState()
 }
