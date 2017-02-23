@@ -69,6 +69,7 @@
     "git-directory-deploy": "^1.5.0",
     "html-webpack-plugin": "^2.24.0",
     "identity-obj-proxy": "^3.0.0",
+    "imports-loader": "^0.7.0",
     "jest": "^18.0.0",
     "json-loader": "^0.5.0",
     "npm-run-all": "^3.1.0",
@@ -93,8 +94,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-bar": "^3.0.0-beta1",
-    "cozy-client-js": "^0.0.10",
+    "cozy-bar": "beta",
+    "cozy-client-js": "beta",
     "cozy-ui": "3.0.0-beta11",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
