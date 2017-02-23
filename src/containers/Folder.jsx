@@ -1,13 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { translate } from '../lib/I18n'
 
-import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu } from '../actions'
+import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
+import Alerter from 'cozy-ui/react/Alerter'
+
+import Empty from '../components/Empty'
+import Oops from '../components/Oops'
 import FileList from '../components/FileList'
 
+import FilesSelectionBar from '../containers/FilesSelectionBar'
+import TrashSelectionBar from '../containers/TrashSelectionBar'
+import FileActionMenu from '../containers/FileActionMenu'
+import DeleteConfirmation from '../containers/DeleteConfirmation'
+
 const isDir = attrs => attrs.type === 'directory'
+
+const TRASH_CONTEXT = 'trash'
 
 class Folder extends Component {
   componentWillMount () {
@@ -24,14 +37,37 @@ class Folder extends Component {
 
   render (props, state) {
     if (props.isFetching === true) {
-      return <p>Loading</p>
+      return (
+        <div role='contentinfo'>
+          <p>Loading</p>
+        </div>
+      )
     }
-    return <FileList {...props} {...state} />
+    const isTrashContext = props.context === TRASH_CONTEXT
+    const { t, alert, showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
+    return (
+      <div role='contentinfo'>
+        {alert && <Alerter
+          type={alert.type}
+          message={t(alert.message, alert.messageData)}
+          onClose={this.props.onAlertAutoClose}
+          />
+        }
+        {!isTrashContext && showSelection && <FilesSelectionBar />}
+        {isTrashContext && showSelection && <TrashSelectionBar />}
+        {showDeleteConfirmation && <DeleteConfirmation />}
+        <FileList {...props} {...state} />
+        {error && <Oops />}
+        {files.length === 0 && <Empty canUpload={!isTrashContext} />}
+        {showActionMenu && <FileActionMenu />}
+      </div>
+    )
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
+  alert: state.ui.alert,
   error: state.ui.error,
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
@@ -42,7 +78,15 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMount: () => {
-    dispatch(openFolder(ownProps.params.file, true))
+    let folderId
+    if (ownProps.params.file !== undefined) {
+      folderId = ownProps.params.file
+    } else {
+      folderId = ownProps.context === TRASH_CONTEXT
+        ? TRASH_DIR_ID
+        : ROOT_DIR_ID
+    }
+    dispatch(openFolder(folderId, true))
   },
   onRouteChange: (folderId) => {
     dispatch(openFolder(folderId, true))
@@ -67,10 +111,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onShowActionMenu: (fileId) => {
     dispatch(showFileActionMenu(fileId))
+  },
+  onAlertAutoClose: () => {
+    dispatch(alertClosed())
   }
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Folder))
+)(translate()(withRouter(Folder)))
