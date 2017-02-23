@@ -3,11 +3,22 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu } from '../actions'
-import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
+import { getVisibleFiles, mustShowSelectionBar, isBrowsingTrash } from '../reducers'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
+import Empty from '../components/Empty'
+import Oops from '../components/Oops'
 import FileList from '../components/FileList'
 
+import FilesSelectionBar from '../containers/FilesSelectionBar'
+import TrashSelectionBar from '../containers/TrashSelectionBar'
+import FileActionMenu from '../containers/FileActionMenu'
+import DeleteConfirmation from '../containers/DeleteConfirmation'
+
 const isDir = attrs => attrs.type === 'directory'
+
+const FILES_CONTEXT = 'files'
+const TRASH_CONTEXT = 'trash'
 
 class Folder extends Component {
   componentWillMount () {
@@ -24,9 +35,25 @@ class Folder extends Component {
 
   render (props, state) {
     if (props.isFetching === true) {
-      return <p>Loading</p>
+      return (
+        <div role='contentinfo'>
+          <p>Loading</p>
+        </div>
+      )
     }
-    return <FileList {...props} {...state} />
+    const isTrashContext = props.context === TRASH_CONTEXT
+    const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
+    return (
+      <div role='contentinfo'>
+        {!isTrashContext && showSelection && <FilesSelectionBar />}
+        {isTrashContext && showSelection && <TrashSelectionBar />}
+        {showDeleteConfirmation && <DeleteConfirmation />}
+        <FileList {...props} {...state} />
+        {error && <Oops />}
+        {files.length === 0 && <Empty canUpload={!isTrashContext} />}
+        {showActionMenu && <FileActionMenu />}
+      </div>
+    )
   }
 }
 
@@ -42,7 +69,15 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMount: () => {
-    dispatch(openFolder(ownProps.params.file, true))
+    let folderId
+    if (ownProps.params.file !== undefined) {
+      folderId = ownProps.params.file
+    } else {
+      folderId = ownProps.context === TRASH_CONTEXT
+        ? TRASH_DIR_ID
+        : ROOT_DIR_ID
+    }
+    dispatch(openFolder(folderId, true))
   },
   onRouteChange: (folderId) => {
     dispatch(openFolder(folderId, true))
