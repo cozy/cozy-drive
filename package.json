@@ -125,7 +125,8 @@
     },
     "globals": {
       "__ALLOW_HTTP__": false,
-      "__TARGET__": "browser"
+      "__TARGET__": "browser",
+      "cozy": {}
     }
   },
   "standard": {

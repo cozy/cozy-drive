@@ -1,12 +1,15 @@
+/* eslint-env jest */
+/* global cozy */
+
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { ROOT_DIR_ID } from '../src/constants/config'
 import { OPEN_FOLDER, OPEN_FOLDER_SUCCESS, openFolder } from '../src/actions'
 
-import cozy from 'cozy-client-js'
+import client from 'cozy-client-js'
 
-jest.mock('cozy-client-js', () => {
-  return {
+beforeAll(() => {
+  cozy.client = Object.assign({}, client, {
     files: {
       statById: jest.fn(() => ({
         _id: 'io.cozy.files.root-dir',
@@ -37,7 +40,7 @@ jest.mock('cozy-client-js', () => {
         }
       }))
     }
-  }
+  })
 })
 
 const middlewares = [ thunk ]
@@ -82,8 +85,8 @@ describe('fetchFiles', () => {
     const store = mockStore({ })
     return store.dispatch(openFolder())
       .then(() => {
-        expect(cozy.files.statById.mock.calls.length).toBe(1)
-        expect(cozy.files.statById.mock.calls[0][0]).toBe(ROOT_DIR_ID)
+        expect(cozy.client.files.statById.mock.calls.length).toBe(1)
+        expect(cozy.client.files.statById.mock.calls[0][0]).toBe(ROOT_DIR_ID)
         expect(store.getActions()).toEqual(expectedActions)
       })
   })

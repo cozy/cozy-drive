@@ -1,6 +1,5 @@
-/* global __ALLOW_HTTP__ */
+/* global cozy, __ALLOW_HTTP__ */
 
-import cozy from 'cozy-client-js'
 import Raven from 'raven-js'
 import { init } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
@@ -70,8 +69,8 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
   await init(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
   try {
-    await cozy.authorize().then(({ client }) => dispatch(setClient(client)))
-    await cozy.offline.replicateFromCozy('io.cozy.files')
+    await cozy.client.authorize().then(({ client }) => dispatch(setClient(client)))
+    await cozy.client.offline.replicateFromCozy('io.cozy.files')
   } catch (err) {
     console.warn(err)
     dispatch(wrongAddressError())

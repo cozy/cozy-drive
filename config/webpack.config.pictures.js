@@ -12,7 +12,7 @@ module.exports = {
       },
       {
         test: /\.(png|gif|jpe?g|svg)$/i,
-        exclude: /(vendor|sprites|icons)/,
+        exclude: /(sprites|icons)/,
         loader: `file?path=img&name=[name]${production ? '.[hash]' : ''}.[ext]`
       }
     ]

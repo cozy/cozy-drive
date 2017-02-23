@@ -1,4 +1,4 @@
-/* global __SENTRY_TOKEN__, cozy */
+/* global __SENTRY_TOKEN__ */
 
 import 'babel-polyfill'
 
@@ -35,13 +35,6 @@ const loggerMiddleware = createLogger()
 document.addEventListener('DOMContentLoaded', () => {
   loadState().then(persistedState => {
     const root = document.querySelector('[role=application]')
-    const data = root.dataset
-
-    cozy.bar.init({
-      appName: data.cozyAppName,
-      iconPath: data.cozyIconPath,
-      lang: data.cozyLocale
-    })
 
     const store = createStore(
       filesApp,

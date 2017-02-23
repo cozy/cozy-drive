@@ -1,4 +1,4 @@
-import cozy from 'cozy-client-js'
+/* global cozy */
 
 import { ROOT_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
@@ -66,9 +66,9 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
     dispatch({ type: OPEN_FOLDER, folderId })
     let folder, parent
     try {
-      folder = await cozy.files.statById(folderId)
+      folder = await cozy.client.files.statById(folderId)
       const parentId = folder.attributes.dir_id
-      parent = !!parentId && await cozy.files.statById(parentId)
+      parent = !!parentId && await cozy.client.files.statById(parentId)
     } catch (err) {
       if (!isInitialFetch && router) {
         router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
@@ -94,7 +94,7 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
 export const uploadFile = (file) => {
   return async (dispatch, getState) => {
     dispatch({ type: UPLOAD_FILE })
-    const created = await cozy.files.create(
+    const created = await cozy.client.files.create(
       file,
       { dirID: getState().folder.id }
     )
@@ -159,7 +159,7 @@ export const createFolder = (name, tempId) => {
 
     let folder
     try {
-      folder = await cozy.files.createDirectory({
+      folder = await cozy.client.files.createDirectory({
         name: name,
         dirID: getState().folder.id
       })
@@ -207,7 +207,7 @@ export const trashFile = id => {
     dispatch({ type: TRASH_FILE, id: id })
     let trashed
     try {
-      trashed = await cozy.files.trashById(id)
+      trashed = await cozy.client.files.trashById(id)
     } catch (err) {
       return dispatch({
         type: TRASH_FILE_FAILURE,
@@ -232,7 +232,7 @@ export const restoreFile = id => {
     dispatch({ type: RESTORE_FILE, id: id })
     let restored
     try {
-      restored = await cozy.files.restoreById(id)
+      restored = await cozy.client.files.restoreById(id)
     } catch (err) {
       return dispatch({
         type: RESTORE_FILE_FAILURE,
@@ -281,8 +281,8 @@ export const downloadSelection = () => {
       return dispatch(downloadFile(selected[0]))
     }
     const paths = getFilePaths(getState(), selected)
-    const href = await cozy.files.getArchiveLink(paths)
-    const fullpath = await cozy.fullpath(href)
+    const href = await cozy.client.files.getArchiveLink(paths)
+    const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')
   }
 }
@@ -293,7 +293,7 @@ const isOffline = (error) => error.message === 'Network request failed'
 export const downloadFile = id => {
   return async (dispatch, getState) => {
     dispatch({ type: DOWNLOAD_FILE, id })
-    const response = await cozy.files.downloadById(id).catch((error) => {
+    const response = await cozy.client.files.downloadById(id).catch((error) => {
       console.error('downloadById', error)
       if (isMissingFile(error)) {
         dispatch(downloadFileMissing())
@@ -330,7 +330,7 @@ export const openFileWith = (id, filename) => {
   return async (dispatch, getState) => {
     if (window.cordova && window.cordova.plugins.fileOpener2) {
       dispatch({ type: OPEN_FILE_WITH, id })
-      const response = await cozy.files.downloadById(id).catch((error) => {
+      const response = await cozy.client.files.downloadById(id).catch((error) => {
         console.error('downloadById', error)
         if (isMissingFile(error)) {
           dispatch(downloadFileMissing())
