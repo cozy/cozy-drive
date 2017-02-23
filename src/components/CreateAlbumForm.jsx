@@ -31,7 +31,7 @@ class CreateAlbumForm extends Component {
     return (
       <form onSubmit={this.onSubmitCurried(onSubmitNewAlbum)}>
         <label className={styles['coz-create-album-label']}>
-          {t('Albums.add_photos.create_label')}
+          {t('Albums.create.inline_form.create_label')}
         </label>
         <div className={styles['coz-inline-form']}>
           <input
@@ -39,12 +39,13 @@ class CreateAlbumForm extends Component {
             type='text'
             name='album-name'
             onInput={this.onNameChange.bind(this)}
+            placeholder={t('Albums.create.inline_form.placeholder')}
             />
           <button
             className={styles['coz-btn--regular']}
             disabled={this.state.disabled}
             >
-            {t('Albums.add_photos.create_button')}
+            {t('Albums.create.inline_form.create_button')}
           </button>
         </div>
       </form>

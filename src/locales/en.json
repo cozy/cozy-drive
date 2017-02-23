@@ -38,11 +38,14 @@
   },  
   "Albums": {
     "add_photos": {
-      "title": "Add to album",
-      "create_label": "Create a new album",
-      "create_button": "Create"
+      "title": "Add to album"
     },
     "create": {
+      "inline_form": {
+        "placeholder": "New album name",
+        "create_label": "Create a new album",
+        "create_button": "Create"
+      },
       "error": {
         "fetch": "An error occurs during duplicate check. Please retry.",
         "already_exists": "An album with that name already exists. Please provide another one.",
