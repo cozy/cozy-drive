@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(openFolder(folderId, true))
   },
   onFolderOpen: (folderId) => {
-    dispatch(openFolder(folderId, false, ownProps.router))
+    return dispatch(openFolder(folderId, false, ownProps.router))
   },
   onFileToggle: (id, selected) => {
     dispatch(toggleFileSelection(id, selected))

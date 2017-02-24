@@ -3,6 +3,7 @@ import styles from '../styles/breadcrumb'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
 import React from 'react'
+import withState from 'cozy-ui/react/helpers/withState'
 import { translate } from '../lib/I18n'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
@@ -11,7 +12,7 @@ import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 import { isBrowsingTrash } from '../reducers'
 
-const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder }) => {
+const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToFolder }) => {
   const isRoot = folder.id === ROOT_DIR_ID
   const isTrash = folder.id === TRASH_DIR_ID
 
@@ -36,7 +37,10 @@ const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder })
       { !isRoot && !isTrash && // show the interactive root folder
         <span
           className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-          onClick={() => goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID)}
+          onClick={() => {
+            toggle()
+            goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID).then(() => toggle())
+          }}
         >
           <a>{ t(topLevelTitle) }</a>
           <span className={styles['separator']}>/</span>
@@ -52,7 +56,10 @@ const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder })
       { showParentFolder && // Displays the parent folder
         <span
           className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-          onClick={() => goToFolder(folder.parent.id)}
+          onClick={() => {
+            toggle()
+            goToFolder(folder.parent.id).then(() => toggle())
+          }}
         >
           <a>{folder.parent.name}</a>
           <span className={styles['separator']}>/</span>
@@ -62,7 +69,7 @@ const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder })
       { !isRoot && !isTrash && // Displays the current folder
         <span>{folder.name}</span>}
 
-      { (opening === folder.dir_id || opening === folder.id) && <Spinner /> }
+      { opening && <Spinner /> }
 
     </h2>
   )
@@ -70,17 +77,22 @@ const Breadcrumb = ({ t, router, folder, opening, isBrowsingTrash, goToFolder })
 
 const mapStateToProps = (state) => ({
   folder: state.folder,
-  isBrowsingTrash: isBrowsingTrash(state),
-  opening: state.ui.opening
+  isBrowsingTrash: isBrowsingTrash(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   goToFolder: (parentId) => {
-    dispatch(openFolder(parentId, false, ownProps.router))
+    return dispatch(openFolder(parentId, false, ownProps.router))
   }
 })
 
 export default translate()(withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Breadcrumb)))
+)(withState({
+  opening: false
+}, (setState) => ({
+  toggle: () => {
+    setState(state => ({ opening: !state.opening }))
+  }
+}))(Breadcrumb))))

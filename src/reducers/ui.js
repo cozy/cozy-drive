@@ -73,18 +73,6 @@ const isWorking = (state = false, action) => {
   }
 }
 
-const opening = (state = false, action) => {
-  switch (action.type) {
-    case OPEN_FOLDER:
-      return action.folderId
-    case OPEN_FOLDER_SUCCESS:
-    case OPEN_FOLDER_FAILURE:
-      return false
-    default:
-      return state
-  }
-}
-
 const creating = (state = false, action) => {
   switch (action.type) {
     case CREATE_FOLDER:
@@ -255,7 +243,6 @@ export default combineReducers({
   isFetching,
   currentFolderId,
   isWorking,
-  opening,
   creating,
   failedCreation,
   updating,
