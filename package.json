@@ -59,8 +59,6 @@
     "babel-runtime": "^6.0.0",
     "btoa": "^1.1.2",
     "copy-webpack-plugin": "^4.0.1",
-    "cozy-bar": "^3.0.0-beta1",
-    "cozy-client-js": "^0.0.10",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
     "csswring": "^5.1.1",
