@@ -1,0 +1,3 @@
+package_name "io.cozy.files.mobile"
+json_key "./keys/android/key.json"
+apk "build/android/cozy-files-v3.apk"
