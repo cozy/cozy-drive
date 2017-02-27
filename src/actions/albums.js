@@ -28,39 +28,21 @@ export const addToAlbum = (photos = [], album = null) => {
       })
     }
 
-    album.photos = album.photos || []
-
-    const photosWithNoDuplicates = photos.filter((photo) => {
-      return album.photos.indexOf(photo) === -1
-    })
-
-    if (!photosWithNoDuplicates.length) {
-      return dispatch({
-        type: ADD_TO_ALBUM_FAILURE,
-        error: 'Albums.add_to.error.already_added'
-      })
-    }
-
-    album.photos = album.photos.concat(photosWithNoDuplicates)
-
-    return await cozy.update(ALBUM_DOCTYPE, album, {
-      photos: album.photos
-    }).then(async (album) => {
-      await cozy.addReferencedFiles(
-        album,
-        photosWithNoDuplicates
-      ).then(() => {
-        return dispatch({
+    return await cozy.addReferencedFiles(album, photos)
+      .catch((fetchError) => {
+        let error = fetchError.response.statusText
+        dispatch({
+          type: ADD_TO_ALBUM_FAILURE,
+          error: error
+        })
+        throw error
+      }).then(() => {
+        dispatch({
           type: ADD_TO_ALBUM_SUCCESS,
           album: album
         })
+        return album
       })
-    }).catch((fetchError) => {
-      return dispatch({
-        type: ADD_TO_ALBUM_FAILURE,
-        error: `Albums.add_photos.error.response.${fetchError.response.statusText}`
-      })
-    })
   }
 }
 

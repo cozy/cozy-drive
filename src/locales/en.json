@@ -40,7 +40,6 @@
     "add_photos": {
       "title": "Add to album",
       "error": {
-        "already_added": "Photos has already been added to this album.",
         "reference": "Some photos has not been added to the album. Please check and try again.",
         "response": {
           "Forbidden": "Application does not have permission to update albums."
