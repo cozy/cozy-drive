@@ -6,7 +6,7 @@
 ###################### Automatically generated ######################
 # Feel free to remove the following line if you use fastlane (which you should)
 
-app_identifier "io.cozy.mobile.sync" # The bundle identifier of your app
+app_identifier "io.cozy.files.mobile" # The bundle identifier of your app
 username "simon@cozycloud.cc" # your Apple ID user
 
 metadata_path "./fastlane/metadata/ios"
