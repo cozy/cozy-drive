@@ -1,0 +1,133 @@
+{
+  "nav": {
+    "item_files": "Fichiers",
+    "item_recent": "Récents",
+    "item_shared": "Mes fichiers partagés",
+    "item_activity": "Activité",
+    "item_trash": "Corbeille",
+    "item_settings": "Comptes"
+  },
+  "breadcrumb": {
+    "title_files": "Fichiers",
+    "title_recent": "Récents",
+    "title_shared": "Mes fichiers partagés",
+    "title_activity": "Activité",
+    "title_trash": "Corbeille"
+  },
+  "toolbar": {
+    "item_upload": "Téléverser",
+    "item_more": "Plus",
+    "menu_upload": "Téléverser les fichiers",
+    "menu_new_folder": "Nouveau dossier",
+    "menu_select": "Sélectionner les éléments"
+  },
+  "table": {
+    "head_name": "Nom",
+    "head_update": "Dernière mise à jour",
+    "head_size": "Taille",
+    "head_status": "État",
+    "row_read_only": "Partagé (lecture seule)",
+    "row_read_write": "Partagé (lecture & écriture)",
+    "row_size_symbols": {
+      "B": "o",
+      "KB": "Ko",
+      "MB": "Mo",
+      "GB": "Go",
+      "TB": "To",
+      "PB": "Po",
+      "EB": "Eo",
+      "ZB": "Zo",
+      "YB": "Yo"
+    }
+  },
+  "selectionbar": {
+    "selected_count": "%{smart_count} élement sélectionné |||| %{smart_count}  éléments sélectionnés",
+    "share": "Partager",
+    "download": "Télécharger",
+    "delete": "Supprimer",
+    "moveto": "Déplacer",
+    "rename": "Renommer",
+    "close": "Fermer"
+  },
+  "deleteconfirmation": {
+    "title": "Supprimer cet élément ? |||| Supprimer ces éléments ?",
+    "trash": "Il/elle sera déplacé(e) dans la corbeille. |||| Ils/elles seront déplacé(e)s dans la corbeille.",
+    "restore": "Vous pouvez toujours le/la restaurer quand vous voulez.",
+    "shared": "Les gens auxquels vous l'aviez partagé-e ne pourront plus y accéder.",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
+  },
+  "empty": {
+    "title" : "Vous n'avez aucun fichier dans ce dossier.",
+    "text" : "Cliquez sur le bouton \"Transférer des fichiers\" pour ajouter des fichiers à ce dossier."
+  },
+  "error": {
+    "open_folder": "Une erreur est survenue pendant l'ouverture du dossier.",
+    "button": {
+        "reload": "Rafraîchir"
+    },
+    "download_file": {
+      "offline": "Vous devez être connecté pour pouvoir ouvrir ce fichier",
+      "missing": "Le fichier n'existe pas"
+    }
+  },
+  "alert": {
+    "trash_file_error": "Une erreur est survenue lors du déplacement de la sélection dans la corbeille.",
+    "trash_file_success": "La sélection a été déplacée dans la Corbeille.",
+    "folder_name": "Le dossier %{folderName} existe déjà, merci de choisir un nouveau nom.",
+    "folder_generic": "Une erreur est survenue, merci de réessayer.",
+    "folder_abort": "Vous devez nommer votre dossier si vous voulez le sauvegarder. Vos informations n'ont pas été enregistrées."
+  },
+  "mobile": {
+    "onboarding": {
+      "welcome": {
+        "title": "Votre cloud personnel",
+        "button": "Connectez-vous"
+      },
+      "server_selection": {
+        "cozy_address": "L'adresse de votre Cozy",
+        "button": "Suivant",
+        "description": "Renseignez votre adresse permettant de vous connecter à votre Cozy, comme votreprenom.cozycloud.cc",
+        "cozy_address_placeholder": "georgesabitbol.cozycloud.cc",
+        "wrong_address": "L'adresse ne semble pas correspondre à un Cozy."
+      }
+    },
+    "settings": {
+      "title": "Comptes",
+      "about": {
+        "title": "À propos",
+        "app_version": "Version",
+        "account": "Compte"
+      },
+      "unlink": {
+        "title": "Déconnecter votre application de votre Cozy",
+        "description": "Déconnecter votre compte Cozy. Vos données seront supprimées",
+        "button": "Se déconnecter",
+        "confirmation": {
+          "title": "Déconnexion ?",
+          "description": "En vous déconnectant de votre Cozy, vous allez écraser les données locales enregistrées par votre application mobile.",
+          "cancel": "Annuler",
+          "unlink": "Se déconnecter"
+        }
+      },
+      "media_backup": {
+        "title": "Sauvegarder des médias",
+        "images": {
+          "title": "Sauvegarde des images",
+          "label": "Sauvegardez vos photos automatiquement dans votre Cozy pour ne jamais les perdre et les partager efficacement."
+        },
+        "launch": "Lancer la sauvegarde"
+      }
+    },
+    "action_menu": {
+      "open_with": "Ouvrir avec",
+      "download": "Télécharger"
+    },
+    "error": {
+      "open_with": {
+        "offline": "Vous devez être connecté pour pouvoir ouvrir ce fichier",
+        "noapp": "Aucune application ne vous permet de lire ce fichier"
+      }
+    }
+  }
+}
