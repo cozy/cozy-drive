@@ -7,10 +7,10 @@ import { translate } from '../lib/I18n'
 import { hideSelectionBar, restoreFile, toggleFileSelection } from '../actions'
 
 const TrashSelectionBar = ({ t, selected, onHide, onRestore }) => (
-  <div className={styles['fil-selectionbar']} role='toolbar'>
-    <button className={styles['fil-action-restore']} onClick={() => onRestore(selected)}>{t('selectionbar.restore')}</button>
-    <button className={styles['fil-action-delete']}>{t('selectionbar.perma_delete')}</button>
-    <button className={styles['fil-action-close']} onClick={onHide}>{t('selectionbar.close')}</button>
+  <div className={styles['coz-selectionbar']} role='toolbar'>
+    <button className={styles['coz-action-restore']} onClick={() => onRestore(selected)}>{t('selectionbar.restore')}</button>
+    <button className={styles['coz-action-delete']}>{t('selectionbar.perma_delete')}</button>
+    <button className={styles['coz-action-close']} onClick={onHide}>{t('selectionbar.close')}</button>
   </div>
 )
 
