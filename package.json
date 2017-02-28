@@ -15,7 +15,7 @@
     "lint": "standard 'src/**/*.js' 'src/**/*.jsx'",
     "test": "node --harmony_proxies node_modules/.bin/jest --coverage",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
-    "watch:server": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8084 --display-modules --display-chunks --inline --hot"
+    "watch:standalone": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8084 --display-modules --display-chunks --inline --hot"
   },
   "repository": {
     "type": "git",
@@ -42,18 +42,23 @@
     "babel-preset-react": "^6.16.0",
     "babel-runtime": "^6.0.0",
     "copy-webpack-plugin": "^4.0.1",
+    "cozy-bar": "beta",
+    "cozy-client-js": "^0.1.0",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
+    "csswring": "^5.1.1",
     "enzyme": "^2.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "git-directory-deploy": "^1.5.0",
     "html-webpack-plugin": "^2.24.0",
     "identity-obj-proxy": "^3.0.0",
+    "imports-loader": "^0.7.0",
     "jest": "^18.0.0",
     "json-loader": "^0.5.0",
     "npm-run-all": "^3.1.0",
     "postcss": "^5.2.0",
+    "postcss-assets-webpack-plugin": "^1.0.0",
     "postcss-discard-duplicates": "^2.0.2",
     "postcss-loader": "^1.1.0",
     "react": "^15.4.0",
@@ -73,12 +78,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-bar": "3.0.0-beta3",
-    "cozy-client-js": "0.0.4",
     "cozy-ui": "3.0.0-beta4",
     "date-fns": "^1.26.0",
     "hammerjs": "^2.0.8",
     "node-polyglot": "^2.2.0",
+    "pouchdb": "^6.1.2",
+    "pouchdb-find": "^0.10.5",
     "preact": "^7.1.0",
     "preact-compat": "^3.13.1",
     "react-redux": "^5.0.2",
@@ -96,6 +101,9 @@
     "moduleNameMapper": {
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
+    },
+    "globals": {
+      "cozy": {}
     }
   },
   "standard": {

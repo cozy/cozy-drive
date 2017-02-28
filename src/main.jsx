@@ -1,3 +1,5 @@
+/* global cozy */
+
 import 'babel-polyfill'
 
 import './styles/main'
@@ -9,8 +11,6 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
-import cozy from 'cozy-client-js'
-import 'cozy-bar'
 import { I18n } from './lib/I18n'
 
 import photosApp from './reducers'
@@ -33,9 +33,9 @@ const store = createStore(
 document.addEventListener('DOMContentLoaded', () => {
   const applicationElement = document.querySelector('[role=application]')
 
-  cozy.init({
-    cozyURL: `//${applicationElement.dataset.cozyStack}`,
-    token: applicationElement.dataset.token
+  cozy.client.init({
+    cozyURL: `//${applicationElement.dataset.cozyDomain}`,
+    token: applicationElement.dataset.cozyToken
   })
 
   cozy.bar.init({

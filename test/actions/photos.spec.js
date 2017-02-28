@@ -1,4 +1,5 @@
 /* eslint-env jest */
+/* global cozy */
 
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -17,7 +18,7 @@ import {
   extractFileAttributes
 } from '../../src/actions/photos'
 
-import cozy from 'cozy-client-js'
+import client from 'cozy-client-js'
 
 const mockFetchedPhotos = [
   {
@@ -84,26 +85,28 @@ const mockErrorsResponses = {
   }
 }
 
-jest.mock('cozy-client-js', () => {
-  return {
-    // default query return success fetched photos
-    query: jest.fn(() => {
-      return new Promise(function (resolve, reject) {
-        resolve(mockFetchedPhotos)
+beforeAll(() => {
+  cozy.client = Object.assign({}, client, {
+    data: {
+      // default query return success fetched photos
+      query: jest.fn(() => {
+        return new Promise(function (resolve, reject) {
+          resolve(mockFetchedPhotos)
+        })
       })
-    })
-    // first call return success uploaded photo
-    .mockImplementationOnce(() => {
-      return new Promise(function (resolve, reject) {
-        resolve(mockFetchedPhotos)
+      // first call return success uploaded photo
+      .mockImplementationOnce(() => {
+        return new Promise(function (resolve, reject) {
+          resolve(mockFetchedPhotos)
+        })
       })
-    })
-    // second call return error when photos fetching failure
-    .mockImplementationOnce(() => {
-      return new Promise(function (resolve, reject) {
-        reject(mockErrorsResponses.serverError)
+      // second call return error when photos fetching failure
+      .mockImplementationOnce(() => {
+        return new Promise(function (resolve, reject) {
+          reject(mockErrorsResponses.serverError)
+        })
       })
-    }),
+    },
     files: {
       // default mock return success uploaded photo
       create: jest.fn(() => {
@@ -135,7 +138,7 @@ jest.mock('cozy-client-js', () => {
         throw new Error('ERROR')
       })
     }
-  }
+  })
 })
 
 const middlewares = [ thunk ]
@@ -150,10 +153,10 @@ const mangoIndexByDateObject = {
 
 describe('fetchPhotos', () => {
   beforeEach(() => {
-    cozy.query.mockClear()
+    cozy.client.data.query.mockClear()
   })
 
-  it('should call cozy.query to fetch 1 photo with success', () => {
+  it('should call cozy.client.data.query to fetch 1 photo with success', () => {
     const expectedActions = [
       {
         type: FETCH_PHOTOS,
@@ -167,13 +170,13 @@ describe('fetchPhotos', () => {
     const store = mockStore({})
     return store.dispatch(fetchPhotos(mangoIndexByDateObject))
       .then(() => {
-        expect(cozy.query.mock.calls.length).toBe(1)
-        expect(cozy.query.mock.calls[0][0]).toBe(mangoIndexByDateObject)
+        expect(cozy.client.data.query.mock.calls.length).toBe(1)
+        expect(cozy.client.data.query.mock.calls[0][0]).toBe(mangoIndexByDateObject)
         expect(store.getActions()).toEqual(expectedActions)
       })
   })
 
-  it('should call cozy.query and dispatch FETCH_PHOTOS_FAILURE if error', () => {
+  it('should call cozy.client.data.query and dispatch FETCH_PHOTOS_FAILURE if error', () => {
     const expectedActions = [
       {
         type: FETCH_PHOTOS,
@@ -187,8 +190,8 @@ describe('fetchPhotos', () => {
     const store = mockStore({})
     return store.dispatch(fetchPhotos(mangoIndexByDateObject))
       .then(() => {
-        expect(cozy.query.mock.calls.length).toBe(1)
-        expect(cozy.query.mock.calls[0][0]).toBe(mangoIndexByDateObject)
+        expect(cozy.client.data.query.mock.calls.length).toBe(1)
+        expect(cozy.client.data.query.mock.calls[0][0]).toBe(mangoIndexByDateObject)
         expect(store.getActions()).toEqual(expectedActions)
       })
   })
@@ -196,10 +199,10 @@ describe('fetchPhotos', () => {
 
 describe('uploadPhotos', () => {
   beforeEach(() => {
-    cozy.files.create.mockClear()
+    cozy.client.files.create.mockClear()
   })
 
-  it('should call cozy.files.create and 1 photo uploaded with success', () => {
+  it('should call cozy.client.files.create and 1 photo uploaded with success', () => {
     const mockImagesArrayToUpload = [
       'MonImage.jpeg' // use string as image file here for testing
     ]
@@ -216,14 +219,14 @@ describe('uploadPhotos', () => {
     const store = mockStore({})
     return store.dispatch(uploadPhotos(mockImagesArrayToUpload))
       .then(() => {
-        expect(cozy.files.create.mock.calls.length).toBe(1)
-        expect(cozy.files.create.mock.calls[0][0]).toBe(
+        expect(cozy.client.files.create.mock.calls.length).toBe(1)
+        expect(cozy.client.files.create.mock.calls[0][0]).toBe(
           mockImagesArrayToUpload[0])
         expect(store.getActions()).toEqual(expectedActions)
       })
   })
 
-  it('should call cozy.files.create and dispatch UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS if conflicts', () => {
+  it('should call cozy.client.files.create and dispatch UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS if conflicts', () => {
     const mockImagesArrayToUpload = [
       'MonImage00.jpeg' // use string as image file here for testing
     ]
@@ -240,14 +243,14 @@ describe('uploadPhotos', () => {
     const store = mockStore({})
     return store.dispatch(uploadPhotos(mockImagesArrayToUpload))
       .then(() => {
-        expect(cozy.files.create.mock.calls.length).toBe(1)
-        expect(cozy.files.create.mock.calls[0][0]).toBe(
+        expect(cozy.client.files.create.mock.calls.length).toBe(1)
+        expect(cozy.client.files.create.mock.calls[0][0]).toBe(
           mockImagesArrayToUpload[0])
         expect(store.getActions()).toEqual(expectedActions)
       })
   })
 
-  it('should call cozy.files.create and dispatch UPLOAD_PHOTOS_FAILURE if error', () => {
+  it('should call cozy.client.files.create and dispatch UPLOAD_PHOTOS_FAILURE if error', () => {
     const mockImagesArrayToUpload = [
       'MonImage.jpeg' // use string as image file here for testing
     ]
@@ -264,14 +267,14 @@ describe('uploadPhotos', () => {
     const store = mockStore({})
     return store.dispatch(uploadPhotos(mockImagesArrayToUpload))
       .then(() => {
-        expect(cozy.files.create.mock.calls.length).toBe(1)
-        expect(cozy.files.create.mock.calls[0][0]).toBe(
+        expect(cozy.client.files.create.mock.calls.length).toBe(1)
+        expect(cozy.client.files.create.mock.calls[0][0]).toBe(
           mockImagesArrayToUpload[0])
         expect(store.getActions()).toEqual(expectedActions)
       })
   })
 
-  it('should call cozy.files.create and dispatch UPLOAD_PHOTOS_FAILURE if unexpected error', () => {
+  it('should call cozy.client.files.create and dispatch UPLOAD_PHOTOS_FAILURE if unexpected error', () => {
     const mockImagesArrayToUpload = [
       'MonImage.jpeg' // use string as image file here for testing
     ]
@@ -288,8 +291,8 @@ describe('uploadPhotos', () => {
     const store = mockStore({})
     return store.dispatch(uploadPhotos(mockImagesArrayToUpload))
       .then(() => {
-        expect(cozy.files.create.mock.calls.length).toBe(1)
-        expect(cozy.files.create.mock.calls[0][0]).toBe(
+        expect(cozy.client.files.create.mock.calls.length).toBe(1)
+        expect(cozy.client.files.create.mock.calls[0][0]).toBe(
           mockImagesArrayToUpload[0])
         expect(store.getActions()).toEqual(expectedActions)
       })

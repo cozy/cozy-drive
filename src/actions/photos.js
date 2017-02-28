@@ -1,8 +1,8 @@
+/* global cozy */
+
 /**
   Photos related features
 **/
-
-import cozy from 'cozy-client-js'
 
 import {
   COZY_PHOTOS_DIR_ID
@@ -34,7 +34,7 @@ export const fetchPhotos = (mangoIndexByDate) => {
       fields: ['_id', 'created_at', 'name', 'size', 'updated_at'],
       descending: true
     }
-    await cozy.query(mangoIndexByDate, options)
+    await cozy.client.data.query(mangoIndexByDate, options)
     .then((photos) => {
       dispatch({
         type: RECEIVE_PHOTOS,
@@ -59,7 +59,7 @@ export const uploadPhotos = (photosArray, dirID = COZY_PHOTOS_DIR_ID) => {
     let nameConflicts = []
     let errors = []
     await Promise.all(photosArray.map(async photo => {
-      await cozy.files.create(
+      await cozy.client.files.create(
         photo,
         { dirID }
       )

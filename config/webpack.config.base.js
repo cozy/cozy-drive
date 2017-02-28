@@ -2,16 +2,16 @@
 
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin')
 
+const { production, extractor } = require('./webpack.vars')
 const pkg = require(path.resolve(__dirname, '../package.json'))
-
-const build = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/main'),
   output: {
     path: path.resolve(__dirname, '../build'),
-    filename: build ? 'app.[hash].js' : 'app.js'
+    filename: 'app.js'
   },
   resolve: {
     extensions: ['', '.js', '.json']
@@ -21,7 +21,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|cozy-(bar,client-js))/,
         loader: 'babel-loader'
       },
       {
@@ -30,15 +30,30 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: [
-          'style-loader',
+        loader: extractor.extract('style', [
           'css-loader?importLoaders=1',
           'postcss-loader'
-        ]
+        ])
       }
     ]
   },
+  postcss: () => {
+    return [
+      require('autoprefixer')(['last 2 versions'])
+    ]
+  },
   plugins: [
+    extractor,
+    new PostCSSAssetsPlugin({
+      test: /\.css$/,
+      plugins: [
+        require('css-mqpacker'),
+        require('postcss-discard-duplicates'),
+        require('postcss-discard-empty')
+      ].concat(
+        production ? require('csswring')({preservehacks: true, removeallcomments: true}) : []
+      )
+    }),
     new HtmlWebpackPlugin({
       template: 'src/index.ejs',
       title: pkg.name,

@@ -1,4 +1,5 @@
 /* eslint-env jest */
+/* global cozy */
 
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -11,7 +12,7 @@ import {
 } from '../../src/constants/config'
 import { indexFilesByDate } from '../../src/actions/mango'
 
-import cozy from 'cozy-client-js'
+import client from 'cozy-client-js'
 
 const mockMangoIndexByDate = {
   doctype: 'io.cozy.files',
@@ -20,21 +21,23 @@ const mockMangoIndexByDate = {
   fields: ['class', 'created_at']
 }
 
-jest.mock('cozy-client-js', () => {
-  return {
-    defineIndex: jest.fn(() => {
-      return new Promise(function (resolve, reject) {
-        resolve(mockMangoIndexByDate)
+beforeAll(() => {
+  cozy.client = Object.assign({}, client, {
+    data: {
+      defineIndex: jest.fn(() => {
+        return new Promise(function (resolve, reject) {
+          resolve(mockMangoIndexByDate)
+        })
       })
-    })
-  }
+    }
+  })
 })
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
 
 describe('indexFilesByDate', () => {
-  it('should call cozy.defineIndex to create an index on fields "class" and "created_at"', () => {
+  it('should call cozy.client.data.defineIndex to create an index on fields "class" and "created_at"', () => {
     const expectedActions = [
       {
         type: INDEX_FILES_BY_DATE
@@ -47,9 +50,9 @@ describe('indexFilesByDate', () => {
     const store = mockStore({ })
     return store.dispatch(indexFilesByDate())
       .then(() => {
-        expect(cozy.defineIndex.mock.calls.length).toBe(1)
-        expect(cozy.defineIndex.mock.calls[0][0]).toBe(FILE_DOCTYPE)
-        expect(cozy.defineIndex.mock.calls[0][1]).toEqual(
+        expect(cozy.client.data.defineIndex.mock.calls.length).toBe(1)
+        expect(cozy.client.data.defineIndex.mock.calls[0][0]).toBe(FILE_DOCTYPE)
+        expect(cozy.client.data.defineIndex.mock.calls[0][1]).toEqual(
           [ 'class', 'created_at' ])
         expect(store.getActions()).toEqual(expectedActions)
       })
