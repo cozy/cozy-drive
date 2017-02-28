@@ -10,23 +10,33 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 import { uploadPhotos, showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
+import classNames from 'classNames'
+
 export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
     <UploadButton
+      className='coz-desktop'
       onUpload={uploadPhotos}
       disabled={disabled}
     />
-    <MenuButton>
+    <MenuButton className='coz-mobile'>
       <button
         role='button'
-        className='coz-btn coz-btn--more'
+        className={classNames('coz-btn', 'coz-btn--more', styles['coz-btn--more'])}
         disabled={disabled}
       >
         <span className='coz-hidden'>{ t('Toolbar.more') }</span>
       </button>
       <Menu className={styles['coz-menu']}>
         <Item>
-          <a className={styles['pho-action-select']} onClick={selectItems}>
+          <UploadButton
+            onUpload={uploadPhotos}
+            disabled={disabled}
+          />
+        </Item>
+        <hr />
+        <Item>
+          <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
             {t('Toolbar.select_items')}
           </a>
         </Item>
