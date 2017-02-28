@@ -29,7 +29,7 @@ export const addToAlbum = (photos = [], album = null) => {
     }
 
     return await cozy.addReferencedFiles(album, photos)
-      .catch((fetchError) => {
+      .catch(fetchError => {
         let error = fetchError.response.statusText
         dispatch({
           type: ADD_TO_ALBUM_FAILURE,
@@ -55,14 +55,48 @@ export const cancelAddToAlbum = (photos = []) => {
   }
 }
 
+// Return an index on albums based on names
+export const createAlbumMangoIndex = () => {
+  return async dispatch => {
+    return cozy.defineIndex(ALBUM_DOCTYPE, ['name'])
+      .then(mangoIndex => {
+        dispatch({
+          type: INDEX_ALBUMS_BY_NAME_SUCCESS,
+          mangoIndex: mangoIndex
+        })
+        return mangoIndex
+      }).catch(fetchError => { throw new Error(fetchError.response.statusText) })
+  }
+}
+
+// Returns existing albums having given name
+export const checkExistingAlbumsByName = (name = null, mangoIndex = null) => {
+  return async (dispatch) => {
+    try {
+      mangoIndex = mangoIndex || await createAlbumMangoIndex()(dispatch)
+    } catch (error) {
+      throw error
+    }
+
+    return await cozy.query(mangoIndex, {
+      selector: { name: name },
+      fields: ['_id']
+    }).catch(fetchError => {
+      throw new Error(fetchError.response.statusText)
+    })
+  }
+}
+
 // Temporary parameter photos
 export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
   return async dispatch => {
     if (!name) {
-      return dispatch({
+      let error = 'Albums.create.error.name_missing'
+      dispatch({
         type: CREATE_ALBUM_FAILURE,
-        error: 'Albums.create.error.name_missing'
+        error: error
       })
+      return Promise.reject(error)
     }
 
     dispatch({
@@ -70,56 +104,32 @@ export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
       name: name
     })
 
-    let existingAlbums
-
-    try {
-      mangoIndex = mangoIndex ||
-        await cozy.defineIndex(ALBUM_DOCTYPE, ['name']).then((mangoIndex) => {
+    return await checkExistingAlbumsByName(name, mangoIndex)(dispatch)
+      .then(existingAlbums => {
+        if (existingAlbums.length) {
+          let error = 'Albums.create.error.already_exists'
           dispatch({
-            type: INDEX_ALBUMS_BY_NAME_SUCCESS,
-            mangoIndex: mangoIndex
+            type: CREATE_ALBUM_FAILURE,
+            error: error
           })
+          return Promise.reject(error)
+        }
 
-          return mangoIndex
+        return cozy.create(ALBUM_DOCTYPE, { name: name })
+          .catch(fetchError => { throw new Error(fetchError.response.statusText) })
+          .then(album => {
+            dispatch({
+              type: CREATE_ALBUM_SUCCESS,
+              album: album
+            })
+            return album
+          })
+      }).catch(error => {
+        dispatch({
+          type: CREATE_ALBUM_FAILURE,
+          error: error
         })
-
-      existingAlbums = await cozy.query(mangoIndex, {
-        selector: { name: name },
-        fields: ['_id']
+        return Promise.reject(error)
       })
-    } catch (error) {
-      return dispatch({
-        type: CREATE_ALBUM_FAILURE,
-        error: 'Albums.create.error.fetch'
-      })
-    }
-
-    if (existingAlbums.length) {
-      return dispatch({
-        type: CREATE_ALBUM_FAILURE,
-        error: 'Albums.create.error.already_exists'
-      })
-    }
-
-    return await cozy.create(ALBUM_DOCTYPE, {
-      name: name
-    }).catch((fetchError) => {
-      return dispatch({
-        type: CREATE_ALBUM_FAILURE,
-        error: `Albums.create.error.response.${fetchError.response.statusText}`
-      })
-    }).then((album) => {
-      addToAlbum(photos, album)(dispatch)
-
-      return dispatch({
-        type: CREATE_ALBUM_SUCCESS,
-        album: album
-      })
-    }).catch((error) => {
-      return dispatch({
-        type: CREATE_ALBUM_FAILURE,
-        error: error.message ? error.message : error
-      })
-    })
   }
 }
