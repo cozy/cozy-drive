@@ -1,5 +1,10 @@
 @require 'cozy-ui'
 
+p
+    text-align left
+    margin     .5em 0
+    font-size  em(18px)
+
 .wizard
     display flex
     flex-direction column
@@ -23,6 +28,7 @@
 
     .wizard-main
         margin auto
+        padding 0 .5em
 
     .title
         margin    .25em auto
@@ -33,11 +39,8 @@
         flex-direction column
         margin-bottom 1.5em
 
-        > [role='button']
-            margin-bottom 1.5em
-
         > .link
-            margin          0 .5em
+            margin          1.5em .5em 0em .5em
             text-align      left
             text-decoration none
             color           #297ef2
@@ -59,9 +62,21 @@
         transition all .3s ease
 
     .wizard-circles__circle--active
-        bacground #297ef2
+        background #297ef2
 
-.welcome .logo-wrapper
+    .input
+        width            100%
+        border           none
+        padding-left     0
+        font-size        em(22px)
+        background-color white
+        color            #297ef2
+
+        &::placeholder
+            color   #32363f
+            opacity .5
+
+.welcome .logo-wrapper, .select-server .logo-wrapper
     background #297ef2
 
 .cozy-logo-white
