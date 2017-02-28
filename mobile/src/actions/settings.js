@@ -1,8 +1,8 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import Raven from 'raven-js'
 import { init } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
+import { logException } from '../lib/crash-reporter'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES_DISABLE = 'BACKUP_IMAGES_DISABLE'
@@ -61,9 +61,8 @@ export const registerDevice = () => async (dispatch, getState) => {
     return onRegistered(client, url)
     .then(url => url)
     .catch(err => {
-      console.warn(err)
       dispatch(wrongAddressError())
-      Raven.captureException(err)
+      logException(err)
       throw err
     })
   }
@@ -72,9 +71,8 @@ export const registerDevice = () => async (dispatch, getState) => {
     await cozy.client.authorize().then(({ client }) => dispatch(setClient(client)))
     await cozy.client.offline.replicateFromCozy('io.cozy.files')
   } catch (err) {
-    console.warn(err)
     dispatch(wrongAddressError())
-    Raven.captureException(err)
+    logException(err)
     throw err
   }
 }

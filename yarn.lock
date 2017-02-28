@@ -5124,7 +5124,7 @@ range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raven-js@^3.10.0:
+raven-js@^3.1.1, raven-js@^3.10.0:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.11.0.tgz#3e309a335fe3314d16b15514ad95d32e05b9ca9a"
   dependencies:
@@ -5354,6 +5354,12 @@ redux-logger@^2.7.4:
 redux-mock-store@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.2.tgz#38007dc38f12ca8d965c7521afee5ccacc234d03"
+
+redux-raven-middleware@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/redux-raven-middleware/-/redux-raven-middleware-1.2.0.tgz#50d02dd653cf93d2df18c4652149f1009bbbe33d"
+  dependencies:
+    raven-js "^3.1.1"
 
 redux-thunk@^2.1.0:
   version "2.2.0"
