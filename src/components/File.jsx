@@ -31,7 +31,8 @@ class File extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      editing: isEditing(props.attributes)
+      editing: isEditing(props.attributes),
+      opening: false
     }
   }
 
@@ -66,14 +67,15 @@ class File extends Component {
   open (e, id, isDir = false) {
     e.stopPropagation()
     if (isDir) {
-      this.props.onOpen(id)
+      this.setState({ opening: true })
+      this.props.onOpen(id).then(() => this.setState({ opening: false }))
     } else {
       // TODO Handle files opening throught the app instead of doing it throught the browser
       window.open(`${STACK_URL}/files/download/${id}`, '_blank')
     }
   }
 
-  render ({ t, f, attributes, showSelection, onShowActionMenu }, { editing }) {
+  render ({ t, f, attributes, showSelection, onShowActionMenu }, { editing, opening }) {
     const isDirectory = isDir(attributes)
     const rowListeners = showSelection
     ? { onClick: e => this.toggle(e) }
@@ -89,7 +91,7 @@ class File extends Component {
             <label onClick={e => this.toggle(e)} />
           </span>
         </div>
-        {this.renderFilenameCell(attributes, editing, !showSelection)}
+        {this.renderFilenameCell(attributes, editing, opening, !showSelection)}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </div>
@@ -109,7 +111,7 @@ class File extends Component {
     )
   }
 
-  renderFilenameCell (attributes, editing, canOpen) {
+  renderFilenameCell (attributes, editing, opening, canOpen) {
     const isDirectory = isDir(attributes)
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(
@@ -129,7 +131,7 @@ class File extends Component {
       <div className={classes} onClick={canOpen ? e => this.open(e, attributes.id, isDirectory) : undefined}>
         {filename}
         {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
-        {(attributes.isOpening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
+        {(opening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
       </div>
     )
   }
