@@ -79,7 +79,7 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
     } else if (router) {
       router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
     }
-    dispatch({
+    return dispatch({
       type: OPEN_FOLDER_SUCCESS,
       folder: Object.assign(extractFileAttributes(folder), {
         parent: extractFileAttributes(parent)}),

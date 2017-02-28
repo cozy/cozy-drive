@@ -4,7 +4,6 @@ import {
   FETCH_FILES,
   RECEIVE_FILES,
   OPEN_FOLDER,
-  OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
   ADD_FOLDER,
   ABORT_ADD_FOLDER,
@@ -67,18 +66,6 @@ const isWorking = (state = false, action) => {
     case TRASH_FILE_FAILURE:
     case RESTORE_FILE_SUCCESS:
     case RESTORE_FILE_FAILURE:
-      return false
-    default:
-      return state
-  }
-}
-
-const opening = (state = false, action) => {
-  switch (action.type) {
-    case OPEN_FOLDER:
-      return action.folderId
-    case OPEN_FOLDER_SUCCESS:
-    case OPEN_FOLDER_FAILURE:
       return false
     default:
       return state
@@ -255,7 +242,6 @@ export default combineReducers({
   isFetching,
   currentFolderId,
   isWorking,
-  opening,
   creating,
   failedCreation,
   updating,
