@@ -85,8 +85,10 @@
   "mobile": {
     "onboarding": {
       "welcome": {
-        "title": "Your own private cloud",
-        "button": "Sign in"
+        "title1": "Welcome to Cozy",
+        "title2": "Your own personal cloud",
+        "button": "Sign in to your Cozy",
+        "no_account_link": "Don’t have an account? Request one here."
       },
       "server_selection": {
         "cozy_address": "Your Cozy's address",
