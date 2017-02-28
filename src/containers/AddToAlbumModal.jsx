@@ -11,8 +11,8 @@ import CreateAlbumForm from '../components/CreateAlbumForm'
 
 import { cancelAddToAlbum, createAlbum, addToAlbum } from '../actions/albums'
 
-const AddToAlbumModal = ({t, isCreating, mangoIndex, photos,
-  onDismiss, onSubmitNewAlbum, albumCreationError, error }) => {
+const AddToAlbumModal = ({t, mangoIndex, photos,
+  onDismiss, onSubmitNewAlbum }) => {
   return (
     <Modal
       title={t('Albums.add_photos.title')}
@@ -30,11 +30,13 @@ const AddToAlbumModal = ({t, isCreating, mangoIndex, photos,
 const mapStateToProps = (state, ownProps) => {
   return {
     photos: state.ui.selected,
-    isCreating: state.ui.isCreatingAlbum,
-    albumCreationError: state.ui.albumCreationError,
-    error: state.ui.albumCreationError || state.ui.addToAlbumError,
     mangoIndex: state.mango.albumsIndexByName
   }
+}
+
+const handleActionError = error => {
+  Alerter.error(error)
+  return Promise.reject(error)
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -46,11 +48,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmitNewAlbum: (name, mangoIndex, photos) => {
     return dispatch(createAlbum(name, mangoIndex, photos))
       .then(
-        album => dispatch(addToAlbum(photos, album)),
-        (error) => {
-          Alerter.error(error)
-          return Promise.reject(error)
-        }
+        album => dispatch(addToAlbum(photos, album)).catch(handleActionError),
+        handleActionError
       )
   }
 })

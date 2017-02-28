@@ -2,12 +2,8 @@ import { combineReducers } from 'redux'
 
 import {
   ADD_TO_ALBUM,
-  ADD_TO_ALBUM_FAILURE,
   ADD_TO_ALBUM_SUCCESS,
   CANCEL_ADD_TO_ALBUM,
-  CREATE_ALBUM,
-  CREATE_ALBUM_FAILURE,
-  CREATE_ALBUM_SUCCESS,
   FETCH_PHOTOS,
   RECEIVE_PHOTOS,
   FETCH_PHOTOS_FAILURE,
@@ -104,44 +100,11 @@ export const showAddToAlbumModal = (state = false, action) => {
   }
 }
 
-export const isCreatingAlbum = (state = false, action) => {
-  switch (action.type) {
-    case CREATE_ALBUM:
-      return !!action.name
-    case CREATE_ALBUM_SUCCESS:
-    case CREATE_ALBUM_FAILURE:
-      return false
-    default:
-      return state
-  }
-}
-
-export const albumCreationError = (state = null, action) => {
-  switch (action.type) {
-    case CREATE_ALBUM_FAILURE:
-      return action.error
-    default:
-      return null
-  }
-}
-
-export const addToAlbumError = (state = null, action) => {
-  switch (action.type) {
-    case ADD_TO_ALBUM_FAILURE:
-      return action.error
-    default:
-      return null
-  }
-}
-
 export default combineReducers({
   isFetching,
   isIndexing,
   isWorking,
   selected,
   showSelectionBar,
-  showAddToAlbumModal,
-  isCreatingAlbum,
-  albumCreationError,
-  addToAlbumError
+  showAddToAlbumModal
 })

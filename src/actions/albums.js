@@ -5,11 +5,8 @@
 
 import {
   ADD_TO_ALBUM,
-  ADD_TO_ALBUM_FAILURE,
   ADD_TO_ALBUM_SUCCESS,
   CANCEL_ADD_TO_ALBUM,
-  CREATE_ALBUM,
-  CREATE_ALBUM_FAILURE,
   CREATE_ALBUM_SUCCESS,
   INDEX_ALBUMS_BY_NAME_SUCCESS
 } from '../constants/actionTypes'
@@ -31,10 +28,6 @@ export const addToAlbum = (photos = [], album = null) => {
     return await cozy.addReferencedFiles(album, photos)
       .catch(fetchError => {
         let error = fetchError.response.statusText
-        dispatch({
-          type: ADD_TO_ALBUM_FAILURE,
-          error: error
-        })
         throw error
       }).then(() => {
         dispatch({
@@ -92,26 +85,13 @@ export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
   return async dispatch => {
     if (!name) {
       let error = 'Albums.create.error.name_missing'
-      dispatch({
-        type: CREATE_ALBUM_FAILURE,
-        error: error
-      })
       return Promise.reject(error)
     }
-
-    dispatch({
-      type: CREATE_ALBUM,
-      name: name
-    })
 
     return await checkExistingAlbumsByName(name, mangoIndex)(dispatch)
       .then(existingAlbums => {
         if (existingAlbums.length) {
           let error = 'Albums.create.error.already_exists'
-          dispatch({
-            type: CREATE_ALBUM_FAILURE,
-            error: error
-          })
           return Promise.reject(error)
         }
 
@@ -125,10 +105,6 @@ export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
             return album
           })
       }).catch(error => {
-        dispatch({
-          type: CREATE_ALBUM_FAILURE,
-          error: error
-        })
         return Promise.reject(error)
       })
   }
