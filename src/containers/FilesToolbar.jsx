@@ -16,6 +16,7 @@ const FilesToolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionB
       disabled={!!error || isSelectionBarVisible}
       onUpload={uploadFile}
       label={t('toolbar.item_upload')}
+      className='coz-btn coz-btn--regular coz-btn--upload'
     />
     <MenuButton>
       <button
@@ -27,9 +28,12 @@ const FilesToolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionB
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
         <Item>
-          <a className={styles['fil-action-upload']}>
-            {t('toolbar.menu_upload')}
-          </a>
+          <UploadButton
+            disabled={!!error || isSelectionBarVisible}
+            onUpload={uploadFile}
+            label={t('toolbar.menu_upload')}
+            className={styles['fil-action-upload']}
+          />
         </Item>
         <Item>
           <a
