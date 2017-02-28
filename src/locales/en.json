@@ -91,11 +91,10 @@
         "no_account_link": "Don’t have an account? Request one here."
       },
       "server_selection": {
-        "cozy_address": "Your Cozy's address",
+        "description": "This is the web address you use to access your Cozy.",
+        "cozy_address_placeholder": "Your Cozy internet address",
         "button": "Next",
-        "description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-        "cozy_address_placeholder": "johnwayne.cozycloud.cc",
-        "wrong_address": "The address doesn't seem to match a Cozy."
+        "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
       },
       "activation": {
         "backupPhotosVideos": {

@@ -9,20 +9,36 @@ import styles from '../../styles/onboarding'
 
 export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error, authorized}) =>
 (
-  <div className={classnames(styles['wizard'])}>
-    <div className={classnames(styles['wizard-main'])}>
-      <p>{t('mobile.onboarding.server_selection.cozy_address')}</p>
-      <input type='url' placeholder={t('mobile.onboarding.server_selection.cozy_address_placeholder')} onChange={updateServerUrl} value={serverUrl} />
-      <p>{t('mobile.onboarding.server_selection.description')}</p>
-      {error && <p style={{color: 'red'}}>{t(error)}</p>}
+  <div className={classnames(styles['wizard'], styles['select-server'])}>
+    <div className={styles['wizard-main']}>
+      <figure>
+        <div className={styles['logo-wrapper']}>
+          <div className={styles['cozy-logo-white']} />
+        </div>
+      </figure>
+      <input
+        type='url'
+        className={styles['input']}
+        placeholder={t('mobile.onboarding.server_selection.cozy_address_placeholder')}
+        onChange={updateServerUrl}
+        value={serverUrl}
+      />
+      {!error &&
+        <p>{t('mobile.onboarding.server_selection.description')}</p>
+      }
+      {error &&
+        <p style={{color: 'red'}}>{t(error)}</p>
+      }
     </div>
-    <button
-      role='button'
-      className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])}
-      onClick={() => selectServer(serverUrl, authorized)}
-    >
-      {t('mobile.onboarding.server_selection.button')}
-    </button>
+    <footer className={styles['wizard-footer']}>
+      <button
+        role='button'
+        className={'coz-btn coz-btn--regular'}
+        onClick={() => selectServer(serverUrl, authorized)}
+      >
+        {t('mobile.onboarding.server_selection.button')}
+      </button>
+    </footer>
   </div>
 )
 
