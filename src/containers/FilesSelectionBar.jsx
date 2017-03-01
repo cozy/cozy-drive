@@ -3,6 +3,7 @@ import styles from '../styles/selectionbar'
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
+import classNames from 'classnames'
 
 import { downloadSelection, hideSelectionBar, showFileActionMenu, showDeleteConfirmation } from '../actions'
 
@@ -18,7 +19,7 @@ const FilesSelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete, onS
     <button className={styles['coz-action-delete']} onClick={onDelete}>{t('selectionbar.delete')}</button>
     <button className={styles['coz-action-moveto']}>{t('selectionbar.moveto')}</button>
     <button className={styles['coz-action-rename']}>{t('selectionbar.rename')}</button>
-    <button className='coz-btn coz-btn--extra coz-btn--extra-white' onClick={onShowActionMenu} />
+    <button className={classNames('coz-btn', 'coz-btn--extra', 'coz-btn--extra-white', styles['coz-action-extra'])} onClick={onShowActionMenu} />
     <button className={styles['coz-action-close']} onClick={onHide}>{t('selectionbar.close')}</button>
   </div>
 )
