@@ -4,7 +4,6 @@ import {
   TRASH_FILE_SUCCESS,
   RESTORE_FILE_SUCCESS,
   DELETE_FILE,
-  ADD_FOLDER,
   RENAME_FOLDER,
   CREATE_FOLDER_SUCCESS
 } from '../actions'
@@ -29,10 +28,10 @@ export const files = (state = [], action) => {
         ...state,
         action.file
       ]
-    case ADD_FOLDER:
+    case CREATE_FOLDER_SUCCESS:
       return [
-        action.folder,
-        ...state
+        ...state,
+        action.folder
       ]
     case TRASH_FILE_SUCCESS:
     case RESTORE_FILE_SUCCESS:
@@ -43,8 +42,6 @@ export const files = (state = [], action) => {
         f.name = (f.id === action.id) ? action.name : f.name
         return f
       })
-    case CREATE_FOLDER_SUCCESS:
-      return state.map(f => f.id === action.tempId ? action.folder : f)
     default:
       return state
   }

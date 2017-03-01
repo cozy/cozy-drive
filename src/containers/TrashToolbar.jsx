@@ -10,7 +10,7 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 import { showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
-const TrashToolbar = ({ t, error, disableFolderCreation, isSelectionBarVisible, showSelectionBar }) => (
+const TrashToolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
     <div className={styles['fil-toolbar-trash']}>
       <button className={classNames(styles['danger-outline'], styles['coz-btn--delete'])}>
@@ -46,8 +46,7 @@ const TrashToolbar = ({ t, error, disableFolderCreation, isSelectionBarVisible, 
 
 const mapStateToProps = (state, ownProps) => ({
   error: state.ui.error,
-  isSelectionBarVisible: mustShowSelectionBar(state),
-  disableFolderCreation: state.ui.disableFolderCreation
+  isSelectionBarVisible: mustShowSelectionBar(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

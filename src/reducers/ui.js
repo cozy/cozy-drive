@@ -72,56 +72,12 @@ const isWorking = (state = false, action) => {
   }
 }
 
-const creating = (state = false, action) => {
-  switch (action.type) {
-    case CREATE_FOLDER:
-      return action.id
-    case CREATE_FOLDER_SUCCESS:
-    case CREATE_FOLDER_FAILURE_DUPLICATE:
-    case CREATE_FOLDER_FAILURE_GENERIC:
-      return false
-    default:
-      return state
-  }
-}
-
-const failedCreation = (state = null, action) => {
-  switch (action.type) {
-    case CREATE_FOLDER:
-      return null
-    case CREATE_FOLDER_FAILURE_DUPLICATE:
-    case CREATE_FOLDER_FAILURE_GENERIC:
-      return {
-        id: action.id
-      }
-    default:
-      return state
-  }
-}
-
-const updating = (state = [], action) => {
-  switch (action.type) {
-    case CREATE_FOLDER:
-      return [
-        ...state,
-        action.id
-      ]
-    case CREATE_FOLDER_SUCCESS:
-      let idx = state.indexOf(action.tempId)
-      return [
-        ...state.slice(0, idx),
-        ...state.slice(idx + 1)
-      ]
-    default:
-      return state
-  }
-}
-
-const disableFolderCreation = (state = false, action) => {
+const showAddFolder = (state = false, action) => {
   switch (action.type) {
     case ADD_FOLDER:
       return true
     case ABORT_ADD_FOLDER:
+    case OPEN_FOLDER:
     case CREATE_FOLDER_SUCCESS:
       return false
     default:
@@ -242,10 +198,7 @@ export default combineReducers({
   isFetching,
   currentFolderId,
   isWorking,
-  creating,
-  failedCreation,
-  updating,
-  disableFolderCreation,
+  showAddFolder,
   showSelectionBar,
   showDeleteConfirmation,
   selected,

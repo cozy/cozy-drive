@@ -105,14 +105,7 @@ export const uploadFile = (file) => {
 }
 
 export const addFolder = () => ({
-  type: ADD_FOLDER,
-  folder: {
-    id: genId(),
-    name: '',
-    type: 'directory',
-    created_at: Date.now(),
-    isNew: true
-  }
+  type: ADD_FOLDER
 })
 
 export const abortAddFolder = (accidental) => {
@@ -120,13 +113,11 @@ export const abortAddFolder = (accidental) => {
     type: ABORT_ADD_FOLDER,
     accidental
   }
-
   if (accidental) {
     action.alert = {
       message: 'alert.folder_abort'
     }
   }
-
   return action
 }
 
@@ -136,24 +127,24 @@ export const renameFolder = (newName, id) => ({
   name: newName
 })
 
-export const createFolder = (name, tempId) => {
+export const createFolder = name => {
   return async (dispatch, getState) => {
-    let existingFolder = getState().files.find(f => f.id !== tempId && f.type === 'directory' && f.name === name)
+    let existingFolder = getState().files.find(f => f.type === 'directory' && f.name === name)
 
     if (existingFolder) {
-      return dispatch({
+      dispatch({
         type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        id: tempId,
         alert: {
           message: 'alert.folder_name',
           messageData: { folderName: name }
         }
       })
+      throw 'alert.folder_name'
     }
 
     dispatch({
       type: CREATE_FOLDER,
-      id: tempId
+      name
     })
 
     let folder
@@ -166,7 +157,6 @@ export const createFolder = (name, tempId) => {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
         dispatch({
           type: CREATE_FOLDER_FAILURE_DUPLICATE,
-          id: tempId,
           alert: {
             message: 'alert.folder_name',
             messageData: { folderName: name }
@@ -175,29 +165,17 @@ export const createFolder = (name, tempId) => {
       } else {
         dispatch({
           type: CREATE_FOLDER_FAILURE_GENERIC,
-          id: tempId,
           alert: {
             message: 'alert.folder_generic'
           }
         })
       }
-      return
+      throw err
     }
     dispatch({
       type: CREATE_FOLDER_SUCCESS,
-      folder: extractFileAttributes(folder),
-      tempId
+      folder: extractFileAttributes(folder)
     })
-  }
-}
-
-export const deleteFileOrFolder = (id, isNew = false) => {
-  return async (dispatch, getState) => {
-    dispatch({ type: DELETE_FILE, id: id })
-
-    if (!isNew) {
-      // @TODO: server side deletion
-    }
   }
 }
 

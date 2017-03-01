@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from '../lib/I18n'
 
-import { openFolder, createFolder, renameFolder, abortAddFolder, deleteFileOrFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
+import { openFolder, renameFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
@@ -100,13 +100,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onFileEdit: (val, attrs) => {
     if (isDir(attrs)) {
       dispatch(renameFolder(val, attrs.id))
-      if (attrs.isNew) dispatch(createFolder(val, attrs.id))
-    }
-  },
-  onFileEditAbort: (accidental, attrs) => {
-    if (isDir(attrs) && attrs.isNew) {
-      dispatch(abortAddFolder(accidental))
-      dispatch(deleteFileOrFolder(attrs.id, attrs.isNew))
     }
   },
   onShowActionMenu: (fileId) => {

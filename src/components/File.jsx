@@ -18,7 +18,6 @@ export const splitFilename = filename => {
 }
 
 const isDir = attrs => attrs.type === 'directory'
-const isEditing = attrs => attrs.isNew === true && (attrs.isCreating === false || attrs.creationError !== null)
 
 export const getClassFromMime = (attrs) => {
   if (isDir(attrs)) {
@@ -31,16 +30,8 @@ class File extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      editing: isEditing(props.attributes),
+      editing: false,
       opening: false
-    }
-  }
-
-  componentWillReceiveProps (newProps) {
-    if (isEditing(newProps.attributes) !== this.state.editing) {
-      this.setState({
-        editing: isEditing(newProps.attributes)
-      })
     }
   }
 
@@ -131,7 +122,7 @@ class File extends Component {
       <div className={classes} onClick={canOpen ? e => this.open(e, attributes.id, isDirectory) : undefined}>
         {filename}
         {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
-        {(opening === true || attributes.isCreating === true) && <div className={styles['fil-loading']} />}
+        {opening === true && <div className={styles['fil-loading']} />}
       </div>
     )
   }
