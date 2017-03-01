@@ -34,3 +34,14 @@ export const initBar = () => {
     lang: 'en'
   })
 }
+
+export const isClientRegistered = async (client) => {
+  return await cozy.client.auth.getClient(client).then(client => true).catch(() => false)
+}
+
+export function resetClient () {
+  // reset pouchDB
+  cozy.client.offline.destroyAllDatabase()
+  // reset cozy-client-js
+  cozy.client._storage.clear()
+}

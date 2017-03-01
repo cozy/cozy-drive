@@ -23,7 +23,7 @@ import OnBoarding from './containers/OnBoarding'
 import Settings from './containers/Settings'
 
 import { loadState, saveState } from './lib/localStorage'
-import { initClient, initBar } from './lib/cozy-helper'
+import { initClient, initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
@@ -56,18 +56,33 @@ document.addEventListener('DOMContentLoaded', () => {
       saveState(stateToBeSaved)
     })
 
-    function requireSetup (nextState, replace) {
-      const url = store.getState().mobile.settings.serverUrl
+    initClient(store.getState().mobile.settings.serverUrl)
+
+    function requireSetup (nextState, replace, callback) {
+      const client = store.getState().mobile.settings.client
       const isSetup = store.getState().mobile.settings.authorized
-      if (!isSetup) {
+      if (isSetup) {
+        isClientRegistered(client).then(clientIsRegistered => {
+          if (clientIsRegistered) {
+            cozy.client.offline.startRepeatedReplication('io.cozy.files', 15)
+            initBar()
+            callback()
+          } else {
+            console.warn(`Your device is no more connected to your server: ${store.getState().mobile.settings.serverUrl}`)
+            resetClient()
+            replace({
+              pathname: '/onboarding',
+              state: { nextPathname: nextState.location.pathname }
+            })
+            callback()
+          }
+        })
+      } else {
+        resetClient()
         replace({
           pathname: '/onboarding',
           state: { nextPathname: nextState.location.pathname }
         })
-      } else {
-        initClient(url)
-        cozy.client.offline.startRepeatedReplication('io.cozy.files', 15)
-        initBar()
       }
     }
 
