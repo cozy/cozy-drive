@@ -1,5 +1,4 @@
 @require 'cozy-ui'
-@require './popover'
 
 .fil-actionmenu-backdrop
     position   fixed
@@ -13,6 +12,7 @@
 
 .fil-actionmenu
     @extends $popover
+    z-index        $file-action-menu
     position       fixed
     bottom         em(9px)
     width          "calc(100% - %s)" % em(16px)
