@@ -41,7 +41,7 @@ b-item
     margin-top 1px
     min-width 220px
 
-    a
+    a, label
         &.fil-action-upload
             background embedurl("../assets/icons/icon-upload-16.svg") em(16px) center no-repeat
         &.fil-action-newfolder
@@ -63,6 +63,9 @@ b-item
         a.fil-action-select,
         hr // temporary while there is only select after hr
             display block
+
+    .desktop-upload
+        display none
 
     .fil-toolbar-trash
         + b-menu-button
