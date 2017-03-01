@@ -53,8 +53,15 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
 
   return (
     <div>
-      <button className={styles['fil-content-previous']}>
-      </button>
+      {path.length >= 2 &&
+        <button
+          className={styles['fil-content-previous']}
+          onClick={() => {
+            toggle()
+            goToFolder(path[path.length - 2].id).then(() => toggle())
+          }}
+        />
+      }
       <h2 className={styles['fil-content-title']}>
 
         { path.map((folder, index) => {
