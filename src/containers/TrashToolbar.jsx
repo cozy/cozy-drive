@@ -12,11 +12,9 @@ import { mustShowSelectionBar } from '../reducers'
 
 const TrashToolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
-    <div className={styles['fil-toolbar-trash']}>
-      <button className={classNames(styles['danger-outline'], styles['coz-btn--delete'])}>
-        {t('toolbar.delete_all')}
-      </button>
-    </div>
+    <button className={classNames(styles['fil-toolbar-trash'], 'coz-btn', 'coz-btn--danger-outline')}>
+      {t('toolbar.delete_all')}
+    </button>
     <MenuButton>
       <button
         role='button'
