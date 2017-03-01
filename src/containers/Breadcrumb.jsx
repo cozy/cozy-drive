@@ -29,49 +29,53 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
   const topLevelTitle = isBrowsingTrash ? 'breadcrumb.title_trash' : 'breadcrumb.title_files'
 
   return (
-    <h2 class={styles['fil-content-title']}>
+    <div>
+      <button className={styles['fil-content-previous']}>
+      </button>
+      <h2 className={styles['fil-content-title']}>
 
-      { (isRoot || isTrash) && // Displays the non-interactive root folder
-        <span>{ t(topLevelTitle) }</span> }
+        { (isRoot || isTrash) && // Displays the non-interactive root folder
+          <span>{ t(topLevelTitle) }</span> }
 
-      { !isRoot && !isTrash && // show the interactive root folder
-        <span
-          className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-          onClick={() => {
-            toggle()
-            goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID).then(() => toggle())
-          }}
-        >
-          <a>{ t(topLevelTitle) }</a>
-          <span className={styles['separator']}>/</span>
-        </span>
-      }
+        { !isRoot && !isTrash && // show the interactive root folder
+          <span
+            className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
+            onClick={() => {
+              toggle()
+              goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID).then(() => toggle())
+            }}
+          >
+            <a>{ t(topLevelTitle) }</a>
+            <span className={styles['separator']}>/</span>
+          </span>
+        }
 
-      { showEllipsis && // show an ellipsis if there are more than 2 levels
-        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}>
-          …
-          <span className={styles['separator']}>/</span>
-        </span> }
+        { showEllipsis && // show an ellipsis if there are more than 2 levels
+          <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}>
+            …
+            <span className={styles['separator']}>/</span>
+          </span> }
 
-      { showParentFolder && // Displays the parent folder
-        <span
-          className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-          onClick={() => {
-            toggle()
-            goToFolder(folder.parent.id).then(() => toggle())
-          }}
-        >
-          <a>{folder.parent.name}</a>
-          <span className={styles['separator']}>/</span>
-        </span>
-      }
+        { showParentFolder && // Displays the parent folder
+          <span
+            className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
+            onClick={() => {
+              toggle()
+              goToFolder(folder.parent.id).then(() => toggle())
+            }}
+          >
+            <a>{folder.parent.name}</a>
+            <span className={styles['separator']}>/</span>
+          </span>
+        }
 
-      { !isRoot && !isTrash && // Displays the current folder
-        <span>{folder.name}</span>}
+        { !isRoot && !isTrash && // Displays the current folder
+          <span>{folder.name}</span>}
 
-      { opening && <Spinner /> }
+        { opening && <Spinner /> }
 
-    </h2>
+      </h2>
+    </div>
   )
 }
 

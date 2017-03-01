@@ -11,7 +11,24 @@
     .separator
         horizontally-padded .3em
 
-    @media (max-width: (768/basefont)rem)
-        font-size(20px)
-        .fil-path-hidden
-            display none
+.fil-content-previous
+    position absolute
+    right     100%
+    top      0
+    width 40px
+    height 40px
+    border 0
+    background white embedurl('../assets/icons/icon-arrow-left.svg') center center no-repeat
+
+@media (max-width: (768/basefont)rem)
+    .fil-path-hidden
+        display none
+
+    .fil-content-title
+        font-size 20px
+
+    .fil-content-title span
+        display none
+
+        &:last-child
+            display inline

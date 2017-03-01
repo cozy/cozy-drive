@@ -8,5 +8,14 @@
     left-spaced(32px)
 
     @media (max-width: (768/basefont)rem)
-        right-spaced(16px)
-        left-spaced(16px)
+        position absolute
+        top      0
+        left     40px // bar hamburger button width
+        right    0
+        z-index  100
+        margin   0
+
+:global
+    @media (max-width: (768/basefont)rem)
+        [role=banner] .coz-bar-title
+            display none
