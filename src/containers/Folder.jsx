@@ -25,6 +25,7 @@ const TRASH_CONTEXT = 'trash'
 class Folder extends Component {
   componentWillMount () {
     this.props.onMount()
+    this.props.onAlertClose()
   }
 
   componentWillReceiveProps (newProps) {
@@ -112,7 +113,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onShowActionMenu: (fileId) => {
     dispatch(showFileActionMenu(fileId))
   },
-  onAlertAutoClose: () => {
+  onAlertClose: () => {
     dispatch(alertClosed())
   }
 })
