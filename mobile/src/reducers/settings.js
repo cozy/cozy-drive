@@ -10,7 +10,7 @@ export const initialState = {
 export const settings = (state = initialState, action) => {
   switch (action.type) {
     case SET_URL:
-      return { ...state, serverUrl: action.url, error: null }
+      return { ...state, serverUrl: action.url, error: null, authorized: false }
     case BACKUP_IMAGES_DISABLE:
       return { ...state, backupImages: false }
     case BACKUP_IMAGES_ENABLE:
@@ -20,7 +20,7 @@ export const settings = (state = initialState, action) => {
     case INIT_STATE:
       return initialState
     case SET_CLIENT:
-      return { ...state, client: action.client }
+      return { ...state, client: action.client, authorized: true }
     default:
       return state
   }
