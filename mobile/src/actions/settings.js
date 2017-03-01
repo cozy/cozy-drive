@@ -58,7 +58,6 @@ export class OnBoardingError extends Error {
 // registration
 
 export const registerDevice = () => async (dispatch, getState) => {
-  await dispatch(checkURL(getState().mobile.settings.serverUrl))
   const device = window.cordova ? window.cordova.platformId : null
   const onRegister = (dispatch) => (client, url) => {
     return onRegistered(client, url)
@@ -69,16 +68,16 @@ export const registerDevice = () => async (dispatch, getState) => {
       throw err
     })
   }
-  await init(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
-  try {
-    await cozy.client.authorize().then(({ client }) => dispatch(setClient(client)))
+  dispatch(checkURL(getState().mobile.settings.serverUrl))
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
+  await cozy.client.authorize().then(async ({ client }) => {
+    dispatch(setClient(client))
     await cozy.client.offline.replicateFromCozy('io.cozy.files')
-  } catch (err) {
+  }).catch(err => {
     dispatch(wrongAddressError())
     logException(err)
     throw err
-  }
+  })
 }
 
 export const setClient = client => ({ type: SET_CLIENT, client })
