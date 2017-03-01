@@ -43,7 +43,6 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const ALERT_CLOSED = 'ALERT_CLOSED'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
-const genId = () => Math.random().toString(36).slice(2)
 
 export const HTTP_CODE_CONFLICT = 409
 const ALERT_TYPE_ERROR = 'error'
@@ -139,7 +138,7 @@ export const createFolder = name => {
           messageData: { folderName: name }
         }
       })
-      throw 'alert.folder_name'
+      throw new Error('alert.folder_name')
     }
 
     dispatch({
