@@ -13,14 +13,17 @@ export const SET_CLIENT = 'SET_CLIENT'
 // url
 
 export const setUrl = url => ({ type: SET_URL, url })
-export const checkURL = url => async dispatch => {
+export const checkURL = url => dispatch => {
   let scheme = 'https://'
   if (__ALLOW_HTTP__) {
-    scheme = 'http://'
+    if (!url.startsWith(scheme)) scheme = 'http://'
     console.warn('development mode: we don\'t check SSL requirement')
   }
   if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
     dispatch(wrongAddressError())
+    if (__ALLOW_HTTP__) {
+      throw new OnBoardingError(`The supported protocols are http:// or https:// (development mode)`)
+    }
     throw new OnBoardingError(`The only supported protocol is ${scheme}`)
   }
   if (!url.startsWith(scheme)) {
