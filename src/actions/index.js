@@ -50,14 +50,8 @@ const ALERT_TYPE_ERROR = 'error'
 export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', type: ALERT_TYPE_ERROR } })
 export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', type: ALERT_TYPE_ERROR } })
 
-export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
+export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false) => {
   return async dispatch => {
-    let routePrefix = '/files'
-    // We're probably going to push a new route to the history, but we need to find the "base" of the url, eg. /files or /trash.
-    if (router && router.location.pathname.indexOf('/') > -1) {
-      routePrefix = '/' + router.location.pathname.split('/')[1]
-    }
-
     if (isInitialFetch) {
       dispatch({ type: FETCH_FILES, folderId })
     }
@@ -68,15 +62,10 @@ export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, route
       const parentId = folder.attributes.dir_id
       parent = !!parentId && await cozy.client.files.statById(parentId)
     } catch (err) {
-      if (!isInitialFetch && router) {
-        router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
-      }
       return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
     }
     if (isInitialFetch) {
       dispatch({ type: RECEIVE_FILES, folderId })
-    } else if (router) {
-      router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
     }
     return dispatch({
       type: OPEN_FOLDER_SUCCESS,
