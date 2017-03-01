@@ -19,21 +19,6 @@ const Nav = ({ t, router }) => {
           </Link>
         </li>
         <li class={styles['fil-nav-item']}>
-          <Link to='/recent' class={styles['fil-cat-recent']} activeClassName={styles['active']}>
-            { t('nav.item_recent') }
-          </Link>
-        </li>
-        <li class={styles['fil-nav-item']}>
-          <Link to='/shared' class={styles['fil-cat-shared']} activeClassName={styles['active']}>
-            { t('nav.item_shared') }
-          </Link>
-        </li>
-        <li class={styles['fil-nav-item']}>
-          <Link to='/activity' class={styles['fil-cat-activity']} activeClassName={styles['active']}>
-            { t('nav.item_activity') }
-          </Link>
-        </li>
-        <li class={styles['fil-nav-item']}>
           <Link to='/trash' class={classNames(styles['fil-cat-trash'], { [styles['active']]: isBrowsingTrash })}>
             { t('nav.item_trash') }
           </Link>
