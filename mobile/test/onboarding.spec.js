@@ -20,7 +20,7 @@ describe('Onboarding', () => {
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
 
-    tree.children[1].props.onClick()
+    tree.children[1].children[0].props.onClick()
     tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
