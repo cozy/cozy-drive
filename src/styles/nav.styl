@@ -1,21 +1,7 @@
 @require 'cozy-ui'
 
-.fil-nav
-    margin     em(24px) 0
-    padding    0
-    list-style none
-.fil-nav-item
-    a
-        display         block
-        left-padded(50px)
-        line-height     em(48px)
-        text-decoration none
-        color           grey-08
-        &.active
-        &:hover
-        &:active
-            box-shadow  inset 4px 0 0 0 dodger-blue
-            font-weight bold
+[role=application]
+    @extend $navigation
 
 .fil-cat-files
     background: embedurl("../assets/icons/icon-folder.svg") em(24px) center no-repeat
@@ -48,25 +34,6 @@
         background-image: embedurl("../assets/icons/icon-settings-active.svg")
 
 @media (max-width: (1023/basefont)rem)
-    .fil-nav
-        display         flex
-        justify-content space-around
-        margin          em(11px) 0 em(6px)
-
-    .fil-nav-item
-        a
-            min-width           em(100px)
-            padding             em(35px) 0 0
-            text-align          center
-            color               grey-11
-            font-size(10px)
-            line-height         1
-            &.active
-            &:hover
-            &:active
-                box-shadow  none
-                font-weight normal
-                color       grey-08
 
     .fil-cat-files
     .fil-cat-recent
