@@ -11,12 +11,18 @@ export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error
 (
   <div className={classNames(styles['wizard'], styles['select-server'])}>
     <div className={styles['wizard-main']}>
-      <div className={styles['logo-wrapper']}>
+      <div
+        className={error
+          ? classNames(styles['logo-wrapper'], styles['error'])
+          : styles['logo-wrapper']}
+      >
         <div className={styles['cozy-logo-white']} />
       </div>
       <input
         type='url'
-        className={styles['input']}
+        className={error
+          ? classNames(styles['input'], styles['error'])
+          : styles['input']}
         placeholder={t('mobile.onboarding.server_selection.cozy_address_placeholder')}
         onChange={updateServerUrl}
         value={serverUrl}
@@ -37,6 +43,7 @@ export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error
         role='button'
         className={'coz-btn coz-btn--regular'}
         onClick={() => selectServer(serverUrl, authorized)}
+        disabled={error}
       >
         {t('mobile.onboarding.server_selection.button')}
       </button>
