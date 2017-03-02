@@ -10,11 +10,9 @@ export const Welcome = ({ nextStep, t }) =>
 (
   <div className={classNames(styles['wizard'], styles['welcome'])}>
     <div className={styles['wizard-main']}>
-      <figure>
-        <div className={styles['logo-wrapper']}>
-          <div className={styles['cozy-logo-white']} />
-        </div>
-      </figure>
+      <div className={styles['logo-wrapper']}>
+        <div className={styles['cozy-logo-white']} />
+      </div>
       <h1 className={styles['title']}>
         {t('mobile.onboarding.welcome.title1')}
       </h1>

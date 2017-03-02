@@ -1,10 +1,5 @@
 @require 'cozy-ui'
 
-p
-    text-align left
-    margin     .5em 0
-    font-size  em(18px)
-
 .wizard
     display flex
     flex-direction column
@@ -18,7 +13,7 @@ p
     .logo-wrapper
         max-width     3.5em
         height        3.5em
-        margin        0 auto 3em auto
+        margin        .5em auto 3em auto
         padding       1.25em
         border-radius 50%
         box-shadow    0 1px 3px rgba(50, 54, 63, .19), 0 4px 12px rgba(50, 54, 63, .12)
@@ -63,6 +58,11 @@ p
 
     .wizard-circles__circle--active
         background #297ef2
+    .description
+        text-align justify
+        margin     .5em 0
+        font-size  em(18px)
+        max-width  25em
 
     .input
         width            100%
