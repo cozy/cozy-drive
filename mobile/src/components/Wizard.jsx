@@ -5,6 +5,7 @@ export default class Wizard extends Component {
     super(props)
 
     this.nextStep = this.nextStep.bind(this)
+    this.previousStep = this.previousStep.bind(this)
 
     this.state = {
       step: 0
@@ -13,6 +14,11 @@ export default class Wizard extends Component {
 
   nextStep () {
     this.setState({ step: this.state.step + 1 })
+  }
+
+  previousStep () {
+    if (this.state.step === 0) return
+    this.setState({ step: this.state.step - 1 })
   }
 
   render () {
@@ -24,6 +30,6 @@ export default class Wizard extends Component {
         this.props.router.replace('/')
       }
     }
-    return <Step nextStep={this.nextStep} {...this.props} />
+    return <Step nextStep={this.nextStep} previousStep={this.previousStep} {...this.props} />
   }
 }

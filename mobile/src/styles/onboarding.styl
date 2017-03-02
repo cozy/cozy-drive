@@ -11,9 +11,10 @@
     text-align center
 
     .wizard-header
-        display        flex
-        flex-direction row-reverse
-        margin-top     2em
+        display         flex
+        flex-direction  row
+        margin-top      2em
+        justify-content flex-start
 
         .skipLink
             padding         .5em
@@ -21,6 +22,26 @@
             text-transform  uppercase
             text-align      right
             color           #95999d
+            margin-left     auto
+
+        .close-button
+            width      2em
+            height     2em
+            cursor     pointer
+
+            &::after, &::before
+                content          ''
+                position         absolute
+                border-radius    3px
+                width            2px
+                height           2em
+                background-color #95999d
+
+            &::after
+                transform rotate(-45deg);
+
+            &::before
+                transform rotate(45deg);
 
     .logo-wrapper
         max-width     3.5em
