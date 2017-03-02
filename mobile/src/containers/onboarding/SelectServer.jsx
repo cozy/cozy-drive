@@ -7,9 +7,15 @@ import { translate } from '../../../../src/lib/I18n'
 import { registerDevice, setUrl } from '../../actions/settings'
 import styles from '../../styles/onboarding'
 
-export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error, authorized}) =>
+export const SelectServer = ({t, goBack, selectServer, updateServerUrl, serverUrl, error, authorized}) =>
 (
   <div className={classNames(styles['wizard'], styles['select-server'])}>
+    <header className={styles['wizard-header']}>
+      <a
+        className={styles['close-button']}
+        onClick={goBack}
+      />
+    </header>
     <div className={styles['wizard-main']}>
       <div
         className={error
@@ -52,6 +58,9 @@ export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  goBack: () => {
+    ownProps.previousStep()
+  },
   selectServer: (serverUrl, authorized) => {
     if (!serverUrl) return
     dispatch(registerDevice())
