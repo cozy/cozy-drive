@@ -40,6 +40,8 @@ export const isClientRegistered = async (client) => {
 }
 
 export function resetClient () {
+  // reset cozy-bar
+  // TODO
   // reset pouchDB
   cozy.client.offline.destroyAllDatabase()
   // reset cozy-client-js

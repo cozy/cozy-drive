@@ -24,6 +24,8 @@ import Settings from './containers/Settings'
 
 import { loadState, saveState } from './lib/localStorage'
 import { initClient, initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
+import RevokableWrapper from './containers/RevokableWrapper'
+import { revokeClient } from './actions/authorization'
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
@@ -64,16 +66,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isSetup) {
         isClientRegistered(client).then(clientIsRegistered => {
           if (clientIsRegistered) {
-            cozy.client.offline.startRepeatedReplication('io.cozy.files', 15)
+            const options = {
+              onError: (err) => {
+                console.log('on error fron the client', err)
+                console.warn(`Your device is no more connected to your server: ${store.getState().mobile.settings.serverUrl}`)
+                store.dispatch(revokeClient())
+              }
+            }
+            cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
             initBar()
             callback()
           } else {
             console.warn(`Your device is no more connected to your server: ${store.getState().mobile.settings.serverUrl}`)
-            resetClient()
-            replace({
-              pathname: '/onboarding',
-              state: { nextPathname: nextState.location.pathname }
-            })
+            store.dispatch(revokeClient())
             callback()
           }
         })
@@ -83,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pathname: '/onboarding',
           state: { nextPathname: nextState.location.pathname }
         })
+        callback()
       }
     }
 
@@ -90,9 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <I18n context={context} lang={lang}>
         <Provider store={store}>
           <Router history={hashHistory}>
-            <Route onEnter={requireSetup}>
+            <Route onEnter={requireSetup} component={RevokableWrapper}>
               {AppRoute}
-
               <Route component={App}>
                 <Route path='settings' name='mobile.settings' component={Settings} />}
               </Route>
