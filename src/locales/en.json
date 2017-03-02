@@ -96,13 +96,11 @@
         "button": "Next",
         "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
       },
-      "activation": {
-        "backupPhotosVideos": {
-          "title": "Back up Photos & Videos",
-          "description": "lorem ipsum dolor sit amet humanus corpus ex machina"
-        },
-        "button": "Activate",
-        "skip": "SKIP"
+      "photos": {
+        "title": "Backup your photos and videos",
+        "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them. By default, it will only be done when the WIFI is on. This setting can be changed later on.",
+        "button": "Enable now",
+        "skip": "Later"
       }
     },
     "settings": {

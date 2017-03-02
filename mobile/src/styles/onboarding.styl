@@ -4,11 +4,23 @@
     display flex
     flex-direction column
     min-height 100vh
-    width   90vw
-    padding 0 5vw
+    width   85vw
+    padding 0 7.5vw
     background-color white
     color            black
     text-align center
+
+    .wizard-header
+        display        flex
+        flex-direction row-reverse
+        margin-top     2em
+
+        .skipLink
+            padding         .5em
+            cursor          pointer
+            text-transform  uppercase
+            text-align      right
+            color           #95999d
 
     .logo-wrapper
         max-width     3.5em
@@ -21,6 +33,9 @@
         &.error
             background #f52d2d
 
+    .illustration
+        margin .5em auto
+
     .wizard-main
         margin auto
         padding 0 .5em
@@ -29,35 +44,6 @@
         margin    .25em auto
         font-size 1.5em
 
-    .wizard-footer
-        display flex
-        flex-direction column
-        margin-bottom 1.5em
-
-        > .link
-            margin          1.5em .5em 0em .5em
-            text-align      left
-            text-decoration none
-            color           #297ef2
-
-    .wizard-button--with-circles
-        margin-bottom 10px
-
-    .wizard-circles
-        display flex
-        margin-bottom 5px
-        justify-content center
-
-    .wizard-circles__circle
-        width 15px
-        height 15px
-        margin 0 5px
-        background rgba(0,0,0,.3)
-        border-radius 50px
-        transition all .3s ease
-
-    .wizard-circles__circle--active
-        background #297ef2
     .description
         text-align justify
         margin     .5em 0
@@ -76,22 +62,28 @@
             color   #32363f
             opacity .5
 
+    .wizard-footer
+        display flex
+        flex-direction column
+        margin-bottom 1.5em
+
+        > .link
+            margin          1.5em .5em 0em .5em
+            text-align      left
+            text-decoration none
+            color           #297ef2
+
 .welcome .logo-wrapper, .select-server .logo-wrapper
     background #297ef2
 
+
+// ASSETS
 .cozy-logo-white
     height  3.5em
     background embedurl("../assets/icons/icon-cozy.svg") center no-repeat
-    background-size 3.5em
+    background-size contain
 
-.activation
-    img
-        width 200px
-        height 200px
-        margin 0 auto
-
-.breadcrumb
-    display inline
-
-    span
-        margin 0 5px
+.illustration-photos
+    height          14em
+    background      embedurl("../assets/illustrations/illustration-photos.svg") center no-repeat
+    background-size contain
