@@ -48,7 +48,7 @@ export const SelectServer = ({t, goBack, selectServer, updateServerUrl, serverUr
       <button
         role='button'
         className={'coz-btn coz-btn--regular'}
-        onClick={() => selectServer(serverUrl, authorized)}
+        onClick={() => selectServer(serverUrl)}
         disabled={error}
       >
         {t('mobile.onboarding.server_selection.button')}
@@ -61,11 +61,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goBack: () => {
     ownProps.previousStep()
   },
-  selectServer: (serverUrl, authorized) => {
+  selectServer: (serverUrl) => {
     if (!serverUrl) return
     dispatch(registerDevice())
       .then(() => {
-        if (authorized) ownProps.nextStep()
+        ownProps.nextStep()
       })
       .catch((err) => console.error(err))
   },
@@ -78,8 +78,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const mapStateToProps = (state) => {
   return ({
     serverUrl: state.mobile.settings.serverUrl,
-    error: state.mobile.settings.error,
-    authorized: state.mobile.settings.authorized
+    error: state.mobile.settings.error
   })
 }
 
