@@ -12,7 +12,7 @@ import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 import { isBrowsingTrash } from '../reducers'
 
-const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToFolder }) => {
+const Breadcrumb = ({ t, router, folder, opening, deployed, toggleOpening, toggleDeploy, isBrowsingTrash, goToFolder }) => {
   // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
   let path = [folder]
 
@@ -52,13 +52,18 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
   }
 
   return (
-    <div>
+    <div
+      className={classNames(styles['fil-content-backdrop'], {[styles['deployed']]: deployed})}
+      onClick={toggleDeploy}
+    >
       {path.length >= 2 &&
         <button
           className={styles['fil-content-previous']}
-          onClick={() => {
-            toggle()
-            goToFolder(path[path.length - 2].id).then(() => toggle())
+          onClick={e => {
+            e.stopPropagation()
+            toggleOpening()
+            if(deployed) toggleDeploy()
+            goToFolder(path[path.length - 2].id).then(() => toggleOpening())
           }}
         />
       }
@@ -67,10 +72,12 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
         { path.map((folder, index) => {
           if (index < path.length - 1) return (
             <span
-              className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-              onClick={() => {
-                toggle()
-                goToFolder(folder.id).then(() => toggle())
+              className={styles['fil-inside-path']}
+              onClick={e => {
+                e.stopPropagation()
+                toggleOpening()
+                if(deployed) toggleDeploy()
+                goToFolder(folder.id).then(() => toggleOpening())
               }}
             >
               <a>
@@ -80,7 +87,18 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
             </span>
           )
           else return (
-            <span>{folder.name}</span>
+            <span
+              className={styles['fil-main-path']}
+              onClick={e => {
+                e.stopPropagation()
+                if (path.length >= 2) toggleDeploy()
+              }}
+            >
+              { folder.name }
+              {path.length >= 2 &&
+                <span className={styles['fil-content-down']} />
+              }
+            </span>
           )
         }) }
 
@@ -106,9 +124,13 @@ export default translate()(withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
 )(withState({
-  opening: false
+  opening: false,
+  deployed: false
 }, (setState) => ({
-  toggle: () => {
+  toggleOpening: () => {
     setState(state => ({ opening: !state.opening }))
-  }
+  },
+  toggleDeploy: () => {
+    setState(state => ({ deployed: !state.deployed }))
+  },
 }))(Breadcrumb))))
