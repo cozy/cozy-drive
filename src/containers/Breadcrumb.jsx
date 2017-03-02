@@ -14,7 +14,10 @@ import { isBrowsingTrash } from '../reducers'
 
 const Breadcrumb = ({ t, router, folder, opening, deployed, toggleOpening, toggleDeploy, isBrowsingTrash, goToFolder }) => {
   // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
-  let path = [folder]
+  let path = []
+
+  // dring the first fetch, folder is an empty object, and we don't want to display anything
+  if (folder.id) path.push(folder)
 
   // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that.
   let parent = folder.parent
@@ -98,11 +101,11 @@ const Breadcrumb = ({ t, router, folder, opening, deployed, toggleOpening, toggl
               {path.length >= 2 &&
                 <span className={styles['fil-content-down']} />
               }
+
+              { opening && <Spinner /> }
             </span>
           )
         }) }
-
-        { opening && <Spinner /> }
 
       </h2>
     </div>
