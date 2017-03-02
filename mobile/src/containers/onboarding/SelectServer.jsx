@@ -7,7 +7,7 @@ import { translate } from '../../../../src/lib/I18n'
 import { registerDevice, setUrl } from '../../actions/settings'
 import styles from '../../styles/onboarding'
 
-export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error}) =>
+export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error, authorized}) =>
 (
   <div className={classnames(styles['wizard'])}>
     <div className={classnames(styles['wizard-main'])}>
@@ -16,15 +16,24 @@ export const SelectServer = ({selectServer, t, updateServerUrl, serverUrl, error
       <p>{t('mobile.onboarding.server_selection.description')}</p>
       {error && <p style={{color: 'red'}}>{t(error)}</p>}
     </div>
-    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])} onClick={selectServer}>{t('mobile.onboarding.server_selection.button')}</button>
+    <button
+      role='button'
+      className={classnames('coz-btn coz-btn--regular', styles['wizard-button'])}
+      onClick={() => selectServer(serverUrl, authorized)}
+    >
+      {t('mobile.onboarding.server_selection.button')}
+    </button>
   </div>
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  selectServer: () => {
-    dispatch(registerDevice()).then(() => {
-      ownProps.nextStep()
-    })
+  selectServer: (serverUrl, authorized) => {
+    if (!serverUrl) return
+    dispatch(registerDevice())
+      .then(() => {
+        if (authorized) ownProps.nextStep()
+      })
+      .catch((err) => console.error(err))
   },
   updateServerUrl: (e) => {
     const serverUrl = e.target.value
@@ -35,7 +44,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const mapStateToProps = (state) => {
   return ({
     serverUrl: state.mobile.settings.serverUrl,
-    error: state.mobile.settings.error
+    error: state.mobile.settings.error,
+    authorized: state.mobile.settings.authorized
   })
 }
 

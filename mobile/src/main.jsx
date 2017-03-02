@@ -23,7 +23,7 @@ import OnBoarding from './containers/OnBoarding'
 import Settings from './containers/Settings'
 
 import { loadState, saveState } from './lib/localStorage'
-import { init } from './lib/cozy-helper'
+import { initClient, initBar } from './lib/cozy-helper'
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
@@ -58,14 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function requireSetup (nextState, replace) {
       const url = store.getState().mobile.settings.serverUrl
-      const isSetup = url !== ''
+      const isSetup = store.getState().mobile.settings.authorized
       if (!isSetup) {
         replace({
           pathname: '/onboarding',
           state: { nextPathname: nextState.location.pathname }
         })
       } else {
-        init(url)
+        initClient(url)
+        initBar()
       }
     }
 
