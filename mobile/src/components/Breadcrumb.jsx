@@ -11,7 +11,7 @@ const Breadcrumb = ({ currentStep, totalSteps }) => {
     } else {
       elementClass = styles['onboarding-breadcrumb-element']
     }
-    elementsArray[i] = <div className={elementClass} />
+    elementsArray[i] = <div className={elementClass} key={`step${i}`} />
   }
   return (<div className={styles['onboarding-breadcrumb']}>
     {elementsArray.map((e) => e)}
