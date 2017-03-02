@@ -14,6 +14,7 @@
         horizontally-padded .3em
 
 .fil-content-previous
+    display none
     position absolute
     right     100%
     top      0
@@ -22,15 +23,57 @@
     border 0
     background white embedurl('../assets/icons/icon-arrow-left.svg') center center no-repeat
 
+.fil-content-down
+    display none
+    width 14px
+    height 10px
+    border 0
+    margin-left 7px
+    background white embedurl('../assets/icons/icon-arrow-down.svg') center center no-repeat
+
 @media (max-width: (768/basefont)rem)
-    .fil-path-hidden
-        display none
+    .fil-content-backdrop
+        position fixed
+        top      0
+        left     40px // bar hamburger button width
+        right    0
+        z-index  100
+
+        &.deployed
+            bottom     0
+            left       0
+            background rgba(50, 54, 63, 0.5)
+
+            .fil-content-previous
+                left 0
+
+            .fil-content-title
+                background white
+                padding-left 40px
+
+            .fil-content-title .fil-inside-path
+                display block
+                color #32363f
 
     .fil-content-title
+        display flex
+        flex-direction column-reverse
         font-size 20px
 
-    .fil-content-title span
+    .fil-content-title .fil-inside-path
+    .fil-content-title .fil-main-path
+        padding 7px 0
+
+    .fil-content-previous
+        display block
+
+    .fil-content-down
+        display inline-block
+
+    .fil-content-title .fil-inside-path
+    .fil-inside-path .separator
         display none
 
-        &:last-child
-            display inline
+    :global
+        [role=banner] .coz-bar-title
+            display none
