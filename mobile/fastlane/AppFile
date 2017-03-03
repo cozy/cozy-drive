@@ -1,4 +1,3 @@
-app_identifier "io.cozy.mobile.sync"
-apple_id "simon@cozycloud.cc"
+app_identifier "io.cozy.files.mobile"
 team_name "CozyCloud"
 itc_team_name "CozyCloud"

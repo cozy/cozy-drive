@@ -28,7 +28,13 @@
     "watch:mobile": "NODE_ENV=mobile:development npm run internal:watch",
     "watch:browser:standalone": "NODE_ENV=browser:development npm run internal:watch:standalone",
     "watch:mobile:standalone": "NODE_ENV=mobile:development npm run internal:watch:standalone",
-    "cordova:deploy": "NODE_ENV=mobile:development npm run internal:build && cd mobile ; cordova run android --device ; cd .."
+    "android:run": "cd mobile ; cordova run android --device ; cd ..",
+    "android:run:emulator": "cd mobile ; cordova run android --emulator ; cd ..",
+    "android:release": "npm run build:mobile && cd mobile ; cordova build android --release ; cd ..",
+    "android:signed": "npm run android:release && cd mobile ; apksigner sign --ks keys/android/cozy-files-release-key.jks --out build/android/cozy-files-v3.apk platforms/android/build/outputs/apk/android-release-unsigned.apk ; cd ..",
+    "android:publish": "npm run android:signed && cd mobile ; fastlane supply ; cd ..",
+    "ios:run": "cd mobile ; cordova run ios --device ; cd ..",
+    "ios:run:emulator": "cd mobile ; cordova run ios --emulator ; cd .."
   },
   "repository": {
     "type": "git",
@@ -59,8 +65,6 @@
     "babel-runtime": "^6.0.0",
     "btoa": "^1.1.2",
     "copy-webpack-plugin": "^4.0.1",
-    "cozy-bar": "^3.0.0-beta1",
-    "cozy-client-js": "^0.0.10",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
     "csswring": "^5.1.1",
@@ -95,9 +99,9 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-bar": "beta",
-    "cozy-client-js": "beta",
-    "cozy-ui": "3.0.0-beta11",
+    "cozy-bar": "3.0.0-beta9",
+    "cozy-client-js": "^0.1.1",
+    "cozy-ui": "3.0.0-beta13",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
     "hammerjs": "^2.0.8",
@@ -115,6 +119,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-mock-store": "^1.2.1",
+    "redux-raven-middleware": "^1.2.0",
     "redux-thunk": "^2.1.0"
   },
   "jest": {

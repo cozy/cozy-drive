@@ -18,13 +18,16 @@ const getAuth = (onRegister, device) => ({
   onRegistered: onRegister
 })
 
-export const init = (url, onRegister = null, device = 'Device') => {
+export const initClient = (url, onRegister = null, device = 'Device') => {
   console.log(`Cozy Client initializes a connection with ${url}`)
   cozy.client.init({
     cozyURL: url,
     offline: {doctypes: ['io.cozy.files'], timer: 15},
     oauth: getAuth(onRegister, device)
   })
+}
+
+export const initBar = () => {
   cozy.bar.init({
     appName: 'Files',
     iconPath: require('../../../vendor/assets/app-icon.svg'),

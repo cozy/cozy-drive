@@ -25,6 +25,7 @@ class Folder extends Component {
   componentWillMount () {
     if (!this.props.isFetching) {
       this.props.onMount()
+      this.props.onAlertClose()
     }
   }
 
@@ -99,7 +100,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onShowActionMenu: (fileId) => {
     dispatch(showFileActionMenu(fileId))
   },
-  onAlertAutoClose: () => {
+  onAlertClose: () => {
     dispatch(alertClosed())
   }
 })

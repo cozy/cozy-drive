@@ -1,9 +1,8 @@
 @require 'cozy-ui'
-@require './popover'
 
 .fil-actionmenu-backdrop
     position   fixed
-    z-index    101
+    z-index    $overlay
     top        0
     right      0
     bottom     0
@@ -13,6 +12,7 @@
 
 .fil-actionmenu
     @extends $popover
+    z-index        $file-action-menu
     position       fixed
     bottom         em(9px)
     width          "calc(100% - %s)" % em(16px)
@@ -39,6 +39,6 @@
     background embedurl("../assets/icons/icon-delete-16.svg") em(16px) center no-repeat
 
 .fil-loading
-    @extend $icon-spinner-blue
     @extend $icon-16
+    @extend $icon-spinner-blue
     margin-left 0.5em

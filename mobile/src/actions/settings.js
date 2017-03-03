@@ -1,8 +1,8 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import Raven from 'raven-js'
-import { init } from '../lib/cozy-helper'
+import { initClient } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
+import { logException } from '../lib/crash-reporter'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES_DISABLE = 'BACKUP_IMAGES_DISABLE'
@@ -13,14 +13,17 @@ export const SET_CLIENT = 'SET_CLIENT'
 // url
 
 export const setUrl = url => ({ type: SET_URL, url })
-export const checkURL = url => async dispatch => {
+export const checkURL = url => dispatch => {
   let scheme = 'https://'
   if (__ALLOW_HTTP__) {
-    scheme = 'http://'
+    if (!url.startsWith(scheme)) scheme = 'http://'
     console.warn('development mode: we don\'t check SSL requirement')
   }
   if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
     dispatch(wrongAddressError())
+    if (__ALLOW_HTTP__) {
+      throw new OnBoardingError(`The supported protocols are http:// or https:// (development mode)`)
+    }
     throw new OnBoardingError(`The only supported protocol is ${scheme}`)
   }
   if (!url.startsWith(scheme)) {
@@ -55,28 +58,26 @@ export class OnBoardingError extends Error {
 // registration
 
 export const registerDevice = () => async (dispatch, getState) => {
-  await dispatch(checkURL(getState().mobile.settings.serverUrl))
   const device = window.cordova ? window.cordova.platformId : null
   const onRegister = (dispatch) => (client, url) => {
     return onRegistered(client, url)
     .then(url => url)
     .catch(err => {
-      console.warn(err)
       dispatch(wrongAddressError())
-      Raven.captureException(err)
+      logException(err)
       throw err
     })
   }
-  await init(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
-  try {
-    await cozy.client.authorize().then(({ client }) => dispatch(setClient(client)))
+  dispatch(checkURL(getState().mobile.settings.serverUrl))
+  initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
+  await cozy.client.authorize().then(async ({ client }) => {
+    dispatch(setClient(client))
     await cozy.client.offline.replicateFromCozy('io.cozy.files')
-  } catch (err) {
-    console.warn(err)
+  }).catch(err => {
     dispatch(wrongAddressError())
-    Raven.captureException(err)
+    logException(err)
     throw err
-  }
+  })
 }
 
 export const setClient = client => ({ type: SET_CLIENT, client })
