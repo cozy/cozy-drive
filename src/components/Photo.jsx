@@ -19,7 +19,9 @@ export class Photo extends Component {
       }))
   }
 
-  render ({ photo, router }, { loading, url }) {
+  render () {
+    const { photo, router } = this.props
+    const { loading, url } = this.state
     const parentPath = router.location.pathname
     return (
       !loading &&
