@@ -113,7 +113,7 @@
     "preact": "^7.1.0",
     "preact-compat": "^3.9.0",
     "raven-js": "^3.10.0",
-    "react-bosonic": "beta",
+    "react-bosonic": "1.0.0-beta6",
     "react-redux": "^5.0.1",
     "react-router": "^3.0.0",
     "redux": "^3.6.0",
