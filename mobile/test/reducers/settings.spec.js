@@ -2,7 +2,7 @@ import reducer, { initialState } from '../../src/reducers/settings'
 import { INIT_STATE } from '../../src/actions'
 import { SET_URL, ERROR, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE, SET_CLIENT } from '../../src/actions/settings'
 
-describe('ui reducers', () => {
+describe('settings reducers', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {}))
     .toEqual(initialState)
@@ -10,8 +10,8 @@ describe('ui reducers', () => {
 
   it('should handle SET_URL', () => {
     const url = 'http://localhost'
-    expect(reducer({serverUrl: '', error: 'defined'}, {type: SET_URL, url: url}))
-    .toEqual({serverUrl: url, error: null})
+    expect(reducer({serverUrl: '', error: 'defined', authorized: false}, {type: SET_URL, url: url}))
+    .toEqual({serverUrl: url, error: null, authorized: false})
   })
 
   it('should handle BACKUP_IMAGES_DISABLE', () => {

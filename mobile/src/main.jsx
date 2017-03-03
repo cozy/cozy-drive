@@ -11,7 +11,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Route, hashHistory } from 'react-router'
-import Raven from 'raven-js'
+import RavenMiddleWare from 'redux-raven-middleware'
 
 import { I18n } from '../../src/lib/I18n'
 
@@ -23,9 +23,7 @@ import OnBoarding from './containers/OnBoarding'
 import Settings from './containers/Settings'
 
 import { loadState, saveState } from './lib/localStorage'
-import { init } from './lib/cozy-helper'
-
-Raven.config(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`).install()
+import { initClient, initBar } from './lib/cozy-helper'
 
 const context = window.context
 const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
@@ -40,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       filesApp,
       persistedState,
       applyMiddleware(
+        RavenMiddleWare(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`),
         thunkMiddleware,
         loggerMiddleware
       )
@@ -59,14 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function requireSetup (nextState, replace) {
       const url = store.getState().mobile.settings.serverUrl
-      const isSetup = url !== ''
+      const isSetup = store.getState().mobile.settings.authorized
       if (!isSetup) {
         replace({
           pathname: '/onboarding',
           state: { nextPathname: nextState.location.pathname }
         })
       } else {
-        init(url)
+        initClient(url)
+        initBar()
       }
     }
 

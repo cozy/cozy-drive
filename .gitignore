@@ -39,6 +39,7 @@ mobile/www
 mobile/keys
 
 # fastlane
+mobile/fastlane/README.md
 mobile/fastlane/report.xml
 mobile/fastlane/Error*.png
 mobile/fastlane/Preview.html

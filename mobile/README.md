@@ -54,6 +54,31 @@ $ cordova run ios
 ```
 
 
+## :lock: Create Release
+
+### Android
+
+Create this folders:
+
+```
+$ mkdir mobile/keys
+$ mkdir mobile/keys/android
+$ mkdir mobile/build
+$ mkdir mobile/build/android
+```
+
+You must have this files:
+
+- keys/android/cozy-files-release-key.jks (and the password)
+- keys/android/key.json
+
+To generate a signed APK on `mobile/build/android/` and publish on Google Play:
+
+```
+$ npm run android:publish
+```
+
+
 ## :rainbow: Icons
 
 You can generate all icons with [splashicon-generator](https://github.com/eberlitz/splashicon-generator).
