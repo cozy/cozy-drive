@@ -55,7 +55,7 @@ exports[`Onboarding should render different components 2`] = `
     className="wizard-footer">
     <button
       className="coz-btn coz-btn--regular"
-      disabled={undefined}
+      disabled={true}
       onClick={[Function]}
       role="button" />
   </footer>
@@ -130,7 +130,7 @@ exports[`Onboarding should render the SelectServer screen 1`] = `
     className="wizard-footer">
     <button
       className="coz-btn coz-btn--regular"
-      disabled={undefined}
+      disabled={true}
       onClick={[Function]}
       role="button" />
   </footer>

@@ -49,7 +49,7 @@ export const SelectServer = ({t, goBack, selectServer, updateServerUrl, serverUr
         role='button'
         className={'coz-btn coz-btn--regular'}
         onClick={() => selectServer(serverUrl)}
-        disabled={error}
+        disabled={error || !serverUrl}
       >
         {t('mobile.onboarding.server_selection.button')}
       </button>
