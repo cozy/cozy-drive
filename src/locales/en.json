@@ -85,23 +85,22 @@
   "mobile": {
     "onboarding": {
       "welcome": {
-        "title": "Your own private cloud",
-        "button": "Sign in"
+        "title1": "Welcome to Cozy",
+        "title2": "Your own personal cloud",
+        "button": "Sign in to your Cozy",
+        "no_account_link": "Don’t have an account? Request one here."
       },
       "server_selection": {
-        "cozy_address": "Your Cozy's address",
+        "description": "This is the web address you use to access your Cozy.",
+        "cozy_address_placeholder": "Your Cozy internet address",
         "button": "Next",
-        "description": "This is the address you use to connect to your cozy, like yourname.cozycloud.cc",
-        "cozy_address_placeholder": "johnwayne.cozycloud.cc",
-        "wrong_address": "The address doesn't seem to match a Cozy."
+        "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
       },
-      "activation": {
-        "backupPhotosVideos": {
-          "title": "Back up Photos & Videos",
-          "description": "lorem ipsum dolor sit amet humanus corpus ex machina"
-        },
-        "button": "Activate",
-        "skip": "SKIP"
+      "photos": {
+        "title": "Backup your photos and videos",
+        "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them. By default, it will only be done when the WIFI is on. This setting can be changed later on.",
+        "button": "Enable now",
+        "skip": "Later"
       }
     },
     "settings": {

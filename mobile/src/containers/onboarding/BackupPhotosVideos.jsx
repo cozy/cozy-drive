@@ -1,30 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import classnames from 'classnames'
+import classNames from 'classnames'
 
 import { translate } from '../../../../src/lib/I18n'
 
+import Breadcrumb from '../../components/Breadcrumb'
+
 import styles from '../../styles/onboarding.styl'
-import logo from '../../../res/icon.png'
 
 import { setBackupImages } from '../../actions/settings'
 
 export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
 (
-  <div className={classnames(styles['wizard'], styles['activation'])}>
-    <div className={classnames(styles['wizard-main'])}>
-      <img src={logo} alt='logo' />
-      <h1>{t('mobile.onboarding.activation.backupPhotosVideos.title')}</h1>
-      <p>{t('mobile.onboarding.activation.backupPhotosVideos.description')}</p>
+  <div className={classNames(styles['wizard'], styles['photos-backup'])}>
+    <header className={styles['wizard-header']}>
+      <a className={styles['skipLink']} onClick={onSkip}>
+        {t('mobile.onboarding.photos.skip')}
+      </a>
+    </header>
+    <div className={styles['wizard-main']}>
+      <div className={classNames(styles['illustration'], styles['illustration-photos'])} />
+      <h1 className={styles['title']}>{t('mobile.onboarding.photos.title')}</h1>
+      <p className={styles['description']}>{t('mobile.onboarding.photos.description')}</p>
     </div>
-    <a onClick={onSkip}>{t('mobile.onboarding.activation.skip')}</a>
-    <button role='button' className={classnames('coz-btn coz-btn--regular', styles['wizard-button'], styles['wizard-button--with-circles'])} onClick={onActivate}>{t('mobile.onboarding.activation.button')}</button>
-    <div className={classnames(styles['wizard-circles'])}>
-      <span className={classnames(styles['wizard-circles__circle'], styles['wizard-circles__circle--active'])} />
-      <span className={classnames(styles['wizard-circles__circle'])} />
-      <span className={classnames(styles['wizard-circles__circle'])} />
-      <span className={classnames(styles['wizard-circles__circle'])} />
-    </div>
+    <footer className={styles['wizard-footer']}>
+      <button
+        role='button'
+        className={'coz-btn coz-btn--regular'}
+        onClick={onActivate}
+      >
+        {t('mobile.onboarding.photos.button')}
+      </button>
+      <Breadcrumb currentStep={1} totalSteps={4} />
+    </footer>
   </div>
 )
 
