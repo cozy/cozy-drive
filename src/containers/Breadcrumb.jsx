@@ -1,18 +1,31 @@
 import styles from '../styles/breadcrumb'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID, TRASH_CONTEXT } from '../constants/config'
 
 import React from 'react'
 import withState from 'cozy-ui/react/helpers/withState'
 import { translate } from '../lib/I18n'
-import { withRouter } from 'react-router'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
-import { isBrowsingTrash } from '../reducers'
 
-const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToFolder }) => {
+const Breadcrumb = ({ t, context, folder, opening, toggle, goToFolder }) => {
+  if (!context) {
+    return null
+  }
+
+  const topLevelTitle = t(`breadcrumb.title_${context}`)
+
+  if (!folder) {
+    return (
+      <h2 class={styles['fil-content-title']}>
+        <span>{ topLevelTitle }</span>
+      </h2>
+    )
+  }
+
   const isRoot = folder.id === ROOT_DIR_ID
   const isTrash = folder.id === TRASH_DIR_ID
 
@@ -24,27 +37,28 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
   const isLevel2Root = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== ROOT_DIR_ID
   const isLevel2Trash = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== TRASH_DIR_ID && !isInTrash
 
-  const showEllipsis = (isBrowsingTrash && isLevel2Trash) || (!isBrowsingTrash && isLevel2Root)
+  const isBrowsingTrash = context === TRASH_CONTEXT
 
-  const topLevelTitle = isBrowsingTrash ? 'breadcrumb.title_trash' : 'breadcrumb.title_files'
+  const showEllipsis = (isBrowsingTrash && isLevel2Trash) || (!isBrowsingTrash && isLevel2Root)
 
   return (
     <h2 class={styles['fil-content-title']}>
 
       { (isRoot || isTrash) && // Displays the non-interactive root folder
-        <span>{ t(topLevelTitle) }</span> }
+        <span>{ topLevelTitle }</span> }
 
       { !isRoot && !isTrash && // show the interactive root folder
-        <span
+        <Link
+          to={`/${context}`}
           className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
           onClick={() => {
             toggle()
-            goToFolder(isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID).then(() => toggle())
+            goToFolder(null, context).then(() => toggle())
           }}
         >
-          <a>{ t(topLevelTitle) }</a>
+          { topLevelTitle }
           <span className={styles['separator']}>/</span>
-        </span>
+        </Link>
       }
 
       { showEllipsis && // show an ellipsis if there are more than 2 levels
@@ -54,16 +68,17 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
         </span> }
 
       { showParentFolder && // Displays the parent folder
-        <span
+        <Link
+          to={`/${context}/${folder.parent.id}`}
           className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
           onClick={() => {
             toggle()
-            goToFolder(folder.parent.id).then(() => toggle())
+            goToFolder(folder.parent.id, context).then(() => toggle())
           }}
         >
-          <a>{folder.parent.name}</a>
+          {folder.parent.name}
           <span className={styles['separator']}>/</span>
-        </span>
+        </Link>
       }
 
       { !isRoot && !isTrash && // Displays the current folder
@@ -77,16 +92,14 @@ const Breadcrumb = ({ t, router, folder, opening, toggle, isBrowsingTrash, goToF
 
 const mapStateToProps = (state) => ({
   folder: state.folder,
-  isBrowsingTrash: isBrowsingTrash(state)
+  context: state.context
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  goToFolder: (parentId) => {
-    return dispatch(openFolder(parentId, false, ownProps.router))
-  }
+  goToFolder: (parentId, context) => dispatch(openFolder(parentId, context))
 })
 
-export default translate()(withRouter(connect(
+export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
 )(withState({
@@ -95,4 +108,4 @@ export default translate()(withRouter(connect(
   toggle: () => {
     setState(state => ({ opening: !state.opening }))
   }
-}))(Breadcrumb))))
+}))(Breadcrumb)))

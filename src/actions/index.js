@@ -1,11 +1,9 @@
 /* global cozy */
-import { ROOT_DIR_ID } from '../constants/config'
+import { FILES_CONTEXT, TRASH_CONTEXT, ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
 import { getFilePaths, getFileById } from '../reducers'
 
-export const FETCH_FILES = 'FETCH_FILES'
-export const RECEIVE_FILES = 'RECEIVE_FILES'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
@@ -50,25 +48,25 @@ const ALERT_TYPE_ERROR = 'error'
 export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', type: ALERT_TYPE_ERROR } })
 export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', type: ALERT_TYPE_ERROR } })
 
-export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false) => {
+export const openFolder = (folderId, context = FILES_CONTEXT) => {
   return async dispatch => {
-    if (isInitialFetch) {
-      dispatch({ type: FETCH_FILES, folderId })
+    if (!folderId) {
+      folderId = context === TRASH_CONTEXT
+        ? TRASH_DIR_ID
+        : ROOT_DIR_ID
     }
-    dispatch({ type: OPEN_FOLDER, folderId })
+    dispatch({ type: OPEN_FOLDER, folderId, context })
     let folder, parent
     try {
       folder = await cozy.client.files.statById(folderId)
       const parentId = folder.attributes.dir_id
       parent = !!parentId && await cozy.client.files.statById(parentId)
     } catch (err) {
-      return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
-    }
-    if (isInitialFetch) {
-      dispatch({ type: RECEIVE_FILES, folderId })
+      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err, context })
     }
     return dispatch({
       type: OPEN_FOLDER_SUCCESS,
+      context,
       folder: Object.assign(extractFileAttributes(folder), {
         parent: extractFileAttributes(parent)}),
       files: folder.relations('contents').map(

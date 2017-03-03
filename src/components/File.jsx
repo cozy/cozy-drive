@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
+import { withRouter } from 'react-router'
 
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
@@ -60,6 +61,7 @@ class File extends Component {
     if (isDir) {
       this.setState({ opening: true })
       this.props.onOpen(id).then(() => this.setState({ opening: false }))
+      this.props.router.push(`/${this.props.context}/${id}`)
     } else {
       // TODO Handle files opening throught the app instead of doing it throught the browser
       window.open(`${STACK_URL}/files/download/${id}`, '_blank')
@@ -128,4 +130,4 @@ class File extends Component {
   }
 }
 
-export default translate()(File)
+export default withRouter(translate()(File))

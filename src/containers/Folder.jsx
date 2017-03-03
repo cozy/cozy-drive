@@ -5,10 +5,11 @@ import { translate } from '../lib/I18n'
 
 import { openFolder, renameFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
+import { TRASH_CONTEXT } from '../constants/config'
 
 import Alerter from 'cozy-ui/react/Alerter'
 
+import Loading from '../components/Loading'
 import Empty from '../components/Empty'
 import Oops from '../components/Oops'
 import FileList from '../components/FileList'
@@ -20,27 +21,28 @@ import DeleteConfirmation from '../containers/DeleteConfirmation'
 
 const isDir = attrs => attrs.type === 'directory'
 
-const TRASH_CONTEXT = 'trash'
-
 class Folder extends Component {
   componentWillMount () {
-    this.props.onMount()
+    if (!this.props.isFetching) {
+      this.props.onMount()
+    }
   }
 
   componentWillReceiveProps (newProps) {
-    if (this.props.params.file !== undefined && // we're not in the root dir
-      newProps.params.file !== this.props.params.file && // the route has changed
-      newProps.params.file !== newProps.folderId) { // but the folder has not been fetched
-      this.props.onRouteChange(newProps.params.file)
+    // if we're already fetching, that's because of a 'openFolder' call
+    // no need to check if the URL has changed
+    if (this.props.isFetching || newProps.isFetching) return
+    // let's check now!
+    if (newProps.context !== this.props.context ||
+      newProps.params.folderId !== this.props.params.folderId) {
+      this.props.onRouteChange(newProps.params.folderId, newProps.context)
     }
   }
 
   render (props, state) {
-    if (props.isFetching === true) {
+    if (props.showLoading === true) {
       return (
-        <div role='contentinfo'>
-          <p>Loading</p>
-        </div>
+        <Loading message={props.t('loading.message')} />
       )
     }
     const isTrashContext = props.context === TRASH_CONTEXT
@@ -67,35 +69,24 @@ class Folder extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
+  showLoading: state.ui.isFetching && state.folder === null,
   alert: state.ui.alert,
   error: state.ui.error,
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
   showActionMenu: state.ui.showFileActionMenu,
-  files: getVisibleFiles(state),
-  folderId: state.ui.currentFolderId
+  files: getVisibleFiles(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMount: () => {
-    let folderId
-    if (ownProps.params.file !== undefined) {
-      folderId = ownProps.params.file
-    } else {
-      folderId = ownProps.context === TRASH_CONTEXT
-        ? TRASH_DIR_ID
-        : ROOT_DIR_ID
-    }
-    dispatch(openFolder(folderId, true))
+    dispatch(openFolder(ownProps.params.folderId, ownProps.context))
   },
-  onRouteChange: (folderId) => {
-    dispatch(openFolder(folderId, true))
+  onRouteChange: (folderId, context) => {
+    dispatch(openFolder(folderId, context))
   },
   onFolderOpen: (folderId) => {
-    return dispatch(openFolder(folderId, false))
-      .then(() => {
-        ownProps.router.push(`/${ownProps.context}/${folderId}`)
-      })
+    return dispatch(openFolder(folderId, ownProps.context))
   },
   onFileToggle: (id, selected) => {
     dispatch(toggleFileSelection(id, selected))

@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux'
 
-import { folder, files } from './folder'
+import { folder, files, context } from './folder'
 import ui from './ui'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID, TRASH_DIR_PATH } from '../constants/config.js'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
 export const reducers = {
   folder,
   files,
+  context,
   ui
 }
 
@@ -56,7 +57,5 @@ export const getActionableFiles = ({ files, ui }) => {
 
 export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
 export const mustShowAddFolder = state => state.ui.showAddFolder
-
-export const isBrowsingTrash = state => state.folder && state.folder.path && state.folder.path.indexOf(TRASH_DIR_PATH) === 0
 
 export default filesApp

@@ -1,31 +1,32 @@
 import styles from '../styles/topbar'
 
 import React from 'react'
-import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 
 import FilesToolbar from '../containers/FilesToolbar'
 import TrashToolbar from '../containers/TrashToolbar'
 import Breadcrumb from '../containers/Breadcrumb'
-import PageTitle from './PageTitle'
 
-const Topbar = ({location}) => {
-  const isFiles = /^\/files/.test(location.pathname)
-  const isTrash = /^\/trash/.test(location.pathname)
+import { FILES_CONTEXT, TRASH_CONTEXT } from '../constants/config'
 
-  if (isFiles || isTrash) {
-    return (
-      <div class={styles['fil-content-header']}>
-        <Breadcrumb />
-        { isFiles && <FilesToolbar /> }
-        { isTrash && <TrashToolbar /> }
-      </div>
-    )
-  }
+const TOOLBARS = {
+  [FILES_CONTEXT]: FilesToolbar,
+  [TRASH_CONTEXT]: TrashToolbar
+}
+
+const Topbar = ({ context }) => {
+  const Toolbar = TOOLBARS[context]
   return (
     <div class={styles['fil-content-header']}>
-      <PageTitle pathname={location.pathname} />
+      <Breadcrumb />
+      <Toolbar />
     </div>
   )
 }
 
-export default withRouter(Topbar)
+const mapStateToProps = (state, ownProps) => ({
+  context: state.context
+})
+const mapDispatchToProps = (dispatch, ownProps) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Topbar)
