@@ -6,7 +6,7 @@ exports[`Nav component should be rendered correctly 1`] = `
       className="coz-nav-item">
       <Link
         activeClassName="active"
-        className="pho-cat-photos"
+        className="pho-cat-photos coz-nav-link"
         onlyActiveOnIndex={false}
         style={Object {}}
         to="/photos">
@@ -17,7 +17,7 @@ exports[`Nav component should be rendered correctly 1`] = `
       className="coz-nav-item">
       <Link
         activeClassName="active"
-        className="pho-cat-albums"
+        className="pho-cat-albums coz-nav-link"
         onlyActiveOnIndex={false}
         style={Object {}}
         to="/albums">
@@ -28,7 +28,7 @@ exports[`Nav component should be rendered correctly 1`] = `
       className="coz-nav-item">
       <Link
         activeClassName="active"
-        className="pho-cat-shared"
+        className="pho-cat-shared coz-nav-link"
         onlyActiveOnIndex={false}
         style={Object {}}
         to="/shared">
@@ -39,7 +39,7 @@ exports[`Nav component should be rendered correctly 1`] = `
       className="coz-nav-item">
       <Link
         activeClassName="active"
-        className="pho-cat-trash"
+        className="pho-cat-trash coz-nav-link"
         onlyActiveOnIndex={false}
         style={Object {}}
         to="/trash">
