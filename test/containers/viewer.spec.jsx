@@ -52,9 +52,9 @@ describe('Viewer component', () => {
     const component = shallow(
       <Connected params={paramsMock} store={storeMock} />
     )
-    expect(component.node.props.current).toBe(photosMock[0]._id)
-    expect(component.node.props.previous).toBe(photosMock[2]._id)
-    expect(component.node.props.next).toBe(photosMock[1]._id)
+    expect(component.node.props.currentPhoto).toBe(photosMock[0])
+    expect(component.node.props.previousID).toBe(photosMock[2]._id)
+    expect(component.node.props.nextID).toBe(photosMock[1]._id)
     expect(component.node).toMatchSnapshot()
   })
 
@@ -62,9 +62,9 @@ describe('Viewer component', () => {
     const component = shallow(
       <Connected params={paramsMock2} store={storeMock} />
     )
-    expect(component.node.props.current).toBe(photosMock[1]._id)
-    expect(component.node.props.previous).toBe(photosMock[0]._id)
-    expect(component.node.props.next).toBe(photosMock[2]._id)
+    expect(component.node.props.currentPhoto).toBe(photosMock[1])
+    expect(component.node.props.previousID).toBe(photosMock[0]._id)
+    expect(component.node.props.nextID).toBe(photosMock[2]._id)
     expect(component.node).toMatchSnapshot()
   })
 
@@ -72,9 +72,9 @@ describe('Viewer component', () => {
     const component = shallow(
       <Connected params={paramsMock3} store={storeMock} />
     )
-    expect(component.node.props.current).toBe(photosMock[2]._id)
-    expect(component.node.props.previous).toBe(photosMock[1]._id)
-    expect(component.node.props.next).toBe(photosMock[0]._id)
+    expect(component.node.props.currentPhoto).toBe(photosMock[2])
+    expect(component.node.props.previousID).toBe(photosMock[1]._id)
+    expect(component.node.props.nextID).toBe(photosMock[0]._id)
     expect(component.node).toMatchSnapshot()
   })
 

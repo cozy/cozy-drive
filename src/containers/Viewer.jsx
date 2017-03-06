@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import Hammer from 'hammerjs'
 
-import { STACK_FILES_DOWNLOAD_PATH } from '../constants/config'
+import { getPhotoLink } from '../actions/photos'
 
 import ViewerToolbar from '../containers/ViewerToolbar'
+import Loading from '../components/Loading'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
@@ -15,7 +16,28 @@ const KEY_CODE_RIGHT = 39
 export class Viewer extends Component {
   constructor (props) {
     super(props)
+
+    this.state = {
+      imageUrl: '',
+      isLoading: true,
+      isImageLoading: true
+    }
+
     this.navigateToPhoto = this.navigateToPhoto.bind(this)
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    let currentPhoto = this.props.currentPhoto || nextProps.currentPhoto
+    if (this.state.imageUrl === '' && currentPhoto !== undefined) {
+      getPhotoLink(currentPhoto)
+        .then(link => {
+          this.setState({
+            imageUrl: link,
+            isLoading: false
+          })
+        })
+    }
   }
 
   componentDidMount () {
@@ -32,35 +54,48 @@ export class Viewer extends Component {
   }
 
   onKeyDown (e) {
-    if (e.keyCode === KEY_CODE_LEFT) this.navigateToPhoto(this.props.previous)
-    else if (e.keyCode === KEY_CODE_RIGHT) this.navigateToPhoto(this.props.next)
+    if (e.keyCode === KEY_CODE_LEFT) this.navigateToPhoto(this.props.previousID)
+    else if (e.keyCode === KEY_CODE_RIGHT) this.navigateToPhoto(this.props.nextID)
   }
 
   onSwipe (e) {
-    if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.props.next)
-    else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.props.previous)
+    if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.props.nextID)
+    else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.props.previousID)
   }
 
   navigateToPhoto (id) {
+    this.setState({imageUrl: '', isImageLoading: true, isLoading: true})
     let url = this.props.router.location.pathname
     let parentPath = url.substring(0, url.lastIndexOf('/'))
 
     this.props.router.push(`${parentPath}/${id}`)
   }
 
+  handleImageLoaded () {
+    this.setState({ isImageLoading: false })
+  }
+
   render () {
-    const { current, previous, next } = this.props
+    const { previousID, nextID } = this.props
+    const { imageUrl, isLoading, isImageLoading } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar />
         <div className={styles['pho-viewer-content']}>
-          <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previous)} />
+          <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />
           <div className={styles['pho-viewer-photo']}>
-            <img
-              src={`${STACK_FILES_DOWNLOAD_PATH}/${current}`}
-            />
+            {!isLoading &&
+              <img
+                onLoad={this.handleImageLoaded}
+                style={isImageLoading ? 'display:none' : ''}
+                src={imageUrl}
+              />
+            }
+            {(isLoading || isImageLoading) &&
+              <Loading noMargin />
+            }
           </div>
-          <a role='button' className={styles['pho-viewer-nav-next']} onClick={() => this.navigateToPhoto(next)} />
+          <a role='button' className={styles['pho-viewer-nav-next']} onClick={() => this.navigateToPhoto(nextID)} />
         </div>
       </div>
     )
@@ -69,16 +104,17 @@ export class Viewer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   let set = state.photos.map(photo => photo._id)
-  let current = ownProps.params.photoId
-  let currentPhotoIndex = set.indexOf(current)
+  let currentID = ownProps.params.photoId
+  let currentPhotoIndex = set.indexOf(currentID)
+  let currentPhoto = state.photos[currentPhotoIndex]
 
-  let next = set[(currentPhotoIndex + 1) % set.length]
-  let previous = set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]
+  let nextID = set[(currentPhotoIndex + 1) % set.length]
+  let previousID = set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]
 
   return {
-    current,
-    previous,
-    next
+    currentPhoto,
+    previousID,
+    nextID
   }
 }
 

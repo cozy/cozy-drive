@@ -1,3 +1,8 @@
+exports[`Loading component should be displayed with --no-margin class if noMargin is true 1`] = `
+<div
+  className="pho-loading--no-margin" />
+`;
+
 exports[`Loading component should be displayed with photos_fetching text if loadingType is photos_fetching 1`] = `
 <div
   className="pho-loading">

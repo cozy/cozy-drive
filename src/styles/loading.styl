@@ -1,6 +1,6 @@
 @require 'cozy-ui'
 
-.pho-loading
+.pho-loading, .pho-loading--no-margin
   text-align center
   &:before
     content     ''
@@ -19,6 +19,10 @@
     margin-top  em(15px)
     color       grey-11
     line-height 1.5
+
+.pho-loading--no-margin
+    &:before
+        margin 0
 
 
 @media (max-width: (1023/basefont)rem)

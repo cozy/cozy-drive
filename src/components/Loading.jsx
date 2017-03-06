@@ -3,10 +3,15 @@ import styles from '../styles/loading'
 import React from 'react'
 import { translate } from '../lib/I18n'
 
-export const Loading = ({ t, loadingType }) => {
+export const Loading = ({ t, loadingType, noMargin }) => {
   return (
-    <div className={styles['pho-loading']}>
-      <p>{t(`Loading.${loadingType}`)}</p>
+    <div
+      className={noMargin
+        ? styles['pho-loading--no-margin']
+        : styles['pho-loading']
+      }
+    >
+      {loadingType && <p>{t(`Loading.${loadingType}`)}</p>}
     </div>
   )
 }

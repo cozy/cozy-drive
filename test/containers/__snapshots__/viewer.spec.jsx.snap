@@ -1,14 +1,18 @@
 exports[`Viewer component should be displayed correctly with the img src computed from photoId using the store and the connected component (current photo is the first of the list) 1`] = `
 <withRouter(Viewer)
-  current="33dda00f0eec15bc3b3c59a615001ac8"
+  currentPhoto={
+    Object {
+      "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+    }
+  }
   dispatch={[Function]}
-  next="33dda00f0eec15bc3b3c59a615001ac9"
+  nextID="33dda00f0eec15bc3b3c59a615001ac9"
   params={
     Object {
       "photoId": "33dda00f0eec15bc3b3c59a615001ac8",
     }
   }
-  previous="33dda00f0eec15bc3b3c59a615001ad0"
+  previousID="33dda00f0eec15bc3b3c59a615001ad0"
   store={
     Object {
       "clearActions": [Function],
@@ -23,15 +27,19 @@ exports[`Viewer component should be displayed correctly with the img src compute
 
 exports[`Viewer component should be displayed correctly with the img src computed from photoId using the store and the connected component (current photo is the last of the list) 1`] = `
 <withRouter(Viewer)
-  current="33dda00f0eec15bc3b3c59a615001ad0"
+  currentPhoto={
+    Object {
+      "_id": "33dda00f0eec15bc3b3c59a615001ad0",
+    }
+  }
   dispatch={[Function]}
-  next="33dda00f0eec15bc3b3c59a615001ac8"
+  nextID="33dda00f0eec15bc3b3c59a615001ac8"
   params={
     Object {
       "photoId": "33dda00f0eec15bc3b3c59a615001ad0",
     }
   }
-  previous="33dda00f0eec15bc3b3c59a615001ac9"
+  previousID="33dda00f0eec15bc3b3c59a615001ac9"
   store={
     Object {
       "clearActions": [Function],
@@ -46,15 +54,19 @@ exports[`Viewer component should be displayed correctly with the img src compute
 
 exports[`Viewer component should be displayed correctly with the img src computed from photoId using the store and the connected component (current photo is the middle of the list) 1`] = `
 <withRouter(Viewer)
-  current="33dda00f0eec15bc3b3c59a615001ac9"
+  currentPhoto={
+    Object {
+      "_id": "33dda00f0eec15bc3b3c59a615001ac9",
+    }
+  }
   dispatch={[Function]}
-  next="33dda00f0eec15bc3b3c59a615001ad0"
+  nextID="33dda00f0eec15bc3b3c59a615001ad0"
   params={
     Object {
       "photoId": "33dda00f0eec15bc3b3c59a615001ac9",
     }
   }
-  previous="33dda00f0eec15bc3b3c59a615001ac8"
+  previousID="33dda00f0eec15bc3b3c59a615001ac8"
   store={
     Object {
       "clearActions": [Function],
@@ -80,8 +92,8 @@ exports[`Viewer component should handle correctly onClick events for next pictur
       role="button" />
     <div
       className="pho-viewer-photo">
-      <img
-        src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
+      <_translate
+        noMargin={true} />
     </div>
     <a
       className="pho-viewer-nav-next"
@@ -104,8 +116,8 @@ exports[`Viewer component should handle correctly onClick events for previous pi
       role="button" />
     <div
       className="pho-viewer-photo">
-      <img
-        src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
+      <_translate
+        noMargin={true} />
     </div>
     <a
       className="pho-viewer-nav-next"
