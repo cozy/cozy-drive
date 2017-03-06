@@ -24,7 +24,13 @@ describe('Photo component', () => {
   it('should render correctly an image according a photo object and the router path', () => {
     const component = shallow(
       <Photo photo={photoObject} router={routerObjectMock} />
-    ).node
-    expect(component).toMatchSnapshot()
+    )
+
+    component.setState({
+      loading: false,
+      url: `http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8`
+    })
+
+    expect(component.node).toMatchSnapshot()
   })
 })
