@@ -26,13 +26,12 @@
   "permissions": {
     "files": {
       "description": "Required to access the files",
-      "type": "io.cozy.files",
-      "verbs": ["GET","POST","PUT","DELETE"],
-      "values": ["io.cozy.files.root-dir"]
+      "type": "io.cozy.files"
     },
-    "settings/locale": {
-      "description": "Required to display a localized Ui",
-      "access": "read"
+    "apps": {
+      "description": "Required by the cozy-bar to display the icons of the apps",
+      "type": "io.cozy.apps",
+      "verbs": ["GET"]
     }
   }
 }
