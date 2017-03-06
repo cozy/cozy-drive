@@ -44,7 +44,7 @@ class CreateAlbumForm extends Component {
 
   render ({ t, onSubmitNewAlbum }) {
     return (
-      <form onSubmit={(event) => this.onSubmit(event, onSubmitNewAlbum)}>
+      <form className={styles['pho-create-album-form']} onSubmit={(event) => this.onSubmit(event, onSubmitNewAlbum)}>
         <label className={styles['coz-create-album-label']}>
           {t('Albums.create.inline_form.create_label')}
         </label>
