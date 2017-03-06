@@ -35,8 +35,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   create: name => {
     return dispatch(createFolder(name))
   },
-  hide: () => {
-    return dispatch(abortAddFolder(name))
+  hide: accidentalAbort => {
+    return dispatch(abortAddFolder(accidentalAbort))
   }
 })
 
