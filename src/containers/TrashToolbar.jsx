@@ -1,5 +1,4 @@
 import styles from '../styles/toolbar'
-import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -12,11 +11,7 @@ import { mustShowSelectionBar } from '../reducers'
 
 const TrashToolbar = ({ t, error, disableFolderCreation, isSelectionBarVisible, showSelectionBar }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
-    <div className={styles['fil-toolbar-trash']}>
-      <button className={classNames('coz-btn', 'coz-btn--danger-outline', styles['coz-btn--delete'])}>
-        {t('toolbar.delete_all')}
-      </button>
-    </div>
+    <div className={styles['fil-toolbar-trash']} />
     <MenuButton>
       <button
         role='button'
