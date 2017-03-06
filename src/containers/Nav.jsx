@@ -39,32 +39,40 @@ class ActiveLink extends Component {
 const Nav = ({ t, context, openFiles, openTrash }) => {
   return (
     <nav>
-      <ul class={styles['fil-nav']}>
-        <li class={styles['fil-nav-item']}>
+      <ul class={styles['coz-nav']}>
+        <li class={styles['coz-nav-item']}>
           <ActiveLink
             to='/files'
             onClick={openFiles}
             className={classNames(
-              styles['fil-cat-files'], { [styles['active']]: context === FILES_CONTEXT }
+              styles['coz-nav-link'],
+              styles['fil-cat-files'],
+              { [styles['active']]: context === FILES_CONTEXT }
             )}
           >
             { t('nav.item_files') }
           </ActiveLink>
         </li>
-        <li class={styles['fil-nav-item']}>
+        <li class={styles['coz-nav-item']}>
           <ActiveLink
             to='/trash'
             onClick={openTrash}
             className={classNames(
-              styles['fil-cat-trash'], { [styles['active']]: context === TRASH_CONTEXT }
+              styles['coz-nav-link'],
+              styles['fil-cat-trash'],
+              { [styles['active']]: context === TRASH_CONTEXT }
             )}
           >
             { t('nav.item_trash') }
           </ActiveLink>
         </li>
         {__TARGET__ === 'mobile' &&
-        <li class={styles['fil-nav-item']}>
-          <Link to='/settings' className={styles['fil-cat-settings']} activeClassName={styles['active']}>
+        <li class={styles['coz-nav-item']}>
+          <Link
+            to='/settings'
+            className={classNames(styles['coz-nav-link'], styles['fil-cat-settings'])}
+            activeClassName={styles['active']}
+          >
             { t('nav.item_settings') }
           </Link>
         </li>
