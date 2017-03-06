@@ -14,7 +14,10 @@
   "Toolbar": {
     "photo_upload": "Upload",
     "more": "More",
-    "select_items": "Select photos"
+    "menu": {
+      "select_items": "Select photos",
+      "photo_upload": "Upload photos"
+    }
   },
   "Loading": {
     "photos_indexing": "Your photos are currently being indexed. Please wait.",

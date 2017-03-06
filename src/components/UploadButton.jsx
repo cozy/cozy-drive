@@ -17,14 +17,14 @@ const styles = {
   }
 }
 
-export const UploadButton = ({ t, disabled, onUpload, className }) => (
+export const UploadButton = ({ t, label, type = 'button', disabled, onUpload, className = '' }) => (
   <label
     role='button'
     disabled={disabled}
-    className={`${className} coz-btn coz-btn--regular coz-btn--upload`}
+    className={`${className} ${type === 'menu-item' ? 'coz-link--upload' : 'coz-btn coz-btn--regular coz-btn--upload'}`}
     style={styles.parent}
   >
-    { t('Toolbar.photo_upload') }
+    { label }
     <input
       type='file'
       accept='image/*'

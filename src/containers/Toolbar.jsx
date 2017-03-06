@@ -18,6 +18,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
       className='coz-desktop'
       onUpload={uploadPhotos}
       disabled={disabled}
+      label={t('Toolbar.photo_upload')}
     />
     <MenuButton className='coz-mobile'>
       <button
@@ -32,12 +33,14 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
           <UploadButton
             onUpload={uploadPhotos}
             disabled={disabled}
+            label={t('Toolbar.menu.photo_upload')}
+            type='menu-item'
           />
         </Item>
         <hr />
         <Item>
           <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
-            {t('Toolbar.select_items')}
+            {t('Toolbar.menu.select_items')}
           </a>
         </Item>
       </Menu>
