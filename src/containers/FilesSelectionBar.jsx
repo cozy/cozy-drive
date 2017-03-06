@@ -14,11 +14,11 @@ const FilesSelectionBar = ({ t, selectedCount, onDownload, onHide, onDelete, onS
       <span> {t('selectionbar.selected_count', { smart_count: selectedCount })}</span>
     </span>
     <span className={styles['coz-selectionbar-separator']} />
-    <button className={styles['coz-action-share']}>{t('selectionbar.share')}</button>
+    {/*<button className={styles['coz-action-share']}>{t('selectionbar.share')}</button>*/}
     <button className={styles['coz-action-download']} onClick={onDownload}>{t('selectionbar.download')}</button>
     <button className={styles['coz-action-delete']} onClick={onDelete}>{t('selectionbar.delete')}</button>
-    <button className={styles['coz-action-moveto']}>{t('selectionbar.moveto')}</button>
-    <button className={styles['coz-action-rename']}>{t('selectionbar.rename')}</button>
+    {/*<button className={styles['coz-action-moveto']}>{t('selectionbar.moveto')}</button>*/}
+    {/*<button className={styles['coz-action-rename']}>{t('selectionbar.rename')}</button>*/}
     <button className={classNames('coz-btn', 'coz-btn--extra', 'coz-btn--extra-white', styles['coz-action-extra'])} onClick={onShowActionMenu} />
     <button className={styles['coz-action-close']} onClick={onHide}>{t('selectionbar.close')}</button>
   </div>
