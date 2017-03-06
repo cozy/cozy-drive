@@ -19,8 +19,12 @@
   "permissions": {
     "files": {
       "description": "Required for photo access",
-      "type": "io.cozy.files",
-      "methods": ["GET", "POST", "PUT"]
+      "type": "io.cozy.files"
+    },
+    "apps": {
+      "description": "Required by the cozy-bar to display the icons of the apps",
+      "type": "io.cozy.apps",
+      "verbs": ["GET"]
     }
   }
 }
