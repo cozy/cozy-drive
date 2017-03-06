@@ -1,4 +1,4 @@
-/* global __SENTRY_TOKEN__ */
+/* global cozy, __SENTRY_TOKEN__ */
 
 import 'babel-polyfill'
 
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       } else {
         initClient(url)
+        cozy.client.offline.startRepeatedReplication('io.cozy.files', 15)
         initBar()
       }
     }
