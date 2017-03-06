@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-ui": "3.0.0-beta4",
+    "cozy-ui": "^3.0.0-beta13",
     "date-fns": "^1.26.0",
     "hammerjs": "^2.0.8",
     "node-polyglot": "^2.2.0",

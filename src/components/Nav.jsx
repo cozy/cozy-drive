@@ -4,26 +4,28 @@ import React from 'react'
 import { translate } from '../lib/I18n'
 import { Link } from 'react-router'
 
+import classNames from 'classnames'
+
 export const Nav = ({ t }) => (
   <nav>
     <ul className={styles['coz-nav']}>
       <li className={styles['coz-nav-item']}>
-        <Link to='/photos' className={styles['pho-cat-photos']} activeClassName={styles['active']}>
+        <Link to='/photos' className={classNames(styles['pho-cat-photos'], styles['coz-nav-link'])} activeClassName={styles['active']}>
           { t('Nav.photos') }
         </Link>
       </li>
       <li className={styles['coz-nav-item']}>
-        <Link to='/albums' className={styles['pho-cat-albums']} activeClassName={styles['active']}>
+        <Link to='/albums' className={classNames(styles['pho-cat-albums'], styles['coz-nav-link'])} activeClassName={styles['active']}>
           { t('Nav.albums') }
         </Link>
       </li>
       <li className={styles['coz-nav-item']}>
-        <Link to='/shared' className={styles['pho-cat-shared']} activeClassName={styles['active']}>
+        <Link to='/shared' className={classNames(styles['pho-cat-shared'], styles['coz-nav-link'])} activeClassName={styles['active']}>
           { t('Nav.shared') }
         </Link>
       </li>
       <li className={styles['coz-nav-item']}>
-        <Link to='/trash' className={styles['pho-cat-trash']} activeClassName={styles['active']}>
+        <Link to='/trash' className={classNames(styles['pho-cat-trash'], styles['coz-nav-link'])} activeClassName={styles['active']}>
           { t('Nav.trash') }
         </Link>
       </li>
