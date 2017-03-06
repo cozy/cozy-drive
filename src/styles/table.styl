@@ -8,7 +8,7 @@
 .fil-content-cell
     box-sizing  border-box
     padding     em(15px) em(32px)
-    font-size(14px)
+    font-size   14px
 
 .fil-content-row
     display         flex
@@ -20,7 +20,7 @@
     .fil-content-body &:hover
         background-color grey-10
 
-.fil-content-file
+.fil-content-cell.fil-content-file
     color grey-08
 
 .fil-content-ext
@@ -62,12 +62,12 @@
     flex 0 0 25%
 
 .fil-content-file-select
-    flex       0 0 5%
+    basefont = 14px
+    flex       0 0 em(32px, basefont)
     opacity    0
-    min-width  em(32px)
-    max-width  em(48px)
     padding    em(15px) em(8px)
-    font-size(14px)
+    text-align center
+    font-size  basefont
     cursor     default
 
     label

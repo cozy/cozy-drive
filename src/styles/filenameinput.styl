@@ -1,8 +1,11 @@
 @require 'cozy-ui'
 
 .fil-file-name-input
-    @extends $form-text
+    @extend $form-text
 
     input[type=text]
-        padded 6px
-        width  100%
+        width   100%
+        padded  em(6px)
+
+        &:focus
+            background-color  white
