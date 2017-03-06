@@ -73,6 +73,7 @@ export const registerDevice = () => async (dispatch, getState) => {
   await cozy.client.authorize().then(async ({ client }) => {
     dispatch(setClient(client))
     await cozy.client.offline.replicateFromCozy('io.cozy.files')
+    cozy.client.offline.startRepeatedReplication('io.cozy.files', 15)
   }).catch(err => {
     dispatch(wrongAddressError())
     logException(err)

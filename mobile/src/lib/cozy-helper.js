@@ -22,7 +22,7 @@ export const initClient = (url, onRegister = null, device = 'Device') => {
   console.log(`Cozy Client initializes a connection with ${url}`)
   cozy.client.init({
     cozyURL: url,
-    offline: {doctypes: ['io.cozy.files'], timer: 15},
+    offline: {doctypes: ['io.cozy.files']},
     oauth: getAuth(onRegister, device)
   })
 }
