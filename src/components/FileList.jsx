@@ -8,7 +8,7 @@ import File from '../components/File'
 import AddFolder from '../containers/AddFolder'
 
 const FileList = ({
-  t, f, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
 }) => (
   <div className={classNames(
     styles['fil-content-table'],
@@ -27,7 +27,8 @@ const FileList = ({
         <File
           context={context}
           onEdit={onFileEdit}
-          onOpen={onFolderOpen}
+          onFolderOpen={onFolderOpen}
+          onFileOpen={onFileOpen}
           onToggle={onFileToggle}
           onShowActionMenu={onShowActionMenu}
           attributes={file}

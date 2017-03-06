@@ -7,9 +7,6 @@ import styles from '../styles/table'
 import { translate } from '../lib/I18n'
 import FilenameInput from '../components/FilenameInput'
 
-// Temporary
-const STACK_URL = 'http://cozy.local:8080'
-
 export const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
   return {
@@ -56,23 +53,21 @@ class File extends Component {
     onToggle(attributes.id, attributes.selected)
   }
 
-  open (e, id, isDir = false) {
+  open (e, attributes) {
     e.stopPropagation()
-    if (isDir) {
+    if (isDir(attributes)) {
       this.setState({ opening: true })
-      this.props.onOpen(id).then(() => this.setState({ opening: false }))
-      this.props.router.push(`/${this.props.context}/${id}`)
+      this.props.onFolderOpen(attributes.id).then(() => this.setState({ opening: false }))
+      this.props.router.push(`/${this.props.context}/${attributes.id}`)
     } else {
-      // TODO Handle files opening throught the app instead of doing it throught the browser
-      window.open(`${STACK_URL}/files/download/${id}`, '_blank')
+      this.props.onFileOpen(attributes)
     }
   }
 
   render ({ t, f, attributes, showSelection, onShowActionMenu }, { editing, opening }) {
-    const isDirectory = isDir(attributes)
     const rowListeners = showSelection
     ? { onClick: e => this.toggle(e) }
-    : { onDoubleClick: e => this.open(e, attributes.id, isDirectory) }
+    : { onDoubleClick: e => this.open(e, attributes) }
     return (
       <div className={styles['fil-content-row']} {...rowListeners}>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
@@ -105,7 +100,6 @@ class File extends Component {
   }
 
   renderFilenameCell (attributes, editing, opening, canOpen) {
-    const isDirectory = isDir(attributes)
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(
       styles['fil-content-cell'],
@@ -121,7 +115,7 @@ class File extends Component {
       )
     }
     return (
-      <div className={classes} onClick={canOpen ? e => this.open(e, attributes.id, isDirectory) : undefined}>
+      <div className={classes} onClick={canOpen ? e => this.open(e, attributes) : undefined}>
         {filename}
         {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
         {opening === true && <div className={styles['fil-loading']} />}

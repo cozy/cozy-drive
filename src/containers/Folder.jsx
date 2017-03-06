@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from '../lib/I18n'
 
-import { openFolder, renameFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
+import { openFolder, openFileInNewTab, renameFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
 import { TRASH_CONTEXT } from '../constants/config'
 
@@ -86,6 +86,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(openFolder(folderId, context)),
   onFolderOpen: (folderId) =>
     dispatch(openFolder(folderId, ownProps.context)),
+  onFileOpen: (file) =>
+    dispatch(openFileInNewTab(file)),
   onFileToggle: (id, selected) =>
     dispatch(toggleFileSelection(id, selected)),
   onFileEdit: (val, attrs) => {

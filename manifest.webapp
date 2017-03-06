@@ -27,8 +27,7 @@
     "files": {
       "description": "Required to access the files",
       "type": "io.cozy.files",
-      "verbs": ["GET","POST","PUT","DELETE"],
-      "values": ["io.cozy.files.root-dir"]
+      "verbs": ["GET","POST","PUT","DELETE"]
     },
     "settings/locale": {
       "description": "Required to display a localized Ui",
