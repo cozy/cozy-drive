@@ -1,6 +1,6 @@
 exports[`UploadButton component should be rendered correctly 1`] = `
 <label
-  className="coz-btn coz-btn--regular coz-btn--upload"
+  className=" coz-btn coz-btn--regular coz-btn--upload"
   disabled={undefined}
   role="button"
   style={
@@ -9,7 +9,6 @@ exports[`UploadButton component should be rendered correctly 1`] = `
       "position": "relative",
     }
   }>
-  Upload
   <input
     accept="image/*"
     disabled={undefined}

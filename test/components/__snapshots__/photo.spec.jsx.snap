@@ -3,12 +3,12 @@ exports[`Photo component should render correctly an image according a photo obje
   className="pho-photo">
   <span
     className="pho-photo-select"
-    data-input="checkbox">
+    data-input="checkbox"
+    onClick={[Function]}>
     <input
       checked={false}
       type="checkbox" />
-    <label
-      onClick={[Function]} />
+    <label />
   </span>
   <Link
     onlyActiveOnIndex={false}

@@ -3,11 +3,14 @@ exports[`Toolbar component should be rendered correctly 1`] = `
   className="pho-toolbar"
   role="toolbar">
   <_translate
+    className="coz-desktop"
     disabled={false}
+    label="Upload"
     onUpload={undefined} />
-  <BMenuButton>
+  <BMenuButton
+    className="coz-mobile">
     <button
-      className="coz-btn coz-btn--more"
+      className="coz-btn coz-btn--more coz-btn--more"
       disabled={false}
       role="button">
       <span
@@ -18,8 +21,16 @@ exports[`Toolbar component should be rendered correctly 1`] = `
     <BListbox
       className="coz-menu">
       <Item>
+        <_translate
+          disabled={false}
+          label="Upload photos"
+          onUpload={undefined}
+          type="menu-item" />
+      </Item>
+      <hr />
+      <Item>
         <a
-          className="pho-action-select"
+          className="pho-action-select coz-mobile"
           onClick={undefined}>
           Select photos
         </a>
