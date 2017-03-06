@@ -2,6 +2,11 @@
 
 /* eslint-env jest */
 
+// Specifying mock directly, manual mocks in __mocks__ subfolder, as described
+// in https://facebook.github.io/jest/docs/manual-mocks.html seems to not
+// work properly.
+jest.mock('cozy-ui/react/Modal', () => {})
+
 import React from 'react'
 import { shallow } from 'enzyme'
 
@@ -59,7 +64,9 @@ describe('Timeline component', () => {
         selected: []
       },
       photos: [],
-      mangoIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      mango: {
+        filesIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      }
     })
     const component = shallow(
       <Connected
@@ -78,7 +85,9 @@ describe('Timeline component', () => {
         selected: []
       },
       photos: [],
-      mangoIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      mango: {
+        filesIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      }
     })
     const component = shallow(
       <Connected

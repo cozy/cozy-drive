@@ -23,7 +23,8 @@ export class Timeline extends Component {
     }
   }
 
-  render ({ showAddToAlbumModal }) {
+  render () {
+    const { showAddToAlbumModal } = this.props
     return (
       <div>
         { showAddToAlbumModal &&
