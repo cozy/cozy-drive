@@ -33,4 +33,11 @@ describe('Loading component', () => {
     ).node
     expect(component).toMatchSnapshot()
   })
+
+  it('should be displayed with --no-margin class if noMargin is true', () => {
+    const component = shallow(
+      <Loading t={mockT} noMargin />
+    ).node
+    expect(component).toMatchSnapshot()
+  })
 })
