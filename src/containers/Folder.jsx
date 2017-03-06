@@ -80,29 +80,23 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onMount: () => {
-    dispatch(openFolder(ownProps.params.folderId, ownProps.context))
-  },
-  onRouteChange: (folderId, context) => {
-    dispatch(openFolder(folderId, context))
-  },
-  onFolderOpen: (folderId) => {
-    return dispatch(openFolder(folderId, ownProps.context))
-  },
-  onFileToggle: (id, selected) => {
-    dispatch(toggleFileSelection(id, selected))
-  },
+  onMount: () =>
+    dispatch(openFolder(ownProps.params.folderId, ownProps.context)),
+  onRouteChange: (folderId, context) =>
+    dispatch(openFolder(folderId, context)),
+  onFolderOpen: (folderId) =>
+    dispatch(openFolder(folderId, ownProps.context)),
+  onFileToggle: (id, selected) =>
+    dispatch(toggleFileSelection(id, selected)),
   onFileEdit: (val, attrs) => {
     if (isDir(attrs)) {
       dispatch(renameFolder(val, attrs.id))
     }
   },
-  onShowActionMenu: (fileId) => {
-    dispatch(showFileActionMenu(fileId))
-  },
-  onAlertClose: () => {
+  onShowActionMenu: (fileId) =>
+    dispatch(showFileActionMenu(fileId)),
+  onAlertClose: () =>
     dispatch(alertClosed())
-  }
 })
 
 export default connect(

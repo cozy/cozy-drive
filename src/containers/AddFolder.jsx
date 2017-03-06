@@ -9,13 +9,13 @@ import { translate } from '../lib/I18n'
 import { createFolder, abortAddFolder } from '../actions'
 import { mustShowAddFolder } from '../reducers'
 
-const AddFolder = ({ f, visible, create, hide }) => {
+const AddFolder = ({ f, visible, create, abort }) => {
   if (!visible) return null
   return (
     <div className={styles['fil-content-row']}>
       <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} />
       <div className={classNames(styles['fil-content-cell'], styles['fil-content-file'], styles['fil-file-folder'])}>
-        <FilenameInput onSubmit={create} onAbort={hide} />
+        <FilenameInput onSubmit={create} onAbort={abort} />
       </div>
       <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
         <time datetime=''>{f(Date.now(), 'MMM D, YYYY')}</time>
@@ -32,12 +32,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  create: name => {
-    return dispatch(createFolder(name))
-  },
-  hide: accidentalAbort => {
-    return dispatch(abortAddFolder(accidentalAbort))
-  }
+  create: name => dispatch(createFolder(name)),
+  abort: accidental => dispatch(abortAddFolder(accidental))
 })
 
 export default connect(

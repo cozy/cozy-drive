@@ -27,6 +27,5 @@ const Topbar = ({ context }) => {
 const mapStateToProps = (state, ownProps) => ({
   context: state.context
 })
-const mapDispatchToProps = (dispatch, ownProps) => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Topbar)
+export default connect(mapStateToProps)(Topbar)
