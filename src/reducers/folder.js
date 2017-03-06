@@ -5,7 +5,6 @@ import {
   UPLOAD_FILE_SUCCESS,
   TRASH_FILE_SUCCESS,
   RESTORE_FILE_SUCCESS,
-  DELETE_FILE,
   RENAME_FOLDER,
   CREATE_FOLDER_SUCCESS
 } from '../actions'
@@ -52,7 +51,6 @@ export const files = (state = [], action) => {
       ]
     case TRASH_FILE_SUCCESS:
     case RESTORE_FILE_SUCCESS:
-    case DELETE_FILE:
       return state.filter(f => f.id !== action.id)
     case RENAME_FOLDER:
       return state.map(f => {
