@@ -1,9 +1,9 @@
-Cozy Cloud makes the personal cloud more accessible. Files and Photos you keep in your Cozy, your personnal cloud are accessible from everywhere.
+Cozy Cloud simplifies the personal cloud. Files and Photos you keep in your Cozy, your personnal cloud, are accessible from everywhere.
 
-Cozy Files allow you to:
+Cozy Files allows you to:
     - Access the files you have in your personal cloud
-    - Automatically synchronize your phone or tablet's photos with you Cozy
+    - Automatically synchronize your phone or tablet's photos with your Cozy
 
-Respectful of the user's privacy, Cozy Cloud simplifies daily tasks: synchronize and backup photos, automate bills downloading, manage expenses, etc. Flexible and easy to use, our Open Source platform allow users to create and develop their own applications.
+Respectful of the user's privacy, Cozy Cloud simplifies daily tasks: synchronize and backup photos, automate bills downloading, manage expenses, etc. Flexible and easy to use, our Open Source platform allows users to create and develop their own applications.
 
 We'd love to hear from you! Please use Github issues to report bugs and vote for next features : https://github.com/cozy/cozy-files-v3/issues
