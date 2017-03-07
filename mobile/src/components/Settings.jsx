@@ -13,7 +13,7 @@ const SubCategory = ({ id, label, value, title }) => (
   </div>
 )
 
-export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup }) => (
+export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup }) => (
   <div>
     <div className={styles['fil-content-row']} />
     <div className={styles['settings']}>
@@ -42,7 +42,7 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
         cancelAction={hideUnlinkConfirmation}
         validateType='danger'
         validateText={t('mobile.settings.unlink.confirmation.unlink')}
-        validateAction={unlink}
+        validateAction={() => unlink(client)}
       />}
 
     </div>

@@ -1,4 +1,4 @@
-/* global cozy */
+/* global cozy, document */
 
 import { LocalStorage as Storage } from 'cozy-client-js'
 
@@ -50,9 +50,15 @@ export const isClientRegistered = async (client) => {
 
 export function resetClient () {
   // reset cozy-bar
-  // TODO
+  if (document.getElementById('coz-bar')) {
+    document.getElementById('coz-bar').remove()
+  }
   // reset pouchDB
-  cozy.client.offline.destroyAllDatabase()
+  if (cozy.client.offline.destroyAllDatabase) {
+    cozy.client.offline.destroyAllDatabase()
+  }
   // reset cozy-client-js
-  cozy.client._storage.clear()
+  if (cozy.client._storage) {
+    cozy.client._storage.clear()
+  }
 }
