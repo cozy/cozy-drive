@@ -34,3 +34,25 @@ export const initBar = () => {
     lang: 'en'
   })
 }
+
+export const isClientRegistered = async (client) => {
+  return await cozy.client.auth.getClient(client).then(client => true).catch(err => {
+    if (err.message === 'Client has been revoked') {
+      return false
+    }
+    // this is the error sent if we are offline
+    if (err.message === 'Failed to fetch') {
+      return true
+    }
+    throw err
+  })
+}
+
+export function resetClient () {
+  // reset cozy-bar
+  // TODO
+  // reset pouchDB
+  cozy.client.offline.destroyAllDatabase()
+  // reset cozy-client-js
+  cozy.client._storage.clear()
+}
