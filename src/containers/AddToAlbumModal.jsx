@@ -48,7 +48,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmitNewAlbum: (name, mangoIndex, photos) => {
     return dispatch(createAlbum(name, mangoIndex, photos))
       .then(
-        album => dispatch(addToAlbum(photos, album)).catch(handleActionError),
+        album => {
+          dispatch(addToAlbum(photos, album))
+            .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}))
+            .catch(handleActionError)
+        },
         handleActionError
       )
   }

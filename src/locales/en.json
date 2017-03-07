@@ -42,6 +42,7 @@
   "Albums": {
     "add_photos": {
       "title": "Add to album",
+      "success": "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
       "error": {
         "reference": "Some photos has not been added to the album. Please check and try again.",
         "response": {
