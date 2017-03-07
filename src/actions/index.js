@@ -39,8 +39,6 @@ export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const ALERT_CLOSED = 'ALERT_CLOSED'
 
-const STACK_URL = '//' + document.querySelector('[role=application]').dataset.cozyDomain
-
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
 export const HTTP_CODE_CONFLICT = 409
@@ -86,7 +84,7 @@ export const openFileInNewTab = (file) => {
       : `${folder.path}/`
     const filePath = `${folderPath}${file.name}`
     const href = await cozy.client.files.getDowloadLink(filePath)
-    window.open(`${STACK_URL}${href}`, '_blank')
+    window.open(`${cozy._url}${href}`, '_blank')
   }
 }
 
