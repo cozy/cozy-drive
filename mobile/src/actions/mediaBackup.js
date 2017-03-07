@@ -15,11 +15,12 @@ export const mediaBackup = () => async (dispatch, getState) => {
   dispatch(startMediaUpload())
   let photos = await getFilteredPhotos()
   const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+  const dirID = 'io.cozy.files.root-dir'
   for (let photo of photos) {
     if (!alreadyUploaded.includes(photo.id)) {
       const blob = await getBlob(photo)
       const options = {
-        dirID: 'io.cozy.files.root-dir',
+        dirID,
         name: photo.fileName
       }
       await cozy.client.files.create(blob, options).then(() => {
