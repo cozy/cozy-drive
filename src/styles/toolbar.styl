@@ -1,6 +1,25 @@
 @require 'cozy-ui'
 
-.pho-content-toolbar
-  margin-left auto
-  .coz-btn:last-child
-    margin-right 0
+.pho-toolbar
+    display flex
+    margin-left auto
+
+    a
+        &.pho-action-select
+            background embedurl("../assets/icons/icon-checkbox.svg") em(16px) center no-repeat
+
+    .coz-btn--more
+        margin-right 0
+
+:local
+    @extends $menu
+
+    b-menu-button
+        width          4em
+        display        flex
+        flex-direction column
+        align-items    flex-end
+
+        b-listbox
+            top          em(43px)//3em
+            margin-right 0

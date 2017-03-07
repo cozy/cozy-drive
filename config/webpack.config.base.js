@@ -21,7 +21,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|cozy-(bar,client-js))/,
+        exclude: /(node_modules|cozy-(bar|client-js))/,
         loader: 'babel-loader'
       },
       {

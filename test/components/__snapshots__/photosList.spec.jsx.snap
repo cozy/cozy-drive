@@ -20,13 +20,15 @@ exports[`PhotosList component should render correctly a loading view if isWorkin
 
 exports[`PhotosList component should render correctly a timeline of photos according a photos array 1`] = `
 <div
+  className=""
   role="contentinfo">
   <div
-    class="pho-section">
+    className="pho-section">
     <h3>
-      January 0001
+      January 2017
     </h3>
     <withRouter(Photo)
+      onToggle={undefined}
       photo={
         Object {
           "_id": "33dda00f0eec15bc3b3c59a615001ac8",
@@ -35,13 +37,15 @@ exports[`PhotosList component should render correctly a timeline of photos accor
           "size": "150000",
           "updated_at": "0001-01-01T00:00:00Z",
         }
-      } />
+      }
+      selected={false} />
   </div>
 </div>
 `;
 
 exports[`PhotosList component should render correctly an empty view if photos is empty 1`] = `
 <div
+  className=""
   role="contentinfo">
   <_translate
     emptyType="photos" />

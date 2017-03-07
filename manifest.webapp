@@ -14,17 +14,30 @@
       "description": "Gestionnaire de photos pour Cozy v3"
     }
   },
+  "routes": {
+    "/": {
+      "folder": "/",
+      "index": "index.html",
+      "public": false
+    }
+  },
   "version": "3.0.0",
   "licence": "AGPL-3.0",
   "permissions": {
     "files": {
       "description": "Required for photo access",
-      "type": "io.cozy.files"
+      "type": "io.cozy.files",
+      "methods": ["GET", "POST", "PUT"]
     },
     "apps": {
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",
       "verbs": ["GET"]
+    },
+    "albums": {
+      "description": "Required to manage photos albums",
+      "type": "io.cozy.photos.albums",
+      "methods": ["GET", "POST", "PUT"]
     }
   }
 }

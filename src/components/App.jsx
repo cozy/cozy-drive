@@ -9,7 +9,6 @@ import Alerter from './Alerter'
 
 export const App = ({ t, children }) => (
   <div className={classNames(styles['pho-wrapper'], styles['coz-sticky'])}>
-
     <Sidebar />
 
     <main className={styles['pho-content']}>

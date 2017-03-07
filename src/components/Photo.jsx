@@ -1,6 +1,7 @@
-import styles from '../styles/photo'
+import styles from '../styles/photoList'
 
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 
 import { getPhotoLink } from '../actions/photos'
@@ -20,17 +21,35 @@ export class Photo extends Component {
   }
 
   render () {
-    const { photo, router } = this.props
+    const { photo, selected = false, onToggle, router } = this.props
     const { loading, url } = this.state
     const parentPath = router.location.pathname
     return (
       !loading &&
-        <Link to={`${parentPath}/${photo._id}`}>
-          <img
-            className={styles['pho-photo-item']}
-            src={url}
-          />
-        </Link>
+        <div className={classNames(
+          styles['pho-photo'],
+          { [styles['pho-photo--selected']]: selected }
+        )}>
+          <span
+            className={styles['pho-photo-select']}
+            data-input='checkbox'
+            onClick={e => {
+              e.stopImmediatePropagation()
+              onToggle(photo._id, selected)
+            }}>
+            <input
+              type='checkbox'
+              checked={selected}
+             />
+            <label />
+          </span>
+          <Link to={`${parentPath}/${photo._id}`}>
+            <img
+              className={styles['pho-photo-item']}
+              src={url}
+            />
+          </Link>
+        </div>
     )
   }
 }

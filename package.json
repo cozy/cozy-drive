@@ -78,7 +78,9 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-ui": "^3.0.0-beta13",
+    "cozy-bar": "^3.0.0-beta9",
+    "cozy-client-js": "^0.1.3",
+    "cozy-ui": "^3.0.0-beta14",
     "date-fns": "^1.26.0",
     "hammerjs": "^2.0.8",
     "node-polyglot": "^2.2.0",
@@ -86,6 +88,7 @@
     "pouchdb-find": "^0.10.5",
     "preact": "^7.1.0",
     "preact-compat": "^3.13.1",
+    "react-bosonic": "beta",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.0",
     "redux": "^3.6.0",

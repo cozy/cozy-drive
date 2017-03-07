@@ -12,7 +12,12 @@
     "albums_text": "Click the \"New album\" button to create your first album."
   },
   "Toolbar": {
-    "photo_upload": "Upload"
+    "photo_upload": "Upload",
+    "more": "More",
+    "menu": {
+      "select_items": "Select photos",
+      "photo_upload": "Upload photos"
+    }
   },
   "Loading": {
     "photos_indexing": "Your photos are currently being indexed. Please wait.",
@@ -27,6 +32,35 @@
         "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
       "upload_errors": "Errors occurred during the photos upload.",
       "unexpected_upload_error": "An unexpected server error occurred."
+    }
+  },
+  "SelectionBar": {
+    "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
+    "add_to_album": "Add to album",
+    "close": "Close"
+  },
+  "Albums": {
+    "add_photos": {
+      "title": "Add to album",
+      "success": "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
+      "error": {
+        "generic": "An error occurred when creating the album, please try again.",
+        "reference": "Some photos has not been added to the album. Please check and try again.",
+        "response": {
+          "Forbidden": "Application does not have permission to update albums."
+        }
+      }
+    },
+    "create": {
+      "inline_form": {
+        "placeholder": "New album name",
+        "create_label": "Create a new album",
+        "create_button": "Create"
+      },
+      "error": {
+        "already_exists": "The album %{name} already exists, please pick another one.",
+        "name_missing": "You have to give a name to your album."
+      }
     }
   },
   "Viewer": {

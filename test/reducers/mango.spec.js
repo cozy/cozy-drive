@@ -2,7 +2,7 @@
 
 import { INDEX_FILES_BY_DATE_SUCCESS } from '../../src/constants/actionTypes'
 
-import { mangoIndexByDate } from '../../src/reducers/mango'
+import { filesIndexByDate } from '../../src/reducers/mango'
 
 const mockMangoIndexByDate = {
   doctype: 'io.cozy.files',
@@ -15,14 +15,14 @@ describe('Mango index reducer', () => {
   // if nothing is sent to the reducer, it should return an default state
   it('should return the default state when no arguments', () => {
     expect(
-      mangoIndexByDate(undefined, {})
+      filesIndexByDate(undefined, {})
     ).toEqual(null)
   })
 
   // if INDEX_FILES_BY_DATE_SUCCESS -> mangoIndexByDate
   it('should handle INDEX_FILES_BY_DATE_SUCCESS', () => {
     expect(
-      mangoIndexByDate([], {
+      filesIndexByDate([], {
         type: INDEX_FILES_BY_DATE_SUCCESS,
         mangoIndexByDate: mockMangoIndexByDate
       })

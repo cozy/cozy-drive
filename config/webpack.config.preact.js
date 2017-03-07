@@ -11,7 +11,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx$/,
-      exclude: /node_modules/,
+      exclude: /node_modules\/(?!(cozy-ui))/,
       loader: 'babel-loader'
     }]
   }

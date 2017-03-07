@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchPhotos } from '../actions/photos'
+import { togglePhotoSelection } from '../actions/selection'
+import { getPhotosByMonth, mustShowSelectionBar } from '../reducers'
 
 import PhotosList from '../components/PhotosList'
 import Topbar from '../components/Topbar'
+import AddToAlbumModal from '../containers/AddToAlbumModal'
 
 export class Timeline extends Component {
   constructor (props) {
@@ -21,8 +24,12 @@ export class Timeline extends Component {
   }
 
   render () {
+    const { showAddToAlbumModal } = this.props
     return (
       <div>
+        { showAddToAlbumModal &&
+          <AddToAlbumModal />
+        }
         <Topbar viewName='photos' />
         <PhotosList {...this.props} {...this.state} />
         { this.props.children }
@@ -35,13 +42,20 @@ const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
   isIndexing: state.ui.isIndexing,
   isWorking: state.ui.isWorking,
+  selected: state.ui.selected,
+  showSelection: mustShowSelectionBar(state),
+  photosByMonth: getPhotosByMonth(state),
+  showAddToAlbumModal: state.ui.showAddToAlbumModal,
   photos: state.photos,
-  mangoIndexByDate: state.mangoIndexByDate
+  mangoIndexByDate: state.mango.filesIndexByDate
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   onFirstFetch: (mangoIndexByDate) => {
     dispatch(fetchPhotos(mangoIndexByDate))
+  },
+  onPhotoToggle: (id, selected) => {
+    dispatch(togglePhotoSelection(id, selected))
   }
 })
 
