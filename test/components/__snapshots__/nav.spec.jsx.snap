@@ -28,17 +28,6 @@ exports[`Nav component should be rendered correctly 1`] = `
       className="coz-nav-item">
       <Link
         activeClassName="active"
-        className="pho-cat-shared coz-nav-link"
-        onlyActiveOnIndex={false}
-        style={Object {}}
-        to="/shared">
-        Shared by me
-      </Link>
-    </li>
-    <li
-      className="coz-nav-item">
-      <Link
-        activeClassName="active"
         className="pho-cat-trash coz-nav-link"
         onlyActiveOnIndex={false}
         style={Object {}}

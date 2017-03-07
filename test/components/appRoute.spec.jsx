@@ -29,9 +29,6 @@ describe('AppRoute component', () => {
       albums: {
         path: 'albums'
       },
-      shared: {
-        path: 'shared'
-      },
       trash: {
         path: 'trash'
       }
