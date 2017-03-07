@@ -21,14 +21,6 @@ const TrashToolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => 
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
         <Item>
-          <a
-            className={styles['fil-action-delete']}
-          >
-            {t('toolbar.delete_all')}
-          </a>
-        </Item>
-        <hr />
-        <Item>
           <a className={styles['fil-action-select']} onClick={showSelectionBar}>
             {t('toolbar.menu_select')}
           </a>
