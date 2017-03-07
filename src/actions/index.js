@@ -39,8 +39,7 @@ export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const ALERT_CLOSED = 'ALERT_CLOSED'
 
-// Temporary
-const STACK_URL = 'http://cozy.local:8080'
+const STACK_URL = '//' + document.querySelector('[role=application]').dataset.cozyDomain
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
