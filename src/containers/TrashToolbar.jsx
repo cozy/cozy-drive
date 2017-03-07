@@ -3,6 +3,7 @@ import styles from '../styles/toolbar'
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
+import classNames from 'classnames'
 
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
@@ -14,7 +15,10 @@ const TrashToolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => 
     <MenuButton>
       <button
         role='button'
-        className='coz-btn coz-btn--secondary coz-btn--more'
+        className={classNames(
+          'coz-btn coz-btn--secondary coz-btn--more',
+          styles['fil-toolbar-more-btn'])
+        }
         disabled={!!error || isSelectionBarVisible}
       >
         <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
