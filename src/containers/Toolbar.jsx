@@ -10,7 +10,7 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 import { uploadPhotos, showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
-import classNames from 'classNames'
+import classNames from 'classnames'
 
 export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>

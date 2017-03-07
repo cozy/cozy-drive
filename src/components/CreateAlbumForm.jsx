@@ -3,7 +3,7 @@ import styles from '../styles/createAlbumForm'
 import React, { Component } from 'react'
 import { translate } from '../lib/I18n'
 
-import classNames from 'classNames'
+import classNames from 'classnames'
 
 class CreateAlbumForm extends Component {
   constructor () {
