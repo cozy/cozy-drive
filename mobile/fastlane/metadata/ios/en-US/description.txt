@@ -1,5 +1,9 @@
-Cozy.io is a platform that brings all your web services in the same private space. With it, your web apps and your devices can share data easily, providing you with a new experience. You can install Cozy on your own hardware where no one profiles you.
+Cozy Cloud simplifies the personal cloud. Files and Photos you keep in your Cozy, your personnal cloud, are accessible from everywhere.
 
-This is the iOS mobile client to your personnal Cozy server. Connect it to your Cozy server and browse through your cozy files from your iOS device.
+Cozy Files allows you to:
+    - Access the files you have in your personal cloud
+    - Automatically synchronize your phone or tablet's photos with your Cozy
 
-Use github issues to report bugs and vote for next features : https://github.com/cozy/cozy-files-v3/issues
+Respectful of the user's privacy, Cozy Cloud simplifies daily tasks: synchronize and backup photos, automate bills downloading, manage expenses, etc. Flexible and easy to use, our Open Source platform allows users to create and develop their own applications.
+
+We'd love to hear from you! Please use Github issues to report bugs and vote for next features : https://github.com/cozy/cozy-files-v3/issues

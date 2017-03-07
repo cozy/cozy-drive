@@ -1,0 +1,9 @@
+Cozy Cloud permet à chacun d’avoir son cloud personnel, respectueux de la vie privée. Avec Cozy Files, accédez aux fichiers et aux photos stockés dans votre Cozy depuis n'importe quel téléphone/tablette.
+
+Avec Cozy Files vous pouvez :
+    - Accéder aux fichiers présents sur votre cloud personnel
+    - Synchroniser automatiquement les photos de votre téléphone ou tablette
+
+Grâce aux nombreuses applications disponibles, Cozy Cloud simplifie la gestion du quotidien : synchroniser et stocker ses photos, automatiser le téléchargement de ses factures, gérer ses dépenses, etc. Flexible et simple à utiliser, cette plateforme Open Source offre aussi la possibilité de créer et développer des applications.
+
+Envoyez-nous vos feedbacks ! Signalez-nous vos bugs et votez pour les prochaines fonctionnalités de l'application sur : https://github.com/cozy/cozy-files-v3/issues
