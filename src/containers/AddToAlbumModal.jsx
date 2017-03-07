@@ -35,7 +35,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const handleActionError = error => {
-  Alerter.error(error)
+  const isUnexpectedError = !!error.message
+  Alerter.error(isUnexpectedError ? 'Albums.add_photos.error.generic' : error)
   return Promise.reject(error)
 }
 

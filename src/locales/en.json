@@ -44,6 +44,7 @@
       "title": "Add to album",
       "success": "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
       "error": {
+        "generic": "An error occurred when creating the album, please try again.",
         "reference": "Some photos has not been added to the album. Please check and try again.",
         "response": {
           "Forbidden": "Application does not have permission to update albums."
