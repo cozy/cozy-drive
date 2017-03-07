@@ -2,7 +2,7 @@ import styles from '../styles/sidebar'
 
 import React from 'react'
 
-import Nav from './Nav'
+import Nav from '../containers/Nav'
 
 const Sidebar = () => (
   <aside class={styles['fil-sidebar']}>
