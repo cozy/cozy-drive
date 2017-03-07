@@ -1,3 +1,4 @@
+/* global cozy */
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
@@ -5,9 +6,6 @@ import filesize from 'filesize'
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
 import FilenameInput from '../components/FilenameInput'
-
-// Temporary
-const STACK_URL = 'http://cozy.local:8080'
 
 export const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
@@ -71,7 +69,7 @@ class File extends Component {
       this.props.onOpen(id).then(() => this.setState({ opening: false }))
     } else {
       // TODO Handle files opening throught the app instead of doing it throught the browser
-      window.open(`${STACK_URL}/files/download/${id}`, '_blank')
+      window.open(`${cozy._url}/files/download/${id}`, '_blank')
     }
   }
 
