@@ -1,6 +1,6 @@
 /* global cozy */
 
-import { getPhotos, getBlob } from '../lib/media'
+import { getFilteredPhotos, getBlob } from '../lib/media'
 import { HTTP_CODE_CONFLICT } from '../../../src/actions'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
@@ -13,7 +13,7 @@ export const successImageUpload = (image) => ({ type: IMAGE_UPLOAD_SUCCESS, id: 
 
 export const mediaBackup = () => async (dispatch, getState) => {
   dispatch(startMediaUpload())
-  let photos = await getPhotos()
+  let photos = await getFilteredPhotos()
   const alreadyUploaded = getState().mobile.mediaBackup.uploaded
   for (let photo of photos) {
     if (!alreadyUploaded.includes(photo.id)) {

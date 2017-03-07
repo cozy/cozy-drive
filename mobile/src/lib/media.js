@@ -67,3 +67,13 @@ export const getPhotos = async () => {
 
   return defaultReturn
 }
+
+export const getFilteredPhotos = async () => {
+  let photos = await getPhotos()
+
+  if (window.cordova.platformId === 'android') {
+    photos = photos.filter((photo) => photo.id.indexOf('DCIM') !== -1)
+  }
+
+  return Promise.resolve(photos)
+}
