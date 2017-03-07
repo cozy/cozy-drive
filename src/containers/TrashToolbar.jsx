@@ -10,7 +10,7 @@ import { showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
 const TrashToolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => (
-  <div className={styles['fil-toolbar']} role='toolbar'>
+  <div className={styles['fil-toolbar-trash']} role='toolbar'>
     <MenuButton>
       <button
         role='button'
