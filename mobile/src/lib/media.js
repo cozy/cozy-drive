@@ -12,6 +12,9 @@ export const requestAuthorization = async () => {
         (error) => {
           console.warn(error)
           resolve(false)
+        },
+        {
+          read: true
         }
       )
     })
@@ -39,8 +42,9 @@ export const getPhotos = async () => {
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
       window.cordova.plugins.photoLibrary.getLibrary(
-        (library) => resolve(library),
+        (response) => resolve(response.library),
         (err) => {
+          console.warn(err)
           if (err.startsWith('Permission')) {
             requestAuthorization().then(authorization => {
               if (authorization) {
@@ -48,6 +52,9 @@ export const getPhotos = async () => {
               } else {
                 resolve(defaultReturn)
               }
+            }).catch(err => {
+              console.warn(err)
+              resolve(defaultReturn)
             })
           } else {
             console.warn(err)
@@ -59,4 +66,14 @@ export const getPhotos = async () => {
   }
 
   return defaultReturn
+}
+
+export const getFilteredPhotos = async () => {
+  let photos = await getPhotos()
+
+  if (window.cordova.platformId === 'android') {
+    photos = photos.filter((photo) => photo.id.indexOf('DCIM') !== -1)
+  }
+
+  return Promise.resolve(photos)
 }
