@@ -6,14 +6,6 @@
     .coz-btn:last-child
         margin-right 0
 
-.fil-toolbar-trash
-    left-padded       44px
-    right-padded      17px
-    vertically-padded 12px
-    background  embedurl('../assets/icons/icon-trash-danger.svg') em(16px) center no-repeat
-
-    + b-menu-button
-        display none
 
 // These styles are needed for the menu to work and come directly from bosonic's source
 // TODO: find a better way for bosonic to share its styling
@@ -61,8 +53,3 @@ b-item
         hr // temporary while there is only select after hr
             display block
 
-    .fil-toolbar-trash
-        + b-menu-button
-            display block
-        .coz-btn--delete
-            display none
