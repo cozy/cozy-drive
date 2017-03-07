@@ -1,18 +1,23 @@
 import styles from '../styles/breadcrumb'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID, TRASH_CONTEXT } from '../constants/config'
 
 import React from 'react'
 import withState from 'cozy-ui/react/helpers/withState'
 import { translate } from '../lib/I18n'
-import { withRouter } from 'react-router'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
-import { isBrowsingTrash } from '../reducers'
 
-const Breadcrumb = ({ t, router, folder, opening, deployed, toggleOpening, toggleDeploy, isBrowsingTrash, goToFolder }) => {
+const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, toggleDeploy, goToFolder }) => {
+  if (!context) {
+    return null
+  }
+
+  let isBrowsingTrash = context === TRASH_CONTEXT
+
   // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
   let path = []
 
@@ -74,7 +79,8 @@ const Breadcrumb = ({ t, router, folder, opening, deployed, toggleOpening, toggl
 
         { path.map((folder, index) => {
           if (index < path.length - 1) return (
-            <span
+            <Link
+              to={`/${context}/${folder.id}`}
               className={styles['fil-inside-path']}
               onClick={e => {
                 e.stopPropagation()
@@ -87,7 +93,7 @@ const Breadcrumb = ({ t, router, folder, opening, deployed, toggleOpening, toggl
                 { folder.name }
               </a>
               <span className={styles['separator']}>/</span>
-            </span>
+            </Link>
           )
           else return (
             <span
@@ -114,16 +120,14 @@ const Breadcrumb = ({ t, router, folder, opening, deployed, toggleOpening, toggl
 
 const mapStateToProps = (state) => ({
   folder: state.folder,
-  isBrowsingTrash: isBrowsingTrash(state)
+  context: state.context
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  goToFolder: (parentId) => {
-    return dispatch(openFolder(parentId, false, ownProps.router))
-  }
+  goToFolder: (parentId, context) => dispatch(openFolder(parentId, context))
 })
 
-export default translate()(withRouter(connect(
+export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
 )(withState({
@@ -136,4 +140,4 @@ export default translate()(withRouter(connect(
   toggleDeploy: () => {
     setState(state => ({ deployed: !state.deployed }))
   },
-}))(Breadcrumb))))
+}))(Breadcrumb)))

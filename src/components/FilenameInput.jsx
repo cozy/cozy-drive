@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import styles from '../styles/filenameinput'
+import Spinner from './Spinner'
 
 const ENTER_KEY = 13
 const ESC_KEY = 27
@@ -12,6 +13,8 @@ export default class FilenameInput extends Component {
     super(props)
     this.state = {
       value: props.name || '',
+      working: false,
+      error: false,
       hasBeenSubmitedOrAborted: false
     }
   }
@@ -45,26 +48,33 @@ export default class FilenameInput extends Component {
   }
 
   submit () {
+    this.setState({ working: true, error: false })
     this.props.onSubmit(this.state.value)
+      .then(() => this.setState({ working: false }))
+      .catch(() => this.setState({
+        working: false,
+        error: true
+      }))
   }
 
   abort (accidental = false) {
-    this.props.onAbort(accidental)
+    this.props.onAbort && this.props.onAbort(accidental)
   }
 
-  render ({ isUpdating }, { value }) {
+  render (props, { value, working, error }) {
     return (
       <div className={styles['fil-file-name-input']}>
         <input
           type='text'
           value={value}
           ref={(input) => { this.textInput = input }}
-          disabled={isUpdating}
+          disabled={working}
           onChange={e => this.handleChange(e)}
           onBlur={() => this.handleBlur()}
           onKeyDown={e => this.handleKeyDown(e)}
-          className={this.props.error ? styles['error'] : null}
+          className={error ? styles['error'] : null}
         />
+        {working && <Spinner />}
       </div>
     )
   }

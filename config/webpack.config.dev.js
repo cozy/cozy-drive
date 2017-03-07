@@ -17,6 +17,7 @@ module.exports = {
       __STACK_ASSETS__: false
     }),
     new webpack.ProvidePlugin({
+      'cozy': 'cozy-client-js/dist/cozy-client.js',
       'cozy.client': 'cozy-client-js/dist/cozy-client.js',
       'cozy.bar': 'cozy-bar/dist/cozy-bar.js'
     })

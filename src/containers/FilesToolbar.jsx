@@ -11,7 +11,7 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 import { addFolder, showSelectionBar, uploadFile } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
-const FilesToolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
+const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
   <div className={styles['fil-toolbar']} role='toolbar'>
     <UploadButton
       disabled={!!error || isSelectionBarVisible}
@@ -40,7 +40,6 @@ const FilesToolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionB
           <a
             className={styles['fil-action-newfolder']}
             onClick={addFolder}
-            disabled={disableFolderCreation}
           >
             {t('toolbar.menu_new_folder')}
           </a>
@@ -58,8 +57,7 @@ const FilesToolbar = ({ t, error, addFolder, disableFolderCreation, isSelectionB
 
 const mapStateToProps = (state, ownProps) => ({
   error: state.ui.error,
-  isSelectionBarVisible: mustShowSelectionBar(state),
-  disableFolderCreation: state.ui.disableFolderCreation
+  isSelectionBarVisible: mustShowSelectionBar(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

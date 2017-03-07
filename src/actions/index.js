@@ -1,11 +1,9 @@
 /* global cozy */
-import { ROOT_DIR_ID } from '../constants/config'
+import { FILES_CONTEXT, TRASH_CONTEXT, ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
 import { getFilePaths, getFileById } from '../reducers'
 
-export const FETCH_FILES = 'FETCH_FILES'
-export const RECEIVE_FILES = 'RECEIVE_FILES'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
@@ -18,7 +16,6 @@ export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
-export const DELETE_FILE = 'DELETE_FILE'
 export const TRASH_FILE = 'TRASH_FILE'
 export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
 export const TRASH_FILE_FAILURE = 'TRASH_FILE_FAILURE'
@@ -43,7 +40,6 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const ALERT_CLOSED = 'ALERT_CLOSED'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
-const genId = () => Math.random().toString(36).slice(2)
 
 export const HTTP_CODE_CONFLICT = 409
 const ALERT_TYPE_ERROR = 'error'
@@ -51,42 +47,44 @@ const ALERT_TYPE_ERROR = 'error'
 export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', type: ALERT_TYPE_ERROR } })
 export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', type: ALERT_TYPE_ERROR } })
 
-export const openFolder = (folderId = ROOT_DIR_ID, isInitialFetch = false, router = null) => {
+export const openFolder = (folderId, context = FILES_CONTEXT) => {
   return async dispatch => {
-    let routePrefix = '/files'
-    // We're probably going to push a new route to the history, but we need to find the "base" of the url, eg. /files or /trash.
-    if (router && router.location.pathname.indexOf('/') > -1) {
-      routePrefix = '/' + router.location.pathname.split('/')[1]
+    if (!folderId) {
+      folderId = context === TRASH_CONTEXT
+        ? TRASH_DIR_ID
+        : ROOT_DIR_ID
     }
-
-    if (isInitialFetch) {
-      dispatch({ type: FETCH_FILES, folderId })
-    }
-    dispatch({ type: OPEN_FOLDER, folderId })
+    dispatch({ type: OPEN_FOLDER, folderId, context })
     let folder, parent
     try {
       folder = await cozy.client.files.statById(folderId)
       const parentId = folder.attributes.dir_id
       parent = !!parentId && await cozy.client.files.statById(parentId)
     } catch (err) {
-      if (!isInitialFetch && router) {
-        router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
-      }
-      return dispatch({type: OPEN_FOLDER_FAILURE, error: err})
-    }
-    if (isInitialFetch) {
-      dispatch({ type: RECEIVE_FILES, folderId })
-    } else if (router) {
-      router.push(folderId === ROOT_DIR_ID ? routePrefix : routePrefix + `/${folderId}`)
+      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err, context })
     }
     return dispatch({
       type: OPEN_FOLDER_SUCCESS,
+      context,
       folder: Object.assign(extractFileAttributes(folder), {
         parent: extractFileAttributes(parent)}),
       files: folder.relations('contents').map(
         c => extractFileAttributes(c)
       )
     })
+  }
+}
+
+export const openFileInNewTab = (file) => {
+  return async (dispatch, getState) => {
+    const folder = getState().folder
+    // TODO: replace this with cozy.client.getFilePath(file, folder)
+    const folderPath = folder.path.endsWith('/')
+      ? folder.path
+      : `${folder.path}/`
+    const filePath = `${folderPath}${file.name}`
+    const href = await cozy.client.files.getDowloadLink(filePath)
+    window.open(`${cozy._url}${href}`, '_blank')
   }
 }
 
@@ -105,14 +103,7 @@ export const uploadFile = (file) => {
 }
 
 export const addFolder = () => ({
-  type: ADD_FOLDER,
-  folder: {
-    id: genId(),
-    name: '',
-    type: 'directory',
-    created_at: Date.now(),
-    isNew: true
-  }
+  type: ADD_FOLDER
 })
 
 export const abortAddFolder = (accidental) => {
@@ -120,13 +111,11 @@ export const abortAddFolder = (accidental) => {
     type: ABORT_ADD_FOLDER,
     accidental
   }
-
   if (accidental) {
     action.alert = {
       message: 'alert.folder_abort'
     }
   }
-
   return action
 }
 
@@ -136,24 +125,24 @@ export const renameFolder = (newName, id) => ({
   name: newName
 })
 
-export const createFolder = (name, tempId) => {
+export const createFolder = name => {
   return async (dispatch, getState) => {
-    let existingFolder = getState().files.find(f => f.id !== tempId && f.type === 'directory' && f.name === name)
+    let existingFolder = getState().files.find(f => f.type === 'directory' && f.name === name)
 
     if (existingFolder) {
-      return dispatch({
+      dispatch({
         type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        id: tempId,
         alert: {
           message: 'alert.folder_name',
           messageData: { folderName: name }
         }
       })
+      throw new Error('alert.folder_name')
     }
 
     dispatch({
       type: CREATE_FOLDER,
-      id: tempId
+      name
     })
 
     let folder
@@ -166,7 +155,6 @@ export const createFolder = (name, tempId) => {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
         dispatch({
           type: CREATE_FOLDER_FAILURE_DUPLICATE,
-          id: tempId,
           alert: {
             message: 'alert.folder_name',
             messageData: { folderName: name }
@@ -175,29 +163,17 @@ export const createFolder = (name, tempId) => {
       } else {
         dispatch({
           type: CREATE_FOLDER_FAILURE_GENERIC,
-          id: tempId,
           alert: {
             message: 'alert.folder_generic'
           }
         })
       }
-      return
+      throw err
     }
     dispatch({
       type: CREATE_FOLDER_SUCCESS,
-      folder: extractFileAttributes(folder),
-      tempId
+      folder: extractFileAttributes(folder)
     })
-  }
-}
-
-export const deleteFileOrFolder = (id, isNew = false) => {
-  return async (dispatch, getState) => {
-    dispatch({ type: DELETE_FILE, id: id })
-
-    if (!isNew) {
-      // @TODO: server side deletion
-    }
   }
 }
 

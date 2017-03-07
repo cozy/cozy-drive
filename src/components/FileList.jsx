@@ -5,9 +5,10 @@ import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import File from '../components/File'
+import AddFolder from '../containers/AddFolder'
 
 const FileList = ({
-  t, f, files, error, showSelection, onFileEdit, onFileEditAbort, onFolderOpen, onFileToggle, onShowActionMenu
+  t, f, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
 }) => (
   <div className={classNames(
     styles['fil-content-table'],
@@ -21,11 +22,13 @@ const FileList = ({
       <div className={classNames(styles['fil-content-header'], styles['fil-content-status'])}>{ t('table.head_status') }</div>
     </div>
     <div className={styles['fil-content-body']}>
+      <AddFolder />
       {!error && files.map((file, idx) => (
         <File
+          context={context}
           onEdit={onFileEdit}
-          onEditAbort={onFileEditAbort}
-          onOpen={onFolderOpen}
+          onFolderOpen={onFolderOpen}
+          onFileOpen={onFileOpen}
           onToggle={onFileToggle}
           onShowActionMenu={onShowActionMenu}
           attributes={file}

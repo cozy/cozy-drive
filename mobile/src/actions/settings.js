@@ -10,6 +10,8 @@ export const BACKUP_IMAGES_ENABLE = 'BACKUP_IMAGES_ENABLE'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
 
+import { revokeClient, unrevokeClient } from './authorization'
+
 // url
 
 export const setUrl = url => ({ type: SET_URL, url })
@@ -71,9 +73,17 @@ export const registerDevice = () => async (dispatch, getState) => {
   dispatch(checkURL(getState().mobile.settings.serverUrl))
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
   await cozy.client.authorize().then(async ({ client }) => {
+    dispatch(unrevokeClient())
     dispatch(setClient(client))
     await cozy.client.offline.replicateFromCozy('io.cozy.files')
-    cozy.client.offline.startRepeatedReplication('io.cozy.files', 15)
+    const options = {
+      onError: (err) => {
+        console.log('on error fron the client', err)
+        console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
+        dispatch(revokeClient())
+      }
+    }
+    cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
   }).catch(err => {
     dispatch(wrongAddressError())
     logException(err)

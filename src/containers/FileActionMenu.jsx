@@ -17,7 +17,7 @@ const Menu = props => {
     <div className={styles['fil-actionmenu']}>
       {files.length === 1 ? <MenuHeaderFile file={files[0]} /> : <MenuHeaderSelection {...props} />}
       <hr />
-      {files.length === 1 && <ItemOpenWith {...props} />}
+      {files.length === 1 && <ItemOpenWith file={files[0]} {...props} />}
       {files.length === 1 ? <DownloadFile file={files[0]} {...props} /> : <DownloadSelection {...props} />}
       {<Delete {...props} />}
     </div>
