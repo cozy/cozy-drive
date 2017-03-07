@@ -34,10 +34,12 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const handleActionError = error => {
-  const isUnexpectedError = !!error.message
-  Alerter.error(isUnexpectedError ? 'Albums.add_photos.error.generic' : error)
-  return Promise.reject(error)
+const handleActionError = name => {
+  return error => {
+    const isUnexpectedError = !!error.message
+    Alerter.error(isUnexpectedError ? 'Albums.add_photos.error.generic' : error, {name: name})
+    return Promise.reject(error)
+  }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -54,7 +56,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}))
             .catch(handleActionError)
         },
-        handleActionError
+        handleActionError(name)
       )
   }
 })

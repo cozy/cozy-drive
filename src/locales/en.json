@@ -58,7 +58,7 @@
         "create_button": "Create"
       },
       "error": {
-        "already_exists": "An album with that name already exists. Please provide another one.",
+        "already_exists": "The album %{name} already exists, please pick another one.",
         "name_missing": "You have to give a name to your album."
       }
     }
