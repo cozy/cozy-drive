@@ -37,7 +37,7 @@
         top      0
         left     40px // bar hamburger button width
         right    0
-        z-index  100
+        z-index  $nav-index
 
         &.deployed
             bottom     0
@@ -79,4 +79,4 @@
             display none
 
         [role=banner][data-drawer-visible="true"]
-            z-index 2000
+            z-index $nav-index + 1
