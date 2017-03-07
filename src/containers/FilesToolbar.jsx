@@ -22,7 +22,7 @@ const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectio
     <MenuButton>
       <button
         role='button'
-        className='coz-btn coz-btn--secondary coz-btn--more'
+        className={classNames('coz-btn', styles['more'])}
         disabled={!!error || isSelectionBarVisible}
       >
         <span className='coz-hidden'>{ t('toolbar.item_more') }</span>

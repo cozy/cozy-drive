@@ -6,6 +6,10 @@
     .coz-btn:last-child
         margin-right 0
 
+    .more
+        @extends $button--secondary
+        @extends $button--more
+
 .fil-toolbar-trash
     left-padded       44px
     right-padded      17px
@@ -14,6 +18,7 @@
 
     + b-menu-button
         display none
+
 
 // These styles are needed for the menu to work and come directly from bosonic's source
 // TODO: find a better way for bosonic to share its styling
@@ -76,3 +81,8 @@ b-item
         top      0
         right    0
         z-index  $nav-index
+
+        .more
+            border 0
+            margin-right 0
+            opacity .5
