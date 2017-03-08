@@ -38,22 +38,6 @@
         right    0
         z-index  $nav-index
 
-        &.deployed
-            bottom     0
-            left       0
-            background rgba(50, 54, 63, 0.5)
-
-            .fil-content-previous
-                left 0
-
-            .fil-content-title
-                background white
-                padding-left 40px
-
-            .fil-content-title .fil-inside-path
-                display block
-                color #32363f
-
     .fil-content-title
         display flex
         flex-direction column-reverse
@@ -61,7 +45,9 @@
 
     .fil-content-title .fil-inside-path
     .fil-content-title .fil-main-path
+        height 40px
         padding 7px 0
+        box-sizing border-box
 
     .fil-content-previous
         display block
@@ -72,6 +58,29 @@
     .fil-content-title .fil-inside-path
     .fil-inside-path .separator
         display none
+
+    .fil-content-backdrop.deployed
+        bottom     0
+        left       0
+        background rgba(50, 54, 63, 0.5)
+
+        .fil-content-previous
+            left 0
+
+        .fil-content-title
+            background white
+
+        .fil-content-title .fil-inside-path
+        .fil-content-title .fil-main-path
+            padding-left 40px
+
+        .fil-inside-path
+            display block
+            color #32363f
+
+        .fil-main-path
+            box-shadow inset 0 -1px 0 0 #d6d8da
+            height 41px
 
     :global
         [role=banner] .coz-bar-title

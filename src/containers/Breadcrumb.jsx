@@ -31,7 +31,7 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
 
     // has the parent a parent too?
     if (parent.dir_id && !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID)) {
-      // since we don't have *actually* any information about the parent's parent, we have to fake it
+      // since we don't *actually* have any information about the parent's parent, we have to fake it
       path.unshift({ id: parent.dir_id })
     }
   }
