@@ -79,7 +79,7 @@
   "dependencies": {
     "classnames": "^2.2.0",
     "cozy-bar": "^3.0.0-beta9",
-    "cozy-client-js": "^0.1.3",
+    "cozy-client-js": "^0.1.5",
     "cozy-ui": "^3.0.0-beta14",
     "date-fns": "^1.26.0",
     "hammerjs": "^2.0.8",

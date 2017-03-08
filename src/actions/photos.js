@@ -133,7 +133,7 @@ export const getPhotoLink = async (photo) => {
     }
   }
 
-  return await cozy.client.files.getDowloadLink(
+  return await cozy.client.files.getDownloadLink(
       cozy.client.files.getFilePath(
         photo,
         await cozy.client.files.statById(photo.dir_id)
