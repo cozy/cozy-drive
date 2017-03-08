@@ -37,15 +37,14 @@ export const DOWNLOAD_FILE_E_OFFLINE = 'DOWNLOAD_FILE_E_OFFLINE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
-export const ALERT_CLOSED = 'ALERT_CLOSED'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 
 export const HTTP_CODE_CONFLICT = 409
-const ALERT_TYPE_ERROR = 'error'
+const ALERT_LEVEL_ERROR = 'error'
 
-export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', type: ALERT_TYPE_ERROR } })
-export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', type: ALERT_TYPE_ERROR } })
+export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', level: ALERT_LEVEL_ERROR } })
+export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', level: ALERT_LEVEL_ERROR } })
 
 export const openFolder = (folderId, context = FILES_CONTEXT) => {
   return async dispatch => {
@@ -333,10 +332,6 @@ export const showFileActionMenu = id => ({
 
 export const hideFileActionMenu = () => ({
   type: HIDE_FILE_ACTIONMENU
-})
-
-export const alertClosed = () => ({
-  type: ALERT_CLOSED
 })
 
 export const actionMenuLoading = (menu) => ({

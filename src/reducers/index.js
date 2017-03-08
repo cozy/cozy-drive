@@ -3,13 +3,16 @@ import { combineReducers } from 'redux'
 import { folder, files, context } from './folder'
 import ui from './ui'
 
+import alerterReducer from 'cozy-ui/react/Alerter'
+
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
 export const reducers = {
   folder,
   files,
   context,
-  ui
+  ui,
+  alerts: alerterReducer
 }
 
 const filesApp = combineReducers(reducers)

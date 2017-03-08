@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from '../lib/I18n'
 
-import { openFolder, openFileInNewTab, renameFolder, toggleFileSelection, showFileActionMenu, alertClosed } from '../actions'
+import { openFolder, openFileInNewTab, renameFolder, toggleFileSelection, showFileActionMenu } from '../actions'
 import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
 import { TRASH_CONTEXT } from '../constants/config'
 
-import Alerter from 'cozy-ui/react/Alerter'
+import { Alerter } from 'cozy-ui/react/Alerter'
 
 import Loading from '../components/Loading'
 import Empty from '../components/Empty'
@@ -25,7 +25,6 @@ class Folder extends Component {
   componentWillMount () {
     if (!this.props.isFetching) {
       this.props.onMount()
-      this.props.onAlertClose()
     }
   }
 
@@ -47,15 +46,10 @@ class Folder extends Component {
       )
     }
     const isTrashContext = props.context === TRASH_CONTEXT
-    const { t, alert, showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
+    const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
     return (
       <div role='contentinfo'>
-        {alert && <Alerter
-          type={alert.type}
-          message={t(alert.message, alert.messageData)}
-          onClose={this.props.onAlertAutoClose}
-          />
-        }
+        <Alerter />
         {!isTrashContext && showSelection && <FilesSelectionBar />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}
@@ -71,7 +65,6 @@ class Folder extends Component {
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
   showLoading: state.ui.isFetching && state.folder === null,
-  alert: state.ui.alert,
   error: state.ui.error,
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
@@ -96,9 +89,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
   },
   onShowActionMenu: (fileId) =>
-    dispatch(showFileActionMenu(fileId)),
-  onAlertClose: () =>
-    dispatch(alertClosed())
+    dispatch(showFileActionMenu(fileId))
 })
 
 export default connect(
