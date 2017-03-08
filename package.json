@@ -42,7 +42,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-runtime": "^6.0.0",
     "copy-webpack-plugin": "^4.0.1",
-    "cozy-bar": "beta",
+    "cozy-bar": "3.0.0-beta10",
     "cozy-client-js": "^0.1.0",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
@@ -78,8 +78,6 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-bar": "^3.0.0-beta9",
-    "cozy-client-js": "^0.1.5",
     "cozy-ui": "^3.0.0-beta14",
     "date-fns": "^1.26.0",
     "hammerjs": "^2.0.8",
