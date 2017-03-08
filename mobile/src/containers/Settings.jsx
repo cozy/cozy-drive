@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  launchBackup: () => dispatch(mediaBackup()),
+  launchBackup: () => dispatch(mediaBackup('Camera')),
   showUnlinkConfirmation: () => dispatch(showUnlinkConfirmation()),
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),
   unlink: (client) => {
