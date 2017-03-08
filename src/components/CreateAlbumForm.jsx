@@ -34,10 +34,10 @@ class CreateAlbumForm extends Component {
   }
 
   onNameChange (event) {
-    const name = event.target.value.trim()
+    const name = event.target.value
     this.setState({
       name: name,
-      isSubmitDisabled: !name.length,
+      isSubmitDisabled: !name.trim().length,
       hasError: false
     })
   }
