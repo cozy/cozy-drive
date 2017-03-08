@@ -12,7 +12,7 @@ import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 
 const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, toggleDeploy, goToFolder }) => {
-  if (!context) {
+  if (!context || !folder) {
     return null
   }
 
