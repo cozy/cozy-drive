@@ -61,7 +61,7 @@ class Folder extends Component {
         {showDeleteConfirmation && <DeleteConfirmation />}
         <FileList {...props} {...state} />
         {error && <Oops />}
-        {files.length === 0 && <Empty canUpload={!isTrashContext} />}
+        {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
         {showActionMenu && <FileActionMenu />}
       </div>
     )
