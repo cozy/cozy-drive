@@ -19,7 +19,7 @@ export const requestAuthorization = async () => {
       )
     })
   }
-  return false
+  return Promise.resolve(false)
 }
 
 export const getBlob = async (libraryItem) => {
@@ -33,7 +33,7 @@ export const getBlob = async (libraryItem) => {
     })
   }
 
-  return ''
+  return Promise.resolve('')
 }
 
 export const getPhotos = async () => {
@@ -65,7 +65,7 @@ export const getPhotos = async () => {
     })
   }
 
-  return defaultReturn
+  return Promise.resolve(defaultReturn)
 }
 
 export const getFilteredPhotos = async () => {
