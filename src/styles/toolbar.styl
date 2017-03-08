@@ -1,7 +1,8 @@
 @require 'cozy-ui'
 @require './popover'
 
-.fil-toolbar
+.fil-toolbar-files
+.fil-toolbar-trash
     margin-left auto
     .coz-btn:last-child
         margin-right 0
@@ -11,12 +12,7 @@
         @extends $button--more
 
 .fil-toolbar-trash
-    left-padded       44px
-    right-padded      17px
-    vertically-padded 12px
-    background  embedurl('../assets/icons/icon-trash-danger.svg') em(16px) center no-repeat
-
-    + b-menu-button
+    .fil-toolbar-more-btn
         display none
 
 
@@ -70,10 +66,8 @@ b-item
         display none
 
     .fil-toolbar-trash
-        + b-menu-button
-            display block
-        .coz-btn--delete
-            display none
+        .fil-toolbar-more-btn
+            display inline-flex
 
 @media (max-width: (768/basefont)rem)
     .fil-toolbar

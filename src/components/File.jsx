@@ -85,7 +85,7 @@ class File extends Component {
         </div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])}>
           {isDir(attributes)
-            ? '-'
+            ? '—'
             : filesize(attributes.size, {base: 10})}
         </div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>—</div>

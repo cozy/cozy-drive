@@ -12,7 +12,7 @@ import { addFolder, showSelectionBar, uploadFile } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
 const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
-  <div className={styles['fil-toolbar']} role='toolbar'>
+  <div className={styles['fil-toolbar-files']} role='toolbar'>
     <UploadButton
       disabled={!!error || isSelectionBarVisible}
       onUpload={uploadFile}

@@ -1,14 +1,29 @@
 @import 'cozy-ui'
 
 .fil-content-table
-    text-align left
-    color      grey-11
+    position    relative
+    height      100%
+    text-align  left
+    color       grey-11
+
+headHeight = em(31px, 16px);
+.fil-content-head
+    position          absolute
+    z-index           1
+    height            headHeight
+    background-color  white
+
+.fil-content-body
+    margin-top  headHeight
+    box-sizing  border-box
+    max-height  'calc(100% - %s)' % headHeight
+    overflow    auto
 
 .fil-content-header
 .fil-content-cell
     box-sizing  border-box
     padding     em(15px) em(32px)
-    font-size(14px)
+    font-size   14px
 
 .fil-content-row
     display         flex
@@ -20,7 +35,7 @@
     .fil-content-body &:hover
         background-color grey-10
 
-.fil-content-file
+.fil-content-cell.fil-content-file
     color grey-08
 
 .fil-content-ext
@@ -62,12 +77,12 @@
     flex 0 0 25%
 
 .fil-content-file-select
-    flex       0 0 5%
+    basefont = 14px
+    flex       0 0 em(32px, basefont)
     opacity    0
-    min-width  em(32px)
-    max-width  em(48px)
     padding    em(15px) em(8px)
-    font-size(14px)
+    text-align center
+    font-size  basefont
     cursor     default
 
     label
@@ -127,18 +142,22 @@
     margin-left 0.5em
 
 @media (max-width: (768/basefont)rem)
-    .fil-content-header
+    .fil-content-head
     .fil-content-date
     .fil-content-size
     .fil-content-status
         display none
 
+    .fil-content-body
+      margin-top  0
+      max-height  100%
+
     .fil-content-file
-        flex 0 0 85%
+        flex 1 1 85%
 
     .fil-content-file-action
-        display block
-        flex 0 0 15%
+        display    block
+        flex       0 0 em(48px)
 
     .fil-content-cell.fil-content-file
         left-padded(61px)

@@ -1,11 +1,17 @@
 @require 'cozy-ui'
 
 $empty
-    text-align center
+    display          flex
+    flex-direction   column
+    justify-content  center
+    flex             1 0 auto
+    padding          1em 0
+    text-align       center
+
     &:before
         content     ''
         display     block
-        margin      em(100px) auto 0
+        margin      0 auto
         width       em(160px)
         height      em(140px)
     h2
