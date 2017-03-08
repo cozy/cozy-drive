@@ -14,9 +14,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  launchBackup: () => {
+  launchBackup: (dir) => {
     dispatch(startMediaUpload())
-    dispatch(mediaBackup('Camera'))
+    dispatch(mediaBackup(dir))
     .then(() => dispatch(endMediaUpload()))
     .catch(() => dispatch(endMediaUpload()))
   },
