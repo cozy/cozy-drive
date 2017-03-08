@@ -14,7 +14,7 @@ const FileList = ({
     styles['fil-content-table'],
     { [styles['fil-content-table-selection']]: showSelection }
   )}>
-    <div className={styles['fil-content-row']}>
+    <div className={classNames(styles['fil-content-head'], styles['fil-content-row'])}>
       <div className={classNames(styles['fil-content-header'], styles['fil-content-file-select'])} />
       <div className={classNames(styles['fil-content-header'], styles['fil-content-file'])}>{ t('table.head_name') }</div>
       <div className={classNames(styles['fil-content-header'], styles['fil-content-date'])}>{ t('table.head_update') }</div>
