@@ -25,7 +25,6 @@ async function getDirID (dir) {
 }
 
 export const mediaBackup = (dir) => async (dispatch, getState) => {
-  dispatch(startMediaUpload())
   let photos = await getFilteredPhotos()
   const alreadyUploaded = getState().mobile.mediaBackup.uploaded
   const dirID = await getDirID(dir)
@@ -46,5 +45,4 @@ export const mediaBackup = (dir) => async (dispatch, getState) => {
       })
     }
   }
-  dispatch(endMediaUpload())
 }
