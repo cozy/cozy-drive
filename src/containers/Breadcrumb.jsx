@@ -42,8 +42,7 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
     if (folder.id === ROOT_DIR_ID) {
       folder.name = t('breadcrumb.title_files')
       hasRootFolder = true
-    }
-    else if (folder.id === TRASH_DIR_ID) {
+    } else if (folder.id === TRASH_DIR_ID) {
       folder.name = t('breadcrumb.title_trash')
       if (isBrowsingTrash) hasRootFolder = true
     }
@@ -52,7 +51,7 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
   })
 
   if (!hasRootFolder) {
-    //if we don't have one, we add it manually
+    // if we don't have one, we add it manually
     path.unshift({
       id: isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID,
       name: isBrowsingTrash ? t('breadcrumb.title_trash') : t('breadcrumb.title_files')
@@ -71,7 +70,7 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
           onClick={e => {
             e.stopPropagation()
             toggleOpening()
-            if(deployed) toggleDeploy()
+            if (deployed) toggleDeploy()
             goToFolder(path[path.length - 2].id).then(() => toggleOpening())
           }}
         />
@@ -79,14 +78,14 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
       <h2 className={styles['fil-path-title']}>
 
         { path.map((folder, index) => {
-          if (index < path.length - 1) return (
-            <Link
+          if (index < path.length - 1) {
+            return <Link
               to={`/${context}/${folder.id}`}
               className={styles['fil-path-link']}
               onClick={e => {
                 e.stopPropagation()
                 toggleOpening()
-                if(deployed) toggleDeploy()
+                if (deployed) toggleDeploy()
                 goToFolder(folder.id).then(() => toggleOpening())
               }}
             >
@@ -95,9 +94,8 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
               </a>
               <span className={styles['fil-path-separator']}>/</span>
             </Link>
-          )
-          else return (
-            <span
+          } else {
+            return <span
               className={styles['fil-path-current']}
               onClick={e => {
                 e.stopPropagation()
@@ -111,7 +109,7 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
 
               { opening && <Spinner /> }
             </span>
-          )
+          }
         }) }
 
       </h2>
@@ -140,5 +138,5 @@ export default translate()(connect(
   },
   toggleDeploy: () => {
     setState(state => ({ deployed: !state.deployed }))
-  },
+  }
 }))(Breadcrumb)))
