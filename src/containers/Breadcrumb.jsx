@@ -65,7 +65,8 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
       onClick={toggleDeploy}
     >
       {path.length >= 2 &&
-        <button
+        <Link
+          to={`/${context}/${path[path.length - 2].id}`}
           className={styles['fil-path-previous']}
           onClick={e => {
             e.stopPropagation()

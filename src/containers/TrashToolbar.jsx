@@ -15,9 +15,7 @@ const TrashToolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => 
     <MenuButton>
       <button
         role='button'
-        className={classNames(
-          'coz-btn coz-btn--secondary coz-btn--more',
-          styles['fil-toolbar-more-btn'])
+        className={classNames('coz-btn', styles['fil-toolbar-more-btn'])
         }
         disabled={!!error || isSelectionBarVisible}
       >

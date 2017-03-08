@@ -7,7 +7,7 @@
     .coz-btn:last-child
         margin-right 0
 
-    .more
+    .fil-toolbar-more-btn
         @extends $button--secondary
         @extends $button--more
 
@@ -65,18 +65,18 @@ b-item
     .desktop-upload
         display none
 
-    .fil-toolbar-trash
-        .fil-toolbar-more-btn
+    .fil-toolbar-trash .fil-toolbar-more-btn
             display inline-flex
 
 @media (max-width: (768/basefont)rem)
-    .fil-toolbar
+    .fil-toolbar-files
+    .fil-toolbar-trash
         position absolute
         top      0
         right    0
         z-index  $nav-index
 
-        .more
+        .fil-toolbar-more-btn
             border       0
             margin-right 0
             opacity      .5
