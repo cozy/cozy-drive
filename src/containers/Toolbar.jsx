@@ -12,39 +12,41 @@ import { mustShowSelectionBar } from '../reducers'
 
 import classNames from 'classnames'
 
-export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
+export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems, viewName }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
-    <UploadButton
-      className='coz-desktop'
-      onUpload={uploadPhotos}
-      disabled={disabled}
-      label={t('Toolbar.photo_upload')}
-    />
-    <MenuButton className='coz-mobile'>
-      <button
-        role='button'
-        className={classNames('coz-btn', 'coz-btn--more', styles['coz-btn--more'])}
+    {viewName === 'photos' && [
+      <UploadButton
+        className='coz-desktop'
+        onUpload={uploadPhotos}
         disabled={disabled}
-      >
-        <span className='coz-hidden'>{ t('Toolbar.more') }</span>
-      </button>
-      <Menu className={styles['coz-menu']}>
-        <Item>
-          <UploadButton
-            onUpload={uploadPhotos}
-            disabled={disabled}
-            label={t('Toolbar.menu.photo_upload')}
-            type='menu-item'
-          />
-        </Item>
-        <hr />
-        <Item>
-          <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
-            {t('Toolbar.menu.select_items')}
-          </a>
-        </Item>
-      </Menu>
-    </MenuButton>
+        label={t('Toolbar.photo_upload')}
+      />,
+      <MenuButton className='coz-mobile'>
+        <button
+          role='button'
+          className={classNames('coz-btn', 'coz-btn--more', styles['coz-btn--more'])}
+          disabled={disabled}
+        >
+          <span className='coz-hidden'>{ t('Toolbar.more') }</span>
+        </button>
+        <Menu className={styles['coz-menu']}>
+          <Item>
+            <UploadButton
+              onUpload={uploadPhotos}
+              disabled={disabled}
+              label={t('Toolbar.menu.photo_upload')}
+              type='menu-item'
+            />
+          </Item>
+          <hr />
+          <Item>
+            <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
+              {t('Toolbar.menu.select_items')}
+            </a>
+          </Item>
+        </Menu>
+      </MenuButton>
+    ]}
   </div>
 )
 
