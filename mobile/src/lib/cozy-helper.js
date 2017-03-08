@@ -2,6 +2,8 @@
 
 import { LocalStorage as Storage } from 'cozy-client-js'
 
+import { openFolder } from '../../../src/actions'
+
 const getStorage = () => new Storage()
 const getClientName = device => `Cozy Files Application on ${device} (${Math.random().toString(36).slice(2)})`
 
@@ -23,7 +25,6 @@ export const initClient = (url, onRegister = null, device = 'Device') => {
     console.log(`Cozy Client initializes a connection with ${url}`)
     cozy.client.init({
       cozyURL: url,
-      offline: {doctypes: ['io.cozy.files']},
       oauth: getAuth(onRegister, device)
     })
   }
@@ -62,5 +63,13 @@ export function resetClient () {
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()
+  }
+}
+
+export function refreshFolder (dispatch, getState) {
+  return result => {
+    if (result.docs_written !== 0) {
+      dispatch(openFolder(getState().folder.id))
+    }
   }
 }
