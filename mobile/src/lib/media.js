@@ -71,7 +71,7 @@ export const getPhotos = async () => {
 export const getFilteredPhotos = async () => {
   let photos = await getPhotos()
 
-  if (window.cordova.platformId === 'android') {
+  if (hasCordovaPlugin() && window.cordova.platformId === 'android') {
     photos = photos.filter((photo) => photo.id.indexOf('DCIM') !== -1)
   }
 
