@@ -1,86 +1,88 @@
 @require 'cozy-ui'
 
-.fil-content-title
-    margin 0
-    font-size(24px)
+$coz-bar-size = 40px
 
-.fil-inside-path
-    color           #95999d
+.fil-path-title
+    margin    0
+    font-size 24px
+
+.fil-path-link
+    color           grey-11
     text-decoration none
     cursor          pointer
 
-    .separator
+    .fil-path-separator
         horizontally-padded .3em
 
-.fil-content-previous
-    display none
-    position absolute
-    right     100%
-    top      0
-    width 40px
-    height 40px
-    border 0
+.fil-path-previous
+    position   absolute
+    right      100%
+    top        0
+    display    none
+    width      $coz-bar-size
+    height     $coz-bar-size
+    border     0
     background white embedurl('../assets/icons/icon-arrow-left.svg') center center no-repeat
 
-.fil-content-down
-    display none
-    width 14px
-    height 10px
-    border 0
+.fil-path-down
+    display     none
+    width       14px
+    height      10px
     margin-left 7px
-    background white embedurl('../assets/icons/icon-arrow-down.svg') center center no-repeat
+    border      0
+    background  embedurl('../assets/icons/icon-arrow-down.svg') center center no-repeat
 
 @media (max-width: (768/basefont)rem)
-    .fil-content-backdrop
+    .fil-path-backdrop
         position fixed
         top      0
-        left     40px // bar hamburger button width
+        left     $coz-bar-size
         right    0
         z-index  $nav-index
 
-    .fil-content-title
-        display flex
+    .fil-path-title
+        display        flex
         flex-direction column-reverse
-        font-size 20px
+        font-size      1.2em
 
-    .fil-content-title .fil-inside-path
-    .fil-content-title .fil-main-path
-        height 40px
-        padding 7px 0
+    .fil-path-link
+    .fil-path-current
         box-sizing border-box
+        height     $coz-bar-size
+        padding    7px 0
 
-    .fil-content-previous
+    .fil-path-previous
         display block
 
-    .fil-content-down
+    .fil-path-down
         display inline-block
 
-    .fil-content-title .fil-inside-path
-    .fil-inside-path .separator
+    .fil-path-link
+    .fil-path-separator
         display none
 
-    .fil-content-backdrop.deployed
+    .fil-path-backdrop.deployed
         bottom     0
         left       0
         background rgba(50, 54, 63, 0.5)
 
-        .fil-content-previous
+        .fil-path-previous
             left 0
 
-        .fil-content-title
+        .fil-path-title
             background white
 
-        .fil-content-title .fil-inside-path
-        .fil-content-title .fil-main-path
-            padding-left 40px
+        .fil-path-link
+        .fil-path-current
+            padding-left $coz-bar-size
 
-        .fil-inside-path
+        .fil-path-link
             display block
-            color #32363f
+            color   grey-08
 
-        .fil-main-path
-            box-shadow inset 0 -1px 0 0 #d6d8da
-            height 41px
+        .fil-path-current
+            height     $coz-bar-size + 1px
+            box-shadow inset 0 -1px 0 0 grey-09
 
     :global
         [role=banner] .coz-bar-title

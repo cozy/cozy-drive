@@ -61,12 +61,12 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
 
   return (
     <div
-      className={classNames(styles['fil-content-backdrop'], {[styles['deployed']]: deployed})}
+      className={classNames(styles['fil-path-backdrop'], {[styles['deployed']]: deployed})}
       onClick={toggleDeploy}
     >
       {path.length >= 2 &&
         <button
-          className={styles['fil-content-previous']}
+          className={styles['fil-path-previous']}
           onClick={e => {
             e.stopPropagation()
             toggleOpening()
@@ -75,13 +75,13 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
           }}
         />
       }
-      <h2 className={styles['fil-content-title']}>
+      <h2 className={styles['fil-path-title']}>
 
         { path.map((folder, index) => {
           if (index < path.length - 1) return (
             <Link
               to={`/${context}/${folder.id}`}
-              className={styles['fil-inside-path']}
+              className={styles['fil-path-link']}
               onClick={e => {
                 e.stopPropagation()
                 toggleOpening()
@@ -92,12 +92,12 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
               <a>
                 { folder.name }
               </a>
-              <span className={styles['separator']}>/</span>
+              <span className={styles['fil-path-separator']}>/</span>
             </Link>
           )
           else return (
             <span
-              className={styles['fil-main-path']}
+              className={styles['fil-path-current']}
               onClick={e => {
                 e.stopPropagation()
                 if (path.length >= 2) toggleDeploy()
@@ -105,7 +105,7 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
             >
               { folder.name }
               {path.length >= 2 &&
-                <span className={styles['fil-content-down']} />
+                <span className={styles['fil-path-down']} />
               }
 
               { opening && <Spinner /> }
