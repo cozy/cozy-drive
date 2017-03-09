@@ -21,14 +21,14 @@ const photosMock = [
 describe('PhotosList component', () => {
   it('should render correctly a timeline of photos according a photos array', () => {
     const component = shallow(
-      <PhotosList key='test' title='Photo list title' photos={photosMock} selected={[]} />
+      <PhotosList title='Photo list title' photos={photosMock} selected={[]} />
     ).node
     expect(component).toMatchSnapshot()
   })
 
   it('should render correctly an empty view if photos is empty', () => {
     const component = shallow(
-      <PhotosList key='test' title='Empty list' photos={[]} selected={[]} />
+      <PhotosList title='Empty list' photos={[]} selected={[]} />
     ).node
     expect(component).toMatchSnapshot()
   })

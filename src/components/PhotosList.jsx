@@ -1,7 +1,6 @@
 import styles from '../styles/photoList'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
 
 import Empty from './Empty'
 import Photo from './Photo'
@@ -28,4 +27,4 @@ export const PhotosList = ({ key, title, photos, selected, onPhotoToggle }) => {
   )
 }
 
-export default translate()(PhotosList)
+export default PhotosList

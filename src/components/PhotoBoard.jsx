@@ -8,23 +8,23 @@ import SelectionBar from '../containers/SelectionBar'
 import PhotosList from './PhotosList'
 
 export const PhotoBoard = props => {
-  const { f, photosByMonth, showSelection, selected, onPhotoToggle } = props
+  const { photoLists, showSelection, selected, onPhotoToggle } = props
   return (
     <div
       role='contentinfo'
       className={showSelection ? styles['pho-list-selection'] : ''}
     >
       {showSelection && <SelectionBar />}
-      {Object.keys(photosByMonth).map(month => {
+      {photoLists.map(photoList => {
         return (<PhotosList
-          key={f(month, 'MMMM YYYY')}
-          title={f(month, 'MMMM YYYY')}
-          photos={photosByMonth[month]}
+          key={photoList.title}
+          title={photoList.title}
+          photos={photoList.photos}
           selected={selected}
           onPhotoToggle={onPhotoToggle}
         />)
       })}
-      {Object.keys(photosByMonth).length === 0 && <Empty emptyType='photos' />}
+      {photoLists.length === 0 && <Empty emptyType='photos' />}
     </div>
   )
 }

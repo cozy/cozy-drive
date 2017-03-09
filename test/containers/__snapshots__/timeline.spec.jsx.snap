@@ -13,7 +13,7 @@ exports[`Timeline component should be rendered correctly without store 1`] = `
 `;
 
 exports[`Timeline component should have correct connected provided props 1`] = `
-<Timeline
+<_translate
   isFetching={true}
   isIndexing={false}
   isWorking={false}
@@ -21,7 +21,7 @@ exports[`Timeline component should have correct connected provided props 1`] = `
   onFirstFetch={[Function]}
   onPhotoToggle={[Function]}
   photos={Array []}
-  photosByMonth={Object {}}
+  photosByMonth={Array []}
   selected={Array []}
   showAddToAlbumModal={undefined}
   showSelection={false}
@@ -38,10 +38,28 @@ exports[`Timeline component should have correct connected provided props 1`] = `
 `;
 
 exports[`Timeline component should render correctly if it has correct connected provided props 1`] = `
-<div>
-  <_translate
-    viewName="photos" />
-  <_translate
-    loadingType="photos_fetching" />
-</div>
+<Timeline
+  f={undefined}
+  isFetching={true}
+  isIndexing={false}
+  isWorking={false}
+  mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
+  onFirstFetch={[Function]}
+  onPhotoToggle={[Function]}
+  photos={Array []}
+  photosByMonth={Array []}
+  selected={Array []}
+  showAddToAlbumModal={undefined}
+  showSelection={false}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+  t={undefined} />
 `;

@@ -16,7 +16,7 @@ export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.
 
 export const getPhotosByMonth = ({ photos }) => {
   let months = {}
-  photos.map(p => {
+  photos.forEach(p => {
     // here we want to get an object whose keys are months in a l10able format
     // so we only keep the year and month part of the date
     const month = p.created_at.slice(0, 7) + '-01T00:00'
@@ -26,7 +26,12 @@ export const getPhotosByMonth = ({ photos }) => {
     }
     months[month].push(p)
   })
-  return months
+  return Object.keys(months).map(month => {
+    return {
+      title: month,
+      photos: months[month]
+    }
+  })
 }
 
 export default photosApp

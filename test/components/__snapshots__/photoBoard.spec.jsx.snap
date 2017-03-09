@@ -2,7 +2,7 @@ exports[`PhotoBoard component should render correctly a loading view if isFetchi
 <div
   className=""
   role="contentinfo">
-  <_translate
+  <Unknown
     onPhotoToggle={undefined}
     photos={
       Array [
@@ -17,7 +17,7 @@ exports[`PhotoBoard component should render correctly a loading view if isFetchi
       ]
     }
     selected={Array []}
-    title="January 2017" />
+    title="2017-01-01" />
 </div>
 `;
 
@@ -25,7 +25,7 @@ exports[`PhotoBoard component should render correctly a loading view if isFirstF
 <div
   className=""
   role="contentinfo">
-  <_translate
+  <Unknown
     onPhotoToggle={undefined}
     photos={
       Array [
@@ -40,7 +40,7 @@ exports[`PhotoBoard component should render correctly a loading view if isFirstF
       ]
     }
     selected={Array []}
-    title="January 2017" />
+    title="2017-01-01" />
 </div>
 `;
 
@@ -48,7 +48,7 @@ exports[`PhotoBoard component should render correctly a loading view if isIndexi
 <div
   className=""
   role="contentinfo">
-  <_translate
+  <Unknown
     onPhotoToggle={undefined}
     photos={
       Array [
@@ -63,7 +63,7 @@ exports[`PhotoBoard component should render correctly a loading view if isIndexi
       ]
     }
     selected={Array []}
-    title="January 2017" />
+    title="2017-01-01" />
 </div>
 `;
 
@@ -71,7 +71,7 @@ exports[`PhotoBoard component should render correctly a loading view if isWorkin
 <div
   className=""
   role="contentinfo">
-  <_translate
+  <Unknown
     onPhotoToggle={undefined}
     photos={
       Array [
@@ -86,7 +86,7 @@ exports[`PhotoBoard component should render correctly a loading view if isWorkin
       ]
     }
     selected={Array []}
-    title="January 2017" />
+    title="2017-01-01" />
 </div>
 `;
 
@@ -94,7 +94,7 @@ exports[`PhotoBoard component should render correctly a timeline of photos accor
 <div
   className=""
   role="contentinfo">
-  <_translate
+  <Unknown
     onPhotoToggle={undefined}
     photos={
       Array [
@@ -109,7 +109,7 @@ exports[`PhotoBoard component should render correctly a timeline of photos accor
       ]
     }
     selected={Array []}
-    title="January 2017" />
+    title="2017-01-01" />
 </div>
 `;
 
