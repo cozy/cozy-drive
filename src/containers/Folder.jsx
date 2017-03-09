@@ -68,7 +68,7 @@ class Folder extends Component {
             {error && <Oops />}
           </div>
         </div>
-        {showActionMenu && <FileActionMenu />}
+        {showActionMenu && <FileActionMenu isTrashContext={isTrashContext} />}
       </div>
     )
   }
