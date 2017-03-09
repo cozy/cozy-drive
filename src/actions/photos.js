@@ -115,28 +115,8 @@ export const uploadPhotos = (photosArray, dirID = COZY_PHOTOS_DIR_ID) => {
 }
 
 // Return a link for the photo, for download or to use in src attributes.
-export const getPhotoLink = async (photo) => {
-  if (!photo.dir_id) {
-    throw new Error('Missing dir_id property on photo')
-  }
-
-  // FIXME: temporary polyfill until next cozy-client-js release
-  if (typeof cozy.client.files.getFilePath !== 'function') {
-    cozy.client.files.getFilePath = (file = {}, folder) => {
-      if (!folder || !folder.attributes) {
-        throw Error('Folder should be valid with an attributes.path property')
-      }
-      const folderPath = folder.attributes.path.endsWith('/')
-        ? folder.attributes.path
-          : `${folder.attributes.path}/`
-      return `${folderPath}${file.name}`
-    }
-  }
-
-  return await cozy.client.files.getDownloadLink(
-      cozy.client.files.getFilePath(
-        photo,
-        await cozy.client.files.statById(photo.dir_id)
-      )
+export const getPhotoLink = async (photoId) => {
+  return await cozy.client.files.getDownloadLinkById(
+      photoId
     ).then(path => `${cozy.client._url}${path}`)
 }

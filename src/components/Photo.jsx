@@ -13,7 +13,7 @@ export class Photo extends Component {
     this.state = {
       loading: true
     }
-    getPhotoLink(props.photo)
+    getPhotoLink(props.photo._id)
       .then(link => this.setState({
         url: link,
         loading: false
