@@ -30,7 +30,7 @@ export class Viewer extends Component {
   componentWillReceiveProps (nextProps) {
     let currentPhoto = this.props.currentPhoto || nextProps.currentPhoto
     if (this.state.imageUrl === '' && currentPhoto !== undefined) {
-      getPhotoLink(currentPhoto)
+      getPhotoLink(currentPhoto._id)
         .then(link => {
           this.setState({
             imageUrl: link,
