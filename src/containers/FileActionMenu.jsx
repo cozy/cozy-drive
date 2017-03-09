@@ -78,7 +78,7 @@ const Delete = ({ t, files, onDelete, actionMenu }) => (
   <Item>
     <a className={styles['fil-action-delete']} onClick={() => onDelete()}>
       {t('mobile.action_menu.delete')}
-      {actionMenu.download && <div className={styles['fil-loading']} />}
+      {actionMenu.delete && <div className={styles['fil-loading']} />}
     </a>
   </Item>
 )
