@@ -6,7 +6,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { mockT, mockF } from '../lib/I18n'
-import { PhotoBoard } from '../../src/components/PhotoBoard'
+import { PhotoBoard } from '../../src/containers/PhotoBoard'
 
 const mockFetchedPhotos = [{
   title: '2017-01-01',

@@ -7,7 +7,7 @@ import { togglePhotoSelection } from '../actions/selection'
 import { getPhotosByMonth, mustShowSelectionBar } from '../reducers'
 
 import Loading from '../components/Loading'
-import PhotoBoard from '../components/PhotoBoard'
+import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
 
