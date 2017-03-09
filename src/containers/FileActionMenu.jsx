@@ -91,7 +91,7 @@ const ActionMenu = withGestures(
 
 const Backdrop = withGestures(
   ownProps => ({
-    tap: () => ownProps.onClose()
+    tap: e => setTimeout(ownProps.onClose)// timeout is used to prevent the infamous ghostclick
   })
 )(() => <div className={styles['fil-actionmenu-backdrop']} />)
 
