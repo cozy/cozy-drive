@@ -60,6 +60,7 @@ export class Timeline extends Component {
             selected={this.props.selected}
             onPhotoToggle={onPhotoToggle} />
         }
+        { this.props.children }
       </div>
     )
   }
