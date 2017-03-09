@@ -1,4 +1,4 @@
-exports[`PhotosList component should render correctly a timeline of photos according a photos array 1`] = `
+exports[`PhotoList component should render correctly a timeline of photos according a photos array 1`] = `
 <div
   className="pho-section">
   <h3>
@@ -20,7 +20,7 @@ exports[`PhotosList component should render correctly a timeline of photos accor
 </div>
 `;
 
-exports[`PhotosList component should render correctly an empty view if photos is empty 1`] = `
+exports[`PhotoList component should render correctly an empty view if photos is empty 1`] = `
 <div
   className="pho-section">
   <h3>

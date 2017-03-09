@@ -7,7 +7,7 @@ import Photo from './Photo'
 
 import classNames from 'classnames'
 
-export const PhotosList = ({ key, title, photos, selected, onPhotoToggle }) => {
+export const PhotoList = ({ key, title, photos, selected, onPhotoToggle }) => {
   return (
     <div
       className={classNames(styles['pho-section'], selected.length && styles['pho-section--has-selection'])}
@@ -27,4 +27,4 @@ export const PhotosList = ({ key, title, photos, selected, onPhotoToggle }) => {
   )
 }
 
-export default PhotosList
+export default PhotoList
