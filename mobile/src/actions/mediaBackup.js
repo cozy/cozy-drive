@@ -1,6 +1,7 @@
 /* global cozy */
 
 import { getFilteredPhotos, getBlob } from '../lib/media'
+import { onWifi } from '../lib/network'
 import { HTTP_CODE_CONFLICT } from '../../../src/actions'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
@@ -25,24 +26,26 @@ async function getDirID (dir) {
 }
 
 export const mediaBackup = (dir) => async (dispatch, getState) => {
-  let photos = await getFilteredPhotos()
-  const alreadyUploaded = getState().mobile.mediaBackup.uploaded
-  const dirID = await getDirID(dir)
-  for (let photo of photos) {
-    if (!alreadyUploaded.includes(photo.id)) {
-      const blob = await getBlob(photo)
-      const options = {
-        dirID,
-        name: photo.fileName
-      }
-      await cozy.client.files.create(blob, options).then(() => {
-        dispatch(successImageUpload(photo))
-      }).catch(err => {
-        if (err.status === HTTP_CODE_CONFLICT) {
-          dispatch(successImageUpload(photo))
+  if (getState().mobile.settings.wifiOnly && !onWifi()) {
+    let photos = await getFilteredPhotos()
+    const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+    const dirID = await getDirID(dir)
+    for (let photo of photos) {
+      if (!alreadyUploaded.includes(photo.id)) {
+        const blob = await getBlob(photo)
+        const options = {
+          dirID,
+          name: photo.fileName
         }
-        console.log(err)
-      })
+        await cozy.client.files.create(blob, options).then(() => {
+          dispatch(successImageUpload(photo))
+        }).catch(err => {
+          if (err.status === HTTP_CODE_CONFLICT) {
+            dispatch(successImageUpload(photo))
+          }
+          console.log(err)
+        })
+      }
     }
   }
 }

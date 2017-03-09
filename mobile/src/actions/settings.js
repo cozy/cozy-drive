@@ -7,6 +7,7 @@ import { logException } from '../lib/crash-reporter'
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES_DISABLE = 'BACKUP_IMAGES_DISABLE'
 export const BACKUP_IMAGES_ENABLE = 'BACKUP_IMAGES_ENABLE'
+export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
 
@@ -45,6 +46,7 @@ export const setBackupImages = (value) => {
     return disableBackupImages()
   }
 }
+export const setWifiOnly = value => ({ type: WIFI_ONLY, value })
 
 // errors
 
