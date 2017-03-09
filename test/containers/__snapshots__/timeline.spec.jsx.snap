@@ -2,6 +2,9 @@ exports[`Timeline component should be rendered correctly with params if params f
 <div>
   <_translate
     viewName="photos" />
+  <Connect(_translate)
+    fetchPhotoLists={[Function]}
+    refetch={false} />
 </div>
 `;
 
@@ -9,18 +12,17 @@ exports[`Timeline component should be rendered correctly without store 1`] = `
 <div>
   <_translate
     viewName="photos" />
+  <Connect(_translate)
+    fetchPhotoLists={[Function]}
+    refetch={false} />
 </div>
 `;
 
 exports[`Timeline component should have correct connected provided props 1`] = `
 <_translate
-  isFetching={true}
-  isIndexing={false}
-  isWorking={false}
-  mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
-  onFirstFetch={[Function]}
+  isFirstFetch={true}
+  onFetchPhotoLists={[Function]}
   photos={Array []}
-  photosByMonth={Array []}
   store={
     Object {
       "clearActions": [Function],
@@ -36,13 +38,9 @@ exports[`Timeline component should have correct connected provided props 1`] = `
 exports[`Timeline component should render correctly if it has correct connected provided props 1`] = `
 <Timeline
   f={undefined}
-  isFetching={true}
-  isIndexing={false}
-  isWorking={false}
-  mangoIndexByDate="_design/54d3474c4efdfe10d790425525e56433857955a1"
-  onFirstFetch={[Function]}
+  isFirstFetch={true}
+  onFetchPhotoLists={[Function]}
   photos={Array []}
-  photosByMonth={Array []}
   store={
     Object {
       "clearActions": [Function],

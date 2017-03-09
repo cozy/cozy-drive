@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { translate } from '../lib/I18n'
+import { indexFilesByDate } from '../actions/mango'
 import { fetchPhotos } from '../actions/photos'
 import { getPhotosByMonth } from '../reducers'
 
-import Loading from '../components/Loading'
 import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
 const formatMonths = (photoList, f, format) => {
@@ -18,39 +18,26 @@ const formatMonths = (photoList, f, format) => {
 export class Timeline extends Component {
   constructor (props) {
     super(props)
-    this.state = { isFirstFetch: true }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    /* istanbul ignore else */
-    if (!nextProps.isIndexing && this.state.isFirstFetch) {
-      this.props.onFirstFetch(nextProps.mangoIndexByDate)
-      this.setState({ isFirstFetch: false })
+    this.state = {
+      photosAreDirty: false
     }
   }
 
+  componentWillUpdate (nextProps, nextState) {
+    this.state.photosAreDirty = nextProps.photos &&
+      nextProps.photos.length !== this.props.photos.length
+  }
+
   render () {
-    const { f, photosByMonth } = this.props
-    const { isIndexing, isWorking, isFetching } = this.props
-    const { isFirstFetch } = this.state
-    const isBusy = isIndexing || isWorking || isFetching
+    const { f, photos, isFirstFetch, onFetchPhotoLists } = this.props
+    const { photosAreDirty } = this.state
     return (
       <div>
         <Topbar viewName='photos' />
-        { isIndexing &&
-          <Loading loadingType='photos_indexing' />
-        }
-        { isFetching && isFirstFetch &&
-          <Loading loadingType='photos_fetching' />
-        }
-        { isWorking &&
-          <Loading loadingType='photos_upload' />
-        }
-        { !isBusy &&
-          <PhotoBoard
-            photoLists={photosByMonth.map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))}
-          />
-        }
+        <PhotoBoard
+          fetchPhotoLists={() => onFetchPhotoLists(isFirstFetch, photos, f)}
+          refetch={photosAreDirty}
+        />
         { this.props.children }
       </div>
     )
@@ -58,17 +45,21 @@ export class Timeline extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.ui.isFetching,
-  isIndexing: state.ui.isIndexing,
-  isWorking: state.ui.isWorking,
-  photosByMonth: getPhotosByMonth(state),
   photos: state.photos,
-  mangoIndexByDate: state.mango.filesIndexByDate
+  isFirstFetch: state.timeline.isFirstFetch
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  onFirstFetch: (mangoIndexByDate) => {
-    dispatch(fetchPhotos(mangoIndexByDate))
+  onFetchPhotoLists: (isFirstFetch, photos, f) => {
+    const fetchPhotoLists = isFirstFetch
+      ? dispatch(indexFilesByDate())
+          .then(mangoIndexByDate => dispatch(fetchPhotos(mangoIndexByDate)))
+        : Promise.resolve(photos)
+
+    return fetchPhotoLists.then(photos => {
+      return getPhotosByMonth({ photos })
+        .map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))
+    })
   }
 })
 

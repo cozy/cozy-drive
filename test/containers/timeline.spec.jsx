@@ -30,8 +30,8 @@ describe('Timeline component', () => {
     )
     // test componentWillReceiveProps
     component.setProps({
-      isIndexing: false,
-      mangoIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      photos: [],
+      isFirstFetch: true
     })
     expect(component.node).toMatchSnapshot()
   })
@@ -49,8 +49,8 @@ describe('Timeline component', () => {
     )
     // test componentWillReceiveProps
     component.setProps({
-      isIndexing: false,
-      mangoIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      photos: [],
+      isFirstFetch: true
     })
     expect(component.node).toMatchSnapshot()
   })
@@ -66,6 +66,9 @@ describe('Timeline component', () => {
       photos: [],
       mango: {
         filesIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      },
+      timeline: {
+        isFirstFetch: true
       }
     })
     const component = shallow(
@@ -73,6 +76,10 @@ describe('Timeline component', () => {
         store={store}
       />
     )
+    component.setProps({
+      photos: [],
+      isFirstFetch: true
+    })
     expect(component.node).toMatchSnapshot()
   })
 
@@ -87,6 +94,9 @@ describe('Timeline component', () => {
       photos: [],
       mango: {
         filesIndexByDate: '_design/54d3474c4efdfe10d790425525e56433857955a1'
+      },
+      timeline: {
+        isFirstFetch: true
       }
     })
     const component = shallow(
@@ -94,19 +104,20 @@ describe('Timeline component', () => {
         store={store}
       />
     )
+    component.setProps({
+      photos: [],
+      isFirstFetch: true
+    })
     expect(component.shallow().node).toMatchSnapshot()
   })
 
   it('should use a correct a mapDispatchToProps with correct dispatch calls', () => {
     // set
-    const dispatchMock = jest.fn()
-    const mockIndexObject = {
-      name: '_design/54d3474c4efdfe10d790425525e56433857955a1'
-    }
+    const dispatchMock = jest.fn().mockReturnValue(Promise.resolve([]))
     const nextProps = mapDispatchToProps(dispatchMock, null)
 
     // act
-    nextProps.onFirstFetch(mockIndexObject)
+    nextProps.onFetchPhotoLists(true, [], text => text)
 
     // assert
     // onFirstFetch call an action using dispatch

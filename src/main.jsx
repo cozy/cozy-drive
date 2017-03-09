@@ -14,7 +14,6 @@ import { Router, hashHistory } from 'react-router'
 import { I18n } from './lib/I18n'
 
 import photosApp from './reducers'
-import { indexFilesByDate } from './actions/mango'
 import AppRoute from './components/AppRoute'
 
 const context = window.context
@@ -41,9 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
   cozy.bar.init({
     appName: 'Photos'
   })
-
-  // create/get mango index for files by date
-  store.dispatch(indexFilesByDate())
 
   render((
     <I18n context={context} lang={lang}>
