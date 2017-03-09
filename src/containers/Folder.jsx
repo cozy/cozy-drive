@@ -10,7 +10,6 @@ import { TRASH_CONTEXT } from '../constants/config'
 import { Alerter } from 'cozy-ui/react/Alerter'
 
 import Loading from '../components/Loading'
-import Empty from '../components/Empty'
 import Oops from '../components/Oops'
 import FileList from '../components/FileList'
 
@@ -46,16 +45,15 @@ class Folder extends Component {
       )
     }
     const isTrashContext = props.context === TRASH_CONTEXT
-    const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
+    const { showSelection, showDeleteConfirmation, error, showActionMenu } = props
     return (
       <div role='contentinfo'>
         <Alerter />
         {!isTrashContext && showSelection && <FilesSelectionBar />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}
-        <FileList {...props} {...state} />
+        <FileList {...props} {...state} isTrashContext={isTrashContext} />
         {error && <Oops />}
-        {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
         {showActionMenu && <FileActionMenu />}
       </div>
     )
