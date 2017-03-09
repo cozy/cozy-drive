@@ -6,7 +6,7 @@ import { togglePhotoSelection } from '../actions/selection'
 import { getPhotosByMonth, mustShowSelectionBar } from '../reducers'
 
 import Loading from '../components/Loading'
-import PhotosList from '../components/PhotosList'
+import PhotoBoard from '../components/PhotoBoard'
 import Topbar from '../components/Topbar'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
 
@@ -43,7 +43,7 @@ export class Timeline extends Component {
         { isWorking &&
           <Loading loadingType='photos_upload' />
         }
-        { !isBusy && <PhotosList {...this.props} {...this.state} />}
+        { !isBusy && <PhotoBoard {...this.props} {...this.state} />}
       </div>
     )
   }
