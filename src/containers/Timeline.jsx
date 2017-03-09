@@ -5,6 +5,7 @@ import { fetchPhotos } from '../actions/photos'
 import { togglePhotoSelection } from '../actions/selection'
 import { getPhotosByMonth, mustShowSelectionBar } from '../reducers'
 
+import Loading from '../components/Loading'
 import PhotosList from '../components/PhotosList'
 import Topbar from '../components/Topbar'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
@@ -24,15 +25,25 @@ export class Timeline extends Component {
   }
 
   render () {
-    const { showAddToAlbumModal } = this.props
+    const { showAddToAlbumModal, isIndexing, isWorking, isFetching } = this.props
+    const { isFirstFetch } = this.state
+    const isBusy = isIndexing || isWorking || isFetching
     return (
       <div>
         { showAddToAlbumModal &&
           <AddToAlbumModal />
         }
         <Topbar viewName='photos' />
-        <PhotosList {...this.props} {...this.state} />
-        { this.props.children }
+        { isIndexing &&
+          <Loading loadingType='photos_indexing' />
+        }
+        { isFetching && isFirstFetch &&
+          <Loading loadingType='photos_fetching' />
+        }
+        { isWorking &&
+          <Loading loadingType='photos_upload' />
+        }
+        { !isBusy && <PhotosList {...this.props} {...this.state} />}
       </div>
     )
   }

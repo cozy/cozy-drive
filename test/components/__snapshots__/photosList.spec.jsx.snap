@@ -1,21 +1,101 @@
 exports[`PhotosList component should render correctly a loading view if isFetching is true 1`] = `
-<_translate
-  loadingType="photos_fetching" />
+<div
+  className=""
+  role="contentinfo">
+  <div
+    className="pho-section">
+    <h3>
+      January 2017
+    </h3>
+    <withRouter(Photo)
+      onToggle={undefined}
+      photo={
+        Object {
+          "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+          "created_at": "0001-01-01T00:00:00Z",
+          "name": "MonImage.jpg",
+          "size": "150000",
+          "updated_at": "0001-01-01T00:00:00Z",
+        }
+      }
+      selected={false} />
+  </div>
+</div>
 `;
 
 exports[`PhotosList component should render correctly a loading view if isFirstFetch is true 1`] = `
-<_translate
-  loadingType="photos_fetching" />
+<div
+  className=""
+  role="contentinfo">
+  <div
+    className="pho-section">
+    <h3>
+      January 2017
+    </h3>
+    <withRouter(Photo)
+      onToggle={undefined}
+      photo={
+        Object {
+          "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+          "created_at": "0001-01-01T00:00:00Z",
+          "name": "MonImage.jpg",
+          "size": "150000",
+          "updated_at": "0001-01-01T00:00:00Z",
+        }
+      }
+      selected={false} />
+  </div>
+</div>
 `;
 
 exports[`PhotosList component should render correctly a loading view if isIndexing is true 1`] = `
-<_translate
-  loadingType="photos_indexing" />
+<div
+  className=""
+  role="contentinfo">
+  <div
+    className="pho-section">
+    <h3>
+      January 2017
+    </h3>
+    <withRouter(Photo)
+      onToggle={undefined}
+      photo={
+        Object {
+          "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+          "created_at": "0001-01-01T00:00:00Z",
+          "name": "MonImage.jpg",
+          "size": "150000",
+          "updated_at": "0001-01-01T00:00:00Z",
+        }
+      }
+      selected={false} />
+  </div>
+</div>
 `;
 
 exports[`PhotosList component should render correctly a loading view if isWorking is true 1`] = `
-<_translate
-  loadingType="photos_upload" />
+<div
+  className=""
+  role="contentinfo">
+  <div
+    className="pho-section">
+    <h3>
+      January 2017
+    </h3>
+    <withRouter(Photo)
+      onToggle={undefined}
+      photo={
+        Object {
+          "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+          "created_at": "0001-01-01T00:00:00Z",
+          "name": "MonImage.jpg",
+          "size": "150000",
+          "updated_at": "0001-01-01T00:00:00Z",
+        }
+      }
+      selected={false} />
+  </div>
+</div>
 `;
 
 exports[`PhotosList component should render correctly a timeline of photos according a photos array 1`] = `

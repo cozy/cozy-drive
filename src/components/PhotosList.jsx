@@ -4,7 +4,6 @@ import React from 'react'
 import { translate } from '../lib/I18n'
 
 import Empty from './Empty'
-import Loading from './Loading'
 import SelectionBar from '../containers/SelectionBar'
 import Photo from './Photo'
 
@@ -12,16 +11,6 @@ import classNames from 'classnames'
 
 export const PhotosList = props => {
   const { f, photosByMonth, showSelection, selected, onPhotoToggle } = props
-  const { isIndexing, isFetching, isWorking, isFirstFetch } = props
-  if (isIndexing) {
-    return <Loading loadingType='photos_indexing' />
-  }
-  if (isFetching || isFirstFetch) {
-    return <Loading loadingType='photos_fetching' />
-  }
-  if (isWorking) {
-    return <Loading loadingType='photos_upload' />
-  }
   return (
     <div
       role='contentinfo'
