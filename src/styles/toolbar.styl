@@ -7,9 +7,14 @@
     .coz-btn:last-child
         margin-right 0
 
+    .fil-toolbar-more-btn
+        @extends $button--secondary
+        @extends $button--more
+
 .fil-toolbar-trash
     .fil-toolbar-more-btn
         display none
+
 
 // These styles are needed for the menu to work and come directly from bosonic's source
 // TODO: find a better way for bosonic to share its styling
@@ -27,7 +32,7 @@ b-item
     display block
 
 .fil-toolbar-menu
-    @extends $popover
+    @extend $popover
     right 0
     padding 5px 0
     margin 0
@@ -35,12 +40,13 @@ b-item
     min-width 220px
 
     a
+    label
         &.fil-action-upload
-            background embedurl("../assets/icons/icon-upload-16.svg") em(16px) center no-repeat
+            background embedurl('../assets/icons/icon-upload-16.svg') em(16px) center no-repeat
         &.fil-action-newfolder
-            background embedurl("../assets/icons/icon-folder-add-16.svg") em(16px) center no-repeat
+            background embedurl('../assets/icons/icon-folder-add-16.svg') em(16px) center no-repeat
         &.fil-action-select
-            background embedurl("../assets/icons/icon-checkbox-16.svg") em(16px) center no-repeat
+            background embedurl('../assets/icons/icon-checkbox-16.svg') em(16px) center no-repeat
         &.fil-action-delete
             background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
 
@@ -57,6 +63,21 @@ b-item
         hr // temporary while there is only select after hr
             display block
 
-    .fil-toolbar-trash
-        .fil-toolbar-more-btn
+    .desktop-upload
+        display none
+
+    .fil-toolbar-trash .fil-toolbar-more-btn
             display inline-flex
+
+@media (max-width: (768/basefont)rem)
+    .fil-toolbar-files
+    .fil-toolbar-trash
+        position absolute
+        top      0
+        right    0
+        z-index  $nav-index
+
+        .fil-toolbar-more-btn
+            border       0
+            margin-right 0
+            opacity      .5

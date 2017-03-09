@@ -1,4 +1,5 @@
 import styles from '../styles/toolbar'
+import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -16,20 +17,24 @@ const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectio
       disabled={!!error || isSelectionBarVisible}
       onUpload={uploadFile}
       label={t('toolbar.item_upload')}
+      className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', styles['desktop-upload'])}
     />
     <MenuButton>
       <button
         role='button'
-        className='coz-btn coz-btn--secondary coz-btn--more'
+        className={classNames('coz-btn', styles['fil-toolbar-more-btn'])}
         disabled={!!error || isSelectionBarVisible}
       >
         <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
         <Item>
-          <a className={styles['fil-action-upload']}>
-            {t('toolbar.menu_upload')}
-          </a>
+          <UploadButton
+            disabled={!!error || isSelectionBarVisible}
+            onUpload={uploadFile}
+            label={t('toolbar.menu_upload')}
+            className={styles['fil-action-upload']}
+          />
         </Item>
         <Item>
           <a
