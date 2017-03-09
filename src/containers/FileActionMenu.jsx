@@ -12,14 +12,14 @@ import { getActionableFiles } from '../reducers'
 import { downloadFile, downloadSelection, hideFileActionMenu, openFileWith, actionMenuLoading, actionMenuLoaded, hideSelectionBar, showDeleteConfirmation } from '../actions'
 
 const Menu = props => {
-  const { files } = props
+  const { files, isTrashContext } = props
   return (
     <div className={styles['fil-actionmenu']}>
       {files.length === 1 ? <MenuHeaderFile file={files[0]} /> : <MenuHeaderSelection {...props} />}
       <hr />
       {files.length === 1 && <ItemOpenWith file={files[0]} {...props} />}
       {files.length === 1 ? <DownloadFile file={files[0]} {...props} /> : <DownloadSelection {...props} />}
-      {<Delete {...props} />}
+      {!isTrashContext && <Delete {...props} />}
     </div>
   )
 }
