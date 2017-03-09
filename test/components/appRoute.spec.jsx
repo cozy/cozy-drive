@@ -23,7 +23,7 @@ describe('AppRoute component', () => {
     const expectedStructure = {
       photos: {
         path: 'photos',
-        component: 'Connect(Timeline)',
+        component: 'Connect(_translate)',
         routes: { // nested
           ':photoId': {
             path: ':photoId',

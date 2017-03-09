@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { translate } from '../lib/I18n'
 import { fetchPhotos } from '../actions/photos'
 import { togglePhotoSelection } from '../actions/selection'
 import { getPhotosByMonth, mustShowSelectionBar } from '../reducers'
 
-import PhotosList from '../components/PhotosList'
+import Loading from '../components/Loading'
+import PhotoBoard from '../components/PhotoBoard'
 import Topbar from '../components/Topbar'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
+
+const formatMonths = (photoList, f, format) => {
+  return {
+    title: f(photoList.title, format),
+    photos: photoList.photos
+  }
+}
 
 export class Timeline extends Component {
   constructor (props) {
@@ -24,15 +33,33 @@ export class Timeline extends Component {
   }
 
   render () {
-    const { showAddToAlbumModal } = this.props
+    const { f, showAddToAlbumModal, photosByMonth } = this.props
+    const { isIndexing, isWorking, isFetching } = this.props
+    const { onPhotoToggle } = this.props
+    const { isFirstFetch } = this.state
+    const isBusy = isIndexing || isWorking || isFetching
     return (
       <div>
         { showAddToAlbumModal &&
           <AddToAlbumModal />
         }
         <Topbar viewName='photos' />
-        <PhotosList {...this.props} {...this.state} />
-        { this.props.children }
+        { isIndexing &&
+          <Loading loadingType='photos_indexing' />
+        }
+        { isFetching && isFirstFetch &&
+          <Loading loadingType='photos_fetching' />
+        }
+        { isWorking &&
+          <Loading loadingType='photos_upload' />
+        }
+        { !isBusy &&
+          <PhotoBoard
+            photoLists={photosByMonth.map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))}
+            showSelection={this.props.showSelection}
+            selected={this.props.selected}
+            onPhotoToggle={onPhotoToggle} />
+        }
       </div>
     )
   }
@@ -62,4 +89,4 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Timeline)
+)(translate()(Timeline))
