@@ -20,7 +20,7 @@ $coz-bar-size = 40px
     top        0
     display    none
     width      $coz-bar-size
-    height     $coz-bar-size
+    height     $coz-bar-size - 1px//don't cover the cozy bar bottom border
     border     0
     background white embedurl('../assets/icons/icon-arrow-left.svg') center center no-repeat
 
@@ -85,7 +85,7 @@ $coz-bar-size = 40px
             color   grey-08
 
         .fil-path-current
-            height     $coz-bar-size + 1px
+            height     $coz-bar-size
             box-shadow inset 0 -1px 0 0 grey-09
 
     :global
