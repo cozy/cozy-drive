@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import { openFolder, openFileInNewTab, renameFolder, toggleFileSelection, showFileActionMenu } from '../actions'
@@ -9,8 +10,12 @@ import { TRASH_CONTEXT } from '../constants/config'
 
 import { Alerter } from 'cozy-ui/react/Alerter'
 
+import styles from '../styles/table'
+
 import Loading from '../components/Loading'
+import Empty from '../components/Empty'
 import Oops from '../components/Oops'
+import FileListHeader from '../components/FileListHeader'
 import FileList from '../components/FileList'
 
 import FilesSelectionBar from '../containers/FilesSelectionBar'
@@ -44,16 +49,25 @@ class Folder extends Component {
         <Loading message={props.t('loading.message')} />
       )
     }
-    const isTrashContext = props.context === TRASH_CONTEXT
-    const { showSelection, showDeleteConfirmation, error, showActionMenu } = props
+    const isTrashContext = props.visibleContext === TRASH_CONTEXT
+    const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
     return (
       <div role='contentinfo'>
         <Alerter />
         {!isTrashContext && showSelection && <FilesSelectionBar />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}
-        <FileList {...props} {...state} isTrashContext={isTrashContext} />
-        {error && <Oops />}
+        <div className={classNames(
+          styles['fil-content-table'],
+          { [styles['fil-content-table-selection']]: showSelection }
+        )}>
+          <FileListHeader />
+          <div className={styles['fil-content-body']}>
+            <FileList {...props} {...state} isTrashContext={isTrashContext} />
+            {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
+            {error && <Oops />}
+          </div>
+        </div>
         {showActionMenu && <FileActionMenu />}
       </div>
     )
@@ -61,6 +75,7 @@ class Folder extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  visibleContext: state.context,
   isFetching: state.ui.isFetching,
   showLoading: state.ui.isFetching && state.folder === null,
   error: state.ui.error,
