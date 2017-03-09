@@ -50,7 +50,7 @@ class Folder extends Component {
       )
     }
     const isTrashContext = props.context === TRASH_CONTEXT
-    const { showSelection, showDeleteConfirmation, error, showActionMenu } = props
+    const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
     return (
       <div role='contentinfo'>
         <Alerter />
