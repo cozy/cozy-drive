@@ -3,14 +3,11 @@ import { connect } from 'react-redux'
 
 import { translate } from '../lib/I18n'
 import { fetchPhotos } from '../actions/photos'
-import { togglePhotoSelection } from '../actions/selection'
-import { getPhotosByMonth, mustShowSelectionBar } from '../reducers'
+import { getPhotosByMonth } from '../reducers'
 
 import Loading from '../components/Loading'
 import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
-import AddToAlbumModal from '../containers/AddToAlbumModal'
-
 const formatMonths = (photoList, f, format) => {
   return {
     title: f(photoList.title, format),
@@ -33,16 +30,12 @@ export class Timeline extends Component {
   }
 
   render () {
-    const { f, showAddToAlbumModal, photosByMonth } = this.props
+    const { f, photosByMonth } = this.props
     const { isIndexing, isWorking, isFetching } = this.props
-    const { onPhotoToggle } = this.props
     const { isFirstFetch } = this.state
     const isBusy = isIndexing || isWorking || isFetching
     return (
       <div>
-        { showAddToAlbumModal &&
-          <AddToAlbumModal />
-        }
         <Topbar viewName='photos' />
         { isIndexing &&
           <Loading loadingType='photos_indexing' />
@@ -56,9 +49,7 @@ export class Timeline extends Component {
         { !isBusy &&
           <PhotoBoard
             photoLists={photosByMonth.map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))}
-            showSelection={this.props.showSelection}
-            selected={this.props.selected}
-            onPhotoToggle={onPhotoToggle} />
+          />
         }
         { this.props.children }
       </div>
@@ -70,10 +61,7 @@ const mapStateToProps = (state, ownProps) => ({
   isFetching: state.ui.isFetching,
   isIndexing: state.ui.isIndexing,
   isWorking: state.ui.isWorking,
-  selected: state.ui.selected,
-  showSelection: mustShowSelectionBar(state),
   photosByMonth: getPhotosByMonth(state),
-  showAddToAlbumModal: state.ui.showAddToAlbumModal,
   photos: state.photos,
   mangoIndexByDate: state.mango.filesIndexByDate
 })
@@ -81,9 +69,6 @@ const mapStateToProps = (state, ownProps) => ({
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   onFirstFetch: (mangoIndexByDate) => {
     dispatch(fetchPhotos(mangoIndexByDate))
-  },
-  onPhotoToggle: (id, selected) => {
-    dispatch(togglePhotoSelection(id, selected))
   }
 })
 
