@@ -17,8 +17,7 @@ import {
   UNSELECT_FILE,
   DOWNLOAD_SELECTION,
   SHOW_FILE_ACTIONMENU,
-  HIDE_FILE_ACTIONMENU,
-  ALERT_CLOSED
+  HIDE_FILE_ACTIONMENU
 } from '../actions'
 
 const isFetching = (state = false, action) => {
@@ -142,19 +141,6 @@ const actionMenu = (state = { openWith: false }, action) => {
   }
 }
 
-const DEFAULT_ALERT_LEVEL = 'info'
-
-const alert = (state = null, action) => {
-  if (action.alert) {
-    return {
-      message: action.alert.message,
-      messageData: action.alert.messageData,
-      type: action.alert.type || DEFAULT_ALERT_LEVEL
-    }
-  } else if (action.type === ALERT_CLOSED) return null
-  else return state
-}
-
 export default combineReducers({
   isFetching,
   showAddFolder,
@@ -164,6 +150,5 @@ export default combineReducers({
   showFileActionMenu,
   actionable,
   error,
-  actionMenu,
-  alert
+  actionMenu
 })

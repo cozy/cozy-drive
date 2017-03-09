@@ -1,23 +1,24 @@
 @import 'cozy-ui'
 
 .fil-content-table
-    position    relative
-    height      100%
-    text-align  left
-    color       grey-11
+    position        relative
+    display         flex
+    flex-direction  column
+    flex            1 1 100%
+    height          100%
+    text-align      left
+    color           grey-11
 
-headHeight = em(31px, 16px);
 .fil-content-head
-    position          absolute
-    z-index           1
-    height            headHeight
-    background-color  white
+    flex 0 0 em(31px, 16px)
 
 .fil-content-body
-    margin-top  headHeight
-    box-sizing  border-box
-    max-height  'calc(100% - %s)' % headHeight
-    overflow    auto
+    flex      1 1 auto
+    display   flex
+    flex-direction column
+    // Because it needs a height to be scrollable. Don't ask.
+    height    1px
+    overflow  auto
 
 .fil-content-header
 .fil-content-cell
@@ -29,6 +30,7 @@ headHeight = em(31px, 16px);
     display         flex
     flex-direction  row
     align-items     center
+    flex            0 0 auto
     width           100%
     border-bottom   1px solid grey-09
 
@@ -43,7 +45,7 @@ headHeight = em(31px, 16px);
 
 .fil-content-header
   padding         em(8px, 12px) em(28px, 12px)
-  font-size(12px)
+  font-size       12px
   text-transform  uppercase
 
 .fil-content-header:first-child
@@ -61,7 +63,7 @@ headHeight = em(31px, 16px);
 
 .fil-content-cell.fil-content-file
     padding-left   em(45px)
-    font-size(16px)
+    font-size      16px
     white-space    nowrap
     overflow       hidden
     text-overflow  ellipsis
@@ -149,7 +151,6 @@ headHeight = em(31px, 16px);
         display none
 
     .fil-content-body
-      margin-top  0
       max-height  100%
 
     .fil-content-file
@@ -157,7 +158,7 @@ headHeight = em(31px, 16px);
 
     .fil-content-file-action
         display    block
-        flex       0 0 em(48px)
+        flex       0 0 em(60px, 14px)
 
     .fil-content-cell.fil-content-file
         left-padded(61px)

@@ -6,7 +6,7 @@ import { translate } from '../../../../src/lib/I18n'
 
 import Breadcrumb from '../../components/Breadcrumb'
 
-import styles from '../../styles/onboarding.styl'
+import styles from '../../styles/onboarding'
 
 import { setBackupImages } from '../../actions/settings'
 

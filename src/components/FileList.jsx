@@ -6,9 +6,10 @@ import { translate } from '../lib/I18n'
 
 import File from '../components/File'
 import AddFolder from '../containers/AddFolder'
+import Empty from '../components/Empty'
 
 const FileList = ({
-  t, f, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
+  t, f, isTrashContext, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
 }) => (
   <div className={classNames(
     styles['fil-content-table'],
@@ -35,6 +36,7 @@ const FileList = ({
           showSelection={showSelection}
         />
       ))}
+      {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
     </div>
   </div>
 )
