@@ -43,7 +43,7 @@
     "babel-runtime": "^6.0.0",
     "copy-webpack-plugin": "^4.0.1",
     "cozy-bar": "3.0.0-beta11",
-    "cozy-client-js": "^0.1.6",
+    "cozy-client-js": "^0.1.7",
     "css-loader": "^0.26.0",
     "css-mqpacker": "^4.0.1",
     "csswring": "^5.1.1",
