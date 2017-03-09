@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import { openFolder, openFileInNewTab, renameFolder, toggleFileSelection, showFileActionMenu } from '../actions'
@@ -9,8 +10,12 @@ import { TRASH_CONTEXT } from '../constants/config'
 
 import { Alerter } from 'cozy-ui/react/Alerter'
 
+import styles from '../styles/table'
+
 import Loading from '../components/Loading'
+import Empty from '../components/Empty'
 import Oops from '../components/Oops'
+import FileListHeader from '../components/FileListHeader'
 import FileList from '../components/FileList'
 
 import FilesSelectionBar from '../containers/FilesSelectionBar'
@@ -52,7 +57,14 @@ class Folder extends Component {
         {!isTrashContext && showSelection && <FilesSelectionBar />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}
-        <FileList {...props} {...state} isTrashContext={isTrashContext} />
+        <div className={classNames(
+          styles['fil-content-table'],
+          { [styles['fil-content-table-selection']]: showSelection }
+        )}>
+          <FileListHeader />
+          <FileList {...props} {...state} isTrashContext={isTrashContext} />
+          {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
+        </div>
         {error && <Oops />}
         {showActionMenu && <FileActionMenu />}
       </div>
