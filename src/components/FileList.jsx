@@ -1,5 +1,3 @@
-import styles from '../styles/table'
-
 import React from 'react'
 import { translate } from '../lib/I18n'
 
@@ -9,7 +7,7 @@ import AddFolder from '../containers/AddFolder'
 const FileList = ({
   t, f, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
 }) => (
-  <div className={styles['fil-content-body']}>
+  <div>
     <AddFolder />
     {!error && files.map((file, idx) => (
       <File

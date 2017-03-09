@@ -49,7 +49,7 @@ class Folder extends Component {
         <Loading message={props.t('loading.message')} />
       )
     }
-    const isTrashContext = props.context === TRASH_CONTEXT
+    const isTrashContext = props.visibleContext === TRASH_CONTEXT
     const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
     return (
       <div role='contentinfo'>
@@ -62,10 +62,12 @@ class Folder extends Component {
           { [styles['fil-content-table-selection']]: showSelection }
         )}>
           <FileListHeader />
-          <FileList {...props} {...state} isTrashContext={isTrashContext} />
-          {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
+          <div className={styles['fil-content-body']}>
+            <FileList {...props} {...state} isTrashContext={isTrashContext} />
+            {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
+            {error && <Oops />}
+          </div>
         </div>
-        {error && <Oops />}
         {showActionMenu && <FileActionMenu />}
       </div>
     )
@@ -73,6 +75,7 @@ class Folder extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  visibleContext: state.context,
   isFetching: state.ui.isFetching,
   showLoading: state.ui.isFetching && state.folder === null,
   error: state.ui.error,
