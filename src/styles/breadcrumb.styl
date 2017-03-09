@@ -1,18 +1,96 @@
 @require 'cozy-ui'
 
-.fil-content-title
-    margin 0
-    font-size(24px)
+$coz-bar-size = 40px
 
-.fil-inside-path
-    color           #95999d
+.fil-path-title
+    margin    0
+    font-size 24px
+
+.fil-path-link
+    color           grey-11
     text-decoration none
     cursor          pointer
 
-    .separator
+    .fil-path-separator
         horizontally-padded .3em
 
-    @media (max-width: (768/basefont)rem)
-        font-size(20px)
-        .fil-path-hidden
+.fil-path-previous
+    position   absolute
+    right      100%
+    top        0
+    display    none
+    width      $coz-bar-size
+    height     $coz-bar-size - 1px//don't cover the cozy bar bottom border
+    border     0
+    background white embedurl('../assets/icons/icon-arrow-left.svg') center center no-repeat
+
+.fil-path-down
+    display     none
+    width       14px
+    height      10px
+    margin-left 7px
+    border      0
+    background  embedurl('../assets/icons/icon-arrow-down.svg') center center no-repeat
+
+@media (max-width: (768/basefont)rem)
+    .fil-path-backdrop
+        position fixed
+        top      0
+        left     $coz-bar-size
+        right    0
+        z-index  $nav-index
+
+    .fil-path-title
+        display        flex
+        flex-direction column-reverse
+        font-size      1.3em
+
+    .fil-path-link
+    .fil-path-current
+        box-sizing    border-box
+        height        $coz-bar-size
+        padding       7px 0
+        text-overflow ellipsis
+        overflow      hidden
+        white-space   nowrap
+        padding-right 50px
+
+    .fil-path-previous
+        display block
+
+    .fil-path-down
+        display inline-block
+
+    .fil-path-link
+    .fil-path-separator
+        display none
+
+    .fil-path-backdrop.deployed
+        bottom     0
+        left       0
+        background rgba(50, 54, 63, 0.5)
+
+        .fil-path-previous
+            left 0
+
+        .fil-path-title
+            background white
+
+        .fil-path-link
+        .fil-path-current
+            padding-left $coz-bar-size
+
+        .fil-path-link
+            display block
+            color   grey-08
+
+        .fil-path-current
+            height     $coz-bar-size
+            box-shadow inset 0 -1px 0 0 grey-09
+
+    :global
+        [role=banner] .coz-bar-title
             display none
+
+        [role=banner][data-drawer-visible="true"]
+            z-index $nav-index + 1

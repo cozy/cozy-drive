@@ -16,11 +16,11 @@ const styles = {
   }
 }
 
-const UploadButton = ({ label, disabled, onUpload }) => (
+const UploadButton = ({ label, disabled, onUpload, className }) => (
   <label
     role='button'
     disabled={disabled}
-    className='coz-btn coz-btn--regular coz-btn--upload'
+    className={className}
     style={styles.parent}
   >
     {label}

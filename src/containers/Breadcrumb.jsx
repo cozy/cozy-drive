@@ -11,82 +11,109 @@ import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 
-const Breadcrumb = ({ t, context, folder, opening, toggle, goToFolder }) => {
-  if (!context) {
+const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, toggleDeploy, goToFolder }) => {
+  if (!context || !folder) {
     return null
   }
 
-  const topLevelTitle = t(`breadcrumb.title_${context}`)
+  let isBrowsingTrash = context === TRASH_CONTEXT
 
-  if (!folder) {
-    return (
-      <h2 class={styles['fil-content-title']}>
-        <span>{ topLevelTitle }</span>
-      </h2>
-    )
+  // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
+  let path = []
+
+  // dring the first fetch, folder is an empty object, and we don't want to display anything
+  if (folder.id) path.push(folder)
+
+  // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that.
+  let parent = folder.parent
+  if (parent && parent.id && !(isBrowsingTrash && parent.id === ROOT_DIR_ID)) {
+    path.unshift(parent)
+
+    // has the parent a parent too?
+    if (parent.dir_id && !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID)) {
+      // since we don't *actually* have any information about the parent's parent, we have to fake it
+      path.unshift({ id: parent.dir_id })
+    }
   }
 
-  const isRoot = folder.id === ROOT_DIR_ID
-  const isTrash = folder.id === TRASH_DIR_ID
+  // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder. While we're at it, we also rename the folders when we need to.
+  let hasRootFolder = false
+  path.forEach(folder => {
+    if (folder.id === ROOT_DIR_ID) {
+      folder.name = t('breadcrumb.title_files')
+      hasRootFolder = true
+    } else if (folder.id === TRASH_DIR_ID) {
+      folder.name = t('breadcrumb.title_trash')
+      if (isBrowsingTrash) hasRootFolder = true
+    }
 
-  const isInRoot = folder.parent && folder.parent.id === ROOT_DIR_ID
-  const isInTrash = folder.parent && folder.parent.id === TRASH_DIR_ID
+    if (!folder.name) folder.name = '…'
+  })
 
-  const showParentFolder = !isRoot && !isTrash && !isInRoot && !isInTrash && folder.parent
-
-  const isLevel2Root = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== ROOT_DIR_ID
-  const isLevel2Trash = folder.parent && folder.parent.dir_id && folder.parent.dir_id !== TRASH_DIR_ID && !isInTrash
-
-  const isBrowsingTrash = context === TRASH_CONTEXT
-
-  const showEllipsis = (isBrowsingTrash && isLevel2Trash) || (!isBrowsingTrash && isLevel2Root)
+  if (!hasRootFolder) {
+    // if we don't have one, we add it manually
+    path.unshift({
+      id: isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID,
+      name: isBrowsingTrash ? t('breadcrumb.title_trash') : t('breadcrumb.title_files')
+    })
+  }
 
   return (
-    <h2 class={styles['fil-content-title']}>
-
-      { (isRoot || isTrash) && // Displays the non-interactive root folder
-        <span>{ topLevelTitle }</span> }
-
-      { !isRoot && !isTrash && // show the interactive root folder
+    <div
+      className={classNames(styles['fil-path-backdrop'], {[styles['deployed']]: deployed})}
+      onClick={toggleDeploy}
+    >
+      {path.length >= 2 &&
         <Link
-          to={`/${context}`}
-          className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-          onClick={() => {
-            toggle()
-            goToFolder(null, context).then(() => toggle())
+          to={`/${context}/${path[path.length - 2].id}`}
+          className={styles['fil-path-previous']}
+          onClick={e => {
+            e.stopPropagation()
+            toggleOpening()
+            if (deployed) toggleDeploy()
+            goToFolder(path[path.length - 2].id).then(() => toggleOpening())
           }}
-        >
-          { topLevelTitle }
-          <span className={styles['separator']}>/</span>
-        </Link>
+        />
       }
+      <h2 className={styles['fil-path-title']}>
 
-      { showEllipsis && // show an ellipsis if there are more than 2 levels
-        <span className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}>
-          …
-          <span className={styles['separator']}>/</span>
-        </span> }
+        { path.map((folder, index) => {
+          if (index < path.length - 1) {
+            return <Link
+              to={`/${context}/${folder.id}`}
+              className={styles['fil-path-link']}
+              onClick={e => {
+                e.stopPropagation()
+                toggleOpening()
+                if (deployed) toggleDeploy()
+                goToFolder(folder.id).then(() => toggleOpening())
+              }}
+            >
+              <a>
+                { folder.name }
+              </a>
+              <span className={styles['fil-path-separator']}>/</span>
+            </Link>
+          } else {
+            return <span
+              className={styles['fil-path-current']}
+              onClick={e => {
+                e.stopPropagation()
+                if (path.length >= 2) toggleDeploy()
+              }}
+            >
+              { folder.name }
+              {path.length >= 2 &&
+                <span className={styles['fil-path-down']} />
+              }
 
-      { showParentFolder && // Displays the parent folder
-        <Link
-          to={`/${context}/${folder.parent.id}`}
-          className={classNames(styles['fil-inside-path'], styles['fil-path-hidden'])}
-          onClick={() => {
-            toggle()
-            goToFolder(folder.parent.id, context).then(() => toggle())
-          }}
-        >
-          {folder.parent.name}
-          <span className={styles['separator']}>/</span>
-        </Link>
-      }
+              { opening && <Spinner /> }
+            </span>
+          }
+        }) }
 
-      { !isRoot && !isTrash && // Displays the current folder
-        <span>{folder.name}</span>}
-
-      { opening && <Spinner /> }
-
-    </h2>
+      </h2>
+    </div>
   )
 }
 
@@ -103,9 +130,13 @@ export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
 )(withState({
-  opening: false
+  opening: false,
+  deployed: false
 }, (setState) => ({
-  toggle: () => {
+  toggleOpening: () => {
     setState(state => ({ opening: !state.opening }))
+  },
+  toggleDeploy: () => {
+    setState(state => ({ deployed: !state.deployed }))
   }
 }))(Breadcrumb)))
