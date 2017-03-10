@@ -19,11 +19,6 @@ export const Nav = ({ t }) => (
           { t('Nav.albums') }
         </Link>
       </li>
-      <li className={styles['coz-nav-item']}>
-        <Link to='/trash' className={classNames(styles['pho-cat-trash'], styles['coz-nav-link'])} activeClassName={styles['active']}>
-          { t('Nav.trash') }
-        </Link>
-      </li>
     </ul>
   </nav>
 )

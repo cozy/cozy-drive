@@ -24,17 +24,6 @@ exports[`Nav component should be rendered correctly 1`] = `
         Albums
       </Link>
     </li>
-    <li
-      className="coz-nav-item">
-      <Link
-        activeClassName="active"
-        className="pho-cat-trash coz-nav-link"
-        onlyActiveOnIndex={false}
-        style={Object {}}
-        to="/trash">
-        Trash
-      </Link>
-    </li>
   </ul>
 </nav>
 `;

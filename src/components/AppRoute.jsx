@@ -14,7 +14,6 @@ const AppRoute = (
       <Route path=':photoId' component={Viewer} />
     </Route>
     <Route path='albums' component={ComingSoon} />
-    <Route path='trash' component={ComingSoon} />
   </Route>
 )
 
