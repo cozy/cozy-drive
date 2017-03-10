@@ -2,23 +2,22 @@ import React from 'react'
 import { translate } from '../lib/I18n'
 
 import File from '../components/File'
-import AddFolder from '../containers/AddFolder'
 
 const FileList = ({
-  t, f, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
+  t, f, displayedFolder, files, selected, selectionModeActive, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
 }) => (
   <div>
-    <AddFolder />
-    {!error && files.map((file, idx) => (
+    {files.map((file, idx) => (
       <File
-        context={context}
+        displayedFolder={displayedFolder}
+        selected={selected.find(f => f && f.id === file.id) !== undefined}
         onEdit={onFileEdit}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
         onToggle={onFileToggle}
         onShowActionMenu={onShowActionMenu}
         attributes={file}
-        showSelection={showSelection}
+        selectionModeActive={selectionModeActive}
       />
     ))}
   </div>
