@@ -5,7 +5,7 @@ import styles from '../styles/nav'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import Spinner from '../components/Spinner'
@@ -26,9 +26,9 @@ class ActiveLink extends Component {
       .then(() => this.setState({ opening: false }))
   }
 
-  render ({ to, className, children }, { opening }) {
+  render ({ to, className, activeClassName, children }, { opening }) {
     return (
-      <Link to={to} className={className} onClick={e => this.open(e)}>
+      <Link to={to} className={className} activeClassName={activeClassName} onClick={e => this.open(e)}>
         {children}
         {opening && <Spinner />}
       </Link>
@@ -36,7 +36,9 @@ class ActiveLink extends Component {
   }
 }
 
-const Nav = ({ t, context, openFiles, openTrash }) => {
+const Nav = ({ t, location, openFiles, openTrash }) => {
+  const isBrowsingFiles = location.pathname.match(/^\/files/) !== null
+  const isBrowsingTrash = location.pathname.match(/^\/trash/) !== null
   return (
     <nav>
       <ul class={styles['coz-nav']}>
@@ -47,8 +49,9 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
             className={classNames(
               styles['coz-nav-link'],
               styles['fil-cat-files'],
-              { [styles['active']]: context === FILES_CONTEXT }
+              { [styles['active']]: isBrowsingFiles }
             )}
+            activeClassName={styles['active']}
           >
             { t('nav.item_files') }
           </ActiveLink>
@@ -60,8 +63,9 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
             className={classNames(
               styles['coz-nav-link'],
               styles['fil-cat-trash'],
-              { [styles['active']]: context === TRASH_CONTEXT }
+              { [styles['active']]: isBrowsingTrash }
             )}
+            activeClassName={styles['active']}
           >
             { t('nav.item_trash') }
           </ActiveLink>
@@ -82,14 +86,11 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  context: state.context
-})
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openFiles: () => dispatch(openFolder(null, FILES_CONTEXT)),
   openTrash: () => dispatch(openFolder(null, TRASH_CONTEXT))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  translate()(Nav)
+export default connect(null, mapDispatchToProps)(
+  withRouter(translate()(Nav))
 )
