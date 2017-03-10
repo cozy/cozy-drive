@@ -36,6 +36,7 @@ class RevokableWrapper extends Component {
             cancelAction={() => { this.logout() }}
             validateText={t('mobile.revoked.loginagain')}
             validateAction={() => { this.loginagain() }}
+            withCross={false}
           />
           {children}
         </div>
