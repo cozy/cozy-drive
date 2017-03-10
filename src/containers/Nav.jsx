@@ -37,6 +37,9 @@ class ActiveLink extends Component {
 }
 
 const Nav = ({ t, location, openFiles, openTrash }) => {
+  // TODO: it'd be better to just use activeClassName here, but it doesn't work
+  // because we use a route with an optional param ; a bit of refactoring regarding to routing concerns
+  // would be interesting
   const isBrowsingFiles = location.pathname.match(/^\/files/) !== null
   const isBrowsingTrash = location.pathname.match(/^\/trash/) !== null
   return (
@@ -51,7 +54,6 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
               styles['fil-cat-files'],
               { [styles['active']]: isBrowsingFiles }
             )}
-            activeClassName={styles['active']}
           >
             { t('nav.item_files') }
           </ActiveLink>
@@ -65,7 +67,6 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
               styles['fil-cat-trash'],
               { [styles['active']]: isBrowsingTrash }
             )}
-            activeClassName={styles['active']}
           >
             { t('nav.item_trash') }
           </ActiveLink>
