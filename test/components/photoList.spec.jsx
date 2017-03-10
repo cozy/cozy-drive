@@ -5,7 +5,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { PhotosList } from '../../src/components/PhotosList'
+import { PhotoList } from '../../src/components/PhotoList'
 
 const photosMock = [
   {
@@ -18,17 +18,17 @@ const photosMock = [
   }
 ]
 
-describe('PhotosList component', () => {
+describe('PhotoList component', () => {
   it('should render correctly a timeline of photos according a photos array', () => {
     const component = shallow(
-      <PhotosList title='Photo list title' photos={photosMock} selected={[]} />
+      <PhotoList title='Photo list title' photos={photosMock} selected={[]} />
     ).node
     expect(component).toMatchSnapshot()
   })
 
   it('should render correctly an empty view if photos is empty', () => {
     const component = shallow(
-      <PhotosList title='Empty list' photos={[]} selected={[]} />
+      <PhotoList title='Empty list' photos={[]} selected={[]} />
     ).node
     expect(component).toMatchSnapshot()
   })

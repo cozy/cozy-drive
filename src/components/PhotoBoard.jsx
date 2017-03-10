@@ -5,7 +5,7 @@ import { translate } from '../lib/I18n'
 
 import Empty from './Empty'
 import SelectionBar from '../containers/SelectionBar'
-import PhotosList from './PhotosList'
+import PhotoList from './PhotoList'
 
 export const PhotoBoard = props => {
   const { photoLists, showSelection, selected, onPhotoToggle } = props
@@ -16,7 +16,7 @@ export const PhotoBoard = props => {
     >
       {showSelection && <SelectionBar />}
       {photoLists.map(photoList => {
-        return (<PhotosList
+        return (<PhotoList
           key={photoList.title}
           title={photoList.title}
           photos={photoList.photos}
