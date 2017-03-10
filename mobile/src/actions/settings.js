@@ -5,8 +5,7 @@ import { onRegistered } from '../lib/registration'
 import { logException } from '../lib/crash-reporter'
 
 export const SET_URL = 'SET_URL'
-export const BACKUP_IMAGES_DISABLE = 'BACKUP_IMAGES_DISABLE'
-export const BACKUP_IMAGES_ENABLE = 'BACKUP_IMAGES_ENABLE'
+export const BACKUP_IMAGES = 'BACKUP_IMAGES'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
@@ -37,15 +36,9 @@ export const checkURL = url => dispatch => {
 
 // backup images
 
-export const enableBackupImages = () => ({type: BACKUP_IMAGES_ENABLE})
-export const disableBackupImages = () => ({type: BACKUP_IMAGES_DISABLE})
-export const setBackupImages = (value) => {
-  if (value) {
-    return enableBackupImages()
-  } else {
-    return disableBackupImages()
-  }
-}
+export const enableBackupImages = () => setBackupImages(true)
+export const disableBackupImages = () => setBackupImages(false)
+export const setBackupImages = value => ({type: BACKUP_IMAGES, value})
 export const setWifiOnly = value => ({ type: WIFI_ONLY, value })
 
 // errors

@@ -2,19 +2,19 @@ import { mockStore } from '../../../test/helpers'
 import {
   SET_URL, setUrl, checkURL,
   SET_CLIENT, setClient,
-  BACKUP_IMAGES_ENABLE, BACKUP_IMAGES_DISABLE, enableBackupImages, disableBackupImages, setBackupImages,
+  BACKUP_IMAGES, enableBackupImages, disableBackupImages, setBackupImages,
   OnBoardingError, wrongAddressError, ERROR, wrongAddressErrorMsg
 } from '../../src/actions/settings'
 
 describe('backup images actions creators', () => {
   it('should create an action to enable backup images', () => {
-    const expectedAction = { type: BACKUP_IMAGES_ENABLE }
+    const expectedAction = { type: BACKUP_IMAGES, value: true }
     expect(enableBackupImages()).toEqual(expectedAction)
     expect(setBackupImages(true)).toEqual(expectedAction)
   })
 
   it('should create an action to disable backup images', () => {
-    const expectedAction = { type: BACKUP_IMAGES_DISABLE }
+    const expectedAction = { type: BACKUP_IMAGES, value: false }
     expect(disableBackupImages()).toEqual(expectedAction)
     expect(setBackupImages(false)).toEqual(expectedAction)
   })
