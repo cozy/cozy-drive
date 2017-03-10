@@ -11,7 +11,7 @@ const withGestures = (eventHandlers) => {
   return WrappedComponent => {
     return class WithGesturesComponent extends Component {
       componentDidMount () {
-        let node = ReactDOM.findDOMNode(this);
+        const node = ReactDOM.findDOMNode(this)
         this.hammer = new Hammer.Manager(node, {
           recognizers: [[Hammer.Tap], [Hammer.Swipe, { direction: Hammer.DIRECTION_ALL }]]
         })
@@ -36,9 +36,11 @@ const withGestures = (eventHandlers) => {
             if (ghostClickTimeout !== null &&
                 lastTouchEvent !== null &&
                 Math.round(lastTouchEvent.srcEvent.pageX) === Math.round(e.pageX) &&
-                Math.round(lastTouchEvent.srcEvent.pageY) === Math.round(e.pageY)){
+                Math.round(lastTouchEvent.srcEvent.pageY) === Math.round(e.pageY)) {
               // the 2 events are related, so we can fire the tap event
-              cancelTimeout(ghostClickTimeout)
+              e.preventDefault()
+              e.stopPropagation()
+              clearTimeout(ghostClickTimeout)
               this.onTap(lastTouchEvent)
               ghostClickTimeout = lastTouchEvent = null
             }
