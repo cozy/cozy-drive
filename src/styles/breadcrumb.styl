@@ -47,9 +47,10 @@ $coz-bar-size = 40px
 
     .fil-path-link
     .fil-path-current
+        display       flex
+        align-items   center
         box-sizing    border-box
         height        $coz-bar-size
-        padding       7px 0
         text-overflow ellipsis
         overflow      hidden
         white-space   nowrap
@@ -81,7 +82,7 @@ $coz-bar-size = 40px
             padding-left $coz-bar-size
 
         .fil-path-link
-            display block
+            display flex
             color   grey-08
 
         .fil-path-current
