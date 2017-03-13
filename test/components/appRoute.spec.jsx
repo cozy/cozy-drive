@@ -32,7 +32,8 @@ describe('AppRoute component', () => {
         }
       },
       albums: {
-        path: 'albums'
+        path: 'albums',
+        component: 'Connect(AlbumsView)'
       }
     }
 

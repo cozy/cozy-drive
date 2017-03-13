@@ -1,0 +1,18 @@
+exports[`Empty component should be displayed with albums text if errorType is albums 1`] = `
+<div>
+  <div
+    className="pho-error">
+    <h2>
+      Something went wrong while fetching the albums.
+    </h2>
+    <button
+      className="coz-btn coz-btn--regular"
+      onClick={[Function]}
+      role="button">
+      Refresh now
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Empty component should be displayed with photos text if errorType is photos 1`] = `<div />`;
