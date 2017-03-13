@@ -125,6 +125,7 @@
         }
       },
       "media_backup": {
+        "media_folder": "Camera",
         "title": "Media Backup",
         "images": {
           "title": "Backup images",

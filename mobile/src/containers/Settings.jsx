@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Settings from '../components/Settings'
 import { setBackupImages } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
-import { mediaBackup } from '../actions/mediaBackup'
+import { mediaBackup, startMediaUpload, endMediaUpload } from '../actions/mediaBackup'
 
 const mapStateToProps = (state, ownProps) => ({
   mediaUploading: state.mobile.mediaBackup.uploading,
@@ -14,7 +14,12 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  launchBackup: () => dispatch(mediaBackup()),
+  launchBackup: (dir) => {
+    dispatch(startMediaUpload())
+    dispatch(mediaBackup(dir))
+    .then(() => dispatch(endMediaUpload()))
+    .catch(() => dispatch(endMediaUpload()))
+  },
   showUnlinkConfirmation: () => dispatch(showUnlinkConfirmation()),
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),
   unlink: (client) => {

@@ -19,7 +19,7 @@ export const requestAuthorization = async () => {
       )
     })
   }
-  return false
+  return Promise.resolve(false)
 }
 
 export const getBlob = async (libraryItem) => {
@@ -33,7 +33,7 @@ export const getBlob = async (libraryItem) => {
     })
   }
 
-  return ''
+  return Promise.resolve('')
 }
 
 export const getPhotos = async () => {
@@ -65,13 +65,13 @@ export const getPhotos = async () => {
     })
   }
 
-  return defaultReturn
+  return Promise.resolve(defaultReturn)
 }
 
 export const getFilteredPhotos = async () => {
   let photos = await getPhotos()
 
-  if (window.cordova.platformId === 'android') {
+  if (hasCordovaPlugin() && window.cordova.platformId === 'android') {
     photos = photos.filter((photo) => photo.id.indexOf('DCIM') !== -1)
   }
 

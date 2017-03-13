@@ -11,15 +11,28 @@ export const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
 export const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
 export const successImageUpload = (image) => ({ type: IMAGE_UPLOAD_SUCCESS, id: image.id })
 
-export const mediaBackup = () => async (dispatch, getState) => {
-  dispatch(startMediaUpload())
+async function getDirID (dir) {
+  const targetDirectory = await cozy.client.files.createDirectory({
+    name: dir,
+    dirID: 'io.cozy.files.root-dir'
+  }).catch(err => {
+    if (err.status === 409) { // directory already exists
+      return cozy.client.files.statByPath(`/${dir}`)
+    }
+    throw err
+  })
+  return targetDirectory._id
+}
+
+export const mediaBackup = (dir) => async (dispatch, getState) => {
   let photos = await getFilteredPhotos()
   const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+  const dirID = await getDirID(dir)
   for (let photo of photos) {
     if (!alreadyUploaded.includes(photo.id)) {
       const blob = await getBlob(photo)
       const options = {
-        dirID: 'io.cozy.files.root-dir',
+        dirID,
         name: photo.fileName
       }
       await cozy.client.files.create(blob, options).then(() => {
@@ -32,5 +45,4 @@ export const mediaBackup = () => async (dispatch, getState) => {
       })
     }
   }
-  dispatch(endMediaUpload())
 }

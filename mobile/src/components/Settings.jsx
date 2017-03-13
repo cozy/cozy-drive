@@ -22,7 +22,7 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
       <SubCategory id={'backupImages'} title={t('mobile.settings.media_backup.images.title')}
         label={t('mobile.settings.media_backup.images.label')}
         value={<input type='checkbox' checked={backupImages} onChange={setBackupImages} />} />
-      <button onclick={launchBackup}>
+      <button onclick={() => launchBackup(t('mobile.settings.media_backup.media_folder'))}>
         {t('mobile.settings.media_backup.launch')}
         {mediaUploading && <div className={styles['media-uploading']} />}
       </button>
