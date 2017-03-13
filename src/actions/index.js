@@ -83,7 +83,7 @@ export const openFileInNewTab = (file) => {
       : `${folder.path}/`
     const filePath = `${folderPath}${file.name}`
     const href = await cozy.client.files.getDownloadLink(filePath)
-    window.open(`${cozy._url}${href}`, '_blank')
+    window.open(`${cozy.client._url}${href}`, '_blank')
   }
 }
 
