@@ -1,4 +1,4 @@
-import styles from '../styles/errorComponent'
+import styles from '../styles/emptyAndError'
 
 import React from 'react'
 import { translate } from '../lib/I18n'

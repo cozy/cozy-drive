@@ -1,6 +1,7 @@
 @require 'cozy-ui'
 
 .pho-empty
+.pho-error
   text-align center
   &:before
     content     ''
@@ -8,7 +9,6 @@
     margin      em(100px) auto 0
     width       em(160px)
     height      em(140px)
-    background  embedurl("../assets/icons/icon-main-app.svg") center center / cover no-repeat
   h2
     font-size(24px)
     margin         em(33px) auto 0
@@ -20,9 +20,18 @@
     color       grey-11
     line-height 1.5
 
+  [role=button]
+      margin-top 1em
+
+.pho-error:before
+  background  embedurl('../assets/icons/icon-image-broken.svg') center center / cover no-repeat
+
+.pho-empty:before
+  background  embedurl('../assets/icons/icon-main-app.svg') center center / cover no-repeat
+
 
 @media (max-width: (1023/basefont)rem)
-  .pho-empty
+  .pho-empty, .pho-error
     &:before
       width  em(120px)
       height em(105px)
