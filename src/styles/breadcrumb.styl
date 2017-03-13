@@ -54,7 +54,7 @@ $coz-bar-size = 40px
         text-overflow ellipsis
         overflow      hidden
         white-space   nowrap
-        padding-right 50px
+        padding       0 2.35em 0 .25em
 
     .fil-path-previous
         display block
@@ -79,7 +79,7 @@ $coz-bar-size = 40px
 
         .fil-path-link
         .fil-path-current
-            padding-left $coz-bar-size
+            padding-left "calc(%s + .25em)" % $coz-bar-size
 
         .fil-path-link
             display flex
