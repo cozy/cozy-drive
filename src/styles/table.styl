@@ -45,12 +45,12 @@
     color grey-11
 
 .fil-content-header
-  padding         em(8px, 12px) em(28px, 12px)
-  font-size       12px
-  text-transform  uppercase
+    padding         em(8px, 12px) em(28px, 12px)
+    font-size       12px
+    text-transform  uppercase
 
 .fil-content-header:first-child
-  padding em(8px, 12px)
+    padding em(8px, 12px)
 
 .fil-content-file-action
     display     none
@@ -104,40 +104,40 @@
     padding em(15px) em(8px)
 
 .fil-file-audio
-  background embedurl("../assets/icons/icon-type-audio.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-audio.svg") 0 center no-repeat
 
 .fil-file-bin
-  background embedurl("../assets/icons/icon-type-binary.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-binary.svg") 0 center no-repeat
 
 .fil-file-code
-  background embedurl("../assets/icons/icon-type-code.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-code.svg") 0 center no-repeat
 
 .fil-file-files
-  background embedurl("../assets/icons/icon-type-files.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-files.svg") 0 center no-repeat
 
 .fil-file-folder
-  background embedurl("../assets/icons/icon-type-folder.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-folder.svg") 0 center no-repeat
 
 .fil-file-image
-  background embedurl("../assets/icons/icon-type-image.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-image.svg") 0 center no-repeat
 
 .fil-file-pdf
-  background embedurl("../assets/icons/icon-type-pdf.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-pdf.svg") 0 center no-repeat
 
 .fil-file-slide
-  background embedurl("../assets/icons/icon-type-slide.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-slide.svg") 0 center no-repeat
 
 .fil-file-sheet
-  background embedurl("../assets/icons/icon-type-spreadsheet.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-spreadsheet.svg") 0 center no-repeat
 
 .fil-file-text
-  background embedurl("../assets/icons/icon-type-text.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-text.svg") 0 center no-repeat
 
 .fil-file-video
-  background embedurl("../assets/icons/icon-type-video.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-video.svg") 0 center no-repeat
 
 .fil-file-zip
-  background embedurl("../assets/icons/icon-type-zip.svg") 0 center no-repeat
+    background embedurl("../assets/icons/icon-type-zip.svg") 0 center no-repeat
 
 .fil-loading
     @extend $icon-16
@@ -145,8 +145,12 @@
     margin-left 0.5em
 
 @media (max-width: (1024/basefont)rem)
-  .fil-content-row
-    max-width  100vw
+    .fil-content-table-selection
+        .fil-content-body
+            margin-bottom em(48px)
+
+    .fil-content-row
+        max-width  100vw
 
 @media (max-width: (768/basefont)rem)
     .fil-content-head
@@ -156,7 +160,7 @@
         display none
 
     .fil-content-body
-      max-height  100%
+        max-height  100%
 
     .fil-content-file
         flex 1 1 auto
