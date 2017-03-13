@@ -11,6 +11,10 @@
     "albums_title": "You don't have any album yet.",
     "albums_text": "Click the \"New album\" button to create your first album."
   },
+  "Error": {
+    "albums_title": "Something went wrong while fetching the albums.",
+    "refresh": "Refresh now"
+  },
   "Toolbar": {
     "photo_upload": "Upload",
     "more": "More",

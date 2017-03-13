@@ -8,21 +8,28 @@ from '../actions/albums'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
+import ErrorComponent from '../components/ErrorComponent'
 import Topbar from '../components/Topbar'
 
 export class AlbumsView extends Component {
   constructor (props) {
     super(props)
-    this.state = { isFetching: true }
-    props.fetchAlbums().then(
-      () => { this.setState({ isFetching: false }) }
-    )
+    this.state = {isFetching: true, error: false}
+    props.fetchAlbums()
+      .then(() => { this.setState({isFetching: false, error: false}) })
+      .catch(albumsError => {
+        console.error(albumsError)
+        this.setState({isFetching: false, error: true})
+      })
   }
 
   render () {
-    const { isFetching } = this.state
+    const { isFetching, error } = this.state
     if (isFetching) {
       return <Loading loadingType='albums_fetching' />
+    }
+    if (error) {
+      return <ErrorComponent errorType='albums' />
     }
     return (
       <div>

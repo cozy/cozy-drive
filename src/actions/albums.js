@@ -27,9 +27,13 @@ export const fetchAlbums = (mangoIndex) => {
       for (let index in albums) {
         albums[index]._type = ALBUM_DOCTYPE // FIXME: this adds the missing _type to album
         albums[index].photosIds = await cozy.client.data.listReferencedFiles(albums[index])
+          .then(photosIds => photosIds)
           .catch(fetchError => {
-            throw new Error(fetchError.response.statusText)
-          }).then(photosIds => photosIds)
+            throw new Error(fetchError.response
+              ? fetchError.response.statusText
+              : fetchError
+            )
+          })
       }
       dispatch({type: FETCH_ALBUMS_SUCCESS, albums})
     }).catch(fetchError => {
@@ -84,7 +88,12 @@ export const createAlbumMangoIndex = () => {
           mangoIndex: mangoIndex
         })
         return mangoIndex
-      }).catch(fetchError => { throw new Error(fetchError.response.statusText) })
+      }).catch(fetchError => {
+        throw new Error(fetchError.response
+          ? fetchError.response.statusText
+          : fetchError
+        )
+      })
   }
 }
 
