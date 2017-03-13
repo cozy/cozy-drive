@@ -34,12 +34,13 @@ export const fetchPhotos = (mangoIndexByDate) => {
       fields: ['_id', 'dir_id', 'created_at', 'name', 'size', 'updated_at'],
       descending: true
     }
-    await cozy.client.data.query(mangoIndexByDate, options)
+    return await cozy.client.data.query(mangoIndexByDate, options)
     .then((photos) => {
       dispatch({
         type: RECEIVE_PHOTOS,
         photos
       })
+      return photos
     })
     .catch((error) => {
       Alerter.error('Alerter.photos.fetching_error')
