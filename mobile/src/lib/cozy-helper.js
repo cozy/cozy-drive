@@ -36,7 +36,8 @@ export const initBar = () => {
   cozy.bar.init({
     appName: 'Files',
     iconPath: require('../../../vendor/assets/app-icon.svg'),
-    lang: 'en'
+    lang: 'en',
+    replaceTitleOnMobile: true
   })
 }
 
