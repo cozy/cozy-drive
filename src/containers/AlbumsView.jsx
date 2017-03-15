@@ -42,7 +42,7 @@ export class AlbumsView extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  albums: state.albums
+  albums: state.albums.albumsList
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
