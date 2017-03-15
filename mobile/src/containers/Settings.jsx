@@ -30,12 +30,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(unlink(client))
     ownProps.router.replace('/onboarding')
   },
-  setBackupImages: (e) => {
-    dispatch(setBackupImages(e.target.checked))
-  },
-  setWifiOnly: (e) => {
-    dispatch(setWifiOnly(e.target.checked))
-  },
+  setWifiOnly: (e) => dispatch(setWifiOnly(e.target.checked)),
+  setBackupImages: (e) => dispatch(setBackupImages(e.target.checked)),
   setSentry: (e) => dispatch(setSentry(e.target.checked))
 })
 
