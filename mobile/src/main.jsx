@@ -19,16 +19,9 @@ import filesApp from './reducers'
 import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState, saveState } from './lib/localStorage'
-import { initClient, initBar, isClientRegistered, resetClient, refreshFolder } from './lib/cozy-helper'
-import { revokeClient } from './actions/authorization'
+import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 
 const loggerMiddleware = createLogger()
-
-const onError = (store, callback) => () => {
-  console.warn(`Your device is no more connected to your server: ${store.getState().mobile.settings.serverUrl}`)
-  store.dispatch(revokeClient())
-  callback()
-}
 
 const renderAppWithPersistedState = persistedState => {
   const store = createStore(
@@ -59,15 +52,15 @@ const renderAppWithPersistedState = persistedState => {
       isClientRegistered(client).then(clientIsRegistered => {
         if (clientIsRegistered) {
           const options = {
-            onError: onError(store, callback),
+            onError: onError(store.dispatch, store.getState),
             onComplete: refreshFolder(store.dispatch, store.getState)
           }
           cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
           initBar()
-          callback()
         } else {
-          onError(store, callback)()
+          onError(store.dispatch, store.getState)()
         }
+        callback()
       })
     } else {
       resetClient()
