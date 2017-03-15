@@ -9,7 +9,6 @@ import { unrevokeClient } from '../actions/authorization'
 import { registerDevice } from '../actions/settings'
 
 class RevokableWrapper extends Component {
-
   logout () {
     resetClient()
     this.props.unrevokeClient()
