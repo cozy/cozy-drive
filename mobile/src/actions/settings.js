@@ -1,6 +1,6 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import { initClient, refreshFolder } from '../lib/cozy-helper'
+import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
 import { logException } from '../lib/crash-reporter'
 
@@ -10,7 +10,7 @@ export const BACKUP_IMAGES_ENABLE = 'BACKUP_IMAGES_ENABLE'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
 
-import { revokeClient, unrevokeClient } from './authorization'
+import { unrevokeClient } from './authorization'
 
 // url
 
@@ -76,11 +76,7 @@ export const registerDevice = () => async (dispatch, getState) => {
     dispatch(unrevokeClient())
     dispatch(setClient(client))
     const options = {
-      onError: (err) => {
-        console.log('on error fron the client', err)
-        console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
-        dispatch(revokeClient())
-      },
+      onError: onError(dispatch, getState),
       onComplete: refreshFolder(dispatch, getState)
     }
     cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
