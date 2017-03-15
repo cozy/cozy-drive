@@ -1,101 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Onboarding should render different components 1`] = `
 <div
-  className="wizard welcome">
+  className="wizard welcome"
+>
   <div
-    className="wizard-main">
+    className="wizard-main"
+  >
     <div
-      className="logo-wrapper">
+      className="logo-wrapper"
+    >
       <div
-        className="cozy-logo-white" />
+        className="cozy-logo-white"
+      />
     </div>
     <h1
-      className="title" />
+      className="title"
+    />
     <h1
-      className="title" />
+      className="title"
+    />
   </div>
   <footer
-    className="wizard-footer">
+    className="wizard-footer"
+  >
     <button
       className="coz-btn coz-btn--regular"
       onClick={[Function]}
-      role="button" />
+      role="button"
+    />
     <a
       className="link"
-      href="#" />
+      href="#"
+    />
   </footer>
 </div>
 `;
 
 exports[`Onboarding should render different components 2`] = `
 <div
-  className="wizard select-server">
+  className="wizard select-server"
+>
   <header
-    className="wizard-header">
+    className="wizard-header"
+  >
     <a
       className="close-button"
-      onClick={undefined} />
+      onClick={undefined}
+    />
   </header>
   <div
-    className="wizard-main">
+    className="wizard-main"
+  >
     <div
-      className="logo-wrapper">
+      className="logo-wrapper"
+    >
       <div
-        className="cozy-logo-white" />
+        className="cozy-logo-white"
+      />
     </div>
     <input
       className="input"
       onChange={undefined}
       placeholder={undefined}
       type="url"
-      value={undefined} />
+      value={undefined}
+    />
     <p
-      className="description" />
+      className="description"
+    />
   </div>
   <footer
-    className="wizard-footer">
+    className="wizard-footer"
+  >
     <button
       className="coz-btn coz-btn--regular"
       disabled={true}
       onClick={[Function]}
-      role="button" />
+      role="button"
+    />
   </footer>
 </div>
 `;
 
 exports[`Onboarding should render the BackupPhotosVideos screen 1`] = `
 <div
-  className="wizard photos-backup">
+  className="wizard photos-backup"
+>
   <header
-    className="wizard-header">
+    className="wizard-header"
+  >
     <a
       className="skipLink"
-      onClick={undefined} />
+      onClick={undefined}
+    />
   </header>
   <div
-    className="wizard-main">
+    className="wizard-main"
+  >
     <div
-      className="illustration illustration-photos" />
+      className="illustration illustration-photos"
+    />
     <h1
-      className="title" />
+      className="title"
+    />
     <p
-      className="description" />
+      className="description"
+    />
   </div>
   <footer
-    className="wizard-footer">
+    className="wizard-footer"
+  >
     <button
       className="coz-btn coz-btn--regular"
       onClick={undefined}
-      role="button" />
+      role="button"
+    />
     <div
-      className="onboarding-breadcrumb">
+      className="onboarding-breadcrumb"
+    >
       <div
-        className="onboarding-breadcrumb-element-active" />
+        className="onboarding-breadcrumb-element-active"
+      />
       <div
-        className="onboarding-breadcrumb-element" />
+        className="onboarding-breadcrumb-element"
+      />
       <div
-        className="onboarding-breadcrumb-element" />
+        className="onboarding-breadcrumb-element"
+      />
       <div
-        className="onboarding-breadcrumb-element" />
+        className="onboarding-breadcrumb-element"
+      />
     </div>
   </footer>
 </div>
@@ -103,64 +138,83 @@ exports[`Onboarding should render the BackupPhotosVideos screen 1`] = `
 
 exports[`Onboarding should render the SelectServer screen 1`] = `
 <div
-  className="wizard select-server">
+  className="wizard select-server"
+>
   <header
-    className="wizard-header">
+    className="wizard-header"
+  >
     <a
       className="close-button"
-      onClick={undefined} />
+      onClick={undefined}
+    />
   </header>
   <div
-    className="wizard-main">
+    className="wizard-main"
+  >
     <div
-      className="logo-wrapper">
+      className="logo-wrapper"
+    >
       <div
-        className="cozy-logo-white" />
+        className="cozy-logo-white"
+      />
     </div>
     <input
       className="input"
       onChange={undefined}
       placeholder={undefined}
       type="url"
-      value={undefined} />
+      value={undefined}
+    />
     <p
-      className="description" />
+      className="description"
+    />
   </div>
   <footer
-    className="wizard-footer">
+    className="wizard-footer"
+  >
     <button
       className="coz-btn coz-btn--regular"
       disabled={true}
       onClick={[Function]}
-      role="button" />
+      role="button"
+    />
   </footer>
 </div>
 `;
 
 exports[`Onboarding should render the welcome screen 1`] = `
 <div
-  className="wizard welcome">
+  className="wizard welcome"
+>
   <div
-    className="wizard-main">
+    className="wizard-main"
+  >
     <div
-      className="logo-wrapper">
+      className="logo-wrapper"
+    >
       <div
-        className="cozy-logo-white" />
+        className="cozy-logo-white"
+      />
     </div>
     <h1
-      className="title" />
+      className="title"
+    />
     <h1
-      className="title" />
+      className="title"
+    />
   </div>
   <footer
-    className="wizard-footer">
+    className="wizard-footer"
+  >
     <button
       className="coz-btn coz-btn--regular"
       onClick={undefined}
-      role="button" />
+      role="button"
+    />
     <a
       className="link"
-      href="#" />
+      href="#"
+    />
   </footer>
 </div>
 `;
