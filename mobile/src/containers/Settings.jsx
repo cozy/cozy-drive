@@ -3,6 +3,7 @@ import Settings from '../components/Settings'
 import { setBackupImages, setWifiOnly } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
 import { mediaBackup, startMediaUpload, endMediaUpload } from '../actions/mediaBackup'
+import { backupAllowed } from '../lib/network'
 
 const mapStateToProps = (state, ownProps) => ({
   mediaUploading: state.mobile.mediaBackup.uploading,
@@ -11,7 +12,8 @@ const mapStateToProps = (state, ownProps) => ({
   backupImages: state.mobile.settings.backupImages,
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,
   client: state.mobile.settings.client,
-  wifiOnly: state.mobile.settings.wifiOnly
+  wifiOnly: state.mobile.settings.wifiOnly,
+  backupAllowed: backupAllowed(state.mobile.network.connection, state.mobile.settings.wifiOnly)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
