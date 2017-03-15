@@ -32,11 +32,12 @@ export class AlbumsView extends Component {
       return <ErrorComponent errorType='albums' />
     }
     return (
-      <div>
-        <Topbar viewName='albums' />
-        <AlbumsList {...this.props} {...this.state} />
-        { this.props.children }
-      </div>
+      !this.props.children
+        ? <div>
+          <Topbar viewName='albums' />
+          <AlbumsList {...this.props} {...this.state} />
+        </div>
+        : <div>{ this.props.children }</div>
     )
   }
 }

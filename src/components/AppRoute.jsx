@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router'
 
 import Timeline from '../containers/Timeline'
 import AlbumsView from '../containers/AlbumsView'
+import AlbumPhotos from '../containers/AlbumPhotos'
 import Viewer from '../containers/Viewer'
 
 import App from './App'
@@ -14,7 +15,10 @@ const AppRoute = (
     <Route path='photos' component={Timeline}>
       <Route path=':photoId' component={Viewer} />
     </Route>
-    <Route path='albums' component={AlbumsView} />
+    <Route path='albums' component={AlbumsView}>
+      <Route path=':albumId' component={AlbumPhotos}>
+      </Route>
+    </Route>
   </Route>
 )
 
