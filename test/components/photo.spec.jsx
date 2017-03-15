@@ -33,4 +33,17 @@ describe('Photo component', () => {
 
     expect(component.node).toMatchSnapshot()
   })
+
+  it('should handle onClick event', () => {
+    const component = shallow(
+      <Photo photo={photoObject} router={routerObjectMock}
+        onToggle={() => {}} />
+    )
+    component.setState({
+      loading: false,
+      url: `http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8`
+    })
+    component.find('[data-input="checkbox"]').simulate('click', {stopImmediatePropagation: () => {}})
+    expect(component.node).toMatchSnapshot()
+  })
 })

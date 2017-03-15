@@ -8,12 +8,42 @@ import {
   ADD_TO_ALBUM_SUCCESS,
   CANCEL_ADD_TO_ALBUM,
   CREATE_ALBUM_SUCCESS,
+  FETCH_ALBUMS_SUCCESS,
   INDEX_ALBUMS_BY_NAME_SUCCESS
 } from '../constants/actionTypes'
 
 import {
   ALBUM_DOCTYPE
 } from '../constants/config'
+
+// Returns albums from the provided index
+export const fetchAlbums = (mangoIndex) => {
+  return async (dispatch) => {
+    if (!mangoIndex) throw Error('Albums.fetchAlbums.error.index_missing')
+    return await cozy.client.data.query(mangoIndex, {
+      selector: {'name': {'$gt': null}},
+      fields: ['_id', '_type', 'name']
+    }).then(async albums => {
+      for (let index in albums) {
+        albums[index]._type = ALBUM_DOCTYPE // FIXME: this adds the missing _type to album
+        albums[index].photosIds = await cozy.client.data.listReferencedFiles(albums[index])
+          .then(photosIds => photosIds)
+          .catch(fetchError => {
+            throw new Error(fetchError.response
+              ? fetchError.response.statusText
+              : fetchError
+            )
+          })
+      }
+      dispatch({type: FETCH_ALBUMS_SUCCESS, albums})
+    }).catch(fetchError => {
+      throw new Error(fetchError.response
+        ? fetchError.response.statusText
+        : fetchError
+      )
+    })
+  }
+}
 
 // create album
 export const addToAlbum = (photos = [], album = null) => {
@@ -58,7 +88,12 @@ export const createAlbumMangoIndex = () => {
           mangoIndex: mangoIndex
         })
         return mangoIndex
-      }).catch(fetchError => { throw new Error(fetchError.response.statusText) })
+      }).catch(fetchError => {
+        throw new Error(fetchError.response
+          ? fetchError.response.statusText
+          : fetchError
+        )
+      })
   }
 }
 

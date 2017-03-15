@@ -11,18 +11,25 @@ export class Photo extends Component {
     super(props)
 
     this.state = {
-      loading: true
+      loading: true,
+      isImageLoading: true
     }
     getPhotoLink(props.photo._id)
       .then(link => this.setState({
         url: link,
         loading: false
       }))
+
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
+  }
+
+  handleImageLoaded () {
+    this.setState({ isImageLoading: false })
   }
 
   render () {
     const { photo, selected = false, onToggle, router } = this.props
-    const { loading, url } = this.state
+    const { loading, url, isImageLoading } = this.state
     const parentPath = router.location.pathname
     return (
       !loading &&
@@ -46,6 +53,9 @@ export class Photo extends Component {
           <Link to={`${parentPath}/${photo._id}`}>
             <img
               className={styles['pho-photo-item']}
+              onLoad={this.handleImageLoaded}
+              style={isImageLoading ? 'display:none' : ''}
+              alt={photo.name}
               src={url}
             />
           </Link>

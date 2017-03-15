@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router'
 
 import Timeline from '../containers/Timeline'
+import AlbumsView from '../containers/AlbumsView'
 import Viewer from '../containers/Viewer'
 
 import App from './App'
@@ -13,7 +14,7 @@ const AppRoute = (
     <Route path='photos' component={Timeline}>
       <Route path=':photoId' component={Viewer} />
     </Route>
-    <Route path='albums' component={ComingSoon} />
+    <Route path='albums' component={AlbumsView} />
   </Route>
 )
 

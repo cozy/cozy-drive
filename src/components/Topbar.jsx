@@ -10,7 +10,7 @@ export const Topbar = ({ t, viewName }) => {
     <h2 className={styles['pho-content-title']}>
       {t(`Nav.${viewName}`)}
     </h2>
-    <Toolbar />
+    <Toolbar viewName={viewName} />
   </div>
 }
 

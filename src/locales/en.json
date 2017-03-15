@@ -11,6 +11,10 @@
     "albums_title": "You don't have any album yet.",
     "albums_text": "Click the \"New album\" button to create your first album."
   },
+  "Error": {
+    "albums_title": "Something went wrong while fetching the albums.",
+    "refresh": "Refresh now"
+  },
   "Toolbar": {
     "photo_upload": "Upload",
     "more": "More",
@@ -21,7 +25,9 @@
   },
   "Loading": {
     "photos_indexing": "Your photos are currently being indexed. Please wait.",
+    "albums_indexing": "Your albums are currently being indexed. Please wait.",
     "photos_fetching": "Loading",
+    "albums_fetching": "Loading",
     "photos_upload": "Uploading"
   },
   "Alerter": {
@@ -40,6 +46,7 @@
     "close": "Close"
   },
   "Albums": {
+    "album_item_description": "%{smart_count} photo |||| %{smart_count} photos",
     "add_photos": {
       "title": "Add to album",
       "success": "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
@@ -60,6 +67,11 @@
       "error": {
         "already_exists": "The album %{name} already exists, please pick another one.",
         "name_missing": "You have to give a name to your album."
+      }
+    },
+    "fetchAlbums": {
+      "error": {
+        "index_missing": "An albums index must be provided to fetch albums."
       }
     }
   },

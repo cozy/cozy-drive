@@ -15,4 +15,12 @@ describe('UploadButton component', () => {
     ).node
     expect(component).toMatchSnapshot()
   })
+
+  it('should handle onChange event', () => {
+    const component = shallow(
+      <UploadButton t={mockT} onUpload={() => {}} />
+    )
+    component.find('input').simulate('change', {target: {files: []}})
+    expect(component.node).toMatchSnapshot()
+  })
 })
