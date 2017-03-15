@@ -76,7 +76,7 @@ export class Viewer extends Component {
   }
 
   render () {
-    const { previousID, nextID } = this.props
+    const { previousID, nextID, currentPhoto } = this.props
     const { imageUrl, isLoading, isImageLoading } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
@@ -88,6 +88,7 @@ export class Viewer extends Component {
               <img
                 onLoad={this.handleImageLoaded}
                 style={isImageLoading ? 'display:none' : ''}
+                alt={currentPhoto.name}
                 src={imageUrl}
               />
             }

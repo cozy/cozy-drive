@@ -12,8 +12,11 @@ export class AlbumItem extends Component {
     super(props)
 
     this.state = {
-      isLoading: true
+      isLoading: true,
+      isImageLoading: true
     }
+
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
 
     if (props.album && props.album.photosIds.length) {
       getPhotoLink(props.album.photosIds[0])
@@ -29,9 +32,13 @@ export class AlbumItem extends Component {
     }
   }
 
+  handleImageLoaded () {
+    this.setState({ isImageLoading: false })
+  }
+
   render () {
     const { t, album, router } = this.props
-    const { isLoading, url } = this.state
+    const { isLoading, url, isImageLoading } = this.state
     const parentPath = router.location.pathname
     return (
       !isLoading &&
@@ -42,6 +49,9 @@ export class AlbumItem extends Component {
           >
             <img
               className={styles['pho-album-photo-item']}
+              onLoad={this.handleImageLoaded}
+              style={isImageLoading ? 'display:none' : ''}
+              alt={`${album.name} album cover`}
               src={url}
             />
             <h2 className={styles['pho-album-title']}>{album.name}</h2>
