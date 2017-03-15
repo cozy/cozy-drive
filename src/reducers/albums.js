@@ -19,7 +19,7 @@ export const albumsList = (state = [], action) => {
 }
 
 // reducer for the current album for the album photos view
-export const currentAlbum = (state = [], action) => {
+export const currentAlbum = (state = {}, action) => {
   switch (action.type) {
     case FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS:
       return action.album

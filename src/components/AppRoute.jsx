@@ -17,6 +17,7 @@ const AppRoute = (
     </Route>
     <Route path='albums' component={AlbumsView}>
       <Route path=':albumId' component={AlbumPhotos}>
+        <Route path=':photoId' component={Viewer} />
       </Route>
     </Route>
   </Route>
