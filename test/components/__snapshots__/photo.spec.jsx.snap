@@ -15,8 +15,11 @@ exports[`Photo component should handle onClick event 1`] = `
     style={Object {}}
     to="/mock/33dda00f0eec15bc3b3c59a615001ac8">
     <img
+      alt="MonImage.jpg"
       className="pho-photo-item"
-      src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
+      onLoad={[Function]}
+      src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8"
+      style="display:none" />
   </Link>
 </div>
 `;
@@ -38,8 +41,11 @@ exports[`Photo component should render correctly an image according a photo obje
     style={Object {}}
     to="/mock/33dda00f0eec15bc3b3c59a615001ac8">
     <img
+      alt="MonImage.jpg"
       className="pho-photo-item"
-      src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8" />
+      onLoad={[Function]}
+      src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8"
+      style="display:none" />
   </Link>
 </div>
 `;
