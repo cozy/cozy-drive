@@ -136,6 +136,13 @@
           "title": "Backup on WIFI only",
           "label": "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
         }
+      },
+      "support": {
+        "title": "Support",
+        "sentry": {
+          "title" : "Improve the application",
+          "label": "If the option is enabled, the application will automatically transmit data to Cozy Cloud, such as errors that may occur. This allows us to be proactive in solving problems."
+        }
       }
     },
     "action_menu": {

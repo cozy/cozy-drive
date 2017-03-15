@@ -9,6 +9,7 @@ export const BACKUP_IMAGES = 'BACKUP_IMAGES'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
+export const SET_SENTRY = 'SET_SENTRY'
 
 import { unrevokeClient } from './authorization'
 
@@ -32,6 +33,17 @@ export const checkURL = url => dispatch => {
     url = `${scheme}${url}`
   }
   return dispatch(setUrl(url))
+}
+
+// sentry
+
+export const enableSentry = () => ({ type: SET_SENTRY, sentry: true })
+export const disableSentry = () => ({ type: SET_SENTRY, sentry: false })
+export const setSentry = (value) => {
+  if (value) {
+    return enableSentry()
+  }
+  return disableSentry()
 }
 
 // backup images

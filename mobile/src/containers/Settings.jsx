@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Settings from '../components/Settings'
-import { setBackupImages, setWifiOnly } from '../actions/settings'
+import { setBackupImages, setWifiOnly, setSentry } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
 import { mediaBackup, startMediaUpload, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from '../lib/network'
@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => ({
   version: window.navigator.appInfo ? window.navigator.appInfo.version : 'dev',
   serverUrl: state.mobile.settings.serverUrl,
   backupImages: state.mobile.settings.backupImages,
+  sentry: state.mobile.settings.sentry,
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,
   client: state.mobile.settings.client,
   wifiOnly: state.mobile.settings.wifiOnly,
@@ -34,7 +35,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   setWifiOnly: (e) => {
     dispatch(setWifiOnly(e.target.checked))
-  }
+  },
+  setSentry: (e) => dispatch(setSentry(e.target.checked))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)
