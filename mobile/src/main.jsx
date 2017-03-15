@@ -19,7 +19,7 @@ import filesApp from './reducers'
 import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState, saveState } from './lib/localStorage'
-import { initClient, initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
+import { initClient, initBar, isClientRegistered, resetClient, refreshFolder } from './lib/cozy-helper'
 import { revokeClient } from './actions/authorization'
 
 const loggerMiddleware = createLogger()
@@ -59,7 +59,8 @@ const renderAppWithPersistedState = persistedState => {
       isClientRegistered(client).then(clientIsRegistered => {
         if (clientIsRegistered) {
           const options = {
-            onError: onError(store, callback)
+            onError: onError(store, callback),
+            onComplete: refreshFolder(store.dispatch, store.getState)
           }
           cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
           initBar()

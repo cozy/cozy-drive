@@ -1,6 +1,6 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import { initClient } from '../lib/cozy-helper'
+import { initClient, refreshFolder } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
 import { logException } from '../lib/crash-reporter'
 
@@ -75,13 +75,13 @@ export const registerDevice = () => async (dispatch, getState) => {
   await cozy.client.authorize().then(async ({ client }) => {
     dispatch(unrevokeClient())
     dispatch(setClient(client))
-    await cozy.client.offline.replicateFromCozy('io.cozy.files')
     const options = {
       onError: (err) => {
         console.log('on error fron the client', err)
         console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
         dispatch(revokeClient())
-      }
+      },
+      onComplete: refreshFolder(dispatch, getState)
     }
     cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
   }).catch(err => {
