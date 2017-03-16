@@ -58,4 +58,5 @@
     <plugin name="cordova-plugin-photo-library" spec="2.0.3">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="This app requires access to the photo library." />
     </plugin>
+    <plugin name="cordova-plugin-network-information" spec="1.3.2" />
 </widget>
