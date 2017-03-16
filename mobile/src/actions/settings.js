@@ -35,23 +35,11 @@ export const checkURL = url => dispatch => {
   return dispatch(setUrl(url))
 }
 
-// sentry
+// settings
 
-export const enableSentry = () => ({ type: SET_SENTRY, sentry: true })
-export const disableSentry = () => ({ type: SET_SENTRY, sentry: false })
-export const setSentry = (value) => {
-  if (value) {
-    return enableSentry()
-  }
-  return disableSentry()
-}
-
-// backup images
-
-export const enableBackupImages = () => setBackupImages(true)
-export const disableBackupImages = () => setBackupImages(false)
-export const setBackupImages = value => ({type: BACKUP_IMAGES, value})
-export const setWifiOnly = value => ({ type: WIFI_ONLY, value })
+export const setBackupImages = backupImages => ({type: BACKUP_IMAGES, backupImages})
+export const setSentry = sentry => ({ type: SET_SENTRY, sentry })
+export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
 // errors
 
