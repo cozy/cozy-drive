@@ -4,7 +4,8 @@ import { SET_URL, ERROR, BACKUP_IMAGES, SET_CLIENT, WIFI_ONLY } from '../actions
 export const initialState = {
   serverUrl: '',
   backupImages: false,
-  error: null
+  error: null,
+  wifiOnly: true
 }
 
 export const settings = (state = initialState, action) => {
