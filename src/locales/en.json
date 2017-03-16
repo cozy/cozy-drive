@@ -13,6 +13,7 @@
   },
   "Error": {
     "albums_title": "Something went wrong while fetching the albums.",
+    "photos_title": "Something went wrong while fetching the photos.",
     "refresh": "Refresh now"
   },
   "Toolbar": {
