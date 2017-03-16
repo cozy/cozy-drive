@@ -9,6 +9,7 @@ import {
   CANCEL_ADD_TO_ALBUM,
   CREATE_ALBUM_SUCCESS,
   FETCH_ALBUMS_SUCCESS,
+  FETCH_CURRENT_ALBUM_PHOTOS,
   FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS,
   INDEX_ALBUMS_BY_NAME_SUCCESS
 } from '../constants/actionTypes'
@@ -49,6 +50,7 @@ export const fetchAlbums = (mangoIndex) => {
 // Returns albums photos informations from the album ID
 export const fetchAlbumPhotosStatsById = (albumId) => {
   return async (dispatch) => {
+    dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS})
     try {
       let album = await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
       const photosIds = await cozy.client.data.listReferencedFiles(album)

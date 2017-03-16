@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import {
   ADD_TO_ALBUM,
   ADD_TO_ALBUM_SUCCESS,
+  FETCH_CURRENT_ALBUM_PHOTOS,
   CANCEL_ADD_TO_ALBUM,
   FETCH_PHOTOS,
   RECEIVE_PHOTOS,
@@ -82,6 +83,7 @@ const selected = (state = [], action) => {
     // case OPEN_FOLDER:
     // case DOWNLOAD_SELECTION:
     case ADD_TO_ALBUM_SUCCESS: // when added to album
+    case FETCH_CURRENT_ALBUM_PHOTOS: // when entering into an album
     case HIDE_SELECTION_BAR:
       return []
     default:
