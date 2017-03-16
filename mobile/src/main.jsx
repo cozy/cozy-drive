@@ -23,6 +23,8 @@ import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, on
 import { watchNetworkState, getConnectionType } from './lib/network'
 import { onConnectionChange, setConnectionState } from './actions/network'
 
+import { configure, getSentryUrl, getSentryConfiguration } from './lib/crash-reporter'
+
 const loggerMiddleware = createLogger()
 
 const renderAppWithPersistedState = persistedState => {
@@ -30,7 +32,7 @@ const renderAppWithPersistedState = persistedState => {
     filesApp,
     persistedState,
     applyMiddleware(
-      RavenMiddleWare(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`),
+      RavenMiddleWare(getSentryUrl(), getSentryConfiguration()),
       thunkMiddleware,
       loggerMiddleware
     )
@@ -45,6 +47,7 @@ const renderAppWithPersistedState = persistedState => {
     }
   }))
 
+  configure(store.getState().mobile.settings.sentry)
   initClient(store.getState().mobile.settings.serverUrl)
   store.dispatch(setConnectionState(getConnectionType()))
   watchNetworkState(onConnectionChange(store.dispatch, getConnectionType))

@@ -2,7 +2,7 @@
 
 import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
-import { logException } from '../lib/crash-reporter'
+import { logException, configure } from '../lib/crash-reporter'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES = 'BACKUP_IMAGES'
@@ -37,9 +37,12 @@ export const checkURL = url => dispatch => {
 
 // settings
 
-export const setBackupImages = backupImages => ({type: BACKUP_IMAGES, backupImages})
-export const setSentry = sentry => ({ type: SET_SENTRY, sentry })
+export const setSentry = sentry => {
+  configure(sentry)
+  return { type: SET_SENTRY, sentry }
+}
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
+export const setBackupImages = backupImages => ({type: BACKUP_IMAGES, backupImages})
 
 // errors
 
