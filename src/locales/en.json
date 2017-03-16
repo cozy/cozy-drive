@@ -131,7 +131,11 @@
           "title": "Backup images",
           "label": "Backup your images automatically to your Cozy not to ever lose them and share them easily."
         },
-        "launch": "Launch Backup"
+        "launch": "Launch Backup",
+        "wifi": {
+          "title": "Backup on WIFI only",
+          "description": "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
+        }
       }
     },
     "action_menu": {
