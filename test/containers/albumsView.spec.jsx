@@ -25,13 +25,13 @@ describe('AlbumsView component', () => {
     const component = shallow(
       <AlbumsView fetchAlbums={() => Promise.resolve(mockAlbums)} />
     )
-    expect(component).toMatchSnapshot()
+    expect(component.node).toMatchSnapshot()
   })
 
   it('should be rendered correctly with error view if error', () => {
     const component = shallow(
       <AlbumsView fetchAlbums={() => Promise.reject('testError')} />
     )
-    expect(component).toMatchSnapshot()
+    expect(component.node).toMatchSnapshot()
   })
 })

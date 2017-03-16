@@ -1,0 +1,10 @@
+exports[`AlbumPhotos component should be rendered correctly 1`] = `
+<div>
+  <_translate
+    albumName="albumTest"
+    viewName="albumContent" />
+  <Connect(_translate)
+    fetchPhotoLists={[Function]}
+    refetch={false} />
+</div>
+`;

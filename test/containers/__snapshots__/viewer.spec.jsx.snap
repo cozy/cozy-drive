@@ -2,17 +2,33 @@ exports[`Viewer component should be displayed correctly with the img src compute
 <withRouter(Viewer)
   currentPhoto={
     Object {
-      "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+      "_id": "33dda00f0eec15bc3b3c59a615001ac1",
     }
   }
   dispatch={[Function]}
-  nextID="33dda00f0eec15bc3b3c59a615001ac9"
+  nextID="33dda00f0eec15bc3b3c59a615001ac2"
   params={
     Object {
-      "photoId": "33dda00f0eec15bc3b3c59a615001ac8",
+      "photoId": "33dda00f0eec15bc3b3c59a615001ac1",
     }
   }
-  previousID="33dda00f0eec15bc3b3c59a615001ad0"
+  previousID="33dda00f0eec15bc3b3c59a615001ad3"
+  router={
+    Object {
+      "location": Object {
+        "pathname": "/photos/33dda00f0eec15bc3b3c59a615001ac8",
+      },
+      "push": [Function],
+      "routes": Array [
+        Object {
+          "path": "/",
+        },
+        Object {
+          "path": "photos",
+        },
+      ],
+    }
+  }
   store={
     Object {
       "clearActions": [Function],
@@ -29,17 +45,33 @@ exports[`Viewer component should be displayed correctly with the img src compute
 <withRouter(Viewer)
   currentPhoto={
     Object {
-      "_id": "33dda00f0eec15bc3b3c59a615001ad0",
+      "_id": "33dda00f0eec15bc3b3c59a615001ad3",
     }
   }
   dispatch={[Function]}
-  nextID="33dda00f0eec15bc3b3c59a615001ac8"
+  nextID="33dda00f0eec15bc3b3c59a615001ac1"
   params={
     Object {
-      "photoId": "33dda00f0eec15bc3b3c59a615001ad0",
+      "photoId": "33dda00f0eec15bc3b3c59a615001ad3",
     }
   }
-  previousID="33dda00f0eec15bc3b3c59a615001ac9"
+  previousID="33dda00f0eec15bc3b3c59a615001ac2"
+  router={
+    Object {
+      "location": Object {
+        "pathname": "/photos/33dda00f0eec15bc3b3c59a615001ac8",
+      },
+      "push": [Function],
+      "routes": Array [
+        Object {
+          "path": "/",
+        },
+        Object {
+          "path": "photos",
+        },
+      ],
+    }
+  }
   store={
     Object {
       "clearActions": [Function],
@@ -56,17 +88,77 @@ exports[`Viewer component should be displayed correctly with the img src compute
 <withRouter(Viewer)
   currentPhoto={
     Object {
-      "_id": "33dda00f0eec15bc3b3c59a615001ac9",
+      "_id": "33dda00f0eec15bc3b3c59a615001ac2",
     }
   }
   dispatch={[Function]}
-  nextID="33dda00f0eec15bc3b3c59a615001ad0"
+  nextID="33dda00f0eec15bc3b3c59a615001ad3"
   params={
     Object {
-      "photoId": "33dda00f0eec15bc3b3c59a615001ac9",
+      "photoId": "33dda00f0eec15bc3b3c59a615001ac2",
     }
   }
-  previousID="33dda00f0eec15bc3b3c59a615001ac8"
+  previousID="33dda00f0eec15bc3b3c59a615001ac1"
+  router={
+    Object {
+      "location": Object {
+        "pathname": "/photos/33dda00f0eec15bc3b3c59a615001ac8",
+      },
+      "push": [Function],
+      "routes": Array [
+        Object {
+          "path": "/",
+        },
+        Object {
+          "path": "photos",
+        },
+      ],
+    }
+  }
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  } />
+`;
+
+exports[`Viewer component should be displayed correctly with the img src computed from photoId using the store and the connected component for photos from an album 1`] = `
+<withRouter(Viewer)
+  currentPhoto={
+    Object {
+      "_id": "33dda00f0eec15bc3b3c59a615001AL1",
+    }
+  }
+  dispatch={[Function]}
+  nextID="33dda00f0eec15bc3b3c59a615001AL2"
+  params={
+    Object {
+      "albumId": "33dda00f0eec15bc3b3c59a615001ac8",
+      "photoId": "33dda00f0eec15bc3b3c59a615001AL1",
+    }
+  }
+  previousID="33dda00f0eec15bc3b3c59a615001AL3"
+  router={
+    Object {
+      "location": Object {
+        "pathname": "/albums/33dda00f0eec15bc3b3c59a615001ac8/33dda00f0eec15bc3b3c59a615001ad0",
+      },
+      "push": [Function],
+      "routes": Array [
+        Object {
+          "path": "/",
+        },
+        Object {
+          "path": "albums",
+        },
+      ],
+    }
+  }
   store={
     Object {
       "clearActions": [Function],

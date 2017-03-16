@@ -33,7 +33,19 @@ describe('AppRoute component', () => {
       },
       albums: {
         path: 'albums',
-        component: 'Connect(AlbumsView)'
+        component: 'Connect(AlbumsView)',
+        routes: { // nested
+          ':albumId': {
+            path: ':albumId',
+            component: 'Connect(withRouter(AlbumPhotos))',
+            routes: { // nested
+              ':photoId': {
+                path: ':photoId',
+                component: 'Connect(withRouter(Viewer))'
+              }
+            }
+          }
+        }
       }
     }
 
