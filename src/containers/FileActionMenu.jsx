@@ -1,11 +1,12 @@
 import styles from '../styles/actionmenu'
 
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 import { Item } from 'react-bosonic/lib/Menu'
 import withGestures from '../lib/withGestures'
+import ReactDOM from 'react-dom'
 
 import { splitFilename, getClassFromMime } from '../components/File'
 import { getActionableFiles } from '../reducers'
@@ -83,11 +84,7 @@ const Delete = ({ t, files, onDelete, actionMenu }) => (
   </Item>
 )
 
-const ActionMenu = withGestures(
-  ownProps => ({
-    swipeDown: () => ownProps.onClose()
-  })
-)(translate()(Menu))
+const ActionMenu = translate()(Menu)
 
 const Backdrop = withGestures(
   ownProps => ({
@@ -95,12 +92,60 @@ const Backdrop = withGestures(
   })
 )(() => <div className={styles['fil-actionmenu-backdrop']} />)
 
-const FileActionMenu = props => (
-  <div className={styles['fil-actionmenu-wrapper']}>
-    <Backdrop {...props} />
-    <ActionMenu {...props} />
-  </div>
-)
+class FileActionMenu extends Component {
+  render (props) {
+    return (
+      <div className={styles['fil-actionmenu-wrapper']}>
+        <Backdrop {...props} />
+        <ActionMenu {...props} ref={actionMenu => this.actionMenu = actionMenu} />
+      </div>
+    )
+  }
+}
+
+let FileActionMenuWithGestures = withGestures(
+  function(ownProps) {
+    let actionMenuNode = ReactDOM.findDOMNode(this.actionMenu)
+
+    const applyTransition = progress => {
+      progress = Math.min(1, Math.max(0, progress))
+      actionMenuNode.style.transform = 'translateY(' + (progress * 100) + '%)'
+    }
+
+    const onDismiss = () => {
+      ownProps.onClose()
+      applyTransition(0)
+      actionMenuNode.removeEventListener('transitionend', onDismiss)
+    }
+
+    const maximumGestureDelta = actionMenuNode.getBoundingClientRect().height
+    const minimumCloseVelocity = .6
+    const minimumClosePan = .6
+
+    return {
+      panStart: e => {
+        actionMenuNode.classList.remove(styles['with-transition'])
+      },
+      panDown: e => {
+        applyTransition(e.deltaY/ maximumGestureDelta)
+      },
+      panUp: e => {
+        applyTransition(e.deltaY / maximumGestureDelta)
+      },
+      panEnd: e => {
+        actionMenuNode.classList.add(styles['with-transition'])
+        let shouldDismiss = (e.deltaY / maximumGestureDelta) >= minimumClosePan ||
+                            (e.deltaY > 0 && e.velocity >= minimumCloseVelocity)
+
+        if (shouldDismiss) {
+          applyTransition(100)
+          actionMenuNode.addEventListener('transitionend', onDismiss, false)
+        }
+        else applyTransition(0)
+      }
+    }
+  }
+)(FileActionMenu)
 
 const mapStateToProps = (state, ownProps) => ({
   files: getActionableFiles(state),
@@ -145,4 +190,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FileActionMenu)
+)(FileActionMenuWithGestures)
