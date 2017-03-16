@@ -81,6 +81,7 @@ const selected = (state = [], action) => {
       ]
     // case OPEN_FOLDER:
     // case DOWNLOAD_SELECTION:
+    case ADD_TO_ALBUM_SUCCESS: // when added to album
     case HIDE_SELECTION_BAR:
       return []
     default:
