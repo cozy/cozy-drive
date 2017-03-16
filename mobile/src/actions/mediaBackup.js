@@ -29,7 +29,7 @@ async function getDirID (dir) {
 export const mediaBackup = (dir) => async (dispatch, getState) => {
   const connectionType = getConnectionType()
   dispatch(setConnectionState(connectionType))
-  if (backupAllowed(getConnectionType(), getState().mobile.settings.wifiOnly)) {
+  if (backupAllowed(connectionType, getState().mobile.settings.wifiOnly)) {
     let photos = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const dirID = await getDirID(dir)
