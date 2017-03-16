@@ -1,0 +1,14 @@
+exports[`AddToAlbumModal component should be rendered correctly 1`] = `
+<Modal
+  cancelType="secondary"
+  primaryType="secondary"
+  secondaryAction={[Function]}
+  title="Add to album"
+  withCross={true}>
+  <div
+    className="coz-modal-section coz-create-album">
+    <_translate
+      onSubmitNewAlbum={[Function]} />
+  </div>
+</Modal>
+`;

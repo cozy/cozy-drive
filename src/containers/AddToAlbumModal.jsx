@@ -11,7 +11,7 @@ import CreateAlbumForm from '../components/CreateAlbumForm'
 
 import { cancelAddToAlbum, createAlbum, addToAlbum } from '../actions/albums'
 
-const AddToAlbumModal = ({t, mangoIndex, photos,
+export const AddToAlbumModal = ({t, mangoIndex, photos,
   onDismiss, onSubmitNewAlbum }) => {
   return (
     <Modal
