@@ -37,6 +37,7 @@ export class Timeline extends Component {
         <PhotoBoard
           fetchPhotoLists={() => onFetchPhotoLists(isFirstFetch, photos, f)}
           refetch={photosAreDirty}
+          photosContext='timeline'
         />
         { this.props.children }
       </div>

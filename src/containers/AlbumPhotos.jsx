@@ -32,6 +32,7 @@ export class AlbumPhotos extends Component {
         <PhotoBoard
           fetchPhotoLists={() => onFetchAlbumPhotos(albumId)}
           refetch={photosAreDirty}
+          photosContext='album'
         />
         { this.props.children }
       </div>

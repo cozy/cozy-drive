@@ -44,14 +44,20 @@ export class PhotoBoard extends Component {
   }
 
   render () {
-    const { showSelection, selected, showAddToAlbumModal, onPhotoToggle } = this.props
+    const {
+      showSelection,
+      selected,
+      showAddToAlbumModal,
+      onPhotoToggle,
+      photosContext
+    } = this.props
     const { isFetching, isWorking, isIndexing } = this.props
     const isGloballyFetching = isFetching || (!isIndexing && this.state.isFetching)
     const { photoLists, isError } = this.state
     const isBusy = isGloballyFetching || isWorking || isIndexing
     if (isError) {
       return <div role='contentinfo'>
-        <ErrorComponent errorType='photos' />
+        <ErrorComponent errorType={`${photosContext}_photos`} />
       </div>
     }
     return (
@@ -81,7 +87,9 @@ export class PhotoBoard extends Component {
             onPhotoToggle={onPhotoToggle}
           />)
         })}
-        {!isBusy && photoLists.length === 0 && <Empty emptyType='photos' />}
+        {!isBusy && photoLists.length === 0 &&
+          <Empty emptyType={`${photosContext}_photos`} />
+        }
       </div>
     )
   }
