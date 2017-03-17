@@ -7,6 +7,8 @@
 [Cozy] Files
 =======================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/cozy/cozy-files-v3.svg)](https://greenkeeper.io/)
+
 
 What's Cozy?
 ------------
