@@ -13,7 +13,7 @@ const SubCategory = ({ id, label, value, title }) => (
   </div>
 )
 
-export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup, wifiOnly, setWifiOnly, backupAllowed, sentry, setSentry }) => (
+export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup, wifiOnly, setWifiOnly, backupAllowed, analytic, setAnalytic }) => (
   <div>
     <div className={styles['fil-content-row']} />
     <div className={styles['settings']}>
@@ -36,9 +36,9 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
       <SubCategory id={'version'} label={t('mobile.settings.about.app_version')} value={version} />
 
       <h3 className={styles['settings__category-title']}>{t('mobile.settings.support.title')}</h3>
-      <SubCategory id={'sentry'} title={t('mobile.settings.support.sentry.title')}
-        label={t('mobile.settings.support.sentry.label')}
-        value={<input type='checkbox' checked={sentry} onChange={setSentry} />} />
+      <SubCategory id={'analytic'} title={t('mobile.settings.support.analytic.title')}
+        label={t('mobile.settings.support.analytic.label')}
+        value={<input type='checkbox' checked={analytic} onChange={setAnalytic} />} />
 
       <h3 className={styles['settings__category-title']}>{t('mobile.settings.unlink.title')}</h3>
       <p>{t('mobile.settings.unlink.description')}</p>

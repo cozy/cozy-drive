@@ -2,14 +2,14 @@
 
 import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
-import { logException, configure } from '../lib/crash-reporter'
+import { logException } from '../lib/crash-reporter'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES = 'BACKUP_IMAGES'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
-export const SET_SENTRY = 'SET_SENTRY'
+export const SET_ANALYTIC = 'SET_ANALYTIC'
 
 import { unrevokeClient } from './authorization'
 
@@ -37,12 +37,9 @@ export const checkURL = url => dispatch => {
 
 // settings
 
-export const setSentry = sentry => {
-  configure(sentry)
-  return { type: SET_SENTRY, sentry }
-}
-export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
+export const setAnalytic = analytic => ({ type: SET_ANALYTIC, analytic })
 export const setBackupImages = backupImages => ({type: BACKUP_IMAGES, backupImages})
+export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
 // errors
 

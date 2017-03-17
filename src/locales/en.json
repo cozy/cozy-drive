@@ -107,7 +107,7 @@
         "button": "Enable now",
         "skip": "Later"
       },
-      "sentry": {
+      "analytic": {
         "title": "Help us improve Cozy",
         "description": "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
       }
@@ -145,7 +145,7 @@
       },
       "support": {
         "title": "Support",
-        "sentry": {
+        "analytic": {
           "title" : "Improve the application",
           "label": "If the option is enabled, the application will automatically transmit data to Cozy Cloud, such as errors that may occur. This allows us to be proactive in solving problems."
         }

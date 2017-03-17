@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Settings from '../components/Settings'
-import { setBackupImages, setWifiOnly, setSentry } from '../actions/settings'
+import { setBackupImages, setWifiOnly, setAnalytic } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
 import { mediaBackup, startMediaUpload, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from '../lib/network'
@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => ({
   version: window.navigator.appInfo ? window.navigator.appInfo.version : 'dev',
   serverUrl: state.mobile.settings.serverUrl,
   backupImages: state.mobile.settings.backupImages,
-  sentry: state.mobile.settings.sentry,
+  analytic: state.mobile.settings.analytic,
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,
   client: state.mobile.settings.client,
   wifiOnly: state.mobile.settings.wifiOnly,
@@ -30,9 +30,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(unlink(client))
     ownProps.router.replace('/onboarding')
   },
-  setWifiOnly: (e) => dispatch(setWifiOnly(e.target.checked)),
   setBackupImages: (e) => dispatch(setBackupImages(e.target.checked)),
-  setSentry: (e) => dispatch(setSentry(e.target.checked))
+  setWifiOnly: (e) => dispatch(setWifiOnly(e.target.checked)),
+  setAnalytic: (e) => dispatch(setAnalytic(e.target.checked))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

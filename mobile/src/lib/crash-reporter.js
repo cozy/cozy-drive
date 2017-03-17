@@ -1,25 +1,23 @@
 /* global __SENTRY_TOKEN__ */
 import Raven from 'raven-js'
 
-let send = false
+let getState
 
-export function getSentryUrl () {
-  return `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
-}
+export const ANALYTIC_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 
-export function getSentryConfiguration () {
+export function getAnalyticConfiguration () {
   return {
-    shouldSendCallback: (data) => send
+    shouldSendCallback: () => getState().mobile.mobile.settings.analytic
   }
 }
 
-export function configure (value) {
-  send = value
+export function configureReporter (value) {
+  getState = value
 }
 
 export function logException (err, context) {
   if (!Raven.isSetup()) {
-    Raven.config(getSentryUrl(), getSentryConfiguration()).install()
+    Raven.config(ANALYTIC_URL, getAnalyticConfiguration()).install()
   }
   Raven.captureException(err, {
     extra: context
