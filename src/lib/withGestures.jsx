@@ -66,16 +66,14 @@ const withGestures = (eventHandlers) => {
       }
 
       onPan (e) {
-        if (e.type === 'pan'){
+        if (e.type === 'pan') {
           if (e.direction === Hammer.DIRECTION_LEFT && this.handlers.panLeft) this.handlers.panLeft(e)
           if (e.direction === Hammer.DIRECTION_RIGHT && this.handlers.panRight) this.handlers.panRight(e)
           if (e.direction === Hammer.DIRECTION_UP && this.handlers.panUp) this.handlers.panUp(e)
           if (e.direction === Hammer.DIRECTION_DOWN && this.handlers.panDown) this.handlers.panDown(e)
-        }
-        else if (e.type === 'panstart' && this.handlers.panStart) {
+        } else if (e.type === 'panstart' && this.handlers.panStart) {
           this.handlers.panStart(e)
-        }
-        else if (e.type === 'panend' && this.handlers.panEnd) {
+        } else if (e.type === 'panend' && this.handlers.panEnd) {
           this.handlers.panEnd(e)
         }
       }
@@ -86,7 +84,7 @@ const withGestures = (eventHandlers) => {
 
       render () {
         return (
-          <WrappedComponent {...this.props} ref={wrapped => this.wrappedComponentInstance = wrapped} />
+          <WrappedComponent {...this.props} ref={wrapped => { this.wrappedComponentInstance = wrapped }} />
         )
       }
     }

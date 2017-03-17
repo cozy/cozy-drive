@@ -6,7 +6,6 @@ import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 import { Item } from 'react-bosonic/lib/Menu'
 import withGestures from '../lib/withGestures'
-import ReactDOM from 'react-dom'
 
 import { splitFilename, getClassFromMime } from '../components/File'
 import { getActionableFiles } from '../reducers'
@@ -97,51 +96,61 @@ class FileActionMenu extends Component {
     return (
       <div className={styles['fil-actionmenu-wrapper']}>
         <Backdrop {...props} />
-        <ActionMenu {...props} ref={actionMenu => this.actionMenu = actionMenu} />
+        <ActionMenu {...props} ref={actionMenu => { this.actionMenu = actionMenu }} />
       </div>
     )
   }
 }
 
 let FileActionMenuWithGestures = withGestures(
-  function(ownProps) {
-    let actionMenuNode = ReactDOM.findDOMNode(this.actionMenu)
+  function (ownProps) { // not an arrow function because we want to keep the context
+    let actionMenuNode = this.actionMenu.getDOMNode()
 
-    const applyTransition = progress => {
+    // to be completely accurate, `maximumGestureDelta` should be the difference between the top of the menu and the bottom of the page; but using the height is much easier to compute and accurate enough.
+    const maximumGestureDistance = actionMenuNode.getBoundingClientRect().height
+    const minimumCloseDistance = 0.6 // between 0 and 1, how far down the gesture must be to be considered complete upon release
+    const minimumCloseVelocity = 0.6 // a gesture faster than this will dismiss the menu, regardless of distance traveled
+
+    // applies a css trasnform to the element, based on the progress of the gesture
+    const applyTransformation = progress => {
+      // wrap the progress between 0 and 1
       progress = Math.min(1, Math.max(0, progress))
       actionMenuNode.style.transform = 'translateY(' + (progress * 100) + '%)'
     }
 
+    // called to dismiss the menu, after a complete gesture and the css transition
     const onDismiss = () => {
       ownProps.onClose()
-      applyTransition(0)
+      // reset the menu
+      applyTransformation(0)
       actionMenuNode.removeEventListener('transitionend', onDismiss)
     }
 
-    const maximumGestureDelta = actionMenuNode.getBoundingClientRect().height
-    const minimumCloseVelocity = .6
-    const minimumClosePan = .6
-
+    // declare the actual gesture callbacks
     return {
       panStart: e => {
+        // disable css transitions during the gesture
         actionMenuNode.classList.remove(styles['with-transition'])
       },
       panDown: e => {
-        applyTransition(e.deltaY/ maximumGestureDelta)
+        applyTransformation(e.deltaY / maximumGestureDistance)
       },
       panUp: e => {
-        applyTransition(e.deltaY / maximumGestureDelta)
+        applyTransformation(e.deltaY / maximumGestureDistance)
       },
       panEnd: e => {
+        // re enable css transitions
         actionMenuNode.classList.add(styles['with-transition'])
-        let shouldDismiss = (e.deltaY / maximumGestureDelta) >= minimumClosePan ||
+        // dismiss the menu if the swipe pan was bigger than the treshold, or if it was a fast, downward gesture
+        let shouldDismiss = e.deltaY / maximumGestureDistance >= minimumCloseDistance ||
                             (e.deltaY > 0 && e.velocity >= minimumCloseVelocity)
 
         if (shouldDismiss) {
-          applyTransition(100)
+          applyTransformation(1)
           actionMenuNode.addEventListener('transitionend', onDismiss, false)
+        } else {
+          applyTransformation(0)
         }
-        else applyTransition(0)
       }
     }
   }
