@@ -36,8 +36,6 @@ export const Analytics = ({ t, onActivate, onSkip }) =>
   </div>
 )
 
-const mapStateToProps = (state, ownProps) => ({})
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: () => {
     dispatch(setAnalytics(true))
@@ -49,4 +47,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Analytics))
+export default connect(null, mapDispatchToProps)(translate()(Analytics))
