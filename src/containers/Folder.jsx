@@ -1,3 +1,5 @@
+/* global __TARGET__ */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
@@ -17,6 +19,7 @@ import Empty from '../components/Empty'
 import Oops from '../components/Oops'
 import FileListHeader from '../components/FileListHeader'
 import FileList from '../components/FileList'
+import UploadProgression from '../../mobile/src/containers/UploadProgression'
 
 import FilesSelectionBar from '../containers/FilesSelectionBar'
 import TrashSelectionBar from '../containers/TrashSelectionBar'
@@ -54,6 +57,7 @@ class Folder extends Component {
     return (
       <div role='contentinfo'>
         <Alerter />
+        {__TARGET__ === 'mobile' && <UploadProgression /> }
         {!isTrashContext && showSelection && <FilesSelectionBar />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}

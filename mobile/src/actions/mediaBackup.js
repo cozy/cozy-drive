@@ -7,10 +7,22 @@ import { HTTP_CODE_CONFLICT } from '../../../src/actions'
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
 export const IMAGE_UPLOAD_SUCCESS = 'IMAGE_UPLOAD_SUCCESS'
+export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
 export const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
 export const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
-export const successImageUpload = (image) => ({ type: IMAGE_UPLOAD_SUCCESS, id: image.id })
+export const successImageUpload = (media) => ({ type: IMAGE_UPLOAD_SUCCESS, id: media.id })
+export const currentUploading = (media, uploadCounter, totalUpload) => (
+  {
+    type: CURRENT_UPLOAD,
+    media,
+    message: 'alert.media_upload',
+    messageData: {
+      upload_counter: uploadCounter,
+      total_upload: totalUpload
+    }
+  }
+)
 
 async function getDirID (dir) {
   const targetDirectory = await cozy.client.files.createDirectory({
@@ -30,8 +42,11 @@ export const mediaBackup = (dir) => async (dispatch, getState) => {
     let photos = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const dirID = await getDirID(dir)
+    const totalUpload = photos.length - alreadyUploaded.length
+    let uploadCounter = 0
     for (let photo of photos) {
       if (!alreadyUploaded.includes(photo.id) && backupAllowed(getState().mobile.settings.wifiOnly)) {
+        dispatch(currentUploading(photo, uploadCounter++, totalUpload))
         const blob = await getBlob(photo)
         const options = {
           dirID,
