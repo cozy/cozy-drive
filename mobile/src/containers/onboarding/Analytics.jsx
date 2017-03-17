@@ -8,11 +8,11 @@ import Breadcrumb from '../../components/Breadcrumb'
 
 import styles from '../../styles/onboarding'
 
-import { setAnalytic } from '../../actions/settings'
+import { setAnalytics } from '../../actions/settings'
 
-export const Analytic = ({ t, onActivate, onSkip }) =>
+export const Analytics = ({ t, onActivate, onSkip }) =>
 (
-  <div className={classNames(styles['wizard'], styles['analytic'])}>
+  <div className={classNames(styles['wizard'], styles['analytics'])}>
     <header className={styles['wizard-header']}>
       <a className={styles['skipLink']} onClick={onSkip}>
         {t('mobile.onboarding.step.skip')}
@@ -20,8 +20,8 @@ export const Analytic = ({ t, onActivate, onSkip }) =>
     </header>
     <div className={styles['wizard-main']}>
       <div className={classNames(styles['illustration'], styles['illustration-trophy'])} />
-      <h1 className={styles['title']}>{t('mobile.onboarding.analytic.title')}</h1>
-      <p className={styles['description']}>{t('mobile.onboarding.analytic.description')}</p>
+      <h1 className={styles['title']}>{t('mobile.onboarding.analytics.title')}</h1>
+      <p className={styles['description']}>{t('mobile.onboarding.analytics.description')}</p>
     </div>
     <footer className={styles['wizard-footer']}>
       <button
@@ -40,13 +40,13 @@ const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: () => {
-    dispatch(setAnalytic(true))
+    dispatch(setAnalytics(true))
     ownProps.nextStep()
   },
   onSkip: () => {
-    dispatch(setAnalytic(false))
+    dispatch(setAnalytics(false))
     ownProps.nextStep()
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Analytic))
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Analytics))

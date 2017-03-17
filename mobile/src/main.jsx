@@ -23,7 +23,7 @@ import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, on
 import { watchNetworkState, getConnectionType } from './lib/network'
 import { onConnectionChange, setConnectionState } from './actions/network'
 
-import { configureReporter, ANALYTIC_URL, getAnalyticConfiguration } from './lib/crash-reporter'
+import { configureReporter, ANALYTICS_URL, getAnalyticsConfiguration } from './lib/crash-reporter'
 
 const loggerMiddleware = createLogger()
 
@@ -32,7 +32,7 @@ const renderAppWithPersistedState = persistedState => {
     filesApp,
     persistedState,
     applyMiddleware(
-      RavenMiddleWare(ANALYTIC_URL, getAnalyticConfiguration()),
+      RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration()),
       thunkMiddleware,
       loggerMiddleware
     )

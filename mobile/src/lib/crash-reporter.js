@@ -3,11 +3,11 @@ import Raven from 'raven-js'
 
 let getState
 
-export const ANALYTIC_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
+export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 
-export function getAnalyticConfiguration () {
+export function getAnalyticsConfiguration () {
   return {
-    shouldSendCallback: () => getState().mobile.mobile.settings.analytic
+    shouldSendCallback: () => getState().mobile.mobile.settings.analytics
   }
 }
 
@@ -17,7 +17,7 @@ export function configureReporter (value) {
 
 export function logException (err, context) {
   if (!Raven.isSetup()) {
-    Raven.config(ANALYTIC_URL, getAnalyticConfiguration()).install()
+    Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
   }
   Raven.captureException(err, {
     extra: context

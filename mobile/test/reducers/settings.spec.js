@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../../src/reducers/settings'
 import { INIT_STATE } from '../../src/actions'
-import { SET_URL, ERROR, SET_CLIENT, SET_ANALYTIC } from '../../src/actions/settings'
+import { SET_URL, ERROR, SET_CLIENT, SET_ANALYTICS } from '../../src/actions/settings'
 
 describe('settings reducers', () => {
   it('should return the initial state', () => {
@@ -14,9 +14,9 @@ describe('settings reducers', () => {
     .toEqual({serverUrl: url, error: null, authorized: false})
   })
 
-  it('should handle SET_ANALYTIC', () => {
-    expect(reducer({analytic: false}, {type: SET_ANALYTIC, analytic: true})).toEqual({analytic: true})
-    expect(reducer({analytic: true}, {type: SET_ANALYTIC, analytic: false})).toEqual({analytic: false})
+  it('should handle SET_ANALYTICS', () => {
+    expect(reducer({analytics: false}, {type: SET_ANALYTICS, analytics: true})).toEqual({analytics: true})
+    expect(reducer({analytics: true}, {type: SET_ANALYTICS, analytics: false})).toEqual({analytics: false})
   })
 
   it('should handle ERROR', () => {

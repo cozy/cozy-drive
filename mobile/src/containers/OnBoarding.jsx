@@ -4,14 +4,14 @@ import Wizard from '../components/Wizard'
 import Welcome from './onboarding/Welcome'
 import SelectServer from './onboarding/SelectServer'
 import BackupPhotosVideos from './onboarding/BackupPhotosVideos'
-import Analytic from './onboarding/Analytic'
+import Analytics from './onboarding/Analytics'
 
 const OnBoarding = (props) => {
   const steps = [
     Welcome,
     SelectServer,
     BackupPhotosVideos,
-    Analytic
+    Analytics
   ]
   return <Wizard steps={steps} {...props} />
 }

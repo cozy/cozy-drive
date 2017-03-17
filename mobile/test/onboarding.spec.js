@@ -7,7 +7,7 @@ import Wizard from '../../mobile/src/components/Wizard'
 import { SelectServer } from '../../mobile/src/containers/onboarding/SelectServer'
 import { Welcome } from '../../mobile/src/containers/onboarding/Welcome'
 import { BackupPhotosVideos } from '../../mobile/src/containers/onboarding/BackupPhotosVideos'
-import { Analytic } from '../../mobile/src/containers/onboarding/Analytic'
+import { Analytics } from '../../mobile/src/containers/onboarding/Analytics'
 
 // used for ref issue in jest tests using react-test-renderer https://facebook.github.io/react/blog/2016/11/16/react-v15.4.0.html#mocking-refs-for-snapshot-testing
 function createNodeMock (element) {
@@ -59,8 +59,8 @@ describe('Onboarding', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  it('should render the Analytic screen', () => {
-    const component = renderer.create(<Analytic t={() => {}} />)
+  it('should render the Analytics screen', () => {
+    const component = renderer.create(<Analytics t={() => {}} />)
 
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
