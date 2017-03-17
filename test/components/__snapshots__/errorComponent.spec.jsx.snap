@@ -3,7 +3,7 @@ exports[`Empty component should be displayed with albums text if errorType is al
   <div
     className="pho-error">
     <h2>
-      Something went wrong while fetching the albums.
+      An error occurred while retrieving the albums list. Please try again later.
     </h2>
     <button
       className="coz-btn coz-btn--regular"
@@ -15,12 +15,12 @@ exports[`Empty component should be displayed with albums text if errorType is al
 </div>
 `;
 
-exports[`Empty component should be displayed with photos text if errorType is photos 1`] = `
+exports[`Empty component should be displayed with photos text if errorType is album_photos 1`] = `
 <div>
   <div
     className="pho-error">
     <h2>
-      Something went wrong while fetching the photos.
+      An error occurred while retrieving the album\'s photos list. Please try again later.
     </h2>
     <button
       className="coz-btn coz-btn--regular"
@@ -30,4 +30,144 @@ exports[`Empty component should be displayed with photos text if errorType is ph
     </button>
   </div>
 </div>
+`;
+
+exports[`Empty component should be displayed with photos text if errorType is timeline_photos 1`] = `
+<div>
+  <div
+    className="pho-error">
+    <h2>
+      An error occurred while retrieving the photos list. Please try again later.
+    </h2>
+    <button
+      className="coz-btn coz-btn--regular"
+      onClick={[Function]}
+      role="button">
+      Refresh now
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Empty component should handle refresh button click 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div>
+    <div
+        className="pho-error">
+        <h2>
+            An error occurred while retrieving the albums list. Please try again later.
+        </h2>
+        <button
+            className="coz-btn coz-btn--regular"
+            onClick={[Function]}
+            role="button">
+            Refresh now
+        </button>
+    </div>
+</div>,
+  "nodes": Array [
+    <div>
+      <div
+            className="pho-error">
+            <h2>
+                  An error occurred while retrieving the albums list. Please try again later.
+            </h2>
+            <button
+                  className="coz-btn coz-btn--regular"
+                  onClick={[Function]}
+                  role="button">
+                  Refresh now
+            </button>
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 2,
+      "_context": Object {},
+      "_currentElement": <Unknown
+        errorType="albums"
+        t={[Function]} />,
+      "_debugID": 7,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": StatelessComponent {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "errorType": "albums",
+          "t": [Function],
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 4,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div>
+          <div
+                    className="pho-error">
+                    <h2>
+                              An error occurred while retrieving the albums list. Please try again later.
+                    </h2>
+                    <button
+                              className="coz-btn coz-btn--regular"
+                              onClick={[Function]}
+                              role="button">
+                              Refresh now
+                    </button>
+          </div>
+</div>,
+        "_debugID": 8,
+        "_renderedOutput": <div>
+          <div
+                    className="pho-error">
+                    <h2>
+                              An error occurred while retrieving the albums list. Please try again later.
+                    </h2>
+                    <button
+                              className="coz-btn coz-btn--regular"
+                              onClick={[Function]}
+                              role="button">
+                              Refresh now
+                    </button>
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <Unknown
+    errorType="albums"
+    t={[Function]} />,
+}
 `;

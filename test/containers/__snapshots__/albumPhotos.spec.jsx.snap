@@ -5,6 +5,7 @@ exports[`AlbumPhotos component should be rendered correctly 1`] = `
     viewName="albumContent" />
   <Connect(_translate)
     fetchPhotoLists={[Function]}
+    photosContext="album"
     refetch={false} />
 </div>
 `;
