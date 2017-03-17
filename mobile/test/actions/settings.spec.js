@@ -5,6 +5,7 @@ import {
   SET_CLIENT, setClient,
   setBackupImages,
   setWifiOnly,
+  setAnalytics,
   OnBoardingError, wrongAddressError, ERROR, wrongAddressErrorMsg
 } from '../../src/actions/settings'
 
@@ -27,6 +28,18 @@ describe('backup images actions creators', () => {
   it('should disable backup on wifi only', () => {
     const state = reducer({}, setWifiOnly(false))
     expect(state).toEqual({wifiOnly: false})
+  })
+})
+
+describe('analytics actions creators', () => {
+  it('should enable analytics', () => {
+    const state = reducer({}, setAnalytics(true))
+    expect(state).toEqual({analytics: true})
+  })
+
+  it('should disable analytics', () => {
+    const state = reducer({}, setAnalytics(false))
+    expect(state).toEqual({analytics: false})
   })
 })
 

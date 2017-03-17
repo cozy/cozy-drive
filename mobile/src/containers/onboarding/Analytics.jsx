@@ -8,20 +8,20 @@ import Breadcrumb from '../../components/Breadcrumb'
 
 import styles from '../../styles/onboarding'
 
-import { setBackupImages } from '../../actions/settings'
+import { setAnalytics } from '../../actions/settings'
 
-export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
+export const Analytics = ({ t, onActivate, onSkip }) =>
 (
-  <div className={classNames(styles['wizard'], styles['photos-backup'])}>
+  <div className={classNames(styles['wizard'], styles['analytics'])}>
     <header className={styles['wizard-header']}>
       <a className={styles['skipLink']} onClick={onSkip}>
         {t('mobile.onboarding.step.skip')}
       </a>
     </header>
     <div className={styles['wizard-main']}>
-      <div className={classNames(styles['illustration'], styles['illustration-photos'])} />
-      <h1 className={styles['title']}>{t('mobile.onboarding.photos.title')}</h1>
-      <p className={styles['description']}>{t('mobile.onboarding.photos.description')}</p>
+      <div className={classNames(styles['illustration'], styles['illustration-trophy'])} />
+      <h1 className={styles['title']}>{t('mobile.onboarding.analytics.title')}</h1>
+      <p className={styles['description']}>{t('mobile.onboarding.analytics.description')}</p>
     </div>
     <footer className={styles['wizard-footer']}>
       <button
@@ -31,20 +31,20 @@ export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
       >
         {t('mobile.onboarding.step.button')}
       </button>
-      <Breadcrumb currentStep={1} totalSteps={2} />
+      <Breadcrumb currentStep={2} totalSteps={2} />
     </footer>
   </div>
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: () => {
-    dispatch(setBackupImages(true))
+    dispatch(setAnalytics(true))
     ownProps.nextStep()
   },
   onSkip: () => {
-    dispatch(setBackupImages(false))
+    dispatch(setAnalytics(false))
     ownProps.nextStep()
   }
 })
 
-export default connect(null, mapDispatchToProps)(translate()(BackupPhotosVideos))
+export default connect(null, mapDispatchToProps)(translate()(Analytics))

@@ -92,10 +92,6 @@ exports[`Onboarding should render the BackupPhotosVideos screen 1`] = `
         className="onboarding-breadcrumb-element-active" />
       <div
         className="onboarding-breadcrumb-element" />
-      <div
-        className="onboarding-breadcrumb-element" />
-      <div
-        className="onboarding-breadcrumb-element" />
     </div>
   </footer>
 </div>

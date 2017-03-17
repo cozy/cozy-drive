@@ -1,4 +1,4 @@
-/* global cozy, __SENTRY_TOKEN__ */
+/* global cozy */
 
 import 'babel-polyfill'
 
@@ -23,6 +23,8 @@ import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, on
 import { watchNetworkState, getConnectionType } from './lib/network'
 import { onConnectionChange, setConnectionState } from './actions/network'
 
+import { configureReporter, ANALYTICS_URL, getAnalyticsConfiguration } from './lib/crash-reporter'
+
 const loggerMiddleware = createLogger()
 
 const renderAppWithPersistedState = persistedState => {
@@ -30,7 +32,7 @@ const renderAppWithPersistedState = persistedState => {
     filesApp,
     persistedState,
     applyMiddleware(
-      RavenMiddleWare(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`),
+      RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration()),
       thunkMiddleware,
       loggerMiddleware
     )
@@ -45,6 +47,7 @@ const renderAppWithPersistedState = persistedState => {
     }
   }))
 
+  configureReporter(store.getState)
   initClient(store.getState().mobile.settings.serverUrl)
   store.dispatch(setConnectionState(getConnectionType()))
   watchNetworkState(onConnectionChange(store.dispatch, getConnectionType))

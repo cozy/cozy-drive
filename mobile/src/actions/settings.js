@@ -9,6 +9,7 @@ export const BACKUP_IMAGES = 'BACKUP_IMAGES'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
+export const SET_ANALYTICS = 'SET_ANALYTICS'
 
 import { unrevokeClient } from './authorization'
 
@@ -34,12 +35,11 @@ export const checkURL = url => dispatch => {
   return dispatch(setUrl(url))
 }
 
-// backup images
+// settings
 
-export const enableBackupImages = () => setBackupImages(true)
-export const disableBackupImages = () => setBackupImages(false)
-export const setBackupImages = value => ({type: BACKUP_IMAGES, value})
-export const setWifiOnly = value => ({ type: WIFI_ONLY, value })
+export const setAnalytics = analytics => ({ type: SET_ANALYTICS, analytics })
+export const setBackupImages = backupImages => ({type: BACKUP_IMAGES, backupImages})
+export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
 // errors
 
