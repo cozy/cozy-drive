@@ -17,19 +17,24 @@ export class AlbumItem extends Component {
     }
 
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
+    this.fetchPhoto = this.fetchPhoto.bind(this)
 
     if (props.album && props.album.photosIds.length) {
-      getPhotoLink(props.album.photosIds[0])
-        .then(link => this.setState({
-          url: link,
-          isLoading: false
-        }))
+      this.fetchPhoto(props.album.photosIds[0])
     } else {
-      this.setState({
+      this.state = {
         url: '',
         isLoading: false
-      })
+      }
     }
+  }
+
+  fetchPhoto (photoId) {
+    getPhotoLink(photoId)
+      .then(link => this.setState({
+        url: link,
+        isLoading: false
+      }))
   }
 
   handleImageLoaded () {

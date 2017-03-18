@@ -14,13 +14,19 @@ export class Photo extends Component {
       loading: true,
       isImageLoading: true
     }
-    getPhotoLink(props.photo._id)
+
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
+    this.fetchPhoto = this.fetchPhoto.bind(this)
+
+    this.fetchPhoto(props.photo._id)
+  }
+
+  fetchPhoto (photoId) {
+    getPhotoLink(photoId)
       .then(link => this.setState({
         url: link,
         loading: false
       }))
-
-    this.handleImageLoaded = this.handleImageLoaded.bind(this)
   }
 
   handleImageLoaded () {
