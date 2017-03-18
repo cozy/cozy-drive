@@ -49,40 +49,29 @@ export const fetchAlbums = (mangoIndex) => {
 // Returns albums photos informations from the album ID
 export const fetchAlbumPhotosStatsById = (albumId) => {
   return async (dispatch) => {
-    return await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
-      .then(async album => {
-        return await cozy.client.data.listReferencedFiles(album)
-          .then(async photosIds => {
-            let fetchedPhotos = []
-            for (let index in photosIds) {
-              fetchedPhotos.push(
-                await cozy.client.files.statById(photosIds[index])
-                  .then(photo => photo)
-                  .catch(fetchError => {
-                    throw new Error(fetchError.response
-                      ? fetchError.response.statusText
-                      : fetchError
-                    )
-                  })
-              )
-            }
-            album.photos = fetchedPhotos
-            dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS, album})
-            return fetchedPhotos
-          })
-          .catch(fetchError => {
-            throw new Error(fetchError.response
-              ? fetchError.response.statusText
-              : fetchError
-            )
-          })
-      })
-      .catch(fetchError => {
-        throw new Error(fetchError.response
-          ? fetchError.response.statusText
-          : fetchError
-        )
-      })
+    try {
+      return await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
+        .then(async album => {
+          return await cozy.client.data.listReferencedFiles(album)
+            .then(async photosIds => {
+              let fetchedPhotos = []
+              for (let index in photosIds) {
+                fetchedPhotos.push(
+                  await cozy.client.files.statById(photosIds[index])
+                    .then(photo => photo)
+                )
+              }
+              album.photos = fetchedPhotos
+              dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS, album})
+              return fetchedPhotos
+            })
+        })
+    } catch (fetchError) {
+      throw new Error(fetchError.response
+        ? fetchError.response.statusText
+        : fetchError
+      )
+    }
   }
 }
 
