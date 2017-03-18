@@ -6,7 +6,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { mockT } from '../lib/I18n'
-import { ViewerToolbar } from '../../src/containers/ViewerToolbar'
+import { ViewerToolbar } from '../../src/components/ViewerToolbar'
 
 const routerObjectMock = {
   location: {
