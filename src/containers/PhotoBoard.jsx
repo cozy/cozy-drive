@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 
 import { togglePhotoSelection } from '../actions/selection'
-import { mustShowSelectionBar } from '../reducers'
+import { mustShowSelectionBar } from '../lib/helpers'
 
 import Empty from '../components/Empty'
 import Loading from '../components/Loading'

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 import { indexFilesByDate } from '../actions/mango'
 import { fetchPhotos } from '../actions/photos'
-import { getPhotosByMonth } from '../reducers'
+import { getPhotosByMonth } from '../lib/helpers'
 
 import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
