@@ -3,13 +3,22 @@
 .pho-content-header
   display     flex
   align-items center
-  bottom-spaced(32px)
+  bottom-spaced(24px)
   right-spaced(32px)
   left-spaced(32px)
 
   @media (max-width: (768/basefont)rem)
     right-spaced(16px)
     left-spaced(16px)
+
+  @media (max-width: (480/basefont)rem)
+    position        fixed
+    z-index         $nav-index
+    left            2em
+    top             .2em
+    bottom-spaced   0
+    height          2em
+    width           calc(100vw - 4em)
 
 .pho-content-album-previous
     width        1.5em
@@ -18,9 +27,24 @@
     background   embedurl('../assets/icons/icon-back.svg')
     cursor       pointer
 
+    @media (max-width: (480/basefont)rem)
+        width           1em
+        height          1em
+        background-size cover
+
 .pho-content-title
-  margin 0
+  margin        0
+  padding-top   .1em
   font-size(24px)
 
   @media (max-width: (768/basefont)rem)
       font-size(20px)
+
+:global
+  @media (max-width: (480/basefont)rem)
+    // FIXME: Should be fix by using next cozy-bar release
+    [role=banner] .coz-bar-title
+      display none
+
+    [role=banner][data-drawer-visible="true"]
+      z-index $nav-index + 1

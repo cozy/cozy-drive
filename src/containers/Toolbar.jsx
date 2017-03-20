@@ -24,7 +24,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems, viewNa
       <MenuButton className='coz-mobile'>
         <button
           role='button'
-          className={classNames('coz-btn', 'coz-btn--more', styles['coz-btn--more'])}
+          className={classNames('coz-btn', 'coz-btn--more', styles['coz-btn--more'], styles['pho-toolbar-btn'])}
           disabled={disabled}
         >
           <span className='coz-hidden'>{ t('Toolbar.more') }</span>
