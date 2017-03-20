@@ -28,6 +28,7 @@ export class Viewer extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    // get currentPhoto image if currentPhoto defined
     let currentPhoto = this.props.currentPhoto || nextProps.currentPhoto
     if (this.state.imageUrl === '' && currentPhoto !== undefined) {
       getPhotoLink(currentPhoto._id)
@@ -104,10 +105,16 @@ export class Viewer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let set = state.photos.map(photo => photo._id)
+  let photos = []
+  if (ownProps.router.routes[1].path === 'albums') { // photos from an album
+    photos = state.albums.currentAlbum.photos || []
+  } else { // all photos (timeline)
+    photos = state.photos
+  }
+  let set = photos.map(photo => photo._id)
   let currentID = ownProps.params.photoId
   let currentPhotoIndex = set.indexOf(currentID)
-  let currentPhoto = state.photos[currentPhotoIndex]
+  let currentPhoto = photos[currentPhotoIndex]
 
   let nextID = set[(currentPhotoIndex + 1) % set.length]
   let previousID = set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]

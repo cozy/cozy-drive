@@ -42,8 +42,9 @@ export class PhotoBoard extends Component {
   render () {
     const { showSelection, selected, showAddToAlbumModal, onPhotoToggle } = this.props
     const { isFetching, isWorking, isIndexing } = this.props
+    const isGloballyFetching = isFetching || (!isIndexing && this.state.isFetching)
     const { photoLists } = this.state
-    const isBusy = isFetching || isWorking || isIndexing
+    const isBusy = isGloballyFetching || isWorking || isIndexing
     return (
       <div
         role='contentinfo'
@@ -52,7 +53,7 @@ export class PhotoBoard extends Component {
         { isIndexing &&
           <Loading loadingType='photos_indexing' />
         }
-        { isFetching &&
+        { isGloballyFetching &&
           <Loading loadingType='photos_fetching' />
         }
         { isWorking &&

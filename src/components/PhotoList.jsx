@@ -13,7 +13,7 @@ export const PhotoList = ({ key, title, photos, selected, onPhotoToggle }) => {
       className={classNames(styles['pho-section'], selected.length && styles['pho-section--has-selection'])}
       key={key}
       >
-      <h3>{title}</h3>
+      {!!title && <h3>{title}</h3>}
       {photos.map(photo =>
         <Photo
           photo={photo}

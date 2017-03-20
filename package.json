@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-ui": "^3.0.0-beta14",
+    "cozy-ui": "^3.0.0-beta17",
     "date-fns": "^1.26.0",
     "hammerjs": "^2.0.8",
     "node-polyglot": "^2.2.0",
@@ -103,6 +103,9 @@
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
     },
+    "transformIgnorePatterns": [
+      "node_modules/(?!cozy-ui)"
+    ],
     "globals": {
       "cozy": {}
     }

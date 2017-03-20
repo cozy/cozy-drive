@@ -31,8 +31,9 @@ describe('PhotoBoard component', () => {
   it('should render correctly a timeline of photos according a photos array', () => {
     const component = shallow(
       <PhotoBoard t={mockT} f={mockF} fetchPhotoLists={() => Promise.resolve(mockFetchedPhotos)} selected={[]} />
-    ).node
-    expect(component).toMatchSnapshot()
+    )
+    component.setState({isFetching: false, photoLists: mockFetchedPhotos})
+    expect(component.node).toMatchSnapshot()
   })
 
   it('should render correctly a loading view if isIndexing is true', () => {
@@ -52,21 +53,16 @@ describe('PhotoBoard component', () => {
   it('should render correctly a loading view if isWorking is true', () => {
     const component = shallow(
       <PhotoBoard t={mockT} f={mockF} fetchPhotoLists={() => Promise.resolve(mockFetchedPhotos)} selected={[]} isWorking />
-    ).node
-    expect(component).toMatchSnapshot()
-  })
-
-  it('should render correctly a loading view if isFirstFetch is true', () => {
-    const component = shallow(
-      <PhotoBoard t={mockT} f={mockF} fetchPhotoLists={() => Promise.resolve(mockFetchedPhotos)} selected={[]} isFirstFetch />
-    ).node
-    expect(component).toMatchSnapshot()
+    )
+    component.setState({isFetching: false})
+    expect(component.node).toMatchSnapshot()
   })
 
   it('should render correctly an empty view if photos is empty', () => {
     const component = shallow(
       <PhotoBoard t={mockT} f={mockF} fetchPhotoLists={() => Promise.resolve([])} selected={[]} />
-    ).node
-    expect(component).toMatchSnapshot()
+    )
+    component.setState({isFetching: false, photoLists: []})
+    expect(component.node).toMatchSnapshot()
   })
 })

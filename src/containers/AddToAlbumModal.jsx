@@ -16,7 +16,7 @@ const AddToAlbumModal = ({t, mangoIndex, photos,
   return (
     <Modal
       title={t('Albums.add_photos.title')}
-      cancelAction={() => onDismiss()}
+      secondaryAction={() => onDismiss()}
       >
       <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
         <CreateAlbumForm
