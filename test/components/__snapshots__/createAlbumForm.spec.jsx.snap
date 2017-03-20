@@ -1,0 +1,111 @@
+exports[`CreateAlbumForm component should be displayed correctly 1`] = `
+<form
+  className="pho-create-album-form"
+  onSubmit={[Function]}>
+  <label
+    className="coz-create-album-label">
+    Create a new album
+  </label>
+  <div
+    className="coz-inline-form">
+    <input
+      className="coz-input-text"
+      disabled={false}
+      name="album-name"
+      onInput={[Function]}
+      placeholder="New album name"
+      type="text"
+      value="" />
+    <button
+      aria-busy={false}
+      className="coz-btn coz-btn--regular coz-btn"
+      disabled={true}>
+      Create
+    </button>
+  </div>
+</form>
+`;
+
+exports[`CreateAlbumForm component should handle correctly form submit with error 1`] = `
+<form
+  className="pho-create-album-form"
+  onSubmit={[Function]}>
+  <label
+    className="coz-create-album-label">
+    Create a new album
+  </label>
+  <div
+    className="coz-inline-form">
+    <input
+      className="coz-input-text"
+      disabled={true}
+      name="album-name"
+      onInput={[Function]}
+      placeholder="New album name"
+      type="text"
+      value="test" />
+    <button
+      aria-busy={true}
+      className="coz-btn coz-btn--regular coz-btn"
+      disabled={true}>
+      Create
+    </button>
+  </div>
+</form>
+`;
+
+exports[`CreateAlbumForm component should handle correctly form submit with success 1`] = `
+<form
+  className="pho-create-album-form"
+  onSubmit={[Function]}>
+  <label
+    className="coz-create-album-label">
+    Create a new album
+  </label>
+  <div
+    className="coz-inline-form">
+    <input
+      className="coz-input-text"
+      disabled={true}
+      name="album-name"
+      onInput={[Function]}
+      placeholder="New album name"
+      type="text"
+      value="test" />
+    <button
+      aria-busy={true}
+      className="coz-btn coz-btn--regular coz-btn"
+      disabled={true}>
+      Create
+    </button>
+  </div>
+</form>
+`;
+
+exports[`CreateAlbumForm component should handle correctly input change 1`] = `
+<form
+  className="pho-create-album-form"
+  onSubmit={[Function]}>
+  <label
+    className="coz-create-album-label">
+    Create a new album
+  </label>
+  <div
+    className="coz-inline-form">
+    <input
+      className="coz-input-text"
+      disabled={false}
+      name="album-name"
+      onInput={[Function]}
+      placeholder="New album name"
+      type="text"
+      value="test" />
+    <button
+      aria-busy={false}
+      className="coz-btn coz-btn--regular coz-btn"
+      disabled={false}>
+      Create
+    </button>
+  </div>
+</form>
+`;

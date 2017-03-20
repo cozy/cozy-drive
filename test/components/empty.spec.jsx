@@ -13,9 +13,16 @@ describe('Empty component', () => {
     jest.resetModules()
   })
 
-  it('should be displayed with photos text if emptyType is photos', () => {
+  it('should be displayed with photos text if emptyType is timeline_photos', () => {
     const component = shallow(
-      <Empty t={mockT} emptyType='photos' />
+      <Empty t={mockT} emptyType='timeline_photos' />
+    ).node
+    expect(component).toMatchSnapshot()
+  })
+
+  it('should be displayed with photos text if emptyType is album_photos', () => {
+    const component = shallow(
+      <Empty t={mockT} emptyType='album_photos' />
     ).node
     expect(component).toMatchSnapshot()
   })

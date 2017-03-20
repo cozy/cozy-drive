@@ -4,6 +4,7 @@ exports[`Timeline component should be rendered correctly with params if params f
     viewName="photos" />
   <Connect(_translate)
     fetchPhotoLists={[Function]}
+    photosContext="timeline"
     refetch={false} />
 </div>
 `;
@@ -14,6 +15,7 @@ exports[`Timeline component should be rendered correctly without store 1`] = `
     viewName="photos" />
   <Connect(_translate)
     fetchPhotoLists={[Function]}
+    photosContext="timeline"
     refetch={false} />
 </div>
 `;

@@ -7,7 +7,7 @@ import Hammer from 'hammerjs'
 
 import { getPhotoLink } from '../actions/photos'
 
-import ViewerToolbar from '../containers/ViewerToolbar'
+import ViewerToolbar from '../components/ViewerToolbar'
 import Loading from '../components/Loading'
 
 const KEY_CODE_LEFT = 37

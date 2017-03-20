@@ -19,16 +19,16 @@ export class AlbumsView extends Component {
       .then(() => { this.setState({isFetching: false, error: false}) })
       .catch(albumsError => {
         console.error(albumsError)
-        this.setState({isFetching: false, error: true})
+        this.setState({isFetching: false, isError: true})
       })
   }
 
   render () {
-    const { isFetching, error } = this.state
+    const { isFetching, isError } = this.state
     if (isFetching) {
       return <Loading loadingType='albums_fetching' />
     }
-    if (error) {
+    if (isError) {
       return <ErrorComponent errorType='albums' />
     }
     return (

@@ -9,6 +9,7 @@ import { mustShowSelectionBar } from '../reducers'
 
 import Empty from '../components/Empty'
 import Loading from '../components/Loading'
+import ErrorComponent from '../components/ErrorComponent'
 import SelectionBar from './SelectionBar'
 import PhotoList from '../components/PhotoList'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
@@ -36,15 +37,29 @@ export class PhotoBoard extends Component {
         isFetching: false,
         photoLists: photoLists
       })
+    }).catch(photosError => {
+      console.error(photosError)
+      this.setState({isFetching: false, isError: true})
     })
   }
 
   render () {
-    const { showSelection, selected, showAddToAlbumModal, onPhotoToggle } = this.props
+    const {
+      showSelection,
+      selected,
+      showAddToAlbumModal,
+      onPhotoToggle,
+      photosContext
+    } = this.props
     const { isFetching, isWorking, isIndexing } = this.props
     const isGloballyFetching = isFetching || (!isIndexing && this.state.isFetching)
-    const { photoLists } = this.state
+    const { photoLists, isError } = this.state
     const isBusy = isGloballyFetching || isWorking || isIndexing
+    if (isError) {
+      return <div role='contentinfo'>
+        <ErrorComponent errorType={`${photosContext}_photos`} />
+      </div>
+    }
     return (
       <div
         role='contentinfo'
@@ -72,7 +87,9 @@ export class PhotoBoard extends Component {
             onPhotoToggle={onPhotoToggle}
           />)
         })}
-        {!isBusy && photoLists.length === 0 && <Empty emptyType='photos' />}
+        {!isBusy && photoLists.length === 0 &&
+          <Empty emptyType={`${photosContext}_photos`} />
+        }
       </div>
     )
   }

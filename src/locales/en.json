@@ -6,13 +6,17 @@
     "trash": "Trash"
   },
   "Empty": {
-    "photos_title": "You don't have any photos yet.",
-    "photos_text":  "Click the \"Upload\" button to add photos.",
+    "timeline_photos_title": "You don't have any photos yet.",
+    "timeline_photos_text":  "Click the \"Upload\" button to add photos.",
     "albums_title": "You don't have any album yet.",
-    "albums_text": "Click the \"New album\" button to create your first album."
+    "albums_text": "Start by clicking \"New album\" to create your first album.",
+    "album_photos_title": "There is not photo in this album yet.",
+    "album_photos_text": "Start by clicking \"Add photos to album\" to add some."
   },
   "Error": {
-    "albums_title": "Something went wrong while fetching the albums.",
+    "albums_title": "An error occurred while retrieving the albums list. Please try again later.",
+    "album_photos_title": "An error occurred while retrieving the album's photos list. Please try again later.",
+    "timeline_photos_title": "An error occurred while retrieving the photos list. Please try again later.",
     "refresh": "Refresh now"
   },
   "Toolbar": {

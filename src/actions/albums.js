@@ -9,6 +9,7 @@ import {
   CANCEL_ADD_TO_ALBUM,
   CREATE_ALBUM_SUCCESS,
   FETCH_ALBUMS_SUCCESS,
+  FETCH_CURRENT_ALBUM_PHOTOS,
   FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS,
   INDEX_ALBUMS_BY_NAME_SUCCESS
 } from '../constants/actionTypes'
@@ -16,6 +17,14 @@ import {
 import {
   ALBUM_DOCTYPE
 } from '../constants/config'
+
+// helper to hanlde server error
+export const throwServerError = (error) => {
+  throw new Error(error.response
+    ? error.response.statusText
+    : error
+  )
+}
 
 // Returns albums from the provided index
 export const fetchAlbums = (mangoIndex) => {
@@ -30,18 +39,13 @@ export const fetchAlbums = (mangoIndex) => {
         albums[index].photosIds = await cozy.client.data.listReferencedFiles(albums[index])
           .then(photosIds => photosIds)
           .catch(fetchError => {
-            throw new Error(fetchError.response
-              ? fetchError.response.statusText
-              : fetchError
-            )
+            throwServerError(fetchError)
           })
       }
       dispatch({type: FETCH_ALBUMS_SUCCESS, albums})
     }).catch(fetchError => {
-      throw new Error(fetchError.response
-        ? fetchError.response.statusText
-        : fetchError
-      )
+      if (fetchError instanceof Error) throw fetchError
+      throwServerError(fetchError)
     })
   }
 }
@@ -49,6 +53,7 @@ export const fetchAlbums = (mangoIndex) => {
 // Returns albums photos informations from the album ID
 export const fetchAlbumPhotosStatsById = (albumId) => {
   return async (dispatch) => {
+    dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS})
     try {
       let album = await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
       const photosIds = await cozy.client.data.listReferencedFiles(album)
@@ -61,10 +66,7 @@ export const fetchAlbumPhotosStatsById = (albumId) => {
       dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS, album})
       return fetchedPhotos
     } catch (fetchError) {
-      throw new Error(fetchError.response
-        ? fetchError.response.statusText
-        : fetchError
-      )
+      throwServerError(fetchError)
     }
   }
 }
@@ -80,15 +82,15 @@ export const addToAlbum = (photos = [], album = null) => {
     }
 
     return await cozy.client.data.addReferencedFiles(album, photos)
-      .catch(fetchError => {
-        let error = fetchError.response.statusText
-        throw error
-      }).then(() => {
+      .then(() => {
         dispatch({
           type: ADD_TO_ALBUM_SUCCESS,
           album: album
         })
         return album
+      })
+      .catch(fetchError => {
+        throwServerError(fetchError)
       })
   }
 }
@@ -113,10 +115,7 @@ export const createAlbumMangoIndex = () => {
         })
         return mangoIndex
       }).catch(fetchError => {
-        throw new Error(fetchError.response
-          ? fetchError.response.statusText
-          : fetchError
-        )
+        throwServerError(fetchError)
       })
   }
 }
@@ -127,14 +126,14 @@ export const checkExistingAlbumsByName = (name = null, mangoIndex = null) => {
     try {
       mangoIndex = mangoIndex || await createAlbumMangoIndex()(dispatch)
     } catch (error) {
-      throw error
+      throwServerError(error)
     }
 
     return await cozy.client.data.query(mangoIndex, {
       selector: { name: name },
       fields: ['_id']
     }).catch(fetchError => {
-      throw new Error(fetchError.response.statusText)
+      throwServerError(fetchError)
     })
   }
 }
@@ -155,13 +154,15 @@ export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
         }
 
         return cozy.client.data.create(ALBUM_DOCTYPE, { name: name })
-          .catch(fetchError => { throw new Error(fetchError.response.statusText) })
           .then(album => {
             dispatch({
               type: CREATE_ALBUM_SUCCESS,
               album: album
             })
             return album
+          })
+          .catch(fetchError => {
+            throwServerError(fetchError)
           })
       }).catch(error => {
         return Promise.reject(error)

@@ -48,11 +48,34 @@ exports[`PhotoBoard component should render correctly a timeline of photos accor
 </div>
 `;
 
+exports[`PhotoBoard component should render correctly a timeline of photos according a photos array in album context 1`] = `
+<div
+  className=""
+  role="contentinfo">
+  <Unknown
+    onPhotoToggle={undefined}
+    photos={
+      Array [
+        Object {
+          "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+          "created_at": "0001-01-01T00:00:00Z",
+          "dir_id": "22545465ezfzef4664686446648684",
+          "name": "MonImage.jpg",
+          "size": "150000",
+          "updated_at": "0001-01-01T00:00:00Z",
+        },
+      ]
+    }
+    selected={Array []}
+    title="2017-01-01" />
+</div>
+`;
+
 exports[`PhotoBoard component should render correctly an empty view if photos is empty 1`] = `
 <div
   className=""
   role="contentinfo">
   <_translate
-    emptyType="photos" />
+    emptyType="timeline_photos" />
 </div>
 `;

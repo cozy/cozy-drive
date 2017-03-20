@@ -4,7 +4,7 @@ import {
   RECEIVE_PHOTOS
 } from '../constants/actionTypes'
 
-const isFirstFetch = (state = true, action) => {
+export const isFirstFetch = (state = true, action) => {
   switch (action.type) {
     case RECEIVE_PHOTOS:
       return false

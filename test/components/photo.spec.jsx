@@ -2,6 +2,12 @@
 
 /* eslint-env jest */
 
+jest.mock('../../src/actions/photos', () => {
+  return {
+    getPhotoLink: () => Promise.resolve('test/monImage.jpg')
+  }
+})
+
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Photo } from '../../src/components/Photo'
@@ -44,6 +50,17 @@ describe('Photo component', () => {
       url: `http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8`
     })
     component.find('[data-input="checkbox"]').simulate('click', {stopImmediatePropagation: () => {}})
+    expect(component.node).toMatchSnapshot()
+  })
+
+  it('should handle onLoad img event correctly', () => {
+    const component = shallow(
+      <Photo photo={photoObject} router={routerObjectMock}
+        onToggle={() => {}} />
+    )
+    expect(component.state().isImageLoading).toEqual(true)
+    component.instance().handleImageLoaded()
+    expect(component.state().isImageLoading).toEqual(false)
     expect(component.node).toMatchSnapshot()
   })
 })

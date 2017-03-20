@@ -5,10 +5,15 @@ import { translate } from '../lib/I18n'
 
 import classNames from 'classnames'
 
-class CreateAlbumForm extends Component {
+export class CreateAlbumForm extends Component {
   constructor () {
     super()
-    this.reset()
+    this.state = {
+      name: '',
+      isSubmitDisabled: true,
+      isBusy: false,
+      hasError: false
+    }
   }
 
   reset () {
@@ -42,7 +47,8 @@ class CreateAlbumForm extends Component {
     })
   }
 
-  render ({ t, onSubmitNewAlbum }) {
+  render () {
+    const { t, onSubmitNewAlbum } = this.props
     return (
       <form className={styles['pho-create-album-form']} onSubmit={(event) => this.onSubmit(event, onSubmitNewAlbum)}>
         <label className={styles['coz-create-album-label']}>

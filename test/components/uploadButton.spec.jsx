@@ -23,4 +23,11 @@ describe('UploadButton component', () => {
     component.find('input').simulate('change', {target: {files: []}})
     expect(component.node).toMatchSnapshot()
   })
+
+  it('should be rendered correctly if type is menu-item', () => {
+    const component = shallow(
+      <UploadButton t={mockT} type='menu-item' />
+    ).node
+    expect(component).toMatchSnapshot()
+  })
 })

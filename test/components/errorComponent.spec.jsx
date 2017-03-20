@@ -13,9 +13,16 @@ describe('Empty component', () => {
     jest.resetModules()
   })
 
-  it('should be displayed with photos text if errorType is photos', () => {
+  it('should be displayed with photos text if errorType is timeline_photos', () => {
     const component = shallow(
-      <ErrorComponent t={mockT} errorType='photos' />
+      <ErrorComponent t={mockT} errorType='timeline_photos' />
+    ).node
+    expect(component).toMatchSnapshot()
+  })
+
+  it('should be displayed with photos text if errorType is album_photos', () => {
+    const component = shallow(
+      <ErrorComponent t={mockT} errorType='album_photos' />
     ).node
     expect(component).toMatchSnapshot()
   })
@@ -24,6 +31,15 @@ describe('Empty component', () => {
     const component = shallow(
       <ErrorComponent t={mockT} errorType='albums' />
     ).node
+    expect(component).toMatchSnapshot()
+  })
+
+  it('should handle refresh button click', () => {
+    window.location.reload = jest.fn()
+    const component = shallow(
+      <ErrorComponent t={mockT} errorType='albums' />
+    )
+    component.find("[role='button']").simulate('click')
     expect(component).toMatchSnapshot()
   })
 })

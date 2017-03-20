@@ -24,6 +24,8 @@ exports[`Photo component should handle onClick event 1`] = `
 </div>
 `;
 
+exports[`Photo component should handle onLoad img event correctly 1`] = `null`;
+
 exports[`Photo component should render correctly an image according a photo object and the router path 1`] = `
 <div
   className="pho-photo">
