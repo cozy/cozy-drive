@@ -14,4 +14,6 @@ const photosApp = combineReducers({
   mango
 })
 
+export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
+
 export default photosApp

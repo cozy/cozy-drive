@@ -1,5 +1,3 @@
-export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
-
 export const getPhotosByMonth = ({ photos }) => {
   let months = {}
   photos.forEach(p => {

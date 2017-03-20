@@ -8,7 +8,7 @@ import UploadButton from '../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { uploadPhotos, showSelectionBar } from '../actions'
-import { mustShowSelectionBar } from '../lib/helpers'
+import { mustShowSelectionBar } from '../reducers'
 
 import classNames from 'classnames'
 

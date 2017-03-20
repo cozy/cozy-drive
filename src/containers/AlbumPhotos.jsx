@@ -15,14 +15,8 @@ export class AlbumPhotos extends Component {
     }
   }
 
-  componentWillUpdate (nextProps, nextState) {
-    this.state.photosAreDirty = nextProps.photos &&
-      nextProps.photos.length !== this.props.photos.length
-  }
-
   render () {
     const { router, onFetchAlbumPhotos, album } = this.props
-    const { photosAreDirty } = this.state
     const albumId = router.params.albumId
     return (
       <div>
@@ -31,7 +25,6 @@ export class AlbumPhotos extends Component {
         }
         <PhotoBoard
           fetchPhotoLists={() => onFetchAlbumPhotos(albumId)}
-          refetch={photosAreDirty}
           photosContext='album'
         />
         { this.props.children }
