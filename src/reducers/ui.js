@@ -56,7 +56,7 @@ export const isWorking = (state = false, action) => {
   }
 }
 
-const showSelectionBar = (state = false, action) => {
+export const showSelectionBar = (state = false, action) => {
   switch (action.type) {
     case SHOW_SELECTION_BAR:
       return true
@@ -67,7 +67,7 @@ const showSelectionBar = (state = false, action) => {
   }
 }
 
-const selected = (state = [], action) => {
+export const selected = (state = [], action) => {
   switch (action.type) {
     case SELECT_PHOTO:
       return [

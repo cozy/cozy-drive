@@ -29,6 +29,37 @@ exports[`UploadButton component should be rendered correctly 1`] = `
 </label>
 `;
 
+exports[`UploadButton component should be rendered correctly if type is menu-item 1`] = `
+<label
+  className=" coz-link--upload"
+  disabled={undefined}
+  role="button"
+  style={
+    Object {
+      "overflow": "hidden",
+      "position": "relative",
+    }
+  }>
+  <input
+    accept="image/*"
+    disabled={undefined}
+    multiple={true}
+    onChange={[Function]}
+    style={
+      Object {
+        "height": "100%",
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "top": 0,
+        "width": "100%",
+        "zIndex": 1,
+      }
+    }
+    type="file" />
+</label>
+`;
+
 exports[`UploadButton component should handle onChange event 1`] = `
 <label
   className=" coz-btn coz-btn--regular coz-btn--upload"

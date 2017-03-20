@@ -15,7 +15,8 @@ import {
 import {
   fetchPhotos,
   uploadPhotos,
-  extractFileAttributes
+  extractFileAttributes,
+  getPhotoLink
 } from '../../src/actions/photos'
 
 import client from 'cozy-client-js'
@@ -136,6 +137,10 @@ beforeAll(() => {
       // error which is not expected by the uploadPhotos function
       .mockImplementationOnce(() => {
         throw new Error('ERROR')
+      }),
+      // getDownloadLinkById return link with success
+      getDownloadLinkById: jest.fn(() => {
+        return new Promise((resolve, reject) => resolve('mock://MonImage.jpg'))
       })
     }
   })
@@ -295,6 +300,20 @@ describe('uploadPhotos', () => {
         expect(cozy.client.files.create.mock.calls[0][0]).toBe(
           mockImagesArrayToUpload[0])
         expect(store.getActions()).toEqual(expectedActions)
+      })
+  })
+})
+
+describe('getPhotoLink', () => {
+  beforeEach(() => {
+    cozy.client.files.getDownloadLinkById.mockClear()
+  })
+
+  it('should call cozy.client.files.getDownloadLinkById to get a photo link with success', () => {
+    return getPhotoLink('idPhoto42')
+      .then(() => {
+        expect(cozy.client.files.getDownloadLinkById.mock.calls.length).toBe(1)
+        expect(cozy.client.files.getDownloadLinkById.mock.calls[0][0]).toBe('idPhoto42')
       })
   })
 })

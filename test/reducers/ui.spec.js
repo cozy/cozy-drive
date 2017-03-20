@@ -9,10 +9,25 @@ import {
   UPLOAD_PHOTOS_FAILURE,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   INDEX_FILES_BY_DATE,
-  INDEX_FILES_BY_DATE_SUCCESS
+  INDEX_FILES_BY_DATE_SUCCESS,
+  SHOW_SELECTION_BAR,
+  HIDE_SELECTION_BAR,
+  SELECT_PHOTO,
+  UNSELECT_PHOTO,
+  ADD_TO_ALBUM_SUCCESS,
+  FETCH_CURRENT_ALBUM_PHOTOS,
+  ADD_TO_ALBUM,
+  CANCEL_ADD_TO_ALBUM
 } from '../../src/constants/actionTypes'
 
-import { isFetching, isIndexing, isWorking } from '../../src/reducers/ui'
+import {
+  isFetching,
+  isIndexing,
+  isWorking,
+  showSelectionBar,
+  selected,
+  showAddToAlbumModal
+} from '../../src/reducers/ui'
 
 describe('UI isFetching reducer', () => {
   // if nothing is sent to the reducer, it should return an default state
@@ -117,6 +132,124 @@ describe('UI isWorking reducer', () => {
     expect(
       isWorking([], {
         type: UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS
+      })
+    ).toBe(false)
+  })
+})
+
+describe('UI showSelectionBar reducer', () => {
+  // if nothing is sent to the reducer, it should return an default state
+  it('should return the default state when no arguments', () => {
+    expect(
+      showSelectionBar(undefined, {})
+    ).toBe(false)
+  })
+
+  // if SHOW_SELECTION_BAR -> true
+  it('should handle SHOW_SELECTION_BAR', () => {
+    expect(
+      showSelectionBar(false, {
+        type: SHOW_SELECTION_BAR
+      })
+    ).toBe(true)
+  })
+
+  // if HIDE_SELECTION_BAR -> false
+  it('should handle HIDE_SELECTION_BAR', () => {
+    expect(
+      showSelectionBar(true, {
+        type: HIDE_SELECTION_BAR
+      })
+    ).toBe(false)
+  })
+})
+
+describe('UI selected reducer', () => {
+  // if nothing is sent to the reducer, it should return an default state
+  it('should return the default state when no arguments', () => {
+    expect(
+      selected(undefined, {})
+    ).toEqual([])
+  })
+
+  // if SELECT_PHOTO -> previous array + new selected photo id
+  it('should handle SELECT_PHOTO', () => {
+    expect(
+      selected(['idPhoto30'], {
+        type: SELECT_PHOTO,
+        id: 'idPhoto42'
+      })
+    ).toEqual(['idPhoto30', 'idPhoto42'])
+  })
+
+  // if UNSELECT_PHOTO -> previous array - new selected photo id
+  it('should handle UNSELECT_PHOTO', () => {
+    expect(
+      selected(['idPhoto30', 'idPhoto42'], {
+        type: UNSELECT_PHOTO,
+        id: 'idPhoto30'
+      })
+    ).toEqual(['idPhoto42'])
+  })
+
+  // if ADD_TO_ALBUM_SUCCESS / FETCH_CURRENT_ALBUM_PHOTOS / HIDE_SELECTION_BAR -> []
+  it('should reset selection if ADD_TO_ALBUM_SUCCESS or FETCH_CURRENT_ALBUM_PHOTOS or HIDE_SELECTION_BAR', () => {
+    expect(
+      selected(['idPhoto30', 'idPhoto42'], {
+        type: ADD_TO_ALBUM_SUCCESS
+      })
+    ).toEqual([])
+    expect(
+      selected(['idPhoto30', 'idPhoto42'], {
+        type: FETCH_CURRENT_ALBUM_PHOTOS
+      })
+    ).toEqual([])
+    expect(
+      selected(['idPhoto30', 'idPhoto42'], {
+        type: HIDE_SELECTION_BAR
+      })
+    ).toEqual([])
+  })
+})
+
+describe('UI showAddToAlbumModal reducer', () => {
+  // if nothing is sent to the reducer, it should return an default state
+  it('should return the default state when no arguments', () => {
+    expect(
+      showAddToAlbumModal(undefined, {})
+    ).toBe(false)
+  })
+
+  // if ADD_TO_ALBUM -> true if no same named album found
+  it('should handle ADD_TO_ALBUM', () => {
+    expect(
+      showAddToAlbumModal(false, {
+        type: ADD_TO_ALBUM,
+        album: undefined
+      })
+    ).toBe(true)
+  })
+
+  // if ADD_TO_ALBUM -> false if album with same name found
+  it('should handle ADD_TO_ALBUM', () => {
+    expect(
+      showAddToAlbumModal(true, {
+        type: ADD_TO_ALBUM,
+        album: {_id: 'idAlbum42'}
+      })
+    ).toBe(false)
+  })
+
+  // if CANCEL_ADD_TO_ALBUM / ADD_TO_ALBUM_SUCCESS -> false
+  it('should handle CANCEL_ADD_TO_ALBUM and ADD_TO_ALBUM_SUCCESS', () => {
+    expect(
+      showAddToAlbumModal(true, {
+        type: CANCEL_ADD_TO_ALBUM
+      })
+    ).toBe(false)
+    expect(
+      showAddToAlbumModal(true, {
+        type: ADD_TO_ALBUM_SUCCESS
       })
     ).toBe(false)
   })

@@ -1,1 +1,29 @@
 exports[`AlbumItem component should be displayed correctly if album with photosIds 1`] = `null`;
+
+exports[`AlbumItem component should be displayed correctly if album without photosIds 1`] = `
+<div
+  className="pho-album">
+  <Link
+    className="pho-album-link"
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/mock/33dda00f0eec15bc3b3c59a615001ac8">
+    <img
+      alt="albumTest2 album cover"
+      className="pho-album-photo-item"
+      onLoad={[Function]}
+      src=""
+      style="" />
+    <h2
+      className="pho-album-title">
+      albumTest2
+    </h2>
+    <h4
+      className="pho-album-description">
+      0 photos
+    </h4>
+  </Link>
+</div>
+`;
+
+exports[`AlbumItem component should handle onLoad img event correctly 1`] = `null`;
