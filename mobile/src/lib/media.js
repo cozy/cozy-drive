@@ -77,3 +77,8 @@ export const getFilteredPhotos = async () => {
 
   return Promise.resolve(photos)
 }
+
+export const canStartBackup = (getState) => {
+  // TODO: Add wifi parameter
+  return getState().mobile.settings.backupImages
+}

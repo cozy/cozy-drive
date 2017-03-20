@@ -1,10 +1,12 @@
 import { getStore } from './store'
 import { initService } from './init'
-import { logException } from './crash-reporter'
+import { logException } from './crash-reporter'
 import { loadState } from './localStorage'
+import { canStartBackup } from './media'
+import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
 
 const hasIosCordovaPlugin = () => {
-  return device.platform === 'iOS' && window.BackgroundFetch !== undefined
+  return window.cordova.platformId === 'iOS' && window.BackgroundFetch !== undefined
 }
 
 export const launchBackground = () => {
@@ -18,20 +20,32 @@ const launchIosBackground = () => {
 
   // Your background-fetch handler.
   const fetchCallback = () => {
-      console.log('[js] BackgroundFetch initiated')
+    console.log('[js] BackgroundFetch initiated')
 
-      loadState().then(persistedState => {
-        let store = getStore(persistedState)
-        initService(store)
+    loadState().then(persistedState => {
+      let store = getStore(persistedState)
+      initService(store)
 
-        logException('C\'est moi le Service Background!!!')
+      logException('C\'est moi le Service Background!!!')
 
+      if (canStartBackup(store.getState)) {
+        logException('start backup on Background')
+        const end = () => {
+          store.dispatch(endMediaUpload())
+          Fetcher.finish()
+        }
+        store.dispatch(startMediaUpload())
+        // TODO: Replace 'Camera' with t('mobile.settings.media_backup.media_folder') but t?
+        store.dispatch(mediaBackup('Camera')).then(end).catch(end)
+      } else {
+        logException('can\'t start backup on Background')
         Fetcher.finish()   // <-- N.B. You MUST called #finish so that native-side can signal completion of the background-thread to the os.
-      })
+      }
+    })
   }
 
   const failureCallback = (error) => {
-      console.log('- BackgroundFetch failed', error)
+    console.log('- BackgroundFetch failed', error)
   }
 
   const options = {

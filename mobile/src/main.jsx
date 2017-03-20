@@ -16,7 +16,7 @@ import MobileAppRoute from './components/MobileAppRoute'
 import { loadState } from './lib/localStorage'
 import { getStore } from './lib/store'
 import { initService } from './lib/init'
-import { launchBackground } from './lib/background'
+import { launchBackground } from './lib/background'
 import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 
 const renderAppWithPersistedState = persistedState => {
