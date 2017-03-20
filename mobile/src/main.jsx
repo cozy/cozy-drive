@@ -20,8 +20,6 @@ import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState, saveState } from './lib/localStorage'
 import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
-import { watchNetworkState, getConnectionType } from './lib/network'
-import { onConnectionChange, setConnectionState } from './actions/network'
 
 import { configureReporter, ANALYTICS_URL, getAnalyticsConfiguration } from './lib/crash-reporter'
 
@@ -49,8 +47,6 @@ const renderAppWithPersistedState = persistedState => {
 
   configureReporter(store.getState)
   initClient(store.getState().mobile.settings.serverUrl)
-  store.dispatch(setConnectionState(getConnectionType()))
-  watchNetworkState(onConnectionChange(store.dispatch, getConnectionType))
 
   function requireSetup (nextState, replace, callback) {
     const client = store.getState().mobile.settings.client
