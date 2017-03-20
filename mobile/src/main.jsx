@@ -7,43 +7,20 @@ import '../../src/styles/main'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
-import RavenMiddleWare from 'redux-raven-middleware'
 
 import { I18n } from '../../src/lib/I18n'
 
-import filesApp from './reducers'
 import MobileAppRoute from './components/MobileAppRoute'
 
-import { loadState, saveState } from './lib/localStorage'
+import { loadState } from './lib/localStorage'
+import { getStore } from './lib/store'
 import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 
-import { configureReporter, ANALYTICS_URL, getAnalyticsConfiguration } from './lib/crash-reporter'
-
-const loggerMiddleware = createLogger()
+import { configureReporter } from './lib/crash-reporter'
 
 const renderAppWithPersistedState = persistedState => {
-  const store = createStore(
-    filesApp,
-    persistedState,
-    applyMiddleware(
-      RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration()),
-      thunkMiddleware,
-      loggerMiddleware
-    )
-  )
-
-  store.subscribe(() => saveState({
-    mobile: {
-      settings: store.getState().mobile.settings,
-      mediaBackup: {
-        uploaded: store.getState().mobile.mediaBackup.uploaded
-      }
-    }
-  }))
+  const store = getStore(persistedState)
 
   configureReporter(store.getState)
   initClient(store.getState().mobile.settings.serverUrl)
