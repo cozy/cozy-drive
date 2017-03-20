@@ -1,10 +1,10 @@
 @require 'cozy-ui'
 
 .pho-album-list
-    display flex
+    display         flex
 
 .pho-album
-    margin-left 2em
+    margin  .5em 0 2em 2em
 
 .pho-album-photo-item
     width         20em
@@ -15,7 +15,7 @@
     background    grey-10
 
 .pho-album-title
-    margin          .2em 0 .5em
+    margin          .2em 0 .2em
     font-size       em(20px)
     color           black
     text-decoration none
@@ -28,3 +28,15 @@
     color       grey-11
     font-weight normal
     font-size   em(14px)
+    margin      0
+
+@media (max-width: (480/basefont)rem)
+    .pho-album-list
+        flex-direction  column
+
+    .pho-album
+        width           100%
+        margin-left     1em
+
+    .pho-album-photo-item
+        width calc(100% - 2em)
