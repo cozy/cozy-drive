@@ -15,15 +15,12 @@ import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState } from './lib/localStorage'
 import { getStore } from './lib/store'
-import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
-
-import { configureReporter } from './lib/crash-reporter'
+import { initService } from './lib/init'
+import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 
 const renderAppWithPersistedState = persistedState => {
   const store = getStore(persistedState)
-
-  configureReporter(store.getState)
-  initClient(store.getState().mobile.settings.serverUrl)
+  initService(store)
 
   function requireSetup (nextState, replace, callback) {
     const client = store.getState().mobile.settings.client
