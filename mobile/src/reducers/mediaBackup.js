@@ -1,5 +1,5 @@
 import { INIT_STATE } from '../actions'
-import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, IMAGE_UPLOAD_SUCCESS, CURRENT_UPLOAD } from '../actions/mediaBackup'
+import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, MEDIA_UPLOAD_SUCCESS, CURRENT_UPLOAD } from '../actions/mediaBackup'
 
 export const initialState = {
   uploading: false,
@@ -12,7 +12,7 @@ export const mediaBackup = (state = initialState, action) => {
       return { ...state, uploading: true }
     case MEDIA_UPLOAD_END:
       return { ...state, uploading: false, currentUpload: undefined }
-    case IMAGE_UPLOAD_SUCCESS:
+    case MEDIA_UPLOAD_SUCCESS:
       return { ...state, uploaded: [...state.uploaded, action.id] }
     case CURRENT_UPLOAD:
       return { ...state, currentUpload: { media: action.media, message: action.message, messageData: action.messageData } }

@@ -83,8 +83,7 @@
     "trash_file_success": "The selection has been moved to the Trash.",
     "folder_name": "The folder %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
-    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
-    "media_upload": "Backing up %{upload_counter} of %{total_upload} photos"
+    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved."
   },
   "mobile": {
     "onboarding": {
@@ -142,7 +141,8 @@
         "wifi": {
           "title": "Backup on WIFI only",
           "label": "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
-        }
+        },
+        "media_upload": "Backing up %{upload_counter} of %{total_upload} photos"
       },
       "support": {
         "title": "Support",

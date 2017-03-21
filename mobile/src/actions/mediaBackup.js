@@ -6,17 +6,17 @@ import { HTTP_CODE_CONFLICT } from '../../../src/actions'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
-export const IMAGE_UPLOAD_SUCCESS = 'IMAGE_UPLOAD_SUCCESS'
+export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
 export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
 export const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
 export const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
-export const successImageUpload = (media) => ({ type: IMAGE_UPLOAD_SUCCESS, id: media.id })
+export const successMediaUpload = (media) => ({ type: MEDIA_UPLOAD_SUCCESS, id: media.id })
 export const currentUploading = (media, uploadCounter, totalUpload) => (
   {
     type: CURRENT_UPLOAD,
     media,
-    message: 'alert.media_upload',
+    message: 'mobile.settings.media_backup.media_upload',
     messageData: {
       upload_counter: uploadCounter,
       total_upload: totalUpload
@@ -53,10 +53,10 @@ export const mediaBackup = (dir) => async (dispatch, getState) => {
           name: photo.fileName
         }
         await cozy.client.files.create(blob, options).then(() => {
-          dispatch(successImageUpload(photo))
+          dispatch(successMediaUpload(photo))
         }).catch(err => {
           if (err.status === HTTP_CODE_CONFLICT) {
-            dispatch(successImageUpload(photo))
+            dispatch(successMediaUpload(photo))
           }
           console.log(err)
         })
