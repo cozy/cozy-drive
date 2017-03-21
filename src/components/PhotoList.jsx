@@ -1,6 +1,7 @@
 import styles from '../styles/photoList'
 
 import React from 'react'
+import Dimensions from 'react-dimensions'
 
 import Empty from './Empty'
 import Photo from './Photo'
@@ -27,4 +28,4 @@ export const PhotoList = ({ key, title, photos, selected, onPhotoToggle }) => {
   )
 }
 
-export default PhotoList
+export default Dimensions()(PhotoList)

@@ -1803,6 +1803,10 @@ electron-to-chromium@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.2.0.tgz#3bd7761f85bd4163602259ae6c7ed338050b17e7"
 
+element-resize-event@^2.0.4:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/element-resize-event/-/element-resize-event-2.0.7.tgz#8b63953715967cd2241620245573e79e684e07b0"
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -5056,6 +5060,12 @@ react-bosonic@beta:
     react-dom "^15.3.2"
     recompose "^0.20.2"
     skatejs-react-integration "^1.0.2"
+
+react-dimensions@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-dimensions/-/react-dimensions-1.3.0.tgz#f5dec8e7b84644a605a900cae0f4a6654acf4e9f"
+  dependencies:
+    element-resize-event "^2.0.4"
 
 react-dom@^15.3.2, react-dom@^15.4.0:
   version "15.4.2"
