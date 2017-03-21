@@ -6,6 +6,18 @@ exports[`PhotoList component should render correctly a timeline of photos accord
     Photo list title
   </h3>
   <withRouter(Photo)
+    box={
+      Object {
+        "aspectRatio": 1,
+        "height": 240,
+        "left": 32,
+        "top": Object {
+          "left": 32,
+          "right": 32,
+        },
+        "width": 240,
+      }
+    }
     onToggle={undefined}
     photo={
       Object {
@@ -41,6 +53,18 @@ exports[`PhotoList component should render correctly an empty view if some photo
     Empty list
   </h3>
   <withRouter(Photo)
+    box={
+      Object {
+        "aspectRatio": 1,
+        "height": 240,
+        "left": 32,
+        "top": Object {
+          "left": 32,
+          "right": 32,
+        },
+        "width": 240,
+      }
+    }
     onToggle={undefined}
     photo={
       Object {

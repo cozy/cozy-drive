@@ -34,38 +34,51 @@ export class Photo extends Component {
   }
 
   render () {
-    const { photo, selected = false, onToggle, router } = this.props
+    const { photo, box, selected = false, onToggle, router } = this.props
     const { loading, url, isImageLoading } = this.state
     const parentPath = router.location.pathname
     return (
-      !loading &&
-        <div className={classNames(
+      <div
+        className={classNames(
           styles['pho-photo'],
           { [styles['pho-photo--selected']]: selected }
-        )}>
-          <span
-            className={styles['pho-photo-select']}
-            data-input='checkbox'
-            onClick={e => {
-              e.stopImmediatePropagation()
-              onToggle(photo._id, selected)
-            }}>
-            <input
-              type='checkbox'
-              checked={selected}
-             />
-            <label />
-          </span>
-          <Link to={`${parentPath}/${photo._id}`}>
-            <img
-              className={styles['pho-photo-item']}
-              onLoad={this.handleImageLoaded}
-              style={isImageLoading ? 'display:none' : ''}
-              alt={photo.name}
-              src={url}
-            />
-          </Link>
-        </div>
+        )}
+        style={box && box.width && box.height
+          ? `width:${box.width}px;height:${box.height}px`
+            : ''}
+      >
+        { !loading &&
+          <div
+
+            >
+            <span
+              className={styles['pho-photo-select']}
+              data-input='checkbox'
+              onClick={e => {
+                e.stopImmediatePropagation()
+                onToggle(photo._id, selected)
+              }}>
+              <input
+                type='checkbox'
+                checked={selected}
+               />
+              <label />
+            </span>
+            <Link to={`${parentPath}/${photo._id}`}>
+              <img
+                className={styles['pho-photo-item']}
+                onLoad={this.handleImageLoaded}
+                style={`${isImageLoading ? 'display:none;' : ''}` +
+                  (box && box.width && box.height
+                    ? `width:${box.width}px;height:${box.height}px`
+                      : '')}
+                alt={photo.name}
+                src={url}
+              />
+            </Link>
+          </div>
+        }
+      </div>
     )
   }
 }

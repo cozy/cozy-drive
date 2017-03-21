@@ -3,14 +3,36 @@ import styles from '../styles/photoList'
 import React, { Component } from 'react'
 import Dimensions from 'react-dimensions'
 
+import justifiedLayout from 'justified-layout'
+
 import Empty from './Empty'
 import Photo from './Photo'
 
 import classNames from 'classnames'
 
+const photoDimensionsFallback = {width: 1, height: 1}
+const photoRowHeight = 240
+
 export class PhotoList extends Component {
   render () {
     const { key, title, photos, selected, onPhotoToggle, containerWidth } = this.props
+    // @see https://flickr.github.io/justified-layout/
+    const layout = justifiedLayout(
+      photos.map(photo => photo.metadata || photoDimensionsFallback),
+      {
+        containerWidth: containerWidth,
+        targetRowHeight: photoRowHeight,
+        // Must be relevant with styles
+        boxSpacing: {
+          horizontal: 16,
+          vertical: 16
+        },
+        containerPadding: {
+          left: 32,
+          right: 32
+        }
+      }
+    )
     return (
       <div
         className={classNames(styles['pho-section'], selected.length && styles['pho-section--has-selection'])}
@@ -22,6 +44,7 @@ export class PhotoList extends Component {
         {photos.map((photo, index) =>
           <Photo
             photo={photo}
+            box={layout.boxes[index]}
             key={photo._id}
             selected={selected.indexOf(photo._id) !== -1}
             onToggle={onPhotoToggle}
