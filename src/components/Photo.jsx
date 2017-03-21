@@ -6,6 +6,19 @@ import { Link, withRouter } from 'react-router'
 
 import { getPhotoLink } from '../actions/photos'
 
+const getStyleFromBox = box => {
+  let style = {}
+  if (box) {
+    if (box.width) {
+      style.width = `${box.width}px`
+    }
+    if (box.height) {
+      style.height = `${box.height}px`
+    }
+  }
+  return style
+}
+
 export class Photo extends Component {
   constructor (props) {
     super(props)
@@ -34,38 +47,47 @@ export class Photo extends Component {
   }
 
   render () {
-    const { photo, selected = false, onToggle, router } = this.props
+    const { photo, box, selected = false, onToggle, router } = this.props
     const { loading, url, isImageLoading } = this.state
     const parentPath = router.location.pathname
     return (
-      !loading &&
-        <div className={classNames(
+      <div
+        className={classNames(
           styles['pho-photo'],
           { [styles['pho-photo--selected']]: selected }
-        )}>
-          <span
-            className={styles['pho-photo-select']}
-            data-input='checkbox'
-            onClick={e => {
-              e.stopImmediatePropagation()
-              onToggle(photo._id, selected)
-            }}>
-            <input
-              type='checkbox'
-              checked={selected}
-             />
-            <label />
-          </span>
-          <Link to={`${parentPath}/${photo._id}`}>
-            <img
-              className={styles['pho-photo-item']}
-              onLoad={this.handleImageLoaded}
-              style={isImageLoading ? 'display:none' : ''}
-              alt={photo.name}
-              src={url}
-            />
-          </Link>
-        </div>
+        )}
+        style={getStyleFromBox(box)}
+      >
+        { !loading &&
+          <div>
+            <span
+              className={styles['pho-photo-select']}
+              data-input='checkbox'
+              onClick={e => {
+                e.stopImmediatePropagation()
+                onToggle(photo._id, selected)
+              }}>
+              <input
+                type='checkbox'
+                checked={selected}
+               />
+              <label />
+            </span>
+            <Link to={`${parentPath}/${photo._id}`}>
+              <img
+                className={styles['pho-photo-item']}
+                onLoad={this.handleImageLoaded}
+                style={Object.assign(
+                  getStyleFromBox(box),
+                  isImageLoading ? {display: 'none'} : {})
+                }
+                alt={photo.name}
+                src={url}
+              />
+            </Link>
+          </div>
+        }
+      </div>
     )
   }
 }

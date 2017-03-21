@@ -1,10 +1,23 @@
 exports[`PhotoList component should render correctly a timeline of photos according a photos array 1`] = `
 <div
-  className="pho-section">
+  className="pho-section"
+  style="">
   <h3>
     Photo list title
   </h3>
   <withRouter(Photo)
+    box={
+      Object {
+        "aspectRatio": 1,
+        "height": 240,
+        "left": 32,
+        "top": Object {
+          "left": 32,
+          "right": 32,
+        },
+        "width": 240,
+      }
+    }
     onToggle={undefined}
     photo={
       Object {
@@ -22,7 +35,8 @@ exports[`PhotoList component should render correctly a timeline of photos accord
 
 exports[`PhotoList component should render correctly an empty view if photos is empty 1`] = `
 <div
-  className="pho-section">
+  className="pho-section"
+  style="">
   <h3>
     Empty list
   </h3>
@@ -33,11 +47,59 @@ exports[`PhotoList component should render correctly an empty view if photos is 
 
 exports[`PhotoList component should render correctly an empty view if some photos are selected 1`] = `
 <div
-  className="pho-section pho-section--has-selection">
+  className="pho-section pho-section--has-selection"
+  style="">
   <h3>
     Empty list
   </h3>
   <withRouter(Photo)
+    box={
+      Object {
+        "aspectRatio": 1,
+        "height": 240,
+        "left": 32,
+        "top": Object {
+          "left": 32,
+          "right": 32,
+        },
+        "width": 240,
+      }
+    }
+    onToggle={undefined}
+    photo={
+      Object {
+        "_id": "33dda00f0eec15bc3b3c59a615001ac8",
+        "created_at": "0001-01-01T00:00:00Z",
+        "dir_id": "22545465ezfzef4664686446648684",
+        "name": "MonImage.jpg",
+        "size": "150000",
+        "updated_at": "0001-01-01T00:00:00Z",
+      }
+    }
+    selected={false} />
+</div>
+`;
+
+exports[`PhotoList component should render correctly when a containerWidth is given 1`] = `
+<div
+  className="pho-section"
+  style="width:1800px">
+  <h3>
+    Empty list
+  </h3>
+  <withRouter(Photo)
+    box={
+      Object {
+        "aspectRatio": 1,
+        "height": 240,
+        "left": 32,
+        "top": Object {
+          "left": 32,
+          "right": 32,
+        },
+        "width": 240,
+      }
+    }
     onToggle={undefined}
     photo={
       Object {
