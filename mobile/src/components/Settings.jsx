@@ -46,11 +46,11 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
       {displayUnlinkConfirmation && <Modal
         title={t('mobile.settings.unlink.confirmation.title')}
         description={t('mobile.settings.unlink.confirmation.description')}
-        cancelText={t('mobile.settings.unlink.confirmation.cancel')}
-        cancelAction={hideUnlinkConfirmation}
-        validateType='danger'
-        validateText={t('mobile.settings.unlink.confirmation.unlink')}
-        validateAction={() => unlink(client)}
+        secondaryText={t('mobile.settings.unlink.confirmation.cancel')}
+        secondaryAction={hideUnlinkConfirmation}
+        primaryType='danger'
+        primaryText={t('mobile.settings.unlink.confirmation.unlink')}
+        primaryAction={() => unlink(client)}
       />}
 
     </div>
