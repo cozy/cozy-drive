@@ -1,7 +1,7 @@
 exports[`Photo component should handle onClick event 1`] = `
 <div
   className="pho-photo"
-  style="">
+  style={Object {}}>
   <div>
     <span
       className="pho-photo-select"
@@ -21,7 +21,11 @@ exports[`Photo component should handle onClick event 1`] = `
         className="pho-photo-item"
         onLoad={[Function]}
         src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8"
-        style="display:none;" />
+        style={
+          Object {
+            "display": "none",
+          }
+        } />
     </Link>
   </div>
 </div>
@@ -30,13 +34,13 @@ exports[`Photo component should handle onClick event 1`] = `
 exports[`Photo component should handle onLoad img event correctly 1`] = `
 <div
   className="pho-photo"
-  style="" />
+  style={Object {}} />
 `;
 
 exports[`Photo component should render correctly an image according a photo object and the router path 1`] = `
 <div
   className="pho-photo"
-  style="">
+  style={Object {}}>
   <div>
     <span
       className="pho-photo-select"
@@ -56,7 +60,11 @@ exports[`Photo component should render correctly an image according a photo obje
         className="pho-photo-item"
         onLoad={[Function]}
         src="http://cozy.local:8080/files/download/33dda00f0eec15bc3b3c59a615001ac8"
-        style="display:none;" />
+        style={
+          Object {
+            "display": "none",
+          }
+        } />
     </Link>
   </div>
 </div>

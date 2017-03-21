@@ -6,6 +6,19 @@ import { Link, withRouter } from 'react-router'
 
 import { getPhotoLink } from '../actions/photos'
 
+const getStyleFromBox = box => {
+  let style = {}
+  if (box) {
+    if (box.width) {
+      style.width = `${box.width}px`
+    }
+    if (box.height) {
+      style.height = `${box.height}px`
+    }
+  }
+  return style
+}
+
 export class Photo extends Component {
   constructor (props) {
     super(props)
@@ -43,9 +56,7 @@ export class Photo extends Component {
           styles['pho-photo'],
           { [styles['pho-photo--selected']]: selected }
         )}
-        style={box && box.width && box.height
-          ? `width:${box.width}px;height:${box.height}px`
-            : ''}
+        style={getStyleFromBox(box)}
       >
         { !loading &&
           <div>
@@ -66,10 +77,10 @@ export class Photo extends Component {
               <img
                 className={styles['pho-photo-item']}
                 onLoad={this.handleImageLoaded}
-                style={`${isImageLoading ? 'display:none;' : ''}` +
-                  (box && box.width && box.height
-                    ? `width:${box.width}px;height:${box.height}px`
-                      : '')}
+                style={Object.assign(
+                  getStyleFromBox(box),
+                  isImageLoading ? {display: 'none'} : {})
+                }
                 alt={photo.name}
                 src={url}
               />
