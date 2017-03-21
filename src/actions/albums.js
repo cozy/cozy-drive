@@ -60,7 +60,7 @@ export const fetchAlbumPhotosStatsById = (albumId) => {
       let fetchedPhotos = []
       for (let index in photosIds) {
         const photo = await cozy.client.files.statById(photosIds[index])
-        fetchedPhotos.push(photo)
+        fetchedPhotos.push(Object.assign({}, photo, photo.attributes))
       }
       album.photos = fetchedPhotos
       dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS, album})
