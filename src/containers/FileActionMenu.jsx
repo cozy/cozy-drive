@@ -1,11 +1,12 @@
 import styles from '../styles/actionmenu'
 
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 import { Item } from 'react-bosonic/lib/Menu'
 import withGestures from '../lib/withGestures'
+import Hammer from 'hammerjs'
 
 import { splitFilename, getClassFromMime } from '../components/File'
 import { getActionableFiles } from '../reducers'
@@ -83,11 +84,7 @@ const Delete = ({ t, files, onDelete, actionMenu }) => (
   </Item>
 )
 
-const ActionMenu = withGestures(
-  ownProps => ({
-    swipeDown: () => ownProps.onClose()
-  })
-)(translate()(Menu))
+const ActionMenu = translate()(Menu)
 
 const Backdrop = withGestures(
   ownProps => ({
@@ -95,12 +92,71 @@ const Backdrop = withGestures(
   })
 )(() => <div className={styles['fil-actionmenu-backdrop']} />)
 
-const FileActionMenu = props => (
-  <div className={styles['fil-actionmenu-wrapper']}>
-    <Backdrop {...props} />
-    <ActionMenu {...props} />
-  </div>
-)
+class FileActionMenu extends Component {
+  componentDidMount () {
+    this.gesturesHandler = new Hammer.Manager(this.fam, {
+      recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
+    })
+
+    this.actionMenuNode = this.actionMenu.getDOMNode()
+
+    this.onDismissHandler = this.onDismiss.bind(this)
+
+    // to be completely accurate, `maximumGestureDelta` should be the difference between the top of the menu and the bottom of the page; but using the height is much easier to compute and accurate enough.
+    const maximumGestureDistance = this.actionMenuNode.getBoundingClientRect().height
+    const minimumCloseDistance = 0.6 // between 0 and 1, how far down the gesture must be to be considered complete upon release
+    const minimumCloseVelocity = 0.6 // a gesture faster than this will dismiss the menu, regardless of distance traveled
+
+    this.gesturesHandler.on('panstart', e => {
+      // disable css transitions during the gesture
+      this.actionMenuNode.classList.remove(styles['with-transition'])
+    })
+    this.gesturesHandler.on('pan', e => {
+      this.applyTransformation(e.deltaY / maximumGestureDistance)
+    })
+    this.gesturesHandler.on('panend', e => {
+      // re enable css transitions
+      this.actionMenuNode.classList.add(styles['with-transition'])
+      // dismiss the menu if the swipe pan was bigger than the treshold, or if it was a fast, downward gesture
+      let shouldDismiss = e.deltaY / maximumGestureDistance >= minimumCloseDistance ||
+                          (e.deltaY > 0 && e.velocity >= minimumCloseVelocity)
+
+      if (shouldDismiss) {
+        this.applyTransformation(1)
+        this.actionMenuNode.addEventListener('transitionend', this.onDismissHandler, false)
+      } else {
+        this.applyTransformation(0)
+      }
+    })
+  }
+
+  componentWillUnmount () {
+    this.gesturesHandler.destroy()
+  }
+
+  // applies a css trasnform to the element, based on the progress of the gesture
+  applyTransformation (progress) {
+    // wrap the progress between 0 and 1
+    progress = Math.min(1, Math.max(0, progress))
+    this.actionMenuNode.style.transform = 'translateY(' + (progress * 100) + '%)'
+  }
+
+  onDismiss () {
+    this.props.onClose()
+    // reset the menu
+    this.applyTransformation(0)
+    this.actionMenuNode.removeEventListener('transitionend', this.onDismissHandler)
+  }
+
+  render (props) {
+    return (
+      <div className={styles['fil-actionmenu-wrapper']} ref={fam => { this.fam = fam }}>
+        <Backdrop {...props} />
+        <ActionMenu {...props} ref={actionMenu => { this.actionMenu = actionMenu }} />
+      </div>
+    )
+  }
+}
 
 const mapStateToProps = (state, ownProps) => ({
   files: getActionableFiles(state),
