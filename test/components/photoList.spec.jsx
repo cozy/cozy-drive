@@ -26,16 +26,9 @@ describe('PhotoList component', () => {
     expect(component).toMatchSnapshot()
   })
 
-  it('should render correctly an empty view if photos is empty', () => {
+  it('should render correctly if some photos are selected', () => {
     const component = shallow(
-      <PhotoList title='Empty list' photos={[]} selected={[]} />
-    ).node
-    expect(component).toMatchSnapshot()
-  })
-
-  it('should render correctly an empty view if some photos are selected', () => {
-    const component = shallow(
-      <PhotoList title='Empty list' photos={photosMock} selected={photosMock} />
+      <PhotoList title='Photo list title' photos={photosMock} selected={photosMock} />
     ).node
     expect(component).toMatchSnapshot()
   })

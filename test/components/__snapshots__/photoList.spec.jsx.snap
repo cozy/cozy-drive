@@ -33,24 +33,12 @@ exports[`PhotoList component should render correctly a timeline of photos accord
 </div>
 `;
 
-exports[`PhotoList component should render correctly an empty view if photos is empty 1`] = `
-<div
-  className="pho-section"
-  style="">
-  <h3>
-    Empty list
-  </h3>
-  <_translate
-    emptyType="photos" />
-</div>
-`;
-
-exports[`PhotoList component should render correctly an empty view if some photos are selected 1`] = `
+exports[`PhotoList component should render correctly if some photos are selected 1`] = `
 <div
   className="pho-section pho-section--has-selection"
   style="">
   <h3>
-    Empty list
+    Photo list title
   </h3>
   <withRouter(Photo)
     box={
