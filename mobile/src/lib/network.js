@@ -12,10 +12,10 @@ export const watchNetworkState = (onConnectionChange) => {
   document.addEventListener('online', onConnectionChange, false)
 }
 
-export const hasCordovaPlugin = window.navigator.connection !== undefined && window.Connection !== undefined
+const hasCordovaPlugin = () => window.navigator.connection !== undefined && window.Connection !== undefined
 
-export const getConnectionType = () => hasCordovaPlugin ? navigator.connection.type : WIFI
+export const getConnectionType = () => hasCordovaPlugin() ? navigator.connection.type : WIFI
 
 export const onWifi = connection => connection === WIFI
 
-export const backupAllowed = (connectionType, wifiOnly) => onWifi(connectionType) || !wifiOnly
+export const backupAllowed = (wifiOnly) => onWifi(getConnectionType()) || !wifiOnly
