@@ -39,4 +39,11 @@ describe('PhotoList component', () => {
     ).node
     expect(component).toMatchSnapshot()
   })
+
+  it('should render correctly when a containerWidth is given', () => {
+    const component = shallow(
+      <PhotoList title='Empty list' photos={photosMock} selected={[]} containerWidth={1800} />
+    ).node
+    expect(component).toMatchSnapshot()
+  })
 })

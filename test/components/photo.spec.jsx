@@ -63,4 +63,41 @@ describe('Photo component', () => {
     expect(component.state().isImageLoading).toEqual(false)
     expect(component.node).toMatchSnapshot()
   })
+
+  it('should render correctly with a box parameter with no properties', () => {
+    const box = {}
+
+    const component = shallow(
+      <Photo photo={photoObject} router={routerObjectMock}
+        box={box} onToggle={() => {}} />
+    )
+
+    expect(component.node).toMatchSnapshot()
+  })
+
+  it('should render correctly with a box parameter with width property set', () => {
+    const box = {
+      width: 100
+    }
+
+    const component = shallow(
+      <Photo photo={photoObject} router={routerObjectMock}
+        box={box} onToggle={() => {}} />
+    )
+
+    expect(component.node).toMatchSnapshot()
+  })
+
+  it('should render correctly with a box parameter with height property set', () => {
+    const box = {
+      height: 100
+    }
+
+    const component = shallow(
+      <Photo photo={photoObject} router={routerObjectMock}
+        box={box} onToggle={() => {}} />
+    )
+
+    expect(component.node).toMatchSnapshot()
+  })
 })

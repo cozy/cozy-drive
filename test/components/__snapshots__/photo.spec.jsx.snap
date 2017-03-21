@@ -69,3 +69,29 @@ exports[`Photo component should render correctly an image according a photo obje
   </div>
 </div>
 `;
+
+exports[`Photo component should render correctly with a box parameter with height property set 1`] = `
+<div
+  className="pho-photo"
+  style={
+    Object {
+      "height": "100px",
+    }
+  } />
+`;
+
+exports[`Photo component should render correctly with a box parameter with no properties 1`] = `
+<div
+  className="pho-photo"
+  style={Object {}} />
+`;
+
+exports[`Photo component should render correctly with a box parameter with width property set 1`] = `
+<div
+  className="pho-photo"
+  style={
+    Object {
+      "width": "100px",
+    }
+  } />
+`;
