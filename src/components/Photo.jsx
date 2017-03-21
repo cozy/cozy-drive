@@ -48,9 +48,7 @@ export class Photo extends Component {
             : ''}
       >
         { !loading &&
-          <div
-
-            >
+          <div>
             <span
               className={styles['pho-photo-select']}
               data-input='checkbox'
