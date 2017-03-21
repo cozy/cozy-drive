@@ -5,7 +5,6 @@ import Dimensions from 'react-dimensions'
 
 import justifiedLayout from 'justified-layout'
 
-import Empty from './Empty'
 import Photo from './Photo'
 
 import classNames from 'classnames'
@@ -53,7 +52,6 @@ export class PhotoList extends Component {
             onToggle={onPhotoToggle}
           />
         )}
-        {photos.length === 0 && <Empty emptyType='photos' />}
       </div>
     )
   }

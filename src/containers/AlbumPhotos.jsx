@@ -40,7 +40,9 @@ const mapStateToProps = (state, ownProps) => ({
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   onFetchAlbumPhotos: (albumId) => {
     return dispatch(fetchAlbumPhotosStatsById(albumId))
-      .then(photos => [{photos: photos}])
+      .then(photos => {
+        return photos.length ? [{photos}] : []
+      })
   }
 })
 
