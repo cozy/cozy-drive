@@ -1,6 +1,7 @@
 exports[`PhotoList component should render correctly a timeline of photos according a photos array 1`] = `
 <div
-  className="pho-section">
+  className="pho-section"
+  style="">
   <h3>
     Photo list title
   </h3>
@@ -22,7 +23,8 @@ exports[`PhotoList component should render correctly a timeline of photos accord
 
 exports[`PhotoList component should render correctly an empty view if photos is empty 1`] = `
 <div
-  className="pho-section">
+  className="pho-section"
+  style="">
   <h3>
     Empty list
   </h3>
@@ -33,7 +35,8 @@ exports[`PhotoList component should render correctly an empty view if photos is 
 
 exports[`PhotoList component should render correctly an empty view if some photos are selected 1`] = `
 <div
-  className="pho-section pho-section--has-selection">
+  className="pho-section pho-section--has-selection"
+  style="">
   <h3>
     Empty list
   </h3>
