@@ -11,7 +11,10 @@ import Photo from './Photo'
 import classNames from 'classnames'
 
 const photoDimensionsFallback = {width: 1, height: 1}
-const photoRowHeight = 240
+
+// Returns pseudo responsive row height based on container width. Trying to get
+// something between 190 and 240.
+const adaptRowHeight = containerWidth => 180 + ((containerWidth || 1800) / 30)
 
 export class PhotoList extends Component {
   render () {
@@ -21,7 +24,7 @@ export class PhotoList extends Component {
       photos.map(photo => photo.metadata || photoDimensionsFallback),
       {
         containerWidth: containerWidth,
-        targetRowHeight: photoRowHeight,
+        targetRowHeight: adaptRowHeight(containerWidth),
         // Must be relevant with styles
         boxSpacing: {
           horizontal: 16,
