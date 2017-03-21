@@ -60,6 +60,7 @@ export const showSelectionBar = (state = false, action) => {
   switch (action.type) {
     case SHOW_SELECTION_BAR:
       return true
+    case ADD_TO_ALBUM_SUCCESS:
     case HIDE_SELECTION_BAR:
       return false
     default:

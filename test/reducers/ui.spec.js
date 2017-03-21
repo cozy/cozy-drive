@@ -162,6 +162,15 @@ describe('UI showSelectionBar reducer', () => {
       })
     ).toBe(false)
   })
+
+  // if ADD_TO_ALBUM_SUCCESS -> false
+  it('should handle ADD_TO_ALBUM_SUCCESS', () => {
+    expect(
+      showSelectionBar(true, {
+        type: ADD_TO_ALBUM_SUCCESS
+      })
+    ).toBe(false)
+  })
 })
 
 describe('UI selected reducer', () => {
