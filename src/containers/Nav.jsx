@@ -5,14 +5,15 @@ import styles from '../styles/nav'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
-import { Link, withRouter } from 'react-router'
+
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import Spinner from '../components/Spinner'
-import { FILES_CONTEXT, TRASH_CONTEXT } from '../constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 import { openFolder } from '../actions'
 
-class ActiveLink extends Component {
+class Link extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -21,27 +22,41 @@ class ActiveLink extends Component {
   }
 
   open (e) {
+    e.preventDefault()
     this.setState({ opening: true })
     this.props.onClick()
-      .then(() => this.setState({ opening: false }))
+      .then(() => {
+        this.setState({ opening: false })
+        this.props.router.push(this.props.to)
+      })
   }
 
-  render ({ to, className, activeClassName, children }, { opening }) {
+  render () {
+    const { router, location, to, activeClassName, children, ...props } = this.props
+    const { opening } = this.state
+
+    props.href = router.createHref(to)
+
+    if (activeClassName && location.pathname.match(new RegExp('^' + to))) {
+      if (props.className) {
+        props.className += ` ${activeClassName}`
+      } else {
+        props.className = activeClassName
+      }
+    }
+
     return (
-      <Link to={to} className={className} activeClassName={activeClassName} onClick={e => this.open(e)}>
+      <a {...props} onClick={e => this.open(e)}>
         {children}
         {opening && <Spinner />}
-      </Link>
+      </a>
     )
   }
 }
 
+const ActiveLink = withRouter(Link)
+
 const Nav = ({ t, location, openFiles, openTrash }) => {
-  // TODO: it'd be better to just use activeClassName here, but it doesn't work
-  // because we use a route with an optional param ; a bit of refactoring regarding to routing concerns
-  // would be interesting
-  const isBrowsingFiles = location.pathname.match(/^\/files/) !== null
-  const isBrowsingTrash = location.pathname.match(/^\/trash/) !== null
   return (
     <nav>
       <ul class={styles['coz-nav']}>
@@ -51,9 +66,9 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
             onClick={openFiles}
             className={classNames(
               styles['coz-nav-link'],
-              styles['fil-cat-files'],
-              { [styles['active']]: isBrowsingFiles }
+              styles['fil-cat-files']
             )}
+            activeClassName={styles['active']}
           >
             { t('nav.item_files') }
           </ActiveLink>
@@ -64,9 +79,9 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
             onClick={openTrash}
             className={classNames(
               styles['coz-nav-link'],
-              styles['fil-cat-trash'],
-              { [styles['active']]: isBrowsingTrash }
+              styles['fil-cat-trash']
             )}
+            activeClassName={styles['active']}
           >
             { t('nav.item_trash') }
           </ActiveLink>
@@ -88,10 +103,10 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  openFiles: () => dispatch(openFolder(null, FILES_CONTEXT)),
-  openTrash: () => dispatch(openFolder(null, TRASH_CONTEXT))
+  openFiles: () => dispatch(openFolder(ROOT_DIR_ID)),
+  openTrash: () => dispatch(openFolder(TRASH_DIR_ID))
 })
 
 export default connect(null, mapDispatchToProps)(
-  withRouter(translate()(Nav))
+  translate()(Nav)
 )

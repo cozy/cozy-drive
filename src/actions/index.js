@@ -1,15 +1,14 @@
 /* global cozy */
-import { FILES_CONTEXT, TRASH_CONTEXT, ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
 import { getFilePaths, getFileById } from '../reducers'
 
+export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
 export const ADD_FOLDER = 'ADD_FOLDER'
 export const ABORT_ADD_FOLDER = 'ABORT_ADD_FOLDER'
-export const RENAME_FOLDER = 'RENAME_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
 export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
@@ -46,25 +45,28 @@ const ALERT_LEVEL_ERROR = 'error'
 export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', level: ALERT_LEVEL_ERROR } })
 export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', level: ALERT_LEVEL_ERROR } })
 
-export const openFolder = (folderId, context = FILES_CONTEXT) => {
+export const locationChange = (virtualRoot, folderId) => {
   return async dispatch => {
-    if (!folderId) {
-      folderId = context === TRASH_CONTEXT
-        ? TRASH_DIR_ID
-        : ROOT_DIR_ID
-    }
-    dispatch({ type: OPEN_FOLDER, folderId, context })
+    dispatch({ type: LOCATION_CHANGE, virtualRoot, folderId })
+    return dispatch(openFolder(virtualRoot, folderId))
+  }
+}
+
+export const openFolder = (virtualRoot, folderId) => {
+  return async dispatch => {
+    if (!folderId) folderId = virtualRoot
+    dispatch({ type: OPEN_FOLDER, virtualRoot, folderId })
     let folder, parent
     try {
       folder = await cozy.client.files.statById(folderId)
       const parentId = folder.attributes.dir_id
       parent = !!parentId && await cozy.client.files.statById(parentId)
     } catch (err) {
-      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err, context })
+      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err, virtualRoot })
     }
     return dispatch({
       type: OPEN_FOLDER_SUCCESS,
-      context,
+      virtualRoot,
       folder: Object.assign(extractFileAttributes(folder), {
         parent: extractFileAttributes(parent)}),
       files: folder.relations('contents').map(
@@ -74,9 +76,8 @@ export const openFolder = (folderId, context = FILES_CONTEXT) => {
   }
 }
 
-export const openFileInNewTab = (file) => {
-  return async (dispatch, getState) => {
-    const folder = getState().folder
+export const openFileInNewTab = (folder, file) => {
+  return async dispatch => {
     // TODO: replace this with cozy.client.getFilePath(file, folder)
     const folderPath = folder.path.endsWith('/')
       ? folder.path
@@ -87,12 +88,12 @@ export const openFileInNewTab = (file) => {
   }
 }
 
-export const uploadFile = (file) => {
-  return async (dispatch, getState) => {
+export const uploadFile = (file, folder) => {
+  return async dispatch => {
     dispatch({ type: UPLOAD_FILE })
     const created = await cozy.client.files.create(
       file,
-      { dirID: getState().folder.id }
+      { dirID: folder.id }
     )
     dispatch({
       type: UPLOAD_FILE_SUCCESS,
@@ -118,15 +119,9 @@ export const abortAddFolder = (accidental) => {
   return action
 }
 
-export const renameFolder = (newName, id) => ({
-  type: RENAME_FOLDER,
-  id,
-  name: newName
-})
-
 export const createFolder = name => {
   return async (dispatch, getState) => {
-    let existingFolder = getState().files.find(f => f.type === 'directory' && f.name === name)
+    let existingFolder = getState().view.files.find(f => f.type === 'directory' && f.name === name)
 
     if (existingFolder) {
       dispatch({
@@ -148,7 +143,7 @@ export const createFolder = name => {
     try {
       folder = await cozy.client.files.createDirectory({
         name: name,
-        dirID: getState().folder.id
+        dirID: getState().view.displayedFolder.id
       })
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {

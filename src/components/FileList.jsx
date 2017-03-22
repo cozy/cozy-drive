@@ -5,13 +5,15 @@ import File from '../components/File'
 import AddFolder from '../containers/AddFolder'
 
 const FileList = ({
-  t, f, context, files, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
+  t, f, virtualRoot, displayedFolder, files, selected, error, showSelection, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
 }) => (
   <div>
     <AddFolder />
     {!error && files.map((file, idx) => (
       <File
-        context={context}
+        virtualRoot={virtualRoot}
+        displayedFolder={displayedFolder}
+        selected={selected.indexOf(file.id) !== -1}
         onEdit={onFileEdit}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}

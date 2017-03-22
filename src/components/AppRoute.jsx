@@ -2,13 +2,13 @@ import React from 'react'
 import { Route, Redirect } from 'react-router'
 
 import App from './App'
-import Folder from '../containers/Folder'
+import FileExplorer from '../containers/FileExplorer'
 
 const AppRoute = (
   <Route component={App}>
     <Redirect from='/' to='files' />
-    <Route path='files(/:folderId)' component={props => <Folder context='files' {...props} />} />
-    <Route path='trash(/:folderId)' component={props => <Folder context='trash' {...props} />} />
+    <Route path='files(/:folderId)' component={FileExplorer} />
+    <Route path='trash(/:folderId)' component={FileExplorer} />
   </Route>
 )
 

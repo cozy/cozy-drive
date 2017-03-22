@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
-import { openFolder, openFileInNewTab, renameFolder, toggleFileSelection, showFileActionMenu } from '../actions'
-import { getVisibleFiles, mustShowSelectionBar } from '../reducers'
-import { TRASH_CONTEXT } from '../constants/config'
+import { openFolder, openFileInNewTab, toggleFileSelection, showFileActionMenu } from '../actions'
+import { getVisibleFiles, mustShowSelectionBar, mustShowAddFolder } from '../reducers'
+import { TRASH_DIR_ID } from '../constants/config'
 
 import { Alerter } from 'cozy-ui/react/Alerter'
 
@@ -23,84 +23,64 @@ import TrashSelectionBar from '../containers/TrashSelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 
-const isDir = attrs => attrs.type === 'directory'
-
-class Folder extends Component {
-  componentWillMount () {
-    if (!this.props.isFetching) {
-      this.props.onMount()
-    }
-  }
-
-  componentWillReceiveProps (newProps) {
-    // if we're already fetching, that's because of a 'openFolder' call
-    // no need to check if the URL has changed
-    if (this.props.isFetching || newProps.isFetching) return
-    // let's check now!
-    if (newProps.context !== this.props.context ||
-      newProps.params.folderId !== this.props.params.folderId) {
-      this.props.onRouteChange(newProps.params.folderId, newProps.context)
-    }
-  }
-
-  render (props, state) {
-    if (props.showLoading === true) {
-      return (
-        <Loading message={props.t('loading.message')} />
-      )
-    }
-    const isTrashContext = props.visibleContext === TRASH_CONTEXT
-    const { showSelection, showDeleteConfirmation, error, files, showActionMenu } = props
-    return (
-      <div role='contentinfo'>
-        <Alerter />
-        {!isTrashContext && showSelection && <FilesSelectionBar />}
-        {isTrashContext && showSelection && <TrashSelectionBar />}
-        {showDeleteConfirmation && <DeleteConfirmation />}
-        <div className={classNames(
-          styles['fil-content-table'],
-          { [styles['fil-content-table-selection']]: showSelection }
-        )}>
-          <FileListHeader />
-          <div className={styles['fil-content-body']}>
-            <FileList {...props} {...state} isTrashContext={isTrashContext} />
-            {!error && files.length === 0 && <Empty canUpload={!isTrashContext} />}
-            {error && <Oops />}
-          </div>
-        </div>
-        {showActionMenu && <FileActionMenu isTrashContext={isTrashContext} />}
-      </div>
-    )
+const FolderContent = props => {
+  const { fetchStatus, files, isAddingFolder } = props
+  const isTrashContext = props.virtualRoot === TRASH_DIR_ID
+  switch (fetchStatus) {
+    case 'pending':
+      return <Loading message={props.t('loading.message')} />
+    case 'failed':
+      return <Oops />
+    case 'loaded':
+      return files.length === 0 && !isAddingFolder
+        ? <Empty canUpload={!isTrashContext} />
+        : <FileList {...props} isTrashContext={isTrashContext} />
   }
 }
 
+const Folder = props => {
+  const isTrashContext = props.virtualRoot === TRASH_DIR_ID
+  const { showSelection, showDeleteConfirmation, showActionMenu } = props
+  return (
+    <div role='contentinfo'>
+      <Alerter />
+      {!isTrashContext && showSelection && <FilesSelectionBar />}
+      {isTrashContext && showSelection && <TrashSelectionBar />}
+      {showDeleteConfirmation && <DeleteConfirmation />}
+      <div className={classNames(
+        styles['fil-content-table'],
+        { [styles['fil-content-table-selection']]: showSelection }
+      )}>
+        <FileListHeader />
+        <div className={styles['fil-content-body']}>
+          <FolderContent {...props} />
+        </div>
+      </div>
+      {showActionMenu && <FileActionMenu isTrashContext={isTrashContext} />}
+    </div>
+  )
+}
+
 const mapStateToProps = (state, ownProps) => ({
-  visibleContext: state.context,
-  isFetching: state.ui.isFetching,
-  showLoading: state.ui.isFetching && state.folder === null,
-  error: state.ui.error,
+  virtualRoot: state.view.virtualRoot,
+  displayedFolder: state.view.displayedFolder,
+  fetchStatus: state.view.fetchStatus,
+  // error: state.ui.error,
+  isAddingFolder: mustShowAddFolder(state), // not fan of this...
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
   showActionMenu: state.ui.showFileActionMenu,
-  files: getVisibleFiles(state)
+  files: getVisibleFiles(state),
+  selected: state.ui.selected
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onMount: () =>
-    dispatch(openFolder(ownProps.params.folderId, ownProps.context)),
-  onRouteChange: (folderId, context) =>
-    dispatch(openFolder(folderId, context)),
-  onFolderOpen: (folderId) =>
-    dispatch(openFolder(folderId, ownProps.context)),
-  onFileOpen: (file) =>
-    dispatch(openFileInNewTab(file)),
+  onFolderOpen: (virtualRoot, folderId) =>
+    dispatch(openFolder(virtualRoot, folderId)),
+  onFileOpen: (parentFolder, file) =>
+    dispatch(openFileInNewTab(parentFolder, file)),
   onFileToggle: (id, selected) =>
     dispatch(toggleFileSelection(id, selected)),
-  onFileEdit: (val, attrs) => {
-    if (isDir(attrs)) {
-      dispatch(renameFolder(val, attrs.id))
-    }
-  },
   onShowActionMenu: (fileId) =>
     dispatch(showFileActionMenu(fileId))
 })

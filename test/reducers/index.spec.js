@@ -9,11 +9,13 @@ describe('index reducer', () => {
   it('should not show trash directory', () => {
     expect(
       getVisibleFiles({
-        folder: null,
-        files: [{
-          id: TRASH_DIR_ID,
-          type: 'directory'
-        }],
+        view: {
+          displayedFolder: null,
+          files: [{
+            id: TRASH_DIR_ID,
+            type: 'directory'
+          }]
+        },
         ui: {
           isUpdating: [],
           isOpening: false,

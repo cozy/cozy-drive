@@ -1,39 +1,23 @@
 import { combineReducers } from 'redux'
 
-import { folder, files, context } from './folder'
+import view from './view'
 import ui from './ui'
 
 import alerterReducer from 'cozy-ui/react/Alerter'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH } from '../constants/config.js'
+import { ROOT_DIR_ID } from '../constants/config.js'
 
 export const reducers = {
-  folder,
-  files,
-  context,
+  view,
   ui,
   alerts: alerterReducer
 }
 
 const filesApp = combineReducers(reducers)
+export default filesApp
 
-const sortFiles = files => files.sort((a, b) => a.name.localeCompare(b.name))
-
-const getSortedFiles = allFiles => {
-  let folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID && f.path !== APPS_DIR_PATH)
-  let files = allFiles.filter(f => f.type !== 'directory')
-  return sortFiles(folders).concat(sortFiles(files))
-}
-
-export const getVisibleFiles = state => {
-  const { files, ui } = state
-  return getSortedFiles(files).map(f => {
-    let additionalProps = {
-      selected: ui.selected.indexOf(f.id) !== -1
-    }
-    return Object.assign({}, f, additionalProps)
-  })
-}
+// Selectors
+export { getVisibleFiles, getVirtualRootFromUrl, getUrlFromParams } from './view'
 
 export const isRootFolder = folder => folder.id === ROOT_DIR_ID
 
@@ -54,5 +38,3 @@ export const getActionableFiles = ({ files, ui }) => {
 
 export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
 export const mustShowAddFolder = state => state.ui.showAddFolder
-
-export default filesApp

@@ -11,11 +11,11 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 import { addFolder, showSelectionBar, uploadFile } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 
-const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
+const FilesToolbar = ({ t, error, displayedFolder, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
     <UploadButton
       disabled={!!error || isSelectionBarVisible}
-      onUpload={uploadFile}
+      onUpload={file => uploadFile(file, displayedFolder)}
       label={t('toolbar.item_upload')}
       className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', styles['desktop-upload'])}
     />
@@ -57,6 +57,7 @@ const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectio
 
 const mapStateToProps = (state, ownProps) => ({
   error: state.ui.error,
+  displayedFolder: state.view.displayedFolder,
   isSelectionBarVisible: mustShowSelectionBar(state)
 })
 
@@ -67,8 +68,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   showSelectionBar: () => {
     dispatch(showSelectionBar())
   },
-  uploadFile: (file) => {
-    dispatch(uploadFile(file))
+  uploadFile: (file, displayedFolder) => {
+    dispatch(uploadFile(file, displayedFolder))
   }
 })
 

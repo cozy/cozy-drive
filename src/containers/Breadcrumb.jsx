@@ -1,22 +1,24 @@
 import styles from '../styles/breadcrumb'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID, TRASH_CONTEXT } from '../constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
 import React from 'react'
 import withState from 'cozy-ui/react/helpers/withState'
 import { translate } from '../lib/I18n'
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 
-const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, toggleDeploy, goToFolder }) => {
-  if (!context || !folder) {
+import { getUrlFromParams } from '../reducers'
+
+const Breadcrumb = ({ t, router, virtualRoot, folder, opening, deployed, toggleOpening, toggleDeploy, goToFolder }) => {
+  if (!virtualRoot || !folder) {
     return null
   }
 
-  let isBrowsingTrash = context === TRASH_CONTEXT
+  let isBrowsingTrash = virtualRoot === TRASH_DIR_ID
 
   // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
   let path = []
@@ -65,13 +67,16 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
     >
       {path.length >= 2 &&
         <Link
-          to={`/${context}/${path[path.length - 2].id}`}
+          to={getUrlFromParams({ virtualRoot, displayedFolder: path[path.length - 2] })}
           className={styles['fil-path-previous']}
           onClick={e => {
-            e.stopPropagation()
+            e.preventDefault()
             toggleOpening()
             if (deployed) toggleDeploy()
-            goToFolder(path[path.length - 2].id).then(() => toggleOpening())
+            goToFolder(virtualRoot, path[path.length - 2].id).then(() => {
+              toggleOpening()
+              router.push(getUrlFromParams({ virtualRoot, displayedFolder: path[path.length - 2] }))
+            })
           }}
         />
       }
@@ -80,13 +85,16 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
         { path.map((folder, index) => {
           if (index < path.length - 1) {
             return <Link
-              to={`/${context}/${folder.id}`}
+              to={getUrlFromParams({ virtualRoot, displayedFolder: folder })}
               className={styles['fil-path-link']}
               onClick={e => {
-                e.stopPropagation()
+                e.preventDefault()
                 toggleOpening()
                 if (deployed) toggleDeploy()
-                goToFolder(folder.id).then(() => toggleOpening())
+                goToFolder(virtualRoot, folder.id).then(() => {
+                  toggleOpening()
+                  router.push(getUrlFromParams({ virtualRoot, displayedFolder: folder }))
+                })
               }}
             >
               <a>
@@ -118,12 +126,12 @@ const Breadcrumb = ({ t, context, folder, opening, deployed, toggleOpening, togg
 }
 
 const mapStateToProps = (state) => ({
-  folder: state.folder,
-  context: state.context
+  folder: state.view.displayedFolder,
+  virtualRoot: state.view.virtualRoot
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  goToFolder: (parentId, context) => dispatch(openFolder(parentId, context))
+  goToFolder: (virtualRoot, parentId) => dispatch(openFolder(virtualRoot, parentId))
 })
 
 export default translate()(connect(
@@ -139,4 +147,4 @@ export default translate()(connect(
   toggleDeploy: () => {
     setState(state => ({ deployed: !state.deployed }))
   }
-}))(Breadcrumb)))
+}))(withRouter(Breadcrumb))))

@@ -7,15 +7,15 @@ import FilesToolbar from '../containers/FilesToolbar'
 import TrashToolbar from '../containers/TrashToolbar'
 import Breadcrumb from '../containers/Breadcrumb'
 
-import { FILES_CONTEXT, TRASH_CONTEXT } from '../constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
 const TOOLBARS = {
-  [FILES_CONTEXT]: FilesToolbar,
-  [TRASH_CONTEXT]: TrashToolbar
+  [ROOT_DIR_ID]: FilesToolbar,
+  [TRASH_DIR_ID]: TrashToolbar
 }
 
-const Topbar = ({ context }) => {
-  const Toolbar = TOOLBARS[context]
+const Topbar = ({ virtualRoot }) => {
+  const Toolbar = TOOLBARS[virtualRoot]
   return (
     <div class={styles['fil-content-header']}>
       <Breadcrumb />
@@ -25,7 +25,7 @@ const Topbar = ({ context }) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  context: state.context
+  virtualRoot: state.view.virtualRoot
 })
 
 export default connect(mapStateToProps)(Topbar)
