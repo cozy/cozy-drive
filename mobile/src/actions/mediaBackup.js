@@ -39,13 +39,14 @@ async function getDirID (dir) {
 
 export const mediaBackup = (dir) => async (dispatch, getState) => {
   if (backupAllowed(getState().mobile.settings.wifiOnly)) {
-    let photos = await getFilteredPhotos()
+    const photosOnDevice = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+    const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
     const dirID = await getDirID(dir)
-    const totalUpload = photos.length - alreadyUploaded.length
+    const totalUpload = photosToUpload.length
     let uploadCounter = 0
-    for (let photo of photos) {
-      if (!alreadyUploaded.includes(photo.id) && backupAllowed(getState().mobile.settings.wifiOnly)) {
+    for (let photo of photosToUpload) {
+      if (backupAllowed(getState().mobile.settings.wifiOnly)) {
         dispatch(currentUploading(photo, uploadCounter++, totalUpload))
         const blob = await getBlob(photo)
         const options = {
