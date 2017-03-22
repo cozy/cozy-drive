@@ -3,6 +3,7 @@
 import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
 import { logException } from '../lib/crash-reporter'
+import { startBackgroundService, stopBackgroundService } from '../lib/background'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES = 'BACKUP_IMAGES'
@@ -38,7 +39,10 @@ export const checkURL = url => dispatch => {
 // settings
 
 export const setAnalytics = analytics => ({ type: SET_ANALYTICS, analytics })
-export const setBackupImages = backupImages => ({type: BACKUP_IMAGES, backupImages})
+export const setBackupImages = backupImages => {
+  backupImages ? startBackgroundService() : stopBackgroundService()
+  return {type: BACKUP_IMAGES, backupImages}
+}
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
 // errors

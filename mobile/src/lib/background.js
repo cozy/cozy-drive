@@ -4,20 +4,26 @@ import { logException } from './crash-reporter'
 import { loadState } from './localStorage'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from './network'
-import { initPolyglot } from '../../../src/lib/i18n'
+import { initPolyglot } from '../../../src/lib/I18n'
 
 const hasIosCordovaPlugin = () => {
-  return window.cordova.platformId === 'iOS' && window.BackgroundFetch !== undefined
+  return window.cordova !== undefined && window.cordova.platformId === 'ios' && window.BackgroundFetch !== undefined
 }
 
-export const launchBackground = () => {
+export const startBackgroundService = () => {
   if (hasIosCordovaPlugin()) {
-    launchIosBackground()
+    startIosBackgroundService()
   }
 }
 
-const launchIosBackground = () => {
-  var Fetcher = window.BackgroundFetch
+export const stopBackgroundService = () => {
+  if (hasIosCordovaPlugin()) {
+    stopIosBackgroundService()
+  }
+}
+
+const startIosBackgroundService = () => {
+  let Fetcher = window.BackgroundFetch
 
   const fetchCallback = () => {
     console.log('[js] BackgroundFetch initiated')
@@ -57,4 +63,10 @@ const launchIosBackground = () => {
   }
 
   Fetcher.configure(fetchCallback, failureCallback, options)
+}
+
+const stopIosBackgroundService = () => {
+  let Fetcher = window.BackgroundFetch
+
+  Fetcher.stop()
 }

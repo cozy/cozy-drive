@@ -16,7 +16,7 @@ import MobileAppRoute from './components/MobileAppRoute'
 import { loadState } from './lib/localStorage'
 import { getStore } from './lib/store'
 import { initService } from './lib/init'
-import { launchBackground } from './lib/background'
+import { startBackgroundService, stopBackgroundService } from './lib/background'
 import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 
 const renderAppWithPersistedState = persistedState => {
@@ -50,6 +50,14 @@ const renderAppWithPersistedState = persistedState => {
     }
   }
 
+  document.addEventListener('deviceready', () => {
+    if (store.getState().mobile.settings.backupImages) {
+      startBackgroundService()
+    } else {
+      stopBackgroundService()
+    }
+  }, false)
+
   const context = window.context
   const root = document.querySelector('[role=application]')
   const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
@@ -67,5 +75,3 @@ document.addEventListener('DOMContentLoaded', () =>
   loadState()
   .then(renderAppWithPersistedState)
 )
-
-document.addEventListener('deviceready', launchBackground, false)
