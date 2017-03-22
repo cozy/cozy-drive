@@ -10,3 +10,4 @@ export const TRASH_DIR_PATH = '/.cozy_trash'
 
 export const FILES_CONTEXT = 'files'
 export const TRASH_CONTEXT = 'trash'
+export const NO_CONTEXT = null

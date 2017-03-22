@@ -9,7 +9,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
 import Spinner from '../components/Spinner'
-import { FILES_CONTEXT, TRASH_CONTEXT } from '../constants/config'
+import { FILES_CONTEXT, TRASH_CONTEXT, NO_CONTEXT } from '../constants/config'
 import { openFolder } from '../actions'
 
 class ActiveLink extends Component {
@@ -36,14 +36,14 @@ class ActiveLink extends Component {
   }
 }
 
-const Nav = ({ t, context, openFiles, openTrash }) => {
+const Nav = ({ t, context, open }) => {
   return (
     <nav>
       <ul class={styles['coz-nav']}>
         <li class={styles['coz-nav-item']}>
           <ActiveLink
             to='/files'
-            onClick={openFiles}
+            onClick={open(FILES_CONTEXT)}
             className={classNames(
               styles['coz-nav-link'],
               styles['fil-cat-files'],
@@ -56,7 +56,7 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
         <li class={styles['coz-nav-item']}>
           <ActiveLink
             to='/trash'
-            onClick={openTrash}
+            onClick={open(TRASH_CONTEXT)}
             className={classNames(
               styles['coz-nav-link'],
               styles['fil-cat-trash'],
@@ -72,6 +72,7 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
             to='/settings'
             className={classNames(styles['coz-nav-link'], styles['fil-cat-settings'])}
             activeClassName={styles['active']}
+            onClick={open(NO_CONTEXT)}
           >
             { t('nav.item_settings') }
           </Link>
@@ -86,8 +87,7 @@ const mapStateToProps = (state, ownProps) => ({
   context: state.context
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  openFiles: () => dispatch(openFolder(null, FILES_CONTEXT)),
-  openTrash: () => dispatch(openFolder(null, TRASH_CONTEXT))
+  open: (context) => () => dispatch(openFolder(null, context))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
