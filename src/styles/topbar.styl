@@ -1,8 +1,8 @@
 @require 'cozy-ui'
 
 .pho-content-header
-  display     flex
-  align-items center
+  display       flex
+  align-items   center
   bottom-spaced(24px)
   right-spaced(32px)
   left-spaced(32px)
@@ -35,10 +35,15 @@
 .pho-content-title
   margin        0
   padding-top   .1em
+  overflow      hidden
+  text-overflow ellipsis
   font-size(24px)
 
   @media (max-width: (768/basefont)rem)
       font-size(20px)
+
+  @media (max-width: (480/basefont)rem)
+      white-space   nowrap
 
 :global
   @media (max-width: (480/basefont)rem)

@@ -2,41 +2,46 @@
 
 .pho-album-list
     display         flex
+    flex-wrap       wrap
+    margin-left     1em
 
 .pho-album
-    margin  .5em 0 2em 2em
+    margin      .5em 1em 2em 1em
+    width       20em
+    position    relative
 
 .pho-album-photo-item
-    width         20em
+    width         100%
     height        12em
-    position      relative
     border-radius em(4px)
     object-fit    cover
     background    grey-10
 
 .pho-album-title
+    width           100%
     margin          .2em 0 .2em
+    overflow        hidden
     font-size       em(20px)
     color           black
     text-decoration none
+    text-overflow   ellipsis
 
 .pho-album-link
     color           black
+    width           calc(100% - 1em)
     text-decoration none
 
 .pho-album-description
+    width       100%
     color       grey-11
     font-weight normal
     font-size   em(14px)
     margin      0
 
 @media (max-width: (480/basefont)rem)
-    .pho-album-list
-        flex-direction  column
-
     .pho-album
         width           100%
         margin-left     1em
 
     .pho-album-photo-item
-        width calc(100% - 2em)
+        width calc(100% - 1em)
