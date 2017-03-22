@@ -2,8 +2,8 @@ import { getStore } from './store'
 import { initService } from './init'
 import { logException } from './crash-reporter'
 import { loadState } from './localStorage'
-import { canStartBackup } from './media'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
+import { backupAllowed } from './network'
 
 const hasIosCordovaPlugin = () => {
   return window.cordova.platformId === 'iOS' && window.BackgroundFetch !== undefined
@@ -28,7 +28,7 @@ const launchIosBackground = () => {
 
       logException('C\'est moi le Service Background!!!')
 
-      if (canStartBackup(store.getState)) {
+      if (store.getState().mobile.settings.backupImages && backupAllowed(getState().mobile.settings.wifiOnly)) {
         logException('start backup on Background')
         const end = () => {
           store.dispatch(endMediaUpload())
