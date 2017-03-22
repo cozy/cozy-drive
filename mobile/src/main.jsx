@@ -1,4 +1,4 @@
-/* global cozy, __SENTRY_TOKEN__ */
+/* global cozy */
 
 import 'babel-polyfill'
 
@@ -10,102 +10,85 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, hashHistory } from 'react-router'
 import RavenMiddleWare from 'redux-raven-middleware'
 
 import { I18n } from '../../src/lib/I18n'
 
 import filesApp from './reducers'
-import AppRoute from '../../src/components/AppRoute'
-import App from '../../src/components/App'
-
-import OnBoarding from './containers/OnBoarding'
-import Settings from './containers/Settings'
+import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState, saveState } from './lib/localStorage'
-import { initClient, initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
-import RevokableWrapper from './containers/RevokableWrapper'
-import { revokeClient } from './actions/authorization'
+import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 
-const context = window.context
-const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
+import { configureReporter, ANALYTICS_URL, getAnalyticsConfiguration } from './lib/crash-reporter'
 
 const loggerMiddleware = createLogger()
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadState().then(persistedState => {
-    const root = document.querySelector('[role=application]')
-
-    const store = createStore(
-      filesApp,
-      persistedState,
-      applyMiddleware(
-        RavenMiddleWare(`https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`),
-        thunkMiddleware,
-        loggerMiddleware
-      )
+const renderAppWithPersistedState = persistedState => {
+  const store = createStore(
+    filesApp,
+    persistedState,
+    applyMiddleware(
+      RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration()),
+      thunkMiddleware,
+      loggerMiddleware
     )
+  )
 
-    store.subscribe(() => {
-      const stateToBeSaved = {
-        mobile: {
-          settings: store.getState().mobile.settings,
-          mediaBackup: {
-            uploaded: store.getState().mobile.mediaBackup.uploaded
-          }
-        }
-      }
-      saveState(stateToBeSaved)
-    })
-
-    initClient(store.getState().mobile.settings.serverUrl)
-
-    function requireSetup (nextState, replace, callback) {
-      const client = store.getState().mobile.settings.client
-      const isSetup = store.getState().mobile.settings.authorized
-      if (isSetup) {
-        isClientRegistered(client).then(clientIsRegistered => {
-          if (clientIsRegistered) {
-            const options = {
-              onError: (err) => {
-                console.log('on error fron the client', err)
-                console.warn(`Your device is no more connected to your server: ${store.getState().mobile.settings.serverUrl}`)
-                store.dispatch(revokeClient())
-              }
-            }
-            cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
-            initBar()
-            callback()
-          } else {
-            console.warn(`Your device is no more connected to your server: ${store.getState().mobile.settings.serverUrl}`)
-            store.dispatch(revokeClient())
-            callback()
-          }
-        })
-      } else {
-        resetClient()
-        replace({
-          pathname: '/onboarding',
-          state: { nextPathname: nextState.location.pathname }
-        })
-        callback()
+  store.subscribe(() => saveState({
+    mobile: {
+      settings: store.getState().mobile.settings,
+      mediaBackup: {
+        uploaded: store.getState().mobile.mediaBackup.uploaded
       }
     }
+  }))
 
-    render((
-      <I18n context={context} lang={lang}>
-        <Provider store={store}>
-          <Router history={hashHistory}>
-            <Route onEnter={requireSetup} component={RevokableWrapper}>
-              {AppRoute}
-              <Route component={App}>
-                <Route path='settings' name='mobile.settings' component={Settings} />}
-              </Route>
-            </Route>
-            <Route path='onboarding' component={OnBoarding} />
-          </Router>
-        </Provider>
-      </I18n>
-    ), root)
-  })
-})
+  configureReporter(store.getState)
+  initClient(store.getState().mobile.settings.serverUrl)
+
+  function requireSetup (nextState, replace, callback) {
+    const client = store.getState().mobile.settings.client
+    const isSetup = store.getState().mobile.settings.authorized
+    if (isSetup) {
+      isClientRegistered(client).then(clientIsRegistered => {
+        if (clientIsRegistered) {
+          const options = {
+            onError: onError(store.dispatch, store.getState),
+            onComplete: refreshFolder(store.dispatch, store.getState)
+          }
+          cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
+          initBar()
+        } else {
+          onError(store.dispatch, store.getState)()
+        }
+        callback()
+      })
+    } else {
+      resetClient()
+      replace({
+        pathname: '/onboarding',
+        state: { nextPathname: nextState.location.pathname }
+      })
+      callback()
+    }
+  }
+
+  const context = window.context
+  const root = document.querySelector('[role=application]')
+  const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
+
+  render((
+    <I18n context={context} lang={lang}>
+      <Provider store={store}>
+        <Router history={hashHistory} routes={MobileAppRoute(requireSetup)} />
+      </Provider>
+    </I18n>
+  ), root)
+}
+
+document.addEventListener('DOMContentLoaded', () =>
+  loadState()
+  .then(renderAppWithPersistedState)
+)

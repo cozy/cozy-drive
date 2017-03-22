@@ -13,7 +13,7 @@ const SubCategory = ({ id, label, value, title }) => (
   </div>
 )
 
-export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup }) => (
+export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup, wifiOnly, setWifiOnly, backupAllowed, analytics, setAnalytics }) => (
   <div>
     <div className={styles['fil-content-row']} />
     <div className={styles['settings']}>
@@ -22,7 +22,10 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
       <SubCategory id={'backupImages'} title={t('mobile.settings.media_backup.images.title')}
         label={t('mobile.settings.media_backup.images.label')}
         value={<input type='checkbox' checked={backupImages} onChange={setBackupImages} />} />
-      <button onclick={launchBackup}>
+      <SubCategory id={'backupOnlyWifi'} title={t('mobile.settings.media_backup.wifi.title')}
+        label={t('mobile.settings.media_backup.wifi.label')}
+        value={<input type='checkbox' checked={wifiOnly} onChange={setWifiOnly} />} />
+      <button onclick={() => launchBackup(t('mobile.settings.media_backup.media_folder'))} className={'coz-btn coz-btn--regular'} disabled={!backupAllowed}>
         {t('mobile.settings.media_backup.launch')}
         {mediaUploading && <div className={styles['media-uploading']} />}
       </button>
@@ -32,17 +35,22 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
         value={<a href={serverUrl}>{serverUrl}</a>} />
       <SubCategory id={'version'} label={t('mobile.settings.about.app_version')} value={version} />
 
+      <h3 className={styles['settings__category-title']}>{t('mobile.settings.support.title')}</h3>
+      <SubCategory id={'analytics'} title={t('mobile.settings.support.analytics.title')}
+        label={t('mobile.settings.support.analytics.label')}
+        value={<input type='checkbox' checked={analytics} onChange={setAnalytics} />} />
+
       <h3 className={styles['settings__category-title']}>{t('mobile.settings.unlink.title')}</h3>
       <p>{t('mobile.settings.unlink.description')}</p>
       <button className={styles['settings__button-danger']} onClick={showUnlinkConfirmation}>{t('mobile.settings.unlink.button')}</button>
       {displayUnlinkConfirmation && <Modal
         title={t('mobile.settings.unlink.confirmation.title')}
         description={t('mobile.settings.unlink.confirmation.description')}
-        cancelText={t('mobile.settings.unlink.confirmation.cancel')}
-        cancelAction={hideUnlinkConfirmation}
-        validateType='danger'
-        validateText={t('mobile.settings.unlink.confirmation.unlink')}
-        validateAction={() => unlink(client)}
+        secondaryText={t('mobile.settings.unlink.confirmation.cancel')}
+        secondaryAction={hideUnlinkConfirmation}
+        primaryType='danger'
+        primaryText={t('mobile.settings.unlink.confirmation.unlink')}
+        primaryAction={() => unlink(client)}
       />}
 
     </div>

@@ -1419,13 +1419,13 @@ cozy-bar@3.0.0-beta11:
   dependencies:
     node-polyglot "^2.2.2"
 
-cozy-client-js@^0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.1.7.tgz#9166f2836e97ad3677368d5b3cb40e30547a3ebc"
+cozy-client-js@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.1.8.tgz#4d2edbf88d06b415ef7180016bb01275ffeb3957"
 
-cozy-ui@3.0.0-beta15:
-  version "3.0.0-beta15"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta15.tgz#3b2a7e0ba3ed3a00cb87e46f2df0505d0a3fb24e"
+cozy-ui@3.0.0-beta17:
+  version "3.0.0-beta17"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta17.tgz#0a8674fe48dd7a13bd13e97cc958dafc91e834d1"
   dependencies:
     classnames "^2.2.5"
     md5 "^2.2.0"

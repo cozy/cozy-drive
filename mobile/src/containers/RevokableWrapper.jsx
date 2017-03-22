@@ -32,10 +32,11 @@ class RevokableWrapper extends Component {
           <Modal
             title={t('mobile.revoked.title')}
             description={t('mobile.revoked.description')}
-            cancelText={t('mobile.revoked.logout')}
-            cancelAction={() => { this.logout() }}
-            validateText={t('mobile.revoked.loginagain')}
-            validateAction={() => { this.loginagain() }}
+            secondaryText={t('mobile.revoked.logout')}
+            secondaryAction={() => { this.logout() }}
+            primaryText={t('mobile.revoked.loginagain')}
+            primaryAction={() => { this.loginagain() }}
+            withCross={false}
           />
           {children}
         </div>

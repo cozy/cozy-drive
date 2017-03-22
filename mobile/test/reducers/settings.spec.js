@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../../src/reducers/settings'
 import { INIT_STATE } from '../../src/actions'
-import { SET_URL, ERROR, BACKUP_IMAGES_DISABLE, BACKUP_IMAGES_ENABLE, SET_CLIENT } from '../../src/actions/settings'
+import { SET_URL, ERROR, SET_CLIENT, SET_ANALYTICS } from '../../src/actions/settings'
 
 describe('settings reducers', () => {
   it('should return the initial state', () => {
@@ -14,14 +14,9 @@ describe('settings reducers', () => {
     .toEqual({serverUrl: url, error: null, authorized: false})
   })
 
-  it('should handle BACKUP_IMAGES_DISABLE', () => {
-    expect(reducer({backupImages: true}, {type: BACKUP_IMAGES_DISABLE}))
-    .toEqual({backupImages: false})
-  })
-
-  it('should handle BACKUP_IMAGES_ENABLE', () => {
-    expect(reducer({backupImages: false}, {type: BACKUP_IMAGES_ENABLE}))
-    .toEqual({backupImages: true})
+  it('should handle SET_ANALYTICS', () => {
+    expect(reducer({analytics: false}, {type: SET_ANALYTICS, analytics: true})).toEqual({analytics: true})
+    expect(reducer({analytics: true}, {type: SET_ANALYTICS, analytics: false})).toEqual({analytics: false})
   })
 
   it('should handle ERROR', () => {

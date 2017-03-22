@@ -101,9 +101,15 @@
       },
       "photos": {
         "title": "Backup your photos and videos",
-        "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them. By default, it will only be done when the WIFI is on. This setting can be changed later on.",
+        "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them. By default, it will only be done when the WIFI is on. This setting can be changed later on."
+      },
+      "step": {
         "button": "Enable now",
         "skip": "Later"
+      },
+      "analytics": {
+        "title": "Help us improve Cozy",
+        "description": "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
       }
     },
     "settings": {
@@ -125,12 +131,24 @@
         }
       },
       "media_backup": {
+        "media_folder": "Camera",
         "title": "Media Backup",
         "images": {
           "title": "Backup images",
           "label": "Backup your images automatically to your Cozy not to ever lose them and share them easily."
         },
-        "launch": "Launch Backup"
+        "launch": "Launch Backup",
+        "wifi": {
+          "title": "Backup on WIFI only",
+          "label": "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
+        }
+      },
+      "support": {
+        "title": "Support",
+        "analytics": {
+          "title" : "Help us improve Cozy",
+          "label": "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
+        }
       }
     },
     "action_menu": {

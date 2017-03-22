@@ -19,11 +19,11 @@ const DeleteConfirmation = ({ t, files, onConfirm, onDismiss, dropSelection }) =
   return (<Modal
     title={t('deleteconfirmation.title', files.length)}
     description={deleteConfirmationTexts}
-    cancelText={t('deleteconfirmation.cancel')}
-    cancelAction={() => onDismiss(files, dropSelection)}
-    validateType='danger'
-    validateText={t('deleteconfirmation.delete')}
-    validateAction={() => onConfirm(files, dropSelection)}
+    secondaryText={t('deleteconfirmation.cancel')}
+    secondaryAction={() => onDismiss(files, dropSelection)}
+    primaryType='danger'
+    primaryText={t('deleteconfirmation.delete')}
+    primaryAction={() => onConfirm(files, dropSelection)}
    />)
 }
 

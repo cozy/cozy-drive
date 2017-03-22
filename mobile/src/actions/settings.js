@@ -1,16 +1,17 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import { initClient } from '../lib/cozy-helper'
+import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
 import { logException } from '../lib/crash-reporter'
 
 export const SET_URL = 'SET_URL'
-export const BACKUP_IMAGES_DISABLE = 'BACKUP_IMAGES_DISABLE'
-export const BACKUP_IMAGES_ENABLE = 'BACKUP_IMAGES_ENABLE'
+export const BACKUP_IMAGES = 'BACKUP_IMAGES'
+export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_CLIENT = 'SET_CLIENT'
+export const SET_ANALYTICS = 'SET_ANALYTICS'
 
-import { revokeClient, unrevokeClient } from './authorization'
+import { unrevokeClient } from './authorization'
 
 // url
 
@@ -34,17 +35,11 @@ export const checkURL = url => dispatch => {
   return dispatch(setUrl(url))
 }
 
-// backup images
+// settings
 
-export const enableBackupImages = () => ({type: BACKUP_IMAGES_ENABLE})
-export const disableBackupImages = () => ({type: BACKUP_IMAGES_DISABLE})
-export const setBackupImages = (value) => {
-  if (value) {
-    return enableBackupImages()
-  } else {
-    return disableBackupImages()
-  }
-}
+export const setAnalytics = analytics => ({ type: SET_ANALYTICS, analytics })
+export const setBackupImages = backupImages => ({type: BACKUP_IMAGES, backupImages})
+export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
 // errors
 
@@ -75,13 +70,9 @@ export const registerDevice = () => async (dispatch, getState) => {
   await cozy.client.authorize().then(async ({ client }) => {
     dispatch(unrevokeClient())
     dispatch(setClient(client))
-    await cozy.client.offline.replicateFromCozy('io.cozy.files')
     const options = {
-      onError: (err) => {
-        console.log('on error fron the client', err)
-        console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
-        dispatch(revokeClient())
-      }
+      onError: onError(dispatch, getState),
+      onComplete: refreshFolder(dispatch, getState)
     }
     cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
   }).catch(err => {

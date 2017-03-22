@@ -50,16 +50,16 @@ b-item
         &.fil-action-delete
             background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
 
-    a.fil-action-upload,
-    a.fil-action-select,
+    .fil-action-upload
+    .fil-action-select
     hr // temporary while there is only select after hr
         display none
 
 
 @media (max-width: (1023/basefont)rem)
     .fil-toolbar-menu
-        a.fil-action-upload,
-        a.fil-action-select,
+        .fil-action-upload
+        .fil-action-select
         hr // temporary while there is only select after hr
             display block
 
@@ -72,7 +72,7 @@ b-item
 @media (max-width: (768/basefont)rem)
     .fil-toolbar-files
     .fil-toolbar-trash
-        position absolute
+        position fixed
         top      0
         right    0
         z-index  $nav-index

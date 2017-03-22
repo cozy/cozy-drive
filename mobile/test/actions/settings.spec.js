@@ -1,22 +1,45 @@
 import { mockStore } from '../../../test/helpers'
+import reducer from '../../src/reducers/settings'
 import {
   SET_URL, setUrl, checkURL,
   SET_CLIENT, setClient,
-  BACKUP_IMAGES_ENABLE, BACKUP_IMAGES_DISABLE, enableBackupImages, disableBackupImages, setBackupImages,
+  setBackupImages,
+  setWifiOnly,
+  setAnalytics,
   OnBoardingError, wrongAddressError, ERROR, wrongAddressErrorMsg
 } from '../../src/actions/settings'
 
 describe('backup images actions creators', () => {
-  it('should create an action to enable backup images', () => {
-    const expectedAction = { type: BACKUP_IMAGES_ENABLE }
-    expect(enableBackupImages()).toEqual(expectedAction)
-    expect(setBackupImages(true)).toEqual(expectedAction)
+  it('should enable backup images', () => {
+    const state = reducer({}, setBackupImages(true))
+    expect(state).toEqual({backupImages: true})
   })
 
-  it('should create an action to disable backup images', () => {
-    const expectedAction = { type: BACKUP_IMAGES_DISABLE }
-    expect(disableBackupImages()).toEqual(expectedAction)
-    expect(setBackupImages(false)).toEqual(expectedAction)
+  it('should disable backup images', () => {
+    const state = reducer({}, setBackupImages(false))
+    expect(state).toEqual({backupImages: false})
+  })
+
+  it('should enable backup on wifi only', () => {
+    const state = reducer({}, setWifiOnly(true))
+    expect(state).toEqual({wifiOnly: true})
+  })
+
+  it('should disable backup on wifi only', () => {
+    const state = reducer({}, setWifiOnly(false))
+    expect(state).toEqual({wifiOnly: false})
+  })
+})
+
+describe('analytics actions creators', () => {
+  it('should enable analytics', () => {
+    const state = reducer({}, setAnalytics(true))
+    expect(state).toEqual({analytics: true})
+  })
+
+  it('should disable analytics', () => {
+    const state = reducer({}, setAnalytics(false))
+    expect(state).toEqual({analytics: false})
   })
 })
 
