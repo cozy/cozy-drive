@@ -15,7 +15,10 @@ const UploadProgression = ({t, message, messageData}) => {
             styles[`coz-alert--info`]
           )}
         >
-          <p>{t(message, messageData)}</p>
+          <p>
+            <span class={styles['fil-loading']} />
+            {t(message, messageData)}
+          </p>
         </div>
       </div>
     )
