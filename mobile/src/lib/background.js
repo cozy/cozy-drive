@@ -18,7 +18,6 @@ export const launchBackground = () => {
 const launchIosBackground = () => {
   var Fetcher = window.BackgroundFetch
 
-  // Your background-fetch handler.
   const fetchCallback = () => {
     console.log('[js] BackgroundFetch initiated')
 
@@ -39,7 +38,7 @@ const launchIosBackground = () => {
         store.dispatch(mediaBackup('Camera')).then(end).catch(end)
       } else {
         logException('can\'t start backup on Background')
-        Fetcher.finish()   // <-- N.B. You MUST called #finish so that native-side can signal completion of the background-thread to the os.
+        Fetcher.finish()
       }
     })
   }
