@@ -4,6 +4,7 @@ import { logException } from './crash-reporter'
 import { loadState } from './localStorage'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from './network'
+import { initPolyglot } from '../../../src/lib/i18n'
 
 const hasIosCordovaPlugin = () => {
   return window.cordova.platformId === 'iOS' && window.BackgroundFetch !== undefined
@@ -27,15 +28,19 @@ const launchIosBackground = () => {
 
       logException('C\'est moi le Service Background!!!')
 
-      if (store.getState().mobile.settings.backupImages && backupAllowed(getState().mobile.settings.wifiOnly)) {
+      if (store.getState().mobile.settings.backupImages && backupAllowed(store.getState().mobile.settings.wifiOnly)) {
         logException('start backup on Background')
         const end = () => {
           store.dispatch(endMediaUpload())
           Fetcher.finish()
         }
         store.dispatch(startMediaUpload())
-        // TODO: Replace 'Camera' with t('mobile.settings.media_backup.media_folder') but t?
-        store.dispatch(mediaBackup('Camera')).then(end).catch(end)
+
+        const context = window.context
+        const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
+        const polyglot = initPolyglot(context, lang)
+
+        store.dispatch(mediaBackup(polyglot.t('mobile.settings.media_backup.media_folder'))).then(end).catch(end)
       } else {
         logException('can\'t start backup on Background')
         Fetcher.finish()

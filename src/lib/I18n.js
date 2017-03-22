@@ -10,7 +10,7 @@ import Polyglot from 'node-polyglot'
 import format from 'date-fns/format'
 import en from '../locales/en'
 
-const initPolyglot = (context, lang) => {
+export const initPolyglot = (context, lang) => {
   const polyglot = new Polyglot({
     phrases: en,
     locale: 'en'
