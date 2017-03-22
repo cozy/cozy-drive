@@ -1,5 +1,5 @@
 import reducer, { initialState } from '../../src/reducers/mediaBackup'
-import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, IMAGE_UPLOAD_SUCCESS } from '../../src/actions/mediaBackup'
+import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, MEDIA_UPLOAD_SUCCESS } from '../../src/actions/mediaBackup'
 import { INIT_STATE } from '../../src/actions'
 
 describe('mediaBackup reducers', () => {
@@ -18,11 +18,11 @@ describe('mediaBackup reducers', () => {
     .toEqual({uploading: false})
   })
 
-  it('should handle IMAGE_UPLOAD_SUCCESS', () => {
-    expect(reducer({uploaded: []}, {type: IMAGE_UPLOAD_SUCCESS, id: 1}))
+  it('should handle MEDIA_UPLOAD_SUCCESS', () => {
+    expect(reducer({uploaded: []}, {type: MEDIA_UPLOAD_SUCCESS, id: 1}))
     .toEqual({uploaded: [1]})
 
-    expect(reducer({uploaded: [1]}, {type: IMAGE_UPLOAD_SUCCESS, id: 2}))
+    expect(reducer({uploaded: [1]}, {type: MEDIA_UPLOAD_SUCCESS, id: 2}))
     .toEqual({uploaded: [1, 2]})
   })
 

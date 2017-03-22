@@ -1,6 +1,6 @@
 import {
-  MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, IMAGE_UPLOAD_SUCCESS,
-  startMediaUpload, endMediaUpload, successImageUpload
+  MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, MEDIA_UPLOAD_SUCCESS,
+  startMediaUpload, endMediaUpload, successMediaUpload
 } from '../../src/actions/mediaBackup'
 
 describe('mediaBackup actions', () => {
@@ -14,9 +14,9 @@ describe('mediaBackup actions', () => {
     expect(endMediaUpload()).toEqual(expectedAction)
   })
 
-  it('should create an action to success image upload', () => {
+  it('should create an action to success media upload', () => {
     const photo = { id: 1 }
-    const expectedAction = { type: IMAGE_UPLOAD_SUCCESS, id: photo.id }
-    expect(successImageUpload(photo)).toEqual(expectedAction)
+    const expectedAction = { type: MEDIA_UPLOAD_SUCCESS, id: photo.id }
+    expect(successMediaUpload(photo)).toEqual(expectedAction)
   })
 })

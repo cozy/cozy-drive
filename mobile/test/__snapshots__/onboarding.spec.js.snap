@@ -62,6 +62,41 @@ exports[`Onboarding should render different components 2`] = `
 </div>
 `;
 
+exports[`Onboarding should render the Analytics screen 1`] = `
+<div
+  className="wizard analytics">
+  <header
+    className="wizard-header">
+    <a
+      className="skipLink"
+      onClick={undefined} />
+  </header>
+  <div
+    className="wizard-main">
+    <div
+      className="illustration illustration-trophy" />
+    <h1
+      className="title" />
+    <p
+      className="description" />
+  </div>
+  <footer
+    className="wizard-footer">
+    <button
+      className="coz-btn coz-btn--regular"
+      onClick={undefined}
+      role="button" />
+    <div
+      className="onboarding-breadcrumb">
+      <div
+        className="onboarding-breadcrumb-element" />
+      <div
+        className="onboarding-breadcrumb-element-active" />
+    </div>
+  </footer>
+</div>
+`;
+
 exports[`Onboarding should render the BackupPhotosVideos screen 1`] = `
 <div
   className="wizard photos-backup">
