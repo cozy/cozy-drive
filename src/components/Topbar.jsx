@@ -1,21 +1,21 @@
 import styles from '../styles/topbar'
 
 import React from 'react'
-import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import FilesToolbar from '../containers/FilesToolbar'
 import TrashToolbar from '../containers/TrashToolbar'
 import Breadcrumb from '../containers/Breadcrumb'
 
+// TODO: move the Topbar into FolderView so that we can get rid of this
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
-
-const TOOLBARS = {
-  [ROOT_DIR_ID]: FilesToolbar,
-  [TRASH_DIR_ID]: TrashToolbar
+const getToolbar = location => {
+  if (location.pathname.match(/^\/files/)) return FilesToolbar
+  if (location.pathname.match(/^\/trash/)) return TrashToolbar
 }
 
-const Topbar = ({ virtualRoot }) => {
-  const Toolbar = TOOLBARS[virtualRoot]
+const Topbar = ({ location }) => {
+  const Toolbar = getToolbar(location)
   return (
     <div class={styles['fil-content-header']}>
       <Breadcrumb />
@@ -24,8 +24,4 @@ const Topbar = ({ virtualRoot }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  virtualRoot: state.view.virtualRoot
-})
-
-export default connect(mapStateToProps)(Topbar)
+export default withRouter(Topbar)

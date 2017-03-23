@@ -10,8 +10,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 import Spinner from '../components/Spinner'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
-import { openFolder } from '../actions'
+import { openFiles, openTrash } from '../actions'
 
 class Link extends Component {
   constructor (props) {
@@ -103,8 +102,8 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  openFiles: () => dispatch(openFolder(ROOT_DIR_ID)),
-  openTrash: () => dispatch(openFolder(TRASH_DIR_ID))
+  openFiles: () => dispatch(openFiles()),
+  openTrash: () => dispatch(openTrash())
 })
 
 export default connect(null, mapDispatchToProps)(

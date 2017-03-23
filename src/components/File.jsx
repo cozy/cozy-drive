@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
 
-import { getUrlFromParams } from '../reducers'
+import { getFolderUrl } from '../reducers'
 
 export const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
@@ -43,9 +43,9 @@ class File extends Component {
     e.stopPropagation()
     if (isDir(attributes)) {
       this.setState({ opening: true })
-      this.props.onFolderOpen(this.props.virtualRoot, attributes.id).then(() => {
+      this.props.onFolderOpen(attributes.id).then(() => {
         this.setState({ opening: false })
-        this.props.router.push(getUrlFromParams({ virtualRoot: this.props.virtualRoot, displayedFolder: attributes }))
+        this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
       this.props.onFileOpen(this.props.displayedFolder, attributes)

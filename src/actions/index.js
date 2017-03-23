@@ -3,6 +3,8 @@ import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/f
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
 import { getFilePaths, getFileById } from '../reducers'
 
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
+
 export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
@@ -45,28 +47,27 @@ const ALERT_LEVEL_ERROR = 'error'
 export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', level: ALERT_LEVEL_ERROR } })
 export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', level: ALERT_LEVEL_ERROR } })
 
-export const locationChange = (virtualRoot, folderId) => {
-  return async dispatch => {
-    dispatch({ type: LOCATION_CHANGE, virtualRoot, folderId })
-    return dispatch(openFolder(virtualRoot, folderId))
-  }
+export const openFiles = () => {
+  return async dispatch => dispatch(openFolder(ROOT_DIR_ID))
 }
 
-export const openFolder = (virtualRoot, folderId) => {
+export const openTrash = () => {
+  return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
+}
+
+export const openFolder = (folderId) => {
   return async dispatch => {
-    if (!folderId) folderId = virtualRoot
-    dispatch({ type: OPEN_FOLDER, virtualRoot, folderId })
+    dispatch({ type: OPEN_FOLDER, folderId })
     let folder, parent
     try {
       folder = await cozy.client.files.statById(folderId)
       const parentId = folder.attributes.dir_id
       parent = !!parentId && await cozy.client.files.statById(parentId)
     } catch (err) {
-      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err, virtualRoot })
+      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
     }
     return dispatch({
       type: OPEN_FOLDER_SUCCESS,
-      virtualRoot,
       folder: Object.assign(extractFileAttributes(folder), {
         parent: extractFileAttributes(parent)}),
       files: folder.relations('contents').map(

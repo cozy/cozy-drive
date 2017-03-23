@@ -17,7 +17,7 @@ const filesApp = combineReducers(reducers)
 export default filesApp
 
 // Selectors
-export { getVisibleFiles, getVirtualRootFromUrl, getUrlFromParams } from './view'
+export { getVisibleFiles, getFolderIdFromRoute, getFolderPath, getFolderUrl } from './view'
 
 export const isRootFolder = folder => folder.id === ROOT_DIR_ID
 

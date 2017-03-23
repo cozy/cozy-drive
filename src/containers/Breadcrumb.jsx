@@ -11,54 +11,21 @@ import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from '../components/Spinner'
 
-import { getUrlFromParams } from '../reducers'
+import { getFolderPath, getFolderUrl } from '../reducers'
 
-const Breadcrumb = ({ t, router, virtualRoot, folder, opening, deployed, toggleOpening, toggleDeploy, goToFolder }) => {
-  if (!virtualRoot || !folder) {
+const Breadcrumb = ({ t, router, location, path, opening, deployed, toggleOpening, toggleDeploy, goToFolder }) => {
+  if (!path) {
     return null
   }
 
-  let isBrowsingTrash = virtualRoot === TRASH_DIR_ID
-
-  // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
-  let path = []
-
-  // dring the first fetch, folder is an empty object, and we don't want to display anything
-  if (folder.id) path.push(folder)
-
-  // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that.
-  let parent = folder.parent
-  if (parent && parent.id && !(isBrowsingTrash && parent.id === ROOT_DIR_ID)) {
-    path.unshift(parent)
-
-    // has the parent a parent too?
-    if (parent.dir_id && !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID)) {
-      // since we don't *actually* have any information about the parent's parent, we have to fake it
-      path.unshift({ id: parent.dir_id })
-    }
-  }
-
-  // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder. While we're at it, we also rename the folders when we need to.
-  let hasRootFolder = false
   path.forEach(folder => {
     if (folder.id === ROOT_DIR_ID) {
       folder.name = t('breadcrumb.title_files')
-      hasRootFolder = true
     } else if (folder.id === TRASH_DIR_ID) {
       folder.name = t('breadcrumb.title_trash')
-      if (isBrowsingTrash) hasRootFolder = true
     }
-
     if (!folder.name) folder.name = '…'
   })
-
-  if (!hasRootFolder) {
-    // if we don't have one, we add it manually
-    path.unshift({
-      id: isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID,
-      name: isBrowsingTrash ? t('breadcrumb.title_trash') : t('breadcrumb.title_files')
-    })
-  }
 
   return (
     <div
@@ -67,15 +34,15 @@ const Breadcrumb = ({ t, router, virtualRoot, folder, opening, deployed, toggleO
     >
       {path.length >= 2 &&
         <Link
-          to={getUrlFromParams({ virtualRoot, displayedFolder: path[path.length - 2] })}
+          to={getFolderUrl(path[path.length - 2].id, location)}
           className={styles['fil-path-previous']}
           onClick={e => {
             e.preventDefault()
             toggleOpening()
             if (deployed) toggleDeploy()
-            goToFolder(virtualRoot, path[path.length - 2].id).then(() => {
+            goToFolder(path[path.length - 2].id).then(() => {
               toggleOpening()
-              router.push(getUrlFromParams({ virtualRoot, displayedFolder: path[path.length - 2] }))
+              router.push(getFolderUrl(path[path.length - 2].id, location))
             })
           }}
         />
@@ -85,15 +52,15 @@ const Breadcrumb = ({ t, router, virtualRoot, folder, opening, deployed, toggleO
         { path.map((folder, index) => {
           if (index < path.length - 1) {
             return <Link
-              to={getUrlFromParams({ virtualRoot, displayedFolder: folder })}
+              to={getFolderUrl(folder.id, location)}
               className={styles['fil-path-link']}
               onClick={e => {
                 e.preventDefault()
                 toggleOpening()
                 if (deployed) toggleDeploy()
-                goToFolder(virtualRoot, folder.id).then(() => {
+                goToFolder(folder.id).then(() => {
                   toggleOpening()
-                  router.push(getUrlFromParams({ virtualRoot, displayedFolder: folder }))
+                  router.push(getFolderUrl(folder.id, location))
                 })
               }}
             >
@@ -125,16 +92,15 @@ const Breadcrumb = ({ t, router, virtualRoot, folder, opening, deployed, toggleO
   )
 }
 
-const mapStateToProps = (state) => ({
-  folder: state.view.displayedFolder,
-  virtualRoot: state.view.virtualRoot
+const mapStateToProps = (state, ownProps) => ({
+  path: getFolderPath(state, ownProps.location)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  goToFolder: (virtualRoot, parentId) => dispatch(openFolder(virtualRoot, parentId))
+  goToFolder: folderId => dispatch(openFolder(folderId))
 })
 
-export default translate()(connect(
+export default withRouter(translate()(connect(
   mapStateToProps,
   mapDispatchToProps
 )(withState({
@@ -147,4 +113,4 @@ export default translate()(connect(
   toggleDeploy: () => {
     setState(state => ({ deployed: !state.deployed }))
   }
-}))(withRouter(Breadcrumb))))
+}))(Breadcrumb))))

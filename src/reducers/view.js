@@ -13,20 +13,6 @@ import {
 
 import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH } from '../constants/config.js'
 
-const virtualRoot = (state = null, action) => {
-  switch (action.type) {
-    // there's a trick here : we set the virtualRoot on the LOCATION_CHANGE action
-    // so that we have something to display when the app is launched or when the user
-    // use the back button
-    case LOCATION_CHANGE:
-    case OPEN_FOLDER_SUCCESS:
-    case OPEN_FOLDER_FAILURE:
-      return action.virtualRoot
-    default:
-      return state
-  }
-}
-
 // reducer for the currently displayed folder properties
 const displayedFolder = (state = null, action) => {
   switch (action.type) {
@@ -67,7 +53,7 @@ const files = (state = [], action) => {
 
 const fetchStatus = (state = null, action) => {
   switch (action.type) {
-    // there's another trick here : we set the fetchStatus to 'pending' only on
+    // there's a trick here : we set the fetchStatus to 'pending' only on
     // the LOCATION_CHANGE action so that the loading spinner is only showed
     // when the app is launched or when the user use the back button
     case LOCATION_CHANGE:
@@ -92,7 +78,6 @@ const lastFetch = (state = null, action) => {
 }
 
 export default combineReducers({
-  virtualRoot,
   displayedFolder,
   files,
   fetchStatus,
@@ -112,15 +97,45 @@ export const getVisibleFiles = ({ view }) => {
   return getSortedFiles(files)
 }
 
-export const getVirtualRootFromUrl = pathname => {
-  if (pathname.match(/^\/files/)) return ROOT_DIR_ID
-  if (pathname.match(/^\/trash/)) return TRASH_DIR_ID
+export const getFolderIdFromRoute = (location, params) => {
+  if (params.folderId) return params.folderId
+  if (location.pathname.match(/^\/files/)) return ROOT_DIR_ID
+  if (location.pathname.match(/^\/trash/)) return TRASH_DIR_ID
 }
 
-export const getUrlFromParams = ({ virtualRoot, displayedFolder }) => {
-  let path = virtualRoot === TRASH_DIR_ID ? '/trash' : '/files'
-  if (displayedFolder && displayedFolder.id !== virtualRoot) {
-    path += `/${displayedFolder.id}`
+export const getFolderUrl = (folderId, location) => {
+  if (folderId === ROOT_DIR_ID) return '/files'
+  if (folderId === TRASH_DIR_ID) return '/trash'
+  let url = location.pathname.match(/^\/files/) ? '/files/' : '/trash/'
+  return url + folderId
+}
+
+// reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
+export const getFolderPath = ({ view }, location) => {
+  const { displayedFolder } = view
+  let path = []
+  let isBrowsingTrash = location.pathname.match(/^\/trash/)
+  // dring the first fetch, displayedFolder is null, and we don't want to display anything
+  if (displayedFolder) {
+    path.push(displayedFolder)
+    // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that.
+    let parent = displayedFolder.parent
+    if (parent && parent.id && !(isBrowsingTrash && parent.id === ROOT_DIR_ID)) {
+      path.unshift(parent)
+      // has the parent a parent too?
+      if (parent.dir_id && !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID)) {
+        // since we don't *actually* have any information about the parent's parent, we have to fake it
+        path.unshift({ id: parent.dir_id })
+      }
+    }
+  }
+  // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder. While we're at it, we also rename the folders when we need to.
+  let hasRootFolder = path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
+  if (!hasRootFolder) {
+    // if we don't have one, we add it manually
+    path.unshift({
+      id: isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID
+    })
   }
   return path
 }

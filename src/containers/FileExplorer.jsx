@@ -2,46 +2,59 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { locationChange } from '../actions'
 import { getVirtualRootFromUrl, getUrlFromParams } from '../reducers'
 
-import Folder from './Folder'
+import { openFolder, openFileInNewTab, toggleFileSelection, showFileActionMenu } from '../actions'
+import { getVisibleFiles, getFolderIdFromRoute, mustShowSelectionBar, mustShowAddFolder } from '../reducers'
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
 
-const matchCurrentView = (props, newProps) =>
-  newProps.location.pathname === getUrlFromParams(props.view)
+const isUrlMatchingDisplayedFolder = (props, displayedFolder) =>
+  displayedFolder && displayedFolder.id === getFolderIdFromRoute(props.location, props.params)
 
 class FileExplorer extends Component {
   componentWillMount () {
-    this.props.onLocationChange(
-      getVirtualRootFromUrl(this.props.location.pathname),
-      this.props.params.folderId
+    this.props.onFolderOpen(
+      getFolderIdFromRoute(this.props.location, this.props.params)
     )
   }
 
   componentWillReceiveProps (newProps) {
-    if (urlHasChanged(this.props, newProps) && !matchCurrentView(this.props, newProps)) {
-      this.props.onLocationChange(
-        getVirtualRootFromUrl(newProps.location.pathname),
-        newProps.params.folderId
+    if (urlHasChanged(this.props, newProps) &&
+      !isUrlMatchingDisplayedFolder(newProps, this.props.displayedFolder)) {
+      this.props.onFolderOpen(
+        getFolderIdFromRoute(newProps.location, newProps.params)
       )
     }
   }
 
   render () {
-    return <Folder />
+    return React.cloneElement(React.Children.only(this.props.children), this.props)
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  view: state.view
+  displayedFolder: state.view.displayedFolder,
+  fetchStatus: state.view.fetchStatus,
+  // error: state.ui.error,
+  isAddingFolder: mustShowAddFolder(state), // not fan of this...
+  showSelection: mustShowSelectionBar(state),
+  showDeleteConfirmation: state.ui.showDeleteConfirmation,
+  showActionMenu: state.ui.showFileActionMenu,
+  files: getVisibleFiles(state),
+  selected: state.ui.selected
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onLocationChange: (virtualRoot, folderId) =>
-    dispatch(locationChange(virtualRoot, folderId))
+  onFolderOpen: (folderId) =>
+    dispatch(openFolder(folderId)),
+  onFileOpen: (parentFolder, file) =>
+    dispatch(openFileInNewTab(parentFolder, file)),
+  onFileToggle: (id, selected) =>
+    dispatch(toggleFileSelection(id, selected)),
+  onShowActionMenu: (fileId) =>
+    dispatch(showFileActionMenu(fileId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FileExplorer))
