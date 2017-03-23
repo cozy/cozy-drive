@@ -8,7 +8,8 @@ exports[`AlbumsList component should be displayed correctly if albums 1`] = `
         "_type": "io.cozy.photos.albums",
         "name": "albumTest2",
       }
-    } />
+    }
+    onServerError={undefined} />
   <_translate
     album={
       Object {
@@ -16,7 +17,8 @@ exports[`AlbumsList component should be displayed correctly if albums 1`] = `
         "_type": "io.cozy.photos.albums",
         "name": "albumTest2",
       }
-    } />
+    }
+    onServerError={undefined} />
 </div>
 `;
 

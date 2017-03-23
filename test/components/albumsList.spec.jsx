@@ -28,7 +28,7 @@ describe('AlbumsList component', () => {
 
   it('should be displayed correctly if albums', () => {
     const component = shallow(
-      <AlbumsList t={mockT} f={mockF} albums={mockAlbums} />
+      <AlbumsList t={mockT} f={mockF} albums={mockAlbums} handleErrorToParent={() => jest.fn()} />
     ).node
     expect(component).toMatchSnapshot()
   })
