@@ -7,6 +7,14 @@ import { translate } from '../lib/I18n'
 
 import { getPhotoLink } from '../actions/photos'
 
+const fetchMainPhoto = album => {
+  if (album.photosIds && album.photosIds.length) {
+    return getPhotoLink(album.photosIds[0])
+  } else {
+    return Promise.resolve(null)
+  }
+}
+
 export class AlbumItem extends Component {
   constructor (props) {
     super(props)
@@ -17,26 +25,19 @@ export class AlbumItem extends Component {
     }
 
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
-    this.fetchPhoto = this.fetchPhoto.bind(this)
 
-    if (props.album && props.album.photosIds.length) {
-      this.fetchPhoto(props.album.photosIds[0])
-    } else {
-      this.state = {
-        url: '',
-        isLoading: false
-      }
-    }
-  }
-
-  fetchPhoto (photoId) {
-    getPhotoLink(photoId)
-      .then(link => this.setState({
-        url: link,
-        isLoading: false
-      }))
-      .catch(linkError => {
+    fetchMainPhoto(props.album || {})
+      .then(link => {
+        this.setState({
+          url: link,
+          isLoading: false
+        })
+      }).catch(linkError => {
         this.props.onServerError(linkError)
+        this.setState({
+          url: '',
+          isLoading: false
+        })
       })
   }
 
