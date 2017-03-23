@@ -7,46 +7,21 @@ import '../../src/styles/main'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
-import RavenMiddleWare from 'redux-raven-middleware'
 
 import { I18n } from '../../src/lib/I18n'
 
-import filesApp from './reducers'
 import MobileAppRoute from './components/MobileAppRoute'
 
-import { loadState, saveState } from './lib/localStorage'
-import { initClient, initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
-
-import { configureReporter, ANALYTICS_URL, getAnalyticsConfiguration } from './lib/crash-reporter'
-
-const loggerMiddleware = createLogger()
+import { loadState } from './lib/localStorage'
+import { getStore } from './lib/store'
+import { initService } from './lib/init'
+import { startBackgroundService, stopBackgroundService } from './lib/background'
+import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 
 const renderAppWithPersistedState = persistedState => {
-  const store = createStore(
-    filesApp,
-    persistedState,
-    applyMiddleware(
-      RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration()),
-      thunkMiddleware,
-      loggerMiddleware
-    )
-  )
-
-  store.subscribe(() => saveState({
-    mobile: {
-      settings: store.getState().mobile.settings,
-      mediaBackup: {
-        uploaded: store.getState().mobile.mediaBackup.uploaded
-      }
-    }
-  }))
-
-  configureReporter(store.getState)
-  initClient(store.getState().mobile.settings.serverUrl)
+  const store = getStore(persistedState)
+  initService(store)
 
   function requireSetup (nextState, replace, callback) {
     const client = store.getState().mobile.settings.client
@@ -74,6 +49,14 @@ const renderAppWithPersistedState = persistedState => {
       callback()
     }
   }
+
+  document.addEventListener('deviceready', () => {
+    if (store.getState().mobile.settings.backupImages) {
+      startBackgroundService()
+    } else {
+      stopBackgroundService()
+    }
+  }, false)
 
   const context = window.context
   const root = document.querySelector('[role=application]')
