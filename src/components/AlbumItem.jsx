@@ -35,6 +35,9 @@ export class AlbumItem extends Component {
         url: link,
         isLoading: false
       }))
+      .catch(linkError => {
+        this.props.onServerError(linkError)
+      })
   }
 
   handleImageLoaded () {
