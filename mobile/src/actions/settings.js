@@ -41,7 +41,7 @@ export const checkURL = url => dispatch => {
 export const setAnalytics = analytics => ({ type: SET_ANALYTICS, analytics })
 export const setBackupImages = backupImages => {
   backupImages ? startBackgroundService() : stopBackgroundService()
-  return {type: BACKUP_IMAGES, backupImages}
+  return { type: BACKUP_IMAGES, backupImages }
 }
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
