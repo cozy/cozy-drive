@@ -243,14 +243,14 @@ export const toggleFileSelection = (id, selected) => ({
   id
 })
 
-export const downloadSelection = () => {
-  return async (dispatch, getState) => {
-    const { selected } = getState().ui
+export const downloadSelection = selected => {
+  return async (dispatch) => {
     dispatch({ type: DOWNLOAD_SELECTION, selected })
-    if (selected.length === 1 && getFileById(getState().files, selected[0]).type !== 'directory') {
+    if (selected.length === 1 && selected[0].type !== 'directory') {
       return dispatch(downloadFile(selected[0]))
     }
-    const paths = getFilePaths(getState(), selected)
+    const paths = selected.map(f => f.path)
+    console.log(paths)
     const href = await cozy.client.files.getArchiveLink(paths)
     const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')
@@ -260,10 +260,10 @@ export const downloadSelection = () => {
 const isMissingFile = (error) => error.status === 404
 const isOffline = (error) => error.message === 'Network request failed'
 
-export const downloadFile = id => {
-  return async (dispatch, getState) => {
-    dispatch({ type: DOWNLOAD_FILE, id })
-    const response = await cozy.client.files.downloadById(id).catch((error) => {
+export const downloadFile = file => {
+  return async (dispatch) => {
+    dispatch({ type: DOWNLOAD_FILE, file })
+    const response = await cozy.client.files.downloadById(file.id).catch((error) => {
       console.error('downloadById', error)
       if (isMissingFile(error)) {
         dispatch(downloadFileMissing())
@@ -275,8 +275,7 @@ export const downloadFile = id => {
       throw error
     })
     const blob = await response.blob()
-    // TODO: accessing state in action creators is an antipattern
-    const filename = getState().files.find(f => f.id === id).name
+    const filename = file.name
 
     if (window.cordova && window.cordova.file) {
       saveFileWithCordova(blob, filename)

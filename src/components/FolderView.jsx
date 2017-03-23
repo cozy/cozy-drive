@@ -34,10 +34,11 @@ const FolderContent = props => {
 class FolderView extends Component {
   render () {
     const { isTrashContext, showSelection, showDeleteConfirmation, showActionMenu } = this.props
+    const { selected } = this.props
     return (
       <div role='contentinfo'>
         <Alerter />
-        {!isTrashContext && showSelection && <FilesSelectionBar />}
+        {!isTrashContext && showSelection && <FilesSelectionBar selected={selected} />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}
         <div className={classNames(

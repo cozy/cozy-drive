@@ -59,7 +59,7 @@ const ItemOpenWith = ({ t, file, onOpenWith, actionMenu }) => (
 
 const DownloadFile = ({ t, file, onDownloadFile, actionMenu }) => (
   <Item>
-    <a className={styles['fil-action-download']} onClick={() => onDownloadFile(file.id)}>
+    <a className={styles['fil-action-download']} onClick={() => onDownloadFile(file)}>
       {t('mobile.action_menu.download')}
       {actionMenu.download && <div className={styles['fil-loading']} />}
     </a>
@@ -68,7 +68,7 @@ const DownloadFile = ({ t, file, onDownloadFile, actionMenu }) => (
 
 const DownloadSelection = ({ t, files, onDownloadSelection, actionMenu }) => (
   <Item>
-    <a className={styles['fil-action-download']} onClick={() => onDownloadSelection()}>
+    <a className={styles['fil-action-download']} onClick={() => onDownloadSelection(files)}>
       {t('mobile.action_menu.download')}
       {actionMenu.download && <div className={styles['fil-loading']} />}
     </a>
@@ -77,7 +77,7 @@ const DownloadSelection = ({ t, files, onDownloadSelection, actionMenu }) => (
 
 const Delete = ({ t, files, onDelete, actionMenu }) => (
   <Item>
-    <a className={styles['fil-action-delete']} onClick={() => onDelete()}>
+    <a className={styles['fil-action-delete']} onClick={() => onDelete(files)}>
       {t('mobile.action_menu.delete')}
       {actionMenu.delete && <div className={styles['fil-loading']} />}
     </a>
@@ -174,23 +174,23 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onDownloadFile: id => {
+  onDownloadFile: file => {
     const clearUI = () => {
       dispatch(actionMenuLoaded('download'))
       dispatch(hideFileActionMenu())
       dispatch(hideSelectionBar())
     }
     dispatch(actionMenuLoading('download'))
-    dispatch(downloadFile(id)).then(clearUI).catch(clearUI)
+    dispatch(downloadFile(file)).then(clearUI).catch(clearUI)
   },
-  onDownloadSelection: () => {
+  onDownloadSelection: files => {
     const clearUI = () => {
       dispatch(actionMenuLoaded('download'))
       dispatch(hideFileActionMenu())
       dispatch(hideSelectionBar())
     }
     dispatch(actionMenuLoading('download'))
-    dispatch(downloadSelection()).then(clearUI).catch(clearUI)
+    dispatch(downloadSelection(files)).then(clearUI).catch(clearUI)
   },
   onClose: () => dispatch(hideFileActionMenu()),
   onOpenWith: (id, filename) => {
@@ -201,7 +201,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(actionMenuLoading('openWith'))
     dispatch(openFileWith(id, filename)).then(clearUI).catch(clearUI)
   },
-  onDelete: () => {
+  onDelete: files => {
     dispatch(actionMenuLoading('delete'))
     dispatch(showDeleteConfirmation())
     dispatch(actionMenuLoaded('delete'))

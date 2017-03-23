@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { getVirtualRootFromUrl, getUrlFromParams } from '../reducers'
+import { getFolderIdFromRoute } from '../reducers'
 
 import { openFolder, openFileInNewTab, toggleFileSelection, showFileActionMenu } from '../actions'
-import { getVisibleFiles, getFolderIdFromRoute, mustShowSelectionBar, mustShowAddFolder } from '../reducers'
+import { getVisibleFiles, getSelectedFiles, mustShowSelectionBar, mustShowAddFolder } from '../reducers'
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
@@ -43,7 +43,7 @@ const mapStateToProps = (state, ownProps) => ({
   showDeleteConfirmation: state.ui.showDeleteConfirmation,
   showActionMenu: state.ui.showFileActionMenu,
   files: getVisibleFiles(state),
-  selected: state.ui.selected
+  selected: getSelectedFiles(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

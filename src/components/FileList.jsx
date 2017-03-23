@@ -12,7 +12,7 @@ const FileList = ({
     {!error && files.map((file, idx) => (
       <File
         displayedFolder={displayedFolder}
-        selected={selected.indexOf(file.id) !== -1}
+        selected={selected.find(f => f.id === file.id) !== undefined}
         onEdit={onFileEdit}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}

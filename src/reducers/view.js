@@ -97,6 +97,23 @@ export const getVisibleFiles = ({ view }) => {
   return getSortedFiles(files)
 }
 
+export const getFileById = ({ view }, id) => {
+  let file = view.files.find(f => f.id === id)
+  if (!file) return null
+  // we need the path for some actions, like selection download
+  // but the stack only provides the path for folders...
+  return Object.assign({}, file, { path: getFilePath({ view }, file) })
+}
+
+const isRootFolder = folder => folder.id === ROOT_DIR_ID
+
+export const getFilePath = ({ view }, file) => {
+  const { displayedFolder } = view
+  return file.type === 'directory'
+    ? file.path
+    : (isRootFolder(displayedFolder) ? `/${file.name}` : `${displayedFolder.path}/${file.name}`)
+}
+
 export const getFolderIdFromRoute = (location, params) => {
   if (params.folderId) return params.folderId
   if (location.pathname.match(/^\/files/)) return ROOT_DIR_ID
