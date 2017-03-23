@@ -6,11 +6,23 @@ import { HTTP_CODE_CONFLICT } from '../../../src/actions'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
-export const IMAGE_UPLOAD_SUCCESS = 'IMAGE_UPLOAD_SUCCESS'
+export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
+export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
 export const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
 export const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
-export const successImageUpload = (image) => ({ type: IMAGE_UPLOAD_SUCCESS, id: image.id })
+export const successMediaUpload = (media) => ({ type: MEDIA_UPLOAD_SUCCESS, id: media.id })
+export const currentUploading = (media, uploadCounter, totalUpload) => (
+  {
+    type: CURRENT_UPLOAD,
+    media,
+    message: 'mobile.settings.media_backup.media_upload',
+    messageData: {
+      upload_counter: uploadCounter,
+      total_upload: totalUpload
+    }
+  }
+)
 
 async function getDirID (dir) {
   const targetDirectory = await cozy.client.files.createDirectory({
@@ -27,21 +39,25 @@ async function getDirID (dir) {
 
 export const mediaBackup = (dir) => async (dispatch, getState) => {
   if (backupAllowed(getState().mobile.settings.wifiOnly)) {
-    let photos = await getFilteredPhotos()
+    const photosOnDevice = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+    const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
     const dirID = await getDirID(dir)
-    for (let photo of photos) {
-      if (!alreadyUploaded.includes(photo.id) && backupAllowed(getState().mobile.settings.wifiOnly)) {
+    const totalUpload = photosToUpload.length
+    let uploadCounter = 0
+    for (let photo of photosToUpload) {
+      if (backupAllowed(getState().mobile.settings.wifiOnly)) {
+        dispatch(currentUploading(photo, uploadCounter++, totalUpload))
         const blob = await getBlob(photo)
         const options = {
           dirID,
           name: photo.fileName
         }
         await cozy.client.files.create(blob, options).then(() => {
-          dispatch(successImageUpload(photo))
+          dispatch(successMediaUpload(photo))
         }).catch(err => {
           if (err.status === HTTP_CODE_CONFLICT) {
-            dispatch(successImageUpload(photo))
+            dispatch(successMediaUpload(photo))
           }
           console.log(err)
         })

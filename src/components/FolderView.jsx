@@ -14,6 +14,7 @@ import FilesSelectionBar from '../containers/FilesSelectionBar'
 import TrashSelectionBar from '../containers/TrashSelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
+import UploadProgression from '../../mobile/src/containers/UploadProgression'
 
 import styles from '../styles/table'
 
@@ -38,6 +39,7 @@ class FolderView extends Component {
     return (
       <div role='contentinfo'>
         <Alerter />
+        {__TARGET__ === 'mobile' && <UploadProgression />}
         {!isTrashContext && showSelection && <FilesSelectionBar selected={selected} />}
         {isTrashContext && showSelection && <TrashSelectionBar />}
         {showDeleteConfirmation && <DeleteConfirmation />}

@@ -47,13 +47,14 @@ $coz-bar-size = 40px
 
     .fil-path-link
     .fil-path-current
+        display       flex
+        align-items   center
         box-sizing    border-box
         height        $coz-bar-size
-        padding       7px 0
         text-overflow ellipsis
         overflow      hidden
         white-space   nowrap
-        padding-right 50px
+        padding       0 2.35em 0 .25em
 
     .fil-path-previous
         display block
@@ -78,19 +79,12 @@ $coz-bar-size = 40px
 
         .fil-path-link
         .fil-path-current
-            padding-left $coz-bar-size
+            padding-left "calc(%s + .25em)" % $coz-bar-size
 
         .fil-path-link
-            display block
+            display flex
             color   grey-08
 
         .fil-path-current
             height     $coz-bar-size
             box-shadow inset 0 -1px 0 0 grey-09
-
-    :global
-        [role=banner] .coz-bar-title
-            display none
-
-        [role=banner][data-drawer-visible="true"]
-            z-index $nav-index + 1

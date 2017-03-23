@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
   cozy.bar.init({
     appName: data.cozyAppName,
     iconPath: data.cozyIconPath,
-    lang: data.cozyLocale
+    lang: data.cozyLocale,
+    replaceTitleOnMobile: true
   })
 
   render((
