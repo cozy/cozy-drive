@@ -67,7 +67,7 @@ export const openFolder = (folderId, context = FILES_CONTEXT) => {
       context,
       folder: Object.assign(extractFileAttributes(folder), {
         parent: extractFileAttributes(parent)}),
-      files: folder.relations('contents').map(
+      files: (folder.relations('contents') || []).map(
         c => extractFileAttributes(c)
       )
     })
