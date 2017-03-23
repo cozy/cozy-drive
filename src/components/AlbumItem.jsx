@@ -7,26 +7,35 @@ import { translate } from '../lib/I18n'
 
 import { getPhotoLink } from '../actions/photos'
 
+const isAlbumEmpty = album => {
+  return !(album && album.photosIds && album.photosIds.length)
+}
+
 const fetchMainPhoto = album => {
-  if (album.photosIds && album.photosIds.length) {
-    return getPhotoLink(album.photosIds[0])
-  } else {
-    return Promise.resolve(null)
-  }
+  return isAlbumEmpty(album)
+    ? Promise.resolve(null)
+      : getPhotoLink(album.photosIds[0])
 }
 
 export class AlbumItem extends Component {
   constructor (props) {
     super(props)
 
+    const { album } = props
+    // Detect right now if there is a main photo to load, otherwise the
+    // Promise.resolve(null) in fetchMainPhoto will not be considered as it will
+    // trigger a setState directly in constructor.
+    const albumIsEmpty = isAlbumEmpty(album)
+
     this.state = {
-      isLoading: true,
-      isImageLoading: true
+      // Set loading state in function of album emtpyness.
+      isLoading: !albumIsEmpty,
+      isImageLoading: !albumIsEmpty
     }
 
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
 
-    fetchMainPhoto(props.album || {})
+    fetchMainPhoto(album)
       .then(link => {
         this.setState({
           url: link,
@@ -35,7 +44,7 @@ export class AlbumItem extends Component {
       }).catch(linkError => {
         this.props.onServerError(linkError)
         this.setState({
-          url: '',
+          url: null,
           isLoading: false
         })
       })
@@ -61,7 +70,7 @@ export class AlbumItem extends Component {
               onLoad={this.handleImageLoaded}
               style={isImageLoading ? 'display:none' : ''}
               alt={`${album.name} album cover`}
-              src={url}
+              src={url || ''}
             />
             <h2 className={styles['pho-album-title']}>{album.name}</h2>
             <h4 className={styles['pho-album-description']}>
