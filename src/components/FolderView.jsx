@@ -10,8 +10,7 @@ import Oops from './Oops'
 import FileListHeader from './FileListHeader'
 import FileList from './FileList'
 
-import FilesSelectionBar from '../containers/FilesSelectionBar'
-import TrashSelectionBar from '../containers/TrashSelectionBar'
+import SelectionBar from './SelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 import UploadProgression from '../../mobile/src/containers/UploadProgression'
@@ -36,12 +35,18 @@ class FolderView extends Component {
   render () {
     const { isTrashContext, showSelection, showDeleteConfirmation, showActionMenu } = this.props
     const { selected, actions } = this.props
+    const { onHideSelectionBar, onShowActionMenu } = this.props
     return (
       <div role='contentinfo'>
         <Alerter />
         {__TARGET__ === 'mobile' && <UploadProgression />}
-        {!isTrashContext && showSelection && <FilesSelectionBar selected={selected} {...actions.selection} />}
-        {isTrashContext && showSelection && <TrashSelectionBar selected={selected} {...actions.selection} />}
+        {showSelection &&
+          <SelectionBar
+            selected={selected}
+            actions={actions.selection}
+            onClose={onHideSelectionBar}
+            onMoreClick={onShowActionMenu}
+          />}
         {showDeleteConfirmation && <DeleteConfirmation />}
         <div className={classNames(
           styles['fil-content-table'],
