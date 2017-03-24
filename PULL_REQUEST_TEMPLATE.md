@@ -10,7 +10,7 @@ Before merging this PR, the following things must have been done:
 - [ ] All changes have test coverage
 - [ ] Updated README, if necessary
 
-If this PR relies on changes in one of our internal libraries (coey-client-js or coy-ui, for example), please also do the following things:
+If this PR relies on changes in one of our internal libraries (cozy-client-js or cozy-ui, for example), please also do the following things:
 
 - [ ] The package.json and yarn.lock files include the correct dependency version, in those versions have been released
 - [ ] [cozy-client-js](https://github.com/cozy/cozy-client-js) documentation and tests are up to date
