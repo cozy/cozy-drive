@@ -41,7 +41,7 @@ class FolderView extends Component {
         <Alerter />
         {__TARGET__ === 'mobile' && <UploadProgression />}
         {!isTrashContext && showSelection && <FilesSelectionBar selected={selected} />}
-        {isTrashContext && showSelection && <TrashSelectionBar />}
+        {isTrashContext && showSelection && <TrashSelectionBar selected={selected} />}
         {showDeleteConfirmation && <DeleteConfirmation />}
         <div className={classNames(
           styles['fil-content-table'],

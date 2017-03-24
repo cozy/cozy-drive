@@ -36,14 +36,14 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: (files, dropSelection) => {
-    if (dropSelection) files.forEach(item => dispatch(toggleFileSelection(item.id, true)))
+    if (dropSelection) files.forEach(item => dispatch(toggleFileSelection(item, true)))
     dispatch(hideDeleteConfirmation())
     dispatch(hideFileActionMenu())
   },
   onConfirm: (files, dropSelection) => {
     files.forEach(item => {
-      dispatch(trashFile(item.id))
-      if (dropSelection) dispatch(toggleFileSelection(item.id, true))
+      dispatch(trashFile(item))
+      if (dropSelection) dispatch(toggleFileSelection(item, true))
     })
     dispatch(hideDeleteConfirmation())
     dispatch(hideFileActionMenu())

@@ -172,12 +172,12 @@ export const createFolder = name => {
   }
 }
 
-export const trashFile = id => {
+export const trashFile = file => {
   return async dispatch => {
-    dispatch({ type: TRASH_FILE, id: id })
+    dispatch({ type: TRASH_FILE, file })
     let trashed
     try {
-      trashed = await cozy.client.files.trashById(id)
+      trashed = await cozy.client.files.trashById(file.id)
     } catch (err) {
       return dispatch({
         type: TRASH_FILE_FAILURE,
@@ -189,7 +189,7 @@ export const trashFile = id => {
     dispatch({
       type: TRASH_FILE_SUCCESS,
       file: extractFileAttributes(trashed),
-      id,
+      id: file.id,
       alert: {
         message: 'alert.trash_file_success'
       }
@@ -197,12 +197,12 @@ export const trashFile = id => {
   }
 }
 
-export const restoreFile = id => {
+export const restoreFile = file => {
   return async dispatch => {
-    dispatch({ type: RESTORE_FILE, id: id })
+    dispatch({ type: RESTORE_FILE, file })
     let restored
     try {
-      restored = await cozy.client.files.restoreById(id)
+      restored = await cozy.client.files.restoreById(file.id)
     } catch (err) {
       return dispatch({
         type: RESTORE_FILE_FAILURE,
@@ -214,7 +214,7 @@ export const restoreFile = id => {
     dispatch({
       type: RESTORE_FILE_SUCCESS,
       file: extractFileAttributes(restored),
-      id,
+      id: file.id,
       alert: {
         message: 'alert.restore_file_success'
       }
@@ -238,9 +238,9 @@ export const hideDeleteConfirmation = () => ({
   type: HIDE_DELETE_CONFIRMATION
 })
 
-export const toggleFileSelection = (id, selected) => ({
+export const toggleFileSelection = (file, selected) => ({
   type: selected ? UNSELECT_FILE : SELECT_FILE,
-  id
+  id: file.id
 })
 
 export const downloadSelection = selected => {
@@ -250,7 +250,6 @@ export const downloadSelection = selected => {
       return dispatch(downloadFile(selected[0]))
     }
     const paths = selected.map(f => f.path)
-    console.log(paths)
     const href = await cozy.client.files.getArchiveLink(paths)
     const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')

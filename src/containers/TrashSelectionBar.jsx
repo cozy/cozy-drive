@@ -13,10 +13,6 @@ const TrashSelectionBar = ({ t, selected, onHide, onRestore }) => (
   </div>
 )
 
-const mapStateToProps = (state, ownProps) => ({
-  selected: state.ui.selected
-})
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onHide: () => {
     dispatch(hideSelectionBar())
@@ -29,7 +25,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(translate()(TrashSelectionBar))
+export default connect(null, mapDispatchToProps)(translate()(TrashSelectionBar))

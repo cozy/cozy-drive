@@ -51,8 +51,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(openFolder(folderId)),
   onFileOpen: (parentFolder, file) =>
     dispatch(openFileInNewTab(parentFolder, file)),
-  onFileToggle: (id, selected) =>
-    dispatch(toggleFileSelection(id, selected)),
+  onFileToggle: (file, selected) =>
+    dispatch(toggleFileSelection(file, selected)),
   onShowActionMenu: (fileId) =>
     dispatch(showFileActionMenu(fileId))
 })

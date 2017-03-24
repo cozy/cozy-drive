@@ -36,7 +36,7 @@ class File extends Component {
   toggle (e) {
     e.stopPropagation()
     const { attributes, onToggle, selected } = this.props
-    onToggle(attributes.id, selected)
+    onToggle(attributes, selected)
   }
 
   open (e, attributes) {
