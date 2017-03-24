@@ -10,12 +10,13 @@ import Oops from './Oops'
 import FileListHeader from './FileListHeader'
 import FileList from './FileList'
 
+import Topbar from './Topbar'
 import SelectionBar from './SelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
 import UploadProgression from '../../mobile/src/containers/UploadProgression'
 
-import styles from '../styles/table'
+import styles from '../styles/folderview'
 
 const FolderContent = props => {
   const { fetchStatus, files, isAddingFolder, canUpload } = props
@@ -37,28 +38,31 @@ class FolderView extends Component {
     const { selected, actions } = this.props
     const { onHideSelectionBar, onShowActionMenu } = this.props
     return (
-      <div role='contentinfo'>
-        <Alerter />
-        {__TARGET__ === 'mobile' && <UploadProgression />}
-        {showSelection &&
-          <SelectionBar
-            selected={selected}
-            actions={actions.selection}
-            onClose={onHideSelectionBar}
-            onMoreClick={onShowActionMenu}
-          />}
-        {showDeleteConfirmation && <DeleteConfirmation />}
-        <div className={classNames(
-          styles['fil-content-table'],
-          { [styles['fil-content-table-selection']]: showSelection }
-        )}>
-          <FileListHeader />
-          <div className={styles['fil-content-body']}>
-            <FolderContent {...this.props} />
+      <main class={styles['fil-content']}>
+        <Topbar />
+        <div role='contentinfo'>
+          <Alerter />
+          {__TARGET__ === 'mobile' && <UploadProgression />}
+          {showSelection &&
+            <SelectionBar
+              selected={selected}
+              actions={actions.selection}
+              onClose={onHideSelectionBar}
+              onMoreClick={onShowActionMenu}
+            />}
+          {showDeleteConfirmation && <DeleteConfirmation />}
+          <div className={classNames(
+            styles['fil-content-table'],
+            { [styles['fil-content-table-selection']]: showSelection }
+          )}>
+            <FileListHeader />
+            <div className={styles['fil-content-body']}>
+              <FolderContent {...this.props} />
+            </div>
           </div>
+          {showActionMenu && <FileActionMenu isTrashContext={isTrashContext} />}
         </div>
-        {showActionMenu && <FileActionMenu isTrashContext={isTrashContext} />}
-      </div>
+      </main>
     )
   }
 }
