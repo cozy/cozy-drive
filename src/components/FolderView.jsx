@@ -35,13 +35,13 @@ const FolderContent = props => {
 class FolderView extends Component {
   render () {
     const { isTrashContext, showSelection, showDeleteConfirmation, showActionMenu } = this.props
-    const { selected } = this.props
+    const { selected, actions } = this.props
     return (
       <div role='contentinfo'>
         <Alerter />
         {__TARGET__ === 'mobile' && <UploadProgression />}
-        {!isTrashContext && showSelection && <FilesSelectionBar selected={selected} />}
-        {isTrashContext && showSelection && <TrashSelectionBar selected={selected} />}
+        {!isTrashContext && showSelection && <FilesSelectionBar selected={selected} {...actions.selection} />}
+        {isTrashContext && showSelection && <TrashSelectionBar selected={selected} {...actions.selection} />}
         {showDeleteConfirmation && <DeleteConfirmation />}
         <div className={classNames(
           styles['fil-content-table'],

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import FolderView from '../components/FolderView'
 
-import {  } from '../actions'
+import { hideSelectionBar, restoreFile, toggleFileSelection } from '../actions'
 import {  } from '../reducers'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -12,7 +12,19 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-
+  actions: Object.assign({}, ownProps.actions, {
+    selection: {
+      onHide: () => {
+        dispatch(hideSelectionBar())
+      },
+      onRestore: (selected) => {
+        selected.forEach(item => {
+          dispatch(restoreFile(item))
+          dispatch(toggleFileSelection(item, true))
+        })
+      }
+    }
+  })
 })
 
 export default connect(

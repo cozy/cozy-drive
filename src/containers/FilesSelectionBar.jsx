@@ -1,11 +1,8 @@
 import styles from '../styles/selectionbar'
 
 import React from 'react'
-import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
 import classNames from 'classnames'
-
-import { downloadSelection, hideSelectionBar, showFileActionMenu, showDeleteConfirmation } from '../actions'
 
 const FilesSelectionBar = ({ t, selected, onDownload, onHide, onDelete, onShowActionMenu }) => (
   <div className={styles['coz-selectionbar']} role='toolbar'>
@@ -24,20 +21,4 @@ const FilesSelectionBar = ({ t, selected, onDownload, onHide, onDelete, onShowAc
   </div>
 )
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onDownload: () => {
-    dispatch(downloadSelection(ownProps.selected))
-    dispatch(hideSelectionBar())
-  },
-  onHide: () => {
-    dispatch(hideSelectionBar())
-  },
-  onDelete: () => {
-    dispatch(showDeleteConfirmation())
-  },
-  onShowActionMenu: () => {
-    dispatch(showFileActionMenu())
-  }
-})
-
-export default connect(null, mapDispatchToProps)(translate()(FilesSelectionBar))
+export default translate()(FilesSelectionBar)
