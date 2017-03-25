@@ -1,17 +1,17 @@
-import styles from '../styles/toolbar'
+import styles from '../../styles/toolbar'
 import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../lib/I18n'
+import { translate } from '../../lib/I18n'
 
-import UploadButton from '../components/UploadButton'
+import UploadButton from '../../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { addFolder, showSelectionBar, uploadFile } from '../actions'
-import { mustShowSelectionBar } from '../reducers'
+import { addFolder, showSelectionBar, uploadFile } from '../../actions'
+import { mustShowSelectionBar } from '../../reducers'
 
-const FilesToolbar = ({ t, error, displayedFolder, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
+const Toolbar = ({ t, error, displayedFolder, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
     <UploadButton
       disabled={!!error || isSelectionBarVisible}
@@ -76,4 +76,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(FilesToolbar))
+)(translate()(Toolbar))

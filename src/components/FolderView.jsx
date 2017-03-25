@@ -10,7 +10,7 @@ import Oops from './Oops'
 import FileListHeader from './FileListHeader'
 import FileList from './FileList'
 
-import Topbar from './Topbar'
+import Breadcrumb from '../containers/Breadcrumb'
 import SelectionBar from './SelectionBar'
 import FileActionMenu from '../containers/FileActionMenu'
 import DeleteConfirmation from '../containers/DeleteConfirmation'
@@ -35,11 +35,14 @@ const FolderContent = props => {
 class FolderView extends Component {
   render () {
     const { isTrashContext, showSelection, showDeleteConfirmation, showActionMenu } = this.props
-    const { selected, actions } = this.props
+    const { selected, actions, toolbar } = this.props
     const { onHideSelectionBar, onShowActionMenu } = this.props
     return (
       <main class={styles['fil-content']}>
-        <Topbar />
+        <div class={styles['fil-topbar']}>
+          <Breadcrumb />
+          {toolbar}
+        </div>
         <div role='contentinfo'>
           <Alerter />
           {__TARGET__ === 'mobile' && <UploadProgression />}

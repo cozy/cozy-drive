@@ -3,8 +3,8 @@ import { Route, Redirect } from 'react-router'
 
 import Layout from './Layout'
 import FileExplorer from '../containers/FileExplorer'
-import Files from '../containers/Files'
-import Trash from '../containers/Trash'
+import { Container as Files } from '../ducks/files'
+import { Container as Trash } from '../ducks/trash'
 
 const AppRoute = (
   <Route component={Layout}>

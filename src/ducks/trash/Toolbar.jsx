@@ -1,16 +1,16 @@
-import styles from '../styles/toolbar'
+import styles from '../../styles/toolbar'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../lib/I18n'
+import { translate } from '../../lib/I18n'
 import classNames from 'classnames'
 
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { showSelectionBar } from '../actions'
-import { mustShowSelectionBar } from '../reducers'
+import { showSelectionBar } from '../../actions'
+import { mustShowSelectionBar } from '../../reducers'
 
-const TrashToolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => (
+const Toolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => (
   <div className={styles['fil-toolbar-trash']} role='toolbar'>
     <MenuButton>
       <button
@@ -46,4 +46,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(TrashToolbar))
+)(translate()(Toolbar))

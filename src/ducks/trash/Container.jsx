@@ -1,14 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import FolderView from '../components/FolderView'
+import FolderView from '../../components/FolderView'
+import Toolbar from './Toolbar'
 
-import { restoreFile, toggleFileSelection } from '../actions'
-import {  } from '../reducers'
+import { restoreFile, toggleFileSelection } from '../../actions'
 
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: true,
-  canUpload: false
+  canUpload: false,
+  toolbar: <Toolbar />
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
