@@ -99,6 +99,11 @@
         "button": "Next",
         "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
       },
+      "files": {
+        "title": "Access your files",
+        "description": "In order to save your Cozy files on your device, the application must access your files.",
+        "button": "Next"
+      },
       "photos": {
         "title": "Backup your photos and videos",
         "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them. By default, it will only be done when the WIFI is on. This setting can be changed later on."

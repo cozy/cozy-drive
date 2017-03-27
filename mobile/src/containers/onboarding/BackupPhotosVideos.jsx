@@ -31,7 +31,7 @@ export const BackupPhotosVideos = ({ t, onActivate, onSkip }) =>
       >
         {t('mobile.onboarding.step.button')}
       </button>
-      <Breadcrumb currentStep={1} totalSteps={2} />
+      <Breadcrumb currentStep={2} totalSteps={3} />
     </footer>
   </div>
 )

@@ -31,7 +31,7 @@ export const Analytics = ({ t, onActivate, onSkip }) =>
       >
         {t('mobile.onboarding.step.button')}
       </button>
-      <Breadcrumb currentStep={2} totalSteps={2} />
+      <Breadcrumb currentStep={3} totalSteps={3} />
     </footer>
   </div>
 )
