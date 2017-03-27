@@ -11,9 +11,9 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="StatusBarBackgroundColor" value="#297ef2" />
     <engine name="android" spec="6.1.2" />
     <platform name="android">
+        <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
         <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png" />
@@ -25,6 +25,7 @@
     <engine name="ios" spec="4.3.1" />
     <platform name="ios">
         <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarStyle" value="default" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <config-file mode="add" parent="ITSAppUsesNonExemptEncryption" target="*-Info.plist">
