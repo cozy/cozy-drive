@@ -9,7 +9,7 @@ import { restoreFile, toggleFileSelection } from '../../actions'
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: true,
   canUpload: false,
-  toolbar: <Toolbar />
+  Toolbar
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

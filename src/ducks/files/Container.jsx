@@ -9,7 +9,7 @@ import { downloadSelection, hideSelectionBar, showDeleteConfirmation } from '../
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: false,
   canUpload: true,
-  toolbar: <Toolbar />
+  Toolbar
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

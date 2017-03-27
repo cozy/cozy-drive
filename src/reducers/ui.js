@@ -20,18 +20,6 @@ import {
   HIDE_FILE_ACTIONMENU
 } from '../actions'
 
-const isFetching = (state = false, action) => {
-  switch (action.type) {
-    case OPEN_FOLDER:
-      return true
-    case OPEN_FOLDER_SUCCESS:
-    case OPEN_FOLDER_FAILURE:
-      return false
-    default:
-      return state
-  }
-}
-
 const showAddFolder = (state = false, action) => {
   switch (action.type) {
     case ADD_FOLDER:
@@ -114,19 +102,6 @@ const actionable = (state = null, action) => {
   }
 }
 
-const error = (state = null, action) => {
-  switch (action.type) {
-    case OPEN_FOLDER_FAILURE:
-      return {
-        message: 'error.open_folder',
-        cause: action.error,
-        critical: true
-      }
-    default:
-      return state
-  }
-}
-
 const actionMenu = (state = { openWith: false }, action) => {
   const newState = {}
   switch (action.type) {
@@ -142,13 +117,11 @@ const actionMenu = (state = { openWith: false }, action) => {
 }
 
 export default combineReducers({
-  isFetching,
   showAddFolder,
   showSelectionBar,
   showDeleteConfirmation,
   selected,
   showFileActionMenu,
   actionable,
-  error,
   actionMenu
 })

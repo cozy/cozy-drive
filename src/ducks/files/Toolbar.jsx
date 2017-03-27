@@ -9,12 +9,11 @@ import UploadButton from '../../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { addFolder, showSelectionBar, uploadFile } from '../../actions'
-import { mustShowSelectionBar } from '../../reducers'
 
-const Toolbar = ({ t, error, displayedFolder, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
+const Toolbar = ({ t, disabled, displayedFolder, addFolder, showSelectionBar, uploadFile }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
     <UploadButton
-      disabled={!!error || isSelectionBarVisible}
+      disabled={disabled}
       onUpload={file => uploadFile(file, displayedFolder)}
       label={t('toolbar.item_upload')}
       className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', styles['desktop-upload'])}
@@ -23,15 +22,14 @@ const Toolbar = ({ t, error, displayedFolder, addFolder, isSelectionBarVisible, 
       <button
         role='button'
         className={classNames('coz-btn', styles['fil-toolbar-more-btn'])}
-        disabled={!!error || isSelectionBarVisible}
+        disabled={disabled}
       >
         <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
         <Item>
           <UploadButton
-            disabled={!!error || isSelectionBarVisible}
-            onUpload={uploadFile}
+            onUpload={file => uploadFile(file, displayedFolder)}
             label={t('toolbar.menu_upload')}
             className={styles['fil-action-upload']}
           />
@@ -56,9 +54,7 @@ const Toolbar = ({ t, error, displayedFolder, addFolder, isSelectionBarVisible, 
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  error: state.ui.error,
-  displayedFolder: state.view.displayedFolder,
-  isSelectionBarVisible: mustShowSelectionBar(state)
+  displayedFolder: state.view.displayedFolder
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -37,7 +37,6 @@ class FileExplorer extends Component {
 const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
   fetchStatus: state.view.fetchStatus,
-  // error: state.ui.error,
   isAddingFolder: mustShowAddFolder(state), // not fan of this...
   showSelection: mustShowSelectionBar(state),
   showDeleteConfirmation: state.ui.showDeleteConfirmation,

@@ -35,13 +35,15 @@ const FolderContent = props => {
 class FolderView extends Component {
   render () {
     const { isTrashContext, showSelection, showDeleteConfirmation, showActionMenu } = this.props
-    const { selected, actions, toolbar } = this.props
+    const { selected, actions, Toolbar } = this.props
     const { onHideSelectionBar, onShowActionMenu } = this.props
+
+    const fetchFailed = this.props.fetchStatus === 'failed'
     return (
       <main class={styles['fil-content']}>
         <div class={styles['fil-topbar']}>
           <Breadcrumb />
-          {toolbar}
+          <Toolbar disabled={fetchFailed || showSelection} />
         </div>
         <div role='contentinfo'>
           <Alerter />

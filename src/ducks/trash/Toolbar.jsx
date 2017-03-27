@@ -8,16 +8,15 @@ import classNames from 'classnames'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { showSelectionBar } from '../../actions'
-import { mustShowSelectionBar } from '../../reducers'
 
-const Toolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => (
+const Toolbar = ({ t, disabled, showSelectionBar }) => (
   <div className={styles['fil-toolbar-trash']} role='toolbar'>
     <MenuButton>
       <button
         role='button'
         className={classNames('coz-btn', styles['fil-toolbar-more-btn'])
         }
-        disabled={!!error || isSelectionBarVisible}
+        disabled={disabled}
       >
         <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
       </button>
@@ -32,11 +31,6 @@ const Toolbar = ({ t, error, isSelectionBarVisible, showSelectionBar }) => (
   </div>
 )
 
-const mapStateToProps = (state, ownProps) => ({
-  error: state.ui.error,
-  isSelectionBarVisible: mustShowSelectionBar(state)
-})
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   showSelectionBar: () => {
     dispatch(showSelectionBar())
@@ -44,6 +38,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(translate()(Toolbar))
