@@ -61,4 +61,5 @@
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="1.3.2" />
     <plugin name="cordova-plugin-background-fetch" spec="4.0.0" />
+    <plugin name="cordova-plugin-background-mode" spec="0.7.2" />
 </widget>
