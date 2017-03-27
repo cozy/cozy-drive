@@ -5,7 +5,7 @@ import { setBackupImages } from '../../actions/settings'
 
 export const BackupPhotosVideos = ({ onActivate, onSkip }) =>
 (
-  <OnBoarding onActivate={onActivate} onSkip={onSkip} nameStep='photos' currentStep={2} totalSteps={3} />
+  <OnBoarding onActivate={onActivate} onSkip={onSkip} nameStep='photos' currentStep={2} totalSteps={3} />
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
