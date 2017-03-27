@@ -101,8 +101,7 @@
       },
       "files": {
         "title": "Access your files",
-        "description": "In order to save your Cozy files on your device, the application must access your files.",
-        "button": "Next"
+        "description": "In order to save your Cozy files on your device, the application must access your files."
       },
       "photos": {
         "title": "Backup your photos and videos",
@@ -110,7 +109,8 @@
       },
       "step": {
         "button": "Enable now",
-        "skip": "Later"
+        "skip": "Later",
+        "next": "Next"
       },
       "analytics": {
         "title": "Help us improve Cozy",
