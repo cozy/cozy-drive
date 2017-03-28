@@ -5,7 +5,7 @@ import { translate } from '../../../src/lib/I18n'
 import Breadcrumb from './Breadcrumb'
 import styles from '../styles/onboarding'
 
-export const OnBoarding = ({ t, onActivate, onSkip, nameStep, currentStep, totalSteps }) =>
+export const OnBoarding = ({ t, onActivate, onSkip, stepName, currentStep, totalSteps }) =>
 (
   <div className={classNames(styles['wizard'], styles['photos-backup'])}>
     <header className={styles['wizard-header']}>
@@ -14,9 +14,9 @@ export const OnBoarding = ({ t, onActivate, onSkip, nameStep, currentStep, total
       </a>}
     </header>
     <div className={styles['wizard-main']}>
-      <div className={classNames(styles['illustration'], styles['illustration-' + nameStep])} />
-      <h1 className={styles['title']}>{t('mobile.onboarding.' + nameStep + '.title')}</h1>
-      <p className={styles['description']}>{t('mobile.onboarding.' + nameStep + '.description')}</p>
+      <div className={classNames(styles['illustration'], styles['illustration-' + stepName])} />
+      <h1 className={styles['title']}>{t('mobile.onboarding.' + stepName + '.title')}</h1>
+      <p className={styles['description']}>{t('mobile.onboarding.' + stepName + '.description')}</p>
     </div>
     <footer className={styles['wizard-footer']}>
       <button
