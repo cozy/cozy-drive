@@ -2,7 +2,7 @@
 
 import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
-import { logException } from '../lib/crash-reporter'
+import { logException } from '../lib/reporter'
 import { startBackgroundService, stopBackgroundService } from '../lib/background'
 
 export const SET_URL = 'SET_URL'

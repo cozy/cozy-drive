@@ -1,4 +1,4 @@
-import { configureReporter } from './crash-reporter'
+import { configureReporter } from './reporter'
 import { initClient } from './cozy-helper'
 
 export const initService = (store) => {

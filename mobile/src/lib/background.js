@@ -1,6 +1,6 @@
 import { getStore } from './store'
 import { initService } from './init'
-import { logException } from './crash-reporter'
+import { logException } from './reporter'
 import { loadState } from './localStorage'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from './network'
