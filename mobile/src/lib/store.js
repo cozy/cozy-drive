@@ -8,9 +8,10 @@ import { ANALYTICS_URL, getAnalyticsConfiguration } from './reporter'
 import { saveState } from './localStorage'
 
 const loggerMiddleware = createLogger()
+let store
 
-export const getStore = (persistedState) => {
-  let store = createStore(
+export const initStore = (persistedState) => {
+  store = createStore(
     filesApp,
     persistedState,
     applyMiddleware(
@@ -28,6 +29,6 @@ export const getStore = (persistedState) => {
       }
     }
   }))
-
-  return store
 }
+
+export const getStore = () => store
