@@ -105,7 +105,7 @@
       },
       "photos": {
         "title": "Backup your photos and videos",
-        "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them. By default, it will only be done when the WIFI is on. This setting can be changed later on."
+        "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them."
       },
       "step": {
         "button": "Enable now",
