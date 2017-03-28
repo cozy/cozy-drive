@@ -5,14 +5,14 @@ import styles from '../styles/nav'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
-import { Link } from 'react-router'
+
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import Spinner from '../components/Spinner'
-import { FILES_CONTEXT, TRASH_CONTEXT } from '../constants/config'
-import { openFolder } from '../actions'
+import { openFiles, openTrash } from '../actions'
 
-class ActiveLink extends Component {
+class Link extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -21,22 +21,41 @@ class ActiveLink extends Component {
   }
 
   open (e) {
+    e.preventDefault()
     this.setState({ opening: true })
     this.props.onClick()
-      .then(() => this.setState({ opening: false }))
+      .then(() => {
+        this.setState({ opening: false })
+        this.props.router.push(this.props.to)
+      })
   }
 
-  render ({ to, className, children }, { opening }) {
+  render () {
+    const { router, location, to, activeClassName, children, ...props } = this.props
+    const { opening } = this.state
+
+    props.href = router.createHref(to)
+
+    if (activeClassName && location.pathname.match(new RegExp('^' + to))) {
+      if (props.className) {
+        props.className += ` ${activeClassName}`
+      } else {
+        props.className = activeClassName
+      }
+    }
+
     return (
-      <Link to={to} className={className} onClick={e => this.open(e)}>
+      <a {...props} onClick={e => this.open(e)}>
         {children}
         {opening && <Spinner />}
-      </Link>
+      </a>
     )
   }
 }
 
-const Nav = ({ t, context, openFiles, openTrash }) => {
+const ActiveLink = withRouter(Link)
+
+const Nav = ({ t, location, openFiles, openTrash }) => {
   return (
     <nav>
       <ul class={styles['coz-nav']}>
@@ -46,9 +65,9 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
             onClick={openFiles}
             className={classNames(
               styles['coz-nav-link'],
-              styles['fil-cat-files'],
-              { [styles['active']]: context === FILES_CONTEXT }
+              styles['fil-cat-files']
             )}
+            activeClassName={styles['active']}
           >
             { t('nav.item_files') }
           </ActiveLink>
@@ -59,9 +78,9 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
             onClick={openTrash}
             className={classNames(
               styles['coz-nav-link'],
-              styles['fil-cat-trash'],
-              { [styles['active']]: context === TRASH_CONTEXT }
+              styles['fil-cat-trash']
             )}
+            activeClassName={styles['active']}
           >
             { t('nav.item_trash') }
           </ActiveLink>
@@ -82,14 +101,11 @@ const Nav = ({ t, context, openFiles, openTrash }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  context: state.context
-})
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  openFiles: () => dispatch(openFolder(null, FILES_CONTEXT)),
-  openTrash: () => dispatch(openFolder(null, TRASH_CONTEXT))
+  openFiles: () => dispatch(openFiles()),
+  openTrash: () => dispatch(openTrash())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(null, mapDispatchToProps)(
   translate()(Nav)
 )

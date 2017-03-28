@@ -1,21 +1,20 @@
-import styles from '../styles/toolbar'
+import styles from '../../styles/toolbar'
 import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../lib/I18n'
+import { translate } from '../../lib/I18n'
 
-import UploadButton from '../components/UploadButton'
+import UploadButton from '../../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { addFolder, showSelectionBar, uploadFile } from '../actions'
-import { mustShowSelectionBar } from '../reducers'
+import { addFolder, showSelectionBar, uploadFile } from '../../actions'
 
-const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectionBar, uploadFile }) => (
+const Toolbar = ({ t, disabled, displayedFolder, addFolder, showSelectionBar, uploadFile }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
     <UploadButton
-      disabled={!!error || isSelectionBarVisible}
-      onUpload={uploadFile}
+      disabled={disabled}
+      onUpload={file => uploadFile(file, displayedFolder)}
       label={t('toolbar.item_upload')}
       className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', styles['desktop-upload'])}
     />
@@ -23,15 +22,14 @@ const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectio
       <button
         role='button'
         className={classNames('coz-btn', styles['fil-toolbar-more-btn'])}
-        disabled={!!error || isSelectionBarVisible}
+        disabled={disabled}
       >
         <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
         <Item>
           <UploadButton
-            disabled={!!error || isSelectionBarVisible}
-            onUpload={uploadFile}
+            onUpload={file => uploadFile(file, displayedFolder)}
             label={t('toolbar.menu_upload')}
             className={styles['fil-action-upload']}
           />
@@ -56,8 +54,7 @@ const FilesToolbar = ({ t, error, addFolder, isSelectionBarVisible, showSelectio
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  error: state.ui.error,
-  isSelectionBarVisible: mustShowSelectionBar(state)
+  displayedFolder: state.view.displayedFolder
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -67,12 +64,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   showSelectionBar: () => {
     dispatch(showSelectionBar())
   },
-  uploadFile: (file) => {
-    dispatch(uploadFile(file))
+  uploadFile: (file, displayedFolder) => {
+    dispatch(uploadFile(file, displayedFolder))
   }
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(FilesToolbar))
+)(translate()(Toolbar))
