@@ -8,13 +8,14 @@ import { ANALYTICS_URL, getAnalyticsConfiguration } from './reporter'
 import { saveState } from './localStorage'
 
 const loggerMiddleware = createLogger()
+const ravenMiddleWare = RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration())
 
 export const configureStore = (persistedState) => {
   const store = createStore(
     filesApp,
     persistedState,
     applyMiddleware(
-      RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration()),
+      ravenMiddleWare,
       thunkMiddleware,
       loggerMiddleware
     )

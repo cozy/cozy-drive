@@ -16,20 +16,17 @@ export function configureReporter (value) {
   getState = value
 }
 
-export function logException (err, context) {
+export function logException (err) {
   if (!Raven.isSetup()) {
     Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
   }
-  Raven.captureException(err, {
-    extra: context
-  })
+  Raven.captureException(err)
   console.groupCollapsed('Raven is recording exception')
   console.error(err)
-  console.info(context)
   console.groupEnd()
 }
 
-export function logInfo (message, context) {
+export function logInfo (message) {
   if (!Raven.isSetup()) {
     Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
   }
