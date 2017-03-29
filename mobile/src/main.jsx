@@ -14,15 +14,14 @@ import { I18n } from '../../src/lib/I18n'
 import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState } from './lib/localStorage'
-import { initStore, getStore } from './lib/store'
+import { configureStore } from './lib/store'
 import { initService } from './lib/init'
 import { startBackgroundService, stopBackgroundService } from './lib/background'
 import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
 
 const renderAppWithPersistedState = persistedState => {
-  initStore(persistedState)
-  const store = getStore()
+  const store = configureStore(persistedState)
   initService(store)
 
   function requireSetup (nextState, replace, callback) {
