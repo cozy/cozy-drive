@@ -11,6 +11,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <hook type="before_build" src="scripts/update-config-version.sh" />
     <engine name="android" spec="6.1.2" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />

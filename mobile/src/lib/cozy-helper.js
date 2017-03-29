@@ -1,4 +1,4 @@
-/* global cozy, document */
+/* global cozy, document, __APP_VERSION__ */
 
 import { LocalStorage as Storage } from 'cozy-client-js'
 
@@ -13,6 +13,11 @@ const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
   softwareID: 'io.cozy.mobile.files',
   clientName: getClientName(device),
+  softwareVersion: __APP_VERSION__,
+  clientKind: 'mobile',
+  clientURI: 'https://github.com/cozy/cozy-files-v3/',
+  logoURI: 'https://raw.githubusercontent.com/cozy/cozy-files-v3/master/vendor/assets/apple-touch-icon-120x120.png',
+  policyURI: 'https://files.cozycloud.cc/cgu.pdf',
   scopes: ['io.cozy.files']
 })
 

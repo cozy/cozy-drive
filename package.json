@@ -140,6 +140,7 @@
       "__ALLOW_HTTP__": false,
       "__TARGET__": "browser",
       "__SENTRY_TOKEN__": "token",
+      "__APP_VERSION__": "0.0.1",
       "cozy": {}
     }
   },
