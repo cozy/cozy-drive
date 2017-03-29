@@ -11,12 +11,16 @@ import {
 
 describe('backup images actions creators', () => {
   it('should enable backup images', () => {
-    const state = reducer({}, setBackupImages(true))
+    const store = mockStore({})
+    store.dispatch(setBackupImages(true))
+    const state = store.getActions().reduce(reducer, store.getState())
     expect(state).toEqual({backupImages: true})
   })
 
   it('should disable backup images', () => {
-    const state = reducer({}, setBackupImages(false))
+    const store = mockStore({})
+    store.dispatch(setBackupImages(false))
+    const state = store.getActions().reduce(reducer, store.getState())
     expect(state).toEqual({backupImages: false})
   })
 
@@ -33,12 +37,16 @@ describe('backup images actions creators', () => {
 
 describe('analytics actions creators', () => {
   it('should enable analytics', () => {
-    const state = reducer({}, setAnalytics(true))
+    const store = mockStore({})
+    store.dispatch(setAnalytics(true))
+    const state = store.getActions().reduce(reducer, store.getState())
     expect(state).toEqual({analytics: true})
   })
 
   it('should disable analytics', () => {
-    const state = reducer({}, setAnalytics(false))
+    const store = mockStore({})
+    store.dispatch(setAnalytics(false))
+    const state = store.getActions().reduce(reducer, store.getState())
     expect(state).toEqual({analytics: false})
   })
 })
