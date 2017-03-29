@@ -37,3 +37,12 @@ export function logInfo (message, context) {
     level: 'info'
   })
 }
+
+export function pingOnceADay () {
+  if (!Raven.isSetup()) {
+    Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
+  }
+  Raven.captureMessage('good day: user opens the app', {
+    level: 'info'
+  })
+}

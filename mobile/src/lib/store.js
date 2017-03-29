@@ -23,6 +23,7 @@ export const initStore = (persistedState) => {
 
   store.subscribe(() => saveState({
     mobile: {
+      timestamp: store.getState().mobile.timestamp,
       settings: store.getState().mobile.settings,
       mediaBackup: {
         uploaded: store.getState().mobile.mediaBackup.uploaded
