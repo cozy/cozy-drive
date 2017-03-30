@@ -4,17 +4,18 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
 import filesApp from '../reducers'
-import { ANALYTICS_URL, getAnalyticsConfiguration } from './crash-reporter'
+import { ANALYTICS_URL, getAnalyticsConfiguration } from './reporter'
 import { saveState } from './localStorage'
 
 const loggerMiddleware = createLogger()
+const ravenMiddleWare = RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration())
 
-export const getStore = (persistedState) => {
-  let store = createStore(
+export const configureStore = (persistedState) => {
+  const store = createStore(
     filesApp,
     persistedState,
     applyMiddleware(
-      RavenMiddleWare(ANALYTICS_URL, getAnalyticsConfiguration()),
+      ravenMiddleWare,
       thunkMiddleware,
       loggerMiddleware
     )
@@ -22,6 +23,7 @@ export const getStore = (persistedState) => {
 
   store.subscribe(() => saveState({
     mobile: {
+      timestamp: store.getState().mobile.timestamp,
       settings: store.getState().mobile.settings,
       mediaBackup: {
         uploaded: store.getState().mobile.mediaBackup.uploaded

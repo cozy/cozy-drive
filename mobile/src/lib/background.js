@@ -1,6 +1,6 @@
-import { getStore } from './store'
+import { configureStore } from './store'
 import { initService } from './init'
-import { logException } from './crash-reporter'
+import { logException } from './reporter'
 import { loadState } from './localStorage'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from './network'
@@ -32,7 +32,7 @@ const startIosBackgroundService = () => {
     console.log('BackgroundFetch initiated')
 
     loadState().then(persistedState => {
-      const store = getStore(persistedState)
+      const store = configureStore(persistedState)
       initService(store)
 
       logException('It\'s me Background Service!!!')

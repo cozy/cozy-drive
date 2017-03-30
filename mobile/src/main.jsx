@@ -14,13 +14,14 @@ import { I18n } from '../../src/lib/I18n'
 import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState } from './lib/localStorage'
-import { getStore } from './lib/store'
+import { configureStore } from './lib/store'
 import { initService } from './lib/init'
 import { startBackgroundService, stopBackgroundService } from './lib/background'
 import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
+import { pingOnceADay } from './actions/timestamp'
 
 const renderAppWithPersistedState = persistedState => {
-  const store = getStore(persistedState)
+  const store = configureStore(persistedState)
   initService(store)
 
   function requireSetup (nextState, replace, callback) {
@@ -50,7 +51,12 @@ const renderAppWithPersistedState = persistedState => {
     }
   }
 
+  document.addEventListener('resume', () => {
+    store.dispatch(pingOnceADay(store.getState().mobile.timestamp))
+  })
+
   document.addEventListener('deviceready', () => {
+    store.dispatch(pingOnceADay(store.getState().mobile.timestamp))
     if (store.getState().mobile.settings.backupImages) {
       startBackgroundService()
     } else {

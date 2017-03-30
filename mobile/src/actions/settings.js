@@ -2,7 +2,7 @@
 
 import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
-import { logException } from '../lib/crash-reporter'
+import { logException, logInfo } from '../lib/reporter'
 import { startBackgroundService, stopBackgroundService } from '../lib/background'
 
 export const SET_URL = 'SET_URL'
@@ -38,10 +38,19 @@ export const checkURL = url => dispatch => {
 
 // settings
 
-export const setAnalytics = analytics => ({ type: SET_ANALYTICS, analytics })
-export const setBackupImages = backupImages => {
+export const setAnalytics = analytics => (dispatch, getState) => {
+  if (analytics && getState().mobile) {
+    getState().mobile.settings.backupImages ? logInfo('settings: backup images is enabled') : logInfo('settings: backup images is disabled')
+  }
+  dispatch({ type: SET_ANALYTICS, analytics })
+}
+
+export const setBackupImages = backupImages => (dispatch, getState) => {
+  if (getState().mobile && getState().mobile.settings.analytics) {
+    backupImages ? logInfo('settings: backup images is enabled') : logInfo('settings: backup images is disabled')
+  }
   backupImages ? startBackgroundService() : stopBackgroundService()
-  return { type: BACKUP_IMAGES, backupImages }
+  return dispatch({ type: BACKUP_IMAGES, backupImages })
 }
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
