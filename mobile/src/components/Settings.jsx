@@ -1,6 +1,9 @@
+/* globals __DEVMODE__ */
+
 import React from 'react'
 import Modal from 'cozy-ui/react/Modal'
 import styles from '../styles/settings'
+import DebugTools from '../containers/DebugTools'
 import { translate } from '../../../src/lib/I18n'
 
 const SubCategory = ({ id, label, value, title }) => (
@@ -52,6 +55,14 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
         primaryText={t('mobile.settings.unlink.confirmation.unlink')}
         primaryAction={() => unlink(client)}
       />}
+
+      {__DEVMODE__ &&
+        [
+          <hr />,
+          <h3>Debug Zone</h3>,
+          <DebugTools />
+        ]
+      }
 
     </div>
   </div>
