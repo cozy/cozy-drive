@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { getFolderIdFromRoute } from '../reducers'
-
-import { openFolder, openFileInNewTab, toggleFileSelection, unselectAllFiles, howFileActionMenu } from '../actions'
-import { getVisibleFiles, getSelectedFiles, getActionableFiles } from '../reducers'
+import { openFolder, openFileInNewTab, toggleFileSelection, unselectAllFiles, showFileActionMenu } from '../actions'
+import { getFolderIdFromRoute, getVisibleFiles, getSelectedFiles, getActionableFiles } from '../reducers'
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname

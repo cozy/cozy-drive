@@ -12,7 +12,6 @@ import {
   abortAddFolder,
   downloadSelection,
   trashFiles,
-  toggleFileSelection,
   hideFileActionMenu
 } from '../../actions'
 

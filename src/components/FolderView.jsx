@@ -1,5 +1,5 @@
+/* global __TARGET__ */
 import React, { Component } from 'react'
-import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import { Alerter } from 'cozy-ui/react/Alerter'
@@ -17,11 +17,6 @@ import FileActionMenu from '../containers/FileActionMenu'
 import UploadProgression from '../../mobile/src/containers/UploadProgression'
 
 import styles from '../styles/folderview'
-
-import {
-  createFolder,
-  abortAddFolder
-} from '../actions'
 
 const FolderContent = props => {
   const { fetchStatus, files, isAddingFolder, canUpload } = props
@@ -64,7 +59,7 @@ class FolderView extends Component {
   }
 
   render () {
-    const { isTrashContext, showDeleteConfirmation, showActionMenu } = this.props
+    const { isTrashContext, showActionMenu } = this.props
     const { selected, actions, Toolbar } = this.props
     const { onShowActionMenu } = this.props
 

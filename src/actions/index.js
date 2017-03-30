@@ -1,7 +1,6 @@
 /* global cozy */
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
-import { getFilePaths, getFileById } from '../reducers'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 

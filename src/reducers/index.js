@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import view from './view'
+import view, { getFileById } from './view'
 import ui from './ui'
 
 import alerterReducer from 'cozy-ui/react/Alerter'
@@ -15,7 +15,6 @@ const filesApp = combineReducers(reducers)
 export default filesApp
 
 // Selectors
-import { getFileById } from './view'
 export { getVisibleFiles, getFileById, getFolderIdFromRoute, getFolderPath, getFolderUrl } from './view'
 
 export const getSelectedFiles = state => {

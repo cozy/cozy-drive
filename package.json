@@ -20,7 +20,7 @@
     "prewatch:browser": "npm run clean:browser",
     "prewatch:mobile": "npm run clean:mobile",
     "lint": "npm-run-all --parallel 'lint:*'",
-    "lint:js": "standard 'src/**/*.js' 'src/**/*.jsx' 'test/**/*.js' 'mobile/src/**/*.js' 'mobile/src/**/*.jsx' 'mobile/test/**/*.js'",
+    "lint:js": "standard --parser babel-eslint 'src/**/*.js' 'src/**/*.jsx' 'test/**/*.js' 'mobile/src/**/*.js' 'mobile/src/**/*.jsx' 'mobile/test/**/*.js'",
     "lint:styles": "stylint src/styles --config ./.stylintrc",
     "test": "node --harmony_proxies node_modules/.bin/jest",
     "watch": "npm run watch:browser",
@@ -54,6 +54,7 @@
   "devDependencies": {
     "autoprefixer": "^6.5.0",
     "babel-core": "^6.0.0",
+    "babel-eslint": "^7.2.1",
     "babel-jest": "^18.0.0",
     "babel-loader": "^6.0.0",
     "babel-plugin-transform-class-properties": "^6.23.0",
