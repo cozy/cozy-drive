@@ -88,7 +88,7 @@ class FolderView extends Component {
             <SelectionBar
               selected={selected}
               actions={actions.selection}
-              onClose={this.toggleSelectionMode}
+              onClose={this.quitSelectionMode}
               onActionComplete={this.quitSelectionMode}
               onMoreClick={onShowActionMenu}
             />}
