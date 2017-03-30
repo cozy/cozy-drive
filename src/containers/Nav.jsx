@@ -7,12 +7,12 @@ import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 
 import Spinner from '../components/Spinner'
 import { openFiles, openTrash } from '../actions'
 
-class Link extends Component {
+class CustomLink extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -53,7 +53,7 @@ class Link extends Component {
   }
 }
 
-const ActiveLink = withRouter(Link)
+const ActiveLink = withRouter(CustomLink)
 
 const Nav = ({ t, location, openFiles, openTrash }) => {
   return (
