@@ -1,7 +1,6 @@
 import styles from '../../styles/toolbar'
 
 import React from 'react'
-import { connect } from 'react-redux'
 import { translate } from '../../lib/I18n'
 import classNames from 'classnames'
 
