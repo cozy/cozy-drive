@@ -57,12 +57,14 @@ class File extends Component {
     ? { onClick: e => this.toggle(e) }
     : { onDoubleClick: e => this.open(e, attributes) }
     return (
-      <div className={styles['fil-content-row']} {...rowListeners}>
-        <div className={classNames(
-          styles['fil-content-cell'],
-          styles['fil-content-file-select'],
-          { [styles['fil-content-file-select--visible']]: selectionModeActive }
-        )}>
+      <div
+        className={classNames(
+          styles['fil-content-row'],
+          { [styles['fil-content-row--selectable']]: selectionModeActive }
+        )}
+        {...rowListeners}
+      >
+        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
           <span data-input='checkbox'>
             <input
               type='checkbox'

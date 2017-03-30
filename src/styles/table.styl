@@ -92,8 +92,9 @@
     label
         cursor default
 
-.fil-content-file-select.fil-content-file-select--visible
-    opacity 1
+.fil-content-row--selectable
+    .fil-content-file-select
+        opacity 1
 
 .fil-content-row:hover
     .fil-content-file-select
@@ -177,7 +178,7 @@
         display none
         padding em(15px) 0 em(15px) em(15px)
 
-    .fil-content-table-selection
+    .fil-content-row--selectable
         .fil-content-file-select
             display  block
             flex     0 0 5%

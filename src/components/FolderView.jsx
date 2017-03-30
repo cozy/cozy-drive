@@ -78,6 +78,7 @@ class FolderView extends Component {
           <Toolbar
             actions={toolbarActions}
             disabled={fetchFailed || selectionModeActive}
+            onSelectItemsClick={this.toggleSelectionMode}
           />
         </div>
         <div role='contentinfo'>

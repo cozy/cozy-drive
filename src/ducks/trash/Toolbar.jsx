@@ -7,9 +7,7 @@ import classNames from 'classnames'
 
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { showSelectionBar } from '../../actions'
-
-const Toolbar = ({ t, disabled, showSelectionBar }) => (
+const Toolbar = ({ t, disabled, onSelectItemsClick }) => (
   <div className={styles['fil-toolbar-trash']} role='toolbar'>
     <MenuButton>
       <button
@@ -22,7 +20,7 @@ const Toolbar = ({ t, disabled, showSelectionBar }) => (
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
         <Item>
-          <a className={styles['fil-action-select']} onClick={showSelectionBar}>
+          <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
             {t('toolbar.menu_select')}
           </a>
         </Item>
@@ -31,13 +29,4 @@ const Toolbar = ({ t, disabled, showSelectionBar }) => (
   </div>
 )
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  showSelectionBar: () => {
-    dispatch(showSelectionBar())
-  }
-})
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(translate()(Toolbar))
+export default translate()(Toolbar)

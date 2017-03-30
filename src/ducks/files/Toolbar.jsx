@@ -8,9 +8,9 @@ import { translate } from '../../lib/I18n'
 import UploadButton from '../../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { showSelectionBar, uploadFile } from '../../actions'
+import { uploadFile } from '../../actions'
 
-const Toolbar = ({ t, disabled, displayedFolder, actions, showSelectionBar, uploadFile }) => (
+const Toolbar = ({ t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFile }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
     <UploadButton
       disabled={disabled}
@@ -44,7 +44,7 @@ const Toolbar = ({ t, disabled, displayedFolder, actions, showSelectionBar, uplo
         </Item>
         <hr />
         <Item>
-          <a className={styles['fil-action-select']} onClick={showSelectionBar}>
+          <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
             {t('toolbar.menu_select')}
           </a>
         </Item>
@@ -58,9 +58,6 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  showSelectionBar: () => {
-    dispatch(showSelectionBar())
-  },
   uploadFile: (file, displayedFolder) => {
     dispatch(uploadFile(file, displayedFolder))
   }
