@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 
 import {
+  OPEN_FOLDER,
   SELECT_FILE,
   UNSELECT_FILE,
   UNSELECT_ALL,
@@ -21,6 +22,7 @@ const selected = (state = [], action) => {
         ...state.slice(0, idx),
         ...state.slice(idx + 1)
       ]
+    case OPEN_FOLDER:
     case UNSELECT_ALL:
       return []
     default:
