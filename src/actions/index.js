@@ -35,6 +35,7 @@ export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
+const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'
@@ -53,32 +54,27 @@ export const openTrash = () => {
 export const openFolder = (folderId) => {
   return async dispatch => {
     dispatch({ type: OPEN_FOLDER, folderId })
-    let folder, parent
     try {
-      folder = await cozy.client.files.statById(folderId)
+      const folder = await cozy.client.files.statById(folderId)
       const parentId = folder.attributes.dir_id
-      parent = !!parentId && await cozy.client.files.statById(parentId)
+      const parent = !!parentId && await cozy.client.files.statById(parentId)
+      return dispatch({
+        type: OPEN_FOLDER_SUCCESS,
+        folder: Object.assign(extractFileAttributes(folder), {
+          parent: extractFileAttributes(parent)}),
+        files: folder.relations('contents').map(
+          c => extractFileAttributes(c)
+        )
+      })
     } catch (err) {
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
     }
-    return dispatch({
-      type: OPEN_FOLDER_SUCCESS,
-      folder: Object.assign(extractFileAttributes(folder), {
-        parent: extractFileAttributes(parent)}),
-      files: folder.relations('contents').map(
-        c => extractFileAttributes(c)
-      )
-    })
   }
 }
 
 export const openFileInNewTab = (folder, file) => {
   return async dispatch => {
-    // TODO: replace this with cozy.client.getFilePath(file, folder)
-    const folderPath = folder.path.endsWith('/')
-      ? folder.path
-      : `${folder.path}/`
-    const filePath = `${folderPath}${file.name}`
+    const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
     const href = await cozy.client.files.getDownloadLink(filePath)
     window.open(`${cozy.client._url}${href}`, '_blank')
   }

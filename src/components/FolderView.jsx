@@ -29,6 +29,8 @@ const FolderContent = props => {
       return files.length === 0 && !isAddingFolder
         ? <Empty canUpload={canUpload} />
         : <FileList {...props} />
+    default:
+      return null
   }
 }
 
