@@ -105,6 +105,7 @@ class FolderView extends Component {
               <FolderContent
                 {...this.props}
                 selectionModeActive={selectionModeActive}
+                isAddingFolder={showAddFolder}
               />
             </div>
           </div>
