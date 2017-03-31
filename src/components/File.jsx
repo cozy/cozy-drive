@@ -5,7 +5,8 @@ import { withRouter } from 'react-router'
 
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
-import FilenameInput from '../components/FilenameInput'
+
+import { getFolderUrl } from '../reducers'
 
 export const splitFilename = filename => {
   let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
@@ -28,58 +29,51 @@ class File extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      editing: false,
       opening: false
     }
   }
 
-  edit (value) {
-    this.props.onEdit(value, this.props.attributes)
-    this.setState({
-      editing: false
-    })
-  }
-
-  abortEdit (accidental) {
-    this.props.onEditAbort(accidental, this.props.attributes)
-    this.setState({
-      editing: false
-    })
-  }
-
   toggle (e) {
     e.stopPropagation()
-    const { attributes, onToggle } = this.props
-    onToggle(attributes.id, attributes.selected)
+    const { attributes, onToggle, selected } = this.props
+    onToggle(attributes, selected)
   }
 
   open (e, attributes) {
     e.stopPropagation()
     if (isDir(attributes)) {
       this.setState({ opening: true })
-      this.props.onFolderOpen(attributes.id).then(() => this.setState({ opening: false }))
-      this.props.router.push(`/${this.props.context}/${attributes.id}`)
+      this.props.onFolderOpen(attributes.id).then(() => {
+        this.setState({ opening: false })
+        this.props.router.push(getFolderUrl(attributes.id, this.props.location))
+      })
     } else {
-      this.props.onFileOpen(attributes)
+      this.props.onFileOpen(this.props.displayedFolder, attributes)
     }
   }
 
-  render ({ t, f, attributes, showSelection, onShowActionMenu }, { editing, opening }) {
-    const rowListeners = showSelection
+  render ({ t, f, attributes, selected, selectionModeActive, onShowActionMenu }, { opening }) {
+    const rowListeners = selectionModeActive
     ? { onClick: e => this.toggle(e) }
     : { onDoubleClick: e => this.open(e, attributes) }
     return (
-      <div className={styles['fil-content-row']} {...rowListeners}>
+      <div
+        className={classNames(
+          styles['fil-content-row'],
+          { [styles['fil-content-row--selectable']]: selectionModeActive }
+        )}
+        {...rowListeners}
+      >
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
           <span data-input='checkbox'>
             <input
               type='checkbox'
-              checked={attributes.selected}
+              checked={selected}
              />
             <label onClick={e => this.toggle(e)} />
           </span>
         </div>
-        {this.renderFilenameCell(attributes, editing, opening, !showSelection)}
+        {this.renderFilenameCell(attributes, opening, !selectionModeActive)}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </div>
@@ -99,7 +93,7 @@ class File extends Component {
     )
   }
 
-  renderFilenameCell (attributes, editing, opening, canOpen) {
+  renderFilenameCell (attributes, opening, canOpen) {
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(
       styles['fil-content-cell'],
@@ -107,13 +101,6 @@ class File extends Component {
       getClassFromMime(attributes),
       { [styles['fil-content-file-openable']]: canOpen }
     )
-    if (editing) {
-      return (
-        <div className={classes}>
-          <FilenameInput name={attributes.name} error={attributes.creationError} onSubmit={val => this.edit(val)} onAbort={accidental => this.abortEdit(accidental)} />
-        </div>
-      )
-    }
     return (
       <div className={classes} onClick={canOpen ? e => this.open(e, attributes) : undefined}>
         {filename}

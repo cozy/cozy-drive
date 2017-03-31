@@ -1,33 +1,29 @@
 /* global cozy */
-import { FILES_CONTEXT, TRASH_CONTEXT, ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
-import { getFilePaths, getFileById } from '../reducers'
 
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
+
+export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
-export const ADD_FOLDER = 'ADD_FOLDER'
 export const ABORT_ADD_FOLDER = 'ABORT_ADD_FOLDER'
-export const RENAME_FOLDER = 'RENAME_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
 export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
-export const TRASH_FILE = 'TRASH_FILE'
-export const TRASH_FILE_SUCCESS = 'TRASH_FILE_SUCCESS'
-export const TRASH_FILE_FAILURE = 'TRASH_FILE_FAILURE'
-export const RESTORE_FILE = 'RESTORE_FILE'
-export const RESTORE_FILE_SUCCESS = 'RESTORE_FILE_SUCCESS'
-export const RESTORE_FILE_FAILURE = 'RESTORE_FILE_FAILURE'
-export const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
-export const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
-export const SHOW_DELETE_CONFIRMATION = 'SHOW_DELETE_CONFIRMATION'
-export const HIDE_DELETE_CONFIRMATION = 'HIDE_DELETE_CONFIRMATION'
+export const TRASH_FILES = 'TRASH_FILES'
+export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
+export const TRASH_FILES_FAILURE = 'TRASH_FILES_FAILURE'
+export const RESTORE_FILES = 'RESTORE_FILES'
+export const RESTORE_FILES_SUCCESS = 'RESTORE_FILES_SUCCESS'
+export const RESTORE_FILES_FAILURE = 'RESTORE_FILES_FAILURE'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
+export const UNSELECT_ALL = 'UNSELECT_ALL'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
 export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
 export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
@@ -39,6 +35,7 @@ export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
+const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'
@@ -46,53 +43,49 @@ const ALERT_LEVEL_ERROR = 'error'
 export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', level: ALERT_LEVEL_ERROR } })
 export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', level: ALERT_LEVEL_ERROR } })
 
-export const openFolder = (folderId, context = FILES_CONTEXT) => {
+export const openFiles = () => {
+  return async dispatch => dispatch(openFolder(ROOT_DIR_ID))
+}
+
+export const openTrash = () => {
+  return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
+}
+
+export const openFolder = (folderId) => {
   return async dispatch => {
-    if (!folderId) {
-      folderId = context === TRASH_CONTEXT
-        ? TRASH_DIR_ID
-        : ROOT_DIR_ID
-    }
-    dispatch({ type: OPEN_FOLDER, folderId, context })
-    let folder, parent
+    dispatch({ type: OPEN_FOLDER, folderId })
     try {
-      folder = await cozy.client.files.statById(folderId)
+      const folder = await cozy.client.files.statById(folderId)
       const parentId = folder.attributes.dir_id
-      parent = !!parentId && await cozy.client.files.statById(parentId)
+      const parent = !!parentId && await cozy.client.files.statById(parentId)
+      return dispatch({
+        type: OPEN_FOLDER_SUCCESS,
+        folder: Object.assign(extractFileAttributes(folder), {
+          parent: extractFileAttributes(parent)}),
+        files: folder.relations('contents').map(
+          c => extractFileAttributes(c)
+        )
+      })
     } catch (err) {
-      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err, context })
+      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
     }
-    return dispatch({
-      type: OPEN_FOLDER_SUCCESS,
-      context,
-      folder: Object.assign(extractFileAttributes(folder), {
-        parent: extractFileAttributes(parent)}),
-      files: folder.relations('contents').map(
-        c => extractFileAttributes(c)
-      )
-    })
   }
 }
 
-export const openFileInNewTab = (file) => {
-  return async (dispatch, getState) => {
-    const folder = getState().folder
-    // TODO: replace this with cozy.client.getFilePath(file, folder)
-    const folderPath = folder.path.endsWith('/')
-      ? folder.path
-      : `${folder.path}/`
-    const filePath = `${folderPath}${file.name}`
+export const openFileInNewTab = (folder, file) => {
+  return async dispatch => {
+    const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
     const href = await cozy.client.files.getDownloadLink(filePath)
     window.open(`${cozy.client._url}${href}`, '_blank')
   }
 }
 
-export const uploadFile = (file) => {
-  return async (dispatch, getState) => {
+export const uploadFile = (file, folder) => {
+  return async dispatch => {
     dispatch({ type: UPLOAD_FILE })
     const created = await cozy.client.files.create(
       file,
-      { dirID: getState().folder.id }
+      { dirID: folder.id }
     )
     dispatch({
       type: UPLOAD_FILE_SUCCESS,
@@ -100,10 +93,6 @@ export const uploadFile = (file) => {
     })
   }
 }
-
-export const addFolder = () => ({
-  type: ADD_FOLDER
-})
 
 export const abortAddFolder = (accidental) => {
   let action = {
@@ -118,15 +107,9 @@ export const abortAddFolder = (accidental) => {
   return action
 }
 
-export const renameFolder = (newName, id) => ({
-  type: RENAME_FOLDER,
-  id,
-  name: newName
-})
-
 export const createFolder = name => {
   return async (dispatch, getState) => {
-    let existingFolder = getState().files.find(f => f.type === 'directory' && f.name === name)
+    let existingFolder = getState().view.files.find(f => f.type === 'directory' && f.name === name)
 
     if (existingFolder) {
       dispatch({
@@ -148,7 +131,7 @@ export const createFolder = name => {
     try {
       folder = await cozy.client.files.createDirectory({
         name: name,
-        dirID: getState().folder.id
+        dirID: getState().view.displayedFolder.id
       })
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
@@ -176,24 +159,25 @@ export const createFolder = name => {
   }
 }
 
-export const trashFile = id => {
+export const trashFiles = files => {
   return async dispatch => {
-    dispatch({ type: TRASH_FILE, id: id })
-    let trashed
+    dispatch({ type: TRASH_FILES, files })
+    let trashed = []
     try {
-      trashed = await cozy.client.files.trashById(id)
+      for (let file of files) {
+        trashed.push(await cozy.client.files.trashById(file.id))
+      }
     } catch (err) {
       return dispatch({
-        type: TRASH_FILE_FAILURE,
+        type: TRASH_FILES_FAILURE,
         alert: {
           message: 'alert.try_again'
         }
       })
     }
-    dispatch({
-      type: TRASH_FILE_SUCCESS,
-      file: extractFileAttributes(trashed),
-      id,
+    return dispatch({
+      type: TRASH_FILES_SUCCESS,
+      ids: files.map(f => f.id),
       alert: {
         message: 'alert.trash_file_success'
       }
@@ -201,24 +185,25 @@ export const trashFile = id => {
   }
 }
 
-export const restoreFile = id => {
+export const restoreFiles = files => {
   return async dispatch => {
-    dispatch({ type: RESTORE_FILE, id: id })
-    let restored
+    dispatch({ type: RESTORE_FILES, files })
+    let restored = []
     try {
-      restored = await cozy.client.files.restoreById(id)
+      for (let file of files) {
+        restored.push(await cozy.client.files.restoreById(file.id))
+      }
     } catch (err) {
       return dispatch({
-        type: RESTORE_FILE_FAILURE,
+        type: RESTORE_FILES_FAILURE,
         alert: {
           message: 'alert.try_again'
         }
       })
     }
-    dispatch({
-      type: RESTORE_FILE_SUCCESS,
-      file: extractFileAttributes(restored),
-      id,
+    return dispatch({
+      type: RESTORE_FILES_SUCCESS,
+      ids: files.map(f => f.id),
       alert: {
         message: 'alert.restore_file_success'
       }
@@ -226,48 +211,34 @@ export const restoreFile = id => {
   }
 }
 
-export const showSelectionBar = () => ({
-  type: SHOW_SELECTION_BAR
-})
-
-export const hideSelectionBar = () => ({
-  type: HIDE_SELECTION_BAR
-})
-
-export const showDeleteConfirmation = () => ({
-  type: SHOW_DELETE_CONFIRMATION
-})
-
-export const hideDeleteConfirmation = () => ({
-  type: HIDE_DELETE_CONFIRMATION
-})
-
-export const toggleFileSelection = (id, selected) => ({
+export const toggleFileSelection = (file, selected) => ({
   type: selected ? UNSELECT_FILE : SELECT_FILE,
-  id
+  id: file.id
 })
 
-export const downloadSelection = () => {
-  return async (dispatch, getState) => {
-    const { selected } = getState().ui
-    dispatch({ type: DOWNLOAD_SELECTION, selected })
-    if (selected.length === 1 && getFileById(getState().files, selected[0]).type !== 'directory') {
+export const unselectAllFiles = () => ({
+  type: UNSELECT_ALL
+})
+
+export const downloadSelection = selected => {
+  return async (dispatch) => {
+    if (selected.length === 1 && selected[0].type !== 'directory') {
       return dispatch(downloadFile(selected[0]))
     }
-    const paths = getFilePaths(getState(), selected)
+    const paths = selected.map(f => f.path)
     const href = await cozy.client.files.getArchiveLink(paths)
     const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')
+    return dispatch({ type: DOWNLOAD_SELECTION, selected })
   }
 }
 
 const isMissingFile = (error) => error.status === 404
 const isOffline = (error) => error.message === 'Network request failed'
 
-export const downloadFile = id => {
-  return async (dispatch, getState) => {
-    dispatch({ type: DOWNLOAD_FILE, id })
-    const response = await cozy.client.files.downloadById(id).catch((error) => {
+export const downloadFile = file => {
+  return async (dispatch) => {
+    const response = await cozy.client.files.downloadById(file.id).catch((error) => {
       console.error('downloadById', error)
       if (isMissingFile(error)) {
         dispatch(downloadFileMissing())
@@ -279,14 +250,14 @@ export const downloadFile = id => {
       throw error
     })
     const blob = await response.blob()
-    // TODO: accessing state in action creators is an antipattern
-    const filename = getState().files.find(f => f.id === id).name
+    const filename = file.name
 
     if (window.cordova && window.cordova.file) {
       saveFileWithCordova(blob, filename)
     } else {
       forceFileDownload(window.URL.createObjectURL(blob), filename)
     }
+    return dispatch({ type: DOWNLOAD_FILE, file })
   }
 }
 

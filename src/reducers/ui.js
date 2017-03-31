@@ -2,74 +2,12 @@ import { combineReducers } from 'redux'
 
 import {
   OPEN_FOLDER,
-  OPEN_FOLDER_SUCCESS,
-  OPEN_FOLDER_FAILURE,
-  ADD_FOLDER,
-  ABORT_ADD_FOLDER,
-  CREATE_FOLDER_SUCCESS,
-  TRASH_FILE_SUCCESS,
-  RESTORE_FILE_SUCCESS,
-  SHOW_SELECTION_BAR,
-  HIDE_SELECTION_BAR,
-  SHOW_DELETE_CONFIRMATION,
-  HIDE_DELETE_CONFIRMATION,
   SELECT_FILE,
   UNSELECT_FILE,
-  DOWNLOAD_SELECTION,
+  UNSELECT_ALL,
   SHOW_FILE_ACTIONMENU,
   HIDE_FILE_ACTIONMENU
 } from '../actions'
-
-const isFetching = (state = false, action) => {
-  switch (action.type) {
-    case OPEN_FOLDER:
-      return true
-    case OPEN_FOLDER_SUCCESS:
-    case OPEN_FOLDER_FAILURE:
-      return false
-    default:
-      return state
-  }
-}
-
-const showAddFolder = (state = false, action) => {
-  switch (action.type) {
-    case ADD_FOLDER:
-      return true
-    case ABORT_ADD_FOLDER:
-    case OPEN_FOLDER:
-    case CREATE_FOLDER_SUCCESS:
-      return false
-    default:
-      return state
-  }
-}
-
-const showSelectionBar = (state = false, action) => {
-  switch (action.type) {
-    case SHOW_SELECTION_BAR:
-      return true
-    case OPEN_FOLDER:
-    case DOWNLOAD_SELECTION:
-    case HIDE_SELECTION_BAR:
-    case TRASH_FILE_SUCCESS:
-    case RESTORE_FILE_SUCCESS:
-      return false
-    default:
-      return state
-  }
-}
-
-const showDeleteConfirmation = (state = false, action) => {
-  switch (action.type) {
-    case SHOW_DELETE_CONFIRMATION:
-      return true
-    case HIDE_DELETE_CONFIRMATION:
-      return false
-    default:
-      return state
-  }
-}
 
 const selected = (state = [], action) => {
   switch (action.type) {
@@ -85,7 +23,7 @@ const selected = (state = [], action) => {
         ...state.slice(idx + 1)
       ]
     case OPEN_FOLDER:
-    case HIDE_SELECTION_BAR:
+    case UNSELECT_ALL:
       return []
     default:
       return state
@@ -114,19 +52,6 @@ const actionable = (state = null, action) => {
   }
 }
 
-const error = (state = null, action) => {
-  switch (action.type) {
-    case OPEN_FOLDER_FAILURE:
-      return {
-        message: 'error.open_folder',
-        cause: action.error,
-        critical: true
-      }
-    default:
-      return state
-  }
-}
-
 const actionMenu = (state = { openWith: false }, action) => {
   const newState = {}
   switch (action.type) {
@@ -142,13 +67,8 @@ const actionMenu = (state = { openWith: false }, action) => {
 }
 
 export default combineReducers({
-  isFetching,
-  showAddFolder,
-  showSelectionBar,
-  showDeleteConfirmation,
   selected,
   showFileActionMenu,
   actionable,
-  error,
   actionMenu
 })
