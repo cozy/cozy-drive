@@ -83,10 +83,10 @@ export function refreshFolder (dispatch, getState) {
 }
 
 export const onError = (dispatch, getState) => (err) => {
-  if (err.message === clientRevokedMsg) {
+  if (err.message === clientRevokedMsg || err.error === 'code=400, message=Invalid JWT token') {
     console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
     dispatch(revokeClient())
-  } else if (err.message === 'ETIMEDOUT' || err.message === 'getCheckpoint rejected with ') {
+  } else if (err.message === 'ETIMEDOUT') {
     console.log('timeout')
   } else {
     console.warn(err)

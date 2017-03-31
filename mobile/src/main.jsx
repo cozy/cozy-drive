@@ -37,7 +37,7 @@ const renderAppWithPersistedState = persistedState => {
           cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
           initBar()
         } else {
-          onError(store.dispatch, store.getState)()
+          onError(store.dispatch, store.getState)({ message: 'Client has been revoked' })
         }
         callback()
       })
