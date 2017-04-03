@@ -39,14 +39,16 @@ export const checkURL = url => dispatch => {
 // settings
 
 export const setAnalytics = analytics => (dispatch, getState) => {
-  if (analytics && getState().mobile) {
-    getState().mobile.settings.backupImages ? logInfo('settings: backup images is enabled') : logInfo('settings: backup images is disabled')
-  }
   dispatch({ type: SET_ANALYTICS, analytics })
+  const state = getState()
+  if (analytics && state.mobile) {
+    state.mobile.settings.backupImages ? logInfo('settings: backup images is enabled') : logInfo('settings: backup images is disabled')
+  }
 }
 
 export const setBackupImages = backupImages => (dispatch, getState) => {
-  if (getState().mobile && getState().mobile.settings.analytics) {
+  const state = getState()
+  if (state.mobile && state.mobile.settings.analytics) {
     backupImages ? logInfo('settings: backup images is enabled') : logInfo('settings: backup images is disabled')
   }
   backupImages ? startBackgroundService() : stopBackgroundService()
