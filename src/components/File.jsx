@@ -9,7 +9,7 @@ import { translate } from '../lib/I18n'
 import { getFolderUrl } from '../reducers'
 
 export const splitFilename = filename => {
-  let dotIdx = filename.lastIndexOf('.') - 1 >>> 0
+  const dotIdx = filename.lastIndexOf('.') - 1 >>> 0
   return {
     extension: filename.slice(dotIdx + 1),
     filename: filename.slice(0, dotIdx + 1)

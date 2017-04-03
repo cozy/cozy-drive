@@ -95,7 +95,7 @@ export const uploadFile = (file, folder) => {
 }
 
 export const abortAddFolder = (accidental) => {
-  let action = {
+  const action = {
     type: ABORT_ADD_FOLDER,
     accidental
   }
@@ -109,7 +109,7 @@ export const abortAddFolder = (accidental) => {
 
 export const createFolder = name => {
   return async (dispatch, getState) => {
-    let existingFolder = getState().view.files.find(f => f.type === 'directory' && f.name === name)
+    const existingFolder = getState().view.files.find(f => f.type === 'directory' && f.name === name)
 
     if (existingFolder) {
       dispatch({
@@ -127,11 +127,14 @@ export const createFolder = name => {
       name
     })
 
-    let folder
     try {
-      folder = await cozy.client.files.createDirectory({
+      const folder = await cozy.client.files.createDirectory({
         name: name,
         dirID: getState().view.displayedFolder.id
+      })
+      dispatch({
+        type: CREATE_FOLDER_SUCCESS,
+        folder: extractFileAttributes(folder)
       })
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
@@ -152,19 +155,15 @@ export const createFolder = name => {
       }
       throw err
     }
-    dispatch({
-      type: CREATE_FOLDER_SUCCESS,
-      folder: extractFileAttributes(folder)
-    })
   }
 }
 
 export const trashFiles = files => {
   return async dispatch => {
     dispatch({ type: TRASH_FILES, files })
-    let trashed = []
+    const trashed = []
     try {
-      for (let file of files) {
+      for (const file of files) {
         trashed.push(await cozy.client.files.trashById(file.id))
       }
     } catch (err) {
@@ -188,9 +187,9 @@ export const trashFiles = files => {
 export const restoreFiles = files => {
   return async dispatch => {
     dispatch({ type: RESTORE_FILES, files })
-    let restored = []
+    const restored = []
     try {
-      for (let file of files) {
+      for (const file of files) {
         restored.push(await cozy.client.files.restoreById(file.id))
       }
     } catch (err) {

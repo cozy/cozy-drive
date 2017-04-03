@@ -17,7 +17,7 @@ const selected = (state = [], action) => {
         action.id
       ]
     case UNSELECT_FILE:
-      let idx = state.indexOf(action.id)
+      const idx = state.indexOf(action.id)
       return [
         ...state.slice(0, idx),
         ...state.slice(idx + 1)
