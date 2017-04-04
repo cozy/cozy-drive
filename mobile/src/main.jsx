@@ -24,7 +24,7 @@ const renderAppWithPersistedState = persistedState => {
 
   function requireSetup (nextState, replace, callback) {
     const state = store.getState()
-    const client = state.mobile.settings.client
+    const client = state.settings.client
     const isSetup = state.mobile.settings.authorized
     const isFirstReplicationFinished = state.settings.firstReplication
     if (isSetup) {

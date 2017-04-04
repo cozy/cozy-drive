@@ -1,4 +1,4 @@
-import { SET_OFFLINE, SET_FIRST_REPLICATION, INIT_STATE } from '../actions'
+import { SET_CLIENT, SET_OFFLINE, SET_FIRST_REPLICATION, INIT_STATE } from '../actions/settings'
 
 export const initialState = {
   offline: false,
@@ -7,6 +7,8 @@ export const initialState = {
 
 export const settings = (state = initialState, action) => {
   switch (action.type) {
+    case SET_CLIENT:
+      return { ...state, offline: true, client: action.client }
     case SET_OFFLINE:
       return { ...state, offline: action.offline }
     case SET_FIRST_REPLICATION:

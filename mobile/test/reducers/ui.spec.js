@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../../src/reducers/ui'
 import { SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION } from '../../src/actions/unlink'
-import { INIT_STATE } from '../../../src/actions'
+import { INIT_STATE } from '../../../src/actions/settings'
 
 describe('ui reducers', () => {
   it('should return the initial state', () => {

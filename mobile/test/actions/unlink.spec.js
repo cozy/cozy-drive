@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* global cozy */
 
-import { INIT_STATE } from '../../../src/actions'
+import { INIT_STATE } from '../../../src/actions/settings'
 import {
   SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION,
   showUnlinkConfirmation, hideUnlinkConfirmation, unlink

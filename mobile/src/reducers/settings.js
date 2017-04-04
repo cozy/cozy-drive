@@ -1,5 +1,5 @@
-import { INIT_STATE } from '../../../src/actions'
-import { SET_URL, ERROR, BACKUP_IMAGES, SET_CLIENT, SET_ANALYTICS, WIFI_ONLY } from '../actions/settings'
+import { INIT_STATE, SET_CLIENT } from '../../../src/actions/settings'
+import { SET_URL, ERROR, BACKUP_IMAGES, SET_ANALYTICS, WIFI_ONLY } from '../actions/settings'
 
 export const initialState = {
   serverUrl: '',
@@ -22,7 +22,7 @@ export const settings = (state = initialState, action) => {
     case INIT_STATE:
       return initialState
     case SET_CLIENT:
-      return { ...state, client: action.client, authorized: true }
+      return { ...state, authorized: true }
     case WIFI_ONLY:
       return { ...state, wifiOnly: action.wifiOnly }
     default:

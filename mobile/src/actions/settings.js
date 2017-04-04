@@ -1,7 +1,7 @@
 /* global cozy, __ALLOW_HTTP__ */
 
 import { initClient, startFirstReplication } from '../lib/cozy-helper'
-import { setOffline } from '../../../src/actions'
+import { setClient } from '../../../src/actions/settings'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
 import { pingOnceADay } from './timestamp'
@@ -11,10 +11,7 @@ export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES = 'BACKUP_IMAGES'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
-export const SET_CLIENT = 'SET_CLIENT'
 export const SET_ANALYTICS = 'SET_ANALYTICS'
-
-import { unrevokeClient } from './authorization'
 
 // url
 
@@ -87,9 +84,7 @@ export const registerDevice = () => async (dispatch, getState) => {
   dispatch(checkURL(getState().mobile.settings.serverUrl))
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
   await cozy.client.authorize().then(({ client }) => {
-    dispatch(unrevokeClient())
     dispatch(setClient(client))
-    dispatch(setOffline(true))
     startFirstReplication(dispatch, getState)
   }).catch(err => {
     dispatch(wrongAddressError())
@@ -97,5 +92,3 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw err
   })
 }
-
-export const setClient = client => ({ type: SET_CLIENT, client })
