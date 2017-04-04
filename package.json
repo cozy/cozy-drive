@@ -28,13 +28,13 @@
     "watch:mobile": "NODE_ENV=mobile:development npm run internal:watch",
     "watch:browser:standalone": "NODE_ENV=browser:development npm run internal:watch:standalone",
     "watch:mobile:standalone": "NODE_ENV=mobile:development npm run internal:watch:standalone",
-    "android:run": "cd mobile ; cordova run android --device ; cd ..",
-    "android:run:emulator": "cd mobile ; cordova run android --emulator ; cd ..",
-    "android:release": "npm run build:mobile && cd mobile ; cordova build android --release ; cd ..",
-    "android:signed": "npm run android:release && cd mobile ; apksigner sign --ks keys/android/cozy-files-release-key.jks --out build/android/cozy-files-v3.apk platforms/android/build/outputs/apk/android-release-unsigned.apk ; cd ..",
-    "android:publish": "npm run android:signed && cd mobile ; fastlane supply ; cd ..",
-    "ios:run": "cd mobile ; cordova run ios --device ; cd ..",
-    "ios:run:emulator": "cd mobile ; cordova run ios --emulator ; cd .."
+    "android:run": "(cd mobile && cordova run android --device)",
+    "android:run:emulator": "(cd mobile && cordova run android --emulator)",
+    "android:release": "npm run build:mobile && (cd mobile && cordova build android --release)",
+    "android:signed": "npm run android:release && (cd mobile && apksigner sign --ks keys/android/cozy-files-release-key.jks --out build/android/cozy-files-v3.apk platforms/android/build/outputs/apk/android-release-unsigned.apk)",
+    "android:publish": "npm run android:signed && (cd mobile && fastlane supply)",
+    "ios:run": "(cd mobile && cordova run ios --device)",
+    "ios:run:emulator": "(cd mobile && cordova run ios --emulator)"
   },
   "repository": {
     "type": "git",
