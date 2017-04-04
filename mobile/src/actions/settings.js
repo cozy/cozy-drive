@@ -1,6 +1,7 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
+import { initClient, startFirstReplication } from '../lib/cozy-helper'
+import { setOffline } from '../../../src/actions'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
 import { pingOnceADay } from './timestamp'
@@ -85,14 +86,11 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
   dispatch(checkURL(getState().mobile.settings.serverUrl))
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
-  await cozy.client.authorize().then(async ({ client }) => {
+  await cozy.client.authorize().then(({ client }) => {
     dispatch(unrevokeClient())
     dispatch(setClient(client))
-    const options = {
-      onError: onError(dispatch, getState),
-      onComplete: refreshFolder(dispatch, getState)
-    }
-    cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
+    dispatch(setOffline(true))
+    startFirstReplication(dispatch, getState)
   }).catch(err => {
     dispatch(wrongAddressError())
     logException(err)

@@ -2,7 +2,7 @@
 
 import { LocalStorage as Storage } from 'cozy-client-js'
 
-import { openFolder } from '../../../src/actions'
+import { openFolder, setFirstReplication } from '../../../src/actions'
 import { revokeClient } from '../actions/authorization'
 
 const clientRevokedMsg = 'Client has been revoked'
@@ -80,6 +80,27 @@ export function refreshFolder (dispatch, getState) {
       dispatch(openFolder(getState().folder.id))
     }
   }
+}
+
+export const startRepeatedReplication = (dispatch, getState) => {
+  const options = {
+    onError: onError(dispatch, getState),
+    onComplete: refreshFolder(dispatch, getState)
+  }
+  cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
+}
+
+export const startFirstReplication = (dispatch, getState) => {
+  const options = {
+    onError: onError(dispatch, getState),
+    onComplete: () => {
+      dispatch(setFirstReplication(true))
+      startRepeatedReplication(dispatch, getState)
+    }
+  }
+  cozy.client.offline.replicateFromCozy('io.cozy.files', options).then(() => {
+    console.log('End of Replication')
+  })
 }
 
 export const onError = (dispatch, getState) => (err) => {

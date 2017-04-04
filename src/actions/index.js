@@ -55,12 +55,14 @@ export const openTrash = () => {
 }
 
 export const openFolder = (folderId) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch({ type: OPEN_FOLDER, folderId })
     try {
-      const folder = await cozy.client.files.statById(folderId)
+      const settings = getState().settings
+      const offline = settings.offline && settings.firstReplication
+      const folder = await cozy.client.files.statById(folderId, offline)
       const parentId = folder.attributes.dir_id
-      const parent = !!parentId && await cozy.client.files.statById(parentId)
+      const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder: Object.assign(extractFileAttributes(folder), {
