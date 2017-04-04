@@ -11,7 +11,7 @@ import {
   CREATE_FOLDER_SUCCESS
 } from '../actions'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH } from '../constants/config.js'
+import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH, KONNECTORS_DIR_PATH } from '../constants/config.js'
 
 // reducer for the currently displayed folder properties
 const displayedFolder = (state = null, action) => {
@@ -87,7 +87,7 @@ export default combineReducers({
 const sortFiles = files => files.sort((a, b) => a.name.localeCompare(b.name))
 
 const getSortedFiles = allFiles => {
-  const folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID && f.path !== APPS_DIR_PATH)
+  const folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID && f.path !== APPS_DIR_PATH && f.path !== KONNECTORS_DIR_PATH)
   const files = allFiles.filter(f => f.type !== 'directory')
   return sortFiles(folders).concat(sortFiles(files))
 }
