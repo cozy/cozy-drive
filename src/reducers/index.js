@@ -2,12 +2,14 @@ import { combineReducers } from 'redux'
 
 import view, { getFileById } from './view'
 import ui from './ui'
+import settings from './settings'
 
 import alerterReducer from 'cozy-ui/react/Alerter'
 
 export const reducers = {
   view,
   ui,
+  settings,
   alerts: alerterReducer
 }
 

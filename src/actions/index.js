@@ -34,6 +34,8 @@ export const DOWNLOAD_FILE_E_OFFLINE = 'DOWNLOAD_FILE_E_OFFLINE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
+export const SET_OFFLINE = 'SET_OFFLINE'
+export const SET_FIRST_REPLICATION = 'SET_FIRST_REPLICATION'
 
 const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
@@ -313,6 +315,16 @@ export const actionMenuLoading = (menu) => ({
 export const actionMenuLoaded = (menu) => ({
   type: 'HIDE_SPINNER',
   menu
+})
+
+export const setOffline = (offline) => ({
+  type: SET_OFFLINE,
+  offline
+})
+
+export const setFirstReplication = (firstReplication) => ({
+  type: SET_FIRST_REPLICATION,
+  firstReplication
 })
 
 export const initializeState = () => ({ type: INIT_STATE })
