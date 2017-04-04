@@ -2,15 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const confirm = component => new Promise((resolve, reject) => {
-  let wrapper = document.body.appendChild(document.createElement('div'))
+  const wrapper = document.body.appendChild(document.createElement('div'))
 
-  let abort = () => {
+  const abort = () => {
     console.log('unmount confirm modal')
     ReactDOM.unmountComponentAtNode(wrapper)
     reject()
   }
 
-  let confirm = () => {
+  const confirm = () => {
     console.log('unmount confirm modal')
     ReactDOM.unmountComponentAtNode(wrapper)
     resolve()
