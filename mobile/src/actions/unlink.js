@@ -1,6 +1,6 @@
 /* global cozy */
 
-import { initializeState } from '.'
+import { initializeState } from '../../../src/actions'
 import { resetClient } from '../lib/cozy-helper'
 
 // constants

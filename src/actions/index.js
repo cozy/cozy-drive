@@ -4,6 +4,7 @@ import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actio
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
+export const INIT_STATE = 'INIT_STATE'
 export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
@@ -313,3 +314,5 @@ export const actionMenuLoaded = (menu) => ({
   type: 'HIDE_SPINNER',
   menu
 })
+
+export const initializeState = () => ({ type: INIT_STATE })

@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../../src/reducers/mediaBackup'
 import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, MEDIA_UPLOAD_SUCCESS } from '../../src/actions/mediaBackup'
-import { INIT_STATE } from '../../src/actions'
+import { INIT_STATE } from '../../../src/actions'
 
 describe('mediaBackup reducers', () => {
   it('should return the initial state', () => {

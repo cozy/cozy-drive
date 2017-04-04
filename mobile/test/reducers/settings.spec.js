@@ -1,5 +1,5 @@
 import reducer, { initialState } from '../../src/reducers/settings'
-import { INIT_STATE } from '../../src/actions'
+import { INIT_STATE } from '../../../src/actions'
 import { SET_URL, ERROR, SET_CLIENT, SET_ANALYTICS } from '../../src/actions/settings'
 
 describe('settings reducers', () => {

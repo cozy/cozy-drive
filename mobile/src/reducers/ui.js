@@ -1,4 +1,4 @@
-import { INIT_STATE } from '../actions'
+import { INIT_STATE } from '../../../src/actions'
 import { SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION } from '../actions/unlink'
 
 export const initialState = {

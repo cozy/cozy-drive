@@ -1,4 +1,4 @@
-import { INIT_STATE } from '../actions'
+import { INIT_STATE } from '../../../src/actions'
 import { SET_URL, ERROR, BACKUP_IMAGES, SET_CLIENT, SET_ANALYTICS, WIFI_ONLY } from '../actions/settings'
 
 export const initialState = {
