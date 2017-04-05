@@ -60,13 +60,14 @@ export const openFolder = (folderId) => {
       const folder = await cozy.client.files.statById(folderId, offline)
       const parentId = folder.attributes.dir_id
       const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
+      // folder.relations('contents') returns null when the trash is empty
+      const files = folder.relations('contents') || []
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder: Object.assign(extractFileAttributes(folder), {
-          parent: extractFileAttributes(parent)}),
-        files: folder.relations('contents').map(
-          c => extractFileAttributes(c)
-        )
+          parent: extractFileAttributes(parent)
+        }),
+        files: files.map(c => extractFileAttributes(c))
       })
     } catch (err) {
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
