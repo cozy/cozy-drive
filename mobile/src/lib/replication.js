@@ -1,31 +1,32 @@
 /* global cozy */
-import { revokeClient } from '../actions/authorization'
 import { clientRevokedMsg } from './cozy-helper'
-import { openFolder, setFirstReplication } from '../../../src/actions'
 
-export const startReplication = (dispatch, getState) => {
-  const firstReplicationIsFinished = getState().settings.firstReplication
-  if (firstReplicationIsFinished) {
-    startRepeatedReplication(dispatch, getState)
+export const startReplication = (firstReplication, firstReplicationFinished, refreshFolder, revokeClient) => {
+  if (firstReplication) {
+    startRepeatedReplication(refreshFolder, revokeClient)
   } else {
-    startFirstReplication(dispatch, getState)
+    startFirstReplication(firstReplicationFinished, refreshFolder, revokeClient)
   }
 }
 
-const startRepeatedReplication = (dispatch, getState) => {
+const startRepeatedReplication = (refreshFolder, revokeClient) => {
   const options = {
-    onError: onError(dispatch, getState),
-    onComplete: refreshFolder(dispatch, getState)
+    onError: onError(revokeClient),
+    onComplete: result => {
+      if (result.docs_written !== 0) {
+        refreshFolder()
+      }
+    }
   }
   cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
 }
 
-const startFirstReplication = (dispatch, getState) => {
+const startFirstReplication = (firstReplicationFinished, refreshFolder, revokeClient) => {
   const options = {
-    onError: onError(dispatch, getState),
+    onError: onError(revokeClient),
     onComplete: () => {
-      dispatch(setFirstReplication(true))
-      startRepeatedReplication(dispatch, getState)
+      firstReplicationFinished()
+      startRepeatedReplication(refreshFolder, revokeClient)
     }
   }
   cozy.client.offline.replicateFromCozy('io.cozy.files', options).then(() => {
@@ -33,18 +34,10 @@ const startFirstReplication = (dispatch, getState) => {
   })
 }
 
-export function refreshFolder (dispatch, getState) {
-  return result => {
-    if (result.docs_written !== 0) {
-      dispatch(openFolder(getState().folder.id))
-    }
-  }
-}
-
-export const onError = (dispatch, getState) => (err) => {
+export const onError = (revokeClient) => (err) => {
   if (err.message === clientRevokedMsg || err.error === 'code=400, message=Invalid JWT token') {
-    console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
-    dispatch(revokeClient())
+    console.warn('Your device is no more connected to your server')
+    revokeClient()
   } else if (err.message === 'ETIMEDOUT') {
     console.log('timeout')
   } else {

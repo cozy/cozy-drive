@@ -18,6 +18,9 @@ import { startBackgroundService, stopBackgroundService } from './lib/background'
 import { initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
 import { startReplication, onError } from './lib/replication'
 import { pingOnceADay } from './actions/timestamp'
+import { openFolder } from '../../src/actions'
+import { revokeClient as reduxRevokeClient } from './actions/authorization'
+import { setFirstReplication } from '../../src/actions/settings'
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
@@ -30,10 +33,14 @@ const renderAppWithPersistedState = persistedState => {
     if (isSetup) {
       isClientRegistered(client).then(clientIsRegistered => {
         if (clientIsRegistered) {
-          startReplication(store.dispatch, store.getState)
+          const firstReplication = store.getState().settings.firstReplication
+          const refreshFolder = () => { store.dispatch(openFolder(store.getState().folder.id)) }
+          const revokeClient = () => { store.dispatch(reduxRevokeClient()) }
+          const firstReplicationFinished = () => { store.dispatch(setFirstReplication(true)) }
+          startReplication(firstReplication, firstReplicationFinished, refreshFolder, revokeClient, store.dispatch, store.getState)
           initBar()
         } else {
-          onError(store.dispatch, store.getState)({ message: 'Client has been revoked' })
+          onError(store.dispatch)({ message: 'Client has been revoked' })
         }
         callback()
       })
