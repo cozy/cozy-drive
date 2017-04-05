@@ -51,12 +51,21 @@ const renderAppWithPersistedState = persistedState => {
     }
   }
 
+  function pingOnceADayWithState () {
+    const state = store.getState()
+    if (state.mobile) {
+      const timestamp = state.mobile.timestamp
+      const analytics = state.mobile.settings.analytics
+      store.dispatch(pingOnceADay(timestamp, analytics))
+    }
+  }
+
   document.addEventListener('resume', () => {
-    store.dispatch(pingOnceADay(store.getState().mobile.timestamp))
+    pingOnceADayWithState()
   })
 
   document.addEventListener('deviceready', () => {
-    store.dispatch(pingOnceADay(store.getState().mobile.timestamp))
+    pingOnceADayWithState()
     if (store.getState().mobile.settings.backupImages) {
       startBackgroundService()
     } else {
