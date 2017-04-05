@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { translate } from '../lib/I18n'
 
 import Loading from './Loading'
-import Empty from './Empty'
+import Empty, { EmptyTrash } from './Empty'
 import Oops from './Oops'
 import FileListHeader from './FileListHeader'
 import FileList from './FileList'
@@ -17,7 +17,7 @@ import UploadProgression from '../../mobile/src/containers/UploadProgression'
 import styles from '../styles/folderview'
 
 const FolderContent = props => {
-  const { fetchStatus, files, isAddingFolder, canUpload } = props
+  const { fetchStatus, files, isAddingFolder } = props
   switch (fetchStatus) {
     case 'pending':
       return <Loading message={props.t('loading.message')} />
@@ -25,11 +25,19 @@ const FolderContent = props => {
       return <Oops />
     case 'loaded':
       return files.length === 0 && !isAddingFolder
-        ? <Empty canUpload={canUpload} />
+        ? <EmptyContent {...props} />
         : <FileList {...props} />
     default:
       return null
   }
+}
+
+const EmptyContent = props => {
+  const { isTrashContext, canUpload } = props
+  if (isTrashContext && !props.params.folderId) {
+    return <EmptyTrash />
+  }
+  return <Empty canUpload={canUpload} />
 }
 
 const toggle = (flag, state, props) => ({ [flag]: !state[flag] })

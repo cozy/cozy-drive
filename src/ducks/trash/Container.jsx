@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       destroy: () =>
         confirm(<EmptyTrashConfirm t={ownProps.t} />)
           .then(() => dispatch(destroyFiles(ownProps.selected)))
-          .catch(err => console.log(err))
+          .catch(() => {})
     }
   })
 })

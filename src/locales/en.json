@@ -72,7 +72,11 @@
   },
   "empty": {
     "title" : "You don’t have any files in this folder.",
-    "text" : "Click the \"upload\" button to add files to this folder."
+    "text" : "Click the \"upload\" button to add files to this folder.",
+    "trash": {
+      "title" : "You don’t have any deleted files.",
+      "text" : "Move files you don't need anymore to the Trash and permanently delete items to free up storage page."
+    }
   },
   "error": {
     "open_folder": "Something went wrong when opening the folder.",
