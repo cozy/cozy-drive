@@ -1,4 +1,4 @@
-import styles from '../styles/confirms'
+import styles from '../../../styles/confirms'
 import classNames from 'classnames'
 
 import React from 'react'

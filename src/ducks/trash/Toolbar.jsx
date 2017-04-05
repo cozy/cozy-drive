@@ -7,7 +7,7 @@ import confirm from '../../lib/confirm'
 import classNames from 'classnames'
 
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
-import EmptyTrashConfirm from '../../components/EmptyTrashConfirm'
+import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import Spinner from '../../components/Spinner'
 
 import { emptyTrash } from './actions'
