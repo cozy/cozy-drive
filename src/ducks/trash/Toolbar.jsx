@@ -49,6 +49,15 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
         <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
       </button>
       <Menu className={styles['fil-toolbar-menu']}>
+      <Item>
+        <a
+          className={styles['fil-action-delete']}
+          onClick={() => emptyTrash()}
+        >
+          {t('toolbar.delete_all')}
+        </a>
+      </Item>
+      <hr />
         <Item>
           <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
             {t('toolbar.menu_select')}
