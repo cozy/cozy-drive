@@ -1,5 +1,3 @@
-/* global cozy */
-
 import 'babel-polyfill'
 
 import '../../src/styles/main'
@@ -17,27 +15,26 @@ import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
 import { initService } from './lib/init'
 import { startBackgroundService, stopBackgroundService } from './lib/background'
-import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
+import { initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
+import { onError } from './lib/replication'
 import { pingOnceADay } from './actions/timestamp'
+import { startReplication } from './actions/settings'
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
   initService(store)
 
   function requireSetup (nextState, replace, callback) {
-    const client = store.getState().mobile.settings.client
-    const isSetup = store.getState().mobile.settings.authorized
+    const state = store.getState()
+    const client = state.settings.client
+    const isSetup = state.mobile.settings.authorized
     if (isSetup) {
       isClientRegistered(client).then(clientIsRegistered => {
         if (clientIsRegistered) {
-          const options = {
-            onError: onError(store.dispatch, store.getState),
-            onComplete: refreshFolder(store.dispatch, store.getState)
-          }
-          cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
+          startReplication(store.dispatch, store.getState)
           initBar()
         } else {
-          onError(store.dispatch, store.getState)({ message: 'Client has been revoked' })
+          onError(store.dispatch)({ message: 'Client has been revoked' })
         }
         callback()
       })

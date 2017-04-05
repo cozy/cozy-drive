@@ -1,19 +1,20 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
+import { initClient } from '../lib/cozy-helper'
+import { startReplication as startPouchReplication } from '../lib/replication'
+import { setClient, setFirstReplication } from '../../../src/actions/settings'
+import { openFolder } from '../../../src/actions'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
 import { pingOnceADay } from './timestamp'
 import { startBackgroundService, stopBackgroundService } from '../lib/background'
+import { revokeClient as reduxRevokeClient } from './authorization'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES = 'BACKUP_IMAGES'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
-export const SET_CLIENT = 'SET_CLIENT'
 export const SET_ANALYTICS = 'SET_ANALYTICS'
-
-import { unrevokeClient } from './authorization'
 
 // url
 
@@ -85,14 +86,9 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
   dispatch(checkURL(getState().mobile.settings.serverUrl))
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
-  await cozy.client.authorize().then(async ({ client }) => {
-    dispatch(unrevokeClient())
+  await cozy.client.authorize().then(({ client }) => {
     dispatch(setClient(client))
-    const options = {
-      onError: onError(dispatch, getState),
-      onComplete: refreshFolder(dispatch, getState)
-    }
-    cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
+    startReplication(dispatch, getState)
   }).catch(err => {
     dispatch(wrongAddressError())
     logException(err)
@@ -100,4 +96,11 @@ export const registerDevice = () => async (dispatch, getState) => {
   })
 }
 
-export const setClient = client => ({ type: SET_CLIENT, client })
+export const startReplication = (dispatch, getState) => {
+  const firstReplication = getState().settings.firstReplication
+  const refreshFolder = () => { dispatch(openFolder(getState().folder.id)) }
+  const revokeClient = () => { dispatch(reduxRevokeClient()) }
+  const firstReplicationFinished = () => { dispatch(setFirstReplication(true)) }
+
+  startPouchReplication(firstReplication, firstReplicationFinished, refreshFolder, revokeClient)
+}

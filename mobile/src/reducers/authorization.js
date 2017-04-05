@@ -1,3 +1,4 @@
+import { SET_CLIENT } from '../../../src/actions/settings'
 import { REVOKE, UNREVOKE } from '../actions/authorization'
 
 export const initialState = {
@@ -8,6 +9,8 @@ export const authorization = (state = initialState, action) => {
     case REVOKE:
       return { ...state, revoked: true }
     case UNREVOKE:
+      return { ...state, revoked: false }
+    case SET_CLIENT:
       return { ...state, revoked: false }
     default:
       return state
