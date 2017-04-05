@@ -11,6 +11,12 @@ import {
   CREATE_FOLDER_SUCCESS
 } from '../actions'
 
+import {
+  EMPTY_TRASH,
+  EMPTY_TRASH_SUCCESS,
+  EMPTY_TRASH_FAILURE
+} from '../ducks/trash'
+
 import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH, KONNECTORS_DIR_PATH } from '../constants/config.js'
 
 // reducer for the currently displayed folder properties
@@ -46,6 +52,8 @@ const files = (state = [], action) => {
         f.name = (f.id === action.id) ? action.name : f.name
         return f
       })
+    case EMPTY_TRASH_SUCCESS:
+      return []
     default:
       return state
   }
@@ -57,8 +65,11 @@ const fetchStatus = (state = null, action) => {
     // the LOCATION_CHANGE action so that the loading spinner is only showed
     // when the app is launched or when the user use the back button
     case LOCATION_CHANGE:
+    case EMPTY_TRASH:
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
+    case EMPTY_TRASH_SUCCESS:
+    case EMPTY_TRASH_FAILURE:
       return 'loaded'
     case OPEN_FOLDER_FAILURE:
       return 'failed'

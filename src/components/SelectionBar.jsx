@@ -21,7 +21,7 @@ const SelectionBar = ({ t, selected, actions, onClose, onActionComplete, onMoreC
           onClick={() => {
             actions[actionName]()
               .then(() => onActionComplete())
-              .catch(err => { console.log(err) })
+              .catch(err => {})
           }}
         >
           {t('selectionbar.' + actionName)}
