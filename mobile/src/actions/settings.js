@@ -38,11 +38,12 @@ export const checkURL = url => dispatch => {
 
 // settings
 
-export const setAnalytics = analytics => (dispatch, getState) => {
+export const setAnalytics = (analytics, source = 'settings') => (dispatch, getState) => {
   dispatch({ type: SET_ANALYTICS, analytics })
   const state = getState()
   if (analytics && state.mobile) {
-    state.mobile.settings.backupImages ? logInfo('settings: backup images is enabled') : logInfo('settings: backup images is disabled')
+    const value = state.mobile.settings.backupImages
+    logInfo(`${source}: backup images is ${value ? 'enabled' : 'disabled'}`)
   }
 }
 
