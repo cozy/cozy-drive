@@ -1,7 +1,7 @@
-[![Travis build status shield](https://img.shields.io/travis/cozy/cozy-files-v3.svg?branch=master)](https://travis-ci.org/cozy/cozy-files-v3)
-[![NPM release version shield](https://img.shields.io/npm/v/cozy-files-v3.svg)](https://www.npmjs.com/package/cozy-files-v3)
-[![Github Release version shield](https://img.shields.io/github/tag/cozy/cozy-files-v3.svg)](https://github.com/cozy/cozy-files-v3/releases)
-[![NPM Licence shield](https://img.shields.io/npm/l/cozy-files-v3.svg)](https://github.com/cozy/cozy-files-v3/blob/master/LICENSE)
+[![Travis build status shield](https://img.shields.io/travis/cozy/cozy-drive.svg?branch=master)](https://travis-ci.org/cozy/cozy-drive)
+[![NPM release version shield](https://img.shields.io/npm/v/cozy-drive.svg)](https://www.npmjs.com/package/cozy-drive)
+[![Github Release version shield](https://img.shields.io/github/tag/cozy/cozy-drive.svg)](https://github.com/cozy/cozy-drive/releases)
+[![NPM Licence shield](https://img.shields.io/npm/l/cozy-drive.svg)](https://github.com/cozy/cozy-drive/blob/master/LICENSE)
 
 
 [Cozy] Files
@@ -39,14 +39,14 @@ Hacking the Files app requires you to [setup a dev environment][setup].
 You can then clone the app repository and install dependencies:
 
 ```sh
-$ git clone https://github.com/cozy/cozy-files-v3.git
-$ cd cozy-files-v3
+$ git clone https://github.com/cozy/cozy-drive.git
+$ cd cozy-drive
 $ yarn install
 ```
 
 :pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version `6` before doing a `yarn install`.
 
-:warning: During its early ages, _cozy-files-v3_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know hot to install and configure the latest available versions.
+:warning: During its early ages, _cozy-drive_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know hot to install and configure the latest available versions.
 
 Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch, lint, test, build…
 
@@ -57,7 +57,7 @@ You can easily view your current running app, you can use the [cozy-stack docker
 
 ```sh
 # in a terminal, run your app in watch mode
-$ cd cozy-files-v3
+$ cd cozy-drive
 $ yarn watch:browser
 ```
 
@@ -94,7 +94,7 @@ yarn link
 then go back to your app project and replace the distributed cozy-ui module with the linked one:
 
 ```sh
-cd cozy-files-v3
+cd cozy-drive
 yarn link cozy-ui
 ```
 
@@ -108,7 +108,7 @@ You can now run the watch task and your project will hot-reload each times a coz
 Tests are run by [mocha] under the hood, and written using [chai] and [sinon]. You can easily run the tests suite with:
 
 ```sh
-$ cd cozy-files-v3
+$ cd cozy-drive
 $ yarn test
 ```
 
@@ -176,7 +176,7 @@ Cozy Files is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [contribute]: CONTRIBUTING.md
 [tx]: https://www.transifex.com/cozy/
 [tx-signin]: https://www.transifex.com/signin/
-[tx-app]: https://www.transifex.com/cozy/cozy-files-v3/dashboard/
+[tx-app]: https://www.transifex.com/cozy/cozy-drive/dashboard/
 [tx-client]: http://docs.transifex.com/client/
 [freenode]: http://webchat.freenode.net/?randomnick=1&channels=%23cozycloud&uio=d4
 [forum]: https://forum.cozy.io/

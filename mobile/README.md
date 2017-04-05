@@ -15,8 +15,8 @@
 ### :package: Install and run in dev mode
 
 ```sh
-$ git clone https://github.com/cozy/cozy-files-v3.git
-$ cd cozy-files-v3
+$ git clone https://github.com/cozy/cozy-drive.git
+$ cd cozy-drive
 $ yarn install
 ```
 

@@ -1,9 +1,9 @@
 {
   "name": "Files",
-  "slug": "cozy-files-v3",
+  "slug": "cozy-drive",
   "icon": "app-icon.svg",
   "description": "File manager for Cozy v3",
-  "source": "https://github.com/cozy/cozy-files-v3.git@build",
+  "source": "https://github.com/cozy/cozy-drive.git@build",
   "developer": {
     "name": "Cozy",
     "url": "https://cozy.io"

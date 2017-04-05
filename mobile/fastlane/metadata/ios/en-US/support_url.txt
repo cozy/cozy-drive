@@ -1,1 +1,1 @@
-https://github.com/cozy/cozy-files-v3/issues
+https://github.com/cozy/cozy-drive/issues

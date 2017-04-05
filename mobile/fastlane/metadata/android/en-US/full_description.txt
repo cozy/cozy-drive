@@ -6,4 +6,4 @@ Cozy Files allows you to:
 
 Respectful of the user's privacy, Cozy Cloud simplifies daily tasks: synchronize and backup photos, automate bills downloading, manage expenses, etc. Flexible and easy to use, our Open Source platform allows users to create and develop their own applications.
 
-We'd love to hear from you! Please use Github issues to report bugs and vote for next features : https://github.com/cozy/cozy-files-v3/issues
+We'd love to hear from you! Please use Github issues to report bugs and vote for next features : https://github.com/cozy/cozy-drive/issues
