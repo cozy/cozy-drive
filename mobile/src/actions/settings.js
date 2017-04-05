@@ -3,6 +3,7 @@
 import { initClient, refreshFolder, onError } from '../lib/cozy-helper'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
+import { pingOnceADay } from './timestamp'
 import { startBackgroundService, stopBackgroundService } from '../lib/background'
 
 export const SET_URL = 'SET_URL'
@@ -44,6 +45,7 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
   if (analytics && state.mobile) {
     const value = state.mobile.settings.backupImages
     logInfo(`${source}: backup images is ${value ? 'enabled' : 'disabled'}`)
+    dispatch(pingOnceADay(state.mobile.timestamp, analytics))
   }
 }
 
