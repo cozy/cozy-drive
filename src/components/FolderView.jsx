@@ -2,8 +2,6 @@
 import React, { Component } from 'react'
 import { translate } from '../lib/I18n'
 
-import { Alerter } from 'cozy-ui/react/Alerter'
-
 import Loading from './Loading'
 import Empty from './Empty'
 import Oops from './Oops'
@@ -84,7 +82,6 @@ class FolderView extends Component {
           />
         </div>
         <div role='contentinfo'>
-          <Alerter />
           {__TARGET__ === 'mobile' && <UploadProgression />}
           {selectionModeActive &&
             <SelectionBar
