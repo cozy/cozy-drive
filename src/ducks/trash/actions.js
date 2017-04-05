@@ -10,76 +10,70 @@ export const DESTROY_FILES = 'DESTROY_FILES'
 export const DESTROY_FILES_SUCCESS = 'DESTROY_FILES_SUCCESS'
 export const DESTROY_FILES_FAILURE = 'DESTROY_FILES_FAILURE'
 
-export const emptyTrash = () => {
-  return async dispatch => {
-    dispatch({ type: EMPTY_TRASH })
-    try {
-      await cozy.client.files.clearTrash()
-    } catch (err) {
-      return dispatch({
-        type: EMPTY_TRASH_FAILURE,
-        alert: {
-          message: 'alert.try_again'
-        }
-      })
-    }
+export const emptyTrash = () => async dispatch => {
+  dispatch({ type: EMPTY_TRASH })
+  try {
+    await cozy.client.files.clearTrash()
+  } catch (err) {
     return dispatch({
-      type: EMPTY_TRASH_SUCCESS,
+      type: EMPTY_TRASH_FAILURE,
       alert: {
-        message: 'alert.empty_trash_success'
+        message: 'alert.try_again'
       }
     })
   }
+  return dispatch({
+    type: EMPTY_TRASH_SUCCESS,
+    alert: {
+      message: 'alert.empty_trash_success'
+    }
+  })
 }
 
-export const restoreFiles = files => {
-  return async dispatch => {
-    dispatch({ type: RESTORE_FILES, files })
-    const restored = []
-    try {
-      for (const file of files) {
-        restored.push(await cozy.client.files.restoreById(file.id))
-      }
-    } catch (err) {
-      return dispatch({
-        type: RESTORE_FILES_FAILURE,
-        alert: {
-          message: 'alert.try_again'
-        }
-      })
+export const restoreFiles = files => async dispatch => {
+  dispatch({ type: RESTORE_FILES, files })
+  const restored = []
+  try {
+    for (const file of files) {
+      restored.push(await cozy.client.files.restoreById(file.id))
     }
+  } catch (err) {
     return dispatch({
-      type: RESTORE_FILES_SUCCESS,
-      ids: files.map(f => f.id),
+      type: RESTORE_FILES_FAILURE,
       alert: {
-        message: 'alert.restore_file_success'
+        message: 'alert.try_again'
       }
     })
   }
+  return dispatch({
+    type: RESTORE_FILES_SUCCESS,
+    ids: files.map(f => f.id),
+    alert: {
+      message: 'alert.restore_file_success'
+    }
+  })
 }
 
-export const destroyFiles = files => {
-  return async dispatch => {
-    dispatch({ type: DESTROY_FILES, files })
-    const trashed = []
-    try {
-      for (const file of files) {
-        trashed.push(await cozy.client.files.destroyById(file.id))
-      }
-    } catch (err) {
-      return dispatch({
-        type: DESTROY_FILES_FAILURE,
-        alert: {
-          message: 'alert.try_again'
-        }
-      })
+export const destroyFiles = files => async dispatch => {
+  dispatch({ type: DESTROY_FILES, files })
+  const trashed = []
+  try {
+    for (const file of files) {
+      trashed.push(await cozy.client.files.destroyById(file.id))
     }
+  } catch (err) {
     return dispatch({
-      type: DESTROY_FILES_SUCCESS,
-      ids: files.map(f => f.id),
+      type: DESTROY_FILES_FAILURE,
       alert: {
-        message: 'alert.destroy_file_success'
+        message: 'alert.try_again'
       }
     })
   }
+  return dispatch({
+    type: DESTROY_FILES_SUCCESS,
+    ids: files.map(f => f.id),
+    alert: {
+      message: 'alert.destroy_file_success'
+    }
+  })
 }

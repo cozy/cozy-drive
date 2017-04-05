@@ -17,7 +17,7 @@ import {
   RESTORE_FILES_SUCCESS,
   DESTROY_FILES,
   DESTROY_FILES_SUCCESS,
-  DESTROY_FILES_FAILURE,
+  DESTROY_FILES_FAILURE
 } from '../ducks/trash'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH, KONNECTORS_DIR_PATH } from '../constants/config.js'
@@ -69,10 +69,8 @@ const fetchStatus = (state = null, action) => {
     // the LOCATION_CHANGE action so that the loading spinner is only showed
     // when the app is launched or when the user use the back button
     case LOCATION_CHANGE:
-    // we temporarily display the spinner when working in the trashed
-    // TODO: display a spinner in the confirm modal instead
-    case EMPTY_TRASH:
-    case DESTROY_FILES:
+    case EMPTY_TRASH:   // we temporarily display the spinner when working in the trashed
+    case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
     case EMPTY_TRASH_SUCCESS:
