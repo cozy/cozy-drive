@@ -15,7 +15,8 @@ import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
 import { initService } from './lib/init'
 import { startBackgroundService, stopBackgroundService } from './lib/background'
-import { initBar, isClientRegistered, resetClient, startRepeatedReplication, startFirstReplication, onError } from './lib/cozy-helper'
+import { initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
+import { startReplication, onError } from './lib/replication'
 import { pingOnceADay } from './actions/timestamp'
 
 const renderAppWithPersistedState = persistedState => {
@@ -26,15 +27,10 @@ const renderAppWithPersistedState = persistedState => {
     const state = store.getState()
     const client = state.settings.client
     const isSetup = state.mobile.settings.authorized
-    const isFirstReplicationFinished = state.settings.firstReplication
     if (isSetup) {
       isClientRegistered(client).then(clientIsRegistered => {
         if (clientIsRegistered) {
-          if (isFirstReplicationFinished) {
-            startRepeatedReplication(store.dispatch, store.getState)
-          } else {
-            startFirstReplication(store.dispatch, store.getState)
-          }
+          startReplication(store.dispatch, store.getState)
           initBar()
         } else {
           onError(store.dispatch, store.getState)({ message: 'Client has been revoked' })

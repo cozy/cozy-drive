@@ -1,6 +1,6 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import { initClient, startFirstReplication } from '../lib/cozy-helper'
+import { initClient, startReplication } from '../lib/cozy-helper'
 import { setClient } from '../../../src/actions/settings'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
@@ -85,7 +85,7 @@ export const registerDevice = () => async (dispatch, getState) => {
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
   await cozy.client.authorize().then(({ client }) => {
     dispatch(setClient(client))
-    startFirstReplication(dispatch, getState)
+    startReplication(dispatch, getState)
   }).catch(err => {
     dispatch(wrongAddressError())
     logException(err)

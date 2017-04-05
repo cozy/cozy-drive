@@ -2,9 +2,6 @@
 
 import { LocalStorage as Storage } from 'cozy-client-js'
 
-import { openFolder, setFirstReplication } from '../../../src/actions'
-import { revokeClient } from '../actions/authorization'
-
 const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
 const getClientName = device => `Cozy Files Application on ${device} (${Math.random().toString(36).slice(2)})`
@@ -71,45 +68,5 @@ export function resetClient () {
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()
-  }
-}
-
-export function refreshFolder (dispatch, getState) {
-  return result => {
-    if (result.docs_written !== 0) {
-      dispatch(openFolder(getState().folder.id))
-    }
-  }
-}
-
-export const startRepeatedReplication = (dispatch, getState) => {
-  const options = {
-    onError: onError(dispatch, getState),
-    onComplete: refreshFolder(dispatch, getState)
-  }
-  cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
-}
-
-export const startFirstReplication = (dispatch, getState) => {
-  const options = {
-    onError: onError(dispatch, getState),
-    onComplete: () => {
-      dispatch(setFirstReplication(true))
-      startRepeatedReplication(dispatch, getState)
-    }
-  }
-  cozy.client.offline.replicateFromCozy('io.cozy.files', options).then(() => {
-    console.log('End of Replication')
-  })
-}
-
-export const onError = (dispatch, getState) => (err) => {
-  if (err.message === clientRevokedMsg || err.error === 'code=400, message=Invalid JWT token') {
-    console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
-    dispatch(revokeClient())
-  } else if (err.message === 'ETIMEDOUT') {
-    console.log('timeout')
-  } else {
-    console.warn(err)
   }
 }
