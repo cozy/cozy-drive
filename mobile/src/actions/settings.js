@@ -1,6 +1,7 @@
 /* global cozy, __ALLOW_HTTP__ */
 
-import { initClient, startReplication as startPouchReplication } from '../lib/cozy-helper'
+import { initClient } from '../lib/cozy-helper'
+import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../../src/actions/settings'
 import { openFolder } from '../../../src/actions'
 import { onRegistered } from '../lib/registration'
