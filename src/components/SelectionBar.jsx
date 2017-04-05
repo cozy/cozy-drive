@@ -5,6 +5,7 @@ import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
 const SelectionBar = ({ t, selected, actions, onClose, onActionComplete, onMoreClick }) => {
+  const onActionAbort = () => {}
   const selectedCount = selected.length
   const actionNames = Object.keys(actions)
   return (
@@ -21,7 +22,7 @@ const SelectionBar = ({ t, selected, actions, onClose, onActionComplete, onMoreC
           onClick={() => {
             actions[actionName]()
               .then(() => onActionComplete())
-              .catch(err => {})
+              .catch(() => onActionAbort())
           }}
         >
           {t('selectionbar.' + actionName)}
