@@ -18,9 +18,6 @@ export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const TRASH_FILES = 'TRASH_FILES'
 export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
 export const TRASH_FILES_FAILURE = 'TRASH_FILES_FAILURE'
-export const RESTORE_FILES = 'RESTORE_FILES'
-export const RESTORE_FILES_SUCCESS = 'RESTORE_FILES_SUCCESS'
-export const RESTORE_FILES_FAILURE = 'RESTORE_FILES_FAILURE'
 export const SELECT_FILE = 'SELECT_FILE'
 export const UNSELECT_FILE = 'UNSELECT_FILE'
 export const UNSELECT_ALL = 'UNSELECT_ALL'
@@ -60,13 +57,14 @@ export const openFolder = (folderId) => {
       const folder = await cozy.client.files.statById(folderId, offline)
       const parentId = folder.attributes.dir_id
       const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
+      // folder.relations('contents') returns null when the trash is empty
+      const files = folder.relations('contents') || []
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder: Object.assign(extractFileAttributes(folder), {
-          parent: extractFileAttributes(parent)}),
-        files: folder.relations('contents').map(
-          c => extractFileAttributes(c)
-        )
+          parent: extractFileAttributes(parent)
+        }),
+        files: files.map(c => extractFileAttributes(c))
       })
     } catch (err) {
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
@@ -181,32 +179,6 @@ export const trashFiles = files => {
       ids: files.map(f => f.id),
       alert: {
         message: 'alert.trash_file_success'
-      }
-    })
-  }
-}
-
-export const restoreFiles = files => {
-  return async dispatch => {
-    dispatch({ type: RESTORE_FILES, files })
-    const restored = []
-    try {
-      for (const file of files) {
-        restored.push(await cozy.client.files.restoreById(file.id))
-      }
-    } catch (err) {
-      return dispatch({
-        type: RESTORE_FILES_FAILURE,
-        alert: {
-          message: 'alert.try_again'
-        }
-      })
-    }
-    return dispatch({
-      type: RESTORE_FILES_SUCCESS,
-      ids: files.map(f => f.id),
-      alert: {
-        message: 'alert.restore_file_success'
       }
     })
   }

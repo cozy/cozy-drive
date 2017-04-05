@@ -12,6 +12,18 @@
         @extends $button--more
 
 .fil-toolbar-trash
+    .fil-btn--delete
+        padding-left         em(44px, 16px)
+        background-image     embedurl('../assets/icons/icon-trash-danger.svg')
+        background-position  em(17px, 16px) center
+        background-repeat    no-repeat
+    .fil-btn--active
+        padding-left         0
+        background-image     none
+        .fil-loading
+            margin-left      0
+            margin-right     em(16px)
+
     .fil-toolbar-more-btn
         display none
 
@@ -64,6 +76,7 @@ b-item
             display block
 
     .desktop-upload
+    .fil-btn--delete
         display none
 
     .fil-toolbar-trash .fil-toolbar-more-btn

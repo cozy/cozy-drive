@@ -46,7 +46,7 @@
     "share": "Share",
     "download": "Download",
     "trash": "Remove",
-    "perma_delete": "Delete permanently",
+    "destroy": "Delete permanently",
     "moveto": "Move",
     "rename": "Rename",
     "restore": "Restore",
@@ -60,12 +60,23 @@
     "cancel": "Cancel",
     "delete": "Remove"
   },
+  "emptytrashconfirmation": {
+    "title": "Permanently delete?",
+    "forbidden": "You won't be able to access these files anymore.",
+    "restore": "You won't be able to restore these files if you didn't make a backup.",
+    "cancel": "Cancel",
+    "delete": "Delete all"
+  },
   "loading": {
     "message": "Loading"
   },
   "empty": {
     "title" : "You don’t have any files in this folder.",
-    "text" : "Click the \"upload\" button to add files to this folder."
+    "text" : "Click the \"upload\" button to add files to this folder.",
+    "trash": {
+      "title" : "You don’t have any deleted files.",
+      "text" : "Move files you don't need anymore to the Trash and permanently delete items to free up storage page."
+    }
   },
   "error": {
     "open_folder": "Something went wrong when opening the folder.",
@@ -81,6 +92,8 @@
     "try_again": "An error has occurred, please try again in a moment.",
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
+    "destroy_file_success": "The selection has been deleted permanently.",
+    "empty_trash_success": "The trash has been emptied.",
     "folder_name": "The folder %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
     "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved."
