@@ -1,4 +1,4 @@
-How to contribute to Cozy Files?
+How to contribute to Cozy Drive?
 ====================================
 
 Thank you for your interest in contributing to Cozy! There are many ways to contribute, and we appreciate all of them.
@@ -23,7 +23,7 @@ Opening an issue is as easy as following [this link][issues] and filling out the
 - What did you try, step by step?
 - What did you expect?
 - What did happen instead?
-- What is the version of the Cozy Files?
+- What is the version of the Cozy Drive?
 
 
 Pull Requests
@@ -48,9 +48,9 @@ Pull requests are the primary mechanism we use to change Cozy. GitHub itself has
 Fork the project on GitHub and [check out your copy locally][forking].
 
 ```
-$ git clone github.com/cozy/cozy-files-v3.git
-$ cd cozy-files-v3
-$ git remote add fork git://github.com/yourusername/cozy-files-v3.git
+$ git clone github.com/cozy/cozy-drive.git
+$ cd cozy-drive
+$ git remote add fork git://github.com/yourusername/cozy-drive.git
 ```
 
 #### Step 2: Branch
@@ -70,7 +70,7 @@ Well, we think you know how to do that. Just be sure to follow the coding guidel
 Don't forget to add tests and be sure they are green:
 
 ```
-$ cd cozy-files-v3
+$ cd cozy-drive
 $ npm run test
 ```
 
@@ -93,7 +93,7 @@ $ git rebase origin/development my-branch
 $ git push -u fork my-branch
 ```
 
-Go to https://github.com/username/cozy-files-v3 and select your branch. Click the 'Pull Request' button and fill out the form. **Do not forget** to select the `development` branch as base branch.
+Go to https://github.com/username/cozy-drive and select your branch. Click the 'Pull Request' button and fill out the form. **Do not forget** to select the `development` branch as base branch.
 
 Alternatively, you can use [hub] to open the pull request from your terminal:
 
@@ -113,7 +113,7 @@ Documentation improvements are very welcome. We try to keep a good documentation
 Translations
 ------------
 
-The Cozy Files is translated on a platform called [Transifex][tx]. [This tutorial][tx-start] can help you to learn how to make your first steps here. If you have any question, don't hesitate to ask us!
+The Cozy Drive is translated on a platform called [Transifex][tx]. [This tutorial][tx-start] can help you to learn how to make your first steps here. If you have any question, don't hesitate to ask us!
 
 
 Community
@@ -123,12 +123,12 @@ You can help us by making our community even more vibrant. For example, you can 
 
 
 
-[issues]: https://github.com/cozy/cozy-files-v3/issues/new
+[issues]: https://github.com/cozy/cozy-drive/issues/new
 [pr]: https://help.github.com/categories/collaborating-with-issues-and-pull-requests/
 [forking]: http://blog.campoy.cat/2014/03/github-and-go-forking-pull-requests-and.html
 [stdjs]: http://standardjs.com/
 [commitmsg]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-[localization]: https://github.com/cozy/cozy-files-v3/blob/master/README.md#localization
+[localization]: https://github.com/cozy/cozy-drive/blob/master/README.md#localization
 [hub]: https://hub.github.com/
 [tx]: https://www.transifex.com/cozy/
 [tx-start]: http://docs.transifex.com/getting-started/translators/

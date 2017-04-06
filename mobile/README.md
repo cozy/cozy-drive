@@ -15,8 +15,8 @@
 ### :package: Install and run in dev mode
 
 ```sh
-$ git clone https://github.com/cozy/cozy-files-v3.git
-$ cd cozy-files-v3
+$ git clone https://github.com/cozy/cozy-drive.git
+$ cd cozy-drive
 $ yarn install
 ```
 
@@ -69,7 +69,7 @@ $ mkdir mobile/build/android
 
 You must have this files:
 
-- keys/android/cozy-files-release-key.jks (and the password)
+- keys/android/cozy-drive-release-key.jks (and the password)
 - keys/android/key.json
 
 To generate a signed APK on `mobile/build/android/` and publish on Google Play:

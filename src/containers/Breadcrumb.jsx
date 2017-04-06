@@ -20,7 +20,7 @@ const Breadcrumb = ({ t, router, location, path, opening, deployed, toggleOpenin
 
   path.forEach(folder => {
     if (folder.id === ROOT_DIR_ID) {
-      folder.name = t('breadcrumb.title_files')
+      folder.name = t('breadcrumb.title_drive')
     } else if (folder.id === TRASH_DIR_ID) {
       folder.name = t('breadcrumb.title_trash')
     }

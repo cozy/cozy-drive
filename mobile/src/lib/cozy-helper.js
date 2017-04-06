@@ -4,16 +4,16 @@ import { LocalStorage as Storage } from 'cozy-client-js'
 
 const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
-const getClientName = device => `Cozy Files Application on ${device} (${Math.random().toString(36).slice(2)})`
+const getClientName = device => `Cozy Drive Application on ${device} (${Math.random().toString(36).slice(2)})`
 
 const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
-  softwareID: 'io.cozy.mobile.files',
+  softwareID: 'io.cozy.drive.mobile',
   clientName: getClientName(device),
   softwareVersion: __APP_VERSION__,
   clientKind: 'mobile',
-  clientURI: 'https://github.com/cozy/cozy-files-v3/',
-  logoURI: 'https://raw.githubusercontent.com/cozy/cozy-files-v3/master/vendor/assets/apple-touch-icon-120x120.png',
+  clientURI: 'https://github.com/cozy/cozy-drive/',
+  logoURI: 'https://raw.githubusercontent.com/cozy/cozy-drive/master/vendor/assets/apple-touch-icon-120x120.png',
   policyURI: 'https://files.cozycloud.cc/cgu.pdf',
   scopes: ['io.cozy.files']
 })
@@ -36,7 +36,7 @@ export const initClient = (url, onRegister = null, device = 'Device') => {
 
 export const initBar = () => {
   cozy.bar.init({
-    appName: 'Files',
+    appName: 'Cozy Drive',
     iconPath: require('../../../vendor/assets/app-icon.svg'),
     lang: 'en',
     replaceTitleOnMobile: true

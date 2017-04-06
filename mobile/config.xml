@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.files.mobile" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Cozy Files</name>
+<widget id="io.cozy.drive.mobile" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
     <content src="index.html" />
