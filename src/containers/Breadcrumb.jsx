@@ -33,6 +33,7 @@ const Breadcrumb = ({ t, router, location, path, opening, deployed, toggleOpenin
     if (deployed) toggleDeploy()
     goToFolder(folderId).then(() => {
       toggleOpening()
+      toggleDeploy()
       router.push(getFolderUrl(folderId, location))
     })
   }
