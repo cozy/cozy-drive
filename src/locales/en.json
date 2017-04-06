@@ -67,6 +67,13 @@
     "cancel": "Cancel",
     "delete": "Delete all"
   },
+  "destroyconfirmation": {
+    "title": "Permanently delete?",
+    "forbidden": "You won't be able to access this file anymore. |||| You won't be able to access these files anymore.",
+    "restore": "You won't be able to restore this file if you didn't make a backup. |||| You won't be able to restore these files if you didn't make a backup.",
+    "cancel": "Cancel",
+    "delete": "Delete permanently"
+  },
   "loading": {
     "message": "Loading"
   },

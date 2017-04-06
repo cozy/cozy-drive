@@ -4,7 +4,7 @@ import { translate } from '../../lib/I18n'
 import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'
-import EmptyTrashConfirm from './components/EmptyTrashConfirm'
+import DestroyConfirm from './components/DestroyConfirm'
 import Toolbar from './Toolbar'
 
 import { restoreFiles, destroyFiles } from './actions'
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     selection: {
       restore: () => dispatch(restoreFiles(ownProps.selected)),
       destroy: () =>
-        confirm(<EmptyTrashConfirm t={ownProps.t} />)
+        confirm(<DestroyConfirm t={ownProps.t} fileCount={ownProps.selected.length} />)
           .then(() => dispatch(destroyFiles(ownProps.selected)))
           .catch(() => {})
     }
