@@ -68,13 +68,15 @@ class FolderView extends Component {
 
   render () {
     const { isTrashContext, showActionMenu } = this.props
-    const { selected, actions, Toolbar } = this.props
+    const { files, selected, actions, Toolbar } = this.props
     const { onShowActionMenu } = this.props
 
     const { showAddFolder, selectionMode } = this.state
 
     const selectionModeActive = selected.length !== 0 || selectionMode === true
     const fetchFailed = this.props.fetchStatus === 'failed'
+    const fetchPending = this.props.fetchStatus === 'pending'
+    const nothingToDo = isTrashContext && files.length === 0
 
     const toolbarActions = {
       addFolder: this.toggleAddFolder
@@ -85,7 +87,7 @@ class FolderView extends Component {
           <Breadcrumb />
           <Toolbar
             actions={toolbarActions}
-            disabled={fetchFailed || selectionModeActive}
+            disabled={fetchFailed || fetchPending || selectionModeActive || nothingToDo}
             onSelectItemsClick={this.toggleSelectionMode}
           />
         </div>

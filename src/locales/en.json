@@ -20,7 +20,7 @@
     "menu_upload": "Upload files",
     "menu_new_folder": "New folder",
     "menu_select": "Select items",
-    "delete_all": "Delete all"
+    "empty_trash": "Empty trash"
   },
   "table": {
     "head_name": "Name",
