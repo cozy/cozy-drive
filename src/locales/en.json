@@ -113,8 +113,8 @@
         "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
       },
       "files": {
-        "title": "Access your files",
-        "description": "In order to save your Cozy files on your device, the application must access your files."
+        "title": "Access your drive",
+        "description": "In order to save your Cozy Drive on your device, the application must access your files."
       },
       "photos": {
         "title": "Backup your photos and videos",
