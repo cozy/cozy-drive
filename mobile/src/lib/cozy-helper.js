@@ -8,7 +8,7 @@ const getClientName = device => `Cozy Drive Application on ${device} (${Math.ran
 
 const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
-  softwareID: 'io.cozy.mobile.files',
+  softwareID: 'io.cozy.drive.mobile',
   clientName: getClientName(device),
   softwareVersion: __APP_VERSION__,
   clientKind: 'mobile',
