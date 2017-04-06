@@ -1,6 +1,6 @@
-Cozy Cloud permet à chacun d’avoir son cloud personnel, respectueux de la vie privée. Avec Cozy Files, accédez aux fichiers et aux photos stockés dans votre Cozy depuis n'importe quel téléphone/tablette.
+Cozy Cloud permet à chacun d’avoir son cloud personnel, respectueux de la vie privée. Avec Cozy Drive, accédez aux fichiers et aux photos stockés dans votre Cozy depuis n'importe quel téléphone/tablette.
 
-Avec Cozy Files vous pouvez :
+Avec Cozy Drive vous pouvez :
     - Accéder aux fichiers présents sur votre cloud personnel
     - Synchroniser automatiquement les photos de votre téléphone ou tablette
 

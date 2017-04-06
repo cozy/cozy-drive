@@ -1,4 +1,4 @@
-How to contribute to Cozy Files?
+How to contribute to Cozy Drive?
 ====================================
 
 Thank you for your interest in contributing to Cozy! There are many ways to contribute, and we appreciate all of them.
@@ -23,7 +23,7 @@ Opening an issue is as easy as following [this link][issues] and filling out the
 - What did you try, step by step?
 - What did you expect?
 - What did happen instead?
-- What is the version of the Cozy Files?
+- What is the version of the Cozy Drive?
 
 
 Pull Requests
@@ -113,7 +113,7 @@ Documentation improvements are very welcome. We try to keep a good documentation
 Translations
 ------------
 
-The Cozy Files is translated on a platform called [Transifex][tx]. [This tutorial][tx-start] can help you to learn how to make your first steps here. If you have any question, don't hesitate to ask us!
+The Cozy Drive is translated on a platform called [Transifex][tx]. [This tutorial][tx-start] can help you to learn how to make your first steps here. If you have any question, don't hesitate to ask us!
 
 
 Community

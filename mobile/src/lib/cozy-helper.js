@@ -4,7 +4,7 @@ import { LocalStorage as Storage } from 'cozy-client-js'
 
 const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
-const getClientName = device => `Cozy Files Application on ${device} (${Math.random().toString(36).slice(2)})`
+const getClientName = device => `Cozy Drive Application on ${device} (${Math.random().toString(36).slice(2)})`
 
 const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
@@ -36,7 +36,7 @@ export const initClient = (url, onRegister = null, device = 'Device') => {
 
 export const initBar = () => {
   cozy.bar.init({
-    appName: 'Files',
+    appName: 'Cozy Drive',
     iconPath: require('../../../vendor/assets/app-icon.svg'),
     lang: 'en',
     replaceTitleOnMobile: true

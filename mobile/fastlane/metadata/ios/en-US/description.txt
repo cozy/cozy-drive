@@ -1,6 +1,6 @@
-Cozy Cloud simplifies the personal cloud. Files and Photos you keep in your Cozy, your personnal cloud, are accessible from everywhere.
+Cozy Cloud simplifies the personal cloud. Drive and Photos you keep in your Cozy, your personnal cloud, are accessible from everywhere.
 
-Cozy Files allows you to:
+Cozy Drive allows you to:
     - Access the files you have in your personal cloud
     - Automatically synchronize your phone or tablet's photos with your Cozy
 

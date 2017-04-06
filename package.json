@@ -1,5 +1,5 @@
 {
-  "name": "cozy-files",
+  "name": "cozy-drive",
   "version": "3.0.0",
   "main": "src/main.jsx",
   "scripts": {
