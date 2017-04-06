@@ -18,8 +18,9 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
         'coz-btn', 'coz-btn--danger-outline', styles['fil-btn--delete']
       )}
       onClick={() => emptyTrash()}
+      disabled={disabled}
     >
-      {t('toolbar.delete_all')}
+      {t('toolbar.empty_trash')}
     </button>
     <MenuButton>
       <button
@@ -36,7 +37,7 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
             className={styles['fil-action-delete']}
             onClick={() => emptyTrash()}
           >
-            {t('toolbar.delete_all')}
+            {t('toolbar.empty_trash')}
           </a>
         </Item>
         <hr />
