@@ -27,6 +27,16 @@ const Breadcrumb = ({ t, router, location, path, opening, deployed, toggleOpenin
     if (!folder.name) folder.name = '…'
   })
 
+  const onClick = folderId => e => {
+    e.preventDefault()
+    toggleOpening()
+    if (deployed) toggleDeploy()
+    goToFolder(folderId).then(() => {
+      toggleOpening()
+      router.push(getFolderUrl(folderId, location))
+    })
+  }
+
   return (
     <div
       className={classNames(styles['fil-path-backdrop'], {[styles['deployed']]: deployed})}
@@ -36,15 +46,7 @@ const Breadcrumb = ({ t, router, location, path, opening, deployed, toggleOpenin
         <Link
           to={getFolderUrl(path[path.length - 2].id, location)}
           className={styles['fil-path-previous']}
-          onClick={e => {
-            e.preventDefault()
-            toggleOpening()
-            if (deployed) toggleDeploy()
-            goToFolder(path[path.length - 2].id).then(() => {
-              toggleOpening()
-              router.push(getFolderUrl(path[path.length - 2].id, location))
-            })
-          }}
+          onClick={onClick(path[path.length - 2].id)}
         />
       }
       <h2 className={styles['fil-path-title']}>
@@ -54,15 +56,7 @@ const Breadcrumb = ({ t, router, location, path, opening, deployed, toggleOpenin
             return <Link
               to={getFolderUrl(folder.id, location)}
               className={styles['fil-path-link']}
-              onClick={e => {
-                e.preventDefault()
-                toggleOpening()
-                if (deployed) toggleDeploy()
-                goToFolder(folder.id).then(() => {
-                  toggleOpening()
-                  router.push(getFolderUrl(folder.id, location))
-                })
-              }}
+              onClick={onClick(folder.id)}
             >
               <a>
                 { folder.name }
