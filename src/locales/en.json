@@ -1,6 +1,6 @@
 {
   "nav": {
-    "item_files": "Drive",
+    "item_drive": "Drive",
     "item_recent": "Recent",
     "item_shared": "Shared by me",
     "item_activity": "Activity",
@@ -8,7 +8,7 @@
     "item_settings": "Settings"
   },
   "breadcrumb": {
-    "title_files": "Drive",
+    "title_drive": "Drive",
     "title_recent": "Recent",
     "title_shared": "Shared by me",
     "title_activity": "Activity",

@@ -22,9 +22,9 @@ What's Drive?
 Cozy Drive makes your file management easy. Main features are:
 
 - File tree
-- Drive and folders upload.
-- Drive and folders sharing (via URLs)
-- Drive and folders search
+- Files and folders upload.
+- Files and folders sharing (via URLs)
+- Files and folders search
 
 
 Hack
