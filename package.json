@@ -34,7 +34,8 @@
     "android:signed": "npm run android:release && (cd mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/android-release-unsigned.apk)",
     "android:publish": "npm run android:signed && (cd mobile && fastlane supply)",
     "ios:run": "(cd mobile && cordova run ios --device)",
-    "ios:run:emulator": "(cd mobile && cordova run ios --emulator)"
+    "ios:run:emulator": "(cd mobile && cordova run ios --emulator)",
+    "ios:publish": "(cd mobile && fastlane ios pushtest)"
   },
   "repository": {
     "type": "git",
