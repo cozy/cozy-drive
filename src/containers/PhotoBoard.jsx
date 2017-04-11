@@ -2,6 +2,7 @@ import styles from '../styles/photoList'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Dimensions from 'react-dimensions'
 import { translate } from '../lib/I18n'
 
 import { togglePhotoSelection } from '../actions/selection'
@@ -51,7 +52,7 @@ export class PhotoBoard extends Component {
       onPhotoToggle,
       photosContext
     } = this.props
-    const { isFetching, isWorking, isIndexing } = this.props
+    const { isFetching, isWorking, isIndexing, containerWidth } = this.props
     const isGloballyFetching = isFetching || (!isIndexing && this.state.isFetching)
     const { photoLists, isError } = this.state
     const isBusy = isGloballyFetching || isWorking || isIndexing
@@ -85,6 +86,7 @@ export class PhotoBoard extends Component {
             photos={photoList.photos}
             selected={selected}
             onPhotoToggle={onPhotoToggle}
+            containerWidth={containerWidth}
           />)
         })}
         {!isBusy && photoLists.length === 0 &&
@@ -113,4 +115,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(PhotoBoard))
+)(translate()(Dimensions()(PhotoBoard)))
