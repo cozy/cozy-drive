@@ -13,38 +13,24 @@ import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
-import { initService } from './lib/init'
+import { initServices } from './lib/init'
 import { startBackgroundService, stopBackgroundService } from './lib/background'
-import { initBar, isClientRegistered, resetClient } from './lib/cozy-helper'
-import { onError } from './lib/replication'
+import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
-import { startReplication } from './actions/settings'
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
-  initService(store)
 
-  function requireSetup (nextState, replace, callback) {
-    const state = store.getState()
-    const client = state.settings.client
-    const isSetup = state.mobile.settings.authorized
-    if (isSetup) {
-      isClientRegistered(client).then(clientIsRegistered => {
-        if (clientIsRegistered) {
-          startReplication(store.dispatch, store.getState)
-          initBar()
-        } else {
-          onError(store.dispatch)({ message: 'Client has been revoked' })
-        }
-        callback()
-      })
-    } else {
+  initServices(store)
+
+  function isRedirectedToOnboaring (nextState, replace) {
+    const isNotAuthorized = !store.getState().mobile.settings.authorized
+    if (isNotAuthorized) {
       resetClient()
       replace({
         pathname: '/onboarding',
         state: { nextPathname: nextState.location.pathname }
       })
-      callback()
     }
   }
 
@@ -77,7 +63,7 @@ const renderAppWithPersistedState = persistedState => {
   render((
     <I18n context={context} lang={lang}>
       <Provider store={store}>
-        <Router history={hashHistory} routes={MobileAppRoute(requireSetup)} />
+        <Router history={hashHistory} routes={MobileAppRoute(isRedirectedToOnboaring)} />
       </Provider>
     </I18n>
   ), root)
