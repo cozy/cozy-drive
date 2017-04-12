@@ -1,6 +1,6 @@
 /* global cozy */
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
-import { openWithOfflineError, openWithNoAppError } from '../../mobile/src/actions'
+import { openWithNoAppError } from '../../mobile/src/actions'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -18,12 +18,7 @@ export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const TRASH_FILES = 'TRASH_FILES'
 export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
 export const TRASH_FILES_FAILURE = 'TRASH_FILES_FAILURE'
-export const SELECT_FILE = 'SELECT_FILE'
-export const UNSELECT_FILE = 'UNSELECT_FILE'
-export const UNSELECT_ALL = 'UNSELECT_ALL'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
-export const SHOW_FILE_ACTIONMENU = 'SHOW_FILE_ACTIONMENU'
-export const HIDE_FILE_ACTIONMENU = 'HIDE_FILE_ACTIONMENU'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
 export const DOWNLOAD_FILE_E_MISSING = 'DOWNLOAD_FILE_E_MISSING'
 export const DOWNLOAD_FILE_E_OFFLINE = 'DOWNLOAD_FILE_E_OFFLINE'
@@ -37,8 +32,10 @@ const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 export const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'
 
-export const downloadFileMissing = () => ({ type: DOWNLOAD_FILE_E_MISSING, alert: { message: 'error.download_file.missing', level: ALERT_LEVEL_ERROR } })
-export const downloadFileOffline = () => ({ type: DOWNLOAD_FILE_E_OFFLINE, alert: { message: 'error.download_file.offline', level: ALERT_LEVEL_ERROR } })
+const META_DEFAULTS = {
+  cancelSelection: true,
+  hideActionMenu: true
+}
 
 export const openFiles = () => {
   return async dispatch => dispatch(openFolder(ROOT_DIR_ID))
@@ -50,7 +47,13 @@ export const openTrash = () => {
 
 export const openFolder = (folderId) => {
   return async (dispatch, getState) => {
-    dispatch({ type: OPEN_FOLDER, folderId })
+    dispatch({
+      type: OPEN_FOLDER,
+      folderId,
+      meta: {
+        cancelSelection: true
+      }
+    })
     try {
       const settings = getState().settings
       const offline = settings.offline && settings.firstReplication
@@ -159,8 +162,9 @@ export const createFolder = name => {
 }
 
 export const trashFiles = files => {
+  const meta = META_DEFAULTS
   return async dispatch => {
-    dispatch({ type: TRASH_FILES, files })
+    dispatch({ type: TRASH_FILES, files, meta })
     const trashed = []
     try {
       for (const file of files) {
@@ -184,42 +188,32 @@ export const trashFiles = files => {
   }
 }
 
-export const toggleFileSelection = (file, selected) => ({
-  type: selected ? UNSELECT_FILE : SELECT_FILE,
-  id: file.id
-})
-
-export const unselectAllFiles = () => ({
-  type: UNSELECT_ALL
-})
-
 export const downloadSelection = selected => {
+  const meta = META_DEFAULTS
   return async (dispatch) => {
     if (selected.length === 1 && selected[0].type !== 'directory') {
-      return dispatch(downloadFile(selected[0]))
+      return dispatch(downloadFile(selected[0], meta))
     }
     const paths = selected.map(f => f.path)
     const href = await cozy.client.files.getArchiveLink(paths)
     const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')
-    return dispatch({ type: DOWNLOAD_SELECTION, selected })
+    return dispatch({ type: DOWNLOAD_SELECTION, selected, meta })
   }
 }
 
 const isMissingFile = (error) => error.status === 404
-const isOffline = (error) => error.message === 'Network request failed'
 
-export const downloadFile = file => {
+const downloadFileError = (error, meta) => {
+  const message = isMissingFile(error) ? 'error.download_file.missing' : 'error.download_file.offline'
+  const type = isMissingFile(error) ? DOWNLOAD_FILE_E_MISSING : DOWNLOAD_FILE_E_OFFLINE
+  return { type, alert: { message, level: ALERT_LEVEL_ERROR }, meta }
+}
+
+const downloadFile = (file, meta) => {
   return async (dispatch) => {
     const response = await cozy.client.files.downloadById(file.id).catch((error) => {
-      console.error('downloadById', error)
-      if (isMissingFile(error)) {
-        dispatch(downloadFileMissing())
-      } else if (isOffline(error)) {
-        dispatch(downloadFileOffline())
-      } else {
-        dispatch(downloadFileOffline())
-      }
+      dispatch(downloadFileError(error, meta))
       throw error
     })
     const blob = await response.blob()
@@ -230,7 +224,7 @@ export const downloadFile = file => {
     } else {
       forceFileDownload(window.URL.createObjectURL(blob), filename)
     }
-    return dispatch({ type: DOWNLOAD_FILE, file })
+    return dispatch({ type: DOWNLOAD_FILE, file, meta })
   }
 }
 
@@ -245,45 +239,25 @@ const forceFileDownload = (href, filename) => {
 }
 
 export const openFileWith = (id, filename) => {
+  const meta = {
+    cancelSelection: true,
+    hideActionMenu: true
+  }
   return async (dispatch, getState) => {
     if (window.cordova && window.cordova.plugins.fileOpener2) {
-      dispatch({ type: OPEN_FILE_WITH, id })
+      dispatch({ type: OPEN_FILE_WITH, id, meta })
       const response = await cozy.client.files.downloadById(id).catch((error) => {
         console.error('downloadById', error)
-        if (isMissingFile(error)) {
-          dispatch(downloadFileMissing())
-        } else if (isOffline(error)) {
-          dispatch(openWithOfflineError())
-        } else {
-          dispatch(openWithOfflineError())
-        }
+        dispatch(downloadFileError(error, meta))
         throw error
       })
       const blob = await response.blob()
       openFileWithCordova(blob, filename).catch((error) => {
         console.error('openFileWithCordova', error)
-        dispatch(openWithNoAppError())
+        dispatch(openWithNoAppError(meta))
       })
     } else {
-      dispatch(openWithNoAppError())
+      dispatch(openWithNoAppError(meta))
     }
   }
 }
-
-export const showFileActionMenu = id => ({
-  type: SHOW_FILE_ACTIONMENU, id
-})
-
-export const hideFileActionMenu = () => ({
-  type: HIDE_FILE_ACTIONMENU
-})
-
-export const actionMenuLoading = (menu) => ({
-  type: 'SHOW_SPINNER',
-  menu
-})
-
-export const actionMenuLoaded = (menu) => ({
-  type: 'HIDE_SPINNER',
-  menu
-})

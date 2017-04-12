@@ -10,9 +10,9 @@ import Toolbar from './Toolbar'
 import {
   createFolder,
   abortAddFolder,
+  openFileWith,
   downloadSelection,
-  trashFiles,
-  hideFileActionMenu
+  trashFiles
 } from '../../actions'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -29,14 +29,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       // we should find a better way...
       abortAddFolder: accidental => dispatch(abortAddFolder(accidental))
     },
+    mobile: {
+      openWith: file => dispatch(openFileWith(file.id, file.name))
+    },
     selection: {
-      download: () => dispatch(downloadSelection(ownProps.selected)),
-      trash: () => confirm(
-        <DeleteConfirm t={ownProps.t} fileCount={ownProps.actionable.length} />
-      ).then(() => {
-        dispatch(trashFiles(ownProps.actionable))
-        dispatch(hideFileActionMenu())
-      })
+      download: files => dispatch(downloadSelection(files)),
+      trash: files =>
+        confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} />)
+          .then(() => dispatch(trashFiles(files)))
+          .catch(() => {})
     }
   })
 })
