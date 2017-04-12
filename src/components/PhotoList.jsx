@@ -1,12 +1,7 @@
 import styles from '../styles/photoList'
-
 import React, { Component } from 'react'
-import Dimensions from 'react-dimensions'
-
 import justifiedLayout from 'justified-layout'
-
 import Photo from './Photo'
-
 import classNames from 'classnames'
 
 const photoDimensionsFallback = {width: 1, height: 1}
@@ -57,4 +52,4 @@ export class PhotoList extends Component {
   }
 }
 
-export default Dimensions()(PhotoList)
+export default PhotoList

@@ -29,7 +29,8 @@ exports[`PhotoBoard component should render correctly a timeline of photos accor
 <div
   className=""
   role="contentinfo">
-  <DimensionsHOC
+  <PhotoList
+    containerWidth={undefined}
     onPhotoToggle={undefined}
     photos={
       Array [
@@ -52,7 +53,8 @@ exports[`PhotoBoard component should render correctly a timeline of photos accor
 <div
   className=""
   role="contentinfo">
-  <DimensionsHOC
+  <PhotoList
+    containerWidth={undefined}
     onPhotoToggle={undefined}
     photos={
       Array [
