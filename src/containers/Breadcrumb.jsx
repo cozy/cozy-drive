@@ -27,37 +27,45 @@ const Breadcrumb = ({ t, router, location, path, opening, deployed, toggleOpenin
     if (!folder.name) folder.name = '…'
   })
 
-  const onClick = folderId => e => {
+  const onClick = animate => folderId => e => {
     e.preventDefault()
-    toggleOpening()
-    if (deployed) toggleDeploy()
-    goToFolder(folderId).then(() => {
+    if (animate) {
       toggleOpening()
-      toggleDeploy()
+      if (deployed) toggleDeploy()
+    }
+    goToFolder(folderId).then(() => {
+      if (animate) {
+        toggleOpening()
+        toggleDeploy()
+      }
       router.push(getFolderUrl(folderId, location))
     })
   }
 
+  const onClickNoAnimate = onClick(false)
+  const onClickWithAnimate = onClick(true)
+
   return (
     <div
       className={classNames(styles['fil-path-backdrop'], {[styles['deployed']]: deployed})}
-      onClick={toggleDeploy}
     >
       {path.length >= 2 &&
         <Link
           to={getFolderUrl(path[path.length - 2].id, location)}
           className={styles['fil-path-previous']}
-          onClick={onClick(path[path.length - 2].id)}
+          onClick={onClickNoAnimate(path[path.length - 2].id)}
         />
       }
-      <h2 className={styles['fil-path-title']}>
+      <h2 className={styles['fil-path-title']}
+        onClick={toggleDeploy}
+      >
 
         { path.map((folder, index) => {
           if (index < path.length - 1) {
             return <Link
               to={getFolderUrl(folder.id, location)}
               className={styles['fil-path-link']}
-              onClick={onClick(folder.id)}
+              onClick={onClickWithAnimate(folder.id)}
             >
               <a>
                 { folder.name }
