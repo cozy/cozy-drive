@@ -180,7 +180,9 @@
     "action_menu": {
       "open_with": "Open with",
       "download": "Download",
-      "delete": "Remove"
+      "trash": "Remove",
+      "restore": "Restore",
+      "destroy": "Delete permanently"
     },
     "error": {
       "open_with": {

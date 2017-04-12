@@ -30,7 +30,13 @@ export const emptyTrash = () => async dispatch => {
   })
 }
 
+const META_DEFAULTS = {
+  cancelSelection: true,
+  hideActionMenu: true
+}
+
 export const restoreFiles = files => async dispatch => {
+  const meta = META_DEFAULTS
   dispatch({ type: RESTORE_FILES, files })
   const restored = []
   try {
@@ -40,6 +46,7 @@ export const restoreFiles = files => async dispatch => {
   } catch (err) {
     return dispatch({
       type: RESTORE_FILES_FAILURE,
+      meta,
       alert: {
         message: 'alert.try_again'
       }
@@ -48,6 +55,7 @@ export const restoreFiles = files => async dispatch => {
   return dispatch({
     type: RESTORE_FILES_SUCCESS,
     ids: files.map(f => f.id),
+    meta,
     alert: {
       message: 'alert.restore_file_success'
     }
@@ -55,6 +63,7 @@ export const restoreFiles = files => async dispatch => {
 }
 
 export const destroyFiles = files => async dispatch => {
+  const meta = META_DEFAULTS
   dispatch({ type: DESTROY_FILES, files })
   const trashed = []
   try {
@@ -64,6 +73,7 @@ export const destroyFiles = files => async dispatch => {
   } catch (err) {
     return dispatch({
       type: DESTROY_FILES_FAILURE,
+      meta,
       alert: {
         message: 'alert.try_again'
       }
@@ -72,6 +82,7 @@ export const destroyFiles = files => async dispatch => {
   return dispatch({
     type: DESTROY_FILES_SUCCESS,
     ids: files.map(f => f.id),
+    meta,
     alert: {
       message: 'alert.destroy_file_success'
     }

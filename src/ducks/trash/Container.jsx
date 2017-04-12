@@ -18,10 +18,10 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: Object.assign({}, ownProps.actions, {
     selection: {
-      restore: () => dispatch(restoreFiles(ownProps.selected)),
-      destroy: () =>
-        confirm(<DestroyConfirm t={ownProps.t} fileCount={ownProps.selected.length} />)
-          .then(() => dispatch(destroyFiles(ownProps.selected)))
+      restore: files => dispatch(restoreFiles(files)),
+      destroy: files =>
+        confirm(<DestroyConfirm t={ownProps.t} fileCount={files.length} />)
+          .then(() => dispatch(destroyFiles(files)))
           .catch(() => {})
     }
   })

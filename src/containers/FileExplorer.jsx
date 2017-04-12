@@ -2,8 +2,27 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { openFolder, openFileInNewTab, toggleFileSelection, unselectAllFiles, showFileActionMenu } from '../actions'
-import { getFolderIdFromRoute, getVisibleFiles, getSelectedFiles, getActionableFiles } from '../reducers'
+import {
+  toggleFileSelection,
+  showSelectionBar,
+  hideSelectionBar
+} from '../ducks/selection'
+import {
+  showActionMenu,
+  hideActionMenu
+} from '../ducks/actionmenu'
+import {
+  openFolder,
+  openFileInNewTab
+} from '../actions'
+import {
+  getFolderIdFromRoute,
+  getVisibleFiles,
+  getSelectedFiles,
+  getActionableFiles,
+  isSelectionBarVisible,
+  isActionMenuVisible
+} from '../reducers'
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
@@ -35,23 +54,28 @@ class FileExplorer extends Component {
 const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
   fetchStatus: state.view.fetchStatus,
-  showActionMenu: state.ui.showFileActionMenu,
   files: getVisibleFiles(state),
   selected: getSelectedFiles(state),
-  actionable: getActionableFiles(state)
+  actionable: getActionableFiles(state),
+  selectionModeActive: isSelectionBarVisible(state),
+  actionMenuActive: isActionMenuVisible(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  unselectAll: () =>
-    dispatch(unselectAllFiles()),
-  onFolderOpen: (folderId) =>
+  showSelectionBar: () =>
+    dispatch(showSelectionBar()),
+  hideSelectionBar: () =>
+    dispatch(hideSelectionBar()),
+  showActionMenu: fileId =>
+    dispatch(showActionMenu(fileId)),
+  hideActionMenu: () =>
+    dispatch(hideActionMenu()),
+  onFolderOpen: folderId =>
     dispatch(openFolder(folderId)),
   onFileOpen: (parentFolder, file) =>
     dispatch(openFileInNewTab(parentFolder, file)),
   onFileToggle: (file, selected) =>
-    dispatch(toggleFileSelection(file, selected)),
-  onShowActionMenu: (fileId) =>
-    dispatch(showFileActionMenu(fileId))
+    dispatch(toggleFileSelection(file, selected))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FileExplorer))

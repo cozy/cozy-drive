@@ -2,26 +2,62 @@
 import styles from '../styles/actionmenu'
 
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 import { Item } from 'react-bosonic/lib/Menu'
 import withGestures from '../lib/withGestures'
 import Hammer from 'hammerjs'
 
-import { splitFilename, getClassFromMime } from '../components/File'
-import { getActionableFiles } from '../reducers'
-import { downloadFile, downloadSelection, hideFileActionMenu, openFileWith, actionMenuLoading, actionMenuLoaded, hideSelectionBar, showDeleteConfirmation } from '../actions'
+import { splitFilename, getClassFromMime } from './File'
+
+class MenuItem extends Component {
+  state = {
+    working: false
+  }
+
+  toggleSpinner = () => {
+    this.setState(state => ({ working: !state.working }))
+  }
+
+  handleClick = () => {
+    this.toggleSpinner()
+    this.props.onClick().then(() => this.toggleSpinner())
+  }
+
+  render () {
+    const { className, children } = this.props
+    const { working } = this.state
+    return (
+      <Item>
+        <a className={className} onClick={this.handleClick}>
+          {children}
+          {working && <div className={styles['fil-loading']} />}
+        </a>
+      </Item>
+    )
+  }
+}
 
 const Menu = props => {
-  const { files, isTrashContext } = props
+  const { t, files, actions } = props
+  const header = files.length === 1 ? <MenuHeaderFile file={files[0]} /> : <MenuHeaderSelection {...props} />
   return (
     <div className={styles['fil-actionmenu']}>
-      {files.length === 1 ? <MenuHeaderFile file={files[0]} /> : <MenuHeaderSelection {...props} />}
+      {header}
       <hr />
-      {__TARGET__ === 'mobile' && files.length === 1 && <ItemOpenWith file={files[0]} {...props} />}
-      {files.length === 1 ? <DownloadFile file={files[0]} {...props} /> : <DownloadSelection {...props} />}
-      {!isTrashContext && <Delete {...props} />}
+      {__TARGET__ === 'mobile' && actions.mobile && files.length === 1 && (
+        <MenuItem className={styles['fil-action-openwith']} onClick={() => actions.mobile.openWith(files[0])}>
+          {t('mobile.action_menu.open_with')}
+        </MenuItem>
+      )}
+      {Object.keys(actions.selection).map(actionName => {
+        const action = actions.selection[actionName]
+        return (
+          <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => action(files)}>
+            {t(`mobile.action_menu.${actionName}`)}
+          </MenuItem>
+        )
+      })}
     </div>
   )
 }
@@ -48,42 +84,6 @@ const MenuHeaderSelection = ({ t, files }) => {
     </Item>
   )
 }
-
-const ItemOpenWith = ({ t, file, onOpenWith, actionMenu }) => (
-  <Item>
-    <a className={styles['fil-action-openwith']} onClick={() => onOpenWith(file.id, file.name)}>
-      {t('mobile.action_menu.open_with')}
-      {actionMenu.openWith && <div className={styles['fil-loading']} />}
-    </a>
-  </Item>
-)
-
-const DownloadFile = ({ t, file, onDownloadFile, actionMenu }) => (
-  <Item>
-    <a className={styles['fil-action-download']} onClick={() => onDownloadFile(file)}>
-      {t('mobile.action_menu.download')}
-      {actionMenu.download && <div className={styles['fil-loading']} />}
-    </a>
-  </Item>
-)
-
-const DownloadSelection = ({ t, files, onDownloadSelection, actionMenu }) => (
-  <Item>
-    <a className={styles['fil-action-download']} onClick={() => onDownloadSelection(files)}>
-      {t('mobile.action_menu.download')}
-      {actionMenu.download && <div className={styles['fil-loading']} />}
-    </a>
-  </Item>
-)
-
-const Delete = ({ t, files, onDelete, actionMenu }) => (
-  <Item>
-    <a className={styles['fil-action-delete']} onClick={() => onDelete(files)}>
-      {t('mobile.action_menu.delete')}
-      {actionMenu.delete && <div className={styles['fil-loading']} />}
-    </a>
-  </Item>
-)
 
 const ActionMenu = translate()(Menu)
 
@@ -169,47 +169,4 @@ class FileActionMenu extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  files: getActionableFiles(state),
-  actionMenu: state.ui.actionMenu
-})
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onDownloadFile: file => {
-    const clearUI = () => {
-      dispatch(actionMenuLoaded('download'))
-      dispatch(hideFileActionMenu())
-      dispatch(hideSelectionBar())
-    }
-    dispatch(actionMenuLoading('download'))
-    dispatch(downloadFile(file)).then(clearUI).catch(clearUI)
-  },
-  onDownloadSelection: files => {
-    const clearUI = () => {
-      dispatch(actionMenuLoaded('download'))
-      dispatch(hideFileActionMenu())
-      dispatch(hideSelectionBar())
-    }
-    dispatch(actionMenuLoading('download'))
-    dispatch(downloadSelection(files)).then(clearUI).catch(clearUI)
-  },
-  onClose: () => dispatch(hideFileActionMenu()),
-  onOpenWith: (id, filename) => {
-    const clearUI = () => {
-      dispatch(actionMenuLoaded('openWith'))
-      dispatch(hideFileActionMenu())
-    }
-    dispatch(actionMenuLoading('openWith'))
-    dispatch(openFileWith(id, filename)).then(clearUI).catch(clearUI)
-  },
-  onDelete: files => {
-    dispatch(actionMenuLoading('delete'))
-    dispatch(showDeleteConfirmation())
-    dispatch(actionMenuLoaded('delete'))
-  }
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FileActionMenu)
+export default translate()(FileActionMenu)

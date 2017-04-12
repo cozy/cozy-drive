@@ -11,7 +11,7 @@ import FileList from './FileList'
 import Breadcrumb from '../containers/Breadcrumb'
 import SelectionBar from './SelectionBar'
 import AddFolder from './AddFolder'
-import FileActionMenu from '../containers/FileActionMenu'
+import FileActionMenu from './FileActionMenu'
 import UploadProgression from '../../mobile/src/containers/UploadProgression'
 
 import styles from '../styles/folderview'
@@ -44,36 +44,30 @@ const toggle = (flag, state, props) => ({ [flag]: !state[flag] })
 
 class FolderView extends Component {
   state = {
-    showAddFolder: false,
-    selectionMode: false
+    showAddFolder: false
   };
-  toggleSelectionMode = () => {
-    this.setState(toggle.bind(null, 'selectionMode'))
-  }
-  quitSelectionMode = () => {
-    this.props.unselectAll()
-    this.setState({ selectionMode: false })
-  }
+
   toggleAddFolder = () => {
     this.setState(toggle.bind(null, 'showAddFolder'))
   }
+
   createFolder = name => {
     return this.props.actions.list.createFolder(name)
       .then(() => this.toggleAddFolder())
   }
+
   abortAddFolder = accidental => {
     this.props.actions.list.abortAddFolder(accidental)
     this.toggleAddFolder()
   }
 
   render () {
-    const { isTrashContext, showActionMenu } = this.props
-    const { files, selected, actions, Toolbar } = this.props
-    const { onShowActionMenu } = this.props
+    const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
+    const { files, selected, actionable, actions, Toolbar } = this.props
+    const { showActionMenu, hideActionMenu, showSelectionBar, hideSelectionBar } = this.props
 
-    const { showAddFolder, selectionMode } = this.state
+    const { showAddFolder } = this.state
 
-    const selectionModeActive = selected.length !== 0 || selectionMode === true
     const fetchFailed = this.props.fetchStatus === 'failed'
     const fetchPending = this.props.fetchStatus === 'pending'
     const nothingToDo = isTrashContext && files.length === 0
@@ -88,7 +82,7 @@ class FolderView extends Component {
           <Toolbar
             actions={toolbarActions}
             disabled={fetchFailed || fetchPending || selectionModeActive || nothingToDo}
-            onSelectItemsClick={this.toggleSelectionMode}
+            onSelectItemsClick={showSelectionBar}
           />
         </div>
         <div role='contentinfo'>
@@ -97,9 +91,8 @@ class FolderView extends Component {
             <SelectionBar
               selected={selected}
               actions={actions.selection}
-              onClose={this.quitSelectionMode}
-              onActionComplete={this.quitSelectionMode}
-              onMoreClick={onShowActionMenu}
+              onClose={hideSelectionBar}
+              onMoreClick={showActionMenu}
             />}
           <div className={styles['fil-content-table']}>
             <FileListHeader />
@@ -116,7 +109,12 @@ class FolderView extends Component {
               />
             </div>
           </div>
-          {showActionMenu && <FileActionMenu isTrashContext={isTrashContext} />}
+          {actionMenuActive &&
+            <FileActionMenu
+              files={actionable}
+              actions={actions}
+              onClose={hideActionMenu}
+            />}
         </div>
       </main>
     )
