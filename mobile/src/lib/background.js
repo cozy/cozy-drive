@@ -1,5 +1,5 @@
 import { configureStore } from './store'
-import { initService } from './init'
+import { initServices } from './init'
 import { logException } from './reporter'
 import { loadState } from './localStorage'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
@@ -34,7 +34,7 @@ const startIosBackgroundService = () => {
 
     loadState().then(persistedState => {
       const store = configureStore(persistedState)
-      initService(store)
+      initServices(store)
 
       logException('It\'s me Background Service!!!')
 
