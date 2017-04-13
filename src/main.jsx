@@ -22,14 +22,14 @@ const loggerMiddleware = createLogger()
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
   // Cannot use import as we are in a condition
-  require('preact/devtools');
+  require('preact/devtools')
 
   // Export React to window for the devtools
-  window.React = React;
+  window.React = React
 }
 
 // Enable Redux dev tools
-const composeEnhancers = (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const composeEnhancers = (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
 const store = createStore(
   filesApp,
