@@ -5,9 +5,10 @@ import { loadState } from './localStorage'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from './network'
 import { initPolyglot } from '../../../src/lib/I18n'
+import { isIos } from './device'
 
 const hasIosCordovaPlugin = () => {
-  return window.cordova !== undefined && window.cordova.platformId === 'ios' && window.BackgroundFetch !== undefined
+  return isIos() && window.BackgroundFetch !== undefined
 }
 
 export const startBackgroundService = () => {
