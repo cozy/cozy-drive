@@ -1,5 +1,4 @@
 @require 'cozy-ui'
-@require './popover'
 
 .fil-toolbar-files
 .fil-toolbar-trash
@@ -27,30 +26,7 @@
     .fil-toolbar-more-btn
         display none
 
-
-// These styles are needed for the menu to work and come directly from bosonic's source
-// TODO: find a better way for bosonic to share its styling
-b-menu-button
-    position relative
-
-b-menu-button > b-listbox
-    display none
-    position absolute
-
-b-menu-button[open] > b-listbox
-    display block
-
-b-item
-    display block
-
 .fil-toolbar-menu
-    @extend $popover
-    right 0
-    padding 5px 0
-    margin 0
-    margin-top 1px
-    min-width 220px
-
     a
     label
         &.fil-action-upload

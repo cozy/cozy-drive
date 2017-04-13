@@ -6,7 +6,7 @@ import { translate } from '../../lib/I18n'
 import confirm from '../../lib/confirm'
 import classNames from 'classnames'
 
-import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
+import Menu, { Item } from '../../components/Menu'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import { emptyTrash } from './actions'
@@ -22,32 +22,27 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
     >
       {t('toolbar.empty_trash')}
     </button>
-    <MenuButton>
-      <button
-        role='button'
-        className={classNames('coz-btn', styles['fil-toolbar-more-btn'])
-        }
-        disabled={disabled}
-      >
-        <span className='coz-hidden'>{ t('toolbar.item_more') }</span>
-      </button>
-      <Menu className={styles['fil-toolbar-menu']}>
-        <Item>
-          <a
-            className={styles['fil-action-delete']}
-            onClick={() => emptyTrash()}
-          >
-            {t('toolbar.empty_trash')}
-          </a>
-        </Item>
-        <hr />
-        <Item>
-          <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
-            {t('toolbar.menu_select')}
-          </a>
-        </Item>
-      </Menu>
-    </MenuButton>
+    <Menu
+      title={t('toolbar.item_more')}
+      disabled={disabled}
+      className={styles['fil-toolbar-menu']}
+      buttonClassName={styles['fil-toolbar-more-btn']}
+    >
+      <Item>
+        <a
+          className={styles['fil-action-delete']}
+          onClick={() => emptyTrash()}
+        >
+          {t('toolbar.empty_trash')}
+        </a>
+      </Item>
+      <hr />
+      <Item>
+        <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
+          {t('toolbar.menu_select')}
+        </a>
+      </Item>
+    </Menu>
   </div>
 )
 
