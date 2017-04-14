@@ -1,5 +1,7 @@
+import { isCordova, isAndroid } from './device'
+
 const hasCordovaPlugin = () => {
-  return window.cordova !== undefined &&
+  return isCordova() &&
     window.cordova.plugins !== undefined &&
     window.cordova.plugins.photoLibrary !== undefined
 }
@@ -71,7 +73,7 @@ export const getPhotos = async () => {
 export const getFilteredPhotos = async () => {
   let photos = await getPhotos()
 
-  if (hasCordovaPlugin() && window.cordova.platformId === 'android') {
+  if (hasCordovaPlugin() && isAndroid()) {
     photos = photos.filter((photo) => photo.id.indexOf('DCIM') !== -1)
   }
 

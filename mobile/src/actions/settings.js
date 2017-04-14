@@ -3,6 +3,7 @@
 import { initClient } from '../lib/cozy-helper'
 import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../../src/actions/settings'
+import { getDeviceName } from '../lib/device'
 import { openFolder } from '../../../src/actions'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
@@ -74,7 +75,6 @@ export class OnBoardingError extends Error {
 // registration
 
 export const registerDevice = () => async (dispatch, getState) => {
-  const device = window.cordova ? window.cordova.platformId : null
   const onRegister = (dispatch) => (client, url) => {
     return onRegistered(client, url)
     .then(url => url)
@@ -85,7 +85,7 @@ export const registerDevice = () => async (dispatch, getState) => {
     })
   }
   dispatch(checkURL(getState().mobile.settings.serverUrl))
-  initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), device)
+  initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getDeviceName())
   await cozy.client.authorize().then(({ client }) => {
     dispatch(setClient(client))
     startReplication(dispatch, getState)

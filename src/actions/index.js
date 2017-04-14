@@ -1,4 +1,5 @@
 /* global cozy */
+import { isCordova } from '../../mobile/src/lib/device'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithNoAppError } from '../../mobile/src/actions'
 
@@ -219,7 +220,7 @@ const downloadFile = (file, meta) => {
     const blob = await response.blob()
     const filename = file.name
 
-    if (window.cordova && window.cordova.file) {
+    if (isCordova() && window.cordova.file) {
       saveFileWithCordova(blob, filename)
     } else {
       forceFileDownload(window.URL.createObjectURL(blob), filename)
@@ -244,7 +245,7 @@ export const openFileWith = (id, filename) => {
     hideActionMenu: true
   }
   return async (dispatch, getState) => {
-    if (window.cordova && window.cordova.plugins.fileOpener2) {
+    if (isCordova() && window.cordova.plugins.fileOpener2) {
       dispatch({ type: OPEN_FILE_WITH, id, meta })
       const response = await cozy.client.files.downloadById(id).catch((error) => {
         console.error('downloadById', error)
