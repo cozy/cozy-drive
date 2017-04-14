@@ -14,7 +14,7 @@ import MobileAppRoute from './components/MobileAppRoute'
 import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
 import { initServices } from './lib/init'
-import { startBackgroundService, stopBackgroundService } from './lib/background'
+import { updateStatusBackgroundService, startBackgroundService } from './lib/background'
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
 
@@ -45,15 +45,11 @@ const renderAppWithPersistedState = persistedState => {
 
   document.addEventListener('resume', () => {
     pingOnceADayWithState()
-  })
+  }, false)
 
   document.addEventListener('deviceready', () => {
     pingOnceADayWithState()
-    if (store.getState().mobile.settings.backupImages) {
-      startBackgroundService()
-    } else {
-      stopBackgroundService()
-    }
+    updateStatusBackgroundService(store.getState().mobile.settings.backupImages)
   }, false)
 
   const context = window.context
@@ -69,7 +65,23 @@ const renderAppWithPersistedState = persistedState => {
   ), root)
 }
 
-document.addEventListener('DOMContentLoaded', () =>
-  loadState()
-  .then(renderAppWithPersistedState)
-)
+document.addEventListener('DOMContentLoaded', () => {
+  if (!isBackgroundServiceParameter()) {
+    loadState().then(renderAppWithPersistedState)
+  }
+}, false)
+
+document.addEventListener('deviceready', () => {
+  if (isBackgroundServiceParameter()) {
+    startBackgroundService()
+  }
+}, false)
+
+// Allows to know if the launch of the application has been done by the service background
+// @see: https://git.io/vSQBC
+const isBackgroundServiceParameter = () => {
+  let queryDict = {}
+  location.search.substr(1).split('&').forEach(function (item) { queryDict[item.split('=')[0]] = item.split('=')[1] })
+
+  return queryDict.backgroundservice
+}

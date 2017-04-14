@@ -1,62 +1,173 @@
 import { configureStore } from './store'
 import { initServices } from './init'
-import { logException } from './reporter'
+import { logException, logInfo } from './reporter'
 import { loadState } from './localStorage'
 import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
 import { backupAllowed } from './network'
 import { initPolyglot } from '../../../src/lib/I18n'
-import { isIos } from './device'
+import { isCordova, isIos, isAndroid, getDeviceName } from './device'
 
-const hasIosCordovaPlugin = () => {
-  return isIos() && window.BackgroundFetch !== undefined
+/*
+  This files is split on 4 parts:
+    - GENERIC: Platform agnostic
+    - SERVICE: The service background
+    - ANDROID: The Android-specific part
+    - IOS: The iOS-specific part
+
+  Only 3 functions are export:
+    - updateStatusBackgroundService: to enbale/disable background service
+    - startBackgroundService: to start background service
+    - disableBackgroundService: to disable background service
+
+  For each platform (Android, iOS) we have:
+    - has__platform__CordovaPlugin: Checks if the plugin is installed
+    - enable__platform__BackgroundService and disable__platform__BackgroundService
+    - start__platform__BackgroundService: Allowing to add a specific callback at the end of the service
+*/
+
+// GENERIC
+
+export const updateStatusBackgroundService = (backupImages) => {
+  if (backupImages) {
+    enableBackgroundService()
+  } else {
+    disableBackgroundService()
+  }
 }
 
 export const startBackgroundService = () => {
   if (hasIosCordovaPlugin()) {
     startIosBackgroundService()
+  } else if (hasAndroidCordovaPlugin()) {
+    startAndroidBackgroundService()
   } else {
-    console.log('Background Service is not compatible with your platform.')
+    notCompatibleError()
   }
 }
 
-export const stopBackgroundService = () => {
+const enableBackgroundService = () => {
   if (hasIosCordovaPlugin()) {
-    stopIosBackgroundService()
+    enableIosBackgroundService()
+  } else if (hasAndroidCordovaPlugin()) {
+    enableAndroidBackgroundService()
+  } else {
+    notCompatibleError()
   }
 }
 
-const startIosBackgroundService = () => {
-  // documentation: https://github.com/transistorsoft/cordova-plugin-background-fetch
-  const fetcher = window.BackgroundFetch
+export const disableBackgroundService = () => {
+  if (hasIosCordovaPlugin()) {
+    disableIosBackgroundService()
+  } else if (hasAndroidCordovaPlugin()) {
+    disableAndroidBackgroundService()
+  } else {
+    notCompatibleError()
+  }
+}
 
-  const fetchCallback = () => {
-    console.log('BackgroundFetch initiated')
+const notCompatibleError = () => {
+  const msg = 'Background Service is not compatible with your platform.'
+  console.warn(msg)
+  if (isCordova()) {
+    console.log(getDeviceName())
+    if (isIos()) {
+      console.log(window.BackgroundFetch)
+    } else if (isAndroid()) {
+      console.log(window.JSBackgroundService)
+    }
+  }
+  logException(msg)
+}
 
-    loadState().then(persistedState => {
-      const store = configureStore(persistedState)
-      initServices(store)
+// SERVICE
 
-      logException('It\'s me Background Service!!!')
+const backgroundService = () => new Promise(resolve => {
+  console.log('BackgroundFetch initiated')
 
-      const state = store.getState()
-      if (state.mobile.settings.backupImages && backupAllowed(state.mobile.settings.wifiOnly)) {
-        const end = () => {
-          store.dispatch(endMediaUpload())
-          fetcher.finish()
-        }
-        store.dispatch(startMediaUpload())
+  loadState().then(persistedState => {
+    const store = configureStore(persistedState)
+    initServices(store)
 
-        const context = window.context
-        const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
-        const polyglot = initPolyglot(context, lang)
-        const dir = polyglot.t('mobile.settings.media_backup.media_folder')
+    logInfo('It\'s me Background Service!!!')
 
-        store.dispatch(mediaBackup(dir)).then(end).catch(end)
-      } else {
-        fetcher.finish()
+    const state = store.getState()
+    if (state.mobile.settings.backupImages && backupAllowed(state.mobile.settings.wifiOnly)) {
+      const end = () => {
+        store.dispatch(endMediaUpload())
+        resolve()
+      }
+      store.dispatch(startMediaUpload())
+
+      const context = window.context
+      const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
+      const polyglot = initPolyglot(context, lang)
+      const dir = polyglot.t('mobile.settings.media_backup.media_folder')
+
+      store.dispatch(mediaBackup(dir)).then(end).catch(end)
+    } else {
+      resolve()
+    }
+  })
+})
+
+// ANDROID
+
+const hasAndroidCordovaPlugin = () => (isAndroid() && window.JSBackgroundService !== undefined)
+
+const enableAndroidBackgroundService = async () => {
+  const isEnable = await isEnableAndroidBackgroundService()
+  if (!isEnable) {
+    const repeatingPeriod = 15 * 60 * 1000
+    window.JSBackgroundService.setRepeating(repeatingPeriod, err => {
+      if (err) {
+        console.warn(err)
+        logException('enableAndroidBackgroundService error')
       }
     })
+  } else {
+    console.log(`It's already enable.`)
   }
+}
+
+const disableAndroidBackgroundService = async () => {
+  const isEnable = await isEnableAndroidBackgroundService()
+  if (isEnable) {
+    window.JSBackgroundService.cancelRepeating(err => {
+      if (err) {
+        console.warn(err)
+        logException('disableAndroidBackgroundService error')
+      }
+    })
+  } else {
+    console.log(`It's already disable.`)
+  }
+}
+
+const startAndroidBackgroundService = () => {
+  backgroundService().then(() => {
+    logInfo('end startAndroidBackgroundService')
+    window.service.workDone()
+  })
+}
+
+const isEnableAndroidBackgroundService = () => new Promise(resolve => {
+  window.JSBackgroundService.isRepeating((err, isSet) => {
+    if (err) {
+      console.warn(err)
+      logException('isEnableAndroidBackgroundService error')
+      resolve(false)
+    }
+    resolve(isSet)
+  })
+})
+
+// IOS
+
+const hasIosCordovaPlugin = () => (isIos() && window.BackgroundFetch !== undefined)
+
+const enableIosBackgroundService = () => {
+  // documentation: https://github.com/transistorsoft/cordova-plugin-background-fetch
+  const fetcher = window.BackgroundFetch
 
   const failureCallback = (error) => {
     console.log('BackgroundFetch failed', error)
@@ -65,10 +176,16 @@ const startIosBackgroundService = () => {
   const options = {
     stopOnTerminate: false
   }
-
-  fetcher.configure(fetchCallback, failureCallback, options)
+  fetcher.configure(startIosBackgroundService, failureCallback, options)
 }
 
-const stopIosBackgroundService = () => {
+const disableIosBackgroundService = () => {
   window.BackgroundFetch.stop()
+}
+
+const startIosBackgroundService = () => {
+  const fetcher = window.BackgroundFetch
+  backgroundService().then(() => {
+    fetcher.finish()
+  })
 }

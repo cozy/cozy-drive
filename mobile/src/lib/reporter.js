@@ -7,7 +7,7 @@ export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 
 export function getAnalyticsConfiguration () {
   return {
-    shouldSendCallback: () => getState().mobile.settings.analytics,
+    shouldSendCallback: () => getState ? getState().mobile.settings.analytics : false,
     environment: __DEVMODE__ ? 'development' : 'production'
   }
 }
@@ -21,9 +21,8 @@ export function logException (err) {
     Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
   }
   Raven.captureException(err)
-  console.groupCollapsed('Raven is recording exception')
+  console.warn('Raven is recording exception')
   console.error(err)
-  console.groupEnd()
 }
 
 export function logInfo (message) {
