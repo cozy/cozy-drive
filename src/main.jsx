@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cozy.bar.init({
     appName: data.cozyAppName,
+    appEditor: data.cozyAppEditor,
     iconPath: data.cozyIconPath,
     lang: data.cozyLocale,
     replaceTitleOnMobile: true
