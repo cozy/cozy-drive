@@ -50,7 +50,8 @@
     "moveto": "Move",
     "rename": "Rename",
     "restore": "Restore",
-    "close": "Close"
+    "close": "Close",
+    "openWith": "Open with"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",
