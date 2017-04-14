@@ -14,9 +14,10 @@ import { isCordova, isIos, isAndroid, getDeviceName } from './device'
     - ANDROID: The Android-specific part
     - IOS: The iOS-specific part
 
-  Only two functions are export:
+  Only 3 functions are export:
     - updateStatusBackgroundService: to enbale/disable background service
     - startBackgroundService: to start background service
+    - disableBackgroundService: to disable background service
 
   For each platform (Android, iOS) we have:
     - has__platform__CordovaPlugin: Checks if the plugin is installed
@@ -54,7 +55,7 @@ const enableBackgroundService = () => {
   }
 }
 
-const disableBackgroundService = () => {
+export const disableBackgroundService = () => {
   if (hasIosCordovaPlugin()) {
     disableIosBackgroundService()
   } else if (hasAndroidCordovaPlugin()) {
