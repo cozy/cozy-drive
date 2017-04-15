@@ -124,8 +124,6 @@ const enableAndroidBackgroundService = async () => {
         logException('enableAndroidBackgroundService error')
       }
     })
-  } else {
-    console.log(`It's already enable.`)
   }
 }
 
@@ -138,8 +136,6 @@ const disableAndroidBackgroundService = async () => {
         logException('disableAndroidBackgroundService error')
       }
     })
-  } else {
-    console.log(`It's already disable.`)
   }
 }
 
