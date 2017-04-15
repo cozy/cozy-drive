@@ -65,6 +65,15 @@ const renderAppWithPersistedState = persistedState => {
   ), root)
 }
 
+// Allows to know if the launch of the application has been done by the service background
+// @see: https://git.io/vSQBC
+const isBackgroundServiceParameter = () => {
+  let queryDict = {}
+  location.search.substr(1).split('&').forEach(function (item) { queryDict[item.split('=')[0]] = item.split('=')[1] })
+
+  return queryDict.backgroundservice
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (!isBackgroundServiceParameter()) {
     loadState().then(renderAppWithPersistedState)
@@ -76,12 +85,3 @@ document.addEventListener('deviceready', () => {
     startBackgroundService()
   }
 }, false)
-
-// Allows to know if the launch of the application has been done by the service background
-// @see: https://git.io/vSQBC
-const isBackgroundServiceParameter = () => {
-  let queryDict = {}
-  location.search.substr(1).split('&').forEach(function (item) { queryDict[item.split('=')[0]] = item.split('=')[1] })
-
-  return queryDict.backgroundservice
-}
