@@ -3,6 +3,8 @@ import { initClient, initBar, isClientRegistered } from './cozy-helper'
 import { revokeClient } from '../actions/authorization'
 import { startReplication } from '../actions/settings'
 
+export const getLang = () => (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
+
 export const initServices = (store) => {
   configureReporter(store.getState)
   initClient(store.getState().mobile.settings.serverUrl)

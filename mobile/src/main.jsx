@@ -13,7 +13,7 @@ import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
-import { initServices } from './lib/init'
+import { initServices, getLang } from './lib/init'
 import { updateStatusBackgroundService, startBackgroundService } from './lib/background'
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
@@ -54,10 +54,9 @@ const renderAppWithPersistedState = persistedState => {
 
   const context = window.context
   const root = document.querySelector('[role=application]')
-  const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
 
   render((
-    <I18n context={context} lang={lang}>
+    <I18n context={context} lang={getLang()}>
       <Provider store={store}>
         <Router history={hashHistory} routes={MobileAppRoute(isRedirectedToOnboaring)} />
       </Provider>
