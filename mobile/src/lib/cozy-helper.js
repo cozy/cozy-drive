@@ -2,7 +2,7 @@
 
 import { LocalStorage as Storage } from 'cozy-client-js'
 
-const clientRevokedMsg = 'Client has been revoked'
+export const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
 const getClientName = device => `Cozy Drive Application on ${device} (${Math.random().toString(36).slice(2)})`
 
