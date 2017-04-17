@@ -20,6 +20,8 @@ module.exports = {
       __APP_VERSION__: JSON.stringify(pkg.version)
     }),
     new webpack.ProvidePlugin({
+      'PouchDB': 'pouchdb',
+      'pouchdbFind': 'pouchdb-find',
       'cozy.client': 'cozy-client-js/dist/cozy-client.js',
       'cozy.bar': 'cozy-bar/dist/cozy-bar.mobile.js'
     })
