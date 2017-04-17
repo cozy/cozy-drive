@@ -64,6 +64,8 @@ $ yarn watch:browser
 ```sh
 # in another terminal, run the docker container
 $ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
+or
+$ yarn server
 ```
 :warning: Don't forget to add `cozy.local` and `app.cozy.local` to your `/etc/hosts`
 
