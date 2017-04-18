@@ -16,7 +16,6 @@ import { I18n } from './lib/I18n'
 import photosApp from './reducers'
 import AppRoute from './components/AppRoute'
 
-const context = window.context
 const lang = document.documentElement.getAttribute('lang') || 'en'
 
 const loggerMiddleware = createLogger()
@@ -30,15 +29,20 @@ const store = createStore(
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-  const applicationElement = document.querySelector('[role=application]')
+  const context = window.context
+  const root = document.querySelector('[role=application]')
+  const data = root.dataset
 
   cozy.client.init({
-    cozyURL: `//${applicationElement.dataset.cozyDomain}`,
-    token: applicationElement.dataset.cozyToken
+    cozyURL: `//${data.cozyDomain}`,
+    token: data.cozyToken
   })
 
   cozy.bar.init({
-    appName: 'Photos'
+    appName: data.cozyAppName,
+    appEditor: data.cozyAppEditor,
+    iconPath: data.cozyIconPath,
+    lang: data.cozyLocale
   })
 
   render((
@@ -47,5 +51,5 @@ document.addEventListener('DOMContentLoaded', () => {
         <Router history={hashHistory} routes={AppRoute} />
       </Provider>
     </I18n>
-  ), applicationElement)
+  ), root)
 })

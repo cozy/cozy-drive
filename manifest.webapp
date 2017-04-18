@@ -4,6 +4,7 @@
   "icon": "app-icon.svg",
   "description": "Photos manager for Cozy v3",
   "source": "https://github.com/cozy/cozy-photos-v3.git@build",
+  "editor": "Cozy",
   "developer": {
     "name": "Cozy",
     "url": "https://cozy.io"
