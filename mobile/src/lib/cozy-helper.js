@@ -1,5 +1,5 @@
 /* global cozy, document, __APP_VERSION__ */
-
+import { getLang } from './init'
 import { LocalStorage as Storage } from 'cozy-client-js'
 
 export const clientRevokedMsg = 'Client has been revoked'
@@ -39,7 +39,7 @@ export const initBar = () => {
   cozy.bar.init({
     appName: 'Cozy Drive',
     iconPath: require('../../../vendor/assets/app-icon.svg'),
-    lang: 'en',
+    lang: getLang(),
     replaceTitleOnMobile: true
   })
 }
