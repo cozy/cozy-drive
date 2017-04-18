@@ -26,11 +26,16 @@ $coz-bar-size = 40px
 
 .fil-path-down
     display     none
-    width       14px
+    min-width   14px
     height      10px
     margin-left 7px
     border      0
     background  embedurl('../assets/icons/icon-arrow-down.svg') center center no-repeat
+
+.fil-path-current-name
+    text-overflow ellipsis
+    overflow      hidden
+    white-space   nowrap
 
 @media (max-width: (768/basefont)rem)
     .fil-path-backdrop
@@ -51,9 +56,6 @@ $coz-bar-size = 40px
         align-items   center
         box-sizing    border-box
         height        $coz-bar-size
-        text-overflow ellipsis
-        overflow      hidden
-        white-space   nowrap
         padding       0 2.35em 0 .25em
 
     .fil-path-previous

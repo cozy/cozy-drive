@@ -113,7 +113,9 @@ class Breadcrumb extends Component {
                     if (path.length >= 2) this.toggleDeploy()
                   }}
                 >
-                  { folder.name }
+                  <span className={styles['fil-path-current-name']}>
+                    { folder.name }
+                  </span>
                   {path.length >= 2 &&
                     <span className={styles['fil-path-down']} />
                   }
