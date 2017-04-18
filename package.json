@@ -23,6 +23,7 @@
     "lint:js": "standard --parser babel-eslint 'src/**/*.js' 'src/**/*.jsx' 'test/**/*.js' 'mobile/src/**/*.js' 'mobile/src/**/*.jsx' 'mobile/test/**/*.js'",
     "lint:styles": "stylint src/styles --config ./.stylintrc",
     "test": "node --harmony_proxies node_modules/.bin/jest",
+    "server": "docker run --rm -it -p 8080:8080 -v \"$(pwd)/build\":/data/cozy-app cozy/cozy-app-dev",
     "watch": "npm run watch:browser",
     "watch:browser": "NODE_ENV=browser:development npm run internal:watch",
     "watch:mobile": "NODE_ENV=mobile:development npm run internal:watch",
