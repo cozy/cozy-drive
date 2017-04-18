@@ -35,14 +35,11 @@ export const initClient = (url, onRegister = null, device = 'Device') => {
 }
 
 export const initBar = () => {
-  const root = document.querySelector('[role=application]')
-  const data = root.dataset
-
   cozy.bar.init({
-    appName: data.cozyAppName,
-    appEditor: data.cozyAppEditor,
-    iconPath: data.cozyIconPath,
-    lang: data.cozyLocale,
+    appName: 'Cozy Drive',
+    appEditor: 'Cozy',
+    iconPath: require('../../../vendor/assets/app-icon.svg'),
+    lang: 'en',
     replaceTitleOnMobile: true
   })
 }
