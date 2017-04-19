@@ -87,15 +87,19 @@ export const openFileInNewTab = (folder, file) => {
 
 export const uploadFile = (file, folder) => {
   return async dispatch => {
-    dispatch({ type: UPLOAD_FILE })
-    const created = await cozy.client.files.create(
-      file,
-      { dirID: folder.id }
-    )
-    dispatch({
-      type: UPLOAD_FILE_SUCCESS,
-      file: extractFileAttributes(created)
-    })
+    try {
+      dispatch({ type: UPLOAD_FILE })
+      const created = await cozy.client.files.create(
+        file,
+        { dirID: folder.id }
+      )
+      dispatch({
+        type: UPLOAD_FILE_SUCCESS,
+        file: extractFileAttributes(created)
+      })
+    } catch (err) {
+      throw err
+    }
   }
 }
 
