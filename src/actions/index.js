@@ -62,7 +62,8 @@ export const openFolder = (folderId) => {
       const parentId = folder.attributes.dir_id
       const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
       // folder.relations('contents') returns null when the trash is empty
-      const files = folder.relations('contents') || []
+      // the filter call is a temporary fix due to a cozy-client-js bug
+      const files = folder.relations('contents').filter(f => f !== undefined) || []
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder: Object.assign(extractFileAttributes(folder), {
