@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+const createWrapper = () => document.body.appendChild(document.createElement('div'))
+
 const confirm = component => new Promise((resolve, reject) => {
-  const wrapper = document.body.appendChild(document.createElement('div'))
+  const wrapper = createWrapper()
 
   const abort = () => {
     ReactDOM.unmountComponentAtNode(wrapper)
@@ -18,3 +20,13 @@ const confirm = component => new Promise((resolve, reject) => {
 })
 
 export default confirm
+
+export const alert = component => {
+  const wrapper = createWrapper()
+
+  const close = () => {
+    ReactDOM.unmountComponentAtNode(wrapper)
+  }
+
+  ReactDOM.render(React.cloneElement(component, { close }), wrapper)
+}

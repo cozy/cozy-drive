@@ -1,4 +1,4 @@
-import styles from '../styles/app'
+import styles from '../styles/layout'
 
 import React from 'react'
 import classNames from 'classnames'

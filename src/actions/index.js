@@ -62,7 +62,8 @@ export const openFolder = (folderId) => {
       const parentId = folder.attributes.dir_id
       const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
       // folder.relations('contents') returns null when the trash is empty
-      const files = folder.relations('contents') || []
+      // the filter call is a temporary fix due to a cozy-client-js bug
+      const files = folder.relations('contents').filter(f => f !== undefined) || []
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder: Object.assign(extractFileAttributes(folder), {
@@ -86,15 +87,19 @@ export const openFileInNewTab = (folder, file) => {
 
 export const uploadFile = (file, folder) => {
   return async dispatch => {
-    dispatch({ type: UPLOAD_FILE })
-    const created = await cozy.client.files.create(
-      file,
-      { dirID: folder.id }
-    )
-    dispatch({
-      type: UPLOAD_FILE_SUCCESS,
-      file: extractFileAttributes(created)
-    })
+    try {
+      dispatch({ type: UPLOAD_FILE })
+      const created = await cozy.client.files.create(
+        file,
+        { dirID: folder.id }
+      )
+      dispatch({
+        type: UPLOAD_FILE_SUCCESS,
+        file: extractFileAttributes(created)
+      })
+    } catch (err) {
+      throw err
+    }
   }
 }
 

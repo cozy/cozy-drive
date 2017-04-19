@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 import { translate } from '../lib/I18n'
 
+import Main from './Main'
+import Topbar from './Topbar'
 import Loading from './Loading'
 import Empty, { EmptyTrash } from './Empty'
 import Oops from './Oops'
@@ -76,15 +78,15 @@ class FolderView extends Component {
       addFolder: this.toggleAddFolder
     }
     return (
-      <main class={styles['fil-content']}>
-        <div class={styles['fil-topbar']}>
+      <Main>
+        <Topbar>
           <Breadcrumb />
           <Toolbar
             actions={toolbarActions}
             disabled={fetchFailed || fetchPending || selectionModeActive || nothingToDo}
             onSelectItemsClick={showSelectionBar}
           />
-        </div>
+        </Topbar>
         <div role='contentinfo'>
           {__TARGET__ === 'mobile' && <UploadProgression />}
           {selectionModeActive &&
@@ -116,7 +118,7 @@ class FolderView extends Component {
               onClose={hideActionMenu}
             />}
         </div>
-      </main>
+      </Main>
     )
   }
 }

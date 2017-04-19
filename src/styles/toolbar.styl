@@ -26,30 +26,32 @@
     .fil-toolbar-more-btn
         display none
 
-.fil-toolbar-menu
-    a
-    label
-        &.fil-action-upload
-            background embedurl('../assets/icons/icon-upload-16.svg') em(16px) center no-repeat
-        &.fil-action-newfolder
-            background embedurl('../assets/icons/icon-folder-add-16.svg') em(16px) center no-repeat
-        &.fil-action-select
-            background embedurl('../assets/icons/icon-checkbox-16.svg') em(16px) center no-repeat
-        &.fil-action-delete
-            background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
-
-    .fil-action-upload
-    .fil-action-select
-    hr // temporary while there is only select after hr
-        display none
-
-
-@media (max-width: (1023/basefont)rem)
+.fil-toolbar-files
     .fil-toolbar-menu
+        a
+        label
+            &.fil-action-upload
+                background embedurl('../assets/icons/icon-upload-16.svg') em(16px) center no-repeat
+            &.fil-action-newfolder
+                background embedurl('../assets/icons/icon-folder-add-16.svg') em(16px) center no-repeat
+            &.fil-action-select
+                background embedurl('../assets/icons/icon-checkbox-16.svg') em(16px) center no-repeat
+            &.fil-action-delete
+                background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
+
         .fil-action-upload
         .fil-action-select
         hr // temporary while there is only select after hr
-            display block
+            display none
+
+
+@media (max-width: (1023/basefont)rem)
+    .fil-toolbar-files
+        .fil-toolbar-menu
+            .fil-action-upload
+            .fil-action-select
+            hr // temporary while there is only select after hr
+                display block
 
     .desktop-upload
     .fil-btn--delete

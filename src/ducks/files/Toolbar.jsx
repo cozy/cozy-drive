@@ -7,6 +7,8 @@ import { translate } from '../../lib/I18n'
 
 import UploadButton from '../../components/UploadButton'
 import Menu, { Item } from '../../components/Menu'
+import QuotaAlert from '../../components/QuotaAlert'
+import { alert } from '../../lib/confirm'
 
 import { uploadFile } from '../../actions'
 
@@ -56,10 +58,15 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFile: (file, displayedFolder) => {
     dispatch(uploadFile(file, displayedFolder))
+      .catch(err => {
+        if (err.response && err.response.status === 413) {
+          alert(<QuotaAlert t={ownProps.t} />)
+        }
+      })
   }
 })
 
-export default connect(
+export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(Toolbar))
+)(Toolbar))

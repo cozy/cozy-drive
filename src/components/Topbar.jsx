@@ -1,12 +1,13 @@
+/* global __TARGET__ */
 import styles from '../styles/topbar'
 
 import React from 'react'
-import { withRouter } from 'react-router'
+import classNames from 'classnames'
 
 const Topbar = ({ children }) => (
-  <div class={styles['fil-topbar']}>
+  <div className={classNames(styles['fil-topbar'], { [styles['mobile']]: __TARGET__ === 'mobile' })}>
     {children}
   </div>
 )
 
-export default withRouter(Topbar)
+export default Topbar

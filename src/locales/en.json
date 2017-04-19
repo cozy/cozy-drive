@@ -74,6 +74,11 @@
     "cancel": "Cancel",
     "delete": "Delete permanently"
   },
+  "quotaalert": {
+    "title": "Your disk space is full :(",
+    "desc": " Please remove files and empty your trash before uploading files again.",
+    "confirm": "OK"
+  },
   "loading": {
     "message": "Loading"
   },
