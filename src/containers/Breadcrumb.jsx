@@ -1,3 +1,4 @@
+/* global __TARGET__ */
 import styles from '../styles/breadcrumb'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
@@ -77,7 +78,11 @@ class Breadcrumb extends Component {
 
     return (
       <div
-        className={classNames(styles['fil-path-backdrop'], {[styles['deployed']]: deployed})}
+        className={classNames(
+          styles['fil-path-backdrop'],
+          {[styles['deployed']]: deployed},
+          {[styles['mobile']]: __TARGET__ === 'mobile'}
+        )}
       >
         {path.length >= 2 &&
           <Link
