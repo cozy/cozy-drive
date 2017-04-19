@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router'
 
 import AppRoute from '../../../src/components/AppRoute'
-import App from '../../../src/components/App'
+import Layout from '../../../src/components/Layout'
 
 import { initBar } from '../lib/cozy-helper'
 
@@ -14,7 +14,7 @@ const MobileAppRoute = requireSetup => (
   <Route>
     <Route onEnter={requireSetup} component={RevokableWrapper}>
       {AppRoute}
-      <Route component={App}>
+      <Route component={Layout}>
         <Route path='settings' name='mobile.settings' component={Settings} />}
       </Route>
     </Route>

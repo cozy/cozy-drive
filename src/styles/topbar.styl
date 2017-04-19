@@ -1,5 +1,7 @@
 @require 'cozy-ui'
 
+$coz-bar-size = 40px
+
 .fil-topbar
     display     flex
     align-items center
@@ -9,4 +11,14 @@
 
 @media (max-width: (768/basefont)rem)
     .fil-topbar
-        margin 0
+        margin   0
+        position fixed
+        top      0
+        left     $coz-bar-size
+        right    0
+        z-index  $nav-index
+        height   $coz-bar-size
+
+        > h2
+            font-size 1.3em
+            margin    0

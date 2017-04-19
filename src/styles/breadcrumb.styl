@@ -1,6 +1,5 @@
 @require 'cozy-ui'
-
-$coz-bar-size = 40px
+@require './topbar'
 
 .fil-path-title
     margin    0
@@ -39,12 +38,13 @@ $coz-bar-size = 40px
 
 @media (max-width: (768/basefont)rem)
     .fil-path-backdrop
+        margin   0
         position fixed
         top      0
         left     $coz-bar-size
         right    0
         z-index  $nav-index
-
+        
     .fil-path-title
         display        flex
         flex-direction column-reverse
