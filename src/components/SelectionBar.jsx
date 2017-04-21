@@ -4,7 +4,7 @@ import React from 'react'
 import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
-const SelectionBar = ({ t, selected, actions, onClose, onActionComplete, onMoreClick }) => {
+const SelectionBar = ({ t, selected, actions, onClose, onMoreClick }) => {
   const selectedCount = selected.length
   const actionNames = Object.keys(actions)
   return (
@@ -18,11 +18,7 @@ const SelectionBar = ({ t, selected, actions, onClose, onActionComplete, onMoreC
         <button
           className={styles['coz-action-' + actionName.toLowerCase()]}
           disabled={selectedCount < 1}
-          onClick={() => {
-            actions[actionName]()
-              .then(() => onActionComplete())
-              .catch(err => { console.log(err) })
-          }}
+          onClick={() => actions[actionName](selected)}
         >
           {t('selectionbar.' + actionName)}
         </button>

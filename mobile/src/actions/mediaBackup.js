@@ -45,7 +45,7 @@ export const mediaBackup = (dir) => async (dispatch, getState) => {
     const dirID = await getDirID(dir)
     const totalUpload = photosToUpload.length
     let uploadCounter = 0
-    for (let photo of photosToUpload) {
+    for (const photo of photosToUpload) {
       if (backupAllowed(getState().mobile.settings.wifiOnly)) {
         dispatch(currentUploading(photo, uploadCounter++, totalUpload))
         const blob = await getBlob(photo)

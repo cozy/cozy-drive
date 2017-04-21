@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   backupImages: state.mobile.settings.backupImages,
   analytics: state.mobile.settings.analytics,
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,
-  client: state.mobile.settings.client,
+  client: state.settings.client,
   wifiOnly: state.mobile.settings.wifiOnly,
   backupAllowed: backupAllowed(state.mobile.settings.wifiOnly)
 })

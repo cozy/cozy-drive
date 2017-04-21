@@ -1,7 +1,7 @@
 default_platform :ios
 
-APP_NAME = "Cozy Files"
-APP_FILENAME = "Cozy Files"
+APP_NAME = "Cozy Drive"
+APP_FILENAME = "Cozy Drive"
 PLATFORM = { :ios => "platforms/ios", :android => "platforms/android" }
 SECURITY = { :ios => "keys/ios", :android => "keys/android" }
 BUILD = { :ios => "build/ios", :android => "build/android" }

@@ -10,7 +10,7 @@ export const Analytics = ({ onActivate, onSkip }) =>
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: () => {
-    dispatch(setAnalytics(true))
+    dispatch(setAnalytics(true, 'onboarbing'))
     ownProps.nextStep()
   },
   onSkip: () => {

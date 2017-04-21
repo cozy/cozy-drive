@@ -1,17 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const confirm = component => new Promise((resolve, reject) => {
-  let wrapper = document.body.appendChild(document.createElement('div'))
+const createWrapper = () => document.body.appendChild(document.createElement('div'))
 
-  let abort = () => {
-    console.log('unmount confirm modal')
+const confirm = component => new Promise((resolve, reject) => {
+  const wrapper = createWrapper()
+
+  const abort = () => {
     ReactDOM.unmountComponentAtNode(wrapper)
     reject()
   }
 
-  let confirm = () => {
-    console.log('unmount confirm modal')
+  const confirm = () => {
     ReactDOM.unmountComponentAtNode(wrapper)
     resolve()
   }
@@ -20,3 +20,13 @@ const confirm = component => new Promise((resolve, reject) => {
 })
 
 export default confirm
+
+export const alert = component => {
+  const wrapper = createWrapper()
+
+  const close = () => {
+    ReactDOM.unmountComponentAtNode(wrapper)
+  }
+
+  ReactDOM.render(React.cloneElement(component, { close }), wrapper)
+}

@@ -38,7 +38,7 @@ describe('Onboarding', () => {
   it('should render the welcome screen', () => {
     const component = renderer.create(<Welcome t={() => {}} />)
 
-    let tree = component.toJSON()
+    const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
 
@@ -46,7 +46,7 @@ describe('Onboarding', () => {
     const options = {createNodeMock}
     const component = renderer.create(<SelectServer t={() => {}} />, options)
 
-    let tree = component.toJSON()
+    const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

@@ -69,7 +69,7 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
             )}
             activeClassName={styles['active']}
           >
-            { t('nav.item_files') }
+            { t('nav.item_drive') }
           </ActiveLink>
         </li>
         <li class={styles['coz-nav-item']}>

@@ -1,14 +1,16 @@
+import { isAndroid } from './device'
+
 const ERROR_GET_DIRECTORY = 'Error to get directory'
 const ERROR_WRITE_FILE = 'Error to write file'
 const ERROR_GET_FILE = 'Error to get file'
 const COZY_PATH = 'Cozy'
-const COZY_FILES_PATH = 'Cozy Files'
+const COZY_FILES_PATH = 'Cozy Drive'
 
-export const getRootPath = () => window.cordova.platformId === 'android'
+export const getRootPath = () => isAndroid()
   ? window.cordova.file.externalRootDirectory
   : window.cordova.file.dataDirectory
 
-export const getTemporaryRootPath = () => window.cordova.platformId === 'android'
+export const getTemporaryRootPath = () => isAndroid()
   ? window.cordova.file.externalCacheDirectory
   : window.cordova.file.cacheDirectory
 

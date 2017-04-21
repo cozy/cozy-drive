@@ -6,12 +6,21 @@ import {
   OPEN_FOLDER_FAILURE,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
-  RESTORE_FILES_SUCCESS,
   RENAME_FOLDER,
   CREATE_FOLDER_SUCCESS
 } from '../actions'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH } from '../constants/config.js'
+import {
+  EMPTY_TRASH,
+  EMPTY_TRASH_SUCCESS,
+  EMPTY_TRASH_FAILURE,
+  RESTORE_FILES_SUCCESS,
+  DESTROY_FILES,
+  DESTROY_FILES_SUCCESS,
+  DESTROY_FILES_FAILURE
+} from '../ducks/trash'
+
+import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH, KONNECTORS_DIR_PATH } from '../constants/config.js'
 
 // reducer for the currently displayed folder properties
 const displayedFolder = (state = null, action) => {
@@ -40,12 +49,15 @@ const files = (state = [], action) => {
       ]
     case TRASH_FILES_SUCCESS:
     case RESTORE_FILES_SUCCESS:
+    case DESTROY_FILES_SUCCESS:
       return state.filter(f => action.ids.indexOf(f.id) === -1)
     case RENAME_FOLDER:
       return state.map(f => {
         f.name = (f.id === action.id) ? action.name : f.name
         return f
       })
+    case EMPTY_TRASH_SUCCESS:
+      return []
     default:
       return state
   }
@@ -57,8 +69,14 @@ const fetchStatus = (state = null, action) => {
     // the LOCATION_CHANGE action so that the loading spinner is only showed
     // when the app is launched or when the user use the back button
     case LOCATION_CHANGE:
+    case EMPTY_TRASH:   // we temporarily display the spinner when working in the trashed
+    case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
+    case EMPTY_TRASH_SUCCESS:
+    case EMPTY_TRASH_FAILURE:
+    case DESTROY_FILES_SUCCESS:
+    case DESTROY_FILES_FAILURE:
       return 'loaded'
     case OPEN_FOLDER_FAILURE:
       return 'failed'
@@ -87,8 +105,8 @@ export default combineReducers({
 const sortFiles = files => files.sort((a, b) => a.name.localeCompare(b.name))
 
 const getSortedFiles = allFiles => {
-  let folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID && f.path !== APPS_DIR_PATH)
-  let files = allFiles.filter(f => f.type !== 'directory')
+  const folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID && f.path !== APPS_DIR_PATH && f.path !== KONNECTORS_DIR_PATH)
+  const files = allFiles.filter(f => f.type !== 'directory')
   return sortFiles(folders).concat(sortFiles(files))
 }
 
@@ -98,7 +116,7 @@ export const getVisibleFiles = ({ view }) => {
 }
 
 export const getFileById = ({ view }, id) => {
-  let file = view.files.find(f => f.id === id)
+  const file = view.files.find(f => f.id === id)
   if (!file) return null
   // we need the path for some actions, like selection download
   // but the stack only provides the path for folders...
@@ -123,20 +141,20 @@ export const getFolderIdFromRoute = (location, params) => {
 export const getFolderUrl = (folderId, location) => {
   if (folderId === ROOT_DIR_ID) return '/files'
   if (folderId === TRASH_DIR_ID) return '/trash'
-  let url = location.pathname.match(/^\/files/) ? '/files/' : '/trash/'
+  const url = location.pathname.match(/^\/files/) ? '/files/' : '/trash/'
   return url + folderId
 }
 
 // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
 export const getFolderPath = ({ view }, location) => {
   const { displayedFolder } = view
-  let path = []
-  let isBrowsingTrash = location.pathname.match(/^\/trash/)
+  const path = []
+  const isBrowsingTrash = location.pathname.match(/^\/trash/)
   // dring the first fetch, displayedFolder is null, and we don't want to display anything
   if (displayedFolder) {
     path.push(displayedFolder)
     // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that.
-    let parent = displayedFolder.parent
+    const parent = displayedFolder.parent
     if (parent && parent.id && !(isBrowsingTrash && parent.id === ROOT_DIR_ID)) {
       path.unshift(parent)
       // has the parent a parent too?
@@ -147,7 +165,7 @@ export const getFolderPath = ({ view }, location) => {
     }
   }
   // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder. While we're at it, we also rename the folders when we need to.
-  let hasRootFolder = path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
+  const hasRootFolder = path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
   if (!hasRootFolder) {
     // if we don't have one, we add it manually
     path.unshift({

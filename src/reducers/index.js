@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux'
 
 import view, { getFileById } from './view'
-import ui from './ui'
+import settings from './settings'
 
+import selectionReducer, { getSelectedIds } from '../ducks/selection'
+import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
 import alerterReducer from 'cozy-ui/react/Alerter'
 
 export const reducers = {
   view,
-  ui,
+  settings,
+  actionmenu: actionmenuReducer,
+  selection: selectionReducer,
   alerts: alerterReducer
 }
 
@@ -16,17 +20,17 @@ export default filesApp
 
 // Selectors
 export { getVisibleFiles, getFileById, getFolderIdFromRoute, getFolderPath, getFolderUrl } from './view'
+export { isBarVisible as isSelectionBarVisible } from '../ducks/selection'
+export { isMenuVisible as isActionMenuVisible } from '../ducks/actionmenu'
 
 export const getSelectedFiles = state => {
-  const { ui } = state
-  return ui.selected.map(id => getFileById(state, id))
+  return getSelectedIds(state).map(id => getFileById(state, id))
 }
 
 export const getActionableFiles = state => {
-  const { ui } = state
-  if (ui.selected.length > 0) {
+  if (getSelectedIds(state).length > 0) {
     return getSelectedFiles(state)
   } else {
-    return [getFileById(state, ui.actionable)]
+    return [getFileById(state, getActionableId(state))]
   }
 }

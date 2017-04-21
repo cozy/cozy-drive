@@ -1,6 +1,6 @@
 {
   "nav": {
-    "item_files": "Files",
+    "item_drive": "Drive",
     "item_recent": "Recent",
     "item_shared": "Shared by me",
     "item_activity": "Activity",
@@ -8,7 +8,7 @@
     "item_settings": "Settings"
   },
   "breadcrumb": {
-    "title_files": "Files",
+    "title_drive": "Drive",
     "title_recent": "Recent",
     "title_shared": "Shared by me",
     "title_activity": "Activity",
@@ -20,7 +20,7 @@
     "menu_upload": "Upload files",
     "menu_new_folder": "New folder",
     "menu_select": "Select items",
-    "delete_all": "Delete all"
+    "empty_trash": "Empty trash"
   },
   "table": {
     "head_name": "Name",
@@ -46,7 +46,7 @@
     "share": "Share",
     "download": "Download",
     "trash": "Remove",
-    "perma_delete": "Delete permanently",
+    "destroy": "Delete permanently",
     "moveto": "Move",
     "rename": "Rename",
     "restore": "Restore",
@@ -60,12 +60,35 @@
     "cancel": "Cancel",
     "delete": "Remove"
   },
+  "emptytrashconfirmation": {
+    "title": "Permanently delete?",
+    "forbidden": "You won't be able to access these files anymore.",
+    "restore": "You won't be able to restore these files if you didn't make a backup.",
+    "cancel": "Cancel",
+    "delete": "Delete all"
+  },
+  "destroyconfirmation": {
+    "title": "Permanently delete?",
+    "forbidden": "You won't be able to access this file anymore. |||| You won't be able to access these files anymore.",
+    "restore": "You won't be able to restore this file if you didn't make a backup. |||| You won't be able to restore these files if you didn't make a backup.",
+    "cancel": "Cancel",
+    "delete": "Delete permanently"
+  },
+  "quotaalert": {
+    "title": "Your disk space is full :(",
+    "desc": " Please remove files and empty your trash before uploading files again.",
+    "confirm": "OK"
+  },
   "loading": {
     "message": "Loading"
   },
   "empty": {
     "title" : "You don’t have any files in this folder.",
-    "text" : "Click the \"upload\" button to add files to this folder."
+    "text" : "Click the \"upload\" button to add files to this folder.",
+    "trash": {
+      "title" : "You don’t have any deleted files.",
+      "text" : "Move files you don't need anymore to the Trash and permanently delete items to free up storage page."
+    }
   },
   "error": {
     "open_folder": "Something went wrong when opening the folder.",
@@ -81,6 +104,8 @@
     "try_again": "An error has occurred, please try again in a moment.",
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
+    "destroy_file_success": "The selection has been deleted permanently.",
+    "empty_trash_success": "The trash has been emptied.",
     "folder_name": "The folder %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
     "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved."
@@ -100,8 +125,8 @@
         "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
       },
       "files": {
-        "title": "Access your files",
-        "description": "In order to save your Cozy files on your device, the application must access your files."
+        "title": "Access your drive",
+        "description": "In order to save your Cozy Drive on your device, the application must access your files."
       },
       "photos": {
         "title": "Backup your photos and videos",
@@ -160,7 +185,9 @@
     "action_menu": {
       "open_with": "Open with",
       "download": "Download",
-      "delete": "Remove"
+      "trash": "Remove",
+      "restore": "Restore",
+      "destroy": "Delete permanently"
     },
     "error": {
       "open_with": {

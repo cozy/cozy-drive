@@ -1,9 +1,13 @@
+import React from 'react'
 import { connect } from 'react-redux'
+import { translate } from '../../lib/I18n'
+import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'
+import DestroyConfirm from './components/DestroyConfirm'
 import Toolbar from './Toolbar'
 
-import { restoreFiles } from '../../actions'
+import { restoreFiles, destroyFiles } from './actions'
 
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: true,
@@ -14,12 +18,16 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: Object.assign({}, ownProps.actions, {
     selection: {
-      restore: () => dispatch(restoreFiles(ownProps.selected))
+      restore: files => dispatch(restoreFiles(files)),
+      destroy: files =>
+        confirm(<DestroyConfirm t={ownProps.t} fileCount={files.length} />)
+          .then(() => dispatch(destroyFiles(files)))
+          .catch(() => {})
     }
   })
 })
 
-export default connect(
+export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(FolderView)
+)(FolderView))

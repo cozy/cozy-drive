@@ -4,7 +4,7 @@ import { translate } from '../lib/I18n'
 import File from '../components/File'
 
 const FileList = ({
-  t, f, displayedFolder, files, selected, selectionModeActive, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, onShowActionMenu
+  t, f, displayedFolder, files, selected, selectionModeActive, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, showActionMenu
 }) => (
   <div>
     {files.map((file, idx) => (
@@ -15,7 +15,7 @@ const FileList = ({
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
         onToggle={onFileToggle}
-        onShowActionMenu={onShowActionMenu}
+        onShowActionMenu={showActionMenu}
         attributes={file}
         selectionModeActive={selectionModeActive}
       />

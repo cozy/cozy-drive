@@ -1,5 +1,5 @@
 {
-  "name": "cozy-files",
+  "name": "cozy-drive",
   "version": "3.0.0",
   "main": "src/main.jsx",
   "scripts": {
@@ -8,7 +8,7 @@
     "build:mobile": "NODE_ENV=mobile:production npm run internal:build",
     "clean:browser": "rm -rf build",
     "clean:mobile": "rm -rf mobile/www",
-    "deploy": "git-directory-deploy --username Cozy --email contact@cozycloud.cc --directory build/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-files-v3.git",
+    "deploy": "git-directory-deploy --username Cozy --email contact@cozycloud.cc --directory build/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-drive.git",
     "internal:build": "webpack --config webpack.config.js --bail",
     "internal:watch": "webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "internal:watch:standalone": "webpack-dev-server --config webpack.config.js --port 8082 --display-modules --display-chunks --inline --hot",
@@ -23,22 +23,24 @@
     "lint:js": "standard --parser babel-eslint 'src/**/*.js' 'src/**/*.jsx' 'test/**/*.js' 'mobile/src/**/*.js' 'mobile/src/**/*.jsx' 'mobile/test/**/*.js'",
     "lint:styles": "stylint src/styles --config ./.stylintrc",
     "test": "node_modules/.bin/jest",
+    "server": "docker run --rm -it -p 8080:8080 -v \"$(pwd)/build\":/data/cozy-app cozy/cozy-app-dev",
     "watch": "npm run watch:browser",
     "watch:browser": "NODE_ENV=browser:development npm run internal:watch",
     "watch:mobile": "NODE_ENV=mobile:development npm run internal:watch",
     "watch:browser:standalone": "NODE_ENV=browser:development npm run internal:watch:standalone",
     "watch:mobile:standalone": "NODE_ENV=mobile:development npm run internal:watch:standalone",
-    "android:run": "cd mobile ; cordova run android --device ; cd ..",
-    "android:run:emulator": "cd mobile ; cordova run android --emulator ; cd ..",
-    "android:release": "npm run build:mobile && cd mobile ; cordova build android --release ; cd ..",
-    "android:signed": "npm run android:release && cd mobile ; apksigner sign --ks keys/android/cozy-files-release-key.jks --out build/android/cozy-files-v3.apk platforms/android/build/outputs/apk/android-release-unsigned.apk ; cd ..",
-    "android:publish": "npm run android:signed && cd mobile ; fastlane supply ; cd ..",
-    "ios:run": "cd mobile ; cordova run ios --device ; cd ..",
-    "ios:run:emulator": "cd mobile ; cordova run ios --emulator ; cd .."
+    "android:run": "(cd mobile && cordova run android --device)",
+    "android:run:emulator": "(cd mobile && cordova run android --emulator)",
+    "android:release": "npm run build:mobile && (cd mobile && cordova build android --release)",
+    "android:signed": "npm run android:release && (cd mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/android-release-unsigned.apk)",
+    "android:publish": "npm run android:signed && (cd mobile && fastlane supply)",
+    "ios:run": "(cd mobile && cordova run ios --device)",
+    "ios:run:emulator": "(cd mobile && cordova run ios --emulator)",
+    "ios:publish": "(cd mobile && fastlane ios pushtest)"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cozy/cozy-files-v3.git"
+    "url": "git+https://github.com/cozy/cozy-drive.git"
   },
   "author": "Cozy Cloud <contact@cozycloud.cc> (https://cozy.io/)",
   "contributors": [
@@ -48,9 +50,9 @@
   ],
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/cozy/cozy-files-v3/issues"
+    "url": "https://github.com/cozy/cozy-drive/issues"
   },
-  "homepage": "https://github.com/cozy/cozy-files-v3#readme",
+  "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
     "autoprefixer": "^6.5.0",
     "babel-core": "^6.0.0",
@@ -102,7 +104,7 @@
   "dependencies": {
     "classnames": "^2.2.0",
     "cozy-bar": "3.0.0-beta15",
-    "cozy-client-js": "0.1.8",
+    "cozy-client-js": "0.2.0",
     "cozy-ui": "3.0.0-beta18",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
@@ -112,8 +114,8 @@
     "node-uuid": "^1.4.7",
     "pouchdb": "^6.1.1",
     "pouchdb-find": "^0.10.4",
-    "preact": "^7.1.0",
-    "preact-compat": "^3.9.0",
+    "preact": "^8.1.0",
+    "preact-compat": "^3.14.3",
     "raven-js": "^3.10.0",
     "react-bosonic": "1.0.0-beta6",
     "react-redux": "^5.0.1",

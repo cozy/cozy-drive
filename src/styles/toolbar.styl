@@ -1,5 +1,4 @@
 @require 'cozy-ui'
-@require './popover'
 
 .fil-toolbar-files
 .fil-toolbar-trash
@@ -12,58 +11,50 @@
         @extends $button--more
 
 .fil-toolbar-trash
+    .fil-btn--delete
+        padding-left         em(44px, 16px)
+        background-image     embedurl('../assets/icons/icon-trash-danger.svg')
+        background-position  em(17px, 16px) center
+        background-repeat    no-repeat
+    .fil-btn--active
+        padding-left         0
+        background-image     none
+        .fil-loading
+            margin-left      0
+            margin-right     em(16px)
+
     .fil-toolbar-more-btn
         display none
 
-
-// These styles are needed for the menu to work and come directly from bosonic's source
-// TODO: find a better way for bosonic to share its styling
-b-menu-button
-    position relative
-
-b-menu-button > b-listbox
-    display none
-    position absolute
-
-b-menu-button[open] > b-listbox
-    display block
-
-b-item
-    display block
-
-.fil-toolbar-menu
-    @extend $popover
-    right 0
-    padding 5px 0
-    margin 0
-    margin-top 1px
-    min-width 220px
-
-    a
-    label
-        &.fil-action-upload
-            background embedurl('../assets/icons/icon-upload-16.svg') em(16px) center no-repeat
-        &.fil-action-newfolder
-            background embedurl('../assets/icons/icon-folder-add-16.svg') em(16px) center no-repeat
-        &.fil-action-select
-            background embedurl('../assets/icons/icon-checkbox-16.svg') em(16px) center no-repeat
-        &.fil-action-delete
-            background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
-
-    .fil-action-upload
-    .fil-action-select
-    hr // temporary while there is only select after hr
-        display none
-
-
-@media (max-width: (1023/basefont)rem)
+.fil-toolbar-files
     .fil-toolbar-menu
+        a
+        label
+            &.fil-action-upload
+                background embedurl('../assets/icons/icon-upload-16.svg') em(16px) center no-repeat
+            &.fil-action-newfolder
+                background embedurl('../assets/icons/icon-folder-add-16.svg') em(16px) center no-repeat
+            &.fil-action-select
+                background embedurl('../assets/icons/icon-checkbox-16.svg') em(16px) center no-repeat
+            &.fil-action-delete
+                background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
+
         .fil-action-upload
         .fil-action-select
         hr // temporary while there is only select after hr
-            display block
+            display none
+
+
+@media (max-width: (1023/basefont)rem)
+    .fil-toolbar-files
+        .fil-toolbar-menu
+            .fil-action-upload
+            .fil-action-select
+            hr // temporary while there is only select after hr
+                display block
 
     .desktop-upload
+    .fil-btn--delete
         display none
 
     .fil-toolbar-trash .fil-toolbar-more-btn

@@ -1,6 +1,5 @@
 @require 'cozy-ui'
-
-$coz-bar-size = 40px
+@require './topbar'
 
 .fil-path-title
     margin    0
@@ -26,14 +25,20 @@ $coz-bar-size = 40px
 
 .fil-path-down
     display     none
-    width       14px
+    min-width   14px
     height      10px
     margin-left 7px
     border      0
     background  embedurl('../assets/icons/icon-arrow-down.svg') center center no-repeat
 
+.fil-path-current-name
+    text-overflow ellipsis
+    overflow      hidden
+    white-space   nowrap
+
 @media (max-width: (768/basefont)rem)
     .fil-path-backdrop
+        margin   0
         position fixed
         top      0
         left     $coz-bar-size
@@ -51,9 +56,6 @@ $coz-bar-size = 40px
         align-items   center
         box-sizing    border-box
         height        $coz-bar-size
-        text-overflow ellipsis
-        overflow      hidden
-        white-space   nowrap
         padding       0 2.35em 0 .25em
 
     .fil-path-previous
@@ -69,13 +71,14 @@ $coz-bar-size = 40px
     .fil-path-backdrop.deployed
         bottom     0
         left       0
-        background rgba(50, 54, 63, 0.5)
 
         .fil-path-previous
             left 0
 
         .fil-path-title
             background white
+            z-index    $popover-index
+            box-shadow 0 1px 0 0 #d6d8da, 0 6px 24px 0 rgba(50, 54, 63, .24)
 
         .fil-path-link
         .fil-path-current

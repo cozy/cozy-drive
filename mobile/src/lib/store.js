@@ -22,6 +22,7 @@ export const configureStore = (persistedState) => {
   )
 
   store.subscribe(() => saveState({
+    settings: store.getState().settings,
     mobile: {
       timestamp: store.getState().mobile.timestamp,
       settings: store.getState().mobile.settings,

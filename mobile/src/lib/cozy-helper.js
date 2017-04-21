@@ -1,22 +1,19 @@
 /* global cozy, document, __APP_VERSION__ */
-
+import { getLang } from './init'
 import { LocalStorage as Storage } from 'cozy-client-js'
 
-import { openFolder } from '../../../src/actions'
-import { revokeClient } from '../actions/authorization'
-
-const clientRevokedMsg = 'Client has been revoked'
+export const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
-const getClientName = device => `Cozy Files Application on ${device} (${Math.random().toString(36).slice(2)})`
+const getClientName = device => `Cozy Drive Application on ${device} (${Math.random().toString(36).slice(2)})`
 
 const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
-  softwareID: 'io.cozy.mobile.files',
+  softwareID: 'io.cozy.drive.mobile',
   clientName: getClientName(device),
   softwareVersion: __APP_VERSION__,
   clientKind: 'mobile',
-  clientURI: 'https://github.com/cozy/cozy-files-v3/',
-  logoURI: 'https://raw.githubusercontent.com/cozy/cozy-files-v3/master/vendor/assets/apple-touch-icon-120x120.png',
+  clientURI: 'https://github.com/cozy/cozy-drive/',
+  logoURI: 'https://raw.githubusercontent.com/cozy/cozy-drive/master/vendor/assets/apple-touch-icon-120x120.png',
   policyURI: 'https://files.cozycloud.cc/cgu.pdf',
   scopes: ['io.cozy.files']
 })
@@ -32,16 +29,18 @@ export const initClient = (url, onRegister = null, device = 'Device') => {
     console.log(`Cozy Client initializes a connection with ${url}`)
     cozy.client.init({
       cozyURL: url,
-      oauth: getAuth(onRegister, device)
+      oauth: getAuth(onRegister, device),
+      offline: {doctypes: ['io.cozy.files']}
     })
   }
 }
 
 export const initBar = () => {
   cozy.bar.init({
-    appName: 'Files',
+    appName: 'Cozy Drive',
+    appEditor: 'Cozy',
     iconPath: require('../../../vendor/assets/app-icon.svg'),
-    lang: 'en',
+    lang: getLang(),
     replaceTitleOnMobile: true
   })
 }
@@ -71,24 +70,5 @@ export function resetClient () {
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()
-  }
-}
-
-export function refreshFolder (dispatch, getState) {
-  return result => {
-    if (result.docs_written !== 0) {
-      dispatch(openFolder(getState().folder.id))
-    }
-  }
-}
-
-export const onError = (dispatch, getState) => (err) => {
-  if (err.message === clientRevokedMsg || err.error === 'code=400, message=Invalid JWT token') {
-    console.warn(`Your device is no more connected to your server: ${getState().mobile.settings.serverUrl}`)
-    dispatch(revokeClient())
-  } else if (err.message === 'ETIMEDOUT') {
-    console.log('timeout')
-  } else {
-    console.warn(err)
   }
 }

@@ -1,5 +1,3 @@
-/* global cozy */
-
 import 'babel-polyfill'
 
 import '../../src/styles/main'
@@ -15,69 +13,74 @@ import MobileAppRoute from './components/MobileAppRoute'
 
 import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
-import { initService } from './lib/init'
-import { startBackgroundService, stopBackgroundService } from './lib/background'
-import { initBar, isClientRegistered, resetClient, refreshFolder, onError } from './lib/cozy-helper'
+import { initServices, getLang } from './lib/init'
+import { updateStatusBackgroundService, startBackgroundService } from './lib/background'
+import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
-  initService(store)
 
-  function requireSetup (nextState, replace, callback) {
-    const client = store.getState().mobile.settings.client
-    const isSetup = store.getState().mobile.settings.authorized
-    if (isSetup) {
-      isClientRegistered(client).then(clientIsRegistered => {
-        if (clientIsRegistered) {
-          const options = {
-            onError: onError(store.dispatch, store.getState),
-            onComplete: refreshFolder(store.dispatch, store.getState)
-          }
-          cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
-          initBar()
-        } else {
-          onError(store.dispatch, store.getState)({ message: 'Client has been revoked' })
-        }
-        callback()
-      })
-    } else {
+  initServices(store)
+
+  function isRedirectedToOnboaring (nextState, replace) {
+    const isNotAuthorized = !store.getState().mobile.settings.authorized
+    if (isNotAuthorized) {
       resetClient()
       replace({
         pathname: '/onboarding',
         state: { nextPathname: nextState.location.pathname }
       })
-      callback()
+    }
+  }
+
+  function pingOnceADayWithState () {
+    const state = store.getState()
+    if (state.mobile) {
+      const timestamp = state.mobile.timestamp
+      const analytics = state.mobile.settings.analytics
+      store.dispatch(pingOnceADay(timestamp, analytics))
     }
   }
 
   document.addEventListener('resume', () => {
-    store.dispatch(pingOnceADay(store.getState().mobile.timestamp))
-  })
+    pingOnceADayWithState()
+  }, false)
 
   document.addEventListener('deviceready', () => {
-    store.dispatch(pingOnceADay(store.getState().mobile.timestamp))
-    if (store.getState().mobile.settings.backupImages) {
-      startBackgroundService()
-    } else {
-      stopBackgroundService()
-    }
+    pingOnceADayWithState()
+    updateStatusBackgroundService(store.getState().mobile.settings.backupImages)
   }, false)
 
   const context = window.context
   const root = document.querySelector('[role=application]')
-  const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
 
   render((
-    <I18n context={context} lang={lang}>
+    <I18n context={context} lang={getLang()}>
       <Provider store={store}>
-        <Router history={hashHistory} routes={MobileAppRoute(requireSetup)} />
+        <Router history={hashHistory} routes={MobileAppRoute(isRedirectedToOnboaring)} />
       </Provider>
     </I18n>
   ), root)
 }
 
-document.addEventListener('DOMContentLoaded', () =>
-  loadState()
-  .then(renderAppWithPersistedState)
-)
+// Allows to know if the launch of the application has been done by the service background
+// @see: https://git.io/vSQBC
+const isBackgroundServiceParameter = () => {
+  let queryDict = {}
+  location.search.substr(1).split('&').forEach(function (item) { queryDict[item.split('=')[0]] = item.split('=')[1] })
+
+  return queryDict.backgroundservice
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!isBackgroundServiceParameter()) {
+    loadState().then(renderAppWithPersistedState)
+  }
+}, false)
+
+document.addEventListener('deviceready', () => {
+  if (isBackgroundServiceParameter()) {
+    startBackgroundService()
+  }
+}, false)
