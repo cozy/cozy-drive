@@ -1,10 +1,11 @@
+/* global __TARGET__ */
 import styles from '../styles/selectionbar'
 
 import React from 'react'
 import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
-const SelectionBar = ({ t, selected, actions, onClose, onMoreClick }) => {
+const SelectionBar = ({ t, selected, actions, mobile, onClose, onMoreClick }) => {
   const selectedCount = selected.length
   const actionNames = Object.keys(actions)
   return (
@@ -23,6 +24,15 @@ const SelectionBar = ({ t, selected, actions, onClose, onMoreClick }) => {
           {t('selectionbar.' + actionName)}
         </button>
       ))}
+      {(__TARGET__ === 'mobile' || true) && Object.keys(mobile).map(actionName => (
+        <button
+          className={styles['coz-action-' + actionName.toLowerCase()]}
+          disabled={selectedCount !== 1}
+          onClick={() => mobile[actionName](selected[0])}
+        >
+          {t('selectionbar.' + actionName)}
+        </button>)
+      )}
       {actionNames.length > 4 &&
         <button
           className={classNames('coz-btn', 'coz-btn--extra-white')}
