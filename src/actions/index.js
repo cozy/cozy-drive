@@ -5,10 +5,12 @@ import { openWithNoAppError } from '../../mobile/src/actions'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
-export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
+export const FETCH_MORE_FILES = 'FETCH_MORE_FILES'
+export const FETCH_MORE_FILES_SUCCESS = 'FETCH_MORE_FILES_SUCCESS'
+export const FETCH_MORE_FILES_FAILURE = 'FETCH_MORE_FILES_FAILURE'
 export const ABORT_ADD_FOLDER = 'ABORT_ADD_FOLDER'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
@@ -61,6 +63,7 @@ export const openFolder = (folderId) => {
       const folder = await cozy.client.files.statById(folderId, offline)
       const parentId = folder.attributes.dir_id
       const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
+      const contents = folder.relationships.contents
       // folder.relations('contents') returns null when the trash is empty
       // the filter call is a temporary fix due to a cozy-client-js bug
       const files = folder.relations('contents').filter(f => f !== undefined) || []
@@ -69,10 +72,31 @@ export const openFolder = (folderId) => {
         folder: Object.assign(extractFileAttributes(folder), {
           parent: extractFileAttributes(parent)
         }),
+        fileCount: contents.meta.count || 0,
         files: files.map(c => extractFileAttributes(c))
       })
     } catch (err) {
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
+    }
+  }
+}
+
+export const fetchMoreFiles = (folderId, skip, limit) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
+    try {
+      const settings = getState().settings
+      const offline = settings.offline && settings.firstReplication
+      const folder = await cozy.client.files.statById(folderId, offline, { skip, limit })
+      const files = folder.relations('contents').filter(f => f !== undefined) || []
+      return dispatch({
+        type: FETCH_MORE_FILES_SUCCESS,
+        files: files.map(c => extractFileAttributes(c)),
+        skip,
+        limit
+      })
+    } catch (err) {
+      return dispatch({ type: FETCH_MORE_FILES_FAILURE, error: err })
     }
   }
 }
@@ -85,18 +109,20 @@ export const openFileInNewTab = (folder, file) => {
   }
 }
 
-export const uploadFile = (file, folder) => {
+export const uploadFiles = (files, folder) => {
   return async dispatch => {
     try {
-      dispatch({ type: UPLOAD_FILE })
-      const created = await cozy.client.files.create(
-        file,
-        { dirID: folder.id }
-      )
-      dispatch({
-        type: UPLOAD_FILE_SUCCESS,
-        file: extractFileAttributes(created)
-      })
+      for (const file of files) {
+        dispatch({ type: UPLOAD_FILE })
+        const created = await cozy.client.files.create(
+          file,
+          { dirID: folder.id }
+        )
+        dispatch({
+          type: UPLOAD_FILE_SUCCESS,
+          file: extractFileAttributes(created)
+        })
+      }
     } catch (err) {
       throw err
     }

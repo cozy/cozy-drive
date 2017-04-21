@@ -146,6 +146,26 @@
     @extend $icon-spinner-blue
     margin-left 0.5em
 
+@keyframes placeHolderShimmer
+    0%
+        background-position -468px 0
+    100%
+        background-position 468px 0
+
+.fil-content-file-placeholder
+    animation-duration        1s
+    animation-fill-mode       forwards
+    animation-iteration-count infinite
+    animation-name            placeHolderShimmer
+    animation-timing-function linear
+    background #f6f7f8
+    background #eeeeee
+    background linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%)
+    background-size 800px 104px
+    height   em(20px)
+    width    em(120px)
+    position relative
+
 @media (max-width: (1024/basefont)rem)
     .fil-content-table-selection
         .fil-content-body

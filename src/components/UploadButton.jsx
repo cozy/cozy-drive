@@ -26,11 +26,12 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     {label}
     <input
       type='file'
+      multiple
       style={styles.input}
       disabled={disabled}
       onChange={e => {
         if (e.target.files) {
-          onUpload(e.target.files[0])
+          onUpload(Array.from(e.target.files))
         }
       }}
     />
