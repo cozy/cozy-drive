@@ -10,7 +10,7 @@ build/
 # Locales
 **/locales/*
 !**/locales/en.json
-
+!**/locales/fr.json
 
 # Default
 !.gitkeep
