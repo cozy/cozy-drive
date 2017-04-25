@@ -85,9 +85,11 @@ const backgroundService = () => new Promise(resolve => {
 
   loadState()
     .then(persistedState => configureStore(persistedState))
-    .then(store => initServices(store))
-    .then(() => logInfo('It\'s me Background Service!!!'))
-    .then(() => startMediaBackup(getMediaFolderName()))
+    .then(store => {
+      initServices(store)
+      logInfo('It\'s me Background Service!!!')
+      store.dispatch(startMediaBackup(getMediaFolderName()))
+    })
     .then(resolve)
     .catch(resolve)
 })

@@ -41,7 +41,7 @@ async function getDirID (dir) {
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
 export const startMediaBackup = (dir, force = false) => async (dispatch, getState) => {
   dispatch(startMediaUpload())
-  if ((getState().mobile.settings.backupImages || force) && backupAllowed(getState().mobile.settings.wifiOnly)) {
+  if (force || (getState().mobile.settings.backupImages && backupAllowed(getState().mobile.settings.wifiOnly))) {
     const photosOnDevice = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))

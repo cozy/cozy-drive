@@ -18,9 +18,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  toogleBackup: (launch, dir) => {
+  toggleBackup: (launch, dir) => {
     if (launch) {
-      startMediaBackup(dir, true)
+      dispatch(startMediaBackup(dir, true))
     } else {
       dispatch(cancelMediaBackup())
     }
