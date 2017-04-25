@@ -14,7 +14,7 @@ import MobileAppRoute from './components/MobileAppRoute'
 import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
 import { initServices, getLang } from './lib/init'
-import { updateStatusBackgroundService, startBackgroundService } from './lib/background'
+import { service, updateStatusBackgroundService, startBackgroundService } from './lib/background'
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
 
@@ -50,6 +50,7 @@ const renderAppWithPersistedState = persistedState => {
   document.addEventListener('deviceready', () => {
     pingOnceADayWithState()
     updateStatusBackgroundService(store.getState().mobile.settings.backupImages)
+    service(store.getState, store.dispatch)
   }, false)
 
   const context = window.context
