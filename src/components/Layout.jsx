@@ -1,13 +1,13 @@
-import styles from '../styles/app'
+import styles from '../styles/layout'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
 import classNames from 'classnames'
+import { translate } from '../lib/I18n'
 
 import Sidebar from './Sidebar'
 import Alerter from './Alerter'
 
-export const App = ({ t, children }) => (
+export const Layout = ({ t, children }) => (
   <div className={classNames(styles['pho-wrapper'], styles['coz-sticky'])}>
     <Sidebar />
 
@@ -18,4 +18,4 @@ export const App = ({ t, children }) => (
   </div>
 )
 
-export default translate()(App)
+export default translate()(Layout)

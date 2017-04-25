@@ -7,12 +7,12 @@ import { shallow } from 'enzyme'
 
 import { mockT } from './lib/I18n'
 import { I18n } from '../src/lib/I18n'
-import { App } from '../src/components/App'
+import { Layout } from '../src/components/Layout'
 
 describe('App component only', () => {
   it('should be mounted correctly', () => {
     const component = shallow(
-      <App t={mockT} />
+      <Layout t={mockT} />
     ).node
     expect(component).toMatchSnapshot()
   })
@@ -26,7 +26,7 @@ describe('I18n with App component', () => {
   it('should be mounted correctly in en lang', () => {
     const component = shallow(
       <I18n lang='en'>
-        <App />
+        <Layout />
       </I18n>
     ).node
     expect(component).toMatchSnapshot()
@@ -35,7 +35,7 @@ describe('I18n with App component', () => {
   it('should be mounted correctly in fr lang', () => {
     const component = shallow(
       <I18n lang='fr'>
-        <App />
+        <Layout />
       </I18n>
     ).node
     expect(component).toMatchSnapshot()
