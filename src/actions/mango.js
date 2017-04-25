@@ -17,7 +17,7 @@ import {
 export const indexFilesByDate = () => {
   return async dispatch => {
     dispatch({ type: INDEX_FILES_BY_DATE })
-    const fields = [ 'class', 'created_at' ]
+    const fields = [ 'class', 'trashed', 'created_at' ]
     return await cozy.client.data.defineIndex(FILE_DOCTYPE, fields)
       .then((mangoIndexByDate) => {
         dispatch({

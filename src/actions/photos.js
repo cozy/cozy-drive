@@ -29,7 +29,8 @@ export const fetchPhotos = (mangoIndexByDate) => {
     dispatch({ type: FETCH_PHOTOS, mangoIndexByDate })
     const options = {
       selector: {
-        class: 'image'
+        class: 'image',
+        trashed: false
       },
       fields: ['_id', 'dir_id', 'created_at', 'name', 'size', 'updated_at', 'metadata'],
       descending: true
