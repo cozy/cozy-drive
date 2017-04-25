@@ -7,6 +7,7 @@ import Topbar from '../../../src/components/Topbar'
 import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from '../../../src/lib/I18n'
+import UploadProgression from '../containers/UploadProgression'
 
 const SubCategory = ({ id, label, value, title }) => (
   <div>
@@ -71,6 +72,7 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
         }
 
       </div>
+      <UploadProgression />
     </div>
   </Main>
 )
