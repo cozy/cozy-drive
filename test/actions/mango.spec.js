@@ -18,7 +18,7 @@ const mockMangoIndexByDate = {
   doctype: 'io.cozy.files',
   type: 'mango',
   name: '_design/54d3474c4efdfe10d790425525e56433857955a1',
-  fields: ['class', 'created_at']
+  fields: ['class', 'trashed', 'created_at']
 }
 
 beforeAll(() => {
@@ -53,7 +53,7 @@ describe('indexFilesByDate', () => {
         expect(cozy.client.data.defineIndex.mock.calls.length).toBe(1)
         expect(cozy.client.data.defineIndex.mock.calls[0][0]).toBe(FILE_DOCTYPE)
         expect(cozy.client.data.defineIndex.mock.calls[0][1]).toEqual(
-          [ 'class', 'created_at' ])
+          [ 'class', 'trashed', 'created_at' ])
         expect(store.getActions()).toEqual(expectedActions)
       })
   })
