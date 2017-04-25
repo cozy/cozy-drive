@@ -7,20 +7,13 @@ import { HTTP_CODE_CONFLICT } from '../../../src/actions'
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
 export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
+export const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
 export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
-let cancelUploading = false
-
-export const startMediaUpload = () => {
-  cancelUploading = false
-  return { type: MEDIA_UPLOAD_START }
-}
-export const endMediaUpload = () => {
-  cancelUploading = true
-  return { type: MEDIA_UPLOAD_END }
-}
-export const successMediaUpload = (media) => ({ type: MEDIA_UPLOAD_SUCCESS, id: media.id })
-export const currentUploading = (media, uploadCounter, totalUpload) => (
+const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
+const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
+const successMediaUpload = (media) => ({ type: MEDIA_UPLOAD_SUCCESS, id: media.id })
+const currentUploading = (media, uploadCounter, totalUpload) => (
   {
     type: CURRENT_UPLOAD,
     media,
@@ -45,8 +38,10 @@ async function getDirID (dir) {
   return targetDirectory._id
 }
 
-export const mediaBackup = (dir) => async (dispatch, getState) => {
-  if (backupAllowed(getState().mobile.settings.wifiOnly)) {
+export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
+export const startMediaBackup = (dir, force = false) => async (dispatch, getState) => {
+  dispatch(startMediaUpload())
+  if ((getState().mobile.settings.backupImages || force) && backupAllowed(getState().mobile.settings.wifiOnly)) {
     const photosOnDevice = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
@@ -54,7 +49,7 @@ export const mediaBackup = (dir) => async (dispatch, getState) => {
     const totalUpload = photosToUpload.length
     let uploadCounter = 0
     for (const photo of photosToUpload) {
-      if (cancelUploading) {
+      if (getState().mobile.mediaBackup.cancelMediaBackup) {
         break
       }
       if (backupAllowed(getState().mobile.settings.wifiOnly)) {
@@ -75,4 +70,5 @@ export const mediaBackup = (dir) => async (dispatch, getState) => {
       }
     }
   }
+  dispatch(endMediaUpload())
 }

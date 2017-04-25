@@ -3,8 +3,7 @@ import { initServices } from './init'
 import { logException, logInfo } from './reporter'
 import { loadState } from './localStorage'
 import { getMediaFolderName } from './media'
-import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
-import { backupAllowed } from './network'
+import { startMediaBackup } from '../actions/mediaBackup'
 import { isCordova, isIos, isAndroid, getDeviceName } from './device'
 
 /*
@@ -81,31 +80,16 @@ const notCompatibleError = () => {
 
 // SERVICE
 
-export const service = (getState, dispatch) => new Promise(resolve => {
-  const state = getState()
-  if (state.mobile.settings.backupImages && backupAllowed(state.mobile.settings.wifiOnly)) {
-    const end = () => {
-      dispatch(endMediaUpload())
-      resolve()
-    }
-    dispatch(startMediaUpload())
-    dispatch(mediaBackup(getMediaFolderName())).then(end).catch(end)
-  } else {
-    resolve()
-  }
-})
-
 const backgroundService = () => new Promise(resolve => {
   console.log('BackgroundFetch initiated')
 
-  loadState().then(persistedState => {
-    const store = configureStore(persistedState)
-    initServices(store)
-
-    logInfo('It\'s me Background Service!!!')
-
-    service(store.getState, store.dispatch).then(resolve)
-  })
+  loadState()
+    .then(persistedState => configureStore(persistedState))
+    .then(store => initServices(store))
+    .then(() => logInfo('It\'s me Background Service!!!'))
+    .then(() => startMediaBackup(getMediaFolderName()))
+    .then(resolve)
+    .catch(resolve)
 })
 
 // ANDROID
