@@ -18,11 +18,15 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  launchBackup: (dir) => {
-    dispatch(startMediaUpload())
-    dispatch(mediaBackup(dir))
-    .then(() => dispatch(endMediaUpload()))
-    .catch(() => dispatch(endMediaUpload()))
+  toogleBackup: (launch, dir) => {
+    if (launch) {
+      dispatch(startMediaUpload())
+      dispatch(mediaBackup(dir))
+      .then(() => dispatch(endMediaUpload()))
+      .catch(() => dispatch(endMediaUpload()))
+    } else {
+      dispatch(endMediaUpload())
+    }
   },
   showUnlinkConfirmation: () => dispatch(showUnlinkConfirmation()),
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),

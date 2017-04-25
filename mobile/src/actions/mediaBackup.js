@@ -9,8 +9,16 @@ export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
 export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
 export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
-export const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
-export const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
+let cancelUploading = false
+
+export const startMediaUpload = () => {
+  cancelUploading = false
+  return { type: MEDIA_UPLOAD_START }
+}
+export const endMediaUpload = () => {
+  cancelUploading = true
+  return { type: MEDIA_UPLOAD_END }
+}
 export const successMediaUpload = (media) => ({ type: MEDIA_UPLOAD_SUCCESS, id: media.id })
 export const currentUploading = (media, uploadCounter, totalUpload) => (
   {
@@ -46,6 +54,9 @@ export const mediaBackup = (dir) => async (dispatch, getState) => {
     const totalUpload = photosToUpload.length
     let uploadCounter = 0
     for (const photo of photosToUpload) {
+      if (cancelUploading) {
+        break
+      }
       if (backupAllowed(getState().mobile.settings.wifiOnly)) {
         dispatch(currentUploading(photo, uploadCounter++, totalUpload))
         const blob = await getBlob(photo)

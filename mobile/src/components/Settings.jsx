@@ -18,7 +18,7 @@ const SubCategory = ({ id, label, value, title }) => (
   </div>
 )
 
-export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, launchBackup, wifiOnly, setWifiOnly, backupAllowed, analytics, setAnalytics }) => (
+export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, toogleBackup, wifiOnly, setWifiOnly, backupAllowed, analytics, setAnalytics }) => (
   <Main>
     <Topbar>
       <h2>{t('mobile.settings.title')}</h2>
@@ -33,8 +33,9 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
         <SubCategory id={'backupOnlyWifi'} title={t('mobile.settings.media_backup.wifi.title')}
           label={t('mobile.settings.media_backup.wifi.label')}
           value={<input type='checkbox' checked={wifiOnly} onChange={setWifiOnly} />} />
-        <button onclick={() => launchBackup(t('mobile.settings.media_backup.media_folder'))} className={'coz-btn coz-btn--regular'} disabled={!backupAllowed}>
-          {t('mobile.settings.media_backup.launch')}
+        <button onclick={() => toogleBackup(!mediaUploading, t('mobile.settings.media_backup.media_folder'))} className={'coz-btn coz-btn--regular'} disabled={!backupAllowed}>
+          {!mediaUploading && t('mobile.settings.media_backup.launch')}
+          {mediaUploading && t('mobile.settings.media_backup.stop')}
           {mediaUploading && <div className={styles['media-uploading']} />}
         </button>
 
