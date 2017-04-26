@@ -1,5 +1,5 @@
 import { INIT_STATE } from '../../../src/actions/settings'
-import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, MEDIA_UPLOAD_SUCCESS, CURRENT_UPLOAD } from '../actions/mediaBackup'
+import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, MEDIA_UPLOAD_CANCEL, MEDIA_UPLOAD_SUCCESS, CURRENT_UPLOAD } from '../actions/mediaBackup'
 
 export const initialState = {
   uploading: false,
@@ -8,10 +8,12 @@ export const initialState = {
 
 export const mediaBackup = (state = initialState, action) => {
   switch (action.type) {
+    case MEDIA_UPLOAD_CANCEL:
+      return { ...state, cancelMediaBackup: true }
     case MEDIA_UPLOAD_START:
-      return { ...state, uploading: true }
+      return { ...state, uploading: true, cancelMediaBackup: false }
     case MEDIA_UPLOAD_END:
-      return { ...state, uploading: false, currentUpload: undefined }
+      return { ...state, uploading: false, cancelMediaBackup: true, currentUpload: undefined }
     case MEDIA_UPLOAD_SUCCESS:
       return { ...state, uploaded: [...state.uploaded, action.id] }
     case CURRENT_UPLOAD:

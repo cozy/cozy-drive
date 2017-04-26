@@ -17,6 +17,8 @@ import { initServices, getLang } from './lib/init'
 import { updateStatusBackgroundService, startBackgroundService } from './lib/background'
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
+import { startMediaBackup } from './actions/mediaBackup'
+import { getMediaFolderName } from './lib/media'
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
@@ -50,6 +52,7 @@ const renderAppWithPersistedState = persistedState => {
   document.addEventListener('deviceready', () => {
     pingOnceADayWithState()
     updateStatusBackgroundService(store.getState().mobile.settings.backupImages)
+    store.dispatch(startMediaBackup(getMediaFolderName()))
   }, false)
 
   const context = window.context

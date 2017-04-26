@@ -2,9 +2,8 @@ import { configureStore } from './store'
 import { initServices } from './init'
 import { logException, logInfo } from './reporter'
 import { loadState } from './localStorage'
-import { startMediaUpload, mediaBackup, endMediaUpload } from '../actions/mediaBackup'
-import { backupAllowed } from './network'
-import { initPolyglot } from '../../../src/lib/I18n'
+import { getMediaFolderName } from './media'
+import { startMediaBackup } from '../actions/mediaBackup'
 import { isCordova, isIos, isAndroid, getDeviceName } from './device'
 
 /*
@@ -84,30 +83,15 @@ const notCompatibleError = () => {
 const backgroundService = () => new Promise(resolve => {
   console.log('BackgroundFetch initiated')
 
-  loadState().then(persistedState => {
-    const store = configureStore(persistedState)
-    initServices(store)
-
-    logInfo('It\'s me Background Service!!!')
-
-    const state = store.getState()
-    if (state.mobile.settings.backupImages && backupAllowed(state.mobile.settings.wifiOnly)) {
-      const end = () => {
-        store.dispatch(endMediaUpload())
-        resolve()
-      }
-      store.dispatch(startMediaUpload())
-
-      const context = window.context
-      const lang = (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
-      const polyglot = initPolyglot(context, lang)
-      const dir = polyglot.t('mobile.settings.media_backup.media_folder')
-
-      store.dispatch(mediaBackup(dir)).then(end).catch(end)
-    } else {
-      resolve()
-    }
-  })
+  loadState()
+    .then(persistedState => configureStore(persistedState))
+    .then(store => {
+      initServices(store)
+      logInfo('It\'s me Background Service!!!')
+      store.dispatch(startMediaBackup(getMediaFolderName()))
+    })
+    .then(resolve)
+    .catch(resolve)
 })
 
 // ANDROID

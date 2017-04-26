@@ -169,6 +169,7 @@
           "label": "Backup your images automatically to your Cozy not to ever lose them and share them easily."
         },
         "launch": "Launch Backup",
+        "stop": "Stop Backup",
         "wifi": {
           "title": "Backup on WIFI only",
           "label": "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."

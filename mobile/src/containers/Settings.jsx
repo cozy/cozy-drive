@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Settings from '../components/Settings'
 import { setBackupImages, setWifiOnly, setAnalytics } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
-import { mediaBackup, startMediaUpload, endMediaUpload } from '../actions/mediaBackup'
+import { startMediaBackup, cancelMediaBackup } from '../actions/mediaBackup'
 import { backupAllowed } from '../lib/network'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -18,11 +18,12 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  launchBackup: (dir) => {
-    dispatch(startMediaUpload())
-    dispatch(mediaBackup(dir))
-    .then(() => dispatch(endMediaUpload()))
-    .catch(() => dispatch(endMediaUpload()))
+  toggleBackup: (launch, dir) => {
+    if (launch) {
+      dispatch(startMediaBackup(dir, true))
+    } else {
+      dispatch(cancelMediaBackup())
+    }
   },
   showUnlinkConfirmation: () => dispatch(showUnlinkConfirmation()),
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),
