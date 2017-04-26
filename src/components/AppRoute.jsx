@@ -11,7 +11,6 @@ export const ComingSoon = () => (<p style='margin-left: 2em'>Coming soon!</p>)
 
 const AppRoute = (
   <Route component={Layout}>
-    <Redirect from='/' to='photos' />
     <Route path='photos' component={Timeline}>
       <Route path=':photoId' component={Viewer} />
     </Route>
@@ -20,6 +19,7 @@ const AppRoute = (
         <Route path=':photoId' component={Viewer} />
       </Route>
     </Route>
+    <Redirect from='/*' to='photos' />
   </Route>
 )
 
