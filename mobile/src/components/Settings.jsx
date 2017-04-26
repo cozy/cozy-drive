@@ -34,7 +34,7 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
         <SubCategory id={'backupOnlyWifi'} title={t('mobile.settings.media_backup.wifi.title')}
           label={t('mobile.settings.media_backup.wifi.label')}
           value={<input type='checkbox' checked={wifiOnly} onChange={setWifiOnly} />} />
-        <button onclick={() => toggleBackup(!mediaUploading, t('mobile.settings.media_backup.media_folder'))} className={'coz-btn coz-btn--regular'} disabled={!backupAllowed}>
+        <button onclick={() => toggleBackup(!mediaUploading, t('mobile.settings.media_backup.media_folder'))} className={'coz-btn coz-btn--regular'}>
           {!mediaUploading && t('mobile.settings.media_backup.launch')}
           {mediaUploading && t('mobile.settings.media_backup.stop')}
           {mediaUploading && <div className={styles['media-uploading']} />}
