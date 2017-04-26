@@ -24,7 +24,7 @@ const SelectionBar = ({ t, selected, actions, mobile, onClose, onMoreClick }) =>
           {t('selectionbar.' + actionName)}
         </button>
       ))}
-      {(__TARGET__ === 'mobile' || true) && Object.keys(mobile).map(actionName => (
+      {(__TARGET__ === 'mobile') && Object.keys(mobile).map(actionName => (
         <button
           className={styles['coz-action-' + actionName.toLowerCase()]}
           disabled={selectedCount !== 1}
