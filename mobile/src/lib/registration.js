@@ -18,7 +18,7 @@ export const onRegistered = (client, url) => {
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
       const target = '_blank'
-      const options = 'clearcache=yes'
+      const options = 'clearcache=yes,location=no'
       const inAppBrowser = window.cordova.InAppBrowser.open(url, target, options)
       return openRegistrationWith(inAppBrowser)
       .then(
