@@ -9,7 +9,7 @@ import classNames from 'classnames'
 import Alerter from '../components/Alerter'
 import CreateAlbumForm from '../components/CreateAlbumForm'
 
-import { cancelAddToAlbum, createAlbum, addToAlbum } from '../actions/albums'
+import { cancelAddToAlbum, createAlbum, addToAlbum } from '../ducks/albums'
 
 export const AddToAlbumModal = ({t, mangoIndex, photos,
   onDismiss, onSubmitNewAlbum }) => {

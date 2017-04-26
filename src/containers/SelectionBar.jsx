@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { translate } from '../lib/I18n'
 
 import { hideSelectionBar } from '../actions/selection'
-import { addToAlbum } from '../actions/albums'
+import { addToAlbum } from '../ducks/albums'
 
 const SelectionBar = ({ t, selected, selectedCount, onHide, onAddToAlbum }) => (
   <div

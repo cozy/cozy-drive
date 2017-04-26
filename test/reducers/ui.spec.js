@@ -13,11 +13,7 @@ import {
   SHOW_SELECTION_BAR,
   HIDE_SELECTION_BAR,
   SELECT_PHOTO,
-  UNSELECT_PHOTO,
-  ADD_TO_ALBUM_SUCCESS,
-  FETCH_CURRENT_ALBUM_PHOTOS,
-  ADD_TO_ALBUM,
-  CANCEL_ADD_TO_ALBUM
+  UNSELECT_PHOTO
 } from '../../src/constants/actionTypes'
 
 import {
@@ -167,7 +163,7 @@ describe('UI showSelectionBar reducer', () => {
   it('should handle ADD_TO_ALBUM_SUCCESS', () => {
     expect(
       showSelectionBar(true, {
-        type: ADD_TO_ALBUM_SUCCESS
+        type: 'ADD_TO_ALBUM_SUCCESS'
       })
     ).toBe(false)
   })
@@ -205,12 +201,12 @@ describe('UI selected reducer', () => {
   it('should reset selection if ADD_TO_ALBUM_SUCCESS or FETCH_CURRENT_ALBUM_PHOTOS or HIDE_SELECTION_BAR', () => {
     expect(
       selected(['idPhoto30', 'idPhoto42'], {
-        type: ADD_TO_ALBUM_SUCCESS
+        type: 'ADD_TO_ALBUM_SUCCESS'
       })
     ).toEqual([])
     expect(
       selected(['idPhoto30', 'idPhoto42'], {
-        type: FETCH_CURRENT_ALBUM_PHOTOS
+        type: 'FETCH_CURRENT_ALBUM_PHOTOS'
       })
     ).toEqual([])
     expect(
@@ -233,7 +229,7 @@ describe('UI showAddToAlbumModal reducer', () => {
   it('should handle ADD_TO_ALBUM', () => {
     expect(
       showAddToAlbumModal(false, {
-        type: ADD_TO_ALBUM,
+        type: 'ADD_TO_ALBUM',
         album: undefined
       })
     ).toBe(true)
@@ -243,7 +239,7 @@ describe('UI showAddToAlbumModal reducer', () => {
   it('should handle ADD_TO_ALBUM', () => {
     expect(
       showAddToAlbumModal(true, {
-        type: ADD_TO_ALBUM,
+        type: 'ADD_TO_ALBUM',
         album: {_id: 'idAlbum42'}
       })
     ).toBe(false)
@@ -253,12 +249,12 @@ describe('UI showAddToAlbumModal reducer', () => {
   it('should handle CANCEL_ADD_TO_ALBUM and ADD_TO_ALBUM_SUCCESS', () => {
     expect(
       showAddToAlbumModal(true, {
-        type: CANCEL_ADD_TO_ALBUM
+        type: 'CANCEL_ADD_TO_ALBUM'
       })
     ).toBe(false)
     expect(
       showAddToAlbumModal(true, {
-        type: ADD_TO_ALBUM_SUCCESS
+        type: 'ADD_TO_ALBUM_SUCCESS'
       })
     ).toBe(false)
   })

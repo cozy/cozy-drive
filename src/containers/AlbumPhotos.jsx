@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { fetchAlbumPhotosStatsById } from '../actions/albums'
+import { fetchAlbumPhotosStatsById } from '../ducks/albums'
 
 import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
