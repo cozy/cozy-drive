@@ -5,21 +5,10 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  ADD_TO_ALBUM,
-  ADD_TO_ALBUM_SUCCESS,
-  CANCEL_ADD_TO_ALBUM,
-  CREATE_ALBUM_SUCCESS,
-  FETCH_ALBUMS_SUCCESS,
-  FETCH_CURRENT_ALBUM_PHOTOS,
-  FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS,
-  INDEX_ALBUMS_BY_NAME_SUCCESS
-} from '../../src/constants/actionTypes'
-
-import {
   ALBUM_DOCTYPE
 } from '../../src/constants/config'
 
-import {
+import reducer, {
   throwServerError,
   createAlbumMangoIndex,
   cancelAddToAlbum,
@@ -27,8 +16,10 @@ import {
   addToAlbum,
   createAlbum,
   fetchAlbums,
-  fetchAlbumPhotosStatsById
-} from '../../src/actions/albums'
+  fetchAlbumPhotosStatsById,
+  getCurrentAlbum,
+  getAlbumsList
+} from '../../src/ducks/albums'
 
 import client from 'cozy-client-js'
 
@@ -44,6 +35,19 @@ const mockAlbum = {
   name: 'albumTest',
   _id: '33dda00f0eec15bc3b3c59a615001ac8'
 }
+
+const mockAlbumsList = [
+  {
+    _type: 'io.cozy.photos.albums',
+    name: 'albumTest2',
+    _id: '33dda00f0eec15bc3b3c59a615001ac8'
+  },
+  {
+    _type: 'io.cozy.photos.albums',
+    name: 'albumTest2',
+    _id: 'f717eb4d94f07737b168d3dbb7002141'
+  }
+]
 
 const mockAlbumsListWithoutIds = [
   {
@@ -207,7 +211,7 @@ describe('cancelAddToAlbum', () => {
   it('should dispatch CANCEL_ADD_TO_ALBUM action', () => {
     const expectedActions = [
       {
-        type: CANCEL_ADD_TO_ALBUM,
+        type: 'CANCEL_ADD_TO_ALBUM',
         photos: mockPhotosList
       }
     ]
@@ -227,7 +231,7 @@ describe('createAlbumMangoIndex', () => {
   it('should call cozy.client.data.defineIndex to create an albums index on fields "name"', () => {
     const expectedActions = [
       {
-        type: INDEX_ALBUMS_BY_NAME_SUCCESS,
+        type: 'INDEX_ALBUMS_BY_NAME_SUCCESS',
         mangoIndex: mockMangoIndexAlbumsByName
       }
     ]
@@ -315,7 +319,7 @@ describe('addToAlbum', () => {
   it('should correctly add referenced files to the album', () => {
     const expectedActions = [
       {
-        type: ADD_TO_ALBUM_SUCCESS,
+        type: 'ADD_TO_ALBUM_SUCCESS',
         album: mockAlbum
       }
     ]
@@ -332,7 +336,7 @@ describe('addToAlbum', () => {
   it('should correctly dispatch an action to open modal to create a new album if no album provided (should not call cozy-client-js here)', () => {
     const expectedActions = [
       {
-        type: ADD_TO_ALBUM,
+        type: 'ADD_TO_ALBUM',
         photos: mockPhotosList
       }
     ]
@@ -364,7 +368,7 @@ describe('createAlbum', () => {
   it('should create correctly and album with photos if all arguments provided', () => {
     const expectedActions = [
       {
-        type: CREATE_ALBUM_SUCCESS,
+        type: 'CREATE_ALBUM_SUCCESS',
         album: mockAlbum
       }
     ]
@@ -410,7 +414,7 @@ describe('fetchAlbums', () => {
   it('should correctly return a list of album if index provided', () => {
     const expectedActions = [
       {
-        type: FETCH_ALBUMS_SUCCESS,
+        type: 'FETCH_ALBUMS_SUCCESS',
         albums: mockAlbumsListWithIds
       }
     ]
@@ -424,7 +428,7 @@ describe('fetchAlbums', () => {
         // for each albums, referenced files are fetched
         expect(cozy.client.data.listReferencedFiles.mock.calls.length).toBe(mockAlbumsListWithoutIds.length)
         cozy.client.data.listReferencedFiles.mock.calls.forEach((call, idx) => {
-          expect(call[0]).toEqual(mockAlbumsListWithoutIds[idx])
+          expect(call[0]).toEqual(mockAlbumsListWithIds[idx])
         })
         expect(store.getActions()).toEqual(expectedActions)
       })
@@ -478,10 +482,10 @@ describe('fetchAlbumPhotosStatsById', () => {
   it('should correctly return all photos according to a album ID', () => {
     const expectedActions = [
       {
-        type: FETCH_CURRENT_ALBUM_PHOTOS
+        type: 'FETCH_CURRENT_ALBUM_PHOTOS'
       },
       {
-        type: FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS,
+        type: 'FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS',
         album: mockAlbumWithPhotos
       }
     ]
@@ -505,7 +509,7 @@ describe('fetchAlbumPhotosStatsById', () => {
   it('should handle server error while finding album', () => {
     const expectedActions = [
       {
-        type: FETCH_CURRENT_ALBUM_PHOTOS
+        type: 'FETCH_CURRENT_ALBUM_PHOTOS'
       }
     ]
     const store = mockStore({ })
@@ -519,5 +523,53 @@ describe('fetchAlbumPhotosStatsById', () => {
         expect(store.getActions()).toEqual(expectedActions)
         expect(fetchError).toEqual(new Error(mockErrorsResponses.findError.response.statusText))
       })
+  })
+})
+
+describe('albumsList reducer', () => {
+  // if nothing is sent to the reducer, it should return an default state
+  it('should return the default state when no arguments', () => {
+    expect(
+      getAlbumsList(reducer(undefined, {}))
+    ).toEqual([])
+  })
+
+  // if CREATE_ALBUM_SUCCESS -> [album]
+  it('should handle CREATE_ALBUM_SUCCESS', () => {
+    expect(
+      getAlbumsList(reducer([], {
+        type: 'CREATE_ALBUM_SUCCESS',
+        album: mockAlbum
+      }))
+    ).toEqual([mockAlbum])
+  })
+
+  // if FETCH_ALBUMS_SUCCESS -> albums
+  it('should handle FETCH_ALBUMS_SUCCESS', () => {
+    expect(
+      getAlbumsList(reducer([], {
+        type: 'FETCH_ALBUMS_SUCCESS',
+        albums: mockAlbumsList
+      }))
+    ).toEqual(mockAlbumsList)
+  })
+})
+
+describe('currentAlbum reducer', () => {
+  // if nothing is sent to the reducer, it should return an default state
+  it('should return the default state when no arguments', () => {
+    expect(
+      getCurrentAlbum(reducer(undefined, {}))
+    ).toEqual({})
+  })
+
+  // if FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS -> [album]
+  it('should handle FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS', () => {
+    expect(
+      getCurrentAlbum(reducer([], {
+        type: 'FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS',
+        album: mockAlbum
+      }))
+    ).toEqual(mockAlbum)
   })
 })

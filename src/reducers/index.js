@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import albums from './albums'
+import albums from '../ducks/albums'
 import { photos } from './photos'
 import timeline from './timeline'
 import mango from './mango'

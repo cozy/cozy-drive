@@ -1,8 +1,7 @@
 /* global describe it expect */
 
 import {
-  INDEX_FILES_BY_DATE_SUCCESS,
-  INDEX_ALBUMS_BY_NAME_SUCCESS
+  INDEX_FILES_BY_DATE_SUCCESS
 } from '../../src/constants/actionTypes'
 
 import { filesIndexByDate, albumsIndexByName } from '../../src/reducers/mango'
@@ -52,7 +51,7 @@ describe('Mango albums index reducer', () => {
   it('should handle INDEX_ALBUMS_BY_NAME_SUCCESS', () => {
     expect(
       albumsIndexByName([], {
-        type: INDEX_ALBUMS_BY_NAME_SUCCESS,
+        type: 'INDEX_ALBUMS_BY_NAME_SUCCESS',
         mangoIndex: mockMangoIndexAlbumsByName
       })
     ).toEqual(mockMangoIndexAlbumsByName)

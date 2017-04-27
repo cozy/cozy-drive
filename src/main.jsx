@@ -16,8 +16,6 @@ import { I18n } from './lib/I18n'
 import photosApp from './reducers'
 import AppRoute from './components/AppRoute'
 
-const lang = document.documentElement.getAttribute('lang') || 'en'
-
 const loggerMiddleware = createLogger()
 
 const store = createStore(
@@ -32,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const context = window.context
   const root = document.querySelector('[role=application]')
   const data = root.dataset
+  const lang = document.documentElement.getAttribute('lang') || 'en'
 
   cozy.client.init({
     cozyURL: `//${data.cozyDomain}`,

@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {
-  fetchAlbums,
-  createAlbumMangoIndex }
-from '../actions/albums'
+import { fetchAlbums, createAlbumMangoIndex } from '../ducks/albums'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'

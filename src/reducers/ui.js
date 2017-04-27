@@ -1,10 +1,6 @@
 import { combineReducers } from 'redux'
 
 import {
-  ADD_TO_ALBUM,
-  ADD_TO_ALBUM_SUCCESS,
-  FETCH_CURRENT_ALBUM_PHOTOS,
-  CANCEL_ADD_TO_ALBUM,
   FETCH_PHOTOS,
   RECEIVE_PHOTOS,
   FETCH_PHOTOS_FAILURE,
@@ -60,7 +56,7 @@ export const showSelectionBar = (state = false, action) => {
   switch (action.type) {
     case SHOW_SELECTION_BAR:
       return true
-    case ADD_TO_ALBUM_SUCCESS:
+    case 'ADD_TO_ALBUM_SUCCESS':
     case HIDE_SELECTION_BAR:
       return false
     default:
@@ -83,8 +79,8 @@ export const selected = (state = [], action) => {
       ]
     // case OPEN_FOLDER:
     // case DOWNLOAD_SELECTION:
-    case ADD_TO_ALBUM_SUCCESS: // when added to album
-    case FETCH_CURRENT_ALBUM_PHOTOS: // when entering into an album
+    case 'ADD_TO_ALBUM_SUCCESS': // when added to album
+    case 'FETCH_CURRENT_ALBUM_PHOTOS': // when entering into an album
     case HIDE_SELECTION_BAR:
       return []
     default:
@@ -94,10 +90,10 @@ export const selected = (state = [], action) => {
 
 export const showAddToAlbumModal = (state = false, action) => {
   switch (action.type) {
-    case ADD_TO_ALBUM:
+    case 'ADD_TO_ALBUM':
       return !action.album
-    case CANCEL_ADD_TO_ALBUM:
-    case ADD_TO_ALBUM_SUCCESS:
+    case 'CANCEL_ADD_TO_ALBUM':
+    case 'ADD_TO_ALBUM_SUCCESS':
       return false
     default:
       return state
