@@ -53,21 +53,7 @@ export const getPhotos = async () => {
         (response) => resolve(response.library),
         (err) => {
           console.warn(err)
-          if (err.startsWith('Permission')) {
-            requestAuthorization().then(authorization => {
-              if (authorization) {
-                getPhotos().then(photos => resolve(photos))
-              } else {
-                resolve(defaultReturn)
-              }
-            }).catch(err => {
-              console.warn(err)
-              resolve(defaultReturn)
-            })
-          } else {
-            console.warn(err)
-            resolve(defaultReturn)
-          }
+          resolve(defaultReturn)
         }
       )
     })
