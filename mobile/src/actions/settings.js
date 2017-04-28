@@ -8,7 +8,6 @@ import { openFolder } from '../../../src/actions'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
 import { pingOnceADay } from './timestamp'
-import { updateStatusBackgroundService } from '../lib/background'
 import { revokeClient as reduxRevokeClient } from './authorization'
 
 export const SET_URL = 'SET_URL'
@@ -50,15 +49,7 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
     dispatch(pingOnceADay(state.mobile.timestamp, analytics))
   }
 }
-
-export const setBackupImages = backupImages => (dispatch, getState) => {
-  const state = getState()
-  if (state.mobile && state.mobile.settings.analytics) {
-    backupImages ? logInfo('settings: backup images is enabled') : logInfo('settings: backup images is disabled')
-  }
-  updateStatusBackgroundService(backupImages)
-  return dispatch({ type: BACKUP_IMAGES, backupImages })
-}
+export const setBackupImages = backupImages => ({ type: BACKUP_IMAGES, backupImages })
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
 // errors

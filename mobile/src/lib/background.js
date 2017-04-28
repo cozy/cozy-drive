@@ -54,11 +54,11 @@ const enableBackgroundService = () => {
   }
 }
 
-export const disableBackgroundService = () => {
+export const disableBackgroundService = async () => {
   if (hasIosCordovaPlugin()) {
     disableIosBackgroundService()
   } else if (hasAndroidCordovaPlugin()) {
-    disableAndroidBackgroundService()
+    await disableAndroidBackgroundService()
   } else {
     notCompatibleError()
   }

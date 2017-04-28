@@ -9,6 +9,17 @@ const hasCordovaPlugin = () => {
     window.cordova.plugins.photoLibrary !== undefined
 }
 
+export const isAuthorized = async () => {
+  if (!hasCordovaPlugin()) {
+    return Promise.resolve(false)
+  }
+  return new Promise(resolve => {
+    const success = () => resolve(true)
+    const error = () => resolve(false)
+    window.cordova.plugins.photoLibrary.getLibrary(success, error)
+  })
+}
+
 export const requestAuthorization = async () => {
   if (!hasCordovaPlugin()) {
     return Promise.resolve(false)

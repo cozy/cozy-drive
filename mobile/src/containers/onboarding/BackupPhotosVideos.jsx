@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import OnBoarding from '../../components/OnBoarding'
-import { setBackupImages } from '../../actions/settings'
+import { backupImages } from '../../actions/mediaBackup'
 
 export const BackupPhotosVideos = ({ onActivate, onSkip }) =>
 (
@@ -9,12 +9,12 @@ export const BackupPhotosVideos = ({ onActivate, onSkip }) =>
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onActivate: () => {
-    dispatch(setBackupImages(true))
+  onActivate: async () => {
+    await dispatch(backupImages(true))
     ownProps.nextStep()
   },
   onSkip: () => {
-    dispatch(setBackupImages(false))
+    dispatch(backupImages(false))
     ownProps.nextStep()
   }
 })

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import Settings from '../components/Settings'
-import { setBackupImages, setWifiOnly, setAnalytics } from '../actions/settings'
+import { setWifiOnly, setAnalytics } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
-import { startMediaBackup, cancelMediaBackup } from '../actions/mediaBackup'
+import { backupImages, startMediaBackup, cancelMediaBackup } from '../actions/mediaBackup'
 import { backupAllowed } from '../lib/network'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -31,8 +31,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(unlink(client))
     ownProps.router.replace('/onboarding')
   },
-  setBackupImages: (e) => dispatch(setBackupImages(e.target.checked)),
-  setWifiOnly: (e) => dispatch(setWifiOnly(e.target.checked)),
+  setBackupImages: (e) => dispatch(backupImages(e.target.checked)),
+  setWifiOnly: async (e) => {
+    await dispatch(setWifiOnly(e.target.checked))
+    dispatch(backupImages())
+  },
   setAnalytics: (e) => dispatch(setAnalytics(e.target.checked))
 })
 
