@@ -1,12 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchAlbums, createAlbumMangoIndex } from '../ducks/albums'
+import { fetchAlbums, createAlbumMangoIndex, getAlbumsList } from '../ducks/albums'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
-import ErrorComponent from '../components/ErrorComponent'
+import { withError } from '../components/ErrorComponent'
 import Topbar from '../components/Topbar'
+
+const DumbAlbumsList = props => (
+  <div>
+    <Topbar viewName='albums' />
+    <AlbumsList
+      {...props}
+    />
+  </div>
+)
+
+const ErrorAlbumsView = withError(props => props.error, 'albums', DumbAlbumsList)
 
 export class AlbumsView extends Component {
   constructor (props) {
@@ -16,40 +27,28 @@ export class AlbumsView extends Component {
 
   componentWillMount () {
     this.props.fetchAlbums()
-      .then(() => { this.setState({isFetching: false, error: false}) })
+      .then(() => {
+        this.setState({isFetching: false, error: false})
+      })
       .catch(albumsError => {
         this.setState({isFetching: false, error: albumsError})
       })
   }
 
-  onServerError (error) {
+  handleError (error) {
     this.setState({error})
   }
 
   render () {
     const { isFetching, error } = this.state
-    if (isFetching) {
-      return <Loading loadingType='albums_fetching' />
-    }
-    if (error) {
-      return <ErrorComponent errorType='albums' />
-    }
-    return (
-      !this.props.children
-        ? <div>
-          <Topbar viewName='albums' />
-          <AlbumsList
-            {...this.props}
-            onServerError={error => this.onServerError(error)}
-          />
-        </div>
-        : <div>{ this.props.children }</div>
-    )
+    return isFetching
+      ? <Loading loadingType='albums_fetching' />
+      : <ErrorAlbumsView error={error} onServerError={() => this.handleError(error)} {...this.props} />
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  albums: state.albums.albumsList
+  albums: getAlbumsList(state.albums)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
