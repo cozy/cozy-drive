@@ -11,17 +11,25 @@ import CreateAlbumForm from '../components/CreateAlbumForm'
 
 import { cancelAddToAlbum, createAlbum, addToAlbum } from '../ducks/albums'
 
-export const AddToAlbumModal = ({t, mangoIndex, photos,
-  onDismiss, onSubmitNewAlbum }) => {
+export const AddToAlbumModal = props => {
+  const {
+    t,
+    mangoIndex,
+    photos,
+    onDismiss,
+    onSubmitNewAlbum
+  } = props
   return (
     <Modal
       title={t('Albums.add_photos.title')}
       secondaryAction={() => onDismiss()}
       >
-      <div className={classNames(styles['coz-modal-section'], styles['coz-create-album'])}>
-        <CreateAlbumForm
-          onSubmitNewAlbum={(name) => onSubmitNewAlbum(name, mangoIndex, photos)}
-          />
+      <div className={classNames(styles['coz-modal-section'])}>
+        <div className={classNames(styles['coz-create-album'])}>
+          <CreateAlbumForm
+            onSubmitNewAlbum={(name) => onSubmitNewAlbum(name, mangoIndex, photos)}
+            />
+        </div>
       </div>
     </Modal>
   )

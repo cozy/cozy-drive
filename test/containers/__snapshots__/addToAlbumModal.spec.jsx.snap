@@ -3,9 +3,12 @@ exports[`AddToAlbumModal component should be rendered correctly 1`] = `
   secondaryAction={[Function]}
   title="Add to album">
   <div
-    className="coz-modal-section coz-create-album">
-    <_translate
-      onSubmitNewAlbum={[Function]} />
+    className="coz-modal-section">
+    <div
+      className="coz-create-album">
+      <_translate
+        onSubmitNewAlbum={[Function]} />
+    </div>
   </div>
 </Unknown>
 `;
