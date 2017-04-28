@@ -1,6 +1,7 @@
 import { isCordova, isAndroid } from './device'
 import { initPolyglot } from '../../../src/lib/I18n'
 import { getLang } from './init'
+import { logException } from './reporter'
 
 const hasCordovaPlugin = () => {
   return isCordova() &&
@@ -9,21 +10,24 @@ const hasCordovaPlugin = () => {
 }
 
 export const requestAuthorization = async () => {
-  if (hasCordovaPlugin()) {
-    return new Promise((resolve, reject) => {
-      window.cordova.plugins.photoLibrary.requestAuthorization(
-        () => resolve(true),
-        (error) => {
-          console.warn(error)
-          resolve(false)
-        },
-        {
-          read: true
-        }
-      )
-    })
+  if (!hasCordovaPlugin()) {
+    return Promise.resolve(false)
   }
-  return Promise.resolve(false)
+  return new Promise((resolve, reject) => {
+    window.cordova.plugins.photoLibrary.requestAuthorization(
+      () => resolve(true),
+      (error) => {
+        if (!error.startsWith('Permission')) {
+          console.warn(error)
+          logException('requestAuthorization error:', error)
+        }
+        resolve(false)
+      },
+      {
+        read: true
+      }
+    )
+  })
 }
 
 export const getBlob = async (libraryItem) => {
