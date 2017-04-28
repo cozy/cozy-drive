@@ -125,9 +125,12 @@ const disableAndroidBackgroundService = async () => {
 
 const startAndroidBackgroundService = () => {
   backgroundService().then(() => {
-    logInfo('end startAndroidBackgroundService')
-    window.service.workDone()
+    stopAndroidBackgroundService()
   })
+}
+
+const stopAndroidBackgroundService = () => {
+  window.service.workDone()
 }
 
 const isEnableAndroidBackgroundService = () => new Promise(resolve => {
@@ -164,8 +167,11 @@ const disableIosBackgroundService = () => {
 }
 
 const startIosBackgroundService = () => {
-  const fetcher = window.BackgroundFetch
   backgroundService().then(() => {
-    fetcher.finish()
+    stopIosBackgroundService()
   })
+}
+
+const stopIosBackgroundService = () => {
+  window.BackgroundFetch.finish()
 }
