@@ -1,6 +1,7 @@
 import { isCordova, isAndroid } from './device'
 import { initPolyglot } from '../../../src/lib/I18n'
 import { getLang } from './init'
+import { logException } from './reporter'
 
 const hasCordovaPlugin = () => {
   return isCordova() &&
@@ -8,22 +9,36 @@ const hasCordovaPlugin = () => {
     window.cordova.plugins.photoLibrary !== undefined
 }
 
-export const requestAuthorization = async () => {
-  if (hasCordovaPlugin()) {
-    return new Promise((resolve, reject) => {
-      window.cordova.plugins.photoLibrary.requestAuthorization(
-        () => resolve(true),
-        (error) => {
-          console.warn(error)
-          resolve(false)
-        },
-        {
-          read: true
-        }
-      )
-    })
+export const isAuthorized = async () => {
+  if (!hasCordovaPlugin()) {
+    return Promise.resolve(false)
   }
-  return Promise.resolve(false)
+  return new Promise(resolve => {
+    const success = () => resolve(true)
+    const error = () => resolve(false)
+    window.cordova.plugins.photoLibrary.getLibrary(success, error)
+  })
+}
+
+export const requestAuthorization = async () => {
+  if (!hasCordovaPlugin()) {
+    return Promise.resolve(false)
+  }
+  return new Promise((resolve, reject) => {
+    window.cordova.plugins.photoLibrary.requestAuthorization(
+      () => resolve(true),
+      (error) => {
+        if (!error.startsWith('Permission')) {
+          console.warn(error)
+          logException('requestAuthorization error:', error)
+        }
+        resolve(false)
+      },
+      {
+        read: true
+      }
+    )
+  })
 }
 
 export const getBlob = async (libraryItem) => {
@@ -49,21 +64,7 @@ export const getPhotos = async () => {
         (response) => resolve(response.library),
         (err) => {
           console.warn(err)
-          if (err.startsWith('Permission')) {
-            requestAuthorization().then(authorization => {
-              if (authorization) {
-                getPhotos().then(photos => resolve(photos))
-              } else {
-                resolve(defaultReturn)
-              }
-            }).catch(err => {
-              console.warn(err)
-              resolve(defaultReturn)
-            })
-          } else {
-            console.warn(err)
-            resolve(defaultReturn)
-          }
+          resolve(defaultReturn)
         }
       )
     })

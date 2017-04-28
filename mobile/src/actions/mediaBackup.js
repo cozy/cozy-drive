@@ -1,8 +1,11 @@
 /* global cozy */
 
-import { getFilteredPhotos, getBlob } from '../lib/media'
+import { setBackupImages } from './settings'
+import { getFilteredPhotos, getBlob, isAuthorized, getMediaFolderName, requestAuthorization } from '../lib/media'
+import { updateStatusBackgroundService } from '../lib/background'
 import { backupAllowed } from '../lib/network'
 import { HTTP_CODE_CONFLICT } from '../../../src/actions'
+import { logInfo } from '../lib/reporter'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
@@ -39,9 +42,31 @@ async function getDirID (dir) {
 }
 
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
+
+/*
+  dir: It's the folder where picture will be uploaded
+  force: Even if the settings are not activated, it uploads the photos
+*/
 export const startMediaBackup = (dir, force = false) => async (dispatch, getState) => {
+  const canBackup = (force, getState) => {
+    return force || (
+      getState().mobile.settings.backupImages &&
+      backupAllowed(getState().mobile.settings.wifiOnly)
+    )
+  }
+
   dispatch(startMediaUpload())
-  if (force || (getState().mobile.settings.backupImages && backupAllowed(getState().mobile.settings.wifiOnly))) {
+
+  if (!await isAuthorized()) {
+    // force is only possible if the authorization is accepted
+    force = await updateValueAfterRequestAuthorization(force)
+    // disable backupImages when authorization is refused
+    if (getState().mobile.settings.backupImages && !force) {
+      await dispatch(setBackupImages(false))
+    }
+  }
+
+  if (canBackup(force, getState)) {
     const photosOnDevice = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
@@ -49,26 +74,70 @@ export const startMediaBackup = (dir, force = false) => async (dispatch, getStat
     const totalUpload = photosToUpload.length
     let uploadCounter = 0
     for (const photo of photosToUpload) {
-      if (getState().mobile.mediaBackup.cancelMediaBackup) {
+      if (getState().mobile.mediaBackup.cancelMediaBackup || !canBackup(force, getState)) {
         break
       }
-      if (backupAllowed(getState().mobile.settings.wifiOnly)) {
-        dispatch(currentUploading(photo, uploadCounter++, totalUpload))
-        const blob = await getBlob(photo)
-        const options = {
-          dirID,
-          name: photo.fileName
-        }
-        await cozy.client.files.create(blob, options).then(() => {
-          dispatch(successMediaUpload(photo))
-        }).catch(err => {
-          if (err.status === HTTP_CODE_CONFLICT) {
-            dispatch(successMediaUpload(photo))
-          }
-          console.log(err)
-        })
-      }
+      dispatch(currentUploading(photo, uploadCounter++, totalUpload))
+      await dispatch(uploadPhoto(dirID, photo))
     }
   }
+
   dispatch(endMediaUpload())
+}
+
+const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
+  const blob = await getBlob(photo)
+  const options = {
+    dirID,
+    name: photo.fileName
+  }
+  await cozy.client.files.create(blob, options).then(() => {
+    dispatch(successMediaUpload(photo))
+  }).catch(err => {
+    if (err.status === HTTP_CODE_CONFLICT) {
+      dispatch(successMediaUpload(photo))
+    }
+    console.log(err)
+  })
+}
+
+// backupImages
+
+export const backupImages = backupImages => async (dispatch, getState) => {
+  if (backupImages === undefined) {
+    backupImages = getState().mobile.settings.backupImages
+  } else {
+    await dispatch(setBackupImages(backupImages))
+  }
+
+  const isAuthorized = await updateValueAfterRequestAuthorization(backupImages)
+  if (backupImages && !isAuthorized) {
+    backupImages = isAuthorized
+    dispatch(setBackupImages(backupImages))
+  }
+
+  backupImagesAnalytics(backupImages, getState)
+  updateStatusBackgroundService(backupImages)
+  if (backupImages) {
+    dispatch(startMediaBackup(getMediaFolderName()))
+  }
+
+  return backupImages
+}
+
+const updateValueAfterRequestAuthorization = async (value) => {
+  if (value) {
+    value = await requestAuthorization()
+  }
+  return value
+}
+
+const backupImagesAnalytics = (backupImages, getState) => {
+  if (getState().mobile.settings.analytics) {
+    if (backupImages) {
+      logInfo('settings: backup images is enabled')
+    } else {
+      logInfo('settings: backup images is disabled')
+    }
+  }
 }

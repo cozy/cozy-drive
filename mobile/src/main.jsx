@@ -14,11 +14,10 @@ import MobileAppRoute from './components/MobileAppRoute'
 import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
 import { initServices, getLang } from './lib/init'
-import { updateStatusBackgroundService, startBackgroundService } from './lib/background'
+import { startBackgroundService } from './lib/background'
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
-import { startMediaBackup } from './actions/mediaBackup'
-import { getMediaFolderName } from './lib/media'
+import { backupImages } from './actions/mediaBackup'
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
@@ -51,8 +50,7 @@ const renderAppWithPersistedState = persistedState => {
 
   document.addEventListener('deviceready', () => {
     pingOnceADayWithState()
-    updateStatusBackgroundService(store.getState().mobile.settings.backupImages)
-    store.dispatch(startMediaBackup(getMediaFolderName()))
+    store.dispatch(backupImages())
   }, false)
 
   const context = window.context
