@@ -6,7 +6,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { mockT, mockF } from '../lib/I18n'
-import { AlbumsList } from '../../src/components/AlbumsList'
+import AlbumsList from '../../src/components/AlbumsList'
 
 const mockAlbums = [
   {
@@ -28,7 +28,7 @@ describe('AlbumsList component', () => {
 
   it('should be displayed correctly if albums', () => {
     const component = shallow(
-      <AlbumsList t={mockT} f={mockF} albums={mockAlbums} handleErrorToParent={() => jest.fn()} />
+      <AlbumsList t={mockT} f={mockF} albums={mockAlbums} />
     ).node
     expect(component).toMatchSnapshot()
   })
