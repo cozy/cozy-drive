@@ -12,10 +12,10 @@ export class AlbumsView extends Component {
   constructor (props) {
     super(props)
     this.state = {isFetching: true, error: false}
+  }
 
-    this.onServerError = this.onServerError.bind(this)
-
-    props.fetchAlbums()
+  componentWillMount () {
+    this.props.fetchAlbums()
       .then(() => { this.setState({isFetching: false, error: false}) })
       .catch(albumsError => {
         this.setState({isFetching: false, error: albumsError})
@@ -40,7 +40,7 @@ export class AlbumsView extends Component {
           <Topbar viewName='albums' />
           <AlbumsList
             {...this.props}
-            onServerError={this.onServerError}
+            onServerError={error => this.onServerError(error)}
           />
         </div>
         : <div>{ this.props.children }</div>

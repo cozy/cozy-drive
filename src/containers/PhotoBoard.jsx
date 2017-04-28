@@ -79,16 +79,16 @@ export class PhotoBoard extends Component {
           <AddToAlbumModal />
         }
         {showSelection && <SelectionBar />}
-        {!isBusy && photoLists.map(photoList => {
-          return (<PhotoList
+        {!isBusy && photoLists.map(photoList =>
+          <PhotoList
             key={photoList.title}
             title={photoList.title}
             photos={photoList.photos}
             selected={selected}
             onPhotoToggle={onPhotoToggle}
             containerWidth={containerWidth}
-          />)
-        })}
+          />
+        )}
         {!isBusy && photoLists.length === 0 &&
           <Empty emptyType={`${photosContext}_photos`} />
         }
