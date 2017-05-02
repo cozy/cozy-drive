@@ -8,6 +8,7 @@ import classNames from 'classnames'
 
 import Alerter from '../components/Alerter'
 import CreateAlbumForm from '../components/CreateAlbumForm'
+import SelectAlbumsForm from '../components/SelectAlbumsForm'
 
 import { cancelAddToAlbum, createAlbum, addToAlbum } from '../ducks/albums'
 
@@ -17,7 +18,8 @@ export const AddToAlbumModal = props => {
     mangoIndex,
     photos,
     onDismiss,
-    onSubmitNewAlbum
+    onSubmitNewAlbum,
+    onSubmitSelectedAlbum
   } = props
   return (
     <Modal
@@ -27,8 +29,11 @@ export const AddToAlbumModal = props => {
       <div className={classNames(styles['coz-modal-section'])}>
         <div className={classNames(styles['coz-create-album'])}>
           <CreateAlbumForm
-            onSubmitNewAlbum={(name) => onSubmitNewAlbum(name, mangoIndex, photos)}
+            onSubmitNewAlbum={name => onSubmitNewAlbum(name, mangoIndex, photos)}
             />
+        </div>
+        <div className={classNames(styles['coz-select-album'])}>
+          <SelectAlbumsForm onSubmitSelectedAlbum={album => onSubmitSelectedAlbum(album, photos)} />
         </div>
       </div>
     </Modal>
@@ -66,6 +71,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         },
         handleActionError(name)
       )
+  },
+  onSubmitSelectedAlbum: (album, photos) => {
+    return dispatch(addToAlbum(photos, album))
+      .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}))
+      .catch(handleActionError)
   }
 })
 
