@@ -1,25 +1,21 @@
 exports[`AlbumsList component should be displayed correctly if albums 1`] = `
-<div
-  className="pho-album-list">
-  <_translate
-    album={
+<DumbAlbumsList
+  albums={
+    Array [
       Object {
         "_id": "33dda00f0eec15bc3b3c59a615001ac8",
         "_type": "io.cozy.photos.albums",
         "name": "albumTest2",
-      }
-    }
-    onServerError={undefined} />
-  <_translate
-    album={
+      },
       Object {
         "_id": "f717eb4d94f07737b168d3dbb7002141",
         "_type": "io.cozy.photos.albums",
         "name": "albumTest2",
-      }
-    }
-    onServerError={undefined} />
-</div>
+      },
+    ]
+  }
+  f={[Function]}
+  t={[Function]} />
 `;
 
 exports[`AlbumsList component should display empty component if albums list empty 1`] = `

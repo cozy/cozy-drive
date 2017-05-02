@@ -20,4 +20,11 @@ export const ErrorComponent = ({ t, errorType }) => {
   )
 }
 
-export default translate()(ErrorComponent)
+const TranslatedError = translate()(ErrorComponent)
+
+export const withError = (onError, type, BaseComponent) => props =>
+  onError(props)
+    ? <TranslatedError errorType={type} />
+    : <BaseComponent {...props} />
+
+export default TranslatedError

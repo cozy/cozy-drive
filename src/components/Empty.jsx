@@ -14,4 +14,11 @@ export const Empty = ({ t, emptyType }) => {
   )
 }
 
-export default translate()(Empty)
+const TranslatedEmpty = translate()(Empty)
+
+export const withEmpty = (isEmpty, type, BaseComponent) => props =>
+  isEmpty(props)
+    ? <TranslatedEmpty emptyType={type} />
+    : <BaseComponent {...props} />
+
+export default TranslatedEmpty

@@ -7,35 +7,33 @@ import { translate } from '../lib/I18n'
 
 import { getPhotoLink } from '../actions/photos'
 
-const isAlbumEmpty = album => {
-  return !(album && album.photosIds && album.photosIds.length)
-}
+const isAlbumEmpty = album => !(album && album.photosIds && album.photosIds.length)
 
-const fetchMainPhoto = album => {
-  return isAlbumEmpty(album)
+const fetchMainPhoto = album =>
+  isAlbumEmpty(album)
     ? Promise.resolve(null)
-      : getPhotoLink(album.photosIds[0])
-}
+    : getPhotoLink(album.photosIds[0])
 
 export class AlbumItem extends Component {
   constructor (props) {
     super(props)
 
-    const { album } = props
     // Detect right now if there is a main photo to load, otherwise the
     // Promise.resolve(null) in fetchMainPhoto will not be considered as it will
     // trigger a setState directly in constructor.
-    const albumIsEmpty = isAlbumEmpty(album)
+    const albumIsEmpty = isAlbumEmpty(props.album)
 
     this.state = {
-      // Set loading state in function of album emtpyness.
+      // Set loading state in function of album emptyness.
       isLoading: !albumIsEmpty,
       isImageLoading: !albumIsEmpty
     }
 
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
+  }
 
-    fetchMainPhoto(album)
+  componentWillMount () {
+    fetchMainPhoto(this.props.album)
       .then(link => {
         this.setState({
           url: link,
