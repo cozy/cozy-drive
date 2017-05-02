@@ -8,7 +8,7 @@ import Loading from '../components/Loading'
 import { withError } from '../components/ErrorComponent'
 import Topbar from '../components/Topbar'
 
-const DumbAlbumsList = props => (
+const DumbAlbumsView = props => (
   <div>
     <Topbar viewName='albums' />
     <AlbumsList
@@ -17,7 +17,7 @@ const DumbAlbumsList = props => (
   </div>
 )
 
-const ErrorAlbumsView = withError(props => props.error, 'albums', DumbAlbumsList)
+const ErrorAlbumsView = withError(props => props.error, 'albums', DumbAlbumsView)
 
 export class AlbumsView extends Component {
   constructor (props) {
