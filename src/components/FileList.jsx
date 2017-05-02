@@ -10,6 +10,7 @@ const STATUS_LOADING = 1
 const STATUS_LOADED = 2
 
 const FETCH_LIMIT = 50
+const ROW_HEIGHT = 50
 
 class FileList extends PureComponent {
   constructor (props) {
@@ -35,7 +36,7 @@ class FileList extends PureComponent {
                 height={height}
                 rowCount={fileCount}
                 onRowsRendered={onRowsRendered}
-                rowHeight={50}
+                rowHeight={ROW_HEIGHT}
                 rowRenderer={this.rowRenderer}
                 width={width}
                 selected={selected}
@@ -49,6 +50,8 @@ class FileList extends PureComponent {
   }
 
   isRowLoaded = ({ index }) => {
+    // No entry in this map signifies that the row has never been loaded before
+    // An entry (either LOADING or LOADED) can be treated as loaded as far as InfiniteLoader is concerned
     return !!this.requestedFiles[index]
   }
 
