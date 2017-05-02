@@ -5,7 +5,7 @@ import { getFilteredPhotos, getBlob, isAuthorized, getMediaFolderName, requestAu
 import { updateStatusBackgroundService } from '../lib/background'
 import { backupAllowed } from '../lib/network'
 import { HTTP_CODE_CONFLICT } from '../../../src/actions'
-import { logInfo } from '../lib/reporter'
+import { logInfo, logException } from '../lib/reporter'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
@@ -86,19 +86,31 @@ export const startMediaBackup = (dir, force = false) => async (dispatch, getStat
 }
 
 const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
-  const blob = await getBlob(photo)
-  const options = {
-    dirID,
-    name: photo.fileName
+  const logError = (err, msg) => {
+    console.warn(msg)
+    console.warn(err)
+    console.info(JSON.stringify(photo))
+    logException('startMediaBackup error')
   }
-  await cozy.client.files.create(blob, options).then(() => {
-    dispatch(successMediaUpload(photo))
-  }).catch(err => {
-    if (err.status === HTTP_CODE_CONFLICT) {
-      dispatch(successMediaUpload(photo))
+
+  try {
+    const blob = await getBlob(photo)
+    const options = {
+      dirID,
+      name: photo.fileName
     }
-    console.log(err)
-  })
+    await cozy.client.files.create(blob, options).then(() => {
+      dispatch(successMediaUpload(photo))
+    }).catch(err => {
+      if (err.status === HTTP_CODE_CONFLICT) {
+        dispatch(successMediaUpload(photo))
+      } else {
+        logError(err, 'startMediaBackup create error')
+      }
+    })
+  } catch (err) {
+    logError(err, 'startMediaBackup getBlob error')
+  }
 }
 
 // backupImages
