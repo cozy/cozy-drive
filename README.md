@@ -1,7 +1,7 @@
 [![Travis build status shield](https://img.shields.io/travis/cozy/cozy-drive.svg?branch=master)](https://travis-ci.org/cozy/cozy-drive)
 [![NPM release version shield](https://img.shields.io/npm/v/cozy-drive.svg)](https://www.npmjs.com/package/cozy-drive)
 [![Github Release version shield](https://img.shields.io/github/tag/cozy/cozy-drive.svg)](https://github.com/cozy/cozy-drive/releases)
-[![NPM Licence shield](https://img.shields.io/npm/l/cozy-drive.svg)](https://github.com/cozy/cozy-drive/blob/master/LICENSE)
+[![NPM Licence shield](https://img.shields.io/github/license/cozy/cozy-drive.svg)](https://github.com/cozy/cozy-drive/blob/master/LICENSE)
 
 
 [Cozy] Drive
@@ -138,7 +138,7 @@ Localization and translations are handled by [Transifex][tx], which is used by a
 
 As a _translator_, you can login to [Transifex][tx-signin] (using your Github account) and claim an access to the [app repository][tx-app]. Locales are pulled when app is build before publishing.
 
-As a _developer_, you must [configure the transifex client][tx-client], and claim an access as _maintainer_ is the [app repository][tx-app]. Then please **only update** the source locale file (usually `en.json` in client and/or server parts), and push it to Transifex repository using the `tx push -s` command.
+As a _developer_, you must [configure the transifex client][tx-client], and claim an access as _maintainer_ to the [app repository][tx-app]. Then please **only update** the source locale file (usually `en.json` in client and/or server parts), and push it to Transifex repository using the `tx push -s` command.
 
 
 ### Maintainer
