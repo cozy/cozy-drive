@@ -1,7 +1,7 @@
 [![Travis build status shield](https://img.shields.io/travis/cozy/cozy-drive.svg?branch=master)](https://travis-ci.org/cozy/cozy-drive)
 [![NPM release version shield](https://img.shields.io/npm/v/cozy-drive.svg)](https://www.npmjs.com/package/cozy-drive)
 [![Github Release version shield](https://img.shields.io/github/tag/cozy/cozy-drive.svg)](https://github.com/cozy/cozy-drive/releases)
-[![NPM Licence shield](https://img.shields.io/npm/l/cozy-drive.svg)](https://github.com/cozy/cozy-drive/blob/master/LICENSE)
+[![NPM Licence shield](https://img.shields.io/github/license/cozy/cozy-drive.svg)](https://github.com/cozy/cozy-drive/blob/master/LICENSE)
 
 
 [Cozy] Drive
