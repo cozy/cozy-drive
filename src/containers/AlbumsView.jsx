@@ -40,6 +40,7 @@ export class AlbumsView extends Component {
   }
 
   render () {
+    if (this.props.children) return this.props.children
     const { isFetching, error } = this.state
     return isFetching
       ? <Loading loadingType='albums_fetching' />
