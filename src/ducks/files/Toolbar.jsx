@@ -10,13 +10,13 @@ import Menu, { Item } from '../../components/Menu'
 import QuotaAlert from '../../components/QuotaAlert'
 import { alert } from '../../lib/confirm'
 
-import { uploadFile } from '../../actions'
+import { uploadFiles } from '../../actions'
 
-const Toolbar = ({ t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFile }) => (
+const Toolbar = ({ t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFiles }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
     <UploadButton
       disabled={disabled}
-      onUpload={file => uploadFile(file, displayedFolder)}
+      onUpload={files => uploadFiles(files, displayedFolder)}
       label={t('toolbar.item_upload')}
       className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', styles['desktop-upload'])}
     />
@@ -28,7 +28,7 @@ const Toolbar = ({ t, disabled, displayedFolder, actions, onSelectItemsClick, up
     >
       <Item>
         <UploadButton
-          onUpload={file => uploadFile(file, displayedFolder)}
+          onUpload={files => uploadFiles(files, displayedFolder)}
           label={t('toolbar.menu_upload')}
           className={styles['fil-action-upload']}
         />
@@ -56,8 +56,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  uploadFile: (file, displayedFolder) => {
-    dispatch(uploadFile(file, displayedFolder))
+  uploadFiles: (files, displayedFolder) => {
+    dispatch(uploadFiles(files, displayedFolder))
       .catch(err => {
         if (err.response && err.response.status === 413) {
           alert(<QuotaAlert t={ownProps.t} />)

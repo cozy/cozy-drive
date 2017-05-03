@@ -52,12 +52,13 @@ class File extends Component {
     }
   }
 
-  render ({ t, f, attributes, selected, selectionModeActive, onShowActionMenu }, { opening }) {
+  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu }, { opening }) {
     const rowListeners = selectionModeActive
     ? { onClick: e => this.toggle(e) }
     : { onDoubleClick: e => this.open(e, attributes) }
     return (
       <div
+        style={style}
         className={classNames(
           styles['fil-content-row'],
           { [styles['fil-content-row--selectable']]: selectionModeActive }
@@ -112,3 +113,19 @@ class File extends Component {
 }
 
 export default withRouter(translate()(File))
+
+export const FilePlaceholder = ({ style }) => (
+  <div
+    style={style}
+    className={styles['fil-content-row']}
+  >
+    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} />
+    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file'])}>
+      <div className={styles['fil-content-file-placeholder']} />
+    </div>
+    <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])} />
+    <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])} />
+    <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])} />
+    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])} />
+  </div>
+)

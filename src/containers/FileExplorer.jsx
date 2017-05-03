@@ -13,6 +13,7 @@ import {
 } from '../ducks/actionmenu'
 import {
   openFolder,
+  fetchMoreFiles,
   openFileInNewTab
 } from '../actions'
 import {
@@ -53,6 +54,8 @@ class FileExplorer extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
+  fileCount: state.view.fileCount,
+  requestedFiles: state.view.requestedFiles,
   fetchStatus: state.view.fetchStatus,
   files: getVisibleFiles(state),
   selected: getSelectedFiles(state),
@@ -70,6 +73,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(showActionMenu(fileId)),
   hideActionMenu: () =>
     dispatch(hideActionMenu()),
+  fetchMoreFiles: (folderId, skip, limit) =>
+    dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId =>
     dispatch(openFolder(folderId)),
   onFileOpen: (parentFolder, file) =>

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
 import {
-  LOCATION_CHANGE,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
+  FETCH_MORE_FILES_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
   RENAME_FOLDER,
@@ -20,7 +20,7 @@ import {
   DESTROY_FILES_FAILURE
 } from '../ducks/trash'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID, APPS_DIR_PATH, KONNECTORS_DIR_PATH } from '../constants/config.js'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
 // reducer for the currently displayed folder properties
 const displayedFolder = (state = null, action) => {
@@ -32,21 +32,60 @@ const displayedFolder = (state = null, action) => {
   }
 }
 
+const fileCount = (state = null, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER_SUCCESS:
+      return action.fileCount
+    case UPLOAD_FILE_SUCCESS:
+    case CREATE_FOLDER_SUCCESS:
+      return state + 1
+    case TRASH_FILES_SUCCESS:
+    case DESTROY_FILES_SUCCESS:
+      return state - action.ids.length
+    case RESTORE_FILES_SUCCESS:
+      return state + action.ids.length
+    default:
+      return state
+  }
+}
+
+const insertItem = (file, array) => {
+  const index = indexFor(file, array, (a, b) => {
+    if (a.type !== b.type) return -1
+    return a.name.localeCompare(b.name)
+  })
+  return [
+    ...array.slice(0, index + 1),
+    file,
+    ...array.slice(index + 1)
+  ]
+}
+
+const indexFor = (file, array, compareFn, start = 0, end = array.length) => {
+  if (array.length === 0) return -1
+  const pivot = parseInt(start + (end - start) / 2, 10)
+  const c = compareFn(file, array[pivot])
+  if (end - start <= 1) return c === -1 ? pivot - 1 : pivot
+  switch (c) {
+    case -1: return indexFor(file, array, compareFn, start, pivot)
+    case 0: return pivot
+    case 1: return indexFor(file, array, compareFn, pivot, end)
+  }
+}
+
 // reducer for the full file list of the currently displayed folder
 const files = (state = [], action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
       return action.files
+    case FETCH_MORE_FILES_SUCCESS:
+      const clone = state.slice(0)
+      action.files.forEach((f, i) => { clone[action.skip + i] = f })
+      return clone
     case UPLOAD_FILE_SUCCESS:
-      return [
-        ...state,
-        action.file
-      ]
+      return insertItem(action.file, state)
     case CREATE_FOLDER_SUCCESS:
-      return [
-        ...state,
-        action.folder
-      ]
+      return insertItem(action.folder, state)
     case TRASH_FILES_SUCCESS:
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
@@ -63,12 +102,11 @@ const files = (state = [], action) => {
   }
 }
 
-const fetchStatus = (state = null, action) => {
+const fetchStatus = (state = 'pending', action) => {
   switch (action.type) {
-    // there's a trick here : we set the fetchStatus to 'pending' only on
-    // the LOCATION_CHANGE action so that the loading spinner is only showed
+    // there's a trick here : we set the fetchStatus to 'pending'
+    // on initial state so that the loading spinner is only showed
     // when the app is launched or when the user use the back button
-    case LOCATION_CHANGE:
     case EMPTY_TRASH:   // we temporarily display the spinner when working in the trashed
     case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
       return 'pending'
@@ -97,26 +135,16 @@ const lastFetch = (state = null, action) => {
 
 export default combineReducers({
   displayedFolder,
+  fileCount,
   files,
   fetchStatus,
   lastFetch
 })
 
-const sortFiles = files => files.sort((a, b) => a.name.localeCompare(b.name))
-
-const getSortedFiles = allFiles => {
-  const folders = allFiles.filter(f => f.type === 'directory' && f.id !== TRASH_DIR_ID && f.path !== APPS_DIR_PATH && f.path !== KONNECTORS_DIR_PATH)
-  const files = allFiles.filter(f => f.type !== 'directory')
-  return sortFiles(folders).concat(sortFiles(files))
-}
-
-export const getVisibleFiles = ({ view }) => {
-  const { files } = view
-  return getSortedFiles(files)
-}
+export const getVisibleFiles = ({ view }) => view.files
 
 export const getFileById = ({ view }, id) => {
-  const file = view.files.find(f => f.id === id)
+  const file = view.files.find(f => f && f.id && f.id === id)
   if (!file) return null
   // we need the path for some actions, like selection download
   // but the stack only provides the path for folders...
