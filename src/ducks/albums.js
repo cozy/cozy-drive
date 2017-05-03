@@ -2,6 +2,7 @@
 import { combineReducers } from 'redux'
 
 import { ALBUM_DOCTYPE } from '../constants/config'
+import Alerter from '../components/Alerter'
 
 const CREATE_ALBUM_SUCCESS = 'CREATE_ALBUM_SUCCESS'
 const FETCH_ALBUMS_SUCCESS = 'FETCH_ALBUMS_SUCCESS'
@@ -58,8 +59,8 @@ export const fetchAlbums = (mangoIndex) => {
     .then(albums => albums.map(album => Object.assign({}, album, { _type: ALBUM_DOCTYPE }))) // FIXME: this adds the missing _type to album
     .then(async albums => {
       for (let index in albums) {
-        albums[index].photosIds = await cozy.client.data.listReferencedFiles(albums[index])
-          .catch(throwServerError)
+        albums[index].photosIds = Array.from(new Set(await cozy.client.data.listReferencedFiles(albums[index])
+          .catch(throwServerError)))
       }
       return albums
     })
@@ -77,7 +78,8 @@ export const fetchAlbumPhotosStatsById = (albumId) => {
     dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS})
     try {
       let album = await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
-      const photosIds = await cozy.client.data.listReferencedFiles(album)
+      const photosIds = Array.from(new Set(await cozy.client.data.listReferencedFiles(album)
+          .catch(throwServerError)))
       let fetchedPhotos = []
       for (let index in photosIds) {
         const photo = await cozy.client.files.statById(photosIds[index])
@@ -101,18 +103,25 @@ export const addToAlbum = (photos = [], album = null) => {
         photos: photos
       })
     }
-
-    return await cozy.client.data.addReferencedFiles(album, photos)
-      .then(() => {
-        dispatch({
-          type: ADD_TO_ALBUM_SUCCESS,
-          album: album
+    const newPhotos = photos.filter(photo => !album.photosIds || album.photosIds.indexOf(photo) === -1)
+    if (newPhotos.length !== photos.length) {
+      Alerter.info('Alerter.photos.already_added_photo')
+    }
+    if (newPhotos.length > 0) {
+      return await cozy.client.data.addReferencedFiles(album, newPhotos)
+        .then(() => {
+          dispatch({
+            type: ADD_TO_ALBUM_SUCCESS,
+            album: album
+          })
+          return album
         })
-        return album
-      })
-      .catch(fetchError => {
-        throwServerError(fetchError)
-      })
+        .catch(fetchError => {
+          throwServerError(fetchError)
+        })
+    } else {
+      throw new Error('Albums.add_photo.error.reference')
+    }
   }
 }
 

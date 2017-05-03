@@ -41,7 +41,8 @@
       "upload_success_conflicts":
         "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
       "upload_errors": "Errors occurred during the photos upload.",
-      "unexpected_upload_error": "An unexpected server error occurred."
+      "unexpected_upload_error": "An unexpected server error occurred.",
+      "already_added_photo": "This album already contains this photo."
     }
   },
   "SelectionBar": {
