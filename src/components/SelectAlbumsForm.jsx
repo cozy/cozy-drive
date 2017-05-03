@@ -1,19 +1,28 @@
+import styles from '../styles/albumsList'
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
+
+import { withError } from '../components/ErrorComponent'
+import { withEmpty } from '../components/Empty'
+
+import Loading from '../components/Loading'
+import SelectAlbumItem from '../components/SelectAlbumItem'
 
 import { fetchAlbums, createAlbumMangoIndex, getAlbumsList } from '../ducks/albums'
 
-import AlbumsList from '../components/AlbumsList'
-import Loading from '../components/Loading'
-import { withError } from '../components/ErrorComponent'
-import Topbar from '../components/Topbar'
+const DumbAlbumsList = props => (
+  <div className={classNames(styles['pho-album-list'], styles['pho-album-list--thumbnails'], styles['pho-album-list--selectable'])}>
+    {props.albums.map((a) => <SelectAlbumItem album={a} key={a._id} onServerError={props.onServerError} onSelectAlbum={props.onSubmitSelectedAlbum} />)}
+  </div>
+)
+
+const AlbumsList = withEmpty(props => props.albums.length === 0, 'albums', DumbAlbumsList)
 
 const DumbAlbumsView = props => (
   <div>
-    <Topbar viewName='albums' />
-    <AlbumsList
-      {...props}
-    />
+    <AlbumsList {...props} />
   </div>
 )
 
@@ -40,7 +49,6 @@ export class AlbumsView extends Component {
   }
 
   render () {
-    if (this.props.children) return this.props.children
     const { isFetching, error } = this.state
     return isFetching
       ? <Loading loadingType='albums_fetching' />

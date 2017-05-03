@@ -9,6 +9,11 @@ exports[`AddToAlbumModal component should be rendered correctly 1`] = `
       <_translate
         onSubmitNewAlbum={[Function]} />
     </div>
+    <div
+      className="coz-select-album">
+      <Connect(AlbumsView)
+        onSubmitSelectedAlbum={[Function]} />
+    </div>
   </div>
 </Unknown>
 `;
