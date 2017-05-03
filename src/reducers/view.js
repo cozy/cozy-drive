@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 
 import {
+  OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
   FETCH_MORE_FILES_SUCCESS,
@@ -27,6 +28,15 @@ const displayedFolder = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
       return action.folder
+    default:
+      return state
+  }
+}
+
+const openedFolderId = (state = null, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER:
+      return action.folderId
     default:
       return state
   }
@@ -135,6 +145,7 @@ const lastFetch = (state = null, action) => {
 
 export default combineReducers({
   displayedFolder,
+  openedFolderId,
   fileCount,
   files,
   fetchStatus,
