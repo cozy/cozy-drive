@@ -21,6 +21,7 @@
   },
   "Toolbar": {
     "photo_upload": "Upload",
+    "album_delete": "Delete album",
     "more": "More",
     "menu": {
       "select_items": "Select photos",
