@@ -92,6 +92,11 @@ export const fetchAlbumPhotosStatsById = (albumId) => {
   }
 }
 
+export const removeFromAlbum = (photos = [], album = null) =>
+  dispatch => cozy.client.data.removeReferencedFiles(album, photos)
+    .then(() => dispatch({ type: ADD_TO_ALBUM_SUCCESS, album }))
+    .catch(throwServerError)
+
 // create album
 export const addToAlbum = (photos = [], album = null) => {
   return async dispatch => {

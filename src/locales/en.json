@@ -47,6 +47,7 @@
   "SelectionBar": {
     "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
     "add_to_album": "Add to album",
+    "remove_from_album": "Remove from album",
     "close": "Close"
   },
   "Albums": {
