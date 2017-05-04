@@ -53,6 +53,15 @@ module.exports = {
         collapseWhitespace: true
       }
     }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src/services.ejs'),
+      filename: 'services.html',
+      title: pkg.name,
+      inject: 'head',
+      minify: {
+        collapseWhitespace: true
+      }
+    }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
     }),

@@ -4,9 +4,13 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: [path.resolve(__dirname, '../src/main')],
+  entry: {
+    app: [path.resolve(__dirname, '../src/main')],
+    viewer: [path.resolve(__dirname, '../src/services')],
+  },
   output: {
-    path: path.resolve(__dirname, '../build')
+    path: path.resolve(__dirname, '../build'),
+    filename: "[name].js"
   },
   externals: {
     'cozy-client-js': 'cozy'
