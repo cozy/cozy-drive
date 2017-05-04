@@ -112,7 +112,7 @@ export const openFileInNewTab = (folder, file) => {
 export const uploadFiles = (files, folder) => {
   return async (dispatch, getState) => {
     try {
-      const currentFileCount = getState().view.fileCount
+      let currentFileCount = getState().view.fileCount
       for (const file of files) {
         dispatch({ type: UPLOAD_FILE })
         const created = await cozy.client.files.create(
@@ -124,6 +124,7 @@ export const uploadFiles = (files, folder) => {
           file: extractFileAttributes(created),
           currentFileCount
         })
+        currentFileCount++
       }
     } catch (err) {
       throw err
