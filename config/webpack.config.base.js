@@ -48,6 +48,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/index.ejs'),
       title: pkg.name,
+      excludeChunks: ['services'],
       inject: 'head',
       minify: {
         collapseWhitespace: true
@@ -55,8 +56,9 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/services.ejs'),
-      filename: 'services.html',
       title: pkg.name,
+      filename: 'services.html',
+      excludeChunks: ['app'],
       inject: 'head',
       minify: {
         collapseWhitespace: true
