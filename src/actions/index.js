@@ -110,8 +110,9 @@ export const openFileInNewTab = (folder, file) => {
 }
 
 export const uploadFiles = (files, folder) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
+      const currentFileCount = getState().view.fileCount
       for (const file of files) {
         dispatch({ type: UPLOAD_FILE })
         const created = await cozy.client.files.create(
@@ -120,7 +121,8 @@ export const uploadFiles = (files, folder) => {
         )
         dispatch({
           type: UPLOAD_FILE_SUCCESS,
-          file: extractFileAttributes(created)
+          file: extractFileAttributes(created),
+          currentFileCount
         })
       }
     } catch (err) {
@@ -145,7 +147,7 @@ export const abortAddFolder = (accidental) => {
 export const createFolder = name => {
   return async (dispatch, getState) => {
     const existingFolder = getState().view.files.find(f => f.type === 'directory' && f.name === name)
-
+    const currentFileCount = getState().view.fileCount
     if (existingFolder) {
       dispatch({
         type: CREATE_FOLDER_FAILURE_DUPLICATE,
@@ -169,7 +171,8 @@ export const createFolder = name => {
       })
       dispatch({
         type: CREATE_FOLDER_SUCCESS,
-        folder: extractFileAttributes(folder)
+        folder: extractFileAttributes(folder),
+        currentFileCount
       })
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
