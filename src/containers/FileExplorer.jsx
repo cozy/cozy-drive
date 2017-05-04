@@ -28,8 +28,8 @@ import {
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
 
-const isUrlMatchingDisplayedFolder = (props, displayedFolder) =>
-  displayedFolder && displayedFolder.id === getFolderIdFromRoute(props.location, props.params)
+const isUrlMatchingOpenedFolder = (props, openedFolderId) =>
+  openedFolderId && openedFolderId === getFolderIdFromRoute(props.location, props.params)
 
 class FileExplorer extends Component {
   componentWillMount () {
@@ -40,7 +40,7 @@ class FileExplorer extends Component {
 
   componentWillReceiveProps (newProps) {
     if (urlHasChanged(this.props, newProps) &&
-      !isUrlMatchingDisplayedFolder(newProps, this.props.displayedFolder)) {
+      !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)) {
       this.props.onFolderOpen(
         getFolderIdFromRoute(newProps.location, newProps.params)
       )
@@ -54,6 +54,7 @@ class FileExplorer extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
+  openedFolderId: state.view.openedFolderId,
   fileCount: state.view.fileCount,
   requestedFiles: state.view.requestedFiles,
   fetchStatus: state.view.fetchStatus,

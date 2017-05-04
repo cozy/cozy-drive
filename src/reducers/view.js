@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 
 import {
+  OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
   FETCH_MORE_FILES_SUCCESS,
@@ -32,6 +33,15 @@ const displayedFolder = (state = null, action) => {
   }
 }
 
+const openedFolderId = (state = null, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER:
+      return action.folderId
+    default:
+      return state
+  }
+}
+
 const fileCount = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
@@ -49,11 +59,19 @@ const fileCount = (state = null, action) => {
   }
 }
 
-const insertItem = (file, array) => {
+const insertItem = (file, array, currentItemCount) => {
   const index = indexFor(file, array, (a, b) => {
-    if (a.type !== b.type) return -1
+    if (a.type !== b.type) {
+      return a.type === 'directory' ? -1 : 1
+    }
     return a.name.localeCompare(b.name)
   })
+  // if we only have partially fetched the file list and the new item
+  // position is in the unfetched part of the list, we don't add the item
+  // to the list
+  if (index === array.length - 1 && array.length < currentItemCount) {
+    return array
+  }
   return [
     ...array.slice(0, index + 1),
     file,
@@ -83,9 +101,9 @@ const files = (state = [], action) => {
       action.files.forEach((f, i) => { clone[action.skip + i] = f })
       return clone
     case UPLOAD_FILE_SUCCESS:
-      return insertItem(action.file, state)
+      return insertItem(action.file, state, action.currentFileCount)
     case CREATE_FOLDER_SUCCESS:
-      return insertItem(action.folder, state)
+      return insertItem(action.folder, state, action.currentFileCount)
     case TRASH_FILES_SUCCESS:
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
@@ -135,6 +153,7 @@ const lastFetch = (state = null, action) => {
 
 export default combineReducers({
   displayedFolder,
+  openedFolderId,
   fileCount,
   files,
   fetchStatus,

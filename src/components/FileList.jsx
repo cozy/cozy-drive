@@ -15,8 +15,14 @@ const ROW_HEIGHT = 50
 class FileList extends PureComponent {
   constructor (props) {
     super(props)
-    this.requestedFiles = {}
-    for (var i = 0; i < props.files.length; i++) this.requestedFiles[i] = STATUS_LOADED
+    this.resetCache(props.files)
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.fileCount !== this.props.fileCount &&
+      newProps.files.length !== this.props.files.length) {
+      this.resetCache(newProps.files)
+    }
   }
 
   render () {
@@ -57,11 +63,22 @@ class FileList extends PureComponent {
 
   loadMoreRows = ({ startIndex, stopIndex }) => {
     const limit = stopIndex - startIndex + 1
-    for (var i = startIndex; i <= stopIndex; i++) this.requestedFiles[i] = STATUS_LOADING
+    this.flagAsLoading(startIndex, stopIndex)
     return this.props.fetchMoreFiles(this.props.displayedFolder.id, startIndex, limit)
-      .then(() => {
-        for (var i = startIndex; i <= stopIndex; i++) this.requestedFiles[i] = STATUS_LOADED
-      })
+      .then(() => this.flagAsLoaded(startIndex, stopIndex))
+  }
+
+  resetCache = files => {
+    this.requestedFiles = {}
+    this.flagAsLoaded(0, files.length - 1)
+  }
+
+  flagAsLoaded = (startIndex, stopIndex) => this.flagFiles(startIndex, stopIndex, STATUS_LOADED)
+
+  flagAsLoading = (startIndex, stopIndex) => this.flagFiles(startIndex, stopIndex, STATUS_LOADING)
+
+  flagFiles = (startIndex, stopIndex, flag) => {
+    for (var i = startIndex; i <= stopIndex; i++) this.requestedFiles[i] = flag
   }
 
   rowRenderer = ({ index, key, style }) => {
