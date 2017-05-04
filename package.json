@@ -104,7 +104,7 @@
   "dependencies": {
     "classnames": "^2.2.0",
     "cozy-bar": "3.0.0-beta18",
-    "cozy-client-js": "0.2.3",
+    "cozy-client-js": "0.2.4",
     "cozy-ui": "3.0.0-beta20",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
