@@ -50,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
 const handleActionError = name => {
   return error => {
     const isUnexpectedError = !!error.message
-    Alerter.error(isUnexpectedError ? 'Albums.add_photos.error.generic' : error, {name: name})
+    Alerter.error(isUnexpectedError ? 'Albums.add_photos.error.reference' : error, {name: name})
     return Promise.reject(error)
   }
 }
@@ -64,17 +64,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmitNewAlbum: (name, mangoIndex, photos) => {
     return dispatch(createAlbum(name, mangoIndex, photos))
       .then(
-        album => {
-          dispatch(addToAlbum(photos, album))
+        album => dispatch(addToAlbum(photos, album))
             .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}))
-            .catch(handleActionError)
-        },
-        handleActionError(name)
-      )
+            .catch(handleActionError),
+            handleActionError(name))
   },
   onSubmitSelectedAlbum: (album, photos) => {
     return dispatch(addToAlbum(photos, album))
-      .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}))
+      .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}),
+      handleActionError(album.name))
       .catch(handleActionError)
   }
 })
