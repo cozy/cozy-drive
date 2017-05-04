@@ -32,16 +32,17 @@
     background  embedurl('../assets/icons/icon-arrow-down.svg') center center no-repeat
 
 .fil-path-current-name
-    text-overflow ellipsis
-    overflow      hidden
-    white-space   nowrap
+    text-overflow  ellipsis
+    overflow       hidden
+    white-space    nowrap
+    line-height    1
 
 @media (max-width: (768/basefont)rem)
     .fil-path-backdrop
         margin   0
         position fixed
         top      0
-        left     $coz-bar-size
+        left     2.5em
         right    0
         z-index  $nav-index
 
@@ -91,3 +92,19 @@
         .fil-path-current
             height     $coz-bar-size
             box-shadow inset 0 -1px 0 0 grey-09
+
+    .fil-path-backdrop.mobile
+        left 0
+
+        .fil-path-previous
+            left   0
+            right  auto
+
+        .fil-path-link
+        .fil-path-current
+            padding-left 1rem
+
+        .fil-path-previous + .fil-path-title
+            .fil-path-link
+            .fil-path-current
+                padding-left $coz-bar-size
