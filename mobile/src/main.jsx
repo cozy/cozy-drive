@@ -51,6 +51,7 @@ const renderAppWithPersistedState = persistedState => {
   document.addEventListener('deviceready', () => {
     pingOnceADayWithState()
     store.dispatch(backupImages())
+    if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
   }, false)
 
   const context = window.context

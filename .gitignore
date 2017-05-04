@@ -37,6 +37,10 @@ mobile/platforms
 mobile/plugins
 mobile/www
 mobile/keys
+mobile/res/icons
+mobile/res/screens
+mobile/icon.png
+mobile/store
 
 # fastlane
 mobile/fastlane/README.md
