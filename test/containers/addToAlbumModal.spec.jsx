@@ -15,7 +15,9 @@ import { AddToAlbumModal } from '../../src/containers/AddToAlbumModal'
 const mockFetchedPhotos = [
   {
     _id: '33dda00f0eec15bc3b3c59a615001ac8',
-    created_at: '0001-01-01T00:00:00Z',
+    metadata: {
+      datetime: '0001-01-01T00:00:00Z'
+    },
     name: 'MonImage.jpg',
     size: '150000',
     updated_at: '0001-01-01T00:00:00Z'

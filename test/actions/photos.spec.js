@@ -24,7 +24,9 @@ import client from 'cozy-client-js'
 const mockFetchedPhotos = [
   {
     _id: '33dda00f0eec15bc3b3c59a615001ac8',
-    created_at: '0001-01-01T00:00:00Z',
+    metadata: {
+      datetime: '0001-01-01T00:00:00Z'
+    },
     name: 'MonImage.jpg',
     size: '150000',
     updated_at: '0001-01-01T00:00:00Z'
@@ -38,7 +40,9 @@ const mockUploadedPhoto = {
     type: 'file',
     name: 'MonImage.jpg',
     dir_id: 'io.cozy.files.root-dir',
-    created_at: '0001-01-01T00:00:00Z',
+    metadata: {
+      datetime: '0001-01-01T00:00:00Z'
+    },
     updated_at: '0001-01-01T00:00:00Z',
     size: '150000',
     md5sum: 'wul1lk+i94dp3H5Dq+O54w==',
@@ -153,7 +157,7 @@ const mangoIndexByDateObject = {
   doctype: 'io.cozy.files',
   type: 'mango',
   name: '_design/54d3474c4efdfe10d790425525e56433857955a1',
-  fields: ['class', 'created_at']
+  fields: ['class', 'metadata.datetime']
 }
 
 describe('fetchPhotos', () => {

@@ -12,7 +12,9 @@ import { photos } from '../../src/reducers/photos'
 const mockFetchedPhotos = [
   {
     _id: '33dda00f0eec15bc3b3c59a615001ac8',
-    created_at: '0001-01-01T00:00:00Z',
+    metadata: {
+      datetime: '0001-01-01T00:00:00Z'
+    },
     name: 'MonImage.jpg',
     size: '150000',
     updated_at: '0001-01-01T00:00:00Z'
@@ -24,7 +26,9 @@ const mockUploadedPhoto = mockFetchedPhotos
 const photosFromState = [
   {
     _id: 'f717eb4d94f07737b168d3dbb7002141',
-    created_at: '0001-01-01T00:00:00Z',
+    metadata: {
+      datetime: '0001-01-01T00:00:00Z'
+    },
     name: 'MonPrecedentImage.jpg',
     size: '150000',
     updated_at: '0001-01-01T00:00:00Z'

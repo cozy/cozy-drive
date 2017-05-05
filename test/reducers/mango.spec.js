@@ -10,7 +10,7 @@ const mockMangoIndexByDate = {
   doctype: 'io.cozy.files',
   type: 'mango',
   name: '_design/54d3474c4efdfe10d790425525e56433857955a1',
-  fields: ['class', 'created_at']
+  fields: ['class', 'metadata.datetime']
 }
 
 const mockMangoIndexAlbumsByName = {

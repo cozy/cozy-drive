@@ -15,7 +15,7 @@ export class PhotoList extends Component {
     const { key, title, photos, selected, onPhotoToggle, containerWidth } = this.props
     // @see https://flickr.github.io/justified-layout/
     const layout = justifiedLayout(
-      photos.map(photo => photo.metadata || photoDimensionsFallback),
+      photos.map(photo => photo.metadata && photo.metadata.width && photo.metadata.height ? photo.metadata : photoDimensionsFallback),
       {
         containerWidth: containerWidth,
         targetRowHeight: adaptRowHeight(containerWidth),

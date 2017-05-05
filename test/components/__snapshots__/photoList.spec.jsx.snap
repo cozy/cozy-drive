@@ -22,8 +22,10 @@ exports[`PhotoList component should render correctly a timeline of photos accord
     photo={
       Object {
         "_id": "33dda00f0eec15bc3b3c59a615001ac8",
-        "created_at": "0001-01-01T00:00:00Z",
         "dir_id": "22545465ezfzef4664686446648684",
+        "metadata": Object {
+          "datetime": "0001-01-01T00:00:00Z",
+        },
         "name": "MonImage.jpg",
         "size": "150000",
         "updated_at": "0001-01-01T00:00:00Z",
@@ -57,8 +59,10 @@ exports[`PhotoList component should render correctly if some photos are selected
     photo={
       Object {
         "_id": "33dda00f0eec15bc3b3c59a615001ac8",
-        "created_at": "0001-01-01T00:00:00Z",
         "dir_id": "22545465ezfzef4664686446648684",
+        "metadata": Object {
+          "datetime": "0001-01-01T00:00:00Z",
+        },
         "name": "MonImage.jpg",
         "size": "150000",
         "updated_at": "0001-01-01T00:00:00Z",
@@ -92,8 +96,10 @@ exports[`PhotoList component should render correctly when a containerWidth is gi
     photo={
       Object {
         "_id": "33dda00f0eec15bc3b3c59a615001ac8",
-        "created_at": "0001-01-01T00:00:00Z",
         "dir_id": "22545465ezfzef4664686446648684",
+        "metadata": Object {
+          "datetime": "0001-01-01T00:00:00Z",
+        },
         "name": "MonImage.jpg",
         "size": "150000",
         "updated_at": "0001-01-01T00:00:00Z",
