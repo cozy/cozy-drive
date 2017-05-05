@@ -1,8 +1,9 @@
+import styles from '../../styles/services'
 import React from 'react'
 
 const ServiceBar = ({title, iconPath, onCancel}) => (
-  <header class='coz-service-bar'>
-    <span class='coz-icon'>
+  <header class={styles['coz-service-bar']}>
+    <span class={styles['coz-icon']}>
       <img src={iconPath} />
     </span>
     <h1>{title}</h1>

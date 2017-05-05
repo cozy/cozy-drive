@@ -1,3 +1,5 @@
+import styles from '../styles/services'
+
 import React, { Component } from 'react'
 
 import Loading from '../components/Loading'
@@ -66,23 +68,22 @@ export default class IntentService extends Component {
   }
 
   render () {
-    console.log('rerender')
     const { data } = this.props
     const { isFetching, error, fileViewerUrl } = this.state
     const { t } = this.context
 
     return (
-      <div class='coz-service'>
+      <div class={styles['coz-service']}>
         { isFetching &&
-          <div class='coz-service-loading'>
+          <div class={styles['coz-service-loading']}>
             <Loading />
           </div> }
-        { error && <div class='coz-error coz-service-error'>
+        { error && <div class={styles['coz-error coz-service-error']}>
           <p>{t(error.message)}</p>
           <p>{t('intent.service.error.cause', {error: error.reason})}</p>
         </div>}
         { !isFetching && !error && fileViewerUrl !== null &&
-          <div class='coz-service-layout'>
+          <div class={styles['coz-service-layout']}>
             <ServiceBar
               title={'data.cozyAppName'}
               iconPath={'iconpath'}
