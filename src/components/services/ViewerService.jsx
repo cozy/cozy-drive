@@ -2,9 +2,7 @@ import React from 'react'
 
 const ViewerService = ({ url }) => {
   return (
-    <div>
-      service content {url}
-    </div>
+    <iframe src={url} />
   )
 }
 

@@ -40,7 +40,7 @@ export default class IntentService extends Component {
       .then(downloadLink => {
         this.setState({
           isFetching: false,
-          fileViewerUrl: downloadLink
+          fileViewerUrl: cozy.client._url + downloadLink
         })
       })
       .catch(error => {
