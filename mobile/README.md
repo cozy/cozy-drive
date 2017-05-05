@@ -79,14 +79,23 @@ $ npm run android:publish
 ```
 
 
-## :rainbow: Icons
+## :rainbow: Icons & Splashscreen
 
 You can generate all icons with [splashicon-generator](https://github.com/eberlitz/splashicon-generator).
 
-Icon: Should be a 1024x1024px with a 5% margin. `res/icon.png`
-
-````sh
-$ npm install -g splashicon-generator
-$ cd mobile
-$ splashicon-generator --imagespath="res"
+```sh
+$ yarn mobile:icon
 ```
+
+### Icon
+
+Should be a 1024x1024px.
+
+- `mobile/res/model/icon.png`. On iOS add 5% margin
+- `mobile/res/model/android/icon.png`. Override the default icon for the 'android' platform. So you can use an icon with alpha, as apple doens't allow.
+
+### Splashscreen
+
+Your splash must be 2732x2732px as it now is the largest resolution (used by iPad Pro 12.9"), and the artwork should fit a center square (1200x1200px). This Photoshop splash screen template provides the recommended size and guidelines of the artwork’s safe zone.
+
+- `mobile/res/model/splash.png`
