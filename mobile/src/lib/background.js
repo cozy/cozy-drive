@@ -4,7 +4,7 @@ import { logException, logInfo } from './reporter'
 import { loadState } from './localStorage'
 import { getMediaFolderName } from './media'
 import { startMediaBackup } from '../actions/mediaBackup'
-import { isCordova, isIos, isAndroid, getDeviceName } from './device'
+import { isCordova, isIos, isAndroid, getPlatformId } from './device'
 
 /*
   This files is split on 4 parts:
@@ -68,7 +68,7 @@ const notCompatibleError = () => {
   const msg = 'Background Service is not compatible with your platform.'
   console.warn(msg)
   if (isCordova()) {
-    console.log(getDeviceName())
+    console.log(getPlatformId())
     if (isIos()) {
       console.log(window.BackgroundFetch)
     } else if (isAndroid()) {

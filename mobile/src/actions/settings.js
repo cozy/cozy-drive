@@ -3,7 +3,7 @@
 import { initClient } from '../lib/cozy-helper'
 import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../../src/actions/settings'
-import { getDeviceName } from '../lib/device'
+import { getPlatformId } from '../lib/device'
 import { openFolder } from '../../../src/actions'
 import { onRegistered } from '../lib/registration'
 import { logException, logInfo } from '../lib/reporter'
@@ -76,7 +76,7 @@ export const registerDevice = () => async (dispatch, getState) => {
     })
   }
   dispatch(checkURL(getState().mobile.settings.serverUrl))
-  initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getDeviceName())
+  initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getPlatformId())
   await cozy.client.authorize().then(({ client }) => {
     dispatch(setClient(client))
     startReplication(dispatch, getState)
