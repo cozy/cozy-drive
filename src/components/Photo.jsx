@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 
-import { getPhotoLink } from '../actions/photos'
+import { getThumbnailUrl } from '../actions/photos'
 
 const getStyleFromBox = box => {
   let style = {}
@@ -35,9 +35,9 @@ export class Photo extends Component {
   }
 
   fetchPhoto (photoId) {
-    getPhotoLink(photoId)
-      .then(link => this.setState({
-        url: link,
+    getThumbnailUrl(photoId)
+      .then(url => this.setState({
+        url,
         loading: false
       }))
   }

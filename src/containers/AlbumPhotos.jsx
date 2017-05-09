@@ -8,23 +8,19 @@ import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
 
 export class AlbumPhotos extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      photosAreDirty: false
-    }
+  componentWillMount () {
+    this.props.fetchAlbumPhotos(this.props.router.params.albumId)
   }
 
   render () {
-    const { router, onFetchAlbumPhotos, album } = this.props
-    const albumId = router.params.albumId
+    const { album, photoLists } = this.props
     return (
       <div>
         {album.name &&
           <Topbar viewName='albumContent' albumName={album.name} />
         }
         <PhotoBoard
-          fetchPhotoLists={() => onFetchAlbumPhotos(albumId)}
+          photoLists={photoLists}
           photosContext='album'
         />
         { this.props.children }
@@ -34,16 +30,12 @@ export class AlbumPhotos extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  album: state.albums.currentAlbum
+  album: state.albums.currentAlbum,
+  photoLists: [{ photos: state.albums.photos }]
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  onFetchAlbumPhotos: (albumId) => {
-    return dispatch(fetchAlbumPhotosStatsById(albumId))
-      .then(photos => {
-        return photos.length ? [{photos}] : []
-      })
-  }
+  fetchAlbumPhotos: (albumId) => dispatch(fetchAlbumPhotosStatsById(albumId))
 })
 
 export default connect(

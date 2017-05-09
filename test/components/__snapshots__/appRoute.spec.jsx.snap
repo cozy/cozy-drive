@@ -1,6 +1,0 @@
-exports[`AppRoute component should temporary use a ComingSoon function as component for routes not available yet 1`] = `
-<p
-  style="margin-left: 2em">
-  Coming soon!
-</p>
-`;

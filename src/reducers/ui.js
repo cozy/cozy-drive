@@ -52,6 +52,15 @@ export const isWorking = (state = false, action) => {
   }
 }
 
+export const hasMore = (state = false, action) => {
+  switch (action.type) {
+    case RECEIVE_PHOTOS:
+      return action.next
+    default:
+      return state
+  }
+}
+
 export const showSelectionBar = (state = false, action) => {
   switch (action.type) {
     case SHOW_SELECTION_BAR:
@@ -104,6 +113,7 @@ export default combineReducers({
   isFetching,
   isIndexing,
   isWorking,
+  hasMore,
   selected,
   showSelectionBar,
   showAddToAlbumModal

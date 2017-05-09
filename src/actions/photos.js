@@ -5,43 +5,64 @@
 **/
 
 import {
-  COZY_PHOTOS_DIR_ID
+  COZY_PHOTOS_DIR_ID,
+  FETCH_LIMIT
 } from '../constants/config'
 
 import {
   FETCH_PHOTOS,
+  FETCH_MORE_PHOTOS,
   FETCH_PHOTOS_FAILURE,
   RECEIVE_PHOTOS,
+  RECEIVE_MORE_PHOTOS,
   UPLOAD_PHOTOS,
   UPLOAD_PHOTOS_SUCCESS,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   UPLOAD_PHOTOS_FAILURE
 } from '../constants/actionTypes'
 
+import {
+  indexFilesByDate
+} from './mango'
+
 import Alerter from '../components/Alerter'
 
 // used after photo upload (for photo format from response)
 export const extractFileAttributes = f => Object.assign({}, f.attributes, { _id: f._id })
 
+export const fetchPhotosByDate = (skip = 0) => {
+  return async (dispatch, getState) => {
+    const mangoIndex = getState().mango.filesIndexByDate
+    return mangoIndex
+      ? dispatch(fetchPhotos(mangoIndex, skip))
+      : dispatch(indexFilesByDate()).then(mangoIndex => dispatch(fetchPhotos(mangoIndex, skip)))
+  }
+}
+
 // fetch images using the index created by the app
-export const fetchPhotos = (mangoIndexByDate) => {
+export const fetchPhotos = (mangoIndex, skip = 0) => {
   return async dispatch => {
-    dispatch({ type: FETCH_PHOTOS, mangoIndexByDate })
+    dispatch({ type: skip !== 0 ? FETCH_MORE_PHOTOS : FETCH_PHOTOS })
     const options = {
       selector: {
         class: 'image',
         trashed: false
       },
       fields: ['_id', 'dir_id', 'name', 'size', 'updated_at', 'metadata'],
-      descending: true
+      descending: true,
+      limit: FETCH_LIMIT,
+      skip,
+      wholeResponse: true
     }
-    return await cozy.client.data.query(mangoIndexByDate, options)
-    .then((photos) => {
+    return await cozy.client.data.query(mangoIndex, options)
+    .then((response) => {
+      const { docs, next } = response
       dispatch({
-        type: RECEIVE_PHOTOS,
-        photos
+        type: skip !== 0 ? RECEIVE_MORE_PHOTOS : RECEIVE_PHOTOS,
+        photos: docs,
+        next
       })
-      return photos
+      return docs
     })
     .catch((error) => {
       Alerter.error('Alerter.photos.fetching_error')
@@ -116,9 +137,14 @@ export const uploadPhotos = (photosArray, dirID = COZY_PHOTOS_DIR_ID) => {
   }
 }
 
-// Return a link for the photo, for download or to use in src attributes.
+// Return a link for the photo for download.
 export const getPhotoLink = async (photoId) => {
-  return await cozy.client.files.getDownloadLinkById(
-      photoId
-    ).then(path => `${cozy.client._url}${path}`)
+  return await cozy.client.files.getDownloadLinkById(photoId)
+    .then(path => `${cozy.client._url}${path}`)
+}
+
+// Return a thumbnail URL for the photo, for use in src attributes.
+export const getThumbnailUrl = async (photoId) => {
+  return await cozy.client.files.statById(photoId, false)
+    .then(file => `${cozy.client._url}${file.links.small}`)
 }

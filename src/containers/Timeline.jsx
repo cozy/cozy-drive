@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { translate } from '../lib/I18n'
-import { indexFilesByDate } from '../actions/mango'
-import { fetchPhotos } from '../actions/photos'
+import { fetchPhotosByDate } from '../actions/photos'
 import { getPhotosByMonth } from '../lib/helpers'
 
 import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
+
 const formatMonths = (photoList, f, format) => {
   return {
     title: f(photoList.title, format),
@@ -16,28 +16,19 @@ const formatMonths = (photoList, f, format) => {
 }
 
 export class Timeline extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      photosAreDirty: false
-    }
-  }
-
-  componentWillUpdate (nextProps, nextState) {
-    this.state.photosAreDirty = nextProps.photos &&
-      nextProps.photos.length !== this.props.photos.length
+  componentWillMount () {
+    this.props.fetchPhotoLists()
   }
 
   render () {
-    const { f, photos, isFirstFetch, onFetchPhotoLists } = this.props
-    const { photosAreDirty } = this.state
+    const { photoLists, photoCount, fetchMore } = this.props
     return (
       <div>
         <Topbar viewName='photos' />
         <PhotoBoard
-          fetchPhotoLists={() => onFetchPhotoLists(isFirstFetch, photos, f)}
-          refetch={photosAreDirty}
+          photoLists={photoLists}
           photosContext='timeline'
+          onFetchMore={() => fetchMore(photoCount)}
         />
         { this.props.children }
       </div>
@@ -46,25 +37,17 @@ export class Timeline extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  photos: state.photos,
-  isFirstFetch: state.timeline.isFirstFetch
+  photoCount: state.photos.length,
+  photoLists: getPhotosByMonth(state.photos)
+    .map(photoList => formatMonths(photoList, ownProps.f, 'MMMM YYYY'))
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  onFetchPhotoLists: (isFirstFetch, photos, f) => {
-    const fetchPhotoLists = isFirstFetch
-      ? dispatch(indexFilesByDate())
-          .then(mangoIndexByDate => dispatch(fetchPhotos(mangoIndexByDate)))
-        : Promise.resolve(photos)
-
-    return fetchPhotoLists.then(photos => {
-      return getPhotosByMonth({ photos })
-        .map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))
-    })
-  }
+  fetchPhotoLists: () => dispatch(fetchPhotosByDate()),
+  fetchMore: skip => dispatch(fetchPhotosByDate(skip))
 })
 
-export default connect(
+export default translate()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(Timeline))
+)(Timeline))

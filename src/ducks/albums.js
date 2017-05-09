@@ -1,16 +1,24 @@
 /* global cozy */
 import { combineReducers } from 'redux'
 
-import { ALBUM_DOCTYPE } from '../constants/config'
+import {
+  ALBUM_DOCTYPE,
+  FETCH_LIMIT
+} from '../constants/config'
 import Alerter from '../components/Alerter'
 
 const CREATE_ALBUM_SUCCESS = 'CREATE_ALBUM_SUCCESS'
 const FETCH_ALBUMS_SUCCESS = 'FETCH_ALBUMS_SUCCESS'
-const FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS = 'FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS'
+const FETCH_CURRENT_ALBUM = 'FETCH_CURRENT_ALBUM'
+const FETCH_CURRENT_ALBUM_SUCCESS = 'FETCH_CURRENT_ALBUM_SUCCESS'
+const FETCH_ALBUM_PHOTOS = 'FETCH_ALBUM_PHOTOS'
+const FETCH_ALBUM_PHOTOS_SUCCESS = 'FETCH_ALBUM_PHOTOS_SUCCESS'
+const FETCH_MORE_ALBUM_PHOTOS = 'FETCH_MORE_ALBUM_PHOTOS'
+const FETCH_MORE_ALBUM_PHOTOS_SUCCESS = 'FETCH_MORE_ALBUM_PHOTOS_SUCCESS'
 const ADD_TO_ALBUM = 'ADD_TO_ALBUM'
 const ADD_TO_ALBUM_SUCCESS = 'ADD_TO_ALBUM_SUCCESS'
 const CANCEL_ADD_TO_ALBUM = 'CANCEL_ADD_TO_ALBUM'
-const FETCH_CURRENT_ALBUM_PHOTOS = 'FETCH_CURRENT_ALBUM_PHOTOS'
+
 const INDEX_ALBUMS_BY_NAME_SUCCESS = 'INDEX_ALBUMS_BY_NAME_SUCCESS'
 
 // reducer for the full album list
@@ -28,8 +36,24 @@ const albumsList = (state = [], action = {}) => {
 // reducer for the current album for the album photos view
 const currentAlbum = (state = {}, action = {}) => {
   switch (action.type) {
-    case FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS:
+    case FETCH_CURRENT_ALBUM_SUCCESS:
       return action.album
+    default:
+      return state
+  }
+}
+
+const photos = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_CURRENT_ALBUM:
+      return []
+    case FETCH_ALBUM_PHOTOS_SUCCESS:
+      return action.photos
+    case FETCH_MORE_ALBUM_PHOTOS_SUCCESS:
+      return [
+        ...state,
+        ...action.photos
+      ]
     default:
       return state
   }
@@ -37,7 +61,8 @@ const currentAlbum = (state = {}, action = {}) => {
 
 export default combineReducers({
   albumsList,
-  currentAlbum
+  currentAlbum,
+  photos
 })
 
 // helper to hanlde server error
@@ -75,19 +100,21 @@ export const fetchAlbums = (mangoIndex) => {
 // Returns albums photos informations from the album ID
 export const fetchAlbumPhotosStatsById = (albumId) => {
   return async (dispatch) => {
-    dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS})
+    dispatch({type: FETCH_CURRENT_ALBUM})
     try {
       let album = await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
-      const photosIds = Array.from(new Set(await cozy.client.data.listReferencedFiles(album)
-          .catch(throwServerError)))
-      let fetchedPhotos = []
-      for (let index in photosIds) {
-        const photo = await cozy.client.files.statById(photosIds[index])
-        fetchedPhotos.push(Object.assign({}, photo, photo.attributes))
-      }
-      album.photos = fetchedPhotos
-      dispatch({type: FETCH_CURRENT_ALBUM_PHOTOS_SUCCESS, album})
-      return fetchedPhotos
+      const photosIds = await cozy.client.data.listReferencedFiles(album)
+      console.log(photosIds)
+
+      // let fetchedPhotos = []
+      // for (let index in photosIds) {
+      //   const photo = await cozy.client.files.statById(photosIds[index])
+      //   fetchedPhotos.push(Object.assign({}, photo, photo.attributes))
+      // }
+
+      album.photosIds = photosIds
+      dispatch({type: FETCH_CURRENT_ALBUM_SUCCESS, album})
+      return dispatch(fetchPhotosByIds(photosIds))
     } catch (fetchError) {
       throwServerError(fetchError)
     }
@@ -98,6 +125,32 @@ export const removeFromAlbum = (photos = [], album = null) =>
   dispatch => cozy.client.data.removeReferencedFiles(album, photos)
     .then(() => dispatch({ type: ADD_TO_ALBUM_SUCCESS, album }))
     .catch(throwServerError)
+
+export const fetchPhotosByIds = (ids, skip = 0) => {
+  return async dispatch => {
+    try {
+      dispatch({ type: skip !== 0 ? FETCH_MORE_ALBUM_PHOTOS : FETCH_ALBUM_PHOTOS })
+      const photos = []
+      const limit = ids.length > skip + FETCH_LIMIT ? FETCH_LIMIT : ids.length
+      for (let i = skip; i < limit; i++) {
+        const photo = await cozy.client.files.statById(ids[i])
+        photos.push(Object.assign({}, photo, photo.attributes))
+      }
+      dispatch({
+        type: skip !== 0 ? FETCH_MORE_ALBUM_PHOTOS_SUCCESS : FETCH_ALBUM_PHOTOS_SUCCESS,
+        photos,
+        next: ids.length > skip + FETCH_LIMIT
+      })
+    } catch (error) {
+      console.log(error)
+      // Alerter.error('Alerter.photos.fetching_error')
+      // return dispatch({
+      //   type: FETCH_PHOTOS_FAILURE,
+      //   error
+      // })
+    }
+  }
+}
 
 // create album
 export const addToAlbum = (photos = [], album = null) => {

@@ -1,5 +1,6 @@
 import {
   RECEIVE_PHOTOS,
+  RECEIVE_MORE_PHOTOS,
   UPLOAD_PHOTOS_SUCCESS,
   UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS,
   UPLOAD_PHOTOS_FAILURE
@@ -10,6 +11,11 @@ export const photos = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_PHOTOS:
       return action.photos
+    case RECEIVE_MORE_PHOTOS:
+      return [
+        ...state,
+        ...action.photos
+      ]
     case UPLOAD_PHOTOS_SUCCESS:
     case UPLOAD_PHOTOS_SUCCESS_WITH_CONFLICTS:
     case UPLOAD_PHOTOS_FAILURE:
