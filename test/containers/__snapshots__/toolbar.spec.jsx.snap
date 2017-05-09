@@ -1,5 +1,7 @@
 exports[`Toolbar component should be rendered correctly 1`] = `
 <div
   className="pho-toolbar"
-  role="toolbar" />
+  role="toolbar">
+  
+</div>
 `;

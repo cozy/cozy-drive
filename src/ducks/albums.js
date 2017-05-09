@@ -205,5 +205,9 @@ export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
   }
 }
 
+export const deleteAlbum = album =>
+  async dispatch =>
+    cozy.client.data.delete(ALBUM_DOCTYPE, album)
+
 export const getAlbumsList = state => state.albumsList
 export const getCurrentAlbum = state => state.currentAlbum
