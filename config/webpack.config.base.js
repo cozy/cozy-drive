@@ -61,6 +61,15 @@ module.exports = {
       minify: {
         collapseWhitespace: true
       }
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/public/index.html',
+      filename: 'public/index.html',
+      title: pkg.name,
+      inject: false,
+      minify: {
+        collapseWhitespace: true
+      }
     })
   ]
 }
