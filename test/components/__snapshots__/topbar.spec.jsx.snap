@@ -5,7 +5,7 @@ exports[`Topbar component should be rendered correctly according the viewName 1`
     className="pho-content-title">
     Photos
   </h2>
-  <Connect(_translate)
+  <withRouter(_translate)
     viewName="photos" />
 </div>
 `;
@@ -19,7 +19,7 @@ exports[`Topbar component should be rendered correctly if viewName is albumConte
     role="button" />
   <h2
     className="pho-content-title" />
-  <Connect(_translate)
+  <withRouter(_translate)
     viewName="albumContent" />
 </div>
 `;

@@ -2,15 +2,19 @@ import styles from '../styles/toolbar'
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { translate } from '../lib/I18n'
 
 import UploadButton from '../components/UploadButton'
 import DeleteButton from '../components/DeleteButton'
+import Alerter from '../components/Alerter'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { uploadPhotos, showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
 import { getCurrentAlbum, deleteAlbum } from '../ducks/albums'
+import DestroyConfirm from '../components/DestroyConfirm'
+import confirm from '../lib/confirm'
 
 import classNames from 'classnames'
 
@@ -93,11 +97,13 @@ const mapStateToProps = (state, ownProps) => ({
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadPhotos: photo => dispatch(uploadPhotos(photo)),
   selectItems: () => dispatch(showSelectionBar()),
-  deleteAlbum: album => /* before deleting, ask in a modal */dispatch(deleteAlbum(album))
-  .then(() => console.log('go to albums lists view'))
+  deleteAlbum: album => confirm(<DestroyConfirm t={ownProps.t} albumName={album.name} />)
+    .then(() => dispatch(deleteAlbum(album)))
+    .then(() => ownProps.router.replace('albums'))
+    .then(() => Alerter.success('Albums.remove_album.success', {name: album.name}))
 })
 
-export default connect(
+export default withRouter(translate()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(Toolbar))
+)(Toolbar)))
