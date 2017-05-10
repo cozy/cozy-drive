@@ -28,15 +28,14 @@ export const DOWNLOAD_FILE_E_OFFLINE = 'DOWNLOAD_FILE_E_OFFLINE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
-export const RENAME = 'RENAME'
 
-const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
+export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'
 
-const META_DEFAULTS = {
+export const META_DEFAULTS = {
   cancelSelection: true,
   hideActionMenu: true
 }
@@ -195,36 +194,6 @@ export const createFolder = name => {
       throw err
     }
   }
-}
-
-export const renameSelection = file => {
-  const meta = META_DEFAULTS
-  return { type: RENAME, file, meta }
-}
-
-export const abortRename = () => {
-  const file = {id: 'bla'}
-  return { type: RENAME, file }
-}
-
-export const rename = (name) => async (dispatch, getState) => {
-  const files = getState().view.files
-  const aFile = files.find(f => f.onFileEdit === true)
-  const isExisting = files.find(f => f.name === name)
-  if (isExisting) {
-      dispatch({
-        type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        alert: {
-          message: 'alert.folder_name',
-          messageData: { folderName: name }
-        }
-      })
-      dispatch(abortRename())
-      throw new Error('alert.folder_name')
-  }
-  await cozy.client.files.updateAttributesById(aFile.id, {name})
-  const file = {id: 'bla'}
-  dispatch({ type: RENAME, file })
 }
 
 export const trashFiles = files => {

@@ -6,6 +6,7 @@ import confirm from '../../lib/confirm'
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
 import Toolbar from './Toolbar'
+import { isRenaming, getRenamingFile, rename, startRenaming, updateFileName, abortRenaming } from './rename'
 
 import {
   createFolder,
@@ -13,7 +14,6 @@ import {
   openFileWith,
   downloadSelection,
   renameSelection,
-  rename,
   abortRename,
   trashFiles
 } from '../../actions'
@@ -21,17 +21,22 @@ import {
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: false,
   canUpload: true,
+  isRenaming: isRenaming(state),
+  renamingFile: getRenamingFile(state),
   Toolbar
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: Object.assign({}, ownProps.actions, {
     list: {
+      // folder
       createFolder: name => dispatch(createFolder(name)),
       // TODO: a bit sad of dispatching an action only to show an alert...
       // we should find a better way...
       abortAddFolder: accidental => dispatch(abortAddFolder(accidental)),
-      rename: (file, name) => dispatch(rename(file, name)),
+      // rename
+      updateRenaming: name => dispatch(updateFileName(name)),
+      rename: () => dispatch(rename()),
       abortRename: name => dispatch(abortRename())
     },
     mobile: {
@@ -45,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           .catch(() => {})
     },
     singleSelection: {
-      rename: selected => dispatch(renameSelection(selected[0]))
+      rename: selected => dispatch(startRenaming(selected[0]))
     }
   })
 })

@@ -53,7 +53,7 @@ class File extends Component {
     }
   }
 
-  render ({ t, f, style, attributes, selected, onEdit, onSubmit, onAbort, selectionModeActive, onShowActionMenu }, { opening }) {
+  render ({ t, f, style, attributes, selected, isRenaming, updateRenaming, rename, abortRename, selectionModeActive, onShowActionMenu }, { opening }) {
     const rowListeners = selectionModeActive
     ? { onClick: e => this.toggle(e) }
     : { onDoubleClick: e => this.open(e, attributes) }
@@ -75,8 +75,8 @@ class File extends Component {
             <label onClick={e => this.toggle(e)} />
           </span>
         </div>
-        {onEdit
-          ? this.renderFilenameInput(attributes, onSubmit, onAbort)
+        {isRenaming
+          ? this.renderFilenameInput(attributes, updateRenaming, rename, abortRename)
           : this.renderFilenameCell(attributes, opening, !selectionModeActive)
         }
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
@@ -98,7 +98,7 @@ class File extends Component {
     )
   }
 
-  renderFilenameInput (attributes, onSubmit, onAbort) {
+  renderFilenameInput (attributes, updateRenaming, rename, abortRename) {
     const classes = classNames(
       styles['fil-content-cell'],
       styles['fil-content-file'],
@@ -107,12 +107,12 @@ class File extends Component {
 
     return (
       <div className={classes}>
-        <FilenameInput name={attributes.name} onSubmit={onSubmit} onAbort={onAbort} />
+        <FilenameInput name={attributes.name} onChange={updateRenaming} onSubmit={rename} onAbort={abortRename} />
       </div>
     )
   }
 
-  renderFilenameCell (attributes, opening, canOpen, onEdit) {
+  renderFilenameCell (attributes, opening, canOpen) {
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(
       styles['fil-content-cell'],

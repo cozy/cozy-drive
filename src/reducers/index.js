@@ -5,6 +5,7 @@ import settings from './settings'
 
 import selectionReducer, { getSelectedIds } from '../ducks/selection'
 import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
+import renameReducer from '../ducks/files/rename'
 import alerterReducer from 'cozy-ui/react/Alerter'
 
 export const reducers = {
@@ -12,6 +13,7 @@ export const reducers = {
   settings,
   actionmenu: actionmenuReducer,
   selection: selectionReducer,
+  rename: renameReducer,
   alerts: alerterReducer
 }
 
