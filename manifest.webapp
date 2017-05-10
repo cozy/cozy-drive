@@ -20,6 +20,11 @@
       "folder": "/",
       "index": "index.html",
       "public": false
+    },
+    "/public": {
+      "folder": "/public",
+      "index": "index.html",
+      "public": true
     }
   },
   "version": "3.0.0",
