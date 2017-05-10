@@ -50,6 +50,14 @@ const Menu = props => {
           {t('mobile.action_menu.open_with')}
         </MenuItem>
       )}
+      {Object.keys(actions.singleSelection).map(actionName => {
+        const action = actions.singleSelection[actionName]
+        return (
+          <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => action(files)}>
+            {t(`mobile.action_menu.${actionName}`)}
+          </MenuItem>
+        )
+      })}
       {Object.keys(actions.selection).map(actionName => {
         const action = actions.selection[actionName]
         return (

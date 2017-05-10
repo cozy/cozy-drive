@@ -6,7 +6,7 @@ import confirm from '../../lib/confirm'
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
 import Toolbar from './Toolbar'
-import { isRenaming, getRenamingFile, startRenaming } from './rename'
+import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 
 import {
   createFolder,
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           .catch(() => {})
     },
     singleSelection: {
-      rename: selected => dispatch(startRenaming(selected[0]))
+      rename: selected => dispatch(startRenamingAsync(selected[0]))
     }
   })
 })

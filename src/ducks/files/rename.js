@@ -52,6 +52,10 @@ export const renameFailureDuplicate = name => ({
 
 // action creators async
 
+export const startRenamingAsync = file => async (dispatch) => {
+  await dispatch(startRenaming(file))
+}
+
 export const rename = () => async (dispatch, getState) => {
   const state = getState()
   const files = getFiles(state)

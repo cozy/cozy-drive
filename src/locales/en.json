@@ -186,6 +186,7 @@
     },
     "action_menu": {
       "open_with": "Open with",
+      "rename": "Rename",
       "download": "Download",
       "trash": "Remove",
       "restore": "Restore",
