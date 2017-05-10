@@ -89,8 +89,7 @@ class FileList extends PureComponent {
     if (!file) {
       return <FilePlaceholder key={key} style={style} />
     }
-    const { actions, isRenaming, renamingFile } = this.props
-    const { updateRenaming, rename, abortRename } = actions.list
+    const { isRenaming, renamingFile } = this.props
     const isFileRenaming = isRenaming && renamingFile && renamingFile.id === file.id
     const isSelected = selected.find(f => f && f.id === file.id) !== undefined
     return (
@@ -100,9 +99,6 @@ class FileList extends PureComponent {
         displayedFolder={displayedFolder}
         selected={isSelected}
         isRenaming={isFileRenaming}
-        updateRenaming={updateRenaming}
-        rename={rename}
-        abortRename={abortRename}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
         onToggle={onFileToggle}

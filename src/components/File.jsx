@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
-import FilenameInput from './FilenameInput'
+import RenameInput from '../ducks/files/RenameInput'
 
 import { getFolderUrl } from '../reducers'
 
@@ -53,7 +53,7 @@ class File extends Component {
     }
   }
 
-  render ({ t, f, style, attributes, selected, isRenaming, updateRenaming, rename, abortRename, selectionModeActive, onShowActionMenu }, { opening }) {
+  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming }, { opening }) {
     const rowListeners = selectionModeActive
     ? { onClick: e => this.toggle(e) }
     : { onDoubleClick: e => this.open(e, attributes) }
@@ -76,7 +76,7 @@ class File extends Component {
           </span>
         </div>
         {isRenaming
-          ? this.renderFilenameInput(attributes, updateRenaming, rename, abortRename)
+          ? this.renderFilenameInput(attributes)
           : this.renderFilenameCell(attributes, opening, !selectionModeActive)
         }
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
@@ -98,7 +98,7 @@ class File extends Component {
     )
   }
 
-  renderFilenameInput (attributes, updateRenaming, rename, abortRename) {
+  renderFilenameInput (attributes) {
     const classes = classNames(
       styles['fil-content-cell'],
       styles['fil-content-file'],
@@ -107,7 +107,7 @@ class File extends Component {
 
     return (
       <div className={classes}>
-        <FilenameInput name={attributes.name} onChange={updateRenaming} onSubmit={rename} onAbort={abortRename} />
+        <RenameInput />
       </div>
     )
   }

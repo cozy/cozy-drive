@@ -6,15 +6,13 @@ import confirm from '../../lib/confirm'
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
 import Toolbar from './Toolbar'
-import { isRenaming, getRenamingFile, rename, startRenaming, updateFileName, abortRenaming } from './rename'
+import { isRenaming, getRenamingFile, startRenaming } from './rename'
 
 import {
   createFolder,
   abortAddFolder,
   openFileWith,
   downloadSelection,
-  renameSelection,
-  abortRename,
   trashFiles
 } from '../../actions'
 
@@ -29,15 +27,10 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: Object.assign({}, ownProps.actions, {
     list: {
-      // folder
       createFolder: name => dispatch(createFolder(name)),
       // TODO: a bit sad of dispatching an action only to show an alert...
       // we should find a better way...
-      abortAddFolder: accidental => dispatch(abortAddFolder(accidental)),
-      // rename
-      updateRenaming: name => dispatch(updateFileName(name)),
-      rename: () => dispatch(rename()),
-      abortRename: name => dispatch(abortRename())
+      abortAddFolder: accidental => dispatch(abortAddFolder(accidental))
     },
     mobile: {
       openWith: file => dispatch(openFileWith(file.id, file.name))

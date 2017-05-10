@@ -1,7 +1,7 @@
 /* global cozy */
 
-import { getFiles } from './index'
-import { META_DEFAULTS, extractFileAttributes } from '../../actions'
+import { getFiles } from './files'
+import { META_DEFAULTS as meta, extractFileAttributes } from '../../actions'
 
 // constants
 
@@ -13,7 +13,7 @@ const RENAME_FAILURE_DUPLICATE = 'RENAME_FAILURE_DUPLICATE'
 
 // reducers
 
-const initialState = { file: null, newName: null }
+const initialState = { file: null, name: null }
 const renameReducer = (state = initialState, action) => {
   switch (action.type) {
     case START_RENAMING:
@@ -38,7 +38,7 @@ export const getUpdatedName = state => state.rename.name
 
 // action creators sync
 
-export const startRenaming = file => ({ type: START_RENAMING, file, META_DEFAULTS })
+export const startRenaming = file => ({ type: START_RENAMING, file, meta })
 export const updateFileName = name => ({ type: UPDATE_FILE_NAME, name })
 export const abortRenaming = () => ({ type: ABORT_RENAMING })
 export const renamed = (file) => ({ type: RENAME_SUCCESS, file })
