@@ -7,7 +7,7 @@ import {
   FETCH_MORE_FILES_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
-  RENAME_FOLDER,
+  RENAME,
   CREATE_FOLDER_SUCCESS
 } from '../actions'
 
@@ -108,9 +108,9 @@ const files = (state = [], action) => {
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
       return state.filter(f => action.ids.indexOf(f.id) === -1)
-    case RENAME_FOLDER:
+    case RENAME:
       return state.map(f => {
-        f.name = (f.id === action.id) ? action.name : f.name
+        f.onFileEdit = (f.id === action.file.id) ? true : false
         return f
       })
     case EMPTY_TRASH_SUCCESS:

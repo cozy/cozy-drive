@@ -5,6 +5,7 @@ import { withRouter } from 'react-router'
 
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
+import FilenameInput from './FilenameInput'
 
 import { getFolderUrl } from '../reducers'
 
@@ -52,7 +53,7 @@ class File extends Component {
     }
   }
 
-  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu }, { opening }) {
+  render ({ t, f, style, attributes, selected, onEdit, onSubmit, onAbort, selectionModeActive, onShowActionMenu }, { opening }) {
     const rowListeners = selectionModeActive
     ? { onClick: e => this.toggle(e) }
     : { onDoubleClick: e => this.open(e, attributes) }
@@ -74,7 +75,10 @@ class File extends Component {
             <label onClick={e => this.toggle(e)} />
           </span>
         </div>
-        {this.renderFilenameCell(attributes, opening, !selectionModeActive)}
+        {onEdit
+          ? this.renderFilenameInput(attributes, onSubmit, onAbort)
+          : this.renderFilenameCell(attributes, opening, !selectionModeActive)
+        }
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </div>
@@ -94,7 +98,21 @@ class File extends Component {
     )
   }
 
-  renderFilenameCell (attributes, opening, canOpen) {
+  renderFilenameInput (attributes, onSubmit, onAbort) {
+    const classes = classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-file'],
+      getClassFromMime(attributes)
+    )
+
+    return (
+      <div className={classes}>
+        <FilenameInput name={attributes.name} onSubmit={onSubmit} onAbort={onAbort} />
+      </div>
+    )
+  }
+
+  renderFilenameCell (attributes, opening, canOpen, onEdit) {
     const { filename, extension } = splitFilename(attributes.name)
     const classes = classNames(
       styles['fil-content-cell'],

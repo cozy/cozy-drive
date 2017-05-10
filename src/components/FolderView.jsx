@@ -63,6 +63,12 @@ class FolderView extends Component {
     this.toggleAddFolder()
   }
 
+  rename = name => this.props.actions.list.rename(name)
+
+  abortRename = () => {
+    this.props.actions.list.abortRename()
+  }
+
   render () {
     const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
     const { files, selected, actionable, actions, Toolbar } = this.props
@@ -93,6 +99,7 @@ class FolderView extends Component {
             <SelectionBar
               selected={selected}
               actions={actions.selection}
+              single={actions.singleSelection}
               mobile={actions.mobile}
               onClose={hideSelectionBar}
               onMoreClick={showActionMenu}
@@ -107,6 +114,8 @@ class FolderView extends Component {
                 />}
               <FolderContent
                 {...this.props}
+                onSubmit={this.rename}
+                onAbort={this.abortRename}
                 selectionModeActive={selectionModeActive}
                 isAddingFolder={showAddFolder}
               />

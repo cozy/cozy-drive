@@ -12,6 +12,9 @@ import {
   abortAddFolder,
   openFileWith,
   downloadSelection,
+  renameSelection,
+  rename,
+  abortRename,
   trashFiles
 } from '../../actions'
 
@@ -27,7 +30,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       createFolder: name => dispatch(createFolder(name)),
       // TODO: a bit sad of dispatching an action only to show an alert...
       // we should find a better way...
-      abortAddFolder: accidental => dispatch(abortAddFolder(accidental))
+      abortAddFolder: accidental => dispatch(abortAddFolder(accidental)),
+      rename: (file, name) => dispatch(rename(file, name)),
+      abortRename: name => dispatch(abortRename())
     },
     mobile: {
       openWith: file => dispatch(openFileWith(file.id, file.name))
@@ -38,6 +43,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} />)
           .then(() => dispatch(trashFiles(files)))
           .catch(() => {})
+    },
+    singleSelection: {
+      rename: selected => dispatch(renameSelection(selected[0]))
     }
   })
 })
