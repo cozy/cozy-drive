@@ -87,6 +87,12 @@
       "error": {
         "generic": "An error occured while removing the photo, please try again."
       }
+    },
+    "remove_album": {
+      "success": "Album was deleted.",
+      "error": {
+        "generic": "An error occured while removing the album, please try again."
+      }
     }
   },
   "Viewer": {

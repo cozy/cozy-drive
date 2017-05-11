@@ -101,6 +101,7 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
     .then(() => dispatch(deleteAlbum(album)))
     .then(() => ownProps.router.replace('albums'))
     .then(() => Alerter.success('Albums.remove_album.success', {name: album.name}))
+    .catch(() => Alerter.error('Albums.remove_album.error.generic'))
 })
 
 export default withRouter(translate()(connect(
