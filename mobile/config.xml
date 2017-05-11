@@ -11,7 +11,6 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <hook src="scripts/generate-icon-splashscreen.sh" type="before_prepare" />
     <hook src="scripts/update-config-version.sh" type="before_build" />
     <engine name="android" spec="6.1.2" />
     <platform name="android">
