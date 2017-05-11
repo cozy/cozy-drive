@@ -8,10 +8,13 @@ const { production, extractor } = require('./webpack.vars')
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
 module.exports = {
-  entry: path.resolve(__dirname, '../src/main'),
+  entry: {
+    app: path.resolve(__dirname, '../src/main'),
+    'public/app': path.resolve(__dirname, '../src/public/main')
+  },
   output: {
     path: path.resolve(__dirname, '../build'),
-    filename: 'app.js'
+    filename: '[name].js'
   },
   resolve: {
     extensions: ['', '.js', '.json']
@@ -63,7 +66,7 @@ module.exports = {
       }
     }),
     new HtmlWebpackPlugin({
-      template: 'src/public/index.html',
+      template: 'src/public/index.ejs',
       filename: 'public/index.html',
       title: pkg.name,
       inject: false,
