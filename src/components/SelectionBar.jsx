@@ -5,9 +5,10 @@ import React from 'react'
 import { translate } from '../lib/I18n'
 import classNames from 'classnames'
 
-const SelectionBar = ({ t, selected, actions, mobile, onClose, onMoreClick }) => {
+const SelectionBar = ({ t, selected, actions, single, mobile, onClose, onMoreClick }) => {
   const selectedCount = selected.length
   const actionNames = Object.keys(actions)
+  const singleNames = Object.keys(single)
   return (
     <div className={styles['coz-selectionbar']} role='toolbar'>
       <span className={styles['coz-selectionbar-count']}>
@@ -20,6 +21,14 @@ const SelectionBar = ({ t, selected, actions, mobile, onClose, onMoreClick }) =>
           className={styles['coz-action-' + actionName.toLowerCase()]}
           disabled={selectedCount < 1}
           onClick={() => actions[actionName](selected)}
+        >
+          {t('selectionbar.' + actionName)}
+        </button>
+      ))}
+      {selectedCount === 1 && singleNames.map(actionName => (
+        <button
+          className={styles['coz-action-' + actionName.toLowerCase()]}
+          onClick={() => single[actionName](selected)}
         >
           {t('selectionbar.' + actionName)}
         </button>

@@ -6,6 +6,7 @@ import confirm from '../../lib/confirm'
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
 import Toolbar from './Toolbar'
+import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 
 import {
   createFolder,
@@ -18,6 +19,8 @@ import {
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: false,
   canUpload: true,
+  isRenaming: isRenaming(state),
+  renamingFile: getRenamingFile(state),
   Toolbar
 })
 
@@ -38,6 +41,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} />)
           .then(() => dispatch(trashFiles(files)))
           .catch(() => {})
+    },
+    singleSelection: {
+      rename: selected => dispatch(startRenamingAsync(selected[0]))
     }
   })
 })

@@ -29,13 +29,13 @@ export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
-const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
+export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'
 
-const META_DEFAULTS = {
+export const META_DEFAULTS = {
   cancelSelection: true,
   hideActionMenu: true
 }

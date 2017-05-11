@@ -7,7 +7,6 @@ import {
   FETCH_MORE_FILES_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
-  RENAME_FOLDER,
   CREATE_FOLDER_SUCCESS
 } from '../actions'
 
@@ -20,6 +19,7 @@ import {
   DESTROY_FILES_SUCCESS,
   DESTROY_FILES_FAILURE
 } from '../ducks/trash'
+import { RENAME_SUCCESS } from '../ducks/files/rename'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -57,6 +57,11 @@ const fileCount = (state = null, action) => {
     default:
       return state
   }
+}
+
+const updateItem = (file, files) => {
+  const withoutFile = files.filter(f => f.id !== file.id)
+  return insertItem(file, withoutFile)
 }
 
 const insertItem = (file, array, currentItemCount) => {
@@ -100,6 +105,8 @@ const files = (state = [], action) => {
       const clone = state.slice(0)
       action.files.forEach((f, i) => { clone[action.skip + i] = f })
       return clone
+    case RENAME_SUCCESS:
+      return updateItem(action.file, state)
     case UPLOAD_FILE_SUCCESS:
       return insertItem(action.file, state, action.currentFileCount)
     case CREATE_FOLDER_SUCCESS:
@@ -108,11 +115,6 @@ const files = (state = [], action) => {
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
       return state.filter(f => action.ids.indexOf(f.id) === -1)
-    case RENAME_FOLDER:
-      return state.map(f => {
-        f.name = (f.id === action.id) ? action.name : f.name
-        return f
-      })
     case EMPTY_TRASH_SUCCESS:
       return []
     default:

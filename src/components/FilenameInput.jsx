@@ -34,7 +34,9 @@ export default class FilenameInput extends Component {
   }
 
   handleChange (e) {
-    this.setState({ value: e.target.value })
+    const value = e.target.value
+    this.setState({ value })
+    this.props.onChange && this.props.onChange(value)
   }
 
   handleBlur () {
@@ -49,7 +51,7 @@ export default class FilenameInput extends Component {
 
   submit () {
     this.setState({ working: true, error: false })
-    this.props.onSubmit(this.state.value)
+    this.props.onSubmit && this.props.onSubmit(this.state.value)
       .then(() => this.setState({ working: false }))
       .catch(() => this.setState({
         working: false,

@@ -83,19 +83,22 @@ class FileList extends PureComponent {
 
   rowRenderer = ({ index, key, style }) => {
     const {
-      displayedFolder, selected, selectionModeActive, onFileEdit, onFolderOpen, onFileOpen, onFileToggle, showActionMenu
+      displayedFolder, selected, selectionModeActive, onFolderOpen, onFileOpen, onFileToggle, showActionMenu
     } = this.props
     const file = this.props.files[index]
     if (!file) {
       return <FilePlaceholder key={key} style={style} />
     }
+    const { isRenaming, renamingFile } = this.props
+    const isFileRenaming = isRenaming && renamingFile && renamingFile.id === file.id
+    const isSelected = selected.find(f => f && f.id === file.id) !== undefined
     return (
       <File
         key={key}
         style={style}
         displayedFolder={displayedFolder}
-        selected={selected.find(f => f && f.id === file.id) !== undefined}
-        onEdit={onFileEdit}
+        selected={isSelected}
+        isRenaming={isFileRenaming}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
         onToggle={onFileToggle}
