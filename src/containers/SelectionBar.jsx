@@ -55,7 +55,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onAddToAlbum: selected => dispatch(addToAlbum(selected)),
   onRemoveFromAlbum: (selected, album) =>
   dispatch(removeFromAlbum(selected, album))
-  .catch(err => Alerter.error((err.message)))
+   .then(() => Alerter.success('Albums.remove_photos.success', { album_name: album.name }))
+  .catch(() => Alerter.error('Albums.remove_photos.error.generic'))
 })
 
 export default connect(
