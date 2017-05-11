@@ -62,6 +62,7 @@ class File extends Component {
         style={style}
         className={classNames(
           styles['fil-content-row'],
+          selected ? styles['fil-content-row-selected'] : '',
           { [styles['fil-content-row--selectable']]: selectionModeActive }
         )}
         {...rowListeners}

@@ -35,8 +35,13 @@
     max-width       'calc(100vw - %s)' % em(220px)
     border-bottom   1px solid grey-09
 
-    .fil-content-body &:hover
+    &:hover
         background-color grey-10
+    &.fil-content-head:hover
+        background-color white
+
+.fil-content-row-selected
+    background-color rgba(24, 122, 255, 0.1)
 
 .fil-content-cell.fil-content-file
     color grey-08
