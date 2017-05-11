@@ -81,6 +81,12 @@
       "error": {
         "index_missing": "An albums index must be provided to fetch albums."
       }
+    },
+    "remove_photos": {
+      "success": "The photo has been removed from album %{album_name}",
+      "error": {
+        "generic": "An error occured while removing the photo, please try again."
+      }
     }
   },
   "Viewer": {
