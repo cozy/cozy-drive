@@ -1,4 +1,3 @@
-/* global __TARGET__ */
 import styles from '../styles/selectionbar'
 
 import React from 'react'
@@ -7,8 +6,10 @@ import classNames from 'classnames'
 
 const SelectionBar = ({ t, selected, actions, single, mobile, onClose, onMoreClick }) => {
   const selectedCount = selected.length
-  const actionNames = Object.keys(actions)
-  const singleNames = single ? Object.keys(single) : []
+  const enableActions = actions.filter(action => {
+    return action.displayCondition === undefined || action.displayCondition(selected)
+  })
+  const actionNames = Object.keys(enableActions)
   return (
     <div className={styles['coz-selectionbar']} role='toolbar'>
       <span className={styles['coz-selectionbar-count']}>
@@ -20,28 +21,11 @@ const SelectionBar = ({ t, selected, actions, single, mobile, onClose, onMoreCli
         <button
           className={styles['coz-action-' + actionName.toLowerCase()]}
           disabled={selectedCount < 1}
-          onClick={() => actions[actionName](selected)}
+          onClick={() => actions[actionName].action(selected)}
         >
           {t('selectionbar.' + actionName)}
         </button>
       ))}
-      {selectedCount === 1 && singleNames.map(actionName => (
-        <button
-          className={styles['coz-action-' + actionName.toLowerCase()]}
-          onClick={() => single[actionName](selected)}
-        >
-          {t('selectionbar.' + actionName)}
-        </button>
-      ))}
-      {(__TARGET__ === 'mobile') && Object.keys(mobile).map(actionName => (
-        <button
-          className={styles['coz-action-' + actionName.toLowerCase()]}
-          disabled={selectedCount !== 1}
-          onClick={() => mobile[actionName](selected[0])}
-        >
-          {t('selectionbar.' + actionName)}
-        </button>)
-      )}
       {actionNames.length > 4 &&
         <button
           className={classNames('coz-btn', 'coz-btn--extra-white')}

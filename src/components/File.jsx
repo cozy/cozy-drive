@@ -7,6 +7,7 @@ import Hammer from 'hammerjs'
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
 import RenameInput from '../ducks/files/RenameInput'
+import { isDirectory } from '../ducks/files/files'
 
 import { getFolderUrl } from '../reducers'
 
@@ -18,10 +19,8 @@ export const splitFilename = filename => {
   }
 }
 
-const isDir = attrs => attrs.type === 'directory'
-
 export const getClassFromMime = (attrs) => {
-  if (isDir(attrs)) {
+  if (isDirectory(attrs)) {
     return styles['fil-file-folder']
   }
   return styles['fil-file-' + attrs.mime.split('/')[0]] || styles['fil-file-files']
@@ -66,7 +65,7 @@ class File extends Component {
 
   open (e, attributes) {
     e.stopPropagation()
-    if (isDir(attributes)) {
+    if (isDirectory(attributes)) {
       this.setState({ opening: true })
       this.props.onFolderOpen(attributes.id).then(() => {
         this.setState({ opening: false })
@@ -102,7 +101,7 @@ class File extends Component {
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])}>
-          {isDir(attributes)
+          {isDirectory(attributes)
             ? '—'
             : filesize(attributes.size, {base: 10})}
         </div>
