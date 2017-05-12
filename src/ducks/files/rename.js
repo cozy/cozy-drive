@@ -22,7 +22,6 @@ const renameReducer = (state = initialState, action) => {
       return { ...state, name: action.name }
     case RENAME_SUCCESS:
     case ABORT_RENAMING:
-    case RENAME_FAILURE_DUPLICATE:
       return initialState
     default:
       return state
