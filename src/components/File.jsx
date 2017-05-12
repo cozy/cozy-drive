@@ -43,10 +43,13 @@ class File extends Component {
     this.gesturesHandler.get('doubletap').recognizeWith('singletap').requireFailure('onpress')
     this.gesturesHandler.get('singletap').requireFailure('doubletap').requireFailure('onpress')
     this.gesturesHandler.on('onpress singletap doubletap', (ev) => {
-      if (ev.type === 'onpress' || (this.props.selectionModeActive && ev.type === 'singletap')) {
-        this.toggle(ev.srcEvent)
-      } else {
-        this.open(ev.srcEvent, this.props.attributes)
+      const enableTouchEvents = ev => ['INPUT', 'BUTTON', 'LABEL'].indexOf(ev.target.nodeName) === -1
+      if (enableTouchEvents(ev)) {
+        if (ev.type === 'onpress' || (this.props.selectionModeActive && ev.type === 'singletap')) {
+          this.toggle(ev.srcEvent)
+        } else {
+          this.open(ev.srcEvent, this.props.attributes)
+        }
       }
     })
   }
