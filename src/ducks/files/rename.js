@@ -63,8 +63,13 @@ export const rename = () => async (dispatch, getState) => {
   const isExisting = files.find(f => f.name === updatedName)
 
   if (isExisting) {
-    dispatch(renameFailureDuplicate(updatedName))
-    throw new Error('alert.folder_name')
+    if (isExisting.id === renamingFile.id) {
+      dispatch(abortRenaming())
+      return
+    } else {
+      dispatch(renameFailureDuplicate(updatedName))
+      throw new Error('alert.folder_name')
+    }
   }
   try {
     const updated = await cozy.client.files.updateAttributesById(renamingFile.id, {name: updatedName})
