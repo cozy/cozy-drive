@@ -38,11 +38,11 @@ class MenuItem extends Component {
 }
 
 const Menu = props => {
-  const { t, files, actions, selected } = props
-  const enableActions = actions.filter(action => {
-    return action.displayCondition === undefined || action.displayCondition(selected)
+  const { t, files, actions } = props
+  const actionNames = Object.keys(actions).filter(actionName => {
+    const action = actions[actionName]
+    return action.displayCondition === undefined || action.displayCondition(files)
   })
-  const actionNames = Object.keys(enableActions)
   const header = files.length === 1 ? <MenuHeaderFile file={files[0]} /> : <MenuHeaderSelection {...props} />
   return (
     <div className={styles['fil-actionmenu']}>
@@ -50,7 +50,7 @@ const Menu = props => {
       <hr />
       {actionNames.map(actionName => (
         <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => actions[actionName].action(files)}>
-          {t(`mobile.action_menu.${actionName}`)}
+          {t(`selectionbar.${actionName}`)}
         </MenuItem>
       ))}
     </div>

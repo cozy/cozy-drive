@@ -184,14 +184,6 @@
         }
       }
     },
-    "action_menu": {
-      "open_with": "Open with",
-      "rename": "Rename",
-      "download": "Download",
-      "trash": "Remove",
-      "restore": "Restore",
-      "destroy": "Delete permanently"
-    },
     "error": {
       "open_with": {
         "offline": "You should be connected to open this file",

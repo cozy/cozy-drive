@@ -6,10 +6,10 @@ import classNames from 'classnames'
 
 const SelectionBar = ({ t, selected, actions, single, mobile, onClose, onMoreClick }) => {
   const selectedCount = selected.length
-  const enableActions = actions.filter(action => {
+  const actionNames = Object.keys(actions).filter(actionName => {
+    const action = actions[actionName]
     return action.displayCondition === undefined || action.displayCondition(selected)
   })
-  const actionNames = Object.keys(enableActions)
   return (
     <div className={styles['coz-selectionbar']} role='toolbar'>
       <span className={styles['coz-selectionbar-count']}>

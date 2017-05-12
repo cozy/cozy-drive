@@ -281,14 +281,14 @@ export const openFileWith = (id, filename) => {
   }
   return async (dispatch, getState) => {
     if (isCordova() && window.cordova.plugins.fileOpener2) {
-      dispatch({ type: OPEN_FILE_WITH, id, meta })
+      dispatch({ type: OPEN_FILE_WITH, id })
       const response = await cozy.client.files.downloadById(id).catch((error) => {
         console.error('downloadById', error)
         dispatch(downloadFileError(error, meta))
         throw error
       })
       const blob = await response.blob()
-      openFileWithCordova(blob, filename).catch((error) => {
+      await openFileWithCordova(blob, filename).catch((error) => {
         console.error('openFileWithCordova', error)
         dispatch(openWithNoAppError(meta))
       })

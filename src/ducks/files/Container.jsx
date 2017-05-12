@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           .catch(() => {})
       },
       openWith: {
-        action: file => dispatch(openFileWith(file.id, file.name)),
+        action: files => dispatch(openFileWith(files[0].id, files[0].name)),
         displayCondition: (selections) => __TARGET__ === 'mobile' && selections.length === 1 && isFile(selections[0])
       },
       rename: {
