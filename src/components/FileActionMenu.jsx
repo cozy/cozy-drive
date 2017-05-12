@@ -1,4 +1,3 @@
-/* global __TARGET__ */
 import styles from '../styles/actionmenu'
 
 import React, { Component } from 'react'
@@ -39,33 +38,21 @@ class MenuItem extends Component {
 }
 
 const Menu = props => {
-  const { t, files, actions } = props
+  const { t, files, actions, selected } = props
+  const enableActions = actions.filter(action => {
+    return action.displayCondition === undefined || action.displayCondition(selected)
+  })
+  const actionNames = Object.keys(enableActions)
   const header = files.length === 1 ? <MenuHeaderFile file={files[0]} /> : <MenuHeaderSelection {...props} />
   return (
     <div className={styles['fil-actionmenu']}>
       {header}
       <hr />
-      {__TARGET__ === 'mobile' && actions.mobile && files.length === 1 && (
-        <MenuItem className={styles['fil-action-openwith']} onClick={() => actions.mobile.openWith(files[0])}>
-          {t('mobile.action_menu.open_with')}
+      {actionNames.map(actionName => (
+        <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => actions[actionName].action(files)}>
+          {t(`mobile.action_menu.${actionName}`)}
         </MenuItem>
-      )}
-      {Object.keys(actions.singleSelection).map(actionName => {
-        const action = actions.singleSelection[actionName]
-        return (
-          <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => action(files)}>
-            {t(`mobile.action_menu.${actionName}`)}
-          </MenuItem>
-        )
-      })}
-      {Object.keys(actions.selection).map(actionName => {
-        const action = actions.selection[actionName]
-        return (
-          <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => action(files)}>
-            {t(`mobile.action_menu.${actionName}`)}
-          </MenuItem>
-        )
-      })}
+      ))}
     </div>
   )
 }

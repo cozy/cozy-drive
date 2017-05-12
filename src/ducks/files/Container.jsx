@@ -1,3 +1,4 @@
+/* global __TARGET__ */
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../../lib/I18n'
@@ -7,6 +8,7 @@ import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
+import { isFile } from './files'
 
 import {
   createFolder,
@@ -32,18 +34,23 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       // we should find a better way...
       abortAddFolder: accidental => dispatch(abortAddFolder(accidental))
     },
-    mobile: {
-      openWith: file => dispatch(openFileWith(file.id, file.name))
-    },
     selection: {
-      download: files => dispatch(downloadSelection(files)),
-      trash: files =>
-        confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} />)
+      download: {
+        action: files => dispatch(downloadSelection(files))
+      },
+      trash: {
+        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} />)
           .then(() => dispatch(trashFiles(files)))
           .catch(() => {})
-    },
-    singleSelection: {
-      rename: selected => dispatch(startRenamingAsync(selected[0]))
+      },
+      openWith: {
+        action: file => dispatch(openFileWith(file.id, file.name)),
+        displayCondition: (selections) => __TARGET__ === 'mobile' && selections.length === 1 && isFile(selections[0])
+      },
+      rename: {
+        action: selected => dispatch(startRenamingAsync(selected[0])),
+        displayCondition: (selections) => selections.length === 1
+      }
     }
   })
 })

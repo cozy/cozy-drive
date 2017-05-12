@@ -93,8 +93,6 @@ class FolderView extends Component {
             <SelectionBar
               selected={selected}
               actions={actions.selection}
-              single={actions.singleSelection}
-              mobile={actions.mobile}
               onClose={hideSelectionBar}
               onMoreClick={showActionMenu}
             />}
@@ -116,7 +114,7 @@ class FolderView extends Component {
           {actionMenuActive &&
             <FileActionMenu
               files={actionable}
-              actions={actions}
+              actions={actions.selection}
               onClose={hideActionMenu}
             />}
         </div>
