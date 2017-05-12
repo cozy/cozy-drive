@@ -121,7 +121,7 @@
       },
       "server_selection": {
         "description": "This is the web address you use to access your Cozy.",
-        "cozy_address_placeholder": "Your Cozy internet address",
+        "cozy_address_placeholder": "tonystark.mycozy.cloud",
         "button": "Next",
         "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
       },
