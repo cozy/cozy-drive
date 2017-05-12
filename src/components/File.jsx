@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { withRouter } from 'react-router'
+import Hammer from 'hammerjs'
 
 import styles from '../styles/table'
 import { translate } from '../lib/I18n'
@@ -34,6 +35,26 @@ class File extends Component {
     }
   }
 
+  componentDidMount () {
+    this.gesturesHandler = new Hammer.Manager(this.fil)
+    this.gesturesHandler.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }))
+    this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
+    this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
+    this.gesturesHandler.get('doubletap').recognizeWith('singletap').requireFailure('onpress')
+    this.gesturesHandler.get('singletap').requireFailure('doubletap').requireFailure('onpress')
+    this.gesturesHandler.on('onpress singletap doubletap', (ev) => {
+      if (ev.type === 'onpress' || (this.props.selectionModeActive && ev.type === 'singletap')) {
+        this.toggle(ev.srcEvent)
+      } else {
+        this.open(ev.srcEvent, this.props.attributes)
+      }
+    })
+  }
+
+  componentWillUnmount () {
+    this.gesturesHandler.destroy()
+  }
+
   toggle (e) {
     e.stopPropagation()
     const { attributes, onToggle, selected } = this.props
@@ -54,18 +75,15 @@ class File extends Component {
   }
 
   render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming }, { opening }) {
-    const rowListeners = selectionModeActive
-    ? { onClick: e => this.toggle(e) }
-    : { onDoubleClick: e => this.open(e, attributes) }
     return (
       <div
+        ref={fil => { this.fil = fil }}
         style={style}
         className={classNames(
           styles['fil-content-row'],
           selected ? styles['fil-content-row-selected'] : '',
           { [styles['fil-content-row--selectable']]: selectionModeActive }
         )}
-        {...rowListeners}
       >
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
           <span data-input='checkbox'>
@@ -76,10 +94,7 @@ class File extends Component {
             <label onClick={e => this.toggle(e)} />
           </span>
         </div>
-        {isRenaming
-          ? this.renderFilenameInput(attributes)
-          : this.renderFilenameCell(attributes, opening, !selectionModeActive)
-        }
+        {this.renderFilenameCell(attributes, opening, isRenaming)}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
         </div>
@@ -99,33 +114,24 @@ class File extends Component {
     )
   }
 
-  renderFilenameInput (attributes) {
-    const classes = classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-file'],
-      getClassFromMime(attributes)
-    )
-
-    return (
-      <div className={classes}>
-        <RenameInput />
-      </div>
-    )
-  }
-
-  renderFilenameCell (attributes, opening, canOpen) {
-    const { filename, extension } = splitFilename(attributes.name)
+  renderFilenameCell (attributes, opening, isRenaming) {
     const classes = classNames(
       styles['fil-content-cell'],
       styles['fil-content-file'],
       getClassFromMime(attributes),
-      { [styles['fil-content-file-openable']]: canOpen }
+      { [styles['fil-content-file-openable']]: !isRenaming }
     )
+    const { filename, extension } = splitFilename(attributes.name)
     return (
-      <div className={classes} onClick={canOpen ? e => this.open(e, attributes) : undefined}>
-        {filename}
-        {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
-        {opening === true && <div className={styles['fil-loading']} />}
+      <div className={classes}>
+        {isRenaming
+          ? <RenameInput />
+          : <div>
+            {filename}
+            {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
+            {opening === true && <div className={styles['fil-loading']} />}
+          </div>
+        }
       </div>
     )
   }
