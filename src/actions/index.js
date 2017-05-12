@@ -2,6 +2,7 @@
 import { isCordova } from '../../mobile/src/lib/device'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithNoAppError } from '../../mobile/src/actions'
+import { isDirectory } from '../ducks/files/files'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -146,7 +147,7 @@ export const abortAddFolder = (accidental) => {
 
 export const createFolder = name => {
   return async (dispatch, getState) => {
-    const existingFolder = getState().view.files.find(f => f.type === 'directory' && f.name === name)
+    const existingFolder = getState().view.files.find(f => isDirectory(f) && f.name === name)
     const currentFileCount = getState().view.fileCount
     if (existingFolder) {
       dispatch({
@@ -226,7 +227,7 @@ export const trashFiles = files => {
 export const downloadSelection = selected => {
   const meta = META_DEFAULTS
   return async (dispatch) => {
-    if (selected.length === 1 && selected[0].type !== 'directory') {
+    if (selected.length === 1 && isDirectory(selected[0])) {
       return dispatch(downloadFile(selected[0], meta))
     }
     const paths = selected.map(f => f.path)

@@ -20,6 +20,7 @@ import {
   DESTROY_FILES_FAILURE
 } from '../ducks/trash'
 import { RENAME_SUCCESS } from '../ducks/files/rename'
+import { isDirectory } from '../ducks/files/files'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -67,7 +68,7 @@ const updateItem = (file, files) => {
 const insertItem = (file, array, currentItemCount) => {
   const index = indexFor(file, array, (a, b) => {
     if (a.type !== b.type) {
-      return a.type === 'directory' ? -1 : 1
+      return isDirectory(a) ? -1 : 1
     }
     return a.name.localeCompare(b.name)
   })
@@ -176,7 +177,7 @@ const isRootFolder = folder => folder.id === ROOT_DIR_ID
 
 export const getFilePath = ({ view }, file) => {
   const { displayedFolder } = view
-  return file.type === 'directory'
+  return isDirectory(file)
     ? file.path
     : (isRootFolder(displayedFolder) ? `/${file.name}` : `${displayedFolder.path}/${file.name}`)
 }
