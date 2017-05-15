@@ -7,6 +7,7 @@ const build = /:production$/.test(process.env.NODE_ENV)
 module.exports = {
   plugins: [
     new CopyPlugin([
+      { from: 'vendor/assets/app-icon.svg', to: 'public/app-icon.svg' },
       { from: 'vendor/assets', ignore: ['.gitkeep'] },
       { from: 'manifest.webapp', transform: transformManifest }
     ])

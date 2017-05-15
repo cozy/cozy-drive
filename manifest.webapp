@@ -1,7 +1,7 @@
 {
   "name": "Photos",
   "slug": "cozy-photos-v3",
-  "icon": "app-icon.svg",
+  "icon": "public/app-icon.svg",
   "description": "Photos manager for Cozy v3",
   "source": "https://github.com/cozy/cozy-photos-v3.git@build",
   "editor": "Cozy",
