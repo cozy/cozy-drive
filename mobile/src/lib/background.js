@@ -88,7 +88,7 @@ const backgroundService = () => new Promise(resolve => {
     .then(store => {
       initServices(store)
       logInfo('It\'s me Background Service!!!')
-      store.dispatch(startMediaBackup(getMediaFolderName()))
+      return store.dispatch(startMediaBackup(getMediaFolderName()))
     })
     .then(resolve)
     .catch(resolve)
