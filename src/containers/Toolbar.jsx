@@ -12,13 +12,9 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { uploadPhotos, showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
-<<<<<<< HEAD
-import { getCurrentAlbum, deleteAlbum } from '../ducks/albums'
+import { getAlbum, deleteAlbum } from '../ducks/albums'
 import DestroyConfirm from '../components/DestroyConfirm'
 import confirm from '../lib/confirm'
-=======
-import { getAlbum, deleteAlbum } from '../ducks/albums'
->>>>>>> [tech] Long lists and Groot refactoring
 
 import classNames from 'classnames'
 
