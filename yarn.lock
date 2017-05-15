@@ -1391,9 +1391,9 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
-cozy-bar@3.0.0-beta23:
-  version "3.0.0-beta23"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-3.0.0-beta23.tgz#0fd96d9b204860cdd6c1563668c4e0eb3933d0a1"
+cozy-bar@3.0.0-beta24:
+  version "3.0.0-beta24"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-3.0.0-beta24.tgz#1f1cf3f2da352237e35a8fc3cbf5d9d436e135f6"
   dependencies:
     node-polyglot "^2.2.2"
 
