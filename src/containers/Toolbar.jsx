@@ -12,13 +12,17 @@ import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { uploadPhotos, showSelectionBar } from '../actions'
 import { mustShowSelectionBar } from '../reducers'
+<<<<<<< HEAD
 import { getCurrentAlbum, deleteAlbum } from '../ducks/albums'
 import DestroyConfirm from '../components/DestroyConfirm'
 import confirm from '../lib/confirm'
+=======
+import { getAlbum, deleteAlbum } from '../ducks/albums'
+>>>>>>> [tech] Long lists and Groot refactoring
 
 import classNames from 'classnames'
 
-export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, selectItems, album, viewName }) => (
+export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, selectItems, viewName, params }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
     {viewName === 'photos' && [
       <UploadButton
@@ -56,7 +60,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
     {viewName === 'albumContent' && [
       <DeleteButton
         className='coz-desktop'
-        onDelete={() => deleteAlbum(album)}
+        onDelete={() => deleteAlbum(params.albumId)}
         disabled={disabled}
         label={t('Toolbar.album_delete')}
       />,
@@ -71,7 +75,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
         <Menu className={styles['coz-menu']}>
           <Item>
             <DeleteButton
-              onDelete={() => deleteAlbum(album)}
+              onDelete={() => deleteAlbum(params.albumId)}
               disabled={disabled}
               label={t('Toolbar.menu.album_delete')}
               type='menu-item'
@@ -90,8 +94,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  disabled: mustShowSelectionBar(state),
-  album: getCurrentAlbum(state.albums)
+  disabled: mustShowSelectionBar(state)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({

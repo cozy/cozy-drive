@@ -6,6 +6,8 @@ import { withRouter } from 'react-router'
 import Hammer from 'hammerjs'
 
 import { getPhotoLink } from '../actions/photos'
+import { getAlbumPhotos } from '../ducks/albums'
+import { getTimelineList } from '../ducks/timeline'
 
 import ViewerToolbar from '../components/ViewerToolbar'
 import Loading from '../components/Loading'
@@ -106,10 +108,10 @@ export class Viewer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   let photos = []
-  if (ownProps.router.routes[1].path === 'albums') { // photos from an album
-    photos = state.albums.currentAlbum.photos || []
+  if (ownProps.params.albumId) { // photos from an album
+    photos = getAlbumPhotos(state, ownProps.params.albumId).entries
   } else { // all photos (timeline)
-    photos = state.photos
+    photos = getTimelineList(state).entries
   }
   let set = photos.map(photo => photo._id)
   let currentID = ownProps.params.photoId

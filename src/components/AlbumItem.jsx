@@ -1,18 +1,17 @@
 import styles from '../styles/albumsList'
 
 import React, { Component } from 'react'
-// import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 import { translate } from '../lib/I18n'
 
 import { getPhotoLink } from '../actions/photos'
 
-const isAlbumEmpty = album => !(album && album.photosIds && album.photosIds.length)
+const isAlbumEmpty = album => !(album && album.photoCount)
 
 const fetchMainPhoto = album =>
   isAlbumEmpty(album)
     ? Promise.resolve(null)
-    : getPhotoLink(album.photosIds[0])
+    : getPhotoLink(album.coverId)
 
 export class AlbumItem extends Component {
   constructor (props) {
@@ -53,31 +52,42 @@ export class AlbumItem extends Component {
   }
 
   render () {
-    const { t, album, router } = this.props
-    const { isLoading, url, isImageLoading } = this.state
-    const parentPath = router.location.pathname
-    return (
-      !isLoading &&
+    if (this.state.isLoading) {
+      return null
+    }
+    const { t, album, onClick } = this.props
+    const { url, isImageLoading } = this.state
+
+    const image = <img
+      className={styles['pho-album-photo-item']}
+      onLoad={this.handleImageLoaded}
+      style={isImageLoading ? 'display:none' : ''}
+      alt={`${album.name} album cover`}
+      src={url || ''}
+    />
+    const desc = <h4 className={styles['pho-album-description']}>
+      {t('Albums.album_item_description',
+        {smart_count: album.photoCount})
+      }
+    </h4>
+    const title = <h2 className={styles['pho-album-title']}>{album.name}</h2>
+
+    if (onClick) {
+      return (
         <div className={styles['pho-album']}>
-          <Link
-            to={`${parentPath}/${album._id}`}
-            className={styles['pho-album-link']}
-          >
-            <img
-              className={styles['pho-album-photo-item']}
-              onLoad={this.handleImageLoaded}
-              style={isImageLoading ? 'display:none' : ''}
-              alt={`${album.name} album cover`}
-              src={url || ''}
-            />
-            <h2 className={styles['pho-album-title']}>{album.name}</h2>
-            <h4 className={styles['pho-album-description']}>
-              {t('Albums.album_item_description',
-                {smart_count: album.photosIds.length})
-              }
-            </h4>
-          </Link>
+          <div onClick={() => onClick(album)} className={styles['pho-album-link']}>
+            {image}{title}{desc}
+          </div>
         </div>
+      )
+    }
+    const parentPath = this.props.router.location.pathname
+    return (
+      <div className={styles['pho-album']}>
+        <Link to={`${parentPath}/${album._id}`} className={styles['pho-album-link']}>
+          {image}{title}{desc}
+        </Link>
+      </div>
     )
   }
 }

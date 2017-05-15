@@ -1,267 +1,135 @@
 /* global cozy */
-import { combineReducers } from 'redux'
+import { getList, createInsertAction, createFetchAction, createFetchIfNeededAction } from './lists'
 
 import {
   ALBUM_DOCTYPE,
   FETCH_LIMIT
 } from '../constants/config'
-import Alerter from '../components/Alerter'
 
-const CREATE_ALBUM_SUCCESS = 'CREATE_ALBUM_SUCCESS'
-const FETCH_ALBUMS_SUCCESS = 'FETCH_ALBUMS_SUCCESS'
-const FETCH_CURRENT_ALBUM = 'FETCH_CURRENT_ALBUM'
-const FETCH_CURRENT_ALBUM_SUCCESS = 'FETCH_CURRENT_ALBUM_SUCCESS'
-const FETCH_ALBUM_PHOTOS = 'FETCH_ALBUM_PHOTOS'
-const FETCH_ALBUM_PHOTOS_SUCCESS = 'FETCH_ALBUM_PHOTOS_SUCCESS'
-const FETCH_MORE_ALBUM_PHOTOS = 'FETCH_MORE_ALBUM_PHOTOS'
-const FETCH_MORE_ALBUM_PHOTOS_SUCCESS = 'FETCH_MORE_ALBUM_PHOTOS_SUCCESS'
+import Alerter from '../components/Alerter'
+import FormattedError from '../lib/FormattedError'
+
+const ALBUMS = 'albums'
+
 const ADD_TO_ALBUM = 'ADD_TO_ALBUM'
 const ADD_TO_ALBUM_SUCCESS = 'ADD_TO_ALBUM_SUCCESS'
 const CANCEL_ADD_TO_ALBUM = 'CANCEL_ADD_TO_ALBUM'
 
-const INDEX_ALBUMS_BY_NAME_SUCCESS = 'INDEX_ALBUMS_BY_NAME_SUCCESS'
-
-// reducer for the full album list
-const albumsList = (state = [], action = {}) => {
-  switch (action.type) {
-    case CREATE_ALBUM_SUCCESS:
-      return state.concat([action.album])
-    case FETCH_ALBUMS_SUCCESS:
-      return action.albums
-    default:
-      return state
-  }
-}
-
-// reducer for the current album for the album photos view
-const currentAlbum = (state = {}, action = {}) => {
-  switch (action.type) {
-    case FETCH_CURRENT_ALBUM_SUCCESS:
-      return action.album
-    default:
-      return state
-  }
-}
-
-const photos = (state = [], action) => {
-  switch (action.type) {
-    case FETCH_CURRENT_ALBUM:
-      return []
-    case FETCH_ALBUM_PHOTOS_SUCCESS:
-      return action.photos
-    case FETCH_MORE_ALBUM_PHOTOS_SUCCESS:
-      return [
-        ...state,
-        ...action.photos
-      ]
-    default:
-      return state
-  }
-}
-
-export default combineReducers({
-  albumsList,
-  currentAlbum,
-  photos
-})
-
-// helper to hanlde server error
-export const throwServerError = (error) => {
-  throw new Error(error.response
-    ? error.response.statusText
-    : error
-  )
-}
+// Return an index on albums based on names
+const createIndex = async () => cozy.client.data.defineIndex(ALBUM_DOCTYPE, ['name'])
 
 // Returns albums from the provided index
-export const fetchAlbums = (mangoIndex) => {
-  return async (dispatch) => {
-    if (!mangoIndex) throw Error('Albums.fetchAlbums.error.index_missing')
-    return cozy.client.data.query(mangoIndex, {
-      selector: {'name': {'$gt': null}},
-      fields: ['_id', '_type', 'name']
-    })
-    .then(albums => albums.map(album => Object.assign({}, album, { _type: ALBUM_DOCTYPE }))) // FIXME: this adds the missing _type to album
-    .then(async albums => {
-      for (let index in albums) {
-        albums[index].photosIds = Array.from(new Set(await cozy.client.data.listReferencedFiles(albums[index])
-          .catch(throwServerError)))
-      }
-      return albums
-    })
-    .then(albums => dispatch({type: FETCH_ALBUMS_SUCCESS, albums}))
-    .catch(fetchError => {
-      if (fetchError instanceof Error) throw fetchError
-      throwServerError(fetchError)
-    })
-  }
-}
-
-// Returns albums photos informations from the album ID
-export const fetchAlbumPhotosStatsById = (albumId) => {
-  return async (dispatch) => {
-    dispatch({type: FETCH_CURRENT_ALBUM})
-    try {
-      let album = await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
-      const photosIds = await cozy.client.data.listReferencedFiles(album)
-      console.log(photosIds)
-
-      // let fetchedPhotos = []
-      // for (let index in photosIds) {
-      //   const photo = await cozy.client.files.statById(photosIds[index])
-      //   fetchedPhotos.push(Object.assign({}, photo, photo.attributes))
-      // }
-
-      album.photosIds = photosIds
-      dispatch({type: FETCH_CURRENT_ALBUM_SUCCESS, album})
-      return dispatch(fetchPhotosByIds(photosIds))
-    } catch (fetchError) {
-      throwServerError(fetchError)
+const fetchAll = async (index, skip = 0) => {
+  return cozy.client.data.query(index, {
+    selector: {'name': {'$gt': null}},
+    fields: ['_id', '_type', 'name']
+  })
+  .then(albums => albums.map(album => Object.assign({}, album, { _type: ALBUM_DOCTYPE }))) // FIXME: this adds the missing _type to album
+  .then(async albums => {
+    for (let index in albums) {
+      // TODO: we'll soon get a meta: count property for this query
+      const photosIds = await cozy.client.data.listReferencedFiles(albums[index])
+      albums[index].photoCount = photosIds.length
+      albums[index].coverId = photosIds[0]
     }
-  }
+    return { entries: albums }
+  })
 }
+
+export const fetchAlbums = createFetchIfNeededAction(ALBUMS, (index, skip = 0) => {
+  return index
+    ? fetchAll(index, skip)
+    : createIndex().then(index => fetchAll(index, skip))
+})
+
+const fetchPhotos = async (album, skip = 0) => {
+  const photos = []
+  const next = album.photoCount > skip + FETCH_LIMIT
+  const limit = next ? FETCH_LIMIT : album.photoCount - skip
+  const photosIds = await cozy.client.data.listReferencedFiles(album)
+  for (let i = skip; i < skip + limit; i++) {
+    const photo = await cozy.client.files.statById(photosIds[i])
+    photos.push(Object.assign({}, photo, photo.attributes))
+  }
+  return { entries: photos, next, skip }
+}
+
+export const fetchAlbumPhotos = (albumId, skip = 0) =>
+  (dispatch, getState) =>
+    dispatch(createFetchAction(`${ALBUMS}/${albumId}`, fetchPhotos)(getAlbum(getState(), albumId), skip))
+
+const checkExistingAlbumsByName = async (name = null, mangoIndex = null) => {
+  mangoIndex = mangoIndex || await createIndex()
+  return await cozy.client.data.query(mangoIndex, {
+    selector: { name: name },
+    fields: ['_id']
+  })
+}
+
+const createEmptyAlbum = async (name = null) => {
+  if (!name) {
+    throw new FormattedError('Albums.create.error.name_missing', { name })
+  }
+  const existingAlbums = await checkExistingAlbumsByName(name)
+  if (existingAlbums.length) {
+    throw new FormattedError('Albums.create.error.already_exists', { name })
+  }
+  return await cozy.client.data.create(ALBUM_DOCTYPE, { name })
+}
+
+export const createAlbum = (name = null, photos = []) =>
+  async dispatch => {
+    return dispatch(createInsertAction(ALBUMS, async () => {
+      const album = await createEmptyAlbum(name)
+      return dispatch(addToAlbum(album, photos))
+        .then(() => ({ entries: [album] }))
+    })())
+  }
+
+export const addToAlbum = (album, photos = []) =>
+  async dispatch =>
+    dispatch(createInsertAction(`${ALBUMS}/${album._id}`, async () => {
+      const newPhotos = photos.filter(photo => !album.photosIds || album.photosIds.indexOf(photo) === -1)
+      if (newPhotos.length !== photos.length) {
+        // TODO: find a way to remove this Alert call
+        Alerter.info('Alerter.photos.already_added_photo')
+      }
+      if (newPhotos.length > 0) {
+        return await cozy.client.data.addReferencedFiles(album, newPhotos)
+      } else {
+        throw new Error('Albums.add_photo.error.reference')
+      }
+    })())
 
 export const removeFromAlbum = (photos = [], album = null) =>
   dispatch => cozy.client.data.removeReferencedFiles(album, photos)
     .then(() => dispatch({ type: ADD_TO_ALBUM_SUCCESS, album }))
-    .catch(throwServerError)
-
-export const fetchPhotosByIds = (ids, skip = 0) => {
-  return async dispatch => {
-    try {
-      dispatch({ type: skip !== 0 ? FETCH_MORE_ALBUM_PHOTOS : FETCH_ALBUM_PHOTOS })
-      const photos = []
-      const limit = ids.length > skip + FETCH_LIMIT ? FETCH_LIMIT : ids.length
-      for (let i = skip; i < limit; i++) {
-        const photo = await cozy.client.files.statById(ids[i])
-        photos.push(Object.assign({}, photo, photo.attributes))
-      }
-      dispatch({
-        type: skip !== 0 ? FETCH_MORE_ALBUM_PHOTOS_SUCCESS : FETCH_ALBUM_PHOTOS_SUCCESS,
-        photos,
-        next: ids.length > skip + FETCH_LIMIT
-      })
-    } catch (error) {
-      console.log(error)
-      // Alerter.error('Alerter.photos.fetching_error')
-      // return dispatch({
-      //   type: FETCH_PHOTOS_FAILURE,
-      //   error
-      // })
-    }
-  }
-}
-
-// create album
-export const addToAlbum = (photos = [], album = null) => {
-  return async dispatch => {
-    if (!album) {
-      return dispatch({
-        type: ADD_TO_ALBUM,
-        photos: photos
-      })
-    }
-    const newPhotos = photos.filter(photo => !album.photosIds || album.photosIds.indexOf(photo) === -1)
-    if (newPhotos.length !== photos.length) {
-      Alerter.info('Alerter.photos.already_added_photo')
-    }
-    if (newPhotos.length > 0) {
-      return await cozy.client.data.addReferencedFiles(album, newPhotos)
-        .then(() => {
-          dispatch({
-            type: ADD_TO_ALBUM_SUCCESS,
-            album: album
-          })
-          return album
-        })
-        .catch(fetchError => {
-          throwServerError(fetchError)
-        })
-    } else {
-      throw new Error('Albums.add_photo.error.reference')
-    }
-  }
-}
-
-export const cancelAddToAlbum = (photos = []) => {
-  return async dispatch => {
-    dispatch({
-      type: CANCEL_ADD_TO_ALBUM,
-      photos: photos
-    })
-  }
-}
-
-// Return an index on albums based on names
-export const createAlbumMangoIndex = () => {
-  return async dispatch => {
-    return cozy.client.data.defineIndex(ALBUM_DOCTYPE, ['name'])
-      .then(mangoIndex => {
-        dispatch({
-          type: INDEX_ALBUMS_BY_NAME_SUCCESS,
-          mangoIndex: mangoIndex
-        })
-        return mangoIndex
-      }).catch(fetchError => {
-        throwServerError(fetchError)
-      })
-  }
-}
-
-// Returns existing albums having given name
-export const checkExistingAlbumsByName = (name = null, mangoIndex = null) => {
-  return async (dispatch) => {
-    try {
-      mangoIndex = mangoIndex || await createAlbumMangoIndex()(dispatch)
-    } catch (error) {
-      throwServerError(error)
-    }
-
-    return await cozy.client.data.query(mangoIndex, {
-      selector: { name: name },
-      fields: ['_id']
-    }).catch(fetchError => {
-      throwServerError(fetchError)
-    })
-  }
-}
-
-// Temporary parameter photos
-export const createAlbum = (name = null, mangoIndex = null, photos = []) => {
-  return async dispatch => {
-    if (!name) {
-      let error = 'Albums.create.error.name_missing'
-      return Promise.reject(error)
-    }
-
-    return await checkExistingAlbumsByName(name, mangoIndex)(dispatch)
-      .then(existingAlbums => {
-        if (existingAlbums.length) {
-          let error = 'Albums.create.error.already_exists'
-          return Promise.reject(error)
-        }
-
-        return cozy.client.data.create(ALBUM_DOCTYPE, { name: name })
-          .then(album => {
-            dispatch({
-              type: CREATE_ALBUM_SUCCESS,
-              album: album
-            })
-            return album
-          })
-          .catch(fetchError => {
-            throwServerError(fetchError)
-          })
-      }).catch(error => {
-        return Promise.reject(error)
-      })
-  }
-}
 
 export const deleteAlbum = album =>
   async dispatch =>
     cozy.client.data.delete(ALBUM_DOCTYPE, album)
-      .catch(throwServerError)
 
-export const getAlbumsList = state => state.albumsList
-export const getCurrentAlbum = state => state.currentAlbum
+// TODO: refactor these 3 actions somewhere...
+export const openAddToAlbum = photos => ({
+  type: ADD_TO_ALBUM,
+  photos: photos
+})
+
+export const closeAddToAlbum = () => ({
+  type: ADD_TO_ALBUM_SUCCESS
+})
+
+export const cancelAddToAlbum = photos => ({
+  type: CANCEL_ADD_TO_ALBUM,
+  photos: photos
+})
+
+// selectors
+export const getAlbumsList = state => getList(state, ALBUMS)
+
+export const getAlbum = (state, id) => {
+  const list = getAlbumsList(state)
+  return list ? list.entries.find(a => a._id === id) : null
+}
+
+export const getAlbumPhotos = (state, albumId) => getList(state, `${ALBUMS}/${albumId}`)

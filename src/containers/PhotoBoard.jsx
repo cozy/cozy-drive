@@ -36,7 +36,11 @@ class MoreButton extends Component {
     const { fetching } = this.state
     return (
       <div style={{ width: width }} className={styles['pho-list-morebutton']}>
-        {fetching && <Spinner />}
+        {fetching &&
+          <button className='coz-btn' disabled>
+            <Spinner />
+          </button>
+        }
         {!fetching &&
           <button
             className='coz-btn coz-btn--secondary'
@@ -53,16 +57,24 @@ class MoreButton extends Component {
 export class PhotoBoard extends Component {
   render () {
     const {
+      t,
+      containerWidth,
       showSelection,
       selected,
       showAddToAlbumModal,
       onPhotoToggle,
-      onFetchMore,
       photosContext
     } = this.props
-    const { t, isFetching, isWorking, isIndexing, hasMore, containerWidth } = this.props
-    const { photoLists, isError } = this.props
-    const isBusy = isFetching || isWorking || isIndexing
+
+    const {
+      photoLists,
+      fetchStatus,
+      hasMore,
+      onFetchMore
+    } = this.props
+
+    const isError = fetchStatus === 'failed'
+    const isFetching = fetchStatus === 'pending' || fetchStatus === 'loading'
 
     if (isError) {
       return (
@@ -77,20 +89,14 @@ export class PhotoBoard extends Component {
         role='contentinfo'
         className={showSelection ? styles['pho-list-selection'] : ''}
       >
-        { isIndexing &&
-          <Loading loadingType='photos_indexing' />
-        }
         { isFetching &&
           <Loading loadingType='photos_fetching' />
-        }
-        { isWorking &&
-          <Loading loadingType='photos_upload' />
         }
         { showAddToAlbumModal &&
           <AddToAlbumModal />
         }
         {showSelection && <SelectionBar />}
-        {!isBusy && photoLists.map(photoList =>
+        {!isFetching && photoLists.map(photoList =>
           <PhotoList
             key={photoList.title}
             title={photoList.title}
@@ -100,12 +106,12 @@ export class PhotoBoard extends Component {
             containerWidth={containerWidth}
           />
         )}
-        {!isBusy && hasMore &&
+        {!isFetching && hasMore &&
           <MoreButton width={containerWidth} onClick={onFetchMore}>
             {t('Board.load_more')}
           </MoreButton>
         }
-        {!isBusy && photoLists.length === 0 &&
+        {!isFetching && photoLists.length === 0 &&
           <Empty emptyType={`${photosContext}_photos`} />
         }
       </div>
@@ -114,10 +120,6 @@ export class PhotoBoard extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.ui.isFetching,
-  isIndexing: state.ui.isIndexing,
-  isWorking: state.ui.isWorking,
-  hasMore: state.ui.hasMore,
   selected: state.ui.selected,
   showSelection: mustShowSelectionBar(state),
   showAddToAlbumModal: state.ui.showAddToAlbumModal
