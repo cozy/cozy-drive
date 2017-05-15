@@ -18,11 +18,11 @@ module.exports = {
 //
 // For dev builds we use the generic "app" slug to share the same application
 // domain for each applications.
-function transformManifest(buffer) {
+function transformManifest (buffer) {
   if (build) {
     return buffer
   }
   const content = JSON.parse(buffer.toString())
-  content.slug = "app"
+  content.slug = 'app'
   return JSON.stringify(content, null, '  ')
 }

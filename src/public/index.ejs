@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Public Cozy Photos</title>
+  <script src="public/app.js"></script>
+  <% if (__STACK_ASSETS__) { %>
+    {{.CozyClientJS}}
+    {{.CozyBar}}
+    <% } %>
+</head>
+
+<body>
+
+  <div role="application" data-cozy-token="{{.Token}}" data-cozy-domain="{{.Domain}}" data-cozy-locale="{{.Locale}}" data-cozy-app-name="{{.AppName}}"
+    data-cozy-app-editor="{{.AppEditor}}" data-cozy-icon-path="{{.IconPath}}">
+
+</body>
+
+</html>
