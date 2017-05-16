@@ -1,5 +1,5 @@
- /* global __DEVELOPMENT__ */
-/* global cozy */
+/* global __DEVELOPMENT__ __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ */
+/* global cozy Piwik */
 
 import 'babel-polyfill'
 
@@ -57,10 +57,22 @@ document.addEventListener('DOMContentLoaded', () => {
     replaceTitleOnMobile: true
   })
 
+  let history = hashHistory
+  try {
+    var PiwikReactRouter = require('piwik-react-router')
+    const piwikTracker = (Piwik.getTracker(), PiwikReactRouter({
+      url: __PIWIK_TRACKER_URL__,
+      siteId: __PIWIK_SITEID__,
+      injectScript: false
+    }))
+    piwikTracker.push(['enableHeartBeatTimer'])
+    history = piwikTracker.connectToHistory(hashHistory)
+  } catch (err) {}
+
   render((
     <I18n context={context} lang={data.cozyLocale}>
       <Provider store={store}>
-        <Router history={hashHistory} routes={AppRoute} />
+        <Router history={history} routes={AppRoute} />
       </Provider>
     </I18n>
   ), root)
