@@ -63,18 +63,12 @@ $ yarn watch:browser
 
 ```sh
 # in another terminal, run the docker container
-$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app/drive cozy/cozy-app-dev
 or
-$ yarn server
-```
-:warning: Don't forget to add `cozy.local` and `app.cozy.local` to your `/etc/hosts`
-
-```
-127.0.0.1 cozy.local
-127.0.0.1 app.cozy.local
+$ yarn stack:docker
 ```
 
-your app is available at http://app.cozy.local:8080.
+your app is available at http://drive.cozy.tools:8080.
 
 
 ### Run on you mobile phone or your tablet :phone:
@@ -87,7 +81,7 @@ your app is available at http://app.cozy.local:8080.
 [Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
 
 ```sh
-git clone https://github.com/cozy/cozy-ui.git -b v3
+git clone https://github.com/cozy/cozy-ui.git
 cd cozy-ui
 yarn install
 yarn link
