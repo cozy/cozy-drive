@@ -44,3 +44,7 @@ export const addPhotosToTimeline = photos => {
 }
 
 export const getTimelineList = state => getList(state, TIMELINE)
+
+import Toolbar from './components/Toolbar'
+
+export { Toolbar }

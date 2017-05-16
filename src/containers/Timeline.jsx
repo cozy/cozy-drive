@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { translate } from '../lib/I18n'
-import { fetchIfNeededPhotos, fetchMorePhotos, getTimelineList } from '../ducks/timeline'
+import { Toolbar as TimelineToolbar, fetchIfNeededPhotos, fetchMorePhotos, getTimelineList } from '../ducks/timeline'
 import { getPhotosByMonth } from '../lib/helpers'
 
 import PhotoBoard from './PhotoBoard'
@@ -30,7 +30,9 @@ export class Timeline extends Component {
 
     return (
       <div>
-        <Topbar viewName='photos' />
+        <Topbar viewName='photos'>
+          <TimelineToolbar />
+        </Topbar>
         <PhotoBoard
           photoLists={photoLists}
           fetchStatus={list.fetchStatus}

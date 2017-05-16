@@ -1,13 +1,13 @@
 /* global cozy */
-import { getList, createInsertAction, createFetchAction, createFetchIfNeededAction } from './lists'
+import { getList, createInsertAction, createFetchAction, createFetchIfNeededAction } from '../lists'
 
 import {
   ALBUM_DOCTYPE,
   FETCH_LIMIT
-} from '../constants/config'
+} from '../../constants/config'
 
-import Alerter from '../components/Alerter'
-import FormattedError from '../lib/FormattedError'
+import Alerter from '../../components/Alerter'
+import FormattedError from '../../lib/FormattedError'
 
 const ALBUMS = 'albums'
 
@@ -133,3 +133,7 @@ export const getAlbum = (state, id) => {
 }
 
 export const getAlbumPhotos = (state, albumId) => getList(state, `${ALBUMS}/${albumId}`)
+
+import AlbumToolbar from './components/AlbumToolbar'
+
+export { AlbumToolbar }
