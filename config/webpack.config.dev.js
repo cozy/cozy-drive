@@ -13,8 +13,10 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __SERVER__: JSON.stringify('http://app.cozy.local'),
-      __STACK_ASSETS__: false
+      __DEVELOPMENT__: true,
+      __STACK_ASSETS__: false,
+      __PIWIK_SITEID__: 8,
+      __PIWIK_TRACKER_URL__: JSON.stringify('https://piwik.cozycloud.cc')
     }),
     new webpack.ProvidePlugin({
       'cozy.client': 'cozy-client-js/dist/cozy-client.js',
