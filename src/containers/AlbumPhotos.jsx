@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos } from '../ducks/albums'
+import { AlbumPhotoToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos } from '../ducks/albums'
 
 import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
@@ -26,7 +26,7 @@ export class AlbumPhotos extends Component {
       <div>
         {album.name &&
           <Topbar viewName='albumContent' albumName={album.name}>
-            <AlbumToolbar album={album} />
+            <AlbumPhotoToolbar album={album} />
           </Topbar>
         }
         {photos &&

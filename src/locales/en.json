@@ -69,6 +69,22 @@
         }
       }
     },
+    "share": {
+      "cta": "Share",
+      "title": "Share with others",
+      "shareByLink": {
+        "title": "Share by link",
+        "desc": "Anyone with the provided link can see and download your photos."
+      },
+      "sharingLink": {
+        "title": "Link to share",
+        "copy": "Copy"
+      },
+      "protectedShare": {
+        "title": "Coming soon!",
+        "desc": "Share anything by email with your family and friends!"
+      }
+    },
     "create": {
       "inline_form": {
         "placeholder": "New album name",
