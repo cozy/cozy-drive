@@ -114,6 +114,7 @@
     "localforage": "^1.4.3",
     "node-polyglot": "^2.2.0",
     "node-uuid": "^1.4.7",
+    "piwik-react-router": "^0.8.2",
     "pouchdb": "^6.1.1",
     "pouchdb-find": "^0.10.4",
     "preact": "^8.1.0",
