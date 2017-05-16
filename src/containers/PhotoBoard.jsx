@@ -15,71 +15,88 @@ import SelectionBar from './SelectionBar'
 import PhotoList from '../components/PhotoList'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
 
-export class PhotoBoard extends Component {
+const Spinner = () => <div class={styles['pho-list-spinner']} />
+
+class MoreButton extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isFetching: true,
-      photoLists: []
-    }
-
-    this.fetchPhotoLists(props)
-  }
-
-  componentWillReceiveProps (nextProps, nextState) {
-    if (!this.state.isFetching && nextProps.refetch) {
-      this.fetchPhotoLists(nextProps)
+      fetching: false
     }
   }
 
-  fetchPhotoLists (props) {
-    props.fetchPhotoLists().then(photoLists => {
-      this.setState({
-        isFetching: false,
-        photoLists: photoLists
-      })
-    }).catch(photosError => {
-      console.error(photosError)
-      this.setState({isFetching: false, isError: true})
-    })
+  handleClick () {
+    this.setState({ fetching: true })
+    this.props.onClick()
+      .then(() => this.setState({ fetching: false }))
   }
 
   render () {
+    const { children, width } = this.props
+    const { fetching } = this.state
+    return (
+      <div style={{ width: width }} className={styles['pho-list-morebutton']}>
+        {fetching &&
+          <button className='coz-btn' disabled>
+            <Spinner />
+          </button>
+        }
+        {!fetching &&
+          <button
+            className='coz-btn coz-btn--secondary'
+            onClick={() => this.handleClick()}
+          >
+            {children}
+          </button>
+        }
+      </div>
+    )
+  }
+}
+
+export class PhotoBoard extends Component {
+  render () {
     const {
+      t,
+      containerWidth,
       showSelection,
       selected,
       showAddToAlbumModal,
       onPhotoToggle,
       photosContext
     } = this.props
-    const { isFetching, isWorking, isIndexing, containerWidth } = this.props
-    const isGloballyFetching = isFetching || (!isIndexing && this.state.isFetching)
-    const { photoLists, isError } = this.state
-    const isBusy = isGloballyFetching || isWorking || isIndexing
+
+    const {
+      photoLists,
+      fetchStatus,
+      hasMore,
+      onFetchMore
+    } = this.props
+
+    const isError = fetchStatus === 'failed'
+    const isFetching = fetchStatus === 'pending' || fetchStatus === 'loading'
+
     if (isError) {
-      return <div role='contentinfo'>
-        <ErrorComponent errorType={`${photosContext}_photos`} />
-      </div>
+      return (
+        <div role='contentinfo'>
+          <ErrorComponent errorType={`${photosContext}_photos`} />
+        </div>
+      )
     }
+
     return (
       <div
         role='contentinfo'
         className={showSelection ? styles['pho-list-selection'] : ''}
       >
-        { isIndexing &&
-          <Loading loadingType='photos_indexing' />
-        }
-        { isGloballyFetching &&
+        { isFetching &&
           <Loading loadingType='photos_fetching' />
-        }
-        { isWorking &&
-          <Loading loadingType='photos_upload' />
         }
         { showAddToAlbumModal &&
           <AddToAlbumModal />
         }
         {showSelection && <SelectionBar />}
-        {!isBusy && photoLists.map(photoList =>
+        {!isFetching && photoLists.map(photoList =>
           <PhotoList
             key={photoList.title}
             title={photoList.title}
@@ -89,7 +106,12 @@ export class PhotoBoard extends Component {
             containerWidth={containerWidth}
           />
         )}
-        {!isBusy && photoLists.length === 0 &&
+        {!isFetching && hasMore &&
+          <MoreButton width={containerWidth} onClick={onFetchMore}>
+            {t('Board.load_more')}
+          </MoreButton>
+        }
+        {!isFetching && photoLists.length === 0 &&
           <Empty emptyType={`${photosContext}_photos`} />
         }
       </div>
@@ -98,9 +120,6 @@ export class PhotoBoard extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.ui.isFetching,
-  isIndexing: state.ui.isIndexing,
-  isWorking: state.ui.isWorking,
   selected: state.ui.selected,
   showSelection: mustShowSelectionBar(state),
   showAddToAlbumModal: state.ui.showAddToAlbumModal

@@ -8,17 +8,17 @@ import { withError } from '../components/ErrorComponent'
 import { withEmpty } from '../components/Empty'
 
 import Loading from '../components/Loading'
-import SelectAlbumItem from '../components/SelectAlbumItem'
+import AlbumItem from '../components/AlbumItem'
 
-import { fetchAlbums, createAlbumMangoIndex, getAlbumsList } from '../ducks/albums'
+import { fetchAlbums, getAlbumsList } from '../ducks/albums'
 
 const DumbAlbumsList = props => (
   <div className={classNames(styles['pho-album-list'], styles['pho-album-list--thumbnails'], styles['pho-album-list--selectable'])}>
-    {props.albums.map((a) => <SelectAlbumItem album={a} key={a._id} onServerError={props.onServerError} onSelectAlbum={props.onSubmitSelectedAlbum} />)}
+    {props.albums.entries.map((a) => <AlbumItem album={a} key={a._id} onServerError={props.onServerError} onClick={props.onSubmitSelectedAlbum} />)}
   </div>
 )
 
-const AlbumsList = withEmpty(props => props.albums.length === 0, 'albums', DumbAlbumsList)
+const AlbumsList = withEmpty(props => props.albums.entries.length === 0, 'albums', DumbAlbumsList)
 
 const DumbAlbumsView = props => (
   <div>
@@ -29,27 +29,19 @@ const DumbAlbumsView = props => (
 const ErrorAlbumsView = withError(props => props.error, 'albums', DumbAlbumsView)
 
 export class AlbumsView extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {isFetching: true, error: false}
-  }
-
   componentWillMount () {
-    this.props.fetchAlbums()
-      .then(() => {
-        this.setState({isFetching: false, error: false})
-      })
-      .catch(albumsError => {
-        this.setState({isFetching: false, error: albumsError})
-      })
-  }
-
-  handleError (error) {
-    this.setState({error})
+    if (!this.props.albums) {
+      this.props.fetchAlbums()
+    }
   }
 
   render () {
-    const { isFetching, error } = this.state
+    if (!this.props.albums) {
+      return null
+    }
+    const { fetchingStatus } = this.props.albums
+    const isFetching = fetchingStatus === 'pending' || fetchingStatus === 'loading'
+    const error = fetchingStatus === 'failed'
     return isFetching
       ? <Loading loadingType='albums_fetching' />
       : <ErrorAlbumsView error={error} onServerError={() => this.handleError(error)} {...this.props} />
@@ -57,17 +49,11 @@ export class AlbumsView extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  albums: getAlbumsList(state.albums)
+  albums: getAlbumsList(state)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbums: () => {
-    return dispatch(createAlbumMangoIndex()).then(
-      albumsIndexByName => {
-        return dispatch(fetchAlbums(albumsIndexByName))
-      }
-    )
-  }
+  fetchAlbums: () => dispatch(fetchAlbums())
 })
 
 export default connect(

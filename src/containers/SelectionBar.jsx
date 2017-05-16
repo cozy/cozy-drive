@@ -9,7 +9,7 @@ import { translate } from '../lib/I18n'
 import Alerter from '../components/Alerter'
 import { hideSelectionBar } from '../actions/selection'
 
-import { addToAlbum, removeFromAlbum, getCurrentAlbum } from '../ducks/albums'
+import { getAlbum, openAddToAlbum, removeFromAlbum } from '../ducks/albums'
 
 const SelectionBar = ({ t, selected, selectedCount, album, onHide, onAddToAlbum, onRemoveFromAlbum, router }) => (
   <div
@@ -47,19 +47,19 @@ const SelectionBar = ({ t, selected, selectedCount, album, onHide, onAddToAlbum,
 const mapStateToProps = (state, ownProps) => ({
   selected: state.ui.selected,
   selectedCount: state.ui.selected.length,
-  album: getCurrentAlbum(state.albums)
+  album: ownProps.params.albumId ? getAlbum(state, ownProps.params.albumId) : null
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onHide: () => dispatch(hideSelectionBar()),
-  onAddToAlbum: selected => dispatch(addToAlbum(selected)),
+  onAddToAlbum: selected => dispatch(openAddToAlbum(selected)),
   onRemoveFromAlbum: (selected, album) =>
   dispatch(removeFromAlbum(selected, album))
    .then(() => Alerter.success('Albums.remove_photos.success', { album_name: album.name }))
   .catch(() => Alerter.error('Albums.remove_photos.error.generic'))
 })
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(withRouter(SelectionBar)))
+)(translate()(SelectionBar)))

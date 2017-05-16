@@ -10,12 +10,11 @@ import Alerter from '../components/Alerter'
 import CreateAlbumForm from '../components/CreateAlbumForm'
 import SelectAlbumsForm from '../components/SelectAlbumsForm'
 
-import { cancelAddToAlbum, createAlbum, addToAlbum } from '../ducks/albums'
+import { cancelAddToAlbum, closeAddToAlbum, createAlbum, addToAlbum } from '../ducks/albums'
 
 export const AddToAlbumModal = props => {
   const {
     t,
-    mangoIndex,
     photos,
     onDismiss,
     onSubmitNewAlbum,
@@ -29,7 +28,7 @@ export const AddToAlbumModal = props => {
       <div className={classNames(styles['coz-modal-section'])}>
         <div className={classNames(styles['coz-create-album'])}>
           <CreateAlbumForm
-            onSubmitNewAlbum={name => onSubmitNewAlbum(name, mangoIndex, photos)}
+            onSubmitNewAlbum={name => onSubmitNewAlbum(name, photos)}
             />
         </div>
         <div className={classNames(styles['coz-select-album'])}>
@@ -42,16 +41,7 @@ export const AddToAlbumModal = props => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    photos: state.ui.selected,
-    mangoIndex: state.mango.albumsIndexByName
-  }
-}
-
-const handleActionError = name => {
-  return error => {
-    const isUnexpectedError = !!error.message
-    Alerter.error(isUnexpectedError ? 'Albums.add_photos.error.reference' : error, {name: name})
-    return Promise.reject(error)
+    photos: state.ui.selected
   }
 }
 
@@ -59,21 +49,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: () => {
     dispatch(cancelAddToAlbum())
   },
-  // Removes photos parameter when we will be able to pick an album instead
-  // of adding photo to the created one by default.
-  onSubmitNewAlbum: (name, mangoIndex, photos) => {
-    return dispatch(createAlbum(name, mangoIndex, photos))
-      .then(
-        album => dispatch(addToAlbum(photos, album))
-            .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}))
-            .catch(handleActionError),
-            handleActionError(name))
+  onSubmitNewAlbum: (name, photos) => {
+    return dispatch(createAlbum(name, photos))
+      .then(() => {
+        dispatch(closeAddToAlbum())
+        Alerter.success('Albums.add_photos.success', {name: name, smart_count: photos.length})
+      })
   },
   onSubmitSelectedAlbum: (album, photos) => {
-    return dispatch(addToAlbum(photos, album))
-      .then(() => Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length}),
-      handleActionError(album.name))
-      .catch(handleActionError)
+    return dispatch(addToAlbum(album, photos))
+      .then(() => {
+        dispatch(closeAddToAlbum())
+        Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length})
+      })
   }
 })
 

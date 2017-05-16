@@ -2,31 +2,42 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { fetchAlbumPhotosStatsById } from '../ducks/albums'
+import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos } from '../ducks/albums'
 
 import PhotoBoard from './PhotoBoard'
 import Topbar from '../components/Topbar'
 
 export class AlbumPhotos extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      photosAreDirty: false
+  componentWillMount () {
+    if (!this.props.album) {
+      this.props.fetchAlbums()
+        .then(() => this.props.fetchPhotos(this.props.router.params.albumId))
+    } else {
+      this.props.fetchPhotos(this.props.router.params.albumId)
     }
   }
 
   render () {
-    const { router, onFetchAlbumPhotos, album } = this.props
-    const albumId = router.params.albumId
+    if (!this.props.album) {
+      return null
+    }
+    const { album, photos, fetchPhotos } = this.props
     return (
       <div>
         {album.name &&
-          <Topbar viewName='albumContent' albumName={album.name} />
+          <Topbar viewName='albumContent' albumName={album.name}>
+            <AlbumToolbar album={album} />
+          </Topbar>
         }
-        <PhotoBoard
-          fetchPhotoLists={() => onFetchAlbumPhotos(albumId)}
-          photosContext='album'
-        />
+        {photos &&
+          <PhotoBoard
+            photoLists={[{ photos: photos.entries }]}
+            fetchStatus={photos.fetchStatus}
+            hasMore={photos.hasMore}
+            photosContext='album'
+            onFetchMore={() => fetchPhotos(album._id, photos.entries.length)}
+          />
+        }
         { this.props.children }
       </div>
     )
@@ -34,16 +45,13 @@ export class AlbumPhotos extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  album: state.albums.currentAlbum
+  album: getAlbum(state, ownProps.router.params.albumId),
+  photos: getAlbumPhotos(state, ownProps.router.params.albumId)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  onFetchAlbumPhotos: (albumId) => {
-    return dispatch(fetchAlbumPhotosStatsById(albumId))
-      .then(photos => {
-        return photos.length ? [{photos}] : []
-      })
-  }
+  fetchAlbums: () => dispatch(fetchAlbums()),
+  fetchPhotos: (albumId, skip) => dispatch(fetchAlbumPhotos(albumId, skip))
 })
 
 export default connect(

@@ -4,7 +4,7 @@
 
 jest.mock('../../src/actions/photos', () => {
   return {
-    getPhotoLink: () => Promise.resolve('test/monImage.jpg')
+    getThumbnailUrl: () => Promise.resolve('test/small/monImage.jpg')
   }
 })
 

@@ -96,13 +96,19 @@ beforeAll(() => {
       // default query return success fetched photos
       query: jest.fn(() => {
         return new Promise(function (resolve, reject) {
-          resolve(mockFetchedPhotos)
+          resolve({
+            docs: mockFetchedPhotos,
+            next: false
+          })
         })
       })
-      // first call return success uploaded photo
+      // first call return success fetched photos
       .mockImplementationOnce(() => {
         return new Promise(function (resolve, reject) {
-          resolve(mockFetchedPhotos)
+          resolve({
+            docs: mockFetchedPhotos,
+            next: false
+          })
         })
       })
       // second call return error when photos fetching failure
@@ -168,12 +174,12 @@ describe('fetchPhotos', () => {
   it('should call cozy.client.data.query to fetch 1 photo with success', () => {
     const expectedActions = [
       {
-        type: FETCH_PHOTOS,
-        mangoIndexByDate: mangoIndexByDateObject
+        type: FETCH_PHOTOS
       },
       {
         type: RECEIVE_PHOTOS,
-        photos: mockFetchedPhotos
+        photos: mockFetchedPhotos,
+        next: false
       }
     ]
     const store = mockStore({})
@@ -188,8 +194,7 @@ describe('fetchPhotos', () => {
   it('should call cozy.client.data.query and dispatch FETCH_PHOTOS_FAILURE if error', () => {
     const expectedActions = [
       {
-        type: FETCH_PHOTOS,
-        mangoIndexByDate: mangoIndexByDateObject
+        type: FETCH_PHOTOS
       },
       {
         type: FETCH_PHOTOS_FAILURE,

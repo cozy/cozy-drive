@@ -1,4 +1,4 @@
-export const getPhotosByMonth = ({ photos }) => {
+export const getPhotosByMonth = photos => {
   let months = {}
   photos.forEach(p => {
     // here we want to get an object whose keys are months in a l10able format

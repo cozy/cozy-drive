@@ -36,6 +36,9 @@
     "albums_fetching": "Loading",
     "photos_upload": "Uploading"
   },
+  "Board": {
+    "load_more": "Load more photos"
+  },
   "Alerter": {
     "photos": {
       "fetching_error": "An error occurred during photos fetching.",

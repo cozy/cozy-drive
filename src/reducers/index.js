@@ -1,17 +1,13 @@
 import { combineReducers } from 'redux'
 
-import albums from '../ducks/albums'
-import { photos } from './photos'
-import timeline from './timeline'
-import mango from './mango'
 import ui from './ui'
+import lists from '../ducks/lists'
+import alerterReducer from 'cozy-ui/react/Alerter'
 
 const photosApp = combineReducers({
-  albums,
-  photos,
-  timeline,
   ui,
-  mango
+  lists,
+  alerts: alerterReducer
 })
 
 export const mustShowSelectionBar = state => state.ui.showSelectionBar || state.ui.selected.length !== 0
