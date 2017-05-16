@@ -104,6 +104,8 @@ const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
     }).catch(err => {
       if (err.status === HTTP_CODE_CONFLICT) {
         dispatch(successMediaUpload(photo))
+      } else if (err === 'Could not fetch the image') {
+        dispatch(successMediaUpload(photo))
       } else {
         logError(err, 'startMediaBackup create error')
       }
