@@ -11,6 +11,7 @@
 <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
   <link rel="stylesheet" href="<%- file %>">
 <% }); %>
+<script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
 <% _.forEach(htmlWebpackPlugin.files.js, function(file) {
     if (!/^public/.test(file)) {
 %>
