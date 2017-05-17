@@ -20,7 +20,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
       onUpload={uploadPhotos}
       disabled={disabled}
       label={t('Toolbar.photo_upload')}
-    />,
+    />
     <MenuButton className='coz-mobile'>
       <button
         role='button'

@@ -91,6 +91,14 @@ export class PhotoBoard extends Component {
       )
     }
 
+    if (!isFetching && (photoLists.length === 0 || photoLists[0].photos.length === 0)) {
+      return (
+        <div role='contentinfo'>
+          <Empty emptyType={`${photosContext}_photos`} />
+        </div>
+      )
+    }
+
     return (
       <AutoSizer>
         {({ width, height }) => (
@@ -116,9 +124,6 @@ export class PhotoBoard extends Component {
               <MoreButton width={width} onClick={onFetchMore}>
                 {t('Board.load_more')}
               </MoreButton>
-            }
-            {!isFetching && photoLists.length === 0 &&
-              <Empty emptyType={`${photosContext}_photos`} />
             }
           </div>
         )}
