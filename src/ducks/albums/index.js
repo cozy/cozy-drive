@@ -1,5 +1,11 @@
 /* global cozy */
-import { getList, createInsertAction, createFetchAction, createFetchIfNeededAction } from '../lists'
+import {
+  getList,
+  createInsertAction,
+  createDeleteAction,
+  createFetchAction,
+  createFetchIfNeededAction
+} from '../lists'
 
 import {
   ALBUM_DOCTYPE,
@@ -22,7 +28,7 @@ const createIndex = async () => cozy.client.data.defineIndex(ALBUM_DOCTYPE, ['na
 const fetchAll = async (index, skip = 0) => {
   return cozy.client.data.query(index, {
     selector: {'name': {'$gt': null}},
-    fields: ['_id', '_type', 'name']
+    fields: ['_id', '_type', '_rev', 'name']
   })
   .then(albums => albums.map(album => Object.assign({}, album, { _type: ALBUM_DOCTYPE }))) // FIXME: this adds the missing _type to album
   .then(async albums => {
@@ -89,25 +95,45 @@ export const createAlbum = (name = null, photos = []) =>
 export const addToAlbum = (album, photos = []) =>
   async dispatch =>
     dispatch(createInsertAction(`${ALBUMS}/${album._id}`, async () => {
+      // TODO: this doesn't work anymore...
       const newPhotos = photos.filter(photo => !album.photosIds || album.photosIds.indexOf(photo) === -1)
       if (newPhotos.length !== photos.length) {
         // TODO: find a way to remove this Alert call
         Alerter.info('Alerter.photos.already_added_photo')
       }
       if (newPhotos.length > 0) {
-        return await cozy.client.data.addReferencedFiles(album, newPhotos)
+        await cozy.client.data.addReferencedFiles(album, newPhotos)
+        return { entries: newPhotos }
       } else {
-        throw new Error('Albums.add_photo.error.reference')
+        throw new FormattedError('Albums.add_photo.error.reference')
       }
     })())
 
-export const removeFromAlbum = (photos = [], album = null) =>
-  dispatch => cozy.client.data.removeReferencedFiles(album, photos)
-    .then(() => dispatch({ type: ADD_TO_ALBUM_SUCCESS, album }))
-
-export const deleteAlbum = album =>
+export const removeFromAlbum = (album, photos = []) =>
   async dispatch =>
-    cozy.client.data.delete(ALBUM_DOCTYPE, album)
+    dispatch(createDeleteAction(`${ALBUMS}/${album._id}`, async () => {
+      await cozy.client.data.removeReferencedFiles(album, photos)
+      return { entries: photos }
+    })())
+
+// export const removeFromAlbum = async (album, photos) => {
+//   const resp = await cozy.client.data.removeReferencedFiles(album, photos)
+//   return deleteItems(`${ALBUMS}/${album._id}`, {
+//     type: REMOVE_FROM_ALBUM,
+//     entries: photos
+//   }) //
+//   // {
+//   //   type: REMOVE_FROM_ALBUM,
+//   //   subType: DELETE_ENTRIES,
+//   //   listName: `${ALBUMS}/${album._id}`
+//   //   entries: photos
+//   // }
+// }
+
+export const deleteAlbum = createDeleteAction(ALBUMS, async (album) => {
+  await cozy.client.data.delete(ALBUM_DOCTYPE, album)
+  return { entries: [album] }
+})
 
 // TODO: refactor these 3 actions somewhere...
 export const openAddToAlbum = photos => ({

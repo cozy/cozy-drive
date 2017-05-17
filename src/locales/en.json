@@ -60,9 +60,9 @@
     "album_item_description": "%{smart_count} photo |||| %{smart_count} photos",
     "add_photos": {
       "title": "Add to album",
-      "success": "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
+      "success": "Album %{name} has been updated with %{smart_count} photo. |||| Album %{name} has been updated with %{smart_count} photos.",
       "error": {
-        "generic": "An error occurred when creating the album, please try again.",
+        "generic": "An error occurred when updating the album, please try again.",
         "reference": "Some photos has not been added to the album. Please check and try again.",
         "response": {
           "Forbidden": "Application does not have permission to update albums."
@@ -75,7 +75,9 @@
         "create_label": "Create a new album",
         "create_button": "Create"
       },
+      "success": "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
       "error": {
+        "generic": "An error occurred when creating the album, please try again.",
         "already_exists": "The album %{name} already exists, please pick another one.",
         "name_missing": "You have to give a name to your album."
       }

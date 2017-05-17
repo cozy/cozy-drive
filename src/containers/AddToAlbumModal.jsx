@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     return dispatch(createAlbum(name, photos))
       .then(() => {
         dispatch(closeAddToAlbum())
-        Alerter.success('Albums.add_photos.success', {name: name, smart_count: photos.length})
+        Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
       })
   },
   onSubmitSelectedAlbum: (album, photos) => {

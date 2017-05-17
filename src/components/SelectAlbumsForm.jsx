@@ -30,9 +30,7 @@ const ErrorAlbumsView = withError(props => props.error, 'albums', DumbAlbumsView
 
 export class AlbumsView extends Component {
   componentWillMount () {
-    if (!this.props.albums) {
-      this.props.fetchAlbums()
-    }
+    this.props.fetchAlbums()
   }
 
   render () {
