@@ -92,9 +92,3 @@ export const getPhotoLink = async (photoId) => {
   return await cozy.client.files.getDownloadLinkById(photoId)
     .then(path => `${cozy.client._url}${path}`)
 }
-
-// Return a thumbnail URL for the photo, for use in src attributes.
-export const getThumbnailUrl = async (photoId) => {
-  return await cozy.client.files.statById(photoId, false)
-    .then(file => `${cozy.client._url}${file.links.small}`)
-}

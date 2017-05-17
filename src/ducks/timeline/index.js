@@ -24,11 +24,13 @@ const fetchPhotos = async (index, skip = 0) => {
     skip,
     wholeResponse: true
   }
-  return await cozy.client.data.query(index, options)
-    .then((response) => {
-      const { docs, next } = response
-      return { entries: docs, next, index, skip }
-    })
+  const { docs, next } = await cozy.client.data.query(index, options)
+  let entries = []
+  for (let doc of docs) {
+    // we need to do this so that photos have their links property
+    entries.push(Object.assign(doc, await cozy.client.files.statById(doc._id)))
+  }
+  return { entries, next, index, skip }
 }
 
 export const fetchIfNeededPhotos = createFetchIfNeededAction(TIMELINE, (index, skip = 0) => {
