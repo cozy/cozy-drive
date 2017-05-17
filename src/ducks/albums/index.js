@@ -115,20 +115,8 @@ export const removeFromAlbum = (album, photos = []) =>
       await cozy.client.data.removeReferencedFiles(album, photos)
       return { entries: photos }
     })())
-
-// export const removeFromAlbum = async (album, photos) => {
-//   const resp = await cozy.client.data.removeReferencedFiles(album, photos)
-//   return deleteItems(`${ALBUMS}/${album._id}`, {
-//     type: REMOVE_FROM_ALBUM,
-//     entries: photos
-//   }) //
-//   // {
-//   //   type: REMOVE_FROM_ALBUM,
-//   //   subType: DELETE_ENTRIES,
-//   //   listName: `${ALBUMS}/${album._id}`
-//   //   entries: photos
-//   // }
-// }
+    // TODO: this is only for closing the selectionBar properly... Fix this!
+    .then(() => dispatch({ type: 'REMOVE_FROM_ALBUM' }))
 
 export const deleteAlbum = createDeleteAction(ALBUMS, async (album) => {
   await cozy.client.data.delete(ALBUM_DOCTYPE, album)

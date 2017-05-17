@@ -42,7 +42,7 @@ export const fetchIfNeededPhotos = createFetchIfNeededAction(TIMELINE, (index, s
 export const fetchMorePhotos = createFetchAction(TIMELINE, fetchPhotos)
 
 export const addPhotosToTimeline = photos => {
-  return async dispatch => dispatch(insertAction(TIMELINE, photos))
+  return async dispatch => dispatch(insertAction(TIMELINE, { entries: photos }))
 }
 
 export const getTimelineList = state => getList(state, TIMELINE)

@@ -25,6 +25,7 @@ export class Timeline extends Component {
     if (!list) {
       return null
     }
+
     const photoLists = getPhotosByMonth(list.entries)
       .map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))
 

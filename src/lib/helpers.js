@@ -1,19 +1,25 @@
 export const getPhotosByMonth = photos => {
-  let months = {}
+  let sections = {}
   photos.forEach(p => {
     // here we want to get an object whose keys are months in a l10able format
     // so we only keep the year and month part of the date
     const month = p.metadata.datetime.slice(0, 7) + '-01T00:00'
     /* istanbul ignore else */
-    if (!months.hasOwnProperty(month)) {
-      months[month] = []
+    if (!sections.hasOwnProperty(month)) {
+      sections[month] = []
     }
-    months[month].push(p)
+    sections[month].push(p)
   })
-  return Object.keys(months).map(month => {
+  // we need to sort the months here because when new photos are uploaded, they
+  // are inserted on top of the list, and months can become unordered
+  const sortedMonths = Object.keys(sections).sort(
+    (a, b) => new Date(a).getTime() - new Date(b).getTime()
+  ).reverse()
+
+  return sortedMonths.map(month => {
     return {
       title: month,
-      photos: months[month]
+      photos: sections[month]
     }
   })
 }

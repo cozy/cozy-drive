@@ -29,21 +29,9 @@ export class Viewer extends Component {
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
-    // get currentPhoto image if currentPhoto defined
-    let currentPhoto = this.props.currentPhoto || nextProps.currentPhoto
-    if (this.state.imageUrl === '' && currentPhoto !== undefined) {
-      getPhotoLink(currentPhoto._id)
-        .then(link => {
-          this.setState({
-            imageUrl: link,
-            isLoading: false
-          })
-        })
-    }
-  }
-
   componentDidMount () {
+    this.fetchPhoto(this.props.currentPhoto._id)
+
     this.onKeyDownCallback = this.onKeyDown.bind(this)
     document.addEventListener('keydown', this.onKeyDownCallback, false)
 
@@ -51,9 +39,17 @@ export class Viewer extends Component {
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
   }
 
+  componentWillReceiveProps (nextProps) {
+    // get currentPhoto image if currentPhoto defined
+    let currentPhoto = this.props.currentPhoto || nextProps.currentPhoto
+    if (this.state.imageUrl === '' && currentPhoto !== undefined) {
+      this.fetchPhoto(currentPhoto._id)
+    }
+  }
+
   componentWillUnmount () {
     document.removeEventListener('keydown', this.onKeyDownCallback, false)
-    this.gesturesHandler.destroy()
+    // this.gesturesHandler.destroy()
   }
 
   onKeyDown (e) {
@@ -64,6 +60,16 @@ export class Viewer extends Component {
   onSwipe (e) {
     if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.props.nextID)
     else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.props.previousID)
+  }
+
+  fetchPhoto (id) {
+    return getPhotoLink(id)
+      .then(link => {
+        this.setState({
+          imageUrl: link,
+          isLoading: false
+        })
+      })
   }
 
   navigateToPhoto (id) {
