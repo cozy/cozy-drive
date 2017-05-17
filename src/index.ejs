@@ -13,7 +13,7 @@
 <% }); %>
 <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
 <% _.forEach(htmlWebpackPlugin.files.js, function(file) {
-    if (!/^public/.test(file)) {
+    if (!/public\//.test(file)) {
 %>
   <script src="<%- file %>" defer></script>
 <%  } %>

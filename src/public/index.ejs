@@ -6,7 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Public Cozy Photos</title>
-  <script src="public/app.js"></script>
+  <% _.forEach(htmlWebpackPlugin.files.js, function(file) {
+      if (/public\//.test(file)) {
+  %>
+    <script src="<%- file %>" defer></script>
+  <%  } %>
+  <% }); %>
   <% if (__STACK_ASSETS__) { %>
     {{.CozyClientJS}}
     {{.CozyBar}}
