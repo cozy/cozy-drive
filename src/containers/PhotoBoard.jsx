@@ -58,7 +58,6 @@ export class PhotoBoard extends Component {
   render () {
     const {
       t,
-      containerWidth,
       showSelection,
       selected,
       showAddToAlbumModal,
