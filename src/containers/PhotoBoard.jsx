@@ -2,7 +2,7 @@ import styles from '../styles/photoList'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Dimensions from 'react-dimensions'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import { translate } from '../lib/I18n'
 
 import { togglePhotoSelection } from '../actions/selection'
@@ -84,37 +84,46 @@ export class PhotoBoard extends Component {
       )
     }
 
-    return (
-      <div
-        role='contentinfo'
-        className={showSelection ? styles['pho-list-selection'] : ''}
-      >
-        { isFetching &&
+    if (isFetching) {
+      return (
+        <div role='contentinfo'>
           <Loading loadingType='photos_fetching' />
-        }
-        { showAddToAlbumModal &&
-          <AddToAlbumModal />
-        }
-        {showSelection && <SelectionBar />}
-        {!isFetching && photoLists.map(photoList =>
-          <PhotoList
-            key={photoList.title}
-            title={photoList.title}
-            photos={photoList.photos}
-            selected={selected}
-            onPhotoToggle={onPhotoToggle}
-            containerWidth={containerWidth}
-          />
+        </div>
+      )
+    }
+
+    return (
+      <AutoSizer>
+        {({ width, height }) => (
+          <div
+            role='contentinfo'
+            className={showSelection ? styles['pho-list-selection'] : ''}
+          >
+            { showAddToAlbumModal &&
+              <AddToAlbumModal />
+            }
+            {showSelection && <SelectionBar />}
+            {!isFetching && photoLists.map(photoList =>
+              <PhotoList
+                key={photoList.title}
+                title={photoList.title}
+                photos={photoList.photos}
+                selected={selected}
+                onPhotoToggle={onPhotoToggle}
+                containerWidth={width}
+              />
+            )}
+            {!isFetching && hasMore &&
+              <MoreButton width={width} onClick={onFetchMore}>
+                {t('Board.load_more')}
+              </MoreButton>
+            }
+            {!isFetching && photoLists.length === 0 &&
+              <Empty emptyType={`${photosContext}_photos`} />
+            }
+          </div>
         )}
-        {!isFetching && hasMore &&
-          <MoreButton width={containerWidth} onClick={onFetchMore}>
-            {t('Board.load_more')}
-          </MoreButton>
-        }
-        {!isFetching && photoLists.length === 0 &&
-          <Empty emptyType={`${photosContext}_photos`} />
-        }
-      </div>
+      </AutoSizer>
     )
   }
 }
@@ -134,4 +143,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(Dimensions()(PhotoBoard)))
+)(translate()(PhotoBoard))
