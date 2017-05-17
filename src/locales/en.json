@@ -84,7 +84,10 @@
         "title": "Coming soon!",
         "desc": "Share anything by email with your family and friends!"
       },
-      "close": "Close"
+      "close": "Close",
+      "error": {
+        "generic": "An error occurred when creating the album share link, please try again."
+      }
     },
     "create": {
       "inline_form": {

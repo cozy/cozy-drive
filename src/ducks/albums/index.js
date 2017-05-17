@@ -92,6 +92,10 @@ export const createAlbum = (name = null, photos = []) =>
     })())
   }
 
+export const getAlbumShareLink = id =>
+  cozy.client.files.getShareLink(id)
+    .then(data => `${window.location.origin}/public?${data.sharecode}&${data.id}`)
+
 export const addToAlbum = (album, photos = []) =>
   async dispatch =>
     dispatch(createInsertAction(`${ALBUMS}/${album._id}`, async () => {
