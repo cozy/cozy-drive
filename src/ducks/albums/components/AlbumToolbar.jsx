@@ -24,7 +24,7 @@ export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteA
       onDelete={() => deleteAlbum(album)}
       disabled={disabled}
       label={t('Toolbar.album_delete')}
-    />,
+    />
     <MenuButton className='coz-mobile'>
       <button
         role='button'
@@ -59,11 +59,13 @@ const mapStateToProps = (state, ownProps) => ({
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   selectItems: () => dispatch(showSelectionBar()),
-  deleteAlbum: album => confirm(<DestroyConfirm t={ownProps.t} albumName={album.name} />)
-    .then(() => dispatch(deleteAlbum(album)))
-    .then(() => ownProps.router.replace('albums'))
-    .then(() => Alerter.success('Albums.remove_album.success', {name: album.name}))
-    .catch(() => Alerter.error('Albums.remove_album.error.generic'))
+  deleteAlbum: album => confirm(
+    <DestroyConfirm t={ownProps.t} albumName={album.name} />,
+    () => dispatch(deleteAlbum(album))
+      .then(() => ownProps.router.replace('albums'))
+      .then(() => Alerter.success('Albums.remove_album.success', {name: album.name}))
+      .catch(() => Alerter.error('Albums.remove_album.error.generic'))
+  )
 })
 
 export default withRouter(translate()(connect(

@@ -54,9 +54,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onHide: () => dispatch(hideSelectionBar()),
   onAddToAlbum: selected => dispatch(openAddToAlbum(selected)),
   onRemoveFromAlbum: (selected, album) =>
-  dispatch(removeFromAlbum(selected, album))
+  dispatch(removeFromAlbum(album, selected))
    .then(() => Alerter.success('Albums.remove_photos.success', { album_name: album.name }))
-  .catch(() => Alerter.error('Albums.remove_photos.error.generic'))
+   .catch(() => Alerter.error('Albums.remove_photos.error.generic'))
 })
 
 export default withRouter(connect(

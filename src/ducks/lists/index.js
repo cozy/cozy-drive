@@ -8,6 +8,7 @@ const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES'
 const RECEIVE_MORE_ENTRIES = 'RECEIVE_MORE_ENTRIES'
 const RECEIVE_ERROR = 'RECEIVE_ERROR'
 const INSERT_ENTRIES = 'INSERT_ENTRIES'
+const DELETE_ENTRY = 'DELETE_ENTRY'
 const EMIT_ERROR = 'EMIT_ERROR'
 
 const entries = (state = [], action) => {
@@ -23,6 +24,16 @@ const entries = (state = [], action) => {
       return [
         ...action.entries,
         ...state
+      ]
+    case DELETE_ENTRY:
+      // TODO: quick and dirty fix for removeFromAlbum (we got IDs instead of photos)
+      const id = typeof action.entity === 'object' ? action.entity.id || action.entity._id : action.entity
+      // TODO: why is the back sending an id prop instead of a _id prop here???
+      const idx = state.findIndex(e => e._id === id)
+      if (idx === -1) return state
+      return [
+        ...state.slice(0, idx),
+        ...state.slice(idx + 1)
       ]
     default:
       return state
@@ -86,6 +97,7 @@ const listsReducer = (state = {}, action) => {
     case RECEIVE_MORE_ENTRIES:
     case RECEIVE_ERROR:
     case INSERT_ENTRIES:
+    case DELETE_ENTRY:
       return Object.assign({}, state, { [action.name]: listReducer(state[action.name] || {}, action) })
     default:
       return state
@@ -159,6 +171,32 @@ export const createInsertAction = (listName, saga) => {
   }
 }
 
+export const createDeleteAction = (listName, saga) => {
+  return (...args) => {
+    return (dispatch, getState) => {
+      const existingList = getList(getState(), listName)
+      return saga(...args)
+        .then(resp => {
+          if (existingList) {
+            console.log(resp)
+            resp.entries.forEach(e => dispatch(deleteAction(listName, e)))
+          }
+          return resp
+        })
+        // TODO: still not sure what's the best solution for alerts:
+        // if it's better to not catch the error here and to let the caller
+        // handle the error or not.
+        //
+        // .catch(error => {
+        //   if (error.name === 'FormattedError') {
+        //     Alerter.error(error.message, error.messageData)
+        //   }
+        //   return dispatch(errorAction(listName, error))
+        // })
+    }
+  }
+}
+
 export const errorAction = (listName, error) => ({
   type: EMIT_ERROR,
   name: listName,
@@ -168,8 +206,13 @@ export const errorAction = (listName, error) => ({
   }
 })
 
+// TODO: remove the discrepancy between insert and deleteAction inputs (full response with entries vs single entry)
 export const insertAction = (listName, resp) => ({
   type: INSERT_ENTRIES, name: listName, ...resp
+})
+
+export const deleteAction = (listName, entity) => ({
+  type: DELETE_ENTRY, name: listName, entity
 })
 
 export const getList = (state, name) => state.lists[name]
