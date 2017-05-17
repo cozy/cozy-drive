@@ -83,7 +83,8 @@
       "protectedShare": {
         "title": "Coming soon!",
         "desc": "Share anything by email with your family and friends!"
-      }
+      },
+      "close": "Close"
     },
     "create": {
       "inline_form": {

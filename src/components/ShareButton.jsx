@@ -1,15 +1,15 @@
 import React from 'react'
-import { translate } from '../lib/I18n'
 
 import classNames from 'classnames'
 
-export const ShareButton = ({ t, label }) => (
+export const ShareButton = ({ label, onClick }) => (
   <button
     role='button'
     className={classNames('coz-btn', 'coz-btn--secondary', 'coz-btn--share')}
+    onClick={() => onClick()}
   >
     {label}
   </button>
 )
 
-export default translate()(ShareButton)
+export default ShareButton
