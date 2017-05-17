@@ -15,7 +15,7 @@ export const getPhotosByMonth = photos => {
   const sortedMonths = Object.keys(sections).sort(
     (a, b) => new Date(a).getTime() - new Date(b).getTime()
   ).reverse()
-  
+
   return sortedMonths.map(month => {
     return {
       title: month,

@@ -49,7 +49,7 @@ export class Viewer extends Component {
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.onKeyDownCallback, false)
-    //this.gesturesHandler.destroy()
+    // this.gesturesHandler.destroy()
   }
 
   onKeyDown (e) {
