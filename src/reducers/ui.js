@@ -32,7 +32,8 @@ export const selected = (state = [], action) => {
         ...state.slice(0, idx),
         ...state.slice(idx + 1)
       ]
-    case 'ADD_TO_ALBUM_SUCCESS': // when added to album
+    case 'ADD_TO_ALBUM_SUCCESS':
+    case 'REMOVE_FROM_ALBUM':
     case HIDE_SELECTION_BAR:
       return []
     default:
@@ -46,6 +47,7 @@ export const showAddToAlbumModal = (state = false, action) => {
       return !action.album
     case 'CANCEL_ADD_TO_ALBUM':
     case 'ADD_TO_ALBUM_SUCCESS':
+    case 'REMOVE_FROM_ALBUM':
       return false
     default:
       return state
