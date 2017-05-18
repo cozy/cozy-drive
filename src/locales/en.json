@@ -69,6 +69,26 @@
         }
       }
     },
+    "share": {
+      "cta": "Share",
+      "title": "Share with others",
+      "shareByLink": {
+        "title": "Share by link",
+        "desc": "Anyone with the provided link can see and download your photos."
+      },
+      "sharingLink": {
+        "title": "Link to share",
+        "copy": "Copy"
+      },
+      "protectedShare": {
+        "title": "Coming soon!",
+        "desc": "Share anything by email with your family and friends!"
+      },
+      "close": "Close",
+      "error": {
+        "generic": "An error occurred when creating the album share link, please try again."
+      }
+    },
     "create": {
       "inline_form": {
         "placeholder": "New album name",

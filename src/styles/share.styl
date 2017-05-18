@@ -1,0 +1,43 @@
+@import 'cozy-ui'
+
+:local
+    @extend $form
+    @extend $form-text
+
+    // Should be in Cozy-uy you know
+    .coz-modal-section
+        padding    1em 1.5em .5em !important
+
+    .coz-form
+        h3
+          margin 0
+
+        h4
+          margin 0 0 .2em
+
+        .coz-form-desc
+          color grey-11
+
+    .pho-input-dual
+      display flex
+      align-items center
+
+      input[type=text]
+        width 100%
+        height em(48px)
+
+      > :first-child
+        flex 2 0 1%
+        padding-right .5em
+
+      > :last-child
+        flex 0 0 6em
+        text-align right
+
+      .coz-form-desc
+        margin 0
+
+    .pho-btn-copy
+      width 100%
+      height em(48px, 14px)
+      margin 0

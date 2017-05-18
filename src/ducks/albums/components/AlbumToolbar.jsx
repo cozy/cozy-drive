@@ -6,19 +6,24 @@ import { withRouter } from 'react-router'
 import { translate } from '../../../lib/I18n'
 
 import DeleteButton from '../../../components/DeleteButton'
+import ShareButton from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
 import { showSelectionBar } from '../../../actions'
 import { mustShowSelectionBar } from '../../../reducers'
-import { deleteAlbum } from '..'
+import { deleteAlbum, getAlbumShareLink } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import confirm from '../../../lib/confirm'
+import ShareModal from '../../../containers/ShareModal'
 
 import classNames from 'classnames'
 
-export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteAlbum, selectItems, params }) => (
+export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteAlbum, selectItems, shareAlbum }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
+    <ShareButton
+      label={t('Albums.share.cta')}
+      onClick={() => shareAlbum(album)} />
     <DeleteButton
       className='coz-desktop'
       onDelete={() => deleteAlbum(album)}
@@ -35,6 +40,7 @@ export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteA
       </button>
       <Menu className={styles['coz-menu']}>
         <Item>
+          <ShareButton label={t('Albums.share.cta')} onClick={() => shareAlbum(album)} />
           <DeleteButton
             onDelete={() => deleteAlbum(album)}
             disabled={disabled}
@@ -65,7 +71,14 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
       .then(() => ownProps.router.replace('albums'))
       .then(() => Alerter.success('Albums.remove_album.success', {name: album.name}))
       .catch(() => Alerter.error('Albums.remove_album.error.generic'))
-  )
+  ),
+  shareAlbum: album => getAlbumShareLink(album._id)
+    .then(shareLink => confirm(<ShareModal t={ownProps.t} shareLink={shareLink}
+      toggleShareLinkCreation={checked => console.info('We should create or destroy the share link.', checked)} />))
+    .catch((ex) => {
+      Alerter.error('Albums.share.error.generic')
+      throw ex
+    })
 })
 
 export default withRouter(translate()(connect(
