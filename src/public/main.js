@@ -2,37 +2,86 @@
 
 import React from 'react'
 import { render } from 'react-dom'
+import justifiedLayout from 'justified-layout'
+
+import { getPhotoLink } from '../actions/photos'
+
+import { ALBUM_DOCTYPE } from '../constants/config'
 
 document.addEventListener('DOMContentLoaded', init)
+
+const arrToObj = (obj = {}, varval = ['var', 'val']) => {
+  obj[varval[0]] = varval[1]
+  return obj
+}
+
+const getQueryParameter = () => window
+  .location
+  .search
+  .substring(1)
+  .split('&')
+  .map(varval => varval.split('='))
+  .reduce(arrToObj, {})
+
+const addUrl = async photo => ({
+  ...photo,
+  url: await getPhotoLink(photo._id)
+})
+
+const getStyle = box => ({
+  width: `${box.width}px`,
+  height: `${box.height}px`,
+  top: `${box.top}px`,
+  left: `${box.left}px`,
+  position: 'absolute'
+})
+
+const toBox = photo => ({
+  width: photo.attributes.metadata.width,
+  height: photo.attributes.metadata.height
+})
+
+const PhotoList = ({photos}) => {
+  const layout = justifiedLayout(photos.map(toBox))
+  const boxes = layout.boxes.map((box, index) => (
+    <img style={getStyle(box)} src={photos[index].url} />
+  ))
+  return <div style={{position: 'relative'}}>{boxes}</div>
+}
 
 class App extends React.Component {
   constructor (props) {
     super(props)
-    this.state = []
+    this.state = {
+      photos: []
+    }
   }
 
   addAll (photos) {
-    this.setState(state => state.concat(photos))
+    this.setState(state => ({ state, photos }))
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    const { id } = getQueryParameter()
     const album = {
-      _type: 'io.cozy.photos.albums',
-      _id: 'f6f96990b5af9be2b04ca9f832000c5f'
+      _type: ALBUM_DOCTYPE,
+      _id: id
     }
 
-    cozy.client.data.listReferencedFiles(album)
-    .then(photosIds => Promise.all(photosIds.map(cozy.client.files.statById)))
-    .then(this.addAll.bind(this))
+    const photosIds = await cozy.client.data.listReferencedFiles(album)
+    const photos = await Promise.all(photosIds.map(cozy.client.files.statById))
+    const photosWithUrl = await Promise.all(photos.map(addUrl))
+    this.setState(state => ({ ...state, photos: photosWithUrl }))
+
+    const document = await cozy.client.data.find(ALBUM_DOCTYPE, id)
+    this.setState(state => ({ ...state, name: document.name }))
   }
 
   render () {
     return (
       <div>
-        <h1>Photos</h1>
-        <ul>
-          {this.state.map(photo => <li><span>{photo._id}</span></li>)}
-        </ul>
+        <h3>{this.state.name}</h3>
+        <PhotoList photos={this.state.photos} />
       </div>
     )
   }
