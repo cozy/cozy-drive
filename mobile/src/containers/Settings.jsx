@@ -7,8 +7,6 @@ import { backupAllowed } from '../lib/network'
 
 const mapStateToProps = (state, ownProps) => ({
   mediaUploading: state.mobile.mediaBackup.uploading,
-  version: window.navigator.appInfo ? window.navigator.appInfo.version : 'dev',
-  serverUrl: state.mobile.settings.serverUrl,
   backupImages: state.mobile.settings.backupImages,
   analytics: state.mobile.settings.analytics,
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,

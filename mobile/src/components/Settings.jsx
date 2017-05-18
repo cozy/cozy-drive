@@ -8,6 +8,7 @@ import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from '../../../src/lib/I18n'
 import UploadProgression from '../containers/UploadProgression'
+import About from '../containers/settings/About'
 
 const SubCategory = ({ id, label, value, title }) => (
   <div>
@@ -19,7 +20,7 @@ const SubCategory = ({ id, label, value, title }) => (
   </div>
 )
 
-export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, toggleBackup, wifiOnly, setWifiOnly, backupAllowed, analytics, setAnalytics }) => (
+export const Settings = ({ t, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, toggleBackup, wifiOnly, setWifiOnly, backupAllowed, analytics, setAnalytics }) => (
   <Main>
     <Topbar>
       <h2>{t('mobile.settings.title')}</h2>
@@ -40,10 +41,7 @@ export const Settings = ({ t, version, serverUrl, backupImages, setBackupImages,
           {mediaUploading && <div className={styles['media-uploading']} />}
         </button>
 
-        <h3 className={styles['settings__category-title']}>{t('mobile.settings.about.title')}</h3>
-        <SubCategory id={'serverUrl'} label={t('mobile.settings.about.account')}
-          value={<a href={serverUrl}>{serverUrl}</a>} />
-        <SubCategory id={'version'} label={t('mobile.settings.about.app_version')} value={version} />
+        <About />
 
         <h3 className={styles['settings__category-title']}>{t('mobile.settings.support.title')}</h3>
         <SubCategory id={'analytics'} title={t('mobile.settings.support.analytics.title')}
