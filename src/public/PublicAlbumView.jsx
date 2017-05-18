@@ -29,13 +29,17 @@ class PublicAlbumView extends React.Component {
       _id: id
     }
 
-    const photosIds = await cozy.client.data.listReferencedFiles(album)
-    const photos = await Promise.all(photosIds.map(cozy.client.files.statById))
-    const photosWithUrl = await Promise.all(photos.map(addUrl))
-    this.setState(state => ({ ...state, photos: photosWithUrl }))
+    try {
+      const photosIds = await cozy.client.data.listReferencedFiles(album)
+      const photos = await Promise.all(photosIds.map(cozy.client.files.statById))
+      const photosWithUrl = await Promise.all(photos.map(addUrl))
+      this.setState(state => ({ ...state, photos: photosWithUrl }))
 
-    const document = await cozy.client.data.find(ALBUM_DOCTYPE, id)
-    this.setState(state => ({ ...state, name: document.name }))
+      const document = await cozy.client.data.find(ALBUM_DOCTYPE, id)
+      this.setState(state => ({ ...state, name: document.name }))
+    } catch (ex) {
+      console.error(ex, this.state)
+    }
   }
 
   render () {
