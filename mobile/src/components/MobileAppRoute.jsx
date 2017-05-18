@@ -7,7 +7,7 @@ import Layout from '../../../src/components/Layout'
 import { initBar } from '../lib/cozy-helper'
 
 import OnBoarding from '../containers/OnBoarding'
-import Settings from '../containers/Settings'
+import Settings from '../components/Settings'
 import RevokableWrapper from '../containers/RevokableWrapper'
 
 const MobileAppRoute = requireSetup => (

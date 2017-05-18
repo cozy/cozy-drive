@@ -11,6 +11,7 @@ const SettingCategory = ({ title, elements }) => (
     {elements.map(element => (
       <div>
         {element.title && <h4 className={styles['settings__subcategory-title']}>{element.title}</h4>}
+        {element.description && <p>{element.description}</p>}
         {element.type === ELEMENT_TEXT &&
           <div className={styles['settings__subcategory']}>
             <p className={styles['settings__subcategory__label']}>{element.label}</p>
