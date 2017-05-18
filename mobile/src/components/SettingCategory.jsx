@@ -2,6 +2,7 @@ import React from 'react'
 import styles from '../styles/settings'
 
 export const ELEMENT_TEXT = 'ELEMENT_TEXT'
+export const ELEMENT_CHECKBOX = 'ELEMENT_CHECKBOX'
 
 const SettingCategory = ({ title, elements }) => (
   <div>
@@ -13,6 +14,13 @@ const SettingCategory = ({ title, elements }) => (
         {element.type === ELEMENT_TEXT && <div className={styles['settings__subcategory']}>
           <p className={styles['settings__subcategory__label']}>{element.label}</p>
           <p className={styles['settings__subcategory__item']} onClick={element.onClick}>{element.value}</p>
+        </div>}
+
+        {element.type === ELEMENT_CHECKBOX && <div className={styles['settings__subcategory']}>
+          <p for={element.id} className={styles['settings__subcategory__label']}>{element.label}</p>
+          <p for={element.id} className={styles['settings__subcategory__item']}>
+            <input id={element.id} type='checkbox' checked={element.checked} onChange={element.onChange} />
+          </p>
         </div>}
 
       </div>

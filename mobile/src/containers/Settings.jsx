@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Settings from '../components/Settings'
-import { setWifiOnly, setAnalytics } from '../actions/settings'
+import { setWifiOnly } from '../actions/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../actions/unlink'
 import { backupImages, startMediaBackup, cancelMediaBackup } from '../actions/mediaBackup'
 import { backupAllowed } from '../lib/network'
@@ -8,7 +8,6 @@ import { backupAllowed } from '../lib/network'
 const mapStateToProps = (state, ownProps) => ({
   mediaUploading: state.mobile.mediaBackup.uploading,
   backupImages: state.mobile.settings.backupImages,
-  analytics: state.mobile.settings.analytics,
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,
   client: state.settings.client,
   wifiOnly: state.mobile.settings.wifiOnly,
@@ -33,8 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   setWifiOnly: async (e) => {
     await dispatch(setWifiOnly(e.target.checked))
     dispatch(backupImages())
-  },
-  setAnalytics: (e) => dispatch(setAnalytics(e.target.checked))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

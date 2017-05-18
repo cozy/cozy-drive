@@ -9,6 +9,7 @@ import DebugTools from '../containers/DebugTools'
 import { translate } from '../../../src/lib/I18n'
 import UploadProgression from '../containers/UploadProgression'
 import About from '../containers/settings/About'
+import Support from '../containers/settings/Support'
 
 const SubCategory = ({ id, label, value, title }) => (
   <div>
@@ -20,7 +21,7 @@ const SubCategory = ({ id, label, value, title }) => (
   </div>
 )
 
-export const Settings = ({ t, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, toggleBackup, wifiOnly, setWifiOnly, backupAllowed, analytics, setAnalytics }) => (
+export const Settings = ({ t, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, toggleBackup, wifiOnly, setWifiOnly, backupAllowed }) => (
   <Main>
     <Topbar>
       <h2>{t('mobile.settings.title')}</h2>
@@ -42,11 +43,7 @@ export const Settings = ({ t, backupImages, setBackupImages, client, showUnlinkC
         </button>
 
         <About />
-
-        <h3 className={styles['settings__category-title']}>{t('mobile.settings.support.title')}</h3>
-        <SubCategory id={'analytics'} title={t('mobile.settings.support.analytics.title')}
-          label={t('mobile.settings.support.analytics.label')}
-          value={<input type='checkbox' checked={analytics} onChange={setAnalytics} />} />
+        <Support />
 
         <h3 className={styles['settings__category-title']}>{t('mobile.settings.unlink.title')}</h3>
         <p>{t('mobile.settings.unlink.description')}</p>
