@@ -8,20 +8,12 @@ import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from '../../../src/lib/I18n'
 import UploadProgression from '../containers/UploadProgression'
+
 import About from '../containers/settings/About'
 import Support from '../containers/settings/Support'
+import MediaBackup from '../containers/settings/MediaBackup'
 
-const SubCategory = ({ id, label, value, title }) => (
-  <div>
-    {title && <h4 className={styles['settings__subcategory-title']}>{title}</h4>}
-    <div className={styles['settings__subcategory']}>
-      <p className={styles['settings__subcategory__label']}>{label}</p>
-      <p id={id} className={styles['settings__subcategory__item']}>{value}</p>
-    </div>
-  </div>
-)
-
-export const Settings = ({ t, backupImages, setBackupImages, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink, mediaUploading, toggleBackup, wifiOnly, setWifiOnly, backupAllowed }) => (
+export const Settings = ({ t, client, showUnlinkConfirmation, displayUnlinkConfirmation, hideUnlinkConfirmation, unlink }) => (
   <Main>
     <Topbar>
       <h2>{t('mobile.settings.title')}</h2>
@@ -29,19 +21,7 @@ export const Settings = ({ t, backupImages, setBackupImages, client, showUnlinkC
     <div>
       <div className={styles['settings']}>
 
-        <h3 className={styles['settings__category-title']}>{t('mobile.settings.media_backup.title')}</h3>
-        <SubCategory id={'backupImages'} title={t('mobile.settings.media_backup.images.title')}
-          label={t('mobile.settings.media_backup.images.label')}
-          value={<input type='checkbox' checked={backupImages} onChange={setBackupImages} />} />
-        <SubCategory id={'backupOnlyWifi'} title={t('mobile.settings.media_backup.wifi.title')}
-          label={t('mobile.settings.media_backup.wifi.label')}
-          value={<input type='checkbox' checked={wifiOnly} onChange={setWifiOnly} />} />
-        <button onclick={() => toggleBackup(!mediaUploading, t('mobile.settings.media_backup.media_folder'))} className={'coz-btn coz-btn--regular'}>
-          {!mediaUploading && t('mobile.settings.media_backup.launch')}
-          {mediaUploading && t('mobile.settings.media_backup.stop')}
-          {mediaUploading && <div className={styles['media-uploading']} />}
-        </button>
-
+        <MediaBackup />
         <About />
         <Support />
 
