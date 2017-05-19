@@ -7,6 +7,8 @@ import { translate } from '../lib/I18n'
 import Sidebar from './Sidebar'
 import Alerter from './Alerter'
 
+import { UploadQueue } from '../ducks/upload'
+
 export const Layout = ({ t, children }) => (
   <div className={classNames(styles['pho-wrapper'], styles['coz-sticky'])}>
     <Sidebar />
@@ -15,6 +17,7 @@ export const Layout = ({ t, children }) => (
       { children }
     </main>
     <Alerter t={t} />
+    <UploadQueue />
   </div>
 )
 
