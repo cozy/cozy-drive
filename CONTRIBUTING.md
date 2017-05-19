@@ -1,5 +1,5 @@
-How to contribute to Cozy Drive?
-====================================
+How to contribute to Cozy Photos?
+=================================
 
 Thank you for your interest in contributing to Cozy! There are many ways to contribute, and we appreciate all of them.
 

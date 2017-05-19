@@ -30,7 +30,7 @@ Cozy Photos make your photos and albums easy to manage. Main features are:
 Hack
 ----
 
-_:pushpin: Note:_ we recommend to use [Yarn] instead of NPM for package management. Don't hesitate to [install][install-yarn] and use it for your Cozy projects, it's now our main node packages tool for Cozy official apps.
+_:pushpin: Note:_ we recommend to use [Yarn] instead of NPM for package management. Don't hesitate to [install][yarn-install] and use it for your Cozy projects, it's now our main node packages tool for Cozy official apps.
 
 ### Install and run in dev mode
 
@@ -70,16 +70,12 @@ $ yarn run watch
 
 ```sh
 # in another terminal, run the docker container
-$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
-```
-:warning: Don't forget to add `cozy.local` and `app.cozy.local` to your `/etc/hosts`
-
-```
-127.0.0.1 cozy.local
-127.0.0.1 app.cozy.local
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app/photos cozy/cozy-app-dev
+or
+$ yarn stack:docker
 ```
 
-your app is available at http://app.cozy.local:8080.
+your app is available at http://photos.cozy.tools:8080.
 
 
 #### Living on the edge
@@ -89,6 +85,7 @@ your app is available at http://app.cozy.local:8080.
 ```sh
 git clone https://github.com/cozy/cozy-ui.git
 cd cozy-ui
+yarn install
 yarn link
 ```
 
@@ -120,13 +117,6 @@ Components tests using jest work with snapshots, it allows to assert rendered co
 :warning: __Be careful when you update snapshots, if the rendered components are incorrect__, the related snapshots will be updated with incorrect components and the related __tests will used incorrect snapshots__. And we won't see tests errors about that.
 
 :pushpin: Don't forget to update / create new tests when you contribute to code to keep the app the consistent.
-
-
-### Resources
-
-All documentation is located in the `/docs` app directory. It provides an exhaustive documentation about workflows (installation, development, pull-requests…), architecture, code consistency, data structures, dependencies, and more.
-
-Feel free to read it and fix / update it if needed, all comments and feedback to improve it are welcome!
 
 
 ### Open a Pull-Request
@@ -175,10 +165,10 @@ Cozy Photos is developed by Cozy Cloud and distributed under the [AGPL v3 licens
 [cozy-ui]: https://github.com/cozy/cozy-ui
 [cozy-client-js]: https://github.com/cozy/cozy-client-js
 [cozy-stack-docker]: https://github.com/cozy/cozy-stack/blob/master/docs/client-app-dev.md#with-docker
-[doctypes]: https://dev.cozy.io/#main-document-types
-[bill-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/bill.coffee
-[konnector-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/konnector.coffee
-[konnectors]: https://github.com/cozy-labs/konnectors
+[doctypes]: https://cozy.github.io/cozy-doctypes/
+[bill-doctype]: https://github.com/cozy/cozy-konnector-libs/blob/master/models/bill.js
+[konnector-doctype]: https://github.com/cozy/cozy-konnector-libs/blob/master/models/base_model.js
+[konnectors]: https://github.com/cozy/cozy-konnector-libs
 [agpl-3.0]: https://www.gnu.org/licenses/agpl-3.0.html
 [contribute]: CONTRIBUTING.md
 [tx]: https://www.transifex.com/cozy/

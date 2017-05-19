@@ -14,6 +14,7 @@
     "prewatch": "npm run clean",
     "lint": "standard 'src/**/*.js' 'src/**/*.jsx'",
     "test": "npm run lint",
+    "stack:docker": "docker run --rm -it -p 8080:8080 -v \"$(pwd)/build\":/data/cozy-app/photos cozy/cozy-app-dev",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "watch:standalone": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8084 --display-modules --display-chunks --inline --hot"
   },
