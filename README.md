@@ -111,13 +111,6 @@ $ yarn test
 :pushpin: Don't forget to update / create new tests when you contribute to code to keep the app the consistent.
 
 
-### Resources
-
-All documentation is located in the `/docs` app directory. It provides an exhaustive documentation about workflows (installation, development, pull-requests…), architecture, code consistency, data structures, dependencies, and more.
-
-Feel free to read it and fix / update it if needed, all comments and feedback to improve it are welcome!
-
-
 ### Open a Pull-Request
 
 If you want to work on Drive and submit code modifications, feel free to open pull-requests! See the [contributing guide][contribute] for more information about how to properly open pull-requests.
@@ -161,13 +154,13 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [setup]: https://dev.cozy.io/#set-up-the-development-environment "Cozy dev docs: Set up the Development Environment"
 [yarn]: https://yarnpkg.com/
 [yarn-install]: https://yarnpkg.com/en/docs/install
-[cozy-ui]: https://github.com/cozy/cozy-ui/
+[cozy-ui]: https://github.com/cozy/cozy-ui
 [cozy-client-js]: https://github.com/cozy/cozy-client-js/
 [cozy-stack-docker]: https://github.com/cozy/cozy-stack/blob/master/docs/client-app-dev.md#with-docker
-[doctypes]: https://dev.cozy.io/#main-document-types
-[bill-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/bill.coffee
-[konnector-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/konnector.coffee
-[konnectors]: https://github.com/cozy-labs/konnectors
+[doctypes]: https://cozy.github.io/cozy-doctypes/
+[bill-doctype]: https://github.com/cozy/cozy-konnector-libs/blob/master/models/bill.js
+[konnector-doctype]: https://github.com/cozy/cozy-konnector-libs/blob/master/models/base_model.js
+[konnectors]: https://github.com/cozy/cozy-konnector-libs
 [agpl-3.0]: https://www.gnu.org/licenses/agpl-3.0.html
 [contribute]: CONTRIBUTING.md
 [tx]: https://www.transifex.com/cozy/
@@ -181,7 +174,6 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [nvm]: https://github.com/creationix/nvm
 [ndenv]: https://github.com/riywo/ndenv
 [cozy-dev]: https://github.com/cozy/cozy-dev/
-[cozy-ui]: https://github.com/cozy/cozy-ui.git
 [mocha]: https://mochajs.org/
 [chai]: http://chaijs.com/
 [sinon]: http://sinonjs.org/
