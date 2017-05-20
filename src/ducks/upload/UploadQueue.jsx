@@ -36,9 +36,12 @@ const Item = translate()(({ t, file, status }) => {
 })
 
 const UploadQueue = ({ t, queue, doneCount }) => {
-  if (queue.length === 0) return null
+  //if (queue.length === 0) return null
   return (
-    <div className={styles['upload-queue']}>
+    <div className={classNames(
+      styles['upload-queue'],
+      { [styles['upload-queue--visible']]: queue.length !== 0 }
+    )}>
       <h4 className={styles['upload-queue-header']}>
         {t('UploadQueue.header', { smart_count: queue.length })}
       </h4>
