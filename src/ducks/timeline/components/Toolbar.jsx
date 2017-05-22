@@ -8,8 +8,12 @@ import { translate } from '../../../lib/I18n'
 import UploadButton from '../../../components/UploadButton'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
 
-import { uploadPhotos, showSelectionBar } from '../../../actions'
+import { showSelectionBar } from '../../../actions'
 import { mustShowSelectionBar } from '../../../reducers'
+
+import { COZY_PHOTOS_DIR_ID } from '../../../constants/config'
+import { addToUploadQueue } from '../../upload'
+import { addPhotosToTimeline } from '../'
 
 import classNames from 'classnames'
 
@@ -54,7 +58,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  uploadPhotos: photo => dispatch(uploadPhotos(photo)),
+  uploadPhotos: photos =>
+    dispatch(addToUploadQueue(photos, COZY_PHOTOS_DIR_ID, photo => addPhotosToTimeline([photo]))),
   selectItems: () => dispatch(showSelectionBar())
 })
 

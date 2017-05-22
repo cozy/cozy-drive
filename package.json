@@ -12,8 +12,8 @@
     "prebuild": "npm-run-all lint clean tx",
     "pretest": "npm run lint",
     "prewatch": "npm run clean",
-    "lint": "standard 'src/**/*.js' 'src/**/*.jsx'",
-    "test": "npm run lint",
+    "lint": "standard  --parser babel-eslint 'src/**/*.js' 'src/**/*.jsx'",
+    "test": "node --harmony_proxies node_modules/.bin/jest --coverage --config=jest.config.json",
     "stack:docker": "docker run --rm -it -p 8080:8080 -v \"$(pwd)/build\":/data/cozy-app/photos cozy/cozy-app-dev",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "watch:standalone": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8084 --display-modules --display-chunks --inline --hot"
@@ -34,8 +34,10 @@
   "devDependencies": {
     "autoprefixer": "^6.5.0",
     "babel-core": "^6.0.0",
+    "babel-eslint": "^7.2.3",
     "babel-jest": "^18.0.0",
     "babel-loader": "^6.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.0.0",
