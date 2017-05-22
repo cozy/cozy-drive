@@ -69,7 +69,7 @@ module.exports = {
       template: 'src/public/index.ejs',
       filename: 'public/index.html',
       title: pkg.name,
-      inject: false,
+      inject: 'head',
       minify: {
         collapseWhitespace: true
       }
