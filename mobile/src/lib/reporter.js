@@ -5,9 +5,9 @@ let getState
 
 export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 
-export function getAnalyticsConfiguration () {
+export function getAnalyticsConfiguration (force = false) {
   return {
-    shouldSendCallback: () => getState ? getState().mobile.settings.analytics : false,
+    shouldSendCallback: () => getState ? getState().mobile.settings.analytics || force : false,
     environment: __DEVMODE__ ? 'development' : 'production'
   }
 }

@@ -3,30 +3,28 @@
 .settings
     margin 0 1em
 
+    .settings__category
+        margin 20px 0 40px
+
+    .settings__button
+        width 100%
+        margin 0 0 10px
+
     .settings__subcategory-title
         display       block
         margin-bottom 0
-        font-weight   normal
+        font-size(16px)
 
     .settings__subcategory
         display flex
 
     .settings__subcategory__label
         color       gray
-        font-size(12px)
+        font-size(14px)
+        line-height em(24px)
+        margin 14px 0
 
     .settings__subcategory__item
         flex-grow  1
         text-align right
-
-    .settings__button-danger
-        @extend $button
-        width 100%
-        margin 0 0 10px
-        color pomegranate
-        border-color pomegranate
-
-.media-uploading
-    @extend $icon-16
-    @extend $icon-spinner-blue
-    margin-left 0.5em
+        margin-top 20px

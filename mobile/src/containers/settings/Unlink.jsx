@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { translate } from '../../../../src/lib/I18n'
 import SettingCategory, { ELEMENT_BUTTON } from '../../components/SettingCategory'
 import Modal from 'cozy-ui/react/Modal'
-import styles from '../../styles/settings'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../../actions/unlink'
 
 export const Unlink = ({ t, showUnlinkConfirmation, hideUnlinkConfirmation, displayUnlinkConfirmation, unlink, client }) => (
@@ -15,7 +14,7 @@ export const Unlink = ({ t, showUnlinkConfirmation, hideUnlinkConfirmation, disp
           type: ELEMENT_BUTTON,
           description: t('mobile.settings.unlink.description'),
           text: t('mobile.settings.unlink.button'),
-          className: styles['settings__button-danger'],
+          theme: 'danger-outline',
           onClick: showUnlinkConfirmation
         }
       ]}

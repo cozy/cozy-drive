@@ -181,6 +181,13 @@
         "analytics": {
           "title" : "Help us improve Cozy",
           "label": "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
+        },
+        "logs": {
+          "title": "Help us to understand your problem",
+          "description": "Send the application log to help us improve its quality and stability.",
+          "button": "Send my logs",
+          "success": "Thanks, we will investigate your problem and contact you soon.",
+          "error": "A problem happened, logs couldn't be sent, please try again."
         }
       }
     },
