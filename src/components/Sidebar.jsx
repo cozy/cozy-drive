@@ -1,17 +1,15 @@
 import styles from '../styles/sidebar'
 
-import { translate } from '../lib/I18n'
-
 import React from 'react'
-import classNames from 'classnames'
 
 import Nav from '../containers/Nav'
+import ButtonClient from '../components/ButtonClient'
 
-const Sidebar = ({ t }) => (
+const Sidebar = () => (
   <aside class={styles['fil-sidebar']}>
     <Nav />
-    <a href={t('nav.link-client')} className={classNames('coz-btn', 'coz-btn--secondary', styles['coz-btn--client'])}><span>{t('nav.btn-client')}</span></a>
+    <ButtonClient />
   </aside>
 )
 
-export default translate()(Sidebar)
+export default Sidebar
