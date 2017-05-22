@@ -101,7 +101,7 @@ const hasAndroidCordovaPlugin = () => (isAndroid() && window.JSBackgroundService
 const enableAndroidBackgroundService = async () => {
   const isEnable = await isEnableAndroidBackgroundService()
   if (!isEnable) {
-    const repeatingPeriod = 15 * 60 * 1000
+    const repeatingPeriod = 60 * 60 * 1000
     window.JSBackgroundService.setRepeating(repeatingPeriod, err => {
       if (err) {
         console.warn(err)
