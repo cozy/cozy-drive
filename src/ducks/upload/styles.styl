@@ -8,26 +8,26 @@
     height   em(210px)
     width    em(480px)
     border   1px solid grey-09
-    border-radius 4px
+    border-radius    4px
     background-color white
-    display flex
-    flex-direction column
-    transition 0.5s
-    opacity 0
-    visibility hidden
-    transform translate(300px)
+    display          flex
+    flex-direction   column
+    transition       0.5s
+    opacity          0
+    visibility       hidden
+    transform        translate(300px)
 
 .upload-queue--visible
-    opacity 1
+    opacity    1
     visibility visible
-    transform translate(0)
+    transform  translate(0)
 
 .upload-queue-header
     background-color grey-10
     color            grey-08
     font-weight      bold
-    margin 0
-    padding em(8px) em(16px) em(8px)
+    margin           0
+    padding          em(8px) em(16px) em(8px)
 
 progress.upload-queue-progress
     -webkit-appearance none
@@ -47,6 +47,12 @@ progress.upload-queue-progress::-moz-progress-bar
 
 .upload-queue-content
     overflow auto
+
+.upload-queue--collapsed
+    height em(40px)
+
+    .upload-queue-content
+        visibility none
 
 .upload-queue-list
     flex      1 1 auto
@@ -76,7 +82,7 @@ progress.upload-queue-progress::-moz-progress-bar
         white-space    nowrap
         overflow       hidden
         text-overflow  ellipsis
-        color grey-08
+        color          grey-08
 
     .item-file
         flex        0 0 85%

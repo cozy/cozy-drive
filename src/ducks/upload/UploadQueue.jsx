@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from '../../lib/I18n'
@@ -35,24 +35,35 @@ const Item = translate()(({ t, file, status }) => {
   )
 })
 
-const UploadQueue = ({ t, queue, doneCount }) => {
-  //if (queue.length === 0) return null
-  return (
-    <div className={classNames(
-      styles['upload-queue'],
-      { [styles['upload-queue--visible']]: queue.length !== 0 }
-    )}>
-      <h4 className={styles['upload-queue-header']}>
-        {t('UploadQueue.header', { smart_count: queue.length })}
-      </h4>
-      <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
-      <div className={styles['upload-queue-content']}>
-        <div className={styles['upload-queue-list']}>
-          {queue.map(item => <Item file={item.file.name} status={item.status} />)}
+class UploadQueue extends Component {
+  state = {
+    collapsed: false
+  }
+
+  toggleCollapsed = () => {
+    this.setState(state => ({ collapsed: !state.collapsed }))
+  }
+
+  render () {
+    const { t, queue, doneCount } = this.props
+    const { collapsed } = this.state
+    return (
+      <div className={classNames(styles['upload-queue'], {
+        [styles['upload-queue--visible']]: queue.length !== 0,
+        [styles['upload-queue--collapsed']]: collapsed
+      })}>
+        <h4 className={styles['upload-queue-header']} onDoubleClick={this.toggleCollapsed}>
+          {t('UploadQueue.header', { smart_count: queue.length })}
+        </h4>
+        <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
+        <div className={styles['upload-queue-content']}>
+          <div className={styles['upload-queue-list']}>
+            {queue.map(item => <Item file={item.file.name} status={item.status} />)}
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 const mapStateToProps = (state, ownProps) => ({
