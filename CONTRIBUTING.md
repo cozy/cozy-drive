@@ -50,7 +50,7 @@ Fork the project on GitHub and [check out your copy locally][forking].
 ```
 $ git clone github.com/cozy/cozy-photos-v3.git
 $ cd cozy-photos-v3
-$ git remote add fork git://github.com/cozy/cozy-photos-v3.git
+$ git remote add fork git://github.com/yourusername/cozy-photos-v3.git
 ```
 
 #### Step 2: Branch
@@ -93,7 +93,7 @@ $ git rebase origin/master my-branch
 $ git push -u fork my-branch
 ```
 
-Go to https://github.com/cozy/cozy-photos-v3 and select your branch. Click the 'Pull Request' button and fill out the form.
+Go to https://github.com/yourusername/cozy-photos-v3 and select your branch. Click the 'Pull Request' button and fill out the form.
 
 Alternatively, you can use [hub] to open the pull request from your terminal:
 
