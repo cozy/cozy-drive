@@ -1,4 +1,4 @@
-import { configureReporter } from './reporter'
+import { configure as configureReporter } from './reporter'
 import { initClient, initBar, isClientRegistered } from './cozy-helper'
 import { revokeClient } from '../actions/authorization'
 import { startReplication } from '../actions/settings'
@@ -6,7 +6,7 @@ import { startReplication } from '../actions/settings'
 export const getLang = () => (navigator && navigator.language) ? navigator.language.slice(0, 2) : 'en'
 
 export const initServices = (store) => {
-  configureReporter(store.getState)
+  configureReporter(store.getState().mobile.settings.analytics)
   initClient(store.getState().mobile.settings.serverUrl)
 
   const client = store.getState().settings.client

@@ -6,7 +6,7 @@ import { setClient, setFirstReplication } from '../../../src/actions/settings'
 import { getDeviceName } from '../lib/device'
 import { openFolder } from '../../../src/actions'
 import { onRegistered } from '../lib/registration'
-import { logException, logInfo } from '../lib/reporter'
+import { logException, logInfo, configure as configureReporter } from '../lib/reporter'
 import { pingOnceADay } from './timestamp'
 import { revokeClient as reduxRevokeClient } from './authorization'
 
@@ -43,6 +43,7 @@ export const checkURL = url => dispatch => {
 export const setAnalytics = (analytics, source = 'settings') => (dispatch, getState) => {
   dispatch({ type: SET_ANALYTICS, analytics })
   const state = getState()
+  configureReporter(analytics)
   if (analytics && state.mobile) {
     const value = state.mobile.settings.backupImages
     logInfo(`${source}: backup images is ${value ? 'enabled' : 'disabled'}`)

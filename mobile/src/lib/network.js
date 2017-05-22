@@ -19,3 +19,4 @@ export const getConnectionType = () => hasCordovaPlugin() ? navigator.connection
 export const onWifi = connection => connection === WIFI
 
 export const backupAllowed = (wifiOnly) => onWifi(getConnectionType()) || !wifiOnly
+export const isOnline = () => hasCordovaPlugin() ? navigator.connection !== NONE : navigator.onLine

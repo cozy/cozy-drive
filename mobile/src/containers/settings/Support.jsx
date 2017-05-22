@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { translate } from '../../../../src/lib/I18n'
 import SettingCategory, { ELEMENT_CHECKBOX, ELEMENT_BUTTON } from '../../components/SettingCategory'
 import { setAnalytics } from '../../actions/settings'
-import { sendLog } from '../../lib/reporter'
+import { logInfo } from '../../lib/reporter'
+import { isOnline } from '../../lib/network'
 
-export const Support = ({ t, analytics, setAnalytics, isDebug, success, failure }) => (
+export const Support = ({ t, analytics, setAnalytics, isDebug, success, failure, offline }) => (
   <SettingCategory
     title={t('mobile.settings.support.title')}
     elements={[
@@ -25,11 +26,15 @@ export const Support = ({ t, analytics, setAnalytics, isDebug, success, failure 
         text: t('mobile.settings.support.logs.button'),
         theme: 'secondary',
         onClick: async () => {
-          try {
-            await sendLog(t('mobile.settings.support.logs.title'))
-            success()
-          } catch (e) {
-            failure()
+          if (isOnline()) {
+            try {
+              await logInfo(t('mobile.settings.support.logs.title'), true)
+              success()
+            } catch (e) {
+              failure()
+            }
+          } else {
+            offline()
           }
         }
       }
@@ -56,6 +61,14 @@ const mapDispatchToProps = dispatch => ({
       type: 'SEND_LOG_FAILURE',
       alert: {
         message: 'mobile.settings.support.logs.error'
+      }
+    })
+  },
+  offline: () => {
+    dispatch({
+      type: 'SEND_LOG_FAILURE',
+      alert: {
+        message: 'alert.offline'
       }
     })
   }

@@ -109,7 +109,8 @@
     "empty_trash_success": "The trash has been emptied.",
     "folder_name": "The element %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
-    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved."
+    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
+    "offline": "This feature is not available offline."
   },
   "mobile": {
     "onboarding": {
