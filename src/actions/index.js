@@ -228,7 +228,7 @@ export const trashFiles = files => {
 export const downloadSelection = selected => {
   const meta = META_DEFAULTS
   return async (dispatch) => {
-    if (selected.length === 1 && isDirectory(selected[0])) {
+    if (selected.length === 1 && !isDirectory(selected[0])) {
       return dispatch(downloadFile(selected[0], meta))
     }
     const paths = selected.map(f => f.path)
