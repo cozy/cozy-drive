@@ -1,3 +1,5 @@
+/* global cozy */
+
 import styles from '../styles/services'
 
 import React, { Component } from 'react'
@@ -11,25 +13,27 @@ export default class IntentService extends Component {
     super(props, context)
     this.store = context.store
 
-    const {window} = props
-
     this.state = {
       isFetching: true,
       fileViewerUrl: null,
-      error: null,
+      error: null
     }
   }
 
   componentDidMount () {
-    const intent = window.location.search.split('=')[1]
+    const {window} = this.props
+    const intentId = window.location.search.split('=')[1]
 
-    cozy.client.intents.createService(intent, window)
+    let data
+    let intent
+    cozy.client.intents.createService(intentId, window)
       .then(service => {
         this.setState({
           service: service
         })
 
-        const data = service.getData()
+        intent = service.getIntent()
+        data = service.getData()
 
         if (!data || !data._id) {
           throw new Error('Unexpected data from intent')
@@ -39,9 +43,17 @@ export default class IntentService extends Component {
       })
       .then(downloadLink => {
         this.setState({
-          isFetching: false,
-          fileViewerUrl: cozy.client._url + downloadLink
+          isFetching: false
         })
+        const fullLink = cozy.client._url + downloadLink
+        switch (intent.attributes.action) {
+          case 'OPEN':
+            this.setState({ fileViewerUrl: fullLink })
+            break
+          case 'GET_URL':
+            this.terminate(fullLink)
+            break
+        }
       })
       .catch(error => {
         this.setState({
@@ -68,7 +80,6 @@ export default class IntentService extends Component {
   }
 
   render () {
-    const { data } = this.props
     const { isFetching, error, fileViewerUrl } = this.state
     const { t } = this.context
 

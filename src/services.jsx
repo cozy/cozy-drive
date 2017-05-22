@@ -16,7 +16,6 @@ import { I18n } from './lib/I18n'
 import filesApp from './reducers'
 import IntentService from './containers/IntentService'
 
-
 const loggerMiddleware = createLogger()
 
 if (__DEVELOPMENT__) {

@@ -32,6 +32,11 @@
       "action": "OPEN",
       "type": ["io.cozy.files"],
       "href": "/services"
+    },
+    {
+      "action": "GET_URL",
+      "type": ["io.cozy.files"],
+      "href": "/services"
     }
   ],
   "version": "3.0.0",
