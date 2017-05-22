@@ -63,18 +63,12 @@ $ yarn watch:browser
 
 ```sh
 # in another terminal, run the docker container
-$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app cozy/cozy-app-dev
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app/drive cozy/cozy-app-dev
 or
-$ yarn server
-```
-:warning: Don't forget to add `cozy.local` and `app.cozy.local` to your `/etc/hosts`
-
-```
-127.0.0.1 cozy.local
-127.0.0.1 app.cozy.local
+$ yarn stack:docker
 ```
 
-your app is available at http://app.cozy.local:8080.
+your app is available at http://drive.cozy.tools:8080.
 
 
 ### Run on you mobile phone or your tablet :phone:
@@ -87,7 +81,7 @@ your app is available at http://app.cozy.local:8080.
 [Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
 
 ```sh
-git clone https://github.com/cozy/cozy-ui.git -b v3
+git clone https://github.com/cozy/cozy-ui.git
 cd cozy-ui
 yarn install
 yarn link
@@ -115,13 +109,6 @@ $ yarn test
 ```
 
 :pushpin: Don't forget to update / create new tests when you contribute to code to keep the app the consistent.
-
-
-### Resources
-
-All documentation is located in the `/docs` app directory. It provides an exhaustive documentation about workflows (installation, development, pull-requests…), architecture, code consistency, data structures, dependencies, and more.
-
-Feel free to read it and fix / update it if needed, all comments and feedback to improve it are welcome!
 
 
 ### Open a Pull-Request
@@ -167,13 +154,13 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [setup]: https://dev.cozy.io/#set-up-the-development-environment "Cozy dev docs: Set up the Development Environment"
 [yarn]: https://yarnpkg.com/
 [yarn-install]: https://yarnpkg.com/en/docs/install
-[cozy-ui]: https://github.com/cozy/cozy-ui/
+[cozy-ui]: https://github.com/cozy/cozy-ui
 [cozy-client-js]: https://github.com/cozy/cozy-client-js/
 [cozy-stack-docker]: https://github.com/cozy/cozy-stack/blob/master/docs/client-app-dev.md#with-docker
-[doctypes]: https://dev.cozy.io/#main-document-types
-[bill-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/bill.coffee
-[konnector-doctype]: https://github.com/cozy-labs/konnectors/blob/master/server/models/konnector.coffee
-[konnectors]: https://github.com/cozy-labs/konnectors
+[doctypes]: https://cozy.github.io/cozy-doctypes/
+[bill-doctype]: https://github.com/cozy/cozy-konnector-libs/blob/master/models/bill.js
+[konnector-doctype]: https://github.com/cozy/cozy-konnector-libs/blob/master/models/base_model.js
+[konnectors]: https://github.com/cozy/cozy-konnector-libs
 [agpl-3.0]: https://www.gnu.org/licenses/agpl-3.0.html
 [contribute]: CONTRIBUTING.md
 [tx]: https://www.transifex.com/cozy/
@@ -187,7 +174,6 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [nvm]: https://github.com/creationix/nvm
 [ndenv]: https://github.com/riywo/ndenv
 [cozy-dev]: https://github.com/cozy/cozy-dev/
-[cozy-ui]: https://github.com/cozy/cozy-ui.git
 [mocha]: https://mochajs.org/
 [chai]: http://chaijs.com/
 [sinon]: http://sinonjs.org/
