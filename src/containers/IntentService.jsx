@@ -54,9 +54,9 @@ export default class IntentService extends Component {
       })
   }
 
-  terminate (account) {
+  terminate (msg) {
     const { service } = this.state
-    service.terminate(account)
+    service.terminate(msg)
   }
 
   cancel () {
