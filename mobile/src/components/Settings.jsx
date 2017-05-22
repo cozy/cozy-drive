@@ -1,6 +1,6 @@
 /* globals __DEVMODE__ */
 
-import React from 'react'
+import React, { Component } from 'react'
 import Main from '../../../src/components/Main'
 import Topbar from '../../../src/components/Topbar'
 import styles from '../styles/settings'
@@ -13,31 +13,45 @@ import Support from '../containers/settings/Support'
 import MediaBackup from '../containers/settings/MediaBackup'
 import Unlink from '../containers/settings/Unlink'
 
-export const Settings = ({ t }) => (
-  <Main>
-    <Topbar>
-      <h2>{t('mobile.settings.title')}</h2>
-    </Topbar>
-    <div>
-      <div className={styles['settings']}>
+class Settings extends Component {
+  state = {
+    countClick: 0
+  }
 
-        <MediaBackup />
-        <About />
-        <Support />
-        <Unlink />
+  handleClick = () => {
+    this.setState(state => ({ countClick: state.countClick + 1 }))
+  }
 
-        {__DEVMODE__ &&
-          [
-            <hr />,
-            <h3>Debug Zone</h3>,
-            <DebugTools />
-          ]
-        }
+  render () {
+    const { t } = this.props
+    const isDebug = this.state.countClick >= 3
+    return (
+      <Main>
+        <Topbar>
+          <h2>{t('mobile.settings.title')}</h2>
+        </Topbar>
+        <div>
+          <div className={styles['settings']}>
 
-      </div>
-      <UploadProgression />
-    </div>
-  </Main>
-)
+            <MediaBackup />
+            <Support isDebug={isDebug} />
+            <About onClick={this.handleClick} />
+            <Unlink />
+
+            {__DEVMODE__ &&
+              [
+                <hr />,
+                <h3>Debug Zone</h3>,
+                <DebugTools />
+              ]
+            }
+
+          </div>
+          <UploadProgression />
+        </div>
+      </Main>
+    )
+  }
+}
 
 export default translate()(Settings)

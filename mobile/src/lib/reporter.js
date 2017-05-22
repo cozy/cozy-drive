@@ -1,44 +1,43 @@
 /* global __SENTRY_TOKEN__, __DEVMODE__ */
 import Raven from 'raven-js'
 
-let getState
-
+let isEnable = false
 export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 
-export function getAnalyticsConfiguration () {
-  return {
-    shouldSendCallback: () => getState ? getState().mobile.settings.analytics : false,
-    environment: __DEVMODE__ ? 'development' : 'production'
-  }
+export const getConfig = () => ({
+  shouldSendCallback: () => isEnable,
+  environment: __DEVMODE__ ? 'development' : 'production'
+})
+
+export const configure = (enable) => {
+  isEnable = enable
+  Raven.config(ANALYTICS_URL, getConfig()).install()
 }
 
-export function configureReporter (value) {
-  getState = value
-}
-
-export function logException (err) {
-  if (!Raven.isSetup()) {
-    Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
-  }
-  Raven.captureException(err)
-  console.warn('Raven is recording exception')
-  console.error(err)
-}
-
-export function logInfo (message) {
-  if (!Raven.isSetup()) {
-    Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
-  }
-  Raven.captureMessage(message, {
-    level: 'info'
+export const logException = (err) => {
+  return new Promise(resolve => {
+    Raven.captureException(err)
+    console.warn('Raven is recording exception')
+    console.error(err)
+    resolve()
   })
 }
 
-export function pingOnceADay () {
-  if (!Raven.isSetup()) {
-    Raven.config(ANALYTICS_URL, getAnalyticsConfiguration()).install()
-  }
-  Raven.captureMessage('good day: user opens the app', {
-    level: 'info'
+const logMessage = (message, level = 'info', force) => {
+  return new Promise(resolve => {
+    const updateConfig = force && !isEnable
+    if (updateConfig) {
+      configure(true)
+    }
+    Raven.captureMessage(message, {
+      level
+    })
+    if (updateConfig) {
+      configure(false)
+    }
+    resolve()
   })
 }
+
+export const logInfo = (message, force = false) => logMessage(message, 'info', force)
+export const pingOnceADay = () => logInfo('good day: user opens the app')

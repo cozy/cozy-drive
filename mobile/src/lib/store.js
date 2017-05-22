@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
 import filesApp from '../reducers'
-import { ANALYTICS_URL, getAnalyticsConfiguration } from './reporter'
+import { ANALYTICS_URL, getConfig as getAnalyticsConfiguration } from './reporter'
 import { saveState } from './localStorage'
 
 const loggerMiddleware = createLogger()

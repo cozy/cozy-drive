@@ -109,7 +109,8 @@
     "empty_trash_success": "The trash has been emptied.",
     "folder_name": "The element %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
-    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved."
+    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
+    "offline": "This feature is not available offline."
   },
   "mobile": {
     "onboarding": {
@@ -181,6 +182,13 @@
         "analytics": {
           "title" : "Help us improve Cozy",
           "label": "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
+        },
+        "logs": {
+          "title": "Help us to understand your problem",
+          "description": "Send the application log to help us improve its quality and stability.",
+          "button": "Send my logs",
+          "success": "Thanks, we will investigate your problem and contact you soon.",
+          "error": "A problem happened, logs couldn't be sent, please try again."
         }
       }
     },

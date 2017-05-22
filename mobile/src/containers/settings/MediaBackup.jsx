@@ -4,7 +4,6 @@ import { translate } from '../../../../src/lib/I18n'
 import SettingCategory, { ELEMENT_CHECKBOX, ELEMENT_BUTTON } from '../../components/SettingCategory'
 import { setWifiOnly } from '../../actions/settings'
 import { backupImages, startMediaBackup, cancelMediaBackup } from '../../actions/mediaBackup'
-import styles from '../../styles/settings'
 
 export const MediaBackup = ({ t, backupImages, setBackupImages, wifiOnly, setWifiOnly, toggleBackup, mediaUploading }) => (
   <SettingCategory
@@ -31,9 +30,9 @@ export const MediaBackup = ({ t, backupImages, setBackupImages, wifiOnly, setWif
         text: <span>
           {!mediaUploading && t('mobile.settings.media_backup.launch')}
           {mediaUploading && t('mobile.settings.media_backup.stop')}
-          {mediaUploading && <div className={styles['media-uploading']} />}
         </span>,
-        className: 'coz-btn coz-btn--regular',
+        busy: mediaUploading,
+        theme: 'regular',
         onClick: () => toggleBackup(!mediaUploading, t('mobile.settings.media_backup.media_folder'))
       }
     ]}
@@ -47,9 +46,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setBackupImages: (e) => dispatch(backupImages(e.target.checked)),
-  setWifiOnly: async (e) => {
-    await dispatch(setWifiOnly(e.target.checked))
+  setBackupImages: (value) => dispatch(backupImages(value)),
+  setWifiOnly: async (value) => {
+    await dispatch(setWifiOnly(value))
     dispatch(backupImages())
   },
   toggleBackup: (launch, dir) => {
