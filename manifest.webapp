@@ -3,6 +3,7 @@
   "slug": "cozy-photos-v3",
   "icon": "public/app-icon.svg",
   "description": "Photos manager for Cozy v3",
+  "category": "cozy",
   "source": "https://github.com/cozy/cozy-photos-v3.git@build",
   "editor": "Cozy",
   "developer": {
