@@ -66,6 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
       injectScript: false
     }))
     piwikTracker.push(['enableHeartBeatTimer'])
+    let userId = data.cozyDomain
+    let indexOfPort = userId.indexOf(':')
+    if (indexOfPort >= 0) userId = userId.substring(0, indexOfPort)
+    piwikTracker.push(['setUserId', userId])
+
     history = piwikTracker.connectToHistory(hashHistory)
   } catch (err) {}
 
