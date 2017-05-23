@@ -24,7 +24,7 @@ export const Support = ({ t, analytics, setAnalytics, isDebug, success, failure,
         title: t('mobile.settings.support.logs.title'),
         description: t('mobile.settings.support.logs.description'),
         text: t('mobile.settings.support.logs.button'),
-        theme: 'secondary',
+        theme: 'regular',
         onClick: async () => {
           if (isOnline()) {
             try {
