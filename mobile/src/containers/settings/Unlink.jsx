@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { translate } from '../../../../src/lib/I18n'
 import SettingCategory, { ELEMENT_BUTTON } from '../../components/SettingCategory'
@@ -45,4 +46,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Unlink))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(Unlink)))
