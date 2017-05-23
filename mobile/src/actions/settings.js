@@ -1,6 +1,6 @@
-/* global cozy, __ALLOW_HTTP__ */
+/* global cozy */
 
-import { initClient } from '../lib/cozy-helper'
+import { initClient, checkURL, MAIL_EXCEPTION } from '../lib/cozy-helper'
 import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../../src/actions/settings'
 import { getDeviceName } from '../lib/device'
@@ -19,24 +19,6 @@ export const SET_ANALYTICS = 'SET_ANALYTICS'
 // url
 
 export const setUrl = url => ({ type: SET_URL, url })
-export const checkURL = url => dispatch => {
-  let scheme = 'https://'
-  if (__ALLOW_HTTP__) {
-    if (!url.startsWith(scheme)) scheme = 'http://'
-    console.warn('development mode: we don\'t check SSL requirement')
-  }
-  if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
-    dispatch(wrongAddressError())
-    if (__ALLOW_HTTP__) {
-      throw new OnBoardingError(`The supported protocols are http:// or https:// (development mode)`)
-    }
-    throw new OnBoardingError(`The only supported protocol is ${scheme}`)
-  }
-  if (!url.startsWith(scheme)) {
-    url = `${scheme}${url}`
-  }
-  return dispatch(setUrl(url))
-}
 
 // settings
 
@@ -56,7 +38,9 @@ export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 // errors
 
 export const wrongAddressErrorMsg = 'mobile.onboarding.server_selection.wrong_address'
+export const wrongAddressWithEmailErrorMsg = 'mobile.onboarding.server_selection.wrong_address_with_email'
 export const wrongAddressError = () => ({ type: ERROR, error: wrongAddressErrorMsg })
+export const wrongAddressWithEmailError = () => ({ type: ERROR, error: wrongAddressWithEmailErrorMsg })
 export class OnBoardingError extends Error {
   constructor (message) {
     super(message)
@@ -76,7 +60,17 @@ export const registerDevice = () => async (dispatch, getState) => {
       throw err
     })
   }
-  dispatch(checkURL(getState().mobile.settings.serverUrl))
+  try {
+    const url = checkURL(getState().mobile.settings.serverUrl)
+    await dispatch(setUrl(url))
+  } catch (err) {
+    if (err.name === MAIL_EXCEPTION) {
+      dispatch(wrongAddressWithEmailError())
+    } else {
+      dispatch(wrongAddressError())
+    }
+    throw err
+  }
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getDeviceName())
   await cozy.client.authorize().then(({ client }) => {
     dispatch(setClient(client))
