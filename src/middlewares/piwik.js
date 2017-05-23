@@ -22,8 +22,11 @@ const piwik = store => next => action => {
   }
 
   if (event && event.category && event.action) {
-    const tracker = Piwik.getTracker()
-    tracker.trackEvent(event.category, event.action, event.name, event.value)
+    try {
+      const tracker = Piwik.getTracker()
+      tracker.trackEvent(event.category, event.action, event.name, event.value)
+    }
+    catch (err) { }
   }
 
   return next(action)
