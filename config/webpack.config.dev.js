@@ -16,6 +16,7 @@ module.exports = {
       __STACK_ASSETS__: false,
       __DEVELOPMENT__: true,
       __PIWIK_SITEID__: 8,
+      __PIWIK_DIMENSION_ID_APP__: 1,
       __PIWIK_TRACKER_URL__: JSON.stringify('https://piwik.cozycloud.cc')
     }),
     new webpack.ProvidePlugin({

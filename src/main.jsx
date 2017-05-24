@@ -1,4 +1,4 @@
-/* global __DEVELOPMENT__ __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ */
+/* global __DEVELOPMENT__ __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ __PIWIK_DIMENSION_ID_APP__ */
 /* global cozy Piwik */
 
 import 'babel-polyfill'
@@ -66,6 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
       injectScript: false
     }))
     piwikTracker.push(['enableHeartBeatTimer'])
+    let userId = data.cozyDomain
+    let indexOfPort = userId.indexOf(':')
+    if (indexOfPort >= 0) userId = userId.substring(0, indexOfPort)
+    piwikTracker.push(['setUserId', userId])
+    piwikTracker.push(['setCustomDimension', __PIWIK_DIMENSION_ID_APP__, data.cozyAppName])
+
     history = piwikTracker.connectToHistory(hashHistory)
   } catch (err) {}
 
