@@ -863,7 +863,7 @@ babel-template@^6.22.0:
     babylon "^6.11.0"
     lodash "^4.2.0"
 
-babel-traverse@^6.18.0, babel-traverse@^6.23.1, babel-traverse@^6.24.1:
+babel-traverse@^6.18.0, babel-traverse@^6.22.0, babel-traverse@^6.23.1, babel-traverse@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.24.1.tgz#ab36673fd356f9a0948659e7b338d5feadb31695"
   dependencies:
@@ -877,7 +877,7 @@ babel-traverse@^6.18.0, babel-traverse@^6.23.1, babel-traverse@^6.24.1:
     invariant "^2.2.0"
     lodash "^4.2.0"
 
-babel-traverse@^6.22.0, babel-traverse@^6.22.1:
+babel-traverse@^6.22.1:
   version "6.22.1"
   resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.22.1.tgz#3b95cd6b7427d6f1f757704908f2fc9748a5f59f"
   dependencies:
@@ -909,11 +909,11 @@ babel-types@^6.22.0:
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
 
-babylon@^6.11.0, babylon@^6.13.0, babylon@^6.15.0:
+babylon@^6.11.0:
   version "6.15.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.15.0.tgz#ba65cfa1a80e1759b0e89fb562e27dccae70348e"
 
-babylon@^6.17.0:
+babylon@^6.13.0, babylon@^6.15.0, babylon@^6.17.0:
   version "6.17.1"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.17.1.tgz#17f14fddf361b695981fe679385e4f1c01ebd86f"
 
@@ -1473,13 +1473,13 @@ cozy-bar@3.0.0-beta24:
   dependencies:
     node-polyglot "^2.2.2"
 
-cozy-client-js@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.0.tgz#837c83751ccb4c0391249bd33c0bfba559f21344"
+cozy-client-js@0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.2.tgz#2af2d6ce0090da9ac39d0e43ccfe2c2d9e833c51"
 
-cozy-ui@3.0.0-beta24:
-  version "3.0.0-beta24"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta24.tgz#7ae8c2ce75550f314aef2b85ca89f4615e83939a"
+cozy-ui@3.0.0-beta27:
+  version "3.0.0-beta27"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta27.tgz#9267481aa151c3da26d9db7118e5af9658ddaabb"
   dependencies:
     classnames "^2.2.5"
     md5 "^2.2.0"

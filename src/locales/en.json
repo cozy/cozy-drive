@@ -3,7 +3,9 @@
     "photos": "Photos",
     "albums": "Albums",
     "shared": "Shared by me",
-    "trash": "Trash"
+    "trash": "Trash",
+    "btn-client": "Get Cozy for desktop",
+    "link-client": "https://docs.cozy.io/en/download/"
   },
   "Empty": {
     "timeline_photos_title": "You don't have any photos yet.",
