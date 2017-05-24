@@ -35,6 +35,7 @@ export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: 
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409
+export const HTTP_FILE_NOT_FOUND = 404
 const ALERT_LEVEL_ERROR = 'error'
 
 export const META_DEFAULTS = {

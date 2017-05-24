@@ -1,3 +1,6 @@
+/* global cozy */
+import { combineReducers } from 'redux'
+
 // constants
 
 export const SET_SAVE_FOLDER_BY_SLUG = 'SET_SAVE_FOLDER_BY_SLUG'
@@ -6,20 +9,18 @@ const INIT_STATE = 'INIT_STATE'
 
 // selectors
 
-export const getFolderBySlug = (state, slug) => state.saveFolder.bySlug[slug] ? state.saveFolder.bySlug[slug].id : undefined
+export const getFolderBySlug = (state, slug) => state.saveFolder.slugs[slug] ? state.saveFolder.slugs[slug] : undefined
 
 // reducers
 
-const initialState = {}
-const saveFolderBySlugReducer = (state = initialState, action) => {
+const saveFolderBySlugReducer = (state = {}, action) => {
   switch (action.type) {
     case SET_SAVE_FOLDER_BY_SLUG:
-    case CREATE_SAVE_FOLDER_SUCCESS:
-      const folder = {}
-      folder[action.slug] = action.folder
-      return { ...state, folder }
+    case CREATE_SAVE_FOLDER_BY_SLUG_SUCCESS:
+      delete action.folder.relations // it's not possible to serialize function
+      return { ...state, [action.slug]: action.folder }
     case INIT_STATE:
-      return initialState
+      return {}
     default:
       return state
   }
@@ -28,20 +29,26 @@ const saveFolderBySlugReducer = (state = initialState, action) => {
 // actions
 
 const createdFolderSuccess = (slug, folder) => ({ type: CREATE_SAVE_FOLDER_BY_SLUG_SUCCESS, slug, folder })
-const setFolderBySlug = (slug, folder) => ({ type: SET_SAVE_FOLDER_BY_SLUG, slug, folder })
+// const setFolderBySlug = (slug, folder) => ({ type: SET_SAVE_FOLDER_BY_SLUG, slug, folder })
 
 // actions async
 
-export const getOrCreateFolderBySlug = (slug, path) => async (dispatch, getState) => {
-  const savedFolder = getFolderBySlug(getState(), slug)
-  if (savedFolder) {
-    return savedFolder
-  }
-
-  const createdFolder = await cozy.client.files.createDirectoryByPath(path)
+export const createFolderBySlug = (slug, path) => async (dispatch, getState) => {
+  const folder = await cozy.client.files.createDirectoryByPath(path)
   dispatch(createdFolderSuccess(slug, folder))
 
   return folder
 }
 
-export default saveFolderBySlugReducer
+export const getOrCreateFolderBySlug = (slug, path) => async (dispatch, getState) => {
+  const folder = getFolderBySlug(getState(), slug)
+  if (folder) {
+    return folder
+  }
+
+  return dispatch(createFolderBySlug(slug, path))
+}
+
+export default combineReducers({
+  slugs: saveFolderBySlugReducer
+})

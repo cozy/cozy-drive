@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import OnBoarding from '../../components/OnBoarding'
 import { backupImages } from '../../actions/mediaBackup'
+import { translate } from '../../../../src/lib/I18n'
 
 export const BackupPhotosVideos = ({ onActivate, onSkip }) =>
 (
@@ -10,13 +11,15 @@ export const BackupPhotosVideos = ({ onActivate, onSkip }) =>
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: async () => {
-    await dispatch(backupImages(true))
+    const path = ownProps.t('mobile.settings.media_backup.media_folder')
+    await dispatch(backupImages(path, true))
     ownProps.nextStep()
   },
   onSkip: () => {
-    dispatch(backupImages(false))
+    const path = ownProps.t('mobile.settings.media_backup.media_folder')
+    dispatch(backupImages(path, false))
     ownProps.nextStep()
   }
 })
 
-export default connect(null, mapDispatchToProps)(BackupPhotosVideos)
+export default translate()(connect(null, mapDispatchToProps)(BackupPhotosVideos))

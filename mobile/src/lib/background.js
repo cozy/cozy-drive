@@ -1,8 +1,8 @@
 import { configureStore } from './store'
-import { initServices } from './init'
+import { initServices, getLang } from './init'
+import { initPolyglot } from '../../../src/lib/I18n'
 import { logException, logInfo } from './reporter'
 import { loadState } from './localStorage'
-import { getMediaFolderName } from './media'
 import { startMediaBackup } from '../actions/mediaBackup'
 import { isCordova, isIos, isAndroid, getPlatformId } from './device'
 
@@ -88,7 +88,13 @@ const backgroundService = () => new Promise(resolve => {
     .then(store => {
       initServices(store)
       logInfo('It\'s me Background Service!!!')
-      return store.dispatch(startMediaBackup(getMediaFolderName()))
+
+      const context = window.context
+      const lang = getLang()
+      const polyglot = initPolyglot(context, lang)
+      const path = polyglot.t('mobile.settings.media_backup.media_folder')
+
+      return store.dispatch(startMediaBackup(path))
     })
     .then(resolve)
     .catch(resolve)
