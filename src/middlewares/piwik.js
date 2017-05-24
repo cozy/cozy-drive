@@ -1,20 +1,26 @@
 /* global Piwik */
 import {
-  UPLOAD_FILE
+  PRE_UPLOAD_FILE
 } from '../actions'
 
 const CATEGORY = {
-  BUTTONS: 'buttons'
+  INTERACTION: 'interaction'
+}
+
+const ACTIONS = {
+  UPLOAD: 'upload'
 }
 
 const piwik = store => next => action => {
   let event = null
 
   switch (action.type){
-    case UPLOAD_FILE:
+    case PRE_UPLOAD_FILE:
       event = {
-        category: CATEGORY.BUTTONS,
-        action: 'upload'
+        category: CATEGORY.INTERACTION,
+        action: ACTIONS.UPLOAD,
+        name: 'file',
+        value: action.count
       }
       break;
     default:
