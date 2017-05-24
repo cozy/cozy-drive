@@ -15,6 +15,7 @@ import { Router, hashHistory } from 'react-router'
 import { I18n } from './lib/I18n'
 
 import photosApp from './reducers'
+import piwikMiddleware from './middlewares/piwik'
 import AppRoute from './components/AppRoute'
 
 const loggerMiddleware = createLogger()
@@ -35,7 +36,8 @@ const store = createStore(
   photosApp,
   composeEnhancers(applyMiddleware(
     thunkMiddleware,
-    loggerMiddleware
+    loggerMiddleware,
+    piwikMiddleware
   ))
 )
 
