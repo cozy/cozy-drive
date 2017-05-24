@@ -32,4 +32,5 @@ script:
 - yarn test
 - yarn run build
 after_success:
-- test $TRAVIS_BRANCH = "master" && yarn run deploy
+- test $TRAVIS_BRANCH = "master" && yarn run deploy -- --branch=build
+- test $TRAVIS_BRANCH = "prod" && yarn run deploy -- --branch=latest
