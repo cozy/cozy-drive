@@ -1,0 +1,39 @@
+{
+  "name": "Drive",
+  "slug": "cozy-drive",
+  "icon": "app-icon.svg",
+  "description": "File manager for Cozy v3",
+  "category": "cozy",
+  "source": "https://github.com/cozy/cozy-drive.git@build",
+  "editor": "Cozy",
+  "developer": {
+    "name": "Cozy",
+    "url": "https://cozy.io"
+  },
+  "default_locale": "en",
+  "locales": {
+    "fr": {
+      "description": "Gestionnaire de fichiers pour Cozy v3"
+    }
+  },
+  "routes": {
+    "/": {
+      "folder": "/",
+      "index": "index.html",
+      "public": false
+    }
+  },
+  "version": "3.0.0",
+  "licence": "AGPL-3.0",
+  "permissions": {
+    "files": {
+      "description": "Required to access the files",
+      "type": "io.cozy.files"
+    },
+    "apps": {
+      "description": "Required by the cozy-bar to display the icons of the apps",
+      "type": "io.cozy.apps",
+      "verbs": ["GET"]
+    }
+  }
+}
