@@ -14,7 +14,7 @@ const ACTIONS = {
 const piwik = store => next => action => {
   let event = null
 
-  switch (action.type){
+  switch (action.type) {
     case PRE_UPLOAD_FILE:
       event = {
         category: CATEGORY.INTERACTION,
@@ -22,17 +22,16 @@ const piwik = store => next => action => {
         name: 'file',
         value: action.count
       }
-      break;
+      break
     default:
-      break;
+      break
   }
 
   if (event && event.category && event.action) {
     try {
       const tracker = Piwik.getTracker()
       tracker.trackEvent(event.category, event.action, event.name, event.value)
-    }
-    catch (err) { }
+    } catch (err) { }
   }
 
   return next(action)
