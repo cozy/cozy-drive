@@ -53,7 +53,9 @@ export class AddToAlbumModal extends Component {
             isFetchingAlbums
             ? <Loading loadingType='albums_fetching' />
             : albums && albums.entries.length > 0
-            ? <SelectAlbumsForm albums={albums} onSubmitSelectedAlbum={album => onSubmitSelectedAlbum(album, photos)} />
+            ? <div className={classNames(styles['coz-select-album'])}>
+                <SelectAlbumsForm albums={albums} onSubmitSelectedAlbum={album => onSubmitSelectedAlbum(album, photos)} />
+              </div>
             : null
           }
         </div>
