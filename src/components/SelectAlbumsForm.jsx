@@ -1,7 +1,6 @@
 import styles from '../styles/albumsList'
 
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import classNames from 'classnames'
 
 import { withError } from '../components/ErrorComponent'
@@ -29,8 +28,7 @@ export const AlbumsView = (props) => {
   if (!props.albums) {
     return null
   }
-  const { fetchingStatus } = props.albums
-  const error = fetchingStatus === 'failed'
+  const error = props.albums.fetchingStatus === 'failed'
   return <ErrorAlbumsView error={error} onServerError={() => this.handleError(error)} {...props} />
 }
 
