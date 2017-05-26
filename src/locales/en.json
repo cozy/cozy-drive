@@ -5,7 +5,9 @@
     "item_shared": "Shared by me",
     "item_activity": "Activity",
     "item_trash": "Trash",
-    "item_settings": "Settings"
+    "item_settings": "Settings",
+    "btn-client": "Get Cozy for desktop",
+    "link-client": "https://docs.cozy.io/en/download/"
   },
   "breadcrumb": {
     "title_drive": "Drive",
