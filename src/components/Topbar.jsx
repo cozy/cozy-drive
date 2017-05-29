@@ -11,41 +11,43 @@ class Topbar extends Component{
   constructor (props) {
     super(props)
 
-    this.ignoreBlurEvent = false
+    this.ignoreBlurEvent = false// we'll ignore blur events if they are triggered by pressing enter or escape, to prevent `onEdit` from firing twice
+    this.inputElement = null
+
     this.backToAlbums = this.backToAlbums.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
   }
+
+  componentDidUpdate () {
+    if (this.inputElement !== null) {
+      this.inputElement.focus()
+      this.inputElement.select()
+    }
+  }
+
   backToAlbums () {
     // go to parent
     let url = this.props.router.location.pathname
     this.props.router.push(url.substring(0, url.lastIndexOf('/')))
   }
+
   handleBlur (e) {
-    if (!this.ignoreBlurEvent && typeof this.props.onEdit === 'function') this.props.onEdit(e.target.value.trim() !== '' ? e.target.value : albumName)
+    if (!this.ignoreBlurEvent && this.props.onEdit) this.props.onEdit(e.target.value.trim() !== '' ? e.target.value : albumName)
   }
+
   handleKeyDown (e) {
-    if (e.keyCode === KEYCODE_ENTER) {
+    if (e.keyCode === KEYCODE_ENTER && this.props.onEdit) {
       this.ignoreBlurEvent = true
       this.props.onEdit(e.target.value)
     }
-    else if (e.keyCode === KEYCODE_ESC) {
+    else if (e.keyCode === KEYCODE_ESC && this.props.onEdit) {
       this.ignoreBlurEvent = true
       this.props.onEdit(albumName)
     }
   }
 
-  render ({ t, children, router, viewName, albumName = '', editing = false, onEdit = ()=>{} }) {
-    let ignoreBlurEvent = false // we'll ignore blur events if they are triggered by pressing enter or escape, to prevent `onEdit` from firing twice
-
-    const focusInput = elem => {
-      if (!elem) return
-      setTimeout(() => {
-        elem.focus()
-        elem.select()
-      })
-    }
-
+  render ({ t, children, viewName, albumName = '', editing = false }) {
     return (
       <div className={styles['pho-content-header']}>
         {viewName === 'albumContent' &&
@@ -60,7 +62,7 @@ class Topbar extends Component{
             viewName !== 'albumContent'
             ? t(`Nav.${viewName}`)
             : editing
-            ? <input type='text' value={albumName} onKeyDown={this.handleKeyDown} onBlur={this.handleBlur} ref={focusInput} />
+            ? <input type='text' value={albumName} onKeyDown={this.handleKeyDown} onBlur={this.handleBlur} ref={elem => {this.inputElement = elem}} />
             : albumName
           }
         </h2>
