@@ -13,6 +13,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import { I18n } from './lib/I18n'
+import piwikMiddleware from './middlewares/piwik'
 
 import filesApp from './reducers'
 import AppRoute from './components/AppRoute'
@@ -35,7 +36,8 @@ const store = createStore(
   filesApp,
   composeEnhancers(applyMiddleware(
     thunkMiddleware,
-    loggerMiddleware
+    loggerMiddleware,
+    piwikMiddleware
   ))
 )
 
