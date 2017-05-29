@@ -1,4 +1,4 @@
-{
+  {
   "name": "Drive",
   "slug": "cozy-drive",
   "icon": "app-icon.svg",
@@ -31,6 +31,11 @@
   "intents": [
     {
       "action": "OPEN",
+      "type": ["io.cozy.files"],
+      "href": "/services"
+    },
+    {
+      "action": "GET_URL",
       "type": ["io.cozy.files"],
       "href": "/services"
     }

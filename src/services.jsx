@@ -39,5 +39,5 @@ document.addEventListener('DOMContentLoaded', () => {
     token: data.cozyToken
   })
 
-  render(<FileViewer intent={intent} />, root)
+  render(<FileViewer intentId={intent} />, root)
 })

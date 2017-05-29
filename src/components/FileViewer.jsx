@@ -12,17 +12,32 @@ class FileViewer extends React.Component {
   }
 
   componentDidMount () {
-    const intent = this.props.intent
-    cozy.client.intents.createService(intent, window)
-      .then(service => {
+    const { intentId } = this.props
+
+    let service, intent
+    cozy.client.intents.createService(intentId, window)
+      .then(_service => {
+        service = _service
         const { id } = service.getData()
+        intent = this.intent = service.getIntent()
         return cozy.client.files.getDownloadLinkById(id)
       })
       .then(link => `${cozy.client._url}${link}`)
       .then(url => {
-        this.setState({ url, loading: false })
+        switch (intent.attributes.action) {
+          case 'OPEN':
+          this.setState({ url, loading: false })
+          break
+          case 'GET_URL':
+          service.terminate({ url })
+          break
+        }
       }).catch(error => {
         this.setState({ error, loading: false })
+
+        if (this.intent.attributes.action == 'GET_URL') {
+          service.terminate({ error })
+        }
       })
   }
 
