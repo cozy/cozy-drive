@@ -7,6 +7,7 @@ import { mediaBackup } from './mediaBackup'
 import { ui } from './ui'
 import { authorization } from './authorization'
 import { timestamp } from './timestamp'
+import { UNLINK } from '../actions/unlink'
 
 const mobile = combineReducers({
   authorization,
@@ -16,7 +17,17 @@ const mobile = combineReducers({
   timestamp
 })
 
-export default combineReducers({
+const appReducer = combineReducers({
   ...reducers,
   mobile
 })
+
+const rootReducer = (state, action) => {
+  if (action.type === UNLINK) {
+    state = undefined
+  }
+
+  return appReducer(state, action)
+}
+
+export default rootReducer

@@ -1,12 +1,12 @@
 /* global cozy */
 
-import { initializeState } from '../../../src/actions/settings'
 import { resetClient } from '../lib/cozy-helper'
 import { disableBackgroundService } from '../lib/background'
 
 // constants
 export const SHOW_UNLINK_CONFIRMATION = 'SHOW_UNLINK_CONFIRMATION'
 export const HIDE_UNLINK_CONFIRMATION = 'HIDE_UNLINK_CONFIRMATION'
+export const UNLINK = 'UNLINK'
 
 // action creators sync
 export const showUnlinkConfirmation = () => ({ type: SHOW_UNLINK_CONFIRMATION })
@@ -20,5 +20,5 @@ export const unlink = (client) => {
   resetClient()
   disableBackgroundService()
 
-  return initializeState()
+  return { type: UNLINK }
 }

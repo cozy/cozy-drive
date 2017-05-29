@@ -1,4 +1,4 @@
-import { INIT_STATE, SET_CLIENT } from '../../../src/actions/settings'
+import { SET_CLIENT } from '../../../src/actions/settings'
 import { SET_URL, ERROR, BACKUP_IMAGES, SET_ANALYTICS, WIFI_ONLY } from '../actions/settings'
 
 export const initialState = {
@@ -19,8 +19,6 @@ export const settings = (state = initialState, action) => {
       return { ...state, analytics: action.analytics }
     case ERROR:
       return { ...state, error: action.error }
-    case INIT_STATE:
-      return initialState
     case SET_CLIENT:
       return { ...state, authorized: true }
     case WIFI_ONLY:
