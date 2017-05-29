@@ -5,7 +5,7 @@ import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../../src/actions/settings'
 import { getDeviceName } from '../lib/device'
 import { openFolder } from '../../../src/actions'
-import { onRegistered } from '../lib/registration'
+import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
 import { logException, logInfo, configure as configureReporter } from '../lib/reporter'
 import { pingOnceADay } from './timestamp'
 import { revokeClient as reduxRevokeClient } from './authorization'
@@ -55,8 +55,10 @@ export const registerDevice = () => async (dispatch, getState) => {
     return onRegistered(client, url)
     .then(url => url)
     .catch(err => {
-      dispatch(wrongAddressError())
-      logException(err)
+      if (err.message !== REGISTRATION_ABORT) {
+        dispatch(wrongAddressError())
+        logException(err)
+      }
       throw err
     })
   }
@@ -76,8 +78,12 @@ export const registerDevice = () => async (dispatch, getState) => {
     dispatch(setClient(client))
     startReplication(dispatch, getState)
   }).catch(err => {
-    dispatch(wrongAddressError())
-    logException(err)
+    if (err.message === REGISTRATION_ABORT) {
+      cozy.client._storage.clear()
+    } else {
+      dispatch(wrongAddressError())
+      logException(err)
+    }
     throw err
   })
 }
