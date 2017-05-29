@@ -5,6 +5,7 @@ import 'babel-polyfill'
 
 import React from 'react'
 import { render } from 'react-dom'
+import FileViewer from './components/FileViewer'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -32,21 +33,12 @@ const getQueryParameter = () => window
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
+  const { intent } = getQueryParameter()
 
   cozy.client.init({
     cozyURL: '//' + data.cozyDomain,
     token: data.cozyToken
   })
 
-  const { intent } = getQueryParameter()
-
-  console.log(cozy.client)
-
-  cozy.client.intents.createService(intent, window)
-  .then(service => {
-    const { id } = service.getData()
-    cozy.client.files.getDownloadLinkById(id)
-    .then(link => `${cozy.client._url}${link}`)
-    .then(url => render(<embed src={url} width='800px' />, root))
-  })
+  render(<FileViewer intent={ intent } />, root)
 })
