@@ -1,8 +1,8 @@
-import loadingStyles from '../styles/loading'
 /* global cozy */
 
 import utilStyles from '../styles/utils'
 import React from 'react'
+import Loading from './Loading'
 
 class FileViewer extends React.Component {
   getInitialState () {
@@ -28,7 +28,7 @@ class FileViewer extends React.Component {
 
   render () {
     return <div>
-      { this.state.loading && <div className={ loadingStyles['fil-loading'] } /> }
+      { this.state.loading && <Loading /> }
       { this.state.error && <pre className='coz-error'>{ this.state.error.toString() }</pre>}
       { this.state.url && <embed className={utilStyles.fullscreen} src={this.state.url} /> }
     </div>
