@@ -29,18 +29,6 @@ if (__DEVELOPMENT__) {
   window.React = React
 }
 
-// Enable Redux dev tools
-const composeEnhancers = (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-
-const store = createStore(
-  filesApp,
-  composeEnhancers(applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware,
-    piwikMiddleware
-  ))
-)
-
 document.addEventListener('DOMContentLoaded', () => {
   const context = window.context
   const root = document.querySelector('[role=application]')
@@ -60,8 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   let history = hashHistory
+  let middlewares = [thunkMiddleware, loggerMiddleware]
 
-  if (data.cozyTracking === 'true' || data.cozyTracking === ''){
+  const enableTracking = data.cozyTracking === 'true' || data.cozyTracking === ''
+
+  if (enableTracking){
     try {
       var PiwikReactRouter = require('piwik-react-router')
       const piwikTracker = (Piwik.getTracker(), PiwikReactRouter({
@@ -77,8 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
       piwikTracker.push(['setCustomDimension', __PIWIK_DIMENSION_ID_APP__, data.cozyAppName])
 
       history = piwikTracker.connectToHistory(hashHistory)
+      middlewares.push(piwikMiddleware)
     } catch (err) {}
   }
+
+  // Enable Redux dev tools
+  const composeEnhancers = (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
+
+  const store = createStore(
+    filesApp,
+    composeEnhancers(applyMiddleware.apply(this, middlewares))
+  )
 
   render((
     <I18n context={context} lang={data.cozyLocale}>
