@@ -29,7 +29,6 @@ const getQueryParameter = () => window
   .map(varval => varval.split('='))
   .reduce(arrToObj, {})
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
