@@ -21,9 +21,11 @@ import classNames from 'classnames'
 
 export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteAlbum, selectItems, shareAlbum, onRename }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
-    <ShareButton
-      label={t('Albums.share.cta')}
-      onClick={() => shareAlbum(album)} />
+    <div className='coz-desktop'>
+      <ShareButton
+        label={t('Albums.share.cta')}
+        onClick={() => shareAlbum(album)} />
+    </div>
     <MenuButton>
       <button
         role='button'
@@ -33,7 +35,12 @@ export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteA
         <span className='coz-hidden'>{ t('Toolbar.more') }</span>
       </button>
       <Menu className={styles['coz-menu']}>
-        <Item className='coz-mobile'>
+        <Item>
+          <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={onRename}>
+            {t('Albums.share.cta')}
+          </a>
+        </Item>
+        <Item>
           <a className={classNames(styles['pho-action-rename'])} onClick={onRename}>
             {t('Toolbar.menu.rename_album')}
           </a>
