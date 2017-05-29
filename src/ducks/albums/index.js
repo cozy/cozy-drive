@@ -4,7 +4,8 @@ import {
   createInsertAction,
   createDeleteAction,
   createFetchAction,
-  createFetchIfNeededAction
+  createFetchIfNeededAction,
+  createUpdateAction
 } from '../lists'
 
 import {
@@ -121,6 +122,11 @@ export const removeFromAlbum = (album, photos = []) =>
     })())
     // TODO: this is only for closing the selectionBar properly... Fix this!
     .then(() => dispatch({ type: 'REMOVE_FROM_ALBUM' }))
+
+export const updateAlbum = createUpdateAction(ALBUMS, async (album) => {
+  let updatedAlbum = await cozy.client.data.updateAttributes(ALBUM_DOCTYPE, album._id, album)
+  return { entries: [updatedAlbum] }
+})
 
 export const deleteAlbum = createDeleteAction(ALBUMS, async (album) => {
   await cozy.client.data.delete(ALBUM_DOCTYPE, album)
