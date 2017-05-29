@@ -1,5 +1,6 @@
-import Spinner from './Spinner'
 import loadingStyles from '../styles/loading'
+/* global cozy */
+
 import utilStyles from '../styles/utils'
 import React from 'react'
 
@@ -10,7 +11,7 @@ class FileViewer extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const intent = this.props.intent
     cozy.client.intents.createService(intent, window)
       .then(service => {
@@ -29,7 +30,7 @@ class FileViewer extends React.Component {
     return <div>
       { this.state.loading && <div className={ loadingStyles['fil-loading'] } /> }
       { this.state.error && <pre className='coz-error'>{ this.state.error.toString() }</pre>}
-      { this.state.url && <embed className={ utilStyles.fullscreen } src={ this.state.url }/> }
+      { this.state.url && <embed className={utilStyles.fullscreen} src={this.state.url} /> }
     </div>
   }
 }
