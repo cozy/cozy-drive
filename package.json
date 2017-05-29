@@ -4,7 +4,7 @@
   "main": "src/main.jsx",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.js --bail",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build/*",
     "copy:manifest": "install -m0644 package.json README.md LICENSE build",
     "deploy": "git-directory-deploy --username Cozy --email contact@cozycloud.cc --directory build/ --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-photos-v3.git",
     "tx": "tx pull --all || true",
