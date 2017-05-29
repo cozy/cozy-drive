@@ -26,16 +26,16 @@ class FileViewer extends React.Component {
       .then(url => {
         switch (intent.attributes.action) {
           case 'OPEN':
-          this.setState({ url, loading: false })
-          break
+            this.setState({ url, loading: false })
+            break
           case 'GET_URL':
-          service.terminate({ url })
-          break
+            service.terminate({ url })
+            break
         }
       }).catch(error => {
         this.setState({ error, loading: false })
 
-        if (this.intent.attributes.action == 'GET_URL') {
+        if (this.intent.attributes.action === 'GET_URL') {
           service.terminate({ error })
         }
       })
