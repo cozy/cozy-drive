@@ -33,7 +33,7 @@ class Topbar extends Component{
   }
 
   handleBlur (e) {
-    if (!this.ignoreBlurEvent && this.props.onEdit) this.props.onEdit(e.target.value.trim() !== '' ? e.target.value : albumName)
+    if (!this.ignoreBlurEvent && this.props.onEdit) this.props.onEdit(e.target.value.trim() !== '' ? e.target.value : this.props.albumName)
   }
 
   handleKeyDown (e) {
@@ -43,7 +43,7 @@ class Topbar extends Component{
     }
     else if (e.keyCode === KEYCODE_ESC && this.props.onEdit) {
       this.ignoreBlurEvent = true
-      this.props.onEdit(albumName)
+      this.props.onEdit(this.props.albumName)
     }
   }
 

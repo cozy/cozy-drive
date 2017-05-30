@@ -34,6 +34,10 @@ export class AlbumPhotos extends Component {
       Alerter.error('Error.album_rename_abort')
       return
     }
+    else if (name === this.props.album.name){
+      this.setState({editing: false})
+      return
+    }
 
     let updatedAlbum = Object.assign({}, this.props.album, { name })
     this.props.updateAlbum(updatedAlbum)
