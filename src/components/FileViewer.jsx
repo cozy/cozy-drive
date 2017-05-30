@@ -35,7 +35,7 @@ class FileViewer extends React.Component {
     } catch (error) {
       this.setState({ error, loading: false })
 
-      if (intent.attributes.action === 'GET_URL') {
+      if (service && intent.attributes.action === 'GET_URL') {
         service.terminate({ error })
       }
     }
