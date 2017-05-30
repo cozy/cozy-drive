@@ -38,7 +38,13 @@ export class ShareModal extends React.Component {
               <h3>{t('Albums.share.shareByLink.title')}</h3>
               <div className={styles['pho-input-dual']}>
                 <div><label for='' className={styles['coz-form-desc']}>{t('Albums.share.shareByLink.desc')}</label></div>
-                <div><Toggle name='share' checked={this.state.displayShareLink} onToggle={checked => this.toggleShareLink(checked)} /></div>
+                <div>
+                  <Toggle
+                    id='pho-album-share-toggle'
+                    name='share'
+                    checked={this.state.displayShareLink}
+                    onToggle={checked => this.toggleShareLink(checked)} />
+                </div>
               </div>
             </div>
           )}
