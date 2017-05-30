@@ -15,23 +15,13 @@
             color pomegranate
             background embedurl("../assets/icons/icon-trash-red.svg") em(16px) center no-repeat
 
-    .coz-btn--more
-        margin-right 0
+    .pho-toolbar-more-btn
+            @extends $button--secondary
+            @extends $button--more
 
-    .pho-toolbar-btn
-        @media (max-width: (480/basefont)rem)
-            height 2em
-            width  2em
-
-:local
-    @extends $menu
-
-    b-menu-button
-        width          4em
-        display        flex
-        flex-direction column
-        align-items    flex-end
-
-        b-listbox
-            top          em(43px)//3em
-            margin-right 0
+@media (max-width: (768/basefont)rem)
+    .pho-toolbar .pho-toolbar-more-btn
+        border        0
+        margin-right  0
+        height        em(48px, 14px)
+        opacity       .5
