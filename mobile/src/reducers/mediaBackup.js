@@ -1,4 +1,3 @@
-import { INIT_STATE } from '../../../src/actions/settings'
 import { MEDIA_UPLOAD_START, MEDIA_UPLOAD_END, MEDIA_UPLOAD_CANCEL, MEDIA_UPLOAD_SUCCESS, CURRENT_UPLOAD } from '../actions/mediaBackup'
 
 export const initialState = {
@@ -18,8 +17,6 @@ export const mediaBackup = (state = initialState, action) => {
       return { ...state, uploaded: [...state.uploaded, action.id] }
     case CURRENT_UPLOAD:
       return { ...state, currentUpload: { media: action.media, message: action.message, messageData: action.messageData } }
-    case INIT_STATE:
-      return initialState
     default:
       return state
   }

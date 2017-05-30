@@ -1,4 +1,3 @@
-import { INIT_STATE } from '../../../src/actions/settings'
 import { SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION } from '../actions/unlink'
 
 export const initialState = {
@@ -11,8 +10,6 @@ export const ui = (state = initialState, action) => {
       return { ...state, displayUnlinkConfirmation: true }
     case HIDE_UNLINK_CONFIRMATION:
       return { ...state, displayUnlinkConfirmation: false }
-    case INIT_STATE:
-      return initialState
     default:
       return state
   }

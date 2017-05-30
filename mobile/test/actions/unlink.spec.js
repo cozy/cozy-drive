@@ -1,7 +1,6 @@
 /* eslint-env jest */
 /* global cozy */
 
-import { INIT_STATE } from '../../../src/actions/settings'
 import {
   SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION,
   showUnlinkConfirmation, hideUnlinkConfirmation, unlink
@@ -25,7 +24,7 @@ describe('ui actions', () => {
   })
 
   it('should create an action to initialize state', () => {
-    const expectedAction = { type: INIT_STATE }
+    const expectedAction = { type: 'UNLINK' }
     expect(unlink()).toEqual(expectedAction)
   })
 })
