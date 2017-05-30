@@ -30,11 +30,10 @@ export class AlbumPhotos extends Component {
   }
 
   renameAlbum (name) {
-    if (name.trim() === ''){
+    if (name.trim() === '') {
       Alerter.error('Error.album_rename_abort')
       return
-    }
-    else if (name === this.props.album.name){
+    } else if (name === this.props.album.name) {
       this.setState({editing: false})
       return
     }
@@ -44,7 +43,7 @@ export class AlbumPhotos extends Component {
       .then(() => {
         this.setState({editing: false})
       })
-      .catch(err => {
+      .catch(() => {
         Alerter.error('Error.generic')
       })
   }

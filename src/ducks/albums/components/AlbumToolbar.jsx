@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from '../../../lib/I18n'
 
-import DeleteButton from '../../../components/DeleteButton'
 import ShareButton from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'

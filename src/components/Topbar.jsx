@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 const KEYCODE_ENTER = 13
 const KEYCODE_ESC = 27
 
-class Topbar extends Component{
+class Topbar extends Component {
   constructor (props) {
     super(props)
 
@@ -40,8 +40,7 @@ class Topbar extends Component{
     if (e.keyCode === KEYCODE_ENTER && this.props.onEdit) {
       this.ignoreBlurEvent = true
       this.props.onEdit(e.target.value)
-    }
-    else if (e.keyCode === KEYCODE_ESC && this.props.onEdit) {
+    } else if (e.keyCode === KEYCODE_ESC && this.props.onEdit) {
       this.ignoreBlurEvent = true
       this.props.onEdit(this.props.albumName)
     }
@@ -62,7 +61,7 @@ class Topbar extends Component{
             viewName !== 'albumContent'
             ? t(`Nav.${viewName}`)
             : editing
-            ? <input type='text' value={albumName} onKeyDown={this.handleKeyDown} onBlur={this.handleBlur} ref={elem => {this.inputElement = elem}} />
+            ? <input type='text' value={albumName} onKeyDown={this.handleKeyDown} onBlur={this.handleBlur} ref={elem => { this.inputElement = elem }} />
             : albumName
           }
         </h2>
