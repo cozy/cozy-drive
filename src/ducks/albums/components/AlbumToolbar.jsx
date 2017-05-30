@@ -36,7 +36,7 @@ export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteA
       </button>
       <Menu className={styles['coz-menu']}>
         <Item>
-          <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={onRename}>
+          <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={() => shareAlbum(album)}>
             {t('Albums.share.cta')}
           </a>
         </Item>
