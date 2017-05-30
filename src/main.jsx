@@ -1,5 +1,5 @@
-/* global __DEVELOPMENT__ __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ __PIWIK_DIMENSION_ID_APP__ */
-/* global cozy Piwik */
+/* global __DEVELOPMENT__ */
+/* global cozy */
 
 import 'babel-polyfill'
 
@@ -13,7 +13,8 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import { I18n } from './lib/I18n'
-import piwikMiddleware from './middlewares/piwik'
+import Tracker from './lib/tracker'
+import eventTrackerMiddleware from './middlewares/EventTracker'
 
 import filesApp from './reducers'
 import AppRoute from './components/AppRoute'
@@ -50,26 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let history = hashHistory
   let middlewares = [thunkMiddleware, loggerMiddleware]
 
-  const enableTracking = data.cozyTracking === 'true' || data.cozyTracking === ''
-
-  if (enableTracking){
-    try {
-      var PiwikReactRouter = require('piwik-react-router')
-      const piwikTracker = (Piwik.getTracker(), PiwikReactRouter({
-        url: __PIWIK_TRACKER_URL__,
-        siteId: __PIWIK_SITEID__,
-        injectScript: false
-      }))
-      piwikTracker.push(['enableHeartBeatTimer'])
-      let userId = data.cozyDomain
-      let indexOfPort = userId.indexOf(':')
-      if (indexOfPort >= 0) userId = userId.substring(0, indexOfPort)
-      piwikTracker.push(['setUserId', userId])
-      piwikTracker.push(['setCustomDimension', __PIWIK_DIMENSION_ID_APP__, data.cozyAppName])
-
-      history = piwikTracker.connectToHistory(hashHistory)
-      middlewares.push(piwikMiddleware)
-    } catch (err) {}
+  if (Tracker.shouldEnableTracking() && Tracker.getTracker()) {
+    let trackerInstance = Tracker.getTracker()
+    history = trackerInstance.connectToHistory(hashHistory)
+    trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
+    middlewares.push(eventTrackerMiddleware)
+    middlewares.push(Tracker.createMiddleware())
   }
 
   // Enable Redux dev tools
