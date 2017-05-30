@@ -3,7 +3,7 @@ import styles from '../styles/addToAlbum'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { translate } from '../lib/I18n'
-import Modal from 'cozy-ui/react/Modal'
+import Modal, { ModalSection } from 'cozy-ui/react/Modal'
 import classNames from 'classnames'
 
 import Alerter from '../components/Alerter'
@@ -43,7 +43,7 @@ export class AddToAlbumModal extends Component {
         title={t('Albums.add_photos.title')}
         secondaryAction={() => onDismiss()}
         >
-        <div className={classNames(styles['coz-modal-section'])}>
+        <ModalSection>
           <div className={classNames(styles['coz-create-album'])}>
             <CreateAlbumForm
               onSubmitNewAlbum={name => onSubmitNewAlbum(name, photos)}
@@ -58,7 +58,7 @@ export class AddToAlbumModal extends Component {
             </div>
             : null
           }
-        </div>
+        </ModalSection>
       </Modal>
     )
   }
