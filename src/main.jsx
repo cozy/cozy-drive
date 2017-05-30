@@ -13,7 +13,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import { I18n } from './lib/I18n'
-import Tracker from './lib/tracker'
+import { shouldEnableTracking, getTracker, createTrackerMiddleware } from './lib/tracker'
 import eventTrackerMiddleware from './middlewares/EventTracker'
 
 import filesApp from './reducers'
@@ -51,12 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let history = hashHistory
   let middlewares = [thunkMiddleware, loggerMiddleware]
 
-  if (Tracker.shouldEnableTracking() && Tracker.getTracker()) {
-    let trackerInstance = Tracker.getTracker()
+  if (shouldEnableTracking() && getTracker()) {
+    let trackerInstance = getTracker()
     history = trackerInstance.connectToHistory(hashHistory)
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
     middlewares.push(eventTrackerMiddleware)
-    middlewares.push(Tracker.createMiddleware())
+    middlewares.push(createTrackerMiddleware())
   }
 
   // Enable Redux dev tools
