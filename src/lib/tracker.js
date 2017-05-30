@@ -1,5 +1,5 @@
 /* global __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ __PIWIK_DIMENSION_ID_APP__ */
-/* global cozy */
+/* global Piwik */
 
 // Think of these functions as a singleton class with only static methods.
 let trackerInstance = null
@@ -18,7 +18,7 @@ export const shouldEnableTracking = () => {
     else if (track === 'false') return false
   }
 
-  return undefined;
+  return undefined
 }
 
 /**
@@ -44,9 +44,8 @@ export const getTracker = (trackerUrl, siteId, automaticallyConfigure = true) =>
     if (automaticallyConfigure) configureTracker()
 
     return trackerInstance
-  }
-  catch (err) {
-    //this usually happens when there's an ad blocker
+  } catch (err) {
+    // this usually happens when there's an ad blocker
     console.warn(err)
     trackerInstance = null
     return null
@@ -81,7 +80,7 @@ export const configureTracker = (options = {}) => {
     if (indexOfPort >= 0) userId = userId.substring(0, indexOfPort)
   }
 
-  //merge default options with what has been provided
+  // merge default options with what has been provided
   options = Object.assign({
     userId: userId,
     appDimensionId: __PIWIK_DIMENSION_ID_APP__,
@@ -89,7 +88,7 @@ export const configureTracker = (options = {}) => {
     heartbeat: true
   }, options)
 
-  //apply them
+  // apply them
   if (options.heartbeat) trackerInstance.push(['enableHeartBeatTimer'])
   trackerInstance.push(['setUserId', options.userId])
   trackerInstance.push(['setCustomDimension', options.appDimensionId, options.app])
@@ -101,7 +100,7 @@ export const configureTracker = (options = {}) => {
 */
 export const createTrackerMiddleware = () => {
   return store => next => action => {
-    if (trackerInstance && action.trackEvent && action.trackEvent.category && action.trackEvent.action)  {
+    if (trackerInstance && action.trackEvent && action.trackEvent.category && action.trackEvent.action) {
       trackerInstance.push(['trackEvent', action.trackEvent.category, action.trackEvent.action, action.trackEvent.name, action.trackEvent.value])
     }
 

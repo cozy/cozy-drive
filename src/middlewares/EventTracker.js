@@ -1,4 +1,3 @@
-/* global Piwik */
 import {
   PRE_UPLOAD_FILE
 } from '../actions'
