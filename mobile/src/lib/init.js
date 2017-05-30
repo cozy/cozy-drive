@@ -7,7 +7,9 @@ export const getLang = () => (navigator && navigator.language) ? navigator.langu
 
 export const initServices = (store) => {
   configureReporter(store.getState().mobile.settings.analytics)
-  initClient(store.getState().mobile.settings.serverUrl)
+  if (store.getState().settings.client) {
+    initClient(store.getState().mobile.settings.serverUrl)
+  }
 
   const client = store.getState().settings.client
   if (client) {

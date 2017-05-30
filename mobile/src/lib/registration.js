@@ -3,15 +3,28 @@ const hasCordovaPlugin = () => {
     window.cordova.InAppBrowser !== undefined
 }
 
-const openRegistrationWith = inAppBrowser => new Promise(resolve => {
-  inAppBrowser.addEventListener('loadstart', ({url}) => {
+export const REGISTRATION_ABORT = 'REGISTRATION_ABORT'
+
+const openRegistrationWith = inAppBrowser => new Promise((resolve, reject) => {
+  const loadStart = ({url}) => {
     const accessCode = /\?access_code=(.+)$/.test(url)
     const state = /\?state=(.+)$/.test(url)
 
     if (accessCode || state) {
       resolve(url)
+      removeListener()
     }
-  })
+  }
+  const exit = () => {
+    reject(new Error(REGISTRATION_ABORT))
+    removeListener()
+  }
+  const removeListener = () => {
+    inAppBrowser.removeEventListener('loadstart', loadStart)
+    inAppBrowser.removeEventListener('exit', exit)
+  }
+  inAppBrowser.addEventListener('loadstart', loadStart)
+  inAppBrowser.addEventListener('exit', exit)
 })
 
 export const onRegistered = (client, url) => {
