@@ -6,7 +6,7 @@ import { updateStatusBackgroundService } from '../lib/background'
 import { backupAllowed } from '../lib/network'
 import { HTTP_CODE_CONFLICT, HTTP_FILE_NOT_FOUND } from '../../../src/actions'
 import { logInfo, logException } from '../lib/reporter'
-import { getOrCreateFolderBySlug, createFolderBySlug } from '../../../src/ducks/saveFolder'
+import { getOrCreateFolder, createFolder } from '../../../src/ducks/backup/saveFolder'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
@@ -64,7 +64,7 @@ export const startMediaBackup = (path, force = false) => async (dispatch, getSta
       if (getState().mobile.mediaBackup.cancelMediaBackup || !canBackup(force, getState)) {
         break
       }
-      const folder = await dispatch(getOrCreateFolderBySlug('media_folder', path))
+      const folder = await dispatch(getOrCreateFolder(path))
       dispatch(currentUploading(photo, uploadCounter++, totalUpload))
       await dispatch(uploadPhoto(folder, photo))
     }
@@ -108,7 +108,7 @@ const uploadPhoto = (folder, photo) => async (dispatch, getState) => {
       }
       if (isInTrash(err)) {
         console.info('The default folder is in the trash, we create another.')
-        const createdFolder = await createFolderBySlug('media_folder', folder.attributes.path)
+        const createdFolder = await createFolder(folder.attributes.path)
         await dispatch(uploadPhoto(createdFolder, photo))
       } else if (err.status === HTTP_CODE_CONFLICT) {
         console.info('This picture is already on your server.')
