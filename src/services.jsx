@@ -5,7 +5,7 @@ import 'babel-polyfill'
 
 import React from 'react'
 import { render } from 'react-dom'
-import FileViewer from './components/FileViewer'
+import IntentHandler from './components/IntentHandler'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -39,5 +39,5 @@ document.addEventListener('DOMContentLoaded', () => {
     token: data.cozyToken
   })
 
-  render(<FileViewer intentId={intent} />, root)
+  render(<IntentHandler intentId={intent} />, root)
 })
