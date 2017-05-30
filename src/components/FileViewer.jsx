@@ -12,33 +12,33 @@ class FileViewer extends React.Component {
   }
 
   componentDidMount () {
+    this.startService()
+  }
+
+  async startService () {
     const { intentId } = this.props
 
-    let serviceAnchor, intent
-    cozy.client.intents.createService(intentId, window)
-      .then(service => {
-        serviceAnchor = service
-        const { id } = service.getData()
-        intent = this.intent = service.getIntent()
-        return cozy.client.files.getDownloadLinkById(id)
-      })
-      .then(link => `${cozy.client._url}${link}`)
-      .then(url => {
-        switch (intent.attributes.action) {
-          case 'OPEN':
-            this.setState({ url, loading: false })
-            break
-          case 'GET_URL':
-            service.terminate({ url })
-            break
-        }
-      }).catch(error => {
-        this.setState({ error, loading: false })
+    try {
+      const service = await cozy.client.intents.createService(intentId, window)
+      const { id } = service.getData()
+      const intent = this.intent = service.getIntent()
+      const link = await cozy.client.files.getDownloadLinkById(id)
+      const url = `${cozy.client._url}${link}`
+      switch (intent.attributes.action) {
+        case 'OPEN':
+          this.setState({ url, loading: false })
+          break
+        case 'GET_URL':
+          service.terminate({ url })
+          break
+      }
+    } catch (error) {
+      this.setState({ error, loading: false })
 
-        if (this.intent.attributes.action === 'GET_URL') {
-          serviceAnchor.terminate({ error })
-        }
-      })
+      if (intent.attributes.action === 'GET_URL') {
+        service.terminate({ error })
+      }
+    }
   }
 
   render () {
