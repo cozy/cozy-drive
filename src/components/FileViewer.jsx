@@ -18,10 +18,12 @@ class FileViewer extends React.Component {
   async startService () {
     const { intentId } = this.props
 
+    let service
+    let intent
     try {
-      const service = await cozy.client.intents.createService(intentId, window)
+      service = await cozy.client.intents.createService(intentId, window)
       const { id } = service.getData()
-      const intent = this.intent = service.getIntent()
+      intent = this.intent = service.getIntent()
       const link = await cozy.client.files.getDownloadLinkById(id)
       const url = `${cozy.client._url}${link}`
       switch (intent.attributes.action) {
