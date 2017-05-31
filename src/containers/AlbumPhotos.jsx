@@ -38,7 +38,7 @@ export class AlbumPhotos extends Component {
       return
     }
 
-    let updatedAlbum = {...this.props.album, name: name }
+    let updatedAlbum = { ...this.props.album, name: name }
     this.props.updateAlbum(updatedAlbum)
       .then(() => {
         this.setState({editing: false})
