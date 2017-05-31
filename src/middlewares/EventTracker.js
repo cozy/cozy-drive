@@ -11,12 +11,12 @@ const ACTIONS = {
   UPLOAD: 'upload'
 }
 
-const piwik = store => next => action => {
+const tracker = store => next => action => {
   let event = null
 
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
-      event = {
+      action.trackEvent = {
         category: CATEGORY.INTERACTION,
         action: ACTIONS.UPLOAD,
         name: 'photo',
@@ -27,14 +27,7 @@ const piwik = store => next => action => {
       break
   }
 
-  if (event && event.category && event.action) {
-    try {
-      const tracker = Piwik.getTracker()
-      tracker.trackEvent(event.category, event.action, event.name, event.value)
-    } catch (err) { }
-  }
-
   return next(action)
 }
 
-export default piwik
+export default tracker

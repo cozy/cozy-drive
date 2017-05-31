@@ -1,5 +1,5 @@
-/* global __DEVELOPMENT__ __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ __PIWIK_DIMENSION_ID_APP__ */
-/* global cozy Piwik */
+/* global __DEVELOPMENT__ */
+/* global cozy */
 
 import 'babel-polyfill'
 
@@ -15,8 +15,9 @@ import { Router, hashHistory } from 'react-router'
 import { I18n } from './lib/I18n'
 
 import photosApp from './reducers'
-import piwikMiddleware from './middlewares/piwik'
 import AppRoute from './components/AppRoute'
+import { shouldEnableTracking, getTracker, createTrackerMiddleware } from './lib/tracker'
+import eventTrackerMiddleware from './middlewares/EventTracker'
 
 const loggerMiddleware = createLogger()
 
@@ -28,18 +29,6 @@ if (__DEVELOPMENT__) {
   // Export React to window for the devtools
   window.React = React
 }
-
-// Enable Redux dev tools
-const composeEnhancers = (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-
-const store = createStore(
-  photosApp,
-  composeEnhancers(applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware,
-    piwikMiddleware
-  ))
-)
 
 document.addEventListener('DOMContentLoaded', () => {
   const context = window.context
@@ -60,22 +49,23 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   let history = hashHistory
-  try {
-    var PiwikReactRouter = require('piwik-react-router')
-    const piwikTracker = (Piwik.getTracker(), PiwikReactRouter({
-      url: __PIWIK_TRACKER_URL__,
-      siteId: __PIWIK_SITEID__,
-      injectScript: false
-    }))
-    piwikTracker.push(['enableHeartBeatTimer'])
-    let userId = data.cozyDomain
-    let indexOfPort = userId.indexOf(':')
-    if (indexOfPort >= 0) userId = userId.substring(0, indexOfPort)
-    piwikTracker.push(['setUserId', userId])
-    piwikTracker.push(['setCustomDimension', __PIWIK_DIMENSION_ID_APP__, data.cozyAppName])
+  let middlewares = [thunkMiddleware, loggerMiddleware]
 
-    history = piwikTracker.connectToHistory(hashHistory)
-  } catch (err) {}
+  if (shouldEnableTracking() && getTracker()) {
+    let trackerInstance = getTracker()
+    history = trackerInstance.connectToHistory(hashHistory)
+    trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
+    middlewares.push(eventTrackerMiddleware)
+    middlewares.push(createTrackerMiddleware())
+  }
+
+  // Enable Redux dev tools
+  const composeEnhancers = (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
+
+  const store = createStore(
+    photosApp,
+    composeEnhancers(applyMiddleware.apply(this, middlewares))
+  )
 
   render((
     <I18n context={context} lang={lang}>
