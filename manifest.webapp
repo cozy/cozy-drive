@@ -21,8 +21,20 @@
       "folder": "/",
       "index": "index.html",
       "public": false
+    },
+    "/services": {
+      "folder": "/",
+      "index": "services.html",
+      "public": false
     }
   },
+  "intents": [
+    {
+      "action": "OPEN",
+      "type": ["io.cozy.files"],
+      "href": "/services"
+    }
+  ],
   "version": "3.0.0",
   "licence": "AGPL-3.0",
   "permissions": {
