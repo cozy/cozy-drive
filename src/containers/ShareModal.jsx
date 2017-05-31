@@ -1,7 +1,7 @@
 import styles from '../styles/share'
 
 import React from 'react'
-import Modal from 'cozy-ui/react/Modal'
+import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import Toggle from 'cozy-ui/react/Toggle'
 import classNames from 'classnames'
 
@@ -32,13 +32,19 @@ export class ShareModal extends React.Component {
         secondaryText={t('Albums.share.close')}
         secondaryAction={abort}
         >
-        <div className={classNames(styles['coz-modal-section'])}>
+        <ModalContent className={styles['pho-share-modal-content']}>
           {withForm(
             <div>
               <h3>{t('Albums.share.shareByLink.title')}</h3>
               <div className={styles['pho-input-dual']}>
                 <div><label for='' className={styles['coz-form-desc']}>{t('Albums.share.shareByLink.desc')}</label></div>
-                <div><Toggle name='share' checked={this.state.displayShareLink} onToggle={checked => this.toggleShareLink(checked)} /></div>
+                <div>
+                  <Toggle
+                    id='pho-album-share-toggle'
+                    name='share'
+                    checked={this.state.displayShareLink}
+                    onToggle={checked => this.toggleShareLink(checked)} />
+                </div>
               </div>
             </div>
           )}
@@ -59,7 +65,7 @@ export class ShareModal extends React.Component {
               <div className={styles['coz-form-desc']}>{t('Albums.share.protectedShare.desc')}</div>
             </div>
           )}
-        </div>
+        </ModalContent>
       </Modal>
     )
   }
