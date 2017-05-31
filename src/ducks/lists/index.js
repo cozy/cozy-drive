@@ -8,6 +8,7 @@ const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES'
 const RECEIVE_MORE_ENTRIES = 'RECEIVE_MORE_ENTRIES'
 const RECEIVE_ERROR = 'RECEIVE_ERROR'
 const INSERT_ENTRIES = 'INSERT_ENTRIES'
+const UPDATE_ENTRIES = 'UPDATE_ENTRIES'
 const DELETE_ENTRY = 'DELETE_ENTRY'
 const EMIT_ERROR = 'EMIT_ERROR'
 
@@ -25,6 +26,11 @@ const entries = (state = [], action) => {
         ...action.entries,
         ...state
       ]
+    case UPDATE_ENTRIES:
+      return state.map(entry => {
+        let updatedEntry = action.entries.find(actionEntry => (actionEntry._id === entry._id))
+        return updatedEntry || entry
+      })
     case DELETE_ENTRY:
       // TODO: quick and dirty fix for removeFromAlbum (we got IDs instead of photos)
       const id = typeof action.entity === 'object' ? action.entity.id || action.entity._id : action.entity
@@ -97,6 +103,7 @@ const listsReducer = (state = {}, action) => {
     case RECEIVE_MORE_ENTRIES:
     case RECEIVE_ERROR:
     case INSERT_ENTRIES:
+    case UPDATE_ENTRIES:
     case DELETE_ENTRY:
       return Object.assign({}, state, { [action.name]: listReducer(state[action.name] || {}, action) })
     default:
@@ -171,6 +178,22 @@ export const createInsertAction = (listName, saga) => {
   }
 }
 
+export const createUpdateAction = (listName, saga) => {
+  return (...args) => {
+    return (dispatch, getState) => {
+      const existingList = getList(getState(), listName)
+      return saga(...args)
+        .then(resp => {
+          if (existingList) {
+            return dispatch(updateAction(listName, resp))
+          } else {
+            return resp
+          }
+        })
+    }
+  }
+}
+
 export const createDeleteAction = (listName, saga) => {
   return (...args) => {
     return (dispatch, getState) => {
@@ -209,6 +232,10 @@ export const errorAction = (listName, error) => ({
 // TODO: remove the discrepancy between insert and deleteAction inputs (full response with entries vs single entry)
 export const insertAction = (listName, resp) => ({
   type: INSERT_ENTRIES, name: listName, ...resp
+})
+
+export const updateAction = (listName, resp) => ({
+  type: UPDATE_ENTRIES, name: listName, ...resp
 })
 
 export const deleteAction = (listName, entity) => ({

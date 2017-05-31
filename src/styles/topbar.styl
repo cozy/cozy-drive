@@ -33,11 +33,16 @@
         background-size cover
 
 .pho-content-title
+  @extend $form-text
   margin        0
   padding-top   .1em
   overflow      hidden
   text-overflow ellipsis
   font-size(24px)
+
+  input[type=text]
+    padding 0.4em 0.3em 0.3em 0.4em
+    max-width 100%
 
   @media (max-width: (768/basefont)rem)
       font-size(20px)

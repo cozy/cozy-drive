@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import { translate } from '../../../lib/I18n'
 
 import UploadButton from '../../../components/UploadButton'
-import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
+import Menu, { Item } from '../../../components/Menu'
 
 import { showSelectionBar } from '../../../actions'
 import { mustShowSelectionBar } from '../../../reducers'
@@ -25,31 +25,27 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
       disabled={disabled}
       label={t('Toolbar.photo_upload')}
     />
-    <MenuButton className='coz-mobile'>
-      <button
-        role='button'
-        className={classNames('coz-btn', 'coz-btn--more', styles['coz-btn--more'], styles['pho-toolbar-btn'])}
-        disabled={disabled}
-      >
-        <span className='coz-hidden'>{ t('Toolbar.more') }</span>
-      </button>
-      <Menu className={styles['coz-menu']}>
-        <Item>
-          <UploadButton
-            onUpload={uploadPhotos}
-            disabled={disabled}
-            label={t('Toolbar.menu.photo_upload')}
-            type='menu-item'
-          />
-        </Item>
-        <hr />
-        <Item>
-          <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
-            {t('Toolbar.menu.select_items')}
-          </a>
-        </Item>
-      </Menu>
-    </MenuButton>
+    <Menu
+      title={t('Toolbar.more')}
+      disabled={disabled}
+      className={styles['pho-toolbar-menu']}
+      buttonClassName={styles['pho-toolbar-more-btn']}
+    >
+      <Item>
+        <UploadButton
+          onUpload={uploadPhotos}
+          disabled={disabled}
+          label={t('Toolbar.menu.photo_upload')}
+          type='menu-item'
+        />
+      </Item>
+      <hr />
+      <Item>
+        <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
+          {t('Toolbar.menu.select_items')}
+        </a>
+      </Item>
+    </Menu>
   </div>
 )
 

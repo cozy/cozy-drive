@@ -92,7 +92,6 @@
     "pouchdb-find": "^0.10.5",
     "preact": "^8.1.0",
     "preact-compat": "^3.14.3",
-    "react-bosonic": "1.0.0-beta6",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.0",
     "react-virtualized": "^9.7.5",

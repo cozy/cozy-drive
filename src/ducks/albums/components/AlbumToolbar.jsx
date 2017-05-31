@@ -5,10 +5,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from '../../../lib/I18n'
 
-import DeleteButton from '../../../components/DeleteButton'
 import ShareButton from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
-import Menu, { MenuButton, Item } from 'react-bosonic/lib/Menu'
+import Menu, { Item } from '../../../components/Menu'
 
 import { showSelectionBar } from '../../../actions'
 import { mustShowSelectionBar } from '../../../reducers'
@@ -19,43 +18,42 @@ import ShareModal from '../../../containers/ShareModal'
 
 import classNames from 'classnames'
 
-export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteAlbum, selectItems, shareAlbum }) => (
+export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteAlbum, selectItems, shareAlbum, onRename }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
-    <ShareButton
-      label={t('Albums.share.cta')}
-      onClick={() => shareAlbum(album)} />
-    <DeleteButton
-      className='coz-desktop'
-      onDelete={() => deleteAlbum(album)}
+    <div className='coz-desktop'>
+      <ShareButton
+        label={t('Albums.share.cta')}
+        onClick={() => shareAlbum(album)} />
+    </div>
+    <Menu
+      title={t('Toolbar.more')}
       disabled={disabled}
-      label={t('Toolbar.album_delete')}
-    />
-    <MenuButton className='coz-mobile'>
-      <button
-        role='button'
-        className={classNames('coz-btn', 'coz-btn--more', styles['coz-btn--more'], styles['pho-toolbar-btn'])}
-        disabled={disabled}
-      >
-        <span className='coz-hidden'>{ t('Toolbar.more') }</span>
-      </button>
-      <Menu className={styles['coz-menu']}>
-        <Item>
-          <ShareButton label={t('Albums.share.cta')} onClick={() => shareAlbum(album)} />
-          <DeleteButton
-            onDelete={() => deleteAlbum(album)}
-            disabled={disabled}
-            label={t('Toolbar.menu.album_delete')}
-            type='menu-item'
-          />
-        </Item>
-        <hr />
-        <Item>
-          <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
-            {t('Toolbar.menu.select_items')}
-          </a>
-        </Item>
-      </Menu>
-    </MenuButton>
+      className={styles['pho-toolbar-menu']}
+      buttonClassName={styles['pho-toolbar-more-btn']}
+    >
+      <Item>
+        <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={() => shareAlbum(album)}>
+          {t('Albums.share.cta')}
+        </a>
+      </Item>
+      <Item>
+        <a className={classNames(styles['pho-action-rename'])} onClick={onRename}>
+          {t('Toolbar.menu.rename_album')}
+        </a>
+      </Item>
+      <hr className='coz-mobile' />
+      <Item>
+        <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
+          {t('Toolbar.menu.select_items')}
+        </a>
+      </Item>
+      <hr />
+      <Item>
+        <a className={classNames(styles['pho-action-delete'])} onClick={() => deleteAlbum(album)}>
+          {t('Toolbar.menu.album_delete')}
+        </a>
+      </Item>
+    </Menu>
   </div>
 )
 
