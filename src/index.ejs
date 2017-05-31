@@ -14,9 +14,11 @@
   <meta name="format-detection" content="telephone=no">
   <script src="cordova.js" defer></script>
   <% } else if (__STACK_ASSETS__) { %>
-  <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
   {{.CozyClientJS}}
   {{.CozyBar}}
+  <% } %>
+  <%  if (__STACK_ASSETS__ || __DEVELOPMENT__) { %>
+  <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
   <% } %>
 </head>
 <div
@@ -26,5 +28,6 @@
   data-cozy-locale="{{.Locale}}"
   data-cozy-app-name="{{.AppName}}"
   data-cozy-app-editor="{{.AppEditor}}"
+  data-cozy-tracking="{{.Tracking}}"
   data-cozy-icon-path="{{.IconPath}}"
 >
