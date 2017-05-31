@@ -1,4 +1,3 @@
-/* global Piwik */
 import {
   ADD_TO_UPLOAD_QUEUE
 } from '../ducks/upload'
@@ -12,8 +11,6 @@ const ACTIONS = {
 }
 
 const tracker = store => next => action => {
-  let event = null
-
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
       action.trackEvent = {
