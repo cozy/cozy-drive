@@ -26,7 +26,7 @@ export const AlbumToolbar = ({ t, album, disabled = false, uploadPhotos, deleteA
         onClick={() => shareAlbum(album)} />
     </div>
     <Menu
-      title={t('toolbar.item_more')}
+      title={t('Toolbar.more')}
       disabled={disabled}
       className={styles['pho-toolbar-menu']}
       buttonClassName={styles['pho-toolbar-more-btn']}

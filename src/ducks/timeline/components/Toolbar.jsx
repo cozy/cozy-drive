@@ -26,7 +26,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
       label={t('Toolbar.photo_upload')}
     />
     <Menu
-      title={t('toolbar.item_more')}
+      title={t('Toolbar.more')}
       disabled={disabled}
       className={styles['pho-toolbar-menu']}
       buttonClassName={styles['pho-toolbar-more-btn']}
