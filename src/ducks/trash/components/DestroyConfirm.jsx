@@ -14,6 +14,7 @@ const DestroyConfirm = ({ t, fileCount, confirm, abort }) => {
   return (<Modal
     title={t('destroyconfirmation.title', fileCount)}
     description={confirmationTexts}
+    secondaryType='secondary'
     secondaryText={t('destroyconfirmation.cancel')}
     secondaryAction={abort}
     primaryType='danger'

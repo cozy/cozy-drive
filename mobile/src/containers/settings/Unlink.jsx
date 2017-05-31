@@ -23,6 +23,7 @@ export const Unlink = ({ t, showUnlinkConfirmation, hideUnlinkConfirmation, disp
     {displayUnlinkConfirmation && <Modal
       title={t('mobile.settings.unlink.confirmation.title')}
       description={t('mobile.settings.unlink.confirmation.description')}
+      secondaryType='secondary'
       secondaryText={t('mobile.settings.unlink.confirmation.cancel')}
       secondaryAction={hideUnlinkConfirmation}
       primaryType='danger'
