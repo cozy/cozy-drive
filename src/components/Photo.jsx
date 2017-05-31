@@ -1,11 +1,11 @@
 /* global cozy */
 import styles from '../styles/photoList'
 
-import React, { Component } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 
-import { getPhotoLink } from '../actions/photos'
+import ImageLoader from './ImageLoader'
 
 const getStyleFromBox = box => {
   let style = {}
@@ -20,78 +20,45 @@ const getStyleFromBox = box => {
   return style
 }
 
-export class Photo extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isImageLoading: true,
-      url: `${cozy.client._url}${props.photo.links.small}`,
-      fallback: null
-    }
-    this.handleImageLoaded = this.handleImageLoaded.bind(this)
-    this.handleImageError = this.handleImageError.bind(this)
-  }
-
-  handleImageLoaded () {
-    this.setState({ isImageLoading: false })
-  }
-
-  handleImageError () {
-    if (this.state.fallback && this.img.src === this.state.fallback) return
-    // extreme fallback
-    getPhotoLink(this.props.photo._id)
-      .then(url => {
-        this.img.src = url
-        this.setState({ fallback: url })
-      })
-  }
-
-  render () {
-    const { photo, box, selected = false, onToggle, router } = this.props
-    const { loading, url, isImageLoading } = this.state
-    const parentPath = router.location.pathname
-    return (
-      <div
-        className={classNames(
-          styles['pho-photo'],
-          { [styles['pho-photo--selected']]: selected }
-        )}
-        style={getStyleFromBox(box)}
-      >
-        { !loading &&
-          <div>
-            <span
-              className={styles['pho-photo-select']}
-              data-input='checkbox'
-              onClick={e => {
-                e.stopImmediatePropagation()
-                onToggle(photo._id, selected)
-              }}>
-              <input
-                type='checkbox'
-                checked={selected}
-               />
-              <label />
-            </span>
-            <Link to={`${parentPath}/${photo._id}`}>
-              <img
-                ref={img => { this.img = img }}
-                className={styles['pho-photo-item']}
-                onLoad={this.handleImageLoaded}
-                onError={this.handleImageError}
-                style={Object.assign(
-                  getStyleFromBox(box),
-                  isImageLoading ? {display: 'none'} : {})
-                }
-                alt={photo.name}
-                src={url}
-              />
-            </Link>
-          </div>
-        }
+const Photo = props => {
+  const { photo, box, selected = false, onToggle, router } = props
+  const style = getStyleFromBox(box)
+  return (
+    <div
+      style={style}
+      className={classNames(
+        styles['pho-photo'],
+        { [styles['pho-photo--selected']]: selected }
+      )}
+    >
+      <div>
+        <span
+          className={styles['pho-photo-select']}
+          data-input='checkbox'
+          onClick={e => {
+            e.stopImmediatePropagation()
+            onToggle(photo._id, selected)
+          }}>
+          <input
+            type='checkbox'
+            checked={selected}
+           />
+          <label />
+        </span>
+        <Link to={{
+          pathname: `${router.location.pathname}/${photo._id}`,
+          query: router.location.query
+        }}>
+          <ImageLoader
+            photo={photo}
+            className={styles['pho-photo-item']}
+            style={style}
+            src={`${cozy.client._url}${photo.links.small}`}
+          />
+        </Link>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default withRouter(Photo)

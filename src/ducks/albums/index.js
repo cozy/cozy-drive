@@ -65,6 +65,8 @@ export const fetchAlbumPhotos = (albumId, skip = 0) =>
   (dispatch, getState) =>
     dispatch(createFetchAction(`${ALBUMS}/${albumId}`, fetchPhotos)(getAlbum(getState(), albumId), skip))
 
+export const fetchAlbumCover = async (album) => cozy.client.files.statById(album.coverId)
+
 const checkExistingAlbumsByName = async (name = null, mangoIndex = null) => {
   mangoIndex = mangoIndex || await createIndex()
   return await cozy.client.data.query(mangoIndex, {

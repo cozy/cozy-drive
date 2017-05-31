@@ -8,7 +8,10 @@ export const ViewerToolbar = ({ t, router }) => {
   const closeViewer = () => {
     // go to parent
     let url = router.location.pathname
-    router.push(url.substring(0, url.lastIndexOf('/')))
+    router.push({
+      pathname: url.substring(0, url.lastIndexOf('/')),
+      query: router.location.query
+    })
   }
   return (
     <div className={styles['pho-viewer-toolbar']} role='viewer-toolbar'>

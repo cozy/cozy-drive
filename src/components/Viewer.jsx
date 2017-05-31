@@ -1,16 +1,13 @@
+/* global cozy */
 import styles from '../styles/viewer'
 
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import Hammer from 'hammerjs'
 
-import { getPhotoLink } from '../actions/photos'
-import { getAlbumPhotos } from '../ducks/albums'
-import { getTimelineList } from '../ducks/timeline'
-
-import ViewerToolbar from '../components/ViewerToolbar'
-import Loading from '../components/Loading'
+import ViewerToolbar from './ViewerToolbar'
+import Loading from './Loading'
+import ImageLoader from './ImageLoader'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
@@ -20,8 +17,6 @@ export class Viewer extends Component {
     super(props)
 
     this.state = {
-      imageUrl: '',
-      isLoading: true,
       isImageLoading: true
     }
 
@@ -30,21 +25,11 @@ export class Viewer extends Component {
   }
 
   componentDidMount () {
-    this.fetchPhoto(this.props.currentPhoto._id)
-
     this.onKeyDownCallback = this.onKeyDown.bind(this)
     document.addEventListener('keydown', this.onKeyDownCallback, false)
 
     this.gesturesHandler = new Hammer(this.viewer)
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
-  }
-
-  componentWillReceiveProps (nextProps) {
-    // get currentPhoto image if currentPhoto defined
-    let currentPhoto = this.props.currentPhoto || nextProps.currentPhoto
-    if (this.state.imageUrl === '' && currentPhoto !== undefined) {
-      this.fetchPhoto(currentPhoto._id)
-    }
   }
 
   componentWillUnmount () {
@@ -62,22 +47,12 @@ export class Viewer extends Component {
     else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.props.previousID)
   }
 
-  fetchPhoto (id) {
-    return getPhotoLink(id)
-      .then(link => {
-        this.setState({
-          imageUrl: link,
-          isLoading: false
-        })
-      })
-  }
-
   navigateToPhoto (id) {
-    this.setState({imageUrl: '', isImageLoading: true, isLoading: true})
-    let url = this.props.router.location.pathname
-    let parentPath = url.substring(0, url.lastIndexOf('/'))
-
-    this.props.router.push(`${parentPath}/${id}`)
+    this.setState({ isImageLoading: true })
+    const router = this.props.router
+    const url = router.location.pathname
+    const parentPath = url.substring(0, url.lastIndexOf('/'))
+    router.push({ pathname: `${parentPath}/${id}`, query: router.location.query })
   }
 
   handleImageLoaded () {
@@ -85,23 +60,23 @@ export class Viewer extends Component {
   }
 
   render () {
-    const { previousID, nextID, currentPhoto } = this.props
-    const { imageUrl, isLoading, isImageLoading } = this.state
+    const { photos, params } = this.props
+    const { previousID, nextID, currentPhoto } = mapRouteToPhotos(photos, params)
+    const { isImageLoading } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar />
         <div className={styles['pho-viewer-content']}>
           <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />
           <div className={styles['pho-viewer-photo']}>
-            {!isLoading &&
-              <img
+            {currentPhoto &&
+              <ImageLoader
+                photo={currentPhoto}
                 onLoad={this.handleImageLoaded}
-                style={isImageLoading ? 'display:none' : ''}
-                alt={currentPhoto.name}
-                src={imageUrl}
+                src={`${cozy.client._url}${currentPhoto.links.large}`}
               />
             }
-            {(isLoading || isImageLoading) &&
+            {(!currentPhoto || isImageLoading) &&
               <Loading noMargin />
             }
           </div>
@@ -112,15 +87,9 @@ export class Viewer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  let photos = []
-  if (ownProps.params.albumId) { // photos from an album
-    photos = getAlbumPhotos(state, ownProps.params.albumId).entries
-  } else { // all photos (timeline)
-    photos = getTimelineList(state).entries
-  }
+const mapRouteToPhotos = (photos, params) => {
   let set = photos.map(photo => photo._id)
-  let currentID = ownProps.params.photoId
+  let currentID = params.photoId
   let currentPhotoIndex = set.indexOf(currentID)
   let currentPhoto = photos[currentPhotoIndex]
 
@@ -134,6 +103,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(
-  mapStateToProps
-)(withRouter(Viewer))
+export default withRouter(Viewer)

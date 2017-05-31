@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 
 import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
 
-import PhotoBoard from './PhotoBoard'
+import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
 import Alerter from '../components/Alerter'
 
@@ -62,7 +62,7 @@ export class AlbumPhotos extends Component {
           </Topbar>
         }
         {photos &&
-          <PhotoBoard
+          <BoardView
             photoLists={[{ photos: photos.entries }]}
             fetchStatus={photos.fetchStatus}
             hasMore={photos.hasMore}
