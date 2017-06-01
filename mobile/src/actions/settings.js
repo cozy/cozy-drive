@@ -90,7 +90,7 @@ export const registerDevice = () => async (dispatch, getState) => {
 
 export const startReplication = (dispatch, getState) => {
   const firstReplication = getState().settings.firstReplication
-  const refreshFolder = () => { dispatch(openFolder(getState().folder.id)) }
+  const refreshFolder = () => { dispatch(openFolder(getState().view.openedFolderId)) }
   const revokeClient = () => { dispatch(reduxRevokeClient()) }
   const firstReplicationFinished = () => { dispatch(setFirstReplication(true)) }
 
