@@ -45,19 +45,23 @@ const mapStateToProps = state => ({
   mediaUploading: state.mobile.mediaBackup.uploading
 })
 
-const mapDispatchToProps = dispatch => ({
-  setBackupImages: (value) => dispatch(backupImages(value)),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  setBackupImages: (value) => {
+    const path = ownProps.t('mobile.settings.media_backup.media_folder')
+    dispatch(backupImages(path, value))
+  },
   setWifiOnly: async (value) => {
     await dispatch(setWifiOnly(value))
-    dispatch(backupImages())
+    const path = ownProps.t('mobile.settings.media_backup.media_folder')
+    dispatch(backupImages(path))
   },
-  toggleBackup: (launch, dir) => {
+  toggleBackup: (launch, path) => {
     if (launch) {
-      dispatch(startMediaBackup(dir, true))
+      dispatch(startMediaBackup(path, true))
     } else {
       dispatch(cancelMediaBackup())
     }
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(MediaBackup))
+export default translate()(connect(mapStateToProps, mapDispatchToProps)(MediaBackup))

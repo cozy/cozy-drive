@@ -7,7 +7,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, hashHistory } from 'react-router'
 
-import { I18n } from '../../src/lib/I18n'
+import { I18n, _polyglot } from '../../src/lib/I18n'
 
 import MobileAppRoute from './components/MobileAppRoute'
 
@@ -48,9 +48,18 @@ const renderAppWithPersistedState = persistedState => {
     pingOnceADayWithState()
   }, false)
 
+  const launchBackup = () => {
+    if (_polyglot) {
+      const path = _polyglot.t('mobile.settings.media_backup.media_folder')
+      store.dispatch(backupImages(path))
+    } else {
+      setTimeout(launchBackup, 3 * 1000)
+    }
+  }
+
   document.addEventListener('deviceready', () => {
     pingOnceADayWithState()
-    store.dispatch(backupImages())
+    setTimeout(launchBackup, 3 * 1000)
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
   }, false)
 

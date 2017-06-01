@@ -1,6 +1,5 @@
 /**
  * preact plugin that provides Polyglot and date-fns helpers using a Higher Order Component.
- *
  */
 
 'use strict'
@@ -9,6 +8,9 @@ import React, { Component } from 'react'
 import Polyglot from 'node-polyglot'
 import format from 'date-fns/format'
 import en from '../locales/en'
+
+export let _polyglot
+export let _format
 
 export const initPolyglot = (context, lang) => {
   const polyglot = new Polyglot({
@@ -33,6 +35,8 @@ export const initPolyglot = (context, lang) => {
     polyglot.extend(dict)
   }
 
+  _polyglot = polyglot
+
   return polyglot
 }
 
@@ -47,7 +51,10 @@ const initFormat = lang => {
       console.warn(`The "${lang}" locale isn't supported by date-fns`)
     }
   }
-  return (date, formatStr) => format(date, formatStr, { locale: locales[lang] })
+
+  _format = (date, formatStr) => format(date, formatStr, { locale: locales[lang] })
+
+  return _format
 }
 
 // Provider root component

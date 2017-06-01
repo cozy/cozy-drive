@@ -23,6 +23,7 @@ export const configureStore = (persistedState) => {
 
   store.subscribe(() => saveState({
     settings: store.getState().settings,
+    backup: store.getState().backup,
     mobile: {
       timestamp: store.getState().mobile.timestamp,
       settings: store.getState().mobile.settings,

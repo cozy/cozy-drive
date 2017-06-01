@@ -1,11 +1,12 @@
 /* global cozy */
 
 import { setBackupImages } from './settings'
-import { getFilteredPhotos, getBlob, isAuthorized, getMediaFolderName, requestAuthorization } from '../lib/media'
+import { getFilteredPhotos, getBlob, isAuthorized, requestAuthorization } from '../lib/media'
 import { updateStatusBackgroundService } from '../lib/background'
 import { backupAllowed } from '../lib/network'
-import { HTTP_CODE_CONFLICT } from '../../../src/actions'
+import { HTTP_CODE_CONFLICT, HTTP_FILE_NOT_FOUND } from '../../../src/actions'
 import { logInfo, logException } from '../lib/reporter'
+import { getOrCreateFolder, createFolder } from '../../../src/ducks/backup/saveFolder'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
@@ -28,26 +29,13 @@ const currentUploading = (media, uploadCounter, totalUpload) => (
   }
 )
 
-async function getDirID (dir) {
-  const targetDirectory = await cozy.client.files.createDirectory({
-    name: dir,
-    dirID: 'io.cozy.files.root-dir'
-  }).catch(err => {
-    if (err.status === 409) { // directory already exists
-      return cozy.client.files.statByPath(`/${dir}`)
-    }
-    throw err
-  })
-  return targetDirectory._id
-}
-
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
 
 /*
   dir: It's the folder where picture will be uploaded
   force: Even if the settings are not activated, it uploads the photos
 */
-export const startMediaBackup = (dir, force = false) => async (dispatch, getState) => {
+export const startMediaBackup = (path, force = false) => async (dispatch, getState) => {
   const canBackup = (force, getState) => {
     return force || (
       getState().mobile.settings.backupImages &&
@@ -70,22 +58,22 @@ export const startMediaBackup = (dir, force = false) => async (dispatch, getStat
     const photosOnDevice = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
-    const dirID = await getDirID(dir)
     const totalUpload = photosToUpload.length
     let uploadCounter = 0
     for (const photo of photosToUpload) {
       if (getState().mobile.mediaBackup.cancelMediaBackup || !canBackup(force, getState)) {
         break
       }
+      const folder = await dispatch(getOrCreateFolder(path))
       dispatch(currentUploading(photo, uploadCounter++, totalUpload))
-      await dispatch(uploadPhoto(dirID, photo))
+      await dispatch(uploadPhoto(folder, photo))
     }
   }
 
   dispatch(endMediaUpload())
 }
 
-const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
+const uploadPhoto = (folder, photo) => async (dispatch, getState) => {
   const logError = (err, msg) => {
     console.warn(msg)
     console.warn(err)
@@ -96,28 +84,55 @@ const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
   try {
     const blob = await getBlob(photo)
     const options = {
-      dirID,
+      dirID: folder._id,
       name: photo.fileName
     }
     await cozy.client.files.create(blob, options).then(() => {
       dispatch(successMediaUpload(photo))
-    }).catch(err => {
-      if (err.status === HTTP_CODE_CONFLICT) {
-        dispatch(successMediaUpload(photo))
-      } else if (err === 'Could not fetch the image') {
+    }).catch(async (err) => {
+      const isInTrash = (err) => {
+        if (err.status === HTTP_FILE_NOT_FOUND &&
+            err.reason !== undefined &&
+            err.reason.errors !== undefined &&
+            err.reason.errors.length > 0) {
+          const errors = err.reason.errors
+          const IN_TRASH = 'Parent directory is in the trash'
+          for (const error of errors) {
+            if (error.detail === IN_TRASH) {
+              return true
+            }
+          }
+        }
+
+        return false
+      }
+      if (isInTrash(err)) {
+        console.info('The default folder is in the trash, we create another.')
+        const createdFolder = await createFolder(folder.attributes.path)
+        await dispatch(uploadPhoto(createdFolder, photo))
+      } else if (err.status === HTTP_CODE_CONFLICT) {
+        console.info('This picture is already on your server.')
         dispatch(successMediaUpload(photo))
       } else {
         logError(err, 'startMediaBackup create error')
       }
     })
   } catch (err) {
-    logError(err, 'startMediaBackup getBlob error')
+    if (err === 'Could not fetch the image') {
+      // this error arrived when the plugin fetch iCloud picture but it's not local
+      dispatch(successMediaUpload(photo))
+    } else if (err.endsWith(' (No such file or directory)')) {
+      // this error arrived when picture are moved but android don't update storage
+      dispatch(successMediaUpload(photo))
+    } else {
+      logError(err, 'startMediaBackup getBlob error')
+    }
   }
 }
 
 // backupImages
 
-export const backupImages = backupImages => async (dispatch, getState) => {
+export const backupImages = (path, backupImages) => async (dispatch, getState) => {
   if (backupImages === undefined) {
     backupImages = getState().mobile.settings.backupImages
   } else {
@@ -133,7 +148,7 @@ export const backupImages = backupImages => async (dispatch, getState) => {
   backupImagesAnalytics(backupImages, getState)
   updateStatusBackgroundService(backupImages)
   if (backupImages) {
-    dispatch(startMediaBackup(getMediaFolderName()))
+    dispatch(startMediaBackup(path))
   }
 
   return backupImages
