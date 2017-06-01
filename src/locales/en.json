@@ -7,6 +7,7 @@
     "item_trash": "Trash",
     "item_settings": "Settings",
     "btn-client": "Get Cozy for desktop",
+    "btn-client-mobile": "Get Cozy Drive on your mobile!",
     "link-client": "https://docs.cozy.io/en/download/"
   },
   "breadcrumb": {

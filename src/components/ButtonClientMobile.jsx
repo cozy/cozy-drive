@@ -1,0 +1,35 @@
+/* eslint-env browser */
+
+import styles from '../styles/buttonclient'
+
+import { translate } from '../lib/I18n'
+
+import React, { Component } from 'react'
+
+import classNames from 'classnames'
+
+class ButtonClientMobile extends Component {
+  constructor (props) {
+    super(props)
+    const seenAd = localStorage.getItem('app_ad')
+    this.state = {
+      seen: seenAd ? JSON.parse(seenAd) : false
+    }
+  }
+
+  read () {
+    localStorage.setItem('app_ad', JSON.stringify(true))
+    this.setState({seen: true})
+  }
+
+  render ({ t }, { seen }) {
+    return (!seen
+      ? <div className={styles['coz-banner-client']}>
+        <a href={t('nav.link-client')} target='_blank' className={styles['coz-btn-clientMobile']} onClick={e => this.read(e)} ><span>{t('nav.btn-client-mobile')}</span></a>
+        <button className={classNames('coz-btn', styles['coz-btn--close'])} onClick={e => this.read()} />
+      </div>
+      : '')
+  }
+}
+
+export default translate()(ButtonClientMobile)
