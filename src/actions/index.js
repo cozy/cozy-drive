@@ -33,7 +33,7 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
 // selectors
 
-const getOpenedFolderId = state => state.view.openedFolderId
+export const getOpenedFolderId = state => state.view.openedFolderId
 
 export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
