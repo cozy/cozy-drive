@@ -1,6 +1,8 @@
 /* global __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ */
-import { getTracker, configureTracker } from '../../../src/lib/tracker'
+import { getTracker, configureTracker, resetTracker } from '../../../src/lib/tracker'
 import { cozyAppName } from './cozy-helper'
+
+const mobileHeartBeatDelay = 30 // how many seconds between each hreatbeat ping to the server
 
 // We'll need access to the app's router history at some point
 let appHistory
@@ -18,7 +20,8 @@ export const startTracker = (cozyServerUrl = '') => {
 
   configureTracker({
     userId: url.hostname || cozyServerUrl,
-    app: cozyAppName
+    app: cozyAppName,
+    heartbeat: mobileHeartBeatDelay
   })
 
   // connect to the router history if possible
@@ -28,4 +31,27 @@ export const startTracker = (cozyServerUrl = '') => {
   }
 }
 
-export { resetTracker } from '../../../src/lib/tracker'
+export const stopTracker = () => {
+  resetTracker()
+  stopHeartBeat()
+}
+
+export const startHeartBeat = () => {
+  const trackerInstance = getTracker()
+
+  if (trackerInstance) {
+    try {
+      trackerInstance.push(['enableHeartBeatTimer', mobileHeartBeatDelay])
+    } catch (err) {}
+  }
+}
+
+export const stopHeartBeat = () => {
+  const trackerInstance = getTracker()
+
+  if (trackerInstance) {
+    try {
+      trackerInstance.push(['disableHeartBeatTimer']) // undocumented, see https://github.com/piwik/piwik/blob/3.x-dev/js/piwik.js#L6544
+    } catch (err) {}
+  }
+}

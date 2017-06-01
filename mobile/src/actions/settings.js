@@ -7,7 +7,7 @@ import { getDeviceName } from '../lib/device'
 import { openFolder } from '../../../src/actions'
 import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
 import { logException, logInfo, configure as configureReporter } from '../lib/reporter'
-import { startTracker, resetTracker } from '../lib/tracker'
+import { startTracker, stopTracker } from '../lib/tracker'
 import { pingOnceADay } from './timestamp'
 import { revokeClient as reduxRevokeClient } from './authorization'
 
@@ -34,7 +34,7 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
     // start the piwik tracker
     startTracker(state.mobile.settings.serverUrl)
   } else if (analytics === false) {
-    resetTracker()
+    stopTracker()
   }
 }
 export const setBackupImages = backupImages => ({ type: BACKUP_IMAGES, backupImages })

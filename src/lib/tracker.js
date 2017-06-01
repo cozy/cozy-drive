@@ -63,7 +63,7 @@ export const getTracker = (trackerUrl, siteId, automaticallyConfigure = true, in
 *                         {string} options.userId
 *                         {number} options.appDimensionId
 *                         {string} options.app
-*                         {boolean} options.heartbeat
+*                         {number} options.heartbeat
 */
 export const configureTracker = (options = {}) => {
   // early out in case the tracker is not available
@@ -86,15 +86,16 @@ export const configureTracker = (options = {}) => {
   }
 
   // merge default options with what has been provided
-  options = Object.assign({
+  options = {
     userId: userId,
     appDimensionId: __PIWIK_DIMENSION_ID_APP__,
     app: appName,
-    heartbeat: true
-  }, options)
+    heartbeat: 15,
+    ...options
+  }
 
   // apply them
-  if (options.heartbeat) trackerInstance.push(['enableHeartBeatTimer'])
+  if (parseInt(options.heartbeat) > 0) trackerInstance.push(['enableHeartBeatTimer', parseInt(options.heartbeat)])
   trackerInstance.push(['setUserId', options.userId])
   trackerInstance.push(['setCustomDimension', options.appDimensionId, options.app])
 }
