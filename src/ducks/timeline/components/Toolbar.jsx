@@ -1,3 +1,4 @@
+/* global cozy */
 import styles from '../../../styles/toolbar'
 
 import React from 'react'
@@ -11,7 +12,6 @@ import Menu, { Item } from '../../../components/Menu'
 import { showSelectionBar } from '../../../actions'
 import { mustShowSelectionBar } from '../../../reducers'
 
-import { COZY_PHOTOS_DIR_ID } from '../../../constants/config'
 import { addToUploadQueue } from '../../upload'
 import { addPhotosToTimeline } from '../'
 
@@ -54,8 +54,10 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  uploadPhotos: photos =>
-    dispatch(addToUploadQueue(photos, COZY_PHOTOS_DIR_ID, photo => addPhotosToTimeline([photo]))),
+  uploadPhotos: async (photos) => {
+    const dir = await cozy.client.files.createDirectoryByPath(ownProps.t('UploadQueue.path'))
+    dispatch(addToUploadQueue(photos, dir._id, photo => addPhotosToTimeline([photo])))
+  },
   selectItems: () => dispatch(showSelectionBar())
 })
 
