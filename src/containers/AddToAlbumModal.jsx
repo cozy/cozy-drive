@@ -43,7 +43,7 @@ export class AddToAlbumModal extends Component {
         title={t('Albums.add_photos.title')}
         secondaryAction={() => onDismiss()}
         >
-        <ModalSection>
+        <ModalSection className={styles['coz-modal-section']}>
           <div className={classNames(styles['coz-create-album'])}>
             <CreateAlbumForm
               onSubmitNewAlbum={name => onSubmitNewAlbum(name, photos)}
