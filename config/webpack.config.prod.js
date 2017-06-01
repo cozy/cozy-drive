@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: '[name].[hash].min.js'
   },
-  devtool: '#cheap-module-source-map',
+  devtool: false,
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
