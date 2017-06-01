@@ -15,6 +15,7 @@ import { loadState } from './lib/localStorage'
 import { configureStore } from './lib/store'
 import { initServices, getLang } from './lib/init'
 import { startBackgroundService } from './lib/background'
+import { startTracker, useHistoryForTracker } from './lib/tracker'
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
 import { backupImages } from './actions/mediaBackup'
@@ -53,6 +54,9 @@ const renderAppWithPersistedState = persistedState => {
     store.dispatch(backupImages())
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
   }, false)
+
+  useHistoryForTracker(hashHistory)
+  if (store.getState().mobile.settings.analytics) startTracker(store.getState().mobile.settings.serverUrl)
 
   const context = window.context
   const root = document.querySelector('[role=application]')
