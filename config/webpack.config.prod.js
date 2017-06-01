@@ -4,7 +4,7 @@ const webpack = require('webpack')
 
 module.exports = {
   output: {
-    filename: 'app.[hash].min.js'
+    filename: '[name].[hash].min.js'
   },
   devtool: '#cheap-module-source-map',
   plugins: [
