@@ -27,6 +27,7 @@
   "Toolbar": {
     "photo_upload": "Upload",
     "album_delete": "Delete",
+    "album_download": "Download",
     "more": "More",
     "menu": {
       "select_items": "Select photos",

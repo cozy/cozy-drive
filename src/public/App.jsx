@@ -1,5 +1,6 @@
 /* global cozy */
 import React, { Component } from 'react'
+import { translate } from '../lib/I18n'
 
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
@@ -31,6 +32,10 @@ class App extends Component {
   }
 
   onFetchMore = () => {
+
+  }
+
+  onDownload = () => {
 
   }
 
@@ -73,9 +78,24 @@ class App extends Component {
         </div>
       )
     }
-    const { photos, selected, hasMore } = this.state
+    const { t } = this.props
+    const { name, photos, selected, hasMore } = this.state
     return (
       <div className={styles['pho-public-layout']}>
+        <div className={styles['pho-content-header']}>
+          <h2 className={styles['pho-content-title']}>{name}</h2>
+          <div className={styles['pho-toolbar']} role='toolbar'>
+            <div className='coz-desktop'>
+              <button
+                role='button'
+                className={['coz-btn', 'coz-btn--secondary', styles['pho-public-download']].join(' ')}
+                onClick={this.onDownload}
+              >
+                {t('Toolbar.album_download')}
+              </button>
+            </div>
+          </div>
+        </div>
         <PhotoBoard
           lists={[{ photos }]}
           selected={selected}
@@ -97,4 +117,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default translate()(App)
