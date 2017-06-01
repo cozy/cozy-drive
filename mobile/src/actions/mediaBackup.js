@@ -28,17 +28,10 @@ const currentUploading = (media, uploadCounter, totalUpload) => (
   }
 )
 
-async function getDirID (dir) {
-  const targetDirectory = await cozy.client.files.createDirectory({
-    name: dir,
-    dirID: 'io.cozy.files.root-dir'
-  }).catch(err => {
-    if (err.status === 409) { // directory already exists
-      return cozy.client.files.statByPath(`/${dir}`)
-    }
-    throw err
-  })
-  return targetDirectory._id
+async function getDirID (path) {
+  const dir = await cozy.client.files.createDirectoryByPath(path)
+
+  return dir._id
 }
 
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
@@ -70,15 +63,17 @@ export const startMediaBackup = (dir, force = false) => async (dispatch, getStat
     const photosOnDevice = await getFilteredPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
-    const dirID = await getDirID(dir)
     const totalUpload = photosToUpload.length
-    let uploadCounter = 0
-    for (const photo of photosToUpload) {
-      if (getState().mobile.mediaBackup.cancelMediaBackup || !canBackup(force, getState)) {
-        break
+    if (totalUpload > 0) {
+      const dirID = await getDirID(dir)
+      let uploadCounter = 0
+      for (const photo of photosToUpload) {
+        if (getState().mobile.mediaBackup.cancelMediaBackup || !canBackup(force, getState)) {
+          break
+        }
+        dispatch(currentUploading(photo, uploadCounter++, totalUpload))
+        await dispatch(uploadPhoto(dirID, photo))
       }
-      dispatch(currentUploading(photo, uploadCounter++, totalUpload))
-      await dispatch(uploadPhoto(dirID, photo))
     }
   }
 
