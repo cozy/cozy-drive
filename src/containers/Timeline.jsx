@@ -5,7 +5,7 @@ import { translate } from '../lib/I18n'
 import { Toolbar as TimelineToolbar, fetchIfNeededPhotos, fetchMorePhotos, getTimelineList } from '../ducks/timeline'
 import { getPhotosByMonth } from '../lib/helpers'
 
-import PhotoBoard from './PhotoBoard'
+import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
 
 const formatMonths = (photoList, f, format) => {
@@ -34,16 +34,23 @@ export class Timeline extends Component {
         <Topbar viewName='photos'>
           <TimelineToolbar />
         </Topbar>
-        <PhotoBoard
+        <BoardView
           photoLists={photoLists}
           fetchStatus={list.fetchStatus}
           hasMore={list.hasMore}
           photosContext='timeline'
           onFetchMore={() => fetchMorePhotos(list.index, list.entries.length)}
         />
-        { this.props.children }
+        {this.renderViewer(this.props.children)}
       </div>
     )
+  }
+
+  renderViewer (children) {
+    if (!children) return null
+    return React.Children.map(children, child => React.cloneElement(child, {
+      photos: this.props.list.entries
+    }))
   }
 }
 

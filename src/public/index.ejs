@@ -12,6 +12,12 @@
     <script src="<%- file %>" defer></script>
   <%  } %>
   <% }); %>
+  <% _.forEach(htmlWebpackPlugin.files.css, function(file) {
+      if (/public\//.test(file)) {
+  %>
+    <link rel="stylesheet" href="<%- file %>" />
+  <%  } %>
+  <% }); %>
   <% if (__STACK_ASSETS__) { %>
     {{.CozyClientJS}}
     {{.CozyBar}}

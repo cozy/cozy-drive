@@ -1,54 +1,37 @@
+/* global cozy */
 import styles from '../styles/albumsList'
 
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { translate } from '../lib/I18n'
 
-import { getPhotoLink } from '../actions/photos'
+import { fetchAlbumCover } from '../ducks/albums'
+import ImageLoader from './ImageLoader'
 
 const isAlbumEmpty = album => !(album && album.photoCount)
-
-const fetchMainPhoto = album =>
-  isAlbumEmpty(album)
-    ? Promise.resolve(null)
-    : getPhotoLink(album.coverId)
 
 export class AlbumItem extends Component {
   constructor (props) {
     super(props)
-
-    // Detect right now if there is a main photo to load, otherwise the
-    // Promise.resolve(null) in fetchMainPhoto will not be considered as it will
-    // trigger a setState directly in constructor.
-    const albumIsEmpty = isAlbumEmpty(props.album)
-
     this.state = {
-      // Set loading state in function of album emptyness.
-      isLoading: !albumIsEmpty,
-      isImageLoading: !albumIsEmpty
+      isLoading: true,
+      coverPhoto: null
     }
-
-    this.handleImageLoaded = this.handleImageLoaded.bind(this)
   }
 
-  componentWillMount () {
-    fetchMainPhoto(this.props.album)
-      .then(link => {
-        this.setState({
-          url: link,
-          isLoading: false
-        })
-      }).catch(linkError => {
-        this.props.onServerError(linkError)
-        this.setState({
-          url: null,
-          isLoading: false
-        })
+  componentDidMount () {
+    const { album } = this.props
+    if (isAlbumEmpty(album) || !album.coverId) {
+      return this.setState({ isLoading: false })
+    }
+    fetchAlbumCover(album)
+      .then(photo => {
+        this.setState({ coverPhoto: photo, isLoading: false })
       })
-  }
-
-  handleImageLoaded () {
-    this.setState({ isImageLoading: false })
+      .catch(error => {
+        this.setState({ isLoading: false })
+        console.log(error)
+      })
   }
 
   render () {
@@ -56,15 +39,16 @@ export class AlbumItem extends Component {
       return null
     }
     const { t, album, onClick } = this.props
-    const { url, isImageLoading } = this.state
+    const { coverPhoto } = this.state
 
-    const image = <img
-      className={styles['pho-album-photo-item']}
-      onLoad={this.handleImageLoaded}
-      style={isImageLoading ? 'display:none' : ''}
-      alt={`${album.name} album cover`}
-      src={url || ''}
-    />
+    const image = !coverPhoto
+      ? <img />
+      : <ImageLoader
+        className={styles['pho-album-photo-item']}
+        alt={`${album.name} album cover`}
+        photo={coverPhoto}
+        src={`${cozy.client._url}${coverPhoto.links.small}`}
+      />
     const desc = <h4 className={styles['pho-album-description']}>
       {t('Albums.album_item_description',
         {smart_count: album.photoCount})

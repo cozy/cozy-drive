@@ -1,61 +1,120 @@
 /* global cozy */
+import React, { Component } from 'react'
+import { translate } from '../lib/I18n'
 
-import React from 'react'
+import PhotoBoard from '../components/PhotoBoard'
+import Loading from '../components/Loading'
+import ErrorComponent from '../components/ErrorComponent'
+import {
+  ALBUM_DOCTYPE
+} from '../constants/config'
 
-import PublicAlbumView from './PublicAlbumView'
+import styles from './index.styl'
 
-const arrToObj = (obj = {}, varval = ['var', 'val']) => {
-  obj[varval[0]] = varval[1]
-  return obj
-}
+class App extends Component {
+  state = {
+    name: null,
+    photos: [],
+    selected: [],
+    loading: true,
+    hasMore: false
+  }
 
-const getQueryParameter = () => window
-  .location
-  .search
-  .substring(1)
-  .split('&')
-  .map(varval => varval.split('='))
-  .reduce(arrToObj, {})
-
-class App extends React.Component {
-  componentDidMount () {
-    const { data } = this.props
-    const { id } = getQueryParameter()
-
-    if (data.cozyDomain && data.cozyToken) {
-      cozy.client.init({
-        cozyURL: `//${data.cozyDomain}`,
-        token: data.cozyToken
-      })
-    }
-
-    if (data.cozyAppName && data.cozyAppEditor && data.cozyIconPath && data.cozyLocale) {
-      try {
-        cozy.bar.init({
-          appName: data.cozyAppName,
-          appEditor: data.cozyAppEditor,
-          iconPath: data.cozyIconPath,
-          lang: data.cozyLocale
-        })
-      } catch (ex) {
-        this.setState(state => ({ ...state, error: ex }))
+  onPhotoToggle = id => {
+    this.setState(({ selected }) => {
+      const idx = selected.findIndex(i => i === id)
+      return {
+        selected: idx === -1
+          ? [...selected, id]
+          : [...selected.slice(0, idx), ...selected.slice(idx + 1)]
       }
-    }
+    })
+  }
 
-    if (!id) {
-      this.setState(state => ({ ...state, error: 'Missing ID' }))
-    }
+  onFetchMore = () => {
 
-    this.setState(state => ({ ...state, id }))
+  }
+
+  onDownload = () => {
+
+  }
+
+  async componentDidMount () {
+    const { albumId } = this.props
+    if (!albumId) {
+      return this.setState({ error: 'Missing ID' })
+    }
+    const album = {
+      _type: ALBUM_DOCTYPE,
+      _id: albumId
+    }
+    try {
+      const photosIds = await cozy.client.data.listReferencedFiles(album)
+      const photos = await Promise.all(photosIds.map(cozy.client.files.statById))
+      // const photosWithUrl = await Promise.all(photos.map(addUrl))
+      const document = await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
+      this.setState(state => ({
+        name: document.name,
+        photos,
+        loading: false
+      }))
+    } catch (ex) {
+      console.error(ex, this.state)
+    }
   }
 
   render () {
-    return this.state.error
-      ? <h1>Error</h1>
-      : this.state.id
-        ? <PublicAlbumView id={this.state.id} />
-        : <h1>Loading...</h1>
+    if (this.state.error) {
+      return (
+        <div className={styles['pho-public-layout']}>
+          <ErrorComponent errorType={`public_album`} />
+        </div>
+      )
+    }
+    if (this.state.loading) {
+      return (
+        <div className={styles['pho-public-layout']}>
+          <Loading loadingType='photos_fetching' />
+        </div>
+      )
+    }
+    const { t } = this.props
+    const { name, photos, selected, hasMore } = this.state
+    return (
+      <div className={styles['pho-public-layout']}>
+        <div className={styles['pho-content-header']}>
+          <h2 className={styles['pho-content-title']}>{name}</h2>
+          <div className={styles['pho-toolbar']} role='toolbar'>
+            <div className='coz-desktop'>
+              <button
+                role='button'
+                className={['coz-btn', 'coz-btn--secondary', styles['pho-public-download']].join(' ')}
+                onClick={this.onDownload}
+              >
+                {t('Toolbar.album_download')}
+              </button>
+            </div>
+          </div>
+        </div>
+        <PhotoBoard
+          lists={[{ photos }]}
+          selected={selected}
+          showSelection={selected.length !== 0}
+          onPhotoToggle={this.onPhotoToggle}
+          hasMore={hasMore}
+          onFetchMore={this.onFetchMore}
+        />
+        {this.renderViewer(this.props.children)}
+      </div>
+    )
+  }
+
+  renderViewer (children) {
+    if (!children) return null
+    return React.Children.map(children, child => React.cloneElement(child, {
+      photos: this.state.photos
+    }))
   }
 }
 
-export default App
+export default translate()(App)

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 
 import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
 
-import PhotoBoard from './PhotoBoard'
+import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
 import Alerter from '../components/Alerter'
 
@@ -62,7 +62,7 @@ export class AlbumPhotos extends Component {
           </Topbar>
         }
         {photos &&
-          <PhotoBoard
+          <BoardView
             photoLists={[{ photos: photos.entries }]}
             fetchStatus={photos.fetchStatus}
             hasMore={photos.hasMore}
@@ -70,9 +70,16 @@ export class AlbumPhotos extends Component {
             onFetchMore={() => fetchPhotos(album._id, photos.entries.length)}
           />
         }
-        { this.props.children }
+        {this.renderViewer(this.props.children)}
       </div>
     )
+  }
+
+  renderViewer (children) {
+    if (!children) return null
+    return React.Children.map(children, child => React.cloneElement(child, {
+      photos: this.props.photos.entries
+    }))
   }
 }
 
