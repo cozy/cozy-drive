@@ -4,7 +4,7 @@ import { initClient, checkURL, MAIL_EXCEPTION } from '../lib/cozy-helper'
 import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../../src/actions/settings'
 import { getDeviceName } from '../lib/device'
-import { openFolder } from '../../../src/actions'
+import { openFolder, getOpenedFolderId } from '../../../src/actions'
 import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
 import { logException, logInfo, configure as configureReporter } from '../lib/reporter'
 import { pingOnceADay } from './timestamp'
@@ -90,7 +90,7 @@ export const registerDevice = () => async (dispatch, getState) => {
 
 export const startReplication = (dispatch, getState) => {
   const firstReplication = getState().settings.firstReplication
-  const refreshFolder = () => { dispatch(openFolder(getState().view.openedFolderId)) }
+  const refreshFolder = () => { dispatch(openFolder(getOpenedFolderId(getState())) }
   const revokeClient = () => { dispatch(reduxRevokeClient()) }
   const firstReplicationFinished = () => { dispatch(setFirstReplication(true)) }
 
