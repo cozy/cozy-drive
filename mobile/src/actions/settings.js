@@ -7,6 +7,7 @@ import { getDeviceName } from '../lib/device'
 import { openFolder, getOpenedFolderId } from '../../../src/actions'
 import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
 import { logException, logInfo, configure as configureReporter } from '../lib/reporter'
+import { startTracker, stopTracker } from '../lib/tracker'
 import { pingOnceADay } from './timestamp'
 import { revokeClient as reduxRevokeClient } from './authorization'
 
@@ -30,6 +31,10 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
     const value = state.mobile.settings.backupImages
     logInfo(`${source}: backup images is ${value ? 'enabled' : 'disabled'}`)
     dispatch(pingOnceADay(state.mobile.timestamp, analytics))
+    // start the piwik tracker
+    startTracker(state.mobile.settings.serverUrl)
+  } else if (analytics === false) {
+    stopTracker()
   }
 }
 export const setBackupImages = backupImages => ({ type: BACKUP_IMAGES, backupImages })
