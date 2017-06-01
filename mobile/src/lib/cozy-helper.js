@@ -2,14 +2,14 @@
 import { getLang } from './init'
 import { LocalStorage as Storage } from 'cozy-client-js'
 
-export const cozyAppName = 'Drive'
+export const softwareID = 'io.cozy.drive.mobile'
 export const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
 const getClientName = device => `Cozy Drive (${device})`
 
 const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
-  softwareID: 'io.cozy.drive.mobile',
+  softwareID: softwareID,
   clientName: getClientName(device),
   softwareVersion: __APP_VERSION__,
   clientKind: 'mobile',
@@ -39,7 +39,7 @@ export const initClient = (url, onRegister = null, device = 'Device') => {
 
 export const initBar = () => {
   cozy.bar.init({
-    appName: cozyAppName,
+    appName: 'Drive',
     appEditor: 'Cozy',
     iconPath: require('../../../vendor/assets/app-icon.svg'),
     lang: getLang(),
