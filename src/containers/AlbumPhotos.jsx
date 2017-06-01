@@ -70,9 +70,16 @@ export class AlbumPhotos extends Component {
             onFetchMore={() => fetchPhotos(album._id, photos.entries.length)}
           />
         }
-        { this.props.children }
+        {this.renderViewer(this.props.children)}
       </div>
     )
+  }
+
+  renderViewer (children) {
+    if (!children) return null
+    return React.Children.map(children, child => React.cloneElement(child, {
+      photos: this.props.photos.entries
+    }))
   }
 }
 
