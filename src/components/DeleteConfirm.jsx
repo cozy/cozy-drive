@@ -16,6 +16,7 @@ const DeleteConfirm = ({ t, fileCount, confirm, abort }) => {
     description={deleteConfirmationTexts}
     secondaryText={t('deleteconfirmation.cancel')}
     secondaryAction={abort}
+    secondaryType='secondary'
     primaryType='danger'
     primaryText={t('deleteconfirmation.delete')}
     primaryAction={confirm}

@@ -14,6 +14,7 @@ const EmptyTrashConfirm = ({ t, confirm, abort }) => {
   return (<Modal
     title={t('emptytrashconfirmation.title')}
     description={confirmationTexts}
+    secondaryType='secondary'
     secondaryText={t('emptytrashconfirmation.cancel')}
     secondaryAction={abort}
     primaryType='danger'
