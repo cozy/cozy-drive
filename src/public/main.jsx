@@ -30,12 +30,12 @@ function init () {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
-  const { id } = getQueryParameter()
+  const { id, sharecode } = getQueryParameter()
 
-  if (data.cozyDomain && data.cozyToken) {
+  if (data.cozyDomain) {
     cozy.client.init({
       cozyURL: `//${data.cozyDomain}`,
-      token: data.cozyToken
+      token: sharecode
     })
   }
 

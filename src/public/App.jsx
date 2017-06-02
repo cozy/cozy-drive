@@ -59,7 +59,7 @@ class App extends Component {
         loading: false
       }))
     } catch (ex) {
-      console.error(ex, this.state)
+      return this.setState({ error: 'Sharing disabled', ex })
     }
   }
 
