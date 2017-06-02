@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchAlbums, getAlbumsList } from '../ducks/albums'
+import { filterSharedDocuments } from '../ducks/sharing'
+
+import { ALBUM_DOCTYPE } from '../constants/config'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
 import Topbar from '../components/Topbar'
 
-const Content = ({ list }) => {
+const Content = ({ list, shared }) => {
   const { fetchStatus, entries } = list
   switch (fetchStatus) {
     case 'pending':
@@ -17,13 +20,27 @@ const Content = ({ list }) => {
     case 'failed':
       return <ErrorComponent errorType='albums' />
     default:
-      return <AlbumsList albums={entries} />
+      return <AlbumsList albums={entries} shared={shared} />
   }
 }
 
 export class AlbumsView extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      shared: []
+    }
+  }
+
   componentWillMount () {
     this.props.fetchAlbums()
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.albums && newProps.albums.entries !== 0) {
+      filterSharedDocuments(newProps.albums.entries.map(a => a._id), ALBUM_DOCTYPE)
+        .then(ids => this.setState({ shared: ids }))
+    }
   }
 
   render () {
@@ -34,7 +51,7 @@ export class AlbumsView extends Component {
     return (
       <div>
         <Topbar viewName='albums' />
-        <Content list={this.props.albums} />
+        <Content list={this.props.albums} shared={this.state.shared} />
       </div>
     )
   }
