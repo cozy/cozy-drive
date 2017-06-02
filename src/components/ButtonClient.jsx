@@ -5,7 +5,7 @@ import { translate } from '../lib/I18n'
 import React from 'react'
 
 const ButtonClient = ({ t }) => (
-  <a href={t('nav.link-client')} className={styles['coz-btn-client']}><span>{t('nav.btn-client')}</span></a>
+  <a href={t('nav.link-client')} target='_blank' className={styles['coz-btn-client']}><span>{t('nav.btn-client')}</span></a>
 )
 
 export default translate()(ButtonClient)
