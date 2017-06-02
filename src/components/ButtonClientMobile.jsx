@@ -11,9 +11,8 @@ import classNames from 'classnames'
 class ButtonClientMobile extends Component {
   constructor (props) {
     super(props)
-    const seenAd = localStorage.getItem('app_ad')
     this.state = {
-      seen: seenAd ? JSON.parse(seenAd) : false
+      seen: JSON.parse(localStorage.getItem('app_ad')) || false
     }
   }
 
@@ -23,12 +22,14 @@ class ButtonClientMobile extends Component {
   }
 
   render ({ t }, { seen }) {
-    return (!seen
-      ? <div className={styles['coz-banner-client']}>
+    if (seen) return null
+
+    return (
+      <div className={styles['coz-banner-client']}>
         <a href={t('nav.link-client')} target='_blank' className={styles['coz-btn-clientMobile']} onClick={e => this.read(e)} ><span>{t('nav.btn-client-mobile')}</span></a>
         <button className={classNames('coz-btn', styles['coz-btn--close'])} onClick={e => this.read()} />
       </div>
-      : '')
+    )
   }
 }
 
