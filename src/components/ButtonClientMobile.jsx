@@ -1,4 +1,4 @@
-/* eslint-env browser */
+/* global localStorage */
 
 import styles from '../styles/buttonclient'
 
