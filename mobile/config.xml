@@ -13,6 +13,7 @@
     <allow-intent href="geo:*" />
     <hook src="scripts/update-config-version.sh" type="before_build" />
     <engine name="android" spec="6.1.2" />
+    <preference name="Orientation" value="portrait" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
         <allow-intent href="market:*" />
