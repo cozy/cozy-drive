@@ -27,7 +27,6 @@
     .pho-album-description
         text-align right
 
-
 .pho-album-list--selectable
     .pho-album-link
         cursor pointer
@@ -64,6 +63,22 @@
     font-weight normal
     font-size   em(14px)
     margin      0
+
+.pho-album-shared
+    position             absolute
+    bottom               em(60px)
+    right                em(10px)
+    padding              em(2px)
+    background-color     white
+    border-radius        50%
+
+    .pho-album-shared-icon
+        padding              em(16px)
+        background-image     embedurl('../assets/icons/icon-share-white.svg')
+        background-position  center
+        background-repeat    no-repeat
+        background-color     emerald
+        border-radius        50%
 
 @media (max-width: (480/basefont)rem)
     .pho-album

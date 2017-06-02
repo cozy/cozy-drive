@@ -10,6 +10,12 @@ import ImageLoader from './ImageLoader'
 
 const isAlbumEmpty = album => !(album && album.photoCount)
 
+const SharedIcon = () => (
+  <div className={styles['pho-album-shared']}>
+    <div className={styles['pho-album-shared-icon']} />
+  </div>
+)
+
 export class AlbumItem extends Component {
   constructor (props) {
     super(props)
@@ -38,7 +44,7 @@ export class AlbumItem extends Component {
     if (this.state.isLoading) {
       return null
     }
-    const { t, album, onClick } = this.props
+    const { t, album, shared, onClick } = this.props
     const { coverPhoto } = this.state
 
     const image = !coverPhoto
@@ -53,6 +59,7 @@ export class AlbumItem extends Component {
       {t('Albums.album_item_description',
         {smart_count: album.photoCount})
       }
+      {shared && ` - ${t('Albums.album_item_shared_ro')}`}
     </h4>
     const title = <h2 className={styles['pho-album-title']}>{album.name}</h2>
 
@@ -62,6 +69,7 @@ export class AlbumItem extends Component {
           <div onClick={() => onClick(album)} className={styles['pho-album-link']}>
             {image}{title}{desc}
           </div>
+          {shared && <SharedIcon />}
         </div>
       )
     }
@@ -71,6 +79,7 @@ export class AlbumItem extends Component {
         <Link to={`${parentPath}/${album._id}`} className={styles['pho-album-link']}>
           {image}{title}{desc}
         </Link>
+        {shared && <SharedIcon />}
       </div>
     )
   }

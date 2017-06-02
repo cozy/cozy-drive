@@ -60,6 +60,7 @@
   },
   "Albums": {
     "album_item_description": "%{smart_count} photo |||| %{smart_count} photos",
+    "album_item_shared_ro": "Shared (read only)",
     "add_photos": {
       "title": "Add to album",
       "success": "Album %{name} has been updated with %{smart_count} photo. |||| Album %{name} has been updated with %{smart_count} photos.",
@@ -87,6 +88,8 @@
         "desc": "Share anything by email with your family and friends!"
       },
       "close": "Close",
+      "loading": "Loading...",
+      "creatingLink": "Creating your link...",
       "error": {
         "generic": "An error occurred when creating the album share link, please try again."
       }
