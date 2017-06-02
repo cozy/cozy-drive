@@ -4,7 +4,7 @@ import utilStyles from '../styles/utils'
 import React from 'react'
 import Loading from './Loading'
 
-class FileViewer extends React.Component {
+class IntentHandler extends React.Component {
   getInitialState () {
     return {
       loading: true
@@ -52,4 +52,4 @@ class FileViewer extends React.Component {
   }
 }
 
-export default FileViewer
+export default IntentHandler
