@@ -1,3 +1,5 @@
+/* global __TARGET__ */
+
 import styles from '../styles/main'
 
 import React from 'react'
