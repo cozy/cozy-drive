@@ -1,4 +1,4 @@
-/* global __PIWIK_TRACKER_URL__ __PIWIK_SITEID__ */
+/* global __PIWIK_TRACKER_URL__ __PIWIK_SITEID_MOBILE__ */
 import { getTracker, configureTracker, resetTracker } from '../../../src/lib/tracker'
 import { softwareID } from './cozy-helper'
 
@@ -13,7 +13,7 @@ export const useHistoryForTracker = (history) => {
 
 export const startTracker = (cozyServerUrl = '') => {
   // start the tracker, inject the script
-  const trackerInstance = getTracker(__PIWIK_TRACKER_URL__, __PIWIK_SITEID__, false, true)
+  const trackerInstance = getTracker(__PIWIK_TRACKER_URL__, __PIWIK_SITEID_MOBILE__, false, true)
 
   // configure the options that aren't in webpack variables
   let url = new URL(cozyServerUrl)
