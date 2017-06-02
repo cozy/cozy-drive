@@ -1,6 +1,8 @@
 @import 'cozy-ui'
 
-
+:global
+    label[for='pho-album-share-toggle']
+        cursor pointer
 
 :local
     .pho-share-modal-content
@@ -28,25 +30,25 @@
           color grey-11
 
     .pho-input-dual
-      display flex
-      align-items center
+        display flex
+        align-items center
 
-      input[type=text]
-        width 100%
-        height em(48px)
+        input[type=text]
+            width 100%
+            height em(48px)
 
-      > :first-child
-        flex 2 0 1%
-        padding-right .5em
+        > :first-child
+            flex 2 0 1%
+            padding-right .5em
 
-      > :last-child
-        flex 0 0 6em
-        text-align right
+        > :last-child
+            flex 0 0 6em
+            text-align right
 
-      .coz-form-desc
-        margin 0
+        .coz-form-desc
+            margin 0
 
     .pho-btn-copy
-      width 100%
-      height em(48px, 14px)
-      margin 0
+        width 100%
+        height em(48px, 14px)
+        margin 0
