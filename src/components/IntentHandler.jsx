@@ -36,7 +36,7 @@ class IntentHandler extends React.Component {
       }
     } catch (error) {
       this.setState({ error, loading: false })
-      if (service && intent.attributes.action === 'GET_URL') {
+      if (service && intent && intent.attributes.action === 'GET_URL') {
         service.terminate({ error: error.message })
       }
     }
