@@ -65,7 +65,6 @@ export class Viewer extends Component {
   }
 
   render () {
-    const { photos, params } = this.props
     const { isImageLoading, previousID, nextID, currentPhoto } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
