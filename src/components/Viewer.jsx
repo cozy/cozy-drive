@@ -17,11 +17,16 @@ export class Viewer extends Component {
     super(props)
 
     this.state = {
-      isImageLoading: true
+      isImageLoading: true,
+      ...mapRouteToPhotos(props.photos, props.params)
     }
 
     this.navigateToPhoto = this.navigateToPhoto.bind(this)
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState({...mapRouteToPhotos(nextProps.photos, nextProps.params)})
   }
 
   componentDidMount () {
@@ -38,13 +43,13 @@ export class Viewer extends Component {
   }
 
   onKeyDown (e) {
-    if (e.keyCode === KEY_CODE_LEFT) this.navigateToPhoto(this.props.previousID)
-    else if (e.keyCode === KEY_CODE_RIGHT) this.navigateToPhoto(this.props.nextID)
+    if (e.keyCode === KEY_CODE_LEFT) this.navigateToPhoto(this.state.previousID)
+    else if (e.keyCode === KEY_CODE_RIGHT) this.navigateToPhoto(this.state.nextID)
   }
 
   onSwipe (e) {
-    if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.props.nextID)
-    else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.props.previousID)
+    if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.state.nextID)
+    else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.state.previousID)
   }
 
   navigateToPhoto (id) {
@@ -60,9 +65,7 @@ export class Viewer extends Component {
   }
 
   render () {
-    const { photos, params } = this.props
-    const { previousID, nextID, currentPhoto } = mapRouteToPhotos(photos, params)
-    const { isImageLoading } = this.state
+    const { isImageLoading, previousID, nextID, currentPhoto } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar />
