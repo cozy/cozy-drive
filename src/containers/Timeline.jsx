@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styles from '../styles/layout'
 
 import { translate } from '../lib/I18n'
 import { Toolbar as TimelineToolbar, fetchIfNeededPhotos, fetchMorePhotos, getTimelineList } from '../ducks/timeline'
@@ -30,7 +31,7 @@ export class Timeline extends Component {
       .map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))
 
     return (
-      <div>
+      <div className={styles['pho-content-wrapper']}>
         <Topbar viewName='photos'>
           <TimelineToolbar />
         </Topbar>

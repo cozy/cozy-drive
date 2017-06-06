@@ -1,41 +1,49 @@
 @require 'cozy-ui'
 
-.pho-empty
-.pho-error
-  text-align center
-  &:before
-    content     ''
-    display     block
-    margin      em(100px) auto 0
-    width       em(160px)
-    height      em(140px)
-  h2
-    font-size(24px)
-    margin         em(33px) auto 0
-    line-height    1.3
-    color          grey-08
-    letter-spacing -0.2px
-  p
-    margin-top  em(5px)
-    color       grey-11
-    line-height 1.5
+$empty
+    display          flex
+    flex-direction   column
+    justify-content  center
+    flex             1 0 auto
+    align-self       center
+    padding          1em 0
+    text-align       center
 
-  [role=button]
-      margin-top 1em
-
-.pho-error:before
-  background  embedurl('../assets/icons/icon-image-broken.svg') center center / cover no-repeat
-
-.pho-empty:before
-  background  embedurl('../assets/icons/icon-main-app.svg') center center / cover no-repeat
-
-
-@media (max-width: (1023/basefont)rem)
-  .pho-empty, .pho-error
     &:before
-      width  em(120px)
-      height em(105px)
+        content     ''
+        display     block
+        margin      0 auto
+        width       em(160px)
+        height      em(140px)
     h2
-      margin em(33px) 1.5em 0
+        font-size(24px)
+        margin         em(33px) auto 0
+        line-height    1.3
+        color          grey-08
+        letter-spacing -0.2px
     p
-      margin em(5px) 1.5em 0
+        margin-top  em(5px)
+        color       grey-11
+        line-height 1.5
+
+    [role=button]
+        margin-top 1em
+
+    @media (max-width: (1023/basefont)rem)
+        &:before
+            width  em(120px)
+            height em(105px)
+        h2
+            margin em(33px) 1.5em 0
+        p
+            margin em(5px) 1.5em 0
+
+.pho-error
+    @extends $empty
+    &:before
+        background  embedurl('../assets/icons/icon-image-broken.svg') center center / cover no-repeat
+
+.pho-empty
+    @extends $empty
+    &:before
+        background  embedurl('../assets/icons/icon-main-app.svg') center center / cover no-repeat
