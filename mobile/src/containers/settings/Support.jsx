@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../../../../src/lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, { ELEMENT_CHECKBOX, ELEMENT_BUTTON } from '../../components/SettingCategory'
 import { setAnalytics } from '../../actions/settings'
 import { logInfo } from '../../lib/reporter'

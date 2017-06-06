@@ -1,7 +1,7 @@
 /* global __TARGET__ */
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'

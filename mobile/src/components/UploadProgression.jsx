@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import styles from '../styles/uploadprogression'
-import { translate } from '../../../src/lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 const UploadProgression = ({t, message, messageData}) => {
   if (!message) {

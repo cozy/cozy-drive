@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import UploadButton from '../../components/UploadButton'
 import Menu, { Item } from '../../components/Menu'

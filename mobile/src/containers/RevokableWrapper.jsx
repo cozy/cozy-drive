@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Modal from 'cozy-ui/react/Modal'
-import { translate } from '../../../src/lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import { resetClient } from '../lib/cozy-helper'
 import { unrevokeClient } from '../actions/authorization'
 import { registerDevice } from '../actions/settings'

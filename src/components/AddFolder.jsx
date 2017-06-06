@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import styles from '../styles/table'
 import FilenameInput from '../components/FilenameInput'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 const AddFolder = ({ f, onSubmit, onAbort }) => (
   <div className={styles['fil-content-row']}>

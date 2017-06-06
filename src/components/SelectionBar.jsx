@@ -1,7 +1,7 @@
 import styles from '../styles/selectionbar'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import classNames from 'classnames'
 
 const SelectionBar = ({ t, selected, actions, single, mobile, onClose, onMoreClick }) => {

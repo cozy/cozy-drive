@@ -1,6 +1,6 @@
 import styles from '../styles/buttonclient'
 
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import React from 'react'
 

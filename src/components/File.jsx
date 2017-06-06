@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import Hammer from 'hammerjs'
 
 import styles from '../styles/table'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 

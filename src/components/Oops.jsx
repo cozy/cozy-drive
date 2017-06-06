@@ -1,7 +1,7 @@
 import styles from '../styles/oops'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 const reload = () => {
   window.location.reload()
