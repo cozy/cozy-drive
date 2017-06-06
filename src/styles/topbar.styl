@@ -1,24 +1,22 @@
 @require 'cozy-ui'
 
+$coz-bar-size = 48px
+
 .pho-content-header
-  display       flex
-  align-items   center
-  bottom-spaced(24px)
-  right-spaced(32px)
-  left-spaced(32px)
+    display       flex
+    align-items   center
+    bottom-spaced(10px)
+    right-spaced(32px)
+    left-spaced(32px)
 
-  @media (max-width: (768/basefont)rem)
-    right-spaced(16px)
-    left-spaced(16px)
-
-  @media (max-width: (480/basefont)rem)
-    position        fixed
-    z-index         $nav-index
-    left            2em
-    top             .2em
-    bottom-spaced   0
-    height          2em
-    width           calc(100vw - 4em)
+    @media (max-width: (768/basefont)rem)
+        margin   0
+        position fixed
+        top      0
+        left     2.5em
+        right    0
+        z-index  $nav-index
+        height   $coz-bar-size
 
 .pho-content-album-previous
     width        1.5em
@@ -33,28 +31,19 @@
         background-size cover
 
 .pho-content-title
-  @extend $form-text
-  margin        0
-  padding-top   .1em
-  overflow      hidden
-  text-overflow ellipsis
-  font-size(24px)
+    @extend $form-text
+    margin        0
+    padding-top   .1em
+    overflow      hidden
+    text-overflow ellipsis
+    font-size(24px)
 
-  input[type=text]
-    padding 0.4em 0.3em 0.3em 0.4em
-    max-width 100%
+    input[type=text]
+        padding 0.4em 0.3em 0.3em 0.4em
+        max-width 100%
 
-  @media (max-width: (768/basefont)rem)
-      font-size(20px)
+    @media (max-width: (768/basefont)rem)
+       font-size(20px)
 
-  @media (max-width: (480/basefont)rem)
-      white-space   nowrap
-
-:global
-  @media (max-width: (480/basefont)rem)
-    // FIXME: Should be fix by using next cozy-bar release
-    [role=banner] .coz-bar-title
-      display none
-
-    [role=banner][data-drawer-visible="true"]
-      z-index $nav-index + 1
+    @media (max-width: (480/basefont)rem)
+       white-space   nowrap
