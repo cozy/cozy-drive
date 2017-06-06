@@ -6,6 +6,7 @@ import { translate } from '../lib/I18n'
 
 import Sidebar from './Sidebar'
 import Alerter from './Alerter'
+import ButtonClientMobile from './ButtonClientMobile'
 
 import { UploadQueue } from '../ducks/upload'
 
@@ -14,6 +15,7 @@ export const Layout = ({ t, children }) => (
     <Sidebar />
 
     <main className={styles['pho-content']}>
+      <ButtonClientMobile />
       { children }
     </main>
     <Alerter t={t} />
