@@ -21,7 +21,10 @@ const Pending = translate()(
 const Item = translate()(({ t, file, status }) => {
   const { filename, extension } = splitFilename(file)
   return (
-    <div className={styles['upload-queue-item']}>
+    <div className={classNames(styles['upload-queue-item'], {
+      [styles['upload-queue-item--done']]: status === 'loaded',
+      [styles['upload-queue-item--error']]: status === 'failed' || status === 'conflict'
+    })}>
       <div className={classNames(styles['item-cell'], styles['item-file'], styles['item-image'])}>
         <div>
           {filename}
