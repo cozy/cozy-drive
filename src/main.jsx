@@ -1,5 +1,4 @@
-/* global __DEVELOPMENT__ */
-/* global cozy */
+/* global __DEVELOPMENT__, cozy */
 
 import 'babel-polyfill'
 

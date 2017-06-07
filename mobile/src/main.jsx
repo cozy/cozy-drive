@@ -1,3 +1,4 @@
+/* global __DEVELOPMENT__ */
 import 'babel-polyfill'
 
 import '../../src/styles/main'
@@ -19,6 +20,15 @@ import { startTracker, useHistoryForTracker, startHeartBeat, stopHeartBeat } fro
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
 import { backupImages } from './actions/mediaBackup'
+
+if (__DEVELOPMENT__) {
+  // Enables React dev tools for Preact
+  // Cannot use import as we are in a condition
+  require('preact/devtools')
+
+  // Export React to window for the devtools
+  window.React = React
+}
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
