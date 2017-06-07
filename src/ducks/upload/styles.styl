@@ -60,6 +60,12 @@ progress.upload-queue-progress::-moz-progress-bar
     display   flex
     flex-direction column
 
+.upload-queue-item--error
+    background-color rgba(245, 44, 44, 0.1)
+
+.upload-queue-item--done
+    background-color grey-10
+
 .upload-queue-item
     height          50px
     box-sizing      border-box
@@ -110,12 +116,22 @@ progress.upload-queue-progress::-moz-progress-bar
         @extend $icon-16
         @extend $icon-spinner-blue
 
+    .item-canceled
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-cross.svg')
+
     .item-failed
         @extend $icon-16
         @extend $icon
-        background-image  embedurl('./assets/icons/icon-cross.svg')
+        background-image embedurl('./assets/icons/icon-warning.svg')
+
+    .item-conflict
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-warning.svg')
 
     .item-loaded
         @extend $icon-16
         @extend $icon
-        background-image  embedurl('./assets/icons/icon-checked.svg')
+        background-image embedurl('./assets/icons/icon-checked.svg')
