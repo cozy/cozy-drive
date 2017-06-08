@@ -117,7 +117,7 @@
     "piwik-react-router": "^0.8.2",
     "pouchdb": "^6.1.1",
     "pouchdb-find": "^0.10.4",
-    "preact": "^8.1.0",
+    "preact": "7.2.1",
     "preact-compat": "^3.14.3",
     "raven-js": "^3.10.0",
     "react-bosonic": "1.0.0-beta6",
