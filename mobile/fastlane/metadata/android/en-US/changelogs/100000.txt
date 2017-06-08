@@ -1,0 +1,5 @@
+Thank you for using Cozy Drive! ☁️
+In this release:
+• A specific error message is shown when an email address is entered instead of the Cozy URL during the connection.
+• Added a "hidden" feature for support purpose (to send application logs when interacting with us).
+• Various bug fixes.

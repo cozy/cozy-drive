@@ -1,0 +1,5 @@
+Merci d'utiliser Cozy Drive ! ☁️
+Dans cette version :
+• Un message d'erreur spécifique apparait lorsqu'une adresse mail est insérée dans le champ d'adresse de l'instance.
+• Ajout d'une fonctionnalité "cachée" de support (envoi des logs de l'application)
+• Différents bugs ont été corrigés.

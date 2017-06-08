@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "npm run build:browser",
@@ -34,7 +34,7 @@
     "android:run:emulator": "(cd mobile && cordova run android --emulator)",
     "android:release": "npm run build:mobile && (cd mobile && cordova build android --release)",
     "android:signed": "npm run android:release && (cd mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/android-release-unsigned.apk)",
-    "android:publish": "npm run android:signed && (cd mobile && fastlane supply)",
+    "android:publish": "(cd mobile && fastlane supply)",
     "ios:run": "(cd mobile && cordova run ios --device)",
     "ios:run:emulator": "(cd mobile && cordova run ios --emulator)",
     "ios:publish": "(cd mobile && fastlane ios pushtest)"
