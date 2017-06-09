@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { translate } from '../../../../src/lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, { ELEMENT_BUTTON } from '../../components/SettingCategory'
 import Modal from 'cozy-ui/react/Modal'
 import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../../actions/unlink'

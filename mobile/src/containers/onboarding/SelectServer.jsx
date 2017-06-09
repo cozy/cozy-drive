@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 
-import { translate } from '../../../../src/lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import { registerDevice, setUrl } from '../../actions/settings'
 import styles from '../../styles/onboarding'

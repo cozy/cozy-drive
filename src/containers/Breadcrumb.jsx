@@ -4,7 +4,7 @@ import styles from '../styles/breadcrumb'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
 
 import React, { Component } from 'react'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { openFolder } from '../actions'

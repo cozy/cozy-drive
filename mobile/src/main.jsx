@@ -8,7 +8,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, hashHistory } from 'react-router'
 
-import { I18n } from '../../src/lib/I18n'
+import { I18n } from 'cozy-ui/react/I18n'
 
 import MobileAppRoute from './components/MobileAppRoute'
 
@@ -73,11 +73,10 @@ const renderAppWithPersistedState = persistedState => {
   useHistoryForTracker(hashHistory)
   if (store.getState().mobile.settings.analytics) startTracker(store.getState().mobile.settings.serverUrl)
 
-  const context = window.context
   const root = document.querySelector('[role=application]')
 
   render((
-    <I18n context={context} lang={getLang()}>
+    <I18n lang={getLang()} dictRequire={(lang) => require(`../../src/locales/${lang}`)}>
       <Provider store={store}>
         <Router history={hashHistory} routes={MobileAppRoute(isRedirectedToOnboaring)} />
       </Provider>

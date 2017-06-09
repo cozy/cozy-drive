@@ -1,5 +1,5 @@
 import { isCordova, isAndroid } from './device'
-import { initPolyglot } from '../../../src/lib/I18n'
+import { _polyglot, initTranslation } from 'cozy-ui/react/I18n/translation'
 import { getLang } from './init'
 import { logException } from './reporter'
 
@@ -84,10 +84,12 @@ export const getFilteredPhotos = async () => {
 }
 
 export const getMediaFolderName = () => {
-  const context = window.context
-  const lang = getLang()
-  const polyglot = initPolyglot(context, lang)
-  const dir = polyglot.t('mobile.settings.media_backup.media_folder')
+  if (_polyglot === undefined) {
+    const lang = getLang()
+    const dictRequire = (lang) => require(`../../../src/locales/${lang}`)
+    initTranslation(lang, dictRequire)
+  }
+  const dir = _polyglot.t('mobile.settings.media_backup.media_folder')
 
   return dir
 }

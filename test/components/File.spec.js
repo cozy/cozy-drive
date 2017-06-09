@@ -2,7 +2,7 @@
 
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { I18n } from '../../src/lib/I18n'
+import { I18n } from 'cozy-ui/react/I18n'
 
 import File from '../../src/components/File'
 
@@ -15,7 +15,7 @@ describe('File component', () => {
       created_at: '2017-01-03T08:52:37.093020313Z'
     }
     const component = renderer.create(
-      <I18n lang='en'>
+      <I18n lang='en' dictRequire={() => ('')}>
         <File attributes={attrs} />
       </I18n>
     )

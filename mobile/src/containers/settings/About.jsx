@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../../../../src/lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, { ELEMENT_TEXT } from '../../components/SettingCategory'
 
 export const About = ({ t, version, serverUrl, onClick }) => (

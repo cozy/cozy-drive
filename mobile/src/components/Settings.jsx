@@ -5,7 +5,7 @@ import Main from '../../../src/components/Main'
 import Topbar from '../../../src/components/Topbar'
 import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
-import { translate } from '../../../src/lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import UploadProgression from '../containers/UploadProgression'
 
 import About from '../containers/settings/About'

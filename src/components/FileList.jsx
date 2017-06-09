@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
