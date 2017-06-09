@@ -184,5 +184,6 @@ export const getAlbum = (state, id) => {
 export const getAlbumPhotos = (state, albumId) => getList(state, `${ALBUMS}/${albumId}`)
 
 import AlbumToolbar from './components/AlbumToolbar'
+import AlbumsToolbar from './components/AlbumsToolbar'
 
-export { AlbumToolbar }
+export { AlbumToolbar, AlbumsToolbar }
