@@ -3,6 +3,10 @@
 [role=application]
     @extend $navigation
 
+.fil-loading
+    @extend $icon-16
+    @extend $icon-spinner-blue
+
 .fil-cat-files
     background: embedurl("../assets/icons/icon-folder.svg") em(24px) center no-repeat
     &.active
@@ -34,6 +38,12 @@
         background-image: embedurl("../assets/icons/icon-settings-active.svg")
 
 @media (max-width: (1023/basefont)rem)
+
+    .fil-loading
+        width .5rem
+        height .5rem
+        position relative
+        top em(-2px)
 
     .fil-cat-files
     .fil-cat-recent
