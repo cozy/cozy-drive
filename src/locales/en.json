@@ -44,7 +44,7 @@
       "YB": "YB"
     }
   },
-  "selectionbar": {
+  "SelectionBar": {
     "selected_count": "item selected |||| items selected",
     "share": "Share",
     "download": "Download",
