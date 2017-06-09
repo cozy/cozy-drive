@@ -13,8 +13,8 @@ $empty
         content     ''
         display     block
         margin      0 auto
-        width       em(160px)
-        height      em(140px)
+        width       10rem
+        height      8.75rem
     h2
         font-size(24px)
         margin         em(33px) auto 0
@@ -28,8 +28,8 @@ $empty
 
     @media (max-width: (1023/basefont)rem)
         &:before
-            width  em(120px)
-            height em(105px)
+            width  5rem
+            height 4.375rem
         h2
             margin em(33px) 1.5em 0
         p
@@ -38,9 +38,13 @@ $empty
 .fil-empty
     @extends $empty
     &:before
-        background  embedurl("../assets/icons/icon-type-folder.svg") center center / cover no-repeat
+        background  embedurl('../assets/icons/icon-type-folder.svg') center center / cover no-repeat
 
 .fil-trash-empty
     @extends $empty
     &:before
-        background  embedurl("../assets/icons/icon-trash-big.svg") center center / cover no-repeat
+        background  embedurl('../assets/icons/icon-trash-big.svg') center center / cover no-repeat
+        height      10rem
+
+        @media (max-width: (1023/basefont)rem)
+            height 5rem
