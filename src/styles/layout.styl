@@ -4,10 +4,7 @@
     @extend    $app-2panes-sticky
 
 .pho-content
-    top-padded(30px)
-
-    @media (max-width: (480/basefont)rem)
-        padding 0
+    padding 0
 
 .pho-content-wrapper
 .pho-content-wrapper > [role=contentinfo]
@@ -19,3 +16,7 @@
     height          100%
     overflow-x      hidden
     overflow-y      auto
+    top-padded(30px)
+
+    @media (max-width: (768/basefont)rem)
+        padding 0

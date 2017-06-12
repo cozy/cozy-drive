@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styles from '../styles/layout'
 
 import { fetchAlbums, getAlbumsList } from '../ducks/albums'
 import { filterSharedDocuments } from '../ducks/sharing'
@@ -49,7 +50,7 @@ export class AlbumsView extends Component {
       return null
     }
     return (
-      <div>
+      <div className={styles['pho-content-wrapper']}>
         <Topbar viewName='albums' />
         <Content list={this.props.albums} shared={this.state.shared} />
       </div>
