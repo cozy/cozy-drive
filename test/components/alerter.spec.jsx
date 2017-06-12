@@ -5,7 +5,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 
-import { mockT } from '../lib/I18n'
+import { mockT } from 'cozy-ui/react/I18n'
 import Alerter from '../../src/components/Alerter'
 
 jest.useFakeTimers()

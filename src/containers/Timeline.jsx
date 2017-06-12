@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../styles/layout'
 
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import { Toolbar as TimelineToolbar, fetchIfNeededPhotos, fetchMorePhotos, getTimelineList } from '../ducks/timeline'
 import { getPhotosByMonth } from '../lib/helpers'
 

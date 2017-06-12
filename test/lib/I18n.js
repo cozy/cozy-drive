@@ -1,6 +1,6 @@
 'use strict'
 
-import { I18n } from '../../src/lib/I18n'
+import { I18n } from '../../src/I18n'
 
 const I18nComponent = new I18n({ lang: 'en' })
 

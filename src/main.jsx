@@ -12,7 +12,7 @@ import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
-import { I18n } from './lib/I18n'
+import { I18n } from 'cozy-ui/react/I18n'
 
 import photosApp from './reducers'
 import AppRoute from './components/AppRoute'
@@ -31,7 +31,6 @@ if (__DEVELOPMENT__) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const context = window.context
   const root = document.querySelector('[role=application]')
   const data = root.dataset
   const lang = document.documentElement.getAttribute('lang') || 'en'
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   )
 
   render((
-    <I18n context={context} lang={lang}>
+    <I18n lang={lang} dictRequire={(lang) => require(`./locales/${lang}`)}>
       <Provider store={store}>
         <Router history={history} routes={AppRoute} />
       </Provider>

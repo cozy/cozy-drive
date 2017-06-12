@@ -1,6 +1,6 @@
 /* global cozy */
 import React, { Component } from 'react'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'

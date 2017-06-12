@@ -5,7 +5,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import Toggle from 'cozy-ui/react/Toggle'
 import classNames from 'classnames'
-import { translate } from '../../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import Alerter from '../../components/Alerter'
 
 import { findPermSet, createPermSet, deletePermSet, getShareLink } from '.'

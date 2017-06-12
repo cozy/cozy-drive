@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import classNames from 'classnames'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import Alerter from '../components/Alerter'
 import { hideSelectionBar } from '../actions/selection'

@@ -3,7 +3,7 @@ import styles from '../../../styles/toolbar'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { translate } from '../../../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import ShareButton from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'

@@ -5,7 +5,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { mockT } from '../lib/I18n'
+import { mockT } from 'cozy-ui/react/I18n'
 import { Loading } from '../../src/components/Loading'
 
 describe('Loading component', () => {

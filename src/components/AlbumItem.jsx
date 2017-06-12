@@ -3,7 +3,7 @@ import styles from '../styles/albumsList'
 
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import { fetchAlbumCover } from '../ducks/albums'
 import ImageLoader from './ImageLoader'
