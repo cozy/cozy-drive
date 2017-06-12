@@ -37,11 +37,12 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
           disabled={disabled}
           label={t('Toolbar.menu.photo_upload')}
           type='menu-item'
+          className='coz-mobile'
         />
       </Item>
-      <hr />
+      <hr className='coz-mobile' />
       <Item>
-        <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
+        <a className={styles['pho-action-select']} onClick={selectItems}>
           {t('Toolbar.menu.select_items')}
         </a>
       </Item>
