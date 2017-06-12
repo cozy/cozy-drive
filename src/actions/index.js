@@ -110,7 +110,7 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
 export const openFileInNewTab = (folder, file) => {
   return async dispatch => {
     const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
-    const href = await cozy.client.files.getDownloadLink(filePath)
+    const href = await cozy.client.files.getDownloadLinkByPath(filePath)
     window.open(`${cozy.client._url}${href}`, '_blank')
   }
 }
