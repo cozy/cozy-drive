@@ -13,6 +13,15 @@ const adaptRowHeight = containerWidth => 180 + ((containerWidth || 1800) / 30)
 export class PhotoList extends Component {
   render () {
     const { key, title, photos, selected, onPhotoToggle, containerWidth } = this.props
+    const confDesk = {
+      spacing: 16,
+      padding: 32
+    }
+    const confMob = {
+      spacing: 8,
+      padding: 0
+    }
+    let conf = containerWidth >= 768 ? confDesk : confMob
     // @see https://flickr.github.io/justified-layout/
     const layout = justifiedLayout(
       photos.map(photo => {
@@ -24,12 +33,14 @@ export class PhotoList extends Component {
         targetRowHeight: adaptRowHeight(containerWidth),
         // Must be relevant with styles
         boxSpacing: {
-          horizontal: 16,
-          vertical: 16
+          horizontal: conf.spacing,
+          vertical: conf.spacing
         },
         containerPadding: {
-          left: 32,
-          right: 32
+          top: 0,
+          right: conf.padding,
+          bottom: 0,
+          left: conf.padding
         }
       }
     )
@@ -37,19 +48,23 @@ export class PhotoList extends Component {
       <div
         className={classNames(styles['pho-section'], selected.length && styles['pho-section--has-selection'])}
         key={key}
-        // Specify the width for making justified layout work.
-        style={containerWidth ? `width:${containerWidth}px` : ''}
+        style={`width:${containerWidth}px;`}
         >
         {!!title && <h3>{title}</h3>}
-        {photos.map((photo, index) =>
-          <Photo
-            photo={photo}
-            box={layout.boxes[index]}
-            key={photo._id}
-            selected={selected.indexOf(photo._id) !== -1}
-            onToggle={onPhotoToggle}
-          />
-        )}
+        <div className={styles['pho-photo-wrapper']}
+          // Specify the width & height for making justified layout work.
+          style={`width:${containerWidth}px; height:${layout.containerHeight}px;`}
+          >
+          {photos.map((photo, index) =>
+            <Photo
+              photo={photo}
+              box={layout.boxes[index]}
+              key={photo._id}
+              selected={selected.indexOf(photo._id) !== -1}
+              onToggle={onPhotoToggle}
+              />
+          )}
+        </div>
       </div>
     )
   }

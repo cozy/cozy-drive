@@ -16,6 +16,12 @@ const getStyleFromBox = box => {
     if (box.height) {
       style.height = `${box.height}px`
     }
+    if (box.top) {
+      style.top = `${box.top}px`
+    }
+    if (box.left) {
+      style.left = `${box.left}px`
+    }
   }
   return style
 }

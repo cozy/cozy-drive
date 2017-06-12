@@ -2,20 +2,33 @@
 
 :local
 
+    .pho-photo-wrapper
+      position relative
+
+
     .pho-section
-        box-sizing border-box
-        left-padded(32px)
-        right-padded(32px)
-        bottom-spaced(2em)
+        position       relative
+        margin-bottom  2rem
+
+        h3
+            padding 0 2rem
+
+        @media (max-width: (768/basefont)rem)
+          margin-bottom  1rem
+
+          h3
+            padding 0 1rem
 
     .pho-photo
-        position relative
-        display  inline-block
-        background-color grey-10
-        margin   0 1em 1em 0
+        position          absolute
+        display           inline-block
+        background-color  grey-10
+        margin            0 1rem 1rem 0
 
         a
           vertical-align middle
+        @media (max-width: (768/basefont)rem)
+          margin 0 .5rem .5rem 0
 
     .pho-photo-item
         height       em(240px)
