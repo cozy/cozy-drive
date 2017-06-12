@@ -15,8 +15,6 @@ import { mustShowSelectionBar } from '../../../reducers'
 import { addToUploadQueue } from '../../upload'
 import { addPhotosToTimeline } from '../'
 
-import classNames from 'classnames'
-
 export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, selectItems, params }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
     <UploadButton
