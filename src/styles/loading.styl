@@ -1,6 +1,6 @@
 @require 'cozy-ui'
 
-.pho-loading, .pho-loading--no-margin
+.pho-loading
   text-align center
   &:before
     content     ''
@@ -8,6 +8,17 @@
     width       em(80px)
     height      em(80px)
     @extend $icon-spinner-blue
+  &.pho-loading--grey
+    &:before
+      @extend $icon-spinner-grey
+
+  &.pho-loading--white
+    &:before
+      @extend $icon-spinner-white
+
+  &.pho-loading--red
+    &:before
+      @extend $icon-spinner-red
 
   h2
     font-size(24px)
@@ -21,8 +32,9 @@
     line-height 1.5
 
 .pho-loading--no-margin
-    &:before
-        margin 0
+  &:before
+    margin 0
+
 
 
 @media (max-width: (1023/basefont)rem)
