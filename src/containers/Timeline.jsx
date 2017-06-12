@@ -10,8 +10,9 @@ import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
 
 const formatMonths = (photoList, f, format) => {
+  const title = f(photoList.title, format)
   return {
-    title: f(photoList.title, format),
+    title: title[0].toUpperCase() + title.slice(1),
     photos: photoList.photos
   }
 }
