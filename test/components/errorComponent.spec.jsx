@@ -5,7 +5,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { mockT } from '../lib/I18n'
+import { mockT } from 'cozy-ui/react/I18n'
 import { ErrorComponent } from '../../src/components/ErrorComponent'
 
 describe('Empty component', () => {

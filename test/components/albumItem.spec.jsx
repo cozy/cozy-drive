@@ -11,7 +11,7 @@ jest.mock('../../src/actions/photos', () => {
   }
 })
 
-import { mockT } from '../lib/I18n'
+import { mockT } from 'cozy-ui/react/I18n'
 import { AlbumItem } from '../../src/components/AlbumItem'
 
 const mockAlbum = {

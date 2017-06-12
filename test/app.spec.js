@@ -5,8 +5,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { mockT } from './lib/I18n'
-import { I18n } from '../src/lib/I18n'
+import { mockT } from 'cozy-ui/react/I18n'
+import { I18n } from '../src/I18n'
 import { Layout } from '../src/components/Layout'
 
 describe('App component only', () => {

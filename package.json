@@ -82,7 +82,7 @@
     "classnames": "^2.2.0",
     "cozy-bar": "3.0.0-beta24",
     "cozy-client-js": "0.3.2",
-    "cozy-ui": "3.0.0-beta30",
+    "cozy-ui": "3.0.0-beta35",
     "date-fns": "^1.26.0",
     "hammerjs": "^2.0.8",
     "justified-layout": "^2.1.0",

@@ -3,7 +3,7 @@ import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
-import { I18n } from '../lib/I18n'
+import { I18n } from 'cozy-ui/react/I18n'
 
 import '../styles/main'
 
@@ -26,7 +26,6 @@ const getQueryParameter = () => window
 document.addEventListener('DOMContentLoaded', init)
 
 function init () {
-  const context = window.context
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -49,7 +48,7 @@ function init () {
   }
 
   render(
-    <I18n context={context} lang={lang}>
+    <I18n lang={lang} dictRequire={(lang) => require(`../locales/${lang}`)}>
       <Router history={hashHistory}>
         <Route path='shared' component={props => <App albumId={id} {...props} />}>
           <Route path=':photoId' component={Viewer} />
