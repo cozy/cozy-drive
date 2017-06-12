@@ -98,7 +98,7 @@ class File extends Component {
         </div>
         {this.renderFilenameCell(attributes, opening, isRenaming)}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
-          <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
+          <time datetime=''>{ f(attributes.created_at, t('table.row_update_format')) }</time>
         </div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])}>
           {isDirectory(attributes)
