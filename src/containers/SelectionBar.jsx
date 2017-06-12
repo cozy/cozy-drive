@@ -24,7 +24,7 @@ const SelectionBar = ({ t, selected, selectedCount, album, onHide, onAddToAlbum,
     <span className={styles['coz-selectionbar-separator']} />
     <button
       disabled={selectedCount === 0}
-      className={styles['pho-action-album-add']}
+      className={styles['coz-action-album-add']}
       onClick={() => onAddToAlbum(selected)}
     >
       {t('SelectionBar.add_to_album')}
@@ -32,7 +32,7 @@ const SelectionBar = ({ t, selected, selectedCount, album, onHide, onAddToAlbum,
     {router.location.pathname.startsWith('/albums') &&
     <button
       disabled={selectedCount === 0}
-      className={styles['pho-action-album-remove']}
+      className={styles['coz-action-album-remove']}
       onClick={() => onRemoveFromAlbum(selected, album)}
     >
       {t('SelectionBar.remove_from_album')}
