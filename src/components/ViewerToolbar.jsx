@@ -19,11 +19,9 @@ export const ViewerToolbar = ({ t, router }) => {
       <div
         className={styles['pho-viewer-toolbar-close']}
         onClick={closeViewer}
+        title={t('Viewer.close')}
       >
         <div className={styles['pho-viewer-toolbar-close-cross']} />
-        <span className={styles['pho-viewer-toolbar-close-text']}>
-          {t('Viewer.close')}
-        </span>
       </div>
     </div>
   )

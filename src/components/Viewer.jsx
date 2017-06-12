@@ -80,7 +80,7 @@ export class Viewer extends Component {
               />
             }
             {(!currentPhoto || isImageLoading) &&
-              <Loading noMargin />
+              <Loading noMargin color='white' />
             }
           </div>
           <a role='button' className={styles['pho-viewer-nav-next']} onClick={() => this.navigateToPhoto(nextID)} />

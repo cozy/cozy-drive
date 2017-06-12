@@ -24,19 +24,19 @@
     display         flex
     flex-grow       0
     align-items     center
-    width           10em
+    width           4.5em
     cursor          pointer
     font-weight     bold
     text-transform  uppercase
 
 
-.pho-viewer-toolbar-close-text
-    font-size em(14px)
-
-
 .pho-viewer-toolbar-close-cross
     width    3em
     height   3em
+
+    &:hover,
+    &:focus
+        background-color alpha(black, .25)
 
     &::after, &::before
         content     ''
