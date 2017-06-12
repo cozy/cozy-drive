@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import styles from '../styles/layout'
 
 import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
 
@@ -55,7 +56,7 @@ export class AlbumPhotos extends Component {
     const { album, photos, fetchPhotos } = this.props
     const { editing } = this.state
     return (
-      <div>
+      <div className={styles['pho-content-wrapper']}>
         {album.name &&
           <Topbar viewName='albumContent' albumName={album.name} editing={editing} onEdit={this.renameAlbum.bind(this)} >
             <AlbumToolbar album={album} onRename={this.editAlbumName.bind(this)} />
