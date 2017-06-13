@@ -5,17 +5,14 @@ import { translate } from 'cozy-ui/react/I18n'
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
-import {
-  ALBUM_DOCTYPE
-} from '../constants/config'
 
-import { downloadAlbum } from '../ducks/albums'
+import { fetchAlbum, fetchPhotos, downloadAlbum } from '../ducks/albums'
 
 import styles from './index.styl'
 
 class App extends Component {
   state = {
-    name: null,
+    album: null,
     photos: [],
     selected: [],
     loading: true,
@@ -34,14 +31,18 @@ class App extends Component {
   }
 
   onFetchMore = () => {
-
+    return fetchPhotos(this.state.album, this.state.photos.length)
+      .then(({ entries, next }) => this.setState(state => ({
+        photos: [...state.photos, ...entries],
+        hasMore: next
+      })))
   }
 
   onDownload = () => {
     const photos = this.state.selected.length !== 0
       ? this.getSelectedPhotos()
       : this.state.photos
-    downloadAlbum({ name: this.state.name }, photos)
+    downloadAlbum(this.state.album, photos)
   }
 
   getSelectedPhotos = () => {
@@ -54,21 +55,17 @@ class App extends Component {
     if (!albumId) {
       return this.setState({ error: 'Missing ID' })
     }
-    const album = {
-      _type: ALBUM_DOCTYPE,
-      _id: albumId
-    }
     try {
-      const photosIds = await cozy.client.data.listReferencedFiles(album)
-      const photos = await Promise.all(photosIds.map(cozy.client.files.statById))
-      // const photosWithUrl = await Promise.all(photos.map(addUrl))
-      const document = await cozy.client.data.find(ALBUM_DOCTYPE, albumId)
+      const album = await fetchAlbum(albumId)
+      const { entries, next } = await fetchPhotos(album)
       this.setState(state => ({
-        name: document.name,
-        photos,
-        loading: false
+        album,
+        photos: entries,
+        loading: false,
+        hasMore: next
       }))
     } catch (ex) {
+      console.log(ex)
       return this.setState({ error: 'Sharing disabled', ex })
     }
   }
@@ -89,11 +86,11 @@ class App extends Component {
       )
     }
     const { t } = this.props
-    const { name, photos, selected, hasMore } = this.state
+    const { album, photos, selected, hasMore } = this.state
     return (
       <div className={styles['pho-public-layout']}>
         <div className={styles['pho-content-header']}>
-          <h2 className={styles['pho-content-title']}>{name}</h2>
+          <h2 className={styles['pho-content-title']}>{album.name}</h2>
           <div className={styles['pho-toolbar']} role='toolbar'>
             <div className='coz-desktop'>
               <button

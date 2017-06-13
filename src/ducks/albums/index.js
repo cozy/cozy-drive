@@ -34,7 +34,6 @@ const fetchAll = async (index, skip = 0) => {
   .then(albums => albums.map(album => Object.assign({}, album, { _type: ALBUM_DOCTYPE }))) // FIXME: this adds the missing _type to album
   .then(async albums => {
     for (let index in albums) {
-      // TODO: we'll soon get a meta: count property for this query
       const photosIds = await cozy.client.data.listReferencedFiles(albums[index])
       albums[index].photoCount = photosIds.length
       albums[index].coverId = photosIds[0]
@@ -49,16 +48,16 @@ export const fetchAlbums = createFetchIfNeededAction(ALBUMS, (index, skip = 0) =
     : createIndex().then(index => fetchAll(index, skip))
 })
 
-const fetchPhotos = async (album, skip = 0) => {
+export const fetchAlbum = async (albumId) => cozy.client.data.find(ALBUM_DOCTYPE, albumId)
+
+export const fetchPhotos = async (album, skip = 0) => {
   const photos = []
-  const next = album.photoCount > skip + FETCH_LIMIT
-  const limit = next ? FETCH_LIMIT : album.photoCount - skip
-  const photosIds = await cozy.client.data.listReferencedFiles(album)
-  for (let i = skip; i < skip + limit; i++) {
-    const photo = await cozy.client.files.statById(photosIds[i])
-    photos.push(Object.assign({}, photo, photo.attributes))
+  const { data, included, meta } = await cozy.client.data.fetchReferencedFiles(album, { skip, limit: FETCH_LIMIT })
+  return {
+    entries: data.map((object, idx) => Object.assign({ _id: object.id }, object, included[idx])),
+    next: meta.count > skip + FETCH_LIMIT,
+    skip
   }
-  return { entries: photos, next, skip }
 }
 
 export const fetchAlbumPhotos = (albumId, skip = 0) =>
