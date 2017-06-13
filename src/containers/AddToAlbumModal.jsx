@@ -11,6 +11,8 @@ import CreateAlbumForm from '../components/CreateAlbumForm'
 import SelectAlbumsForm from '../components/SelectAlbumsForm'
 import Loading from '../components/Loading'
 
+import { getSelectedIds } from '../ducks/selection'
+
 import {
   fetchAlbums,
   getAlbumsList,
@@ -66,7 +68,7 @@ export class AddToAlbumModal extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    photos: state.ui.selected,
+    photos: getSelectedIds(state),
     albums: getAlbumsList(state)
   }
 }

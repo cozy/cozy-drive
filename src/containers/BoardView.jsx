@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { togglePhotoSelection } from '../actions/selection'
-import { mustShowSelectionBar } from '../reducers'
+import { isSelectionBarVisible, getSelectedIds, toggleItemSelection } from '../ducks/selection'
 
 import Empty from '../components/Empty'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
-import SelectionBar from './SelectionBar'
+import SelectionBarWithActions from './SelectionBarWithActions'
 import PhotoBoard from '../components/PhotoBoard'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
 
@@ -16,8 +15,9 @@ class BoardView extends Component {
     const {
       showSelection,
       selected,
-      showAddToAlbumModal,
+      isAddToAlbumModalOpened,
       onPhotoToggle,
+      selectionModeActive,
       photosContext
     } = this.props
 
@@ -57,8 +57,8 @@ class BoardView extends Component {
 
     return (
       <div>
-        {showAddToAlbumModal && <AddToAlbumModal />}
-        {showSelection && <SelectionBar />}
+        {isAddToAlbumModalOpened && <AddToAlbumModal />}
+        {selectionModeActive && <SelectionBarWithActions />}
         <PhotoBoard
           lists={photoLists}
           selected={selected}
@@ -73,14 +73,14 @@ class BoardView extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selected: state.ui.selected,
-  showSelection: mustShowSelectionBar(state),
-  showAddToAlbumModal: state.ui.showAddToAlbumModal
+  selected: getSelectedIds(state),
+  selectionModeActive: isSelectionBarVisible(state),
+  isAddToAlbumModalOpened: state.ui.isAddToAlbumModalOpened
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onPhotoToggle: (id, selected) => {
-    dispatch(togglePhotoSelection(id, selected))
+    dispatch(toggleItemSelection(id, selected))
   }
 })
 

@@ -9,8 +9,7 @@ import ShareButton from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { Item } from '../../../components/Menu'
 
-import { showSelectionBar } from '../../../actions'
-import { mustShowSelectionBar } from '../../../reducers'
+import { isSelectionBarVisible, showSelectionBar } from '../../selection'
 import { deleteAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import confirm from '../../../lib/confirm'
@@ -76,7 +75,7 @@ class AlbumToolbar extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  disabled: mustShowSelectionBar(state)
+  disabled: isSelectionBarVisible(state)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({

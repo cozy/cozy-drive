@@ -201,7 +201,6 @@ export const createDeleteAction = (listName, saga) => {
       return saga(...args)
         .then(resp => {
           if (existingList) {
-            console.log(resp)
             resp.entries.forEach(e => dispatch(deleteAction(listName, e)))
           }
           return resp

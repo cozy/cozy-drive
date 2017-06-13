@@ -9,8 +9,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import UploadButton from '../../../components/UploadButton'
 import Menu, { Item } from '../../../components/Menu'
 
-import { showSelectionBar } from '../../../actions'
-import { mustShowSelectionBar } from '../../../reducers'
+import { showSelectionBar, isSelectionBarVisible } from '../../selection'
 
 import { addToUploadQueue } from '../../upload'
 import { addPhotosToTimeline } from '../'
@@ -49,7 +48,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  disabled: mustShowSelectionBar(state)
+  disabled: isSelectionBarVisible(state)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
