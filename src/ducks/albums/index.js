@@ -51,7 +51,6 @@ export const fetchAlbums = createFetchIfNeededAction(ALBUMS, (index, skip = 0) =
 export const fetchAlbum = async (albumId) => cozy.client.data.find(ALBUM_DOCTYPE, albumId)
 
 export const fetchPhotos = async (album, skip = 0) => {
-  const photos = []
   const { data, included, meta } = await cozy.client.data.fetchReferencedFiles(album, { skip, limit: FETCH_LIMIT })
   return {
     entries: data.map((object, idx) => Object.assign({ _id: object.id }, object, included[idx])),
@@ -95,8 +94,8 @@ export const downloadAlbum = async (album, photos) => {
 const slugify = (text) =>
   text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
+    .replace(/--+/g, '-')         // Replace multiple - with single -
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '')             // Trim - from end of text
 
