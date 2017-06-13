@@ -86,6 +86,31 @@ const createEmptyAlbum = async (name = null) => {
   return await cozy.client.data.create(ALBUM_DOCTYPE, { name })
 }
 
+export const downloadAlbum = async (album, photos) => {
+  const filename = slugify(album.name)
+  const href = await cozy.client.files.getArchiveLinkByIds(photos.map(p => p._id), filename)
+  const fullpath = await cozy.client.fullpath(href)
+  forceFileDownload(fullpath, filename + '.zip')
+}
+
+const slugify = (text) =>
+  text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '')             // Trim - from end of text
+
+const forceFileDownload = (href, filename) => {
+  const element = document.createElement('a')
+  element.setAttribute('href', href)
+  element.setAttribute('download', filename)
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
+}
+
 export const createAlbum = (name = null, photos = []) =>
   async dispatch => {
     return dispatch(createInsertAction(ALBUMS, async () => {

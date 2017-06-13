@@ -9,6 +9,8 @@ import {
   ALBUM_DOCTYPE
 } from '../constants/config'
 
+import { downloadAlbum } from '../ducks/albums'
+
 import styles from './index.styl'
 
 class App extends Component {
@@ -36,7 +38,15 @@ class App extends Component {
   }
 
   onDownload = () => {
+    const photos = this.state.selected.length !== 0
+      ? this.getSelectedPhotos()
+      : this.state.photos
+    downloadAlbum({ name: this.state.name }, photos)
+  }
 
+  getSelectedPhotos = () => {
+    const { photos, selected } = this.state
+    return selected.map(id => photos.find(p => p._id === id))
   }
 
   async componentDidMount () {
