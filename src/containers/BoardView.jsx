@@ -28,42 +28,17 @@ class BoardView extends Component {
       onFetchMore
     } = this.props
 
-    const isError = fetchStatus === 'failed'
-    const isFetching = fetchStatus === 'pending' || fetchStatus === 'loading'
-
-    if (isError) {
-      return (
-        <div role='contentinfo'>
-          <ErrorComponent errorType={`${photosContext}_photos`} />
-        </div>
-      )
-    }
-
-    if (isFetching) {
-      return (
-        <div role='contentinfo'>
-          <Loading loadingType='photos_fetching' />
-        </div>
-      )
-    }
-
-    if (!isFetching && (photoLists.length === 0 || photoLists[0].photos.length === 0)) {
-      return (
-        <div role='contentinfo'>
-          <Empty emptyType={`${photosContext}_photos`} />
-        </div>
-      )
-    }
-
     return (
-      <div>
+      <div role='contentinfo'>
         {isAddToAlbumModalOpened && <AddToAlbumModal />}
         {selectionModeActive && <SelectionBarWithActions />}
         <PhotoBoard
           lists={photoLists}
           selected={selected}
+          photosContext={photosContext}
           showSelection={showSelection}
           onPhotoToggle={onPhotoToggle}
+          fetchStatus={fetchStatus}
           hasMore={hasMore}
           onFetchMore={onFetchMore}
         />

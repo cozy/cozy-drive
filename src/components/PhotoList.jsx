@@ -12,7 +12,17 @@ const adaptRowHeight = containerWidth => 180 + ((containerWidth || 1800) / 30)
 
 export class PhotoList extends Component {
   render () {
-    const { key, title, photos, selected, onPhotoToggle, containerWidth } = this.props
+    const {
+      key,
+      title,
+      photos,
+      selected,
+      showSelection,
+      onPhotoToggle,
+      onPhotosSelect,
+      onPhotosUnselect,
+      containerWidth
+    } = this.props
     const confDesk = {
       spacing: 16,
       padding: 32
@@ -29,7 +39,7 @@ export class PhotoList extends Component {
         return metadata && metadata.width && metadata.height ? metadata : photoDimensionsFallback
       }),
       {
-        containerWidth: containerWidth,
+        containerWidth,
         targetRowHeight: adaptRowHeight(containerWidth),
         // Must be relevant with styles
         boxSpacing: {
@@ -44,13 +54,23 @@ export class PhotoList extends Component {
         }
       }
     )
+    const photoIds = photos.map(p => p._id)
+    const allSelected = selected.length === photoIds.length && selected.every(id => photoIds.indexOf(id) !== -1)
     return (
       <div
-        className={classNames(styles['pho-section'], selected.length && styles['pho-section--has-selection'])}
+        className={classNames(styles['pho-section'], showSelection && styles['pho-section--has-selection'])}
         key={key}
         style={`width:${containerWidth}px;`}
         >
-        {!!title && <h3>{title}</h3>}
+        <div className={styles['pho-section-header']}>
+          {!!title && <h3>{title}</h3>}
+          {showSelection && allSelected && <a onClick={() => onPhotosUnselect(photoIds)}>
+            UNSELECT ALL
+          </a>}
+          {showSelection && !allSelected && <a onClick={() => onPhotosSelect(photoIds)}>
+            SELECT ALL
+          </a>}
+        </div>
         <div className={styles['pho-photo-wrapper']}
           // Specify the width & height for making justified layout work.
           style={`width:${containerWidth}px; height:${layout.containerHeight}px;`}
@@ -62,7 +82,7 @@ export class PhotoList extends Component {
               key={photo._id}
               selected={selected.indexOf(photo._id) !== -1}
               onToggle={onPhotoToggle}
-              />
+            />
           )}
         </div>
       </div>
