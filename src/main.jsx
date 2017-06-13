@@ -16,7 +16,7 @@ import { I18n } from 'cozy-ui/react/I18n'
 
 import photosApp from './reducers'
 import AppRoute from './components/AppRoute'
-import { shouldEnableTracking, getTracker, createTrackerMiddleware } from './lib/tracker'
+import { shouldEnableTracking, getTracker, createTrackerMiddleware } from 'cozy-ui/react/helpers/tracker'
 import eventTrackerMiddleware from './middlewares/EventTracker'
 
 const loggerMiddleware = createLogger()
