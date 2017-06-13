@@ -12,8 +12,8 @@ import { I18n } from 'cozy-ui/react/I18n'
 
 import MobileAppRoute from './components/MobileAppRoute'
 
-import { loadState } from './lib/localStorage'
-import { configureStore } from './lib/store'
+import { loadState } from '../../src/store/persistedState'
+import configureStore from '../../src/store/configureStore'
 import { initServices, getLang } from './lib/init'
 import { startBackgroundService } from './lib/background'
 import { startTracker, useHistoryForTracker, startHeartBeat, stopHeartBeat } from './lib/tracker'
