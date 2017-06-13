@@ -1,12 +1,38 @@
 /* global cozy */
-import { getList, createFetchAction, createFetchIfNeededAction, insertAction } from '../lists'
-import {
-  FILE_DOCTYPE,
-  FETCH_LIMIT
-} from '../../constants/config'
+import { getList, createFetchAction, createFetchIfNeededAction, insertAction, deleteAction } from '../lists'
+import Toolbar from './components/Toolbar'
+import DeleteConfirm from './components/DeleteConfirm'
+import { hideSelectionBar } from '../selection'
+import { FILE_DOCTYPE, FETCH_LIMIT } from '../../constants/config'
 
+// constants
 const TIMELINE = 'timeline'
 
+// selectors
+export const getTimelineList = state => getList(state, TIMELINE)
+
+// components
+export { Toolbar }
+export { DeleteConfirm }
+
+// async actions
+export const addPhotosToTimeline = photos => async dispatch => {
+  dispatch(insertAction(TIMELINE, { entries: photos }))
+}
+
+export const deletePhotos = ids => async dispatch => {
+  for (const id of ids) {
+    try {
+      await cozy.client.files.trashById(id)
+      dispatch(deleteAction(TIMELINE, id))
+    } catch (e) {
+      console.log(e)
+    }
+    dispatch(hideSelectionBar())
+  }
+}
+
+// list
 const indexFilesByDate = async () => {
   const fields = [ 'class', 'trashed', 'metadata.datetime' ]
   return await cozy.client.data.defineIndex(FILE_DOCTYPE, fields)
@@ -40,13 +66,3 @@ export const fetchIfNeededPhotos = createFetchIfNeededAction(TIMELINE, (index, s
 })
 
 export const fetchMorePhotos = createFetchAction(TIMELINE, fetchPhotos)
-
-export const addPhotosToTimeline = photos => {
-  return async dispatch => dispatch(insertAction(TIMELINE, { entries: photos }))
-}
-
-export const getTimelineList = state => getList(state, TIMELINE)
-
-import Toolbar from './components/Toolbar'
-
-export { Toolbar }

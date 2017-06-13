@@ -119,7 +119,10 @@ export const removeFromAlbum = (album, photos = []) =>
       return { entries: photos }
     })())
     // TODO: this is only for closing the selectionBar properly... Fix this!
-    .then(() => dispatch({ type: 'REMOVE_FROM_ALBUM' }))
+    .then(() => {
+      const meta = { cancelSelection: true }
+      return dispatch({ type: 'REMOVE_FROM_ALBUM', meta })
+    })
 
 export const updateAlbum = createUpdateAction(ALBUMS, async (album) => {
   let updatedAlbum = await cozy.client.data.updateAttributes(ALBUM_DOCTYPE, album._id, album)
@@ -137,9 +140,10 @@ export const openAddToAlbum = photos => ({
   photos: photos
 })
 
-export const closeAddToAlbum = () => ({
-  type: ADD_TO_ALBUM_SUCCESS
-})
+export const closeAddToAlbum = () => {
+  const meta = { cancelSelection: true }
+  return { type: ADD_TO_ALBUM_SUCCESS, meta }
+}
 
 export const cancelAddToAlbum = photos => ({
   type: CANCEL_ADD_TO_ALBUM,
