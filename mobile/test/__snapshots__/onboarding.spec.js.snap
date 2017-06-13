@@ -21,7 +21,7 @@ exports[`Onboarding should render different components 1`] = `
       role="button" />
     <a
       className="link"
-      href="#" />
+      href="https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=browser" />
   </footer>
 </div>
 `;
@@ -121,7 +121,7 @@ exports[`Onboarding should render the welcome screen 1`] = `
       role="button" />
     <a
       className="link"
-      href="#" />
+      href="https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=browser" />
   </footer>
 </div>
 `;
