@@ -44,19 +44,20 @@ const fetchPhotos = async (index, skip = 0) => {
       class: 'image',
       trashed: false
     },
-    fields: ['_id', 'dir_id', 'name', 'size', 'updated_at', 'metadata'],
+    // TODO: type and class should not be necessary, it's just a temp fix for a stack bug
+    fields: ['_id', 'dir_id', 'name', 'size', 'updated_at', 'metadata', 'type', 'class'],
     descending: true,
     limit: FETCH_LIMIT,
     skip,
     wholeResponse: true
   }
-  const { docs, next } = await cozy.client.data.query(index, options)
-  let entries = []
-  for (let doc of docs) {
-    // we need to do this so that photos have their links property
-    entries.push(Object.assign(doc, await cozy.client.files.statById(doc._id)))
+  const { data, meta } = await cozy.client.files.query(index, options)
+  return {
+    entries: data.map(p => Object.assign({ _id: p.id }, p, p.attributes)),
+    next: meta.count > skip + FETCH_LIMIT,
+    index,
+    skip
   }
-  return { entries, next, index, skip }
 }
 
 export const fetchIfNeededPhotos = createFetchIfNeededAction(TIMELINE, (index, skip = 0) => {

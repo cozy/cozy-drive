@@ -34,7 +34,6 @@ const fetchAll = async (index, skip = 0) => {
   .then(albums => albums.map(album => Object.assign({}, album, { _type: ALBUM_DOCTYPE }))) // FIXME: this adds the missing _type to album
   .then(async albums => {
     for (let index in albums) {
-      // TODO: we'll soon get a meta: count property for this query
       const photosIds = await cozy.client.data.listReferencedFiles(albums[index])
       albums[index].photoCount = photosIds.length
       albums[index].coverId = photosIds[0]
@@ -49,16 +48,15 @@ export const fetchAlbums = createFetchIfNeededAction(ALBUMS, (index, skip = 0) =
     : createIndex().then(index => fetchAll(index, skip))
 })
 
-const fetchPhotos = async (album, skip = 0) => {
-  const photos = []
-  const next = album.photoCount > skip + FETCH_LIMIT
-  const limit = next ? FETCH_LIMIT : album.photoCount - skip
-  const photosIds = await cozy.client.data.listReferencedFiles(album)
-  for (let i = skip; i < skip + limit; i++) {
-    const photo = await cozy.client.files.statById(photosIds[i])
-    photos.push(Object.assign({}, photo, photo.attributes))
+export const fetchAlbum = async (albumId) => cozy.client.data.find(ALBUM_DOCTYPE, albumId)
+
+export const fetchPhotos = async (album, skip = 0) => {
+  const { data, included, meta } = await cozy.client.data.fetchReferencedFiles(album, { skip, limit: FETCH_LIMIT })
+  return {
+    entries: data.map((object, idx) => Object.assign({ _id: object.id }, object, included[idx])),
+    next: meta.count > skip + FETCH_LIMIT,
+    skip
   }
-  return { entries: photos, next, skip }
 }
 
 export const fetchAlbumPhotos = (albumId, skip = 0) =>
@@ -84,6 +82,31 @@ const createEmptyAlbum = async (name = null) => {
     throw new FormattedError('Albums.create.error.already_exists', { name })
   }
   return await cozy.client.data.create(ALBUM_DOCTYPE, { name })
+}
+
+export const downloadAlbum = async (album, photos) => {
+  const filename = slugify(album.name)
+  const href = await cozy.client.files.getArchiveLinkByIds(photos.map(p => p._id), filename)
+  const fullpath = await cozy.client.fullpath(href)
+  forceFileDownload(fullpath, filename + '.zip')
+}
+
+const slugify = (text) =>
+  text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
+    .replace(/--+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '')             // Trim - from end of text
+
+const forceFileDownload = (href, filename) => {
+  const element = document.createElement('a')
+  element.setAttribute('href', href)
+  element.setAttribute('download', filename)
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
 }
 
 export const createAlbum = (name = null, photos = []) =>
