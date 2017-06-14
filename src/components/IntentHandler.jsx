@@ -4,7 +4,7 @@ import utilStyles from '../styles/utils'
 import React from 'react'
 import Loading from './Loading'
 
-class FileViewer extends React.Component {
+class IntentHandler extends React.Component {
   getInitialState () {
     return {
       loading: true
@@ -36,9 +36,8 @@ class FileViewer extends React.Component {
       }
     } catch (error) {
       this.setState({ error, loading: false })
-
-      if (service && intent.attributes.action === 'GET_URL') {
-        service.terminate({ error })
+      if (service && intent && intent.attributes.action === 'GET_URL') {
+        service.terminate({ error: error.message })
       }
     }
   }
@@ -52,4 +51,4 @@ class FileViewer extends React.Component {
   }
 }
 
-export default FileViewer
+export default IntentHandler
