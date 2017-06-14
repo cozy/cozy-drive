@@ -53,6 +53,8 @@ export class Viewer extends Component {
   }
 
   navigateToPhoto (id) {
+    if (this.state.singlePhoto) return
+
     this.setState({ isImageLoading: true })
     const router = this.props.router
     const url = router.location.pathname
@@ -65,12 +67,12 @@ export class Viewer extends Component {
   }
 
   render () {
-    const { isImageLoading, previousID, nextID, currentPhoto } = this.state
+    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar />
         <div className={styles['pho-viewer-content']}>
-          <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />
+          {!singlePhoto && <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />}
           <div className={styles['pho-viewer-photo']}>
             {currentPhoto &&
               <ImageLoader
@@ -83,7 +85,7 @@ export class Viewer extends Component {
               <Loading noMargin color='white' />
             }
           </div>
-          <a role='button' className={styles['pho-viewer-nav-next']} onClick={() => this.navigateToPhoto(nextID)} />
+          {!singlePhoto && <a role='button' className={styles['pho-viewer-nav-next']} onClick={() => this.navigateToPhoto(nextID)} />}
         </div>
       </div>
     )
@@ -100,6 +102,7 @@ const mapRouteToPhotos = (photos = [], params) => {
   let previousID = set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]
 
   return {
+    singlePhoto: currentID === previousID && currentID === nextID,
     currentPhoto,
     previousID,
     nextID
