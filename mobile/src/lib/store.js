@@ -3,7 +3,7 @@ import RavenMiddleWare from 'redux-raven-middleware'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import eventTrackerMiddleware from '../../../src/middlewares/EventTracker'
-import { createTrackerMiddleware } from '../../../src/lib/tracker'
+import { createTrackerMiddleware } from 'cozy-ui/react/helpers/tracker'
 
 import filesApp from '../reducers'
 import { ANALYTICS_URL, getConfig as getAnalyticsConfiguration } from './reporter'
