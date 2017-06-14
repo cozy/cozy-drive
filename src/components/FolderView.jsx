@@ -65,7 +65,7 @@ class FolderView extends Component {
 
   render () {
     const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
-    const { files, actionable, actions, Toolbar } = this.props
+    const { files, selected, actionable, actions, Toolbar } = this.props
     const { hideActionMenu, showSelectionBar } = this.props
 
     const { showAddFolder } = this.state
@@ -89,7 +89,7 @@ class FolderView extends Component {
         </Topbar>
         <div role='contentinfo'>
           {__TARGET__ === 'mobile' && <UploadProgression />}
-          {selectionModeActive && <SelectionBar actions={actions.selection} />}
+          {selectionModeActive && <SelectionBar selected={selected} actions={actions.selection} />}
           <div className={styles['fil-content-table']}>
             <FileListHeader />
             <div className={styles['fil-content-body']}>
