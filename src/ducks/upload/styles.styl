@@ -135,3 +135,40 @@ progress.upload-queue-progress::-moz-progress-bar
         @extend $icon-16
         @extend $icon
         background-image embedurl('./assets/icons/icon-checked.svg')
+
+@media (max-width: (1023/basefont)rem)
+    // we need to cover the border-bottom of the cozy-bar
+    $coz-bar-size = 48px
+    $coz-bar-border-size = 1px
+
+    .upload-queue
+        position static
+        max-width 100%
+        height auto
+        max-height 0
+        border-radius 0
+        background 0
+        border 0
+        box-shadow none
+        transform none
+        z-index $app-index
+
+        &:before
+            content ""
+            width 100%
+            height $coz-bar-border-size
+            background white
+            position fixed
+            top $coz-bar-size - $coz-bar-border-size
+            z-index  $nav-index
+
+    .upload-queue--visible
+        max-height 30%
+
+    .upload-queue-content
+        display none
+
+    .upload-queue-header
+        background 0
+        color dodger-blue
+        text-transform uppercase

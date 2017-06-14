@@ -10,3 +10,6 @@ indent_size = 2
 
 [*.{jade,pug}]
 trim_trailing_whitespace = false
+
+[*.styl]
+indent_size = 4
