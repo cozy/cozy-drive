@@ -143,24 +143,24 @@ progress.upload-queue-progress::-moz-progress-bar
 
     .upload-queue
         position static
+        transform none
+        z-index $app-index
         max-width 100%
         height auto
         max-height 0
         border-radius 0
-        background 0
         border 0
+        background 0
         box-shadow none
-        transform none
-        z-index $app-index
 
         &:before
-            content ""
-            width 100%
-            height $coz-bar-border-size
-            background white
             position fixed
             top $coz-bar-size - $coz-bar-border-size
             z-index  $nav-index
+            width 100%
+            height $coz-bar-border-size
+            content ""
+            background white
 
     .upload-queue--visible
         max-height 30%
