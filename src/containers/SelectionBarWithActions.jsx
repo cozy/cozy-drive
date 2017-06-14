@@ -1,3 +1,4 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
