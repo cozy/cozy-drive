@@ -64,7 +64,7 @@ class NewAlbum extends Component {
   }
 
   render () {
-    const { t } = this.props
+    const { t, closeAddAlbum } = this.props
     const { name } = this.state
     return (
       <div className={styles['pho-panel']}>
@@ -88,7 +88,7 @@ class NewAlbum extends Component {
           <footer className={styles['pho-panel-footer']}>
             <div className={styles['pho-panel-wrap']}>
               <div className={styles['pho-panel-controls']}>
-                <button className={classNames('coz-btn', 'coz-btn--secondary')}>
+                <button className={classNames('coz-btn', 'coz-btn--secondary')} onclick={closeAddAlbum}>
                   {t('Albums.create.panel_form.cancel')}
                 </button>
                 <button
@@ -138,7 +138,7 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
   createAlbum: (name, photos) =>
     dispatch(createAlbum(name, photos))
       .then(() => {
-        ownProps.onCreated()
+        ownProps.closeAddAlbum()
         Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
       })
       .catch(error => Alerter.error(error.message, error.messageData))

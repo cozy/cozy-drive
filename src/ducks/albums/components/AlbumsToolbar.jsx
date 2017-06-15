@@ -32,7 +32,7 @@ class AlbumsToolbar extends Component {
             {t('Toolbar.album_new')}
           </button>
         </div>
-        {this.state.showAddAlbum && <NewAlbum onCreated={this.closeAddAlbum} />}
+        {this.state.showAddAlbum && <NewAlbum closeAddAlbum={this.closeAddAlbum} />}
       </div>
     )
   }
