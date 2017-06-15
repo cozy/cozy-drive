@@ -36,7 +36,7 @@ class BoardView extends Component {
           lists={photoLists}
           selected={selected}
           photosContext={photosContext}
-          showSelection={showSelection}
+          showSelection={selectionModeActive}
           onPhotoToggle={onPhotoToggle}
           fetchStatus={fetchStatus}
           hasMore={hasMore}

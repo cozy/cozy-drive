@@ -47,7 +47,9 @@
     "photos_upload": "Uploading"
   },
   "Board": {
-    "load_more": "Load more photos"
+    "load_more": "Load more photos",
+    "select_all": "Select all",
+    "unselect_all": "Unselect all"
   },
   "Alerter": {
     "photos": {

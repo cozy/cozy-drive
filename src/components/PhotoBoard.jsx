@@ -27,6 +27,9 @@ class MoreButton extends Component {
 
   render () {
     const { children, width } = this.props
+    if (!width) {
+      return null
+    }
     const { fetching } = this.state
     return (
       <div style={{ width: width }} className={styles['pho-list-morebutton']}>
