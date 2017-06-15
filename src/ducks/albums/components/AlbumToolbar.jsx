@@ -31,7 +31,7 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, album, photos, disabled = false, deleteAlbum, selectItems, shareAlbum, onRename } = this.props
+    const { t, album, photos, disabled = false, deleteAlbum, selectItems, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
