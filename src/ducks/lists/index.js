@@ -1,8 +1,5 @@
 import { combineReducers } from 'redux'
 
-// temporary...
-import Alerter from '../../components/Alerter'
-
 const FETCH_ENTRIES = 'FETCH_ENTRIES'
 const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES'
 const RECEIVE_MORE_ENTRIES = 'RECEIVE_MORE_ENTRIES'
@@ -168,12 +165,6 @@ export const createInsertAction = (listName, saga) => {
             return resp
           }
         })
-        .catch(error => {
-          if (error.name === 'FormattedError') {
-            Alerter.error(error.message, error.messageData)
-          }
-          return dispatch(errorAction(listName, error))
-        })
     }
   }
 }
@@ -205,16 +196,6 @@ export const createDeleteAction = (listName, saga) => {
           }
           return resp
         })
-        // TODO: still not sure what's the best solution for alerts:
-        // if it's better to not catch the error here and to let the caller
-        // handle the error or not.
-        //
-        // .catch(error => {
-        //   if (error.name === 'FormattedError') {
-        //     Alerter.error(error.message, error.messageData)
-        //   }
-        //   return dispatch(errorAction(listName, error))
-        // })
     }
   }
 }

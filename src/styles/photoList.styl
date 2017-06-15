@@ -2,21 +2,35 @@
 
 :local
 
-
     .pho-section
         margin-bottom  2rem
 
-        h3
-            padding 0 2rem
-
-        @media (max-width: (768/basefont)rem)
-          margin-bottom  1rem
-
-          h3
-            padding 0 1rem
-
     .pho-photo-wrapper
         position relative
+
+    .pho-section-header
+        display flex
+        flex-direction row
+        align-items center
+
+        h3
+            flex-grow 1
+            padding 0 2rem
+
+        a,
+        a:visited,
+        a:hover,
+        a:active
+            color            dodger-blue
+            text-decoration  none
+            text-transform   uppercase
+            cursor           pointer
+
+        @media (max-width: (768/basefont)rem)
+            margin-bottom  1rem
+
+            h3
+                padding 0 1rem
 
     .pho-photo
         position          absolute

@@ -18,13 +18,30 @@ class App extends Component {
     hasMore: false
   }
 
-  onPhotoToggle = id => {
+  onPhotoToggle = obj => {
     this.setState(({ selected }) => {
-      const idx = selected.findIndex(i => i === id)
+      const idx = selected.findIndex(i => i === obj.id)
       return {
         selected: idx === -1
-          ? [...selected, id]
+          ? [...selected, obj.id]
           : [...selected.slice(0, idx), ...selected.slice(idx + 1)]
+      }
+    })
+  }
+
+  onPhotosSelect = ids => {
+    this.setState(({ selected }) => {
+      const newIds = ids.filter(id => selected.indexOf(id) === -1)
+      return {
+        selected: [...selected, ...newIds]
+      }
+    })
+  }
+
+  onPhotosUnselect = ids => {
+    this.setState(({ selected }) => {
+      return {
+        selected: selected.filter(id => ids.indexOf(id) === -1)
       }
     })
   }
@@ -107,6 +124,8 @@ class App extends Component {
           selected={selected}
           showSelection={selected.length !== 0}
           onPhotoToggle={this.onPhotoToggle}
+          onPhotosSelect={this.onPhotosSelect}
+          onPhotosUnselect={this.onPhotosUnselect}
           hasMore={hasMore}
           onFetchMore={this.onFetchMore}
         />

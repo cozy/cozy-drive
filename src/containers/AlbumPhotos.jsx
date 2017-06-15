@@ -64,6 +64,7 @@ export class AlbumPhotos extends Component {
         }
         {photos &&
           <BoardView
+            album={album}
             photoLists={[{ photos: photos.entries }]}
             fetchStatus={photos.fetchStatus}
             hasMore={photos.hasMore}

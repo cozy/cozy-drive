@@ -83,6 +83,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(closeAddToAlbum())
         Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
       })
+      .catch(error => Alerter.error(error.message, error.messageData))
   },
   onSubmitSelectedAlbum: (album, photos) => {
     return dispatch(addToAlbum(album, photos))
@@ -90,6 +91,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(closeAddToAlbum())
         Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length})
       })
+      .catch(error => Alerter.error(error.message, error.messageData))
   },
   fetchAlbums: () => dispatch(fetchAlbums())
 })

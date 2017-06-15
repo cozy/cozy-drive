@@ -27,6 +27,7 @@
   },
   "Toolbar": {
     "photo_upload": "Upload",
+    "album_new": "New album",
     "album_delete": "Delete",
     "album_download": "Download",
     "more": "More",
@@ -46,7 +47,9 @@
     "photos_upload": "Uploading"
   },
   "Board": {
-    "load_more": "Load more photos"
+    "load_more": "Load more photos",
+    "select_all": "Select all",
+    "unselect_all": "Unselect all"
   },
   "Alerter": {
     "photos": {
@@ -98,6 +101,12 @@
       }
     },
     "create": {
+      "panel_form": {
+        "label": "Add a name to your new album",
+        "placeholder": "Untitled album",
+        "cancel": "Cancel",
+        "submit": "Create new album"
+      },
       "inline_form": {
         "placeholder": "New album name",
         "create_label": "Create a new album",
