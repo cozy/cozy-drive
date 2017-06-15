@@ -31,8 +31,7 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, album, photos, disabled = false, deleteAlbum, downloadAlbum, selectItems, shareAlbum, onRename } = this.props
-    console.log(photos)
+    const { t, album, photos, disabled = false, deleteAlbum, selectItems, shareAlbum, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
@@ -92,8 +91,7 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
       .then(() => ownProps.router.replace('albums'))
       .then(() => Alerter.success('Albums.remove_album.success', {name: album.name}))
       .catch(() => Alerter.error('Albums.remove_album.error.generic'))
-  ),
-  downloadAlbum: downloadAlbum
+  )
 })
 
 export default withRouter(translate()(connect(
