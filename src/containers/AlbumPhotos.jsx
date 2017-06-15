@@ -59,7 +59,7 @@ export class AlbumPhotos extends Component {
       <div className={styles['pho-content-wrapper']}>
         {album.name &&
           <Topbar viewName='albumContent' albumName={album.name} editing={editing} onEdit={this.renameAlbum.bind(this)} >
-            <AlbumToolbar album={album} onRename={this.editAlbumName.bind(this)} />
+            <AlbumToolbar album={album} photos={photos.entries} onRename={this.editAlbumName.bind(this)} />
           </Topbar>
         }
         {photos &&

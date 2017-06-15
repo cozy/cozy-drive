@@ -10,7 +10,7 @@ import Alerter from '../../../components/Alerter'
 import Menu, { Item } from '../../../components/Menu'
 
 import { isSelectionBarVisible, showSelectionBar } from '../../selection'
-import { deleteAlbum } from '..'
+import { deleteAlbum, downloadAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import confirm from '../../../lib/confirm'
 import { ShareModal } from '../../sharing'
@@ -31,7 +31,7 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, album, disabled = false, deleteAlbum, selectItems, shareAlbum, onRename } = this.props
+    const { t, album, photos, disabled = false, deleteAlbum, selectItems, shareAlbum, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
@@ -48,6 +48,11 @@ class AlbumToolbar extends Component {
           <Item>
             <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={() => shareAlbum(album)}>
               {t('Albums.share.cta')}
+            </a>
+          </Item>
+          <Item>
+            <a className={classNames(styles['pho-action-download'])} onClick={() => downloadAlbum(album, photos)}>
+              {t('Toolbar.menu.download_album')}
             </a>
           </Item>
           <Item>

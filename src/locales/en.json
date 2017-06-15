@@ -34,7 +34,8 @@
       "select_items": "Select photos",
       "photo_upload": "Upload photos",
       "rename_album": "Rename album",
-      "album_delete": "Delete album"
+      "album_delete": "Delete album",
+      "download_album": "Download album"
     }
   },
   "Loading": {
