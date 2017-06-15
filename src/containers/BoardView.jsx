@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { isSelectionBarVisible, getSelectedIds, toggleItemSelection } from '../ducks/selection'
+import {
+  isSelectionBarVisible,
+  getSelectedIds,
+  toggleItemSelection,
+  addToSelection,
+  removeFromSelection
+} from '../ducks/selection'
 
 import Empty from '../components/Empty'
 import Loading from '../components/Loading'
@@ -13,10 +19,13 @@ import AddToAlbumModal from '../containers/AddToAlbumModal'
 class BoardView extends Component {
   render () {
     const {
+      album,
       showSelection,
       selected,
       isAddToAlbumModalOpened,
       onPhotoToggle,
+      onPhotosSelect,
+      onPhotosUnselect,
       selectionModeActive,
       photosContext
     } = this.props
@@ -31,13 +40,15 @@ class BoardView extends Component {
     return (
       <div role='contentinfo'>
         {isAddToAlbumModalOpened && <AddToAlbumModal />}
-        {selectionModeActive && <SelectionBarWithActions />}
+        {selectionModeActive && <SelectionBarWithActions album={album} />}
         <PhotoBoard
           lists={photoLists}
           selected={selected}
           photosContext={photosContext}
           showSelection={selectionModeActive}
           onPhotoToggle={onPhotoToggle}
+          onPhotosSelect={onPhotosSelect}
+          onPhotosUnselect={onPhotosUnselect}
           fetchStatus={fetchStatus}
           hasMore={hasMore}
           onFetchMore={onFetchMore}
@@ -56,6 +67,12 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onPhotoToggle: (id, selected) => {
     dispatch(toggleItemSelection(id, selected))
+  },
+  onPhotosSelect: (ids) => {
+    dispatch(addToSelection(ids))
+  },
+  onPhotosUnselect: (ids) => {
+    dispatch(removeFromSelection(ids))
   }
 })
 

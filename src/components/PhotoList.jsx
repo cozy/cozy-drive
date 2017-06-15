@@ -61,13 +61,16 @@ export class PhotoList extends Component {
         }
       }
     )
+    
     const photoIds = photos.map(p => p._id)
     const allSelected = selected.length === photoIds.length && selected.every(id => photoIds.indexOf(id) !== -1)
     // we need to process the right position of the last photo of the first row so that we can align
     // the SELECT ALL button with the photo
     const firstRowTop = layout.boxes[0].top
-    const secondRowFirstIndex = layout.boxes.findIndex(b => b.top !== firstRowTop) || layout.boxes.length
-    const firstRowLastBox = layout.boxes[secondRowFirstIndex - 1]
+    const secondRowFirstIndex = layout.boxes.findIndex(b => b.top !== firstRowTop)
+    const firstRowLastBox = secondRowFirstIndex === -1
+      ? layout.boxes[layout.boxes.length - 1]
+      : layout.boxes[secondRowFirstIndex - 1]
     const firstRowLastBoxRight = containerWidth - firstRowLastBox.left - firstRowLastBox.width
 
     return (
