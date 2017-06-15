@@ -4,7 +4,6 @@ import { shouldEnableTracking, getTracker, createTrackerMiddleware } from 'cozy-
 import thunkMiddleware from 'redux-thunk'
 import eventTrackerMiddleware from '../middlewares/EventTracker'
 import { saveState, getReducers as getTargetReducers, getMiddlewares as getTargetMiddlewares } from './getTargetConfig'
-import createLogger from 'redux-logger'
 
 const getReducers = (persistedState) => {
   let reducers = [getTargetReducers]
@@ -17,8 +16,7 @@ const getReducers = (persistedState) => {
 }
 
 const getMiddlewares = () => {
-  const loggerMiddleware = createLogger()
-  let middlewares = [thunkMiddleware, loggerMiddleware]
+  let middlewares = [thunkMiddleware]
 
   if (shouldEnableTracking() && getTracker()) {
     middlewares.push(eventTrackerMiddleware)
