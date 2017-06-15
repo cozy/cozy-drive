@@ -46,7 +46,7 @@ class AlbumToolbar extends Component {
           buttonClassName={styles['pho-toolbar-more-btn']}
         >
           <Item>
-            <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={() => shareAlbum(album)}>
+            <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={this.showShareModal}>
               {t('Albums.share.cta')}
             </a>
           </Item>
