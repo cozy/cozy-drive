@@ -3,7 +3,7 @@ import { getList, createFetchAction, createFetchIfNeededAction, insertAction, de
 import Toolbar from './components/Toolbar'
 import DeleteConfirm from './components/DeleteConfirm'
 import { hideSelectionBar } from '../selection'
-import { FILE_DOCTYPE, FETCH_LIMIT } from '../../constants/config'
+import { FILE_DOCTYPE, FETCH_LIMIT, ALBUM_DOCTYPE } from '../../constants/config'
 
 // constants
 const TIMELINE = 'timeline'
@@ -25,6 +25,12 @@ export const deletePhotos = ids => async dispatch => {
     try {
       await cozy.client.files.trashById(id)
       dispatch(deleteAction(TIMELINE, id))
+      const file = await cozy.client.data.find(FILE_DOCTYPE, id)
+      for (const ref of file.referenced_by) {
+        if (ref.type === ALBUM_DOCTYPE) {
+          await cozy.client.data.removeReferencedFiles({ _id: ref.id, _type: ref.type }, id)
+        }
+      }
     } catch (e) {
       console.log(e)
     }
