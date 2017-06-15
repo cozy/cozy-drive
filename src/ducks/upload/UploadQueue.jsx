@@ -56,7 +56,12 @@ class UploadQueue extends Component {
         [styles['upload-queue--collapsed']]: collapsed
       })}>
         <h4 className={styles['upload-queue-header']} onDoubleClick={this.toggleCollapsed}>
-          {t('UploadQueue.header', { smart_count: queue.length })}
+          <span className='coz-desktop'>
+            {t('UploadQueue.header', { smart_count: queue.length })}
+          </span>
+          <span className='coz-mobile'>
+            {t('UploadQueue.header_mobile', { done: doneCount, total: queue.length })}
+          </span>
         </h4>
         <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
         <div className={styles['upload-queue-content']}>
