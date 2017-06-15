@@ -1,8 +1,5 @@
 import { combineReducers } from 'redux'
 
-// temporary...
-import Alerter from '../../components/Alerter'
-
 const FETCH_ENTRIES = 'FETCH_ENTRIES'
 const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES'
 const RECEIVE_MORE_ENTRIES = 'RECEIVE_MORE_ENTRIES'

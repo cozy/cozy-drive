@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
-import { openAddToAlbum, removeFromAlbum, getAlbum } from '../ducks/albums'
+import { openAddToAlbum, removeFromAlbum } from '../ducks/albums'
 import { SelectionBar } from '../ducks/selection'
 import Alerter from '../components/Alerter'
 import confirm from '../lib/confirm'
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     'album-remove': {
       action: selected => dispatch(removeFromAlbum(ownProps.album, selected))
         .then(() => Alerter.success('Albums.remove_photos.success', { album_name: ownProps.album.name }))
-        .catch(err => Alerter.error('Albums.remove_photos.error.generic')),
+        .catch(() => Alerter.error('Albums.remove_photos.error.generic')),
       displayCondition: () => ownProps.album !== undefined
     }
   }

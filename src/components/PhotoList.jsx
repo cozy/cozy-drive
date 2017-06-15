@@ -61,7 +61,7 @@ export class PhotoList extends Component {
         }
       }
     )
-    
+
     const photoIds = photos.map(p => p._id)
     const allSelected = selected.length === photoIds.length && selected.every(id => photoIds.indexOf(id) !== -1)
     // we need to process the right position of the last photo of the first row so that we can align

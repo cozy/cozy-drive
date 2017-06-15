@@ -9,9 +9,6 @@ import {
   removeFromSelection
 } from '../ducks/selection'
 
-import Empty from '../components/Empty'
-import Loading from '../components/Loading'
-import ErrorComponent from '../components/ErrorComponent'
 import SelectionBarWithActions from './SelectionBarWithActions'
 import PhotoBoard from '../components/PhotoBoard'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
@@ -20,7 +17,6 @@ class BoardView extends Component {
   render () {
     const {
       album,
-      showSelection,
       selected,
       isAddToAlbumModalOpened,
       onPhotoToggle,
