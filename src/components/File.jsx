@@ -26,27 +26,6 @@ export const getClassFromMime = (attrs) => {
   return styles['fil-file-' + attrs.mime.split('/')[0]] || styles['fil-file-files']
 }
 
-const getClassDiv = element => {
-  if (element.nodeName === 'DIV') {
-    return element.className
-  }
-  return getClassDiv(element.parentNode)
-}
-
-const enableTouchEvents = ev => {
-  // remove event when you rename a file
-  if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
-    return false
-  }
-
-  // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
-  if (getClassDiv(ev.target).indexOf(styles['fil-content-file-select']) !== -1) {
-    return false
-  }
-
-  return true
-}
-
 class File extends Component {
   constructor (props) {
     super(props)
@@ -56,6 +35,23 @@ class File extends Component {
   }
 
   componentDidMount () {
+    const enableTouchEvents = ev => {
+      // remove event when you rename a file
+      if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
+        return false
+      }
+
+      // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
+      if (ev.target === this.checkboxDiv
+          || ev.target === this.checkboxSpan
+          || ev.target === this.checkboxInput
+          || ev.target === this.checkboxLabel) {
+        return false
+      }
+
+      return true
+    }
+
     this.gesturesHandler = new Hammer.Manager(this.fil)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
@@ -104,13 +100,14 @@ class File extends Component {
           { [styles['fil-content-row--selectable']]: selectionModeActive }
         )}
       >
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} onclick={(e) => this.toggle(e)}>
-          <span data-input='checkbox'>
+        <div ref={div => this.checkboxDiv = div} className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} onclick={(e) => this.toggle(e)}>
+          <span ref={span => this.checkboxSpan = span} data-input='checkbox'>
             <input
+              ref={input => this.checkboxInput = input}
               type='checkbox'
               checked={selected}
              />
-            <label />
+            <label ref={label => this.checkboxLabel = label} />
           </span>
         </div>
         {this.renderFilenameCell(attributes, opening, isRenaming)}
