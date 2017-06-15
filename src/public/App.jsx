@@ -7,6 +7,7 @@ import ErrorComponent from '../components/ErrorComponent'
 
 import { fetchAlbum, fetchPhotos, downloadAlbum } from '../ducks/albums'
 
+import classNames from 'classnames'
 import styles from './index.styl'
 
 class App extends Component {
@@ -105,13 +106,13 @@ class App extends Component {
     const { album, photos, selected, hasMore } = this.state
     return (
       <div className={styles['pho-public-layout']}>
-        <div className={styles['pho-content-header']}>
+        <div className={classNames(styles['pho-content-header'], styles['--no-icon'])}>
           <h2 className={styles['pho-content-title']}>{album.name}</h2>
           <div className={styles['pho-toolbar']} role='toolbar'>
             <div className='coz-desktop'>
               <button
                 role='button'
-                className={['coz-btn', 'coz-btn--secondary', styles['pho-public-download']].join(' ')}
+                className={classNames('coz-btn', 'coz-btn--secondary', styles['pho-public-download'])}
                 onClick={this.onDownload}
               >
                 {t('Toolbar.album_download')}

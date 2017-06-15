@@ -43,7 +43,8 @@ function init () {
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
       iconPath: data.cozyIconPath,
-      lang: data.cozyLocale
+      lang: data.cozyLocale,
+      replaceTitleOnMobile: true
     })
   }
 

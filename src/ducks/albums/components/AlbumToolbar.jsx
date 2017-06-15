@@ -31,7 +31,7 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, album, photos, disabled = false, deleteAlbum, selectItems, shareAlbum, onRename } = this.props
+    const { t, album, photos, disabled = false, deleteAlbum, selectItems, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
@@ -46,7 +46,7 @@ class AlbumToolbar extends Component {
           buttonClassName={styles['pho-toolbar-more-btn']}
         >
           <Item>
-            <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={() => shareAlbum(album)}>
+            <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={this.showShareModal}>
               {t('Albums.share.cta')}
             </a>
           </Item>
