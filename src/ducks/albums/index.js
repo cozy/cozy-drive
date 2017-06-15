@@ -109,20 +109,25 @@ const forceFileDownload = (href, filename) => {
   document.body.removeChild(element)
 }
 
+// TODO: warning, this method wants photo ids, not photos
 export const createAlbum = (name = null, photos = []) =>
   async dispatch => {
     return dispatch(createInsertAction(ALBUMS, async () => {
       const album = await createEmptyAlbum(name)
+      album.photoCount = photos.length
+      album.coverId = photos[0]
       return dispatch(addToAlbum(album, photos))
         .then(() => ({ entries: [album] }))
     })())
   }
 
+// TODO: warning, this method wants photo ids, not photos
 export const addToAlbum = (album, photos = []) =>
   async dispatch =>
     dispatch(createInsertAction(`${ALBUMS}/${album._id}`, async () => {
       // TODO: this doesn't work anymore...
-      const newPhotos = photos.filter(photo => !album.photosIds || album.photosIds.indexOf(photo) === -1)
+      // const newPhotos = photos.filter(photo => !album.photosIds || album.photosIds.indexOf(photo) === -1)
+      const newPhotos = photos
       if (newPhotos.length !== photos.length) {
         // TODO: find a way to remove this Alert call
         Alerter.info('Alerter.photos.already_added_photo')

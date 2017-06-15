@@ -3,11 +3,13 @@ import styles from '../styles/newAlbum'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { fetchIfNeededPhotos, fetchMorePhotos, getTimelineList, getPhotosByMonth } from '../ducks/timeline'
 import { createAlbum } from '../ducks/albums'
 import PhotoBoard from './PhotoBoard'
+import Alerter from './Alerter'
 
 class NewAlbum extends Component {
   constructor (props) {
@@ -18,12 +20,12 @@ class NewAlbum extends Component {
     }
   }
 
-  onPhotoToggle = id => {
+  onPhotoToggle = obj => {
     this.setState(({ selected }) => {
-      const idx = selected.findIndex(i => i === id)
+      const idx = selected.findIndex(i => i === obj.id)
       return {
         selected: idx === -1
-          ? [...selected, id]
+          ? [...selected, obj.id]
           : [...selected.slice(0, idx), ...selected.slice(idx + 1)]
       }
     })
@@ -50,6 +52,11 @@ class NewAlbum extends Component {
     this.setState({ name: e.target.value })
   }
 
+  onSubmit = e => {
+    const { name, selected } = this.state
+    this.props.createAlbum(name, selected)
+  }
+
   componentDidMount () {
     this.props.fetchIfNeededPhotos()
     this.input.focus()
@@ -61,7 +68,7 @@ class NewAlbum extends Component {
     const { name } = this.state
     return (
       <div className={styles['pho-panel']}>
-        <form action='' className={styles['pho-panel-form']}>
+        <div className={styles['pho-panel-form']}>
           <header className={styles['pho-panel-header']}>
             <div className={styles['pho-panel-wrap']}>
               <label className={styles['coz-form-label']}>{t('Albums.create.panel_form.label')}</label>
@@ -84,13 +91,16 @@ class NewAlbum extends Component {
                 <button className={classNames('coz-btn', 'coz-btn--secondary')}>
                   {t('Albums.create.panel_form.cancel')}
                 </button>
-                <button className={classNames('coz-btn', 'coz-btn--regular')}>
+                <button
+                  className={classNames('coz-btn', 'coz-btn--regular')}
+                  onClick={this.onSubmit}
+                >
                   {t('Albums.create.panel_form.submit')}
                 </button>
               </div>
             </div>
           </footer>
-        </form>
+        </div>
       </div>
     )
   }
@@ -125,16 +135,16 @@ const mapStateToProps = (state, ownProps) => ({
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchIfNeededPhotos: () => dispatch(fetchIfNeededPhotos()),
   fetchMorePhotos: (index, skip) => dispatch(fetchMorePhotos(index, skip)),
-  onSubmit: (name, photos) => {
-    return dispatch(createAlbum(name, photos))
+  createAlbum: (name, photos) =>
+    dispatch(createAlbum(name, photos))
       .then(() => {
-        //dispatch(closeAddToAlbum())
+        ownProps.onCreated()
         Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
       })
-  },
+      .catch(error => Alerter.error(error.message, error.messageData))
 })
 
-export default translate()(connect(
+export default withRouter(translate()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewAlbum))
+)(NewAlbum)))
