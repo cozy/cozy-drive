@@ -8,6 +8,7 @@ import {
   addToSelection,
   removeFromSelection
 } from '../ducks/selection'
+import { isRelated } from '../ducks/timeline'
 
 import SelectionBarWithActions from './SelectionBarWithActions'
 import PhotoBoard from '../components/PhotoBoard'
@@ -17,6 +18,7 @@ class BoardView extends Component {
   render () {
     const {
       album,
+      related,
       selected,
       isAddToAlbumModalOpened,
       onPhotoToggle,
@@ -36,7 +38,7 @@ class BoardView extends Component {
     return (
       <div role='contentinfo'>
         {isAddToAlbumModalOpened && <AddToAlbumModal />}
-        {selectionModeActive && <SelectionBarWithActions album={album} />}
+        {selectionModeActive && <SelectionBarWithActions album={album} related={related} />}
         <PhotoBoard
           lists={photoLists}
           selected={selected}
@@ -56,6 +58,7 @@ class BoardView extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   selected: getSelectedIds(state),
+  related: isRelated(state),
   selectionModeActive: isSelectionBarVisible(state),
   isAddToAlbumModalOpened: state.ui.isAddToAlbumModalOpened
 })

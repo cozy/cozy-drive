@@ -2,7 +2,7 @@
 import { getList, createFetchAction, createFetchIfNeededAction, insertAction, deleteAction } from '../lists'
 import Toolbar from './components/Toolbar'
 import DeleteConfirm from './components/DeleteConfirm'
-import { hideSelectionBar } from '../selection'
+import { hideSelectionBar, getSelectedIds } from '../selection'
 import { FILE_DOCTYPE, FETCH_LIMIT, ALBUM_DOCTYPE } from '../../constants/config'
 
 // constants
@@ -10,6 +10,23 @@ const TIMELINE = 'timeline'
 
 // selectors
 export const getTimelineList = state => getList(state, TIMELINE)
+export const isRelated = state => {
+  const ids = getSelectedIds(state)
+  const list = getTimelineList(state)
+  for (const id of ids) {
+    for (const photo of list.entries) {
+      if (photo._id === id && photo.relationships && photo.relationships.referenced_by && photo.relationships.referenced_by.data && photo.relationships.referenced_by.data.length > 0) {
+        const refs = photo.relationships.referenced_by.data
+        for (const ref of refs) {
+          if (ref.type === ALBUM_DOCTYPE) {
+            return true
+          }
+        }
+      }
+    }
+  }
+  return false
+}
 
 // components
 export { Toolbar }
