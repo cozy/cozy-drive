@@ -94,9 +94,10 @@ export const fetchMorePhotos = createFetchAction(TIMELINE, fetchPhotos)
 export const getPhotosByMonth = (photos, f, format) => {
   let sections = {}
   photos.forEach(p => {
+    const datetime = p.metadata && p.metadata.datetime ? p.metadata.datetime : Date.now()
     // here we want to get an object whose keys are months in a l10able format
     // so we only keep the year and month part of the date
-    const month = p.metadata.datetime.slice(0, 7) + '-01T00:00'
+    const month = datetime.slice(0, 7) + '-01T00:00'
     /* istanbul ignore else */
     if (!sections.hasOwnProperty(month)) {
       sections[month] = []
