@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       action: selected => dispatch(openAddToAlbum(selected))
     },
     'delete': {
-      action: selected => confirm(<DeleteConfirm t={ownProps.t} count={selected.length} related={false} />,
+      action: selected => confirm(<DeleteConfirm t={ownProps.t} count={selected.length} related={ownProps.related} />,
         () => dispatch(deletePhotos(selected))
       ),
       displayCondition: () => ownProps.router.location.pathname.startsWith('/photos')
