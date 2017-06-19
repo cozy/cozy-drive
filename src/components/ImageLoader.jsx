@@ -9,12 +9,10 @@ const getPhotoLink = async (photoId) => {
 
 export default class ImageLoader extends Component {
   state = {
-    loading: true,
     fallback: null
   }
 
   onLoad = () => {
-    this.setState({ loading: false })
     if (this.props.onLoad) this.props.onLoad()
   }
 
@@ -25,7 +23,7 @@ export default class ImageLoader extends Component {
     getPhotoLink(this.props.photo._id)
       .then(url => {
         this.img.src = url
-        this.setState({ loading: false, fallback: url })
+        this.setState({ fallback: url })
         if (this.props.onLoad) this.props.onLoad()
       })
   }
@@ -38,7 +36,6 @@ export default class ImageLoader extends Component {
 
   render () {
     const { photo, src, alt, className, style = {} } = this.props
-    const { loading } = this.state
     return (
       <img
         ref={img => { this.img = img }}
