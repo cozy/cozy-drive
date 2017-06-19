@@ -18,7 +18,10 @@ export class Viewer extends Component {
 
     this.state = {
       isImageLoading: true,
-      ...mapRouteToPhotos(props.photos, props.params)
+      ...mapRouteToPhotos(props.photos, props.params),
+      scale: 1,
+      offsetX: 0,
+      offsetY: 0
     }
 
     this.navigateToPhoto = this.navigateToPhoto.bind(this)
@@ -35,6 +38,54 @@ export class Viewer extends Component {
 
     this.gesturesHandler = new Hammer(this.viewer)
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
+
+    let initialScale = 0
+    let maxScale = 6
+
+    let initialOffsetX = 0
+    let initialOffsetY = 0
+    let maxOffsetX = 0
+    let maxOffsetY = 0
+
+    this.gesturesHandler.get('pinch').set({ enable: true })
+    this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
+
+    this.gesturesHandler.on('pinchstart', e => {
+      initialScale = this.state.scale
+    })
+
+    this.gesturesHandler.on('pinch', e => {
+      // @TODO: account for the pinch center, and translate the photo according to that (so that you can zoom into a specific point in the photo). There is a `center`property on `e` for that
+      this.setState({
+        scale: Math.max(1, Math.min(maxScale, initialScale + (e.scale - 1))) // scale is a factor computed by hammer, but it works pretty well. However, it starts at `1` a the begining of the gesture, but we want the difference from the exisitng, so we subtract 1
+      })
+    })
+
+    this.gesturesHandler.on('panstart', e => {
+      initialOffsetX = this.state.offsetX
+      initialOffsetY = this.state.offsetY
+
+      // prevent panning past the edges of the photo
+      if (this.viewer && this.photo) {
+        let wrapperBoundaries = this.viewer.getBoundingClientRect()
+        let photoBoundaries = React.findDOMNode(this.photo).getBoundingClientRect()
+        maxOffsetX = Math.max(photoBoundaries.width / 2 - wrapperBoundaries.width / 2, 0) / initialScale
+        maxOffsetY = Math.max(photoBoundaries.height / 2 - wrapperBoundaries.height / 2, 0) / initialScale
+      }
+      else {
+        maxOffsetX = maxOffsetY = 0
+      }
+    })
+    this.gesturesHandler.on('pan', e => {
+      // values are clamped, and the delta is adjusted for the scale
+      this.setState({
+        offsetX: Math.max(-maxOffsetX, Math.min(maxOffsetX, initialOffsetX + e.deltaX / initialScale)),
+        offsetY: Math.max(-maxOffsetY, Math.min(maxOffsetY, initialOffsetY + e.deltaY / initialScale)),
+      })
+    })
+    this.gesturesHandler.on('panend', e => {
+      // @TODO: handle remaining velocity
+    })
   }
 
   componentWillUnmount () {
@@ -48,12 +99,16 @@ export class Viewer extends Component {
   }
 
   onSwipe (e) {
+    // @TODO: probably disable when zoomed in
+
     if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.state.nextID)
     else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.state.previousID)
   }
 
   navigateToPhoto (id) {
     if (this.state.singlePhoto) return
+
+    // @TODO: reset scale and offsets
 
     this.setState({ isImageLoading: true })
     const router = this.props.router
@@ -67,7 +122,10 @@ export class Viewer extends Component {
   }
 
   render () {
-    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto } = this.state
+    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, scale, offsetX, offsetY } = this.state
+    let style = {
+      transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`
+    }
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar />
@@ -79,6 +137,8 @@ export class Viewer extends Component {
                 photo={currentPhoto}
                 onLoad={this.handleImageLoaded}
                 src={`${cozy.client._url}${currentPhoto.links.large}`}
+                style={style}
+                ref={photo => { this.photo = photo }}
               />
             }
             {(!currentPhoto || isImageLoading) &&
