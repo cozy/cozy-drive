@@ -48,7 +48,9 @@ export class AlbumItem extends Component {
     const { coverPhoto } = this.state
 
     const image = !coverPhoto
-      ? <img />
+      ? <div
+        className={styles['pho-album-photo-item']}
+      />
       : <ImageLoader
         className={styles['pho-album-photo-item']}
         alt={`${album.name} album cover`}

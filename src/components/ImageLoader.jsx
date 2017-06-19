@@ -45,7 +45,7 @@ export default class ImageLoader extends Component {
         className={className}
         onLoad={this.onLoad}
         onError={this.onError}
-        style={Object.assign({}, style, loading === true ? { display: 'none' } : {})}
+        style={Object.assign({}, style)}
         alt={alt || photo.name}
         src={src}
       />
