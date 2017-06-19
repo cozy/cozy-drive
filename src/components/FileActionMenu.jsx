@@ -50,7 +50,7 @@ const Menu = props => {
       <hr />
       {actionNames.map(actionName => (
         <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => actions[actionName].action(files)}>
-          {t(`selectionbar.${actionName}`)}
+          {t(`SelectionBar.${actionName}`)}
         </MenuItem>
       ))}
     </div>
@@ -74,7 +74,7 @@ const MenuHeaderSelection = ({ t, files }) => {
   return (
     <Item>
       <div className={classNames(styles['fil-actionmenu-header'])}>
-        {fileCount} {t('selectionbar.selected_count', { smart_count: fileCount })}
+        {fileCount} {t('SelectionBar.selected_count', { smart_count: fileCount })}
       </div>
     </Item>
   )
