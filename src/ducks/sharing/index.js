@@ -1,6 +1,6 @@
 /* global cozy */
 export const filterSharedDocuments = (ids, doctype) =>
-  findPermSets(ids, doctype).then(sets => sets.map(set => set.attributes.permissions.albums.values[0]))
+  findPermSets(ids, doctype).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
 
 export const findPermSet = (id, doctype) =>
   findPermSets([id], doctype).then(sets => sets.length === 0 ? undefined : sets[0])
@@ -12,7 +12,7 @@ export const findPermSet = (id, doctype) =>
 export const findPermSets = (ids, doctype) =>
   cozy.client.fetchJSON('GET', `/permissions/doctype/${doctype}/sharedByLink`)
     .then(sets => sets.filter(set => {
-      const perm = set.attributes.permissions.albums
+      const perm = set.attributes.permissions.collection
       return perm.type === doctype && ids.find(id => perm.values.indexOf(id) !== -1) !== undefined
     }))
 

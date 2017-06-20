@@ -82,12 +82,23 @@
       "cta": "Share",
       "title": "Share with others",
       "shareByLink": {
-        "title": "Share by link",
+        "title": "By publick link",
+        "subtitle": "Share by link",
         "desc": "Anyone with the provided link can see and download your photos."
+      },
+      "shareByUrl": {
+        "title": "By email and url",
+        "subtitle": "Share by email and url",
+        "email": "email",
+        "url": "cozy address",
+        "emailPlaceholder": "Enter email address of your recipient",
+        "urlPlaceholder": "Enter url address of your recipient",
+        "send": "Send"
       },
       "sharingLink": {
         "title": "Link to share",
-        "copy": "Copy"
+        "copy": "Copy",
+        "copied": "Copied"
       },
       "protectedShare": {
         "title": "Coming soon!",

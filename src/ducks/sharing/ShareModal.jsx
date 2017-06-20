@@ -4,17 +4,11 @@ import React, { Component } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import Toggle from 'cozy-ui/react/Toggle'
-import classNames from 'classnames'
-import { translate } from 'cozy-ui/react/I18n'
+import classnames from 'classnames'
+import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 import Alerter from '../../components/Alerter'
 
 import { findPermSet, createPermSet, deletePermSet, getShareLink } from '.'
-
-const withForm = Component => (
-  <div className={styles['coz-form']}>
-    {Component}
-  </div>
-)
 
 export class ShareModal extends Component {
   constructor (props) {
@@ -23,7 +17,8 @@ export class ShareModal extends Component {
       loading: true,
       creating: false,
       permissions: null,
-      active: false
+      active: false,
+      copied: false
     }
   }
 
@@ -55,13 +50,18 @@ export class ShareModal extends Component {
     }
   }
 
+  sendSharingLinks (email, url) {
+    console.log(email, url)
+  }
+
   onError () {
     Alerter.error('Error.generic')
     this.props.onClose()
   }
 
   render () {
-    const { t, onClose, document } = this.props
+    const { t } = this.context
+    const { onClose } = this.props
     const { loading, active, creating, permissions } = this.state
     return (
       <Modal
@@ -69,45 +69,25 @@ export class ShareModal extends Component {
         secondaryAction={onClose}
       >
         <ModalContent className={styles['pho-share-modal-content']}>
-          {withForm(
-            <div>
-              <h3>{t('Albums.share.shareByLink.title')}</h3>
-              <div className={styles['pho-input-dual']}>
-                <div><label for='' className={styles['coz-form-desc']}>{t('Albums.share.shareByLink.desc')}</label></div>
-                <div>
-                  <Toggle
-                    id='pho-album-share-toggle'
-                    name='share'
-                    checked={active}
-                    onToggle={checked => this.toggleShareLink(checked)} />
-                </div>
-              </div>
-            </div>
-          )}
-          {active && withForm(
-            <div>
-              <h4>{t('Albums.share.sharingLink.title')}</h4>
-              <div className={styles['pho-input-dual']}>
-                <div><input type='text' name='' id='' value={getShareLink(document._id, permissions)} /></div>
-                <div>
-                  <CopyToClipboard
-                    text={getShareLink(document._id, permissions)}
-                    onCopy={() => this.setState({copied: true})}
-                  >
-                    <button className={classNames('coz-btn', 'coz-btn--secondary', styles['pho-btn-copy'])}>
-                      {t('Albums.share.sharingLink.copy')}
-                    </button>
-                  </CopyToClipboard>
-                </div>
-              </div>
-            </div>
-          )}
-          {active && withForm(
-            <div>
-              <h3>{t('Albums.share.protectedShare.title')}</h3>
-              <div className={styles['coz-form-desc']}>{t('Albums.share.protectedShare.desc')}</div>
-            </div>
-          )}
+          <Tabs initialActiveTab='link'>
+            <TabList>
+              <Tab name='link'>
+                {t('Albums.share.shareByLink.title')}
+              </Tab>
+              <Tab name='url'>
+                {t('Albums.share.shareByUrl.title')}
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel name='link'>
+                <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
+                {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => console.log(this) || this.setState({ copied: true })} copied={this.state.copied} />}
+              </TabPanel>
+              <TabPanel name='url'>
+                <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </ModalContent>
         {creating &&
           <div className={styles['pho-share-modal-footer']}>
@@ -124,4 +104,105 @@ export class ShareModal extends Component {
   }
 }
 
-export default translate()(ShareModal)
+class ShareByUrl extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      email: '',
+      url: ''
+    }
+  }
+
+  changeEmail (email) {
+    this.setState({ email })
+  }
+
+  changeUrl (url) {
+    this.setState({ url })
+  }
+
+  sendSharingLink () {
+    this.props.onSend(this.state.email, this.state.url)
+  }
+
+  render () {
+    const { t } = this.context
+    return (
+      <div className={styles['coz-form']}>
+        <h3>{t('Albums.share.shareByUrl.subtitle')}</h3>
+        <div>
+          <h4>{t('Albums.share.shareByUrl.email')}</h4>
+          <input
+            type='text'
+            name=''
+            id=''
+            onChange={e => this.changeEmail(e.target.value)}
+            value={this.state.email}
+            placeholder={t('Albums.share.shareByUrl.emailPlaceholder')} />
+        </div>
+        <div>
+          <h4>{t('Albums.share.shareByUrl.url')}</h4>
+          <input
+            type='text'
+            name=''
+            id=''
+            onChange={e => this.changeUrl(e.target.value)}
+            value={this.state.url}
+            placeholder={t('Albums.share.shareByUrl.urlPlaceholder')} />
+        </div>
+        <div>
+          <button
+            className={classnames('coz-btn', 'coz-btn--regular')}
+            disabled={!this.state.email || !this.state.url}
+            onClick={e => this.sendSharingLink()}>
+            {t('Albums.share.shareByUrl.send')}
+          </button>
+        </div>
+      </div>
+    )
+  }
+}
+
+const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
+  <div className={styles['coz-form']}>
+    <h3>{t('Albums.share.shareByLink.subtitle')}</h3>
+    <div className={styles['pho-input-dual']}>
+      <div><label for='' className={styles['coz-form-desc']}>{t('Albums.share.shareByLink.desc')}</label></div>
+      <div>
+        <Toggle
+          id='pho-album-share-toggle'
+          name='share'
+          checked={active}
+          onToggle={onToggle} />
+      </div>
+    </div>
+  </div>
+)
+
+const ShareWithLink = ({ id, permissions, onCopy, copied }, { t }) => (
+  <div className={styles['coz-form']}>
+    <h4>{t('Albums.share.sharingLink.title')}</h4>
+    <div className={styles['pho-input-dual']}>
+      <div><input type='text' name='' id='' value={getShareLink(id, permissions)} /></div>
+      <div>
+        {!copied &&
+          <CopyToClipboard
+            text={getShareLink(id, permissions)}
+            onCopy={onCopy}
+          >
+            <div>
+              <button className={classnames('coz-btn', 'coz-btn--secondary', styles['pho-btn-copy'])}>
+                {t('Albums.share.sharingLink.copy')}
+              </button>
+            </div>
+          </CopyToClipboard>
+        }
+        {copied && <button className={classnames('coz-btn', 'coz-btn--secondary', styles['pho-btn-copied'])} aria-disabled>
+          {t('Albums.share.sharingLink.copied')}
+        </button>}
+      </div>
+    </div>
+  </div>
+)
+
+export default ShareModal
