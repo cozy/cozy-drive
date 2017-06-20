@@ -98,15 +98,14 @@ export const fetchMorePhotos = createFetchAction(TIMELINE, fetchPhotos)
 * Updates a collection of photos based on their id
 */
 export const refetchSomePhotos = createUpdateAction(TIMELINE, async (photos) => {
-  let index = await indexFilesByDate()
-  let selector = {
+  const index = await indexFilesByDate()
+  const selector = {
     ...DEFAULT_COUCH_SELECTOR,
     '_id': {
       '$in': photos
     }
   }
-  let response = await fetchPhotos(index, 0, selector)
-  return response
+  return await fetchPhotos(index, 0, selector)
 })
 
 export const getPhotosByMonth = (photos, f, format) => {
