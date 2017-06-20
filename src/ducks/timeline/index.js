@@ -7,7 +7,7 @@ import { FILE_DOCTYPE, FETCH_LIMIT, ALBUM_DOCTYPE } from '../../constants/config
 
 // constants
 const TIMELINE = 'timeline'
-const NOT_TRASHED_SELECTOR = {
+const DEFAULT_COUCH_SELECTOR = {
   class: 'image',
   trashed: false
 }
@@ -67,7 +67,7 @@ const indexFilesByDate = async () => {
   return await cozy.client.data.defineIndex(FILE_DOCTYPE, fields)
 }
 
-const fetchPhotos = async (index, skip = 0, selector = NOT_TRASHED_SELECTOR) => {
+const fetchPhotos = async (index, skip = 0, selector = DEFAULT_COUCH_SELECTOR) => {
   const options = {
     selector,
     // TODO: type and class should not be necessary, it's just a temp fix for a stack bug
@@ -100,7 +100,7 @@ export const fetchMorePhotos = createFetchAction(TIMELINE, fetchPhotos)
 export const refetchSomePhotos = createUpdateAction(TIMELINE, async (photos) => {
   let index = await indexFilesByDate()
   let selector = {
-    ...NOT_TRASHED_SELECTOR,
+    ...DEFAULT_COUCH_SELECTOR,
     '_id': {
       '$in': photos
     }
