@@ -11,6 +11,7 @@ import ImageLoader from './ImageLoader'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
+const TOOLBAR_HIDE_DELAY = 3000
 
 export class Viewer extends Component {
   constructor (props) {
@@ -18,11 +19,14 @@ export class Viewer extends Component {
 
     this.state = {
       isImageLoading: true,
-      ...mapRouteToPhotos(props.photos, props.params)
+      ...mapRouteToPhotos(props.photos, props.params),
+      hideToolBar: false
     }
 
     this.navigateToPhoto = this.navigateToPhoto.bind(this)
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
+
+    this.hideToolbarTimeout = null
   }
 
   componentWillReceiveProps (nextProps) {
@@ -35,6 +39,9 @@ export class Viewer extends Component {
 
     this.gesturesHandler = new Hammer(this.viewer)
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
+    this.gesturesHandler.on('tap', this.toggleToolbar.bind(this))
+
+    this.hideToolbarAfterDelay()
   }
 
   componentWillUnmount () {
@@ -55,7 +62,10 @@ export class Viewer extends Component {
   navigateToPhoto (id) {
     if (this.state.singlePhoto) return
 
-    this.setState({ isImageLoading: true })
+    this.setState({
+      isImageLoading: true,
+      hideToolBar: true
+    })
     const router = this.props.router
     const url = router.location.pathname
     const parentPath = url.substring(0, url.lastIndexOf('/'))
@@ -66,11 +76,26 @@ export class Viewer extends Component {
     this.setState({ isImageLoading: false })
   }
 
+  toggleToolbar () {
+    // inver the current state
+    const hidden = !this.state.hideToolBar
+    this.setState({ hideToolBar: hidden })
+    // if the toolbar is now visible, reset the hide delay
+    if (!hidden) this.hideToolbarAfterDelay()
+  }
+
+  hideToolbarAfterDelay () {
+    clearTimeout(this.hideToolbarTimeout)
+    this.hideToolbarTimeout = setTimeout(() => {
+      this.setState({ hideToolBar: true })
+    }, TOOLBAR_HIDE_DELAY)
+  }
+
   render () {
-    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto } = this.state
+    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideToolBar } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
-        <ViewerToolbar />
+        <ViewerToolbar hidden={hideToolBar} />
         <div className={styles['pho-viewer-content']}>
           {!singlePhoto && <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />}
           <div className={styles['pho-viewer-photo']}>
