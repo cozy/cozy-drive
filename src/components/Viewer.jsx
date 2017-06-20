@@ -20,7 +20,7 @@ export class Viewer extends Component {
     this.state = {
       isImageLoading: true,
       ...mapRouteToPhotos(props.photos, props.params),
-      hideToolBar: false
+      hideToolbar: false
     }
 
     this.navigateToPhoto = this.navigateToPhoto.bind(this)
@@ -44,6 +44,11 @@ export class Viewer extends Component {
     this.hideToolbarAfterDelay()
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    // if the toolbar was hidden but is now displayed, start a countdown to hide it again
+    if (prevState.hideToolbar && !this.state.hideToolbar) this.hideToolbarAfterDelay()
+  }
+
   componentWillUnmount () {
     document.removeEventListener('keydown', this.onKeyDownCallback, false)
     // this.gesturesHandler.destroy()
@@ -64,7 +69,7 @@ export class Viewer extends Component {
 
     this.setState({
       isImageLoading: true,
-      hideToolBar: true
+      hideToolbar: true
     })
     const router = this.props.router
     const url = router.location.pathname
@@ -77,25 +82,21 @@ export class Viewer extends Component {
   }
 
   toggleToolbar () {
-    // invert the current state
-    const hidden = !this.state.hideToolBar
-    this.setState({ hideToolBar: hidden })
-    // if the toolbar is now visible, reset the hide delay
-    if (!hidden) this.hideToolbarAfterDelay()
+    this.setState(state => ({...state, hideToolbar: !state.hideToolbar}))
   }
 
   hideToolbarAfterDelay () {
     clearTimeout(this.hideToolbarTimeout)
     this.hideToolbarTimeout = setTimeout(() => {
-      this.setState({ hideToolBar: true })
+      this.setState({ hideToolbar: true })
     }, TOOLBAR_HIDE_DELAY)
   }
 
   render () {
-    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideToolBar } = this.state
+    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideToolbar } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
-        <ViewerToolbar hidden={hideToolBar} />
+        <ViewerToolbar hidden={hideToolbar} />
         <div className={styles['pho-viewer-content']}>
           {!singlePhoto && <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />}
           <div className={styles['pho-viewer-photo']}>
