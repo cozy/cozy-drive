@@ -77,7 +77,7 @@ export class Viewer extends Component {
   }
 
   toggleToolbar () {
-    // inver the current state
+    // invert the current state
     const hidden = !this.state.hideToolBar
     this.setState({ hideToolBar: hidden })
     // if the toolbar is now visible, reset the hide delay
