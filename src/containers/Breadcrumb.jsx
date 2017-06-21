@@ -9,7 +9,7 @@ import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { openFolder } from '../actions'
 import classNames from 'classnames'
-import Spinner from '../components/Spinner'
+import Spinner from 'cozy-ui/react/Spinner'
 
 import { getFolderPath, getFolderUrl } from '../reducers'
 

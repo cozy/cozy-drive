@@ -8,6 +8,7 @@ import styles from '../styles/table'
 import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
+import Spinner from 'cozy-ui/react/Spinner'
 
 import { getFolderUrl } from '../reducers'
 
@@ -148,7 +149,7 @@ class File extends Component {
           : <div>
             {filename}
             {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
-            {opening === true && <div className={styles['fil-loading']} />}
+            {opening === true && <Spinner />}
           </div>
         }
       </div>

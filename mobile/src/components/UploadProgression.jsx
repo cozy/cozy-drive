@@ -3,6 +3,8 @@ import classNames from 'classnames'
 import styles from '../styles/uploadprogression'
 import { translate } from 'cozy-ui/react/I18n'
 
+import Spinner from 'cozy-ui/react/Spinner'
+
 const UploadProgression = ({t, message, messageData}) => {
   if (!message) {
     return null
@@ -16,7 +18,7 @@ const UploadProgression = ({t, message, messageData}) => {
           )}
         >
           <p>
-            <span class={styles['fil-loading']} />
+            <Spinner color='white' />
             {t(message, messageData)}
           </p>
         </div>
