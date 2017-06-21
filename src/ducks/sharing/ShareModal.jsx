@@ -51,8 +51,7 @@ export class ShareModal extends Component {
   }
 
   sendSharingLinks (email, url) {
-    const { _id, _type } = this.props.document
-    return share(_id, _type, email, url)
+    return share(this.props.document, email, url)
     .then(sharing => {
       Alerter.info('Albums.share.shareByUrl.success', { email })
     })
