@@ -7,6 +7,7 @@ import { Item } from 'react-bosonic/lib/Menu'
 import withGestures from '../lib/withGestures'
 import Hammer from 'hammerjs'
 
+import Spinner from 'cozy-ui/react/Spinner'
 import { splitFilename, getClassFromMime } from './File'
 
 class MenuItem extends Component {
@@ -30,7 +31,7 @@ class MenuItem extends Component {
       <Item>
         <a className={className} onClick={this.handleClick}>
           {children}
-          {working && <div className={styles['fil-loading']} />}
+          {working && <Spinner />}
         </a>
       </Item>
     )

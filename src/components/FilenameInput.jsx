@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import styles from '../styles/filenameinput'
-import Spinner from './Spinner'
+import Spinner from 'cozy-ui/react/Spinner'
 
 const ENTER_KEY = 13
 const ESC_KEY = 27

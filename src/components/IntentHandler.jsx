@@ -2,7 +2,7 @@
 
 import utilStyles from '../styles/utils'
 import React from 'react'
-import Loading from './Loading'
+import Spinner from 'cozy-ui/react/Spinner'
 
 class IntentHandler extends React.Component {
   getInitialState () {
@@ -44,7 +44,12 @@ class IntentHandler extends React.Component {
 
   render () {
     return <div>
-      { this.state.loading && <Loading /> }
+      { this.state.loading &&
+        <Spinner
+          size='xxlarge'
+          loadingType='message'
+          middle='true'
+        /> }
       { this.state.error && <pre className='coz-error'>{ this.state.error.toString() }</pre>}
       { this.state.url && <embed className={utilStyles.fullscreen} src={this.state.url} /> }
     </div>
