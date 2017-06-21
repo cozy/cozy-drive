@@ -22,6 +22,11 @@ import {
   addToAlbum }
 from '../ducks/albums'
 
+import {
+  refetchSomePhotos
+}
+from '../ducks/timeline'
+
 export class AddToAlbumModal extends Component {
   componentWillMount () {
     this.props.fetchAlbums()
@@ -80,6 +85,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmitNewAlbum: (name, photos) => {
     return dispatch(createAlbum(name, photos))
       .then(() => {
+        return dispatch(refetchSomePhotos(photos))
+      })
+      .then(() => {
         dispatch(closeAddToAlbum())
         Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
       })
@@ -87,6 +95,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onSubmitSelectedAlbum: (album, photos) => {
     return dispatch(addToAlbum(album, photos))
+      .then(() => {
+        return dispatch(refetchSomePhotos(photos))
+      })
       .then(() => {
         dispatch(closeAddToAlbum())
         Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length})

@@ -1,5 +1,5 @@
 /* global cozy */
-import { getList, createFetchAction, createFetchIfNeededAction, insertAction, deleteAction } from '../lists'
+import { getList, createFetchAction, createFetchIfNeededAction, createUpdateAction, insertAction, deleteAction } from '../lists'
 import Toolbar from './components/Toolbar'
 import DeleteConfirm from './components/DeleteConfirm'
 import { hideSelectionBar, getSelectedIds } from '../selection'
@@ -7,6 +7,10 @@ import { FILE_DOCTYPE, FETCH_LIMIT, ALBUM_DOCTYPE } from '../../constants/config
 
 // constants
 const TIMELINE = 'timeline'
+const DEFAULT_COUCH_SELECTOR = {
+  class: 'image',
+  trashed: false
+}
 
 // selectors
 export const getTimelineList = state => getList(state, TIMELINE)
@@ -63,12 +67,9 @@ const indexFilesByDate = async () => {
   return await cozy.client.data.defineIndex(FILE_DOCTYPE, fields)
 }
 
-const fetchPhotos = async (index, skip = 0) => {
+const fetchPhotos = async (index, skip = 0, selector = DEFAULT_COUCH_SELECTOR) => {
   const options = {
-    selector: {
-      class: 'image',
-      trashed: false
-    },
+    selector,
     // TODO: type and class should not be necessary, it's just a temp fix for a stack bug
     fields: ['_id', 'dir_id', 'name', 'size', 'updated_at', 'metadata', 'type', 'class'],
     descending: true,
@@ -92,6 +93,20 @@ export const fetchIfNeededPhotos = createFetchIfNeededAction(TIMELINE, (index, s
 })
 
 export const fetchMorePhotos = createFetchAction(TIMELINE, fetchPhotos)
+
+/**
+* Updates a collection of photos based on their id
+*/
+export const refetchSomePhotos = createUpdateAction(TIMELINE, async (photos) => {
+  const index = await indexFilesByDate()
+  const selector = {
+    ...DEFAULT_COUCH_SELECTOR,
+    '_id': {
+      '$in': photos
+    }
+  }
+  return await fetchPhotos(index, 0, selector)
+})
 
 export const getPhotosByMonth = (photos, f, format) => {
   let sections = {}
