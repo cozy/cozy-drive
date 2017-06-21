@@ -82,7 +82,16 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getDeviceName())
 
-  if (await cozy.client.isV2()) {
+  let isV2Instance
+  try{
+    isV2Instance = await cozy.client.isV2()
+  }
+  catch (err) {
+    // this can happen if the HTTP request to check the instance version fails; in that case, it is likely to fail again and be caught during the authorize process, which is designed to handle this
+    isV2Instance = false
+  }
+
+  if (isV2Instance) {
     dispatch(wrongAddressV2Error())
     throw new Error('The cozy address entered is a V2 instance')
   }
