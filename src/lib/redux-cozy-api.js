@@ -1,11 +1,17 @@
 /* global cozy */
 import { combineReducers } from 'redux'
 
+const FILES_DOCTYPE = 'io.cozy.files'
+const FETCH_LIMIT = 50
+
 // action types
 const REGISTER_SCHEMAS = 'REGISTER_SCHEMAS'
 const GET_OR_CREATE_INDEX = 'GET_OR_CREATE_INDEX'
 const FETCH_DOCUMENTS = 'FETCH_DOCUMENTS'
+const FETCH_DOCUMENT = 'FETCH_DOCUMENT'
+const FETCH_REFERENCED_FILES = 'FETCH_REFERENCED_FILES'
 const RECEIVE_DATA = 'RECEIVE_DATA'
+const RECEIVE_REFERENCED_FILES = 'RECEIVE_REFERENCED_FILES'
 const RECEIVE_ERROR = 'RECEIVE_ERROR'
 
 // reducers
@@ -30,6 +36,11 @@ const entities = (state = {}, action) => {
         ...state,
         [action.doctype]: Object.assign({}, state[action.doctype], objectifyEntitiesArray(action.response.data))
       }
+    case RECEIVE_REFERENCED_FILES:
+      return {
+        ...state,
+        [action.relationType]: Object.assign({}, state[action.relationType], objectifyEntitiesArray(action.response.data))
+      }
     default:
       return state
   }
@@ -40,6 +51,8 @@ const type = (state = null, action) => {
   switch (action.type) {
     case FETCH_DOCUMENTS:
       return action.doctype
+    case FETCH_REFERENCED_FILES:
+      return action.relationType
     default:
       return state
   }
@@ -48,8 +61,10 @@ const type = (state = null, action) => {
 const fetchStatus = (state = 'pending', action) => {
   switch (action.type) {
     case FETCH_DOCUMENTS:
+    case FETCH_REFERENCED_FILES:
       return 'loading'
     case RECEIVE_DATA:
+    case RECEIVE_REFERENCED_FILES:
       return 'loaded'
     case RECEIVE_ERROR:
       return 'failed'
@@ -61,6 +76,7 @@ const fetchStatus = (state = 'pending', action) => {
 const lastFetch = (state = null, action) => {
   switch (action.type) {
     case RECEIVE_DATA:
+    case RECEIVE_REFERENCED_FILES:
       return Date.now()
     default:
       return state
@@ -70,6 +86,7 @@ const lastFetch = (state = null, action) => {
 const hasMore = (state = false, action) => {
   switch (action.type) {
     case RECEIVE_DATA:
+    case RECEIVE_REFERENCED_FILES:
       return action.next !== undefined ? action.next : state
     default:
       return state
@@ -79,6 +96,7 @@ const hasMore = (state = false, action) => {
 const count = (state = 0, action) => {
   switch (action.type) {
     case RECEIVE_DATA:
+    case RECEIVE_REFERENCED_FILES:
       const response = action.response
       return response.meta && response.meta.count ? response.meta.count : response.data.length
     default:
@@ -89,6 +107,10 @@ const count = (state = 0, action) => {
 const ids = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_DATA:
+    case RECEIVE_REFERENCED_FILES:
+      if (!action.skip) {
+        return action.response.data.map(doc => doc.id)
+      }
       return [
         ...state,
         ...action.response.data.map(doc => doc.id)
@@ -110,9 +132,12 @@ const endpoint = combineReducers({
 const endpoints = (state = {}, action) => {
   switch (action.type) {
     case FETCH_DOCUMENTS:
+    case FETCH_REFERENCED_FILES:
     case RECEIVE_DATA:
+    case RECEIVE_REFERENCED_FILES:
     case RECEIVE_ERROR:
-      const endpointKey = action.doctype
+      const entity = action.entity // for referenced files fetching
+      const endpointKey = entity ? `${entity.type}/${entity.id}/${action.relationName}` : action.doctype
       return Object.assign({}, state, { [endpointKey]: endpoint(state[endpointKey] || {}, action) })
     default:
       return state
@@ -133,12 +158,18 @@ const objectifyEntitiesArray = (entities) => {
 }
 
 const mapEntitiesToIds = (entities, doctype, ids) => {
+  if (!entities[doctype]) {
+    return ids.map(() => null)
+  }
   return ids.map(id => entities[doctype][id])
 }
 
 // selectors
 const getSchema = (state, doctype) => state.api.schemas[doctype]
+const getRelations = (state, doctype) => getSchema(state, doctype).relations || {}
 const getIndex = (state, doctype) => getSchema(state, doctype).index
+
+export const getEntity = (state, doctype, id) => getEntities(state, doctype, [id])[0]
 
 export const getEntities = (state, doctype, ids) => mapEntitiesToIds(state.api.entities, doctype, ids)
 
@@ -152,6 +183,8 @@ export const getEndpointList = (state, key) => {
   }
   return list
 }
+
+export const getReferencedFilesList = (state, doctype, id, relationName) => getEndpointList(state, `${doctype}/${id}/${relationName}`)
 
 // action creators
 export const registerSchemas = (schemas) => (dispatch) => {
@@ -177,8 +210,20 @@ export const fetchDocuments = (doctype) => async (dispatch, getState) => {
     // see https://github.com/cozy/cozy-stack/blob/master/docs/data-system.md#list-all-the-documents
     // WARN: looks like this route returns something looking like a couchDB design doc, we need to filter it:
     const rows = resp.rows.filter(row => !row.doc.hasOwnProperty('views'))
+    // we normalize the data (note that we add _type so that cozy.client.data.listReferencedFiles works...)
+    const docs = rows.map(row => Object.assign({}, row.doc, { id: row.id, type: doctype, _type: doctype }))
+    // if the doctype references files, we fetch these files IDs here (this is needed for albums)
+    // in the future, if we define more complex relations with other doctypes, we may have to deal
+    // with the retrieval of these association IDs here
+    const relations = getRelations(getState(), doctype)
+    for (let name in relations) {
+      if (relations[name].type === FILES_DOCTYPE) {
+        for (let doc of docs) {
+          doc[name] = await cozy.client.data.listReferencedFiles(doc)
+        }
+      }
+    }
     // we forge a correct JSONAPI response:
-    const docs = rows.map(row => Object.assign({}, row.doc, { id: row.id, type: doctype }))
     const JSONAPIresp = {
       data: docs,
       meta: { count: resp.total_rows },
@@ -188,5 +233,47 @@ export const fetchDocuments = (doctype) => async (dispatch, getState) => {
     dispatch({ type: RECEIVE_DATA, doctype, response: JSONAPIresp })
   } catch (error) {
     dispatch({ type: RECEIVE_ERROR, doctype, error })
+  }
+}
+
+const getOrFetchDocument = (doctype, id) => async (dispatch, getState) => {
+  let doc = getEntity(getState(), doctype, id)
+  if (!doc) {
+    // TODO: handle fetch status & errors with specific reducers:
+    // { entities: 'io.cozy.photos.albums': { entities: {...}, fetchStatuses: {...}, errors: {...} }}
+    dispatch({ type: FETCH_DOCUMENT, doctype, id })
+    doc = await cozy.client.data.find(doctype, id)
+    // we normalize again...
+    doc = Object.assign({}, doc, { id: doc._id, type: doc._type })
+  }
+  return doc
+}
+
+export const fetchDocument = (doctype, id, options) => async (dispatch, getState) => {
+  try {
+    const doc = await dispatch(getOrFetchDocument(doctype, id))
+    if (options.include) {
+      const relations = getRelations(getState(), doctype)
+      for (let relationName of options.include) {
+        const relationType = relations[relationName].type
+        // TODO: we only handle files relations here
+        if (relationType === FILES_DOCTYPE) {
+          dispatch({ type: FETCH_REFERENCED_FILES, entity: doc, relationName, relationType })
+          // WARN: the stack API is probably not ideal here: referencedFiles are in the 'included' property
+          // (that should be used when fetching an entity AND its relations) and the 'data' property
+          // only contains uplets { id, type }
+          const { included, meta } = await cozy.client.data.fetchReferencedFiles(doc, { limit: FETCH_LIMIT })
+          // we forge a standard response with a 'data' property
+          const response = {
+            data: included.map(file => Object.assign({}, file.attributes, { id: file.id, _id: file.id, links: file.links })),
+            meta,
+            next: meta.count > FETCH_LIMIT
+          }
+          dispatch({ type: RECEIVE_REFERENCED_FILES, entity: doc, relationName, relationType, response })
+        }
+      }
+    }
+  } catch (error) {
+    dispatch({ type: RECEIVE_ERROR, doctype, id, error })
   }
 }
