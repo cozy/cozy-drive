@@ -38,6 +38,44 @@ export const createPermSet = (id, doctype) =>
     }
   })
 
+export const share = async (id, doctype, email, url) => {
+  const target = await cozy.client.fetchJSON('POST', '/sharings/recipient', {
+    email,
+    url
+  })
+
+  const sharings = await cozy.client.fetchJSON('POST', '/sharings/', {
+    desc: 'Share Ilyn Sarkisian',
+    permissions: {
+      album: {
+        description: 'album',
+        type: doctype,
+        values: [
+          id
+        ]
+      },
+      files: {
+        description: 'photos',
+        type: 'io.cozy.files',
+        values: [
+          `io.cozy.photos.albums/${id}`
+        ]
+      }
+    },
+    recipients: [
+      {
+        recipient: {
+          id: target._id,
+          type: 'io.cozy.recipients'
+        }
+      }
+    ],
+    sharing_type: 'master-slave'
+  })
+
+  return sharings
+}
+
 export const deletePermSet = (setId) =>
   cozy.client.fetchJSON('DELETE', `/permissions/${setId}`)
 

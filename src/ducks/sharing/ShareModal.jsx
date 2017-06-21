@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 import Alerter from '../../components/Alerter'
 
-import { findPermSet, createPermSet, deletePermSet, getShareLink } from '.'
+import { findPermSet, createPermSet, deletePermSet, getShareLink, share } from '.'
 
 export class ShareModal extends Component {
   constructor (props) {
@@ -51,7 +51,15 @@ export class ShareModal extends Component {
   }
 
   sendSharingLinks (email, url) {
-    console.log(email, url)
+    const { _id, _type } = this.props.document
+    return share(_id, _type, email, url)
+    .then(sharing => {
+      Alerter.info('Albums.share.shareByUrl.success', { email })
+    })
+    .catch(err => {
+      Alerter.error('Error.generic')
+      throw err
+    })
   }
 
   onError () {
@@ -123,6 +131,12 @@ class ShareByUrl extends React.Component {
 
   sendSharingLink () {
     this.props.onSend(this.state.email, this.state.url)
+    .then(() => {
+      this.setState(state => ({email: '', url: ''}))
+    })
+    .catch(() => {
+      this.setState(state => ({email: '', url: ''}))
+    })
   }
 
   render () {

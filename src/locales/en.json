@@ -93,7 +93,8 @@
         "url": "cozy address",
         "emailPlaceholder": "Enter email address of your recipient",
         "urlPlaceholder": "Enter url address of your recipient",
-        "send": "Send"
+        "send": "Send",
+        "success": "You sent an invite to %{email}."
       },
       "sharingLink": {
         "title": "Link to share",
