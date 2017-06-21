@@ -141,29 +141,29 @@ class ShareByUrl extends React.Component {
   render () {
     const { t } = this.context
     return (
-      <div className={styles['coz-form']}>
+      <div className={styles['coz-form-group']}>
         <h3>{t('Albums.share.shareByUrl.subtitle')}</h3>
-        <div>
-          <h4>{t('Albums.share.shareByUrl.email')}</h4>
+        <div className={styles['coz-form']}>
+          <label className={styles['coz-form-label']} for='email'>{t('Albums.share.shareByUrl.email')}</label>
           <input
             type='text'
             name=''
-            id=''
+            id='email'
             onChange={e => this.changeEmail(e.target.value)}
             value={this.state.email}
             placeholder={t('Albums.share.shareByUrl.emailPlaceholder')} />
         </div>
-        <div>
-          <h4>{t('Albums.share.shareByUrl.url')}</h4>
+        <div className={styles['coz-form']}>
+          <label className={styles['coz-form-label']} for='url'>{t('Albums.share.shareByUrl.url')}</label>
           <input
             type='text'
             name=''
-            id=''
+            id='url'
             onChange={e => this.changeUrl(e.target.value)}
             value={this.state.url}
             placeholder={t('Albums.share.shareByUrl.urlPlaceholder')} />
         </div>
-        <div>
+        <div className={classnames(styles['coz-form-controls'], styles['coz-form-controls--dispatch'])}>
           <button
             className={classnames('coz-btn', 'coz-btn--regular')}
             disabled={!this.state.email || !this.state.url}
@@ -177,7 +177,7 @@ class ShareByUrl extends React.Component {
 }
 
 const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
-  <div className={styles['coz-form']}>
+  <div className={styles['coz-form-group']}>
     <h3>{t('Albums.share.shareByLink.subtitle')}</h3>
     <div className={styles['pho-input-dual']}>
       <div><label for='' className={styles['coz-form-desc']}>{t('Albums.share.shareByLink.desc')}</label></div>
