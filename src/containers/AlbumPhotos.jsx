@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
-import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
+import { AlbumToolbar, updateAlbum } from '../ducks/albums'
+import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos } from '../features/albums'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
@@ -18,12 +19,7 @@ export class AlbumPhotos extends Component {
   }
 
   componentWillMount () {
-    if (!this.props.album) {
-      this.props.fetchAlbums()
-        .then(() => this.props.fetchPhotos(this.props.router.params.albumId))
-    } else {
-      this.props.fetchPhotos(this.props.router.params.albumId)
-    }
+    this.props.fetchAlbum(this.props.router.params.albumId)
   }
 
   editAlbumName () {
@@ -53,7 +49,7 @@ export class AlbumPhotos extends Component {
     if (!this.props.album) {
       return null
     }
-    const { album, photos, fetchPhotos } = this.props
+    const { album, photos, fetchMorePhotos } = this.props
     const { editing } = this.state
     return (
       <div className={styles['pho-content-wrapper']}>
@@ -69,7 +65,7 @@ export class AlbumPhotos extends Component {
             fetchStatus={photos.fetchStatus}
             hasMore={photos.hasMore}
             photosContext='album'
-            onFetchMore={() => fetchPhotos(album._id, photos.entries.length)}
+            onFetchMore={() => fetchMorePhotos(album, photos.entries.length)}
           />
         }
         {this.renderViewer(this.props.children)}
@@ -91,8 +87,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbums: () => dispatch(fetchAlbums()),
-  fetchPhotos: (albumId, skip) => dispatch(fetchAlbumPhotos(albumId, skip)),
+  fetchAlbum: (id) => dispatch(fetchAlbum(id)),
+  fetchMorePhotos: (album, skip) => dispatch(fetchAlbumPhotos(album, skip)),
   updateAlbum: (album) => dispatch(updateAlbum(album))
 })
 

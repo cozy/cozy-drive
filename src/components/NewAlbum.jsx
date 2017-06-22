@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { fetchIfNeededPhotos, fetchMorePhotos, getTimelineList, getPhotosByMonth } from '../ducks/timeline'
-import { createAlbum } from '../ducks/albums'
+import { checkUniquenessOfAlbumName, createAlbum } from '../features/albums'
 import PhotoBoard from './PhotoBoard'
 import Alerter from './Alerter'
 
@@ -54,7 +54,32 @@ class NewAlbum extends Component {
 
   onSubmit = e => {
     const { name, selected } = this.state
+    if (!name) {
+      Alerter.error('Albums.create.error.name_missing')
+      this.input.focus()
+      return
+    }
+    // TODO: we should not have to dispatch this method (see comments in redux-cozy-api)
+    this.props.checkUniquenessOfAlbumName(name)
+      .then(unique => {
+        if (!unique) {
+          Alerter.error('Albums.create.error.already_exists', { name })
+          this.input.focus()
+          this.input.select()
+        } else {
+          this.createAlbum(name, selected)
+        }
+      })
+  }
+
+  createAlbum = (name, selected) => {
     this.props.createAlbum(name, selected)
+      .then(album => {
+        this.props.closeAddAlbum()
+        Alerter.success('Albums.create.success', {name: name, smart_count: selected.length})
+        this.props.router.push(`/albums/${album.id}`)
+      })
+      .catch(error => Alerter.error(error.message, error.messageData))
   }
 
   componentDidMount () {
@@ -135,13 +160,9 @@ const mapStateToProps = (state, ownProps) => ({
 export const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchIfNeededPhotos: () => dispatch(fetchIfNeededPhotos()),
   fetchMorePhotos: (index, skip) => dispatch(fetchMorePhotos(index, skip)),
-  createAlbum: (name, photos) =>
-    dispatch(createAlbum(name, photos))
-      .then(() => {
-        ownProps.closeAddAlbum()
-        Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
-      })
-      .catch(error => Alerter.error(error.message, error.messageData))
+  createAlbum: (name, photos) => dispatch(createAlbum(name, photos)),
+  // TODO: we should not have to dispatch this method (see comments in redux-cozy-api)
+  checkUniquenessOfAlbumName: (name) => dispatch(checkUniquenessOfAlbumName(name))
 })
 
 export default withRouter(translate()(connect(
