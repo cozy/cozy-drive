@@ -7,7 +7,12 @@ import {
   getEntity,
   getReferencedFilesList,
   createEntity,
-  checkUniquenessOf
+  updateEntity,
+  deleteEntity,
+  checkUniquenessOf,
+  addReferencedFiles,
+  removeReferencedFiles,
+  downloadArchive
 } from '../../lib/redux-cozy-api'
 
 const ALBUMS = 'io.cozy.photos.albums'
@@ -25,8 +30,11 @@ export const fetchAlbum = (id) => fetchDocument(ALBUMS, id, { include: ['photos'
 export const fetchAlbumPhotos = (album, skip = 0) => fetchReferencedFiles(album, 'photos', skip)
 
 export const checkUniquenessOfAlbumName = (name) => checkUniquenessOf(ALBUMS, 'name', name)
-export const createAlbum = (name, photoIds) => createEntity({
-  type: ALBUMS,
-  name,
-  photos: photoIds
-})
+export const createAlbum = (name, photoIds) => createEntity({ type: ALBUMS, name, photos: photoIds })
+
+export const addToAlbum = (album, photoIds) => addReferencedFiles(album, 'photos', photoIds)
+export const removeFromAlbum = (album, photoIds) => removeReferencedFiles(album, 'photos', photoIds)
+
+export const updateAlbum = (album) => updateEntity(album)
+export const deleteAlbum = (album) => deleteEntity(album)
+export const downloadAlbum = (album, photos) => downloadArchive(album.name, photos.map(p => p.id))

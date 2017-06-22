@@ -16,16 +16,21 @@ import { getSelectedIds } from '../ducks/selection'
 import {
   fetchAlbums,
   getAlbumsList,
-  cancelAddToAlbum,
-  closeAddToAlbum,
   createAlbum,
-  addToAlbum }
-from '../ducks/albums'
+  addToAlbum,
+  checkUniquenessOfAlbumName
+} from '../features/albums'
 
+// TODO
+import {
+  cancelAddToAlbum,
+  closeAddToAlbum
+} from '../ducks/albums'
+
+// TODO: what the f... was that for?
 import {
   refetchSomePhotos
-}
-from '../ducks/timeline'
+} from '../ducks/timeline'
 
 export class AddToAlbumModal extends Component {
   componentWillMount () {
@@ -42,8 +47,8 @@ export class AddToAlbumModal extends Component {
       onSubmitSelectedAlbum
     } = props
 
-    const { fetchingStatus } = props.albums ? props.albums : { fetchingStatus: 'loading' }
-    const isFetchingAlbums = fetchingStatus === 'pending' || fetchingStatus === 'loading'
+    const fetchStatus = albums ? albums.fetchStatus : 'loading'
+    const isFetchingAlbums = fetchStatus === 'pending' || fetchStatus === 'loading'
 
     return (
       <Modal
@@ -82,27 +87,38 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: () => {
     dispatch(cancelAddToAlbum())
   },
-  onSubmitNewAlbum: (name, photos) => {
-    return dispatch(createAlbum(name, photos))
-      .then(() => {
-        return dispatch(refetchSomePhotos(photos))
-      })
-      .then(() => {
-        dispatch(closeAddToAlbum())
-        Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
-      })
-      .catch(error => Alerter.error(error.message, error.messageData))
+  onSubmitNewAlbum: async (name, photos) => {
+    try {
+      if (!name) {
+        Alerter.error('Albums.create.error.name_missing')
+        return
+      }
+      // TODO: we should not have to dispatch this method (see comments in redux-cozy-api)
+      const unique = await dispatch(checkUniquenessOfAlbumName(name))
+      if (!unique) {
+        Alerter.error('Albums.create.error.already_exists', { name })
+        return
+      }
+      const album = await dispatch(createAlbum(name, photos))
+      dispatch(closeAddToAlbum())
+      Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
+    } catch (error) {
+      Alerter.error('Albums.create.error.generic')
+    }
   },
-  onSubmitSelectedAlbum: (album, photos) => {
-    return dispatch(addToAlbum(album, photos))
-      .then(() => {
-        return dispatch(refetchSomePhotos(photos))
-      })
-      .then(() => {
-        dispatch(closeAddToAlbum())
+  onSubmitSelectedAlbum: async (album, photos) => {
+    try {
+      const addedPhotos = await dispatch(addToAlbum(album, photos))
+      if (addedPhotos.length !== photos.length) {
+        Alerter.info('Alerter.photos.already_added_photo')
+      } else {
         Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length})
-      })
-      .catch(error => Alerter.error(error.message, error.messageData))
+      }
+      dispatch(closeAddToAlbum())
+    } catch (error) {
+      console.log(error)
+      Alerter.error('Albums.add_photos.error.reference')
+    }
   },
   fetchAlbums: () => dispatch(fetchAlbums())
 })

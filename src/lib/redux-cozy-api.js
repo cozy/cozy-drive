@@ -10,12 +10,21 @@ const GET_OR_CREATE_INDEX = 'GET_OR_CREATE_INDEX'
 const FETCH_DOCUMENTS = 'FETCH_DOCUMENTS'
 const FETCH_DOCUMENT = 'FETCH_DOCUMENT'
 const FETCH_REFERENCED_FILES = 'FETCH_REFERENCED_FILES'
+const ADD_REFERENCED_FILES = 'ADD_REFERENCED_FILES'
+const REMOVE_REFERENCED_FILES = 'REMOVE_REFERENCED_FILES'
 const CREATE_ENTITY = 'CREATE_ENTITY'
+const UPDATE_ENTITY = 'UPDATE_ENTITY'
+const DELETE_ENTITY = 'DELETE_ENTITY'
 const RECEIVE_DATA = 'RECEIVE_DATA'
+const RECEIVE_DOCUMENT = 'RECEIVE_DOCUMENT'
 const RECEIVE_REFERENCED_FILES = 'RECEIVE_REFERENCED_FILES'
 const RECEIVE_CREATION_CONFIRM = 'RECEIVE_CREATION_CONFIRM'
+const RECEIVE_UPDATE_CONFIRM = 'RECEIVE_UPDATE_CONFIRM'
+const RECEIVE_DELETION_CONFIRM = 'RECEIVE_DELETION_CONFIRM'
 const RECEIVE_ERROR = 'RECEIVE_ERROR'
 const RECEIVE_CREATION_ERROR = 'RECEIVE_CREATION_ERROR'
+const RECEIVE_UPDATE_ERROR = 'RECEIVE_UPDATE_ERROR'
+const RECEIVE_DELETION_ERROR = 'RECEIVE_DELETION_ERROR'
 
 // reducers
 const schemas = (state = {}, action) => {
@@ -44,10 +53,23 @@ const entities = (state = {}, action) => {
         ...state,
         [FILES_DOCTYPE]: Object.assign({}, state[FILES_DOCTYPE], objectifyEntitiesArray(action.response.data))
       }
+    case ADD_REFERENCED_FILES:
+    case REMOVE_REFERENCED_FILES:
+      return {
+        ...state,
+        [action.entity.type]: Object.assign({}, state[action.entity.type], { [action.entity.id]: action.entity })
+      }
+    case RECEIVE_DOCUMENT:
     case RECEIVE_CREATION_CONFIRM:
+    case RECEIVE_UPDATE_CONFIRM:
       return {
         ...state,
         [action.entity.type]: Object.assign({}, state[action.entity.type], objectifyEntitiesArray(action.response.data))
+      }
+    case RECEIVE_DELETION_CONFIRM:
+      return {
+        ...state,
+        [action.entity.type]: removeObjectProperty(state[action.entity.type], action.entity.id)
       }
     default:
       return state
@@ -124,11 +146,21 @@ const ids = (state = [], action) => {
         ...state,
         ...action.response.data.map(doc => doc.id)
       ]
+    case ADD_REFERENCED_FILES:
+      // TODO: here we don't follow JSONAPI conventions... (we pass an array of ids in the action)
+      return [
+        ...state,
+        ...action.ids
+      ]
+    case REMOVE_REFERENCED_FILES:
+      return state.filter(id => action.ids.indexOf(id) === -1)
     case RECEIVE_CREATION_CONFIRM:
       return [
         ...state,
         action.response.data[0].id
       ]
+    case RECEIVE_DELETION_CONFIRM:
+      return state.filter(id => id !== action.response.data[0].id)
     default:
       return state
   }
@@ -149,7 +181,10 @@ const endpoints = (state = {}, action) => {
     case FETCH_REFERENCED_FILES:
     case RECEIVE_DATA:
     case RECEIVE_REFERENCED_FILES:
+    case ADD_REFERENCED_FILES:
+    case REMOVE_REFERENCED_FILES:
     case RECEIVE_CREATION_CONFIRM:
+    case RECEIVE_DELETION_CONFIRM:
     case RECEIVE_ERROR:
       const entity = action.entity
       const endpointKey = entity
@@ -168,6 +203,15 @@ export default combineReducers({
 })
 
 // utils
+const removeObjectProperty = (obj, prop) => {
+  return Object.keys(obj).reduce((result, key) => {
+    if (key !== prop) {
+      result[key] = obj[key]
+    }
+    return result
+  }, {})
+}
+
 const objectifyEntitiesArray = (entities) => {
   let obj = {}
   entities.forEach(entity => obj[entity.id] = entity)
@@ -181,12 +225,30 @@ const mapEntitiesToIds = (entities, doctype, ids) => {
   return ids.map(id => entities[doctype][id])
 }
 
+const slugify = (text) =>
+  text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
+    .replace(/--+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '')             // Trim - from end of text
+
+const forceFileDownload = (href, filename) => {
+  const element = document.createElement('a')
+  element.setAttribute('href', href)
+  element.setAttribute('download', filename)
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
+}
+
 // selectors
 const getSchema = (state, doctype) => state.api.schemas[doctype]
 const getRelations = (state, doctype) => getSchema(state, doctype).relations || {}
 const getIndex = (state, doctype) => getSchema(state, doctype).index
 
-export const getEntity = (state, doctype, id) => getEntities(state, doctype, [id])[0]
+export const getEntity = (state, doctype, id) => !state.api.entities[doctype] ? null : state.api.entities[doctype][id]
 
 export const getEntities = (state, doctype, ids) => mapEntitiesToIds(state.api.entities, doctype, ids)
 
@@ -204,8 +266,14 @@ export const getEndpointList = (state, key) => {
 export const getReferencedFilesList = (state, doctype, id, relationName) => getEndpointList(state, `${doctype}/${id}/${relationName}`)
 
 // async helpers: they interact with the stack but not with the store
+export const downloadArchive = async (notSecureFilename, fileIds) => {
+  const filename = slugify(notSecureFilename)
+  const href = await cozy.client.files.getArchiveLinkByIds(fileIds, filename)
+  const fullpath = await cozy.client.fullpath(href)
+  forceFileDownload(fullpath, filename + '.zip')
+}
 
-// TODO: for this first helper, sadly, we need to make it an action creator
+// TODO: for this helper, sadly, we need to make it an action creator
 // because we need the store's state in order to retrieve the mango index
 // that's another proof that indexes should be managed by cozy-client-js...
 export const checkUniquenessOf = (doctype, property, value) => async (dispatch, getState) => {
@@ -276,6 +344,7 @@ const getOrFetchDocument = (doctype, id) => async (dispatch, getState) => {
     doc = await cozy.client.data.find(doctype, id)
     // we normalize again...
     doc = Object.assign({}, doc, { id: doc._id, type: doc._type })
+    dispatch({ type: RECEIVE_DOCUMENT, entity: doc, response: { data: [doc] } })
   }
   return doc
 }
@@ -295,6 +364,7 @@ export const fetchDocument = (doctype, id, options) => async (dispatch, getState
     }
   } catch (error) {
     dispatch({ type: RECEIVE_ERROR, doctype, id, error })
+    console.log(error)
   }
 }
 
@@ -307,13 +377,14 @@ export const fetchReferencedFiles = (entity, relationName, skip = 0) => async (d
     const { included, meta } = await cozy.client.data.fetchReferencedFiles(entity, { skip, limit: FETCH_LIMIT })
     // we forge a standard response with a 'data' property
     const response = {
-      data: included.map(file => Object.assign({}, file.attributes, { id: file.id, _id: file.id, links: file.links })),
+      data: !included ? [] : included.map(file => Object.assign({}, file.attributes, { id: file.id, _id: file.id, links: file.links })),
       meta,
       next: meta.count > skip + FETCH_LIMIT
     }
     dispatch({ type: RECEIVE_REFERENCED_FILES, entity, relationName, response, skip })
   } catch (error) {
     dispatch({ type: RECEIVE_ERROR, entity, relationName, error })
+    console.log(error)
   }
 }
 
@@ -328,6 +399,9 @@ export const createEntity = (entity) => async (dispatch, getState) => {
       const relationType = relations[relationName].type
       // TODO: we only handle files relations here
       if (relationType === FILES_DOCTYPE) {
+        // WARN: we don't use the addReferencedFiles action creator here
+        // because the entity should already have a property named after the
+        // relation's name containing IDs
         await cozy.client.data.addReferencedFiles(created, entity[relationName])
       }
     }
@@ -338,6 +412,57 @@ export const createEntity = (entity) => async (dispatch, getState) => {
     return normalizedEntity
   } catch (error) {
     dispatch({ type: RECEIVE_CREATION_ERROR, entity, error })
+    throw error
+  }
+}
+
+export const addReferencedFiles = (entity, relationName, ids) => async (dispatch, getState) => {
+  // TODO: here we try to avoid adding duplicates, but if all IDs have not been fetched on
+  // the entity side, we may still add duplicates... This should probably best handled by the stack
+  const newIds = ids.filter(id => entity[relationName].indexOf(id) === -1)
+  await cozy.client.data.addReferencedFiles(entity, newIds)
+  const updated = Object.assign({}, entity, { [relationName]: [...entity[relationName], ...newIds] })
+  dispatch({ type: ADD_REFERENCED_FILES, entity: updated, relationName, ids: newIds })
+  return newIds
+}
+
+export const removeReferencedFiles = (entity, relationName, ids) => async (dispatch, getState) => {
+  await cozy.client.data.removeReferencedFiles(entity, ids)
+  const updated = Object.assign({}, entity, { [relationName]: entity[relationName].filter(id => ids.indexOf(id) === -1) })
+  dispatch({ type: REMOVE_REFERENCED_FILES, entity: updated, relationName, ids })
+  return ids
+}
+
+export const updateEntity = (entity) => async (dispatch, getState) => {
+  try {
+    // TODO: handle this action type
+    dispatch({ type: UPDATE_ENTITY, entity })
+    const updated = await cozy.client.data.updateAttributes(entity.type, entity.id, entity)
+    // TODO: we don't handle the entity's relations here...
+
+    // we forge a standard response with a 'data' property
+    const response = { data: [entity] }
+    dispatch({ type: RECEIVE_UPDATE_CONFIRM, entity, response })
+    return entity
+  } catch (error) {
+    dispatch({ type: RECEIVE_UPDATE_ERROR, entity, error })
+    throw error
+  }
+}
+
+export const deleteEntity = (entity) => async (dispatch, getState) => {
+  try {
+    // TODO: handle this action type
+    dispatch({ type: DELETE_ENTITY, entity })
+    const deleted = await cozy.client.data.delete(entity.type, entity)
+    // TODO: we don't handle the entity's relations here. Do we have to???
+
+    // we forge a standard response with a 'data' property
+    const response = { data: [entity] }
+    dispatch({ type: RECEIVE_DELETION_CONFIRM, entity, response })
+    return entity
+  } catch (error) {
+    dispatch({ type: RECEIVE_DELETION_ERROR, entity, error })
     throw error
   }
 }

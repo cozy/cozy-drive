@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../styles/layout'
 
+// TODO
 import { AlbumsToolbar } from '../ducks/albums'
 import { fetchAlbums, getAlbumsList } from '../features/albums'
 import { filterSharedDocuments } from '../ducks/sharing'
@@ -65,7 +66,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbums: (index) => dispatch(fetchAlbums(index))
+  fetchAlbums: () => dispatch(fetchAlbums())
 })
 
 export default connect(

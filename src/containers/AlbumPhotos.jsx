@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
-import { AlbumToolbar, updateAlbum } from '../ducks/albums'
-import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos } from '../features/albums'
+// TODO
+import { AlbumToolbar } from '../ducks/albums'
+import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../features/albums'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
@@ -23,7 +24,7 @@ export class AlbumPhotos extends Component {
   }
 
   editAlbumName () {
-    this.setState({editing: true})
+    this.setState({ editing: true })
   }
 
   renameAlbum (name) {
@@ -31,14 +32,14 @@ export class AlbumPhotos extends Component {
       Alerter.error('Error.album_rename_abort')
       return
     } else if (name === this.props.album.name) {
-      this.setState({editing: false})
+      this.setState({ editing: false })
       return
     }
 
     let updatedAlbum = { ...this.props.album, name: name }
     this.props.updateAlbum(updatedAlbum)
       .then(() => {
-        this.setState({editing: false})
+        this.setState({ editing: false })
       })
       .catch(() => {
         Alerter.error('Error.generic')
