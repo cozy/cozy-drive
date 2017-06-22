@@ -89,7 +89,9 @@ class FolderView extends Component {
         </Topbar>
         <div role='contentinfo'>
           {__TARGET__ === 'mobile' && <UploadProgression />}
-          {selectionModeActive && <SelectionBar selected={selected} actions={actions.selection} />}
+          <div style={{display: selectionModeActive ? 'inherit' : 'none'}} >
+            <SelectionBar selected={selected} actions={actions.selection} />
+          </div>
           <div className={styles['fil-content-table']}>
             <FileListHeader />
             <div className={styles['fil-content-body']}>
