@@ -218,10 +218,10 @@
       "pending": "Pending"
     },
     "alert": {
-      "success": "%{smart_count} photo uploaded with success. |||| %{smart_count} photos uploaded with success.",
+      "success": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
       "success_conflicts":
-        "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
-      "errors": "Errors occurred during the photos upload."
+        "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
+      "errors": "Errors occurred during the file upload."
     }
   }
 }

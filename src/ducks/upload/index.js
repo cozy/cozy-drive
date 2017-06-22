@@ -89,24 +89,18 @@ export const onQueueEmpty = () => (dispatch, getState) => {
   const errors = getErrors(queue)
   const loaded = getLoaded(queue)
 
-  dispatch({ type: PURGE_UPLOAD_QUEUE })
+  let action = { type: PURGE_UPLOAD_QUEUE }
 
   if (!conflicts.length && !errors.length) {
+    action.alert = alertShow('UploadQueue.alert.success', {smart_count: loaded.length}, 'success')
     dispatch({type: 'random', alert: alertShow('UploadQueue.alert.success', {smart_count: loaded.length}, 'success')})
-//    Alerter.success(
-//      'UploadQueue.alert.success',
-//      {smart_count: loaded.length}
-//    )
   } else if (conflicts.length && !errors.length) {
-    dispatch({type: 'random', alert: alertShow('UploadQueue.alert.success_conflicts', {smart_count: loaded.length, conflictNumber: conflicts.length}, 'info')})
-//    Alerter.info(
-//      'UploadQueue.alert.success_conflicts',
-//      {smart_count: loaded.length, conflictNumber: conflicts.length}
-//    )
+    action.alert = alertShow('UploadQueue.alert.success_conflicts', {smart_count: loaded.length, conflictNumber: conflicts.length}, 'info')
   } else {
-    dispatch({type: 'random', alert: alertShow('UploadQueue.alert.errors', null, 'error')})
-//    Alerter.error('UploadQueue.alert.errors')
+    action.alert = alertShow('UploadQueue.alert.errors', null, 'error')
   }
+
+  dispatch(action)
 }
 
 // selectors

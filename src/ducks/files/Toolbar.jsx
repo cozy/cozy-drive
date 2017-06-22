@@ -58,16 +58,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-//    console.log(files, displayedFolder)
-    dispatch(addToUploadQueue(files, displayedFolder._id, file => {
-      return uploadFiles(file)
-    }))
-//    dispatch(uploadFiles(files, displayedFolder))
-//      .catch(err => {
-//        if (err.response && err.response.status === 413) {
-//          alert(<QuotaAlert t={ownProps.t} />)
-//        }
-//      })
+    dispatch(addToUploadQueue(files, displayedFolder._id, file => uploadFiles(file)))
   }
 })
 

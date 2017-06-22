@@ -109,7 +109,7 @@ const files = (state = [], action) => {
     case RENAME_SUCCESS:
       return updateItem(action.file, state)
     case UPLOAD_FILE_SUCCESS:
-      return insertItem(action.file, state, action.currentFileCount)
+      return insertItem(action.file, state)
     case CREATE_FOLDER_SUCCESS:
       return insertItem(action.folder, state, action.currentFileCount)
     case TRASH_FILES_SUCCESS:
