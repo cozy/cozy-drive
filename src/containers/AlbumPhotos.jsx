@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
-// TODO
-import { AlbumToolbar } from '../ducks/albums'
-import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../features/albums'
+import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../features/albums'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'

@@ -81,7 +81,7 @@ class App extends Component {
         </div>
       )
     }
-    const { entries, fetchStatus, hasMore, error } = photos
+    const { entries, hasMore } = photos
     const { selected } = this.state
     return (
       <div className={styles['pho-public-layout']}>

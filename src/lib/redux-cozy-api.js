@@ -214,7 +214,7 @@ const removeObjectProperty = (obj, prop) => {
 
 const objectifyEntitiesArray = (entities) => {
   let obj = {}
-  entities.forEach(entity => obj[entity.id] = entity)
+  entities.forEach(entity => { obj[entity.id] = entity })
   return obj
 }
 
@@ -437,7 +437,7 @@ export const updateEntity = (entity) => async (dispatch, getState) => {
   try {
     // TODO: handle this action type
     dispatch({ type: UPDATE_ENTITY, entity })
-    const updated = await cozy.client.data.updateAttributes(entity.type, entity.id, entity)
+    /* const updated = */ await cozy.client.data.updateAttributes(entity.type, entity.id, entity)
     // TODO: we don't handle the entity's relations here...
 
     // we forge a standard response with a 'data' property
@@ -454,7 +454,7 @@ export const deleteEntity = (entity) => async (dispatch, getState) => {
   try {
     // TODO: handle this action type
     dispatch({ type: DELETE_ENTITY, entity })
-    const deleted = await cozy.client.data.delete(entity.type, entity)
+    /* const deleted = */ await cozy.client.data.delete(entity.type, entity)
     // TODO: we don't handle the entity's relations here. Do we have to???
 
     // we forge a standard response with a 'data' property

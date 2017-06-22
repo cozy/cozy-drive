@@ -18,19 +18,10 @@ import {
   getAlbumsList,
   createAlbum,
   addToAlbum,
-  checkUniquenessOfAlbumName
-} from '../features/albums'
-
-// TODO
-import {
+  checkUniquenessOfAlbumName,
   cancelAddToAlbum,
   closeAddToAlbum
-} from '../ducks/albums'
-
-// TODO: what the f... was that for?
-import {
-  refetchSomePhotos
-} from '../ducks/timeline'
+} from '../features/albums'
 
 export class AddToAlbumModal extends Component {
   componentWillMount () {
@@ -101,7 +92,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       }
       const album = await dispatch(createAlbum(name, photos))
       dispatch(closeAddToAlbum())
-      Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
+      Alerter.success('Albums.create.success', {name: album.name, smart_count: photos.length})
     } catch (error) {
       Alerter.error('Albums.create.error.generic')
     }

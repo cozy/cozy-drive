@@ -9,13 +9,12 @@ import ShareButton from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { Item } from '../../../components/Menu'
 
-import { isSelectionBarVisible, showSelectionBar } from '../../selection'
-// TODO
-//import { downloadAlbum } from '..'
-import { deleteAlbum, downloadAlbum } from '../../../features/albums'
+import { isSelectionBarVisible, showSelectionBar } from '../../../ducks/selection'
+
+import { deleteAlbum, downloadAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import confirm from '../../../lib/confirm'
-import { ShareModal } from '../../sharing'
+import { ShareModal } from '../../../ducks/sharing'
 
 import classNames from 'classnames'
 

@@ -22,7 +22,7 @@ export const getAlbumsList = (state) => getEntityList(state, ALBUMS)
 // TODO
 export const fetchAlbumCover = async (album) => cozy.client.files.statById(album.photos[0])
 
-export const getAlbum = (state, id) => getEntity(state, ALBUMS, id /*, { include: ['photos'] }*/)
+export const getAlbum = (state, id) => getEntity(state, ALBUMS, id /*, { include: ['photos'] } */)
 // TODO: not ideal, too much impl details leak
 export const getAlbumPhotos = (state, id) => getReferencedFilesList(state, ALBUMS, id, 'photos')
 export const fetchAlbum = (id) => fetchDocument(ALBUMS, id, { include: ['photos'] })
@@ -38,3 +38,28 @@ export const removeFromAlbum = (album, photoIds) => removeReferencedFiles(album,
 export const updateAlbum = (album) => updateEntity(album)
 export const deleteAlbum = (album) => deleteEntity(album)
 export const downloadAlbum = (album, photos) => downloadArchive(album.name, photos.map(p => p.id))
+
+// TODO: refactor these 3 actions somewhere...
+const ADD_TO_ALBUM = 'ADD_TO_ALBUM'
+const ADD_TO_ALBUM_SUCCESS = 'ADD_TO_ALBUM_SUCCESS'
+const CANCEL_ADD_TO_ALBUM = 'CANCEL_ADD_TO_ALBUM'
+
+export const openAddToAlbum = photos => ({
+  type: ADD_TO_ALBUM,
+  photos: photos
+})
+
+export const closeAddToAlbum = () => {
+  const meta = { cancelSelection: true }
+  return { type: ADD_TO_ALBUM_SUCCESS, meta }
+}
+
+export const cancelAddToAlbum = photos => ({
+  type: CANCEL_ADD_TO_ALBUM,
+  photos: photos
+})
+
+import AlbumToolbar from './components/AlbumToolbar'
+import AlbumsToolbar from './components/AlbumsToolbar'
+
+export { AlbumToolbar, AlbumsToolbar }

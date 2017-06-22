@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../styles/layout'
 
-// TODO
-import { AlbumsToolbar } from '../ducks/albums'
-import { fetchAlbums, getAlbumsList } from '../features/albums'
+import { AlbumsToolbar, fetchAlbums, getAlbumsList } from '../features/albums'
 import { filterSharedDocuments } from '../ducks/sharing'
 
 import AlbumsList from '../components/AlbumsList'

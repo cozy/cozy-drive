@@ -2,9 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
-// TODO
-import { openAddToAlbum } from '../ducks/albums'
-import { removeFromAlbum } from '../features/albums'
+
+import { openAddToAlbum, removeFromAlbum } from '../features/albums'
 import { SelectionBar, hideSelectionBar } from '../ducks/selection'
 import Alerter from '../components/Alerter'
 import confirm from '../lib/confirm'
