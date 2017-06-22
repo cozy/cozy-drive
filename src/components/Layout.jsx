@@ -4,6 +4,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import Sidebar from './Sidebar'
+import { UploadQueue } from '../ducks/upload'
 import { Alerter } from 'cozy-ui/react/Alerter'
 
 const Layout = ({ children }) => (
@@ -11,6 +12,7 @@ const Layout = ({ children }) => (
     <Sidebar />
     <Alerter />
     { children }
+    <UploadQueue />
   </div>
 )
 

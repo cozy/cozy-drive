@@ -209,5 +209,19 @@
       "loginagain": "Log in again",
       "logout": "Log out"
     }
+  },
+  "UploadQueue": {
+    "path": "/Photos/Uploaded from Cozy Photos",
+    "header": "Uploading %{smart_count} photo to Cozy Photos |||| Uploading %{smart_count} photos to Cozy Photos",
+    "header_mobile": "%{done} of %{total} uploading…",
+    "item": {
+      "pending": "Pending"
+    },
+    "alert": {
+      "success": "%{smart_count} photo uploaded with success. |||| %{smart_count} photos uploaded with success.",
+      "success_conflicts":
+        "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
+      "errors": "Errors occurred during the photos upload."
+    }
   }
 }

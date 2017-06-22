@@ -10,6 +10,7 @@ import Menu, { Item } from '../../components/Menu'
 import QuotaAlert from '../../components/QuotaAlert'
 import { alert } from '../../lib/confirm'
 
+import { addToUploadQueue } from '../upload'
 import { uploadFiles } from '../../actions'
 
 const Toolbar = ({ t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFiles }) => (
@@ -57,12 +58,16 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-    dispatch(uploadFiles(files, displayedFolder))
-      .catch(err => {
-        if (err.response && err.response.status === 413) {
-          alert(<QuotaAlert t={ownProps.t} />)
-        }
-      })
+//    console.log(files, displayedFolder)
+    dispatch(addToUploadQueue(files, displayedFolder._id, file => {
+      return uploadFiles(file)
+    }))
+//    dispatch(uploadFiles(files, displayedFolder))
+//      .catch(err => {
+//        if (err.response && err.response.status === 413) {
+//          alert(<QuotaAlert t={ownProps.t} />)
+//        }
+//      })
   }
 })
 

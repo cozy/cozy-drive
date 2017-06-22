@@ -117,7 +117,13 @@ export const openFileInNewTab = (folder, file) => {
   }
 }
 
-export const uploadFiles = (files, folder) => {
+export const uploadFiles = (file) => {
+  return {
+    type: UPLOAD_FILE_SUCCESS,
+    file: file,
+    currentFileCount: 1
+  }
+  /*
   return async (dispatch, getState) => {
     let currentFileCount = getState().view.fileCount
     dispatch({
@@ -141,7 +147,7 @@ export const uploadFiles = (files, folder) => {
       }
       currentFileCount++
     }
-  }
+  }*/
 }
 
 export const abortAddFolder = (accidental) => {
