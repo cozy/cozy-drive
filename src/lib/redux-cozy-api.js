@@ -54,10 +54,19 @@ const entities = (state = {}, action) => {
         [FILES_DOCTYPE]: Object.assign({}, state[FILES_DOCTYPE], objectifyEntitiesArray(action.response.data))
       }
     case ADD_REFERENCED_FILES:
-    case REMOVE_REFERENCED_FILES:
       return {
         ...state,
         [action.entity.type]: Object.assign({}, state[action.entity.type], { [action.entity.id]: action.entity })
+      }
+    case REMOVE_REFERENCED_FILES:
+      if (!state[action.entity.type][action.entity.id]) {
+        return state // nothing to update
+      }
+      const entity = state[action.entity.type][action.entity.id]
+      const updated = Object.assign({}, entity, { [action.relationName]: entity[action.relationName].filter(id => action.ids.indexOf(id) === -1) })
+      return {
+        ...state,
+        [action.entity.type]: Object.assign({}, state[action.entity.type], { [action.entity.id]: updated })
       }
     case RECEIVE_DOCUMENT:
     case RECEIVE_CREATION_CONFIRM:
@@ -130,6 +139,10 @@ const count = (state = 0, action) => {
     case RECEIVE_REFERENCED_FILES:
       const response = action.response
       return response.meta && response.meta.count ? response.meta.count : response.data.length
+    case ADD_REFERENCED_FILES:
+      return state + action.ids.length
+    case REMOVE_REFERENCED_FILES:
+      return state - action.ids.length
     default:
       return state
   }
@@ -427,9 +440,12 @@ export const addReferencedFiles = (entity, relationName, ids) => async (dispatch
 }
 
 export const removeReferencedFiles = (entity, relationName, ids) => async (dispatch, getState) => {
-  await cozy.client.data.removeReferencedFiles(entity, ids)
-  const updated = Object.assign({}, entity, { [relationName]: entity[relationName].filter(id => ids.indexOf(id) === -1) })
-  dispatch({ type: REMOVE_REFERENCED_FILES, entity: updated, relationName, ids })
+  // TODO: we need to make sure the entity have _id and _type props because for now,
+  // deleting a photo from the timeline only marginally use this duck and therefore entities
+  // passed to this method may not be normalized
+  const normalizedEntity = Object.assign({}, entity, { _id: entity.id, _type: entity.type })
+  await cozy.client.data.removeReferencedFiles(normalizedEntity, ids)
+  dispatch({ type: REMOVE_REFERENCED_FILES, entity: normalizedEntity, relationName, ids })
   return ids
 }
 

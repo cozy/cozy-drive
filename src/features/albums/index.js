@@ -16,6 +16,7 @@ import {
 } from '../../lib/redux-cozy-api'
 
 const ALBUMS = 'io.cozy.photos.albums'
+export const DOCTYPE = ALBUMS
 
 export const fetchAlbums = () => fetchDocuments(ALBUMS)
 export const getAlbumsList = (state) => getEntityList(state, ALBUMS)
