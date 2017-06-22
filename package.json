@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "main": "src/main.jsx",
   "scripts": {
     "build": "npm run build:browser",
@@ -37,7 +37,7 @@
     "android:publish": "(cd mobile && fastlane supply)",
     "ios:run": "(cd mobile && cordova run ios --device)",
     "ios:run:emulator": "(cd mobile && cordova run ios --emulator)",
-    "ios:publish": "(cd mobile && fastlane ios pushtest)"
+    "ios:publish": "npm run build:mobile && (cd mobile && fastlane ios pushtest)"
   },
   "repository": {
     "type": "git",
