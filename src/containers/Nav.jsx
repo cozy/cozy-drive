@@ -9,7 +9,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
 
-import Spinner from '../components/Spinner'
+import Spinner from 'cozy-ui/react/Spinner'
 import { openFiles, openTrash } from '../actions'
 
 class CustomLink extends Component {

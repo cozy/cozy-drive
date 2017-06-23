@@ -8,6 +8,7 @@ import styles from '../styles/table'
 import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
+import Spinner from 'cozy-ui/react/Spinner'
 
 import { getFolderUrl } from '../reducers'
 
@@ -26,6 +27,27 @@ export const getClassFromMime = (attrs) => {
   return styles['fil-file-' + attrs.mime.split('/')[0]] || styles['fil-file-files']
 }
 
+const getClassDiv = element => {
+  if (element.nodeName === 'DIV') {
+    return element.className
+  }
+  return getClassDiv(element.parentNode)
+}
+
+const enableTouchEvents = ev => {
+  // remove event when you rename a file
+  if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
+    return false
+  }
+
+  // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
+  if (getClassDiv(ev.target).indexOf(styles['fil-content-file-select']) !== -1) {
+    return false
+  }
+
+  return true
+}
+
 class File extends Component {
   constructor (props) {
     super(props)
@@ -36,15 +58,11 @@ class File extends Component {
 
   componentDidMount () {
     this.gesturesHandler = new Hammer.Manager(this.fil)
-    this.gesturesHandler.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }))
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
-    this.gesturesHandler.get('doubletap').recognizeWith('singletap').requireFailure('onpress')
-    this.gesturesHandler.get('singletap').requireFailure('doubletap').requireFailure('onpress')
-    this.gesturesHandler.on('onpress singletap doubletap', (ev) => {
-      const enableTouchEvents = ev => ['INPUT', 'BUTTON', 'LABEL'].indexOf(ev.target.nodeName) === -1
+    this.gesturesHandler.on('onpress singletap', (ev) => {
       if (enableTouchEvents(ev)) {
-        if (ev.type === 'onpress' || (this.props.selectionModeActive && ev.type === 'singletap')) {
+        if (ev.type === 'onpress' || this.props.selectionModeActive) {
           this.toggle(ev.srcEvent)
         } else {
           this.open(ev.srcEvent, this.props.attributes)
@@ -87,18 +105,18 @@ class File extends Component {
           { [styles['fil-content-row--selectable']]: selectionModeActive }
         )}
       >
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])}>
+        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} onclick={(e) => this.toggle(e)}>
           <span data-input='checkbox'>
             <input
               type='checkbox'
               checked={selected}
              />
-            <label onClick={e => this.toggle(e)} />
+            <label />
           </span>
         </div>
         {this.renderFilenameCell(attributes, opening, isRenaming)}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
-          <time datetime=''>{ f(attributes.created_at, 'MMM D, YYYY') }</time>
+          <time datetime=''>{ f(attributes.created_at, t('table.row_update_format')) }</time>
         </div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])}>
           {isDirectory(attributes)
@@ -131,7 +149,7 @@ class File extends Component {
           : <div>
             {filename}
             {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
-            {opening === true && <div className={styles['fil-loading']} />}
+            {opening === true && <Spinner />}
           </div>
         }
       </div>

@@ -2,9 +2,9 @@
 
 import utilStyles from '../styles/utils'
 import React from 'react'
-import Loading from './Loading'
+import Spinner from 'cozy-ui/react/Spinner'
 
-class FileViewer extends React.Component {
+class IntentHandler extends React.Component {
   getInitialState () {
     return {
       loading: true
@@ -36,20 +36,24 @@ class FileViewer extends React.Component {
       }
     } catch (error) {
       this.setState({ error, loading: false })
-
-      if (service && intent.attributes.action === 'GET_URL') {
-        service.terminate({ error })
+      if (service && intent && intent.attributes.action === 'GET_URL') {
+        service.terminate({ error: error.message })
       }
     }
   }
 
   render () {
     return <div>
-      { this.state.loading && <Loading /> }
+      { this.state.loading &&
+        <Spinner
+          size='xxlarge'
+          loadingType='message'
+          middle='true'
+        /> }
       { this.state.error && <pre className='coz-error'>{ this.state.error.toString() }</pre>}
       { this.state.url && <embed className={utilStyles.fullscreen} src={this.state.url} /> }
     </div>
   }
 }
 
-export default FileViewer
+export default IntentHandler

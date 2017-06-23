@@ -1,5 +1,5 @@
 /* global __PIWIK_TRACKER_URL__ __PIWIK_SITEID_MOBILE__ */
-import { getTracker, configureTracker, resetTracker } from '../../../src/lib/tracker'
+import { getTracker, configureTracker, resetTracker } from 'cozy-ui/react/helpers/tracker'
 import { softwareID } from './cozy-helper'
 
 const mobileHeartBeatDelay = 30 // how many seconds between each hreatbeat ping to the server

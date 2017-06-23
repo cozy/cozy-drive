@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "0.2.0",
+  "version": "0.3.2",
   "main": "src/main.jsx",
   "scripts": {
     "build": "npm run build:browser",
@@ -37,7 +37,7 @@
     "android:publish": "(cd mobile && fastlane supply)",
     "ios:run": "(cd mobile && cordova run ios --device)",
     "ios:run:emulator": "(cd mobile && cordova run ios --emulator)",
-    "ios:publish": "(cd mobile && fastlane ios pushtest)"
+    "ios:publish": "npm run build:mobile && (cd mobile && fastlane ios pushtest)"
   },
   "repository": {
     "type": "git",
@@ -105,9 +105,9 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "cozy-bar": "3.0.0-beta21",
+    "cozy-bar": "3.0.0-beta29",
     "cozy-client-js": "0.2.5",
-    "cozy-ui": "3.0.0-beta35",
+    "cozy-ui": "3.0.0-beta38",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
     "hammerjs": "^2.0.8",
@@ -150,6 +150,7 @@
       "__SENTRY_TOKEN__": "token",
       "__APP_VERSION__": "0.0.1",
       "__DEVMODE__": true,
+      "__DEVELOPMENT__": true,
       "cozy": {}
     }
   },

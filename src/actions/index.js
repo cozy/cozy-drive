@@ -109,9 +109,11 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
 
 export const openFileInNewTab = (folder, file) => {
   return async dispatch => {
+    const newTab = window.open('about:blank', '_blank') // must be done before the async calls, otherwise pop-up blockers are trigered
+
     const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
-    const href = await cozy.client.files.getDownloadLink(filePath)
-    window.open(`${cozy.client._url}${href}`, '_blank')
+    const href = await cozy.client.files.getDownloadLinkByPath(filePath)
+    newTab.location.href = `${cozy.client._url}${href}`
   }
 }
 
@@ -217,12 +219,14 @@ export const trashFiles = files => {
         trashed.push(await cozy.client.files.trashById(file.id))
       }
     } catch (err) {
-      return dispatch({
-        type: TRASH_FILES_FAILURE,
-        alert: {
-          message: 'alert.try_again'
-        }
-      })
+      if (!isAlreadyInTrash(err)) {
+        return dispatch({
+          type: TRASH_FILES_FAILURE,
+          alert: {
+            message: 'alert.try_again'
+          }
+        })
+      }
     }
     return dispatch({
       type: TRASH_FILES_SUCCESS,
@@ -306,4 +310,17 @@ export const openFileWith = (id, filename) => {
       dispatch(openWithNoAppError(meta))
     }
   }
+}
+
+// helpers
+const isAlreadyInTrash = err => {
+  const reasons = err.reason !== undefined ? err.reason.errors : undefined
+  if (reasons) {
+    for (const reason of reasons) {
+      if (reason.detail === 'File or directory is already in the trash') {
+        return true
+      }
+    }
+  }
+  return false
 }

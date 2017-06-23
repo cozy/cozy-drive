@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 import {
-  toggleFileSelection,
-  showSelectionBar,
-  hideSelectionBar
+  toggleItemSelection,
+  isSelectionBarVisible,
+  showSelectionBar
 } from '../ducks/selection'
 import {
   showActionMenu,
@@ -22,7 +22,6 @@ import {
   getVisibleFiles,
   getSelectedFiles,
   getActionableFiles,
-  isSelectionBarVisible,
   isActionMenuVisible
 } from '../reducers'
 
@@ -69,8 +68,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   showSelectionBar: () =>
     dispatch(showSelectionBar()),
-  hideSelectionBar: () =>
-    dispatch(hideSelectionBar()),
   showActionMenu: fileId =>
     dispatch(showActionMenu(fileId)),
   hideActionMenu: () =>
@@ -82,7 +79,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onFileOpen: (parentFolder, file) =>
     dispatch(openFileInNewTab(parentFolder, file)),
   onFileToggle: (file, selected) =>
-    dispatch(toggleFileSelection(file, selected))
+    dispatch(toggleItemSelection(file, selected))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FileExplorer))

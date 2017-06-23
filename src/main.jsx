@@ -7,18 +7,12 @@ import './styles/main'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { compose, createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import { I18n } from 'cozy-ui/react/I18n'
-import { shouldEnableTracking, getTracker, createTrackerMiddleware } from './lib/tracker'
-import eventTrackerMiddleware from './middlewares/EventTracker'
+import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
 
-import filesApp from './reducers'
 import AppRoute from './components/AppRoute'
-
-const loggerMiddleware = createLogger()
+import configureStore from './store/configureStore'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -47,23 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   let history = hashHistory
-  let middlewares = [thunkMiddleware, loggerMiddleware]
-
   if (shouldEnableTracking() && getTracker()) {
     let trackerInstance = getTracker()
     history = trackerInstance.connectToHistory(hashHistory)
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
-    middlewares.push(eventTrackerMiddleware)
-    middlewares.push(createTrackerMiddleware())
   }
 
-  // Enable Redux dev tools
-  const composeEnhancers = (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-
-  const store = createStore(
-    filesApp,
-    composeEnhancers(applyMiddleware.apply(this, middlewares))
-  )
+  const store = configureStore()
 
   render((
     <I18n lang={data.cozyLocale} dictRequire={(lang) => require(`./locales/${lang}`)}>

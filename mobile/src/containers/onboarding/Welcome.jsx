@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 
 import styles from '../../styles/onboarding'
-import { getPlatformId } from '../../lib/device'
+import { getPlatformId, isIos } from '../../lib/device'
 
 export class Welcome extends Component {
   constructor (props) {
@@ -36,9 +36,9 @@ export class Welcome extends Component {
           >
             {t('mobile.onboarding.welcome.button')}
           </button>
-          <a href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${this.platform}`} className={styles['link']}>
+          {!isIos() && <a href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${this.platform}`} className={styles['link']}>
             {t('mobile.onboarding.welcome.no_account_link')}
-          </a>
+          </a>}
         </footer>
       </div>
     )

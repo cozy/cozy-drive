@@ -44,8 +44,10 @@ export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
 export const wrongAddressErrorMsg = 'mobile.onboarding.server_selection.wrong_address'
 export const wrongAddressWithEmailErrorMsg = 'mobile.onboarding.server_selection.wrong_address_with_email'
+export const wrongAddressV2ErrorMsg = 'mobile.onboarding.server_selection.wrong_address_v2'
 export const wrongAddressError = () => ({ type: ERROR, error: wrongAddressErrorMsg })
 export const wrongAddressWithEmailError = () => ({ type: ERROR, error: wrongAddressWithEmailErrorMsg })
+export const wrongAddressV2Error = () => ({ type: ERROR, error: wrongAddressV2ErrorMsg })
 export class OnBoardingError extends Error {
   constructor (message) {
     super(message)
@@ -79,6 +81,20 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw err
   }
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getDeviceName())
+
+  let isV2Instance
+  try {
+    isV2Instance = await cozy.client.isV2()
+  } catch (err) {
+    // this can happen if the HTTP request to check the instance version fails; in that case, it is likely to fail again and be caught during the authorize process, which is designed to handle this
+    isV2Instance = false
+  }
+
+  if (isV2Instance) {
+    dispatch(wrongAddressV2Error())
+    throw new Error('The cozy address entered is a V2 instance')
+  }
+
   await cozy.client.authorize().then(({ client }) => {
     dispatch(setClient(client))
     startReplication(dispatch, getState)

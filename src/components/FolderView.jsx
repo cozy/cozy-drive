@@ -4,14 +4,14 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import Main from './Main'
 import Topbar from './Topbar'
-import Loading from './Loading'
+import Spinner from 'cozy-ui/react/Spinner'
 import Empty, { EmptyTrash } from './Empty'
 import Oops from './Oops'
 import FileListHeader from './FileListHeader'
 import FileList from './FileList'
 
 import Breadcrumb from '../containers/Breadcrumb'
-import SelectionBar from './SelectionBar'
+import { SelectionBar } from '../ducks/selection'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
 import UploadProgression from '../../mobile/src/containers/UploadProgression'
@@ -22,7 +22,11 @@ const FolderContent = props => {
   const { fetchStatus, files, isAddingFolder } = props
   switch (fetchStatus) {
     case 'pending':
-      return <Loading message={props.t('loading.message')} />
+      return <Spinner
+        size='xxlarge'
+        loadingType='message'
+        middle='true'
+      />
     case 'failed':
       return <Oops />
     case 'loaded':
@@ -66,7 +70,7 @@ class FolderView extends Component {
   render () {
     const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
     const { files, selected, actionable, actions, Toolbar } = this.props
-    const { showActionMenu, hideActionMenu, showSelectionBar, hideSelectionBar } = this.props
+    const { hideActionMenu, showSelectionBar } = this.props
 
     const { showAddFolder } = this.state
 
@@ -89,13 +93,7 @@ class FolderView extends Component {
         </Topbar>
         <div role='contentinfo'>
           {__TARGET__ === 'mobile' && <UploadProgression />}
-          {selectionModeActive &&
-            <SelectionBar
-              selected={selected}
-              actions={actions.selection}
-              onClose={hideSelectionBar}
-              onMoreClick={showActionMenu}
-            />}
+          {selectionModeActive && <SelectionBar selected={selected} actions={actions.selection} />}
           <div className={styles['fil-content-table']}>
             <FileListHeader />
             <div className={styles['fil-content-body']}>

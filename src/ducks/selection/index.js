@@ -1,10 +1,25 @@
 import { combineReducers } from 'redux'
+import SelectionBar from './SelectionBar'
 
-const SELECT_FILE = 'SELECT_FILE'
-const UNSELECT_FILE = 'UNSELECT_FILE'
+// constants
+const SELECT_ITEM = 'SELECT_ITEM'
+const UNSELECT_ITEM = 'UNSELECT_ITEM'
 const TOGGLE_SELECTION_BAR = 'TOGGLE_SELECTION_BAR'
 const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
+
+// selectors
+export const getSelectedIds = state => state.selection.selected
+export const isSelectionBarVisible = state => state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
+
+// actions
+export const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
+export const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
+export const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
+export const toggleItemSelection = (item, selected) => ({ type: selected ? UNSELECT_ITEM : SELECT_ITEM, id: item.id })
+
+// components
+export { SelectionBar }
 
 // reducers
 const selected = (state = [], action) => {
@@ -12,12 +27,12 @@ const selected = (state = [], action) => {
     return []
   }
   switch (action.type) {
-    case SELECT_FILE:
+    case SELECT_ITEM:
       return [
         ...state,
         action.id
       ]
-    case UNSELECT_FILE:
+    case UNSELECT_ITEM:
       const idx = state.indexOf(action.id)
       return [
         ...state.slice(0, idx),
@@ -30,7 +45,7 @@ const selected = (state = [], action) => {
   }
 }
 
-const isBarOpened = (state = false, action) => {
+const isSelectionBarOpened = (state = false, action) => {
   if (action.meta && action.meta.cancelSelection) {
     return false
   }
@@ -48,29 +63,5 @@ const isBarOpened = (state = false, action) => {
 
 export default combineReducers({
   selected,
-  isBarOpened
-})
-
-// selectors
-export const getSelectedIds = state => state.selection.selected
-
-export const isBarVisible = state =>
-  state.selection.selected.length !== 0 || state.selection.isBarOpened
-
-// actions
-export const showSelectionBar = () => ({
-  type: SHOW_SELECTION_BAR
-})
-
-export const hideSelectionBar = () => ({
-  type: HIDE_SELECTION_BAR
-})
-
-export const toggleSelectionBar = () => ({
-  type: TOGGLE_SELECTION_BAR
-})
-
-export const toggleFileSelection = (file, selected) => ({
-  type: selected ? UNSELECT_FILE : SELECT_FILE,
-  id: file.id
+  isSelectionBarOpened
 })
