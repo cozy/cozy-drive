@@ -23,6 +23,8 @@ import {
   closeAddToAlbum
 } from '../ducks/albums'
 
+import { refetchSomePhotos } from '../ducks/timeline'
+
 export class AddToAlbumModal extends Component {
   componentWillMount () {
     this.props.fetchAlbums()
@@ -91,6 +93,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         return
       }
       const album = await dispatch(createAlbum(name, photos))
+      // TODO: sadly we need to refetch the photos so that their relationships
+      // property get updated and so that isRelated works when deleting a photo
+      // that has just been added to an album
+      await dispatch(refetchSomePhotos(photos))
       dispatch(closeAddToAlbum())
       Alerter.success('Albums.create.success', {name: album.name, smart_count: photos.length})
     } catch (error) {
@@ -105,6 +111,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       } else {
         Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length})
       }
+      // TODO: sadly we need to refetch the photos so that their relationships
+      // property get updated and so that isRelated works when deleting a photo
+      // that has just been added to an album
+      await dispatch(refetchSomePhotos(photos))
       dispatch(closeAddToAlbum())
     } catch (error) {
       console.log(error)
