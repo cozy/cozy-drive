@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { fetchIfNeededPhotos, fetchMorePhotos, getTimelineList, getPhotosByMonth } from '../ducks/timeline'
-import { checkUniquenessOfAlbumName, createAlbum } from '../features/albums'
+import { checkUniquenessOfAlbumName, createAlbum } from '../ducks/albums'
 import PhotoBoard from './PhotoBoard'
 import Alerter from './Alerter'
 

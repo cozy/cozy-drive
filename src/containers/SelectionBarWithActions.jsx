@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
 
-import { openAddToAlbum, removeFromAlbum } from '../features/albums'
+import { openAddToAlbum, removeFromAlbum } from '../ducks/albums'
 import { SelectionBar, hideSelectionBar } from '../ducks/selection'
+import { DeleteConfirm, deletePhotos } from '../ducks/timeline'
 import Alerter from '../components/Alerter'
 import confirm from '../lib/confirm'
-import { DeleteConfirm, deletePhotos } from '../ducks/timeline'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: {

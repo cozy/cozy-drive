@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
 
-import { fetchAlbumCover } from '../features/albums'
+import { fetchAlbumCover } from '../ducks/albums'
 import ImageLoader from './ImageLoader'
 
 const isAlbumEmpty = album => !(album && album.photos && album.photos.length !== 0)

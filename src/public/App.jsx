@@ -6,7 +6,7 @@ import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
 
-import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../features/albums'
+import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
 
 import classNames from 'classnames'
 import styles from './index.styl'

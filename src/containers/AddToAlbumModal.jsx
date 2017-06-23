@@ -21,7 +21,7 @@ import {
   checkUniquenessOfAlbumName,
   cancelAddToAlbum,
   closeAddToAlbum
-} from '../features/albums'
+} from '../ducks/albums'
 
 export class AddToAlbumModal extends Component {
   componentWillMount () {

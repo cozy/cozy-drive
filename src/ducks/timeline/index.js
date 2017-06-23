@@ -4,7 +4,7 @@ import Toolbar from './components/Toolbar'
 import DeleteConfirm from './components/DeleteConfirm'
 import { hideSelectionBar, getSelectedIds } from '../selection'
 import { FILE_DOCTYPE, FETCH_LIMIT } from '../../constants/config'
-import { DOCTYPE as ALBUMS_DOCTYPE, removeFromAlbum } from '../../features/albums'
+import { DOCTYPE as ALBUMS_DOCTYPE, removeFromAlbum } from '../albums'
 
 // constants
 const TIMELINE = 'timeline'
