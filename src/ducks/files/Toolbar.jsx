@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       let action = { type: '' }// dummy action, we only use it to trigger an alert notification
 
       if (quotas.length > 0) {
-        // quota errors have their own modal onstead of a notification
+        // quota errors have their own modal instead of a notification
         alert(<QuotaAlert t={ownProps.t} />)
       }
       else if (conflicts.length > 0) {

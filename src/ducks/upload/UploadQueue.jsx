@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 
 import styles from './styles'
-import { getUploadQueue, getProcessed } from '.'
+import { getUploadQueue, getProcessed, purgeUploadQueue } from '.'
 
 const splitFilename = filename => {
   const dotIdx = filename.lastIndexOf('.') - 1 >>> 0
@@ -52,7 +52,7 @@ class UploadQueue extends Component {
   }
 
   render () {
-    const { t, queue, doneCount } = this.props
+    const { t, queue, doneCount, purgeQueue } = this.props
     const { collapsed } = this.state
     return (
       <div className={classNames(styles['upload-queue'], {
@@ -66,6 +66,9 @@ class UploadQueue extends Component {
           <span className='coz-mobile'>
             {t('UploadQueue.header_mobile', { done: doneCount, total: queue.length })}
           </span>
+          <button className={classNames(styles['btn-close'])} onClick={() => {purgeQueue() }}>
+            {t('UploadQueue.close')}
+          </button>
         </h4>
         <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
         <div className={styles['upload-queue-content']}>
@@ -82,4 +85,7 @@ const mapStateToProps = (state, ownProps) => ({
   queue: getUploadQueue(state),
   doneCount: getProcessed(state).length
 })
-export default translate()(connect(mapStateToProps)(UploadQueue))
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  purgeQueue: () => dispatch(purgeUploadQueue())
+})
+export default translate()(connect(mapStateToProps, mapDispatchToProps)(UploadQueue))

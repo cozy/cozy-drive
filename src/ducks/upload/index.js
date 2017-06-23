@@ -88,6 +88,8 @@ export const addToUploadQueue = (files, dirID, fileUploadedCallback, queueComple
   dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
 
+export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
+
 export const onQueueEmpty = (callback) => (dispatch, getState) => {
 
   const queue = getUploadQueue(getState())
@@ -96,7 +98,6 @@ export const onQueueEmpty = (callback) => (dispatch, getState) => {
   const conflicts = getConflicts(queue)
   const errors = getErrors(queue)
 
-  dispatch({ type: PURGE_UPLOAD_QUEUE })
   return dispatch(callback(loaded, quotas, conflicts, errors))
 }
 
