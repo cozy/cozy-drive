@@ -59,10 +59,10 @@ const entities = (state = {}, action) => {
         [action.entity.type]: Object.assign({}, state[action.entity.type], { [action.entity.id]: action.entity })
       }
     case REMOVE_REFERENCED_FILES:
-      if (!state[action.entity.type][action.entity.id]) {
+      const entity = state[action.entity.type][action.entity.id]
+      if (!entity) {
         return state // nothing to update
       }
-      const entity = state[action.entity.type][action.entity.id]
       const updated = Object.assign({}, entity, { [action.relationName]: entity[action.relationName].filter(id => action.ids.indexOf(id) === -1) })
       return {
         ...state,
