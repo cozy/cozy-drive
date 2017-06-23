@@ -376,8 +376,11 @@ export const fetchDocument = (doctype, id, options) => async (dispatch, getState
       }
     }
   } catch (error) {
+    // TODO: this error is badly handled by the reducers
+    // it's only handled by the endpoint reducer, but we'd like to handle it in a per-entity
+    // reducer in the future. That's why we re-throw for now
     dispatch({ type: RECEIVE_ERROR, doctype, id, error })
-    console.log(error)
+    throw error
   }
 }
 

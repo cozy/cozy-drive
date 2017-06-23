@@ -63,6 +63,7 @@ class App extends Component {
       return this.setState({ error: 'Missing ID' })
     }
     this.props.fetchAlbum(albumId)
+      .catch(() => this.setState({ error: 'Fetch error' }))
   }
 
   render () {
