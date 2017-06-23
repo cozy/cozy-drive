@@ -14,18 +14,22 @@ const splitFilename = filename => {
   }
 }
 
+const getFileTypeClass = mime => {
+  return styles['item-type-' + mime.split('/')[0]] || styles['item-type-files']
+}
+
 const Pending = translate()(
   props => <span className={styles['item-pending']}>{props.t('UploadQueue.item.pending')}</span>
 )
 
-const Item = translate()(({ t, file, status }) => {
+const Item = translate()(({ t, file, status, type }) => {
   const { filename, extension } = splitFilename(file)
   return (
     <div className={classNames(styles['upload-queue-item'], {
       [styles['upload-queue-item--done']]: status === 'loaded',
       [styles['upload-queue-item--error']]: status === 'failed' || status === 'conflict'
     })}>
-      <div className={classNames(styles['item-cell'], styles['item-file'], styles['item-image'])}>
+      <div className={classNames(styles['item-cell'], styles['item-file'], getFileTypeClass(type))}>
         <div>
           {filename}
           {extension && <span className={styles['item-ext']}>{extension}</span>}
@@ -66,7 +70,7 @@ class UploadQueue extends Component {
         <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
         <div className={styles['upload-queue-content']}>
           <div className={styles['upload-queue-list']}>
-            {queue.map(item => <Item file={item.file.name} status={item.status} />)}
+            {queue.map(item => <Item file={item.file.name} type={item.file.type} status={item.status} />)}
           </div>
         </div>
       </div>

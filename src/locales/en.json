@@ -211,8 +211,7 @@
     }
   },
   "UploadQueue": {
-    "path": "/Photos/Uploaded from Cozy Photos",
-    "header": "Uploading %{smart_count} photo to Cozy Photos |||| Uploading %{smart_count} photos to Cozy Photos",
+    "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
     "header_mobile": "%{done} of %{total} uploading…",
     "item": {
       "pending": "Pending"
