@@ -11,7 +11,7 @@ import QuotaAlert from '../../components/QuotaAlert'
 import { alert } from '../../lib/confirm'
 
 import { addToUploadQueue } from '../upload'
-import { uploadFiles } from '../../actions'
+import { uploadedFile } from '../../actions'
 
 const Toolbar = ({ t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFiles }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
@@ -58,7 +58,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-    dispatch(addToUploadQueue(files, displayedFolder._id, file => uploadFiles(file)))
+    dispatch(addToUploadQueue(files, displayedFolder._id, file => uploadedFile(file)))
   }
 })
 
