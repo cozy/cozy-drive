@@ -59,7 +59,8 @@ export const share = async ({_id, _type, name}, email, url) => {
         type: 'io.cozy.files',
         values: [
           `io.cozy.photos.albums/${_id}`
-        ]
+        ],
+        selector: 'referenced_by'
       }
     },
     recipients: [
