@@ -5,8 +5,6 @@ import styles from '../styles/layout'
 import { AlbumsToolbar, fetchAlbums, getAlbumsList } from '../ducks/albums'
 import { filterSharedDocuments } from '../ducks/sharing'
 
-import { ALBUM_DOCTYPE } from '../constants/config'
-
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
@@ -38,8 +36,9 @@ export class AlbumsView extends Component {
   }
 
   componentWillReceiveProps (newProps) {
+    // TODO: this is not the cleanest way of doing this...
     if (newProps.albums && newProps.albums.entries !== 0) {
-      filterSharedDocuments(newProps.albums.entries.map(a => a._id), ALBUM_DOCTYPE)
+      filterSharedDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums')
         .then(ids => this.setState({ shared: ids }))
     }
   }
@@ -65,7 +64,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbums: (index) => dispatch(fetchAlbums(index))
+  fetchAlbums: () => dispatch(fetchAlbums())
 })
 
 export default connect(

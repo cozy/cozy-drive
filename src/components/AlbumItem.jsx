@@ -8,7 +8,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { fetchAlbumCover } from '../ducks/albums'
 import ImageLoader from './ImageLoader'
 
-const isAlbumEmpty = album => !(album && album.photoCount)
+const isAlbumEmpty = album => !(album && album.photos && album.photos.length !== 0)
 
 const SharedIcon = () => (
   <div className={styles['pho-album-shared']}>
@@ -27,7 +27,7 @@ export class AlbumItem extends Component {
 
   componentDidMount () {
     const { album } = this.props
-    if (isAlbumEmpty(album) || !album.coverId) {
+    if (isAlbumEmpty(album)) {
       return this.setState({ isLoading: false })
     }
     fetchAlbumCover(album)
@@ -59,7 +59,7 @@ export class AlbumItem extends Component {
       />
     const desc = <h4 className={styles['pho-album-description']}>
       {t('Albums.album_item_description',
-        {smart_count: album.photoCount})
+        {smart_count: album.photos.length})
       }
       {shared && ` - ${t('Albums.album_item_shared_ro')}`}
     </h4>

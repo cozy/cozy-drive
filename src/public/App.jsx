@@ -1,22 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
 
-import { fetchAlbum, fetchPhotos, downloadAlbum } from '../ducks/albums'
+import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
 
 import classNames from 'classnames'
 import styles from './index.styl'
 
 class App extends Component {
   state = {
-    album: null,
-    photos: [],
-    selected: [],
-    loading: true,
-    hasMore: false
+    selected: []
   }
 
   onPhotoToggle = obj => {
@@ -47,63 +44,45 @@ class App extends Component {
     })
   }
 
-  onFetchMore = () => {
-    return fetchPhotos(this.state.album, this.state.photos.length)
-      .then(({ entries, next }) => this.setState(state => ({
-        photos: [...state.photos, ...entries],
-        hasMore: next
-      })))
-  }
-
   onDownload = () => {
     const photos = this.state.selected.length !== 0
       ? this.getSelectedPhotos()
-      : this.state.photos
-    downloadAlbum(this.state.album, photos)
+      : this.props.photos.entries
+    downloadAlbum(this.props.album, photos)
   }
 
   getSelectedPhotos = () => {
-    const { photos, selected } = this.state
-    return selected.map(id => photos.find(p => p._id === id))
+    const { selected } = this.state
+    const { photos } = this.props
+    return selected.map(id => photos.entries.find(p => p.id === id))
   }
 
-  async componentDidMount () {
+  componentDidMount () {
     const { albumId } = this.props
     if (!albumId) {
       return this.setState({ error: 'Missing ID' })
     }
-    try {
-      const album = await fetchAlbum(albumId)
-      const { entries, next } = await fetchPhotos(album)
-      this.setState(state => ({
-        album,
-        photos: entries,
-        loading: false,
-        hasMore: next
-      }))
-    } catch (ex) {
-      console.log(ex)
-      return this.setState({ error: 'Sharing disabled', ex })
-    }
+    this.props.fetchAlbum(albumId)
   }
 
   render () {
-    if (this.state.error) {
+    const { t, album, photos, fetchMorePhotos } = this.props
+    if (this.state.error || (photos && photos.error)) {
       return (
         <div className={styles['pho-public-layout']}>
           <ErrorComponent errorType={`public_album`} />
         </div>
       )
     }
-    if (this.state.loading) {
+    if (!album || !photos || photos.fetchStatus !== 'loaded') {
       return (
         <div className={styles['pho-public-layout']}>
           <Loading loadingType='photos_fetching' />
         </div>
       )
     }
-    const { t } = this.props
-    const { album, photos, selected, hasMore } = this.state
+    const { entries, hasMore } = photos
+    const { selected } = this.state
     return (
       <div className={styles['pho-public-layout']}>
         <div className={classNames(styles['pho-content-header'], styles['--no-icon'])}>
@@ -121,14 +100,14 @@ class App extends Component {
           </div>
         </div>
         <PhotoBoard
-          lists={[{ photos }]}
+          lists={[{ photos: entries }]}
           selected={selected}
           showSelection={selected.length !== 0}
           onPhotoToggle={this.onPhotoToggle}
           onPhotosSelect={this.onPhotosSelect}
           onPhotosUnselect={this.onPhotosUnselect}
           hasMore={hasMore}
-          onFetchMore={this.onFetchMore}
+          onFetchMore={() => fetchMorePhotos(album, entries.length)}
         />
         {this.renderViewer(this.props.children)}
       </div>
@@ -143,4 +122,17 @@ class App extends Component {
   }
 }
 
-export default translate()(App)
+const mapStateToProps = (state, ownProps) => ({
+  album: getAlbum(state, ownProps.albumId),
+  photos: getAlbumPhotos(state, ownProps.albumId)
+})
+
+export const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchAlbum: (id) => dispatch(fetchAlbum(id)),
+  fetchMorePhotos: (album, skip) => dispatch(fetchAlbumPhotos(album, skip))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(App))

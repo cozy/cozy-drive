@@ -3,7 +3,8 @@ import { getList, createFetchAction, createFetchIfNeededAction, createUpdateActi
 import Toolbar from './components/Toolbar'
 import DeleteConfirm from './components/DeleteConfirm'
 import { hideSelectionBar, getSelectedIds } from '../selection'
-import { FILE_DOCTYPE, FETCH_LIMIT, ALBUM_DOCTYPE } from '../../constants/config'
+import { FILE_DOCTYPE, FETCH_LIMIT } from '../../constants/config'
+import { DOCTYPE as ALBUMS_DOCTYPE, removeFromAlbum } from '../albums'
 
 // constants
 const TIMELINE = 'timeline'
@@ -23,7 +24,7 @@ export const isRelated = state => {
         if (photo._id === id && photo.relationships && photo.relationships.referenced_by && photo.relationships.referenced_by.data && photo.relationships.referenced_by.data.length > 0) {
           const refs = photo.relationships.referenced_by.data
           for (const ref of refs) {
-            if (ref.type === ALBUM_DOCTYPE) {
+            if (ref.type === ALBUMS_DOCTYPE) {
               return true
             }
           }
@@ -49,9 +50,10 @@ export const deletePhotos = ids => async dispatch => {
       await cozy.client.files.trashById(id)
       dispatch(deleteAction(TIMELINE, id))
       const file = await cozy.client.data.find(FILE_DOCTYPE, id)
+
       for (const ref of file.referenced_by) {
-        if (ref.type === ALBUM_DOCTYPE) {
-          await cozy.client.data.removeReferencedFiles({ _id: ref.id, _type: ref.type }, id)
+        if (ref.type === ALBUMS_DOCTYPE) {
+          dispatch(removeFromAlbum(ref, [id]))
         }
       }
     } catch (e) {

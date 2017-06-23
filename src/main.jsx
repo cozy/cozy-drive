@@ -18,6 +18,7 @@ import photosApp from './reducers'
 import AppRoute from './components/AppRoute'
 import { shouldEnableTracking, getTracker, createTrackerMiddleware } from 'cozy-ui/react/helpers/tracker'
 import eventTrackerMiddleware from './middlewares/EventTracker'
+import { registerSchemas } from './lib/redux-cozy-api'
 
 const loggerMiddleware = createLogger()
 
@@ -66,6 +67,17 @@ document.addEventListener('DOMContentLoaded', () => {
     photosApp,
     composeEnhancers(applyMiddleware.apply(this, middlewares))
   )
+
+  store.dispatch(registerSchemas({
+    'io.cozy.photos.albums': {
+      fields: ['name'],
+      relations: {
+        photos: {
+          type: 'io.cozy.files'
+        }
+      }
+    }
+  }))
 
   render((
     <I18n lang={lang} dictRequire={(lang) => require(`./locales/${lang}`)}>

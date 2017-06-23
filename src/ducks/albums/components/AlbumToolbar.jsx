@@ -9,11 +9,12 @@ import ShareButton from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { Item } from '../../../components/Menu'
 
-import { isSelectionBarVisible, showSelectionBar } from '../../selection'
+import { isSelectionBarVisible, showSelectionBar } from '../../../ducks/selection'
+
 import { deleteAlbum, downloadAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import confirm from '../../../lib/confirm'
-import { ShareModal } from '../../sharing'
+import { ShareModal } from '../../../ducks/sharing'
 
 import classNames from 'classnames'
 
@@ -88,8 +89,10 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
   deleteAlbum: album => confirm(
     <DestroyConfirm t={ownProps.t} albumName={album.name} />,
     () => dispatch(deleteAlbum(album))
-      .then(() => ownProps.router.replace('albums'))
-      .then(() => Alerter.success('Albums.remove_album.success', {name: album.name}))
+      .then(album => {
+        ownProps.router.replace('albums')
+        Alerter.success('Albums.remove_album.success', {name: album.name})
+      })
       .catch(() => Alerter.error('Albums.remove_album.error.generic'))
   )
 })
