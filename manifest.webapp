@@ -51,6 +51,11 @@
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",
       "verbs": ["GET"]
+    },
+    "settings": {
+      "description": "Required by the cozy-bar to know which applications are coming soon",
+      "type": "io.cozy.settings",
+      "verbs": ["GET"]
     }
   }
 }
