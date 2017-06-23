@@ -91,7 +91,6 @@ export const addToUploadQueue = (files, dirID, fileUploadedCallback, queueComple
 export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
 
 export const onQueueEmpty = (callback) => (dispatch, getState) => {
-
   const queue = getUploadQueue(getState())
   const loaded = getLoaded(queue)
   const quotas = getQuotaErrors(queue)

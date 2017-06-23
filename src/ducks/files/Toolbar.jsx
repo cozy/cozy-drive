@@ -69,14 +69,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       if (quotas.length > 0) {
         // quota errors have their own modal instead of a notification
         alert(<QuotaAlert t={ownProps.t} />)
-      }
-      else if (conflicts.length > 0) {
+      } else if (conflicts.length > 0) {
         action.alert = alertShow('upload.alert.success_conflicts', {smart_count: loaded.length, conflictNumber: conflicts.length}, ALERT_LEVEL_INFO)
-      }
-      else if (errors.length > 0) {
+      } else if (errors.length > 0) {
         action.alert = alertShow('upload.alert.errors', null, ALERT_LEVEL_ERROR)
-      }
-      else {
+      } else {
         action.alert = alertShow('upload.alert.success', {smart_count: loaded.length}, ALERT_LEVEL_SUCCESS)
       }
 
