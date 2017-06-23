@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 
 import NewAlbum from '../../../components/NewAlbum'
+import Menu, { Item } from '../../../components/Menu'
 
 class AlbumsToolbar extends Component {
   state = {
@@ -32,6 +33,19 @@ class AlbumsToolbar extends Component {
             {t('Toolbar.album_new')}
           </button>
         </div>
+        <Menu
+          title={t('Toolbar.more')}
+          className={styles['pho-toolbar-menu']}
+          buttonClassName={styles['pho-toolbar-more-btn']}
+        >
+          <Item>
+            <div className='coz-mobile'>
+              <a className={styles['pho-btn-new']} onClick={this.showAddAlbum}>
+                {t('Toolbar.album_new')}
+              </a>
+            </div>
+          </Item>
+        </Menu>
         {this.state.showAddAlbum && <NewAlbum closeAddAlbum={this.closeAddAlbum} />}
       </div>
     )

@@ -66,20 +66,21 @@ class NewAlbum extends Component {
           Alerter.error('Albums.create.error.already_exists', { name })
           this.input.focus()
           this.input.select()
+          return Promise.resolve()
         } else {
-          this.createAlbum(name, selected)
+          return this.createAlbum(name, selected)
         }
       })
+      .catch(() => Alerter.error('Albums.create.error.generic'))
   }
 
   createAlbum = (name, selected) => {
-    this.props.createAlbum(name, selected)
+    return this.props.createAlbum(name, selected)
       .then(album => {
         this.props.closeAddAlbum()
         Alerter.success('Albums.create.success', {name: name, smart_count: selected.length})
         this.props.router.push(`/albums/${album.id}`)
       })
-      .catch(error => Alerter.error(error.message, error.messageData))
   }
 
   componentDidMount () {
