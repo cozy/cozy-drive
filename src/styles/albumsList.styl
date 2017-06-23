@@ -1,10 +1,9 @@
 @require 'cozy-ui'
 
 .pho-album-list
-    display         flex
-    flex-wrap       wrap
-    margin-left     1em
-    margin-bottom   2em
+    display    flex
+    flex-wrap  wrap
+    margin     0 1em 2em 1em
 
 .pho-album-list--thumbnails
     flex-direction column
@@ -56,7 +55,6 @@
 
 .pho-album-link
     color           black
-    width           calc(100% - 1em)
     text-decoration none
 
 .pho-album-description
@@ -67,12 +65,12 @@
     margin      0
 
 .pho-album-shared
-    position             absolute
-    bottom               em(60px)
-    right                em(10px)
-    padding              em(2px)
-    background-color     white
-    border-radius        50%
+    position          absolute
+    top               em(147px)
+    right             em(10px)
+    padding           em(2px)
+    background-color  white
+    border-radius     50%
 
     .pho-album-shared-icon
         padding              em(16px)
@@ -86,6 +84,3 @@
     .pho-album
         width           100%
         margin-left     1em
-
-    .pho-album-photo-item
-        width calc(100% - 1em)
