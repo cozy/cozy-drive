@@ -1,4 +1,5 @@
 @import 'cozy-ui'
+@import '../../styles/mimetypes'
 
 .upload-queue
     @extend $popover
@@ -97,38 +98,7 @@ progress.upload-queue-progress::-moz-progress-bar
         background-position em(15px) center
         background-repeat no-repeat
 
-    .item-type-audio
-        background-image embedurl('../../assets/icons/icon-type-audio.svg')
-
-    .item-type-binary
-        background-image embedurl('../../assets/icons/icon-type-binary.svg')
-
-    .item-type-code
-        background-image embedurl('../../assets/icons/icon-type-code.svg')
-
-    .item-type-files
-        background-image embedurl('../../assets/icons/icon-type-files.svg')
-
-    .item-type-image
-        background-image embedurl('../../assets/icons/icon-type-image.svg')
-
-    .item-type-pdf
-        background-image embedurl('../../assets/icons/icon-type-pdf.svg')
-
-    .item-type-slide
-        background-image embedurl('../../assets/icons/icon-type-slide.svg')
-
-    .item-type-spreadsheet
-        background-image embedurl('../../assets/icons/icon-type-spreadsheet.svg')
-
-    .item-type-text
-        background-image embedurl('../../assets/icons/icon-type-text.svg')
-
-    .item-type-video
-        background-image embedurl('../../assets/icons/icon-type-video.svg')
-
-    .item-type-zip
-        background-image embedurl('../../assets/icons/icon-type-zip.svg')
+    mime-types('item-type-', '../../assets/icons/')
 
     .item-ext
         color grey-11
