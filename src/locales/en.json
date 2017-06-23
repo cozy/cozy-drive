@@ -20,7 +20,9 @@
     "albums_title": "An error occurred while retrieving the albums list. Please try again later.",
     "album_photos_title": "An error occurred while retrieving the album's photos list. Please try again later.",
     "timeline_photos_title": "An error occurred while retrieving the photos list. Please try again later.",
-    "public_album_title": "An error occurred while retrieving the album. Please try again later.",
+    "public_album_error_title": "An error occurred while retrieving the photos list. Please try again later.",
+    "public_album_unshared_title": "Sorry, this link is no longer available.",
+    "public_album_unshared_text": "One lost, ten found... or just check out with the owner for help. This file might not be lost.",
     "refresh": "Refresh now",
     "generic": "An error occurred, please try again.",
     "album_rename_abort": "The album name can not be empty."

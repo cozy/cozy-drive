@@ -5,6 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
+import ErrorShare from '../components/ErrorShare'
 
 import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
 
@@ -68,10 +69,17 @@ class App extends Component {
 
   render () {
     const { t, album, photos, fetchMorePhotos } = this.props
-    if (this.state.error || (photos && photos.error)) {
+    if (this.state.error) {
       return (
         <div className={styles['pho-public-layout']}>
-          <ErrorComponent errorType={`public_album`} />
+          <ErrorShare errorType={`public_album_unshared`} />
+        </div>
+      )
+    }
+    if (photos && photos.error) {
+      return (
+        <div className={styles['pho-public-layout']}>
+          <ErrorComponent errorType={`public_album_error`} />
         </div>
       )
     }
