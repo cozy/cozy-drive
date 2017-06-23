@@ -221,6 +221,7 @@
   "UploadQueue": {
     "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
     "header_mobile": "%{done} of %{total} uploading…",
+    "header_done": "Uploaded %{done} out of %{total} successfully",
     "close": "close",
     "item": {
       "pending": "Pending"

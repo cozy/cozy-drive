@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 
 import styles from './styles'
-import { getUploadQueue, getProcessed, purgeUploadQueue } from '.'
+import { getUploadQueue, getProcessed, getSuccessful, purgeUploadQueue } from '.'
 
 const splitFilename = filename => {
   const dotIdx = filename.lastIndexOf('.') - 1 >>> 0
@@ -52,7 +52,7 @@ class UploadQueue extends Component {
   }
 
   render () {
-    const { t, queue, doneCount, purgeQueue } = this.props
+    const { t, queue, doneCount, successCount, purgeQueue } = this.props
     const { collapsed } = this.state
     return (
       <div className={classNames(styles['upload-queue'], {
@@ -60,12 +60,22 @@ class UploadQueue extends Component {
         [styles['upload-queue--collapsed']]: collapsed
       })}>
         <h4 className={styles['upload-queue-header']} onDoubleClick={this.toggleCollapsed}>
-          <span className='coz-desktop'>
-            {t('UploadQueue.header', { smart_count: queue.length })}
-          </span>
-          <span className='coz-mobile'>
-            {t('UploadQueue.header_mobile', { done: doneCount, total: queue.length })}
-          </span>
+          {
+            doneCount < queue.length
+            ?
+            <div>
+              <span className='coz-desktop'>
+                {t('UploadQueue.header', { smart_count: queue.length })}
+              </span>
+              <span className='coz-mobile'>
+                {t('UploadQueue.header_mobile', { done: doneCount, total: queue.length })}
+              </span>
+            </div>
+            :
+            <span>
+              {t('UploadQueue.header_done', { done: successCount, total: queue.length })}
+            </span>
+          }
           <button className={classNames(styles['btn-close'])} onClick={() => {purgeQueue() }}>
             {t('UploadQueue.close')}
           </button>
@@ -83,7 +93,8 @@ class UploadQueue extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   queue: getUploadQueue(state),
-  doneCount: getProcessed(state).length
+  doneCount: getProcessed(state).length,
+  successCount: getSuccessful(state).length
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   purgeQueue: () => dispatch(purgeUploadQueue())

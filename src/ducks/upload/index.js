@@ -110,3 +110,4 @@ const getLoaded = queue => filterByStatus(queue, LOADED)
 
 export const getUploadQueue = state => state[SLUG].queue
 export const getProcessed = state => getUploadQueue(state).filter(f => f.status !== PENDING)
+export const getSuccessful = state => getLoaded(getUploadQueue(state))
