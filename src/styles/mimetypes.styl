@@ -6,6 +6,6 @@ Generates a list of rules like:
 It's a quick way to generate all the selectors for the different file types
 */
 mime-types(selector-prefix, icons-path)
-    for mimetype in audio bin code files folder image pdf slide spreadsheet text video zip
+    for mimetype in audio bin code files folder image pdf slide sheet text video zip
         .{selector-prefix}{mimetype}
             background-image embedurl(s('%sicon-type-%s.svg', unquote(icons-path), mimetype))
