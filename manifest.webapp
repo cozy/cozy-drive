@@ -45,6 +45,11 @@
       "description": "Required to manage photos albums",
       "type": "io.cozy.photos.albums",
       "methods": ["GET", "POST", "PUT"]
+    },
+    "settings": {
+      "description": "Required by the cozy-bar to know which applications are coming soon",
+      "type": "io.cozy.settings",
+      "verbs": ["GET"]
     }
   }
 }
