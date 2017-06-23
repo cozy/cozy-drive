@@ -210,17 +210,19 @@
       "logout": "Log out"
     }
   },
-  "UploadQueue": {
-    "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
-    "header_mobile": "%{done} of %{total} uploading…",
-    "item": {
-      "pending": "Pending"
-    },
+  "upload": {
     "alert": {
       "success": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
       "success_conflicts":
         "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
       "errors": "Errors occurred during the file upload."
+    }
+  },
+  "UploadQueue": {
+    "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
+    "header_mobile": "%{done} of %{total} uploading…",
+    "item": {
+      "pending": "Pending"
     }
   }
 }

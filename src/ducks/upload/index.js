@@ -1,8 +1,6 @@
 /* global cozy */
 import { combineReducers } from 'redux'
 
-import { alertShow } from 'cozy-ui/react/Alerter'
-
 import UploadQueue from './UploadQueue'
 
 export { UploadQueue }
@@ -20,6 +18,7 @@ const LOADING = 'loading'
 const LOADED = 'loaded'
 const FAILED = 'failed'
 const CONFLICT = 'conflict'
+const QUOTA = 'quota'
 
 const itemInitialState = file => ({
   file,
@@ -60,10 +59,10 @@ export default combineReducers({ queue })
 
 const extractFileAttributes = f => Object.assign({}, f, f.attributes)
 
-const processNextFile = (callback, dirID) => async (dispatch, getState) => {
+const processNextFile = (fileUploadedCallback, queueCompletedCallback, dirID) => async (dispatch, getState) => {
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
   if (!item) {
-    return dispatch(onQueueEmpty())
+    return dispatch(onQueueEmpty(queueCompletedCallback))
   }
   const file = item.file
   try {
@@ -71,42 +70,41 @@ const processNextFile = (callback, dirID) => async (dispatch, getState) => {
     const uploadedFile = await cozy.client.files.create(file, { dirID })
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
     // TODO: is the extractFileAttributes call really necessary?
-    dispatch(callback(extractFileAttributes(uploadedFile)))
+    dispatch(fileUploadedCallback(extractFileAttributes(uploadedFile)))
   } catch (error) {
-    dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status: error.status === 409 ? CONFLICT : FAILED })
+    let status
+
+    if (error.status === 400) status = CONFLICT
+    else if (error.status === 413) status = QUOTA
+    else status = FAILED
+
+    dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
   }
-  dispatch(processNextFile(callback, dirID))
+  dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
 
-export const addToUploadQueue = (files, dirID, callback) => async dispatch => {
+export const addToUploadQueue = (files, dirID, fileUploadedCallback, queueCompletedCallback) => async dispatch => {
   dispatch({ type: ADD_TO_UPLOAD_QUEUE, files })
-  dispatch(processNextFile(callback, dirID))
+  dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
 
-export const onQueueEmpty = () => (dispatch, getState) => {
+export const onQueueEmpty = (callback) => (dispatch, getState) => {
+
   const queue = getUploadQueue(getState())
+  const loaded = getLoaded(queue)
+  const quotas = getQuotaErrors(queue)
   const conflicts = getConflicts(queue)
   const errors = getErrors(queue)
-  const loaded = getLoaded(queue)
 
-  let action = { type: PURGE_UPLOAD_QUEUE }
-
-  if (!conflicts.length && !errors.length) {
-    action.alert = alertShow('UploadQueue.alert.success', {smart_count: loaded.length}, 'success')
-    dispatch({type: 'random', alert: alertShow('UploadQueue.alert.success', {smart_count: loaded.length}, 'success')})
-  } else if (conflicts.length && !errors.length) {
-    action.alert = alertShow('UploadQueue.alert.success_conflicts', {smart_count: loaded.length, conflictNumber: conflicts.length}, 'info')
-  } else {
-    action.alert = alertShow('UploadQueue.alert.errors', null, 'error')
-  }
-
-  dispatch(action)
+  dispatch({ type: PURGE_UPLOAD_QUEUE })
+  return dispatch(callback(loaded, quotas, conflicts, errors))
 }
 
 // selectors
 const filterByStatus = (queue, status) => queue.filter(f => f.status === status)
 const getConflicts = queue => filterByStatus(queue, CONFLICT)
 const getErrors = queue => filterByStatus(queue, FAILED)
+const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
 const getLoaded = queue => filterByStatus(queue, LOADED)
 
 export const getUploadQueue = state => state[SLUG].queue
