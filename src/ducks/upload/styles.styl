@@ -9,7 +9,7 @@
     height   em(210px)
     width    em(480px)
     max-width 90%
-    border   1px solid grey-09
+    border   1px solid silver
     border-radius    4px
     background-color white
     display          flex
@@ -25,8 +25,8 @@
     transform  translate(0)
 
 .upload-queue-header
-    background-color grey-10
-    color            grey-08
+    background-color pale-grey
+    color            charcoal-grey
     font-weight      bold
     margin           0
     padding          em(8px) em(16px) em(8px)
@@ -51,7 +51,7 @@ progress.upload-queue-progress
     margin     0
 
 progress.upload-queue-progress::-webkit-progress-bar
-    background-color grey-09
+    background-color silver
 progress.upload-queue-progress::-webkit-progress-value
     background-color dodger-blue
 progress.upload-queue-progress::-moz-progress-bar
@@ -75,7 +75,7 @@ progress.upload-queue-progress::-moz-progress-bar
     background-color rgba(245, 44, 44, 0.1)
 
 .upload-queue-item--done
-    background-color grey-10
+    background-color pale-grey
 
 .upload-queue-item
     height          50px
@@ -86,7 +86,7 @@ progress.upload-queue-progress::-moz-progress-bar
     flex            0 0 auto
     width           100%
     max-width       'calc(100vw - %s)' % em(220px)
-    border-bottom   1px solid grey-09
+    border-bottom   1px solid silver
 
     .item-cell
         box-sizing  border-box
@@ -100,7 +100,7 @@ progress.upload-queue-progress::-moz-progress-bar
         white-space    nowrap
         overflow       hidden
         text-overflow  ellipsis
-        color          grey-08
+        color          charcoal-grey
 
     .item-file
         flex        0 0 85%
@@ -111,7 +111,7 @@ progress.upload-queue-progress::-moz-progress-bar
     mime-types('item-type-', '../../assets/icons/')
 
     .item-ext
-        color grey-11
+        color cool-grey
 
     .item-status
         flex       0 0 15%
