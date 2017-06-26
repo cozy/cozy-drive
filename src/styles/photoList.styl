@@ -13,10 +13,11 @@
         flex-direction row
         align-items center
         position relative
+        padding 0 2rem
 
         h3
             flex-grow 1
-            padding 0 2rem
+            padding-right 2rem
 
         a,
         a:visited,
@@ -26,12 +27,14 @@
             text-decoration  none
             text-transform   uppercase
             cursor           pointer
+            margin-left      auto
 
         @media (max-width: (768/basefont)rem)
             margin-bottom  1rem
+            padding 0 1rem
 
             h3
-                padding 0 1rem
+                padding-right 1rem
 
     .pho-photo
         position          absolute
@@ -75,6 +78,7 @@
 
     .pho-section--has-selection
         .pho-photo-select
+            box-sizing border-box
             width  100%
             height 100%
             opacity 1

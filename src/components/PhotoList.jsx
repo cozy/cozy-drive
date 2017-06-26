@@ -71,7 +71,7 @@ export class PhotoList extends Component {
     const firstRowLastBox = secondRowFirstIndex === -1
       ? layout.boxes[layout.boxes.length - 1]
       : layout.boxes[secondRowFirstIndex - 1]
-    const firstRowLastBoxRight = containerWidth - firstRowLastBox.left - firstRowLastBox.width
+    const firstRowLastBoxRight = containerWidth - firstRowLastBox.left - firstRowLastBox.width - conf.padding
 
     return (
       <div
@@ -82,11 +82,11 @@ export class PhotoList extends Component {
         <div className={styles['pho-section-header']}>
           <h3>{title}</h3>
           {showSelection && allSelected &&
-            <a style={{ paddingRight: `${firstRowLastBoxRight}px` }} onClick={() => onPhotosUnselect(photoIds)}>
+            <a style={{ marginRight: `${firstRowLastBoxRight}px` }} onClick={() => onPhotosUnselect(photoIds)}>
               {t('Board.unselect_all')}
             </a>}
           {showSelection && !allSelected &&
-            <a style={{ paddingRight: `${firstRowLastBoxRight}px` }} onClick={() => onPhotosSelect(photoIds)}>
+            <a style={{ marginRight: `${firstRowLastBoxRight}px` }} onClick={() => onPhotosSelect(photoIds)}>
               {t('Board.select_all')}
             </a>}
         </div>
