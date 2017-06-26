@@ -2,7 +2,7 @@
 import createLogger from 'redux-logger'
 import getReducers from '../reducers'
 
-const saveState = (store) => {
+const persistState = (store) => {
   // no persiste state on browser
 }
 
@@ -18,4 +18,4 @@ const getMiddlewares = () => {
   return middlewares
 }
 
-export { getReducers, saveState, getMiddlewares }
+export { getReducers, persistState, getMiddlewares }
