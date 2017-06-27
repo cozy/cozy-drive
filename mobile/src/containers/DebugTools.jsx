@@ -40,7 +40,7 @@ class DebugTools extends Component {
         <Checkbox title='Offline' value={this.props.offline} onChange={this.props.setOffline} />
         <h4>Pouchdb</h4>
         <Button onClick={() => this.stopReplication()}>stop replication</Button>
-        <hr/>
+        <hr />
       </div>
     )
   }
