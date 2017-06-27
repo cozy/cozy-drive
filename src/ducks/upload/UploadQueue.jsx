@@ -62,7 +62,7 @@ class UploadQueue extends Component {
         <h4 className={styles['upload-queue-header']} onDoubleClick={this.toggleCollapsed}>
           {
             doneCount < queue.length &&
-            <div>
+            <div className={styles['upload-queue-header-inner']}>
               <span className='coz-desktop'>
                 {t('UploadQueue.header', { smart_count: queue.length })}
               </span>
@@ -73,7 +73,7 @@ class UploadQueue extends Component {
           }
           {
             doneCount >= queue.length &&
-            <div>
+            <div className={styles['upload-queue-header-inner']}>
               <span>
                 {t('UploadQueue.header_done', { done: successCount, total: queue.length })}
               </span>
