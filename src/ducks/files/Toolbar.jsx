@@ -9,8 +9,14 @@ import UploadButton from '../../components/UploadButton'
 import Menu, { Item } from '../../components/Menu'
 import QuotaAlert from '../../components/QuotaAlert'
 import { alert } from '../../lib/confirm'
+import { alertShow } from 'cozy-ui/react/Alerter'
 
-import { uploadFiles } from '../../actions'
+import { addToUploadQueue } from '../upload'
+import { uploadedFile } from '../../actions'
+
+const ALERT_LEVEL_INFO = 'info'
+const ALERT_LEVEL_ERROR = 'error'
+const ALERT_LEVEL_SUCCESS = 'success'
 
 const Toolbar = ({ t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFiles }) => (
   <div className={styles['fil-toolbar-files']} role='toolbar'>
@@ -57,12 +63,22 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-    dispatch(uploadFiles(files, displayedFolder))
-      .catch(err => {
-        if (err.response && err.response.status === 413) {
-          alert(<QuotaAlert t={ownProps.t} />)
-        }
-      })
+    dispatch(addToUploadQueue(files, displayedFolder._id, file => uploadedFile(file), (loaded, quotas, conflicts, errors) => {
+      let action = { type: '' }// dummy action, we only use it to trigger an alert notification
+
+      if (quotas.length > 0) {
+        // quota errors have their own modal instead of a notification
+        alert(<QuotaAlert t={ownProps.t} />)
+      } else if (conflicts.length > 0) {
+        action.alert = alertShow('upload.alert.success_conflicts', {smart_count: loaded.length, conflictNumber: conflicts.length}, ALERT_LEVEL_INFO)
+      } else if (errors.length > 0) {
+        action.alert = alertShow('upload.alert.errors', null, ALERT_LEVEL_ERROR)
+      } else {
+        action.alert = alertShow('upload.alert.success', {smart_count: loaded.length}, ALERT_LEVEL_SUCCESS)
+      }
+
+      return action
+    }))
   }
 })
 

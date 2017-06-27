@@ -6,11 +6,13 @@ import settings from './settings'
 import selectionReducer, { getSelectedIds } from '../ducks/selection'
 import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
 import renameReducer from '../ducks/files/rename'
+import upload from '../ducks/upload'
 import alerterReducer from 'cozy-ui/react/Alerter'
 
 export const reducers = {
   view,
   settings,
+  upload,
   actionmenu: actionmenuReducer,
   selection: selectionReducer,
   rename: renameReducer,
