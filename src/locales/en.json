@@ -158,14 +158,14 @@
         "account": "Account"
       },
       "unlink": {
-        "title": "Unlink your device from your Cozy",
-        "description": "Unlink your cozy account to this device. All data will be deleted",
-        "button": "Unlink",
+        "title": "Reset this application",
+        "description": "By clicking Reset, you will be able to start your application over, and will only lose the data saved on your smartphone.",
+        "button": "Reset",
         "confirmation": {
-          "title": "Unlink your device?",
+          "title": "Reset this application?",
           "description": "By logging out of your Cozy, you will erase all data synchronized locally by your mobile application.",
           "cancel": "Cancel",
-          "unlink": "Unlink"
+          "unlink": "Reset"
         }
       },
       "media_backup": {
