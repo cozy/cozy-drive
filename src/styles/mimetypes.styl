@@ -1,0 +1,11 @@
+/*
+Generates a list of rules like:
+.my-prefix-audio
+    background-image embedurl('path/to/icon-type-audio.svg')
+
+It's a quick way to generate all the selectors for the different file types
+*/
+mime-types(selector-prefix, icons-path)
+    for mimetype in audio bin code files folder image pdf slide sheet text video zip
+        .{selector-prefix}{mimetype}
+            background-image embedurl(s('%sicon-type-%s.svg', unquote(icons-path), mimetype))

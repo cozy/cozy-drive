@@ -17,8 +17,6 @@ export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
 export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
-export const PRE_UPLOAD_FILE = 'PRE_UPLOAD_FILE'
-export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const TRASH_FILES = 'TRASH_FILES'
 export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
@@ -117,30 +115,10 @@ export const openFileInNewTab = (folder, file) => {
   }
 }
 
-export const uploadFiles = (files, folder) => {
-  return async (dispatch, getState) => {
-    let currentFileCount = getState().view.fileCount
-    dispatch({
-      type: PRE_UPLOAD_FILE,
-      count: files.length
-    })
-    for (const file of files) {
-      try {
-        dispatch({ type: UPLOAD_FILE })
-        const created = await cozy.client.files.create(
-          file,
-          { dirID: folder.id }
-        )
-        dispatch({
-          type: UPLOAD_FILE_SUCCESS,
-          file: extractFileAttributes(created),
-          currentFileCount
-        })
-      } catch (err) {
-        console.warn(err)
-      }
-      currentFileCount++
-    }
+export const uploadedFile = (file) => {
+  return {
+    type: UPLOAD_FILE_SUCCESS,
+    file: file
   }
 }
 

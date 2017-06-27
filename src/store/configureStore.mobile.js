@@ -1,12 +1,12 @@
 /* global __DEVELOPMENT__ */
 import getReducers from '../../mobile/src/reducers'
-import { saveState as savePersistedState } from './persistedState'
+import { saveState } from './persistedState'
 import RavenMiddleWare from 'redux-raven-middleware'
 import createLogger from 'redux-logger'
 import { ANALYTICS_URL, getConfig as getAnalyticsConfiguration } from '../../mobile/src/lib/reporter'
 
-const saveState = store => {
-  store.subscribe(() => savePersistedState({
+const persistState = store => {
+  store.subscribe(() => saveState({
     settings: store.getState().settings,
     mobile: {
       timestamp: store.getState().mobile.timestamp,
@@ -36,4 +36,4 @@ const getMiddlewares = () => {
   return middlewares
 }
 
-export { getReducers, saveState, getMiddlewares }
+export { getReducers, persistState, getMiddlewares }

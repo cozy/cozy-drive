@@ -158,14 +158,14 @@
         "account": "Account"
       },
       "unlink": {
-        "title": "Unlink your device from your Cozy",
-        "description": "Unlink your cozy account to this device. All data will be deleted",
-        "button": "Unlink",
+        "title": "Reset this application",
+        "description": "By clicking Reset, you will be able to start your application over, and will only lose the data saved on your smartphone.",
+        "button": "Reset",
         "confirmation": {
-          "title": "Unlink your device?",
+          "title": "Reset this application?",
           "description": "By logging out of your Cozy, you will erase all data synchronized locally by your mobile application.",
           "cancel": "Cancel",
-          "unlink": "Unlink"
+          "unlink": "Reset"
         }
       },
       "media_backup": {
@@ -209,6 +209,23 @@
       "description": "It appears you revoked this device from your Cozy. If you didn't, please let us know at contact@cozycloud.cc. All your local data related to your Cozy will be removed.",
       "loginagain": "Log in again",
       "logout": "Log out"
+    }
+  },
+  "upload": {
+    "alert": {
+      "success": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
+      "success_conflicts":
+        "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
+      "errors": "Errors occurred during the file upload."
+    }
+  },
+  "UploadQueue": {
+    "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
+    "header_mobile": "%{done} of %{total} uploading…",
+    "header_done": "Uploaded %{done} out of %{total} successfully",
+    "close": "close",
+    "item": {
+      "pending": "Pending"
     }
   }
 }

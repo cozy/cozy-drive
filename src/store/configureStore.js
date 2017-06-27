@@ -3,7 +3,7 @@ import { compose, createStore, applyMiddleware } from 'redux'
 import { shouldEnableTracking, getTracker, createTrackerMiddleware } from 'cozy-ui/react/helpers/tracker'
 import thunkMiddleware from 'redux-thunk'
 import eventTrackerMiddleware from '../middlewares/EventTracker'
-import { saveState, getReducers as getTargetReducers, getMiddlewares as getTargetMiddlewares } from './getTargetConfig'
+import { getReducers as getTargetReducers, getMiddlewares as getTargetMiddlewares } from './getTargetConfig'
 
 const getReducers = (persistedState) => {
   let reducers = [getTargetReducers]
@@ -37,10 +37,6 @@ const configureStore = (persistedState) => {
     ...reducers,
     composeEnhancers(applyMiddleware.apply(this, middlewares))
   )
-
-  if (persistedState) {
-    saveState(store)
-  }
 
   return store
 }
