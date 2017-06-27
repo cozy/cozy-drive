@@ -6,6 +6,7 @@ import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import IntentHandler from './components/IntentHandler'
+import { I18n } from 'cozy-ui/react/I18n'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -39,5 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     token: data.cozyToken
   })
 
-  render(<IntentHandler intentId={intent} />, root)
+  render((
+    <I18n lang={data.cozyLocale} dictRequire={(lang) => require(`./locales/${lang}`)}>
+      <IntentHandler intentId={intent} />
+    </I18n>), root)
 })
