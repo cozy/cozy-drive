@@ -2,6 +2,7 @@
 import 'babel-polyfill'
 
 import '../../src/styles/main'
+import './styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
