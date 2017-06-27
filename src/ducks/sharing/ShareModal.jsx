@@ -2,7 +2,7 @@ import styles from './share.styl'
 
 import React, { Component } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import Modal, { ModalContent } from 'cozy-ui/react/Modal'
+import Modal, { ModalContentOffset } from 'cozy-ui/react/Modal'
 import Toggle from 'cozy-ui/react/Toggle'
 import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
@@ -75,9 +75,9 @@ export class ShareModal extends Component {
         title={t('Albums.share.title')}
         secondaryAction={onClose}
       >
-        <ModalContent className={styles['pho-share-modal-content']}>
+        <ModalContentOffset>
           <Tabs initialActiveTab='link'>
-            <TabList>
+            <TabList className={styles['pho-share-modal-tabs']}>
               <Tab name='link'>
                 {t('Albums.share.shareByLink.title')}
               </Tab>
@@ -85,7 +85,7 @@ export class ShareModal extends Component {
                 {t('Albums.share.shareByUrl.title')}
               </Tab>
             </TabList>
-            <TabPanels>
+            <TabPanels className={styles['pho-share-modal-content']}>
               <TabPanel name='link'>
                 <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
                 {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => console.log(this) || this.setState({ copied: true })} copied={this.state.copied} />}
@@ -95,7 +95,7 @@ export class ShareModal extends Component {
               </TabPanel>
             </TabPanels>
           </Tabs>
-        </ModalContent>
+        </ModalContentOffset>
         {creating &&
           <div className={styles['pho-share-modal-footer']}>
             <p>{t('Albums.share.creatingLink')}</p>

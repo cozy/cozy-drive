@@ -9,6 +9,10 @@
         @extend $form
         @extend $form-text
         @extend $form-button
+        padding 0 1.5em
+
+    .pho-share-modal-tabs
+        padding 0 .5em
 
     .pho-share-modal-footer
         padding 0
@@ -53,6 +57,10 @@
 
         .coz-form-desc
             margin 0
+
+        @media (max-width 32em)
+            > :last-child
+                flex-basis auto
 
     .pho-btn-copy
         width 100%

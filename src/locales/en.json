@@ -84,12 +84,12 @@
       "cta": "Share",
       "title": "Share with others",
       "shareByLink": {
-        "title": "By publick link",
+        "title": "By public link",
         "subtitle": "Share by link",
         "desc": "Anyone with the provided link can see and download your photos."
       },
       "shareByUrl": {
-        "title": "By email and url",
+        "title": "By email & url",
         "subtitle": "Share by email and url",
         "email": "email",
         "url": "cozy address",
