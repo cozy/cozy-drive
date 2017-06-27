@@ -2,7 +2,7 @@ import styles from './share.styl'
 
 import React, { Component } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import Modal, { ModalContentOffset } from 'cozy-ui/react/Modal'
+import Modal from 'cozy-ui/react/Modal'
 import Toggle from 'cozy-ui/react/Toggle'
 import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
@@ -75,27 +75,25 @@ export class ShareModal extends Component {
         title={t('Albums.share.title')}
         secondaryAction={onClose}
       >
-        <ModalContentOffset>
-          <Tabs initialActiveTab='link'>
-            <TabList className={styles['pho-share-modal-tabs']}>
-              <Tab name='link'>
-                {t('Albums.share.shareByLink.title')}
-              </Tab>
-              <Tab name='url'>
-                {t('Albums.share.shareByUrl.title')}
-              </Tab>
-            </TabList>
-            <TabPanels className={styles['pho-share-modal-content']}>
-              <TabPanel name='link'>
-                <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
-                {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => console.log(this) || this.setState({ copied: true })} copied={this.state.copied} />}
-              </TabPanel>
-              <TabPanel name='url'>
-                <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </ModalContentOffset>
+        <Tabs initialActiveTab='link'>
+          <TabList className={styles['pho-share-modal-tabs']}>
+            <Tab name='link'>
+              {t('Albums.share.shareByLink.title')}
+            </Tab>
+            <Tab name='url'>
+              {t('Albums.share.shareByUrl.title')}
+            </Tab>
+          </TabList>
+          <TabPanels className={styles['pho-share-modal-content']}>
+            <TabPanel name='link'>
+              <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
+              {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => console.log(this) || this.setState({ copied: true })} copied={this.state.copied} />}
+            </TabPanel>
+            <TabPanel name='url'>
+              <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
         {creating &&
           <div className={styles['pho-share-modal-footer']}>
             <p>{t('Albums.share.creatingLink')}</p>
