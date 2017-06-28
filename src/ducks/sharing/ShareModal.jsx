@@ -87,7 +87,7 @@ export class ShareModal extends Component {
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='link'>
               <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
-              {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => console.log(this) || this.setState({ copied: true })} copied={this.state.copied} />}
+              {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
             </TabPanel>
             <TabPanel name='url'>
               <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
