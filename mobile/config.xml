@@ -39,6 +39,7 @@
     <platform name="ios">
         <preference name="StatusBarOverlaysWebView" value="false" />
         <preference name="StatusBarStyle" value="default" />
+        <preference name="Suppresses3DTouchGesture" value="true" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon height="29" src="res/icons/ios/icon-small.png" width="29" />
