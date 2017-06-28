@@ -75,7 +75,7 @@ class UploadQueue extends Component {
   }
 
   render () {
-    const { t, queue, doneCount, successCount, purgeQueue } = this.props
+    const { queue, doneCount, successCount, purgeQueue } = this.props
     const { collapsed } = this.state
     return (
       <div className={classNames(styles['upload-queue'], {
