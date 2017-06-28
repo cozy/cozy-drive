@@ -63,7 +63,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-    dispatch(addToUploadQueue(files, displayedFolder._id, file => uploadedFile(file), (loaded, quotas, conflicts, errors) => {
+    dispatch(addToUploadQueue(files, displayedFolder.id, file => uploadedFile(file), (loaded, quotas, conflicts, errors) => {
       let action = { type: '' }// dummy action, we only use it to trigger an alert notification
 
       if (quotas.length > 0) {
