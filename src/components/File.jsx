@@ -144,7 +144,6 @@ class File extends Component {
       getClassFromMime(attributes),
       { [styles['fil-content-file-openable']]: !isRenaming }
     )
-    console.log(attributes)
     const { filename, extension } = splitFilename(attributes)
     return (
       <div className={classes}>
