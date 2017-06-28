@@ -111,7 +111,11 @@ export const openFileInNewTab = (folder, file) => {
 
     const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
     const href = await cozy.client.files.getDownloadLinkByPath(filePath)
-    newTab.location.href = `${cozy.client._url}${href}`
+    if (isCordova()) {
+      newTab.executeScript({ code: `window.location.href = '${cozy.client._url}${href}'` })
+    } else {
+      newTab.location.href = `${cozy.client._url}${href}`
+    }
   }
 }
 
