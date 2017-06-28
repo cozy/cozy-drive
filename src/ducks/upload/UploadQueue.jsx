@@ -38,6 +38,33 @@ const Item = translate()(({ t, file, status }) => {
   )
 })
 
+const Header = translate()(({ t, total, done, successful, onDoubleClick, onClose }) => (
+  <h4 className={styles['upload-queue-header']} onDoubleClick={onDoubleClick}>
+    {
+      done < total &&
+      <div className={styles['upload-queue-header-inner']}>
+        <span className='coz-desktop'>
+          {t('UploadQueue.header', { smart_count: total })}
+        </span>
+        <span className='coz-mobile'>
+          {t('UploadQueue.header_mobile', { done, total })}
+        </span>
+      </div>
+    }
+    {
+      done >= total &&
+      <div className={styles['upload-queue-header-inner']}>
+        <span>
+          {t('UploadQueue.header_done', { done: successful, total })}
+        </span>
+        <button className={classNames(styles['btn-close'])} onClick={onClose}>
+          { t('UploadQueue.close') }
+        </button>
+      </div>
+    }
+  </h4>
+))
+
 class UploadQueue extends Component {
   state = {
     collapsed: false
@@ -55,30 +82,13 @@ class UploadQueue extends Component {
         [styles['upload-queue--visible']]: queue.length !== 0,
         [styles['upload-queue--collapsed']]: collapsed
       })}>
-        <h4 className={styles['upload-queue-header']} onDoubleClick={this.toggleCollapsed}>
-          {
-            doneCount < queue.length &&
-            <div className={styles['upload-queue-header-inner']}>
-              <span className='coz-desktop'>
-                {t('UploadQueue.header', { smart_count: queue.length })}
-              </span>
-              <span className='coz-mobile'>
-                {t('UploadQueue.header_mobile', { done: doneCount, total: queue.length })}
-              </span>
-            </div>
-          }
-          {
-            doneCount >= queue.length &&
-            <div className={styles['upload-queue-header-inner']}>
-              <span>
-                {t('UploadQueue.header_done', { done: successCount, total: queue.length })}
-              </span>
-              <button className={classNames(styles['btn-close'])} onClick={purgeQueue}>
-                { t('UploadQueue.close') }
-              </button>
-            </div>
-          }
-        </h4>
+        <Header
+          total={queue.length}
+          done={doneCount}
+          successful={successCount}
+          onDoubleClick={this.toggleCollapsed}
+          onClose={purgeQueue}
+        />
         <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
         <div className={styles['upload-queue-content']}>
           <div className={styles['upload-queue-list']}>
