@@ -1,0 +1,2 @@
+Thank you for using Cozy! Here are the latest changes:
+- minor bug fixes
