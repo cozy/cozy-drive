@@ -23,7 +23,22 @@
     "menu_upload": "Upload files",
     "menu_new_folder": "New folder",
     "menu_select": "Select items",
-    "empty_trash": "Empty trash"
+    "empty_trash": "Empty trash",
+    "share": "Share"
+  },
+  "share": {
+    "title": "Share with others",
+    "shareByLink": {
+      "title": "By public link",
+      "subtitle": "Share by link",
+      "desc": "Anyone with the provided link can see and download your files."
+    },
+    "sharingLink": {
+      "title": "Link to share",
+      "copy": "Copy",
+      "copied": "Copied"
+    },
+    "creatingLink": "Creating your link..."
   },
   "table": {
     "head_name": "Name",

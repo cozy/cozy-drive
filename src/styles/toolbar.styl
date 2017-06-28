@@ -38,9 +38,12 @@
             &.fil-action-select
                 background embedurl('../assets/icons/icon-checkbox-16.svg') em(16px) center no-repeat
             &.fil-action-delete
-                background  embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
+                background embedurl('../assets/icons/icon-trash-dark.svg') em(16px) center no-repeat
+            &.fil-action-share
+                background embedurl('../assets/icons/icon-share-dark.svg') em(16px) center no-repeat
 
         .fil-action-upload
+        .fil-action-share
         hr // temporary while there is only select after hr
             display none
 
@@ -50,13 +53,10 @@
     .fil-toolbar-trash
         .fil-toolbar-menu
             .fil-action-upload
+            .fil-action-share
             .fil-action-select
             hr // temporary while there is only select after hr
                 display block
-
-    .desktop-upload
-    .fil-btn--delete
-        display none
 
     .fil-toolbar-trash .fil-toolbar-more-btn
             display inline-flex
