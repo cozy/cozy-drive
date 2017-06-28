@@ -38,31 +38,26 @@ const Item = translate()(({ t, file, status }) => {
   )
 })
 
-const Header = translate()(({ t, total, done, successful, onDoubleClick, onClose }) => (
-  <h4 className={styles['upload-queue-header']} onDoubleClick={onDoubleClick}>
-    {
-      done < total &&
-      <div className={styles['upload-queue-header-inner']}>
-        <span className='coz-desktop'>
-          {t('UploadQueue.header', { smart_count: total })}
-        </span>
-        <span className='coz-mobile'>
-          {t('UploadQueue.header_mobile', { done, total })}
-        </span>
-      </div>
-    }
-    {
-      done >= total &&
-      <div className={styles['upload-queue-header-inner']}>
-        <span>
-          {t('UploadQueue.header_done', { done: successful, total })}
-        </span>
-        <button className={classNames(styles['btn-close'])} onClick={onClose}>
-          { t('UploadQueue.close') }
-        </button>
-      </div>
-    }
-  </h4>
+const InProgressHeader = translate()(({ t, total, done }) => (
+  <div className={styles['upload-queue-header-inner']}>
+    <span className='coz-desktop'>
+      {t('UploadQueue.header', { smart_count: total })}
+    </span>
+    <span className='coz-mobile'>
+      {t('UploadQueue.header_mobile', { done, total })}
+    </span>
+  </div>
+))
+
+const FinishedHeader = translate()(({t, total, successful, onClose}) => (
+  <div className={styles['upload-queue-header-inner']}>
+    <span>
+      {t('UploadQueue.header_done', { done: successful, total })}
+    </span>
+    <button className={classNames(styles['btn-close'])} onClick={onClose}>
+      { t('UploadQueue.close') }
+    </button>
+  </div>
 ))
 
 class UploadQueue extends Component {
@@ -82,13 +77,13 @@ class UploadQueue extends Component {
         [styles['upload-queue--visible']]: queue.length !== 0,
         [styles['upload-queue--collapsed']]: collapsed
       })}>
-        <Header
-          total={queue.length}
-          done={doneCount}
-          successful={successCount}
-          onDoubleClick={this.toggleCollapsed}
-          onClose={purgeQueue}
-        />
+        <h4 className={styles['upload-queue-header']} onDoubleClick={this.toggleCollapsed}>
+          {
+            doneCount < queue.length
+            ? <InProgressHeader total={queue.length} done={doneCount} />
+            : <FinishedHeader total={queue.length} successful={successCount} onClose={purgeQueue} />
+          }
+        </h4>
         <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
         <div className={styles['upload-queue-content']}>
           <div className={styles['upload-queue-list']}>
