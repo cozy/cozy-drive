@@ -8,7 +8,7 @@ import AlbumItem from '../components/AlbumItem'
 const DumbAlbumsList = props => (
   <div className={styles['pho-album-list']}>
     {props.albums.map((a) =>
-      <AlbumItem album={a} shared={props.shared.indexOf(a._id) !== -1} key={a._id} onServerError={props.onServerError} />)}
+      <AlbumItem album={a} sharedByMe={props.sharedByMe.indexOf(a._id) !== -1} sharedWithMe={props.sharedWithMe.indexOf(a._id) !== -1} key={a._id} onServerError={props.onServerError} />)}
   </div>
 )
 

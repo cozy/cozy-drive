@@ -77,8 +77,12 @@
         background-image     embedurl('../assets/icons/icon-share-white.svg')
         background-position  center
         background-repeat    no-repeat
-        background-color     emerald
         border-radius        50%
+
+        &.--by-me
+            background-color     emerald
+        &.--with-me
+            background-color     portage
 
 @media (max-width: (480/basefont)rem)
     .pho-album
