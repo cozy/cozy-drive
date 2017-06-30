@@ -12,16 +12,12 @@ import Spinner from 'cozy-ui/react/Spinner'
 
 import { getFolderUrl } from '../reducers'
 
-export const splitFilename = file => {
-  if (isDirectory(file)) {
-    return { filename: file.name, extension: '' }
-  } else {
-    return {
-      extension: file.name.slice(file.name.lastIndexOf('.') + 1),
-      filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
-    }
+export const splitFilename = file => isDirectory(file)
+  ? { filename: file.name, extension: '' }
+  : {
+    extension: file.name.slice(file.name.lastIndexOf('.') + 1),
+    filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
   }
-}
 
 export const getClassFromMime = (attrs) => {
   if (isDirectory(attrs)) {
