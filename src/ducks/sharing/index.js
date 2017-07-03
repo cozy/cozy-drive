@@ -13,11 +13,11 @@ export const findPermSet = (id, doctype) =>
 // there is a need of a bit of exploratory work and design for that API...
 
 const SHARED_BY_LINK = 'sharedByLink'
-const SHARED_BY_ME = 'sharedByMe'
 const SHARED_WITH_ME = 'sharedWithMe'
+const SHARED_WITH_OTHERS = 'sharedWithOthers'
 
 export const findPermissionSets = (ids, doctype, sharingType) => {
-  if ([SHARED_BY_LINK, SHARED_BY_ME, SHARED_WITH_ME].indexOf(sharingType) < 0) throw new Error("findPermissionSets expects a sharing type")
+  if ([SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS].indexOf(sharingType) < 0) throw new Error("findPermissionSets expects a sharing type")
 
   return cozy.client.fetchJSON('GET', `/permissions/doctype/${doctype}/${sharingType}`)
     .then(sets => sets.filter(set => {
