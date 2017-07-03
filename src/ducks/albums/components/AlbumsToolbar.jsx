@@ -35,11 +35,11 @@ class AlbumsToolbar extends Component {
         </div>
         <Menu
           title={t('Toolbar.more')}
-          className={styles['pho-toolbar-menu']}
+          className={classNames(styles['pho-toolbar-menu'], 'coz-mobile')}
           buttonClassName={styles['pho-toolbar-more-btn']}
         >
           <Item>
-            <div className='coz-mobile'>
+            <div>
               <a className={styles['pho-btn-new']} onClick={this.showAddAlbum}>
                 {t('Toolbar.album_new')}
               </a>
