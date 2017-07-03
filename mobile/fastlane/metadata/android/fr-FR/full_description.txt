@@ -1,3 +1,5 @@
+Cette application n'est compatible qu'avec la dernière version de Cozy (v3).
+
 Cozy Cloud permet à chacun d’avoir son cloud personnel, respectueux de la vie privée. Avec Cozy Drive, accédez aux fichiers et aux photos stockés dans votre Cozy depuis n'importe quel téléphone/tablette.
 
 Avec Cozy Drive vous pouvez :

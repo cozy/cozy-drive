@@ -59,7 +59,7 @@ const Menu = props => {
 }
 
 const MenuHeaderFile = ({ file }) => {
-  const { filename, extension } = splitFilename(file.name)
+  const { filename, extension } = splitFilename(file)
   return (
     <Item>
       <div className={classNames(styles['fil-actionmenu-file'], styles['fil-actionmenu-header'], getClassFromMime(file))}>

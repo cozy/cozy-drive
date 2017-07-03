@@ -12,13 +12,12 @@ import Spinner from 'cozy-ui/react/Spinner'
 
 import { getFolderUrl } from '../reducers'
 
-export const splitFilename = filename => {
-  const dotIdx = filename.lastIndexOf('.') - 1 >>> 0
-  return {
-    extension: filename.slice(dotIdx + 1),
-    filename: filename.slice(0, dotIdx + 1)
+export const splitFilename = file => isDirectory(file)
+  ? { filename: file.name, extension: '' }
+  : {
+    extension: file.name.slice(file.name.lastIndexOf('.') + 1),
+    filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
   }
-}
 
 export const getClassFromMime = (attrs) => {
   if (isDirectory(attrs)) {
@@ -141,7 +140,7 @@ class File extends Component {
       getClassFromMime(attributes),
       { [styles['fil-content-file-openable']]: !isRenaming }
     )
-    const { filename, extension } = splitFilename(attributes.name)
+    const { filename, extension } = splitFilename(attributes)
     return (
       <div className={classes}>
         {isRenaming

@@ -1,3 +1,5 @@
+This application is only compatible with the latest version of Cozy (v3).
+
 Cozy Cloud simplifies the personal cloud. Files and photos you keep in your Cozy, your personal cloud, are accessible from everywhere.
 
 Cozy Drive allows you to:
