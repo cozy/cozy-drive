@@ -61,10 +61,27 @@ export class Viewer extends Component {
     })
 
     this.gesturesHandler.on('pinch', e => {
-      const scaleDelta = e.scale - 1 // scale is a factor computed by hammer, but it works pretty well. However, it starts at `1` a the begining of the gesture, but we want the difference from the exisitng, so we subtract 1
-      console.log(scaleDelta)
+      let newZoom = Math.max(1, Math.min(maxScale, initialScale + e.scale - 1))// scale is a factor computed by hammer, but it works pretty well. However, it starts at `1` a the begining of the gesture, but we want the difference from the exisitng, so we subtract 1
+
+      let gestureX = e.center.x
+      let gestureY = e.center.y
+      let photoBoundaries = this.viewer.getBoundingClientRect()
+      let photoCenterX = (photoBoundaries.right - photoBoundaries.left) / 2
+      let photoCenterY = (photoBoundaries.bottom - photoBoundaries.top) / 2
+
+      let initialDeltaX = photoCenterX - gestureX
+      let initialDeltaY = photoCenterY - gestureY
+
+      let deltaXAfterZoom = (initialDeltaX * newZoom)
+      let deltaYAfterZoom = (initialDeltaY * newZoom)
+      let finalX = (deltaXAfterZoom - initialDeltaX) / newZoom
+      let finalY = (deltaYAfterZoom - initialDeltaY) / newZoom
+
+
       this.setState({
-        scale: Math.max(1, Math.min(maxScale, initialScale + scaleDelta))
+        scale: newZoom,
+        offsetX: finalX,
+        offsetY: finalY
       })
     })
 
