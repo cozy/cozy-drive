@@ -1,20 +1,30 @@
 /* global cozy */
-export const filterSharedDocuments = (ids, doctype) =>
-  findPermSets(ids, doctype).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
+export const filterSharedByMeDocuments = (ids, doctype) =>
+  findPermissionSets(ids, doctype, SHARED_BY_LINK).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
+
+export const filterSharedWithMeDocuments = (ids, doctype) =>
+  findPermissionSets(ids, doctype, SHARED_WITH_ME).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
 
 export const findPermSet = (id, doctype) =>
-  findPermSets([id], doctype).then(sets => sets.length === 0 ? undefined : sets[0])
+  findPermissionSets([id], doctype, SHARED_BY_LINK).then(sets => sets.length === 0 ? undefined : sets[0])
 
 // TODO: move this to cozy-client-js
 // there is cozy.client.files.getCollectionShareLink already, but I think that
 // there is a need of a bit of exploratory work and design for that API...
 
-export const findPermSets = (ids, doctype) =>
-  cozy.client.fetchJSON('GET', `/permissions/doctype/${doctype}/sharedByLink`)
+const SHARED_BY_LINK = 'sharedByLink'
+const SHARED_WITH_ME = 'sharedWithMe'
+const SHARED_WITH_OTHERS = 'sharedWithOthers'
+
+export const findPermissionSets = (ids, doctype, sharingType) => {
+  if ([SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS].indexOf(sharingType) < 0) throw new Error('findPermissionSets expects a sharing type')
+
+  return cozy.client.fetchJSON('GET', `/permissions/doctype/${doctype}/${sharingType}`)
     .then(sets => sets.filter(set => {
       const perm = set.attributes.permissions.collection
       return perm.type === doctype && ids.find(id => perm.values.indexOf(id) !== -1) !== undefined
     }))
+}
 
 export const createPermSet = (id, doctype) =>
   cozy.client.fetchJSON('POST', `/permissions?codes=email`, {

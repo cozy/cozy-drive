@@ -1,5 +1,6 @@
 /* global cozy */
 import styles from '../styles/albumsList'
+import classNames from 'classnames'
 
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
@@ -10,9 +11,9 @@ import ImageLoader from './ImageLoader'
 
 const isAlbumEmpty = album => !(album && album.photos && album.photos.length !== 0)
 
-const SharedIcon = () => (
+const SharedIcon = ({ byMe }) => (
   <div className={styles['pho-album-shared']}>
-    <div className={styles['pho-album-shared-icon']} />
+    <div className={classNames(styles['pho-album-shared-icon'], styles[byMe ? '--by-me' : '--with-me'])} />
   </div>
 )
 
@@ -44,7 +45,7 @@ export class AlbumItem extends Component {
     if (this.state.isLoading) {
       return null
     }
-    const { t, album, shared, onClick } = this.props
+    const { t, album, sharedByMe, sharedWithMe, onClick } = this.props
     const { coverPhoto } = this.state
 
     const image = !coverPhoto
@@ -61,7 +62,7 @@ export class AlbumItem extends Component {
       {t('Albums.album_item_description',
         {smart_count: album.photos.length})
       }
-      {shared && ` - ${t('Albums.album_item_shared_ro')}`}
+      {(sharedByMe || sharedWithMe) && ` - ${t('Albums.album_item_shared_ro')}`}
     </h4>
     const title = <h2 className={styles['pho-album-title']}>{album.name}</h2>
 
@@ -71,7 +72,7 @@ export class AlbumItem extends Component {
           <div onClick={() => onClick(album)} className={styles['pho-album-link']}>
             {image}{title}{desc}
           </div>
-          {shared && <SharedIcon />}
+          {(sharedByMe || sharedWithMe) && <SharedIcon byMe={false} />}
         </div>
       )
     }
@@ -81,7 +82,7 @@ export class AlbumItem extends Component {
         <Link to={`${parentPath}/${album._id}`} className={styles['pho-album-link']}>
           {image}{title}{desc}
         </Link>
-        {shared && <SharedIcon />}
+        {(sharedByMe || sharedWithMe) && <SharedIcon byMe={sharedByMe} />}
       </div>
     )
   }
