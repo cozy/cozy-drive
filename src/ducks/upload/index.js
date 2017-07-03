@@ -83,13 +83,13 @@ export const addToUploadQueue = (files, dirID, callback) => async dispatch => {
   dispatch(processNextFile(callback, dirID))
 }
 
+export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
+
 export const onQueueEmpty = () => (dispatch, getState) => {
   const queue = getUploadQueue(getState())
   const conflicts = getConflicts(queue)
   const errors = getErrors(queue)
   const loaded = getLoaded(queue)
-
-  dispatch({ type: PURGE_UPLOAD_QUEUE })
 
   if (!conflicts.length && !errors.length) {
     Alerter.success(
@@ -114,3 +114,4 @@ const getLoaded = queue => filterByStatus(queue, LOADED)
 
 export const getUploadQueue = state => state[SLUG].queue
 export const getProcessed = state => getUploadQueue(state).filter(f => f.status !== PENDING)
+export const getSuccessful = state => getLoaded(getUploadQueue(state))

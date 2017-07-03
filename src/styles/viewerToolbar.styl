@@ -59,9 +59,13 @@
         position            fixed
         height              em(48px)
         background-color    alpha(grey-08, .33)
+        transition .4s opacity ease-out
 
         &::before
             width em(48px)
+
+        &.--hidden
+            opacity 0
 
     .pho-viewer-toolbar-close
         width em(48/14)
