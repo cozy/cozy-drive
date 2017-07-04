@@ -12,6 +12,10 @@ import ImageLoader from './ImageLoader'
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
 const TOOLBAR_HIDE_DELAY = 3000
+const MIN_SCALE = 1
+const MAX_SCALE = 6
+
+const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
 export class Viewer extends Component {
   constructor (props) {
@@ -23,6 +27,11 @@ export class Viewer extends Component {
       scale: 1,
       offsetX: 0,
       offsetY: 0,
+      initialOffset: {
+        x: 0,
+        y: 0
+      },
+      initialScale: 0,
       hideToolbar: false
     }
 
@@ -36,6 +45,33 @@ export class Viewer extends Component {
     this.setState({...mapRouteToPhotos(nextProps.photos, nextProps.params)})
   }
 
+  computeMaxOffset () {
+    if (this.viewer && this.photo) {
+      const wrapperBoundaries = this.viewer.getBoundingClientRect()
+      const photoBoundaries = this.photo.getBoundingClientRect()
+
+      return {
+        x: Math.max(photoBoundaries.width / 2 - wrapperBoundaries.width / 2, 0) / this.state.scale,
+        y: Math.max(photoBoundaries.height / 2 - wrapperBoundaries.height / 2, 0) / this.state.scale
+      }
+    } else {
+      return {
+        x :0,
+        y: 0
+      }
+    }
+  }
+
+  saveInitialState () {
+    this.setState(state => ({
+      initialScale: state.scale,
+      initialOffset: {
+        x: state.offsetX,
+        y: state.offsetY
+      },
+    }))
+  }
+
   componentDidMount () {
     this.onKeyDownCallback = this.onKeyDown.bind(this)
     document.addEventListener('keydown', this.onKeyDownCallback, false)
@@ -44,74 +80,51 @@ export class Viewer extends Component {
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
 
     let initialScale = 0
-    let maxScale = 6
-
-    let initialOffsetX = 0
-    let initialOffsetY = 0
-    let maxOffsetX = 0
-    let maxOffsetY = 0
-
-    let photoCenterX = 0
-    let photoCenterY = 0
 
     this.gesturesHandler.get('pinch').set({ enable: true })
     this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
 
-    this.gesturesHandler.on('pinchstart', e => {
-      initialScale = this.state.scale
-      initialOffsetX = this.state.offsetX
-      initialOffsetY = this.state.offsetY
-    })
-
-    this.gesturesHandler.on('pinch', e => {
-      let photoBoundaries = this.viewer.getBoundingClientRect()
-      photoCenterX = ((photoBoundaries.right - photoBoundaries.left) / 2) + photoBoundaries.left
-      photoCenterY = ((photoBoundaries.bottom - photoBoundaries.top) / 2) + photoBoundaries.top
-
-      let newZoom = initialScale + (e.scale - 1)// scale is a factor computed by hammer, but it works pretty well. However, it starts at `1` a the begining of the gesture, but we want the difference from the exisitng, so we subtract 1
-      let zoomDiff = newZoom - initialScale
-      let zoomFactor = 1 + zoomDiff
-
-      let gestureX = e.center.x
-      let gestureY = e.center.y
-
-      let initialDeltaX = (photoCenterX - gestureX) / this.state.scale
-      let initialDeltaY = (photoCenterY - gestureY) / this.state.scale
-
-      let deltaXAfterZoom = initialDeltaX * zoomFactor
-      let deltaYAfterZoom = initialDeltaY * zoomFactor
-
-      let finalX = deltaXAfterZoom - initialDeltaX + initialOffsetX
-      let finalY = deltaYAfterZoom - initialDeltaY + initialOffsetY
-
-      this.setState({
-        scale: Math.max(1, Math.min(maxScale, initialScale * zoomFactor)),
-        offsetX: finalX,
-        offsetY: finalY
-      })
-    })
-
-    this.gesturesHandler.on('panstart', e => {
-      initialOffsetX = this.state.offsetX
-      initialOffsetY = this.state.offsetY
-
-      // prevent panning past the edges of the photo
-      if (this.viewer && this.photo) {
-        let wrapperBoundaries = this.viewer.getBoundingClientRect()
-        let photoBoundaries = React.findDOMNode(this.photo).getBoundingClientRect()
-        maxOffsetX = Math.max(photoBoundaries.width / 2 - wrapperBoundaries.width / 2, 0) / this.state.scale
-        maxOffsetY = Math.max(photoBoundaries.height / 2 - wrapperBoundaries.height / 2, 0) / this.state.scale
-      }
-      else {
-        maxOffsetX = maxOffsetY = 0
-      }
-    })
+    this.gesturesHandler.on('panstart', this.saveInitialState.bind(this))
+    this.gesturesHandler.on('pinchstart', this.saveInitialState.bind(this))
 
     this.gesturesHandler.on('pan', e => {
       // values are clamped, and the delta is adjusted for the scale
-      this.setState({
-        offsetX: Math.max(-maxOffsetX, Math.min(maxOffsetX, initialOffsetX + e.deltaX / this.state.scale)),
-        offsetY: Math.max(-maxOffsetY, Math.min(maxOffsetY, initialOffsetY + e.deltaY / this.state.scale)),
+      this.setState(state => {
+        const maxOffset = this.computeMaxOffset()
+        return {
+          offsetX: clamp(-maxOffset.x, state.initialOffset.x + e.deltaX / state.scale, maxOffset.x),
+          offsetY: clamp(-maxOffset.y, state.initialOffset.y + e.deltaY / state.scale, maxOffset.y),
+        }
+      })
+    })
+
+    this.gesturesHandler.on('pinch', e => {
+      this.setState((state) => {
+        let wrapperBoundaries = this.viewer.getBoundingClientRect()
+        let photoCenterX = (wrapperBoundaries.right - wrapperBoundaries.left) / 2
+        let photoCenterY = (wrapperBoundaries.bottom - wrapperBoundaries.top) / 2
+
+        let gestureX = e.center.x
+        let gestureY = e.center.y
+
+        let scaleFactor = clamp(MIN_SCALE / state.initialScale, e.scale, MAX_SCALE / state.initialScale)
+
+        let initialDeltaX = (photoCenterX - gestureX) / state.scale
+        let initialDeltaY = (photoCenterY - gestureY) / state.scale
+
+        let deltaXAfterZoom = initialDeltaX * scaleFactor
+        let deltaYAfterZoom = initialDeltaY * scaleFactor
+
+        let finalX = deltaXAfterZoom - initialDeltaX + state.initialOffset.x
+        let finalY = deltaYAfterZoom - initialDeltaY + state.initialOffset.y
+
+        const maxOffset = this.computeMaxOffset()
+
+        return {
+          scale: state.initialScale * scaleFactor,
+          offsetX: clamp(-maxOffset.x, finalX, maxOffset.x),
+          offsetY: clamp(-maxOffset.y, finalY, maxOffset.y)
+        }
       })
     })
 
@@ -192,7 +205,7 @@ export class Viewer extends Component {
                 onLoad={this.handleImageLoaded}
                 src={`${cozy.client._url}${currentPhoto.links.large}`}
                 style={style}
-                ref={photo => { this.photo = photo }}
+                ref={photo => { this.photo = React.findDOMNode(photo) }}
               />
             }
             {(!currentPhoto || isImageLoading) &&
