@@ -14,6 +14,8 @@ const KEY_CODE_RIGHT = 39
 const TOOLBAR_HIDE_DELAY = 3000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
+const MASS = 13       // Determines how "heavy" the photo feels when paning the image. The bigger the number, the heavier it is.
+const FRICTION = .9   // Determines how much the image is slowed down after letting go of a pan. The closest it is to 1, the less it slows down (a value bigger than 1 makes it accelerate)
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
@@ -32,6 +34,10 @@ export class Viewer extends Component {
         y: 0
       },
       initialScale: 0,
+      momentum: {
+        x: 0,
+        y: 0
+      },
       hideToolbar: false
     }
 
@@ -57,9 +63,9 @@ export class Viewer extends Component {
     this.gesturesHandler.get('pinch').set({ enable: true })
     this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
 
-    // During a gesture, everything is computed with a base value (the state of the image when the gesture starts) and a delta (a translation / zoom, described by the gesture). When a gesture starts, we record the current state of the image
-    this.gesturesHandler.on('panstart', this.saveInitialOffsetAndScale.bind(this))
-    this.gesturesHandler.on('pinchstart', this.saveInitialOffsetAndScale.bind(this))
+    // During a gesture, everything is computed with a base value (the state of the image when the gesture starts) and a delta (a translation / zoom, described by the gesture). When a gesture starts, we record the current state of the image.
+    this.gesturesHandler.on('panstart', this.prepareForGesture.bind(this))
+    this.gesturesHandler.on('pinchstart', this.prepareForGesture.bind(this))
 
     // during a pan, we add the gestures delta to the initial offset to get the new offset. The new offset is then scaled : if the pan distance was 100px, but the image was scaled 2x, the actual offset should only be 50px. FInally, this value is clamped to make sure the user can't pan further than the edges.
     this.gesturesHandler.on('pan', e => {
@@ -119,12 +125,38 @@ export class Viewer extends Component {
     })
 
     this.gesturesHandler.on('panend', e => {
-      // @TODO: handle remaining velocity
+      // convert the remaining velocity into momentum
+      this.setState({
+        momentum: {
+          x: e.velocityX * MASS,
+          y: e.velocityY * MASS
+        }
+      }, this.applyMomentum.bind(this))
     })
 
     this.gesturesHandler.on('tap', this.toggleToolbar.bind(this))
 
     this.hideToolbarAfterDelay()
+  }
+
+  /**
+   * Gradually applies the momentum after a pan end
+   */
+  applyMomentum () {
+    this.setState(state => {
+      const maxOffset = this.computeMaxOffset()
+
+      return {
+        offsetX: clamp(-maxOffset.x, state.offsetX + state.momentum.x, maxOffset.x),
+        offsetY: clamp(-maxOffset.y, state.offsetY + state.momentum.y, maxOffset.y),
+        momentum: {
+          x: state.momentum.x * FRICTION,
+          y: state.momentum.y * FRICTION,
+        }
+      }
+    }, () => {
+      if (Math.abs(this.state.momentum.x) > .1 || Math.abs(this.state.momentum.y) > .1) requestAnimationFrame(this.applyMomentum.bind(this))
+    })
   }
 
   /**
@@ -149,15 +181,19 @@ export class Viewer extends Component {
   }
 
   /**
-   * Persist the current scale and offset to the state. This is called at the begining of gestures and the values saved are used as "base values" for the calculation
+   * Persist the current scale and offset to the state. This is called at the begining of gestures and the values saved are used as "base values" for the calculation. It also kills any remaining momentum from a previous gesture
    */
-  saveInitialOffsetAndScale () {
+  prepareForGesture () {
     this.setState(state => ({
       initialScale: state.scale,
       initialOffset: {
         x: state.offsetX,
         y: state.offsetY
       },
+      momentum: {
+        x: 0,
+        y: 0,
+      }
     }))
   }
 
