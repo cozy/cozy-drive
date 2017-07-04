@@ -1,3 +1,4 @@
+/* global cozy */
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
@@ -9,6 +10,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
+import Preview from '../components/Preview'
 
 import { getFolderUrl } from '../reducers'
 
@@ -143,6 +145,7 @@ class File extends Component {
     const { filename, extension } = splitFilename(attributes)
     return (
       <div className={classes}>
+        { attributes.mime === 'image/jpeg' && <Preview thumbnail={`${cozy.client._url}${attributes.links.small}`} /> }
         {isRenaming
           ? <RenameInput />
           : <div>
