@@ -227,7 +227,7 @@ export const downloadSelection = selected => {
       return dispatch(downloadFile(selected[0], meta))
     }
     const paths = selected.map(f => f.path)
-    const href = await cozy.client.files.getArchiveLinkByPaths(paths)
+    const href = await cozy.client.files.getArchiveLink(paths)
     const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')
     return dispatch({ type: DOWNLOAD_SELECTION, selected, meta })
