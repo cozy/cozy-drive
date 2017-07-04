@@ -145,7 +145,7 @@ class File extends Component {
     const { filename, extension } = splitFilename(attributes)
     return (
       <div className={classes}>
-        { attributes.mime === 'image/jpeg' && <Preview thumbnail={`${cozy.client._url}${attributes.links.small}`} /> }
+        { attributes.links && <Preview thumbnail={`${cozy.client._url}${attributes.links.small}`} /> }
         {isRenaming
           ? <RenameInput />
           : <div>
