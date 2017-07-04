@@ -1421,6 +1421,12 @@ cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
+copy-to-clipboard@^3:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.0.6.tgz#13c09bfea0408a5dc5bb987fee3b3986518c9d69"
+  dependencies:
+    toggle-selection "^1.0.3"
+
 copy-webpack-plugin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-4.0.1.tgz#9728e383b94316050d0c7463958f2b85c0aa8200"
@@ -1468,9 +1474,9 @@ cozy-client-js@0.2.5:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.2.5.tgz#e4d9dd82fb35b2ca9724cd6684b8f9a2b26f3dac"
 
-cozy-ui@3.0.0-beta38:
-  version "3.0.0-beta38"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta38.tgz#d88f70938619656d5549ac8de7f76433d688b635"
+cozy-ui@^3.0.0-beta39:
+  version "3.0.0-beta39"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta39.tgz#413e7f9df0e729c1dcbbd46826538da028e12192"
   dependencies:
     classnames "^2.2.5"
     md5 "^2.2.0"
@@ -5297,6 +5303,13 @@ react-bosonic@1.0.0-beta6:
     recompose "^0.20.2"
     skatejs-react-integration "^1.0.2"
 
+react-copy-to-clipboard@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.0.tgz#23ccdd7c4d9ec2cc763839e2a55b1220aeb4f33d"
+  dependencies:
+    copy-to-clipboard "^3"
+    prop-types "^15.5.8"
+
 react-dom@^15.3.2, react-dom@^15.4.0:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.5.4.tgz#ba0c28786fd52ed7e4f2135fe0288d462aef93da"
@@ -6347,6 +6360,10 @@ to-string-tag-x@^1.1.1, to-string-tag-x@^1.2.0:
   dependencies:
     lodash.isnull "^3.0.0"
     validate.io-undefined "^1.0.3"
+
+toggle-selection@^1.0.3:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/toggle-selection/-/toggle-selection-1.0.5.tgz#726c703de607193a73c32c7df49cd24950fc574f"
 
 toposort@^1.0.0:
   version "1.0.3"
