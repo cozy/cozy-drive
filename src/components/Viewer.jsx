@@ -45,6 +45,92 @@ export class Viewer extends Component {
     this.setState({...mapRouteToPhotos(nextProps.photos, nextProps.params)})
   }
 
+  componentDidMount () {
+    this.onKeyDownCallback = this.onKeyDown.bind(this)
+    document.addEventListener('keydown', this.onKeyDownCallback, false)
+
+    this.gesturesHandler = new Hammer(this.viewer)
+    this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
+
+    let initialScale = 0
+
+    this.gesturesHandler.get('pinch').set({ enable: true })
+    this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
+
+    // During a gesture, everything is computed with a base value (the state of the image when the gesture starts) and a delta (a translation / zoom, described by the gesture). When a gesture starts, we record the current state of the image
+    this.gesturesHandler.on('panstart', this.saveInitialOffsetAndScale.bind(this))
+    this.gesturesHandler.on('pinchstart', this.saveInitialOffsetAndScale.bind(this))
+
+    // during a pan, we add the gestures delta to the initial offset to get the new offset. The new offset is then scaled : if the pan distance was 100px, but the image was scaled 2x, the actual offset should only be 50px. FInally, this value is clamped to make sure the user can't pan further than the edges.
+    this.gesturesHandler.on('pan', e => {
+      this.setState(state => {
+        const maxOffset = this.computeMaxOffset()
+        return {
+          offsetX: clamp(-maxOffset.x, state.initialOffset.x + e.deltaX / state.scale, maxOffset.x),
+          offsetY: clamp(-maxOffset.y, state.initialOffset.y + e.deltaY / state.scale, maxOffset.y),
+        }
+      })
+    })
+
+    // pinching / zooming / scaling is a bit more complicated, because the gesture's center has to be taken into account
+    this.gesturesHandler.on('pinch', e => {
+      this.setState((state) => {
+        // first we compute the scale factor: this is the number by which we will multiply the initial scale (as it was before the gesture started) to get the final scaling value. So if the initial scale is 2, and the scale factor is 1.5, the final scale will be 3.
+        // this value is clamped so so it stays within reasonable zoom limits.
+        let scaleFactor = clamp(MIN_SCALE / state.initialScale, e.scale, MAX_SCALE / state.initialScale)
+
+        // When the user is zooming in or out, we want that the origin point of the gesture stays in exactly the same place. The scaling origin is in the center of the viewer.
+        // If the gesture's origin is the same as the scaling origin, this works "out of the box" — you can imagine the pixels on all sides being "pushed" towards the outside. But if the gesture's origin is not in the center, we need to offset the whole image to produce the illusion that the scaling center is there.
+
+        // compute the center of the viewer
+        let wrapperBoundaries = this.viewer.getBoundingClientRect()
+        const viewerCenter= {
+          x: (wrapperBoundaries.right - wrapperBoundaries.left) / 2,
+          y: (wrapperBoundaries.bottom - wrapperBoundaries.top) / 2
+        }
+
+        // Compute the delta between the viewer's center and the gesture's center. This value is scaled back to the "natural" size — if the delta is 100px but the image is currently scale 2x, the real offset value is only 50px.
+        const offsetBeforeScale = {
+          x: (viewerCenter.x - e.center.x) / state.scale,
+          y: (viewerCenter.y - e.center.y) / state.scale
+        }
+
+        // Now we compute what this offset will be once we apply the new scale
+        const offsetAfterScale = {
+          x: offsetBeforeScale.x * scaleFactor,
+          y: offsetBeforeScale.y * scaleFactor
+        }
+
+        // finally, we compute the actual offset we want to apply. This is the difference between the offset *after* scaling and the offset *before* scaling. We also add any existing offset to preserve it (otherwise it is reset to the center each time)
+        const finalOffset = {
+          x: offsetAfterScale.x - offsetBeforeScale.x + state.initialOffset.x,
+          y: offsetAfterScale.y - offsetBeforeScale.y + state.initialOffset.y
+        }
+
+        // last thing: the offsets are clamped to make sure the offsetting doesn't go further than the edges
+        const maxOffset = this.computeMaxOffset()
+
+        return {
+          scale: state.initialScale * scaleFactor,
+          offsetX: clamp(-maxOffset.x, finalOffset.x, maxOffset.x),
+          offsetY: clamp(-maxOffset.y, finalOffset.y, maxOffset.y)
+        }
+      })
+    })
+
+    this.gesturesHandler.on('panend', e => {
+      // @TODO: handle remaining velocity
+    })
+
+    this.gesturesHandler.on('tap', this.toggleToolbar.bind(this))
+
+    this.hideToolbarAfterDelay()
+  }
+
+  /**
+   * Compute the maximum offset that can be applied to the photo on each axis before it goes over the edges
+   * @returns {object} A point with an x and y property
+   */
   computeMaxOffset () {
     if (this.viewer && this.photo) {
       const wrapperBoundaries = this.viewer.getBoundingClientRect()
@@ -62,7 +148,10 @@ export class Viewer extends Component {
     }
   }
 
-  saveInitialState () {
+  /**
+   * Persist the current scale and offset to the state. This is called at the begining of gestures and the values saved are used as "base values" for the calculation
+   */
+  saveInitialOffsetAndScale () {
     this.setState(state => ({
       initialScale: state.scale,
       initialOffset: {
@@ -70,71 +159,6 @@ export class Viewer extends Component {
         y: state.offsetY
       },
     }))
-  }
-
-  componentDidMount () {
-    this.onKeyDownCallback = this.onKeyDown.bind(this)
-    document.addEventListener('keydown', this.onKeyDownCallback, false)
-
-    this.gesturesHandler = new Hammer(this.viewer)
-    this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
-
-    let initialScale = 0
-
-    this.gesturesHandler.get('pinch').set({ enable: true })
-    this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
-
-    this.gesturesHandler.on('panstart', this.saveInitialState.bind(this))
-    this.gesturesHandler.on('pinchstart', this.saveInitialState.bind(this))
-
-    this.gesturesHandler.on('pan', e => {
-      // values are clamped, and the delta is adjusted for the scale
-      this.setState(state => {
-        const maxOffset = this.computeMaxOffset()
-        return {
-          offsetX: clamp(-maxOffset.x, state.initialOffset.x + e.deltaX / state.scale, maxOffset.x),
-          offsetY: clamp(-maxOffset.y, state.initialOffset.y + e.deltaY / state.scale, maxOffset.y),
-        }
-      })
-    })
-
-    this.gesturesHandler.on('pinch', e => {
-      this.setState((state) => {
-        let wrapperBoundaries = this.viewer.getBoundingClientRect()
-        let photoCenterX = (wrapperBoundaries.right - wrapperBoundaries.left) / 2
-        let photoCenterY = (wrapperBoundaries.bottom - wrapperBoundaries.top) / 2
-
-        let gestureX = e.center.x
-        let gestureY = e.center.y
-
-        let scaleFactor = clamp(MIN_SCALE / state.initialScale, e.scale, MAX_SCALE / state.initialScale)
-
-        let initialDeltaX = (photoCenterX - gestureX) / state.scale
-        let initialDeltaY = (photoCenterY - gestureY) / state.scale
-
-        let deltaXAfterZoom = initialDeltaX * scaleFactor
-        let deltaYAfterZoom = initialDeltaY * scaleFactor
-
-        let finalX = deltaXAfterZoom - initialDeltaX + state.initialOffset.x
-        let finalY = deltaYAfterZoom - initialDeltaY + state.initialOffset.y
-
-        const maxOffset = this.computeMaxOffset()
-
-        return {
-          scale: state.initialScale * scaleFactor,
-          offsetX: clamp(-maxOffset.x, finalX, maxOffset.x),
-          offsetY: clamp(-maxOffset.y, finalY, maxOffset.y)
-        }
-      })
-    })
-
-    this.gesturesHandler.on('panend', e => {
-      // @TODO: handle remaining velocity
-    })
-
-    this.gesturesHandler.on('tap', this.toggleToolbar.bind(this))
-
-    this.hideToolbarAfterDelay()
   }
 
   componentDidUpdate (prevProps, prevState) {
