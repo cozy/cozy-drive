@@ -51,6 +51,9 @@ export class Viewer extends Component {
     let maxOffsetX = 0
     let maxOffsetY = 0
 
+    let photoCenterX = 0
+    let photoCenterY = 0
+
     this.gesturesHandler.get('pinch').set({ enable: true })
     this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
 
@@ -61,25 +64,28 @@ export class Viewer extends Component {
     })
 
     this.gesturesHandler.on('pinch', e => {
-      let newZoom = Math.max(1, Math.min(maxScale, initialScale + e.scale - 1))// scale is a factor computed by hammer, but it works pretty well. However, it starts at `1` a the begining of the gesture, but we want the difference from the exisitng, so we subtract 1
+      let photoBoundaries = this.viewer.getBoundingClientRect()
+      photoCenterX = ((photoBoundaries.right - photoBoundaries.left) / 2) + photoBoundaries.left
+      photoCenterY = ((photoBoundaries.bottom - photoBoundaries.top) / 2) + photoBoundaries.top
+
+      let newZoom = initialScale + (e.scale - 1)// scale is a factor computed by hammer, but it works pretty well. However, it starts at `1` a the begining of the gesture, but we want the difference from the exisitng, so we subtract 1
+      let zoomDiff = newZoom - initialScale
+      let zoomFactor = 1 + zoomDiff
 
       let gestureX = e.center.x
       let gestureY = e.center.y
-      let photoBoundaries = this.viewer.getBoundingClientRect()
-      let photoCenterX = (photoBoundaries.right - photoBoundaries.left) / 2
-      let photoCenterY = (photoBoundaries.bottom - photoBoundaries.top) / 2
 
-      let initialDeltaX = photoCenterX - gestureX
-      let initialDeltaY = photoCenterY - gestureY
+      let initialDeltaX = (photoCenterX - gestureX) / this.state.scale
+      let initialDeltaY = (photoCenterY - gestureY) / this.state.scale
 
-      let deltaXAfterZoom = (initialDeltaX * newZoom)
-      let deltaYAfterZoom = (initialDeltaY * newZoom)
-      let finalX = (deltaXAfterZoom - initialDeltaX) / newZoom
-      let finalY = (deltaYAfterZoom - initialDeltaY) / newZoom
+      let deltaXAfterZoom = initialDeltaX * zoomFactor
+      let deltaYAfterZoom = initialDeltaY * zoomFactor
 
+      let finalX = deltaXAfterZoom - initialDeltaX + initialOffsetX
+      let finalY = deltaYAfterZoom - initialDeltaY + initialOffsetY
 
       this.setState({
-        scale: newZoom,
+        scale: Math.max(1, Math.min(maxScale, initialScale * zoomFactor)),
         offsetX: finalX,
         offsetY: finalY
       })
@@ -100,6 +106,7 @@ export class Viewer extends Component {
         maxOffsetX = maxOffsetY = 0
       }
     })
+
     this.gesturesHandler.on('pan', e => {
       // values are clamped, and the delta is adjusted for the scale
       this.setState({
@@ -107,9 +114,11 @@ export class Viewer extends Component {
         offsetY: Math.max(-maxOffsetY, Math.min(maxOffsetY, initialOffsetY + e.deltaY / this.state.scale)),
       })
     })
+
     this.gesturesHandler.on('panend', e => {
       // @TODO: handle remaining velocity
     })
+
     this.gesturesHandler.on('tap', this.toggleToolbar.bind(this))
 
     this.hideToolbarAfterDelay()
