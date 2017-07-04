@@ -181,7 +181,10 @@ export class Viewer extends Component {
   }
 
   /**
-   * Persist the current scale and offset to the state. This is called at the begining of gestures and the values saved are used as "base values" for the calculation. It also kills any remaining momentum from a previous gesture
+   * Things to do when a gesture starts:
+   * - saves the current scale and offset, which will be used as base values for calculations
+   * - kill any remaining momentum from previous gestures
+   * - hide the toolbar
    */
   prepareForGesture () {
     this.setState(state => ({
@@ -193,7 +196,8 @@ export class Viewer extends Component {
       momentum: {
         x: 0,
         y: 0,
-      }
+      },
+      hideToolbar: true
     }))
   }
 
@@ -213,7 +217,8 @@ export class Viewer extends Component {
   }
 
   onSwipe (e) {
-    // @TODO: probably disable when zoomed in
+    // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
+    if (this.state.scale > 1) return
 
     if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.state.nextID)
     else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.state.previousID)
@@ -222,10 +227,12 @@ export class Viewer extends Component {
   navigateToPhoto (id) {
     if (this.state.singlePhoto) return
 
-    // @TODO: reset scale and offsets
     this.setState({
       isImageLoading: true,
-      hideToolbar: true
+      hideToolbar: true,
+      scale: 1,
+      offsetX: 0,
+      offsetY: 0
     })
     const router = this.props.router
     const url = router.location.pathname
