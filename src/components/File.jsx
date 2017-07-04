@@ -143,9 +143,10 @@ class File extends Component {
       { [styles['fil-content-file-openable']]: !isRenaming }
     )
     const { filename, extension } = splitFilename(attributes)
+    const url = cozy.client._url
     return (
       <div className={classes}>
-        { attributes.links && <Preview thumbnail={`${cozy.client._url}${attributes.links.small}`} /> }
+        { attributes.links && <Preview thumbnail={`${url}${attributes.links.small}`} /> }
         {isRenaming
           ? <RenameInput />
           : <div>
