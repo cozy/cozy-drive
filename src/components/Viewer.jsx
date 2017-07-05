@@ -14,8 +14,8 @@ const KEY_CODE_RIGHT = 39
 const TOOLBAR_HIDE_DELAY = 3000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
-const MASS = 13       // Determines how "heavy" the photo feels when paning the image. The bigger the number, the heavier it is.
-const FRICTION = 0.9   // Determines how much the image is slowed down after letting go of a pan. The closest it is to 1, the less it slows down (a value bigger than 1 makes it accelerate)
+const MASS = 13       // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
+const FRICTION = 0.9   // When the photo is paning after a pan gesture ended suddenly, FRICTION determines how quickly the movement slows down. 0 would stop it imediately, 1 doesn't slow it down at all.
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
@@ -83,7 +83,7 @@ export class Viewer extends Component {
         // this value is clamped so so it stays within reasonable zoom limits.
         let scaleFactor = clamp(MIN_SCALE / state.initialScale, e.scale, MAX_SCALE / state.initialScale)
 
-        // When the user is zooming in or out, we want that the origin point of the gesture stays in exactly the same place. The scaling origin is in the center of the viewer.
+        // When the user is zooming in or out, we want that the origin point of the gesture to stay in exactly the same place. The scaling origin is in the center of the viewer.
         // If the gesture's origin is the same as the scaling origin, this works "out of the box" — you can imagine the pixels on all sides being "pushed" towards the outside. But if the gesture's origin is not in the center, we need to offset the whole image to produce the illusion that the scaling center is there.
 
         // compute the center of the viewer
