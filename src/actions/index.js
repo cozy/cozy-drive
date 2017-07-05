@@ -67,6 +67,13 @@ export const openFolder = (folderId) => {
       const folder = await cozy.client.files.statById(folderId, offline)
       const parentId = folder.attributes.dir_id
       const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
+      .catch(ex => {
+        if (ex.status === 403) {
+          console.warn('User don\'t have access to parent folder')
+        } else {
+          throw ex
+        }
+      })
       const contents = folder.relationships.contents
       // folder.relations('contents') returns null when the trash is empty
       // the filter call is a temporary fix due to a cozy-client-js bug
@@ -74,7 +81,7 @@ export const openFolder = (folderId) => {
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder: Object.assign(extractFileAttributes(folder), {
-          parent: extractFileAttributes(parent)
+          parent: !!parent && extractFileAttributes(parent)
         }),
         fileCount: contents.meta.count || 0,
         files: files.map(c => extractFileAttributes(c))

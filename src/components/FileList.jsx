@@ -83,7 +83,7 @@ class FileList extends PureComponent {
 
   rowRenderer = ({ index, key, style }) => {
     const {
-      displayedFolder, selected, selectionModeActive, onFolderOpen, onFileOpen, onFileToggle, showActionMenu
+      displayedFolder, selected = [], selectionModeActive, onFolderOpen, onFileOpen, onFileToggle, showActionMenu
     } = this.props
     const file = this.props.files[index]
     if (!file) {
