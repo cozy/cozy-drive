@@ -15,7 +15,7 @@ const TOOLBAR_HIDE_DELAY = 3000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
 const MASS = 13       // Determines how "heavy" the photo feels when paning the image. The bigger the number, the heavier it is.
-const FRICTION = .9   // Determines how much the image is slowed down after letting go of a pan. The closest it is to 1, the less it slows down (a value bigger than 1 makes it accelerate)
+const FRICTION = 0.9   // Determines how much the image is slowed down after letting go of a pan. The closest it is to 1, the less it slows down (a value bigger than 1 makes it accelerate)
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
@@ -58,8 +58,6 @@ export class Viewer extends Component {
     this.gesturesHandler = new Hammer(this.viewer)
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
 
-    let initialScale = 0
-
     this.gesturesHandler.get('pinch').set({ enable: true })
     this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
 
@@ -73,7 +71,7 @@ export class Viewer extends Component {
         const maxOffset = this.computeMaxOffset()
         return {
           offsetX: clamp(-maxOffset.x, state.initialOffset.x + e.deltaX / state.scale, maxOffset.x),
-          offsetY: clamp(-maxOffset.y, state.initialOffset.y + e.deltaY / state.scale, maxOffset.y),
+          offsetY: clamp(-maxOffset.y, state.initialOffset.y + e.deltaY / state.scale, maxOffset.y)
         }
       })
     })
@@ -90,7 +88,7 @@ export class Viewer extends Component {
 
         // compute the center of the viewer
         let wrapperBoundaries = this.viewer.getBoundingClientRect()
-        const viewerCenter= {
+        const viewerCenter = {
           x: (wrapperBoundaries.right - wrapperBoundaries.left) / 2,
           y: (wrapperBoundaries.bottom - wrapperBoundaries.top) / 2
         }
@@ -151,11 +149,11 @@ export class Viewer extends Component {
         offsetY: clamp(-maxOffset.y, state.offsetY + state.momentum.y, maxOffset.y),
         momentum: {
           x: state.momentum.x * FRICTION,
-          y: state.momentum.y * FRICTION,
+          y: state.momentum.y * FRICTION
         }
       }
     }, () => {
-      if (Math.abs(this.state.momentum.x) > .1 || Math.abs(this.state.momentum.y) > .1) requestAnimationFrame(this.applyMomentum.bind(this))
+      if (Math.abs(this.state.momentum.x) > 0.1 || Math.abs(this.state.momentum.y) > 0.1) requestAnimationFrame(this.applyMomentum.bind(this))
     })
   }
 
@@ -174,7 +172,7 @@ export class Viewer extends Component {
       }
     } else {
       return {
-        x :0,
+        x: 0,
         y: 0
       }
     }
@@ -195,7 +193,7 @@ export class Viewer extends Component {
       },
       momentum: {
         x: 0,
-        y: 0,
+        y: 0
       },
       hideToolbar: true
     }))
@@ -257,7 +255,7 @@ export class Viewer extends Component {
 
   render () {
     const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideToolbar, scale, offsetX, offsetY } = this.state
-    let style = {
+    const style = {
       transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`
     }
     return (
