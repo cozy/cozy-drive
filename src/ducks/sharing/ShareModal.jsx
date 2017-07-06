@@ -7,6 +7,7 @@ import Toggle from 'cozy-ui/react/Toggle'
 import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 import Alerter from '../../components/Alerter'
+import Recipient from '../../components/Recipient'
 import ShareAutocomplete from './ShareAutocomplete'
 
 import { findPermSet, createPermSet, deletePermSet, getShareLink, share } from '.'
@@ -84,6 +85,9 @@ export class ShareModal extends Component {
             <Tab name='url'>
               {t('Albums.share.shareByUrl.title')}
             </Tab>
+            <Tab name='access'>
+              {t('Albums.share.whoHasAccess.title')}
+            </Tab>
           </TabList>
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='link'>
@@ -92,6 +96,9 @@ export class ShareModal extends Component {
             </TabPanel>
             <TabPanel name='url'>
               <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
+            </TabPanel>
+            <TabPanel name='access'>
+              <WhoHasAccess />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -216,6 +223,14 @@ const ShareWithLink = ({ id, permissions, onCopy, copied }, { t }) => (
         </button>}
       </div>
     </div>
+  </div>
+)
+
+const WhoHasAccess = ({ t }) => (
+  <div>
+    <Recipient user={'michael@scott.com'} url={'michaelscott.mycozy.cloud'} status={'Invited'} />
+    <Recipient user={'Jim Halpert'} url={'jimmy.mycozy.cloud'} status={'Can view'} />
+    <Recipient user={'dwight@dundermifflin.com'} url={'dschrute.mycozy.cloud'} status={'Can edit'} />
   </div>
 )
 
