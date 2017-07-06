@@ -12,8 +12,8 @@ import LightFolderView from '../../components/LightFolderView'
 
 document.addEventListener('DOMContentLoaded', init)
 
-const arrToObj = (obj = {}, varval = ['var', 'val']) => {
-  obj[varval[0]] = varval[1]
+const arrToObj = (obj = {}, [key, val = true]) => {
+  obj[key] = val
   return obj
 }
 
@@ -29,7 +29,7 @@ function init () {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
-  const { id, sharecode } = getQueryParameter()
+  const { id, sharecode, directdownload } = getQueryParameter()
 
   if (data.cozyDomain) {
     cozy.client.init({
@@ -38,29 +38,35 @@ function init () {
     })
   }
 
-  if (data.cozyAppName && data.cozyAppEditor && data.cozyIconPath && data.cozyLocale) {
-    cozy.bar.init({
-      appName: data.cozyAppName,
-      appEditor: data.cozyAppEditor,
-      iconPath: data.cozyIconPath,
-      lang: data.cozyLocale,
-      replaceTitleOnMobile: true
-    })
+  if (directdownload) {
+    cozy.client.files.getDownloadLinkById(id).then(
+      link => window.open(`${cozy.client._url}${link}`, '_SELF')
+    )
+  } else {
+    const store = configureStore()
+
+    if (data.cozyAppName && data.cozyAppEditor && data.cozyIconPath && data.cozyLocale) {
+      cozy.bar.init({
+        appName: data.cozyAppName,
+        appEditor: data.cozyAppEditor,
+        iconPath: data.cozyIconPath,
+        lang: data.cozyLocale,
+        replaceTitleOnMobile: true
+      })
+    }
+
+    render(
+      <I18n lang={lang} dictRequire={(lang) => require(`../../locales/${lang}`)}>
+        <Provider store={store}>
+          <Router history={hashHistory}>
+            <Route component={Layout}>
+              <Route path='files(/:folderId)' component={LightFolderView} />
+            </Route>
+            <Redirect from='/*' to={`files/${id}`} />
+          </Router>
+        </Provider>
+      </I18n>,
+      root
+    )
   }
-
-  const store = configureStore()
-
-  render(
-    <I18n lang={lang} dictRequire={(lang) => require(`../../locales/${lang}`)}>
-      <Provider store={store}>
-        <Router history={hashHistory}>
-          <Route component={Layout}>
-            <Route path='files(/:folderId)' component={LightFolderView} />
-          </Route>
-          <Redirect from='/*' to={`files/${id}`} />
-        </Router>
-      </Provider>
-    </I18n>,
-    root
-  )
 }
