@@ -94,7 +94,7 @@ export class ShareModal extends React.Component {
   }
 
   render () {
-    const { t } = this.context
+    const t = this.context.t || this.props.t
     const { onClose } = this.props
     const { loading, active, creating, permissions } = this.state
     return (
@@ -110,8 +110,8 @@ export class ShareModal extends React.Component {
           </TabList>
           <TabPanels className={styles['share-modal-content']}>
             <TabPanel name='link'>
-              <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
-              {active && <ShareWithLink id={this.props.document.id} permissions={permissions} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
+              <ShareWithLinkToggle t={t} active={active} onToggle={checked => this.toggleShareLink(checked)} />
+              {active && <ShareWithLink t={t} id={this.props.document.id} permissions={permissions} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -130,7 +130,7 @@ export class ShareModal extends React.Component {
   }
 }
 
-const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
+const ShareWithLinkToggle = ({ active, onToggle, t }) => (
   <div className={styles['coz-form-group']}>
     <h3>{t('share.shareByLink.subtitle')}</h3>
     <div className={styles['input-dual']}>
@@ -146,7 +146,7 @@ const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
   </div>
 )
 
-const ShareWithLink = ({ id, permissions, onCopy, copied }, { t }) => (
+const ShareWithLink = ({ id, permissions, onCopy, copied, t }) => (
   <div className={styles['coz-form']}>
     <h4>{t('share.sharingLink.title')}</h4>
     <div className={styles['input-dual']}>
