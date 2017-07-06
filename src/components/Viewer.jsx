@@ -14,7 +14,7 @@ const KEY_CODE_RIGHT = 39
 const TOOLBAR_HIDE_DELAY = 3000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
-const MASS = 13       // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
+const MASS = 10       // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
 const FRICTION = 0.9   // When the photo is paning after a pan gesture ended suddenly, FRICTION determines how quickly the movement slows down. 0 would stop it imediately, 1 doesn't slow it down at all.
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
@@ -78,6 +78,8 @@ export class Viewer extends Component {
 
     // pinching / zooming / scaling is a bit more complicated, because the gesture's center has to be taken into account
     this.gesturesHandler.on('pinch', e => {
+      if (e.isFinal) return // hard to reproduce, but the final event seems to be causing problems and since it's just replaying the previous event, it can safely be discared
+
       this.setState((state) => {
         // first we compute the scale factor: this is the number by which we will multiply the initial scale (as it was before the gesture started) to get the final scaling value. So if the initial scale is 2, and the scale factor is 1.5, the final scale will be 3.
         // this value is clamped so so it stays within reasonable zoom limits.
