@@ -122,7 +122,7 @@ export const openFileInNewTab = (folder, file) => {
 export const uploadedFile = (file) => {
   return {
     type: UPLOAD_FILE_SUCCESS,
-    file: file
+    file: extractFileAttributes(file)
   }
 }
 
