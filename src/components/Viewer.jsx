@@ -64,6 +64,8 @@ export class Viewer extends Component {
     // During a gesture, everything is computed with a base value (the state of the image when the gesture starts) and a delta (a translation / zoom, described by the gesture). When a gesture starts, we record the current state of the image.
     this.gesturesHandler.on('panstart', this.prepareForGesture.bind(this))
     this.gesturesHandler.on('pinchstart', this.prepareForGesture.bind(this))
+    // It frequently happens that at the end of a pinch gesture, a pan gesture is detected — because the fingers don't come off the screen at exactly the same time. Reseting the values at the end of the pinch makes sure the values are correct for the (accidental) pan event.
+    this.gesturesHandler.on('pinchend', this.prepareForGesture.bind(this))
 
     // during a pan, we add the gestures delta to the initial offset to get the new offset. The new offset is then scaled : if the pan distance was 100px, but the image was scaled 2x, the actual offset should only be 50px. FInally, this value is clamped to make sure the user can't pan further than the edges.
     this.gesturesHandler.on('pan', e => {
