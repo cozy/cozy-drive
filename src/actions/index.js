@@ -33,7 +33,7 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
 export const getOpenedFolderId = state => state.view.openedFolderId
 
-export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links })
+export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links, relationships: f.relationships })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409

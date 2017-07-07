@@ -8,7 +8,7 @@ import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
-import { isFile } from './files'
+import { isFile, isReferencedByAlbum } from './files'
 
 import {
   createFolder,
@@ -17,6 +17,13 @@ import {
   downloadSelection,
   trashFiles
 } from '../../actions'
+
+const isAnyFileReferenceByAlbum = files => {
+  for (let i = 0, l = files.length; i < l; ++i) {
+    if (isReferencedByAlbum(files[i])) return true
+  }
+  return false
+}
 
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: false,
@@ -39,7 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         action: files => dispatch(downloadSelection(files))
       },
       trash: {
-        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} />)
+        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} referenced={isAnyFileReferenceByAlbum(files)} />)
           .then(() => dispatch(trashFiles(files)))
           .catch(() => {})
       },
