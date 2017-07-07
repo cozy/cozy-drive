@@ -52,6 +52,11 @@
       "type": "io.cozy.apps",
       "verbs": ["GET"]
     },
+    "albums": {
+      "description": "Required to manage photos albums",
+      "type": "io.cozy.photos.albums",
+      "methods": ["PUT"]
+    },
     "settings": {
       "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",
       "type": "io.cozy.settings",

@@ -2,7 +2,7 @@
 import { isCordova } from '../../mobile/src/lib/device'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithNoAppError } from '../../mobile/src/actions'
-import { isDirectory } from '../ducks/files/files'
+import { isDirectory, ALBUMS_DOCTYPE } from '../ducks/files/files'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -199,6 +199,14 @@ export const trashFiles = files => {
     try {
       for (const file of files) {
         trashed.push(await cozy.client.files.trashById(file.id))
+
+        if (file.relationships && file.relationships.referenced_by && file.relationships.referenced_by.data) {
+          for (const ref of file.relationships.referenced_by.data) {
+            if (ref.type === ALBUMS_DOCTYPE) {
+              await cozy.client.data.removeReferencedFiles({ _type: ref.type, _id: ref.id }, file.id)
+            }
+          }
+        }
       }
     } catch (err) {
       if (!isAlreadyInTrash(err)) {
