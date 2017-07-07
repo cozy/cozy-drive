@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Main from './Main'
 import FolderContent from './FolderContent'
 import FileListHeader from './FileListHeader'
+import Topbar from './Topbar'
+import Breadcrumb from '../containers/Breadcrumb'
 
 import {
   openFolder,
@@ -26,6 +28,9 @@ class DumbFolderView extends React.Component {
     const props = this.props
     return (
       <Main>
+        <Topbar>
+          <Breadcrumb />
+        </Topbar>
         <div role='contentinfo'>
           <div className={styles['fil-content-table']}>
             <FileListHeader />
