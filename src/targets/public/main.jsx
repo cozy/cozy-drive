@@ -6,7 +6,7 @@ import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { I18n } from 'cozy-ui/react/I18n'
 
 import configureStore from '../..//store/configureStore'
-import Layout from '../../components/Layout'
+import PublicLayout from '../../components/PublicLayout'
 
 import LightFolderView from '../../components/LightFolderView'
 
@@ -59,7 +59,7 @@ function init () {
       <I18n lang={lang} dictRequire={(lang) => require(`../../locales/${lang}`)}>
         <Provider store={store}>
           <Router history={hashHistory}>
-            <Route component={Layout}>
+            <Route component={PublicLayout}>
               <Route path='files(/:folderId)' component={LightFolderView} />
             </Route>
             <Redirect from='/*' to={`files/${id}`} />
