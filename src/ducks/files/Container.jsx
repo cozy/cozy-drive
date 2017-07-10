@@ -18,7 +18,7 @@ import {
   trashFiles
 } from '../../actions'
 
-const isAnyFileReferenceByAlbum = files => {
+const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {
     if (isReferencedByAlbum(files[i])) return true
   }
@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         action: files => dispatch(downloadSelection(files))
       },
       trash: {
-        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} referenced={isAnyFileReferenceByAlbum(files)} />)
+        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} referenced={isAnyFileReferencedByAlbum(files)} />)
           .then(() => dispatch(trashFiles(files)))
           .catch(() => {})
       },
