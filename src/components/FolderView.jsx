@@ -4,47 +4,16 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import Main from './Main'
 import Topbar from './Topbar'
-import Spinner from 'cozy-ui/react/Spinner'
-import Empty, { EmptyTrash } from './Empty'
-import Oops from './Oops'
 import FileListHeader from './FileListHeader'
-import FileList from './FileList'
 
 import Breadcrumb from '../containers/Breadcrumb'
 import { SelectionBar } from '../ducks/selection'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
 import UploadProgression from '../../mobile/src/containers/UploadProgression'
+import FolderContent from './FolderContent'
 
 import styles from '../styles/folderview'
-
-const FolderContent = props => {
-  const { fetchStatus, files, isAddingFolder } = props
-  switch (fetchStatus) {
-    case 'pending':
-      return <Spinner
-        size='xxlarge'
-        loadingType='message'
-        middle='true'
-      />
-    case 'failed':
-      return <Oops />
-    case 'loaded':
-      return files.length === 0 && !isAddingFolder
-        ? <EmptyContent {...props} />
-        : <FileList {...props} />
-    default:
-      return null
-  }
-}
-
-const EmptyContent = props => {
-  const { isTrashContext, canUpload } = props
-  if (isTrashContext && !props.params.folderId) {
-    return <EmptyTrash />
-  }
-  return <Empty canUpload={canUpload} />
-}
 
 const toggle = (flag, state, props) => ({ [flag]: !state[flag] })
 

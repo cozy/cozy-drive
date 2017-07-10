@@ -75,7 +75,6 @@ export const rename = () => async (dispatch, getState) => {
     const updated = await cozy.client.files.updateAttributesById(renamingFile.id, {name: updatedName})
     dispatch(renamed(extractFileAttributes(updated)))
   } catch (e) {
-    console.log('error')
     console.warn(e)
   }
 }

@@ -1,3 +1,4 @@
+/* global cozy */
 import styles from './share.styl'
 
 import React from 'react'
@@ -8,7 +9,6 @@ import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 // import Alerter from 'cozy-ui/react/Alerter'
 
-/* global cozy */
 export const filterSharedDocuments = (ids, doctype) =>
   findPermSets(ids, doctype).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
 
@@ -45,8 +45,8 @@ export const createPermSet = (id, doctype) =>
 export const deletePermSet = (setId) =>
   cozy.client.fetchJSON('DELETE', `/permissions/${setId}`)
 
-export const getShareLink = (id, perms) =>
-  `${window.location.origin}/public?sharecode=${perms.attributes.codes.email}&id=${id}`
+export const getShareLink = (id, perms, type) =>
+  `${window.location.origin}/public?sharecode=${perms.attributes.codes.email}&id=${id}${type === 'file' ? '&directdownload' : ''}`
 
 export class ShareModal extends React.Component {
   constructor (props) {
@@ -94,7 +94,7 @@ export class ShareModal extends React.Component {
   }
 
   render () {
-    const { t } = this.context
+    const t = this.context.t || this.props.t
     const { onClose } = this.props
     const { loading, active, creating, permissions } = this.state
     return (
@@ -110,8 +110,8 @@ export class ShareModal extends React.Component {
           </TabList>
           <TabPanels className={styles['share-modal-content']}>
             <TabPanel name='link'>
-              <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
-              {active && <ShareWithLink id={this.props.document.id} permissions={permissions} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
+              <ShareWithLinkToggle t={t} active={active} onToggle={checked => this.toggleShareLink(checked)} />
+              {active && <ShareWithLink t={t} id={this.props.document.id} type={this.props.document.type} permissions={permissions} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -130,7 +130,7 @@ export class ShareModal extends React.Component {
   }
 }
 
-const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
+const ShareWithLinkToggle = ({ active, onToggle, t }) => (
   <div className={styles['coz-form-group']}>
     <h3>{t('share.shareByLink.subtitle')}</h3>
     <div className={styles['input-dual']}>
@@ -146,15 +146,15 @@ const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
   </div>
 )
 
-const ShareWithLink = ({ id, permissions, onCopy, copied }, { t }) => (
+const ShareWithLink = ({ id, type, permissions, onCopy, copied, t }) => (
   <div className={styles['coz-form']}>
     <h4>{t('share.sharingLink.title')}</h4>
     <div className={styles['input-dual']}>
-      <div><input type='text' name='' id='' value={getShareLink(id, permissions)} /></div>
+      <div><input type='text' name='' id='' value={getShareLink(id, permissions, type)} /></div>
       <div>
         {!copied &&
           <CopyToClipboard
-            text={getShareLink(id, permissions)}
+            text={getShareLink(id, permissions, type)}
             onCopy={onCopy}
           >
             <div>

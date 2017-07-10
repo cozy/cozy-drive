@@ -6,6 +6,7 @@ import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
+import { ShareModal } from '../../ducks/sharing'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile } from './files'
@@ -50,10 +51,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       rename: {
         action: selected => dispatch(startRenamingAsync(selected[0])),
         displayCondition: (selections) => selections.length === 1 && isFile(selections[0])
+      },
+      share: {
+        action: selected => confirm(<ShareModalConfirm t={ownProps.t} document={selected[0]} />),
+        displayCondition: selections => selections.length === 1 && isFile(selections[0])
       }
     }
   })
 })
+
+const ShareModalConfirm = ({ abort, ...props }) => (
+  <ShareModal onClose={abort} {...props} />
+)
 
 export default translate()(connect(
   mapStateToProps,

@@ -26,6 +26,11 @@
       "folder": "/",
       "index": "services.html",
       "public": false
+    },
+    "/public": {
+      "folder": "/public",
+      "index": "index.html",
+      "public": true
     }
   },
   "intents": [
