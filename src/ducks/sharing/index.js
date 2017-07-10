@@ -5,7 +5,7 @@ export const filterSharedByMeDocuments = (ids, doctype) =>
 export const filterSharedWithMeDocuments = (ids, doctype) =>
   findPermissionSets(ids, doctype, SHARED_WITH_ME).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
 
-export const findPermSet = (id, doctype) =>
+export const findPermSetByLink = (id, doctype) =>
   findPermissionSets([id], doctype, SHARED_BY_LINK).then(sets => sets.length === 0 ? undefined : sets[0])
 
 // TODO: move this to cozy-client-js

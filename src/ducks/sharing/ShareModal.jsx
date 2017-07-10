@@ -10,7 +10,7 @@ import Alerter from '../../components/Alerter'
 import Recipient from '../../components/Recipient'
 import ShareAutocomplete from './ShareAutocomplete'
 
-import { findPermSet, createPermSet, deletePermSet, getShareLink, share } from '.'
+import { findPermSetByLink, createPermSet, deletePermSet, getShareLink, share } from '.'
 
 export class ShareModal extends Component {
   constructor (props) {
@@ -18,7 +18,7 @@ export class ShareModal extends Component {
     this.state = {
       loading: true,
       creating: false,
-      permissions: null,
+      byLinkPermissions: null,
       active: false,
       copied: false
     }
@@ -26,10 +26,10 @@ export class ShareModal extends Component {
 
   componentDidMount () {
     const { _id, _type } = this.props.document
-    findPermSet(_id, _type)
-      .then(permissions => {
-        if (permissions !== undefined) {
-          this.setState({ loading: false, permissions, active: true })
+    findPermSetByLink(_id, _type)
+      .then(byLinkPermissions => {
+        if (byLinkPermissions !== undefined) {
+          this.setState({ loading: false, byLinkPermissions, active: true })
         } else {
           this.setState({ loading: false })
         }
@@ -42,11 +42,11 @@ export class ShareModal extends Component {
     if (active) {
       this.setState({ creating: true })
       createPermSet(_id, _type)
-        .then(permissions => this.setState({ active, permissions, creating: false }))
+        .then(byLinkPermissions => this.setState({ active, byLinkPermissions, creating: false }))
         .catch(() => this.onError())
     } else {
-      const setId = this.state.permissions._id
-      this.setState({ active, permissions: null })
+      const setId = this.state.byLinkPermissions._id
+      this.setState({ active, byLinkPermissions: null })
       deletePermSet(setId)
         .catch(() => this.onError())
     }
@@ -71,7 +71,7 @@ export class ShareModal extends Component {
   render () {
     const { t } = this.context
     const { onClose } = this.props
-    const { loading, active, creating, permissions } = this.state
+    const { loading, active, creating, byLinkPermissions } = this.state
     return (
       <Modal
         title={t('Albums.share.title')}
@@ -92,7 +92,7 @@ export class ShareModal extends Component {
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='link'>
               <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
-              {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
+              {active && <ShareWithLink shareLink={getShareLink(this.props.document._id, byLinkPermissions)} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
             </TabPanel>
             <TabPanel name='url'>
               <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
@@ -200,15 +200,15 @@ const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
   </div>
 )
 
-const ShareWithLink = ({ id, permissions, onCopy, copied }, { t }) => (
+const ShareWithLink = ({ shareLink, onCopy, copied }, { t }) => (
   <div className={styles['coz-form']}>
     <h4>{t('Albums.share.sharingLink.title')}</h4>
     <div className={styles['pho-input-dual']}>
-      <div><input type='text' name='' id='' value={getShareLink(id, permissions)} /></div>
+      <div><input type='text' name='' id='' value={shareLink} /></div>
       <div>
         {!copied &&
           <CopyToClipboard
-            text={getShareLink(id, permissions)}
+            text={shareLink}
             onCopy={onCopy}
           >
             <div>
