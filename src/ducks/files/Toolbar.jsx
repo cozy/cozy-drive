@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import { ROOT_DIR_ID } from '../../constants/config'
 
 import UploadButton from '../../components/UploadButton'
 import ShareButton from '../../components/ShareButton'
@@ -13,7 +14,7 @@ import { alert } from '../../lib/confirm'
 import { alertShow } from 'cozy-ui/react/Alerter'
 
 import { addToUploadQueue } from '../upload'
-import { uploadedFile } from '../../actions'
+import { uploadedFile, downloadFiles } from '../../actions'
 import { ShareModal } from '../../ducks/sharing'
 
 const toggleShowShareModal = state => ({ ...state, showShareModal: !state.showShareModal })
@@ -28,7 +29,8 @@ class Toolbar extends React.Component {
   }
 
   render () {
-    const { t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFiles } = this.props
+    const { t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFiles, downloadAll } = this.props
+    const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     return (
       <div className={styles['fil-toolbar-files']} role='toolbar'>
         <UploadButton
@@ -72,6 +74,14 @@ class Toolbar extends React.Component {
               {t('toolbar.menu_new_folder')}
             </a>
           </Item>
+          { notRootfolder && <Item>
+            <a
+              className={styles['fil-action-download']}
+              onClick={() => downloadAll([displayedFolder])}
+            >
+              {t('toolbar.menu_download_folder')}
+            </a>
+          </Item>}
           <hr />
           <Item>
             <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
@@ -107,7 +117,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
       return action
     }))
-  }
+  },
+  downloadAll: folder => dispatch(downloadFiles(folder))
 })
 
 export default translate()(connect(
