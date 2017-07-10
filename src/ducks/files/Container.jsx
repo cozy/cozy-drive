@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       rename: {
         action: selected => dispatch(startRenamingAsync(selected[0])),
-        displayCondition: (selections) => selections.length === 1
+        displayCondition: (selections) => selections.length === 1 && isFile(selections[0])
       }
     }
   })
