@@ -235,7 +235,7 @@ export const trashFiles = files => {
   }
 }
 
-export const downloadSelection = selected => {
+export const downloadFiles = selected => {
   const meta = META_DEFAULTS
   return async (dispatch) => {
     if (selected.length === 1 && !isDirectory(selected[0])) {

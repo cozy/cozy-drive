@@ -15,7 +15,7 @@ import {
   createFolder,
   abortAddFolder,
   openFileWith,
-  downloadSelection,
+  downloadFiles,
   trashFiles
 } from '../../actions'
 
@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     selection: {
       download: {
-        action: files => dispatch(downloadSelection(files))
+        action: files => dispatch(downloadFiles(files))
       },
       trash: {
         action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} referenced={isAnyFileReferencedByAlbum(files)} />)
