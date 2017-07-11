@@ -77,6 +77,7 @@
     "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
     "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
     "shared": "If you have shared it, people won't be able to access it. |||| If you have shared them, people won't be able to access them.",
+    "referenced": "Some of the files within the selection are related to a photo album. They will be removed from it if you proceed to trash them.",
     "cancel": "Cancel",
     "delete": "Remove"
   },

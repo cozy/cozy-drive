@@ -2,7 +2,7 @@
 import { isCordova } from '../../mobile/src/lib/device'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithNoAppError } from '../../mobile/src/actions'
-import { isDirectory } from '../ducks/files/files'
+import { isDirectory, isReferencedByAlbum, ALBUMS_DOCTYPE } from '../ducks/files/files'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -33,7 +33,7 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
 export const getOpenedFolderId = state => state.view.openedFolderId
 
-export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links })
+export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links, relationships: f.relationships })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409
@@ -206,6 +206,14 @@ export const trashFiles = files => {
     try {
       for (const file of files) {
         trashed.push(await cozy.client.files.trashById(file.id))
+
+        if (isReferencedByAlbum(file)) {
+          for (const ref of file.relationships.referenced_by.data) {
+            if (ref.type === ALBUMS_DOCTYPE) {
+              await cozy.client.data.removeReferencedFiles({ _type: ref.type, _id: ref.id }, file.id)
+            }
+          }
+        }
       }
     } catch (err) {
       if (!isAlreadyInTrash(err)) {
