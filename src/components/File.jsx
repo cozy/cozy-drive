@@ -95,7 +95,7 @@ class File extends Component {
     }
   }
 
-  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming }, { opening }) {
+  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming, withSelectionCheckbox }, { opening }) {
     return (
       <div
         ref={fil => { this.fil = fil }}
@@ -107,13 +107,15 @@ class File extends Component {
         )}
       >
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} onclick={(e) => this.toggle(e)}>
-          <span data-input='checkbox'>
-            <input
-              type='checkbox'
-              checked={selected}
-             />
-            <label />
-          </span>
+          {withSelectionCheckbox &&
+            <span data-input='checkbox'>
+              <input
+                type='checkbox'
+                checked={selected}
+              />
+              <label />
+            </span>
+          }
         </div>
         <FileNameCell attributes={attributes} isRenaming={isRenaming} opening={opening} />
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>

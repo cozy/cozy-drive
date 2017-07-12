@@ -36,6 +36,7 @@ class DumbFolderView extends React.Component {
             <FileListHeader />
             <div className={styles['fil-content-body']}>
               <FolderContent
+                withSelectionCheckbox={false}
                 {...props}
               />
             </div>
