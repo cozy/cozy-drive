@@ -7,6 +7,7 @@ import Toggle from 'cozy-ui/react/Toggle'
 import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 import Alerter from '../../components/Alerter'
+import ShareAutocomplete from './ShareAutocomplete'
 
 import { findPermSet, createPermSet, deletePermSet, getShareLink, share } from '.'
 
@@ -118,8 +119,16 @@ class ShareByUrl extends React.Component {
     }
   }
 
-  changeEmail (email) {
-    this.setState({ email })
+  changeEmail (contactOrEmail) {
+    if (typeof contactOrEmail === 'string') {
+      this.setState({ email: contactOrEmail })
+    }
+    else {
+      this.setState({
+        email: contactOrEmail.email[0].address,
+        url: contactOrEmail.cozy[0].url
+      })
+    }
   }
 
   changeUrl (url) {
@@ -143,13 +152,10 @@ class ShareByUrl extends React.Component {
         <h3>{t('Albums.share.shareByUrl.subtitle')}</h3>
         <div className={styles['coz-form']}>
           <label className={styles['coz-form-label']} for='email'>{t('Albums.share.shareByUrl.email')}</label>
-          <input
-            type='text'
-            name=''
-            id='email'
-            onChange={e => this.changeEmail(e.target.value)}
+          <ShareAutocomplete
             value={this.state.email}
-            placeholder={t('Albums.share.shareByUrl.emailPlaceholder')} />
+            onChange={(event, { newValue }) => this.changeEmail(newValue)}
+            />
         </div>
         <div className={styles['coz-form']}>
           <label className={styles['coz-form-label']} for='url'>{t('Albums.share.shareByUrl.url')}</label>
