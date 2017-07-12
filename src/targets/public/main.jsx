@@ -1,4 +1,4 @@
-/* global cozy */
+/* global cozy __DEVELOPMENT__ */
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -43,6 +43,14 @@ function init () {
       link => window.open(`${cozy.client._url}${link}`, '_SELF')
     )
   } else {
+    if (__DEVELOPMENT__) {
+      // Enables React dev tools for Preact
+      // Cannot use import as we are in a condition
+      require('preact/devtools')
+
+      // Export React to window for the devtools
+      window.React = React
+    }
     const store = configureStore()
 
     if (data.cozyAppName && data.cozyAppEditor && data.cozyIconPath && data.cozyLocale) {
