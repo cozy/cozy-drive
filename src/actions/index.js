@@ -235,17 +235,17 @@ export const trashFiles = files => {
   }
 }
 
-export const downloadFiles = selected => {
+export const downloadFiles = files => {
   const meta = META_DEFAULTS
   return async (dispatch) => {
-    if (selected.length === 1 && !isDirectory(selected[0])) {
-      return dispatch(downloadFile(selected[0], meta))
+    if (files.length === 1 && !isDirectory(files[0])) {
+      return dispatch(downloadFile(files[0], meta))
     }
-    const paths = selected.map(f => f.path)
+    const paths = files.map(f => f.path)
     const href = await cozy.client.files.getArchiveLinkByPaths(paths)
     const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')
-    return dispatch({ type: DOWNLOAD_SELECTION, selected, meta })
+    return dispatch({ type: DOWNLOAD_SELECTION, files, meta })
   }
 }
 
