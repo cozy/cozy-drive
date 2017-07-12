@@ -21,12 +21,26 @@ export default class ShareAutocomplete extends Component {
     this.setState({ contacts })
   }
 
+  getPrimaryEmailAddress (contact) {
+    if (contact.email.length === 0) return ''
+
+    let primary = contact.email.find(email => email.primary)
+    return primary ? primary.address : contact.email[0].address
+  }
+
+  getPrimaryCozyUrl (contact) {
+    if (!contact.cozy || contact.cozy.length === 0) return ''
+
+    let primary = contact.cozy.find(cozy => cozy.primary)
+    return primary ? primary.url : contact.cozy[0].url
+  }
+
   computeSuggestions (value) {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
     return inputLength === 0 ? [] : this.state.contacts.filter(contact => {
-      return contact.email[0].address.toLowerCase().slice(0, inputLength) === inputValue
+      return this.getPrimaryEmailAddress(contact).toLowerCase().slice(0, inputLength) === inputValue
     })
   }
 
@@ -42,7 +56,16 @@ export default class ShareAutocomplete extends Component {
     })
   }
 
-  render ({ onChange, value }, { suggestions }) {
+  onChange (event, { newValue }) {
+    if (typeof newValue === 'string') {
+      this.props.onChange(newValue)
+    }
+    else {
+      this.props.onChange(this.getPrimaryEmailAddress(newValue), this.getPrimaryCozyUrl(newValue))
+    }
+  }
+
+  render ({ value }, { suggestions }) {
     return (
     <Autosuggest
       theme={autosuggestTheme}
@@ -52,12 +75,12 @@ export default class ShareAutocomplete extends Component {
       onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
       renderSuggestion={contact =>
         <div>
-          <div className={autosuggestTheme['suggestion-primary']}>{contact.email[0].address}</div>
-          <div className={autosuggestTheme['suggestion-secondary']}>{contact.cozy[0].url}</div>
+          <div className={autosuggestTheme['suggestionPrimary']}>{this.getPrimaryEmailAddress(contact)}</div>
+          <div className={autosuggestTheme['suggestionSecondary']}>{this.getPrimaryCozyUrl(contact)}</div>
         </div>
       }
       inputProps={{
-        onChange: onChange,
+        onChange: this.onChange.bind(this),
         value: value
       }}
       />

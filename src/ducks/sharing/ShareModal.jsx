@@ -119,16 +119,13 @@ class ShareByUrl extends React.Component {
     }
   }
 
-  changeEmail (contactOrEmail) {
-    if (typeof contactOrEmail === 'string') {
-      this.setState({ email: contactOrEmail })
-    }
-    else {
-      this.setState({
-        email: contactOrEmail.email[0].address,
-        url: contactOrEmail.cozy[0].url
-      })
-    }
+  onAutocomplete (email, url) {
+    this.changeEmail(email)
+    if (url) this.changeUrl(url)
+  }
+
+  changeEmail (email) {
+    this.setState({ email })
   }
 
   changeUrl (url) {
@@ -154,7 +151,7 @@ class ShareByUrl extends React.Component {
           <label className={styles['coz-form-label']} for='email'>{t('Albums.share.shareByUrl.email')}</label>
           <ShareAutocomplete
             value={this.state.email}
-            onChange={(event, { newValue }) => this.changeEmail(newValue)}
+            onChange={(email, url) => this.onAutocomplete(email, url)}
             />
         </div>
         <div className={styles['coz-form']}>
