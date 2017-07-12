@@ -115,7 +115,7 @@ class File extends Component {
             <label />
           </span>
         </div>
-        {this.renderFilenameCell(attributes, opening, isRenaming)}
+        <FileNameCell attributes={attributes} isRenaming={isRenaming} opening={opening} />
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, t('table.row_update_format')) }</time>
         </div>
@@ -134,30 +134,30 @@ class File extends Component {
       </div>
     )
   }
+}
 
-  renderFilenameCell (attributes, opening, isRenaming) {
-    const classes = classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-file'],
-      getClassFromMime(attributes),
-      { [styles['fil-content-file-openable']]: !isRenaming }
-    )
-    const { filename, extension } = splitFilename(attributes)
-    const url = cozy.client._url
-    return (
-      <div className={classes}>
-        { attributes.links && <Preview thumbnail={`${url}${attributes.links.small}`} /> }
-        {isRenaming
-          ? <RenameInput />
-          : <div>
-            {filename}
-            {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
-            {opening === true && <Spinner />}
-          </div>
-        }
-      </div>
-    )
-  }
+const FileNameCell = ({ attributes, isRenaming, opening }) => {
+  const classes = classNames(
+    styles['fil-content-cell'],
+    styles['fil-content-file'],
+    getClassFromMime(attributes),
+    { [styles['fil-content-file-openable']]: !isRenaming }
+  )
+  const { filename, extension } = splitFilename(attributes)
+  const url = cozy.client._url
+  return (
+    <div className={classes}>
+      { attributes.links && <Preview thumbnail={`${url}${attributes.links.small}`} /> }
+      {isRenaming
+        ? <RenameInput />
+        : <div>
+          {filename}
+          {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
+          {opening === true && <Spinner />}
+        </div>
+      }
+    </div>
+  )
 }
 
 export default withRouter(translate()(File))
