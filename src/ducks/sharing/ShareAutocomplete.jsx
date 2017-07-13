@@ -22,6 +22,7 @@ export default class ShareAutocomplete extends Component {
   }
 
   getPrimaryEmailAddress (contact) {
+    // look for an address marked as primary, fallback to the first one or to an empty string
     if (contact.email.length === 0) return ''
 
     let primary = contact.email.find(email => email.primary)
@@ -29,6 +30,7 @@ export default class ShareAutocomplete extends Component {
   }
 
   getPrimaryCozyUrl (contact) {
+    // same thing as getPrimaryEmailAddress
     if (!contact.cozy || contact.cozy.length === 0) return ''
 
     let primary = contact.cozy.find(cozy => cozy.primary)
@@ -36,6 +38,8 @@ export default class ShareAutocomplete extends Component {
   }
 
   computeSuggestions (value) {
+    // Looks into all email addressses and tries to find one that starts with the current input value.
+    // Note that it might find a match on an address taht is not considered primary.
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
 
@@ -57,6 +61,7 @@ export default class ShareAutocomplete extends Component {
   }
 
   onChange (event, { newValue }) {
+    // `newValue` can be a simple string when it's the result of the user typing text, or it can be a contact if it results from an interaction with the autocomplete
     if (typeof newValue === 'string') {
       this.props.onChange(newValue)
     } else {
