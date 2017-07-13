@@ -93,6 +93,11 @@ export const deletePermSet = (setId) =>
 export const getShareLink = (id, perms) =>
   `${window.location.origin}/public?sharecode=${perms.attributes.codes.email}&id=${id}`
 
+export const getContacts = async () => {
+  const response = await cozy.client.fetchJSON('POST', '/data/io.cozy.contacts/_all_docs?include_docs=true', {})
+  return response.rows.map(row => row.doc)
+}
+
 import ShareModal from './ShareModal'
 
 export { ShareModal }

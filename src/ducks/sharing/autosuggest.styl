@@ -1,0 +1,43 @@
+@import 'cozy-ui'
+
+.container
+    position relative
+
+.suggestionsContainer
+    position absolute
+    top 100%
+    margin-top 1px
+    z-index $alert-index-mobile
+    width 100%
+    max-height em(170px)
+    overflow auto
+    border 1px solid silver
+    border-radius 4px
+    background white
+    display none
+
+.suggestionsContainerOpen
+    display block
+
+.suggestionsList
+    margin 0
+    padding 10px 0
+    list-style none
+
+.suggestion
+    padding 10px
+
+.suggestionHighlighted
+    background pale-grey
+
+.suggestionPrimary
+.suggestionSecondary
+    text-overflow ellipsis
+    overflow hidden
+    white-space nowrap
+
+.suggestionPrimary
+    font-weight bold
+
+.suggestionSecondary
+    color cool-grey
