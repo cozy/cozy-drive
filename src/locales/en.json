@@ -7,8 +7,10 @@
     "item_trash": "Trash",
     "item_settings": "Settings",
     "btn-client": "Get Cozy for desktop",
+    "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
-    "link-client": "https://docs.cozy.io/en/download/"
+    "link-client": "https://docs.cozy.io/en/download/",
+    "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
   "breadcrumb": {
     "title_drive": "Drive",
