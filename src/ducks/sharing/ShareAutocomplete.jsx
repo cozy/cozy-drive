@@ -40,7 +40,7 @@ export default class ShareAutocomplete extends Component {
     const inputLength = inputValue.length;
 
     return inputLength === 0 ? [] : this.state.contacts.filter(contact => {
-      return this.getPrimaryEmailAddress(contact).toLowerCase().slice(0, inputLength) === inputValue
+      return contact.email.filter(email => (email.address.toLowerCase().slice(0, inputLength) === inputValue)).length > 0
     })
   }
 
