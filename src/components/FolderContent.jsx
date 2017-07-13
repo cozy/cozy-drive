@@ -26,7 +26,7 @@ const FolderContent = props => {
     case 'loaded':
       return files.length === 0 && !isAddingFolder
         ? <EmptyContent {...props} />
-        : <FileList {...props} />
+        : <FileList withSelectionCheckbox {...props} />
     default:
       return null
   }
