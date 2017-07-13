@@ -1,7 +1,7 @@
 {
   "name": "Drive",
   "slug": "cozy-drive",
-  "icon": "app-icon.svg",
+  "icon": "public/app-icon.svg",
   "description": "File manager for Cozy v3",
   "category": "cozy",
   "source": "https://github.com/cozy/cozy-drive.git@build",
