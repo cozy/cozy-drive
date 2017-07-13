@@ -8,7 +8,7 @@ export default class ShareAutocomplete extends Component {
   getInitialState () {
     return {
       contacts: [],
-      suggestions: [],
+      suggestions: []
     }
   }
 
@@ -36,8 +36,8 @@ export default class ShareAutocomplete extends Component {
   }
 
   computeSuggestions (value) {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
 
     return inputLength === 0 ? [] : this.state.contacts.filter(contact => {
       return contact.email.filter(email => (email.address.toLowerCase().slice(0, inputLength) === inputValue)).length > 0
@@ -59,30 +59,30 @@ export default class ShareAutocomplete extends Component {
   onChange (event, { newValue }) {
     if (typeof newValue === 'string') {
       this.props.onChange(newValue)
-    }
-    else {
+    } else {
       this.props.onChange(this.getPrimaryEmailAddress(newValue), this.getPrimaryCozyUrl(newValue))
     }
   }
 
   render ({ value }, { suggestions }) {
     return (
-    <Autosuggest
-      theme={autosuggestTheme}
-      suggestions={suggestions}
-      getSuggestionValue={contact => contact}
-      onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-      onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
-      renderSuggestion={contact =>
-        <div>
-          <div className={autosuggestTheme['suggestionPrimary']}>{this.getPrimaryEmailAddress(contact)}</div>
-          <div className={autosuggestTheme['suggestionSecondary']}>{this.getPrimaryCozyUrl(contact)}</div>
-        </div>
+      <Autosuggest
+        theme={autosuggestTheme}
+        suggestions={suggestions}
+        getSuggestionValue={contact => contact}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
+        renderSuggestion={contact =>
+          <div>
+            <div className={autosuggestTheme['suggestionPrimary']}>{this.getPrimaryEmailAddress(contact)}</div>
+            <div className={autosuggestTheme['suggestionSecondary']}>{this.getPrimaryCozyUrl(contact)}</div>
+          </div>
       }
-      inputProps={{
-        onChange: this.onChange.bind(this),
-        value: value
-      }}
+        inputProps={{
+          onChange: this.onChange.bind(this),
+          value: value
+        }}
       />
-  )}
+    )
+  }
 }
