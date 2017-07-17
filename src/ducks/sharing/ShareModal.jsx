@@ -10,7 +10,7 @@ import Alerter from '../../components/Alerter'
 import Recipient from '../../components/Recipient'
 import ShareAutocomplete from './ShareAutocomplete'
 
-import { findPermSetByLink, createPermSet, deletePermSet, getShareLink, share } from '.'
+import { findPermSetByLink, createPermSet, deletePermSet, getShareLink, share, getRecipients } from '.'
 
 export class ShareModal extends Component {
   constructor (props) {
@@ -35,6 +35,8 @@ export class ShareModal extends Component {
         }
       })
       .catch(() => this.onError())
+    getRecipients(_id, _type)
+    .then(recipients => this.setState(state => ({...state, recipients: recipients})))
   }
 
   toggleShareLink (active) {
@@ -98,7 +100,7 @@ export class ShareModal extends Component {
               <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
             </TabPanel>
             <TabPanel name='access'>
-              <WhoHasAccess />
+              <WhoHasAccess recipients={this.state.recipients} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -226,11 +228,11 @@ const ShareWithLink = ({ shareLink, onCopy, copied }, { t }) => (
   </div>
 )
 
-const WhoHasAccess = ({ t }) => (
+const WhoHasAccess = ({ recipients }) => (
   <div>
-    <Recipient user={'michael@scott.com'} url={'michaelscott.mycozy.cloud'} status={'Invited'} />
-    <Recipient user={'Jim Halpert'} url={'jimmy.mycozy.cloud'} status={'Can view'} />
-    <Recipient user={'dwight@dundermifflin.com'} url={'dschrute.mycozy.cloud'} status={'Can edit'} />
+    {recipients.map(({email, url, status}) => (
+      <Recipient name={email} url={url} status={status} />
+    ))}
   </div>
 )
 

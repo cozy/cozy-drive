@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styles from '../styles/layout'
 
 import { AlbumsToolbar, fetchAlbums, getAlbumsList } from '../ducks/albums'
-import { filterSharedByMeDocuments, filterSharedWithMeDocuments } from '../ducks/sharing'
+import { filterSharedByLinkDocuments, filterSharedWithMeDocuments } from '../ducks/sharing'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
@@ -40,7 +40,7 @@ export class AlbumsView extends Component {
     // TODO: this is not the cleanest way of doing this...
     if (newProps.albums && newProps.albums.entries !== 0) {
       Promise.all([
-        filterSharedByMeDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums'),
+        filterSharedByLinkDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums'),
         filterSharedWithMeDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums')
       ])
         .then(sharedIds => this.setState({ sharedByMe: sharedIds[0], sharedWithMe: sharedIds[1] }))
