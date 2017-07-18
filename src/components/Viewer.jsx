@@ -260,7 +260,8 @@ export class Viewer extends Component {
   render () {
     const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideToolbar, scale, offsetX, offsetY } = this.state
     const style = {
-      transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`
+      transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`,
+      display: isImageLoading ? 'none' : 'initial'
     }
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
