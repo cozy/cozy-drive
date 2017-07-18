@@ -77,7 +77,7 @@ export const share = async ({_id, _type, name}, email, url) => {
       {
         recipient: {
           id: target._id,
-          type: 'io.cozy.recipients'
+          type: 'io.cozy.contacts'
         }
       }
     ],
