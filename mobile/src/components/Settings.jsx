@@ -11,6 +11,7 @@ import UploadProgression from '../containers/UploadProgression'
 import About from '../containers/settings/About'
 import Support from '../containers/settings/Support'
 import MediaBackup from '../containers/settings/MediaBackup'
+import Contacts from '../containers/settings/Contacts'
 import Unlink from '../containers/settings/Unlink'
 
 class Settings extends Component {
@@ -34,6 +35,7 @@ class Settings extends Component {
           <div className={styles['settings']}>
 
             <MediaBackup />
+            <Contacts />
             <Support isDebug={isDebug} />
             <About onClick={this.handleClick} />
             <Unlink />
