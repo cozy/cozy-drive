@@ -3,19 +3,49 @@
 :local
 
     .pho-section
-        box-sizing border-box
-        left-padded(32px)
-        right-padded(32px)
-        bottom-spaced(2em)
+        margin-bottom  2rem
+
+    .pho-photo-wrapper
+        position relative
+
+    .pho-section-header
+        display flex
+        flex-direction row
+        align-items center
+        position relative
+        padding 0 2rem
+
+        h3
+            flex-grow 1
+            padding-right 2rem
+
+        a,
+        a:visited,
+        a:hover,
+        a:active
+            color            dodger-blue
+            text-decoration  none
+            text-transform   uppercase
+            cursor           pointer
+            margin-left      auto
+
+        @media (max-width: (768/basefont)rem)
+            margin-bottom  1rem
+            padding 0 1rem
+
+            h3
+                padding-right 1rem
 
     .pho-photo
-        position relative
-        display  inline-block
-        background-color grey-10
-        margin   0 1em 1em 0
+        position          absolute
+        display           inline-block
+        background-color  grey-10
+        margin            0 1rem 1rem 0
 
         a
           vertical-align middle
+        @media (max-width: (768/basefont)rem)
+          margin 0 .5rem .5rem 0
 
     .pho-photo-item
         height       em(240px)
@@ -48,18 +78,17 @@
 
     .pho-section--has-selection
         .pho-photo-select
+            box-sizing border-box
             width  100%
             height 100%
+            opacity 1
 
     .pho-photo:hover
         .pho-photo-select
             opacity 1
 
-    .pho-list-selection
-        .pho-photo-select
-            opacity 1
-
     .pho-list-morebutton
+        position relative
         bottom-spaced(2em)
 
         .pho-list-spinner

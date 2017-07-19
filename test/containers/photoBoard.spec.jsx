@@ -10,7 +10,7 @@ jest.mock('cozy-ui/react/Modal', () => {})
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { mockT, mockF } from '../lib/I18n'
+import { mockT, mockF } from 'cozy-ui/react/I18n'
 import { PhotoBoard } from '../../src/containers/PhotoBoard'
 
 const mockFetchedPhotos = [{

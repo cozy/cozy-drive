@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { translate } from '../../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import styles from './styles'
-import { getUploadQueue, getProcessed } from '.'
+import { getUploadQueue, getProcessed, getSuccessful, purgeUploadQueue } from '.'
 
 const splitFilename = filename => {
   const dotIdx = filename.lastIndexOf('.') - 1 >>> 0
@@ -38,6 +38,28 @@ const Item = translate()(({ t, file, status }) => {
   )
 })
 
+const InProgressHeader = translate()(({ t, total, done }) => (
+  <div className={styles['upload-queue-header-inner']}>
+    <span className='coz-desktop'>
+      {t('UploadQueue.header', { smart_count: total })}
+    </span>
+    <span className='coz-mobile'>
+      {t('UploadQueue.header_mobile', { done, total })}
+    </span>
+  </div>
+))
+
+const FinishedHeader = translate()(({t, total, successful, onClose}) => (
+  <div className={styles['upload-queue-header-inner']}>
+    <span>
+      {t('UploadQueue.header_done', { done: successful, total })}
+    </span>
+    <button className={classNames(styles['btn-close'])} onClick={onClose}>
+      { t('UploadQueue.close') }
+    </button>
+  </div>
+))
+
 class UploadQueue extends Component {
   state = {
     collapsed: false
@@ -48,7 +70,7 @@ class UploadQueue extends Component {
   }
 
   render () {
-    const { t, queue, doneCount } = this.props
+    const { queue, doneCount, successCount, purgeQueue } = this.props
     const { collapsed } = this.state
     return (
       <div className={classNames(styles['upload-queue'], {
@@ -56,7 +78,11 @@ class UploadQueue extends Component {
         [styles['upload-queue--collapsed']]: collapsed
       })}>
         <h4 className={styles['upload-queue-header']} onDoubleClick={this.toggleCollapsed}>
-          {t('UploadQueue.header', { smart_count: queue.length })}
+          {
+            doneCount < queue.length
+            ? <InProgressHeader total={queue.length} done={doneCount} />
+            : <FinishedHeader total={queue.length} successful={successCount} onClose={purgeQueue} />
+          }
         </h4>
         <progress className={styles['upload-queue-progress']} value={doneCount} max={queue.length} />
         <div className={styles['upload-queue-content']}>
@@ -71,6 +97,10 @@ class UploadQueue extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   queue: getUploadQueue(state),
-  doneCount: getProcessed(state).length
+  doneCount: getProcessed(state).length,
+  successCount: getSuccessful(state).length
 })
-export default translate()(connect(mapStateToProps)(UploadQueue))
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  purgeQueue: () => dispatch(purgeUploadQueue())
+})
+export default translate()(connect(mapStateToProps, mapDispatchToProps)(UploadQueue))

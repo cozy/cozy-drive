@@ -1,23 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { togglePhotoSelection } from '../actions/selection'
-import { mustShowSelectionBar } from '../reducers'
+import {
+  isSelectionBarVisible,
+  getSelectedIds,
+  toggleItemSelection,
+  addToSelection,
+  removeFromSelection
+} from '../ducks/selection'
+import { isRelated } from '../ducks/timeline'
 
-import Empty from '../components/Empty'
-import Loading from '../components/Loading'
-import ErrorComponent from '../components/ErrorComponent'
-import SelectionBar from './SelectionBar'
+import SelectionBarWithActions from './SelectionBarWithActions'
 import PhotoBoard from '../components/PhotoBoard'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
 
 class BoardView extends Component {
   render () {
     const {
-      showSelection,
+      album,
+      related,
       selected,
-      showAddToAlbumModal,
+      isAddToAlbumModalOpened,
       onPhotoToggle,
+      onPhotosSelect,
+      onPhotosUnselect,
+      selectionModeActive,
       photosContext
     } = this.props
 
@@ -28,42 +35,19 @@ class BoardView extends Component {
       onFetchMore
     } = this.props
 
-    const isError = fetchStatus === 'failed'
-    const isFetching = fetchStatus === 'pending' || fetchStatus === 'loading'
-
-    if (isError) {
-      return (
-        <div role='contentinfo'>
-          <ErrorComponent errorType={`${photosContext}_photos`} />
-        </div>
-      )
-    }
-
-    if (isFetching) {
-      return (
-        <div role='contentinfo'>
-          <Loading loadingType='photos_fetching' />
-        </div>
-      )
-    }
-
-    if (!isFetching && (photoLists.length === 0 || photoLists[0].photos.length === 0)) {
-      return (
-        <div role='contentinfo'>
-          <Empty emptyType={`${photosContext}_photos`} />
-        </div>
-      )
-    }
-
     return (
-      <div>
-        {showAddToAlbumModal && <AddToAlbumModal />}
-        {showSelection && <SelectionBar />}
+      <div role='contentinfo'>
+        {isAddToAlbumModalOpened && <AddToAlbumModal />}
+        {selectionModeActive && <SelectionBarWithActions album={album} related={related} />}
         <PhotoBoard
           lists={photoLists}
           selected={selected}
-          showSelection={showSelection}
+          photosContext={photosContext}
+          showSelection={selectionModeActive}
           onPhotoToggle={onPhotoToggle}
+          onPhotosSelect={onPhotosSelect}
+          onPhotosUnselect={onPhotosUnselect}
+          fetchStatus={fetchStatus}
           hasMore={hasMore}
           onFetchMore={onFetchMore}
         />
@@ -73,14 +57,21 @@ class BoardView extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selected: state.ui.selected,
-  showSelection: mustShowSelectionBar(state),
-  showAddToAlbumModal: state.ui.showAddToAlbumModal
+  selected: getSelectedIds(state),
+  related: isRelated(state),
+  selectionModeActive: isSelectionBarVisible(state),
+  isAddToAlbumModalOpened: state.ui.isAddToAlbumModalOpened
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onPhotoToggle: (id, selected) => {
-    dispatch(togglePhotoSelection(id, selected))
+    dispatch(toggleItemSelection(id, selected))
+  },
+  onPhotosSelect: (ids) => {
+    dispatch(addToSelection(ids))
+  },
+  onPhotosUnselect: (ids) => {
+    dispatch(removeFromSelection(ids))
   }
 })
 

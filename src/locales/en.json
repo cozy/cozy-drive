@@ -20,13 +20,16 @@
     "albums_title": "An error occurred while retrieving the albums list. Please try again later.",
     "album_photos_title": "An error occurred while retrieving the album's photos list. Please try again later.",
     "timeline_photos_title": "An error occurred while retrieving the photos list. Please try again later.",
-    "public_album_title": "An error occurred while retrieving the album. Please try again later.",
+    "public_album_error_title": "An error occurred while retrieving the photos list. Please try again later.",
+    "public_album_unshared_title": "Sorry, this link is no longer available.",
+    "public_album_unshared_text": "One lost, ten found... or just check out with the owner for help. This file might not be lost.",
     "refresh": "Refresh now",
     "generic": "An error occurred, please try again.",
     "album_rename_abort": "The album name can not be empty."
   },
   "Toolbar": {
     "photo_upload": "Upload",
+    "album_new": "New album",
     "album_delete": "Delete",
     "album_download": "Download",
     "more": "More",
@@ -34,7 +37,8 @@
       "select_items": "Select photos",
       "photo_upload": "Upload photos",
       "rename_album": "Rename album",
-      "album_delete": "Delete album"
+      "album_delete": "Delete album",
+      "download_album": "Download album"
     }
   },
   "Loading": {
@@ -45,7 +49,9 @@
     "photos_upload": "Uploading"
   },
   "Board": {
-    "load_more": "Load more photos"
+    "load_more": "Load more photos",
+    "select_all": "Select all",
+    "unselect_all": "Unselect all"
   },
   "Alerter": {
     "photos": {
@@ -54,9 +60,10 @@
     }
   },
   "SelectionBar": {
-    "selected_count": "%{smart_count} item selected |||| %{smart_count} items selected",
-    "add_to_album": "Add to album",
-    "remove_from_album": "Remove from album",
+    "selected_count": "item selected |||| items selected",
+    "delete": "Delete",
+    "album-add": "Add to album",
+    "album-remove": "Remove from album",
     "close": "Close"
   },
   "Albums": {
@@ -77,12 +84,24 @@
       "cta": "Share",
       "title": "Share with others",
       "shareByLink": {
-        "title": "Share by link",
+        "title": "By public link",
+        "subtitle": "Share by link",
         "desc": "Anyone with the provided link can see and download your photos."
+      },
+      "shareByUrl": {
+        "title": "By email & url",
+        "subtitle": "Share by email and url",
+        "email": "email",
+        "url": "cozy address",
+        "emailPlaceholder": "Enter email address of your recipient",
+        "urlPlaceholder": "Enter url address of your recipient",
+        "send": "Send",
+        "success": "You sent an invite to %{email}."
       },
       "sharingLink": {
         "title": "Link to share",
-        "copy": "Copy"
+        "copy": "Copy",
+        "copied": "Copied"
       },
       "protectedShare": {
         "title": "Coming soon!",
@@ -96,6 +115,12 @@
       }
     },
     "create": {
+      "panel_form": {
+        "label": "Add a name to your new album",
+        "placeholder": "Untitled album",
+        "cancel": "Cancel",
+        "submit": "Create new album"
+      },
       "inline_form": {
         "placeholder": "New album name",
         "create_label": "Create a new album",
@@ -120,7 +145,7 @@
       }
     },
     "remove_album": {
-      "success": "Album was deleted.",
+      "success": "Album %{name} was deleted.",
       "error": {
         "generic": "An error occured while removing the album, please try again."
       }
@@ -137,9 +162,23 @@
     "eye": "Your photos won't be deleted.",
     "link": "If you have shared it, people won't be able to access it."
   },
+  "timeline": {
+    "DeleteConfirm": {
+      "title": "Delete this element? |||| Delete these elements?",
+      "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
+      "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
+      "shared": "If you have shared it, people won't be able to access it. |||| If you have shared them, people won't be able to access them.",
+      "related": "Some of the photos within the selection are related to an album. They will be removed from it if you proceed to trash them.",
+      "cancel": "Cancel",
+      "delete": "Remove"
+    }
+  },
   "UploadQueue": {
     "path": "/Photos/Uploaded from Cozy Photos",
     "header": "Uploading %{smart_count} photo to Cozy Photos |||| Uploading %{smart_count} photos to Cozy Photos",
+    "header_mobile": "%{done} of %{total} uploading…",
+    "header_done": "Uploaded %{done} out of %{total} successfully",
+    "close": "close",
     "item": {
       "pending": "Pending"
     },

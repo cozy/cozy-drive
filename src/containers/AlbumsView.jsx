@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styles from '../styles/layout'
 
-import { fetchAlbums, getAlbumsList } from '../ducks/albums'
-import { filterSharedDocuments } from '../ducks/sharing'
-
-import { ALBUM_DOCTYPE } from '../constants/config'
+import { AlbumsToolbar, fetchAlbums, getAlbumsList } from '../ducks/albums'
+import { filterSharedByMeDocuments, filterSharedWithMeDocuments } from '../ducks/sharing'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
 import Topbar from '../components/Topbar'
 
-const Content = ({ list, shared }) => {
+const Content = ({ list, sharedByMe, sharedWithMe }) => {
   const { fetchStatus, entries } = list
   switch (fetchStatus) {
     case 'pending':
@@ -20,7 +19,7 @@ const Content = ({ list, shared }) => {
     case 'failed':
       return <ErrorComponent errorType='albums' />
     default:
-      return <AlbumsList albums={entries} shared={shared} />
+      return <AlbumsList albums={entries} sharedByMe={sharedByMe} sharedWithMe={sharedWithMe} />
   }
 }
 
@@ -28,7 +27,8 @@ export class AlbumsView extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      shared: []
+      sharedByMe: [],
+      sharedWithMe: []
     }
   }
 
@@ -37,9 +37,13 @@ export class AlbumsView extends Component {
   }
 
   componentWillReceiveProps (newProps) {
+    // TODO: this is not the cleanest way of doing this...
     if (newProps.albums && newProps.albums.entries !== 0) {
-      filterSharedDocuments(newProps.albums.entries.map(a => a._id), ALBUM_DOCTYPE)
-        .then(ids => this.setState({ shared: ids }))
+      Promise.all([
+        filterSharedByMeDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums'),
+        filterSharedWithMeDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums')
+      ])
+        .then(sharedIds => this.setState({ sharedByMe: sharedIds[0], sharedWithMe: sharedIds[1] }))
     }
   }
 
@@ -49,9 +53,11 @@ export class AlbumsView extends Component {
       return null
     }
     return (
-      <div>
-        <Topbar viewName='albums' />
-        <Content list={this.props.albums} shared={this.state.shared} />
+      <div className={styles['pho-content-wrapper']}>
+        <Topbar viewName='albums'>
+          <AlbumsToolbar />
+        </Topbar>
+        <Content list={this.props.albums} sharedByMe={this.state.sharedByMe} sharedWithMe={this.state.sharedWithMe} />
       </div>
     )
   }
@@ -62,7 +68,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbums: (index) => dispatch(fetchAlbums(index))
+  fetchAlbums: () => dispatch(fetchAlbums())
 })
 
 export default connect(

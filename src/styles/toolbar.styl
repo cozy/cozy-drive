@@ -11,13 +11,19 @@
             background embedurl("../assets/icons/icon-pen.svg") em(16px) center no-repeat
         &.pho-action-share
             background embedurl("../assets/icons/icon-share.svg") em(16px) center no-repeat
+        &.pho-action-download
+            background embedurl("../assets/icons/icon-download-16.svg") em(16px) center no-repeat
         &.pho-action-delete
             color pomegranate
             background embedurl("../assets/icons/icon-trash-red.svg") em(16px) center no-repeat
 
     .pho-toolbar-more-btn
-            @extends $button--secondary
-            @extends $button--more
+        @extends $button--secondary
+        @extends $button--more
+
+    .pho-btn-new
+        @extend $button--upload
+        background-image embedurl("../assets/icons/icon-album-add.svg")
 
 @media (max-width: (768/basefont)rem)
     .pho-toolbar .pho-toolbar-more-btn

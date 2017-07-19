@@ -1,21 +1,19 @@
 import styles from '../styles/emptyAndError'
 
 import React from 'react'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 export const ErrorComponent = ({ t, errorType }) => {
   return (
-    <div>
-      <div className={styles['pho-error']}>
-        <h2>{ t(`Error.${errorType}_title`) }</h2>
-        <button
-          role='button'
-          className='coz-btn coz-btn--regular'
-          onClick={() => window.location.reload()}
-        >
-          {t('Error.refresh')}
-        </button>
-      </div>
+    <div className={styles['pho-error']}>
+      <h2>{ t(`Error.${errorType}_title`) }</h2>
+      <button
+        role='button'
+        className='coz-btn coz-btn--regular'
+        onClick={() => window.location.reload()}
+      >
+        {t('Error.refresh')}
+      </button>
     </div>
   )
 }

@@ -2,13 +2,18 @@
 import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
-import { I18n } from '../lib/I18n'
+import { I18n } from 'cozy-ui/react/I18n'
 
 import '../styles/main'
 
 import App from './App'
 import Viewer from '../components/Viewer'
+import apiReducer, { registerSchemas } from '../lib/redux-cozy-api'
 
 const arrToObj = (obj = {}, varval = ['var', 'val']) => {
   obj[varval[0]] = varval[1]
@@ -26,7 +31,6 @@ const getQueryParameter = () => window
 document.addEventListener('DOMContentLoaded', init)
 
 function init () {
-  const context = window.context
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -44,18 +48,39 @@ function init () {
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
       iconPath: data.cozyIconPath,
-      lang: data.cozyLocale
+      lang: data.cozyLocale,
+      replaceTitleOnMobile: true
     })
   }
 
+  const store = createStore(
+    combineReducers({
+      api: apiReducer
+    }),
+    applyMiddleware(thunkMiddleware, createLogger())
+  )
+
+  store.dispatch(registerSchemas({
+    'io.cozy.photos.albums': {
+      fields: ['name'],
+      relations: {
+        photos: {
+          type: 'io.cozy.files'
+        }
+      }
+    }
+  }))
+
   render(
-    <I18n context={context} lang={lang}>
-      <Router history={hashHistory}>
-        <Route path='shared' component={props => <App albumId={id} {...props} />}>
-          <Route path=':photoId' component={Viewer} />
-        </Route>
-        <Redirect from='/*' to='shared' />
-      </Router>
+    <I18n lang={lang} dictRequire={(lang) => require(`../locales/${lang}`)}>
+      <Provider store={store}>
+        <Router history={hashHistory}>
+          <Route path='shared' component={props => <App albumId={id} {...props} />}>
+            <Route path=':photoId' component={Viewer} />
+          </Route>
+          <Redirect from='/*' to='shared' />
+        </Router>
+      </Provider>
     </I18n>
   , root)
 }

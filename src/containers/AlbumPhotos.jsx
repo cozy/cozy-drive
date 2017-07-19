@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import styles from '../styles/layout'
 
-import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbums, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
+import { AlbumToolbar, getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
@@ -17,16 +18,11 @@ export class AlbumPhotos extends Component {
   }
 
   componentWillMount () {
-    if (!this.props.album) {
-      this.props.fetchAlbums()
-        .then(() => this.props.fetchPhotos(this.props.router.params.albumId))
-    } else {
-      this.props.fetchPhotos(this.props.router.params.albumId)
-    }
+    this.props.fetchAlbum(this.props.router.params.albumId)
   }
 
   editAlbumName () {
-    this.setState({editing: true})
+    this.setState({ editing: true })
   }
 
   renameAlbum (name) {
@@ -34,14 +30,14 @@ export class AlbumPhotos extends Component {
       Alerter.error('Error.album_rename_abort')
       return
     } else if (name === this.props.album.name) {
-      this.setState({editing: false})
+      this.setState({ editing: false })
       return
     }
 
     let updatedAlbum = { ...this.props.album, name: name }
     this.props.updateAlbum(updatedAlbum)
       .then(() => {
-        this.setState({editing: false})
+        this.setState({ editing: false })
       })
       .catch(() => {
         Alerter.error('Error.generic')
@@ -52,22 +48,23 @@ export class AlbumPhotos extends Component {
     if (!this.props.album) {
       return null
     }
-    const { album, photos, fetchPhotos } = this.props
+    const { album, photos, fetchMorePhotos } = this.props
     const { editing } = this.state
     return (
-      <div>
-        {album.name &&
+      <div className={styles['pho-content-wrapper']}>
+        {(album.name && photos) &&
           <Topbar viewName='albumContent' albumName={album.name} editing={editing} onEdit={this.renameAlbum.bind(this)} >
-            <AlbumToolbar album={album} onRename={this.editAlbumName.bind(this)} />
+            <AlbumToolbar album={album} photos={photos.entries} onRename={this.editAlbumName.bind(this)} />
           </Topbar>
         }
         {photos &&
           <BoardView
+            album={album}
             photoLists={[{ photos: photos.entries }]}
             fetchStatus={photos.fetchStatus}
             hasMore={photos.hasMore}
             photosContext='album'
-            onFetchMore={() => fetchPhotos(album._id, photos.entries.length)}
+            onFetchMore={() => fetchMorePhotos(album, photos.entries.length)}
           />
         }
         {this.renderViewer(this.props.children)}
@@ -89,8 +86,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbums: () => dispatch(fetchAlbums()),
-  fetchPhotos: (albumId, skip) => dispatch(fetchAlbumPhotos(albumId, skip)),
+  fetchAlbum: (id) => dispatch(fetchAlbum(id)),
+  fetchMorePhotos: (album, skip) => dispatch(fetchAlbumPhotos(album, skip)),
   updateAlbum: (album) => dispatch(updateAlbum(album))
 })
 

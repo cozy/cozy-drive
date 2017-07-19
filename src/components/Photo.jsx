@@ -16,6 +16,12 @@ const getStyleFromBox = box => {
     if (box.height) {
       style.height = `${box.height}px`
     }
+    if (box.top) {
+      style.top = `${box.top}px`
+    }
+    if (box.left) {
+      style.left = `${box.left}px`
+    }
   }
   return style
 }
@@ -37,7 +43,7 @@ const Photo = props => {
           data-input='checkbox'
           onClick={e => {
             e.stopImmediatePropagation()
-            onToggle(photo._id, selected)
+            onToggle({ id: photo._id }, selected)
           }}>
           <input
             type='checkbox'

@@ -2,7 +2,7 @@ import styles from '../styles/addToAlbum'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { translate } from '../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 import Modal, { ModalSection } from 'cozy-ui/react/Modal'
 import classNames from 'classnames'
 
@@ -11,14 +11,19 @@ import CreateAlbumForm from '../components/CreateAlbumForm'
 import SelectAlbumsForm from '../components/SelectAlbumsForm'
 import Loading from '../components/Loading'
 
+import { getSelectedIds } from '../ducks/selection'
+
 import {
   fetchAlbums,
   getAlbumsList,
-  cancelAddToAlbum,
-  closeAddToAlbum,
   createAlbum,
-  addToAlbum }
-from '../ducks/albums'
+  addToAlbum,
+  checkUniquenessOfAlbumName,
+  cancelAddToAlbum,
+  closeAddToAlbum
+} from '../ducks/albums'
+
+import { refetchSomePhotos } from '../ducks/timeline'
 
 export class AddToAlbumModal extends Component {
   componentWillMount () {
@@ -35,8 +40,8 @@ export class AddToAlbumModal extends Component {
       onSubmitSelectedAlbum
     } = props
 
-    const { fetchingStatus } = props.albums ? props.albums : { fetchingStatus: 'loading' }
-    const isFetchingAlbums = fetchingStatus === 'pending' || fetchingStatus === 'loading'
+    const fetchStatus = albums ? albums.fetchStatus : 'loading'
+    const isFetchingAlbums = fetchStatus === 'pending' || fetchStatus === 'loading'
 
     return (
       <Modal
@@ -66,7 +71,7 @@ export class AddToAlbumModal extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    photos: state.ui.selected,
+    photos: getSelectedIds(state),
     albums: getAlbumsList(state)
   }
 }
@@ -75,19 +80,46 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onDismiss: () => {
     dispatch(cancelAddToAlbum())
   },
-  onSubmitNewAlbum: (name, photos) => {
-    return dispatch(createAlbum(name, photos))
-      .then(() => {
-        dispatch(closeAddToAlbum())
-        Alerter.success('Albums.create.success', {name: name, smart_count: photos.length})
-      })
+  onSubmitNewAlbum: async (name, photos) => {
+    try {
+      if (!name) {
+        Alerter.error('Albums.create.error.name_missing')
+        return
+      }
+      // TODO: we should not have to dispatch this method (see comments in redux-cozy-api)
+      const unique = await dispatch(checkUniquenessOfAlbumName(name))
+      if (!unique) {
+        Alerter.error('Albums.create.error.already_exists', { name })
+        return
+      }
+      const album = await dispatch(createAlbum(name, photos))
+      // TODO: sadly we need to refetch the photos so that their relationships
+      // property get updated and so that isRelated works when deleting a photo
+      // that has just been added to an album
+      await dispatch(refetchSomePhotos(photos))
+      dispatch(closeAddToAlbum())
+      Alerter.success('Albums.create.success', {name: album.name, smart_count: photos.length})
+    } catch (error) {
+      Alerter.error('Albums.create.error.generic')
+    }
   },
-  onSubmitSelectedAlbum: (album, photos) => {
-    return dispatch(addToAlbum(album, photos))
-      .then(() => {
-        dispatch(closeAddToAlbum())
+  onSubmitSelectedAlbum: async (album, photos) => {
+    try {
+      const addedPhotos = await dispatch(addToAlbum(album, photos))
+      if (addedPhotos.length !== photos.length) {
+        Alerter.info('Alerter.photos.already_added_photo')
+      } else {
         Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length})
-      })
+      }
+      // TODO: sadly we need to refetch the photos so that their relationships
+      // property get updated and so that isRelated works when deleting a photo
+      // that has just been added to an album
+      await dispatch(refetchSomePhotos(photos))
+      dispatch(closeAddToAlbum())
+    } catch (error) {
+      console.log(error)
+      Alerter.error('Albums.add_photos.error.reference')
+    }
   },
   fetchAlbums: () => dispatch(fetchAlbums())
 })

@@ -138,7 +138,7 @@ As a _developer_, you must [configure the transifex client][tx-client], and clai
 
 ### Maintainer
 
-The lead maintainer for Cozy Photos is @CPatchane, send him/her a :beers: to say hello!
+The lead maintainer for Cozy Photos is @goldoraf, send him/her a :beers: to say hello!
 
 
 ### Get in touch

@@ -4,18 +4,15 @@ import styles from '../../../styles/toolbar'
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { translate } from '../../../lib/I18n'
+import { translate } from 'cozy-ui/react/I18n'
 
 import UploadButton from '../../../components/UploadButton'
 import Menu, { Item } from '../../../components/Menu'
 
-import { showSelectionBar } from '../../../actions'
-import { mustShowSelectionBar } from '../../../reducers'
+import { showSelectionBar, isSelectionBarVisible } from '../../selection'
 
 import { addToUploadQueue } from '../../upload'
 import { addPhotosToTimeline } from '../'
-
-import classNames from 'classnames'
 
 export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, selectItems, params }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
@@ -37,11 +34,12 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
           disabled={disabled}
           label={t('Toolbar.menu.photo_upload')}
           type='menu-item'
+          className='coz-mobile'
         />
       </Item>
-      <hr />
+      <hr className='coz-mobile' />
       <Item>
-        <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
+        <a className={styles['pho-action-select']} onClick={selectItems}>
           {t('Toolbar.menu.select_items')}
         </a>
       </Item>
@@ -50,7 +48,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  disabled: mustShowSelectionBar(state)
+  disabled: isSelectionBarVisible(state)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({

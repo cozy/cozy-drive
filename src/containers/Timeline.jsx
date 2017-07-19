@@ -2,19 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../styles/layout'
 
-import { translate } from '../lib/I18n'
-import { Toolbar as TimelineToolbar, fetchIfNeededPhotos, fetchMorePhotos, getTimelineList } from '../ducks/timeline'
-import { getPhotosByMonth } from '../lib/helpers'
+import { translate } from 'cozy-ui/react/I18n'
+import { Toolbar as TimelineToolbar, fetchIfNeededPhotos, fetchMorePhotos, getTimelineList, getPhotosByMonth } from '../ducks/timeline'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
-
-const formatMonths = (photoList, f, format) => {
-  return {
-    title: f(photoList.title, format),
-    photos: photoList.photos
-  }
-}
 
 export class Timeline extends Component {
   componentWillMount () {
@@ -27,8 +19,7 @@ export class Timeline extends Component {
       return null
     }
 
-    const photoLists = getPhotosByMonth(list.entries)
-      .map(photoList => formatMonths(photoList, f, 'MMMM YYYY'))
+    const photoLists = getPhotosByMonth(list.entries, f, 'MMMM YYYY')
 
     return (
       <div className={styles['pho-content-wrapper']}>
