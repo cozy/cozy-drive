@@ -9,6 +9,7 @@ import configureStore from '../..//store/configureStore'
 import PublicLayout from '../../components/PublicLayout'
 
 import LightFolderView from '../../components/LightFolderView'
+import ErrorShare from '../../components/ErrorShare'
 
 document.addEventListener('DOMContentLoaded', init)
 
@@ -41,7 +42,21 @@ function init () {
   if (directdownload) {
     cozy.client.files.getDownloadLinkById(id).then(
       link => window.open(`${cozy.client._url}${link}`, '_SELF')
-    )
+    ).catch(e => {
+      cozy.bar.init({
+        appName: data.cozyAppName,
+        appEditor: data.cozyAppEditor,
+        iconPath: data.cozyIconPath,
+        lang: data.cozyLocale,
+        replaceTitleOnMobile: true
+      })
+      render(
+        <I18n lang={lang} dictRequire={(lang) => require(`../../locales/${lang}`)}>
+          <ErrorShare errorType={`public_unshared`} />
+        </I18n>,
+        root
+      )
+    })
   } else {
     if (__DEVELOPMENT__) {
       // Enables React dev tools for Preact
