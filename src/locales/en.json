@@ -122,7 +122,9 @@
     "download_file": {
       "offline": "You should be connected to download this file",
       "missing": "This file is missing"
-    }
+    },
+    "public_unshared_title": "Sorry, this link is no longer available.",
+    "public_unshared_text": "One lost, ten found... or just check out with the owner for help. This file might not be lost."
   },
   "alert": {
     "try_again": "An error has occurred, please try again in a moment.",
