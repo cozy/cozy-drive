@@ -1,12 +1,15 @@
 /* global cozy */
-export const filterSharedByMeDocuments = (ids, doctype) =>
-  findPermissionSets(ids, doctype, SHARED_BY_LINK).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
+export const filterSharedByLinkDocuments = (ids, doctype) =>
+  findPermissionSets(ids, doctype, SHARED_BY_LINK, 'collection').then(sets => sets.map(set => set.attributes.permissions['collection'].values[0]))
 
 export const filterSharedWithMeDocuments = (ids, doctype) =>
-  findPermissionSets(ids, doctype, SHARED_WITH_ME).then(sets => sets.map(set => set.attributes.permissions.collection.values[0]))
+  findPermissionSets(ids, doctype, SHARED_WITH_ME, 'collection').then(sets => sets.map(set => set.attributes.permissions['collection'].values[0]))
 
-export const findPermSet = (id, doctype) =>
-  findPermissionSets([id], doctype, SHARED_BY_LINK).then(sets => sets.length === 0 ? undefined : sets[0])
+export const filterSharedWithOthersDocuments = (id, doctype) =>
+  findPermissionSets([id], doctype, SHARED_WITH_OTHERS, 'rule0')
+
+export const findPermSetByLink = (id, doctype) =>
+  findPermissionSets([id], doctype, SHARED_BY_LINK, 'collection').then(sets => sets.length === 0 ? undefined : sets[0])
 
 // TODO: move this to cozy-client-js
 // there is cozy.client.files.getCollectionShareLink already, but I think that
@@ -16,14 +19,19 @@ const SHARED_BY_LINK = 'sharedByLink'
 const SHARED_WITH_ME = 'sharedWithMe'
 const SHARED_WITH_OTHERS = 'sharedWithOthers'
 
-export const findPermissionSets = (ids, doctype, sharingType) => {
+export const findPermissionSets = (ids, doctype, sharingType, permissionsName) => {
   if ([SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS].indexOf(sharingType) < 0) throw new Error('findPermissionSets expects a sharing type')
 
   return cozy.client.fetchJSON('GET', `/permissions/doctype/${doctype}/${sharingType}`)
     .then(sets => sets.filter(set => {
-      const perm = set.attributes.permissions.collection
+      const perm = set.attributes.permissions[permissionsName]
       return perm.type === doctype && ids.find(id => perm.values.indexOf(id) !== -1) !== undefined
     }))
+}
+
+export const findSharings = ids => {
+  const promises = ids.map(id => cozy.client.fetchJSON('GET', `/sharings/${id}`))
+  return Promise.all(promises)
 }
 
 export const createPermSet = (id, doctype) =>
@@ -93,10 +101,37 @@ export const deletePermSet = (setId) =>
 export const getShareLink = (id, perms) =>
   `${window.location.origin}/public?sharecode=${perms.attributes.codes.email}&id=${id}`
 
-export const getContacts = async () => {
-  const response = await cozy.client.fetchJSON('POST', '/data/io.cozy.contacts/_all_docs?include_docs=true', {})
+export const getContacts = async (ids = []) => {
+  const response = await cozy.client.fetchJSON('GET', '/data/io.cozy.contacts/_all_docs?include_docs=true', {keys: ids})
   return response.rows.map(row => row.doc)
 }
+
+const getProperty = (property, comparator) => (list, id) => {
+  const wantedItem = list.find(comparator(id)) || {}
+  return wantedItem[property]
+}
+
+const getEmail = getProperty('email', id => item => item._id === id)
+const getUrl = getProperty('url', id => item => item._id === id)
+
+export const getRecipients = (id, type) => filterSharedWithOthersDocuments(id, type)
+  .then(perms => perms.map(perm => perm.attributes.source_id))
+  .then(findSharings)
+  .then(sharings => sharings.map(sharing => sharing.attributes.recipients))
+  .then(arrayOfArrays => [].concat(...arrayOfArrays))
+  .then(recipients => recipients.map(info => ({
+    id: info.recipient.id,
+    status: info.status
+  })))
+  .then(async recipients => {
+    const ids = recipients.map(recipient => recipient.id)
+    const contacts = await getContacts(ids)
+    return recipients.map(recipient => ({
+      ...recipient,
+      email: getEmail(contacts, recipient.id),
+      url: getUrl(contacts, recipient.id)
+    }))
+  })
 
 import ShareModal from './ShareModal'
 

@@ -103,6 +103,9 @@
         "copy": "Copy",
         "copied": "Copied"
       },
+      "whoHasAccess": {
+        "title": "Who has access"
+      },
       "protectedShare": {
         "title": "Coming soon!",
         "desc": "Share anything by email with your family and friends!"

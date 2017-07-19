@@ -7,9 +7,10 @@ import Toggle from 'cozy-ui/react/Toggle'
 import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 import Alerter from '../../components/Alerter'
+import Recipient from '../../components/Recipient'
 import ShareAutocomplete from './ShareAutocomplete'
 
-import { findPermSet, createPermSet, deletePermSet, getShareLink, share } from '.'
+import { findPermSetByLink, createPermSet, deletePermSet, getShareLink, share, getRecipients } from '.'
 
 export class ShareModal extends Component {
   constructor (props) {
@@ -17,7 +18,7 @@ export class ShareModal extends Component {
     this.state = {
       loading: true,
       creating: false,
-      permissions: null,
+      byLinkPermissions: null,
       active: false,
       copied: false
     }
@@ -25,15 +26,17 @@ export class ShareModal extends Component {
 
   componentDidMount () {
     const { _id, _type } = this.props.document
-    findPermSet(_id, _type)
-      .then(permissions => {
-        if (permissions !== undefined) {
-          this.setState({ loading: false, permissions, active: true })
+    findPermSetByLink(_id, _type)
+      .then(byLinkPermissions => {
+        if (byLinkPermissions !== undefined) {
+          this.setState({ loading: false, byLinkPermissions, active: true })
         } else {
           this.setState({ loading: false })
         }
       })
       .catch(() => this.onError())
+    getRecipients(_id, _type)
+    .then(recipients => this.setState(state => ({...state, recipients: recipients})))
   }
 
   toggleShareLink (active) {
@@ -41,11 +44,11 @@ export class ShareModal extends Component {
     if (active) {
       this.setState({ creating: true })
       createPermSet(_id, _type)
-        .then(permissions => this.setState({ active, permissions, creating: false }))
+        .then(byLinkPermissions => this.setState({ active, byLinkPermissions, creating: false }))
         .catch(() => this.onError())
     } else {
-      const setId = this.state.permissions._id
-      this.setState({ active, permissions: null })
+      const setId = this.state.byLinkPermissions._id
+      this.setState({ active, byLinkPermissions: null })
       deletePermSet(setId)
         .catch(() => this.onError())
     }
@@ -70,7 +73,7 @@ export class ShareModal extends Component {
   render () {
     const { t } = this.context
     const { onClose } = this.props
-    const { loading, active, creating, permissions } = this.state
+    const { loading, active, creating, byLinkPermissions } = this.state
     return (
       <Modal
         title={t('Albums.share.title')}
@@ -84,14 +87,20 @@ export class ShareModal extends Component {
             <Tab name='url'>
               {t('Albums.share.shareByUrl.title')}
             </Tab>
+            <Tab name='access'>
+              {t('Albums.share.whoHasAccess.title')}
+            </Tab>
           </TabList>
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='link'>
               <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
-              {active && <ShareWithLink id={this.props.document._id} permissions={permissions} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
+              {active && <ShareWithLink shareLink={getShareLink(this.props.document._id, byLinkPermissions)} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
             </TabPanel>
             <TabPanel name='url'>
               <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
+            </TabPanel>
+            <TabPanel name='access'>
+              <WhoHasAccess recipients={this.state.recipients} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -193,15 +202,15 @@ const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
   </div>
 )
 
-const ShareWithLink = ({ id, permissions, onCopy, copied }, { t }) => (
+const ShareWithLink = ({ shareLink, onCopy, copied }, { t }) => (
   <div className={styles['coz-form']}>
     <h4>{t('Albums.share.sharingLink.title')}</h4>
     <div className={styles['pho-input-dual']}>
-      <div><input type='text' name='' id='' value={getShareLink(id, permissions)} /></div>
+      <div><input type='text' name='' id='' value={shareLink} /></div>
       <div>
         {!copied &&
           <CopyToClipboard
-            text={getShareLink(id, permissions)}
+            text={shareLink}
             onCopy={onCopy}
           >
             <div>
@@ -216,6 +225,14 @@ const ShareWithLink = ({ id, permissions, onCopy, copied }, { t }) => (
         </button>}
       </div>
     </div>
+  </div>
+)
+
+const WhoHasAccess = ({ recipients }) => (
+  <div>
+    {recipients.map(({email, url, status}) => (
+      <Recipient name={email} url={url} status={status} />
+    ))}
   </div>
 )
 
