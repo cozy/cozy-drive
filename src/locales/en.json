@@ -155,7 +155,10 @@
     }
   },
   "Viewer": {
-    "close": "Close"
+    "close": "Close",
+    "actions": {
+      "download" : "Download"
+    }
   },
   "destroyconfirmation": {
     "title": "Permanently delete this album?",

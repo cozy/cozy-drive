@@ -4,8 +4,9 @@ import classNames from 'classnames'
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import { withRouter } from 'react-router'
+import { downloadFile } from '../lib/redux-cozy-api.js'
 
-export const ViewerToolbar = ({ t, router, hidden }) => {
+export const ViewerToolbar = ({ t, router, hidden, currentPhoto }) => {
   const closeViewer = () => {
     // go to parent
     let url = router.location.pathname
@@ -16,7 +17,14 @@ export const ViewerToolbar = ({ t, router, hidden }) => {
   }
   return (
     <div className={classNames(styles['pho-viewer-toolbar'], {[styles['--hidden']]: hidden})} role='viewer-toolbar'>
-      <div className={styles['pho-viewer-toolbar-actions']} />
+      <div className={classNames(styles['coz-selectionbar'], styles['pho-viewer-toolbar-actions'])}>
+        <button
+          className={styles['coz-action-download']}
+          onClick={() => downloadFile(currentPhoto)}
+          >
+          {t('Viewer.actions.download')}
+        </button>
+      </div>
       <div
         className={styles['pho-viewer-toolbar-close']}
         onClick={closeViewer}
