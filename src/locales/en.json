@@ -66,6 +66,21 @@
     "album-remove": "Remove from album",
     "close": "Close"
   },
+  "Share": {
+    "status": {
+      "pending": "Pending",
+      "accepted": {
+        "master-slave": "Can Read",
+        "master-master": "Can Read and Write"
+      },
+      "refused": "Refused",
+      "error": "Error",
+      "unregistered": "Error",
+      "mail-not-sent": "Error",
+      "revoked": "Error"
+
+    }
+  },
   "Albums": {
     "album_item_description": "%{smart_count} photo |||| %{smart_count} photos",
     "album_item_shared_ro": "Shared (read only)",
