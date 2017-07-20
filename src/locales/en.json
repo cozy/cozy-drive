@@ -217,6 +217,11 @@
           "success": "Thanks, we will investigate your problem and contact you soon.",
           "error": "A problem happened, logs couldn't be sent, please try again."
         }
+      },
+      "contacts": {
+        "title": "Contacts",
+        "subtitle": "Import contacts",
+        "text": "Import the contacts from your device to your Cozy to easily share content with them."
       }
     },
     "error": {

@@ -70,8 +70,8 @@ const renderAppWithPersistedState = persistedState => {
     pingOnceADayWithState()
     store.dispatch(backupImages())
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
+    if (store.getState().mobile.settings.backupContacts) store.dispatch(backupContacts())
   }, false)
-    if (store.getState().mobile.settings.backupContacts) backupContacts()
 
   useHistoryForTracker(hashHistory)
   if (store.getState().mobile.settings.analytics) startTracker(store.getState().mobile.settings.serverUrl)
