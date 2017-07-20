@@ -196,10 +196,10 @@ export const getFolderUrl = (folderId, location) => {
 }
 
 // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
-export const getFolderPath = ({ view }, location) => {
+export const getFolderPath = ({ view }, location, isPublic) => {
   const { displayedFolder } = view
   const path = []
-  const isBrowsingTrash = location.pathname.match(/^\/trash/)
+  const isBrowsingTrash = /^\/trash/.test(location.pathname)
   // dring the first fetch, displayedFolder is null, and we don't want to display anything
   if (displayedFolder) {
     path.push(displayedFolder)
@@ -208,11 +208,14 @@ export const getFolderPath = ({ view }, location) => {
     if (parent && parent.id && !(isBrowsingTrash && parent.id === ROOT_DIR_ID)) {
       path.unshift(parent)
       // has the parent a parent too?
-      if (parent.dir_id && !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID)) {
+      if (parent.dir_id && !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID) && !isPublic) {
         // since we don't *actually* have any information about the parent's parent, we have to fake it
         path.unshift({ id: parent.dir_id })
       }
     }
+  }
+  if (isPublic) {
+    return path
   }
   // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder. While we're at it, we also rename the folders when we need to.
   const hasRootFolder = path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
