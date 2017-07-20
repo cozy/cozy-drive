@@ -1,5 +1,8 @@
+/* global cozy */
+
 import { isCordova } from '../lib/device'
 import { setBackupContacts } from './settings'
+import { logException } from '../lib/reporter'
 
 const DOCTYPE_CONTACTS = 'io.cozy.contacts'
 
@@ -8,13 +11,15 @@ export const requestAuthorization = () => {
     if (!isCordova() ||
        !navigator.contacts) {
       resolve(false)
-    }
-    else {
+    } else {
       // to trigger the permission, we need to interact with the contacts API — we're going to do a fake-find
       navigator.contacts.find(
         ['displayName'],
-        () => {resolve(true)},
-        (err) => {resolve(false)},
+        () => { resolve(true) },
+        (e) => {
+          logException(e)
+          resolve(false)
+        },
         {
           filter: (new Date()).toString(), // we just want a filter that won't match anything
           multiple: false
@@ -34,9 +39,8 @@ const getCozyContacts = async (ids = []) => {
   let response
   try {
     response = await cozy.client.fetchJSON('GET', '/data/io.cozy.contacts/_all_docs?include_docs=true', {keys: ids})
-  }
-  catch (exception) {
-    console.warn(exception)
+  } catch (e) {
+    logException(e)
     return []
   }
   return response.rows.map(row => row.doc)
@@ -93,7 +97,7 @@ const cordovaContactToCozy = (contact) => {
         number: phone.value,
         type: phone.type,
         label: null,
-        primary: !!phone.pref,
+        primary: !!phone.pref
       })
     })
   }
@@ -106,18 +110,17 @@ export const backupContacts = () => async (dispatch) => {
 
   try {
     deviceContacts = await loadDeviceContacts()
-  }
-  catch (e) {
+  } catch (e) {
     // the authorization has been revoked
     dispatch(setBackupContacts(false))
     return
   }
-  //keep only contacts with an email address
+  // keep only contacts with an email address
   deviceContacts = deviceContacts.filter(contact => (contact.emails && contact.emails.length > 0)).map(cordovaContactToCozy)
 
   let cozyContacts = await getCozyContacts()
 
-  //we want to add contacts that aren't in the cozy yet, and we'll use the email as id
+  // we want to add contacts that aren't in the cozy yet, and we'll use the email as id
   for (const deviceContact of deviceContacts) {
     let contactAlreadySynced = false
     let deviceEmails = deviceContact.email.map(email => email.address)
