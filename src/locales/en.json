@@ -64,6 +64,7 @@
     "delete": "Delete",
     "album-add": "Add to album",
     "album-remove": "Remove from album",
+    "download": "Download",
     "close": "Close"
   },
   "Albums": {

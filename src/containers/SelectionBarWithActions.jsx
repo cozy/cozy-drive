@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
 
 import { openAddToAlbum, removeFromAlbum } from '../ducks/albums'
-import { SelectionBar, hideSelectionBar } from '../ducks/selection'
+import { SelectionBar, hideSelectionBar, downloadSelection } from '../ducks/selection'
 import { DeleteConfirm, deletePhotos } from '../ducks/timeline'
 import Alerter from '../components/Alerter'
 import confirm from '../lib/confirm'
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: {
     'album-add': {
       action: selected => dispatch(openAddToAlbum(selected))
+    },
+    'download': {
+      action: selected => downloadSelection(selected)
     },
     'delete': {
       action: selected => confirm(<DeleteConfirm t={ownProps.t} count={selected.length} related={ownProps.related} />,
