@@ -29,7 +29,7 @@ class DumbFolderView extends React.Component {
     return (
       <Main>
         <Topbar>
-          <Breadcrumb />
+          <Breadcrumb isPublic />
         </Topbar>
         <div role='contentinfo'>
           <div className={styles['fil-content-table']}>
