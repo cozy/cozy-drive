@@ -140,7 +140,7 @@ class NewAlbum extends Component {
       <PhotoBoard
         lists={photoLists}
         selected={this.state.selected}
-        photosContext='albums'
+        photosContext='timeline'
         showSelection
         onPhotoToggle={this.onPhotoToggle}
         onPhotosSelect={this.onPhotosSelect}
