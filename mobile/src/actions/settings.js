@@ -17,6 +17,7 @@ export const BACKUP_CONTACTS = 'BACKUP_CONTACTS'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_ANALYTICS = 'SET_ANALYTICS'
+export const TOKEN_SCOPE = 'TOKEN_SCOPE'
 
 // url
 
@@ -41,6 +42,7 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
 export const setBackupImages = backupImages => ({ type: BACKUP_IMAGES, backupImages })
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 export const setBackupContacts = backupContacts => ({ type: BACKUP_CONTACTS, backupContacts })
+export const setTokenScope = (scope) => ({ type: TOKEN_SCOPE, scope })
 
 // errors
 
@@ -82,6 +84,7 @@ export const registerDevice = () => async (dispatch, getState) => {
     }
     throw err
   }
+
   initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getDeviceName())
 
   let isV2Instance
@@ -97,7 +100,8 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw new Error('The cozy address entered is a V2 instance')
   }
 
-  await cozy.client.authorize().then(({ client }) => {
+  return await cozy.client.authorize(true).then(({ client, token }) => {
+    dispatch(setTokenScope(token.scope))
     dispatch(setClient(client))
     startReplication(dispatch, getState)
   }).catch(err => {

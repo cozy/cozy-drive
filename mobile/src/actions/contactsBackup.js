@@ -1,12 +1,12 @@
 /* global cozy */
 
 import { isCordova } from '../lib/device'
-import { setBackupContacts } from './settings'
+import { setBackupContacts, registerDevice } from './settings'
 import { logException } from '../lib/reporter'
 
 const DOCTYPE_CONTACTS = 'io.cozy.contacts'
 
-export const requestAuthorization = () => {
+export const requestDeviceAuthorization = () => {
   return new Promise((resolve, reject) => {
     if (!isCordova() ||
        !navigator.contacts) {
@@ -29,6 +29,23 @@ export const requestAuthorization = () => {
   })
 }
 
+export const requestCozyAuthorization = () => (dispatch, getState) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenScope = getState().mobile.settings.tokenScope || ''
+      if (tokenScope.indexOf(DOCTYPE_CONTACTS) >= 0) {
+        resolve(true)
+      } else {
+        await dispatch(registerDevice())
+        resolve(true)
+      }
+    } catch (e) {
+      logException(e)
+      resolve(false)
+    }
+  })
+}
+
 const loadDeviceContacts = () => {
   return new Promise((resolve, reject) => {
     navigator.contacts.find(['*'], resolve, reject)
@@ -40,7 +57,7 @@ const getCozyContacts = async (ids = []) => {
   try {
     response = await cozy.client.fetchJSON('GET', '/data/io.cozy.contacts/_all_docs?include_docs=true', {keys: ids})
   } catch (e) {
-    logException(e)
+    // exceptions might happen if the database is not created yet, which is ok
     return []
   }
   return response.rows.map(row => row.doc)
