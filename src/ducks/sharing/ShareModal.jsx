@@ -10,7 +10,7 @@ import Alerter from '../../components/Alerter'
 import ShareAutocomplete from './ShareAutocomplete'
 
 import WhoHasAccess from './WhoHasAccess'
-import { findPermSetByLink, createPermSet, deletePermSet, getShareLink, share } from '.'
+import { fetchShareLinkPermission, createShareLinkPermission, deletePermission, getShareLink, share } from '.'
 
 export class ShareModal extends Component {
   constructor (props) {
@@ -26,7 +26,7 @@ export class ShareModal extends Component {
 
   componentDidMount () {
     const { _id, _type } = this.props.document
-    findPermSetByLink(_id, _type)
+    fetchShareLinkPermission(_id, _type)
       .then(byLinkPermissions => {
         if (byLinkPermissions !== undefined) {
           this.setState({ loading: false, byLinkPermissions, active: true })
@@ -41,13 +41,13 @@ export class ShareModal extends Component {
     const { _id, _type } = this.props.document
     if (active) {
       this.setState({ creating: true })
-      createPermSet(_id, _type)
+      createShareLinkPermission(_id, _type)
         .then(byLinkPermissions => this.setState({ active, byLinkPermissions, creating: false }))
         .catch(() => this.onError())
     } else {
       const setId = this.state.byLinkPermissions._id
       this.setState({ active, byLinkPermissions: null })
-      deletePermSet(setId)
+      deletePermission(setId)
         .catch(() => this.onError())
     }
   }
