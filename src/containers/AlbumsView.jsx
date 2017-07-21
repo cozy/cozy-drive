@@ -3,7 +3,7 @@ import { cozyConnect } from '../lib/redux-cozy-client'
 import styles from '../styles/layout'
 
 import { AlbumsToolbar, fetchAlbums } from '../ducks/albums'
-import { filterSharedDocuments, filterSharedWithMeDocuments } from '../ducks/sharing'
+import { filterSharedByLinkDocuments, filterSharedWithMeDocuments } from '../ducks/sharing'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'

@@ -4,7 +4,6 @@ import { cozyConnect } from '../lib/redux-cozy-client'
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
-import ErrorShare from '../components/ErrorShare'
 
 import { fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
 
