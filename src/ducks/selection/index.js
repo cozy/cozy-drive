@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { downloadArchive } from '../../lib/redux-cozy-api'
 import SelectionBar from './SelectionBar'
 
 // constants
@@ -21,6 +22,7 @@ export const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
 export const toggleItemSelection = (item, selected) => ({ type: selected ? UNSELECT_ITEM : SELECT_ITEM, id: item.id })
 export const addToSelection = (ids) => ({ type: ADD_TO_SELECTION, ids })
 export const removeFromSelection = (ids) => ({ type: REMOVE_FROM_SELECTION, ids })
+export const downloadSelection = (selected) => downloadArchive('selection', selected)
 
 // components
 export { SelectionBar }
