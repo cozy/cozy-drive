@@ -7,10 +7,10 @@ import Toggle from 'cozy-ui/react/Toggle'
 import classnames from 'classnames'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 import Alerter from '../../components/Alerter'
-import Recipient from '../../components/Recipient'
 import ShareAutocomplete from './ShareAutocomplete'
 
-import { findPermSetByLink, createPermSet, deletePermSet, getShareLink, share, getRecipients } from '.'
+import WhoHasAccess from './WhoHasAccess'
+import { findPermSetByLink, createPermSet, deletePermSet, getShareLink, share } from '.'
 
 export class ShareModal extends Component {
   constructor (props) {
@@ -35,8 +35,6 @@ export class ShareModal extends Component {
         }
       })
       .catch(() => this.onError())
-    getRecipients(_id, _type)
-    .then(recipients => this.setState(state => ({...state, recipients: recipients})))
   }
 
   toggleShareLink (active) {
@@ -73,7 +71,7 @@ export class ShareModal extends Component {
   render () {
     const { t } = this.context
     const { onClose } = this.props
-    const { loading, active, creating, byLinkPermissions } = this.state
+    const { loading, active, creating, byLinkPermissions, copied } = this.state
     return (
       <Modal
         title={t('Albums.share.title')}
@@ -94,13 +92,16 @@ export class ShareModal extends Component {
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='link'>
               <ShareWithLinkToggle active={active} onToggle={checked => this.toggleShareLink(checked)} />
-              {active && <ShareWithLink shareLink={getShareLink(this.props.document._id, byLinkPermissions)} onCopy={() => this.setState({ copied: true })} copied={this.state.copied} />}
+              {active && <ShareWithLink
+                shareLink={getShareLink(this.props.document._id, byLinkPermissions)}
+                onCopy={() => this.setState(state => ({ ...state, copied: true }))}
+                copied={copied} />}
             </TabPanel>
             <TabPanel name='url'>
               <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
             </TabPanel>
             <TabPanel name='access'>
-              <WhoHasAccess recipients={this.state.recipients} />
+              <WhoHasAccess document={this.props.document} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -225,14 +226,6 @@ const ShareWithLink = ({ shareLink, onCopy, copied }, { t }) => (
         </button>}
       </div>
     </div>
-  </div>
-)
-
-const WhoHasAccess = ({ recipients }) => (
-  <div>
-    {recipients.map(({email, url, status}) => (
-      <Recipient name={email} url={url} status={status} />
-    ))}
   </div>
 )
 

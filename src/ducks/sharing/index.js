@@ -117,12 +117,18 @@ const getUrl = getProperty('url', id => item => item._id === id)
 export const getRecipients = (id, type) => filterSharedWithOthersDocuments(id, type)
   .then(perms => perms.map(perm => perm.attributes.source_id))
   .then(findSharings)
-  .then(sharings => sharings.map(sharing => sharing.attributes.recipients))
+  .then(sharings =>
+    sharings.map(sharing =>
+      sharing.attributes.recipients.map(info =>
+        ({
+          id: info.recipient.id,
+          status: info.status,
+          type: sharing.attributes.sharing_type
+        })
+      )
+    )
+  )
   .then(arrayOfArrays => [].concat(...arrayOfArrays))
-  .then(recipients => recipients.map(info => ({
-    id: info.recipient.id,
-    status: info.status
-  })))
   .then(async recipients => {
     const ids = recipients.map(recipient => recipient.id)
     const contacts = await getContacts(ids)
