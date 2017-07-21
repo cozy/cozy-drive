@@ -286,6 +286,13 @@ export const downloadArchive = async (notSecureFilename, fileIds) => {
   forceFileDownload(fullpath, filename + '.zip')
 }
 
+export const downloadFile = async (file) => {
+  const response = await cozy.client.files.downloadById(file.id)
+  const blob = await response.blob()
+  const filename = file.name
+  forceFileDownload(window.URL.createObjectURL(blob), filename)
+}
+
 // TODO: for this helper, sadly, we need to make it an action creator
 // because we need the store's state in order to retrieve the mango index
 // that's another proof that indexes should be managed by cozy-client-js...

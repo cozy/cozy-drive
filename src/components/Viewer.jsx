@@ -265,7 +265,7 @@ export class Viewer extends Component {
     }
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
-        <ViewerToolbar hidden={hideToolbar} />
+        <ViewerToolbar hidden={hideToolbar} currentPhoto={currentPhoto} />
         <div className={styles['pho-viewer-content']}>
           {!singlePhoto && <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />}
           <div className={styles['pho-viewer-photo']}>

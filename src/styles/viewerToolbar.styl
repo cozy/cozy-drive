@@ -1,5 +1,7 @@
 @require 'cozy-ui'
 
+:local
+    @extend $selectionbar
 
 .pho-viewer-toolbar
     z-index     101
@@ -8,26 +10,29 @@
     width       100vw
     height      em(90px)
 
-    &::before
-        content     ''
-        flex-grow   0
-        width       10em
-        font-size   em(14px)
-
 
 .pho-viewer-toolbar-actions
-    display flex
-    width   100%
+    position          static
+    z-index           0
+    display           flex
+    align-items       center
+    justify-content   center
+    width             100%
+    height            auto
+    background-color  transparent
 
 
 .pho-viewer-toolbar-close
-    display         flex
-    flex-grow       0
-    align-items     center
-    width           4.5em
-    cursor          pointer
-    font-weight     bold
-    text-transform  uppercase
+    position         fixed
+    z-index          1
+    top              0
+    right            0
+    display          flex
+    align-items      center
+    justify-content  center
+    width            em(90px)
+    height           em(90px)
+    cursor           pointer
 
 
 .pho-viewer-toolbar-close-cross
@@ -68,7 +73,8 @@
             opacity 0
 
     .pho-viewer-toolbar-close
-        width em(48/14)
+        width   em(48px)
+        height  em(48px)
 
     .pho-viewer-toolbar-close-text
         display none
