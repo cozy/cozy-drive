@@ -101,8 +101,8 @@ export const registerDevice = () => async (dispatch, getState) => {
   }
 
   return await cozy.client.authorize(true).then(({ client, token }) => {
-    dispatch(setTokenScope(token.scope))
     dispatch(setClient(client))
+    dispatch(setTokenScope(token.scope))
     startReplication(dispatch, getState)
   }).catch(err => {
     if (err.message === REGISTRATION_ABORT) {
