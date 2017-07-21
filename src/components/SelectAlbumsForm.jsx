@@ -6,15 +6,15 @@ import classNames from 'classnames'
 import { withError } from '../components/ErrorComponent'
 import { withEmpty } from '../components/Empty'
 
-import AlbumItem from '../components/AlbumItem'
+import AlbumItem from '../containers/AlbumItem'
 
 const DumbAlbumsList = props => (
   <div className={classNames(styles['pho-album-list'], styles['pho-album-list--thumbnails'], styles['pho-album-list--selectable'])}>
-    {props.albums.entries.map((a) => <AlbumItem album={a} key={a._id} onServerError={props.onServerError} onClick={props.onSubmitSelectedAlbum} />)}
+    {props.albums.data.map((a) => <AlbumItem album={a} key={a._id} onServerError={props.onServerError} onClick={props.onSubmitSelectedAlbum} />)}
   </div>
 )
 
-const AlbumsList = withEmpty(props => props.albums.entries.length === 0, 'albums', DumbAlbumsList)
+const AlbumsList = withEmpty(props => props.albums.data.length === 0, 'albums', DumbAlbumsList)
 
 const DumbAlbumsView = props => (
   <div>

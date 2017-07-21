@@ -38,7 +38,8 @@
       "photo_upload": "Upload photos",
       "rename_album": "Rename album",
       "album_delete": "Delete album",
-      "download_album": "Download album"
+      "download_album": "Download album",
+      "add_photos": "Add photos to album"
     }
   },
   "Loading": {
@@ -138,7 +139,8 @@
         "label": "Add a name to your new album",
         "placeholder": "Untitled album",
         "cancel": "Cancel",
-        "submit": "Create new album"
+        "submit": "Create new album",
+        "update": "Add photos to album"
       },
       "inline_form": {
         "placeholder": "New album name",

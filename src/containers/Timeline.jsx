@@ -1,37 +1,28 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import { cozyConnect } from '../lib/redux-cozy-client'
 import styles from '../styles/layout'
 
-import { translate } from 'cozy-ui/react/I18n'
-import { Toolbar as TimelineToolbar, fetchIfNeededPhotos, fetchMorePhotos, getTimelineList, getPhotosByMonth } from '../ducks/timeline'
+import { Toolbar as TimelineToolbar, fetchTimeline, getPhotosByMonth } from '../ducks/timeline'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
 
 export class Timeline extends Component {
-  componentWillMount () {
-    this.props.fetchIfNeededPhotos()
-  }
-
   render () {
-    const { f, list, fetchMorePhotos } = this.props
-    if (!list) {
+    const { f, photos } = this.props
+    if (!photos) {
       return null
     }
-
-    const photoLists = getPhotosByMonth(list.entries, f, 'MMMM YYYY')
-
+    const photoLists = photos.data ? getPhotosByMonth(photos.data, f, 'MMMM YYYY') : []
     return (
       <div className={styles['pho-content-wrapper']}>
         <Topbar viewName='photos'>
           <TimelineToolbar />
         </Topbar>
         <BoardView
+          photos={photos}
           photoLists={photoLists}
-          fetchStatus={list.fetchStatus}
-          hasMore={list.hasMore}
           photosContext='timeline'
-          onFetchMore={() => fetchMorePhotos(list.index, list.entries.length)}
         />
         {this.renderViewer(this.props.children)}
       </div>
@@ -41,21 +32,11 @@ export class Timeline extends Component {
   renderViewer (children) {
     if (!children) return null
     return React.Children.map(children, child => React.cloneElement(child, {
-      photos: this.props.list.entries
+      photos: this.props.photos.data
     }))
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  list: getTimelineList(state)
-})
+const mapDocumentsToProps = (ownProps) => ({ photos: fetchTimeline() })
 
-export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchIfNeededPhotos: () => dispatch(fetchIfNeededPhotos()),
-  fetchMorePhotos: (index, skip) => dispatch(fetchMorePhotos(index, skip))
-})
-
-export default translate()(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Timeline))
+export default cozyConnect(mapDocumentsToProps)(Timeline)

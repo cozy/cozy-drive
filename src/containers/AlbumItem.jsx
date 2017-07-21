@@ -4,12 +4,10 @@ import classNames from 'classnames'
 
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
-import { translate } from 'cozy-ui/react/I18n'
+import { cozyConnect } from '../lib/redux-cozy-client'
 
-import { fetchAlbumCover } from '../ducks/albums'
-import ImageLoader from './ImageLoader'
-
-const isAlbumEmpty = album => !(album && album.photos && album.photos.length !== 0)
+import { fetchAlbumPhotos } from '../ducks/albums'
+import ImageLoader from '../components/ImageLoader'
 
 const SharedIcon = ({ byMe }) => (
   <div className={styles['pho-album-shared']}>
@@ -18,35 +16,12 @@ const SharedIcon = ({ byMe }) => (
 )
 
 export class AlbumItem extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isLoading: true,
-      coverPhoto: null
-    }
-  }
-
-  componentDidMount () {
-    const { album } = this.props
-    if (isAlbumEmpty(album)) {
-      return this.setState({ isLoading: false })
-    }
-    fetchAlbumCover(album)
-      .then(photo => {
-        this.setState({ coverPhoto: photo, isLoading: false })
-      })
-      .catch(error => {
-        this.setState({ isLoading: false })
-        console.log(error)
-      })
-  }
-
   render () {
-    if (this.state.isLoading) {
+    const { t, album, photos, sharedByMe, sharedWithMe, onClick } = this.props
+    if (photos.fetchStatus !== 'loaded') {
       return null
     }
-    const { t, album, sharedByMe, sharedWithMe, onClick } = this.props
-    const { coverPhoto } = this.state
+    const coverPhoto = photos.data[0] || null
 
     const image = !coverPhoto
       ? <div
@@ -60,7 +35,7 @@ export class AlbumItem extends Component {
       />
     const desc = <h4 className={styles['pho-album-description']}>
       {t('Albums.album_item_description',
-        {smart_count: album.photos.length})
+        {smart_count: photos.count})
       }
       {(sharedByMe || sharedWithMe) && ` - ${t('Albums.album_item_shared_ro')}`}
     </h4>
@@ -88,4 +63,8 @@ export class AlbumItem extends Component {
   }
 }
 
-export default translate()(withRouter(AlbumItem))
+const mapDocumentsToProps = (ownProps) => ({
+  photos: fetchAlbumPhotos(ownProps.album)
+})
+
+export default withRouter(cozyConnect(mapDocumentsToProps)(AlbumItem))

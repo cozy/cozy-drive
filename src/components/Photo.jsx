@@ -43,7 +43,7 @@ const Photo = props => {
           data-input='checkbox'
           onClick={e => {
             e.stopImmediatePropagation()
-            onToggle({ id: photo._id }, selected)
+            onToggle({ id: photo.id }, selected)
           }}>
           <input
             type='checkbox'
@@ -52,7 +52,7 @@ const Photo = props => {
           <label />
         </span>
         <Link to={{
-          pathname: `${router.location.pathname}/${photo._id}`,
+          pathname: `${router.location.pathname}/${photo.id}`,
           query: router.location.query
         }}>
           <ImageLoader

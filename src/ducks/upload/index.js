@@ -1,4 +1,3 @@
-/* global cozy */
 import { combineReducers } from 'redux'
 
 import Alerter from '../../components/Alerter'
@@ -58,9 +57,7 @@ const queue = (state = [], action) => {
 }
 export default combineReducers({ queue })
 
-const extractFileAttributes = f => Object.assign({}, f, f.attributes)
-
-const processNextFile = (callback, dirID) => async (dispatch, getState) => {
+const processNextFile = (callback) => async (dispatch, getState) => {
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
   if (!item) {
     return dispatch(onQueueEmpty())
@@ -68,19 +65,18 @@ const processNextFile = (callback, dirID) => async (dispatch, getState) => {
   const file = item.file
   try {
     dispatch({ type: UPLOAD_FILE, file })
-    const uploadedFile = await cozy.client.files.create(file, { dirID })
+    await dispatch(callback(file))
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
-    // TODO: is the extractFileAttributes call really necessary?
-    dispatch(callback(extractFileAttributes(uploadedFile)))
   } catch (error) {
+    console.log(error)
     dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status: error.status === 409 ? CONFLICT : FAILED })
   }
-  dispatch(processNextFile(callback, dirID))
+  dispatch(processNextFile(callback))
 }
 
-export const addToUploadQueue = (files, dirID, callback) => async dispatch => {
+export const addToUploadQueue = (files, callback) => async dispatch => {
   dispatch({ type: ADD_TO_UPLOAD_QUEUE, files })
-  dispatch(processNextFile(callback, dirID))
+  dispatch(processNextFile(callback))
 }
 
 export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })

@@ -2,7 +2,6 @@
 import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -13,7 +12,7 @@ import '../styles/main'
 
 import App from './App'
 import Viewer from '../components/Viewer'
-import apiReducer, { registerSchemas } from '../lib/redux-cozy-api'
+import { CozyClient, CozyProvider, cozyMiddleware, reducer } from '../lib/redux-cozy-client'
 
 const arrToObj = (obj = {}, varval = ['var', 'val']) => {
   obj[varval[0]] = varval[1]
@@ -36,12 +35,10 @@ function init () {
   const data = root.dataset
   const { id, sharecode } = getQueryParameter()
 
-  if (data.cozyDomain) {
-    cozy.client.init({
-      cozyURL: `//${data.cozyDomain}`,
-      token: sharecode
-    })
-  }
+  const client = new CozyClient({
+    cozyURL: `//${data.cozyDomain}`,
+    token: sharecode
+  })
 
   if (data.cozyAppName && data.cozyAppEditor && data.cozyIconPath && data.cozyLocale) {
     cozy.bar.init({
@@ -55,32 +52,21 @@ function init () {
 
   const store = createStore(
     combineReducers({
-      api: apiReducer
+      cozy: reducer
     }),
-    applyMiddleware(thunkMiddleware, createLogger())
+    applyMiddleware(cozyMiddleware(client), thunkMiddleware, createLogger())
   )
-
-  store.dispatch(registerSchemas({
-    'io.cozy.photos.albums': {
-      fields: ['name'],
-      relations: {
-        photos: {
-          type: 'io.cozy.files'
-        }
-      }
-    }
-  }))
 
   render(
     <I18n lang={lang} dictRequire={(lang) => require(`../locales/${lang}`)}>
-      <Provider store={store}>
+      <CozyProvider store={store} client={client}>
         <Router history={hashHistory}>
           <Route path='shared' component={props => <App albumId={id} {...props} />}>
             <Route path=':photoId' component={Viewer} />
           </Route>
           <Redirect from='/*' to='shared' />
         </Router>
-      </Provider>
+      </CozyProvider>
     </I18n>
   , root)
 }

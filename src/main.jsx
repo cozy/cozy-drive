@@ -7,7 +7,6 @@ import './styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -18,7 +17,7 @@ import photosApp from './reducers'
 import AppRoute from './components/AppRoute'
 import { shouldEnableTracking, getTracker, createTrackerMiddleware } from 'cozy-ui/react/helpers/tracker'
 import eventTrackerMiddleware from './middlewares/EventTracker'
-import { registerSchemas } from './lib/redux-cozy-api'
+import { CozyClient, CozyProvider, cozyMiddleware } from './lib/redux-cozy-client'
 
 const loggerMiddleware = createLogger()
 
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = root.dataset
   const lang = document.documentElement.getAttribute('lang') || 'en'
 
-  cozy.client.init({
+  const client = new CozyClient({
     cozyURL: `//${data.cozyDomain}`,
     token: data.cozyToken
   })
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   let history = hashHistory
-  let middlewares = [thunkMiddleware, loggerMiddleware]
+  let middlewares = [cozyMiddleware(client), thunkMiddleware, loggerMiddleware]
 
   if (shouldEnableTracking() && getTracker()) {
     let trackerInstance = getTracker()
@@ -68,22 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
     composeEnhancers(applyMiddleware.apply(this, middlewares))
   )
 
-  store.dispatch(registerSchemas({
-    'io.cozy.photos.albums': {
-      fields: ['name'],
-      relations: {
-        photos: {
-          type: 'io.cozy.files'
-        }
-      }
-    }
-  }))
-
   render((
     <I18n lang={lang} dictRequire={(lang) => require(`./locales/${lang}`)}>
-      <Provider store={store}>
+      <CozyProvider store={store} client={client}>
         <Router history={history} routes={AppRoute} />
-      </Provider>
+      </CozyProvider>
     </I18n>
   ), root)
 })
