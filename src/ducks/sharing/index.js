@@ -44,6 +44,11 @@ export const fetchShareLinkPermission = (id, doctype) =>
 export const getShareLink = (id, permission) =>
   `${window.location.origin}/public?sharecode=${permission.attributes.codes.email}&id=${id}`
 
+export const createShareLink = (id, doctype = 'io.cozy.photos.albums') =>
+  fetchShareLinkPermission(id, doctype)
+  .then(permission => permission ? Promise.resolve(permission) : createShareLinkPermission(id, doctype))
+  .then(permission => ({ sharelink: getShareLink(id, permission), id: permission._id }))
+
 /**
  * helpers
  */
