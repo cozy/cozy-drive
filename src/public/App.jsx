@@ -4,6 +4,7 @@ import { cozyConnect } from '../lib/redux-cozy-client'
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
+import Menu, { Item } from '../components/Menu'
 
 import { fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
 
@@ -95,6 +96,20 @@ class App extends Component {
                 {t('Toolbar.album_download')}
               </button>
             </div>
+            <Menu
+              title={t('Toolbar.more')}
+              className={classNames(styles['pho-toolbar-menu'], 'coz-mobile')}
+              buttonClassName={styles['pho-toolbar-more-btn']}
+            >
+              <Item>
+                <a
+                  className={classNames(styles['pho-public-download'])}
+                  onClick={this.onDownload}
+                >
+                  {t('Toolbar.album_download')}
+                </a>
+              </Item>
+            </Menu>
           </div>
         </div>
         <PhotoBoard
