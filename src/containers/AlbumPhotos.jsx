@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
 import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
+import { hideSelectionBar } from '../ducks/selection'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
@@ -72,6 +73,10 @@ export class AlbumPhotos extends Component {
       photos: this.props.photos.data
     }))
   }
+
+  componentWillUnmount () {
+    this.props.clearSelection()
+  }
 }
 
 const mapDocumentsToProps = (ownProps) => ({
@@ -81,7 +86,8 @@ const mapDocumentsToProps = (ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateAlbum: (album) => dispatch(updateAlbum(album))
+  updateAlbum: (album) => dispatch(updateAlbum(album)),
+  clearSelection: () => dispatch(hideSelectionBar())
 })
 
 export default cozyConnect(
