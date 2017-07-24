@@ -6,6 +6,7 @@ import FolderContent from './FolderContent'
 import FileListHeader from './FileListHeader'
 import Topbar from './Topbar'
 import Breadcrumb from '../containers/Breadcrumb'
+import ErrorShare from './ErrorShare'
 
 import {
   openFolder,
@@ -20,12 +21,25 @@ import {
 import styles from '../styles/folderview'
 
 class DumbFolderView extends React.Component {
+  state = {
+    revoked: false
+  }
+
   componentWillMount () {
     this.props.onFolderOpen(this.props.params.folderId)
+    .then(e => {
+      if (e.type === 'OPEN_FOLDER_FAILURE' &&
+      /no permission doc for token/.test(e.error.reason.errors[0].detail)) {
+        this.setState(state => ({...state, revoked: true}))
+      }
+    })
   }
 
   render () {
     const props = this.props
+    if (this.state.revoked) {
+      return <ErrorShare errorType={`public_unshared`} />
+    }
     return (
       <Main>
         <Topbar>
