@@ -2,7 +2,7 @@ import styles from '../../../styles/toolbar'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
 
 import ShareButton from '../../../components/ShareButton'
@@ -32,7 +32,7 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, album, photos, disabled = false, deleteAlbum, selectItems, onRename } = this.props
+    const { t, location, album, photos, disabled = false, deleteAlbum, selectItems, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
@@ -60,6 +60,11 @@ class AlbumToolbar extends Component {
             <a className={classNames(styles['pho-action-rename'])} onClick={onRename}>
               {t('Toolbar.menu.rename_album')}
             </a>
+          </Item>
+          <Item>
+            <Link className={classNames(styles['pho-action-addphotos'])} to={`${location.pathname}/edit`}>
+              {t('Toolbar.menu.add_photos')}
+            </Link>
           </Item>
           <hr className='coz-mobile' />
           <Item>
@@ -89,7 +94,7 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
   deleteAlbum: album => confirm(
     <DestroyConfirm t={ownProps.t} albumName={album.name} />,
     () => dispatch(deleteAlbum(album))
-      .then(album => {
+      .then(() => {
         ownProps.router.replace('albums')
         Alerter.success('Albums.remove_album.success', {name: album.name})
       })

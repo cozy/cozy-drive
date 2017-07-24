@@ -290,7 +290,7 @@ export class Viewer extends Component {
 }
 
 const mapRouteToPhotos = (photos = [], params) => {
-  let set = photos.map(photo => photo._id)
+  let set = photos.map(photo => photo.id)
   let currentID = params.photoId
   let currentPhotoIndex = set.indexOf(currentID)
   let currentPhoto = photos[currentPhotoIndex]

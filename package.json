@@ -13,7 +13,8 @@
     "pretest": "npm run lint",
     "prewatch": "npm run clean",
     "lint": "standard  --parser babel-eslint 'src/**/*.js' 'src/**/*.jsx'",
-    "test": "node --harmony_proxies node_modules/.bin/jest --coverage --config=jest.config.json",
+    "test": "node_modules/.bin/jest --coverage --config=jest.config.json",
+    "test:watch": "npm run test -- --watch",
     "stack:docker": "docker run --rm -it -p 8080:8080 -v \"$(pwd)/build\":/data/cozy-app/photos cozy/cozy-app-dev",
     "watch": "NODE_ENV=development webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "watch:standalone": "NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8084 --display-modules --display-chunks --inline --hot"
@@ -92,6 +93,7 @@
     "pouchdb-find": "^0.10.5",
     "preact": "^8.1.0",
     "preact-compat": "^3.14.3",
+    "prop-types": "^15.5.10",
     "react-autosuggest": "^9.3.1",
     "react-copy-to-clipboard": "^5.0.0",
     "react-redux": "^5.0.2",

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import { cozyConnect } from '../lib/redux-cozy-client'
 import styles from '../styles/layout'
 
-import { AlbumsToolbar, fetchAlbums, getAlbumsList } from '../ducks/albums'
+import { AlbumsToolbar, fetchAlbums } from '../ducks/albums'
 import { filterSharedByLinkDocuments, filterSharedWithMeDocuments } from '../ducks/sharing'
 
 import AlbumsList from '../components/AlbumsList'
@@ -11,7 +11,7 @@ import ErrorComponent from '../components/ErrorComponent'
 import Topbar from '../components/Topbar'
 
 const Content = ({ list, sharedByMe, sharedWithMe }) => {
-  const { fetchStatus, entries } = list
+  const { fetchStatus, data } = list
   switch (fetchStatus) {
     case 'pending':
     case 'loading':
@@ -19,7 +19,7 @@ const Content = ({ list, sharedByMe, sharedWithMe }) => {
     case 'failed':
       return <ErrorComponent errorType='albums' />
     default:
-      return <AlbumsList albums={entries} sharedByMe={sharedByMe} sharedWithMe={sharedWithMe} />
+      return <AlbumsList albums={data} sharedByMe={sharedByMe} sharedWithMe={sharedWithMe} />
   }
 }
 
@@ -32,16 +32,12 @@ export class AlbumsView extends Component {
     }
   }
 
-  componentWillMount () {
-    this.props.fetchAlbums()
-  }
-
   componentWillReceiveProps (newProps) {
     // TODO: this is not the cleanest way of doing this...
-    if (newProps.albums && newProps.albums.entries !== 0) {
+    if (newProps.albums && newProps.albums.data !== 0) {
       Promise.all([
-        filterSharedByLinkDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums'),
-        filterSharedWithMeDocuments(newProps.albums.entries.map(a => a.id), 'io.cozy.photos.albums')
+        filterSharedByLinkDocuments(newProps.albums.data.map(a => a.id), 'io.cozy.photos.albums'),
+        filterSharedWithMeDocuments(newProps.albums.data.map(a => a.id), 'io.cozy.photos.albums')
       ])
         .then(sharedIds => this.setState({ sharedByMe: sharedIds[0], sharedWithMe: sharedIds[1] }))
     }
@@ -63,15 +59,6 @@ export class AlbumsView extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  albums: getAlbumsList(state)
-})
+const mapDocumentsToProps = (ownProps) => ({ albums: fetchAlbums() })
 
-export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbums: () => dispatch(fetchAlbums())
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AlbumsView)
+export default cozyConnect(mapDocumentsToProps)(AlbumsView)

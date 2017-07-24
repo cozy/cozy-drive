@@ -1,4 +1,3 @@
-/* global cozy */
 import styles from '../../../styles/toolbar'
 
 import React from 'react'
@@ -12,7 +11,7 @@ import Menu, { Item } from '../../../components/Menu'
 import { showSelectionBar, isSelectionBarVisible } from '../../selection'
 
 import { addToUploadQueue } from '../../upload'
-import { addPhotosToTimeline } from '../'
+import { uploadPhoto } from '../'
 
 export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, selectItems, params }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
@@ -52,11 +51,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  uploadPhotos: async (photos) => {
-    const dir = await cozy.client.files.createDirectoryByPath(ownProps.t('UploadQueue.path'))
-    dispatch(addToUploadQueue(photos, dir._id, photo => addPhotosToTimeline([photo])))
-  },
-  selectItems: () => dispatch(showSelectionBar())
+  selectItems: () => dispatch(showSelectionBar()),
+  uploadPhotos: (photos) =>
+    dispatch(addToUploadQueue(photos, photo => uploadPhoto(photo, ownProps.t('UploadQueue.path'))))
 })
 
 export default withRouter(translate()(connect(

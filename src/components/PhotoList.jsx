@@ -62,7 +62,7 @@ export class PhotoList extends Component {
       }
     )
 
-    const photoIds = photos.map(p => p._id)
+    const photoIds = photos.map(p => p.id)
     const allSelected = selected.length === photoIds.length && selected.every(id => photoIds.indexOf(id) !== -1)
     // we need to process the right position of the last photo of the first row so that we can align
     // the SELECT ALL button with the photo
@@ -98,8 +98,8 @@ export class PhotoList extends Component {
             <Photo
               photo={photo}
               box={layout.boxes[index]}
-              key={photo._id}
-              selected={selected.indexOf(photo._id) !== -1}
+              key={photo.id}
+              selected={selected.indexOf(photo.id) !== -1}
               onToggle={onPhotoToggle}
             />
           )}

@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { translate } from 'cozy-ui/react/I18n'
+import { cozyConnect } from '../lib/redux-cozy-client'
 
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
-import ErrorShare from '../components/ErrorShare'
 
-import { getAlbum, getAlbumPhotos, fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
+import { fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
 
 import classNames from 'classnames'
 import styles from './index.styl'
@@ -48,14 +46,14 @@ class App extends Component {
   onDownload = () => {
     const photos = this.state.selected.length !== 0
       ? this.getSelectedPhotos()
-      : this.props.photos.entries
+      : this.props.photos.data
     downloadAlbum(this.props.album, photos)
   }
 
   getSelectedPhotos = () => {
     const { selected } = this.state
     const { photos } = this.props
-    return selected.map(id => photos.entries.find(p => p.id === id))
+    return selected.map(id => photos.data.find(p => p.id === id))
   }
 
   componentDidMount () {
@@ -63,19 +61,10 @@ class App extends Component {
     if (!albumId) {
       return this.setState({ error: 'Missing ID' })
     }
-    this.props.fetchAlbum(albumId)
-      .catch(() => this.setState({ error: 'Fetch error' }))
   }
 
   render () {
-    const { t, album, photos, fetchMorePhotos } = this.props
-    if (this.state.error) {
-      return (
-        <div className={styles['pho-public-layout']}>
-          <ErrorShare errorType={`public_album_unshared`} />
-        </div>
-      )
-    }
+    const { t, album, photos } = this.props
     if (photos && photos.error) {
       return (
         <div className={styles['pho-public-layout']}>
@@ -90,7 +79,7 @@ class App extends Component {
         </div>
       )
     }
-    const { entries, hasMore } = photos
+    const { data, hasMore, fetchMore } = photos
     const { selected } = this.state
     return (
       <div className={styles['pho-public-layout']}>
@@ -109,14 +98,14 @@ class App extends Component {
           </div>
         </div>
         <PhotoBoard
-          lists={[{ photos: entries }]}
+          lists={[{ photos: data }]}
           selected={selected}
           showSelection={selected.length !== 0}
           onPhotoToggle={this.onPhotoToggle}
           onPhotosSelect={this.onPhotosSelect}
           onPhotosUnselect={this.onPhotosUnselect}
           hasMore={hasMore}
-          onFetchMore={() => fetchMorePhotos(album, entries.length)}
+          onFetchMore={fetchMore}
         />
         {this.renderViewer(this.props.children)}
       </div>
@@ -126,22 +115,15 @@ class App extends Component {
   renderViewer (children) {
     if (!children) return null
     return React.Children.map(children, child => React.cloneElement(child, {
-      photos: this.state.photos
+      photos: this.props.photos.data
     }))
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  album: getAlbum(state, ownProps.albumId),
-  photos: getAlbumPhotos(state, ownProps.albumId)
+const mapDocumentsToProps = (ownProps) => ({
+  album: fetchAlbum(ownProps.albumId),
+  // TODO: not ideal, but we'll have to wait after associations are implemented
+  photos: fetchAlbumPhotos({ type: 'io.cozy.photos.albums', id: ownProps.albumId })
 })
 
-export const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchAlbum: (id) => dispatch(fetchAlbum(id)),
-  fetchMorePhotos: (album, skip) => dispatch(fetchAlbumPhotos(album, skip))
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(translate()(App))
+export default cozyConnect(mapDocumentsToProps)(App)

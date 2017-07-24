@@ -3,7 +3,7 @@ import styles from '../styles/albumsList'
 import React from 'react'
 
 import { withEmpty } from '../components/Empty'
-import AlbumItem from '../components/AlbumItem'
+import AlbumItem from '../containers/AlbumItem'
 
 const DumbAlbumsList = props => (
   <div className={styles['pho-album-list']}>

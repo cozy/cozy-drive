@@ -30,9 +30,7 @@ class BoardView extends Component {
 
     const {
       photoLists,
-      fetchStatus,
-      hasMore,
-      onFetchMore
+      photos
     } = this.props
 
     return (
@@ -47,9 +45,9 @@ class BoardView extends Component {
           onPhotoToggle={onPhotoToggle}
           onPhotosSelect={onPhotosSelect}
           onPhotosUnselect={onPhotosUnselect}
-          fetchStatus={fetchStatus}
-          hasMore={hasMore}
-          onFetchMore={onFetchMore}
+          fetchStatus={photos.fetchStatus}
+          hasMore={photos.hasMore}
+          onFetchMore={photos.fetchMore}
         />
       </div>
     )
@@ -58,7 +56,7 @@ class BoardView extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   selected: getSelectedIds(state),
-  related: isRelated(state),
+  related: isRelated(state, ownProps.photos.data),
   selectionModeActive: isSelectionBarVisible(state),
   isAddToAlbumModalOpened: state.ui.isAddToAlbumModalOpened
 })
