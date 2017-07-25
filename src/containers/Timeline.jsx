@@ -3,6 +3,7 @@ import { cozyConnect } from '../lib/redux-cozy-client'
 import styles from '../styles/layout'
 
 import { Toolbar as TimelineToolbar, fetchTimeline, getPhotosByMonth } from '../ducks/timeline'
+import { hideSelectionBar } from '../ducks/selection'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
@@ -35,8 +36,15 @@ export class Timeline extends Component {
       photos: this.props.photos.data
     }))
   }
+
+  componentWillUnmount () {
+    this.props.clearSelection()
+  }
 }
 
 const mapDocumentsToProps = (ownProps) => ({ photos: fetchTimeline() })
+const mapActionsToProps = (dispatch) => ({
+  clearSelection: () => dispatch(hideSelectionBar())
+})
 
-export default cozyConnect(mapDocumentsToProps)(Timeline)
+export default cozyConnect(mapDocumentsToProps, mapActionsToProps)(Timeline)
