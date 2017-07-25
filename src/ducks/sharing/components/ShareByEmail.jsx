@@ -9,8 +9,8 @@ import { share } from '..'
 import styles from '../share.styl'
 
 class ShareByEmail extends React.Component {
-  sendSharingLinks (email, url) {
-    return share(this.props.document, email, url)
+  sendSharingLinks (email) {
+    return share(this.props.document, email)
     .then(sharing => {
       Alerter.info('Albums.share.shareByEmail.success', { email })
     })
@@ -23,7 +23,7 @@ class ShareByEmail extends React.Component {
   render () {
     return (
       <div>
-        <ShareByUrl onSend={(email, url) => this.sendSharingLinks(email, url)} />
+        <ShareByUrl onSend={(email) => this.sendSharingLinks(email)} />
         <WhoHasAccess document={this.props.document} />
       </div>
     )
@@ -34,31 +34,25 @@ class ShareByUrl extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
-      url: ''
+      email: ''
     }
   }
 
-  onAutocomplete (email, url) {
+  onAutocomplete (email) {
     this.changeEmail(email)
-    if (url) this.changeUrl(url)
   }
 
   changeEmail (email) {
     this.setState({ email })
   }
 
-  changeUrl (url) {
-    this.setState({ url })
-  }
-
   sendSharingLink () {
-    this.props.onSend(this.state.email, this.state.url)
+    this.props.onSend(this.state.email)
     .then(() => {
-      this.setState(state => ({email: '', url: ''}))
+      this.setState(state => ({...state, email: ''}))
     })
     .catch(() => {
-      this.setState(state => ({email: '', url: ''}))
+      this.setState(state => ({...state, email: ''}))
     })
   }
 
@@ -77,7 +71,7 @@ class ShareByUrl extends React.Component {
         <div className={classnames(styles['coz-form-controls'], styles['coz-form-controls--dispatch'])}>
           <button
             className={classnames('coz-btn', 'coz-btn--regular')}
-            disabled={!this.state.email || !this.state.url}
+            disabled={!this.state.email}
             onClick={e => this.sendSharingLink()}>
             {t('Albums.share.shareByEmail.send')}
           </button>

@@ -18,19 +18,19 @@ export class ShareModal extends Component {
       >
         <Tabs initialActiveTab='email'>
           <TabList className={styles['pho-share-modal-tabs']}>
-            <Tab name='link'>
-              {t('Albums.share.shareByLink.title')}
-            </Tab>
             <Tab name='email'>
               {t('Albums.share.shareByEmail.title')}
             </Tab>
+            <Tab name='link'>
+              {t('Albums.share.shareByLink.title')}
+            </Tab>
           </TabList>
           <TabPanels className={styles['pho-share-modal-content']}>
-            <TabPanel name='link'>
-              <ShareByLink document={this.props.document} />
-            </TabPanel>
             <TabPanel name='email'>
               <ShareByEmail document={this.props.document} />
+            </TabPanel>
+            <TabPanel name='link'>
+              <ShareByLink document={this.props.document} />
             </TabPanel>
           </TabPanels>
         </Tabs>

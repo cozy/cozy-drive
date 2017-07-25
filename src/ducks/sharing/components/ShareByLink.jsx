@@ -48,7 +48,6 @@ export const ShareWithLink = ({ shareLink, onCopy, copied }, { t }) => (
   </div>
 )
 
-
 class ShareByLink extends React.Component {
   state = {
     checked: false,
@@ -76,7 +75,7 @@ class ShareByLink extends React.Component {
     this.setState(state => ({...state, loading: true}))
     createShareLink(this.props.document._id).then(
       (sharing) => {
-        this.setState(state => ({...state, loading:false, sharing}))
+        this.setState(state => ({...state, loading: false, sharing}))
       }
     )
   }
@@ -93,9 +92,9 @@ class ShareByLink extends React.Component {
       <div>
         <ShareWithLinkToggle active={checked} onToggle={checked => this.toggleShareLink(checked)} />
         {checked && !loading && <ShareWithLink
-            shareLink={sharing.sharelink}
-            onCopy={() => this.setState(state => ({ ...state, copied: true }))}
-            copied={copied} />}
+          shareLink={sharing.sharelink}
+          onCopy={() => this.setState(state => ({ ...state, copied: true }))}
+          copied={copied} />}
 
         {loading &&
           <div className={styles['pho-share-modal-footer']}>
