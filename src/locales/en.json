@@ -105,13 +105,11 @@
         "subtitle": "Share by link",
         "desc": "Anyone with the provided link can see and download your photos."
       },
-      "shareByUrl": {
-        "title": "By email & url",
-        "subtitle": "Share by email and url",
+      "shareByEmail": {
+        "title": "By email",
+        "subtitle": "Share by email",
         "email": "email",
-        "url": "cozy address",
-        "emailPlaceholder": "Enter email address of your recipient",
-        "urlPlaceholder": "Enter url address of your recipient",
+        "emailPlaceholder": "Enter email address or name of your recipient",
         "send": "Send",
         "success": "You sent an invite to %{email}."
       },
@@ -128,8 +126,7 @@
         "desc": "Share anything by email with your family and friends!"
       },
       "close": "Close",
-      "loading": "Loading...",
-      "creatingLink": "Creating your link...",
+      "gettingLink": "Getting your link...",
       "error": {
         "generic": "An error occurred when creating the album share link, please try again."
       }

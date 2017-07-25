@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Recipient from '../../components/Recipient'
-import { getRecipients } from '.'
+import Recipient from './Recipient'
+import { getRecipients } from '..'
 
 const WhoHasAccess = ({ recipients }) => (
   <div>

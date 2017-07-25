@@ -1,8 +1,8 @@
-import autosuggestTheme from './autosuggest.styl'
-
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
-import { getContacts } from './index'
+import { getContacts } from '..'
+
+import autosuggestTheme from './autosuggest.styl'
 
 export default class ShareAutocomplete extends Component {
   getInitialState () {
