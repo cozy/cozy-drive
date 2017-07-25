@@ -4,6 +4,7 @@ import { cozyConnect } from '../lib/redux-cozy-client'
 import PhotoBoard from '../components/PhotoBoard'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
+import ErrorShare from '../components/ErrorShare'
 import Menu, { Item } from '../components/Menu'
 
 import { fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
@@ -64,8 +65,22 @@ class App extends Component {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { album, photos } = nextProps
+    if (photos.fetchStatus === 'failed' && album === null) {
+      this.setState({error: 'Fetch error'})
+    }
+  }
+
   render () {
     const { t, album, photos } = this.props
+    if (this.state.error) {
+      return (
+        <div className={classNames(styles['pho-public-layout'], styles['pho-public-layout--full'])}>
+          <ErrorShare errorType={`public_album_unshared`} />
+        </div>
+      )
+    }
     if (photos && photos.error) {
       return (
         <div className={styles['pho-public-layout']}>

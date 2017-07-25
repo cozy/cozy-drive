@@ -8,6 +8,17 @@
     width 100%
     top-padded(30px)
 
+@media (max-width: (768/basefont)rem)
+    .pho-public-layout--full
+        reset()
+        position: absolute;
+        top 0
+        right 0
+        bottom 0
+        left 0
+        z-index $bar-index
+        background-color white
+
 .pho-content-header.--no-icon
     left 0
     left-padded(15px)
