@@ -150,7 +150,7 @@
         "cozy_address_placeholder": "tonystark.mycozy.cloud",
         "button": "Next",
         "wrong_address_with_email": "You typed an email address. To connect on your cozy you must type its url, something like https://tonystark.mycozy.cloud",
-        "wrong_address_v2": "You have just entered the address of old Cozy version. This application is only compatible with the latest version. Please refer to our site for more information.",
+        "wrong_address_v2": "You have just entered the address of old Cozy version. This application is only compatible with the latest version. [Please refer to our site for more information.](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
         "wrong_address": "This address doesn’t seem to be a cozy. Please check the address you provide."
       },
       "files": {
