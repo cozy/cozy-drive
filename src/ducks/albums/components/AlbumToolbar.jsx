@@ -32,13 +32,13 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, location, album, photos, disabled = false, deleteAlbum, selectItems, onRename } = this.props
+    const { t, location, album, photos, readonly, disabled = false, deleteAlbum, selectItems, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
-          <ShareButton
+          {!readonly && <ShareButton
             label={t('Albums.share.cta')}
-            onClick={this.showShareModal} />
+            onClick={this.showShareModal} />}
         </div>
         <Menu
           title={t('Toolbar.more')}
@@ -46,11 +46,12 @@ class AlbumToolbar extends Component {
           className={styles['pho-toolbar-menu']}
           buttonClassName={styles['pho-toolbar-more-btn']}
         >
+          {!readonly &&
           <Item>
             <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={this.showShareModal}>
               {t('Albums.share.cta')}
             </a>
-          </Item>
+          </Item>}
           <Item>
             <a className={classNames(styles['pho-action-download'])} onClick={() => downloadAlbum(album, photos)}>
               {t('Toolbar.menu.download_album')}
@@ -61,11 +62,12 @@ class AlbumToolbar extends Component {
               {t('Toolbar.menu.rename_album')}
             </a>
           </Item>
+          {!readonly &&
           <Item>
             <Link className={classNames(styles['pho-action-addphotos'])} to={`${location.pathname}/edit`}>
               {t('Toolbar.menu.add_photos')}
             </Link>
-          </Item>
+          </Item>}
           <hr className='coz-mobile' />
           <Item>
             <a className={classNames(styles['pho-action-select'], 'coz-mobile')} onClick={selectItems}>
@@ -73,11 +75,12 @@ class AlbumToolbar extends Component {
             </a>
           </Item>
           <hr />
+          {!readonly &&
           <Item>
             <a className={classNames(styles['pho-action-delete'])} onClick={() => deleteAlbum(album)}>
               {t('Toolbar.menu.album_delete')}
             </a>
-          </Item>
+          </Item>}
         </Menu>
         {this.state.showShareModal && <ShareModal document={album} onClose={this.closeShareModal} />}
       </div>

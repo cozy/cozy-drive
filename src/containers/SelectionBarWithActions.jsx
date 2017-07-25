@@ -12,7 +12,8 @@ import confirm from '../lib/confirm'
 const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: {
     'album-add': {
-      action: selected => dispatch(openAddToAlbum(selected))
+      action: selected => dispatch(openAddToAlbum(selected)),
+      displayCondition: () => ownProps.album === undefined ? true : (ownProps.album.readonly === false && false)
     },
     'download': {
       action: selected => downloadSelection(selected)
@@ -32,7 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           dispatch(hideSelectionBar())
         })
         .catch(() => Alerter.error('Albums.remove_photos.error.generic')),
-      displayCondition: () => ownProps.album !== undefined
+      displayCondition: () => (ownProps.album === undefined ? false : (ownProps.album.readonly === false && false))
     }
   }
 })
