@@ -8,17 +8,21 @@ import Topbar from './Topbar'
 import Breadcrumb from '../containers/Breadcrumb'
 import ErrorShare from './ErrorShare'
 
+import DownloadButton from './DownloadButton'
+
 import {
   openFolder,
   getOpenedFolderId,
   fetchMoreFiles,
-  openFileInNewTab
+  openFileInNewTab,
+  downloadFiles
 } from '../actions'
 import {
   getVisibleFiles
 } from '../reducers'
 
 import styles from '../styles/folderview'
+import toolbarstyles from '../styles/toolbar'
 
 class DumbFolderView extends React.Component {
   state = {
@@ -36,7 +40,7 @@ class DumbFolderView extends React.Component {
   }
 
   render () {
-    const props = this.props
+    const { t } = this.context
     if (this.state.revoked) {
       return <ErrorShare errorType={`public_unshared`} />
     }
@@ -44,6 +48,12 @@ class DumbFolderView extends React.Component {
       <Main>
         <Topbar>
           <Breadcrumb isPublic />
+          <div className={toolbarstyles['fil-toolbar-files']} role='toolbar'>
+            <DownloadButton
+              label={t('toolbar.menu_download_folder')}
+              onDownload={() => this.props.onDownload([this.props.displayedFolder])}
+            />
+          </div>
         </Topbar>
         <div role='contentinfo'>
           <div className={styles['fil-content-table']}>
@@ -51,7 +61,7 @@ class DumbFolderView extends React.Component {
             <div className={styles['fil-content-body']}>
               <FolderContent
                 withSelectionCheckbox={false}
-                {...props}
+                {...this.props}
               />
             </div>
           </div>
@@ -76,7 +86,8 @@ const mapDispatchToProps = dispatch => ({
   onFolderOpen: folderId =>
     dispatch(openFolder(folderId)),
   onFileOpen: (parentFolder, file) =>
-    dispatch(openFileInNewTab(parentFolder, file))
+    dispatch(openFileInNewTab(parentFolder, file)),
+  onDownload: files => dispatch(downloadFiles(files))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DumbFolderView)
