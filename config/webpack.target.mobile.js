@@ -7,7 +7,9 @@ const {production} = require('./webpack.vars')
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
 module.exports = {
-  entry: [path.resolve(__dirname, '../mobile/src/main')],
+  entry: {
+    app: path.resolve(__dirname, '../mobile/src/main')
+  },
   output: {
     path: path.resolve(__dirname, '../mobile/www')
   },
