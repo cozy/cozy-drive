@@ -25,18 +25,15 @@ const AlbumItemLink = ({ router, album, image, title, desc }) => {
 }
 const LinkedAlbumItem = withRouter(AlbumItemLink)
 
-const ClickableAlbumItem = ({ album, image, title, desc, disabled }) => {
+const ClickableAlbumItem = ({ album, image, title, desc, onClick, disabled }) => {
   return disabled
-  ?
-  <div className={classNames(styles['pho-album-link'], styles['pho-album-link--disabled'])}>
+  ? <div className={classNames(styles['pho-album-link'], styles['pho-album-link--disabled'])}>
     {image}{title}{desc}
   </div>
-  :
-  <div onClick={() => onClick(album)} className={styles['pho-album-link']}>
+  : <div onClick={() => onClick(album)} className={styles['pho-album-link']}>
     {image}{title}{desc}
   </div>
 }
-
 
 export class AlbumItem extends Component {
   render () {
@@ -70,10 +67,8 @@ export class AlbumItem extends Component {
       <div className={styles['pho-album']}>
         {
           onClick
-          ?
-          <ClickableAlbumItem album={album} image={image} title={title} desc={desc} disabled={disabled} />
-          :
-          <LinkedAlbumItem album={album} image={image} title={title} desc={desc} />
+          ? <ClickableAlbumItem album={album} image={image} title={title} desc={desc} onClick={onClick} disabled={disabled} />
+          : <LinkedAlbumItem album={album} image={image} title={title} desc={desc} />
         }
         {(sharedByMe || sharedWithMe) && <SharedIcon byMe={sharedByMe} />}
       </div>

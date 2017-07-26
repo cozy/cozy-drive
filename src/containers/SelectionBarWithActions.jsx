@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: {
     'album-add': {
       action: selected => dispatch(openAddToAlbum(selected)),
-      displayCondition: () => ownProps.album === undefined ? true : (ownProps.album.readonly === false && false)
+      displayCondition: () => ownProps.album === undefined ? true : (ownProps.album.readOnly === false && false)
     },
     'download': {
       action: selected => downloadSelection(selected)
