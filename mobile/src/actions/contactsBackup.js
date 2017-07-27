@@ -122,6 +122,10 @@ const cordovaContactToCozy = (contact) => {
   return cozyContact
 }
 
+const filterContactsWithEmailAddress = contacts => {
+  return contacts.filter(contact => (contact.emails && contact.emails.length > 0))
+}
+
 export const backupContacts = () => async (dispatch) => {
   let deviceContacts
 
@@ -132,8 +136,8 @@ export const backupContacts = () => async (dispatch) => {
     dispatch(setBackupContacts(false))
     return
   }
-  // keep only contacts with an email address
-  deviceContacts = deviceContacts.filter(contact => (contact.emails && contact.emails.length > 0)).map(cordovaContactToCozy)
+
+  deviceContacts = filterContactsWithEmailAddress(deviceContacts).map(cordovaContactToCozy)
 
   let cozyContacts = await getCozyContacts()
 
