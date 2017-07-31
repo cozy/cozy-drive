@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import classnames from 'classnames'
 
 import Main from './Main'
 import FolderContent from './FolderContent'
@@ -52,11 +53,12 @@ class DumbFolderView extends React.Component {
           <div className={toolbarstyles['fil-toolbar-files']} role='toolbar'>
             <DownloadButton
               label={t('toolbar.menu_download_folder')}
+              className={toolbarstyles['fil-public-download']}
               onDownload={() => this.props.onDownload([this.props.displayedFolder])}
             />
             <Menu
               title={t('toolbar.item_more')}
-              className={toolbarstyles['fil-toolbar-menu']}
+              className={classnames(toolbarstyles['fil-toolbar-menu'], toolbarstyles['fil-toolbar-menu--public'])}
               buttonClassName={toolbarstyles['fil-toolbar-more-btn']}
             >
               <Item>
