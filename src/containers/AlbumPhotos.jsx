@@ -62,6 +62,7 @@ export class AlbumPhotos extends Component {
             photos={photos}
             photoLists={[{ photos: photos.data }]}
             photosContext='album'
+            readOnly={sharedWithMe.length > 0}
           />
         }
         {this.renderViewer(this.props.children)}

@@ -90,7 +90,7 @@ export class AddToAlbumModal extends Component {
             ? <Loading loadingType='albums_fetching' />
             : albums && albums.data.length > 0
             ? <div className={classNames(styles['coz-select-album'])}>
-              <SelectAlbumsForm albums={albums} readOnly={sharedWithMe} onSubmitSelectedAlbum={album => this.onSubmitSelectedAlbum(album, photos)} />
+              <SelectAlbumsForm albums={albums} sharedWithMe={sharedWithMe} onSubmitSelectedAlbum={album => this.onSubmitSelectedAlbum(album, photos)} />
             </div>
             : null
           }
