@@ -44,6 +44,10 @@ export default class ShareAutocomplete extends Component {
     const inputLength = inputValue.length
 
     return inputLength === 0 ? [] : this.state.contacts.filter(contact => {
+      if (!contact.email) return false
+      // technically `email` is supposed to be an array, but we can handle a single value here
+      if (contact.email instanceof Array === false) contact.email = [{address: contact.email.toString()}]
+
       return contact.email.filter(email => (email.address.toLowerCase().slice(0, inputLength) === inputValue)).length > 0
     })
   }
