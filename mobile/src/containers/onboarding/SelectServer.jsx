@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import ReactMarkdown from 'react-markdown'
 import classNames from 'classnames'
 
 import { translate } from 'cozy-ui/react/I18n'
@@ -54,7 +55,7 @@ export class SelectServer extends Component {
           }
           {error &&
             <p className={styles['description']} style={{color: 'red'}}>
-              {t(error)}
+              <ReactMarkdown source={t(error)} />
             </p>
           }
         </div>

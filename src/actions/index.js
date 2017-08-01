@@ -2,7 +2,7 @@
 import { isCordova } from '../../mobile/src/lib/device'
 import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
 import { openWithNoAppError } from '../../mobile/src/actions'
-import { isDirectory } from '../ducks/files/files'
+import { isDirectory, isReferencedByAlbum, ALBUMS_DOCTYPE } from '../ducks/files/files'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -33,7 +33,7 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
 export const getOpenedFolderId = state => state.view.openedFolderId
 
-export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id })
+export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links, relationships: f.relationships })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 export const HTTP_CODE_CONFLICT = 409
@@ -67,6 +67,13 @@ export const openFolder = (folderId) => {
       const folder = await cozy.client.files.statById(folderId, offline)
       const parentId = folder.attributes.dir_id
       const parent = !!parentId && await cozy.client.files.statById(parentId, offline)
+      .catch(ex => {
+        if (ex.status === 403) {
+          console.warn('User don\'t have access to parent folder')
+        } else {
+          throw ex
+        }
+      })
       const contents = folder.relationships.contents
       // folder.relations('contents') returns null when the trash is empty
       // the filter call is a temporary fix due to a cozy-client-js bug
@@ -74,7 +81,7 @@ export const openFolder = (folderId) => {
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder: Object.assign(extractFileAttributes(folder), {
-          parent: extractFileAttributes(parent)
+          parent: !!parent && extractFileAttributes(parent)
         }),
         fileCount: contents.meta.count || 0,
         files: files.map(c => extractFileAttributes(c))
@@ -122,7 +129,7 @@ export const openFileInNewTab = (folder, file) => {
 export const uploadedFile = (file) => {
   return {
     type: UPLOAD_FILE_SUCCESS,
-    file: file
+    file: extractFileAttributes(file)
   }
 }
 
@@ -199,6 +206,14 @@ export const trashFiles = files => {
     try {
       for (const file of files) {
         trashed.push(await cozy.client.files.trashById(file.id))
+
+        if (isReferencedByAlbum(file)) {
+          for (const ref of file.relationships.referenced_by.data) {
+            if (ref.type === ALBUMS_DOCTYPE) {
+              await cozy.client.data.removeReferencedFiles({ _type: ref.type, _id: ref.id }, file.id)
+            }
+          }
+        }
       }
     } catch (err) {
       if (!isAlreadyInTrash(err)) {
@@ -220,17 +235,17 @@ export const trashFiles = files => {
   }
 }
 
-export const downloadSelection = selected => {
+export const downloadFiles = files => {
   const meta = META_DEFAULTS
   return async (dispatch) => {
-    if (selected.length === 1 && !isDirectory(selected[0])) {
-      return dispatch(downloadFile(selected[0], meta))
+    if (files.length === 1 && !isDirectory(files[0])) {
+      return dispatch(downloadFile(files[0], meta))
     }
-    const paths = selected.map(f => f.path)
-    const href = await cozy.client.files.getArchiveLink(paths)
+    const paths = files.map(f => f.path)
+    const href = await cozy.client.files.getArchiveLinkByPaths(paths)
     const fullpath = await cozy.client.fullpath(href)
     forceFileDownload(fullpath, 'files.zip')
-    return dispatch({ type: DOWNLOAD_SELECTION, selected, meta })
+    return dispatch({ type: DOWNLOAD_SELECTION, files, meta })
   }
 }
 

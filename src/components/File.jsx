@@ -1,3 +1,4 @@
+/* global cozy */
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
@@ -9,6 +10,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
+import Preview from '../components/Preview'
 
 import { getFolderUrl } from '../reducers'
 
@@ -93,7 +95,7 @@ class File extends Component {
     }
   }
 
-  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming }, { opening }) {
+  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming, withSelectionCheckbox }, { opening }) {
     return (
       <div
         ref={fil => { this.fil = fil }}
@@ -105,15 +107,17 @@ class File extends Component {
         )}
       >
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} onclick={(e) => this.toggle(e)}>
-          <span data-input='checkbox'>
-            <input
-              type='checkbox'
-              checked={selected}
-             />
-            <label />
-          </span>
+          {withSelectionCheckbox &&
+            <span data-input='checkbox'>
+              <input
+                type='checkbox'
+                checked={selected}
+              />
+              <label />
+            </span>
+          }
         </div>
-        {this.renderFilenameCell(attributes, opening, isRenaming)}
+        <FileNameCell attributes={attributes} isRenaming={isRenaming} opening={opening} />
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
           <time datetime=''>{ f(attributes.created_at, t('table.row_update_format')) }</time>
         </div>
@@ -132,28 +136,30 @@ class File extends Component {
       </div>
     )
   }
+}
 
-  renderFilenameCell (attributes, opening, isRenaming) {
-    const classes = classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-file'],
-      getClassFromMime(attributes),
-      { [styles['fil-content-file-openable']]: !isRenaming }
-    )
-    const { filename, extension } = splitFilename(attributes)
-    return (
-      <div className={classes}>
-        {isRenaming
-          ? <RenameInput />
-          : <div>
-            {filename}
-            {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
-            {opening === true && <Spinner />}
-          </div>
-        }
-      </div>
-    )
-  }
+const FileNameCell = ({ attributes, isRenaming, opening }) => {
+  const classes = classNames(
+    styles['fil-content-cell'],
+    styles['fil-content-file'],
+    getClassFromMime(attributes),
+    { [styles['fil-content-file-openable']]: !isRenaming }
+  )
+  const { filename, extension } = splitFilename(attributes)
+  const url = cozy.client._url
+  return (
+    <div className={classes}>
+      { attributes.links && <Preview thumbnail={`${url}${attributes.links.small}`} /> }
+      {isRenaming
+        ? <RenameInput />
+        : <div>
+          {filename}
+          {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
+          {opening === true && <Spinner />}
+        </div>
+      }
+    </div>
+  )
 }
 
 export default withRouter(translate()(File))

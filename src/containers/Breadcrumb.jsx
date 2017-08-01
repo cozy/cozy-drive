@@ -38,7 +38,7 @@ class Breadcrumb extends Component {
   }
 
   handleClick = (e, folderId, animate) => {
-    const { router, location, goToFolder } = this.props
+    const { router, location, goToFolder, getFolderUrl } = this.props
     e.preventDefault()
     if (animate) {
       this.toggleOpening()
@@ -138,7 +138,8 @@ class Breadcrumb extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  path: getFolderPath(state, ownProps.location)
+  path: getFolderPath(state, ownProps.location, ownProps.isPublic),
+  getFolderUrl
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

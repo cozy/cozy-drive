@@ -91,4 +91,5 @@
     <plugin name="cordova-plugin-device" spec="1.1.6" />
     <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
     <plugin name="io.cozy.jsbackgroundservice" spec="https://github.com/cozy/cordova-jsbackgroundservice#v1.2.0" />
+    <plugin name="cordova-plugin-contacts" spec="2.3.1" />
 </widget>

@@ -1,7 +1,7 @@
 {
   "name": "Drive",
-  "slug": "cozy-drive",
-  "icon": "app-icon.svg",
+  "slug": "drive",
+  "icon": "public/app-icon.svg",
   "description": "File manager for Cozy v3",
   "category": "cozy",
   "source": "https://github.com/cozy/cozy-drive.git@build",
@@ -26,6 +26,11 @@
       "folder": "/",
       "index": "services.html",
       "public": false
+    },
+    "/public": {
+      "folder": "/public",
+      "index": "index.html",
+      "public": true
     }
   },
   "intents": [
@@ -51,6 +56,11 @@
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",
       "verbs": ["GET"]
+    },
+    "albums": {
+      "description": "Required to manage photos albums",
+      "type": "io.cozy.photos.albums",
+      "methods": ["PUT"]
     },
     "settings": {
       "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",

@@ -20,6 +20,7 @@ import { startTracker, useHistoryForTracker, startHeartBeat, stopHeartBeat } fro
 import { resetClient } from './lib/cozy-helper'
 import { pingOnceADay } from './actions/timestamp'
 import { backupImages } from './actions/mediaBackup'
+import { backupContacts } from './actions/contactsBackup'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -69,6 +70,7 @@ const renderAppWithPersistedState = persistedState => {
     pingOnceADayWithState()
     store.dispatch(backupImages())
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
+    if (store.getState().mobile.settings.backupContacts) store.dispatch(backupContacts())
   }, false)
 
   useHistoryForTracker(hashHistory)

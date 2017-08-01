@@ -6,17 +6,25 @@ import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
+import { ShareModal } from '../../ducks/sharing'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
-import { isFile } from './files'
+import { isFile, isReferencedByAlbum } from './files'
 
 import {
   createFolder,
   abortAddFolder,
   openFileWith,
-  downloadSelection,
+  downloadFiles,
   trashFiles
 } from '../../actions'
+
+const isAnyFileReferencedByAlbum = files => {
+  for (let i = 0, l = files.length; i < l; ++i) {
+    if (isReferencedByAlbum(files[i])) return true
+  }
+  return false
+}
 
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: false,
@@ -36,10 +44,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     selection: {
       download: {
-        action: files => dispatch(downloadSelection(files))
+        action: files => dispatch(downloadFiles(files))
       },
       trash: {
-        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} />)
+        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} referenced={isAnyFileReferencedByAlbum(files)} />)
           .then(() => dispatch(trashFiles(files)))
           .catch(() => {})
       },
@@ -49,11 +57,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       rename: {
         action: selected => dispatch(startRenamingAsync(selected[0])),
-        displayCondition: (selections) => selections.length === 1
+        displayCondition: (selections) => selections.length === 1 && isFile(selections[0])
+      },
+      share: {
+        action: selected => confirm(<ShareModalConfirm t={ownProps.t} document={selected[0]} />),
+        displayCondition: selections => selections.length === 1 && isFile(selections[0])
       }
     }
   })
 })
+
+const ShareModalConfirm = ({ abort, ...props }) => (
+  <ShareModal onClose={abort} {...props} />
+)
 
 export default translate()(connect(
   mapStateToProps,

@@ -7,8 +7,10 @@
     "item_trash": "Trash",
     "item_settings": "Settings",
     "btn-client": "Get Cozy for desktop",
+    "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
-    "link-client": "https://docs.cozy.io/en/download/"
+    "link-client": "https://docs.cozy.io/en/download/",
+    "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
   "breadcrumb": {
     "title_drive": "Drive",
@@ -23,7 +25,23 @@
     "menu_upload": "Upload files",
     "menu_new_folder": "New folder",
     "menu_select": "Select items",
-    "empty_trash": "Empty trash"
+    "menu_download_folder": "Download folder",
+    "empty_trash": "Empty trash",
+    "share": "Share"
+  },
+  "share": {
+    "title": "Share with others",
+    "shareByLink": {
+      "title": "By public link",
+      "subtitle": "Share by link",
+      "desc": "Anyone with the provided link can see and download your files."
+    },
+    "sharingLink": {
+      "title": "Link to share",
+      "copy": "Copy",
+      "copied": "Copied"
+    },
+    "creatingLink": "Creating your link..."
   },
   "table": {
     "head_name": "Name",
@@ -62,6 +80,7 @@
     "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
     "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
     "shared": "If you have shared it, people won't be able to access it. |||| If you have shared them, people won't be able to access them.",
+    "referenced": "Some of the files within the selection are related to a photo album. They will be removed from it if you proceed to trash them.",
     "cancel": "Cancel",
     "delete": "Remove"
   },
@@ -103,7 +122,9 @@
     "download_file": {
       "offline": "You should be connected to download this file",
       "missing": "This file is missing"
-    }
+    },
+    "public_unshared_title": "Sorry, this link is no longer available.",
+    "public_unshared_text": "One lost, ten found... or just check out with the owner for help. This file might not be lost."
   },
   "alert": {
     "try_again": "An error has occurred, please try again in a moment.",
@@ -129,8 +150,8 @@
         "cozy_address_placeholder": "tonystark.mycozy.cloud",
         "button": "Next",
         "wrong_address_with_email": "You typed an email address. To connect on your cozy you must type its url, something like https://tonystark.mycozy.cloud",
-        "wrong_address_v2": "You have just entered the address of old Cozy version. This application is only compatible with the latest version. Please refer to our site for more information.",
-        "wrong_address": "This address doesn’t send to a cozy. Please check the address you provide."
+        "wrong_address_v2": "You have just entered the address of old Cozy version. This application is only compatible with the latest version. [Please refer to our site for more information.](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
+        "wrong_address": "This address doesn’t seem to be a cozy. Please check the address you provide."
       },
       "files": {
         "title": "Access your drive",
@@ -196,6 +217,11 @@
           "success": "Thanks, we will investigate your problem and contact you soon.",
           "error": "A problem happened, logs couldn't be sent, please try again."
         }
+      },
+      "contacts": {
+        "title": "Contacts",
+        "subtitle": "Import contacts",
+        "text": "Import the contacts from your device to your Cozy to easily share content with them."
       }
     },
     "error": {

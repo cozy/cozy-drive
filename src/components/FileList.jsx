@@ -26,7 +26,7 @@ class FileList extends PureComponent {
   }
 
   render () {
-    const { fileCount, files, selected } = this.props
+    const { fileCount, files, selected, withSelectionCheckbox } = this.props
     return (
       <InfiniteLoader
         isRowLoaded={this.isRowLoaded}
@@ -47,6 +47,7 @@ class FileList extends PureComponent {
                 width={width}
                 selected={selected}
                 files={files}
+                withSelectionCheckbox={withSelectionCheckbox}
               />
             )}
           </AutoSizer>
@@ -83,7 +84,7 @@ class FileList extends PureComponent {
 
   rowRenderer = ({ index, key, style }) => {
     const {
-      displayedFolder, selected, selectionModeActive, onFolderOpen, onFileOpen, onFileToggle, showActionMenu
+      displayedFolder, selected = [], selectionModeActive, onFolderOpen, onFileOpen, onFileToggle, showActionMenu, withSelectionCheckbox
     } = this.props
     const file = this.props.files[index]
     if (!file) {
@@ -105,6 +106,7 @@ class FileList extends PureComponent {
         onShowActionMenu={showActionMenu}
         attributes={file}
         selectionModeActive={selectionModeActive}
+        withSelectionCheckbox={withSelectionCheckbox}
       />
     )
   }
