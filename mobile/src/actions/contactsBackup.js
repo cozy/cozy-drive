@@ -147,7 +147,9 @@ export const backupContacts = () => async (dispatch) => {
     let deviceContactEmails = deviceContact.email.map(email => email.address)
 
     for (const cozyContact of cozyContacts) {
-      if (cozyContact.email.filter(email => (deviceContactEmails.indexOf(email.address) >= 0)).length > 0) {
+      if (cozyContact.email instanceof Array === false) continue
+
+      if (cozyContact.email.filter(email => (email.address && deviceContactEmails.indexOf(email.address) >= 0)).length > 0) {
         contactAlreadySynced = true
         break
       }
