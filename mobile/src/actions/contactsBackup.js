@@ -65,59 +65,59 @@ const getCozyContacts = async (ids = []) => {
 
 const cordovaContactToCozy = (contact) => {
   let cozyContact = {}
-  let baseContact = {
-    displayName: '',
-    name: {},
-    emails: [],
-    addresses: [],
-    phoneNumbers: [],
-    ...contact
-  }
 
-  cozyContact.fullname = baseContact.displayName
+  cozyContact.fullname = contact.displayName || ''
 
-  cozyContact.name = {
-    familyName: baseContact.name.familyName,
-    givenName: baseContact.name.givenName,
-    additionalName: baseContact.name.middleName,
-    namePrefix: baseContact.name.honorificPrefix,
-    nameSuffix: baseContact.name.honorificSuffix
+  if (contact.name) {
+    cozyContact.name = {
+      familyName: contact.name.familyName,
+      givenName: contact.name.givenName,
+      additionalName: contact.name.middleName,
+      namePrefix: contact.name.honorificPrefix,
+      nameSuffix: contact.name.honorificSuffix
+    }
   }
 
   cozyContact.email = []
-  baseContact.emails.forEach(email => {
-    cozyContact.email.push({
-      address: email.value,
-      type: email.type,
-      label: null,
-      primary: !!email.pref
+  if (contact.emails instanceof Array) {
+    contact.emails.forEach(email => {
+      cozyContact.email.push({
+        address: email.value,
+        type: email.type,
+        label: null,
+        primary: !!email.pref
+      })
     })
-  })
+  }
 
   cozyContact.address = []
-  baseContact.addresses.forEach(address => {
-    cozyContact.address.push({
-      street: address.streetAddress,
-      pobox: null,
-      city: address.locality,
-      region: address.region,
-      postcode: address.postalCode,
-      country: address.country,
-      type: address.type,
-      primary: !!address.pref,
-      formattedAddress: address.formatted
+  if (contact.addresses instanceof Array) {
+    contact.addresses.forEach(address => {
+      cozyContact.address.push({
+        street: address.streetAddress,
+        pobox: null,
+        city: address.locality,
+        region: address.region,
+        postcode: address.postalCode,
+        country: address.country,
+        type: address.type,
+        primary: !!address.pref,
+        formattedAddress: address.formatted
+      })
     })
-  })
+  }
 
   cozyContact.phone = []
-  baseContact.phoneNumbers.forEach(phone => {
-    cozyContact.phone.push({
-      number: phone.value,
-      type: phone.type,
-      label: null,
-      primary: !!phone.pref
+  if (contact.phoneNumbers instanceof Array) {
+    contact.phoneNumbers.forEach(phone => {
+      cozyContact.phone.push({
+        number: phone.value,
+        type: phone.type,
+        label: null,
+        primary: !!phone.pref
+      })
     })
-  })
+  }
 
   return cozyContact
 }
