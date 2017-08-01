@@ -62,7 +62,7 @@ const fetchPermissions = (sharingType) =>
     cozy.client.fetchJSON('GET', `/permissions/doctype/${doctype}/${sharingType}`)
       .then(sets => sets.filter(set => {
         const permission = set.attributes.permissions[key]
-        return permission.type === doctype && ids.find(id => permission.values.indexOf(id) !== -1) !== undefined
+        return permission && permission.type === doctype && ids.find(id => permission.values.indexOf(id) !== -1) !== undefined
       })
     )
 
