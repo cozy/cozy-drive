@@ -1,69 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Onboarding component should render step with option 1`] = `
 <div
-  className="wizard photos-backup">
+  className="wizard photos-backup"
+>
   <header
-    className="wizard-header">
+    className="wizard-header"
+  >
     <a
       className="skipLink"
-      onClick={[Function]}>
+      onClick={[Function]}
+    >
       mobile.onboarding.step.skip
     </a>
   </header>
   <div
-    className="wizard-main">
+    className="wizard-main"
+  >
     <div
-      className="illustration illustration-undefined" />
+      className="illustration illustration-undefined"
+    />
     <h1
-      className="title">
+      className="title"
+    >
       mobile.onboarding.undefined.title
     </h1>
     <p
-      className="description">
+      className="description"
+    >
       mobile.onboarding.undefined.description
     </p>
   </div>
   <footer
-    className="wizard-footer">
+    className="wizard-footer"
+  >
     <button
       className="coz-btn coz-btn--regular"
       onClick={undefined}
-      role="button">
+      role="button"
+    >
       mobile.onboarding.step.button
     </button>
     <div
-      className="onboarding-breadcrumb" />
+      className="onboarding-breadcrumb"
+    />
   </footer>
 </div>
 `;
 
 exports[`Onboarding component should render step without option 1`] = `
 <div
-  className="wizard photos-backup">
+  className="wizard photos-backup"
+>
   <header
-    className="wizard-header" />
+    className="wizard-header"
+  />
   <div
-    className="wizard-main">
+    className="wizard-main"
+  >
     <div
-      className="illustration illustration-undefined" />
+      className="illustration illustration-undefined"
+    />
     <h1
-      className="title">
+      className="title"
+    >
       mobile.onboarding.undefined.title
     </h1>
     <p
-      className="description">
+      className="description"
+    >
       mobile.onboarding.undefined.description
     </p>
   </div>
   <footer
-    className="wizard-footer">
+    className="wizard-footer"
+  >
     <button
       className="coz-btn coz-btn--regular"
       onClick={undefined}
-      role="button">
+      role="button"
+    >
       mobile.onboarding.step.next
     </button>
     <div
-      className="onboarding-breadcrumb" />
+      className="onboarding-breadcrumb"
+    />
   </footer>
 </div>
 `;
