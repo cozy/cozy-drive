@@ -77,9 +77,8 @@ const fetchSharings = (ids) => Promise.all(ids.map(fetchSharing))
 export const deletePermission = (id) =>
   cozy.client.fetchJSON('DELETE', `/permissions/${id}`)
 
-const createRecipient = (email, url) => cozy.client.fetchJSON('POST', '/sharings/recipient', {
-  email,
-  url
+const createRecipient = (email) => cozy.client.fetchJSON('POST', '/sharings/recipient', {
+  email
 })
 
 const createSharing = (id, description, recipient, sharingType = 'master-slave') =>
@@ -111,9 +110,9 @@ const createSharing = (id, description, recipient, sharingType = 'master-slave')
     sharing_type: sharingType
   })
 
-export const share = ({ _id, name }, email, url) =>
-  createRecipient(email, url).then(
-    (recipient) => createSharing(_id, name, recipient)
+export const share = ({ _id, name }, email, sharingType) =>
+  createRecipient(email).then(
+    (recipient) => createSharing(_id, name, recipient, sharingType)
   )
 
 export const getContacts = async (ids = []) => {

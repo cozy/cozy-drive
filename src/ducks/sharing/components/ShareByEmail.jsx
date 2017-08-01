@@ -9,21 +9,22 @@ import { share } from '..'
 import styles from '../share.styl'
 
 class ShareByEmail extends React.Component {
-  sendSharingLinks (email) {
-    return share(this.props.document, email)
-    .then(sharing => {
-      Alerter.info('Albums.share.shareByEmail.success', { email })
-    })
-    .catch(err => {
-      Alerter.error('Error.generic')
-      throw err
-    })
+
+  sendSharingLinks (email, sharingType) {
+    return share(this.props.document, email, sharingType)
+      .then(sharing => {
+        Alerter.info('Albums.share.shareByEmail.success', { email })
+      })
+      .catch(err => {
+        Alerter.error('Error.generic')
+        throw err
+      })
   }
 
   render () {
     return (
       <div>
-        <ShareByUrl onSend={(email) => this.sendSharingLinks(email)} />
+        <ShareByUrl onSend={(email, sharingType) => this.sendSharingLinks(email, sharingType)} />
         <WhoHasAccess document={this.props.document} />
       </div>
     )
@@ -34,7 +35,8 @@ class ShareByUrl extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: ''
+      email: '',
+      sharingType: 'master-slave'
     }
   }
 
@@ -43,17 +45,21 @@ class ShareByUrl extends React.Component {
   }
 
   changeEmail (email) {
-    this.setState({ email })
+    this.setState(state => ({ ...state, email }))
   }
 
   sendSharingLink () {
-    this.props.onSend(this.state.email)
+    this.props.onSend(this.state.email, this.state.sharingType)
     .then(() => {
-      this.setState(state => ({...state, email: ''}))
+      this.setState(state => ({ ...state, email: '', sharingType: 'master-slave' }))
     })
     .catch(() => {
-      this.setState(state => ({...state, email: ''}))
+      this.setState(state => ({ ...state, email: '', sharingType: 'master-slave' }))
     })
+  }
+
+  changeSharingType (sharingType) {
+    this.setState(state => ({ ...state, sharingType }))
   }
 
   render () {
@@ -66,9 +72,17 @@ class ShareByUrl extends React.Component {
           <ShareAutocomplete
             value={this.state.email}
             onChange={(email, url) => this.onAutocomplete(email, url)}
-            />
+          />
         </div>
         <div className={classnames(styles['coz-form-controls'], styles['coz-form-controls--dispatch'])}>
+          <select
+            name='select'
+            className={styles['coz-select']}
+            value={this.state.sharingType}
+            onChange={e => this.changeSharingType(e.target.value)}>
+            <option value='master-slave'>{t('Share.status.accepted.master-slave')}</option>
+            <option value='master-master'>{t('Share.status.accepted.master-master')}</option>
+          </select>
           <button
             className={classnames('coz-btn', 'coz-btn--regular')}
             disabled={!this.state.email}
