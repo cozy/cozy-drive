@@ -15,14 +15,44 @@ const SharedIcon = ({ byMe }) => (
   </div>
 )
 
+const AlbumItemLink = ({ router, album, image, title, desc }) => {
+  const parentPath = router.location.pathname
+  return (
+    <Link to={`${parentPath}/${album._id}`} className={styles['pho-album-link']}>
+      {image}
+      {title}
+      {desc}
+    </Link>
+  )
+}
+const LinkedAlbumItem = withRouter(AlbumItemLink)
+
+const ClickableAlbumItem = ({ album, image, title, desc, onClick, disabled }) => {
+  return disabled
+  ? <div className={classNames(styles['pho-album-link'], styles['pho-album-link--disabled'])}>
+    {image}
+    <div>
+      {title}
+      {desc}
+    </div>
+  </div>
+  : <div onClick={() => onClick(album)} className={styles['pho-album-link']}>
+    {image}
+    <div>
+      {title}
+      {desc}
+    </div>
+  </div>
+}
+
 export class AlbumItem extends Component {
   render () {
-    const { t, album, photos, sharedByMe, sharedWithMe, onClick } = this.props
+    const { t, album, photos, sharedByMe, sharedWithMe, onClick, disabled } = this.props
     if (photos.fetchStatus !== 'loaded') {
       return null
     }
-    const coverPhoto = photos.data[0] || null
 
+    const coverPhoto = photos.data[0] || null
     const image = !coverPhoto
       ? <div
         className={styles['pho-album-photo-item']}
@@ -33,31 +63,24 @@ export class AlbumItem extends Component {
         photo={coverPhoto}
         src={`${cozy.client._url}${coverPhoto.links.small}`}
       />
+
     const desc = <h4 className={styles['pho-album-description']}>
+      {(sharedByMe || sharedWithMe) && <SharedIcon byMe={sharedByMe} />}
       {t('Albums.album_item_description',
         {smart_count: photos.count})
       }
       {(sharedByMe || sharedWithMe) && ` - ${t('Albums.album_item_shared_ro')}`}
     </h4>
+
     const title = <h2 className={styles['pho-album-title']}>{album.name}</h2>
 
-    if (onClick) {
-      return (
-        <div className={styles['pho-album']}>
-          <div onClick={() => onClick(album)} className={styles['pho-album-link']}>
-            {image}{title}{desc}
-          </div>
-          {(sharedByMe || sharedWithMe) && <SharedIcon byMe={false} />}
-        </div>
-      )
-    }
-    const parentPath = this.props.router.location.pathname
     return (
       <div className={styles['pho-album']}>
-        <Link to={`${parentPath}/${album._id}`} className={styles['pho-album-link']}>
-          {image}{title}{desc}
-        </Link>
-        {(sharedByMe || sharedWithMe) && <SharedIcon byMe={sharedByMe} />}
+        {
+          onClick
+          ? <ClickableAlbumItem album={album} image={image} title={title} desc={desc} onClick={onClick} disabled={disabled} />
+          : <LinkedAlbumItem album={album} image={image} title={title} desc={desc} />
+        }
       </div>
     )
   }
@@ -67,4 +90,4 @@ const mapDocumentsToProps = (ownProps) => ({
   photos: fetchAlbumPhotos(ownProps.album)
 })
 
-export default withRouter(cozyConnect(mapDocumentsToProps)(AlbumItem))
+export default cozyConnect(mapDocumentsToProps)(AlbumItem)

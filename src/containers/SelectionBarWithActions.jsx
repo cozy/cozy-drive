@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           dispatch(hideSelectionBar())
         })
         .catch(() => Alerter.error('Albums.remove_photos.error.generic')),
-      displayCondition: () => ownProps.album !== undefined
+      displayCondition: () => (ownProps.album !== undefined && ownProps.readOnly === false)
     }
   }
 })

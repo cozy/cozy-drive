@@ -19,6 +19,7 @@ class BoardView extends Component {
     const {
       album,
       related,
+      readOnly,
       selected,
       isAddToAlbumModalOpened,
       onPhotoToggle,
@@ -36,7 +37,7 @@ class BoardView extends Component {
     return (
       <div role='contentinfo'>
         {isAddToAlbumModalOpened && <AddToAlbumModal />}
-        {selectionModeActive && <SelectionBarWithActions album={album} related={related} />}
+        {selectionModeActive && <SelectionBarWithActions album={album} related={related} readOnly={readOnly} />}
         <PhotoBoard
           lists={photoLists}
           selected={selected}

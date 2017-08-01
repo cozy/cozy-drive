@@ -3,10 +3,10 @@ export const filterSharedByLinkDocuments = (ids, doctype) =>
   fetchShareLinkPermissions(ids, doctype, 'collection').then(sets => sets.map(set => set.attributes.permissions['collection'].values[0]))
 
 export const filterSharedWithMeDocuments = (ids, doctype) =>
-  fetchSharedWithMePermissions(ids, doctype, 'collection').then(sets => sets.map(set => set.attributes.permissions['collection'].values[0]))
+  fetchSharedWithMePermissions(ids, doctype, 'rule0').then(sets => sets.map(set => set.attributes.permissions['rule0'].values[0]))
 
-export const filterSharedWithOthersDocuments = (id, doctype) =>
-  fetchSharedWithOthersPermissions([id], doctype, 'rule0')
+export const filterSharedWithOthersDocuments = (ids, doctype) =>
+  fetchSharedWithOthersPermissions(ids, doctype, 'rule0').then(sets => sets.map(set => set.attributes.permissions['rule0'].values[0]))
 
 // TODO: move this to cozy-client-js
 // there is cozy.client.files.getCollectionShareLink already, but I think that
@@ -53,9 +53,9 @@ export const createShareLink = (id, doctype = 'io.cozy.photos.albums') =>
  * helpers
  */
 
-const SHARED_BY_LINK = 'sharedByLink'
-const SHARED_WITH_ME = 'sharedWithMe'
-const SHARED_WITH_OTHERS = 'sharedWithOthers'
+export const SHARED_BY_LINK = 'sharedByLink'
+export const SHARED_WITH_ME = 'sharedWithMe'
+export const SHARED_WITH_OTHERS = 'sharedWithOthers'
 
 const fetchPermissions = (sharingType) =>
   (ids, doctype, key) =>
@@ -129,7 +129,7 @@ const getProperty = (property, comparator) => (list, id) => {
 const getEmail = getProperty('email', id => item => item._id === id)
 const getUrl = getProperty('url', id => item => item._id === id)
 
-export const getRecipients = (id, type) => filterSharedWithOthersDocuments(id, type)
+export const getRecipients = (id, type) => fetchSharedWithOthersPermissions([id], type, 'rule0')
   .then(perms => perms.map(perm => perm.attributes.source_id))
   .then(fetchSharings)
   .then(sharings =>
@@ -155,5 +155,6 @@ export const getRecipients = (id, type) => filterSharedWithOthersDocuments(id, t
   })
 
 import ShareModal from './ShareModal'
+import withSharings from './withSharings'
 
-export { ShareModal }
+export { ShareModal, withSharings }

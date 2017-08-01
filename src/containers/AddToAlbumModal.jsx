@@ -12,6 +12,7 @@ import SelectAlbumsForm from '../components/SelectAlbumsForm'
 import Loading from '../components/Loading'
 
 import { getSelectedIds } from '../ducks/selection'
+import { withSharings, SHARED_WITH_ME } from '../ducks/sharing'
 
 import {
   fetchAlbums,
@@ -68,7 +69,7 @@ export class AddToAlbumModal extends Component {
   }
 
   render () {
-    const { t, photos, albums } = this.props
+    const { t, photos, albums, sharedWithMe } = this.props
 
     const fetchStatus = albums ? albums.fetchStatus : 'loading'
     const isFetchingAlbums = fetchStatus === 'pending' || fetchStatus === 'loading'
@@ -89,7 +90,7 @@ export class AddToAlbumModal extends Component {
             ? <Loading loadingType='albums_fetching' />
             : albums && albums.data.length > 0
             ? <div className={classNames(styles['coz-select-album'])}>
-              <SelectAlbumsForm albums={albums} onSubmitSelectedAlbum={album => this.onSubmitSelectedAlbum(album, photos)} />
+              <SelectAlbumsForm albums={albums} sharedWithMe={sharedWithMe} onSubmitSelectedAlbum={album => this.onSubmitSelectedAlbum(album, photos)} />
             </div>
             : null
           }
@@ -102,4 +103,4 @@ export class AddToAlbumModal extends Component {
 const mapDocumentsToProps = (ownProps) => ({ albums: fetchAlbums() })
 const mapStateToProps = (state, ownProps) => ({ photos: getSelectedIds(state) })
 
-export default connect(mapStateToProps)(cozyConnect(mapDocumentsToProps)(AddToAlbumModal))
+export default connect(mapStateToProps)(cozyConnect(mapDocumentsToProps)(withSharings(AddToAlbumModal, 'albums', 'io.cozy.photos.albums', [SHARED_WITH_ME])))

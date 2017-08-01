@@ -27,10 +27,22 @@
         color grey-08
     .pho-album-description
         text-align right
+    .pho-album-shared
+        position static
+        display inline-block
+        vertical-align middle
+        margin-right .5em
+
+        .pho-album-shared-icon
+            padding .6em
+            background-size 50%
 
 .pho-album-list--selectable
     .pho-album-link
         cursor pointer
+    .pho-album-link--disabled
+        cursor not-allowed
+        opacity .6
 
 .pho-album
     margin      .5em 1em 2em 1em
@@ -66,7 +78,7 @@
 
 .pho-album-shared
     position          absolute
-    top               em(147px)
+    top               em(175px)
     right             em(10px)
     padding           em(2px)
     background-color  white

@@ -5,6 +5,7 @@ import styles from '../styles/layout'
 
 import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
 import { hideSelectionBar } from '../ducks/selection'
+import { withSharings, SHARED_WITH_ME } from '../ducks/sharing'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
@@ -45,13 +46,14 @@ export class AlbumPhotos extends Component {
     if (!this.props.album) {
       return null
     }
-    const { album, photos } = this.props
+    const { album, photos, sharedWithMe } = this.props
     const { editing } = this.state
+
     return (
       <div className={styles['pho-content-wrapper']}>
         {(album.name && photos.data) &&
           <Topbar viewName='albumContent' albumName={album.name} editing={editing} onEdit={this.renameAlbum.bind(this)} >
-            <AlbumToolbar album={album} photos={photos.data} onRename={this.editAlbumName.bind(this)} />
+            <AlbumToolbar album={album} readOnly={sharedWithMe.length > 0} photos={photos.data} onRename={this.editAlbumName.bind(this)} />
           </Topbar>
         }
         {photos.data &&
@@ -60,6 +62,7 @@ export class AlbumPhotos extends Component {
             photos={photos}
             photoLists={[{ photos: photos.data }]}
             photosContext='album'
+            readOnly={sharedWithMe.length > 0}
           />
         }
         {this.renderViewer(this.props.children)}
@@ -93,4 +96,4 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
 export default cozyConnect(
   mapDocumentsToProps,
   mapDispatchToProps
-)(withRouter(AlbumPhotos))
+)(withRouter(withSharings(AlbumPhotos, 'album', 'io.cozy.photos.albums', [SHARED_WITH_ME])))

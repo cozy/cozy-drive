@@ -3,7 +3,7 @@ import { cozyConnect } from '../lib/redux-cozy-client'
 import styles from '../styles/layout'
 
 import { AlbumsToolbar, fetchAlbums } from '../ducks/albums'
-import { filterSharedByLinkDocuments, filterSharedWithMeDocuments } from '../ducks/sharing'
+import { withSharings, SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS } from '../ducks/sharing'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
@@ -24,36 +24,18 @@ const Content = ({ list, sharedByMe, sharedWithMe }) => {
 }
 
 export class AlbumsView extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      sharedByMe: [],
-      sharedWithMe: []
-    }
-  }
-
-  componentWillReceiveProps (newProps) {
-    // TODO: this is not the cleanest way of doing this...
-    if (newProps.albums && newProps.albums.data !== 0) {
-      Promise.all([
-        filterSharedByLinkDocuments(newProps.albums.data.map(a => a.id), 'io.cozy.photos.albums'),
-        filterSharedWithMeDocuments(newProps.albums.data.map(a => a.id), 'io.cozy.photos.albums')
-      ])
-        .then(sharedIds => this.setState({ sharedByMe: sharedIds[0], sharedWithMe: sharedIds[1] }))
-    }
-  }
-
   render () {
     if (this.props.children) return this.props.children
     if (!this.props.albums) {
       return null
     }
+
     return (
       <div className={styles['pho-content-wrapper']}>
         <Topbar viewName='albums'>
           <AlbumsToolbar />
         </Topbar>
-        <Content list={this.props.albums} sharedByMe={this.state.sharedByMe} sharedWithMe={this.state.sharedWithMe} />
+        <Content list={this.props.albums} sharedByMe={this.props.sharedWithOthers.concat(this.props.sharedByLink)} sharedWithMe={this.props.sharedWithMe} />
       </div>
     )
   }
@@ -61,4 +43,4 @@ export class AlbumsView extends Component {
 
 const mapDocumentsToProps = (ownProps) => ({ albums: fetchAlbums() })
 
-export default cozyConnect(mapDocumentsToProps)(AlbumsView)
+export default cozyConnect(mapDocumentsToProps)(withSharings(AlbumsView, 'albums', 'io.cozy.photos.albums', [SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS]))
