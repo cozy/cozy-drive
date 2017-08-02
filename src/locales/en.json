@@ -235,6 +235,34 @@
       "description": "It appears you revoked this device from your Cozy. If you didn't, please let us know at contact@cozycloud.cc. All your local data related to your Cozy will be removed.",
       "loginagain": "Log in again",
       "logout": "Log out"
+    },
+    "rating": {
+      "enjoy": {
+        "title": "Enjoying Cozy Drive?",
+        "yes": "Yes!",
+        "no": "Not really"
+      },
+      "rate": {
+        "title": "Would you mind rating it?",
+        "yes": "Let's do that!",
+        "no": "No, thanks",
+        "later": "Maybe later"
+      },
+      "feedback": {
+        "title": "Would you mind giving us some feedback?",
+        "yes": "Send",
+        "no": "No, thanks"
+      },
+      "email": {
+        "subject": "Feedback on Cozy Drive",
+        "placeholder": "Hello, I think Cozy Drive would be beter if…"
+      },
+      "alert": {
+        "rated": "Thank you! You're ⭐️⭐️⭐️⭐️⭐️",
+        "declined": "Awesome. You will love the upcoming features. Stay Cozy!",
+        "later": "No problem, we'll ask again later.",
+        "feedback": "Thank you for the feedback. We'll definitely work on it!"
+      }
     }
   },
   "upload": {
