@@ -72,8 +72,8 @@
     "status": {
       "pending": "Pending",
       "accepted": {
-        "master-slave": "Can Read",
-        "master-master": "Can Read and Write"
+        "master-slave": "Can View",
+        "master-master": "Can Change"
       },
       "refused": "Refused",
       "error": "Error",
