@@ -2,7 +2,7 @@ import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import classnames from 'classnames'
 import Toggle from 'cozy-ui/react/Toggle'
-import { deletePermission, createShareLink } from '..'
+import { deletePermission, createShareLink, getShareLink } from '..'
 
 import styles from '../share.styl'
 
@@ -57,8 +57,10 @@ class ShareByLink extends React.Component {
   }
 
   componentDidMount () {
-    this.fetchShareLink()
-    this.setState(state => ({...state, checked: true}))
+    getShareLink(this.props.document._id)
+    .then(sharing => {
+      this.setState(state => ({...state, sharing, checked: sharing !== undefined}))
+    })
   }
 
   toggleShareLink (checked) {
