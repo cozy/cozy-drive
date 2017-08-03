@@ -1,6 +1,6 @@
 'use strict'
 
-const webpack = require('webpack')
+const { DefinePlugin, optimize } = require('webpack')
 
 module.exports = {
   output: {
@@ -8,15 +8,13 @@ module.exports = {
   },
   devtool: false,
   plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
+    new optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
         warnings: false
       }
     }),
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'), // to compile on production mode (redux)
       __DEVELOPMENT__: false,
       __DEVTOOLS__: false,

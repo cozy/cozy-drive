@@ -2,7 +2,7 @@
 
 const CopyPlugin = require('copy-webpack-plugin')
 
-const {production} = require('./webpack.vars')
+const { production } = require('./webpack.vars')
 
 module.exports = {
   plugins: [

@@ -1,9 +1,9 @@
 'use strict'
 
-const webpack = require('webpack')
+const { IgnorePlugin } = require('webpack')
 
 module.exports = {
   plugins: [
-    new webpack.IgnorePlugin(/^\.\.\/contexts/)
+    new IgnorePlugin(/^\.\.\/contexts/)
   ]
 }

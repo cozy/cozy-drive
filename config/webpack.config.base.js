@@ -9,15 +9,12 @@ const {extractor, production} = require('./webpack.vars')
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
 module.exports = {
-  output: {
-    filename: 'app.js'
-  },
   resolve: {
-    extensions: ['', '.js', '.json', '.css']
+    modules: ['node_modules', 'src'],
+    extensions: ['.js', '.json', '.css']
   },
-  devtool: '#source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /(node_modules|cozy-(bar|client-js))/,
@@ -25,23 +22,33 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       },
       {
         test: /\.css$/,
-        loader: extractor.extract('style', [
-          'css-loader?importLoaders=1',
-          'postcss-loader'
-        ])
+        loader: extractor.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                importLoaders: 1
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: () => [require('autoprefixer')({ browsers: ['last 2 versions'] })]
+              }
+            }
+          ]
+        })
       }
     ],
     noParse: [
       /localforage\/dist/
-    ]
-  },
-  postcss: () => {
-    return [
-      require('autoprefixer')(['last 2 versions'])
     ]
   },
   plugins: [
@@ -59,6 +66,16 @@ module.exports = {
       title: pkg.name,
       filename: 'services.html',
       chunks: ['services'],
+      inject: 'head',
+      minify: {
+        collapseWhitespace: true
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src/targets/public/index.ejs'),
+      title: pkg.name,
+      filename: 'public/index.html',
+      chunks: ['public/app'],
       inject: 'head',
       minify: {
         collapseWhitespace: true
