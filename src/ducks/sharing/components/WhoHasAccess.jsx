@@ -24,7 +24,9 @@ class StatefulWhoHasAccess extends React.Component {
       recipients.map(recipient => {
         const status = recipient.status === 'accepted'
          ? t(`Share.status.${recipient.status}.${recipient.type}`)
-         : t(`Share.status.${recipient.status}`)
+         : recipient.status
+           ? t(`Share.status.${recipient.status}`)
+           : t('Share.status.pending')
         return {
           ...recipient,
           status
