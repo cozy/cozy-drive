@@ -4,7 +4,7 @@ import OnBoarding from '../../components/OnBoarding'
 
 export const Files = ({ onActivate }) =>
 (
-  <OnBoarding onActivate={onActivate} stepName='files' currentStep={1} totalSteps={3} />
+  <OnBoarding onActivate={onActivate} stepName='files' currentStep={1} totalSteps={4} />
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

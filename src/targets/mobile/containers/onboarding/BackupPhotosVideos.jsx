@@ -5,7 +5,7 @@ import { backupImages } from '../../actions/mediaBackup'
 
 export const BackupPhotosVideos = ({ onActivate, onSkip }) =>
 (
-  <OnBoarding onActivate={onActivate} onSkip={onSkip} stepName='photos' currentStep={2} totalSteps={3} />
+  <OnBoarding onActivate={onActivate} onSkip={onSkip} stepName='photos' currentStep={2} totalSteps={4} />
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -161,6 +161,10 @@
         "title": "Backup your photos and videos",
         "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them."
       },
+      "contacts": {
+        "title": "Sync your contacts",
+        "description": "Save your phone's contact on your Cozy — this will facilitate sharing files with them."
+      },
       "step": {
         "button": "Enable now",
         "skip": "Later",
