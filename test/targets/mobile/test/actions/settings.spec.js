@@ -1,13 +1,13 @@
-import { mockStore } from '../../../test/helpers'
-import reducer from '../../src/reducers/settings'
+import { mockStore } from '../../../../helpers'
+import reducer from '../../../../../src/targets/mobile/reducers/settings'
 import {
   SET_URL, setUrl,
   setBackupImages,
   setWifiOnly,
   setAnalytics,
   wrongAddressError, ERROR, wrongAddressErrorMsg
-} from '../../src/actions/settings'
-import { SET_CLIENT, setClient } from '../../../src/actions/settings'
+} from '../../../../../src/targets/mobile/actions/settings'
+import { SET_CLIENT, setClient } from '../../../../../src/actions/settings'
 
 describe('backup images actions creators', () => {
   it('should enable backup images', () => {

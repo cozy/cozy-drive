@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router'
 
-import AppRoute from '../../../src/components/AppRoute'
-import Layout from '../../../src/components/Layout'
+import AppRoute from '../../../components/AppRoute'
+import Layout from '../../../components/Layout'
 
 import { initBar } from '../lib/cozy-helper'
 

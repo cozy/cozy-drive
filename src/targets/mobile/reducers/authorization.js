@@ -1,4 +1,4 @@
-import { SET_CLIENT } from '../../../src/actions/settings'
+import { SET_CLIENT } from '../../../actions/settings'
 import { REVOKE, UNREVOKE } from '../actions/authorization'
 
 export const initialState = {

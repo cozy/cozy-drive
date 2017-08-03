@@ -2,7 +2,7 @@
 
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { OnBoarding } from '../../src/components/OnBoarding'
+import { OnBoarding } from '../../../../../src/targets/mobile/components/OnBoarding'
 
 describe('Onboarding component', () => {
   it('should render step with option', () => {

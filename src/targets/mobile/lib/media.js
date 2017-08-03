@@ -86,7 +86,7 @@ export const getFilteredPhotos = async () => {
 export const getMediaFolderName = () => {
   if (_polyglot === undefined) {
     const lang = getLang()
-    const dictRequire = (lang) => require(`../../../src/locales/${lang}`)
+    const dictRequire = (lang) => require(`../../../locales/${lang}`)
     initTranslation(lang, dictRequire)
   }
   const dir = _polyglot.t('mobile.settings.media_backup.media_folder')

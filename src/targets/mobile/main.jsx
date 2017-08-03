@@ -1,7 +1,7 @@
 /* global __DEVELOPMENT__ */
 import 'babel-polyfill'
 
-import '../../src/styles/main'
+import '../../styles/main'
 import './styles/main'
 
 import React from 'react'
@@ -13,7 +13,7 @@ import { I18n } from 'cozy-ui/react/I18n'
 
 import MobileAppRoute from './components/MobileAppRoute'
 
-import { configureStore, loadState, persistState } from '../../src/store'
+import { configureStore, loadState, persistState } from '../../store'
 import { initServices, getLang } from './lib/init'
 import { startBackgroundService } from './lib/background'
 import { startTracker, useHistoryForTracker, startHeartBeat, stopHeartBeat } from './lib/tracker'
@@ -79,7 +79,7 @@ const renderAppWithPersistedState = persistedState => {
   const root = document.querySelector('[role=application]')
 
   render((
-    <I18n lang={getLang()} dictRequire={(lang) => require(`../../src/locales/${lang}`)}>
+    <I18n lang={getLang()} dictRequire={(lang) => require(`../../locales/${lang}`)}>
       <Provider store={store}>
         <Router history={hashHistory} routes={MobileAppRoute(isRedirectedToOnboaring)} />
       </Provider>

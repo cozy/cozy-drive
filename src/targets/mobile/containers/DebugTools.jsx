@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { logException, logInfo } from '../lib/reporter'
-import { setFirstReplication, setOffline } from '../../../src/actions/settings'
+import { setFirstReplication, setOffline } from '../../../actions/settings'
 
 const Button = ({ onClick, children }) => (
   <button onclick={onClick} className={'coz-btn coz-btn--regular'}>

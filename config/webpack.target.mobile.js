@@ -8,7 +8,7 @@ const pkg = require(path.resolve(__dirname, '../package.json'))
 
 module.exports = {
   entry: {
-    app: path.resolve(__dirname, '../mobile/src/main')
+    app: path.resolve(__dirname, '../src/targets/mobile/main')
   },
   output: {
     path: path.resolve(__dirname, '../mobile/www')

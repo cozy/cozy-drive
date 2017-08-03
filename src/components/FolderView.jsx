@@ -10,7 +10,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import { SelectionBar } from '../ducks/selection'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
-import UploadProgression from '../../mobile/src/containers/UploadProgression'
+import UploadProgression from '../targets/mobile/containers/UploadProgression'
 import FolderContent from './FolderContent'
 
 import styles from '../styles/folderview'

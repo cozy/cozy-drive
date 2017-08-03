@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 
-import { reducers } from '../../../src/reducers'
+import { reducers } from '../../../reducers'
 
 import { settings } from './settings'
 import { mediaBackup } from './mediaBackup'
