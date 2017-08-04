@@ -2,10 +2,9 @@ import React from 'react'
 import classNames from 'classnames'
 
 import { translate } from 'cozy-ui/react/I18n'
-import Breadcrumb from './Breadcrumb'
 import styles from '../styles/onboarding'
 
-export const OnBoarding = ({ t, onActivate, onSkip, stepName, currentStep, totalSteps }) =>
+export const OnBoarding = ({ t, breadcrumbs, onActivate, onSkip, stepName, currentStep, totalSteps }) =>
 (
   <div className={classNames(styles['wizard'], styles['photos-backup'])}>
     <header className={styles['wizard-header']}>
@@ -27,7 +26,7 @@ export const OnBoarding = ({ t, onActivate, onSkip, stepName, currentStep, total
         {onSkip && t('mobile.onboarding.step.button')}
         {!onSkip && t('mobile.onboarding.step.next')}
       </button>
-      <Breadcrumb currentStep={currentStep} totalSteps={totalSteps} />
+      {breadcrumbs}
     </footer>
   </div>
 )

@@ -11,13 +11,15 @@ import Analytics from './onboarding/Analytics'
 const OnBoarding = (props) => {
   const steps = [
     Welcome,
-    SelectServer,
+    SelectServer
+  ]
+  const stepsWithBreadcrumb = [
     Files,
     BackupPhotosVideos,
     BackupContacts,
     Analytics
   ]
-  return <Wizard steps={steps} {...props} />
+  return <Wizard steps={steps} breadcrumbSteps={stepsWithBreadcrumb} {...props} />
 }
 
 export default OnBoarding
