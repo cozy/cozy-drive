@@ -11,7 +11,8 @@ module.exports = {
     app: [path.resolve(__dirname, '../src/targets/mobile/main')]
   },
   output: {
-    path: path.resolve(__dirname, '../mobile/www')
+    path: path.resolve(__dirname, '../mobile/www'),
+    filename: '[name].js'
   },
   plugins: [
     new DefinePlugin({
