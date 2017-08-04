@@ -70,6 +70,9 @@ $ yarn stack:docker
 
 your app is available at http://drive.cozy.tools:8080.
 
+### Share and send mails in development
+
+[See specific documentation](src/ducks/sharing/README.md)
 
 ### Run on you mobile phone or your tablet :phone:
 
