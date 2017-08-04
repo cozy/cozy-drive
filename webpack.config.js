@@ -8,6 +8,7 @@ const common = merge(
   require('./config/webpack.config.disable-contexts'),
   require('./config/webpack.config.preact'),
   require('./config/webpack.config.cozy-ui'),
+  require('./config/webpack.config.cozy-ui.react'),
   require('./config/webpack.config.pictures'),
   require('./config/webpack.config.vendors'),
   require('./config/webpack.config.manifest'),

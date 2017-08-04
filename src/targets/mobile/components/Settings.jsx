@@ -1,8 +1,8 @@
 /* globals __DEVMODE__ */
 
 import React, { Component } from 'react'
-import Main from '../../../src/components/Main'
-import Topbar from '../../../src/components/Topbar'
+import Main from '../../../components/Main'
+import Topbar from '../../../components/Topbar'
 import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from 'cozy-ui/react/I18n'

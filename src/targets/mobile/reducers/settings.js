@@ -1,4 +1,4 @@
-import { SET_CLIENT } from '../../../src/actions/settings'
+import { SET_CLIENT } from '../../../actions/settings'
 import { SET_URL, ERROR, BACKUP_IMAGES, BACKUP_CONTACTS, SET_ANALYTICS, WIFI_ONLY, TOKEN_SCOPE } from '../actions/settings'
 
 export const initialState = {

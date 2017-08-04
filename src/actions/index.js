@@ -1,7 +1,7 @@
 /* global cozy */
-import { isCordova } from '../../mobile/src/lib/device'
-import { saveFileWithCordova, openFileWithCordova } from '../../mobile/src/lib/filesystem'
-import { openWithNoAppError } from '../../mobile/src/actions'
+import { isCordova } from '../targets/mobile/lib/device'
+import { saveFileWithCordova, openFileWithCordova } from '../targets/mobile/lib/filesystem'
+import { openWithNoAppError } from '../targets/mobile/actions'
 import { isDirectory, isReferencedByAlbum, ALBUMS_DOCTYPE } from '../ducks/files/files'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'

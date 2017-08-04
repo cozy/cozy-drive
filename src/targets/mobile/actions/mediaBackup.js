@@ -4,7 +4,7 @@ import { setBackupImages } from './settings'
 import { getFilteredPhotos, getBlob, isAuthorized, getMediaFolderName, requestAuthorization } from '../lib/media'
 import { updateStatusBackgroundService } from '../lib/background'
 import { backupAllowed } from '../lib/network'
-import { HTTP_CODE_CONFLICT } from '../../../src/actions'
+import { HTTP_CODE_CONFLICT } from '../../../actions'
 import { logInfo, logException } from '../lib/reporter'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'

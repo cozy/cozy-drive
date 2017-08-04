@@ -2,9 +2,9 @@
 
 import { initClient, checkURL, MAIL_EXCEPTION } from '../lib/cozy-helper'
 import { startReplication as startPouchReplication } from '../lib/replication'
-import { setClient, setFirstReplication } from '../../../src/actions/settings'
+import { setClient, setFirstReplication } from '../../../actions/settings'
 import { getDeviceName } from '../lib/device'
-import { openFolder, getOpenedFolderId } from '../../../src/actions'
+import { openFolder, getOpenedFolderId } from '../../../actions'
 import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
 import { logException, logInfo, configure as configureReporter } from '../lib/reporter'
 import { startTracker, stopTracker } from '../lib/tracker'

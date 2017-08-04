@@ -1,4 +1,4 @@
-import * as filesystem from '../../src/lib/filesystem'
+import * as filesystem from '../../../../../src/targets/mobile/lib/filesystem'
 
 const ANDROID_ROOT_DIRECTORY = 'externalRootDirectory'
 const IOS_ROOT_DIRECTORY = 'dataDirectory'

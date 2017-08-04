@@ -1,19 +1,26 @@
 'use strict'
 
-const {production} = require('./webpack.vars')
+const { production } = require('./webpack.vars')
 
 module.exports = {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.svg$/,
         include: /(sprites|icons)/,
-        loader: 'svg-sprite?name=[name]_[hash]'
+        loader: 'svg-sprite-loader',
+        options: {
+          name: '[name]_[hash]'
+        }
       },
       {
         test: /\.(png|gif|jpe?g|svg)$/i,
         exclude: /(sprites|icons)/,
-        loader: `file?path=img&name=[name]${production ? '.[hash]' : ''}.[ext]`
+        loader: 'file-loader',
+        options: {
+          path: 'img',
+          name: `[name]${production ? '.[hash]' : ''}.[ext]`
+        }
       }
     ]
   }

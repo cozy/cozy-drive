@@ -1,9 +1,9 @@
 /* global __DEVELOPMENT__ */
-import getReducers from '../../mobile/src/reducers'
+import getReducers from '../targets/mobile/reducers'
 import { saveState } from './persistedState'
 import RavenMiddleWare from 'redux-raven-middleware'
 import createLogger from 'redux-logger'
-import { ANALYTICS_URL, getConfig as getAnalyticsConfiguration } from '../../mobile/src/lib/reporter'
+import { ANALYTICS_URL, getConfig as getAnalyticsConfiguration } from '../targets/mobile/lib/reporter'
 
 const persistState = store => {
   store.subscribe(() => saveState({
