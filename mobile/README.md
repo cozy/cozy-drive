@@ -6,10 +6,11 @@
 
 ### :wrench: Requirements
 
-- Node v6
-- Android SDK 25.0.0 to deploy on android
-- Xcode 8.1 to deploy on ios
-- cordova cli `npm install cordova -g`
+- Node v6 (on macOS: `brew install node@6 && brew link node@6`)
+- ImageMagick (on macOS: `brew install imagemagick`)
+- Android SDK >= 25.0.0 to deploy on android
+- Xcode 8.1 >= to deploy on ios
+- cordova cli (`npm install cordova -g`)
 
 
 ### :package: Install and run in dev mode
@@ -23,6 +24,7 @@ $ yarn install
 mobile specific:
 
 ```sh
+$ yarn mobile:icon
 $ yarn build:mobile
 $ cd mobile
 $ cordova prepare
@@ -39,14 +41,14 @@ $ yarn watch:mobile
 
 After that, you can deploy with one of these commands:
 
-On android:
+On Android:
 
 ```sh
 $ cd mobile
 $ cordova run android
 ```
 
-On iOS:
+On iOS: open the mobile/platforms/ios/Cozy Drive.xcworkspace in Xcode, update the Swift syntax if needed, set your signing certificate on the target, then:
 
 ```sh
 $ cd mobile
