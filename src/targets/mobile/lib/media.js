@@ -66,7 +66,7 @@ export const getPhotos = async () => {
           console.warn(err)
           resolve(defaultReturn)
         },
-        {includeCloudData: false}
+        {includeCloudData: false, includeVideos: true}
       )
     })
   }
