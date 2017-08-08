@@ -17,7 +17,8 @@ export {
   updateDocument,
   deleteDocument,
   createFile,
-  trashFile
+  trashFile,
+  CREATE_DOCUMENT
 } from './reducer'
 
 export { downloadArchive, downloadFile } from './helpers'
