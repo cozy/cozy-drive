@@ -16,7 +16,7 @@ export const isAuthorized = async () => {
   return new Promise(resolve => {
     const success = () => resolve(true)
     const error = () => resolve(false)
-    window.cordova.plugins.photoLibrary.getLibrary(success, error)
+    window.cordova.plugins.photoLibrary.getLibrary(success, error, {includeCloudData: false})
   })
 }
 
@@ -65,7 +65,8 @@ export const getPhotos = async () => {
         (err) => {
           console.warn(err)
           resolve(defaultReturn)
-        }
+        },
+        {includeCloudData: false}
       )
     })
   }
