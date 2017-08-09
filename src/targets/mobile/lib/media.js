@@ -16,7 +16,7 @@ export const isAuthorized = async () => {
   return new Promise(resolve => {
     const success = () => resolve(true)
     const error = () => resolve(false)
-    window.cordova.plugins.photoLibrary.getLibrary(success, error, {includeCloudData: false})
+    window.cordova.plugins.photoLibrary.getLibrary(success, error, {includeCloudData: false, includeVideos: true})
   })
 }
 
@@ -44,7 +44,7 @@ export const requestAuthorization = async () => {
 export const getBlob = async (libraryItem) => {
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
-      window.cordova.plugins.photoLibrary.getPhoto(
+      window.cordova.plugins.photoLibrary.getLibraryItem(
         libraryItem,
         fullPhotoBlob => resolve(fullPhotoBlob),
         err => reject(err)

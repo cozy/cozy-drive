@@ -61,7 +61,9 @@ export const startMediaBackup = (dir, force = false) => async (dispatch, getStat
 
   if (canBackup(force, getState)) {
     const photosOnDevice = await getFilteredPhotos()
-    const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+
+    // TODO: shitty debug comment !!
+    const alreadyUploaded = [] // getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
     const totalUpload = photosToUpload.length
     if (totalUpload > 0) {
