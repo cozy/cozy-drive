@@ -88,7 +88,7 @@ class App extends Component {
         </div>
       )
     }
-    if (!album || !photos || photos.fetchStatus !== 'loaded') {
+    if (!album || !photos || photos.fetchStatus === 'pending' || photos.fetchStatus === 'loading') {
       return (
         <div className={styles['pho-public-layout']}>
           <Loading loadingType='photos_fetching' />

@@ -5,7 +5,7 @@ import { getCollection, getDocument } from '.'
 import { mapValues, filterValues } from './utils'
 import { makeFetchMoreAction } from './reducer'
 
-const isFetchCollection = (action) => action.types[0] === 'FETCH_COLLECTION'
+const isFetchCollection = (action) => action.types[0] === 'FETCH_COLLECTION' || action.types[0] === 'FETCH_REFERENCED_FILES'
 
 const enhanceProps = (props, fetchActions, dispatch) => mapValues(fetchActions, (action, propName) => {
   const dataObject = props[propName]

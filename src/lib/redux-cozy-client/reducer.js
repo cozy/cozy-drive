@@ -11,6 +11,7 @@ const DELETE_DOCUMENT = 'DELETE_DOCUMENT'
 const RECEIVE_NEW_DOCUMENT = 'RECEIVE_NEW_DOCUMENT'
 const RECEIVE_UPDATED_DOCUMENT = 'RECEIVE_UPDATED_DOCUMENT'
 const RECEIVE_DELETED_DOCUMENT = 'RECEIVE_DELETED_DOCUMENT'
+const FETCH_REFERENCED_FILES = 'FETCH_REFERENCED_FILES'
 const ADD_REFERENCED_FILES = 'ADD_REFERENCED_FILES'
 const REMOVE_REFERENCED_FILES = 'REMOVE_REFERENCED_FILES'
 
@@ -115,9 +116,10 @@ const collectionInitialState = {
 const collection = (state = collectionInitialState, action) => {
   switch (action.type) {
     case FETCH_COLLECTION:
+    case FETCH_REFERENCED_FILES:
       return {
         ...state,
-        type: action.doctype,
+        type: action.doctype || 'io.cozy.files',
         fetchStatus: action.skip > 0 ? 'loadingMore' : 'loading'
       }
     case RECEIVE_DATA:
@@ -174,6 +176,7 @@ const collections = (state = {}, action) => {
 
   switch (action.type) {
     case FETCH_COLLECTION:
+    case FETCH_REFERENCED_FILES:
     case ADD_REFERENCED_FILES:
     case REMOVE_REFERENCED_FILES:
     case RECEIVE_DATA:
@@ -221,9 +224,9 @@ export const fetchDocument = (doctype, id) => ({
 })
 
 export const fetchReferencedFiles = (doc, skip = 0) => ({
-  types: [FETCH_COLLECTION, RECEIVE_DATA, RECEIVE_ERROR],
+  types: [FETCH_REFERENCED_FILES, RECEIVE_DATA, RECEIVE_ERROR],
   collection: `${doc.type}/${doc.id}#files`,
-  doctype: 'io.cozy.files',
+  document: doc,
   options: {},
   skip,
   promise: (client) => client.fetchReferencedFiles(doc, skip)
@@ -282,7 +285,10 @@ export const removeReferencedFiles = (doc, ids) => ({
 
 export const makeActionCreator = (promise) => ({ promise })
 
-export const makeFetchMoreAction = ({ collection, doctype, options }, skip) => fetchCollection(collection, doctype, options, skip)
+export const makeFetchMoreAction = ({ types, collection, document, doctype, options }, skip) =>
+  types[0] === FETCH_REFERENCED_FILES
+  ? fetchReferencedFiles(document, skip)
+  : fetchCollection(collection, doctype, options, skip)
 
 // selectors
 const mapDocumentsToIds = (documents, doctype, ids) => ids.map(id => documents[doctype][id])
