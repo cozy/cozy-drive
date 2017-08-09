@@ -72,7 +72,7 @@ function onUploadFail (error) {
 
 export const uploadLibraryItem = async (dirID, libraryItem) => {
   if (hasCordovaPlugin()) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       // window.cordova.plugins.photoLibrary.getLibraryItem(
       //   libraryItem,
       //   fullPhotoBlob => resolve(fullPhotoBlob),
@@ -83,12 +83,13 @@ export const uploadLibraryItem = async (dirID, libraryItem) => {
       console.log(cozy.client)
       console.log(libraryItem)
 
-      var token = 'Basic dXNlcjpleUpoYkdjaU9pSklVelV4TWlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpoWTJObGMzTWlMQ0pwWVhRaU9qRTFNREl3T1RVek9UUXNJbWx6Y3lJNklucHNiM1F1YlhsamIzcDVMbU5zYjNWa0lpd2ljM1ZpSWpvaVpERTFaRFpsTW1KaVpUTmlOMll6T0RBMllqUTRNbUUxWWpZeE1UQmxOR0lpTENKelkyOXdaU0k2SW1sdkxtTnZlbmt1Wm1sc1pYTWdhVzh1WTI5NmVTNWpiMjUwWVdOMGN5SjkuMkNtV0RlTjRydDdQTDIyZUd4NEp2MDAtaEFiQmF6bW1kbGhlTDQ3YmVabEFFbXdLTmN3dDhSOXBiTGlDOVNZV3YyMnNZRzM5ZVlqSGtPdWhyQXJhOEE=' // cozy.client._token.token
+      var credentials = await cozy.client.authorize()
+      var token = credentials.token.accessToken
       options.fileKey = 'file'
       options.fileName = libraryItem['id'] // fileURL.substr(fileURL.lastIndexOf('/') + 1);
       options.mimeType = libraryItem['mimeType']
       options.headers = {
-        'Authorization': token
+        'Authorization': 'Basic ' + token
       } // get that in plugin code
       console.log(options)
       var ft = new FileTransfer()
