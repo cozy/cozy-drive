@@ -1,3 +1,4 @@
+/* global cozy FileUploadOptions FileTransfer */
 import { isCordova, isAndroid } from './device'
 import { _polyglot, initTranslation } from 'cozy-ui/react/I18n/translation'
 import { getLang } from './init'
