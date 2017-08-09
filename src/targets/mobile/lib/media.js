@@ -80,14 +80,17 @@ export const uploadLibraryItem = async (dirID, libraryItem) => {
       // )
       var uri = encodeURI(cozy.client._url + '/files/' + dirID)
       var options = new FileUploadOptions()
-      var token = cozy.client._token.token
+      console.log(cozy.client)
+      console.log(libraryItem)
+
+      var token = 'Basic dXNlcjpleUpoYkdjaU9pSklVelV4TWlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpoWTJObGMzTWlMQ0pwWVhRaU9qRTFNREl3T1RVek9UUXNJbWx6Y3lJNklucHNiM1F1YlhsamIzcDVMbU5zYjNWa0lpd2ljM1ZpSWpvaVpERTFaRFpsTW1KaVpUTmlOMll6T0RBMllqUTRNbUUxWWpZeE1UQmxOR0lpTENKelkyOXdaU0k2SW1sdkxtTnZlbmt1Wm1sc1pYTWdhVzh1WTI5NmVTNWpiMjUwWVdOMGN5SjkuMkNtV0RlTjRydDdQTDIyZUd4NEp2MDAtaEFiQmF6bW1kbGhlTDQ3YmVabEFFbXdLTmN3dDhSOXBiTGlDOVNZV3YyMnNZRzM5ZVlqSGtPdWhyQXJhOEE=' // cozy.client._token.token
       options.fileKey = 'file'
       options.fileName = libraryItem['id'] // fileURL.substr(fileURL.lastIndexOf('/') + 1);
       options.mimeType = libraryItem['mimeType']
       options.headers = {
-        'Authorization': 'Bearer ' + token
+        'Authorization': token
       } // get that in plugin code
-
+      console.log(options)
       var ft = new FileTransfer()
       ft.onprogress = function (progressEvent) {
         if (progressEvent.lengthComputable) {
