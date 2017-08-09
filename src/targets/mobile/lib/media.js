@@ -41,19 +41,67 @@ export const requestAuthorization = async () => {
   })
 }
 
-export const getBlob = async (libraryItem) => {
+// export const getBlob = async (libraryItem) => {
+//   if (hasCordovaPlugin()) {
+//     return new Promise((resolve, reject) => {
+//       window.cordova.plugins.photoLibrary.getLibraryItem(
+//         libraryItem,
+//         fullPhotoBlob => resolve(fullPhotoBlob),
+//         err => reject(err)
+//       )
+//     })
+//   }
+
+//   return Promise.resolve('')
+// }
+
+// -------------------------------------------------------------------------
+// LIBRARY ITEM UPLOAD
+function onUploadSuccess (r) {
+  console.log('Code = ' + r.responseCode)
+  console.log('Response = ' + r.response)
+  console.log('Sent = ' + r.bytesSent)
+}
+
+function onUploadFail (error) {
+  alert('An error has occurred: Code = ' + error.code)
+  console.log('upload error source ' + error.source)
+  console.log('upload error target ' + error.target)
+}
+
+export const uploadLibraryItem = async (dirID, libraryItem) => {
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
-      window.cordova.plugins.photoLibrary.getLibraryItem(
-        libraryItem,
-        fullPhotoBlob => resolve(fullPhotoBlob),
-        err => reject(err)
-      )
+      // window.cordova.plugins.photoLibrary.getLibraryItem(
+      //   libraryItem,
+      //   fullPhotoBlob => resolve(fullPhotoBlob),
+      //   err => reject(err)
+      // )
+      var uri = encodeURI(cozy.client._url + '/files/' + dirID)
+      var options = new FileUploadOptions()
+      var token = cozy.client._token.token
+      options.fileKey = 'file'
+      options.fileName = libraryItem['id'] // fileURL.substr(fileURL.lastIndexOf('/') + 1);
+      options.mimeType = libraryItem['mimeType']
+      options.headers = {
+        'Authorization': 'Bearer ' + token
+      } // get that in plugin code
+
+      var ft = new FileTransfer()
+      ft.onprogress = function (progressEvent) {
+        if (progressEvent.lengthComputable) {
+          console.log('percent' + (progressEvent.loaded / progressEvent.total))
+        } else {
+          console.log('increment')
+        }
+      }
+      ft.upload(libraryItem['id'], uri, onUploadSuccess, onUploadFail, options)
     })
   }
 
   return Promise.resolve('')
 }
+// -------------------------------------------------------------------------
 
 export const getPhotos = async () => {
   const defaultReturn = []
