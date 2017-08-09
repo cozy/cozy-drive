@@ -11,6 +11,7 @@ import { SelectionBar } from '../ducks/selection'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
 import UploadProgression from '../targets/mobile/containers/UploadProgression'
+import RatingModal from '../targets/mobile/containers/RatingModal'
 import FolderContent from './FolderContent'
 
 import styles from '../styles/folderview'
@@ -62,6 +63,7 @@ class FolderView extends Component {
         </Topbar>
         <div role='contentinfo'>
           {__TARGET__ === 'mobile' && <UploadProgression />}
+          {__TARGET__ === 'mobile' && <RatingModal />}
           <div style={{display: selectionModeActive ? 'inherit' : 'none'}} >
             <SelectionBar selected={selected} actions={actions.selection} />
           </div>

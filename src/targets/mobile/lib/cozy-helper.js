@@ -3,9 +3,10 @@ import { getLang } from './init'
 import { LocalStorage as Storage } from 'cozy-client-js'
 
 export const softwareID = 'io.cozy.drive.mobile'
+export const softwareName = 'Cozy Drive'
 export const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
-const getClientName = device => `Cozy Drive (${device})`
+const getClientName = device => `${softwareName} (${device})`
 
 const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
@@ -16,7 +17,7 @@ const getClientParams = (device) => ({
   clientURI: 'https://github.com/cozy/cozy-drive/',
   logoURI: 'https://raw.githubusercontent.com/cozy/cozy-drive/master/vendor/assets/apple-touch-icon-120x120.png',
   policyURI: 'https://files.cozycloud.cc/cgu.pdf',
-  scopes: ['io.cozy.files', 'io.cozy.contacts']
+  scopes: ['io.cozy.files', 'io.cozy.contacts', 'io.cozy.jobs:POST:sendmail:worker']
 })
 
 const getAuth = (onRegister, device) => ({
