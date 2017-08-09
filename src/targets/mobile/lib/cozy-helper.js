@@ -1,16 +1,15 @@
 /* global cozy, document, __APP_VERSION__, __ALLOW_HTTP__ */
 import { getLang } from './init'
 import { LocalStorage as Storage } from 'cozy-client-js'
+import { SOFTWARE_NAME, SOFTWARE_ID } from './constants'
 
-export const softwareID = 'io.cozy.drive.mobile'
-export const softwareName = 'Cozy Drive'
 export const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
-const getClientName = device => `${softwareName} (${device})`
+const getClientName = device => `${SOFTWARE_NAME} (${device})`
 
 const getClientParams = (device) => ({
   redirectURI: 'http://localhost',
-  softwareID: softwareID,
+  softwareID: SOFTWARE_ID,
   clientName: getClientName(device),
   softwareVersion: __APP_VERSION__,
   clientKind: 'mobile',

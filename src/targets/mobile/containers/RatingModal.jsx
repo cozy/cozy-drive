@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
-import { softwareID, softwareName } from '../lib/cozy-helper'
+import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
 
 import styles from '../styles/rating'
 
@@ -36,8 +36,8 @@ class RatingModal extends Component {
           yes: t('mobile.rating.rate.yes'),
           no: t('mobile.rating.rate.no'),
           later: t('mobile.rating.rate.later'),
-          softwareID,
-          softwareName
+          softwareID: SOFTWARE_ID,
+          softwareName: SOFTWARE_NAME
         })
 
         if (buttonIndex === BUTTON_INDEX_LATER) {

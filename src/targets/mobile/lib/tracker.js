@@ -1,6 +1,6 @@
 /* global __PIWIK_TRACKER_URL__ __PIWIK_SITEID_MOBILE__ */
 import { getTracker, configureTracker, resetTracker } from 'cozy-ui/react/helpers/tracker'
-import { softwareID } from './cozy-helper'
+import { SOFTWARE_ID } from './constants'
 
 const mobileHeartBeatDelay = 30 // how many seconds between each hreatbeat ping to the server
 
@@ -20,7 +20,7 @@ export const startTracker = (cozyServerUrl = '') => {
 
   configureTracker({
     userId: url.hostname || cozyServerUrl,
-    app: softwareID,
+    app: SOFTWARE_ID,
     heartbeat: mobileHeartBeatDelay
   })
 
