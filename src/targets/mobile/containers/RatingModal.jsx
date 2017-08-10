@@ -143,9 +143,7 @@ class FeeedbackForm extends Component {
       >
         <ModalContent className={styles['feedback-form']}>
           <form className={'coz-form'} onSubmit={this.onSubmit.bind(this)}>
-            <textarea className={styles['feedback-text']} ref={this.registerElement.bind(this)}>
-              { t('mobile.rating.email.placeholder') }
-            </textarea>
+            <textarea className={styles['feedback-text']} placeholder={t('mobile.rating.email.placeholder')} ref={this.registerElement.bind(this)} />
             <div className={styles['button-block']}>
               <button className='coz-btn coz-btn--secondary' type='button' onClick={() => onClose(false)}>
                 { t('mobile.rating.feedback.no') }
