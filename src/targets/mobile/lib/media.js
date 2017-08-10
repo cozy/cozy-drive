@@ -73,20 +73,24 @@ function onUploadFail (error) {
 export const uploadLibraryItem = async (dirID, libraryItem) => {
   if (hasCordovaPlugin()) {
     return new Promise(async (resolve, reject) => {
-      // window.cordova.plugins.photoLibrary.getLibraryItem(
-      //   libraryItem,
-      //   fullPhotoBlob => resolve(fullPhotoBlob),
-      //   err => reject(err)
-      // )
-      var uri = encodeURI(cozy.client._url + '/files/' + dirID)
+      // Upload a file
+      // POST /files/:dir-id
+      // Type  file
+      // Name  the file name
+      // Tags  an array of tags
+      // Executable  true if the file is executable (UNIX permission)
+      var uri = encodeURI(cozy.client._url + '/files/' + dirID +
+                          '?type=file&name=' + libraryItem['fileName'] +
+                          '&tags=' + libraryItem['mimeType'] +
+                          '&executable=false')
       var options = new FileUploadOptions()
       console.log(cozy.client)
       console.log(libraryItem)
 
       var credentials = await cozy.client.authorize()
       var token = credentials.token.accessToken
-      options.fileKey = 'file'
-      options.fileName = libraryItem['id'] // fileURL.substr(fileURL.lastIndexOf('/') + 1);
+      options.fileKey = 'libraryItem:' + libraryItem['id'] // needed on iOS, to request PHAsset from ID (library items are sandboxed)
+      options.fileName = libraryItem['fileName']
       options.mimeType = libraryItem['mimeType']
       options.headers = {
         'Authorization': 'Basic ' + token
@@ -100,7 +104,7 @@ export const uploadLibraryItem = async (dirID, libraryItem) => {
           console.log('increment')
         }
       }
-      ft.upload(libraryItem['id'], uri, onUploadSuccess, onUploadFail, options)
+      ft.upload(libraryItem['fileName'], uri, onUploadSuccess, onUploadFail, options)
     })
   }
 
