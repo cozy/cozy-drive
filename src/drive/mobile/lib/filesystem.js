@@ -59,7 +59,7 @@ export const writeFile = (fileEntry, dataObj) => new Promise((resolve, reject) =
   })
 })
 
-export const saveFile = (dirEntry, fileData, fileName) => new Promise((resolve, reject) => {
+const saveFile = (dirEntry, fileData, fileName) => new Promise((resolve, reject) => {
   dirEntry.getFile(fileName, { create: true, exclusive: false }, fileEntry => {
     writeFile(fileEntry, fileData).then(() => {
       resolve(fileEntry)

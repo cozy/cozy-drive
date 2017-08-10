@@ -8,6 +8,7 @@ import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
 import renameReducer from '../ducks/files/rename'
 import upload from '../ducks/upload'
 import alerterReducer from 'cozy-ui/react/Alerter'
+import availableOffline from '../ducks/files/availableOffline'
 
 export const reducers = {
   view,
@@ -16,7 +17,8 @@ export const reducers = {
   actionmenu: actionmenuReducer,
   selection: selectionReducer,
   rename: renameReducer,
-  alerts: alerterReducer
+  alerts: alerterReducer,
+  availableOffline
 }
 
 const filesApp = combineReducers(reducers)

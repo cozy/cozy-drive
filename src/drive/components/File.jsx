@@ -118,7 +118,7 @@ class File extends Component {
     }
   }
 
-  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming, withSelectionCheckbox }, { opening }) {
+  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming, withSelectionCheckbox, isAvailableOffline }, { opening }) {
     return (
       <div
         ref={fil => { this.fil = fil }}
@@ -150,6 +150,7 @@ class File extends Component {
             : filesize(attributes.size, {base: 10})}
         </div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>—</div>
+        <div className={classNames(styles['fil-content-cell'], styles['fil-available-offline'])}>{JSON.stringify(isAvailableOffline)}</div>
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])}>
           <button className='coz-btn coz-btn--extra' onClick={(e) => {
             onShowActionMenu(attributes.id)

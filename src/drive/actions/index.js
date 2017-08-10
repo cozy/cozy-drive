@@ -3,6 +3,7 @@ import { isCordova } from '../mobile/lib/device'
 import { saveFileWithCordova, openFileWithCordova } from '../mobile/lib/filesystem'
 import { openWithNoAppError } from '../mobile/actions'
 import { isDirectory, isReferencedByAlbum, ALBUMS_DOCTYPE } from '../ducks/files/files'
+import * as availableOffline from '../ducks/files/availableOffline'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -247,6 +248,35 @@ export const downloadFiles = files => {
     forceFileDownload(fullpath, 'files.zip')
     return dispatch({ type: DOWNLOAD_SELECTION, files, meta })
   }
+}
+
+export const toggleAvailableOffline = (file) => async (dispatch, getState) =>
+  availableOffline.isAvailableOffline(getState())(file.id)
+  ? dispatch(undoMakeAvailableOffline(file))
+  : dispatch(makeAvailableOffline(file))
+
+const undoMakeAvailableOffline = (file) => async dispatch => {
+  const filename = file.id
+
+  console.log(`${filename} is gonna be remove from cordova directory`)
+
+  dispatch(availableOffline.undoMakeAvailableOffline(file.id))
+}
+
+const makeAvailableOffline = (file) => async dispatch => {
+  const response = await cozy.client.files.downloadById(file.id).catch((error) => {
+    dispatch(downloadFileError(error, META_DEFAULTS))
+    throw error
+  })
+  const blob = await response.blob()
+  const filename = file.id
+
+  console.log(`${filename} is gonna be saved to cordova directory`)
+
+  if (isCordova() && window.cordova.file) {
+    saveFileWithCordova(blob, filename)
+  }
+  dispatch(availableOffline.makeAvailableOffline(file.id))
 }
 
 const isMissingFile = (error) => error.status === 404
