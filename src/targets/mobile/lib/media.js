@@ -1,3 +1,4 @@
+/* global cozy FileUploadOptions FileTransfer */
 import { isCordova, isAndroid } from './device'
 import { _polyglot, initTranslation } from 'cozy-ui/react/I18n/translation'
 import { getLang } from './init'
@@ -16,7 +17,14 @@ export const isAuthorized = async () => {
   return new Promise(resolve => {
     const success = () => resolve(true)
     const error = () => resolve(false)
-    window.cordova.plugins.photoLibrary.getLibrary(success, error)
+    window.cordova.plugins.photoLibrary.getLibrary(success, error, {includeCloudData: false, includeVideos: true})
+    // window.cordova.plugins.photoLibrary.isAuthorized(
+    //   success,
+    //   (error) => {
+    //     console.warn(error)
+    //     logException('isAuthorized error:', error)
+    //     resolve(false)
+    //   })
   })
 }
 
@@ -41,19 +49,76 @@ export const requestAuthorization = async () => {
   })
 }
 
-export const getBlob = async (libraryItem) => {
+// export const getBlob = async (libraryItem) => {
+//   if (hasCordovaPlugin()) {
+//     return new Promise((resolve, reject) => {
+//       window.cordova.plugins.photoLibrary.getLibraryItem(
+//         libraryItem,
+//         fullPhotoBlob => resolve(fullPhotoBlob),
+//         err => reject(err)
+//       )
+//     })
+//   }
+
+//   return Promise.resolve('')
+// }
+
+// -------------------------------------------------------------------------
+// LIBRARY ITEM UPLOAD
+function onUploadSuccess (r) {
+  console.log('Code = ' + r.responseCode)
+  console.log('Response = ' + r.response)
+  console.log('Sent = ' + r.bytesSent)
+}
+
+function onUploadFail (error) {
+  alert('An error has occurred: Code = ' + error.code)
+  console.log('upload error source ' + error.source)
+  console.log('upload error target ' + error.target)
+}
+
+export const uploadLibraryItem = async (dirID, libraryItem) => {
   if (hasCordovaPlugin()) {
-    return new Promise((resolve, reject) => {
-      window.cordova.plugins.photoLibrary.getPhoto(
-        libraryItem,
-        fullPhotoBlob => resolve(fullPhotoBlob),
-        err => reject(err)
-      )
+    return new Promise(async (resolve, reject) => {
+      // Upload a file
+      // POST /files/:dir-id
+      // Type  file
+      // Name  the file name
+      // Tags  an array of tags
+      // Executable  true if the file is executable (UNIX permission)
+      var uri = encodeURI(cozy.client._url + '/files/' + dirID +
+                          '?type=file&name=' + libraryItem['fileName'] +
+                          '&tags=library' +
+                          '&executable=false')
+      var options = new FileUploadOptions()
+      console.log(cozy.client)
+      console.log(libraryItem)
+
+      var credentials = await cozy.client.authorize()
+      var token = credentials.token.accessToken
+      options.fileKey = 'libraryItem:' + libraryItem['id'] // needed on iOS, to request PHAsset from ID (library items are sandboxed)
+      options.fileName = libraryItem['fileName']
+      options.mimeType = libraryItem['mimeType']
+      options.headers = {
+        'Authorization': 'Basic ' + token,
+        'Content-Type': libraryItem['mimeType']
+      } // get that in plugin code
+      console.log(options)
+      var ft = new FileTransfer()
+      ft.onprogress = function (progressEvent) {
+        if (progressEvent.lengthComputable) {
+          console.log('percent' + (progressEvent.loaded / progressEvent.total))
+        } else {
+          console.log('increment')
+        }
+      }
+      ft.upload(libraryItem['fileName'], uri, onUploadSuccess, onUploadFail, options)
     })
   }
 
   return Promise.resolve('')
 }
+// -------------------------------------------------------------------------
 
 export const getPhotos = async () => {
   const defaultReturn = []
@@ -65,7 +130,8 @@ export const getPhotos = async () => {
         (err) => {
           console.warn(err)
           resolve(defaultReturn)
-        }
+        },
+        {includeCloudData: false, includeVideos: true}
       )
     })
   }
