@@ -18,6 +18,13 @@ export const isAuthorized = async () => {
     const success = () => resolve(true)
     const error = () => resolve(false)
     window.cordova.plugins.photoLibrary.getLibrary(success, error, {includeCloudData: false, includeVideos: true})
+    // window.cordova.plugins.photoLibrary.isAuthorized(
+    //   success,
+    //   (error) => {
+    //     console.warn(error)
+    //     logException('isAuthorized error:', error)
+    //     resolve(false)
+    //   })
   })
 }
 
@@ -81,7 +88,7 @@ export const uploadLibraryItem = async (dirID, libraryItem) => {
       // Executable  true if the file is executable (UNIX permission)
       var uri = encodeURI(cozy.client._url + '/files/' + dirID +
                           '?type=file&name=' + libraryItem['fileName'] +
-                          '&tags=' + libraryItem['mimeType'] +
+                          '&tags=library' +
                           '&executable=false')
       var options = new FileUploadOptions()
       console.log(cozy.client)
@@ -93,7 +100,8 @@ export const uploadLibraryItem = async (dirID, libraryItem) => {
       options.fileName = libraryItem['fileName']
       options.mimeType = libraryItem['mimeType']
       options.headers = {
-        'Authorization': 'Basic ' + token
+        'Authorization': 'Basic ' + token,
+        'Content-Type': libraryItem['mimeType']
       } // get that in plugin code
       console.log(options)
       var ft = new FileTransfer()
