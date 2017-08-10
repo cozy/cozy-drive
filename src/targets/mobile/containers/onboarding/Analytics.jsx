@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import OnBoarding from '../../components/OnBoarding'
 import { setAnalytics } from '../../actions/settings'
 
-export const Analytics = ({ onActivate, onSkip }) =>
+export const Analytics = ({ onActivate, onSkip, breadcrumbs }) =>
 (
-  <OnBoarding onActivate={onActivate} onSkip={onSkip} stepName='analytics' currentStep={3} totalSteps={3} />
+  <OnBoarding onActivate={onActivate} onSkip={onSkip} stepName='analytics' breadcrumbs={breadcrumbs} />
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
