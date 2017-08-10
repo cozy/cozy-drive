@@ -9,7 +9,6 @@ import { share } from '..'
 import styles from '../share.styl'
 
 class ShareByEmail extends React.Component {
-
   sendSharingLinks (email, sharingType) {
     return share(this.props.document, email, sharingType)
       .then(sharing => {
