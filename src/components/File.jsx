@@ -36,7 +36,7 @@ export const getClassFromMime = (attrs) => {
     const correlationTable = {
       zip: 'zip',
       pdf: 'pdf',
-      spreadhseet: 'spreadsheet',
+      spreadsheet: 'spreadsheet',
       excel: 'spreadsheet',
       presentation: 'silde',
       powerpoint: 'slide'
