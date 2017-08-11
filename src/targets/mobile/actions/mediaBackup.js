@@ -1,7 +1,7 @@
 /* global cozy */
 
 import { setBackupImages } from './settings'
-import { getFilteredPhotos, getBlob, isAuthorized, getMediaFolderName, requestAuthorization } from '../lib/media'
+import { getFilteredPhotos, uploadLibraryItem, isAuthorized, getMediaFolderName, requestAuthorization } from '../lib/media'
 import { updateStatusBackgroundService } from '../lib/background'
 import { backupAllowed } from '../lib/network'
 import { HTTP_CODE_CONFLICT } from '../../../actions'
@@ -61,7 +61,9 @@ export const startMediaBackup = (dir, force = false) => async (dispatch, getStat
 
   if (canBackup(force, getState)) {
     const photosOnDevice = await getFilteredPhotos()
-    const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+
+    // TODO: shitty debug comment !!
+    const alreadyUploaded = [] // getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(photo => !alreadyUploaded.includes(photo.id))
     const totalUpload = photosToUpload.length
     if (totalUpload > 0) {
@@ -89,7 +91,7 @@ const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
   }
 
   try {
-    const blob = await getBlob(photo)
+    const blob = await uploadLibraryItem(dirID, photo)
     const options = {
       dirID,
       name: photo.fileName
