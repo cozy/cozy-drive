@@ -15,7 +15,7 @@ export const DOCTYPE = 'io.cozy.photos.albums'
 export const fetchAlbums = () => fetchCollection('albums', DOCTYPE)
 export const fetchAlbumPhotos = (album, skip = 0) => fetchReferencedFiles(album, skip)
 export const fetchAlbum = (id) => fetchDocument(DOCTYPE, id)
-export const createAlbum = (name) => createDocument({ type: DOCTYPE, name }, { updateCollections: ['albums'] })
+export const createAlbum = (name, createdAt = new Date()) => createDocument({ type: DOCTYPE, name, 'created_at': createdAt }, { updateCollections: ['albums'] })
 export const updateAlbum = (album) => updateDocument(album)
 export const deleteAlbum = (album) => deleteDocument(album, { updateCollections: ['albums'] })
 export const addToAlbum = (album, photoIds) => addReferencedFiles(album, photoIds)
