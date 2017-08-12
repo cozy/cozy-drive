@@ -7,7 +7,7 @@
 ### :wrench: Requirements
 
 - Node v6
-- Android SDK 25.0.0 to deploy on android
+- Android SDK 25.0.0 to deploy on android (download here: https://dl.google.com/android/repository/tools_r25.2.3-macosx.zip )
 - Xcode 8.1 to deploy on ios
 - cordova cli `npm install cordova -g`
 
