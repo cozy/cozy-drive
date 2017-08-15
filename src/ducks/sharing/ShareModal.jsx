@@ -10,27 +10,27 @@ import ShareByEmail from './components/ShareByEmail'
 export class ShareModal extends Component {
   render () {
     const { t } = this.context
-    const { onClose } = this.props
+    const { onClose, documentType = 'Document' } = this.props
     return (
       <Modal
-        title={t('Albums.share.title')}
+        title={t(`${documentType}.share.title`)}
         secondaryAction={onClose}
       >
         <Tabs initialActiveTab='email'>
           <TabList className={styles['pho-share-modal-tabs']}>
             <Tab name='email'>
-              {t('Albums.share.shareByEmail.title')}
+              {t(`${documentType}.share.shareByEmail.title`)}
             </Tab>
             <Tab name='link'>
-              {t('Albums.share.shareByLink.title')}
+              {t(`${documentType}.share.shareByLink.title`)}
             </Tab>
           </TabList>
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='email'>
-              <ShareByEmail document={this.props.document} />
+              <ShareByEmail document={this.props.document} documentType={documentType} />
             </TabPanel>
             <TabPanel name='link'>
-              <ShareByLink document={this.props.document} />
+              <ShareByLink document={this.props.document} documentType={documentType} />
             </TabPanel>
           </TabPanels>
         </Tabs>

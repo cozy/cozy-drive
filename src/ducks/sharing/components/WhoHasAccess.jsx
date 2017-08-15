@@ -17,9 +17,9 @@ class StatefulWhoHasAccess extends React.Component {
   }
 
   componentDidMount () {
-    const { _id, _type } = this.props.document
+    const { id, type } = this.props.document
     const { t } = this.context
-    getRecipients(_id, _type)
+    getRecipients(id, type)
     .then(recipients =>
       recipients.map(recipient => {
         const status = recipient.status === 'accepted'

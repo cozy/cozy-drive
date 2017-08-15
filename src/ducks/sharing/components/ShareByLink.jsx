@@ -6,11 +6,11 @@ import { deletePermission, createShareLink, getShareLink } from '..'
 
 import styles from '../share.styl'
 
-export const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
+export const ShareWithLinkToggle = ({ active, onToggle, documentType }, { t }) => (
   <div className={styles['coz-form-group']}>
-    <h3>{t('Albums.share.shareByLink.subtitle')}</h3>
+    <h3>{t(`${documentType}.share.shareByLink.subtitle`)}</h3>
     <div className={styles['pho-input-dual']}>
-      <div><label for='' className={styles['coz-form-desc']}>{t('Albums.share.shareByLink.desc')}</label></div>
+      <div><label for='' className={styles['coz-form-desc']}>{t(`${documentType}.share.shareByLink.desc`)}</label></div>
       <div>
         <Toggle
           id='pho-album-share-toggle'
@@ -22,9 +22,9 @@ export const ShareWithLinkToggle = ({ active, onToggle }, { t }) => (
   </div>
 )
 
-export const ShareWithLink = ({ shareLink, onCopy, copied }, { t }) => (
+export const ShareWithLink = ({ shareLink, onCopy, copied, documentType }, { t }) => (
   <div className={styles['coz-form']}>
-    <h4>{t('Albums.share.sharingLink.title')}</h4>
+    <h4>{t(`${documentType}.share.sharingLink.title`)}</h4>
     <div className={styles['pho-input-dual']}>
       <div><input type='text' name='' id='' value={shareLink} /></div>
       <div>
@@ -35,13 +35,13 @@ export const ShareWithLink = ({ shareLink, onCopy, copied }, { t }) => (
           >
             <div>
               <button className={classnames('coz-btn', 'coz-btn--secondary', styles['pho-btn-copy'])}>
-                {t('Albums.share.sharingLink.copy')}
+                {t(`${documentType}.share.sharingLink.copy`)}
               </button>
             </div>
           </CopyToClipboard>
         }
         {copied && <button className={classnames('coz-btn', 'coz-btn--secondary', styles['pho-btn-copied'])} aria-disabled>
-          {t('Albums.share.sharingLink.copied')}
+          {t(`${documentType}.share.sharingLink.copied`)}
         </button>}
       </div>
     </div>
@@ -57,7 +57,7 @@ class ShareByLink extends React.Component {
   }
 
   componentDidMount () {
-    getShareLink(this.props.document._id)
+    getShareLink(this.props.document.id)
     .then(sharing => {
       this.setState(state => ({...state, sharing, checked: sharing !== undefined}))
     })
@@ -75,7 +75,7 @@ class ShareByLink extends React.Component {
 
   fetchShareLink () {
     this.setState(state => ({...state, loading: true}))
-    createShareLink(this.props.document._id).then(
+    createShareLink(this.props.document.id).then(
       (sharing) => {
         this.setState(state => ({...state, loading: false, sharing}))
       }
@@ -89,18 +89,25 @@ class ShareByLink extends React.Component {
 
   render () {
     const t = this.context.t
-    const {checked, copied, loading, sharing} = this.state
+    const { checked, copied, loading, sharing } = this.state
+    const { documentType } = this.props
     return (
       <div>
-        <ShareWithLinkToggle active={checked} onToggle={checked => this.toggleShareLink(checked)} />
+        <ShareWithLinkToggle
+          active={checked}
+          onToggle={checked => this.toggleShareLink(checked)}
+          documentType={documentType}
+        />
         {checked && !loading && <ShareWithLink
           shareLink={sharing.sharelink}
           onCopy={() => this.setState(state => ({ ...state, copied: true }))}
-          copied={copied} />}
+          copied={copied}
+          documentType={documentType}
+        />}
 
         {loading &&
           <div className={styles['pho-share-modal-footer']}>
-            <p>{t('Albums.share.gettingLink')}</p>
+            <p>{t(`${documentType}.share.gettingLink`)}</p>
           </div>
         }
       </div>
