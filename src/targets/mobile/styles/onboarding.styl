@@ -1,0 +1,125 @@
+@require 'cozy-ui'
+
+.wizard
+    display flex
+    flex-direction column
+    min-height 100vh
+    width   85vw
+    padding 0 7.5vw
+    background-color white
+    color            black
+    text-align center
+
+    .wizard-header
+        display         flex
+        flex-direction  row
+        margin-top      2em
+        justify-content flex-start
+
+        .skipLink
+            padding         .5em
+            cursor          pointer
+            text-transform  uppercase
+            text-align      right
+            color           #95999d
+            margin-left     auto
+
+        .close-button
+            width      2em
+            height     2em
+            cursor     pointer
+
+            &::after, &::before
+                content          ''
+                position         absolute
+                border-radius    3px
+                width            2px
+                height           2em
+                background-color #95999d
+
+            &::after
+                transform rotate(-45deg);
+
+            &::before
+                transform rotate(45deg);
+
+    .logo-wrapper
+        max-width     3.5em
+        height        3.5em
+        margin        .5em auto 3em auto
+        padding       1.25em
+        border-radius 50%
+        box-shadow    0 1px 3px rgba(50, 54, 63, .19), 0 4px 12px rgba(50, 54, 63, .12)
+
+        &.error
+            background #f52d2d
+
+    .illustration
+        margin .5em auto
+        height 14em
+        background-size contain
+
+    .wizard-main
+        margin auto
+        padding 0 .5em
+
+    .title
+        margin    .25em auto
+        font-size 1.5em
+
+    .description
+        text-align center
+        margin     .5em 0
+        font-size  em(18px)
+        max-width  25em
+
+    .input
+        width            100%
+        border           none
+        padding-left     0
+        font-size        em(22px)
+        background-color white
+
+        &::placeholder
+            color   #32363f
+            opacity .5
+
+        &.error
+            color #f52d2d
+
+    .wizard-footer
+        display flex
+        flex-direction column
+        margin-bottom 1.5em
+
+        > .link
+            margin          1.5em .5em 0em .5em
+            text-align      left
+            text-decoration none
+            color           #297ef2
+
+.select-server
+    .description
+        text-align left
+
+.welcome .logo-wrapper, .select-server .logo-wrapper
+    background #297ef2
+
+
+// ASSETS
+.cozy-logo-white
+    height  3.5em
+    background embedurl("../assets/icons/icon-cozy.svg") center no-repeat
+    background-size contain
+
+.illustration-photos
+    background      embedurl("../assets/illustrations/illustration-photos.svg") center no-repeat
+
+.illustration-analytics
+    background      embedurl("../assets/illustrations/illustration-trophy.svg") center no-repeat
+
+.illustration-files
+    background      embedurl("../assets/illustrations/illustration-files.svg") center no-repeat
+
+.illustration-contacts
+    background      embedurl("../assets/illustrations/illustration-contacts.svg") center no-repeat

@@ -25,7 +25,30 @@ export const getClassFromMime = (attrs) => {
   if (isDirectory(attrs)) {
     return styles['fil-file-folder']
   }
-  return styles['fil-file-' + attrs.mime.split('/')[0]] || styles['fil-file-files']
+
+  const [type, subtype] = attrs.mime.split('/')
+  let className = 'files'
+
+  if (styles['fil-file-' + type]) {
+    className = type
+  } else if (type === 'application') {
+    // for mime types with an `application` type, we need to consider the subtype
+    const correlationTable = {
+      zip: 'zip',
+      pdf: 'pdf',
+      spreadsheet: 'sheet',
+      excel: 'sheet',
+      presentation: 'slide',
+      powerpoint: 'slide'
+    }
+
+    const reg = new RegExp(Object.keys(correlationTable).join('|'))
+    const result = subtype.match(reg)
+
+    if (result) className = correlationTable[result[0]]
+  }
+
+  return styles['fil-file-' + className]
 }
 
 const getClassDiv = element => {

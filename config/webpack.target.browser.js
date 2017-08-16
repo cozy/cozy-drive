@@ -1,9 +1,7 @@
 'use strict'
 
 const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const pkg = require(path.resolve(__dirname, '../package.json'))
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
   entry: {
@@ -19,18 +17,8 @@ module.exports = {
     'cozy-client-js': 'cozy'
   },
   plugins: [
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       __TARGET__: JSON.stringify('browser')
-    }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../src/targets/public/index.ejs'),
-      title: pkg.name,
-      filename: 'public/index.html',
-      chunks: ['public/app'],
-      inject: 'head',
-      minify: {
-        collapseWhitespace: true
-      }
     })
   ]
 }

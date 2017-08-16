@@ -1,24 +1,49 @@
 'use strict'
 
 const { extractor } = require('./webpack.vars')
+const { LoaderOptionsPlugin } = require('webpack')
 
 module.exports = {
   resolve: {
     extensions: ['.styl']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.styl$/,
-        loader: extractor.extract('style', [
-          'css-loader?importLoaders=1&modules&localIdentName=[local]--[hash:base64:5]',
-          'postcss-loader',
-          'stylus-loader'
-        ])
+        exclude: /(node_modules)/,
+        loader: extractor.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[local]--[hash:base64:5]'
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: () => [require('autoprefixer')({ browsers: ['last 2 versions'] })]
+              }
+            },
+            'stylus-loader'
+          ]
+        })
       }
     ]
   },
-  stylus: {
-    use: [ require('cozy-ui/stylus')() ]
-  }
+  plugins: [
+    new LoaderOptionsPlugin({
+      options: {
+        stylus: {
+          use: [ require('cozy-ui/stylus')() ]
+        }
+      }
+    })
+  ]
 }
