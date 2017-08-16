@@ -1,6 +1,6 @@
 {
   "name": "cozy-photos",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.js --bail",
