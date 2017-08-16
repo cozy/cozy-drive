@@ -41,7 +41,7 @@ function init () {
 
   if (directdownload) {
     cozy.client.files.getDownloadLinkById(id).then(
-      link => window.open(`${cozy.client._url}${link}`, '_SELF')
+      link => { window.location = `${cozy.client._url}${link}` }
     ).catch(e => {
       cozy.bar.init({
         appName: data.cozyAppName,
