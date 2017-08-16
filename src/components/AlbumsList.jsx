@@ -8,7 +8,7 @@ import AlbumItem from '../containers/AlbumItem'
 const FALLBACK_CREATION_DATE = null
 const sortByCreationDate = (a, b) => {
   // descending order, so newer albums first
-  return (new Date(a.created_at || FALLBACK_CREATION_DATE)) < (new Date(b.created_at || FALLBACK_CREATION_DATE))
+  return (new Date(b.created_at || FALLBACK_CREATION_DATE)) - (new Date(a.created_at || FALLBACK_CREATION_DATE))
 }
 
 const DumbAlbumsList = props => (
