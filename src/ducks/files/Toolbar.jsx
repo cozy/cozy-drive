@@ -51,14 +51,14 @@ class Toolbar extends React.Component {
           className={styles['fil-toolbar-menu']}
           buttonClassName={styles['fil-toolbar-more-btn']}
         >
-          <Item>
+          { notRootfolder && <Item>
             <a
               className={styles['fil-action-share']}
               onClick={() => this.setState(toggleShowShareModal)}
             >
               {t('toolbar.share')}
             </a>
-          </Item>
+          </Item>}
           <Item>
             <UploadButton
               onUpload={files => uploadFiles(files, displayedFolder)}
