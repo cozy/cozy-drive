@@ -39,12 +39,12 @@ class Toolbar extends React.Component {
           label={t('toolbar.item_upload')}
           className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', 'coz-desktop')}
         />
-        <ShareButton
+        { notRootfolder && <ShareButton
           disabled={disabled}
           onShare={() => this.setState(toggleShowShareModal)}
           label={t('toolbar.share')}
           className={'coz-desktop'}
-        />
+        />}
         <Menu
           title={t('toolbar.item_more')}
           disabled={disabled}
