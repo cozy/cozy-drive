@@ -9,7 +9,7 @@ const ButtonClient = ({ url, className, text }) => (
 )
 
 const DumbButtonClientDesktop = ({ t }) => (
-  <ButtonClient icon={t('nav.link-client')} className={styles['coz-btn-client']} text={t('nav.btn-client')} />
+  <ButtonClient url={t('nav.link-client')} className={styles['coz-btn-client']} text={t('nav.btn-client')} />
 )
 
 export const ButtonClientDesktop = translate()(DumbButtonClientDesktop)
