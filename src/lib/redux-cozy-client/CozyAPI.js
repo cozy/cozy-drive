@@ -85,9 +85,9 @@ export default class CozyAPI {
   }
 
   async updateDocument (doc) {
-    /* const updated = */ await cozy.client.data.updateAttributes(doc.type, doc.id, doc)
+    const updated = await cozy.client.data.updateAttributes(doc.type, doc.id, doc)
     // we forge a standard response with a 'data' property
-    return { data: [doc] }
+    return { data: [{...doc, _rev: updated._rev}] }
   }
 
   async deleteDocument (doc) {
