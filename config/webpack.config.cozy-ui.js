@@ -1,7 +1,7 @@
 'use strict'
 
-const { extractor } = require('./webpack.vars')
 const { LoaderOptionsPlugin } = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   resolve: {
@@ -12,7 +12,7 @@ module.exports = {
       {
         test: /\.styl$/,
         exclude: /(node_modules)/,
-        loader: extractor.extract({
+        loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             {
