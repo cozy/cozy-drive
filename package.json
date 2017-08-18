@@ -8,7 +8,7 @@
     "build:drive:mobile": "npm run internal:build -- --env.app=drive --env.target=mobile --env.production",
     "clean:browser": "rm -rf build/*",
     "clean:mobile": "rm -rf targets/*/mobile/www/*",
-    "deploy": "git-directory-deploy --username=Cozy --email=contact@cozycloud.cc --directory=build/ --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-drive.git",
+    "deploy": "git-directory-deploy --username=Cozy --email=contact@cozycloud.cc --directory=build/drive/ --repo=https://$GITHUB_TOKEN@github.com/cozy/cozy-drive.git",
     "internal:build": "webpack --config webpack.config.js --bail",
     "internal:watch": "webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "tx": "tx pull --all || true",

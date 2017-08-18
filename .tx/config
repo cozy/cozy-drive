@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 
 [cozy-drive.global]
-file_filter = src/locales/<lang>.json
-source_file = src/locales/en.json
+file_filter = src/drive/locales/<lang>.json
+source_file = src/drive/locales/en.json
 source_lang = en
 type = KEYVALUEJSON
