@@ -25,7 +25,7 @@ mobile specific:
 
 ```sh
 $ yarn mobile:drive:icon
-$ yarn build:mobile
+$ yarn build:drive:mobile
 $ cd targets/drive/mobile
 $ cordova prepare
 ```
@@ -33,7 +33,7 @@ $ cordova prepare
 or if you develop :loop::
 
 ```sh
-$ yarn watch:mobile
+$ yarn watch:drive:mobile
 ```
 
 

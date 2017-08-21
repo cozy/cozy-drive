@@ -6,13 +6,13 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
+import { CozyClient, CozyProvider, cozyMiddleware, reducer } from 'redux-cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
-import '../styles/main'
+import 'photos/styles/main'
 
 import App from './App'
-import Viewer from '../components/Viewer'
-import { CozyClient, CozyProvider, cozyMiddleware, reducer } from '../lib/redux-cozy-client'
+import Viewer from 'photos/components/Viewer'
 
 const arrToObj = (obj = {}, varval = ['var', 'val']) => {
   obj[varval[0]] = varval[1]
@@ -58,7 +58,7 @@ function init () {
   )
 
   render(
-    <I18n lang={lang} dictRequire={(lang) => require(`../locales/${lang}`)}>
+    <I18n lang={lang} dictRequire={(lang) => require(`photos/locales/${lang}`)}>
       <CozyProvider store={store} client={client}>
         <Router history={hashHistory}>
           <Route path='shared' component={props => <App albumId={id} {...props} />}>

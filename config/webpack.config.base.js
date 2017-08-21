@@ -13,7 +13,9 @@ module.exports = function(production) {
       modules: ['node_modules', 'src'],
       extensions: ['.js', '.json', '.css'],
       alias: {
-        drive: path.resolve(SRC_DIR, './drive/')
+        drive: path.resolve(SRC_DIR, './drive/'),
+        photos: path.resolve(SRC_DIR, './photos/'),
+        'redux-cozy-client': path.resolve(SRC_DIR, './lib/redux-cozy-client')
       }
     },
     module: {

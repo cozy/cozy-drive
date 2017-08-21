@@ -2,7 +2,7 @@
 
 const CopyPlugin = require('copy-webpack-plugin')
 
-module.exports = function(production) {
+module.exports = function(production, app) {
   // Method to modify the manifest slug on dev builds. On production builds the
   // manifest should be copied without modification.
   //
@@ -19,7 +19,7 @@ module.exports = function(production) {
   return {
     plugins: [
       new CopyPlugin([
-        { from: 'manifest.webapp', transform: transformManifest },
+        { from: `targets/${app}/manifest.webapp`, transform: transformManifest },
         { from: 'README.md' },
         { from: 'LICENSE' }
       ])

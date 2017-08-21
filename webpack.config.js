@@ -11,8 +11,8 @@ module.exports = function(env) {
     require('./config/webpack.config.preact'),
     require('./config/webpack.config.cozy-ui'),
     require('./config/webpack.config.pictures')(production),
-    require('./config/webpack.config.vendors'),
-    require('./config/webpack.config.manifest')(production),
+    require('./config/webpack.config.vendors')(production, app),
+    require('./config/webpack.config.manifest')(production, app),
     require(`./config/webpack.target.${target}`)(production, app),
     require(production ? './config/webpack.config.prod' : './config/webpack.config.dev')
   )

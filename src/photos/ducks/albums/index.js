@@ -8,7 +8,7 @@ import {
   addReferencedFiles,
   removeReferencedFiles,
   downloadArchive
-} from '../../lib/redux-cozy-client'
+} from 'redux-cozy-client'
 
 export const DOCTYPE = 'io.cozy.photos.albums'
 

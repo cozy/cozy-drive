@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { cozyConnect } from '../lib/redux-cozy-client'
+import { cozyConnect } from 'redux-cozy-client'
 import styles from '../styles/layout'
 
 import { Toolbar as TimelineToolbar, fetchTimeline, getPhotosByMonth } from '../ducks/timeline'

@@ -3,21 +3,21 @@
 
 import 'babel-polyfill'
 
-import './styles/main'
+import 'photos/styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
+import { CozyClient, CozyProvider, cozyMiddleware } from 'redux-cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
-import photosApp from './reducers'
-import AppRoute from './components/AppRoute'
+import photosApp from 'photos/reducers'
+import AppRoute from 'photos/components/AppRoute'
 import { shouldEnableTracking, getTracker, createTrackerMiddleware } from 'cozy-ui/react/helpers/tracker'
-import eventTrackerMiddleware from './middlewares/EventTracker'
-import { CozyClient, CozyProvider, cozyMiddleware } from './lib/redux-cozy-client'
+import eventTrackerMiddleware from 'photos/middlewares/EventTracker'
 
 const loggerMiddleware = createLogger()
 
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   )
 
   render((
-    <I18n lang={lang} dictRequire={(lang) => require(`./locales/${lang}`)}>
+    <I18n lang={lang} dictRequire={(lang) => require(`photos/locales/${lang}`)}>
       <CozyProvider store={store} client={client}>
         <Router history={history} routes={AppRoute} />
       </CozyProvider>

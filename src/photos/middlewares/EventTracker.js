@@ -1,6 +1,6 @@
 import { ADD_TO_UPLOAD_QUEUE } from '../ducks/upload'
 import { DOCTYPE as DOCTYPE_ALBUM } from '../ducks/albums'
-import { CREATE_DOCUMENT } from '../lib/redux-cozy-client'
+import { CREATE_DOCUMENT } from 'redux-cozy-client'
 
 const CATEGORY = {
   INTERACTION: 'interaction'

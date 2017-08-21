@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { downloadArchive } from '../../lib/redux-cozy-client'
+import { downloadArchive } from 'redux-cozy-client'
 import SelectionBar from './SelectionBar'
 
 // constants

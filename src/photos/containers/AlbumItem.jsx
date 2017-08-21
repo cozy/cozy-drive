@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
-import { cozyConnect } from '../lib/redux-cozy-client'
+import { cozyConnect } from 'redux-cozy-client'
 
 import { fetchAlbumPhotos } from '../ducks/albums'
 import ImageLoader from '../components/ImageLoader'

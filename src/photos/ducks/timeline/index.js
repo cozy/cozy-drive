@@ -4,7 +4,7 @@ import DeleteConfirm from './components/DeleteConfirm'
 import { hideSelectionBar, getSelectedIds } from '../selection'
 import { FILE_DOCTYPE } from '../../constants/config'
 import { DOCTYPE as ALBUMS_DOCTYPE, removeFromAlbum } from '../albums'
-import { fetchCollection, makeActionCreator, createFile, trashFile } from '../../lib/redux-cozy-client'
+import { fetchCollection, makeActionCreator, createFile, trashFile } from 'redux-cozy-client'
 
 // constants
 const TIMELINE = 'timeline'

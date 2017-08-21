@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { cozyConnect } from '../lib/redux-cozy-client'
+import { cozyConnect } from 'redux-cozy-client'
 
-import PhotoBoard from '../components/PhotoBoard'
-import Loading from '../components/Loading'
-import ErrorComponent from '../components/ErrorComponent'
-import ErrorShare from '../components/ErrorShare'
-import Menu, { Item } from '../components/Menu'
+import PhotoBoard from 'photos/components/PhotoBoard'
+import Loading from 'photos/components/Loading'
+import ErrorComponent from 'photos/components/ErrorComponent'
+import ErrorShare from 'photos/components/ErrorShare'
+import Menu, { Item } from 'photos/components/Menu'
 
-import { fetchAlbum, fetchAlbumPhotos, downloadAlbum } from '../ducks/albums'
+import { fetchAlbum, fetchAlbumPhotos, downloadAlbum } from 'photos/ducks/albums'
 
 import classNames from 'classnames'
 import styles from './index.styl'
