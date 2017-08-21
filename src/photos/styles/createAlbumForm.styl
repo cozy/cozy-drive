@@ -1,0 +1,40 @@
+@import 'cozy-ui'
+
+.pho-create-album-form
+    @extend $form-text
+
+    .coz-create-album-label
+        display         block
+        color           grey-11
+        font-size       .75em
+        line-height     1.5
+        text-transform  uppercase
+
+    .coz-inline-form
+        display     flex
+        align-items stretch
+        width       100%
+
+        .coz-input-text
+            width        40%
+            flex-grow    1
+
+        .coz-input-text,
+        .coz-btn
+            font-size  1em
+            height     3em
+            margin-right .3em
+            align-self stretch
+
+        .coz-btn
+            margin-right 0
+            padding-left 2.5em
+            padding-right 2.5em
+
+            &[aria-busy=true]
+                padding-right 1em
+
+@media (max-width: (1023/basefont)rem)
+    .pho-create-album-form .coz-inline-form .coz-btn
+        padding-left 1.5em
+        padding-right 1.5em

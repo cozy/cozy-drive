@@ -1,0 +1,189 @@
+@import 'cozy-ui'
+
+.upload-queue
+    @extend $popover
+    position fixed
+    bottom   em(8px)
+    right    em(24px)
+    height   em(210px)
+    width    em(480px)
+    max-width 90%
+    border   1px solid grey-09
+    border-radius    4px
+    background-color white
+    display          flex
+    flex-direction   column
+    transition       0.5s
+    opacity          0
+    visibility       hidden
+    transform        translateY(300px)
+
+.upload-queue--visible
+    opacity    1
+    visibility visible
+    transform  translate(0)
+
+.upload-queue-header
+    background-color grey-10
+    color            grey-08
+    font-weight      bold
+    margin           0
+    padding          em(8px) em(16px) em(8px)
+
+    .upload-queue-header-inner
+        display flex
+        justify-content space-between
+        align-items center
+
+    .btn-close
+        border 0
+        background 0
+        margin 0
+        padding .4em 0 .4em .8em
+        color dodger-blue
+        text-transform uppercase
+        font-size .8em
+
+progress.upload-queue-progress
+    -webkit-appearance none
+    -moz-appearance    none
+    border     none
+    display    block
+    width      100%
+    height     em(2px)
+    margin     0
+
+progress.upload-queue-progress::-webkit-progress-bar
+    background-color grey-09
+progress.upload-queue-progress::-webkit-progress-value
+    background-color dodger-blue
+progress.upload-queue-progress::-moz-progress-bar
+    background-color dodger-blue
+
+.upload-queue-content
+    overflow auto
+
+.upload-queue--collapsed
+    height em(40px)
+
+    .upload-queue-content
+        visibility none
+
+.upload-queue-list
+    flex      1 1 auto
+    display   flex
+    flex-direction column
+
+.upload-queue-item--error
+    background-color rgba(245, 44, 44, 0.1)
+
+.upload-queue-item--done
+    background-color grey-10
+
+.upload-queue-item
+    height          50px
+    box-sizing      border-box
+    display         flex
+    flex-direction  row
+    align-items     center
+    flex            0 0 auto
+    width           100%
+    max-width       'calc(100vw - %s)' % em(220px)
+    border-bottom   1px solid grey-09
+
+    .item-cell
+        box-sizing  border-box
+        padding     em(15px) em(32px)
+        font-size   14px
+
+    .item-cell.item-file
+        padding-left   em(60px)
+        font-size      16px
+        line-height    1.3
+        white-space    nowrap
+        overflow       hidden
+        text-overflow  ellipsis
+        color          grey-08
+
+    .item-file
+        flex        0 0 85%
+        user-select none
+
+    .item-ext
+        color grey-11
+
+    .item-image
+        background embedurl('./assets/icons/icon-type-image.svg') em(15px) center no-repeat
+
+    .item-status
+        flex       0 0 15%
+        text-align center
+
+    .item-pending
+        text-transform uppercase
+        color          dodger-blue
+        font-size      em(12px)
+        font-weight    bold
+        line-height    2em
+
+    .item-loading
+        @extend $icon-16
+        @extend $icon-spinner-blue
+
+    .item-canceled
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-cross.svg')
+
+    .item-failed
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-warning.svg')
+
+    .item-conflict
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-warning.svg')
+
+    .item-loaded
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-checked.svg')
+
+@media (max-width: (1023/basefont)rem)
+    // we need to cover the border-bottom of the cozy-bar
+    $coz-bar-size = 48px
+    $coz-bar-border-size = 1px
+
+    .upload-queue
+        position static
+        transform none
+        z-index $app-index
+        width 100%
+        max-width 100%
+        height auto
+        max-height 0
+        border-radius 0
+        border 0
+        background 0
+        box-shadow none
+
+        &:before
+            position fixed
+            top $coz-bar-size - $coz-bar-border-size
+            z-index  $nav-index
+            width 100%
+            height $coz-bar-border-size
+            content ''
+            background white
+
+    .upload-queue--visible
+        max-height 30%
+
+    .upload-queue-content
+        display none
+
+    .upload-queue-header
+        background 0
+        color dodger-blue
+        text-transform uppercase

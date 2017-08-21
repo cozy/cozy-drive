@@ -1,0 +1,10 @@
+@import 'cozy-ui'
+
+.pho-alerter
+    @extends $alerts
+
+    .coz-overlay
+    .coz-alert
+        // Specify z-index to bypass upload button z-index
+        z-index $modal-index
+

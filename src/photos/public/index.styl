@@ -1,0 +1,38 @@
+@import 'cozy-ui'
+@import '../styles/topbar'
+@import '../styles/toolbar'
+
+.pho-public-layout
+    display flex
+    flex-direction column
+    width 100%
+    top-padded(30px)
+
+@media (max-width: (768/basefont)rem)
+    .pho-public-layout--full
+        reset()
+        position: absolute;
+        top 0
+        right 0
+        bottom 0
+        left 0
+        z-index $bar-index
+        background-color white
+
+.pho-content-header.--no-icon
+    left 0
+    left-padded(15px)
+
+.pho-public-download
+    padding-left         em(44px, 16px)
+    background-image     embedurl('../assets/icons/icon-download-16.svg')
+    background-position  em(17px, 16px) center
+    background-repeat    no-repeat
+
+@media (max-width: (768/basefont)rem)
+    .pho-public-download
+        display none
+
+@media (min-width: (769/basefont)rem)
+    .pho-toolbar-menu
+        display none
