@@ -87,7 +87,7 @@ class AlbumToolbar extends Component {
             </Item>
           }
         </Menu>
-        {this.state.showShareModal && <ShareModal document={album} onClose={this.closeShareModal} />}
+        {this.state.showShareModal && <ShareModal document={album} documentType='Albums' onClose={this.closeShareModal} />}
       </div>
     )
   }

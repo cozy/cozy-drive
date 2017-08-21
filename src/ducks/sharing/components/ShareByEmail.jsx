@@ -10,9 +10,10 @@ import styles from '../share.styl'
 
 class ShareByEmail extends React.Component {
   sendSharingLinks (email, sharingType) {
-    return share(this.props.document, email, sharingType)
+    const { document, documentType } = this.props
+    return share(document, email, sharingType)
       .then(sharing => {
-        Alerter.info('Albums.share.shareByEmail.success', { email })
+        Alerter.info(`${documentType}.share.shareByEmail.success`, { email })
       })
       .catch(err => {
         Alerter.error('Error.generic')
@@ -21,10 +22,14 @@ class ShareByEmail extends React.Component {
   }
 
   render () {
+    const { document, documentType } = this.props
     return (
       <div>
-        <ShareByUrl onSend={(email, sharingType) => this.sendSharingLinks(email, sharingType)} />
-        <WhoHasAccess document={this.props.document} />
+        <ShareByUrl
+          onSend={(email, sharingType) => this.sendSharingLinks(email, sharingType)}
+          documentType={documentType}
+        />
+        <WhoHasAccess document={document} />
       </div>
     )
   }
@@ -63,11 +68,12 @@ class ShareByUrl extends React.Component {
 
   render () {
     const { t } = this.context
+    const { documentType } = this.props
     return (
       <div className={styles['coz-form-group']}>
-        <h3>{t('Albums.share.shareByEmail.subtitle')}</h3>
+        <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
         <div className={styles['coz-form']}>
-          <label className={styles['coz-form-label']} for='email'>{t('Albums.share.shareByEmail.email')}</label>
+          <label className={styles['coz-form-label']} for='email'>{t(`${documentType}.share.shareByEmail.email`)}</label>
           <ShareAutocomplete
             value={this.state.email}
             onChange={(email, url) => this.onAutocomplete(email, url)}
@@ -86,7 +92,7 @@ class ShareByUrl extends React.Component {
             className={classnames('coz-btn', 'coz-btn--regular')}
             disabled={!this.state.email}
             onClick={e => this.sendSharingLink()}>
-            {t('Albums.share.shareByEmail.send')}
+            {t(`${documentType}.share.shareByEmail.send`)}
           </button>
         </div>
       </div>
