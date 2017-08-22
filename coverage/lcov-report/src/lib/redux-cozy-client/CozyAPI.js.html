@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/lib/redux-cozy-client/CozyAPI.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/lib/redux-cozy-client</a> CozyAPI.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/60</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.45% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/55</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* global cozy */
+const FILES_DOCTYPE = 'io.cozy.files'
+const FETCH_LIMIT = 50
+&nbsp;
+export default class CozyAPI {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor (config) {
+<span class="cstat-no" title="statement not covered" >    cozy.client.init(config)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync fetchDocuments (doctype) {
+    // WARN: cozy-client-js lacks a cozy.data.findAll method that uses this route
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      // WARN: if no document of this doctype exist, this route will return a 404,
+      // so we need to try/catch and return an empty response object in case of a 404
+      const resp = <span class="cstat-no" title="statement not covered" >await cozy.client.fetchJSON('GET', `/data/${doctype}/_all_docs?include_docs=true`)</span>
+      // WARN: the JSON response from the stack is not homogenous with other routes (offset? rows? total_rows?)
+      // see https://github.com/cozy/cozy-stack/blob/master/docs/data-system.md#list-all-the-documents
+      // WARN: looks like this route returns something looking like a couchDB design doc, we need to filter it:
+      const rows = <span class="cstat-no" title="statement not covered" >resp.rows.filter(<span class="fstat-no" title="function not covered" >ro</span>w =&gt; <span class="cstat-no" title="statement not covered" >!row.doc.hasOwnProperty('views'))</span></span>
+      // we normalize the data (note that we add _type so that cozy.client.data.listReferencedFiles works...)
+      const docs = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >ro</span>w =&gt; <span class="cstat-no" title="statement not covered" >Object.assign({}, row.doc, { id: row.id, type: doctype, _type: doctype }))</span></span>
+      // we forge a correct JSONAPI response:
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        data: docs,
+        meta: { count: resp.total_rows },
+        skip: resp.offset,
+        next: false
+      }
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      if (error.message.match(/not_found/)) {</span>
+<span class="cstat-no" title="statement not covered" >        return { data: [], meta: { count: 0 }, skip: 0, next: false }</span>
+      }
+<span class="cstat-no" title="statement not covered" >      throw error</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync queryDocuments (doctype, index, options) {
+    const fields = <span class="cstat-no" title="statement not covered" >options.fields</span>
+    const skip = <span class="cstat-no" title="statement not covered" >options.skip || 0</span>
+    // Mango wants an array of single-property-objects...
+    const sort = <span class="cstat-no" title="statement not covered" >options.sort</span>
+      ? index.fields.map(<span class="fstat-no" title="function not covered" >f </span>=&gt; (<span class="cstat-no" title="statement not covered" >{ [f]: options.sort[f] || 'desc' })</span>)
+      : undefined
+&nbsp;
+    const queryOptions = <span class="cstat-no" title="statement not covered" >{</span>
+      limit: FETCH_LIMIT,
+      wholeResponse: true, // WARN: mandatory to get the full JSONAPI response
+      ...options,
+      // TODO: type and class should not be necessary, it's just a temp fix for a stack bug
+      fields: [...fields, '_id', 'type', 'class'],
+      skip,
+      sort
+    }
+&nbsp;
+    // abstract away the format differences between query replies on the VFS versus the data API
+    let data, meta, next
+<span class="cstat-no" title="statement not covered" >    if (doctype === FILES_DOCTYPE) {</span>
+      const response = <span class="cstat-no" title="statement not covered" >await cozy.client.files.query(index, queryOptions)</span>
+<span class="cstat-no" title="statement not covered" >      data = response.data.map(<span class="fstat-no" title="function not covered" >do</span>c =&gt; <span class="cstat-no" title="statement not covered" >Object.assign({ _id: doc.id }, doc, doc.attributes))</span></span>
+<span class="cstat-no" title="statement not covered" >      meta = response.meta</span>
+<span class="cstat-no" title="statement not covered" >      next = meta.count &gt; skip + FETCH_LIMIT</span>
+    } else {
+      const response = <span class="cstat-no" title="statement not covered" >await cozy.client.data.query(index, queryOptions)</span>
+<span class="cstat-no" title="statement not covered" >      data = response.docs.map(<span class="fstat-no" title="function not covered" >do</span>c =&gt; <span class="cstat-no" title="statement not covered" >Object.assign({id: doc._id}, doc))</span></span>
+<span class="cstat-no" title="statement not covered" >      meta = {}</span>
+<span class="cstat-no" title="statement not covered" >      next = response.next</span>
+    }
+&nbsp;
+    // we forge a correct JSONAPI response:
+<span class="cstat-no" title="statement not covered" >    return { data, meta, next }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync fetchDocument (doctype, id) {
+    const doc = <span class="cstat-no" title="statement not covered" >await cozy.client.data.find(doctype, id)</span>
+    // we normalize again...
+    const normalized = <span class="cstat-no" title="statement not covered" >{ ...doc, id: doc._id, type: doc._type }</span>
+<span class="cstat-no" title="statement not covered" >    return { data: [normalized] }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync createDocument (doc) {
+    const created = <span class="cstat-no" title="statement not covered" >await cozy.client.data.create(doc.type, doc)</span>
+    // we forge a standard response with a 'data' property
+    const normalized = <span class="cstat-no" title="statement not covered" >{ ...created, id: created._id }</span>
+<span class="cstat-no" title="statement not covered" >    return { data: [normalized] }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync updateDocument (doc) {
+    const updated = <span class="cstat-no" title="statement not covered" >await cozy.client.data.updateAttributes(doc.type, doc.id, doc)</span>
+    // we forge a standard response with a 'data' property
+<span class="cstat-no" title="statement not covered" >    return { data: [{...doc, _rev: updated._rev}] }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync deleteDocument (doc) {
+    /* const deleted = */ <span class="cstat-no" title="statement not covered" >await cozy.client.data.delete(doc.type, doc)</span>
+    // we forge a standard response with a 'data' property
+<span class="cstat-no" title="statement not covered" >    return { data: [doc] }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync createIndex (doctype, fields) {
+<span class="cstat-no" title="statement not covered" >    return await cozy.client.data.defineIndex(doctype, fields)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync fetchFileByPath (path) {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      const file = <span class="cstat-no" title="statement not covered" >await cozy.client.files.statByPath(path)</span>
+      // we forge a standard response with a 'data' property
+<span class="cstat-no" title="statement not covered" >      return { data: [normalizeFile(file)] }</span>
+    } catch (err) {
+<span class="cstat-no" title="statement not covered" >      return null</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync createFile (file, dirID) {
+    const created = <span class="cstat-no" title="statement not covered" >await cozy.client.files.create(file, { dirID })</span>
+    // we forge a standard response with a 'data' property
+<span class="cstat-no" title="statement not covered" >    return { data: [normalizeFile(created)] }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync trashFile (file) {
+    /* const trashed = */ <span class="cstat-no" title="statement not covered" >cozy.client.files.trashById(file.id)</span>
+    // we forge a standard response with a 'data' property
+<span class="cstat-no" title="statement not covered" >    return { data: [file] }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync fetchReferencedFiles (doc, skip = <span class="branch-0 cbranch-no" title="branch not covered" >0)</span> {
+    // WARN: _type and _id are needed by cozy.client.data.fetchReferencedFiles
+    const normalized = <span class="cstat-no" title="statement not covered" >{ ...doc, _type: doc.type, _id: doc.id }</span>
+    // WARN: the stack API is probably not ideal here: referencedFiles are in the 'included' property
+    // (that should be used when fetching an entity AND its relations) and the 'data' property
+    // only contains uplets { id, type }
+    const { included, meta } = <span class="cstat-no" title="statement not covered" >await cozy.client.data.fetchReferencedFiles(normalized, { skip, limit: FETCH_LIMIT })</span>
+    // we forge a standard response with a 'data' property
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      data: !included ? [] : included.map(<span class="fstat-no" title="function not covered" >fi</span>le =&gt; (<span class="cstat-no" title="statement not covered" >{ ...file, ...file.attributes, type: 'io.cozy.files' })</span>),
+      meta,
+      next: meta.count &gt; skip + FETCH_LIMIT,
+      skip
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync addReferencedFiles (doc, ids) {
+<span class="cstat-no" title="statement not covered" >    await cozy.client.data.addReferencedFiles(doc, ids)</span>
+<span class="cstat-no" title="statement not covered" >    return ids</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync removeReferencedFiles (doc, ids) {
+    // WARN: _type and _id are needed by cozy.client.data.removeReferencedFiles
+    const normalized = <span class="cstat-no" title="statement not covered" >{ ...doc, _type: doc.type, _id: doc.id }</span>
+<span class="cstat-no" title="statement not covered" >    await cozy.client.data.removeReferencedFiles(normalized, ids)</span>
+<span class="cstat-no" title="statement not covered" >    return ids</span>
+  }
+}
+&nbsp;
+const normalizeFile = <span class="fstat-no" title="function not covered" >(f</span>ile) =&gt; (<span class="cstat-no" title="statement not covered" >{ ...file, ...file.attributes, id: file._id, type: file._type })</span>
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Aug 21 2017 15:25:08 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

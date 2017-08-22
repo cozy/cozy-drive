@@ -1,0 +1,22 @@
+@import 'cozy-ui'
+
+.pho-wrapper
+    @extend    $app-2panes-sticky
+
+.pho-content
+    padding 0
+
+.pho-content-wrapper
+.pho-content-wrapper > [role=contentinfo]
+    position        relative
+    display         flex
+    flex-direction  column
+    flex            1 1 auto
+    box-sizing      border-box
+    height          100%
+    overflow-x      hidden
+    overflow-y      auto
+    top-padded(30px)
+
+    @media (max-width: (768/basefont)rem)
+        padding 0

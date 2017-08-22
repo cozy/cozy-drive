@@ -1,6 +1,6 @@
 'use strict'
 
-const { extractor } = require('./webpack.vars')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   module: {
@@ -8,7 +8,7 @@ module.exports = {
       {
         test: /\.styl$/,
         include: /(cozy-ui\/react)/,
-        loader: extractor.extract({
+        loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             {

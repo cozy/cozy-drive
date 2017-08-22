@@ -1,0 +1,29 @@
+@require 'cozy-ui'
+
+:local
+    @extend $navigation
+
+.pho-cat-photos
+    background: embedurl("../assets/icons/icon-image.svg") em(24px) center no-repeat
+    &.active
+        background-image: embedurl("../assets/icons/icon-image-active.svg")
+.pho-cat-albums
+    background: embedurl("../assets/icons/icon-album.svg") em(24px) center no-repeat
+    &.active
+        background-image: embedurl("../assets/icons/icon-album-active.svg")
+.pho-cat-shared
+    background: embedurl("../assets/icons/icon-share.svg") em(24px) center no-repeat
+    &.active
+        background-image: embedurl("../assets/icons/icon-share-active.svg")
+.pho-cat-trash
+    background: embedurl("../assets/icons/icon-trash.svg") em(24px) center no-repeat
+    &.active
+        background-image: embedurl("../assets/icons/icon-trash-active.svg")
+
+
+@media (max-width: (1023/basefont)rem)
+    .pho-cat-photos
+    .pho-cat-albums
+    .pho-cat-shared
+    .pho-cat-trash
+        background-position center top
