@@ -1602,13 +1602,13 @@ cozy-client-js@0.3.11:
   version "0.3.11"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.11.tgz#60aa59e56d51af8bae7fcc4929fd51a90a1b8b72"
 
-cozy-ui@^3.0.0-beta41:
-  version "3.0.0-beta9"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta9.tgz#52369cfa4b456a2e209cd756672a21f284bd7f24"
+cozy-ui@3.0.0-beta41:
+  version "3.0.0-beta41"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta41.tgz#ed76a74a6dc2372ed878d69ee93a57817e649960"
   dependencies:
     classnames "^2.2.5"
     md5 "^2.2.0"
-    normalize.css "5.0.0"
+    normalize.css "^7.0.0"
 
 create-ecdh@^4.0.0:
   version "4.0.0"
@@ -4662,9 +4662,9 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-normalize.css@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-5.0.0.tgz#7cec875ce8178a5333c4de80b68ea9c18b9d7c37"
+normalize.css@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-7.0.0.tgz#abfb1dd82470674e0322b53ceb1aaf412938e4bf"
 
 npm-run-all@^3.1.0:
   version "3.1.2"
@@ -5995,7 +5995,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@2, request@2.80.0:
+request@2, request@2.80.0, request@^2.79.0:
   version "2.80.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.80.0.tgz#8cc162d76d79381cdefdd3505d76b80b60589bd0"
   dependencies:
@@ -6021,7 +6021,7 @@ request@2, request@2.80.0:
     tunnel-agent "~0.4.1"
     uuid "^3.0.0"
 
-request@^2.79.0, request@^2.81.0:
+request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:

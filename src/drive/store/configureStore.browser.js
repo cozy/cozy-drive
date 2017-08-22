@@ -1,5 +1,5 @@
 /* global __DEVELOPMENT__ */
-import createLogger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import getReducers from '../reducers'
 
 const persistState = (store) => {
