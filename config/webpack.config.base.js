@@ -10,11 +10,11 @@ const SRC_DIR = path.resolve(__dirname, '../src')
 module.exports = function(production) {
   return {
     resolve: {
-      modules: ['node_modules', 'src'],
+      modules: ['node_modules', SRC_DIR],
       extensions: ['.js', '.json', '.css'],
       alias: {
-        drive: path.resolve(SRC_DIR, './drive/'),
-        photos: path.resolve(SRC_DIR, './photos/'),
+        // drive: path.resolve(SRC_DIR, './drive/'),
+        // photos: path.resolve(SRC_DIR, './photos/'),
         'redux-cozy-client': path.resolve(SRC_DIR, './lib/redux-cozy-client')
       }
     },
