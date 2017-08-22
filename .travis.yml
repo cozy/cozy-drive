@@ -31,6 +31,7 @@ before_install:
 script:
 - yarn test
 - yarn build:drive:browser
+- yarn build:photos:browser
 after_success:
-- test $TRAVIS_BRANCH = "master" && yarn run deploy -- --branch=build
-- test $TRAVIS_BRANCH = "prod" && yarn run deploy -- --branch=latest
+- test $TRAVIS_BRANCH = "master" && yarn run deploy:drive -- --branch=build-drive && yarn run deploy:photos -- --branch=build-photos
+- test $TRAVIS_BRANCH = "prod" && yarn run deploy:drive -- --branch=latest-drive && yarn run deploy:photos -- --branch=latest-photos
