@@ -108,19 +108,21 @@ const createSharing = (document, recipient, sharingType = 'master-slave', descri
     ? {
       files: {
         type: 'io.cozy.files',
-        verbs: ['GET'],
+        verbs: ['ALL'],
         values: [id]
       }
     }
     : {
       collection: {
-        description: 'album',
+        //description: 'foo',
         type,
+        verbs: ['ALL'],
         values: [id]
       },
       files: {
-        description: 'photos',
+        //description: 'bar',
         type: 'io.cozy.files',
+        verbs: ['ALL'],
         values: [
           `${type}/${id}`
         ],
