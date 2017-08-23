@@ -3,6 +3,7 @@ import Autosuggest from 'react-autosuggest'
 import { getContacts } from '..'
 
 import autosuggestTheme from './autosuggest.styl'
+import Recipient from './Recipient'
 
 export default class ShareAutocomplete extends Component {
   getInitialState () {
@@ -82,10 +83,10 @@ export default class ShareAutocomplete extends Component {
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
         renderSuggestion={contact =>
-          <div>
-            <div className={autosuggestTheme['suggestionPrimary']}>{this.getPrimaryEmailAddress(contact)}</div>
-            <div className={autosuggestTheme['suggestionSecondary']}>{this.getPrimaryCozyUrl(contact)}</div>
-          </div>
+          <Recipient
+            name={this.getPrimaryEmailAddress(contact)}
+            url={this.getPrimaryCozyUrl(contact)}
+          />
       }
         inputProps={{
           onChange: this.onChange.bind(this),
