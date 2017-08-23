@@ -29,19 +29,55 @@
     "empty_trash": "Empty trash",
     "share": "Share"
   },
-  "share": {
-    "title": "Share with others",
-    "shareByLink": {
-      "title": "By public link",
-      "subtitle": "Share by link",
-      "desc": "Anyone with the provided link can see and download your files."
-    },
-    "sharingLink": {
-      "title": "Link to share",
-      "copy": "Copy",
-      "copied": "Copied"
-    },
-    "creatingLink": "Creating your link..."
+  "Share": {
+    "status": {
+      "pending": "Pending",
+      "accepted": {
+        "master-slave": "Can View",
+        "master-master": "Can Change"
+      },
+      "refused": "Refused",
+      "error": "Error",
+      "unregistered": "Error",
+      "mail-not-sent": "Error",
+      "revoked": "Error"
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "Share",
+      "title": "Share with others",
+      "shareByLink": {
+        "title": "By public link",
+        "subtitle": "Share by link",
+        "desc": "Anyone with the provided link can see and download your files."
+      },
+      "shareByEmail": {
+        "title": "By email",
+        "subtitle": "Share by email",
+        "email": "email",
+        "emailPlaceholder": "Enter email address or name of your recipient",
+        "send": "Send",
+        "success": "You sent an invite to %{email}."
+      },
+      "sharingLink": {
+        "title": "Link to share",
+        "copy": "Copy",
+        "copied": "Copied"
+      },
+      "whoHasAccess": {
+        "title": "Who has access"
+      },
+      "protectedShare": {
+        "title": "Coming soon!",
+        "desc": "Share anything by email with your family and friends!"
+      },
+      "close": "Close",
+      "gettingLink": "Getting your link...",
+      "error": {
+        "generic": "An error occurred when creating the file share link, please try again."
+      }
+    }
   },
   "table": {
     "head_name": "Name",

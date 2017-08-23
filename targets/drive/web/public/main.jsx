@@ -31,6 +31,7 @@ function init () {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
   const { id, sharecode, directdownload } = getQueryParameter()
+  console.log(id, sharecode, directdownload)
 
   if (data.cozyDomain) {
     cozy.client.init({

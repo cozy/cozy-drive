@@ -57,7 +57,7 @@ class ShareByLink extends React.Component {
   }
 
   componentDidMount () {
-    getShareLink(this.props.document.id)
+    getShareLink(this.props.document)
     .then(sharing => {
       this.setState(state => ({...state, sharing, checked: sharing !== undefined}))
     })
@@ -75,7 +75,7 @@ class ShareByLink extends React.Component {
 
   fetchShareLink () {
     this.setState(state => ({...state, loading: true}))
-    createShareLink(this.props.document.id).then(
+    createShareLink(this.props.document).then(
       (sharing) => {
         this.setState(state => ({...state, loading: false, sharing}))
       }

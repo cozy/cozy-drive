@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import Alerter from '../../../components/Alerter'
+import Alerter from 'photos/components/Alerter'
 import ShareAutocomplete from './ShareAutocomplete'
 import WhoHasAccess from './WhoHasAccess'
 import { share } from '..'
@@ -10,8 +10,8 @@ import styles from '../share.styl'
 
 class ShareByEmail extends React.Component {
   sendSharingLinks (email, sharingType) {
-    const { document, documentType } = this.props
-    return share(document, email, sharingType)
+    const { document, documentType, sharingDesc } = this.props
+    return share(document, email, sharingType, sharingDesc)
       .then(sharing => {
         Alerter.info(`${documentType}.share.shareByEmail.success`, { email })
       })
