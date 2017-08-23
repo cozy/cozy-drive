@@ -5,7 +5,7 @@ const ColorHash = (str) => {
     ]
   }
 
-  function hashCode (str) {
+  const hashCode = (str) => {
     var h, i, len, max
 
     h = 0
@@ -18,7 +18,7 @@ const ColorHash = (str) => {
     return h
   }
 
-  function getColor (str, name) {
+  const getColor = (str, name) => {
     var scheme, hash
 
     scheme = schemes[name] || schemes.base

@@ -2,7 +2,7 @@ import styles from './recipient.styl'
 
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
-import ColorHash from '../../../lib/colorhash'
+import { ColorHash } from '../colorhash'
 
 export const Recipient = ({ t, name, url, status }) => {
   const initial = name.charAt(0)
