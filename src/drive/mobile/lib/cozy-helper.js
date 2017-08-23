@@ -40,7 +40,7 @@ export const initBar = () => {
   cozy.bar.init({
     appName: 'Drive',
     appEditor: 'Cozy',
-    iconPath: require('../../../../vendor/assets/app-icon.svg'),
+    iconPath: require('../../../../targets/drive/vendor/assets/app-icon.svg'),
     lang: getLang(),
     replaceTitleOnMobile: true
   })
