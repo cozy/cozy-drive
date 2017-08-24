@@ -1,4 +1,10 @@
 /* global cozy */
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
+
+const track = (document, action) => getTracker().push(['trackEvent', isFile(document) ? 'Drive' : 'Photos', action, `${action}${isFile(document) ? 'File' : 'Album'}`])
+const trackSharingByLink = (document) => track(document, 'shareByLink')
+const trackSharingByEmail = (document) => track(document, 'shareByEmail')
+
 export const filterSharedByLinkDocuments = (ids, doctype) =>
   fetchShareLinkPermissions(ids, doctype, 'collection').then(sets => sets.map(set => set.attributes.permissions['collection'].values[0]))
 
@@ -67,6 +73,10 @@ export const createShareLink = (document) =>
   getShareLinkPermission(document)
   .then(permission => permission || createShareLinkPermission(document))
   .then(permission => ({ sharelink: buildShareLink(document, permission.attributes.codes.email), id: permission._id }))
+  .then(sharing => {
+    trackSharingByLink(document)
+    return sharing
+  })
 
 /**
  * helpers
@@ -144,9 +154,9 @@ const createSharing = (document, recipient, sharingType = 'master-slave', descri
 }
 
 export const share = (document, email, sharingType, sharingDesc) =>
-  createRecipient(email).then(
-    (recipient) => createSharing(document, recipient, sharingType, sharingDesc)
-  )
+  createRecipient(email)
+    .then((recipient) => createSharing(document, recipient, sharingType, sharingDesc))
+    .then(() => trackSharingByEmail(document))
 
 export const getContacts = async (ids = []) => {
   const response = await cozy.client.fetchJSON('GET', '/data/io.cozy.contacts/_all_docs?include_docs=true', {keys: ids})
