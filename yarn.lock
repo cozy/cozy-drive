@@ -1602,9 +1602,9 @@ cozy-client-js@0.3.11:
   version "0.3.11"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.11.tgz#60aa59e56d51af8bae7fcc4929fd51a90a1b8b72"
 
-cozy-ui@3.0.0-beta41:
-  version "3.0.0-beta41"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta41.tgz#ed76a74a6dc2372ed878d69ee93a57817e649960"
+cozy-ui@3.0.0-beta42:
+  version "3.0.0-beta42"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-3.0.0-beta42.tgz#2d2773eed6dd146463b0c0540e722ad8973df642"
   dependencies:
     classnames "^2.2.5"
     md5 "^2.2.0"
