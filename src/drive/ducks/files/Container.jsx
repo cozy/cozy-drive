@@ -6,7 +6,7 @@ import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
-import { ShareModal } from '../../ducks/sharing'
+import { ShareModal } from 'sharing'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
@@ -60,16 +60,26 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         displayCondition: (selections) => selections.length === 1 && isFile(selections[0])
       },
       share: {
-        action: selected => confirm(<ShareModalConfirm t={ownProps.t} document={selected[0]} />),
+        action: selected => confirm(<ShareModalConfirm t={ownProps.t} document={selected[0]} documentType='Files' sharingDesc={selected[0].name} />),
         displayCondition: selections => selections.length === 1 && isFile(selections[0])
       }
     }
   })
 })
 
-const ShareModalConfirm = ({ abort, ...props }) => (
-  <ShareModal onClose={abort} {...props} />
-)
+// TODO: sadly, as ShareModalConfirm is used with the confirm helper that renders
+// components outside of the main app, we need to provide the i18n context
+// manually for sharing components
+class ShareModalConfirm extends React.Component {
+  getChildContext () {
+    return { t: this.props.t }
+  }
+
+  render () {
+    const { abort } = this.props
+    return <ShareModal onClose={abort} {...this.props} />
+  }
+}
 
 export default translate()(connect(
   mapStateToProps,

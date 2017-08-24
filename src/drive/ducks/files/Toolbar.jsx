@@ -15,7 +15,7 @@ import { alertShow } from 'cozy-ui/react/Alerter'
 
 import { addToUploadQueue } from '../upload'
 import { uploadedFile, downloadFiles } from '../../actions'
-import { ShareModal } from '../../ducks/sharing'
+import { ShareModal } from 'sharing'
 
 const toggleShowShareModal = state => ({ ...state, showShareModal: !state.showShareModal })
 
@@ -89,7 +89,13 @@ class Toolbar extends React.Component {
             </a>
           </Item>
         </Menu>
-        {this.state.showShareModal && <ShareModal document={displayedFolder} onClose={() => this.setState(toggleShowShareModal)} />}
+        {this.state.showShareModal &&
+          <ShareModal
+            document={displayedFolder}
+            documentType='Files'
+            sharingDesc={displayedFolder.name}
+            onClose={() => this.setState(toggleShowShareModal)}
+          />}
       </div>
     )
   }

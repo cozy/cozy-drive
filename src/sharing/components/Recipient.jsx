@@ -1,7 +1,7 @@
 import styles from './recipient.styl'
 
 import React from 'react'
-import ColorHash from '../colorhash'
+import ColorHash from './colorhash'
 
 export const Recipient = ({ name, url, status }) => {
   const initial = name.charAt(0)

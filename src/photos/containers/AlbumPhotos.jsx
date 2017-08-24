@@ -5,7 +5,7 @@ import styles from '../styles/layout'
 
 import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
 import { hideSelectionBar } from '../ducks/selection'
-import { withSharings, SHARED_WITH_ME } from '../ducks/sharing'
+import { withSharings, SHARED_WITH_ME } from 'sharing'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'

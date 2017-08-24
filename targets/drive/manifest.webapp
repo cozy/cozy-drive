@@ -4,7 +4,7 @@
   "icon": "public/app-icon.svg",
   "description": "File manager for Cozy v3",
   "category": "cozy",
-  "source": "https://github.com/cozy/cozy-drive.git@build",
+  "source": "https://github.com/cozy/cozy-drive.git@build-drive",
   "editor": "Cozy",
   "developer": {
     "name": "Cozy",
@@ -61,6 +61,11 @@
       "description": "Required to manage photos albums",
       "type": "io.cozy.photos.albums",
       "methods": ["PUT"]
+    },
+    "contacts": {
+      "description": "Required to to share files with your contacts",
+      "type": "io.cozy.contacts",
+      "methods": ["GET", "POST"]
     },
     "settings": {
       "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",

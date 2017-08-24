@@ -3,7 +3,7 @@ import { cozyConnect } from 'redux-cozy-client'
 import styles from '../styles/layout'
 
 import { AlbumsToolbar, fetchAlbums } from '../ducks/albums'
-import { withSharings, SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS } from '../ducks/sharing'
+import { withSharings, SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS } from 'sharing'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'

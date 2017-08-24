@@ -12,7 +12,7 @@ import SelectAlbumsForm from '../components/SelectAlbumsForm'
 import Loading from '../components/Loading'
 
 import { getSelectedIds } from '../ducks/selection'
-import { withSharings, SHARED_WITH_ME } from '../ducks/sharing'
+import { withSharings, SHARED_WITH_ME } from 'sharing'
 
 import {
   fetchAlbums,

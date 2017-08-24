@@ -10,7 +10,7 @@ import ShareByEmail from './components/ShareByEmail'
 export class ShareModal extends Component {
   render () {
     const { t } = this.context
-    const { onClose, documentType = 'Document' } = this.props
+    const { onClose, sharingDesc, documentType = 'Document' } = this.props
     return (
       <Modal
         title={t(`${documentType}.share.title`)}
@@ -27,7 +27,7 @@ export class ShareModal extends Component {
           </TabList>
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='email'>
-              <ShareByEmail document={this.props.document} documentType={documentType} />
+              <ShareByEmail document={this.props.document} documentType={documentType} sharingDesc={sharingDesc} />
             </TabPanel>
             <TabPanel name='link'>
               <ShareByLink document={this.props.document} documentType={documentType} />

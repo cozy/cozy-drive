@@ -14,7 +14,7 @@ import { isSelectionBarVisible, showSelectionBar } from '../../../ducks/selectio
 import { deleteAlbum, downloadAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import confirm from '../../../lib/confirm'
-import { ShareModal } from '../../../ducks/sharing'
+import { ShareModal } from 'sharing'
 
 import classNames from 'classnames'
 
@@ -87,7 +87,13 @@ class AlbumToolbar extends Component {
             </Item>
           }
         </Menu>
-        {this.state.showShareModal && <ShareModal document={album} documentType='Albums' onClose={this.closeShareModal} />}
+        {this.state.showShareModal &&
+          <ShareModal
+            document={album}
+            documentType='Albums'
+            sharingDesc={album.name}
+            onClose={this.closeShareModal}
+          />}
       </div>
     )
   }
