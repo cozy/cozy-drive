@@ -8,17 +8,14 @@ export const filterSharedWithMeDocuments = (ids, doctype) =>
 export const filterSharedWithOthersDocuments = (ids, doctype) =>
   fetchSharedWithOthersPermissions(ids, doctype, 'rule0').then(sets => sets.map(set => set.attributes.permissions['rule0'].values[0]))
 
-// TODO: move this to cozy-client-js
-// there is cozy.client.files.getCollectionShareLink already, but I think that
-// there is a need of a bit of exploratory work and design for that API...
-
+const isFile = ({ type }) => type === 'directory' || type === 'file'
 /**
  * SHARE BY LINK
  */
 
 const createShareLinkPermission = (document) => {
   const { id, type } = document
-  const permissions = type === 'directory'
+  const permissions = isFile(document)
     ? {
       files: {
         type: 'io.cozy.files',
@@ -26,6 +23,8 @@ const createShareLinkPermission = (document) => {
         values: [id]
       }
     }
+    // TODO: this works for albums, but it needs to be generalized and integrated
+    // with redux-cozy-client ; some sort of doctype "schema" will be needed here
     : {
       files: {
         type: 'io.cozy.files',
@@ -51,21 +50,23 @@ const createShareLinkPermission = (document) => {
 
 const getShareLinkPermission = (document) => {
   const { id, type } = document
-  return fetchShareLinkPermissions([id], type === 'directory' ? 'io.cozy.files' : type, type === 'directory' ? 'files' : 'collection')
+  const doctype = isFile(document) ? 'io.cozy.files' : type
+  const key = isFile(document) ? 'files' : 'collection'
+  return fetchShareLinkPermissions([id], doctype, key)
   .then(permissions => permissions.length === 0 ? undefined : permissions[0])
 }
 
-const buildShareLink = (id, sharecode) =>
-  `${window.location.origin}/public?sharecode=${sharecode}&id=${id}`
+const buildShareLink = (document, sharecode) =>
+  `${window.location.origin}/public?sharecode=${sharecode}&id=${document.id}${document.type === 'file' ? '&directdownload' : ''}`
 
 export const getShareLink = (document) =>
   getShareLinkPermission(document)
-  .then(permission => permission ? { sharelink: buildShareLink(document.id, permission.attributes.codes.email), id: permission._id } : undefined)
+  .then(permission => permission ? { sharelink: buildShareLink(document, permission.attributes.codes.email), id: permission._id } : undefined)
 
 export const createShareLink = (document) =>
   getShareLinkPermission(document)
   .then(permission => permission || createShareLinkPermission(document))
-  .then(permission => ({ sharelink: buildShareLink(document.id, permission.attributes.codes.email), id: permission._id }))
+  .then(permission => ({ sharelink: buildShareLink(document, permission.attributes.codes.email), id: permission._id }))
 
 /**
  * helpers
@@ -76,14 +77,14 @@ export const SHARED_WITH_ME = 'sharedWithMe'
 export const SHARED_WITH_OTHERS = 'sharedWithOthers'
 
 const correctDoctype = (doctype) =>
-  doctype === 'directory' ? 'io.cozy.files' : doctype
+  doctype === 'directory' || doctype === 'file' ? 'io.cozy.files' : doctype
 
 const fetchPermissions = (sharingType) =>
   (ids, doctype, key) =>
     cozy.client.fetchJSON('GET', `/permissions/doctype/${correctDoctype(doctype)}/${sharingType}`)
       .then(permissions => permissions.filter(permission => {
         const obj = permission.attributes.permissions[key]
-        return obj && obj.type === doctype && ids.find(id => obj.values.indexOf(id) !== -1) !== undefined
+        return obj && obj.type === correctDoctype(doctype) && ids.find(id => obj.values.indexOf(id) !== -1) !== undefined
       })
     )
 
@@ -104,7 +105,7 @@ const createRecipient = (email) => cozy.client.fetchJSON('POST', '/sharings/reci
 
 const createSharing = (document, recipient, sharingType = 'master-slave', description = '') => {
   const { id, type } = document
-  const permissions = type === 'directory'
+  const permissions = isFile(document)
     ? {
       files: {
         type: 'io.cozy.files',
@@ -114,13 +115,11 @@ const createSharing = (document, recipient, sharingType = 'master-slave', descri
     }
     : {
       collection: {
-        //description: 'foo',
         type,
         verbs: ['ALL'],
         values: [id]
       },
       files: {
-        //description: 'bar',
         type: 'io.cozy.files',
         verbs: ['ALL'],
         values: [
@@ -162,7 +161,8 @@ const getProperty = (property, comparator) => (list, id) => {
 const getEmail = getProperty('email', id => item => item._id === id)
 const getUrl = getProperty('url', id => item => item._id === id)
 
-export const getRecipients = (id, type) => fetchSharedWithOthersPermissions([id], type, 'rule0')
+export const getRecipients = (document) =>
+  fetchSharedWithOthersPermissions([document.id], document.type, 'rule0')
   .then(perms => perms.map(perm => perm.attributes.source_id))
   .then(fetchSharings)
   .then(sharings =>

@@ -4,7 +4,7 @@
   "icon": "public/app-icon.svg",
   "description": "File manager for Cozy v3",
   "category": "cozy",
-  "source": "https://github.com/cozy/cozy-drive.git@build",
+  "source": "https://github.com/cozy/cozy-drive.git@build-drive",
   "editor": "Cozy",
   "developer": {
     "name": "Cozy",
