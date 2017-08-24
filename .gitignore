@@ -5,6 +5,7 @@ yarn-error.log
 
 # Build
 build/
+coverage/
 
 # Locales
 **/locales/*
