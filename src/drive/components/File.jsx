@@ -172,7 +172,7 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
   const url = cozy.client._url
   return (
     <div className={classes}>
-      { attributes.links && <Preview thumbnail={`${url}${attributes.links.small}`} /> }
+      {attributes.links && attributes.links.small && <Preview thumbnail={`${url}${attributes.links.small}`} />}
       {isRenaming
         ? <RenameInput />
         : <div>
