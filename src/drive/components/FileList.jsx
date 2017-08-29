@@ -35,7 +35,7 @@ class FileList extends PureComponent {
         minimumBatchSize={FETCH_LIMIT}
       >
         {({ onRowsRendered, registerChild }) => (
-          <AutoSizer>
+          <AutoSizer disableHeight>
             {({ width, height }) => (
               <List
                 ref={registerChild}
