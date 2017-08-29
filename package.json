@@ -28,7 +28,7 @@
     "watch:drive": "npm run watch:drive:browser",
     "watch:drive:browser": "npm run internal:watch -- --env.app=drive --env.target=browser",
     "watch:drive:mobile": "npm run internal:watch -- --env.app=drive --env.target=mobile",
-    "watch:drive:standalone": "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=browser --port 8084 --display-modules --display-chunks --inline --hot",
+    "watch:drive:standalone": "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=mobile --port 8084 --display-modules --display-chunks --inline --hot",
     "watch:photos": "npm run watch:photos:browser",
     "watch:photos:browser": "npm run internal:watch -- --env.app=photos --env.target=browser",
     "mobile:drive:icon": "(cd targets/drive/mobile && splashicon-generator --imagespath='./res/model')",
