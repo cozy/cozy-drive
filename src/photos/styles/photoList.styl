@@ -1,0 +1,102 @@
+@require 'cozy-ui'
+
+:local
+
+    .pho-section
+        margin-bottom  2rem
+
+    .pho-photo-wrapper
+        position relative
+
+    .pho-section-header
+        display flex
+        flex-direction row
+        align-items center
+        position relative
+        padding 0 2rem
+
+        h3
+            flex-grow 1
+            padding-right 2rem
+
+        a,
+        a:visited,
+        a:hover,
+        a:active
+            color            dodger-blue
+            text-decoration  none
+            text-transform   uppercase
+            cursor           pointer
+            margin-left      auto
+
+        @media (max-width: (768/basefont)rem)
+            margin-bottom  1rem
+            padding 0 1rem
+
+            h3
+                padding-right 1rem
+
+    .pho-photo
+        position          absolute
+        display           inline-block
+        background-color  grey-10
+        margin            0 1rem 1rem 0
+
+        a
+          vertical-align middle
+        @media (max-width: (768/basefont)rem)
+          margin 0 .5rem .5rem 0
+
+    .pho-photo-item
+        height       em(240px)
+        transition   transform .2s ease
+
+    .pho-photo-select
+        position absolute
+        z-index  2
+        opacity  0
+        height   2em
+        width    2em
+        padding  1em
+        cursor   pointer
+
+        &[data-input=checkbox] label::before
+            box-shadow 0 0 0 3px rgba(0,0,0,.3), inset 0 0 0 1.5em rgba(255,255,255,.8)
+
+
+        &[data-input=checkbox] input[type=checkbox]:checked + label::after
+            background-size     1.5em
+            background-position center center
+
+        &[data-input=checkbox] input[type=checkbox]:checked + label::before
+            background-color dodger-blue
+            box-shadow       0 0 0 3px dodger-blue, inset 0 0 0 1.5em dodger-blue
+
+    .pho-photo--selected
+        .pho-photo-item
+            transform:scale(0.9);
+
+    .pho-section--has-selection
+        .pho-photo-select
+            box-sizing border-box
+            width  100%
+            height 100%
+            opacity 1
+
+    .pho-photo:hover
+        .pho-photo-select
+            opacity 1
+
+    .pho-list-morebutton
+        position relative
+        bottom-spaced(2em)
+
+        .pho-list-spinner
+            @extend $icon-24
+            @extend $icon-spinner-blue
+            margin  0 auto
+            display block
+
+        button
+            margin  0 auto
+            display block

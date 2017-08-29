@@ -1,0 +1,32 @@
+@require 'cozy-ui'
+
+// Desktop Button
+.coz-btn-client
+    @extend $button-client
+    margin em(16px, 13px)
+
+    @media (max-width: (1023/basefont)rem)
+        display none
+
+// Mobile button
+.coz-banner-client
+    position relative
+
+    @media (min-width: (1024/basefont)rem)
+        display none
+
+    .coz-btn-clientMobile
+        @extend $button-client-mobile
+        margin  0
+
+        @media (max-width: (1023/basefont)rem)
+            display flex
+
+    .coz-btn--close
+        @extend $button--close
+        position   absolute
+        right      0
+        top        50%
+        transform  translateY(-50%)
+        margin     0
+        filter     brightness(0) invert(1)

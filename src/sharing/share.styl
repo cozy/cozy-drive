@@ -1,0 +1,74 @@
+@import 'cozy-ui'
+
+:global
+    label[for='pho-album-share-toggle']
+        cursor pointer
+
+:local
+    .pho-share-modal-content
+        @extend $form
+        @extend $form-text
+        @extend $form-button
+        @extend $form-select
+        padding 0 1.5em 1.5em
+
+    .pho-share-modal-tabs
+        padding 0 .5em
+
+    .pho-share-modal-footer
+        padding 0
+        background-color grey-10
+        color            grey-08
+        font-weight      bold
+
+        p
+            margin 0
+            padding 1em 1.5em
+
+    .coz-form-group
+        margin 0
+
+        h3
+          margin .3em 0 0
+
+        .coz-form
+            margin 0
+
+        .coz-form-desc
+          color grey-11
+
+        .coz-select
+            flex 0 0 49%
+            height em(40px)
+            padding-bottom em(7px)
+
+    input[type=text]
+        width 100%
+
+    .pho-input-dual
+        display flex
+        align-items center
+
+        input[type=text]
+            width 100%
+            height em(48px)
+
+        > :first-child
+            flex 2 0 1%
+            padding-right .5em
+
+        > :last-child
+            flex 0 0 6em
+            text-align right
+
+        .coz-form-desc
+            margin 0
+
+        @media (max-width 32em)
+            > :last-child
+                flex-basis auto
+
+    .pho-btn-copy
+        width 100%
+        height em(48px, 14px)
+        margin 0

@@ -1,7 +1,7 @@
 'use strict'
 
-const { extractor } = require('./webpack.vars')
 const { LoaderOptionsPlugin } = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   resolve: {
@@ -11,8 +11,11 @@ module.exports = {
     rules: [
       {
         test: /\.styl$/,
-        exclude: /(node_modules)/,
-        loader: extractor.extract({
+        // INFO: cf https://webpack.js.org/configuration/module/#rule-conditions
+        // "common conditions like /node_modules/ may inadvertently miss symlinked files."
+        // This is probably why the condition below generated errors with a yarn linked cozy-ui.
+        // exclude: /(node_modules)/,
+        loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             {

@@ -5,16 +5,14 @@ yarn-error.log
 
 # Build
 build/
-
+coverage/
 
 # Locales
 **/locales/*
 !**/locales/en.json
 
-
 # Default
 !.gitkeep
-
 
 # OS generated files
 .DS_Store
@@ -26,25 +24,24 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-
 # Editors / IDEs
 .floo
 .flooignore
 
 # Mobile
-mobile/hooks
-mobile/platforms
-mobile/plugins
-mobile/www
-mobile/keys
-mobile/res/icons
-mobile/res/screens
-mobile/icon.png
-mobile/store
+targets/*/mobile/hooks
+targets/*/mobile/platforms
+targets/*/mobile/plugins
+targets/*/mobile/www
+targets/*/mobile/keys
+targets/*/mobile/res/icons
+targets/*/mobile/res/screens
+targets/*/mobile/icon.png
+targets/*/mobile/store
 
 # fastlane
-mobile/fastlane/README.md
-mobile/fastlane/report.xml
-mobile/fastlane/Error*.png
-mobile/fastlane/Preview.html
-mobile/Preview.html
+targets/*/mobile/fastlane/README.md
+targets/*/mobile/fastlane/report.xml
+targets/*/mobile/fastlane/Error*.png
+targets/*/mobile/fastlane/Preview.html
+targets/*/mobile/Preview.html
