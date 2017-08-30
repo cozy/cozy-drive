@@ -1,12 +1,13 @@
-import { isCordova, isAndroid } from './device'
+import { isCordova } from './device'
 import { _polyglot, initTranslation } from 'cozy-ui/react/I18n/translation'
 import { getLang } from './init'
+import { getToken, getClientUrl } from './cozy-helper'
 import { logException } from './reporter'
 
 const hasCordovaPlugin = () => {
   return isCordova() &&
     window.cordova.plugins !== undefined &&
-    window.cordova.plugins.photoLibrary !== undefined
+    window.cordova.plugins.listLibraryItems !== undefined
 }
 
 export const isAuthorized = async () => {
@@ -16,7 +17,7 @@ export const isAuthorized = async () => {
   return new Promise(resolve => {
     const success = () => resolve(true)
     const error = () => resolve(false)
-    window.cordova.plugins.photoLibrary.getLibrary(success, error)
+    window.cordova.plugins.listLibraryItems.isAuthorized(success, error)
   })
 }
 
@@ -25,7 +26,7 @@ export const requestAuthorization = async () => {
     return Promise.resolve(false)
   }
   return new Promise((resolve, reject) => {
-    window.cordova.plugins.photoLibrary.requestAuthorization(
+    window.cordova.plugins.listLibraryItems.requestReadAuthorization(
       () => resolve(true),
       (error) => {
         if (!error.startsWith('Permission')) {
@@ -33,26 +34,41 @@ export const requestAuthorization = async () => {
           logException('requestAuthorization error:', error)
         }
         resolve(false)
-      },
-      {
-        read: true
       }
     )
   })
 }
 
-export const getBlob = async (libraryItem) => {
+export const uploadLibraryItem = (dirID, libraryItem) => {
   if (hasCordovaPlugin()) {
-    return new Promise((resolve, reject) => {
-      window.cordova.plugins.photoLibrary.getPhoto(
-        libraryItem,
-        fullPhotoBlob => resolve(fullPhotoBlob),
-        err => reject(err)
-      )
+    return new Promise(async (resolve, reject) => {
+      // the cordova plugin is going to do the upload and needs all the infos to make a request to the stack
+      const token = getToken()
+      const uri = getClientUrl() +
+                  '/files/' + encodeURIComponent(dirID) +
+                  '?Name=' + encodeURIComponent(libraryItem['fileName']) +
+                  '&Type=file&Tags=library&Executable=false'
+
+      const payload = {
+        'id': dirID,
+        'libraryId': libraryItem['id'],
+        'mimeType': libraryItem['mimeType'],
+        'filePath': libraryItem['filePath'],
+        'serverUrl': uri,
+        'headers': {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': libraryItem['mimeType']
+        }
+      }
+
+      window.cordova.plugins.listLibraryItems.uploadItem(payload, result => {
+        if (result.errors) reject(result.errors)
+        else resolve(result.data)
+      }, reject)
     })
   }
 
-  return Promise.resolve('')
+  return Promise.resolve()
 }
 
 export const getPhotos = async () => {
@@ -60,7 +76,8 @@ export const getPhotos = async () => {
 
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
-      window.cordova.plugins.photoLibrary.getLibrary(
+      window.cordova.plugins.listLibraryItems.listItems(
+        true, true, false, // includePictures, includeVideos, includeCloud
         (response) => resolve(response.library),
         (err) => {
           console.warn(err)
@@ -71,16 +88,6 @@ export const getPhotos = async () => {
   }
 
   return Promise.resolve(defaultReturn)
-}
-
-export const getFilteredPhotos = async () => {
-  let photos = await getPhotos()
-
-  if (hasCordovaPlugin() && isAndroid()) {
-    photos = photos.filter((photo) => photo.id.indexOf('DCIM') !== -1)
-  }
-
-  return Promise.resolve(photos)
 }
 
 export const getMediaFolderName = () => {

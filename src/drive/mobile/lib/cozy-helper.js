@@ -114,3 +114,10 @@ export const checkURL = url => {
   }
   return url
 }
+
+export const getToken = async () => {
+  const credentials = await cozy.client.authorize()
+  return credentials.token.accessToken
+}
+
+export const getClientUrl = () => cozy.client._url
