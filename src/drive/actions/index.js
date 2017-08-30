@@ -36,7 +36,7 @@ export const getOpenedFolderId = state => state.view.openedFolderId
 export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links, relationships: f.relationships })
 const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
-export const HTTP_CODE_CONFLICT = 409
+const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'
 
 export const META_DEFAULTS = {
