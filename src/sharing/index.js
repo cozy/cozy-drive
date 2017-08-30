@@ -1,7 +1,13 @@
 /* global cozy */
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
 
-const track = (document, action) => getTracker().push(['trackEvent', isFile(document) ? 'Drive' : 'Photos', action, `${action}${isFile(document) ? 'File' : 'Album'}`])
+const track = (document, action) => {
+  const tracker = getTracker()
+  if (!tracker) {
+    return
+  }
+  tracker.push(['trackEvent', isFile(document) ? 'Drive' : 'Photos', action, `${action}${isFile(document) ? 'File' : 'Album'}`])
+}
 const trackSharingByLink = (document) => track(document, 'shareByLink')
 const trackSharingByEmail = (document) => track(document, 'shareByEmail')
 
