@@ -7,7 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const SRC_DIR = path.resolve(__dirname, '../src')
 
-module.exports = function(production) {
+module.exports = function (production) {
   return {
     resolve: {
       modules: ['node_modules', SRC_DIR],
