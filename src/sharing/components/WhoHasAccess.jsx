@@ -3,14 +3,13 @@ import React from 'react'
 import Recipient from './Recipient'
 import { getRecipients, getPrimaryEmail, getPrimaryCozy } from '..'
 
-const WhoHasAccess = ({ recipients }) => {
-  return (
+const WhoHasAccess = ({ recipients }) => (
   <div>
     {recipients.map(({ contact, status }) => (
       <Recipient name={getPrimaryEmail(contact)} url={getPrimaryCozy(contact)} status={status} />
     ))}
   </div>
-)}
+)
 
 class StatefulWhoHasAccess extends React.Component {
   state = {
