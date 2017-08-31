@@ -115,11 +115,11 @@ const fetchSharings = (ids) => Promise.all(ids.map(fetchSharing))
 export const deletePermission = (id) =>
   cozy.client.fetchJSON('DELETE', `/permissions/${id}`)
 
-const createRecipient = (email) => cozy.client.fetchJSON('POST', '/sharings/recipient', {
-  email
+const createContact = (email) => cozy.client.fetchJSON('POST', '/data/io.cozy.contacts/', {
+  email: [{ address: email, primary: true }]
 })
 
-const createSharing = (document, recipient, sharingType = 'master-slave', description = '') => {
+const createSharing = (document, contactId, sharingType = 'master-slave', description = '') => {
   const { id, type } = document
   const permissions = isFile(document)
     ? {
@@ -150,7 +150,7 @@ const createSharing = (document, recipient, sharingType = 'master-slave', descri
     recipients: [
       {
         recipient: {
-          id: recipient._id,
+          id: contactId,
           type: 'io.cozy.contacts'
         }
       }
@@ -159,15 +159,27 @@ const createSharing = (document, recipient, sharingType = 'master-slave', descri
   })
 }
 
-export const share = (document, email, sharingType, sharingDesc) =>
-  createRecipient(email)
-    .then((recipient) => createSharing(document, recipient, sharingType, sharingDesc))
+const getContactId = ({ email, id }) => id
+  ? Promise.resolve(id)
+  : createContact(email).then((contact) => contact.id)
+
+export const share = (document, recipient, sharingType, sharingDesc) =>
+  getContactId(recipient)
+    .then((id) => createSharing(document, id, sharingType, sharingDesc))
     .then(() => trackSharingByEmail(document))
 
 export const getContacts = async (ids = []) => {
   const response = await cozy.client.fetchJSON('GET', '/data/io.cozy.contacts/_all_docs?include_docs=true', {keys: ids})
-  return response.rows.map(row => row.doc)
+  return response.rows.map(row => row.doc).filter(doc => Array.isArray(doc.email))
 }
+
+const getPrimaryOrFirst = property => (obj) => {
+  if (!obj[property] || obj[property].length === 0) return ''
+  return obj[property].find(property => property.primary) || obj[property][0]
+}
+
+export const getPrimaryEmail = (contact) => getPrimaryOrFirst('email')(contact).address
+export const getPrimaryCozy = (contact) => getPrimaryOrFirst('cozy')(contact).url
 
 const getProperty = (property, comparator) => (list, id) => {
   const wantedItem = list.find(comparator(id)) || {}
