@@ -149,8 +149,7 @@ class File extends Component {
             ? '—'
             : filesize(attributes.size, {base: 10})}
         </div>
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>—</div>
-        <div className={classNames(styles['fil-content-cell'], styles['fil-available-offline'])}>{JSON.stringify(isAvailableOffline)}</div>
+        {isAvailableOffline && <AvailableOfflineBadge />}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])}>
           <button className='coz-btn coz-btn--extra' onClick={(e) => {
             onShowActionMenu(attributes.id)
@@ -161,6 +160,12 @@ class File extends Component {
     )
   }
 }
+
+const AvailableOfflineBadge = (props) => (
+  <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>
+    <span className={styles['fil-content-offline']} />
+  </div>
+)
 
 const FileNameCell = ({ attributes, isRenaming, opening }) => {
   const classes = classNames(
