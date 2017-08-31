@@ -71,18 +71,39 @@ const saveFile = (dirEntry, fileData, fileName) => new Promise((resolve, reject)
   })
 })
 
+const openFileWithCordova = (uri, mimetype) => new Promise((resolve, reject) => {
+  window.cordova.plugins.fileOpener2.open(decodeURIComponent(uri), mimetype, { error: reject, success: resolve })
+})
+
+export const deleteOfflineFile = async (filename) => {
+  const entry = await getCozyEntry()
+  const fileEntry = await getEntry(`${entry.nativeURL}${filename}`)
+  return fileEntry.remove()
+}
+
 export const saveFileWithCordova = (fileData, fileName) => new Promise((resolve, reject) => {
   getCozyEntry()
-  .then(entry => saveFile(entry, fileData, fileName).then(resolve).catch(reject))
+  .then(entry => saveFile(entry, fileData, fileName))
+  .then(resolve)
   .catch(reject)
 })
 
-export const openFileWithCordova = (fileData, filename) => new Promise((resolve, reject) => {
-  const fileMIMEType = fileData.type
+export const temporarySave = (file, filename) => new Promise((resolve, reject) => {
   getEntry(getTemporaryRootPath())
-  .then(dirEntry => saveFile(dirEntry, fileData, filename)
-    .then(fileEntry => window.cordova.plugins.fileOpener2.open(fileEntry.nativeURL, fileMIMEType, { error: reject, success: resolve }))
-    .catch(reject)
-  )
+  .then(entry => saveFile(entry, file, filename))
+  .then(resolve)
   .catch(reject)
+})
+
+export const saveAndOpenWithCordova = (file, filename) => new Promise((resolve, reject) => {
+  temporarySave(file, filename)
+  .then(entry => openFileWithCordova(decodeURIComponent(entry.nativeURL), file.type))
+  .then(resolve)
+  .catch(reject)
+})
+
+export const openOfflineFile = (file) => new Promise(async (resolve, reject) => {
+  const entry = await getCozyEntry()
+  const fileEntry = await getEntry(`${entry.nativeURL}${file.id}`)
+  return openFileWithCordova(fileEntry.nativeURL, file.mime).then(resolve).catch(reject)
 })

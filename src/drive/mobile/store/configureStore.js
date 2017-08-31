@@ -45,7 +45,8 @@ const configureStore = (initialState = {}) => {
       mediaBackup: {
         uploaded: store.getState().mobile.mediaBackup.uploaded
       }
-    }
+    },
+    availableOffline: store.getState().availableOffline
   }))
 
   return store

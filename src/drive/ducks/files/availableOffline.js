@@ -1,7 +1,7 @@
 const MAKE_AVAILABLE_OFFLINE = 'MAKE_AVAILABLE_OFFLINE'
 const UNDO_MAKE_AVAILABLE_OFFLINE = 'UNDO_MAKE_AVAILABLE_OFFLINE'
 
-export default (state = ['1f136b8ec3d67492bedf013b4800dda7'], action = {}) => {
+export default (state = [], action = {}) => {
   switch (action.type) {
     case MAKE_AVAILABLE_OFFLINE:
       return [...state, action.id]
