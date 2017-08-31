@@ -181,14 +181,6 @@ const getPrimaryOrFirst = property => (obj) => {
 export const getPrimaryEmail = (contact) => getPrimaryOrFirst('email')(contact).address
 export const getPrimaryCozy = (contact) => getPrimaryOrFirst('cozy')(contact).url
 
-const getProperty = (property, comparator) => (list, id) => {
-  const wantedItem = list.find(comparator(id)) || {}
-  return wantedItem[property]
-}
-
-const getEmail = getProperty('email', id => item => item._id === id)
-const getUrl = getProperty('url', id => item => item._id === id)
-
 export const getRecipients = (document) =>
   fetchSharedWithOthersPermissions([document.id], document.type, 'rule0')
   .then(perms => perms.map(perm => perm.attributes.source_id))
@@ -197,7 +189,7 @@ export const getRecipients = (document) =>
     sharings.map(sharing =>
       sharing.attributes.recipients.map(info =>
         ({
-          id: info.recipient.id,
+          contactId: info.recipient.id,
           status: info.status,
           type: sharing.attributes.sharing_type
         })
@@ -206,12 +198,10 @@ export const getRecipients = (document) =>
   )
   .then(arrayOfArrays => [].concat(...arrayOfArrays))
   .then(async recipients => {
-    const ids = recipients.map(recipient => recipient.id)
-    const contacts = await getContacts(ids)
+    const contacts = await getContacts(recipients.map(recipient => recipient.contactId))
     return recipients.map(recipient => ({
       ...recipient,
-      email: getEmail(contacts, recipient.id),
-      url: getUrl(contacts, recipient.id)
+      contact: contacts.find(c => c._id === recipient.contactId)
     }))
   })
 
