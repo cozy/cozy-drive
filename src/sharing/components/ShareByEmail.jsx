@@ -9,11 +9,11 @@ import { share } from '..'
 import styles from '../share.styl'
 
 class ShareByEmail extends React.Component {
-  sendSharingLinks (email, sharingType) {
+  share (recipient, sharingType) {
     const { document, documentType, sharingDesc } = this.props
-    return share(document, email, sharingType, sharingDesc)
+    return share(document, recipient, sharingType, sharingDesc)
       .then(sharing => {
-        Alerter.info(`${documentType}.share.shareByEmail.success`, { email })
+        Alerter.info(`${documentType}.share.shareByEmail.success`, { email: recipient.email })
       })
       .catch(err => {
         Alerter.error('Error.generic')
@@ -26,7 +26,7 @@ class ShareByEmail extends React.Component {
     return (
       <div>
         <ShareByUrl
-          onSend={(email, sharingType) => this.sendSharingLinks(email, sharingType)}
+          onSend={(recipient, sharingType) => this.share(recipient, sharingType)}
           documentType={documentType}
         />
         <WhoHasAccess document={document} />
@@ -40,25 +40,33 @@ class ShareByUrl extends React.Component {
     super(props)
     this.state = {
       email: '',
+      url: undefined,
+      id: undefined,
       sharingType: 'master-slave'
     }
   }
 
-  onAutocomplete (email) {
-    this.changeEmail(email)
+  onAutocomplete (email, url, id) {
+    this.setState(state => ({ ...state, email, url, id }))
   }
 
-  changeEmail (email) {
-    this.setState(state => ({ ...state, email }))
+  reset () {
+    this.setState(state => ({
+      ...state,
+      email: '',
+      url: undefined,
+      id: undefined,
+      sharingType: 'master-slave' }))
   }
 
   sendSharingLink () {
-    this.props.onSend(this.state.email, this.state.sharingType)
+    const {email, url, id, sharingType} = this.state
+    this.props.onSend({email, url, id}, sharingType)
     .then(() => {
-      this.setState(state => ({ ...state, email: '', sharingType: 'master-slave' }))
+      this.reset()
     })
     .catch(() => {
-      this.setState(state => ({ ...state, email: '', sharingType: 'master-slave' }))
+      this.reset()
     })
   }
 
@@ -76,7 +84,7 @@ class ShareByUrl extends React.Component {
           <label className={styles['coz-form-label']} for='email'>{t(`${documentType}.share.shareByEmail.email`)}</label>
           <ShareAutocomplete
             value={this.state.email}
-            onChange={(email, url) => this.onAutocomplete(email, url)}
+            onChange={(email, url, id) => this.onAutocomplete(email, url, id)}
           />
         </div>
         <div className={classnames(styles['coz-form-controls'], styles['coz-form-controls--dispatch'])}>
