@@ -139,6 +139,8 @@ export class Viewer extends Component {
 
     this.gesturesHandler.on('tap', this.toggleActions.bind(this))
 
+    document.addEventListener('mousemove', this.showActions.bind(this))
+
     this.hideActionsAfterDelay()
   }
 
@@ -249,6 +251,10 @@ export class Viewer extends Component {
 
   toggleActions () {
     this.setState(state => ({...state, hideActions: !state.hideActions}))
+  }
+
+  showActions () {
+    this.setState(state => ({...state, hideActions: false}))
   }
 
   hideActionsAfterDelay () {
