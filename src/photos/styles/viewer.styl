@@ -16,12 +16,6 @@
     overflow        hidden
     color           white
 
-    &::after
-        content     ''
-        flex-shrink 0
-        height      em(90px)
-
-
 .pho-viewer-content
     display         flex
     flex-direction  row
@@ -30,22 +24,32 @@
 
 
 .pho-viewer-nav-previous, .pho-viewer-nav-next
-    flex-shrink         0
-    width               em(75px)
-    background-position center
-    background-repeat   no-repeat
-    cursor              pointer
+    position             fixed
+    z-index              101
+    top                  em(90px)
+    bottom               0
+    width                em(75px)
+    background-position  center
+    background-repeat    no-repeat
+    cursor               pointer
+    background-color     alpha(grey-08, .33)
+    transition           .4s opacity ease-out
 
     &:hover,
     &:focus
-        background-color alpha(black, .25)
+        background-color alpha(black, .5)
+
+    &--hidden
+        opacity 0
+        pointer-events none
 
 .pho-viewer-nav-next
-    background-image embedurl('../assets/icons/icon-arrow-right.svg')
+    background-image  embedurl('../assets/icons/icon-arrow-right.svg')
+    right             0
 
 .pho-viewer-nav-previous
-    background-image embedurl('../assets/icons/icon-arrow-left.svg')
-
+    background-image  embedurl('../assets/icons/icon-arrow-left.svg')
+    left              0
 
 .pho-viewer-photo
     position        relative
@@ -63,10 +67,6 @@
 
 
 @media (max-width: (1023/basefont)rem)
-    .pho-viewer-wrapper
-        &::after
-            display none
-
     .pho-viewer-nav-previous, .pho-viewer-nav-next
         display none
 
