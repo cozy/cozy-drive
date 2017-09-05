@@ -1,8 +1,9 @@
 /* global cozy */
 import { isCordova } from '../mobile/lib/device'
-import { saveFileWithCordova, openFileWithCordova } from '../mobile/lib/filesystem'
+import { saveFileWithCordova, saveAndOpenWithCordova, openOfflineFile, deleteOfflineFile } from '../mobile/lib/filesystem'
 import { openWithNoAppError } from '../mobile/actions'
 import { isDirectory, isReferencedByAlbum, ALBUMS_DOCTYPE } from '../ducks/files/files'
+import * as availableOffline from '../ducks/files/availableOffline'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -114,14 +115,25 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
 
 export const openFileInNewTab = (folder, file) => {
   return async dispatch => {
-    const newTab = window.open('about:blank', '_blank') // must be done before the async calls, otherwise pop-up blockers are trigered
-
-    const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
-    const href = await cozy.client.files.getDownloadLinkByPath(filePath)
-    if (isCordova()) {
-      newTab.executeScript({ code: `window.location.href = '${cozy.client._url}${href}'` })
+    if (file.availableOffline) {
+      openOfflineFile(file)
+      .catch((error) => {
+        console.error('openFileInNewTab', error)
+        dispatch(openWithNoAppError({
+          cancelSelection: true,
+          hideActionMenu: true
+        }))
+      })
     } else {
-      newTab.location.href = `${cozy.client._url}${href}`
+      const newTab = window.open('about:blank', '_blank') // must be done before the async calls, otherwise pop-up blockers are trigered
+
+      const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
+      const href = await cozy.client.files.getDownloadLinkByPath(filePath)
+      if (isCordova()) {
+        newTab.executeScript({ code: `window.location.href = '${cozy.client._url}${href}'` })
+      } else {
+        newTab.location.href = `${cozy.client._url}${href}`
+      }
     }
   }
 }
@@ -249,6 +261,33 @@ export const downloadFiles = files => {
   }
 }
 
+export const toggleAvailableOffline = (file) => async (dispatch, getState) =>
+  availableOffline.isAvailableOffline(getState())(file.id)
+  ? dispatch(undoMakeAvailableOffline(file))
+  : dispatch(makeAvailableOffline(file))
+
+const undoMakeAvailableOffline = (file) => async dispatch => {
+  const filename = file.id
+  if (isCordova() && window.cordova.file) {
+    deleteOfflineFile(filename)
+  }
+  dispatch(availableOffline.undoMakeAvailableOffline(file.id))
+}
+
+const makeAvailableOffline = (file) => async dispatch => {
+  const response = await cozy.client.files.downloadById(file.id).catch((error) => {
+    dispatch(downloadFileError(error, META_DEFAULTS))
+    throw error
+  })
+  const blob = await response.blob()
+  const filename = file.id
+
+  if (isCordova() && window.cordova.file) {
+    saveFileWithCordova(blob, filename)
+  }
+  dispatch(availableOffline.makeAvailableOffline(file.id))
+}
+
 const isMissingFile = (error) => error.status === 404
 
 const downloadFileError = (error, meta) => {
@@ -299,7 +338,7 @@ export const openFileWith = (id, filename) => {
         throw error
       })
       const blob = await response.blob()
-      await openFileWithCordova(blob, filename).catch((error) => {
+      await saveAndOpenWithCordova(blob, filename).catch((error) => {
         console.error('openFileWithCordova', error)
         dispatch(openWithNoAppError(meta))
       })

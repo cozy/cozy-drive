@@ -1,14 +1,16 @@
 import styles from '../styles/actionmenu'
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
-import { Item } from 'react-bosonic/lib/Menu'
+import Toggle from 'cozy-ui/react/Toggle'
 import withGestures from '../lib/withGestures'
 import Hammer from 'hammerjs'
 
 import Spinner from 'cozy-ui/react/Spinner'
 import { splitFilename, getClassFromMime } from './File'
+import { isAvailableOffline } from '../ducks/files/availableOffline'
 
 class MenuItem extends Component {
   state = {
@@ -25,18 +27,25 @@ class MenuItem extends Component {
   }
 
   render () {
-    const { className, children } = this.props
+    const { className, children, checkbox } = this.props
     const { working } = this.state
     return (
-      <Item>
+      <div>
         <a className={className} onClick={this.handleClick}>
           {children}
           {working && <Spinner />}
+          {checkbox && <Toggle id={children} checked={checkbox.value} onToggle={checkbox.onChange} />}
         </a>
-      </Item>
+      </div>
     )
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  checkbox: { value: isAvailableOffline(state)(ownProps.files[0].id), onChange: () => {} }
+})
+
+export const ConnectedToggleMenuItem = connect(mapStateToProps)(MenuItem)
 
 const Menu = props => {
   const { t, files, actions } = props
@@ -49,11 +58,17 @@ const Menu = props => {
     <div className={styles['fil-actionmenu']}>
       {header}
       <hr />
-      {actionNames.map(actionName => (
-        <MenuItem className={styles[`fil-action-${actionName}`]} onClick={() => actions[actionName].action(files)}>
-          {t(`SelectionBar.${actionName}`)}
-        </MenuItem>
-      ))}
+      {actionNames.map(actionName => {
+        const Component = actions[actionName].Component || MenuItem
+        return (
+          <Component
+            className={styles[`fil-action-${actionName}`]}
+            onClick={() => actions[actionName].action(files)}
+            files={files}>
+            {t(`SelectionBar.${actionName}`)}
+          </Component>
+        )
+      })}
     </div>
   )
 }
@@ -61,23 +76,23 @@ const Menu = props => {
 const MenuHeaderFile = ({ file }) => {
   const { filename, extension } = splitFilename(file)
   return (
-    <Item>
+    <div>
       <div className={classNames(styles['fil-actionmenu-file'], styles['fil-actionmenu-header'], getClassFromMime(file))}>
         {filename}
         <span className={styles['fil-actionmenu-file-ext']}>{extension}</span>
       </div>
-    </Item>
+    </div>
   )
 }
 
 const MenuHeaderSelection = ({ t, files }) => {
   const fileCount = files.length
   return (
-    <Item>
+    <div>
       <div className={classNames(styles['fil-actionmenu-header'])}>
         {fileCount} {t('SelectionBar.selected_count', { smart_count: fileCount })}
       </div>
-    </Item>
+    </div>
   )
 }
 

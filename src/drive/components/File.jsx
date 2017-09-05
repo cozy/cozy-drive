@@ -114,11 +114,11 @@ class File extends Component {
         this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
-      this.props.onFileOpen(this.props.displayedFolder, attributes)
+      this.props.onFileOpen(this.props.displayedFolder, { ...attributes, availableOffline: this.props.isAvailableOffline })
     }
   }
 
-  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming, withSelectionCheckbox }, { opening }) {
+  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming, withSelectionCheckbox, isAvailableOffline }, { opening }) {
     return (
       <div
         ref={fil => { this.fil = fil }}
@@ -149,7 +149,7 @@ class File extends Component {
             ? '—'
             : filesize(attributes.size, {base: 10})}
         </div>
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>—</div>
+        {isAvailableOffline && <AvailableOfflineBadge />}
         <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])}>
           <button className='coz-btn coz-btn--extra' onClick={(e) => {
             onShowActionMenu(attributes.id)
@@ -160,6 +160,12 @@ class File extends Component {
     )
   }
 }
+
+const AvailableOfflineBadge = (props) => (
+  <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>
+    <span className={styles['fil-content-offline']} />
+  </div>
+)
 
 const FileNameCell = ({ attributes, isRenaming, opening }) => {
   const classes = classNames(

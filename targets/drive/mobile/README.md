@@ -55,6 +55,14 @@ $ cd targets/drive/mobile
 $ cordova run ios
 ```
 
+### Standalone mode
+- Open your browser with web-security CORS disabled
+- launch `$ yarn watch:mobile:standalone`
+- Go to localhost:8084 in your browser and open the console
+- Follow the onboarding and after giving your cozy URL, click on the link logged in the console
+- Log yourself, accept permissions and copy the url you've been redirected to.
+- Return to your previous tab and paste the url in the prompt (be quick, or take your time, whatever, because the prompt may be blocked when it pops if you're still on the permissions tab)
+- Profit!
 
 ## :lock: Create Release
 

@@ -133,7 +133,6 @@
     "prop-types": "^15.5.10",
     "raven-js": "^3.10.0",
     "react-autosuggest": "^9.3.2",
-    "react-bosonic": "1.0.0-beta6",
     "react-copy-to-clipboard": "^5.0.0",
     "react-markdown": "^2.5.0",
     "react-redux": "^5.0.1",

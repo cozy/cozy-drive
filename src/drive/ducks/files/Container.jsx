@@ -10,13 +10,16 @@ import { ShareModal } from 'sharing'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
+import { isAvailableOffline } from './availableOffline'
+import { ConnectedToggleMenuItem } from '../../components/FileActionMenu'
 
 import {
   createFolder,
   abortAddFolder,
   openFileWith,
   downloadFiles,
-  trashFiles
+  trashFiles,
+  toggleAvailableOffline
 } from '../../actions'
 
 const isAnyFileReferencedByAlbum = files => {
@@ -31,7 +34,8 @@ const mapStateToProps = (state, ownProps) => ({
   canUpload: true,
   isRenaming: isRenaming(state),
   renamingFile: getRenamingFile(state),
-  Toolbar
+  Toolbar,
+  isAvailableOffline: isAvailableOffline(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -58,6 +62,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       rename: {
         action: selected => dispatch(startRenamingAsync(selected[0])),
         displayCondition: (selections) => selections.length === 1 && isFile(selections[0])
+      },
+      availableOffline: {
+        action: selected => dispatch(toggleAvailableOffline(selected[0])),
+        displayCondition: (selections) => __TARGET__ === 'mobile' && selections.length === 1 && isFile(selections[0]),
+        Component: (props) => <ConnectedToggleMenuItem {...props} />
       },
       share: {
         action: selected => confirm(<ShareModalConfirm t={ownProps.t} document={selected[0]} documentType='Files' sharingDesc={selected[0].name} />),

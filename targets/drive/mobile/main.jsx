@@ -13,7 +13,8 @@ import { I18n } from 'cozy-ui/react/I18n'
 
 import MobileAppRoute from 'drive/mobile/components/MobileAppRoute'
 
-import { configureStore, loadState, persistState } from 'drive/store'
+import configureStore from 'drive/mobile/store/configureStore'
+import { loadState } from 'drive/mobile/store/persistedState'
 import { initServices, getLang } from 'drive/mobile/lib/init'
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { startTracker, useHistoryForTracker, startHeartBeat, stopHeartBeat } from 'drive/mobile/lib/tracker'
@@ -33,7 +34,6 @@ if (__DEVELOPMENT__) {
 
 const renderAppWithPersistedState = persistedState => {
   const store = configureStore(persistedState)
-  persistState(store)
 
   initServices(store)
 

@@ -109,7 +109,8 @@
     "rename": "Rename",
     "restore": "Restore",
     "close": "Close",
-    "openWith": "Open with"
+    "openWith": "Open with",
+    "availableOffline": "Make available offline"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",
