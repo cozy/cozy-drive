@@ -43,7 +43,7 @@ export const uploadLibraryItem = (dirID, libraryItem) => {
   if (hasCordovaPlugin()) {
     return new Promise(async (resolve, reject) => {
       // the cordova plugin is going to do the upload and needs all the infos to make a request to the stack
-      const token = getToken()
+      const token = await getToken()
       const uri = getClientUrl() +
                   '/files/' + encodeURIComponent(dirID) +
                   '?Name=' + encodeURIComponent(libraryItem['fileName']) +
