@@ -33,7 +33,7 @@ export class Timeline extends Component {
   renderViewer (children) {
     if (!children) return null
     return React.Children.map(children, child => React.cloneElement(child, {
-      photos: this.props.photos.data
+      photos: this.props.photos.data || []
     }))
   }
 
