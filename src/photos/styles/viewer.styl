@@ -7,7 +7,7 @@
     right           0
     top             0
     bottom          0
-    z-index         100
+    z-index         $modal-index
     display         flex
     flex-direction  column
     background      grey-08
@@ -25,7 +25,7 @@
 
 .pho-viewer-nav-previous, .pho-viewer-nav-next
     position             fixed
-    z-index              101
+    z-index              $modal-index + 1
     top                  em(90px)
     bottom               0
     width                em(75px)
