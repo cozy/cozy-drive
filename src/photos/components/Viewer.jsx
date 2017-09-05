@@ -207,13 +207,11 @@ export class Viewer extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    // if the viewer's actions were hidden but are now displayed, start a countdown to hide them again
     if (prevState.hideActions && !this.state.hideActions) this.hideActionsAfterDelay()
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.onKeyDownCallback, false)
-    // this.gesturesHandler.destroy()
   }
 
   onKeyDown (e) {
