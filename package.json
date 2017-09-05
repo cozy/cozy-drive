@@ -119,6 +119,7 @@
     "cozy-client-js": "0.3.14",
     "cozy-ui": "3.0.0-beta46",
     "date-fns": "^1.22.0",
+    "diacritics": "^1.3.0",
     "filesize": "^3.3.0",
     "hammerjs": "^2.0.8",
     "justified-layout": "^2.1.0",

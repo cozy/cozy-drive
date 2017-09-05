@@ -43,6 +43,11 @@
       "action": "GET_URL",
       "type": ["io.cozy.files"],
       "href": "/services"
+    },
+    {
+      "action": "LIST",
+      "type": ["io.cozy.suggestions"],
+      "href": "/services"
     }
   ],
   "version": "3.0.0",
