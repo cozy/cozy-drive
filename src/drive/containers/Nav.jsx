@@ -69,7 +69,7 @@ const Nav = ({ t, location, openFiles, openRecent, openTrash }) => {
             )}
             activeClassName={styles['active']}
           >
-            { t('nav.item_drive') }
+            { t('Nav.item_drive') }
           </ActiveLink>
         </li>
         <li class={styles['coz-nav-item']}>
@@ -95,7 +95,7 @@ const Nav = ({ t, location, openFiles, openRecent, openTrash }) => {
             )}
             activeClassName={styles['active']}
           >
-            { t('nav.item_trash') }
+            { t('Nav.item_trash') }
           </ActiveLink>
         </li>
         {__TARGET__ === 'mobile' &&
@@ -105,7 +105,7 @@ const Nav = ({ t, location, openFiles, openRecent, openTrash }) => {
             className={classNames(styles['coz-nav-link'], styles['fil-cat-settings'])}
             activeClassName={styles['active']}
           >
-            { t('nav.item_settings') }
+            { t('Nav.item_settings') }
           </Link>
         </li>
         }

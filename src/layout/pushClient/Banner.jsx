@@ -1,6 +1,6 @@
 /* global localStorage */
 
-import styles from '../styles/buttonclient'
+import styles from './pushClient'
 
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 
 import classNames from 'classnames'
 
-class ButtonClientMobile extends Component {
+class BannerClient extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -26,11 +26,15 @@ class ButtonClientMobile extends Component {
 
     return (
       <div className={styles['coz-banner-client']}>
-        <a href={t('nav.link-client')} target='_blank' className={styles['coz-btn-clientMobile']} onClick={e => this.read(e)} ><span>{t('nav.btn-client-mobile')}</span></a>
+        <a href={t('Nav.link-client')} target='_blank' className={styles['coz-btn-clientMobile']} onClick={e => this.read(e)} ><span>{t('Nav.btn-client-mobile')}</span></a>
+        <p className={styles['coz-banner-text']}>
+          <span>{t('Nav.banner-txt-client')}</span>
+          <a href={t('Nav.link-client')} target='_blank' className={classNames('coz-btn', 'coz-btn--transparent')} onClick={e => this.read(e)}>{t('Nav.banner-btn-client')}</a>
+        </p>
         <button className={classNames('coz-btn', styles['coz-btn--close'])} onClick={e => this.read()} />
       </div>
     )
   }
 }
 
-export default translate()(ButtonClientMobile)
+export default translate()(BannerClient)

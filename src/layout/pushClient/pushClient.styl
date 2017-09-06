@@ -8,23 +8,31 @@
     @media (max-width: (1023/basefont)rem)
         display none
 
-// Mobile button
+// Banner
 .coz-banner-client
     position relative
 
-    @media (min-width: (769/basefont)rem) and (max-width: (1023/basefont)rem)
+    @media (min-width: (769/basefont)rem)
         margin-top     em(-30px)
         margin-bottom  em(30px)
-
-    @media (min-width: (1024/basefont)rem)
-        display none
 
     .coz-btn-clientMobile
         @extend $button-client-mobile
         margin  0
 
+        @media (min-width: (1024/basefont)rem)
+            display none
+
+    .coz-banner-text
+        @extend $button-client-mobile
+        margin 0
+        cursor default
+
         @media (max-width: (1023/basefont)rem)
-            display flex
+            display none
+
+        span
+            padding-right 2em
 
     .coz-btn--close
         @extend $button--close
