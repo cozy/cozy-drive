@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux'
-import { reducer as cozyReducer, fetchCollection, getCollection, createDocument } from '..'
+import {
+  reducer as cozyReducer,
+  fetchCollection,
+  getCollection,
+  createDocument
+} from '..'
 
 const reducer = combineReducers({ cozy: cozyReducer })
 const dispatchInitialAction = (compositeAction, initialState = undefined) => {
@@ -7,7 +12,11 @@ const dispatchInitialAction = (compositeAction, initialState = undefined) => {
   return reducer(initialState, { type: types[0], ...rest })
 }
 
-const dispatchSuccessfulAction = (compositeAction, response, initialState = undefined) => {
+const dispatchSuccessfulAction = (
+  compositeAction,
+  response,
+  initialState = undefined
+) => {
   const { types, ...rest } = compositeAction
   const actions = [
     { type: types[0], ...rest },
@@ -32,7 +41,9 @@ describe('Redux store tests', () => {
 
     describe('When a collection is fetched', () => {
       it('should have a `loading` status', () => {
-        const state = dispatchInitialAction(fetchCollection('rockets', 'io.cozy.rockets'))
+        const state = dispatchInitialAction(
+          fetchCollection('rockets', 'io.cozy.rockets')
+        )
         const collection = getCollection(state, 'rockets')
         expect(collection.fetchStatus).toBe('loading')
       })
@@ -41,9 +52,21 @@ describe('Redux store tests', () => {
 
   const fakeFetchResponse = {
     data: [
-      { id: '33dda00f0eec15bc3b3c59a615001ac7', type: 'io.cozy.rockets', name: 'Falcon 9' },
-      { id: '33dda00f0eec15bc3b3c59a615001ac8', type: 'io.cozy.rockets', name: 'Falcon Heavy' },
-      { id: '33dda00f0eec15bc3b3c59a615001ac9', type: 'io.cozy.rockets', name: 'BFR' }
+      {
+        id: '33dda00f0eec15bc3b3c59a615001ac7',
+        type: 'io.cozy.rockets',
+        name: 'Falcon 9'
+      },
+      {
+        id: '33dda00f0eec15bc3b3c59a615001ac8',
+        type: 'io.cozy.rockets',
+        name: 'Falcon Heavy'
+      },
+      {
+        id: '33dda00f0eec15bc3b3c59a615001ac9',
+        type: 'io.cozy.rockets',
+        name: 'BFR'
+      }
     ]
   }
 
@@ -51,7 +74,10 @@ describe('Redux store tests', () => {
     let state, collection
 
     beforeEach(() => {
-      state = dispatchSuccessfulAction(fetchCollection('rockets', 'io.cozy.rockets'), fakeFetchResponse)
+      state = dispatchSuccessfulAction(
+        fetchCollection('rockets', 'io.cozy.rockets'),
+        fakeFetchResponse
+      )
       collection = getCollection(state, 'rockets')
     })
 
@@ -66,19 +92,24 @@ describe('Redux store tests', () => {
     describe('When a document is successfully created on the server', () => {
       const fakeResponse = {
         data: [
-          { id: '33dda00f0eec15bc3b3c59a615001ac5', type: 'io.cozy.rockets', name: 'Saturn V' }
+          {
+            id: '33dda00f0eec15bc3b3c59a615001ac5',
+            type: 'io.cozy.rockets',
+            name: 'Saturn V'
+          }
         ]
       }
 
-      it('should be found in the store', () => {
-
-      })
+      it('should be found in the store', () => {})
 
       it('should update collections listed in the `updateCollections` option', () => {
         state = dispatchSuccessfulAction(
-          createDocument({ type: 'io.cozy.rockets', name: 'Saturn V' }, {
-            updateCollections: ['rockets']
-          }),
+          createDocument(
+            { type: 'io.cozy.rockets', name: 'Saturn V' },
+            {
+              updateCollections: ['rockets']
+            }
+          ),
           fakeResponse,
           state
         )
