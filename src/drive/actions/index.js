@@ -10,6 +10,9 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
+export const FETCH_RECENT = 'FETCH_RECENT'
+export const FETCH_RECENT_SUCCESS = 'FETCH_RECENT_SUCCESS'
+export const FETCH_RECENT_FAILURE = 'FETCH_RECENT_FAILURE'
 export const FETCH_MORE_FILES = 'FETCH_MORE_FILES'
 export const FETCH_MORE_FILES_SUCCESS = 'FETCH_MORE_FILES_SUCCESS'
 export const FETCH_MORE_FILES_FAILURE = 'FETCH_MORE_FILES_FAILURE'
@@ -47,6 +50,10 @@ export const META_DEFAULTS = {
 
 export const openFiles = () => {
   return async dispatch => dispatch(openFolder(ROOT_DIR_ID))
+}
+
+export const openRecent = () => {
+  return async dispatch => dispatch(fetchRecentFiles())
 }
 
 export const openTrash = () => {
@@ -89,6 +96,34 @@ export const openFolder = (folderId) => {
       })
     } catch (err) {
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
+    }
+  }
+}
+
+export const fetchRecentFiles = () => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: FETCH_RECENT,
+      meta: {
+        cancelSelection: true
+      }
+    })
+
+    try {
+      const index = await cozy.client.data.defineIndex('io.cozy.files', ['updated_at', 'size'])
+      const files = await cozy.client.data.query(index, {
+        selector: {updated_at: {'$gt': null}},
+        sort: [{'updated_at': 'desc'}],
+        limit: 50
+      })
+
+      return dispatch({
+        type: FETCH_RECENT_SUCCESS,
+        fileCount: files.length,
+        files: files.map(f => ({...f, id: f._id}))
+      })
+    } catch (e) {
+      return dispatch({ type: FETCH_RECENT_FAILURE, error: e })
     }
   }
 }

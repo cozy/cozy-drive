@@ -63,6 +63,13 @@ class Breadcrumb extends Component {
   render () {
     const { t, location, path } = this.props
     const { opening, deployed } = this.state
+
+    if (location.pathname === '/recent') {
+      path.unshift({
+        name: t('breadcrumb.title_recent')
+      })
+    }
+
     if (!path) {
       return null
     }
