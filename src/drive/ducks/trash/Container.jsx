@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import confirm from '../../lib/confirm'
+import { isAvailableOffline } from '../files/availableOffline'
 
 import FolderView from '../../components/FolderView'
 import DestroyConfirm from './components/DestroyConfirm'
@@ -12,7 +13,8 @@ import { restoreFiles, destroyFiles } from './actions'
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: true,
   canUpload: false,
-  Toolbar
+  Toolbar,
+  isAvailableOffline: isAvailableOffline(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
