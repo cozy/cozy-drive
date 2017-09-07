@@ -3,6 +3,15 @@ import styles from './pushClient'
 import { translate } from 'cozy-ui/react/I18n'
 
 import React, { Component } from 'react'
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
+
+const track = (element) => {
+  const tracker = getTracker()
+  if (!tracker) {
+    return
+  }
+  tracker.push(['trackEvent', 'interaction', 'desktop-prompt', element])
+}
 
 class ButtonClient extends Component {
   constructor (props) {
@@ -15,7 +24,7 @@ class ButtonClient extends Component {
   render ({ t }, { seen }) {
     if (seen) {
       return (
-        <a href={t('Nav.link-client')} target='_blank' className={styles['coz-btn-client']}><span>{t('Nav.btn-client')}</span></a>
+        <a href={t('Nav.link-client')} target='_blank' className={styles['coz-btn-client']} onClick={e => track('button')}><span>{t('Nav.btn-client')}</span></a>
       )
     }
   }
