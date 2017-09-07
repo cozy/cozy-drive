@@ -39,7 +39,7 @@ class BannerClient extends Component {
         <a href={t('Nav.link-client')} target='_blank' className={styles['coz-btn-clientMobile']} onClick={e => this.read(e)} ><span>{t('Nav.btn-client-mobile')}</span></a>
         <p className={styles['coz-banner-text']}>
           <span>{t('Nav.banner-txt-client')}</span>
-          <a href={t('Nav.link-client')} target='_blank' className={classNames('coz-btn', 'coz-btn--transparent')} onClick={e => this.read('banner')}>{t('Nav.banner-btn-client')}</a>
+          <a href={t('Nav.link-client')} target='_blank' className={classNames('coz-btn')} onClick={e => this.read('banner')}>{t('Nav.banner-btn-client')}</a>
         </p>
         <button className={classNames('coz-btn', styles['coz-btn--close'])} onClick={e => this.read('close')} />
       </div>
