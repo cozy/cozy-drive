@@ -38,7 +38,6 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const getOpenedFolderId = state => state.view.openedFolderId
 
 export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links, relationships: f.relationships })
-const toServer = f => Object.assign({}, { attributes: f }, { _id: f.id })
 
 const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'
@@ -148,7 +147,7 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
   }
 }
 
-export const openFileInNewTab = (folder, file) => {
+export const openFileInNewTab = (file) => {
   return async dispatch => {
     if (file.availableOffline) {
       openOfflineFile(file)
@@ -162,8 +161,7 @@ export const openFileInNewTab = (folder, file) => {
     } else {
       const newTab = window.open('about:blank', '_blank') // must be done before the async calls, otherwise pop-up blockers are trigered
 
-      const filePath = await cozy.client.files.getFilePath(file, toServer(folder))
-      const href = await cozy.client.files.getDownloadLinkByPath(filePath)
+      const href = await cozy.client.files.getDownloadLinkById(file.id)
       if (isCordova()) {
         newTab.executeScript({ code: `window.location.href = '${cozy.client._url}${href}'` })
       } else {

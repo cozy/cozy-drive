@@ -86,8 +86,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId =>
     dispatch(openFolder(folderId)),
-  onFileOpen: (parentFolder, file) =>
-    dispatch(openFileInNewTab(parentFolder, file)),
+  onFileOpen: (file) =>
+    dispatch(openFileInNewTab(file)),
   onFileToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected))
 })
