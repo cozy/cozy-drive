@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
 
 import Spinner from 'cozy-ui/react/Spinner'
-import { openFiles, openTrash } from '../actions'
+import { openFiles, openTrash, openRecent } from '../actions'
 
 class CustomLink extends Component {
   constructor (props) {
@@ -55,7 +55,7 @@ class CustomLink extends Component {
 
 const ActiveLink = withRouter(CustomLink)
 
-const Nav = ({ t, location, openFiles, openTrash }) => {
+const Nav = ({ t, location, openFiles, openRecent, openTrash }) => {
   return (
     <nav>
       <ul class={styles['coz-nav']}>
@@ -70,6 +70,19 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
             activeClassName={styles['active']}
           >
             { t('nav.item_drive') }
+          </ActiveLink>
+        </li>
+        <li class={styles['coz-nav-item']}>
+          <ActiveLink
+            to='/recent'
+            onClick={openRecent}
+            className={classNames(
+              styles['coz-nav-link'],
+              styles['fil-cat-recent']
+            )}
+            activeClassName={styles['active']}
+          >
+            { t('nav.item_recent') }
           </ActiveLink>
         </li>
         <li class={styles['coz-nav-item']}>
@@ -103,6 +116,7 @@ const Nav = ({ t, location, openFiles, openTrash }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openFiles: () => dispatch(openFiles()),
+  openRecent: () => dispatch(openRecent()),
   openTrash: () => dispatch(openTrash())
 })
 

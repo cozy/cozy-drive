@@ -29,9 +29,24 @@ const isAnyFileReferencedByAlbum = files => {
   return false
 }
 
+// TODO: sadly, as ShareModalConfirm is used with the confirm helper that renders
+// components outside of the main app, we need to provide the i18n context
+// manually for sharing components
+class ShareModalConfirm extends React.Component {
+  getChildContext () {
+    return { t: this.props.t }
+  }
+
+  render () {
+    const { abort } = this.props
+    return <ShareModal onClose={abort} {...this.props} />
+  }
+}
+
 const mapStateToProps = (state, ownProps) => ({
-  isTrashContext: false,
-  canUpload: true,
+  isTrashContext: ownProps.isTrashContext,
+  canUpload: ownProps.canUpload,
+  canCreateFolder: ownProps.canCreateFolder,
   isRenaming: isRenaming(state),
   renamingFile: getRenamingFile(state),
   Toolbar,
@@ -75,20 +90,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
   })
 })
-
-// TODO: sadly, as ShareModalConfirm is used with the confirm helper that renders
-// components outside of the main app, we need to provide the i18n context
-// manually for sharing components
-class ShareModalConfirm extends React.Component {
-  getChildContext () {
-    return { t: this.props.t }
-  }
-
-  render () {
-    const { abort } = this.props
-    return <ShareModal onClose={abort} {...this.props} />
-  }
-}
 
 export default translate()(connect(
   mapStateToProps,

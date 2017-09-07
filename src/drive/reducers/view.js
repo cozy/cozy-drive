@@ -4,6 +4,8 @@ import {
   OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
+  FETCH_RECENT_SUCCESS,
+  FETCH_RECENT_FAILURE,
   FETCH_MORE_FILES_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
@@ -29,6 +31,8 @@ const displayedFolder = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
       return action.folder
+    case FETCH_RECENT_SUCCESS:
+      return null
     default:
       return state
   }
@@ -46,6 +50,7 @@ const openedFolderId = (state = null, action) => {
 const fileCount = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
+    case FETCH_RECENT_SUCCESS:
       return action.fileCount
     case UPLOAD_FILE_SUCCESS:
     case CREATE_FOLDER_SUCCESS:
@@ -101,6 +106,7 @@ const indexFor = (file, array, compareFn, start = 0, end = array.length) => {
 const files = (state = [], action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
+    case FETCH_RECENT_SUCCESS:
       return action.files
     case FETCH_MORE_FILES_SUCCESS:
       const clone = state.slice(0)
@@ -132,12 +138,14 @@ const fetchStatus = (state = 'pending', action) => {
     case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
+    case FETCH_RECENT_SUCCESS:
     case EMPTY_TRASH_SUCCESS:
     case EMPTY_TRASH_FAILURE:
     case DESTROY_FILES_SUCCESS:
     case DESTROY_FILES_FAILURE:
       return 'loaded'
     case OPEN_FOLDER_FAILURE:
+    case FETCH_RECENT_FAILURE:
       return 'failed'
     default:
       return state
@@ -148,6 +156,8 @@ const lastFetch = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case OPEN_FOLDER_FAILURE:
+    case FETCH_RECENT_SUCCESS:
+    case FETCH_RECENT_FAILURE:
       return Date.now()
     default:
       return state
@@ -179,7 +189,7 @@ export const getFilePath = ({ view }, file) => {
   const { displayedFolder } = view
   return isDirectory(file)
     ? file.path
-    : (isRootFolder(displayedFolder) ? `/${file.name}` : `${displayedFolder.path}/${file.name}`)
+    : (displayedFolder && !isRootFolder(displayedFolder) ? `${displayedFolder.path}/${file.name}` : `/${file.name}`)
 }
 
 export const getFolderIdFromRoute = (location, params) => {
@@ -200,6 +210,7 @@ export const getFolderPath = ({ view }, location, isPublic) => {
   const { displayedFolder } = view
   const path = []
   const isBrowsingTrash = /^\/trash/.test(location.pathname)
+  const isBrowsingRecentFiles = /^\/recent/.test(location.pathname)
   // dring the first fetch, displayedFolder is null, and we don't want to display anything
   if (displayedFolder) {
     path.push(displayedFolder)
@@ -217,13 +228,15 @@ export const getFolderPath = ({ view }, location, isPublic) => {
   if (isPublic) {
     return path
   }
-  // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder. While we're at it, we also rename the folders when we need to.
-  const hasRootFolder = path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
-  if (!hasRootFolder) {
-    // if we don't have one, we add it manually
-    path.unshift({
-      id: isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID
-    })
+  // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder.
+  if (!isBrowsingRecentFiles) {
+    const hasRootFolder = path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
+    if (!hasRootFolder) {
+      // if we don't have one, we add it manually
+      path.unshift({
+        id: isBrowsingTrash ? TRASH_DIR_ID : ROOT_DIR_ID
+      })
+    }
   }
   return path
 }

@@ -39,7 +39,7 @@ class FolderView extends Component {
 
   render () {
     const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
-    const { files, selected, actionable, actions, Toolbar } = this.props
+    const { files, selected, actionable, actions, Toolbar, canUpload, canCreateFolder } = this.props
     const { hideActionMenu, showSelectionBar } = this.props
 
     const { showAddFolder } = this.state
@@ -48,15 +48,15 @@ class FolderView extends Component {
     const fetchPending = this.props.fetchStatus === 'pending'
     const nothingToDo = isTrashContext && files.length === 0
 
-    const toolbarActions = {
-      addFolder: this.toggleAddFolder
-    }
+    const toolbarActions = {}
+    if (canCreateFolder) toolbarActions.addFolder = this.toggleAddFolder
     return (
       <Main>
         <Topbar>
           <Breadcrumb />
           <Toolbar
             actions={toolbarActions}
+            canUpload={canUpload}
             disabled={fetchFailed || fetchPending || selectionModeActive || nothingToDo}
             onSelectItemsClick={showSelectionBar}
           />

@@ -29,16 +29,17 @@ class Toolbar extends React.Component {
   }
 
   render () {
-    const { t, disabled, displayedFolder, actions, onSelectItemsClick, uploadFiles, downloadAll } = this.props
+    const { t, disabled, displayedFolder, actions, onSelectItemsClick, canUpload, uploadFiles, downloadAll } = this.props
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     return (
       <div className={styles['fil-toolbar-files']} role='toolbar'>
+        { canUpload &&
         <UploadButton
           disabled={disabled}
           onUpload={files => uploadFiles(files, displayedFolder)}
           label={t('toolbar.item_upload')}
           className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', 'coz-desktop')}
-        />
+        />}
         { notRootfolder && <ShareButton
           disabled={disabled}
           onShare={() => this.setState(toggleShowShareModal)}
@@ -59,21 +60,22 @@ class Toolbar extends React.Component {
               {t('toolbar.share')}
             </a>
           </Item>}
+          { canUpload &&
           <Item>
             <UploadButton
               onUpload={files => uploadFiles(files, displayedFolder)}
               label={t('toolbar.menu_upload')}
               className={styles['fil-action-upload']}
             />
-          </Item>
-          <Item>
+          </Item>}
+          { actions.addFolder && <Item>
             <a
               className={styles['fil-action-newfolder']}
               onClick={actions.addFolder}
             >
               {t('toolbar.menu_new_folder')}
             </a>
-          </Item>
+          </Item>}
           { notRootfolder && <Item>
             <a
               className={styles['fil-action-download']}
