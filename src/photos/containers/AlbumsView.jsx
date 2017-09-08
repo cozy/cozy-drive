@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { cozyConnect } from 'redux-cozy-client'
 import styles from '../styles/layout'
 
-import { AlbumsToolbar, fetchAlbums } from '../ducks/albums'
-import { withSharings, SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS } from 'sharing'
+import { AlbumsToolbar, fetchAlbums, fetchAlbumsSharings } from '../ducks/albums'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
@@ -35,12 +34,15 @@ export class AlbumsView extends Component {
         <Topbar viewName='albums'>
           <AlbumsToolbar />
         </Topbar>
-        <Content list={this.props.albums} sharedByMe={this.props.sharedWithOthers.concat(this.props.sharedByLink)} sharedWithMe={this.props.sharedWithMe} />
+        <Content list={this.props.albums} />
       </div>
     )
   }
 }
 
-const mapDocumentsToProps = (ownProps) => ({ albums: fetchAlbums() })
+const mapDocumentsToProps = (ownProps) => ({
+  albums: fetchAlbums(),
+  sharings: fetchAlbumsSharings()
+})
 
-export default cozyConnect(mapDocumentsToProps)(withSharings(AlbumsView, 'albums', 'io.cozy.photos.albums', [SHARED_BY_LINK, SHARED_WITH_ME, SHARED_WITH_OTHERS]))
+export default cozyConnect(mapDocumentsToProps)(AlbumsView)

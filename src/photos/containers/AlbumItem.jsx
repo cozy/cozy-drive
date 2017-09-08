@@ -4,7 +4,8 @@ import classNames from 'classnames'
 
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
-import { cozyConnect } from 'redux-cozy-client'
+import { connect } from 'react-redux'
+import { cozyConnect, isSharedByMe, isSharedWithMe } from 'redux-cozy-client'
 
 import { fetchAlbumPhotos } from '../ducks/albums'
 import ImageLoader from '../components/ImageLoader'
@@ -45,9 +46,26 @@ const ClickableAlbumItem = ({ album, image, title, desc, onClick, disabled }) =>
   </div>
 }
 
+const AlbumItemDesc = connect(
+  (state, ownProps) => ({
+    sharedByMe: isSharedByMe(state, ownProps.album),
+    sharedWithMe: isSharedWithMe(state, ownProps.album)
+  })
+)(
+  ({ t, photoCount, sharedByMe, sharedWithMe }) => (
+    <h4 className={styles['pho-album-description']}>
+      {(sharedByMe || sharedWithMe) && <SharedIcon byMe={sharedByMe} />}
+      {t('Albums.album_item_description',
+        {smart_count: photoCount})
+      }
+      {(sharedByMe || sharedWithMe) && ` - ${t('Albums.album_item_shared_ro')}`}
+    </h4>
+  )
+)
+
 export class AlbumItem extends Component {
   render () {
-    const { t, album, photos, sharedByMe, sharedWithMe, onClick, disabled } = this.props
+    const { t, album, photos, onClick, disabled } = this.props
     if (photos.fetchStatus !== 'loaded') {
       return null
     }
@@ -64,13 +82,7 @@ export class AlbumItem extends Component {
         src={`${cozy.client._url}${coverPhoto.links.small}`}
       />
 
-    const desc = <h4 className={styles['pho-album-description']}>
-      {(sharedByMe || sharedWithMe) && <SharedIcon byMe={sharedByMe} />}
-      {t('Albums.album_item_description',
-        {smart_count: photos.count})
-      }
-      {(sharedByMe || sharedWithMe) && ` - ${t('Albums.album_item_shared_ro')}`}
-    </h4>
+    const desc = <AlbumItemDesc t={t} album={album} photoCount={photos.count} />
 
     const title = <h2 className={styles['pho-album-title']}>{album.name}</h2>
 
@@ -87,7 +99,7 @@ export class AlbumItem extends Component {
 }
 
 const mapDocumentsToProps = (ownProps) => ({
-  photos: fetchAlbumPhotos(ownProps.album)
+  photos: fetchAlbumPhotos(ownProps.album.id)
 })
 
 export default cozyConnect(mapDocumentsToProps)(AlbumItem)
