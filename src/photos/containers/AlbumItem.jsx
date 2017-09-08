@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { cozyConnect, isSharedByMe, isSharedWithMe } from 'redux-cozy-client'
+import { cozyConnect, isSharedByMe, isSharedWithMe, getSharingDetails } from 'redux-cozy-client'
 
 import { fetchAlbumPhotos } from '../ducks/albums'
 import ImageLoader from '../components/ImageLoader'
@@ -49,16 +49,17 @@ const ClickableAlbumItem = ({ album, image, title, desc, onClick, disabled }) =>
 const AlbumItemDesc = connect(
   (state, ownProps) => ({
     sharedByMe: isSharedByMe(state, ownProps.album),
-    sharedWithMe: isSharedWithMe(state, ownProps.album)
+    sharedWithMe: isSharedWithMe(state, ownProps.album),
+    sharing: getSharingDetails(state, ownProps.album)
   })
 )(
-  ({ t, photoCount, sharedByMe, sharedWithMe }) => (
+  ({ t, photoCount, sharedByMe, sharedWithMe, sharing }) => (
     <h4 className={styles['pho-album-description']}>
       {(sharedByMe || sharedWithMe) && <SharedIcon byMe={sharedByMe} />}
       {t('Albums.album_item_description',
         {smart_count: photoCount})
       }
-      {(sharedByMe || sharedWithMe) && ` - ${t('Albums.album_item_shared_ro')}`}
+      {(sharedByMe || sharedWithMe) && ` - ${t(`Albums.album_item_shared_${sharing.sharingType === 'master-slave' ? 'ro' : 'rw'}`)}`}
     </h4>
   )
 )
