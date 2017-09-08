@@ -1,3 +1,5 @@
+/* global __TARGET__ */
+
 import styles from '../styles/layout'
 
 import React from 'react'
@@ -6,7 +8,7 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import Sidebar from './Sidebar'
 import Alerter from './Alerter'
-import ButtonClientMobile from './ButtonClientMobile'
+import BannerClient from '../../layout/pushClient/Banner'
 
 import { UploadQueue } from '../ducks/upload'
 
@@ -15,7 +17,7 @@ export const Layout = ({ t, children }) => (
     <Sidebar />
 
     <main className={styles['pho-content']}>
-      <ButtonClientMobile />
+      { __TARGET__ !== 'mobile' && <BannerClient />}
       { children }
     </main>
     <Alerter t={t} />
