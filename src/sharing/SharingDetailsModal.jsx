@@ -21,7 +21,7 @@ export class SharingDetailsModal extends Component {
             {t(`${documentType}.share.details.createdAt`, { date: f(sharing.sharer.createdAt, 'Do MMMM YYYY') })}
           </div>
           <div className={styles['pho-share-details-perm']}>
-            {t(`${documentType}.share.details.${sharing.sharer.sharingType === 'master-slave' ? 'ro' : 'rw'}`)}
+            {t(`${documentType}.share.details.${sharing.sharingType === 'master-slave' ? 'ro' : 'rw'}`)}
           </div>
         </div>
       </Modal>

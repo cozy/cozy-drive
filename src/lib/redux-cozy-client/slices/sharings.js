@@ -57,15 +57,24 @@ export const getSharingDetails = (state, doc) => {
     ? {
       name: 'John Doe',
       url: getSharing(state, withMe.attributes.source_id).attributes.sharer.url,
-      createdAt: doc.created_at || null,
-      sharingType: getSharing(state, withMe.attributes.source_id).attributes.sharing_type
+      createdAt: doc.created_at || null
     }
     : 'me'
+  const sharingType = byMe !== undefined
+    ? getSharing(state, byMe.attributes.source_id).attributes.sharing_type
+    : (
+      withMe !== undefined
+      ? getSharing(state, withMe.attributes.source_id).attributes.sharing_type
+      : null
+    )
+  const recipients = []
   return {
     byMe: byMe !== undefined,
     byLink: byLink !== undefined,
     withMe: withMe !== undefined,
-    sharer
+    sharingType,
+    sharer,
+    recipients
   }
 }
 
