@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
 
-import ShareButton from '../../../components/ShareButton'
+import ShareButton, { SharedByMeButton, SharedWithMeButton } from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { Item } from '../../../components/Menu'
 
@@ -14,13 +14,14 @@ import { isSelectionBarVisible, showSelectionBar } from '../../../ducks/selectio
 import { deleteAlbum, downloadAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import confirm from '../../../lib/confirm'
-import { ShareModal } from 'sharing'
+import { ShareModal, SharingDetailsModal } from 'sharing'
 
 import classNames from 'classnames'
 
 class AlbumToolbar extends Component {
   state = {
-    showShareModal: false
+    showShareModal: false,
+    showSharingDetailsModal: false
   }
 
   showShareModal = () => {
@@ -31,15 +32,34 @@ class AlbumToolbar extends Component {
     this.setState({ showShareModal: false })
   }
 
+  showSharingDetailsModal = () => {
+    this.setState({ showSharingDetailsModal: true })
+  }
+
+  closeSharingDetailsModal = () => {
+    this.setState({ showSharingDetailsModal: false })
+  }
+
   render () {
-    const { t, location, album, photos, readOnly, disabled = false, deleteAlbum, selectItems, onRename } = this.props
+    const { t, location, album, photos, sharedWithMe, sharedByMe, sharing, disabled = false, deleteAlbum, selectItems, onRename } = this.props
+    const readOnly = sharedWithMe
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
-          {!readOnly &&
+          {!sharedByMe && !sharedWithMe &&
             <ShareButton
               label={t('Albums.share.cta')}
               onClick={this.showShareModal} />
+          }
+          {sharedByMe &&
+            <SharedByMeButton
+              label={t('Albums.share.sharedByMe')}
+              onClick={this.showShareModal} />
+          }
+          {sharedWithMe &&
+            <SharedWithMeButton
+              label={t('Albums.share.sharedWithMe')}
+              onClick={this.showSharingDetailsModal} />
           }
         </div>
         <Menu
@@ -93,6 +113,14 @@ class AlbumToolbar extends Component {
             documentType='Albums'
             sharingDesc={album.name}
             onClose={this.closeShareModal}
+          />}
+        {this.state.showSharingDetailsModal &&
+          <SharingDetailsModal
+            document={album}
+            documentType='Albums'
+            sharingDesc={album.name}
+            sharing={sharing}
+            onClose={this.closeSharingDetailsModal}
           />}
       </div>
     )

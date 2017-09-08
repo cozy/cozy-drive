@@ -20,10 +20,6 @@ export default class CozyClient {
     return this.api.fetchDocument(doctype, id)
   }
 
-  async fetchFile (id) {
-    return this.api.fetchFile(id)
-  }
-
   async fetchReferencedFiles (doc, skip = 0) {
     return this.api.fetchReferencedFiles(doc, skip)
   }
@@ -46,6 +42,20 @@ export default class CozyClient {
 
   async deleteDocument (doc) {
     return this.api.deleteDocument(doc)
+  }
+
+  async fetchSharings (doctype) {
+    const permissions = await this.api.fetchSharingPermissions(doctype)
+    const sharingIds = [
+      ...permissions.byMe.map(p => p.attributes.source_id),
+      ...permissions.withMe.map(p => p.attributes.source_id)
+    ]
+    const sharings = await Promise.all(sharingIds.map(id => this.api.fetchSharing(id)))
+    return { permissions, sharings }
+  }
+
+  async fetchFile (id) {
+    return this.api.fetchFile(id)
   }
 
   async createFile (file, dirID) {

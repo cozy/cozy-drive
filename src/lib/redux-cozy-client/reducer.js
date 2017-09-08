@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { removeObjectProperty } from './utils'
+import { removeObjectProperty, mapValues } from './utils'
 
 const FETCH_DOCUMENT = 'FETCH_DOCUMENT'
 const FETCH_COLLECTION = 'FETCH_COLLECTION'
@@ -202,9 +202,11 @@ const collections = (state = {}, action) => {
   }
 }
 
+import sharings from './slices/sharings'
 export default combineReducers({
   collections,
-  documents
+  documents,
+  sharings
 })
 
 export const fetchCollection = (name, doctype, options = {}, skip = 0) => ({
@@ -289,6 +291,34 @@ export const makeFetchMoreAction = ({ types, collection, document, doctype, opti
   types[0] === FETCH_REFERENCED_FILES
   ? fetchReferencedFiles(document, skip)
   : fetchCollection(collection, doctype, options, skip)
+
+export const applySelectorForAction = (state, action) => {
+  switch (action.types[0]) {
+    case FETCH_COLLECTION:
+    case FETCH_REFERENCED_FILES:
+      return getCollection(state, action.collection)
+    case FETCH_DOCUMENT:
+      return getDocument(state, action.doctype, action.id)
+    default:
+      return null
+  }
+}
+
+export const enhancePropsForActions = (props, fetchActions, dispatch) => mapValues(fetchActions, (action, propName) => {
+  const dataObject = props[propName]
+  switch (action.types[0]) {
+    case FETCH_COLLECTION:
+    case FETCH_REFERENCED_FILES:
+      return {
+        ...dataObject,
+        fetchMore: dataObject.hasMore
+          ? () => dispatch(makeFetchMoreAction(action, dataObject.data.length))
+          : null
+      }
+    default:
+      return dataObject
+  }
+})
 
 // selectors
 const mapDocumentsToIds = (documents, doctype, ids) => ids.map(id => documents[doctype][id])

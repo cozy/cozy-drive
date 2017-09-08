@@ -206,6 +206,7 @@ export const getRecipients = (document) =>
   })
 
 import ShareModal from './ShareModal'
+import SharingDetailsModal from './SharingDetailsModal'
 import withSharings from './withSharings'
 
-export { ShareModal, withSharings }
+export { ShareModal, SharingDetailsModal, withSharings }

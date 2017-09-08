@@ -14,7 +14,7 @@ const sortByCreationDate = (a, b) => {
 const DumbAlbumsList = props => (
   <div className={styles['pho-album-list']}>
     {props.albums.sort(sortByCreationDate).map((a) =>
-      <AlbumItem album={a} sharedByMe={props.sharedByMe.indexOf(a.id) !== -1} sharedWithMe={props.sharedWithMe.indexOf(a.id) !== -1} key={a.id} onServerError={props.onServerError} />)}
+      <AlbumItem album={a} key={a.id} onServerError={props.onServerError} />)}
   </div>
 )
 

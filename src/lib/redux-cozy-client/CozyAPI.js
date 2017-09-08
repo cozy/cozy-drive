@@ -1,6 +1,9 @@
 /* global cozy */
 const FILES_DOCTYPE = 'io.cozy.files'
 const FETCH_LIMIT = 50
+export const SHARED_BY_LINK = 'sharedByLink'
+export const SHARED_WITH_ME = 'sharedWithMe'
+export const SHARED_WITH_OTHERS = 'sharedWithOthers'
 
 export default class CozyAPI {
   constructor (config) {
@@ -148,6 +151,21 @@ export default class CozyAPI {
     const normalized = { ...doc, _type: doc.type, _id: doc.id }
     await cozy.client.data.removeReferencedFiles(normalized, ids)
     return ids
+  }
+
+  async fetchSharingPermissions (doctype) {
+    const fetchPermissions = async (doctype, sharingType) =>
+      await cozy.client.fetchJSON('GET', `/permissions/doctype/${doctype}/${sharingType}`)
+
+    const byMe = await fetchPermissions(doctype, SHARED_WITH_OTHERS)
+    const byLink = await fetchPermissions(doctype, SHARED_BY_LINK)
+    const withMe = await fetchPermissions(doctype, SHARED_WITH_ME)
+
+    return { byMe, byLink, withMe }
+  }
+
+  async fetchSharing (id) {
+    return cozy.client.fetchJSON('GET', `/sharings/${id}`)
   }
 }
 
