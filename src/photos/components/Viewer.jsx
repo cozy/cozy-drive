@@ -271,24 +271,22 @@ export class Viewer extends Component {
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
         <ViewerToolbar hidden={hideActions} currentPhoto={currentPhoto} />
-        <div className={styles['pho-viewer-content']}>
-          {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-previous'], {[styles['pho-viewer-nav-previous--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(previousID)} />}
-          <div className={styles['pho-viewer-photo']}>
-            {currentPhoto &&
-              <ImageLoader
-                photo={currentPhoto}
-                onLoad={this.handleImageLoaded}
-                src={`${cozy.client._url}${currentPhoto.links.large}`}
-                style={style}
-                ref={photo => { this.photo = React.findDOMNode(photo) }}
-              />
-            }
-            {(!currentPhoto || isImageLoading) &&
-              <Loading noMargin color='white' />
-            }
-          </div>
-          {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-next'], {[styles['pho-viewer-nav-next--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(nextID)} />}
+        {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-previous'], {[styles['pho-viewer-nav-previous--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(previousID)} />}
+        <div className={styles['pho-viewer-photo']}>
+          {currentPhoto &&
+            <ImageLoader
+              photo={currentPhoto}
+              onLoad={this.handleImageLoaded}
+              src={`${cozy.client._url}${currentPhoto.links.large}`}
+              style={style}
+              ref={photo => { this.photo = React.findDOMNode(photo) }}
+            />
+          }
+          {(!currentPhoto || isImageLoading) &&
+            <Loading noMargin color='white' />
+          }
         </div>
+        {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-next'], {[styles['pho-viewer-nav-next--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(nextID)} />}
       </div>
     )
   }
