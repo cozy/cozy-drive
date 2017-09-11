@@ -70,13 +70,13 @@ $ cordova run ios
 
 ### Android
 
-Create this folders:
+Create these folders:
 
 ```
-$ mkdir mobile/keys
-$ mkdir mobile/keys/android
-$ mkdir mobile/build
-$ mkdir mobile/build/android
+$ mkdir targets/drive/mobile/keys
+$ mkdir targets/drive/mobile/keys/android
+$ mkdir targets/drive/mobile/build
+$ mkdir targets/drive/mobile/build/android
 ```
 
 You must have this files:
@@ -84,7 +84,7 @@ You must have this files:
 - keys/android/cozy-drive-release-key.jks (and the password)
 - keys/android/key.json
 
-To generate a signed APK on `mobile/build/android/` and publish on Google Play:
+To generate a signed APK on `targets/drive/mobile/build/android/` and publish on Google Play:
 
 ```
 $ npm run android:publish
