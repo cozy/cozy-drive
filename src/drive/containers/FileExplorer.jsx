@@ -14,6 +14,7 @@ import {
 import {
   openFolder,
   getOpenedFolderId,
+  fetchRecentFiles,
   fetchMoreFiles,
   openFileInNewTab
 } from '../actions'
@@ -25,6 +26,8 @@ import {
   isActionMenuVisible
 } from '../reducers'
 
+const isRecentFilesView = (props) => props.location.pathname === '/recent'
+
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
 
@@ -33,13 +36,18 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) =>
 
 class FileExplorer extends Component {
   componentWillMount () {
-    this.props.onFolderOpen(
-      getFolderIdFromRoute(this.props.location, this.props.params)
-    )
+    if (isRecentFilesView(this.props)) {
+      this.props.fetchRecentFiles()
+    } else {
+      this.props.onFolderOpen(
+        getFolderIdFromRoute(this.props.location, this.props.params)
+      )
+    }
   }
 
   componentWillReceiveProps (newProps) {
     if (urlHasChanged(this.props, newProps) &&
+        !isRecentFilesView(newProps) &&
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)) {
       this.props.onFolderOpen(
         getFolderIdFromRoute(newProps.location, newProps.params)
@@ -72,12 +80,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(showActionMenu(fileId)),
   hideActionMenu: () =>
     dispatch(hideActionMenu()),
+  fetchRecentFiles: () =>
+    dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId =>
     dispatch(openFolder(folderId)),
-  onFileOpen: (parentFolder, file) =>
-    dispatch(openFileInNewTab(parentFolder, file)),
+  onFileOpen: (file) =>
+    dispatch(openFileInNewTab(file)),
   onFileToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected))
 })

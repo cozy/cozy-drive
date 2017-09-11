@@ -4,12 +4,18 @@
     @extend $selectionbar
 
 .pho-viewer-toolbar
-    z-index     101
+    position    fixed
+    z-index     $modal-index + 1
     display     flex
     flex-shrink 0
-    width       100vw
+    width       100%
     height      em(90px)
+    background-color    alpha(grey-08, .33)
+    transition .4s opacity ease-out
 
+    &--hidden
+        opacity 0
+        pointer-events none
 
 .pho-viewer-toolbar-actions
     position          static
@@ -24,7 +30,6 @@
 
 .pho-viewer-toolbar-close
     position         fixed
-    z-index          1
     top              0
     right            0
     display          flex
@@ -61,23 +66,14 @@
 
 @media (max-width: (1023/basefont)rem)
     .pho-viewer-toolbar
-        position            fixed
-        height              em(48px)
-        background-color    alpha(grey-08, .33)
-        transition .4s opacity ease-out
+        height  em(48px)
 
         &::before
             width em(48px)
 
-        &.--hidden
-            opacity 0
-
     .pho-viewer-toolbar-close
         width   em(48px)
         height  em(48px)
-
-    .pho-viewer-toolbar-close-text
-        display none
 
     .pho-viewer-toolbar-close-cross
         margin auto

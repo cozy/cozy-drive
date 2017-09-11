@@ -35,7 +35,7 @@ class FileList extends PureComponent {
         minimumBatchSize={FETCH_LIMIT}
       >
         {({ onRowsRendered, registerChild }) => (
-          <AutoSizer>
+          <AutoSizer disableHeight>
             {({ width, height }) => (
               <List
                 ref={registerChild}
@@ -90,7 +90,7 @@ class FileList extends PureComponent {
     if (!file) {
       return <FilePlaceholder key={key} style={style} />
     }
-    const { isRenaming, renamingFile } = this.props
+    const { isRenaming, renamingFile, isAvailableOffline } = this.props
     const isFileRenaming = isRenaming && renamingFile && renamingFile.id === file.id
     const isSelected = selected.find(f => f && f.id === file.id) !== undefined
     return (
@@ -107,6 +107,7 @@ class FileList extends PureComponent {
         attributes={file}
         selectionModeActive={selectionModeActive}
         withSelectionCheckbox={withSelectionCheckbox}
+        isAvailableOffline={isAvailableOffline(file.id)}
       />
     )
   }

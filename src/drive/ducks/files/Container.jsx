@@ -10,13 +10,16 @@ import { ShareModal } from 'sharing'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
+import { isAvailableOffline } from './availableOffline'
+import { ConnectedToggleMenuItem } from '../../components/FileActionMenu'
 
 import {
   createFolder,
   abortAddFolder,
   openFileWith,
   downloadFiles,
-  trashFiles
+  trashFiles,
+  toggleAvailableOffline
 } from '../../actions'
 
 const isAnyFileReferencedByAlbum = files => {
@@ -26,12 +29,28 @@ const isAnyFileReferencedByAlbum = files => {
   return false
 }
 
+// TODO: sadly, as ShareModalConfirm is used with the confirm helper that renders
+// components outside of the main app, we need to provide the i18n context
+// manually for sharing components
+class ShareModalConfirm extends React.Component {
+  getChildContext () {
+    return { t: this.props.t }
+  }
+
+  render () {
+    const { abort } = this.props
+    return <ShareModal onClose={abort} {...this.props} />
+  }
+}
+
 const mapStateToProps = (state, ownProps) => ({
-  isTrashContext: false,
-  canUpload: true,
+  isTrashContext: ownProps.isTrashContext,
+  canUpload: ownProps.canUpload,
+  canCreateFolder: ownProps.canCreateFolder,
   isRenaming: isRenaming(state),
   renamingFile: getRenamingFile(state),
-  Toolbar
+  Toolbar,
+  isAvailableOffline: isAvailableOffline(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -59,6 +78,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         action: selected => dispatch(startRenamingAsync(selected[0])),
         displayCondition: (selections) => selections.length === 1 && isFile(selections[0])
       },
+      availableOffline: {
+        action: selected => dispatch(toggleAvailableOffline(selected[0])),
+        displayCondition: (selections) => __TARGET__ === 'mobile' && selections.length === 1 && isFile(selections[0]),
+        Component: (props) => <ConnectedToggleMenuItem {...props} />
+      },
       share: {
         action: selected => confirm(<ShareModalConfirm t={ownProps.t} document={selected[0]} documentType='Files' sharingDesc={selected[0].name} />),
         displayCondition: selections => selections.length === 1 && isFile(selections[0])
@@ -66,20 +90,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
   })
 })
-
-// TODO: sadly, as ShareModalConfirm is used with the confirm helper that renders
-// components outside of the main app, we need to provide the i18n context
-// manually for sharing components
-class ShareModalConfirm extends React.Component {
-  getChildContext () {
-    return { t: this.props.t }
-  }
-
-  render () {
-    const { abort } = this.props
-    return <ShareModal onClose={abort} {...this.props} />
-  }
-}
 
 export default translate()(connect(
   mapStateToProps,

@@ -11,6 +11,8 @@ export {
   fetchReferencedFiles,
   addReferencedFiles,
   removeReferencedFiles,
+  applySelectorForAction,
+  enhancePropsForActions,
   getCollection,
   getDocument,
   createDocument,
@@ -20,5 +22,12 @@ export {
   trashFile,
   CREATE_DOCUMENT
 } from './reducer'
+export {
+  fetchSharings,
+  fetchSharingStatus,
+  isSharedByMe,
+  isSharedWithMe,
+  getSharingDetails
+} from './slices/sharings'
 
 export { downloadArchive, downloadFile } from './helpers'

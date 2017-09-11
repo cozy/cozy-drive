@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
-module.exports = function(production, app) {
+module.exports = function (production, app) {
   return {
     entry: {
       app: [path.resolve(__dirname, `../targets/${app}/mobile/main`)]

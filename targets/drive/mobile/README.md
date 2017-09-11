@@ -55,6 +55,14 @@ $ cd targets/drive/mobile
 $ cordova run ios
 ```
 
+### Standalone mode
+- Open your browser with web-security CORS disabled
+- launch `$ yarn watch:mobile:standalone`
+- Go to localhost:8084 in your browser and open the console
+- Follow the onboarding and after giving your cozy URL, click on the link logged in the console
+- Log yourself, accept permissions and copy the url you've been redirected to.
+- Return to your previous tab and paste the url in the prompt (be quick, or take your time, whatever, because the prompt may be blocked when it pops if you're still on the permissions tab)
+- Profit!
 
 ## :lock: Create Release
 
@@ -62,13 +70,13 @@ $ cordova run ios
 
 ### Android
 
-Create this folders:
+Create these folders:
 
 ```
-$ mkdir mobile/keys
-$ mkdir mobile/keys/android
-$ mkdir mobile/build
-$ mkdir mobile/build/android
+$ mkdir targets/drive/mobile/keys
+$ mkdir targets/drive/mobile/keys/android
+$ mkdir targets/drive/mobile/build
+$ mkdir targets/drive/mobile/build/android
 ```
 
 You must have this files:
@@ -76,7 +84,7 @@ You must have this files:
 - keys/android/cozy-drive-release-key.jks (and the password)
 - keys/android/key.json
 
-To generate a signed APK on `mobile/build/android/` and publish on Google Play:
+To generate a signed APK on `targets/drive/mobile/build/android/` and publish on Google Play:
 
 ```
 $ npm run android:publish

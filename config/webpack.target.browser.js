@@ -5,7 +5,7 @@ const fs = require('fs')
 const { DefinePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = function(production, app) {
+module.exports = function (production, app) {
   var entry = {
     app: path.resolve(__dirname, `../targets/${app}/web/main`)
   }

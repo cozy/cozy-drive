@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { cozyConnect } from 'redux-cozy-client'
+import { connect } from 'react-redux'
+import { cozyConnect, isSharedWithMe, isSharedByMe, getSharingDetails } from 'redux-cozy-client'
 import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
-import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, updateAlbum } from '../ducks/albums'
+import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, fetchAlbumSharing, updateAlbum } from '../ducks/albums'
 import { hideSelectionBar } from '../ducks/selection'
-import { withSharings, SHARED_WITH_ME } from 'sharing'
 
 import BoardView from './BoardView'
 import Topbar from '../components/Topbar'
@@ -43,17 +43,24 @@ export class AlbumPhotos extends Component {
   }
 
   render () {
-    if (!this.props.album) {
+    if (!this.props.album || !this.props.sharing) {
       return null
     }
-    const { album, photos, sharedWithMe } = this.props
+    const { album, photos, sharedWithMe, sharedByMe, sharing } = this.props
     const { editing } = this.state
 
     return (
       <div className={styles['pho-content-wrapper']}>
         {(album.name && photos.data) &&
           <Topbar viewName='albumContent' albumName={album.name} editing={editing} onEdit={this.renameAlbum.bind(this)} >
-            <AlbumToolbar album={album} readOnly={sharedWithMe.length > 0} photos={photos.data} onRename={this.editAlbumName.bind(this)} />
+            <AlbumToolbar
+              album={album}
+              sharedWithMe={sharedWithMe}
+              sharedByMe={sharedByMe}
+              sharing={sharing}
+              photos={photos.data}
+              onRename={this.editAlbumName.bind(this)}
+            />
           </Topbar>
         }
         {photos.data &&
@@ -62,7 +69,7 @@ export class AlbumPhotos extends Component {
             photos={photos}
             photoLists={[{ photos: photos.data }]}
             photosContext='album'
-            readOnly={sharedWithMe.length > 0}
+            readOnly={sharedWithMe}
           />
         }
         {this.renderViewer(this.props.children)}
@@ -82,10 +89,19 @@ export class AlbumPhotos extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => ownProps.album
+  ? {
+    sharedWithMe: isSharedWithMe(state, ownProps.album),
+    sharedByMe: isSharedByMe(state, ownProps.album),
+    sharing: getSharingDetails(state, ownProps.album)
+  }
+  : {}
+
 const mapDocumentsToProps = (ownProps) => ({
   album: fetchAlbum(ownProps.router.params.albumId),
   // TODO: not ideal, but we'll have to wait after associations are implemented
-  photos: fetchAlbumPhotos({ type: 'io.cozy.photos.albums', id: ownProps.router.params.albumId })
+  photos: fetchAlbumPhotos(ownProps.router.params.albumId),
+  sharingStatus: fetchAlbumSharing(ownProps.router.params.albumId)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -96,4 +112,4 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
 export default cozyConnect(
   mapDocumentsToProps,
   mapDispatchToProps
-)(withRouter(withSharings(AlbumPhotos, 'album', 'io.cozy.photos.albums', [SHARED_WITH_ME])))
+)(connect(mapStateToProps)(withRouter(AlbumPhotos)))

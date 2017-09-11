@@ -16,7 +16,7 @@ export const ViewerToolbar = ({ t, router, hidden, currentPhoto }) => {
     })
   }
   return (
-    <div className={classNames(styles['pho-viewer-toolbar'], {[styles['--hidden']]: hidden})} role='viewer-toolbar'>
+    <div className={classNames(styles['pho-viewer-toolbar'], {[styles['pho-viewer-toolbar--hidden']]: hidden})} role='viewer-toolbar'>
       <div className={classNames(styles['coz-selectionbar'], styles['pho-viewer-toolbar-actions'])}>
         <button
           className={styles['coz-action-download']}

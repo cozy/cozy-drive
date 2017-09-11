@@ -4,11 +4,11 @@ import styles from '../styles/main'
 
 import React from 'react'
 
-import ButtonClientMobile from './ButtonClientMobile'
+import BannerClient from '../../layout/pushClient/Banner'
 
 const Main = ({ children }) => (
   <main class={styles['fil-content']}>
-    { __TARGET__ !== 'mobile' && <ButtonClientMobile />}
+    { __TARGET__ !== 'mobile' && <BannerClient />}
     {children}
   </main>
 )

@@ -5,7 +5,10 @@
     "shared": "Shared by me",
     "trash": "Trash",
     "btn-client": "Get Cozy for desktop",
+    "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
+    "banner-txt-client": "Tip: your pictures, bills, ID documents, all accessible anytime, from any of your device with Cozy Drive installed on your computer",
+    "banner-btn-client": "Download now",
     "link-client": "https://docs.cozy.io/en/download/"
   },
   "Empty": {
@@ -86,6 +89,7 @@
   "Albums": {
     "album_item_description": "%{smart_count} photo |||| %{smart_count} photos",
     "album_item_shared_ro": "Shared (read only)",
+    "album_item_shared_rw": "Shared (read/write)",
     "add_photos": {
       "title": "Add to album",
       "success": "Album %{name} has been updated with %{smart_count} photo. |||| Album %{name} has been updated with %{smart_count} photos.",
@@ -100,6 +104,14 @@
     "share": {
       "cta": "Share",
       "title": "Share with others",
+      "details": {
+        "title": "Sharing details",
+        "createdAt": "On %{date}",
+        "ro": "Read only",
+        "rw": "Read/write"
+      },
+      "sharedByMe": "Shared",
+      "sharedWithMe": "Shared with me",
       "shareByLink": {
         "title": "By public link",
         "subtitle": "Share by link",

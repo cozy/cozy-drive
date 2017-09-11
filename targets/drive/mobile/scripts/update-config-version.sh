@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CONFIG='config.xml'
-NEW_VERSION=$(cat ../package.json \
+NEW_VERSION=$(cat ../../../package.json \
   | grep version \
   | head -1 \
   | awk -F: '{ print $2 }' \

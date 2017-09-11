@@ -1,5 +1,5 @@
 {
-  "nav": {
+  "Nav": {
     "item_drive": "Drive",
     "item_recent": "Recent",
     "item_shared": "Shared by me",
@@ -9,6 +9,8 @@
     "btn-client": "Get Cozy for desktop",
     "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
+    "banner-txt-client": "Tip: your pictures, bills, ID documents, all accessible anytime, from any of your device with Cozy Drive installed on your computer",
+    "banner-btn-client": "Download now",
     "link-client": "https://docs.cozy.io/en/download/",
     "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
@@ -109,7 +111,8 @@
     "rename": "Rename",
     "restore": "Restore",
     "close": "Close",
-    "openWith": "Open with"
+    "openWith": "Open with",
+    "availableOffline": "Make available offline"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",

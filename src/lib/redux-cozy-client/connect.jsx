@@ -1,25 +1,8 @@
 import React, { Component } from 'react'
 import { connect as reduxConnect } from 'react-redux'
 
-import { getCollection, getDocument } from '.'
+import { applySelectorForAction, enhancePropsForActions } from '.'
 import { mapValues, filterValues } from './utils'
-import { makeFetchMoreAction } from './reducer'
-
-const isFetchCollection = (action) => action.types[0] === 'FETCH_COLLECTION' || action.types[0] === 'FETCH_REFERENCED_FILES'
-
-const enhanceProps = (props, fetchActions, dispatch) => mapValues(fetchActions, (action, propName) => {
-  const dataObject = props[propName]
-  if (!isFetchCollection(action)) {
-    return dataObject
-  }
-  const fetchMore = dataObject.hasMore
-    ? () => dispatch(makeFetchMoreAction(action, dataObject.data.length))
-    : null
-  return {
-    ...dataObject,
-    fetchMore
-  }
-})
 
 const connect = (mapDocumentsToProps, mapActionsToProps = null) => (WrappedComponent) => {
   class Wrapper extends Component {
@@ -39,7 +22,7 @@ const connect = (mapDocumentsToProps, mapActionsToProps = null) => (WrappedCompo
         f,
         client,
         ...this.props,
-        ...enhanceProps(this.props, fetchActions, store.dispatch)
+        ...enhancePropsForActions(this.props, fetchActions, store.dispatch)
       }
       return <WrappedComponent {...props} />
     }
@@ -52,14 +35,8 @@ const connect = (mapDocumentsToProps, mapActionsToProps = null) => (WrappedCompo
     const fetchActions = filterValues(initialProps, (prop) => isAction(prop))
     const otherProps = filterValues(initialProps, (prop) => !isAction(prop))
 
-    const selector = (state, action) => {
-      return isFetchCollection(action)
-      ? getCollection(state, action.collection)
-      : getDocument(state, action.doctype, action.id)
-    }
-
     const mapStateToProps = (state) => ({
-      ...mapValues(fetchActions, (action) => isAction(action) ? selector(state, action) : action),
+      ...mapValues(fetchActions, (action) => isAction(action) ? applySelectorForAction(state, action) : action),
       fetchActions,
       ...otherProps
     })

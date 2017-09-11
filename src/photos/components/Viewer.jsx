@@ -1,5 +1,6 @@
 /* global cozy */
 import styles from '../styles/viewer'
+import classNames from 'classnames'
 
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
@@ -11,7 +12,7 @@ import ImageLoader from './ImageLoader'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
-const TOOLBAR_HIDE_DELAY = 3000
+const ACTIONS_HIDE_DELAY = 3000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
 const MASS = 10       // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
@@ -38,13 +39,13 @@ export class Viewer extends Component {
         x: 0,
         y: 0
       },
-      hideToolbar: false
+      hideActions: false
     }
 
     this.navigateToPhoto = this.navigateToPhoto.bind(this)
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
 
-    this.hideToolbarTimeout = null
+    this.hideActionsTimeout = null
   }
 
   componentWillReceiveProps (nextProps) {
@@ -136,9 +137,11 @@ export class Viewer extends Component {
       }, this.applyMomentum.bind(this))
     })
 
-    this.gesturesHandler.on('tap', this.toggleToolbar.bind(this))
+    this.gesturesHandler.on('tap', this.toggleActions.bind(this))
 
-    this.hideToolbarAfterDelay()
+    document.addEventListener('mousemove', this.showActions.bind(this))
+
+    this.hideActionsAfterDelay()
   }
 
   /**
@@ -186,7 +189,7 @@ export class Viewer extends Component {
    * Things to do when a gesture starts:
    * - saves the current scale and offset, which will be used as base values for calculations
    * - kill any remaining momentum from previous gestures
-   * - hide the toolbar
+   * - hide the actions
    */
   prepareForGesture () {
     this.setState(state => ({
@@ -199,18 +202,16 @@ export class Viewer extends Component {
         x: 0,
         y: 0
       },
-      hideToolbar: true
+      hideActions: true
     }))
   }
 
   componentDidUpdate (prevProps, prevState) {
-    // if the toolbar was hidden but is now displayed, start a countdown to hide it again
-    if (prevState.hideToolbar && !this.state.hideToolbar) this.hideToolbarAfterDelay()
+    if (prevState.hideActions && !this.state.hideActions) this.hideActionsAfterDelay()
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.onKeyDownCallback, false)
-    // this.gesturesHandler.destroy()
   }
 
   onKeyDown (e) {
@@ -231,7 +232,7 @@ export class Viewer extends Component {
 
     this.setState({
       isImageLoading: true,
-      hideToolbar: true,
+      hideActions: true,
       scale: 1,
       offsetX: 0,
       offsetY: 0
@@ -246,44 +247,46 @@ export class Viewer extends Component {
     this.setState({ isImageLoading: false })
   }
 
-  toggleToolbar () {
-    this.setState(state => ({...state, hideToolbar: !state.hideToolbar}))
+  toggleActions () {
+    this.setState(state => ({...state, hideActions: !state.hideActions}))
   }
 
-  hideToolbarAfterDelay () {
-    clearTimeout(this.hideToolbarTimeout)
-    this.hideToolbarTimeout = setTimeout(() => {
-      this.setState({ hideToolbar: true })
-    }, TOOLBAR_HIDE_DELAY)
+  showActions () {
+    this.setState(state => ({...state, hideActions: false}))
+  }
+
+  hideActionsAfterDelay () {
+    clearTimeout(this.hideActionsTimeout)
+    this.hideActionsTimeout = setTimeout(() => {
+      this.setState({ hideActions: true })
+    }, ACTIONS_HIDE_DELAY)
   }
 
   render () {
-    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideToolbar, scale, offsetX, offsetY } = this.state
+    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideActions, scale, offsetX, offsetY } = this.state
     const style = {
       transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`,
       display: isImageLoading ? 'none' : 'initial'
     }
     return (
       <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
-        <ViewerToolbar hidden={hideToolbar} currentPhoto={currentPhoto} />
-        <div className={styles['pho-viewer-content']}>
-          {!singlePhoto && <a role='button' className={styles['pho-viewer-nav-previous']} onClick={() => this.navigateToPhoto(previousID)} />}
-          <div className={styles['pho-viewer-photo']}>
-            {currentPhoto &&
-              <ImageLoader
-                photo={currentPhoto}
-                onLoad={this.handleImageLoaded}
-                src={`${cozy.client._url}${currentPhoto.links.large}`}
-                style={style}
-                ref={photo => { this.photo = React.findDOMNode(photo) }}
-              />
-            }
-            {(!currentPhoto || isImageLoading) &&
-              <Loading noMargin color='white' />
-            }
-          </div>
-          {!singlePhoto && <a role='button' className={styles['pho-viewer-nav-next']} onClick={() => this.navigateToPhoto(nextID)} />}
+        <ViewerToolbar hidden={hideActions} currentPhoto={currentPhoto} />
+        {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-previous'], {[styles['pho-viewer-nav-previous--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(previousID)} />}
+        <div className={styles['pho-viewer-photo']}>
+          {currentPhoto &&
+            <ImageLoader
+              photo={currentPhoto}
+              onLoad={this.handleImageLoaded}
+              src={`${cozy.client._url}${currentPhoto.links.large}`}
+              style={style}
+              ref={photo => { this.photo = React.findDOMNode(photo) }}
+            />
+          }
+          {(!currentPhoto || isImageLoading) &&
+            <Loading noMargin color='white' />
+          }
         </div>
+        {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-next'], {[styles['pho-viewer-nav-next--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(nextID)} />}
       </div>
     )
   }

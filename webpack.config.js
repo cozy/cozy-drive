@@ -2,7 +2,7 @@
 
 const merge = require('webpack-merge')
 
-module.exports = function(env) {
+module.exports = function (env) {
   const { target = 'browser', app = 'drive' } = env
   const production = env.production === true
   return merge(

@@ -1,4 +1,4 @@
-import { OPEN_FILE_E_OFFLINE, OPEN_FILE_E_NO_APP } from '../actions'
+import { OPEN_FILE_E_OFFLINE, OPEN_FILE_E_NO_APP } from 'drive/actions'
 
 export const OPEN_WITH_OFFLINE_ERROR = 'mobile.error.open_with.offline'
 export const OPEN_WITH_NO_APP_ERROR = 'mobile.error.open_with.noapp'

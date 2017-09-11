@@ -1,12 +1,12 @@
 import React from 'react'
 
 import Recipient from './Recipient'
-import { getRecipients } from '..'
+import { getRecipients, getPrimaryEmail, getPrimaryCozy } from '..'
 
 const WhoHasAccess = ({ recipients }) => (
   <div>
-    {recipients.map(({email, url, status}) => (
-      <Recipient name={email} url={url} status={status} />
+    {recipients.map(({ contact, status }) => (
+      <Recipient name={getPrimaryEmail(contact)} url={getPrimaryCozy(contact)} status={status} />
     ))}
   </div>
 )

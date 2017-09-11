@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
@@ -28,7 +28,7 @@
     "watch:drive": "npm run watch:drive:browser",
     "watch:drive:browser": "npm run internal:watch -- --env.app=drive --env.target=browser",
     "watch:drive:mobile": "npm run internal:watch -- --env.app=drive --env.target=mobile",
-    "watch:drive:standalone": "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=browser --port 8084 --display-modules --display-chunks --inline --hot",
+    "watch:drive:standalone": "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=mobile --port 8084 --display-modules --display-chunks --inline --hot",
     "watch:photos": "npm run watch:photos:browser",
     "watch:photos:browser": "npm run internal:watch -- --env.app=photos --env.target=browser",
     "mobile:drive:icon": "(cd targets/drive/mobile && splashicon-generator --imagespath='./res/model')",
@@ -116,8 +116,8 @@
   "dependencies": {
     "classnames": "^2.2.0",
     "cozy-bar": "^3.0.1",
-    "cozy-client-js": "0.3.11",
-    "cozy-ui": "3.0.0-beta42",
+    "cozy-client-js": "0.3.14",
+    "cozy-ui": "3.0.0-beta45",
     "date-fns": "^1.22.0",
     "filesize": "^3.3.0",
     "hammerjs": "^2.0.8",
@@ -133,7 +133,6 @@
     "prop-types": "^15.5.10",
     "raven-js": "^3.10.0",
     "react-autosuggest": "^9.3.2",
-    "react-bosonic": "1.0.0-beta6",
     "react-copy-to-clipboard": "^5.0.0",
     "react-markdown": "^2.5.0",
     "react-redux": "^5.0.1",
