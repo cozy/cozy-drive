@@ -5,7 +5,7 @@ Cozy Drive Features:
 • Save all the photos on your smartphone, they will be available on your PC and tablet as well
 • Automatically synchronize the files on your PC with Cozy
 • Share your holiday pictures with everyone you want!
-• Compatible MacOs, iOS, Android and Windows.
+• Compatible with MacOs, iOS, Android and Windows.
 
 Ready to get Cozy? Install Cozy Drive and enhance your Cozy, your new personal cloud. For more information about Cozy, please go to our website: cozy.io.
 
