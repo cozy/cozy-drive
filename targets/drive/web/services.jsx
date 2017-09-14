@@ -5,7 +5,7 @@ import 'babel-polyfill'
 
 import React from 'react'
 import { render } from 'react-dom'
-import IntentHandler from 'drive/components/IntentHandler'
+import IntentHandler from 'drive/ducks/services'
 import { I18n } from 'cozy-ui/react/I18n'
 
 if (__DEVELOPMENT__) {

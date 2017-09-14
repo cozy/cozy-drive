@@ -45,7 +45,7 @@
       "href": "/services"
     },
     {
-      "action": "LIST",
+      "action": "OPEN",
       "type": ["io.cozy.suggestions"],
       "href": "/services"
     }

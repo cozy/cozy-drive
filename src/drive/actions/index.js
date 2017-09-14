@@ -147,6 +147,11 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
   }
 }
 
+export const getFileDownloadUrl = async (id) => {
+  const link = await cozy.client.files.getDownloadLinkById(id)
+  return `${cozy.client._url}${link}`
+}
+
 export const openFileInNewTab = (file) => {
   return async dispatch => {
     if (file.availableOffline) {
@@ -161,11 +166,11 @@ export const openFileInNewTab = (file) => {
     } else {
       const newTab = window.open('about:blank', '_blank') // must be done before the async calls, otherwise pop-up blockers are trigered
 
-      const href = await cozy.client.files.getDownloadLinkById(file.id)
+      const href = await getFileDownloadUrl(file.id)
       if (isCordova()) {
-        newTab.executeScript({ code: `window.location.href = '${cozy.client._url}${href}'` })
+        newTab.executeScript({ code: `window.location.href = '${href}'` })
       } else {
-        newTab.location.href = `${cozy.client._url}${href}`
+        newTab.location.href = href
       }
     }
   }
