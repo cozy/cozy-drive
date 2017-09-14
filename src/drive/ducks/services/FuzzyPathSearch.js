@@ -20,14 +20,14 @@ class FuzzyPathSearch {
     let suggestions
 
     if (isQueryAugmented && this.previousSuggestions.length !== 0) {
-      // the new query is just a more selective version of the previous one, so we narrow down the exisitng list
+      // the new query is just a more selective version of the previous one, so we narrow down the existing list
       suggestions = this.filterAndScore(this.previousSuggestions, sortedQuery.map(segment => segment.word))
-    }
-    else {
+    } else {
       suggestions = this.filterAndScore(this.files, sortedQuery.map(segment => segment.word))
     }
 
     this.previousQuery = sortedQuery
+    this.previousSuggestions = suggestions
 
     return suggestions
   }
@@ -52,7 +52,7 @@ class FuzzyPathSearch {
 
   sortQueryByRevelance (query) {
     // query terms are sorted in two categories: those that are new or have changed, and therefore may further reduce the set of results, are prioritzed. Those that were there and have not changed come second.
-    // finally, longer words are placed first discard results earlier
+    // finally, longer words are placed first to allow discarding files earlier in the scoring loop
     let priorizedWords = []
     let wordsFromPreviousQuery = []
 
@@ -62,8 +62,7 @@ class FuzzyPathSearch {
           if (currentQuerySegment.word !== previousQuerySegment.word) {
             currentQuerySegment.isAugmentedWord = true
             priorizedWords.push(currentQuerySegment)
-          }
-          else {
+          } else {
             currentQuerySegment.isNewWord = false
             wordsFromPreviousQuery.push(currentQuerySegment)
           }
@@ -72,6 +71,7 @@ class FuzzyPathSearch {
         }
       }
 
+      // this segment wasn't included in any previous query segment so it's a new word and we prioritize it
       priorizedWords.push(currentQuerySegment)
     }
 
@@ -90,7 +90,7 @@ class FuzzyPathSearch {
 
       for (let word of words) {
         // let the magic begin...
-        // essentialy, matches words at the end of the path are worth more
+        // essentialy, matched words that are at the end of the path get better scores
         let wordScore = 0
         let wordOccurenceValue = 10000
         let firstOccurence = true
@@ -102,7 +102,7 @@ class FuzzyPathSearch {
 
           if (dirName.includes(word)) {
             if (firstOccurence) {
-              wordOccurenceValue = 52428800  // 52 428 800 === 2^19 * 100
+              wordOccurenceValue = 52428800  // that's 2^19 * 100
               wordScore += wordOccurenceValue / 2 * (1 + word.length / dirName.length)
               firstOccurence = false
             } else {
@@ -114,7 +114,7 @@ class FuzzyPathSearch {
             wordScore -= wordOccurenceValue
             wordOccurenceValue /= 2
             if (depth === maxDepth - 1) {
-              // if on the leaf there is no occurence of word : apply a big penalty
+              // make the penality bigger if the last part of the path doesn't include the word at all
               wordScore /= 2
             }
           }
