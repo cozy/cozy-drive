@@ -67,7 +67,8 @@ export default class ShareAutocomplete extends Component {
       }
         inputProps={{
           onChange: this.onChange.bind(this),
-          value: value
+          value: value,
+          type: 'email'
         }}
       />
     )
