@@ -1,11 +1,16 @@
-Cette application n'est compatible qu'avec la dernière version de Cozy (v3).
+éunit. Dans votre Cozy, vous mettez toutes vos données personnelles : photos, santé, bancaire, vacances, alors inaccessibles aux autres et aux entreprises.
+Dans sa version Bêta (qui remplace l’ancienne version V2), Cozy vous propose une première application sur mobile : Cozy Drive. `
 
-Cozy Cloud permet à chacun d’avoir son cloud personnel, respectueux de la vie privée. Avec Cozy Drive, accédez aux fichiers et aux photos stockés dans votre Cozy depuis n'importe quel téléphone/tablette.
 
-Avec Cozy Drive vous pouvez :
-    - Accéder aux fichiers présents sur votre cloud personnel
-    - Synchroniser automatiquement les photos de votre téléphone ou tablette
+Fonctionnalités de Cozy Drive  :
+• Sauvegardez les photos prises depuis votre mobile, elles seront accessibles depuis votre PC et tablette
+• Automatisez la synchronisation de vos documents et fichiers sur votre PC avec votre Cozy
+• Partagez vos photos de vacances avec qui vous voulez quand vous le souhaitez !
+• Compatible MacOs, iOS, Android et Windows.
 
-Grâce aux nombreuses applications disponibles, Cozy Cloud simplifie la gestion du quotidien : synchroniser et stocker ses photos, automatiser le téléchargement de ses factures, gérer ses dépenses, etc. Flexible et simple à utiliser, cette plateforme Open Source offre aussi la possibilité de créer et développer des applications.
 
-Envoyez-nous vos feedbacks ! Signalez-nous vos bugs et votez pour les prochaines fonctionnalités de l'application sur : https://github.com/cozy/cozy-drive/issues
+Prêt à adopter Cozy? Installez Cozy Drive et décuplez les capacités de votre Cozy, votre nouveau cloud personnel. Pour plus d’informations sur Cozy, venez nous rendre visite sur cozy.io.
+
+Votre avis compte pour nous alors rejoignez la communauté de milliers de Cozynautes et partagez vos impressions sur notre forum : https://forum.cozy.io/
+
+Et n’oubliez pas : Make Internet Great Again with Cozy !
