@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 
 import Menu, { Item } from '../../../components/Menu'
+import MoreButton from '../../../components/MoreButton'
 
 const AlbumsToolbar = ({ t }) => (
   <div className={styles['pho-toolbar']} role='toolbar'>
@@ -19,9 +20,8 @@ const AlbumsToolbar = ({ t }) => (
       </Link>
     </div>
     <Menu
-      title={t('Toolbar.more')}
       className={classNames(styles['pho-toolbar-menu'], 'coz-mobile')}
-      buttonClassName={styles['pho-toolbar-more-btn']}
+      button={<MoreButton />}
     >
       <Item>
         <div>

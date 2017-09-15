@@ -107,7 +107,7 @@ class FileList extends PureComponent {
         attributes={file}
         selectionModeActive={selectionModeActive}
         withSelectionCheckbox={withSelectionCheckbox}
-        isAvailableOffline={isAvailableOffline(file.id)}
+        isAvailableOffline={isAvailableOffline && isAvailableOffline(file.id)}
       />
     )
   }

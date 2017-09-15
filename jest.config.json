@@ -1,3 +1,6 @@
 {
-  "roots": ["<rootDir>/src/lib"]
+  "roots": ["<rootDir>/src/lib"],
+  "transformIgnorePatterns": [
+    "node_modules/(?!cozy-ui)/"
+  ]
 }

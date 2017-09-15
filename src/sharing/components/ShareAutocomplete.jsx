@@ -1,27 +1,20 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
-import { getContacts, getPrimaryEmail, getPrimaryCozy } from '..'
 
 import autosuggestTheme from './autosuggest.styl'
 import Recipient from './Recipient'
+import { getPrimaryEmail, getPrimaryCozy } from '..'
 
 export default class ShareAutocomplete extends Component {
   getInitialState () {
     return {
-      contacts: [],
       suggestions: []
     }
   }
 
-  componentDidMount () {
-    getContacts().then((contacts) => {
-      this.setState(state => ({ ...state, contacts }))
-    })
-  }
-
   computeSuggestions (value) {
     const inputValue = value.trim().toLowerCase()
-    return inputValue.length === 0 ? [] : this.state.contacts.filter(
+    return inputValue.length === 0 ? [] : this.props.contacts.filter(
       contact => (
         contact.email && contact.email.some(email => new RegExp(inputValue).test(email.address))
       ) || (
@@ -59,12 +52,7 @@ export default class ShareAutocomplete extends Component {
         getSuggestionValue={contact => contact}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
-        renderSuggestion={contact =>
-          <Recipient
-            name={getPrimaryEmail(contact)}
-            url={getPrimaryCozy(contact)}
-          />
-      }
+        renderSuggestion={contact => <Recipient contact={contact} />}
         inputProps={{
           onChange: this.onChange.bind(this),
           value: value,

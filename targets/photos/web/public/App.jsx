@@ -151,7 +151,7 @@ class App extends Component {
 const mapDocumentsToProps = (ownProps) => ({
   album: fetchAlbum(ownProps.albumId),
   // TODO: not ideal, but we'll have to wait after associations are implemented
-  photos: fetchAlbumPhotos({ type: 'io.cozy.photos.albums', id: ownProps.albumId })
+  photos: fetchAlbumPhotos(ownProps.albumId)
 })
 
 export default cozyConnect(mapDocumentsToProps)(App)

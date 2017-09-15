@@ -4,14 +4,13 @@ import classnames from 'classnames'
 import Alerter from 'photos/components/Alerter'
 import ShareAutocomplete from './ShareAutocomplete'
 import WhoHasAccess from './WhoHasAccess'
-import { share } from '..'
 
 import styles from '../share.styl'
 
-class ShareByEmail extends React.Component {
+class ShareByEmailWrapper extends React.Component {
   share (recipient, sharingType) {
     const { document, documentType, sharingDesc } = this.props
-    return share(document, recipient, sharingType, sharingDesc)
+    return this.props.onShare(document, recipient, sharingType, sharingDesc)
       .then(sharing => {
         Alerter.info(`${documentType}.share.shareByEmail.success`, { email: recipient.email })
       })
@@ -21,21 +20,41 @@ class ShareByEmail extends React.Component {
       })
   }
 
-  render () {
+  unshare (recipient) {
     const { document, documentType } = this.props
+    return this.props.onUnshare(document, recipient)
+      .then(() => {
+        Alerter.info(`${documentType}.share.unshare.success`, { email: recipient.email })
+      })
+      .catch(err => {
+        Alerter.error('Error.generic')
+        throw err
+      })
+  }
+
+  render () {
+    const { document, documentType, contacts, recipients } = this.props
     return (
       <div>
-        <ShareByUrl
+        <ShareByEmail
           onSend={(recipient, sharingType) => this.share(recipient, sharingType)}
+          contacts={contacts}
           documentType={documentType}
         />
-        <WhoHasAccess document={document} />
+        <WhoHasAccess
+          document={document}
+          documentType={documentType}
+          recipients={recipients}
+          onUnshare={(recipient) => this.unshare(recipient)}
+        />
       </div>
     )
   }
 }
 
-class ShareByUrl extends React.Component {
+export default ShareByEmailWrapper
+
+class ShareByEmail extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -76,7 +95,7 @@ class ShareByUrl extends React.Component {
 
   render () {
     const { t } = this.context
-    const { documentType } = this.props
+    const { contacts, documentType } = this.props
     return (
       <div className={styles['coz-form-group']}>
         <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
@@ -84,6 +103,7 @@ class ShareByUrl extends React.Component {
           <label className={styles['coz-form-label']} for='email'>{t(`${documentType}.share.shareByEmail.email`)}</label>
           <ShareAutocomplete
             value={this.state.email}
+            contacts={contacts}
             onChange={(email, url, id) => this.onAutocomplete(email, url, id)}
           />
         </div>
@@ -107,5 +127,3 @@ class ShareByUrl extends React.Component {
     )
   }
 }
-
-export default ShareByEmail

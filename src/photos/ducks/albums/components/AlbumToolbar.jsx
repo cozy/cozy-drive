@@ -8,6 +8,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import ShareButton, { SharedByMeButton, SharedWithMeButton } from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { Item } from '../../../components/Menu'
+import MoreButton from '../../../components/MoreButton'
 
 import { isSelectionBarVisible, showSelectionBar } from '../../../ducks/selection'
 
@@ -41,8 +42,7 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, location, album, photos, sharedWithMe, sharedByMe, sharing, disabled = false, deleteAlbum, selectItems, onRename } = this.props
-    const readOnly = sharedWithMe
+    const { t, location, album, photos, sharedWithMe, sharedByMe, readOnly, disabled = false, deleteAlbum, selectItems, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
@@ -63,12 +63,11 @@ class AlbumToolbar extends Component {
           }
         </div>
         <Menu
-          title={t('Toolbar.more')}
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
-          buttonClassName={styles['pho-toolbar-more-btn']}
+          button={<MoreButton />}
         >
-          {!readOnly &&
+          {!sharedWithMe &&
             <Item>
               <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={this.showShareModal}>
                 {t('Albums.share.cta')}
@@ -98,8 +97,8 @@ class AlbumToolbar extends Component {
               {t('Toolbar.menu.select_items')}
             </a>
           </Item>
-          {!readOnly && <hr />}
-          {!readOnly &&
+          {!sharedWithMe && <hr />}
+          {!sharedWithMe &&
             <Item>
               <a className={classNames(styles['pho-action-delete'])} onClick={() => deleteAlbum(album)}>
                 {t('Toolbar.menu.album_delete')}
@@ -119,7 +118,6 @@ class AlbumToolbar extends Component {
             document={album}
             documentType='Albums'
             sharingDesc={album.name}
-            sharing={sharing}
             onClose={this.closeSharingDetailsModal}
           />}
       </div>

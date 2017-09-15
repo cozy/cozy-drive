@@ -125,6 +125,10 @@
         "send": "Send",
         "success": "You sent an invite to %{email}."
       },
+      "unshare": {
+        "title": "Remove from album",
+        "success": "You removed this shared album from %{email}."
+      },
       "sharingLink": {
         "title": "Link to share",
         "copy": "Copy",

@@ -1,6 +1,7 @@
 import styles from './share.styl'
 
 import React, { Component } from 'react'
+import { cozyConnect, fetchCollection, fetchSharings, share, unshare, shareByLink, revokeLink } from 'redux-cozy-client'
 import Modal from 'cozy-ui/react/Modal'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 
@@ -10,7 +11,9 @@ import ShareByEmail from './components/ShareByEmail'
 export class ShareModal extends Component {
   render () {
     const { t } = this.context
-    const { onClose, sharingDesc, documentType = 'Document' } = this.props
+    const { onClose, sharing, sharingDesc, share, unshare, shareByLink, revokeLink, contacts, documentType = 'Document' } = this.props
+    // TODO: temporary
+    const loaded = contacts.fetchStatus === 'loaded'
     return (
       <Modal
         title={t(`${documentType}.share.title`)}
@@ -27,10 +30,25 @@ export class ShareModal extends Component {
           </TabList>
           <TabPanels className={styles['pho-share-modal-content']}>
             <TabPanel name='email'>
-              <ShareByEmail document={this.props.document} documentType={documentType} sharingDesc={sharingDesc} />
+              {loaded && <ShareByEmail
+                document={this.props.document}
+                documentType={documentType}
+                recipients={sharing.recipients}
+                contacts={contacts.data}
+                sharingDesc={sharingDesc}
+                onShare={share}
+                onUnshare={unshare}
+              />}
             </TabPanel>
             <TabPanel name='link'>
-              <ShareByLink document={this.props.document} documentType={documentType} />
+              <ShareByLink
+                document={this.props.document}
+                documentType={documentType}
+                checked={!!sharing.sharingLink}
+                link={sharing.sharingLink}
+                onEnable={shareByLink}
+                onDisable={revokeLink}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -39,4 +57,19 @@ export class ShareModal extends Component {
   }
 }
 
-export default ShareModal
+export default cozyConnect(
+  ownProps => ({
+    sharing: fetchSharings(ownProps.document._type, ownProps.document._id, {
+      include: ['recipients']
+    }),
+    // TODO: we shouldn't have to fetch contacts manually, it should be handled
+    // automatically when using the include: ['recipients'] option
+    contacts: fetchCollection('contacts', 'io.cozy.contacts')
+  }),
+  (dispatch, ownProps) => ({
+    share: (document, recipient, sharingType, sharingDesc) => dispatch(share(document, recipient, sharingType, sharingDesc)),
+    unshare: (document, recipient) => dispatch(unshare(document, recipient)),
+    shareByLink: (document) => dispatch(shareByLink(document)),
+    revokeLink: (document) => dispatch(revokeLink(document))
+  })
+)(ShareModal)

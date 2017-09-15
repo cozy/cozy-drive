@@ -47,21 +47,22 @@ export default class Menu extends Component {
   }
 
   render () {
-    const { title, disabled, className, buttonClassName } = this.props
+    const { title, disabled, className, button, buttonClassName } = this.props
     const { opened } = this.state
     return (
       <div
         className={classNames(styles['coz-menu'], className)}
         ref={ref => { this.container = ref }}
       >
-        <button
+        {button && React.cloneElement(button, { disabled, onClick: this.toggle })}
+        {!button && <button
           role='button'
           className={classNames('coz-btn', buttonClassName)}
           disabled={disabled}
           onClick={this.toggle}
         >
-          <span className='coz-hidden'>{title}</span>
-        </button>
+          {title}
+        </button>}
         <div className={classNames(
           styles['coz-menu-inner'],
           { [styles['coz-menu-inner--opened']]: opened }

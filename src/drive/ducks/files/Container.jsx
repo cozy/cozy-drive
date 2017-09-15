@@ -1,6 +1,7 @@
 /* global __TARGET__ */
 import React from 'react'
 import { connect } from 'react-redux'
+import { showModal } from 'react-cozy-helpers'
 import { translate } from 'cozy-ui/react/I18n'
 import confirm from '../../lib/confirm'
 
@@ -32,16 +33,16 @@ const isAnyFileReferencedByAlbum = files => {
 // TODO: sadly, as ShareModalConfirm is used with the confirm helper that renders
 // components outside of the main app, we need to provide the i18n context
 // manually for sharing components
-class ShareModalConfirm extends React.Component {
-  getChildContext () {
-    return { t: this.props.t }
-  }
-
-  render () {
-    const { abort } = this.props
-    return <ShareModal onClose={abort} {...this.props} />
-  }
-}
+// class ShareModalConfirm extends React.Component {
+//   getChildContext () {
+//     return { t: this.props.t }
+//   }
+//
+//   render () {
+//     const { abort } = this.props
+//     return <ShareModal onClose={abort} {...this.props} />
+//   }
+// }
 
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: ownProps.isTrashContext,
@@ -84,7 +85,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         Component: (props) => <ConnectedToggleMenuItem {...props} />
       },
       share: {
-        action: selected => confirm(<ShareModalConfirm t={ownProps.t} document={selected[0]} documentType='Files' sharingDesc={selected[0].name} />),
+        action: selected => dispatch(showModal(<ShareModal document={selected[0]} documentType='Files' sharingDesc={selected[0].name} />)),
         displayCondition: selections => selections.length === 1 && isFile(selections[0])
       }
     }

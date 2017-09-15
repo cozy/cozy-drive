@@ -24,10 +24,11 @@ export {
 } from './reducer'
 export {
   fetchSharings,
-  fetchSharingStatus,
-  isSharedByMe,
-  isSharedWithMe,
-  getSharingDetails
+  getSharingDetails,
+  share,
+  unshare,
+  shareByLink,
+  revokeLink
 } from './slices/sharings'
 
 export { downloadArchive, downloadFile } from './helpers'

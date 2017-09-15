@@ -167,6 +167,41 @@ export default class CozyAPI {
   async fetchSharing (id) {
     return cozy.client.fetchJSON('GET', `/sharings/${id}`)
   }
+
+  async createSharing (permissions, contactId, sharingType, description) {
+    return cozy.client.fetchJSON('POST', '/sharings/', {
+      desc: description,
+      permissions,
+      recipients: [
+        {
+          recipient: {
+            id: contactId,
+            type: 'io.cozy.contacts'
+          }
+        }
+      ],
+      sharing_type: sharingType
+    })
+  }
+
+  async revokeSharing (sharingId) {
+    return cozy.client.fetchJSON('DELETE', `/sharings/${sharingId}`)
+  }
+
+  async createSharingLink (permissions) {
+    return cozy.client.fetchJSON('POST', `/permissions?codes=email`, {
+      data: {
+        type: 'io.cozy.permissions',
+        attributes: {
+          permissions
+        }
+      }
+    })
+  }
+
+  async revokeSharingLink (permission) {
+    return cozy.client.fetchJSON('DELETE', `/permissions/${permission._id}`)
+  }
 }
 
 const normalizeFile = (file) => ({ ...file, ...file.attributes, id: file._id, type: file._type })
