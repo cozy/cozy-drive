@@ -6,15 +6,13 @@ import { settings } from './settings'
 import { mediaBackup } from './mediaBackup'
 import { ui } from './ui'
 import { authorization } from './authorization'
-import { timestamp } from './timestamp'
 import { UNLINK } from '../actions/unlink'
 
 const mobile = combineReducers({
   authorization,
   settings,
   mediaBackup,
-  ui,
-  timestamp
+  ui
 })
 
 const appReducer = combineReducers({

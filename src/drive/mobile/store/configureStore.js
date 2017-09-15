@@ -40,7 +40,6 @@ const configureStore = (initialState = {}) => {
   store.subscribe(() => saveState({
     settings: store.getState().settings,
     mobile: {
-      timestamp: store.getState().mobile.timestamp,
       settings: store.getState().mobile.settings,
       mediaBackup: {
         uploaded: store.getState().mobile.mediaBackup.uploaded
