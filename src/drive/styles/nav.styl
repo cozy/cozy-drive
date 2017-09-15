@@ -4,32 +4,32 @@
     @extend $navigation
 
 .fil-cat-files
-    background: embedurl("../assets/icons/icon-folder.svg") em(24px) center no-repeat
+    background-image: embedurl("../assets/icons/icon-folder.svg")
     &.active
         background-image: embedurl("../assets/icons/icon-folder-active.svg")
 
 .fil-cat-recent
-    background: embedurl("../assets/icons/icon-clock.svg") em(24px) center no-repeat
+    background-image: embedurl("../assets/icons/icon-clock.svg")
     &.active
         background-image: embedurl("../assets/icons/icon-clock-active.svg")
 
 .fil-cat-shared
-    background: embedurl("../assets/icons/icon-shared.svg") em(24px) center no-repeat
+    background-image: embedurl("../assets/icons/icon-shared.svg")
     &.active
         background-image: embedurl("../assets/icons/icon-shared-active.svg")
 
 .fil-cat-activity
-    background: embedurl("../assets/icons/icon-dashboard.svg") em(24px) center no-repeat
+    background-image: embedurl("../assets/icons/icon-dashboard.svg")
     &.active
         background-image: embedurl("../assets/icons/icon-dashboard-active.svg")
 
 .fil-cat-trash
-    background: embedurl("../assets/icons/icon-trash.svg") em(24px) center no-repeat
+    background-image: embedurl("../assets/icons/icon-trash.svg")
     &.active
         background-image: embedurl("../assets/icons/icon-trash-active.svg")
 
 .fil-cat-settings
-    background: embedurl("../assets/icons/icon-settings.svg") em(24px) center no-repeat
+    background-image: embedurl("../assets/icons/icon-settings.svg")
     &.active
         background-image: embedurl("../assets/icons/icon-settings-active.svg")
 
@@ -41,11 +41,3 @@
             height .5rem
             position relative
             top em(-2px)
-
-    .fil-cat-files
-    .fil-cat-recent
-    .fil-cat-shared
-    .fil-cat-activity
-    .fil-cat-trash
-    .fil-cat-settings
-        background-position center top
