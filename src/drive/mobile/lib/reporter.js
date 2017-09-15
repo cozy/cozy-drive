@@ -5,7 +5,7 @@ let isEnable = false
 export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 
 export const getConfig = () => ({
-  shouldSendCallback: () => isEnable,
+  shouldSendCallback: () => isEnable && !__DEVELOPMENT__,
   environment: __DEVELOPMENT__ ? 'development' : 'production'
 })
 
