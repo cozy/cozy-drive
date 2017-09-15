@@ -55,7 +55,6 @@ export const isClientRegistered = async (client) => {
     if (err.message === 'Failed to fetch') {
       return true
     }
-    throw err
   })
 }
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, { ELEMENT_CHECKBOX, ELEMENT_BUTTON } from '../../components/SettingCategory'
 import { setAnalytics } from '../../actions/settings'
-import { logInfo } from '../../lib/reporter'
 import { isOnline } from '../../lib/network'
 
 export const Support = ({ t, analytics, setAnalytics, isDebug, success, failure, offline }) => (
@@ -28,7 +27,6 @@ export const Support = ({ t, analytics, setAnalytics, isDebug, success, failure,
         onClick: async () => {
           if (isOnline()) {
             try {
-              await logInfo(t('mobile.settings.support.logs.title'), true)
               success()
             } catch (e) {
               failure()

@@ -4,7 +4,7 @@ import { setBackupImages } from './settings'
 import { getPhotos, uploadLibraryItem, isAuthorized, getMediaFolderName, requestAuthorization } from '../lib/media'
 import { updateStatusBackgroundService } from '../lib/background'
 import { backupAllowed } from '../lib/network'
-import { logInfo, logException } from '../lib/reporter'
+import { logException } from '../lib/reporter'
 
 export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
 export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
@@ -80,18 +80,14 @@ export const startMediaBackup = (dir, force = false) => async (dispatch, getStat
 }
 
 const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
-  const logError = (err, msg) => {
-    console.warn(msg)
-    console.warn(err)
-    console.info(JSON.stringify(photo))
-    logException('startMediaBackup error')
-  }
-
   try {
     await uploadLibraryItem(dirID, photo)
     dispatch(successMediaUpload(photo))
   } catch (err) {
-    logError(err, 'startMediaBackup upload item error')
+    console.warn('startMediaBackup upload item error')
+    console.warn(JSON.stringify(err))
+    console.info(JSON.stringify(photo))
+    logException('startMediaBackup error')
   }
 }
 
@@ -110,7 +106,6 @@ export const backupImages = backupImages => async (dispatch, getState) => {
     dispatch(setBackupImages(backupImages))
   }
 
-  backupImagesAnalytics(backupImages, getState)
   updateStatusBackgroundService(backupImages)
   if (backupImages) {
     dispatch(startMediaBackup(getMediaFolderName()))
@@ -124,14 +119,4 @@ const updateValueAfterRequestAuthorization = async (value) => {
     value = await requestAuthorization()
   }
   return value
-}
-
-const backupImagesAnalytics = (backupImages, getState) => {
-  if (getState().mobile.settings.analytics) {
-    if (backupImages) {
-      logInfo('settings: backup images is enabled')
-    } else {
-      logInfo('settings: backup images is disabled')
-    }
-  }
 }
