@@ -1,4 +1,4 @@
-/* global __SENTRY_TOKEN__, __DEVMODE__ */
+/* global __SENTRY_TOKEN__, __DEVELOPMENT__ */
 import Raven from 'raven-js'
 
 let isEnable = false
@@ -6,7 +6,7 @@ export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 
 export const getConfig = () => ({
   shouldSendCallback: () => isEnable,
-  environment: __DEVMODE__ ? 'development' : 'production'
+  environment: __DEVELOPMENT__ ? 'development' : 'production'
 })
 
 export const configure = (enable) => {
