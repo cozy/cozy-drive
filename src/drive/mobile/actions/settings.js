@@ -8,7 +8,6 @@ import { openFolder, getOpenedFolderId } from '../../actions'
 import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
 import { logException, logInfo, configure as configureReporter } from '../lib/reporter'
 import { startTracker, stopTracker } from '../lib/tracker'
-import { pingOnceADay } from './timestamp'
 import { revokeClient as reduxRevokeClient } from './authorization'
 
 export const SET_URL = 'SET_URL'
@@ -32,7 +31,6 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
   if (analytics && state.mobile) {
     const value = state.mobile.settings.backupImages
     logInfo(`${source}: backup images is ${value ? 'enabled' : 'disabled'}`)
-    dispatch(pingOnceADay(state.mobile.timestamp, analytics))
     // start the piwik tracker
     startTracker(state.mobile.settings.serverUrl)
   } else if (analytics === false) {

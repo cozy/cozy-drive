@@ -19,7 +19,6 @@ import { initServices, getLang } from 'drive/mobile/lib/init'
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { startTracker, useHistoryForTracker, startHeartBeat, stopHeartBeat } from 'drive/mobile/lib/tracker'
 import { resetClient } from 'drive/mobile/lib/cozy-helper'
-import { pingOnceADay } from 'drive/mobile/actions/timestamp'
 import { backupImages } from 'drive/mobile/actions/mediaBackup'
 import { backupContacts } from 'drive/mobile/actions/contactsBackup'
 
@@ -48,26 +47,15 @@ const renderAppWithPersistedState = persistedState => {
     }
   }
 
-  function pingOnceADayWithState () {
-    const state = store.getState()
-    if (state.mobile) {
-      const timestamp = state.mobile.timestamp
-      const analytics = state.mobile.settings.analytics
-      store.dispatch(pingOnceADay(timestamp, analytics))
-    }
-  }
-
   document.addEventListener('pause', () => {
     if (store.getState().mobile.settings.analytics) stopHeartBeat()
   }, false)
 
   document.addEventListener('resume', () => {
-    pingOnceADayWithState()
     if (store.getState().mobile.settings.analytics) startHeartBeat()
   }, false)
 
   document.addEventListener('deviceready', () => {
-    pingOnceADayWithState()
     store.dispatch(backupImages())
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
     if (store.getState().mobile.settings.backupContacts) store.dispatch(backupContacts())

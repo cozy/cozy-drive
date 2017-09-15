@@ -40,4 +40,3 @@ const logMessage = (message, level = 'info', force) => {
 }
 
 export const logInfo = (message, force = false) => logMessage(message, 'info', force)
-export const pingOnceADay = () => logInfo('good day: user opens the app')
