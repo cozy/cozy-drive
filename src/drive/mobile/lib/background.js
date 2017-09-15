@@ -1,6 +1,6 @@
 import configureStore from '../store/configureStore'
 import { initServices } from './init'
-import { logException, logInfo } from './reporter'
+import { logException } from './reporter'
 import { loadState } from '../store/persistedState'
 import { getMediaFolderName } from './media'
 import { startMediaBackup } from '../actions/mediaBackup'
@@ -87,7 +87,6 @@ const backgroundService = () => new Promise(resolve => {
     .then(persistedState => configureStore(persistedState))
     .then(store => {
       initServices(store)
-      logInfo('It\'s me Background Service!!!')
       return store.dispatch(startMediaBackup(getMediaFolderName()))
     })
     .then(resolve)
