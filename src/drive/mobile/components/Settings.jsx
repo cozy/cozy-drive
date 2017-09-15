@@ -1,4 +1,4 @@
-/* globals __DEVMODE__ */
+/* globals __DEVELOPMENT__ */
 
 import React, { Component } from 'react'
 import Main from '../../components/Main'
@@ -40,7 +40,7 @@ class Settings extends Component {
             <About onClick={this.handleClick} />
             <Unlink />
 
-            {__DEVMODE__ &&
+            {__DEVELOPMENT__ &&
               [
                 <hr />,
                 <h3>Debug Zone</h3>,

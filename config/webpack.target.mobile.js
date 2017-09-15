@@ -20,7 +20,6 @@ module.exports = function (production, app) {
         __ALLOW_HTTP__: !production,
         __TARGET__: JSON.stringify('mobile'),
         __SENTRY_TOKEN__: JSON.stringify('29bd1255b6d544a1b65435a634c9ff67'),
-        __DEVMODE__: !production,
         __APP_VERSION__: JSON.stringify(pkg.version)
       }),
       new ProvidePlugin({
