@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import Alerter from 'photos/components/Alerter'
 import ShareAutocomplete from './ShareAutocomplete'
 import WhoHasAccess from './WhoHasAccess'
+import { getPrimaryEmail } from '..'
 
 import styles from '../share.styl'
 
@@ -12,6 +13,8 @@ class ShareByEmailWrapper extends React.Component {
     const { document, documentType, sharingDesc } = this.props
     return this.props.onShare(document, recipient, sharingType, sharingDesc)
       .then(sharing => {
+        // TODO: here we get a non-standard recipient (single email property), it'd better
+        // to get a real one from the autocompelte
         Alerter.info(`${documentType}.share.shareByEmail.success`, { email: recipient.email })
       })
       .catch(err => {
@@ -24,7 +27,7 @@ class ShareByEmailWrapper extends React.Component {
     const { document, documentType } = this.props
     return this.props.onUnshare(document, recipient)
       .then(() => {
-        Alerter.info(`${documentType}.share.unshare.success`, { email: recipient.email })
+        Alerter.info(`${documentType}.share.unshare.success`, { email: getPrimaryEmail(recipient) })
       })
       .catch(err => {
         Alerter.error('Error.generic')
