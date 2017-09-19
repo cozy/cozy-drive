@@ -7,6 +7,9 @@ yarn-error.log
 build/
 coverage/
 
+# Stack
+storage/
+
 # Locales
 **/locales/*
 !**/locales/en.json

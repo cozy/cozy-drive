@@ -50,6 +50,7 @@ const Recipient = ({ t, contact, status, documentType, onUnshare }) => {
             title={status + '  v'}
             className={styles['pho-recipient-menu']}
             buttonClassName={styles['pho-recipient-menu-btn']}
+            disabled={status === 'pending'}
           >
             <Item>
               <a className={classNames(styles['pho-action-unshare'])} onClick={() => onUnshare(contact)}>

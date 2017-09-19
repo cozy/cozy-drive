@@ -32,3 +32,46 @@
 
 .suggestionHighlighted
     background pale-grey
+
+.recipientsContainer
+    display        flex
+    flex-wrap      wrap
+    padding        em(8px)
+    border-radius  2px
+    border         1px solid silver
+
+    &:hover
+        border 1px solid cool-grey
+
+    &:last-child
+        flex-grow 1
+        min-width 33%
+
+    input[type=email]
+        width   100%
+        padding 0.5em
+        border  none
+        &:hover
+        &:focus
+            border none
+
+.recipientChip
+    background-color silver
+    border-radius em(32px)
+    height        em(32px)
+    line-height   em(32px)
+    padding       0 em(16px)
+    margin        0 em(8px) em(8px) 0
+
+.removeRecipient
+    display          inline-block
+    height           em(20px)
+    width            em(20px)
+    line-height      em(16px)
+    margin           0 -8px 0 8px
+    background-color cool-grey
+    border           none
+    border-radius    50%
+    &:after
+        color   silver
+        content 'x'

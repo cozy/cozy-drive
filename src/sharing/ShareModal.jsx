@@ -67,7 +67,7 @@ export default cozyConnect(
     contacts: fetchCollection('contacts', 'io.cozy.contacts')
   }),
   (dispatch, ownProps) => ({
-    share: (document, recipient, sharingType, sharingDesc) => dispatch(share(document, recipient, sharingType, sharingDesc)),
+    share: (document, recipients, sharingType, sharingDesc) => dispatch(share(document, recipients, sharingType, sharingDesc)),
     unshare: (document, recipient) => dispatch(unshare(document, recipient)),
     shareByLink: (document) => dispatch(shareByLink(document)),
     revokeLink: (document) => dispatch(revokeLink(document))
