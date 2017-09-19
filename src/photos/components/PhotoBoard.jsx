@@ -89,7 +89,7 @@ export class PhotoBoard extends Component {
                 key={photoList.title}
                 title={photoList.title}
                 photos={photoList.photos}
-                selected={selected}
+                selected={selected.filter(id => photoList.photos.find(p => p.id === id))}
                 showSelection={showSelection}
                 onPhotoToggle={onPhotoToggle}
                 onPhotosSelect={onPhotosSelect}
