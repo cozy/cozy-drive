@@ -29,7 +29,6 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
   const state = getState()
   configureReporter(analytics)
   if (analytics && state.mobile) {
-    const value = state.mobile.settings.backupImages
     startTracker(state.mobile.settings.serverUrl)
   } else if (analytics === false) {
     stopTracker()
