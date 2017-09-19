@@ -3,7 +3,6 @@ import {
   fetchDocument,
   fetchReferencedFiles,
   fetchSharings,
-  fetchSharingStatus,
   createDocument,
   updateDocument,
   deleteDocument,
@@ -15,10 +14,10 @@ import {
 export const DOCTYPE = 'io.cozy.photos.albums'
 
 export const fetchAlbums = () => fetchCollection('albums', DOCTYPE)
-export const fetchAlbumsSharings = (id) => fetchSharings(DOCTYPE)
+export const fetchSharedAlbums = (id) => fetchSharings(DOCTYPE)
 export const fetchAlbumPhotos = (id, skip = 0) => fetchReferencedFiles({ type: DOCTYPE, id }, skip)
 export const fetchAlbum = (id) => fetchDocument(DOCTYPE, id)
-export const fetchAlbumSharing = (id) => fetchSharingStatus(DOCTYPE, id)
+export const fetchAlbumSharings = (id) => fetchSharings(DOCTYPE, id)
 export const createAlbum = (name, createdAt = new Date()) => createDocument({ type: DOCTYPE, name, 'created_at': createdAt }, { updateCollections: ['albums'] })
 export const updateAlbum = (album) => updateDocument(album)
 export const deleteAlbum = (album) => deleteDocument(album, { updateCollections: ['albums'] })

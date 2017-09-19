@@ -37,7 +37,7 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 
 export const getOpenedFolderId = state => state.view.openedFolderId
 
-export const extractFileAttributes = f => Object.assign({}, f.attributes, { id: f._id, links: f.links, relationships: f.relationships })
+export const extractFileAttributes = f => ({ ...f.attributes, id: f._id, _id: f._id, _type: 'io.cozy.files', links: f.links, relationships: f.relationships })
 
 const HTTP_CODE_CONFLICT = 409
 const ALERT_LEVEL_ERROR = 'error'

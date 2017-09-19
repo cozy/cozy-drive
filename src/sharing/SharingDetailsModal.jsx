@@ -1,15 +1,16 @@
 import styles from './share.styl'
 
 import React, { Component } from 'react'
-import Recipient from './components/Recipient'
+import { cozyConnect, fetchSharings } from 'redux-cozy-client'
+import { UserAvatar } from './components/Recipient'
 import Modal from 'cozy-ui/react/Modal'
 
-const Owner = Recipient
+const Owner = UserAvatar
 
 export class SharingDetailsModal extends Component {
   render () {
     const { t, f } = this.context
-    const { onClose, sharing, documentType = 'Document' } = this.props
+    const { onClose, sharing, document, documentType = 'Document' } = this.props
     return (
       <Modal
         title={t(`${documentType}.share.details.title`)}
@@ -18,7 +19,7 @@ export class SharingDetailsModal extends Component {
         <div className={styles['pho-share-modal-content']}>
           <Owner name={t(`${documentType}.share.sharedWithMe`)} url={sharing.sharer.url} />
           <div className={styles['pho-share-details-created']}>
-            {t(`${documentType}.share.details.createdAt`, { date: f(sharing.sharer.createdAt, 'Do MMMM YYYY') })}
+            {t(`${documentType}.share.details.createdAt`, { date: f(document.created_at || null, 'Do MMMM YYYY') })}
           </div>
           <div className={styles['pho-share-details-perm']}>
             {t(`${documentType}.share.details.${sharing.sharingType === 'master-slave' ? 'ro' : 'rw'}`)}
@@ -29,4 +30,6 @@ export class SharingDetailsModal extends Component {
   }
 }
 
-export default SharingDetailsModal
+export default cozyConnect(
+  (ownProps) => ({ sharing: fetchSharings(ownProps.document._type, ownProps.document._id) })
+)(SharingDetailsModal)

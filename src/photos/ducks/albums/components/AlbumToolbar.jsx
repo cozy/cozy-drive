@@ -3,16 +3,19 @@ import styles from '../../../styles/toolbar'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
+import { leave } from 'redux-cozy-client'
 import { translate } from 'cozy-ui/react/I18n'
 
 import ShareButton, { SharedByMeButton, SharedWithMeButton } from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { Item } from '../../../components/Menu'
+import MoreButton from '../../../components/MoreButton'
 
 import { isSelectionBarVisible, showSelectionBar } from '../../../ducks/selection'
 
 import { deleteAlbum, downloadAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
+import QuitConfirm from '../../../components/QuitConfirm'
 import confirm from '../../../lib/confirm'
 import { ShareModal, SharingDetailsModal } from 'sharing'
 
@@ -41,8 +44,8 @@ class AlbumToolbar extends Component {
   }
 
   render () {
-    const { t, location, album, photos, sharedWithMe, sharedByMe, sharing, disabled = false, deleteAlbum, selectItems, onRename } = this.props
-    const readOnly = sharedWithMe
+    const { t, location, album, photos, sharedWithMe, sharedByMe, readOnly, disabled = false } = this.props
+    const { deleteAlbum, leaveAlbum, selectItems, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role='toolbar'>
         <div className='coz-desktop'>
@@ -63,12 +66,11 @@ class AlbumToolbar extends Component {
           }
         </div>
         <Menu
-          title={t('Toolbar.more')}
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
-          buttonClassName={styles['pho-toolbar-more-btn']}
+          button={<MoreButton />}
         >
-          {!readOnly &&
+          {!sharedWithMe &&
             <Item>
               <a className={classNames(styles['pho-action-share'], 'coz-mobile')} onClick={this.showShareModal}>
                 {t('Albums.share.cta')}
@@ -98,11 +100,18 @@ class AlbumToolbar extends Component {
               {t('Toolbar.menu.select_items')}
             </a>
           </Item>
-          {!readOnly && <hr />}
-          {!readOnly &&
+          <hr />
+          {!sharedWithMe &&
             <Item>
               <a className={classNames(styles['pho-action-delete'])} onClick={() => deleteAlbum(album)}>
                 {t('Toolbar.menu.album_delete')}
+              </a>
+            </Item>
+          }
+          {sharedWithMe &&
+            <Item>
+              <a className={classNames(styles['pho-action-delete'])} onClick={() => leaveAlbum(album)}>
+                {t('Toolbar.menu.album_quit')}
               </a>
             </Item>
           }
@@ -119,7 +128,6 @@ class AlbumToolbar extends Component {
             document={album}
             documentType='Albums'
             sharingDesc={album.name}
-            sharing={sharing}
             onClose={this.closeSharingDetailsModal}
           />}
       </div>
@@ -141,6 +149,16 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
         Alerter.success('Albums.remove_album.success', {name: album.name})
       })
       .catch(() => Alerter.error('Albums.remove_album.error.generic'))
+  ),
+  leaveAlbum: album => confirm(
+    <QuitConfirm t={ownProps.t} albumName={album.name} />,
+    () => dispatch(leave(album))
+      .then(() => dispatch(deleteAlbum(album)))
+      .then(() => {
+        ownProps.router.replace('albums')
+        Alerter.success('Albums.quit_album.success', {name: album.name})
+      })
+      .catch(() => Alerter.error('Albums.quit_album.error.generic'))
   )
 })
 

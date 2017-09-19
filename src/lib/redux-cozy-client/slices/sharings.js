@@ -1,13 +1,34 @@
 import { combineReducers } from 'redux'
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
+import { getDocument, createDocument } from '../reducer'
 
 export const FETCH_SHARINGS = 'FETCH_SHARINGS'
 const RECEIVE_SHARINGS_DATA = 'RECEIVE_SHARINGS_DATA'
 const RECEIVE_FETCH_SHARINGS_ERROR = 'RECEIVE_FETCH_SHARINGS_ERROR'
+const CREATE_SHARING = 'CREATE_SHARING'
+const RECEIVE_NEW_SHARING = 'RECEIVE_NEW_SHARING'
+const CREATE_SHARING_LINK = 'CREATE_SHARING_LINK'
+const RECEIVE_NEW_SHARING_LINK = 'RECEIVE_NEW_SHARING_LINK'
+const REVOKE_SHARING_LINK = 'REVOKE_SHARING_LINK'
+const RECEIVE_SHARING_LINK_REVOKE = 'RECEIVE_SHARING_LINK_REVOKE'
+const REVOKE_SHARING = 'REVOKE_SHARING'
+const RECEIVE_SHARING_REVOKE = 'RECEIVE_SHARING_REVOKE'
+const RECEIVE_ERROR = 'RECEIVE_ERROR'
 
 const documents = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_SHARINGS_DATA:
-      return [...state, ...action.response.sharings]
+      return action.response.sharings
+    case RECEIVE_NEW_SHARING:
+      return [...state, action.response]
+    case REVOKE_SHARING:
+      const idx = state.findIndex(s => s.attributes.sharing_id === action.sharingId)
+      if (idx === -1) return state
+      return [
+        ...state.slice(0, idx),
+        {...state[idx], attributes: {...state[idx].attributes, revoked: true}},
+        ...state.slice(idx + 1)
+      ]
     default:
       return state
   }
@@ -16,13 +37,58 @@ const documents = (state = [], action) => {
 const doctypePermsetInitialState = { fetchStatus: 'loading', byMe: [], byLink: [], withMe: [] }
 
 const permissions = (state = {}, action) => {
+  let idx
   switch (action.type) {
     case FETCH_SHARINGS:
+      if (state[action.doctype]) {
+        return {...state, [action.doctype]: { ...state[action.doctype], fetchStatus: 'loading' }}
+      }
       return {...state, [action.doctype]: doctypePermsetInitialState}
     case RECEIVE_SHARINGS_DATA:
       return {...state, [action.doctype]: { fetchStatus: 'loaded', ...action.response.permissions }}
     case RECEIVE_FETCH_SHARINGS_ERROR:
       return {...state, [action.doctype]: { fetchStatus: 'error' }}
+    case RECEIVE_NEW_SHARING:
+      return {
+        ...state,
+        [action.doctype]: {
+          ...state[action.doctype],
+          byMe: [
+            ...state[action.doctype].byMe,
+            {
+              attributes: {
+                permissions: { 'rule0': { type: action.doctype, values: [action.id] } },
+                source_id: action.response.attributes.sharing_id,
+                type: 'io.cozy.sharings'
+              }
+            }
+          ]
+        }
+      }
+    case RECEIVE_NEW_SHARING_LINK:
+      return {
+        ...state,
+        [action.doctype]: {
+          ...state[action.doctype],
+          byLink: [
+            ...state[action.doctype].byLink,
+            action.response
+          ]
+        }
+      }
+    case REVOKE_SHARING_LINK:
+      idx = state[action.doctype].byLink.findIndex(p => action.permission._id === p._id)
+      if (idx === -1) return state
+      return {
+        ...state,
+        [action.doctype]: {
+          ...state[action.doctype],
+          byLink: [
+            ...state[action.doctype].byLink.slice(0, idx),
+            ...state[action.doctype].byLink.slice(idx + 1)
+          ]
+        }
+      }
     default:
       return state
   }
@@ -30,59 +96,206 @@ const permissions = (state = {}, action) => {
 
 export default combineReducers({ documents, permissions })
 
-export const fetchSharingStatus = (doctype, id) => ({
+// actions
+export const fetchSharings = (doctype, id = null, options = {}) => ({
   types: [FETCH_SHARINGS, RECEIVE_SHARINGS_DATA, RECEIVE_FETCH_SHARINGS_ERROR],
   doctype,
   id,
+  options,
   promise: (client) => client.fetchSharings(doctype)
 })
-export const fetchSharings = fetchSharingStatus
 
+export const share = (document, recipient, sharingType, sharingDesc) => async (dispatch, getState) => {
+  const recipientId = recipient.id || (await dispatch(createContact(recipient))).data[0].id
+  trackSharingByEmail(document)
+  return dispatch(createSharing(document, recipientId, sharingType, sharingDesc))
+}
+
+export const unshare = (document, recipient) => async (dispatch, getState) => {
+  const sharing = getSharingForRecipient(getState(), document, recipient)
+  return dispatch({
+    types: [REVOKE_SHARING, RECEIVE_SHARING_REVOKE, RECEIVE_ERROR],
+    doctype: document._type,
+    id: document._id,
+    sharingId: sharing.attributes.sharing_id,
+    // TODO: right now, we create one sharing for each recipient, so we can just
+    // delete the sharing, but when we'll have many recipients for one sharing,
+    // we'll need to use another route:
+    // https://github.com/cozy/cozy-stack/blob/master/docs/sharing.md#delete-sharingssharing-idrecipientclient-id
+    promise: client => client.revokeSharing(sharing.attributes.sharing_id)
+  })
+}
+
+export const leave = (document) => async (dispatch, getState) => {
+  const sharings = getDocumentActiveSharings(getState(), document._type, document._id)
+  const sharing = sharings.find(s => s.attributes.owner === false)
+  return dispatch({
+    types: [REVOKE_SHARING, RECEIVE_SHARING_REVOKE, RECEIVE_ERROR],
+    doctype: document._type,
+    id: document._id,
+    sharingId: sharing.attributes.sharing_id,
+    promise: client => client.revokeSharing(sharing.attributes.sharing_id)
+  })
+}
+
+export const shareByLink = (document) => {
+  trackSharingByLink(document)
+  return createSharingLink(document)
+}
+
+export const revokeLink = (document) => async (dispatch, getState) => {
+  const perm = getSharingLinkPermission(getState(), document)
+  return dispatch({
+    types: [REVOKE_SHARING_LINK, RECEIVE_SHARING_LINK_REVOKE, RECEIVE_ERROR],
+    doctype: document._type,
+    id: document._id,
+    permission: perm,
+    promise: client => client.revokeSharingLink(perm)
+  })
+}
+
+const createSharing = (document, contactId, sharingType = 'master-slave', description = '') => ({
+  types: [CREATE_SHARING, RECEIVE_NEW_SHARING, RECEIVE_ERROR],
+  doctype: document._type,
+  id: document._id,
+  promise: client => client.createSharing(getPermissionsFor(document), contactId, sharingType, description)
+})
+
+const createSharingLink = (document) => ({
+  types: [CREATE_SHARING_LINK, RECEIVE_NEW_SHARING_LINK, RECEIVE_ERROR],
+  doctype: document._type,
+  id: document._id,
+  promise: client => client.createSharingLink(getPermissionsFor(document, true))
+})
+
+const createContact = ({ email }) => createDocument({
+  type: 'io.cozy.contacts',
+  email: [{ address: email, primary: true }]
+})
+
+const getPermissionsFor = (document, publicLink = false) => {
+  const { _id, _type } = document
+  const verbs = publicLink ? ['GET'] : ['ALL']
+  return isFile(document)
+    ? {
+      files: {
+        type: 'io.cozy.files',
+        verbs,
+        values: [_id]
+      }
+    }
+    // TODO: this works for albums, but it needs to be generalized and integrated
+    // with redux-cozy-client ; some sort of doctype "schema" will be needed here
+    : {
+      collection: {
+        type: _type,
+        verbs,
+        values: [_id]
+      },
+      files: {
+        type: 'io.cozy.files',
+        verbs,
+        values: [`${_type}/${_id}`],
+        selector: 'referenced_by'
+      }
+    }
+}
+
+// selectors
+const getSharing = (state, id) => state.cozy.sharings.documents.find(s => s.attributes.sharing_id === id)
+const getContact = (state, id) => getDocument(state, 'io.cozy.contacts', id)
 const getDoctypePermissions = (state, doctype) => {
   if (state.cozy.sharings.permissions[doctype]) {
     return state.cozy.sharings.permissions[doctype]
   }
-  console.warn('It looks like you\'re using sharings selectors without fetching the corresponding doctype\'s sharing permissions')
   return doctypePermsetInitialState
 }
 
-const getSharing = (state, id) => state.cozy.sharings.documents.find(s => s.attributes.sharing_id === id)
+const getSharingLink = (state, doctype, id) => {
+  const perm = getSharingLinkPermission(state, doctype, id)
+  return perm ? buildSharingLink(id, doctype, perm.attributes.codes.email) : null
+}
 
-export const getSharingDetails = (state, doc) => {
-  const perms = getDoctypePermissions(state, doc._type)
-  const byMe = perms.byMe.find(p => p.attributes.permissions['rule0'].values.indexOf(doc._id) !== -1)
-  const withMe = perms.withMe.find(p => p.attributes.permissions['rule0'].values.indexOf(doc._id) !== -1)
-  const byLink = perms.byLink.find(p => p.attributes.permissions['collection'].values.indexOf(doc._id) !== -1)
-  const sharer = withMe !== undefined
-    ? {
-      name: 'John Doe',
-      url: getSharing(state, withMe.attributes.source_id).attributes.sharer.url,
-      createdAt: doc.created_at || null
-    }
-    : 'me'
-  const sharingType = byMe !== undefined
-    ? getSharing(state, byMe.attributes.source_id).attributes.sharing_type
-    : (
-      withMe !== undefined
-      ? getSharing(state, withMe.attributes.source_id).attributes.sharing_type
-      : null
-    )
-  const recipients = []
+const getSharingLinkPermission = (state, doctype, id) => {
+  const perms = getDoctypePermissions(state, doctype)
+  return perms.byLink.find(p => p.attributes.permissions[isFile(document) ? 'files' : 'collection'].values.indexOf(id) !== -1)
+}
+
+const getSharingForRecipient = (state, document, recipient) => {
+  const sharings = getDocumentActiveSharings(state, document._type, document._id)
+  return sharings.find(s => s.attributes.recipients.find(r => r.recipient.id === recipient._id))
+}
+
+const getDocumentActiveSharings = (state, doctype, id) => {
+  const perms = getDoctypePermissions(state, doctype)
+  return [
+    ...perms.byMe.filter(perm => perm.attributes.permissions['rule0'].values.indexOf(id) !== -1),
+    ...perms.withMe.filter(perm => perm.attributes.permissions['rule0'].values.indexOf(id) !== -1)
+  ].map(p => getSharing(state, p.attributes.source_id))
+   .filter(s => !s.attributes.revoked)
+}
+
+export const getSharings = (state, doctype, options = {}) => {
+  const perms = getDoctypePermissions(state, doctype)
   return {
-    byMe: byMe !== undefined,
-    byLink: byLink !== undefined,
-    withMe: withMe !== undefined,
-    sharingType,
-    sharer,
-    recipients
+    byMe: perms.byMe.map(p => p.attributes.permissions['rule0'].values[0]),
+    withMe: perms.withMe.map(p => p.attributes.permissions['rule0'].values[0]),
+    byLink: perms.byLink.map(p => p.attributes.permissions[doctype === 'io.cozy.files' ? 'files' : 'collection'].values[0])
   }
 }
 
-export const isSharedByMe = (state, doc) =>
-  getDoctypePermissions(state, doc._type).byMe.find(p => p.attributes.permissions['rule0'].values.indexOf(doc._id) !== -1) !== undefined
+export const getSharingStatus = (state, doctype, id) => {
+  const sharings = getDocumentActiveSharings(state, doctype, id)
+  return {
+    shared: sharings.length !== 0,
+    owner: sharings.some(s => s.attributes.owner === true),
+    sharingType: sharings.some(s => s.attributes.sharing_type === 'master-master') ? 'master-master' : 'master-slave',
+    sharings
+  }
+}
 
-export const isSharedWithMe = (state, doc) =>
-  getDoctypePermissions(state, doc._type).withMe.find(p => p.attributes.permissions['rule0'].values.indexOf(doc._id) !== -1) !== undefined
+export const getSharingDetails = (state, doctype, id, options = {}) => {
+  const { shared, owner, sharingType, sharings } = getSharingStatus(state, doctype, id)
+  const sharingLink = getSharingLink(state, doctype, id)
+  return {
+    shared,
+    owner,
+    sharingType,
+    sharingLink,
+    sharer: shared && !owner ? { name: 'John Doe', url: sharings[0].attributes.sharer.url } : null,
+    readOnly: !owner && sharingType === 'master-slave',
+    recipients: shared && owner ? getSharingRecipients(state, sharings) : [],
+    byMe: shared && owner === true,
+    withMe: shared && !owner,
+    byLink: !!sharingLink
+  }
+}
 
-export const isSharedByLink = (state, doc) =>
-  getDoctypePermissions(state, doc._type).byLink.find(p => p.attributes.permissions['collection'].values.indexOf(doc._id) !== -1) !== undefined
+const getSharingRecipients = (state, sharings) =>
+  sharings.filter(sharing => sharing.attributes.recipients)
+          .map(sharing =>
+            sharing.attributes.recipients.map(info =>
+              ({
+                contact: getContact(state, info.recipient.id),
+                status: info.status,
+                type: sharing.attributes.sharing_type
+              })
+            )
+          )
+          .reduce((a, b) => a.concat(b), [])
+
+const buildSharingLink = (id, doctype, sharecode) =>
+  `${window.location.origin}/public?sharecode=${sharecode}&id=${id}${doctype === 'file' ? '&directdownload' : ''}`
+
+// helpers
+const isFile = ({ _type, type }) => _type === 'io.cozy.files' || type === 'directory' || type === 'file'
+
+const track = (document, action) => {
+  const tracker = getTracker()
+  if (!tracker) {
+    return
+  }
+  tracker.push(['trackEvent', isFile(document) ? 'Drive' : 'Photos', action, `${action}${isFile(document) ? 'File' : 'Album'}`])
+}
+const trackSharingByLink = (document) => track(document, 'shareByLink')
+const trackSharingByEmail = (document) => track(document, 'shareByEmail')

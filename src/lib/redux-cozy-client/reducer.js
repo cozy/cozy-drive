@@ -202,7 +202,7 @@ const collections = (state = {}, action) => {
   }
 }
 
-import sharings from './slices/sharings'
+import sharings, { FETCH_SHARINGS, getSharings, getSharingDetails } from './slices/sharings'
 export default combineReducers({
   collections,
   documents,
@@ -299,6 +299,10 @@ export const applySelectorForAction = (state, action) => {
       return getCollection(state, action.collection)
     case FETCH_DOCUMENT:
       return getDocument(state, action.doctype, action.id)
+    case FETCH_SHARINGS:
+      return action.id
+        ? getSharingDetails(state, action.doctype, action.id, action.options)
+        : getSharings(state, action.doctype, action.options)
     default:
       return null
   }
@@ -341,3 +345,6 @@ export const getDocument = (state, doctype, id) => {
   }
   return documents[id]
 }
+
+export const isCollectionFetched = (state, name) =>
+  state.cozy.collections[name] && state.cozy.collections[name].fetchStatus === 'loaded'

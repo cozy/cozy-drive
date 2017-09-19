@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { cozyConnect } from 'redux-cozy-client'
 import styles from '../styles/layout'
 
-import { AlbumsToolbar, fetchAlbums, fetchAlbumsSharings } from '../ducks/albums'
+import { AlbumsToolbar, fetchAlbums, fetchSharedAlbums } from '../ducks/albums'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
 import ErrorComponent from '../components/ErrorComponent'
 import Topbar from '../components/Topbar'
 
-const Content = ({ list, sharedByMe, sharedWithMe }) => {
+const Content = ({ list }) => {
   const { fetchStatus, data } = list
   switch (fetchStatus) {
     case 'pending':
@@ -18,7 +18,7 @@ const Content = ({ list, sharedByMe, sharedWithMe }) => {
     case 'failed':
       return <ErrorComponent errorType='albums' />
     default:
-      return <AlbumsList albums={data} sharedByMe={sharedByMe} sharedWithMe={sharedWithMe} />
+      return <AlbumsList albums={data} />
   }
 }
 
@@ -42,7 +42,7 @@ export class AlbumsView extends Component {
 
 const mapDocumentsToProps = (ownProps) => ({
   albums: fetchAlbums(),
-  sharings: fetchAlbumsSharings()
+  sharings: fetchSharedAlbums()
 })
 
 export default cozyConnect(mapDocumentsToProps)(AlbumsView)

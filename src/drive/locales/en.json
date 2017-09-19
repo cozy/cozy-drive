@@ -62,6 +62,10 @@
         "send": "Send",
         "success": "You sent an invite to %{email}."
       },
+      "unshare": {
+        "title": "Remove from sharing",
+        "success": "You removed this shared file from %{email}."
+      },
       "sharingLink": {
         "title": "Link to share",
         "copy": "Copy",

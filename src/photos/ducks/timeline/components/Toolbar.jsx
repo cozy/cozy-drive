@@ -7,6 +7,7 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import UploadButton from '../../../components/UploadButton'
 import Menu, { Item } from '../../../components/Menu'
+import MoreButton from '../../../components/MoreButton'
 
 import { showSelectionBar, isSelectionBarVisible } from '../../selection'
 
@@ -22,10 +23,9 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, deleteAlbum, select
       label={t('Toolbar.photo_upload')}
     />
     <Menu
-      title={t('Toolbar.more')}
       disabled={disabled}
       className={styles['pho-toolbar-menu']}
-      buttonClassName={styles['pho-toolbar-more-btn']}
+      button={<MoreButton />}
     >
       <Item>
         <UploadButton

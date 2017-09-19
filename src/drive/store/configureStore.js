@@ -1,13 +1,15 @@
 /* global __DEVELOPMENT__ */
 import { compose, createStore, applyMiddleware } from 'redux'
 import { shouldEnableTracking, getTracker, createTrackerMiddleware } from 'cozy-ui/react/helpers/tracker'
+import { cozyMiddleware } from 'redux-cozy-client'
 import thunkMiddleware from 'redux-thunk'
 import eventTrackerMiddleware from '../middlewares/EventTracker'
 import rootReducer from '../reducers'
 import logger from 'redux-logger'
 
-const configureStore = (initialState = {}) => {
+const configureStore = (client, initialState = {}) => {
   const middlewares = [
+    cozyMiddleware(client),
     thunkMiddleware
   ]
   if (shouldEnableTracking() && getTracker()) {
