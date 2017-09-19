@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
-import { getDocument, isCollectionFetched, createDocument } from '../reducer'
+import { getDocument, createDocument } from '../reducer'
 
 export const FETCH_SHARINGS = 'FETCH_SHARINGS'
 const RECEIVE_SHARINGS_DATA = 'RECEIVE_SHARINGS_DATA'
@@ -40,6 +40,9 @@ const permissions = (state = {}, action) => {
   let idx
   switch (action.type) {
     case FETCH_SHARINGS:
+      if (state[action.doctype]) {
+        return {...state, [action.doctype]: { ...state[action.doctype], fetchStatus: 'loading' }}
+      }
       return {...state, [action.doctype]: doctypePermsetInitialState}
     case RECEIVE_SHARINGS_DATA:
       return {...state, [action.doctype]: { fetchStatus: 'loaded', ...action.response.permissions }}
@@ -119,6 +122,18 @@ export const unshare = (document, recipient) => async (dispatch, getState) => {
     // delete the sharing, but when we'll have many recipients for one sharing,
     // we'll need to use another route:
     // https://github.com/cozy/cozy-stack/blob/master/docs/sharing.md#delete-sharingssharing-idrecipientclient-id
+    promise: client => client.revokeSharing(sharing.attributes.sharing_id)
+  })
+}
+
+export const leave = (document) => async (dispatch, getState) => {
+  const sharings = getDocumentActiveSharings(getState(), document._type, document._id)
+  const sharing = sharings.find(s => s.attributes.owner === false)
+  return dispatch({
+    types: [REVOKE_SHARING, RECEIVE_SHARING_REVOKE, RECEIVE_ERROR],
+    doctype: document._type,
+    id: document._id,
+    sharingId: sharing.attributes.sharing_id,
     promise: client => client.revokeSharing(sharing.attributes.sharing_id)
   })
 }

@@ -27,6 +27,7 @@ export {
   getSharingDetails,
   share,
   unshare,
+  leave,
   shareByLink,
   revokeLink
 } from './slices/sharings'
