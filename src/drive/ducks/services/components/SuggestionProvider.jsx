@@ -59,13 +59,21 @@ class SuggestionProvider extends React.Component {
       const folders = files.filter(file => file.type === 'directory')
 
       const normalizedFiles = files.filter(file => file.trashed === false).map(file => {
-        const dir = file.type === 'directory' ? file : folders.find(folder => folder._id === file.dir_id)
+        const isDir = file.type === 'directory'
+        const dirId = isDir ? file._id : file.dir_id
+        let path
+        if (isDir) {
+          path = file.path
+        } else {
+          const parentDir = folders.find(folder => folder._id === file.dir_id)
+          path = parentDir && parentDir.path ? parentDir.path : ''
+        }
 
         return {
           id: file._id,
           name: file.name,
-          path: dir.path || '',
-          url: window.location.origin + '/#/files/' + dir._id
+          path,
+          url: window.location.origin + '/#/files/' + dirId
         }
       })
 
