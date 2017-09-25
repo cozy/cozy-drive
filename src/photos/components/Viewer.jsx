@@ -269,10 +269,10 @@ export class Viewer extends Component {
       display: isImageLoading ? 'none' : 'initial'
     }
     return (
-      <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
+      <div className={styles['pho-viewer-wrapper']} role='viewer'>
         <ViewerToolbar hidden={hideActions} currentPhoto={currentPhoto} />
         {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-previous'], {[styles['pho-viewer-nav-previous--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(previousID)} />}
-        <div className={styles['pho-viewer-photo']}>
+        <div className={styles['pho-viewer-photo']} ref={viewer => { this.viewer = viewer }}>
           {currentPhoto &&
             <ImageLoader
               photo={currentPhoto}
