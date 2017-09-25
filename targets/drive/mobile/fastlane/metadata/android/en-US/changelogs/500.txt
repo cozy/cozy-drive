@@ -1,0 +1,3 @@
+- improve menu readability and visibility
+- fix: hide the top menu bar on tablets
+- fix: only saves photos from the camera roll
