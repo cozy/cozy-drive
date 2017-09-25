@@ -18,7 +18,7 @@ export default class ImageLoader extends Component {
 
   onError = () => {
     if (!this.img) return // if we already unmounted
-    if (this.state.fallback && this.img.src === this.state.fallback) return
+    if (this.state.fallback !== null) return
     // extreme fallback
     getPhotoLink(this.props.photo.id)
       .then(url => {

@@ -54,6 +54,22 @@ export default class CozyClient {
     return { permissions, sharings }
   }
 
+  async createSharing (permissions, contactId, sharingType, description) {
+    return this.api.createSharing(permissions, contactId, sharingType, description)
+  }
+
+  async revokeSharing (sharingId) {
+    return this.api.revokeSharing(sharingId)
+  }
+
+  async createSharingLink (permissions) {
+    return this.api.createSharingLink(permissions)
+  }
+
+  async revokeSharingLink (permission) {
+    return this.api.revokeSharingLink(permission)
+  }
+
   async fetchFile (id) {
     return this.api.fetchFile(id)
   }

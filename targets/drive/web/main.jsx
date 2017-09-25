@@ -6,9 +6,9 @@ import 'drive/styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
 import { Router, hashHistory } from 'react-router'
 import { I18n } from 'cozy-ui/react/I18n'
+import { CozyClient, CozyProvider } from 'redux-cozy-client'
 import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
 
 import AppRoute from 'drive/components/AppRoute'
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
 
-  cozy.client.init({
-    cozyURL: '//' + data.cozyDomain,
+  const client = new CozyClient({
+    cozyURL: `//${data.cozyDomain}`,
     token: data.cozyToken
   })
 
@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
   }
 
-  const store = configureStore()
+  const store = configureStore(client)
 
   render((
     <I18n lang={data.cozyLocale} dictRequire={(lang) => require(`drive/locales/${lang}`)}>
-      <Provider store={store}>
+      <CozyProvider store={store} client={client}>
         <Router history={history} routes={AppRoute} />
-      </Provider>
+      </CozyProvider>
     </I18n>
   ), root)
 })

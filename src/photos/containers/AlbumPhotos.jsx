@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { cozyConnect, isSharedWithMe, isSharedByMe, getSharingDetails } from 'redux-cozy-client'
+import { cozyConnect } from 'redux-cozy-client'
 import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
-import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, fetchAlbumSharing, updateAlbum } from '../ducks/albums'
+import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, fetchAlbumSharings, updateAlbum } from '../ducks/albums'
 import { hideSelectionBar } from '../ducks/selection'
 
 import BoardView from './BoardView'
@@ -43,10 +42,10 @@ export class AlbumPhotos extends Component {
   }
 
   render () {
-    if (!this.props.album || !this.props.sharing) {
+    if (!this.props.album || !this.props.shared) {
       return null
     }
-    const { album, photos, sharedWithMe, sharedByMe, sharing } = this.props
+    const { album, photos, shared } = this.props
     const { editing } = this.state
 
     return (
@@ -55,9 +54,9 @@ export class AlbumPhotos extends Component {
           <Topbar viewName='albumContent' albumName={album.name} editing={editing} onEdit={this.renameAlbum.bind(this)} >
             <AlbumToolbar
               album={album}
-              sharedWithMe={sharedWithMe}
-              sharedByMe={sharedByMe}
-              sharing={sharing}
+              sharedWithMe={shared.withMe}
+              sharedByMe={shared.byMe}
+              readOnly={shared.readOnly}
               photos={photos.data}
               onRename={this.editAlbumName.bind(this)}
             />
@@ -69,7 +68,7 @@ export class AlbumPhotos extends Component {
             photos={photos}
             photoLists={[{ photos: photos.data }]}
             photosContext='album'
-            readOnly={sharedWithMe}
+            readOnly={shared.readOnly}
           />
         }
         {this.renderViewer(this.props.children)}
@@ -89,19 +88,11 @@ export class AlbumPhotos extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ownProps.album
-  ? {
-    sharedWithMe: isSharedWithMe(state, ownProps.album),
-    sharedByMe: isSharedByMe(state, ownProps.album),
-    sharing: getSharingDetails(state, ownProps.album)
-  }
-  : {}
-
 const mapDocumentsToProps = (ownProps) => ({
   album: fetchAlbum(ownProps.router.params.albumId),
   // TODO: not ideal, but we'll have to wait after associations are implemented
   photos: fetchAlbumPhotos(ownProps.router.params.albumId),
-  sharingStatus: fetchAlbumSharing(ownProps.router.params.albumId)
+  shared: fetchAlbumSharings(ownProps.router.params.albumId)
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -112,4 +103,4 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
 export default cozyConnect(
   mapDocumentsToProps,
   mapDispatchToProps
-)(connect(mapStateToProps)(withRouter(AlbumPhotos)))
+)(withRouter(AlbumPhotos))

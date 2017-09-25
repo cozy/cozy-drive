@@ -28,7 +28,7 @@ export const requestDeviceAuthorization = () => {
   })
 }
 
-// versions 0.3.5 of the app and prior only requested permissions for io.cozy.files ; this function makes checks if we have permissions for io.cozy.contact and requests them if not
+// versions 0.3.5 of the app and prior only requested permissions for io.cozy.files ; this function checks if we have permissions for io.cozy.contact and requests them if not
 export const requestCozyAuthorization = () => (dispatch, getState) => {
   return new Promise(async (resolve, reject) => {
     try {

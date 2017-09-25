@@ -81,11 +81,11 @@ export class PhotoList extends Component {
         >
         <div className={styles['pho-section-header']}>
           <h3>{title}</h3>
-          {showSelection && allSelected &&
+          {showSelection && photos.length > 1 && allSelected &&
             <a style={{ marginRight: `${firstRowLastBoxRight}px` }} onClick={() => onPhotosUnselect(photoIds)}>
               {t('Board.unselect_all')}
             </a>}
-          {showSelection && !allSelected &&
+          {showSelection && photos.length > 1 && !allSelected &&
             <a style={{ marginRight: `${firstRowLastBoxRight}px` }} onClick={() => onPhotosSelect(photoIds)}>
               {t('Board.select_all')}
             </a>}

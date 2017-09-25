@@ -34,6 +34,7 @@
     "photo_upload": "Upload",
     "album_new": "New album",
     "album_delete": "Delete",
+    "album_quit": "Leave & delete shared album",
     "album_download": "Download",
     "more": "More",
     "menu": {
@@ -41,6 +42,7 @@
       "photo_upload": "Upload photos",
       "rename_album": "Rename album",
       "album_delete": "Delete album",
+      "album_quit": "Leave & delete shared album",
       "download_album": "Download album",
       "add_photos": "Add photos to album"
     }
@@ -125,6 +127,10 @@
         "send": "Send",
         "success": "You sent an invite to %{email}."
       },
+      "unshare": {
+        "title": "Remove from album",
+        "success": "You removed this shared album from %{email}."
+      },
       "sharingLink": {
         "title": "Link to share",
         "copy": "Copy",
@@ -179,6 +185,12 @@
       "error": {
         "generic": "An error occured while removing the album, please try again."
       }
+    },
+    "quit_album": {
+      "success": "Album %{name} was deleted.",
+      "error": {
+        "generic": "An error occured while leaving the album, please try again."
+      }
     }
   },
   "Viewer": {
@@ -194,6 +206,12 @@
     "forbidden": "You won't be able to access this album or selection anymore.",
     "eye": "Your photos won't be deleted.",
     "link": "If you have shared it, people won't be able to access it."
+  },
+  "quitconfirmation": {
+    "title": "Permanently leave and delete this shared album?",
+    "cancel": "Cancel",
+    "quit": "Leave & delete",
+    "forbidden": "You won't be able to access this album or selection anymore."
   },
   "timeline": {
     "DeleteConfirm": {

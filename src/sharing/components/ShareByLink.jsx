@@ -2,7 +2,6 @@ import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import classnames from 'classnames'
 import Toggle from 'cozy-ui/react/Toggle'
-import { deletePermission, createShareLink, getShareLink } from '..'
 
 import styles from '../share.styl'
 
@@ -50,47 +49,32 @@ export const ShareWithLink = ({ shareLink, onCopy, copied, documentType }, { t }
 
 class ShareByLink extends React.Component {
   state = {
-    checked: false,
     copied: false,
-    loading: false,
-    sharing: undefined
-  }
-
-  componentDidMount () {
-    getShareLink(this.props.document)
-    .then(sharing => {
-      this.setState(state => ({...state, sharing, checked: sharing !== undefined}))
-    })
+    loading: false
   }
 
   toggleShareLink (checked) {
     if (checked) {
-      this.fetchShareLink()
+      this.createShareLink()
     } else {
-      // destroy link
       this.deleteShareLink()
     }
-    this.setState(state => ({...state, checked}))
   }
 
-  fetchShareLink () {
+  createShareLink () {
     this.setState(state => ({...state, loading: true}))
-    createShareLink(this.props.document).then(
-      (sharing) => {
-        this.setState(state => ({...state, loading: false, sharing}))
-      }
-    )
+    this.props.onEnable(this.props.document)
+      .then(() => this.setState(state => ({...state, loading: false})))
   }
 
   deleteShareLink () {
-    deletePermission(this.state.sharing.id)
-    this.setState(state => ({...state, sharing: undefined}))
+    this.props.onDisable(this.props.document)
   }
 
   render () {
     const t = this.context.t
-    const { checked, copied, loading, sharing } = this.state
-    const { documentType } = this.props
+    const { copied, loading } = this.state
+    const { link, checked, documentType } = this.props
     return (
       <div>
         <ShareWithLinkToggle
@@ -99,7 +83,7 @@ class ShareByLink extends React.Component {
           documentType={documentType}
         />
         {checked && !loading && <ShareWithLink
-          shareLink={sharing.sharelink}
+          shareLink={link}
           onCopy={() => this.setState(state => ({ ...state, copied: true }))}
           copied={copied}
           documentType={documentType}
