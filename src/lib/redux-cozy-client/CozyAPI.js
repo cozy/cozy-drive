@@ -168,24 +168,26 @@ export default class CozyAPI {
     return cozy.client.fetchJSON('GET', `/sharings/${id}`)
   }
 
-  async createSharing (permissions, contactId, sharingType, description) {
+  async createSharing (permissions, contactIds, sharingType, description) {
     return cozy.client.fetchJSON('POST', '/sharings/', {
       desc: description,
       permissions,
-      recipients: [
-        {
-          recipient: {
-            id: contactId,
-            type: 'io.cozy.contacts'
-          }
+      recipients: contactIds.map(contactId => ({
+        recipient: {
+          id: contactId,
+          type: 'io.cozy.contacts'
         }
-      ],
+      })),
       sharing_type: sharingType
     })
   }
 
   async revokeSharing (sharingId) {
     return cozy.client.fetchJSON('DELETE', `/sharings/${sharingId}`)
+  }
+
+  revokeSharingForClient (sharingId, clientId) {
+    return cozy.client.fetchJSON('DELETE', `/sharings/${sharingId}/recipient/${clientId}`)
   }
 
   async createSharingLink (permissions) {

@@ -4,7 +4,7 @@ import Recipient from './Recipient'
 
 const WhoHasAccess = ({ recipients, documentType, onUnshare }) => (
   <div>
-    {recipients.map(({ contact, status }) => (
+    {recipients.filter(r => r.status !== 'revoked').map(({ contact, status }) => (
       <Recipient contact={contact} status={status} documentType={documentType} onUnshare={onUnshare} />
     ))}
   </div>

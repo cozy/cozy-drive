@@ -15,6 +15,11 @@ const REVOKE_SHARING = 'REVOKE_SHARING'
 const RECEIVE_SHARING_REVOKE = 'RECEIVE_SHARING_REVOKE'
 const RECEIVE_ERROR = 'RECEIVE_ERROR'
 
+const removeRecipient = (recipients, recipientId) => {
+  const idx = recipients.findIndex(r => r.recipient.id === recipientId)
+  return [...recipients.slice(0, idx), ...recipients.slice(idx + 1)]
+}
+
 const documents = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_SHARINGS_DATA:
@@ -24,11 +29,18 @@ const documents = (state = [], action) => {
     case REVOKE_SHARING:
       const idx = state.findIndex(s => s.attributes.sharing_id === action.sharingId)
       if (idx === -1) return state
-      return [
-        ...state.slice(0, idx),
-        {...state[idx], attributes: {...state[idx].attributes, revoked: true}},
-        ...state.slice(idx + 1)
-      ]
+      const sharing = state[idx]
+      const loneRecipient = sharing.attributes.recipients.length === 1
+      const newState = loneRecipient
+        ? {...sharing, attributes: {...sharing.attributes, revoked: true}}
+        : {
+          ...sharing,
+          attributes: {
+            ...sharing.attributes,
+            recipients: removeRecipient(sharing.attributes.recipients, action.recipientId)
+          }
+        }
+      return [...state.slice(0, idx), newState, ...state.slice(idx + 1)]
     default:
       return state
   }
@@ -105,24 +117,29 @@ export const fetchSharings = (doctype, id = null, options = {}) => ({
   promise: (client) => client.fetchSharings(doctype)
 })
 
-export const share = (document, recipient, sharingType, sharingDesc) => async (dispatch, getState) => {
-  const recipientId = recipient.id || (await dispatch(createContact(recipient))).data[0].id
+export const share = (document, recipients, sharingType, sharingDesc) => async (dispatch, getState) => {
+  const recipientIds = await Promise.all(
+    recipients.map(recipient => recipient.id || dispatch(createContact(recipient)).then(c => c.data[0].id))
+  )
   trackSharingByEmail(document)
-  return dispatch(createSharing(document, recipientId, sharingType, sharingDesc))
+  return dispatch(createSharing(document, recipientIds, sharingType, sharingDesc))
 }
 
 export const unshare = (document, recipient) => async (dispatch, getState) => {
   const sharing = getSharingForRecipient(getState(), document, recipient)
+  const loneRecipient = sharing.attributes.recipients.length === 1
   return dispatch({
     types: [REVOKE_SHARING, RECEIVE_SHARING_REVOKE, RECEIVE_ERROR],
     doctype: document._type,
     id: document._id,
     sharingId: sharing.attributes.sharing_id,
-    // TODO: right now, we create one sharing for each recipient, so we can just
-    // delete the sharing, but when we'll have many recipients for one sharing,
-    // we'll need to use another route:
-    // https://github.com/cozy/cozy-stack/blob/master/docs/sharing.md#delete-sharingssharing-idrecipientclient-id
-    promise: client => client.revokeSharing(sharing.attributes.sharing_id)
+    recipientId: recipient._id,
+    promise: client => loneRecipient
+      ? client.revokeSharing(sharing.attributes.sharing_id)
+      : client.revokeSharingForClient(
+        sharing.attributes.sharing_id,
+        sharing.attributes.recipients.find(r => r.recipient.id === recipient._id).Client.client_id
+      )
   })
 }
 
@@ -154,11 +171,11 @@ export const revokeLink = (document) => async (dispatch, getState) => {
   })
 }
 
-const createSharing = (document, contactId, sharingType = 'master-slave', description = '') => ({
+const createSharing = (document, contactIds, sharingType = 'master-slave', description = '') => ({
   types: [CREATE_SHARING, RECEIVE_NEW_SHARING, RECEIVE_ERROR],
   doctype: document._type,
   id: document._id,
-  promise: client => client.createSharing(getPermissionsFor(document), contactId, sharingType, description)
+  promise: client => client.createSharing(getPermissionsFor(document), contactIds, sharingType, description)
 })
 
 const createSharingLink = (document) => ({

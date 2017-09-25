@@ -9,13 +9,17 @@ import { getPrimaryEmail } from '..'
 import styles from '../share.styl'
 
 class ShareByEmailWrapper extends React.Component {
-  share (recipient, sharingType) {
+  share (recipients, sharingType) {
     const { document, documentType, sharingDesc } = this.props
-    return this.props.onShare(document, recipient, sharingType, sharingDesc)
-      .then(sharing => {
-        // TODO: here we get a non-standard recipient (single email property), it'd better
-        // to get a real one from the autocompelte
-        Alerter.info(`${documentType}.share.shareByEmail.success`, { email: recipient.email })
+    return this.props.onShare(document, recipients, sharingType, sharingDesc)
+      .then(() => {
+        if (recipients.length === 1) {
+          Alerter.info(`${documentType}.share.shareByEmail.success`, {
+            email: recipients[0].id ? getPrimaryEmail(recipients[0]) : recipients[0].email
+          })
+        } else {
+          Alerter.info(`${documentType}.share.shareByEmail.genericSuccess`, { count: recipients.length })
+        }
       })
       .catch(err => {
         Alerter.error('Error.generic')
@@ -61,29 +65,36 @@ class ShareByEmail extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
-      url: undefined,
-      id: undefined,
+      recipients: [],
       sharingType: 'master-slave'
     }
   }
 
-  onAutocomplete (email, url, id) {
-    this.setState(state => ({ ...state, email, url, id }))
+  onRecipientPick (recipient) {
+    const existing = this.state.recipients.find(r => r === recipient)
+    if (!existing) {
+      this.setState(state => ({ ...state, recipients: [...state.recipients, recipient] }))
+    }
+  }
+
+  onRecipientRemove (recipient) {
+    const idx = this.state.recipients.findIndex(r => r === recipient)
+    this.setState(state => ({
+      ...state,
+      recipients: [...state.recipients.slice(0, idx), ...state.recipients.slice(idx + 1)]
+    }))
   }
 
   reset () {
     this.setState(state => ({
       ...state,
-      email: '',
-      url: undefined,
-      id: undefined,
+      recipients: [],
       sharingType: 'master-slave' }))
   }
 
   sendSharingLink () {
-    const {email, url, id, sharingType} = this.state
-    this.props.onSend({email, url, id}, sharingType)
+    const { recipients, sharingType } = this.state
+    this.props.onSend(recipients, sharingType)
     .then(() => {
       this.reset()
     })
@@ -99,15 +110,17 @@ class ShareByEmail extends React.Component {
   render () {
     const { t } = this.context
     const { contacts, documentType } = this.props
+    const { recipients } = this.state
     return (
       <div className={styles['coz-form-group']}>
         <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
         <div className={styles['coz-form']}>
           <label className={styles['coz-form-label']} for='email'>{t(`${documentType}.share.shareByEmail.email`)}</label>
           <ShareAutocomplete
-            value={this.state.email}
             contacts={contacts}
-            onChange={(email, url, id) => this.onAutocomplete(email, url, id)}
+            recipients={recipients}
+            onPick={(recipient) => this.onRecipientPick(recipient)}
+            onRemove={(recipient) => this.onRecipientRemove(recipient)}
           />
         </div>
         <div className={classnames(styles['coz-form-controls'], styles['coz-form-controls--dispatch'])}>
@@ -121,7 +134,7 @@ class ShareByEmail extends React.Component {
           </select>
           <button
             className={classnames('coz-btn', 'coz-btn--regular')}
-            disabled={!this.state.email}
+            disabled={this.state.recipients.length === 0}
             onClick={e => this.sendSharingLink()}>
             {t(`${documentType}.share.shareByEmail.send`)}
           </button>
