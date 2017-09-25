@@ -1,36 +1,48 @@
 @require 'cozy-ui'
 
-[role=application]
-    @extend $navigation
+.coz-nav
+    @extend .c-nav
+
+.coz-nav-item
+    @extend .c-nav-item
+
+.coz-nav-link
+    @extend .c-nav-link
 
 .fil-cat-files
     background-image: embedurl("../assets/icons/icon-folder.svg")
     &.active
+        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-folder-active.svg")
 
 .fil-cat-recent
     background-image: embedurl("../assets/icons/icon-clock.svg")
     &.active
+        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-clock-active.svg")
 
 .fil-cat-shared
     background-image: embedurl("../assets/icons/icon-shared.svg")
     &.active
+        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-shared-active.svg")
 
 .fil-cat-activity
     background-image: embedurl("../assets/icons/icon-dashboard.svg")
     &.active
+        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-dashboard-active.svg")
 
 .fil-cat-trash
     background-image: embedurl("../assets/icons/icon-trash.svg")
     &.active
+        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-trash-active.svg")
 
 .fil-cat-settings
     background-image: embedurl("../assets/icons/icon-settings.svg")
     &.active
+        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-settings-active.svg")
 
 @media (max-width: (1023/basefont)rem)

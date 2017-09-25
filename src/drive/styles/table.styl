@@ -109,8 +109,9 @@
     font-size  basefont
     cursor     default
 
-    label
+    [data-input="checkbox"] label
         cursor default
+        padding 0
 
 .fil-content-row--selectable
     .fil-content-file-select
@@ -193,7 +194,7 @@ mime-types('fil-file-', '../assets/icons/')
         padding    0
 
     .fil-content-cell.fil-content-file
-        left-padded(61px)
+        padding-left em(61px)
         background-position em(16px) center
 
     .fil-content-cell.fil-content-file-select
