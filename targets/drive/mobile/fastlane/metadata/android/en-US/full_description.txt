@@ -3,7 +3,7 @@ Here comes the Cozy first mobile app, in its Beta version (replacing the old V2 
 
 Cozy Drive Features:
 • Save all the photos from your smartphone, they will be available on your PC and tablet as well.
-• Automatically synchronize the files from your PC with if you have installed Cozy Desktop.
+• Access your most important files offline.
 • Share pictures with anybody you want! Whether or not they already use Cozy.
 
 Ready to get Cozy? Install Cozy Drive and enhance your Cozy, your new personal cloud. For more information about Cozy, please go to our website: https://cozy.io
