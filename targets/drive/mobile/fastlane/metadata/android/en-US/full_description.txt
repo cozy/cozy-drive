@@ -1,5 +1,5 @@
 We all have a life and a digital life. Cozy gathers them. In your Cozy, you have all your personal data: pictures, health, bank, holidays, accessible only by you.
-Here comes the Cozy first mobile app, in its Beta version (replacing the old V2 version): Cozy Drive.
+Here comes the first Cozy mobile app, in its Beta version (replacing the old V2 version): Cozy Drive.
 
 Cozy Drive Features:
 • Save all the photos from your smartphone, they will be available on your PC and tablet as well.
