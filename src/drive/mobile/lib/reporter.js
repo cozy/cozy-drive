@@ -2,7 +2,7 @@
 import Raven from 'raven-js'
 
 let isEnable = false
-export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
+export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
 
 export const getConfig = () => ({
   shouldSendCallback: () => isEnable && !__DEVELOPMENT__,
