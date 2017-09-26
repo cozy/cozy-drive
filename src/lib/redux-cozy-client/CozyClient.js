@@ -11,36 +11,36 @@ export default class CozyClient {
   async fetchCollection (name, doctype, options = {}, skip = 0) {
     if (options.selector) {
       const index = await this.getCollectionIndex(name, doctype, options)
-      return await this.api.queryDocuments(doctype, index, {...options, skip})
+      return await this.api.queryDocuments(doctype, index, { ...options, skip })
     }
     return await this.api.fetchDocuments(doctype)
   }
 
-  async fetchDocument (doctype, id) {
+  fetchDocument (doctype, id) {
     return this.api.fetchDocument(doctype, id)
   }
 
-  async fetchReferencedFiles (doc, skip = 0) {
+  fetchReferencedFiles (doc, skip = 0) {
     return this.api.fetchReferencedFiles(doc, skip)
   }
 
-  async addReferencedFiles (doc, ids) {
+  addReferencedFiles (doc, ids) {
     return this.api.addReferencedFiles(doc, ids)
   }
 
-  async removeReferencedFiles (doc, ids) {
+  removeReferencedFiles (doc, ids) {
     return this.api.removeReferencedFiles(doc, ids)
   }
 
-  async createDocument (doc) {
+  createDocument (doc) {
     return this.api.createDocument(doc)
   }
 
-  async updateDocument (doc) {
+  updateDocument (doc) {
     return this.api.updateDocument(doc)
   }
 
-  async deleteDocument (doc) {
+  deleteDocument (doc) {
     return this.api.deleteDocument(doc)
   }
 
@@ -50,15 +50,22 @@ export default class CozyClient {
       ...permissions.byMe.map(p => p.attributes.source_id),
       ...permissions.withMe.map(p => p.attributes.source_id)
     ]
-    const sharings = await Promise.all(sharingIds.map(id => this.api.fetchSharing(id)))
+    const sharings = await Promise.all(
+      sharingIds.map(id => this.api.fetchSharing(id))
+    )
     return { permissions, sharings }
   }
 
-  async createSharing (permissions, contactIds, sharingType, description) {
-    return this.api.createSharing(permissions, contactIds, sharingType, description)
+  createSharing (permissions, contactIds, sharingType, description) {
+    return this.api.createSharing(
+      permissions,
+      contactIds,
+      sharingType,
+      description
+    )
   }
 
-  async revokeSharing (sharingId) {
+  revokeSharing (sharingId) {
     return this.api.revokeSharing(sharingId)
   }
 
@@ -66,23 +73,23 @@ export default class CozyClient {
     return this.api.revokeSharingForClient(sharingId, clientId)
   }
 
-  async createSharingLink (permissions) {
+  createSharingLink (permissions) {
     return this.api.createSharingLink(permissions)
   }
 
-  async revokeSharingLink (permission) {
+  revokeSharingLink (permission) {
     return this.api.revokeSharingLink(permission)
   }
 
-  async fetchFile (id) {
+  fetchFile (id) {
     return this.api.fetchFile(id)
   }
 
-  async createFile (file, dirID) {
+  createFile (file, dirID) {
     return this.api.createFile(file, dirID)
   }
 
-  async trashFile (file) {
+  trashFile (file) {
     return this.api.trashFile(file)
   }
 
@@ -105,7 +112,10 @@ export default class CozyClient {
 
   async getCollectionIndex (name, doctype, options) {
     if (!this.indexes[name]) {
-      this.indexes[name] = await this.api.createIndex(doctype, this.getIndexFields(options))
+      this.indexes[name] = await this.api.createIndex(
+        doctype,
+        this.getIndexFields(options)
+      )
     }
     return this.indexes[name]
   }

@@ -4,7 +4,10 @@ import { connect as reduxConnect } from 'react-redux'
 import { applySelectorForAction, enhancePropsForActions } from '.'
 import { mapValues, filterValues } from './utils'
 
-const connect = (mapDocumentsToProps, mapActionsToProps = null) => (WrappedComponent) => {
+const connect = (
+  mapDocumentsToProps,
+  mapActionsToProps = null
+) => WrappedComponent => {
   class Wrapper extends Component {
     componentDidMount () {
       const { fetchActions } = this.props
@@ -31,12 +34,16 @@ const connect = (mapDocumentsToProps, mapActionsToProps = null) => (WrappedCompo
   const makeMapStateToProps = (initialState, initialOwnProps) => {
     const initialProps = mapDocumentsToProps(initialOwnProps)
 
-    const isAction = (action) => action && action.types && action.promise
-    const fetchActions = filterValues(initialProps, (prop) => isAction(prop))
-    const otherProps = filterValues(initialProps, (prop) => !isAction(prop))
+    const isAction = action => action && action.types && action.promise
+    const fetchActions = filterValues(initialProps, prop => isAction(prop))
+    const otherProps = filterValues(initialProps, prop => !isAction(prop))
 
-    const mapStateToProps = (state) => ({
-      ...mapValues(fetchActions, (action) => isAction(action) ? applySelectorForAction(state, action) : action),
+    const mapStateToProps = state => ({
+      ...mapValues(
+        fetchActions,
+        action =>
+          isAction(action) ? applySelectorForAction(state, action) : action
+      ),
       fetchActions,
       ...otherProps
     })
