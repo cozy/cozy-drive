@@ -9,21 +9,25 @@ const DeleteConfirm = ({ t, count, confirm, abort, related }) => {
     types.push('related')
   }
   const deleteConfirmationTexts = types.map(type => (
-    <p className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}>
+    <p
+      className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
+    >
       {t(`timeline.DeleteConfirm.${type}`, count)}
     </p>
   ))
 
-  return (<Modal
-    title={t('timeline.DeleteConfirm.title', count)}
-    description={deleteConfirmationTexts}
-    secondaryType='secondary'
-    secondaryText={t('timeline.DeleteConfirm.cancel')}
-    secondaryAction={abort}
-    primaryType='danger'
-    primaryText={t('timeline.DeleteConfirm.delete')}
-    primaryAction={confirm}
-   />)
+  return (
+    <Modal
+      title={t('timeline.DeleteConfirm.title', count)}
+      description={deleteConfirmationTexts}
+      secondaryType="secondary"
+      secondaryText={t('timeline.DeleteConfirm.cancel')}
+      secondaryAction={abort}
+      primaryType="danger"
+      primaryText={t('timeline.DeleteConfirm.delete')}
+      primaryAction={confirm}
+    />
+  )
 }
 
 export default DeleteConfirm

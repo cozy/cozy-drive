@@ -9,11 +9,11 @@ import { registerDevice, setUrl } from '../../actions/settings'
 import styles from '../../styles/onboarding'
 
 export class SelectServer extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.serverInput.focus()
   }
 
-  render () {
+  render() {
     const {
       t,
       goBack,
@@ -25,43 +25,48 @@ export class SelectServer extends Component {
     return (
       <div className={classNames(styles['wizard'], styles['select-server'])}>
         <header className={styles['wizard-header']}>
-          <a
-            className={styles['close-button']}
-            onClick={goBack}
-          />
+          <a className={styles['close-button']} onClick={goBack} />
         </header>
         <div className={styles['wizard-main']}>
           <div
-            className={error
-              ? classNames(styles['logo-wrapper'], styles['error'])
-              : styles['logo-wrapper']}
+            className={
+              error
+                ? classNames(styles['logo-wrapper'], styles['error'])
+                : styles['logo-wrapper']
+            }
           >
             <div className={styles['cozy-logo-white']} />
           </div>
           <input
-            type='url'
-            className={error
-              ? classNames(styles['input'], styles['error'])
-              : styles['input']}
-            placeholder={t('mobile.onboarding.server_selection.cozy_address_placeholder')}
-            ref={(input) => { this.serverInput = input }}
+            type="url"
+            className={
+              error
+                ? classNames(styles['input'], styles['error'])
+                : styles['input']
+            }
+            placeholder={t(
+              'mobile.onboarding.server_selection.cozy_address_placeholder'
+            )}
+            ref={input => {
+              this.serverInput = input
+            }}
             onChange={updateServerUrl}
             value={serverUrl}
           />
-          {!error &&
+          {!error && (
             <p className={styles['description']}>
               {t('mobile.onboarding.server_selection.description')}
             </p>
-          }
-          {error &&
-            <p className={styles['description']} style={{color: 'red'}}>
+          )}
+          {error && (
+            <p className={styles['description']} style={{ color: 'red' }}>
               <ReactMarkdown source={t(error)} />
             </p>
-          }
+          )}
         </div>
         <footer className={styles['wizard-footer']}>
           <button
-            role='button'
+            role="button"
             className={'coz-btn coz-btn--regular'}
             onClick={() => selectServer(serverUrl)}
             disabled={error || !serverUrl}
@@ -78,25 +83,27 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goBack: () => {
     ownProps.previousStep()
   },
-  selectServer: (serverUrl) => {
+  selectServer: serverUrl => {
     if (!serverUrl) return
     dispatch(registerDevice())
       .then(() => {
         ownProps.nextStep()
       })
-      .catch((err) => console.error(err))
+      .catch(err => console.error(err))
   },
-  updateServerUrl: (e) => {
+  updateServerUrl: e => {
     const serverUrl = e.target.value
     dispatch(setUrl(serverUrl))
   }
 })
 
-const mapStateToProps = (state) => {
-  return ({
+const mapStateToProps = state => {
+  return {
     serverUrl: state.mobile.settings.serverUrl,
     error: state.mobile.settings.error
-  })
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(SelectServer))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate()(SelectServer)
+)

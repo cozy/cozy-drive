@@ -12,10 +12,12 @@ import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import { emptyTrash } from './actions'
 
 const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
-  <div className={styles['fil-toolbar-trash']} role='toolbar'>
+  <div className={styles['fil-toolbar-trash']} role="toolbar">
     <button
       className={classNames(
-        'coz-btn', 'coz-btn--danger-outline', styles['fil-btn--delete']
+        'coz-btn',
+        'coz-btn--danger-outline',
+        styles['fil-btn--delete']
       )}
       onClick={() => emptyTrash()}
       disabled={disabled}
@@ -29,10 +31,7 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
       buttonClassName={styles['fil-toolbar-more-btn']}
     >
       <Item>
-        <a
-          className={styles['fil-action-delete']}
-          onClick={() => emptyTrash()}
-        >
+        <a className={styles['fil-action-delete']} onClick={() => emptyTrash()}>
           {t('toolbar.empty_trash')}
         </a>
       </Item>

@@ -8,18 +8,17 @@ import BackupPhotosVideos from './onboarding/BackupPhotosVideos'
 import BackupContacts from './onboarding/BackupContacts'
 import Analytics from './onboarding/Analytics'
 
-const OnBoarding = (props) => {
-  const steps = [
-    Welcome,
-    SelectServer
-  ]
+const OnBoarding = props => {
+  const steps = [Welcome, SelectServer]
   const stepsWithBreadcrumb = [
     Files,
     BackupPhotosVideos,
     BackupContacts,
     Analytics
   ]
-  return <Wizard steps={steps} breadcrumbSteps={stepsWithBreadcrumb} {...props} />
+  return (
+    <Wizard steps={steps} breadcrumbSteps={stepsWithBreadcrumb} {...props} />
+  )
 }
 
 export default OnBoarding

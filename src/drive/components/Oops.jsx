@@ -8,15 +8,15 @@ const reload = () => {
 }
 
 const Oops = ({ t }) => (
-  <div class={styles['fil-oops']}>
-    <h2>{ t('error.open_folder') }</h2>
+  <div className={styles['fil-oops']}>
+    <h2>{t('error.open_folder')}</h2>
     <p>
       <button
-        role='button'
-        className='coz-btn coz-btn--regular'
+        role="button"
+        className="coz-btn coz-btn--regular"
         onClick={reload}
       >
-        { t('error.button.reload') }
+        {t('error.button.reload')}
       </button>
     </p>
   </div>

@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux'
 import { removeObjectProperty, mapValues } from './utils'
+import sharings, {
+  FETCH_SHARINGS,
+  getSharings,
+  getSharingDetails
+} from './slices/sharings'
 
 const FETCH_DOCUMENT = 'FETCH_DOCUMENT'
 const FETCH_COLLECTION = 'FETCH_COLLECTION'
@@ -236,11 +241,6 @@ const collections = (state = {}, action) => {
   }
 }
 
-import sharings, {
-  FETCH_SHARINGS,
-  getSharings,
-  getSharingDetails
-} from './slices/sharings'
 export default combineReducers({
   collections,
   documents,

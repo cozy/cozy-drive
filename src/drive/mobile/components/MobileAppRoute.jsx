@@ -15,10 +15,10 @@ const MobileAppRoute = requireSetup => (
     <Route onEnter={requireSetup} component={RevokableWrapper}>
       {AppRoute}
       <Route component={Layout}>
-        <Route path='settings' name='mobile.settings' component={Settings} />}
+        <Route path="settings" name="mobile.settings" component={Settings} />}
       </Route>
     </Route>
-    <Route path='onboarding' component={OnBoarding} onLeave={() => initBar()} />
+    <Route path="onboarding" component={OnBoarding} onLeave={() => initBar()} />
   </Route>
 )
 

@@ -19,14 +19,14 @@ const PROMPT_AFTER_BOOTS = 5
 
 // RatingModal is the base component
 class RatingModal extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       screen: SCREEN_ENJOY
     }
   }
 
-  async onUserReply (enjoyed) {
+  async onUserReply(enjoyed) {
     if (enjoyed) {
       try {
         const { t } = this.context
@@ -59,33 +59,40 @@ class RatingModal extends Component {
     }
   }
 
-  onCloseFeedback (gaveFeedback) {
+  onCloseFeedback(gaveFeedback) {
     if (gaveFeedback) this.props.alert('mobile.rating.alert.feedback')
     this.props.dontShowAgain()
   }
 
-  render () {
-    return this.state.screen === SCREEN_ENJOY ? <EnjoyCozy onReply={this.onUserReply.bind(this)} /> : <FeeedbackForm onClose={this.onCloseFeedback.bind(this)} />
+  render() {
+    return this.state.screen === SCREEN_ENJOY ? (
+      <EnjoyCozy onReply={this.onUserReply.bind(this)} />
+    ) : (
+      <FeeedbackForm onClose={this.onCloseFeedback.bind(this)} />
+    )
   }
 }
 
 // sub-components
 class EnjoyCozy extends Component {
-  render () {
+  render() {
     const { onReply } = this.props
     const { t } = this.context
     return (
-      <Modal
-        title={t('mobile.rating.enjoy.title')}
-        withCross={false}
-      >
+      <Modal title={t('mobile.rating.enjoy.title')} withCross={false}>
         <ModalContent>
           <div className={styles['button-block']}>
-            <button className='coz-btn coz-btn--secondary' onClick={() => onReply(false)}>
-              { t('mobile.rating.enjoy.no') }
+            <button
+              className="coz-btn coz-btn--secondary"
+              onClick={() => onReply(false)}
+            >
+              {t('mobile.rating.enjoy.no')}
             </button>
-            <button className='coz-btn coz-btn--regular' onClick={() => onReply(true)}>
-              { t('mobile.rating.enjoy.yes') }
+            <button
+              className="coz-btn coz-btn--regular"
+              onClick={() => onReply(true)}
+            >
+              {t('mobile.rating.enjoy.yes')}
             </button>
           </div>
         </ModalContent>
@@ -95,26 +102,22 @@ class EnjoyCozy extends Component {
 }
 
 class FeeedbackForm extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       sending: false
     }
   }
 
-  async onSubmit (e) {
+  async onSubmit(e) {
     e.preventDefault()
 
     const { t } = this.context
     const mailData = {
       mode: 'from',
-      to: [
-        { name: 'Support', email: FEEDBACK_EMAIL }
-      ],
+      to: [{ name: 'Support', email: FEEDBACK_EMAIL }],
       subject: t('mobile.rating.email.subject'),
-      parts: [
-        { type: 'text/plain', body: this.textarea.value.toString() }
-      ]
+      parts: [{ type: 'text/plain', body: this.textarea.value.toString() }]
     }
 
     try {
@@ -128,38 +131,56 @@ class FeeedbackForm extends Component {
     this.props.onClose(true)
   }
 
-  registerElement (element) {
+  registerElement(element) {
     this.textarea = element
   }
 
-  render () {
+  render() {
     const { onClose } = this.props
     const { sending } = this.state
     const { t } = this.context
     return (
-      <Modal
-        title={t('mobile.rating.feedback.title')}
-        withCross={false}
-      >
+      <Modal title={t('mobile.rating.feedback.title')} withCross={false}>
         <ModalContent className={styles['feedback-form']}>
           <form className={'coz-form'} onSubmit={this.onSubmit.bind(this)}>
-            <textarea className={styles['feedback-text']} placeholder={t('mobile.rating.email.placeholder')} ref={this.registerElement.bind(this)} />
+            <textarea
+              className={styles['feedback-text']}
+              placeholder={t('mobile.rating.email.placeholder')}
+              ref={this.registerElement.bind(this)}
+            />
             <div className={styles['button-block']}>
-              <button className='coz-btn coz-btn--secondary' type='button' onClick={() => onClose(false)}>
-                { t('mobile.rating.feedback.no') }
+              <button
+                className="coz-btn coz-btn--secondary"
+                type="button"
+                onClick={() => onClose(false)}
+              >
+                {t('mobile.rating.feedback.no')}
               </button>
-              <button className='coz-btn coz-btn--regular' type='submit' aria-busy={sending}>
-                { t('mobile.rating.feedback.yes') }
+              <button
+                className="coz-btn coz-btn--regular"
+                type="submit"
+                aria-busy={sending}
+              >
+                {t('mobile.rating.feedback.yes')}
               </button>
             </div>
           </form>
         </ModalContent>
-      </Modal>)
+      </Modal>
+    )
   }
 }
 
 // promptRating is not a component because the native UI is used instead
-const promptRating = ({ title, message, yes, no, later, softwareName, softwareID }) => {
+const promptRating = ({
+  title,
+  message,
+  yes,
+  no,
+  later,
+  softwareName,
+  softwareID
+}) => {
   return new Promise((resolve, reject) => {
     try {
       AppRate.preferences = {
@@ -196,7 +217,7 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
   let hasIncrementedBootCount = false
 
   return class extends Component {
-    constructor (props) {
+    constructor(props) {
       super(props)
       this.state = {
         bootCount: 0,
@@ -204,7 +225,7 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
       }
     }
 
-    componentStateRestored () {
+    componentStateRestored() {
       if (hasIncrementedBootCount) return
 
       this.setState(prevState => ({
@@ -213,34 +234,47 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
       hasIncrementedBootCount = true
     }
 
-    dontShowAgain () {
+    dontShowAgain() {
       this.setState({ prompted: true })
     }
 
-    showLater () {
+    showLater() {
       this.setState({
         bootCount: 0,
         prompted: false
       })
     }
 
-    render () {
+    render() {
       const { bootCount, prompted } = this.state
       const visible = prompted === false && bootCount >= showAfterBoots
-      return visible ? <WrappedComponent dontShowAgain={this.dontShowAgain.bind(this)} showLater={this.showLater.bind(this)} {...this.props} /> : null
+      return visible ? (
+        <WrappedComponent
+          dontShowAgain={this.dontShowAgain.bind(this)}
+          showLater={this.showLater.bind(this)}
+          {...this.props}
+        />
+      ) : null
     }
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  alert: (message) => dispatch({
-    type: ALERT_RATING,
-    alert: { message }
-  })
+const mapDispatchToProps = dispatch => ({
+  alert: message =>
+    dispatch({
+      type: ALERT_RATING,
+      alert: { message }
+    })
 })
 
 const ConnectedRatingModal = connect(null, mapDispatchToProps)(RatingModal)
-const DelayedRatingModal = withBootDelay(ConnectedRatingModal, PROMPT_AFTER_BOOTS)
-const PersistentRatingModal = withPersistentState(DelayedRatingModal, 'DelayedRatingModal')
+const DelayedRatingModal = withBootDelay(
+  ConnectedRatingModal,
+  PROMPT_AFTER_BOOTS
+)
+const PersistentRatingModal = withPersistentState(
+  DelayedRatingModal,
+  'DelayedRatingModal'
+)
 
 export default PersistentRatingModal

@@ -1,7 +1,12 @@
 /* global cozy */
 import { clientRevokedMsg } from './cozy-helper'
 
-export const startReplication = (firstReplication, firstReplicationFinished, refreshFolder, revokeClient) => {
+export const startReplication = (
+  firstReplication,
+  firstReplicationFinished,
+  refreshFolder,
+  revokeClient
+) => {
   if (firstReplication) {
     startRepeatedReplication(refreshFolder, revokeClient)
   } else {
@@ -21,7 +26,11 @@ const startRepeatedReplication = (refreshFolder, revokeClient) => {
   cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
 }
 
-const startFirstReplication = (firstReplicationFinished, refreshFolder, revokeClient) => {
+const startFirstReplication = (
+  firstReplicationFinished,
+  refreshFolder,
+  revokeClient
+) => {
   const options = {
     onError: onError(revokeClient),
     onComplete: () => {
@@ -34,8 +43,11 @@ const startFirstReplication = (firstReplicationFinished, refreshFolder, revokeCl
   })
 }
 
-export const onError = (revokeClient) => (err) => {
-  if (err.message === clientRevokedMsg || err.error === 'code=400, message=Invalid JWT token') {
+export const onError = revokeClient => err => {
+  if (
+    err.message === clientRevokedMsg ||
+    err.error === 'code=400, message=Invalid JWT token'
+  ) {
     console.warn('Your device is no more connected to your server')
     revokeClient()
   } else if (err.message === 'ETIMEDOUT') {

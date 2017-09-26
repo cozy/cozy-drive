@@ -17,14 +17,23 @@ const styles = {
   }
 }
 
-export const DeleteButton = ({ t, label, type = 'button', disabled, onDelete, className = '' }) => (
+export const DeleteButton = ({
+  t,
+  label,
+  type = 'button',
+  disabled,
+  onDelete,
+  className = ''
+}) => (
   <label
-    role='button'
+    role="button"
     disabled={disabled}
-    className={`${className} ${type === 'menu-item' ? 'coz-link--delete' : 'coz-btn coz-btn--danger coz-btn--delete'}`}
+    className={`${className} ${type === 'menu-item'
+      ? 'coz-link--delete'
+      : 'coz-btn coz-btn--danger coz-btn--delete'}`}
     style={styles.parent}
   >
-    { label }
+    {label}
     <button
       disabled={disabled}
       style={styles.input}

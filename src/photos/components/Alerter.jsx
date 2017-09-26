@@ -7,13 +7,13 @@ const createStore = () => {
   let notifications = []
   let listeners = []
 
-  const dispatch = (notification) => {
+  const dispatch = notification => {
     notification.id = notifications.length
     notifications.push(notification)
     listeners.forEach(listener => listener(notification))
   }
 
-  const subscribe = (listener) => {
+  const subscribe = listener => {
     listeners.push(listener)
   }
 
@@ -23,14 +23,14 @@ const createStore = () => {
 const store = createStore()
 
 class Alert extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       hidden: true
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.close = this.close.bind(this)
     this.closeTimer = setTimeout(() => {
       this.beginClosing()
@@ -38,11 +38,11 @@ class Alert extends Component {
     // Delay to trigger CSS transition after the first render.
     // Totally open for a better way to achieve this.
     setTimeout(() => {
-      this.setState({hidden: false})
+      this.setState({ hidden: false })
     }, 20)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // this.base.removeEventListener('transitionend', this.close, false)
     this.setState({ hidden: false })
     if (this.closeTimer) {
@@ -50,16 +50,16 @@ class Alert extends Component {
     }
   }
 
-  beginClosing () {
+  beginClosing() {
     // this.base.addEventListener('transitionend', this.close, false)
     this.setState({ hidden: true })
   }
 
-  close () {
+  close() {
     this.props.onClose()
   }
 
-  render () {
+  render() {
     const { message, type, buttonText, buttonAction } = this.props
     const { hidden } = this.state
     return (
@@ -72,57 +72,60 @@ class Alert extends Component {
           )}
         >
           <p>{message}</p>
-          {buttonText &&
-            <a onClick={buttonAction} className={classNames('coz-btn', `coz-btn--alert-${type}`)}>
+          {buttonText && (
+            <a
+              onClick={buttonAction}
+              className={classNames('coz-btn', `coz-btn--alert-${type}`)}
+            >
               {buttonText}
             </a>
-          }
+          )}
         </div>
-        {type === 'error' &&
+        {type === 'error' && (
           <div
             className={classNames(
               styles['coz-overlay'],
               hidden ? styles['coz-overlay--hidden'] : ''
             )}
           />
-        }
+        )}
       </div>
     )
   }
 }
 
 export default class Alerter extends Component {
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
     this.state = {
       notifications: []
     }
   }
 
-  static info (msg, options) {
+  static info(msg, options) {
     store.dispatch({ type: 'info', msg, options })
   }
 
-  static success (msg, options) {
+  static success(msg, options) {
     store.dispatch({ type: 'success', msg, options })
   }
 
-  static error (msg, options) {
+  static error(msg, options) {
     store.dispatch({ type: 'error', msg, options })
   }
 
-  componentDidMount () {
-    this.setState({mounted: true})
+  componentDidMount() {
+    this.setState({ mounted: true })
     store.subscribe(this.notify.bind(this))
   }
 
-  notify (notification) {
+  notify(notification) {
     this.setState({
       notifications: [...this.state.notifications, notification]
     })
   }
 
-  handleClose (id) {
+  handleClose(id) {
     let idx = this.state.notifications.findIndex(n => n.id === id)
     this.setState({
       notifications: [
@@ -132,7 +135,7 @@ export default class Alerter extends Component {
     })
   }
 
-  render () {
+  render() {
     const t = this.props.t
     return (
       <div className={styles['pho-alerter']}>

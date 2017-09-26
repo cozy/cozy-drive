@@ -1,4 +1,8 @@
-import { checkURL, SCHEME_EXCEPTION, MAIL_EXCEPTION } from '../../../../../src/targets/mobile/lib/cozy-helper'
+import {
+  checkURL,
+  SCHEME_EXCEPTION,
+  MAIL_EXCEPTION
+} from '../../../../../src/targets/mobile/lib/cozy-helper'
 
 describe('cozy-helper checkURL', () => {
   it('should accept https://localhost', () => {

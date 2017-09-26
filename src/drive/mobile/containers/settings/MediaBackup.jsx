@@ -1,11 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import SettingCategory, { ELEMENT_CHECKBOX, ELEMENT_BUTTON } from '../../components/SettingCategory'
+import SettingCategory, {
+  ELEMENT_CHECKBOX,
+  ELEMENT_BUTTON
+} from '../../components/SettingCategory'
 import { setWifiOnly } from '../../actions/settings'
-import { backupImages, startMediaBackup, cancelMediaBackup } from '../../actions/mediaBackup'
+import {
+  backupImages,
+  startMediaBackup,
+  cancelMediaBackup
+} from '../../actions/mediaBackup'
 
-export const MediaBackup = ({ t, backupImages, setBackupImages, wifiOnly, setWifiOnly, toggleBackup, mediaUploading }) => (
+export const MediaBackup = ({
+  t,
+  backupImages,
+  setBackupImages,
+  wifiOnly,
+  setWifiOnly,
+  toggleBackup,
+  mediaUploading
+}) => (
   <SettingCategory
     title={t('mobile.settings.media_backup.title')}
     elements={[
@@ -27,13 +42,19 @@ export const MediaBackup = ({ t, backupImages, setBackupImages, wifiOnly, setWif
       },
       {
         type: ELEMENT_BUTTON,
-        text: <span>
-          {!mediaUploading && t('mobile.settings.media_backup.launch')}
-          {mediaUploading && t('mobile.settings.media_backup.stop')}
-        </span>,
+        text: (
+          <span>
+            {!mediaUploading && t('mobile.settings.media_backup.launch')}
+            {mediaUploading && t('mobile.settings.media_backup.stop')}
+          </span>
+        ),
         busy: mediaUploading,
         theme: 'regular',
-        onClick: () => toggleBackup(!mediaUploading, t('mobile.settings.media_backup.media_folder'))
+        onClick: () =>
+          toggleBackup(
+            !mediaUploading,
+            t('mobile.settings.media_backup.media_folder')
+          )
       }
     ]}
   />
@@ -46,8 +67,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setBackupImages: (value) => dispatch(backupImages(value)),
-  setWifiOnly: async (value) => {
+  setBackupImages: value => dispatch(backupImages(value)),
+  setWifiOnly: async value => {
     await dispatch(setWifiOnly(value))
     dispatch(backupImages())
   },
@@ -60,4 +81,6 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(MediaBackup))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate()(MediaBackup)
+)

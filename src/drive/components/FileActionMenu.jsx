@@ -26,7 +26,7 @@ class MenuItem extends Component {
     this.props.onClick().then(() => this.toggleSpinner())
   }
 
-  render () {
+  render() {
     const { className, children, checkbox } = this.props
     const { working } = this.state
     return (
@@ -34,7 +34,13 @@ class MenuItem extends Component {
         <a className={className} onClick={this.handleClick}>
           {children}
           {working && <Spinner />}
-          {checkbox && <Toggle id={children} checked={checkbox.value} onToggle={checkbox.onChange} />}
+          {checkbox && (
+            <Toggle
+              id={children}
+              checked={checkbox.value}
+              onToggle={checkbox.onChange}
+            />
+          )}
         </a>
       </div>
     )
@@ -42,7 +48,10 @@ class MenuItem extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  checkbox: { value: isAvailableOffline(state)(ownProps.files[0].id), onChange: () => {} }
+  checkbox: {
+    value: isAvailableOffline(state)(ownProps.files[0].id),
+    onChange: () => {}
+  }
 })
 
 export const ConnectedToggleMenuItem = connect(mapStateToProps)(MenuItem)
@@ -51,9 +60,16 @@ const Menu = props => {
   const { t, files, actions } = props
   const actionNames = Object.keys(actions).filter(actionName => {
     const action = actions[actionName]
-    return action.displayCondition === undefined || action.displayCondition(files)
+    return (
+      action.displayCondition === undefined || action.displayCondition(files)
+    )
   })
-  const header = files.length === 1 ? <MenuHeaderFile file={files[0]} /> : <MenuHeaderSelection {...props} />
+  const header =
+    files.length === 1 ? (
+      <MenuHeaderFile file={files[0]} />
+    ) : (
+      <MenuHeaderSelection {...props} />
+    )
   return (
     <div className={styles['fil-actionmenu']}>
       {header}
@@ -64,7 +80,8 @@ const Menu = props => {
           <Component
             className={styles[`fil-action-${actionName}`]}
             onClick={() => actions[actionName].action(files)}
-            files={files}>
+            files={files}
+          >
             {t(`SelectionBar.${actionName}`)}
           </Component>
         )
@@ -77,7 +94,13 @@ const MenuHeaderFile = ({ file }) => {
   const { filename, extension } = splitFilename(file)
   return (
     <div>
-      <div className={classNames(styles['fil-actionmenu-file'], styles['fil-actionmenu-header'], getClassFromMime(file))}>
+      <div
+        className={classNames(
+          styles['fil-actionmenu-file'],
+          styles['fil-actionmenu-header'],
+          getClassFromMime(file)
+        )}
+      >
         {filename}
         <span className={styles['fil-actionmenu-file-ext']}>{extension}</span>
       </div>
@@ -90,7 +113,8 @@ const MenuHeaderSelection = ({ t, files }) => {
   return (
     <div>
       <div className={classNames(styles['fil-actionmenu-header'])}>
-        {fileCount} {t('SelectionBar.selected_count', { smart_count: fileCount })}
+        {fileCount}{' '}
+        {t('SelectionBar.selected_count', { smart_count: fileCount })}
       </div>
     </div>
   )
@@ -98,14 +122,12 @@ const MenuHeaderSelection = ({ t, files }) => {
 
 const ActionMenu = translate()(Menu)
 
-const Backdrop = withGestures(
-  ownProps => ({
-    tap: () => ownProps.onClose()
-  })
-)(() => <div className={styles['fil-actionmenu-backdrop']} />)
+const Backdrop = withGestures(ownProps => ({
+  tap: () => ownProps.onClose()
+}))(() => <div className={styles['fil-actionmenu-backdrop']} />)
 
 class FileActionMenu extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.gesturesHandler = new Hammer.Manager(this.fam, {
       recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
     })
@@ -115,7 +137,8 @@ class FileActionMenu extends Component {
     this.dismissHandler = this.dismiss.bind(this)
 
     // to be completely accurate, `maximumGestureDelta` should be the difference between the top of the menu and the bottom of the page; but using the height is much easier to compute and accurate enough.
-    const maximumGestureDistance = this.actionMenuNode.getBoundingClientRect().height
+    const maximumGestureDistance = this.actionMenuNode.getBoundingClientRect()
+      .height
     const minimumCloseDistance = 0.6 // between 0 and 1, how far down the gesture must be to be considered complete upon release
     const minimumCloseVelocity = 0.6 // a gesture faster than this will dismiss the menu, regardless of distance traveled
 
@@ -134,8 +157,9 @@ class FileActionMenu extends Component {
       // re enable css transitions
       this.actionMenuNode.classList.add(styles['with-transition'])
       // dismiss the menu if the swipe pan was bigger than the treshold, or if it was a fast, downward gesture
-      let shouldDismiss = e.deltaY / maximumGestureDistance >= minimumCloseDistance ||
-                          (e.deltaY > 0 && e.velocity >= minimumCloseVelocity)
+      let shouldDismiss =
+        e.deltaY / maximumGestureDistance >= minimumCloseDistance ||
+        (e.deltaY > 0 && e.velocity >= minimumCloseVelocity)
 
       if (shouldDismiss) {
         if (currentGestureProgress >= 1) {
@@ -143,7 +167,11 @@ class FileActionMenu extends Component {
           this.dismissHandler()
         } else {
           // we need to transition the menu to the bottom before dismissing it
-          this.actionMenuNode.addEventListener('transitionend', this.dismissHandler, false)
+          this.actionMenuNode.addEventListener(
+            'transitionend',
+            this.dismissHandler,
+            false
+          )
           this.applyTransformation(1)
         }
       } else {
@@ -152,29 +180,42 @@ class FileActionMenu extends Component {
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.gesturesHandler.destroy()
   }
 
   // applies a css trasnform to the element, based on the progress of the gesture
-  applyTransformation (progress) {
+  applyTransformation(progress) {
     // wrap the progress between 0 and 1
     progress = Math.min(1, Math.max(0, progress))
-    this.actionMenuNode.style.transform = 'translateY(' + (progress * 100) + '%)'
+    this.actionMenuNode.style.transform = 'translateY(' + progress * 100 + '%)'
   }
 
-  dismiss () {
+  dismiss() {
     this.props.onClose()
     // remove the event handler so subsequent transitions don't trigger dismissals
-    this.actionMenuNode.removeEventListener('transitionend', this.dismissHandler)
+    this.actionMenuNode.removeEventListener(
+      'transitionend',
+      this.dismissHandler
+    )
     this.applyTransformation(0)
   }
 
-  render (props) {
+  render(props) {
     return (
-      <div className={styles['fil-actionmenu-wrapper']} ref={fam => { this.fam = fam }}>
+      <div
+        className={styles['fil-actionmenu-wrapper']}
+        ref={fam => {
+          this.fam = fam
+        }}
+      >
         <Backdrop {...props} />
-        <ActionMenu {...props} ref={actionMenu => { this.actionMenu = actionMenu }} />
+        <ActionMenu
+          {...props}
+          ref={actionMenu => {
+            this.actionMenu = actionMenu
+          }}
+        />
       </div>
     )
   }

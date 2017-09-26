@@ -16,17 +16,15 @@ const FolderContent = props => {
   const { fetchStatus, files, isAddingFolder } = props
   switch (fetchStatus) {
     case 'pending':
-      return <Spinner
-        size='xxlarge'
-        loadingType='message'
-        middle='true'
-      />
+      return <Spinner size="xxlarge" loadingType="message" middle="true" />
     case 'failed':
       return <Oops />
     case 'loaded':
-      return files.length === 0 && !isAddingFolder
-        ? <EmptyContent {...props} />
-        : <FileList withSelectionCheckbox {...props} />
+      return files.length === 0 && !isAddingFolder ? (
+        <EmptyContent {...props} />
+      ) : (
+        <FileList withSelectionCheckbox {...props} />
+      )
     default:
       return null
   }

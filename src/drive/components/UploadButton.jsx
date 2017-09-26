@@ -18,14 +18,14 @@ const styles = {
 
 const UploadButton = ({ label, disabled, onUpload, className }) => (
   <label
-    role='button'
+    role="button"
     disabled={disabled}
     className={className}
     style={styles.parent}
   >
     {label}
     <input
-      type='file'
+      type="file"
       multiple
       style={styles.input}
       disabled={disabled}

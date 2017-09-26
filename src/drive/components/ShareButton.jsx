@@ -3,9 +3,14 @@ import classnames from 'classnames'
 
 const ShareButton = ({ label, disabled, onShare, className }) => (
   <button
-    role='button'
+    role="button"
     disabled={disabled}
-    className={classnames(className, 'coz-btn', 'coz-btn--secondary', 'coz-btn--share')}
+    className={classnames(
+      className,
+      'coz-btn',
+      'coz-btn--secondary',
+      'coz-btn--share'
+    )}
     onClick={() => onShare()}
   >
     {label}

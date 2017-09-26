@@ -4,7 +4,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import { getFileDownloadUrl } from '../../../actions'
 
 class Embeder extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -12,11 +12,11 @@ class Embeder extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.fetchFileUrl()
   }
 
-  async fetchFileUrl () {
+  async fetchFileUrl() {
     const { service } = this.props
 
     try {
@@ -28,17 +28,20 @@ class Embeder extends React.Component {
     }
   }
 
-  render () {
-    return <div>
-      { this.state.loading &&
-        <Spinner
-          size='xxlarge'
-          loadingType='message'
-          middle='true'
-        /> }
-      { this.state.error && <pre className='coz-error'>{ this.state.error.toString() }</pre>}
-      { this.state.url && <embed className={styles.fullscreen} src={this.state.url} /> }
-    </div>
+  render() {
+    return (
+      <div>
+        {this.state.loading && (
+          <Spinner size="xxlarge" loadingType="message" middle="true" />
+        )}
+        {this.state.error && (
+          <pre className="coz-error">{this.state.error.toString()}</pre>
+        )}
+        {this.state.url && (
+          <embed className={styles.fullscreen} src={this.state.url} />
+        )}
+      </div>
+    )
   }
 }
 

@@ -6,11 +6,11 @@ export const SHARED_WITH_ME = 'sharedWithMe'
 export const SHARED_WITH_OTHERS = 'sharedWithOthers'
 
 export default class CozyAPI {
-  constructor (config) {
+  constructor(config) {
     cozy.client.init(config)
   }
 
-  async fetchDocuments (doctype) {
+  async fetchDocuments(doctype) {
     // WARN: cozy-client-js lacks a cozy.data.findAll method that uses this route
     try {
       // WARN: if no document of this doctype exist, this route will return a 404,
@@ -45,7 +45,7 @@ export default class CozyAPI {
     }
   }
 
-  async queryDocuments (doctype, index, options) {
+  async queryDocuments(doctype, index, options) {
     const fields = options.fields
     const skip = options.skip || 0
     // Mango wants an array of single-property-objects...
@@ -86,20 +86,20 @@ export default class CozyAPI {
     }
   }
 
-  async fetchDocument (doctype, id) {
+  async fetchDocument(doctype, id) {
     const doc = await cozy.client.data.find(doctype, id)
     // we normalize again...
     const normalized = { ...doc, id: doc._id, type: doc._type }
     return { data: [normalized] }
   }
 
-  async createDocument (doc) {
+  async createDocument(doc) {
     const created = await cozy.client.data.create(doc.type, doc)
     const normalized = { ...created, id: created._id }
     return { data: [normalized] }
   }
 
-  async updateDocument (doc) {
+  async updateDocument(doc) {
     const updated = await cozy.client.data.updateAttributes(
       doc.type,
       doc.id,
@@ -108,16 +108,16 @@ export default class CozyAPI {
     return { data: [{ ...doc, _rev: updated._rev }] }
   }
 
-  async deleteDocument (doc) {
+  async deleteDocument(doc) {
     await cozy.client.data.delete(doc.type, doc)
     return { data: [doc] }
   }
 
-  async createIndex (doctype, fields) {
-    return await cozy.client.data.defineIndex(doctype, fields)
+  async createIndex(doctype, fields) {
+    return cozy.client.data.defineIndex(doctype, fields)
   }
 
-  async fetchFileByPath (path) {
+  async fetchFileByPath(path) {
     try {
       const file = await cozy.client.files.statByPath(path)
       return { data: [normalizeFile(file)] }
@@ -126,17 +126,17 @@ export default class CozyAPI {
     }
   }
 
-  async createFile (file, dirID) {
+  async createFile(file, dirID) {
     const created = await cozy.client.files.create(file, { dirID })
     return { data: [normalizeFile(created)] }
   }
 
-  async trashFile (file) {
+  async trashFile(file) {
     await cozy.client.files.trashById(file.id)
     return { data: [file] }
   }
 
-  async fetchReferencedFiles (doc, skip = 0) {
+  async fetchReferencedFiles(doc, skip = 0) {
     // WARN: _type and _id are needed by cozy.client.data.fetchReferencedFiles
     const normalized = { ...doc, _type: doc.type, _id: doc.id }
     // WARN: the stack API is probably not ideal here: referencedFiles are in the 'included' property
@@ -153,29 +153,29 @@ export default class CozyAPI {
       data: !included
         ? []
         : included.map(file => ({
-          ...file,
-          ...file.attributes,
-          type: 'io.cozy.files'
-        })),
+            ...file,
+            ...file.attributes,
+            type: 'io.cozy.files'
+          })),
       meta,
       next: meta.count > skip + FETCH_LIMIT,
       skip
     }
   }
 
-  async addReferencedFiles (doc, ids) {
+  async addReferencedFiles(doc, ids) {
     await cozy.client.data.addReferencedFiles(doc, ids)
     return ids
   }
 
-  async removeReferencedFiles (doc, ids) {
+  async removeReferencedFiles(doc, ids) {
     // WARN: _type and _id are needed by cozy.client.data.removeReferencedFiles
     const normalized = { ...doc, _type: doc.type, _id: doc.id }
     await cozy.client.data.removeReferencedFiles(normalized, ids)
     return ids
   }
 
-  async fetchSharingPermissions (doctype) {
+  async fetchSharingPermissions(doctype) {
     const fetchPermissions = (doctype, sharingType) =>
       cozy.client.fetchJSON(
         'GET',
@@ -189,11 +189,11 @@ export default class CozyAPI {
     return { byMe, byLink, withMe }
   }
 
-  fetchSharing (id) {
+  fetchSharing(id) {
     return cozy.client.fetchJSON('GET', `/sharings/${id}`)
   }
 
-  createSharing (permissions, contactIds, sharingType, description) {
+  createSharing(permissions, contactIds, sharingType, description) {
     return cozy.client.fetchJSON('POST', '/sharings/', {
       desc: description,
       permissions,
@@ -207,18 +207,18 @@ export default class CozyAPI {
     })
   }
 
-  revokeSharing (sharingId) {
+  revokeSharing(sharingId) {
     return cozy.client.fetchJSON('DELETE', `/sharings/${sharingId}`)
   }
 
-  revokeSharingForClient (sharingId, clientId) {
+  revokeSharingForClient(sharingId, clientId) {
     return cozy.client.fetchJSON(
       'DELETE',
       `/sharings/${sharingId}/recipient/${clientId}`
     )
   }
 
-  createSharingLink (permissions) {
+  createSharingLink(permissions) {
     return cozy.client.fetchJSON('POST', `/permissions?codes=email`, {
       data: {
         type: 'io.cozy.permissions',
@@ -229,7 +229,7 @@ export default class CozyAPI {
     })
   }
 
-  revokeSharingLink (permission) {
+  revokeSharingLink(permission) {
     return cozy.client.fetchJSON('DELETE', `/permissions/${permission._id}`)
   }
 }

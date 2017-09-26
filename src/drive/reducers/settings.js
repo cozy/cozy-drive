@@ -1,4 +1,8 @@
-import { SET_CLIENT, SET_OFFLINE, SET_FIRST_REPLICATION } from '../actions/settings'
+import {
+  SET_CLIENT,
+  SET_OFFLINE,
+  SET_FIRST_REPLICATION
+} from '../actions/settings'
 
 export const initialState = {
   offline: false,

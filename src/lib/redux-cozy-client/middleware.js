@@ -1,4 +1,4 @@
-const cozyMiddleware = (client) => ({ dispatch, getState }) => {
+const cozyMiddleware = client => ({ dispatch, getState }) => {
   return next => action => {
     const { promise, type, types, ...rest } = action
     if (!promise) {
@@ -6,34 +6,33 @@ const cozyMiddleware = (client) => ({ dispatch, getState }) => {
     }
 
     if (!type && !types) {
-      return promise(client)
-        .then((action) => dispatch(action))
+      return promise(client).then(action => dispatch(action))
     }
 
     if (type) {
-      return promise(client)
-        .then((response) => {
-          next({...rest, response, type})
-          return response
-        })
+      return promise(client).then(response => {
+        next({ ...rest, response, type })
+        return response
+      })
     }
 
     const [REQUEST, SUCCESS, FAILURE] = types
-    next({...rest, type: REQUEST})
+    next({ ...rest, type: REQUEST })
 
     return promise(client)
       .then(
-        (response) => {
-          next({...rest, response, type: SUCCESS})
+        response => {
+          next({ ...rest, response, type: SUCCESS })
           return response
         },
-        (error) => {
+        error => {
           console.log(error)
-          next({...rest, error, type: FAILURE})
+          next({ ...rest, error, type: FAILURE })
         }
-      ).catch((error) => {
+      )
+      .catch(error => {
         console.error('MIDDLEWARE ERROR:', error)
-        next({...rest, error, type: FAILURE})
+        next({ ...rest, error, type: FAILURE })
       })
   }
 }

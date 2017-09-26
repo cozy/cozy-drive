@@ -19,9 +19,7 @@ import {
   openFileInNewTab,
   downloadFiles
 } from '../actions'
-import {
-  getVisibleFiles
-} from '../reducers'
+import { getVisibleFiles } from '../reducers'
 
 import styles from '../styles/folderview'
 import toolbarstyles from '../styles/toolbar'
@@ -31,17 +29,18 @@ class DumbFolderView extends React.Component {
     revoked: false
   }
 
-  componentWillMount () {
-    this.props.onFolderOpen(this.props.params.folderId)
-    .then(e => {
-      if (e.type === 'OPEN_FOLDER_FAILURE' &&
-      /no permission doc for token/.test(e.error.reason.errors[0].detail)) {
-        this.setState(state => ({...state, revoked: true}))
+  componentWillMount() {
+    this.props.onFolderOpen(this.props.params.folderId).then(e => {
+      if (
+        e.type === 'OPEN_FOLDER_FAILURE' &&
+        /no permission doc for token/.test(e.error.reason.errors[0].detail)
+      ) {
+        this.setState(state => ({ ...state, revoked: true }))
       }
     })
   }
 
-  render () {
+  render() {
     const { t } = this.context
     if (this.state.revoked) {
       return <ErrorShare errorType={`public_unshared`} />
@@ -50,21 +49,26 @@ class DumbFolderView extends React.Component {
       <Main>
         <Topbar>
           <Breadcrumb isPublic />
-          <div className={toolbarstyles['fil-toolbar-files']} role='toolbar'>
+          <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
             <DownloadButton
               label={t('toolbar.menu_download_folder')}
               className={toolbarstyles['fil-public-download']}
-              onDownload={() => this.props.onDownload([this.props.displayedFolder])}
+              onDownload={() =>
+                this.props.onDownload([this.props.displayedFolder])}
             />
             <Menu
               title={t('toolbar.item_more')}
-              className={classnames(toolbarstyles['fil-toolbar-menu'], toolbarstyles['fil-toolbar-menu--public'])}
+              className={classnames(
+                toolbarstyles['fil-toolbar-menu'],
+                toolbarstyles['fil-toolbar-menu--public']
+              )}
               buttonClassName={toolbarstyles['fil-toolbar-more-btn']}
             >
               <Item>
                 <a
                   className={toolbarstyles['fil-action-download']}
-                  onClick={() => this.props.onDownload([this.props.displayedFolder])}
+                  onClick={() =>
+                    this.props.onDownload([this.props.displayedFolder])}
                 >
                   {t('toolbar.menu_download_folder')}
                 </a>
@@ -72,14 +76,11 @@ class DumbFolderView extends React.Component {
             </Menu>
           </div>
         </Topbar>
-        <div role='contentinfo'>
+        <div role="contentinfo">
           <div className={styles['fil-content-table']}>
             <FileListHeader />
             <div className={styles['fil-content-body']}>
-              <FolderContent
-                withSelectionCheckbox={false}
-                {...this.props}
-              />
+              <FolderContent withSelectionCheckbox={false} {...this.props} />
             </div>
           </div>
         </div>
@@ -100,10 +101,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
-  onFolderOpen: folderId =>
-    dispatch(openFolder(folderId)),
-  onFileOpen: (file) =>
-    dispatch(openFileInNewTab(file)),
+  onFolderOpen: folderId => dispatch(openFolder(folderId)),
+  onFileOpen: file => dispatch(openFileInNewTab(file)),
   onDownload: files => dispatch(downloadFiles(files))
 })
 

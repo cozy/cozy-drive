@@ -32,29 +32,28 @@ const Photo = props => {
   return (
     <div
       style={style}
-      className={classNames(
-        styles['pho-photo'],
-        { [styles['pho-photo--selected']]: selected }
-      )}
+      className={classNames(styles['pho-photo'], {
+        [styles['pho-photo--selected']]: selected
+      })}
     >
       <div>
         <span
           className={styles['pho-photo-select']}
-          data-input='checkbox'
+          data-input="checkbox"
           onClick={e => {
             e.stopImmediatePropagation()
             onToggle({ id: photo.id }, selected)
-          }}>
-          <input
-            type='checkbox'
-            checked={selected}
-           />
+          }}
+        >
+          <input type="checkbox" checked={selected} />
           <label />
         </span>
-        <Link to={{
-          pathname: `${router.location.pathname}/${photo.id}`,
-          query: router.location.query
-        }}>
+        <Link
+          to={{
+            pathname: `${router.location.pathname}/${photo.id}`,
+            query: router.location.query
+          }}
+        >
           <ImageLoader
             photo={photo}
             className={styles['pho-photo-item']}

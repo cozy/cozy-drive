@@ -2,11 +2,24 @@ import React from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import SettingCategory, { ELEMENT_BUTTON } from '../../components/SettingCategory'
+import SettingCategory, {
+  ELEMENT_BUTTON
+} from '../../components/SettingCategory'
 import Modal from 'cozy-ui/react/Modal'
-import { showUnlinkConfirmation, hideUnlinkConfirmation, unlink } from '../../actions/unlink'
+import {
+  showUnlinkConfirmation,
+  hideUnlinkConfirmation,
+  unlink
+} from '../../actions/unlink'
 
-export const Unlink = ({ t, showUnlinkConfirmation, hideUnlinkConfirmation, displayUnlinkConfirmation, unlink, client }) => (
+export const Unlink = ({
+  t,
+  showUnlinkConfirmation,
+  hideUnlinkConfirmation,
+  displayUnlinkConfirmation,
+  unlink,
+  client
+}) => (
   <div>
     <SettingCategory
       title={t('mobile.settings.unlink.title')}
@@ -20,16 +33,18 @@ export const Unlink = ({ t, showUnlinkConfirmation, hideUnlinkConfirmation, disp
         }
       ]}
     />
-    {displayUnlinkConfirmation && <Modal
-      title={t('mobile.settings.unlink.confirmation.title')}
-      description={t('mobile.settings.unlink.confirmation.description')}
-      secondaryType='secondary'
-      secondaryText={t('mobile.settings.unlink.confirmation.cancel')}
-      secondaryAction={hideUnlinkConfirmation}
-      primaryType='danger'
-      primaryText={t('mobile.settings.unlink.confirmation.unlink')}
-      primaryAction={() => unlink(client)}
-    />}
+    {displayUnlinkConfirmation && (
+      <Modal
+        title={t('mobile.settings.unlink.confirmation.title')}
+        description={t('mobile.settings.unlink.confirmation.description')}
+        secondaryType="secondary"
+        secondaryText={t('mobile.settings.unlink.confirmation.cancel')}
+        secondaryAction={hideUnlinkConfirmation}
+        primaryType="danger"
+        primaryText={t('mobile.settings.unlink.confirmation.unlink')}
+        primaryAction={() => unlink(client)}
+      />
+    )}
   </div>
 )
 
@@ -41,10 +56,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   showUnlinkConfirmation: () => dispatch(showUnlinkConfirmation()),
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),
-  unlink: (client) => {
+  unlink: client => {
     dispatch(unlink(client))
     ownProps.router.replace('/onboarding')
   }
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(Unlink)))
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(translate()(Unlink))
+)

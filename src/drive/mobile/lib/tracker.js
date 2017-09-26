@@ -1,5 +1,9 @@
 /* global __PIWIK_TRACKER_URL__ __PIWIK_SITEID_MOBILE__ */
-import { getTracker, configureTracker, resetTracker } from 'cozy-ui/react/helpers/tracker'
+import {
+  getTracker,
+  configureTracker,
+  resetTracker
+} from 'cozy-ui/react/helpers/tracker'
 import { SOFTWARE_ID } from './constants'
 
 const mobileHeartBeatDelay = 30 // how many seconds between each hreatbeat ping to the server
@@ -7,13 +11,18 @@ const mobileHeartBeatDelay = 30 // how many seconds between each hreatbeat ping 
 // We'll need access to the app's router history at some point
 let appHistory
 
-export const useHistoryForTracker = (history) => {
+export const useHistoryForTracker = history => {
   appHistory = history
 }
 
 export const startTracker = (cozyServerUrl = '') => {
   // start the tracker, inject the script
-  const trackerInstance = getTracker(__PIWIK_TRACKER_URL__, __PIWIK_SITEID_MOBILE__, false, true)
+  const trackerInstance = getTracker(
+    __PIWIK_TRACKER_URL__,
+    __PIWIK_SITEID_MOBILE__,
+    false,
+    true
+  )
 
   // configure the options that aren't in webpack variables
   let url = new URL(cozyServerUrl)

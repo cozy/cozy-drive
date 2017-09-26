@@ -2,28 +2,45 @@ import { remove as removeDiacritics } from 'diacritics'
 
 // Search for keywords inside a list of files and folders, while being permissive regardig the order of words
 class FuzzyPathSearch {
-  constructor (files = []) {
+  constructor(files = []) {
     // files must have a `path` and `name` property
     this.files = files
     this.previousQuery = []
     this.previousSuggestions = files
   }
 
-  search (query) {
+  search(query) {
     if (!query) return []
 
-    const queryArray = removeDiacritics(query.replace(/\//g, ' ').trim().toLowerCase()).split(' ')
-    const preparedQuery = queryArray.map(word => ({ word, isAugmentedWord: false, isNewWord: true }))
+    const queryArray = removeDiacritics(
+      query
+        .replace(/\//g, ' ')
+        .trim()
+        .toLowerCase()
+    ).split(' ')
+    const preparedQuery = queryArray.map(word => ({
+      word,
+      isAugmentedWord: false,
+      isNewWord: true
+    }))
 
     const isQueryAugmented = this.isAugmentingPreviousQuery(preparedQuery)
-    const sortedQuery = isQueryAugmented ? this.sortQueryByRevelance(preparedQuery) : this.sortQuerybyLength(preparedQuery)
+    const sortedQuery = isQueryAugmented
+      ? this.sortQueryByRevelance(preparedQuery)
+      : this.sortQuerybyLength(preparedQuery)
     let suggestions
 
     if (isQueryAugmented && this.previousSuggestions.length !== 0) {
       // the new query is just a more selective version of the previous one, so we narrow down the existing list
-      suggestions = this.filterAndScore(this.previousSuggestions, sortedQuery.map(segment => segment.word))
+      suggestions = this.filterAndScore(
+        this.previousSuggestions,
+        sortedQuery.map(segment => segment.word)
+      )
     } else {
-      suggestions = this.filterAndScore(this.files, sortedQuery.map(segment => segment.word))
+      suggestions = this.filterAndScore(
+        this.files,
+        sortedQuery.map(segment => segment.word)
+      )
     }
 
     this.previousQuery = sortedQuery
@@ -32,7 +49,7 @@ class FuzzyPathSearch {
     return suggestions
   }
 
-  isAugmentingPreviousQuery (query) {
+  isAugmentingPreviousQuery(query) {
     for (let currentQuerySegment of query) {
       let isInPreviousQuery = false
       for (let previousQuerySegment of this.previousQuery) {
@@ -50,7 +67,7 @@ class FuzzyPathSearch {
     return true
   }
 
-  sortQueryByRevelance (query) {
+  sortQueryByRevelance(query) {
     // query terms are sorted in two categories: those that are new or have changed, and therefore may further reduce the set of results, are prioritzed. Those that were there and have not changed come second.
     // finally, longer words are placed first to allow discarding files earlier in the scoring loop
     let priorizedWords = []
@@ -75,14 +92,16 @@ class FuzzyPathSearch {
       priorizedWords.push(currentQuerySegment)
     }
 
-    return this.sortQuerybyLength(priorizedWords).concat(this.sortQuerybyLength(wordsFromPreviousQuery))
+    return this.sortQuerybyLength(priorizedWords).concat(
+      this.sortQuerybyLength(wordsFromPreviousQuery)
+    )
   }
 
-  sortQuerybyLength (query) {
-    return query.sort((a, b) => (b.word.length - a.word.length))
+  sortQuerybyLength(query) {
+    return query.sort((a, b) => b.word.length - a.word.length)
   }
 
-  filterAndScore (files, words) {
+  filterAndScore(files, words) {
     const suggestions = []
 
     files.forEach(file => {
@@ -94,7 +113,9 @@ class FuzzyPathSearch {
         let wordScore = 0
         let wordOccurenceValue = 10000
         let firstOccurence = true
-        const pathArray = removeDiacritics((file.path + '/' + file.name).toLowerCase()).split('/')
+        const pathArray = removeDiacritics(
+          (file.path + '/' + file.name).toLowerCase()
+        ).split('/')
         const maxDepth = pathArray.length
 
         for (let depth = 0; depth < maxDepth; ++depth) {
@@ -102,11 +123,13 @@ class FuzzyPathSearch {
 
           if (dirName.includes(word)) {
             if (firstOccurence) {
-              wordOccurenceValue = 52428800  // that's 2^19 * 100
-              wordScore += wordOccurenceValue / 2 * (1 + word.length / dirName.length)
+              wordOccurenceValue = 52428800 // that's 2^19 * 100
+              wordScore +=
+                wordOccurenceValue / 2 * (1 + word.length / dirName.length)
               firstOccurence = false
             } else {
-              wordScore -= wordOccurenceValue * (1 - word.length / dirName.length)
+              wordScore -=
+                wordOccurenceValue * (1 - word.length / dirName.length)
             }
 
             wordOccurenceValue /= 2

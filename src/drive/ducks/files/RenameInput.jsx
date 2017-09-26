@@ -4,7 +4,12 @@ import FilenameInput from '../../components/FilenameInput'
 import { getUpdatedName, rename, updateFileName, abortRenaming } from './rename'
 
 const RenameInput = ({ name, updateRenaming, rename, abortRenaming }) => (
-  <FilenameInput name={name} onChange={updateRenaming} onSubmit={rename} onAbort={abortRenaming} />
+  <FilenameInput
+    name={name}
+    onChange={updateRenaming}
+    onSubmit={rename}
+    onAbort={abortRenaming}
+  />
 )
 
 const mapStateToProps = (state, ownProps) => ({
@@ -17,7 +22,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   abortRenaming: name => dispatch(abortRenaming())
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RenameInput)
+export default connect(mapStateToProps, mapDispatchToProps)(RenameInput)

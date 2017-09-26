@@ -15,7 +15,7 @@ import PhotoBoard from '../components/PhotoBoard'
 import AddToAlbumModal from '../containers/AddToAlbumModal'
 
 class BoardView extends Component {
-  render () {
+  render() {
     const {
       album,
       related,
@@ -29,15 +29,18 @@ class BoardView extends Component {
       photosContext
     } = this.props
 
-    const {
-      photoLists,
-      photos
-    } = this.props
+    const { photoLists, photos } = this.props
 
     return (
-      <div role='contentinfo'>
+      <div role="contentinfo">
         {isAddToAlbumModalOpened && <AddToAlbumModal />}
-        {selectionModeActive && <SelectionBarWithActions album={album} related={related} readOnly={readOnly} />}
+        {selectionModeActive && (
+          <SelectionBarWithActions
+            album={album}
+            related={related}
+            readOnly={readOnly}
+          />
+        )}
         <PhotoBoard
           lists={photoLists}
           selected={selected}
@@ -66,15 +69,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onPhotoToggle: (id, selected) => {
     dispatch(toggleItemSelection(id, selected))
   },
-  onPhotosSelect: (ids) => {
+  onPhotosSelect: ids => {
     dispatch(addToSelection(ids))
   },
-  onPhotosUnselect: (ids) => {
+  onPhotosUnselect: ids => {
     dispatch(removeFromSelection(ids))
   }
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BoardView)
+export default connect(mapStateToProps, mapDispatchToProps)(BoardView)

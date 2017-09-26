@@ -17,7 +17,10 @@ import { addToUploadQueue } from '../upload'
 import { uploadedFile, downloadFiles } from '../../actions'
 import { ShareModal } from 'sharing'
 
-const toggleShowShareModal = state => ({ ...state, showShareModal: !state.showShareModal })
+const toggleShowShareModal = state => ({
+  ...state,
+  showShareModal: !state.showShareModal
+})
 
 const ALERT_LEVEL_INFO = 'info'
 const ALERT_LEVEL_ERROR = 'error'
@@ -28,76 +31,104 @@ class Toolbar extends React.Component {
     showShareModal: false
   }
 
-  render () {
-    const { t, disabled, displayedFolder, actions, onSelectItemsClick, canUpload, uploadFiles, downloadAll } = this.props
+  render() {
+    const {
+      t,
+      disabled,
+      displayedFolder,
+      actions,
+      onSelectItemsClick,
+      canUpload,
+      uploadFiles,
+      downloadAll
+    } = this.props
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     return (
-      <div className={styles['fil-toolbar-files']} role='toolbar'>
-        { canUpload &&
-        <UploadButton
-          disabled={disabled}
-          onUpload={files => uploadFiles(files, displayedFolder)}
-          label={t('toolbar.item_upload')}
-          className={classNames('coz-btn', 'coz-btn--regular', 'coz-btn--upload', 'coz-desktop')}
-        />}
-        { notRootfolder && <ShareButton
-          disabled={disabled}
-          onShare={() => this.setState(toggleShowShareModal)}
-          label={t('toolbar.share')}
-          className={'coz-desktop'}
-        />}
+      <div className={styles['fil-toolbar-files']} role="toolbar">
+        {canUpload && (
+          <UploadButton
+            disabled={disabled}
+            onUpload={files => uploadFiles(files, displayedFolder)}
+            label={t('toolbar.item_upload')}
+            className={classNames(
+              'coz-btn',
+              'coz-btn--regular',
+              'coz-btn--upload',
+              'coz-desktop'
+            )}
+          />
+        )}
+        {notRootfolder && (
+          <ShareButton
+            disabled={disabled}
+            onShare={() => this.setState(toggleShowShareModal)}
+            label={t('toolbar.share')}
+            className={'coz-desktop'}
+          />
+        )}
         <Menu
           title={t('toolbar.item_more')}
           disabled={disabled}
           className={styles['fil-toolbar-menu']}
           buttonClassName={styles['fil-toolbar-more-btn']}
         >
-          { notRootfolder && <Item>
-            <a
-              className={styles['fil-action-share']}
-              onClick={() => this.setState(toggleShowShareModal)}
-            >
-              {t('toolbar.share')}
-            </a>
-          </Item>}
-          { canUpload &&
-          <Item>
-            <UploadButton
-              onUpload={files => uploadFiles(files, displayedFolder)}
-              label={t('toolbar.menu_upload')}
-              className={styles['fil-action-upload']}
-            />
-          </Item>}
-          { actions.addFolder && <Item>
-            <a
-              className={styles['fil-action-newfolder']}
-              onClick={actions.addFolder}
-            >
-              {t('toolbar.menu_new_folder')}
-            </a>
-          </Item>}
-          { notRootfolder && <Item>
-            <a
-              className={styles['fil-action-download']}
-              onClick={() => downloadAll([displayedFolder])}
-            >
-              {t('toolbar.menu_download_folder')}
-            </a>
-          </Item>}
+          {notRootfolder && (
+            <Item>
+              <a
+                className={styles['fil-action-share']}
+                onClick={() => this.setState(toggleShowShareModal)}
+              >
+                {t('toolbar.share')}
+              </a>
+            </Item>
+          )}
+          {canUpload && (
+            <Item>
+              <UploadButton
+                onUpload={files => uploadFiles(files, displayedFolder)}
+                label={t('toolbar.menu_upload')}
+                className={styles['fil-action-upload']}
+              />
+            </Item>
+          )}
+          {actions.addFolder && (
+            <Item>
+              <a
+                className={styles['fil-action-newfolder']}
+                onClick={actions.addFolder}
+              >
+                {t('toolbar.menu_new_folder')}
+              </a>
+            </Item>
+          )}
+          {notRootfolder && (
+            <Item>
+              <a
+                className={styles['fil-action-download']}
+                onClick={() => downloadAll([displayedFolder])}
+              >
+                {t('toolbar.menu_download_folder')}
+              </a>
+            </Item>
+          )}
           <hr />
           <Item>
-            <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
+            <a
+              className={styles['fil-action-select']}
+              onClick={onSelectItemsClick}
+            >
               {t('toolbar.menu_select')}
             </a>
           </Item>
         </Menu>
-        {this.state.showShareModal &&
+        {this.state.showShareModal && (
           <ShareModal
             document={displayedFolder}
-            documentType='Files'
+            documentType="Files"
             sharingDesc={displayedFolder.name}
             onClose={() => this.setState(toggleShowShareModal)}
-          />}
+          />
+        )}
       </div>
     )
   }
@@ -109,27 +140,45 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-    dispatch(addToUploadQueue(files, displayedFolder.id, file => uploadedFile(file), (loaded, quotas, conflicts, errors) => {
-      let action = { type: '' }// dummy action, we only use it to trigger an alert notification
+    dispatch(
+      addToUploadQueue(
+        files,
+        displayedFolder.id,
+        file => uploadedFile(file),
+        (loaded, quotas, conflicts, errors) => {
+          let action = { type: '' } // dummy action, we only use it to trigger an alert notification
 
-      if (quotas.length > 0) {
-        // quota errors have their own modal instead of a notification
-        alert(<QuotaAlert t={ownProps.t} />)
-      } else if (conflicts.length > 0) {
-        action.alert = alertShow('upload.alert.success_conflicts', {smart_count: loaded.length, conflictNumber: conflicts.length}, ALERT_LEVEL_INFO)
-      } else if (errors.length > 0) {
-        action.alert = alertShow('upload.alert.errors', null, ALERT_LEVEL_ERROR)
-      } else {
-        action.alert = alertShow('upload.alert.success', {smart_count: loaded.length}, ALERT_LEVEL_SUCCESS)
-      }
+          if (quotas.length > 0) {
+            // quota errors have their own modal instead of a notification
+            alert(<QuotaAlert t={ownProps.t} />)
+          } else if (conflicts.length > 0) {
+            action.alert = alertShow(
+              'upload.alert.success_conflicts',
+              { smart_count: loaded.length, conflictNumber: conflicts.length },
+              ALERT_LEVEL_INFO
+            )
+          } else if (errors.length > 0) {
+            action.alert = alertShow(
+              'upload.alert.errors',
+              null,
+              ALERT_LEVEL_ERROR
+            )
+          } else {
+            action.alert = alertShow(
+              'upload.alert.success',
+              { smart_count: loaded.length },
+              ALERT_LEVEL_SUCCESS
+            )
+          }
 
-      return action
-    }))
+          return action
+        }
+      )
+    )
   },
   downloadAll: folder => dispatch(downloadFiles(folder))
 })
 
-export default translate()(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Toolbar))
+export default translate()(
+  connect(mapStateToProps, mapDispatchToProps)(Toolbar)
+)

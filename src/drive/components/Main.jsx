@@ -7,8 +7,8 @@ import React from 'react'
 import BannerClient from '../../layout/pushClient/Banner'
 
 const Main = ({ children }) => (
-  <main class={styles['fil-content']}>
-    { __TARGET__ !== 'mobile' && <BannerClient />}
+  <main className={styles['fil-content']}>
+    {__TARGET__ !== 'mobile' && <BannerClient />}
     {children}
   </main>
 )

@@ -83,11 +83,7 @@ const insertItem = (file, array, currentItemCount) => {
   if (index === array.length - 1 && array.length < currentItemCount) {
     return array
   }
-  return [
-    ...array.slice(0, index + 1),
-    file,
-    ...array.slice(index + 1)
-  ]
+  return [...array.slice(0, index + 1), file, ...array.slice(index + 1)]
 }
 
 const indexFor = (file, array, compareFn, start = 0, end = array.length) => {
@@ -96,9 +92,12 @@ const indexFor = (file, array, compareFn, start = 0, end = array.length) => {
   const c = compareFn(file, array[pivot])
   if (end - start <= 1) return c === -1 ? pivot - 1 : pivot
   switch (c) {
-    case -1: return indexFor(file, array, compareFn, start, pivot)
-    case 0: return pivot
-    case 1: return indexFor(file, array, compareFn, pivot, end)
+    case -1:
+      return indexFor(file, array, compareFn, start, pivot)
+    case 0:
+      return pivot
+    case 1:
+      return indexFor(file, array, compareFn, pivot, end)
   }
 }
 
@@ -110,7 +109,9 @@ const files = (state = [], action) => {
       return action.files
     case FETCH_MORE_FILES_SUCCESS:
       const clone = state.slice(0)
-      action.files.forEach((f, i) => { clone[action.skip + i] = f })
+      action.files.forEach((f, i) => {
+        clone[action.skip + i] = f
+      })
       return clone
     case RENAME_SUCCESS:
       return updateItem(action.file, state)
@@ -134,7 +135,7 @@ const fetchStatus = (state = 'pending', action) => {
     // there's a trick here : we set the fetchStatus to 'pending'
     // on initial state so that the loading spinner is only showed
     // when the app is launched or when the user use the back button
-    case EMPTY_TRASH:   // we temporarily display the spinner when working in the trashed
+    case EMPTY_TRASH: // we temporarily display the spinner when working in the trashed
     case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
@@ -189,7 +190,9 @@ export const getFilePath = ({ view }, file) => {
   const { displayedFolder } = view
   return isDirectory(file)
     ? file.path
-    : (displayedFolder && !isRootFolder(displayedFolder) ? `${displayedFolder.path}/${file.name}` : `/${file.name}`)
+    : displayedFolder && !isRootFolder(displayedFolder)
+      ? `${displayedFolder.path}/${file.name}`
+      : `/${file.name}`
 }
 
 export const getFolderIdFromRoute = (location, params) => {
@@ -216,10 +219,18 @@ export const getFolderPath = ({ view }, location, isPublic) => {
     path.push(displayedFolder)
     // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that.
     const parent = displayedFolder.parent
-    if (parent && parent.id && !(isBrowsingTrash && parent.id === ROOT_DIR_ID)) {
+    if (
+      parent &&
+      parent.id &&
+      !(isBrowsingTrash && parent.id === ROOT_DIR_ID)
+    ) {
       path.unshift(parent)
       // has the parent a parent too?
-      if (parent.dir_id && !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID) && !isPublic) {
+      if (
+        parent.dir_id &&
+        !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID) &&
+        !isPublic
+      ) {
         // since we don't *actually* have any information about the parent's parent, we have to fake it
         path.unshift({ id: parent.dir_id })
       }
@@ -230,7 +241,8 @@ export const getFolderPath = ({ view }, location, isPublic) => {
   }
   // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder.
   if (!isBrowsingRecentFiles) {
-    const hasRootFolder = path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
+    const hasRootFolder =
+      path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
     if (!hasRootFolder) {
       // if we don't have one, we add it manually
       path.unshift({
