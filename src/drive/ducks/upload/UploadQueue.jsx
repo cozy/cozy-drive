@@ -87,10 +87,10 @@ class UploadQueue extends Component {
         >
           {doneCount < queue.length && (
             <div className={styles['upload-queue-header-inner']}>
-              <span className="coz-desktop">
+              <span className={styles['u-hide--mob']}>
                 {t('UploadQueue.header', { smart_count: queue.length })}
               </span>
-              <span className="coz-mobile">
+              <span className={styles['u-hide--desk']}>
                 {t('UploadQueue.header_mobile', {
                   done: doneCount,
                   total: queue.length

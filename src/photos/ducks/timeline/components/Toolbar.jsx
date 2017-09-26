@@ -24,7 +24,7 @@ export const Toolbar = ({
 }) => (
   <div className={styles['pho-toolbar']} role="toolbar">
     <UploadButton
-      className="coz-desktop"
+      className={styles['u-hide--mob']}
       onUpload={uploadPhotos}
       disabled={disabled}
       label={t('Toolbar.photo_upload')}
@@ -40,10 +40,10 @@ export const Toolbar = ({
           disabled={disabled}
           label={t('Toolbar.menu.photo_upload')}
           type="menu-item"
-          className="coz-mobile"
+          className={styles['u-hide--desk']}
         />
       </Item>
-      <hr className="coz-mobile" />
+      <hr className={styles['u-hide--desk']} />
       <Item>
         <a className={styles['pho-action-select']} onClick={selectItems}>
           {t('Toolbar.menu.select_items')}

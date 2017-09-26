@@ -45,8 +45,8 @@ export const ShareWithLink = (
             <div>
               <button
                 className={classnames(
-                  'coz-btn',
-                  'coz-btn--secondary',
+                  styles['c-btn'],
+                  styles['c-btn--secondary'],
                   styles['pho-btn-copy']
                 )}
               >
@@ -58,8 +58,8 @@ export const ShareWithLink = (
         {copied && (
           <button
             className={classnames(
-              'coz-btn',
-              'coz-btn--secondary',
+              styles['c-btn'],
+              styles['c-btn--secondary'],
               styles['pho-btn-copied']
             )}
             aria-disabled

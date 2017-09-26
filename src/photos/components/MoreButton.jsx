@@ -1,17 +1,17 @@
-import styles from '../styles/toolbar'
-
 import React from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 
+import styles from '../styles/toolbar'
+
 const MoreButton = ({ t, disabled, onClick }) => (
   <button
     role="button"
-    className={classNames('coz-btn', styles['pho-toolbar-more-btn'])}
+    className={classNames(styles['c-btn'], styles['pho-toolbar-more-btn'])}
     disabled={disabled}
     onClick={onClick}
   >
-    <span className="coz-hidden">{t('Toolbar.more')}</span>
+    <span className={styles['u-visuallyhidden']}>{t('Toolbar.more')}</span>
   </button>
 )
 

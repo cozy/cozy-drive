@@ -1,7 +1,8 @@
-import styles from '../styles/emptyAndError'
-
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import classNames from 'classnames'
+
+import styles from '../styles/emptyAndError'
 
 export const ErrorComponent = ({ t, errorType }) => {
   return (
@@ -9,7 +10,7 @@ export const ErrorComponent = ({ t, errorType }) => {
       <h2>{t(`Error.${errorType}_title`)}</h2>
       <button
         role="button"
-        className="coz-btn coz-btn--regular"
+        className={classNames(styles['c-btn'], styles['c-btn--regular'])}
         onClick={() => window.location.reload()}
       >
         {t('Error.refresh')}

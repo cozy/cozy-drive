@@ -1,5 +1,7 @@
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import classNames from 'classnames'
+import button from 'cozy-ui/stylus/components/button'
 
 const styles = {
   parent: {
@@ -29,8 +31,12 @@ export const DeleteButton = ({
     role="button"
     disabled={disabled}
     className={`${className} ${type === 'menu-item'
-      ? 'coz-link--delete'
-      : 'coz-btn coz-btn--danger coz-btn--delete'}`}
+      ? button['c-link--delete']
+      : classNames(
+          button['c-btn'],
+          button['c-btn--danger'],
+          button['c-btn--delete']
+        )}`}
     style={styles.parent}
   >
     {label}
