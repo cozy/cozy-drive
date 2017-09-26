@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '../services.styl'
+import util from 'cozy-ui/stylus/utilities/text'
 import Spinner from 'cozy-ui/react/Spinner'
 import { getFileDownloadUrl } from '../../../actions'
 
@@ -35,7 +36,7 @@ class Embeder extends React.Component {
           <Spinner size="xxlarge" loadingType="message" middle="true" />
         )}
         {this.state.error && (
-          <pre className="coz-error">{this.state.error.toString()}</pre>
+          <pre className={util['u-error']}>{this.state.error.toString()}</pre>
         )}
         {this.state.url && (
           <embed className={styles.fullscreen} src={this.state.url} />

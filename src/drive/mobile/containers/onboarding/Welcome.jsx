@@ -32,7 +32,7 @@ export class Welcome extends Component {
         <footer className={styles['wizard-footer']}>
           <button
             role="button"
-            className="coz-btn coz-btn--regular"
+            className={classNames(styles['c-btn'], styles['c-btn--regular'])}
             onClick={nextStep}
           >
             {t('mobile.onboarding.welcome.button')}

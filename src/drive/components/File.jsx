@@ -201,7 +201,7 @@ class File extends Component {
           )}
         >
           <button
-            className="coz-btn coz-btn--extra"
+            className={classNames(styles['c-btn'], styles['c-btn-extra'])}
             onClick={e => {
               onShowActionMenu(attributes.id)
               e.stopPropagation()

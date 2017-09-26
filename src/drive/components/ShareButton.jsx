@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import styles from 'cozy-ui/stylus/components/button'
 
 const ShareButton = ({ label, disabled, onShare, className }) => (
   <button
@@ -7,9 +8,9 @@ const ShareButton = ({ label, disabled, onShare, className }) => (
     disabled={disabled}
     className={classnames(
       className,
-      'coz-btn',
-      'coz-btn--secondary',
-      'coz-btn--share'
+      styles['c-btn'],
+      styles['c-btn--secondary'],
+      styles['c-btn--share']
     )}
     onClick={() => onShare()}
   >

@@ -1,7 +1,7 @@
-import styles from '../styles/menu'
-
 import React, { Component } from 'react'
 import classNames from 'classnames'
+
+import styles from '../styles/menu'
 
 export const Item = ({ children, onClick }) => (
   <div onClick={onClick} className={styles['coz-menu-item']}>
@@ -64,7 +64,7 @@ export default class Menu extends Component {
         {!button && (
           <button
             role="button"
-            className={classNames('coz-btn', buttonClassName)}
+            className={classNames(styles['c-btn'], buttonClassName)}
             disabled={disabled}
             onClick={this.toggle}
           >

@@ -8,6 +8,7 @@ import PhotoList from './PhotoList'
 import Empty from './Empty'
 import Loading from './Loading'
 import ErrorComponent from './ErrorComponent'
+import classNames from 'classnames'
 
 const Spinner = () => <div className={styles['pho-list-spinner']} />
 
@@ -33,13 +34,13 @@ class MoreButton extends Component {
     return (
       <div style={{ width: width }} className={styles['pho-list-morebutton']}>
         {fetching && (
-          <button className="coz-btn" disabled>
+          <button className={styles['c-btn']} disabled>
             <Spinner />
           </button>
         )}
         {!fetching && (
           <button
-            className="coz-btn coz-btn--secondary"
+            className={classNames(styles['c-btn'], styles['c-btn--secondary'])}
             onClick={() => this.handleClick()}
           >
             {children}

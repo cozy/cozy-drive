@@ -51,10 +51,10 @@ class Toolbar extends React.Component {
             onUpload={files => uploadFiles(files, displayedFolder)}
             label={t('toolbar.item_upload')}
             className={classNames(
-              'coz-btn',
-              'coz-btn--regular',
-              'coz-btn--upload',
-              'coz-desktop'
+              styles['c-btn'],
+              styles['c-btn--regular'],
+              styles['c-btn--upload'],
+              styles['u-hide--mob']
             )}
           />
         )}
@@ -63,7 +63,7 @@ class Toolbar extends React.Component {
             disabled={disabled}
             onShare={() => this.setState(toggleShowShareModal)}
             label={t('toolbar.share')}
-            className={'coz-desktop'}
+            className={styles['u-hide--mob']}
           />
         )}
         <Menu

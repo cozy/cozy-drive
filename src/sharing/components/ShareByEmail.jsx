@@ -162,7 +162,7 @@ class ShareByEmail extends React.Component {
             </option>
           </select>
           <button
-            className={classnames('coz-btn', 'coz-btn--regular')}
+            className={classnames(styles['c-btn'], styles['c-btn--regular'])}
             disabled={this.state.recipients.length === 0}
             onClick={e => this.sendSharingLink()}
           >

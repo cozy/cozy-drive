@@ -47,7 +47,7 @@ class BannerClient extends Component {
           <a
             href={t('Nav.link-client')}
             target="_blank"
-            className={classNames('coz-btn')}
+            className={classNames(styles['c-btn'])}
             onClick={e => {
               this.markAsSeen('banner')
             }}
@@ -56,7 +56,7 @@ class BannerClient extends Component {
           </a>
         </p>
         <button
-          className={classNames('coz-btn', styles['coz-btn--close'])}
+          className={classNames(styles['c-btn'], styles['c-btn--close'])}
           onClick={e => {
             this.markAsSeen('close')
           }}

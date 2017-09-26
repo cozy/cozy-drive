@@ -63,7 +63,7 @@ const InProgressHeader = translate()(({ t, total, done }) => (
     <span className="coz-desktop">
       {t('UploadQueue.header', { smart_count: total })}
     </span>
-    <span className="coz-mobile">
+    <span className={styles['u-hide--desk']}>
       {t('UploadQueue.header_mobile', { done, total })}
     </span>
   </div>
