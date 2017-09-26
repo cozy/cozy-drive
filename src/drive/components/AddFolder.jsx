@@ -7,16 +7,51 @@ import { translate } from 'cozy-ui/react/I18n'
 
 const AddFolder = ({ f, onSubmit, onAbort }) => (
   <div className={styles['fil-content-row']}>
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} />
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file'], styles['fil-file-folder'])}>
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file-select']
+      )}
+    />
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file'],
+        styles['fil-file-folder']
+      )}
+    >
       <FilenameInput onSubmit={onSubmit} onAbort={onAbort} />
     </div>
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
-      <time datetime=''>{f(Date.now(), 'MMM D, YYYY')}</time>
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-date']
+      )}
+    >
+      <time dateTime="">{f(Date.now(), 'MMM D, YYYY')}</time>
     </div>
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])}>—</div>
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>—</div>
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])} />
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-size']
+      )}
+    >
+      —
+    </div>
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-status']
+      )}
+    >
+      —
+    </div>
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file-action']
+      )}
+    />
   </div>
 )
 

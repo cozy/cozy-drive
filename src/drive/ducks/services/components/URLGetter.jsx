@@ -2,11 +2,11 @@ import React from 'react'
 import { getFileDownloadUrl } from '../../../actions'
 
 class URLGetter extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     this.getURL()
   }
 
-  async getURL () {
+  async getURL() {
     const { service } = this.props
 
     try {

@@ -9,23 +9,22 @@ import Empty from './Empty'
 import Loading from './Loading'
 import ErrorComponent from './ErrorComponent'
 
-const Spinner = () => <div class={styles['pho-list-spinner']} />
+const Spinner = () => <div className={styles['pho-list-spinner']} />
 
 class MoreButton extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       fetching: false
     }
   }
 
-  handleClick () {
+  handleClick() {
     this.setState({ fetching: true })
-    this.props.onClick()
-      .then(() => this.setState({ fetching: false }))
+    this.props.onClick().then(() => this.setState({ fetching: false }))
   }
 
-  render () {
+  render() {
     const { children, width } = this.props
     if (!width) {
       return null
@@ -33,26 +32,26 @@ class MoreButton extends Component {
     const { fetching } = this.state
     return (
       <div style={{ width: width }} className={styles['pho-list-morebutton']}>
-        {fetching &&
-          <button className='coz-btn' disabled>
+        {fetching && (
+          <button className="coz-btn" disabled>
             <Spinner />
           </button>
-        }
-        {!fetching &&
+        )}
+        {!fetching && (
           <button
-            className='coz-btn coz-btn--secondary'
+            className="coz-btn coz-btn--secondary"
             onClick={() => this.handleClick()}
           >
             {children}
           </button>
-        }
+        )}
       </div>
     )
   }
 }
 
 export class PhotoBoard extends Component {
-  render () {
+  render() {
     const {
       t,
       lists,
@@ -74,7 +73,7 @@ export class PhotoBoard extends Component {
       return <ErrorComponent errorType={`${photosContext}_photos`} />
     }
     if (isFetching) {
-      return <Loading loadingType='photos_fetching' />
+      return <Loading loadingType="photos_fetching" />
     }
     if (!isFetching && (lists.length === 0 || lists[0].photos.length === 0)) {
       return <Empty emptyType={`${photosContext}_photos`} />
@@ -84,24 +83,26 @@ export class PhotoBoard extends Component {
       <AutoSizer>
         {({ width, height }) => (
           <div className={showSelection ? styles['pho-list-selection'] : ''}>
-            {lists.map(photoList =>
+            {lists.map(photoList => (
               <PhotoList
                 key={photoList.title}
                 title={photoList.title}
                 photos={photoList.photos}
-                selected={selected.filter(id => photoList.photos.find(p => p.id === id))}
+                selected={selected.filter(id =>
+                  photoList.photos.find(p => p.id === id)
+                )}
                 showSelection={showSelection}
                 onPhotoToggle={onPhotoToggle}
                 onPhotosSelect={onPhotosSelect}
                 onPhotosUnselect={onPhotosUnselect}
                 containerWidth={width}
               />
-            )}
-            {hasMore &&
+            ))}
+            {hasMore && (
               <MoreButton width={width} onClick={onFetchMore}>
                 {t('Board.load_more')}
               </MoreButton>
-            }
+            )}
           </div>
         )}
       </AutoSizer>

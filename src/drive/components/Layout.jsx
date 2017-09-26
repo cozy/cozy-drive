@@ -13,11 +13,11 @@ import { Alerter as OldAlerter } from 'cozy-ui/react/Alerter'
 import Alerter from 'photos/components/Alerter'
 
 const Layout = ({ t, children }) => (
-  <div class={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
+  <div className={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
     <Sidebar />
     <OldAlerter />
     <Alerter t={t} />
-    { children }
+    {children}
     <UploadQueue />
     <ModalManager />
   </div>

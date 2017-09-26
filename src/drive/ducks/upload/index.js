@@ -36,21 +36,21 @@ const status = action => {
   }
 }
 
-const item = (state, action) => Object.assign({}, state, { status: status(action) })
+const item = (state, action) =>
+  Object.assign({}, state, { status: status(action) })
 
 const queue = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
-      return [
-        ...state,
-        ...action.files.map(f => itemInitialState(f))
-      ]
+      return [...state, ...action.files.map(f => itemInitialState(f))]
     case PURGE_UPLOAD_QUEUE:
       return []
     case UPLOAD_FILE:
     case RECEIVE_UPLOAD_SUCCESS:
     case RECEIVE_UPLOAD_ERROR:
-      return state.map(i => i.file.name !== action.file.name ? i : item(i, action))
+      return state.map(
+        i => (i.file.name !== action.file.name ? i : item(i, action))
+      )
     default:
       return state
   }
@@ -59,7 +59,11 @@ export default combineReducers({ queue })
 
 const extractFileAttributes = f => Object.assign({}, f, f.attributes)
 
-const processNextFile = (fileUploadedCallback, queueCompletedCallback, dirID) => async (dispatch, getState) => {
+const processNextFile = (
+  fileUploadedCallback,
+  queueCompletedCallback,
+  dirID
+) => async (dispatch, getState) => {
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
   if (!item) {
     return dispatch(onQueueEmpty(queueCompletedCallback))
@@ -83,14 +87,19 @@ const processNextFile = (fileUploadedCallback, queueCompletedCallback, dirID) =>
   dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
 
-export const addToUploadQueue = (files, dirID, fileUploadedCallback, queueCompletedCallback) => async dispatch => {
+export const addToUploadQueue = (
+  files,
+  dirID,
+  fileUploadedCallback,
+  queueCompletedCallback
+) => async dispatch => {
   dispatch({ type: ADD_TO_UPLOAD_QUEUE, files })
   dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
 
 export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
 
-export const onQueueEmpty = (callback) => (dispatch, getState) => {
+export const onQueueEmpty = callback => (dispatch, getState) => {
   const queue = getUploadQueue(getState())
   const loaded = getLoaded(queue)
   const quotas = getQuotaErrors(queue)
@@ -108,5 +117,6 @@ const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
 const getLoaded = queue => filterByStatus(queue, LOADED)
 
 export const getUploadQueue = state => state[SLUG].queue
-export const getProcessed = state => getUploadQueue(state).filter(f => f.status !== PENDING)
+export const getProcessed = state =>
+  getUploadQueue(state).filter(f => f.status !== PENDING)
 export const getSuccessful = state => getLoaded(getUploadQueue(state))

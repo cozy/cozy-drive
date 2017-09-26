@@ -1,9 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import SettingCategory, { ELEMENT_CHECKBOX } from '../../components/SettingCategory'
+import SettingCategory, {
+  ELEMENT_CHECKBOX
+} from '../../components/SettingCategory'
 import { setBackupContacts } from '../../actions/settings'
-import { requestDeviceAuthorization, requestCozyAuthorization, backupContacts } from '../../actions/contactsBackup'
+import {
+  requestDeviceAuthorization,
+  requestCozyAuthorization,
+  backupContacts
+} from '../../actions/contactsBackup'
 
 export const Contacts = ({ t, backup, setBackupContacts }) => (
   <SettingCategory
@@ -26,7 +32,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setBackupContacts: async (shouldBackup) => {
+  setBackupContacts: async shouldBackup => {
     dispatch(setBackupContacts(shouldBackup))
 
     // if contact syncing has been activated, prompt for authorization and start the first sync
@@ -40,4 +46,6 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Contacts))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate()(Contacts)
+)

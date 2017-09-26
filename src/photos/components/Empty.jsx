@@ -6,8 +6,8 @@ import { translate } from 'cozy-ui/react/I18n'
 export const Empty = ({ t, emptyType }) => {
   return (
     <div className={styles['pho-empty']}>
-      <h2>{ t(`Empty.${emptyType}_title`) }</h2>
-      <p>{ t(`Empty.${emptyType}_text`)}</p>
+      <h2>{t(`Empty.${emptyType}_title`)}</h2>
+      <p>{t(`Empty.${emptyType}_text`)}</p>
     </div>
   )
 }
@@ -15,8 +15,10 @@ export const Empty = ({ t, emptyType }) => {
 const TranslatedEmpty = translate()(Empty)
 
 export const withEmpty = (isEmpty, type, BaseComponent) => props =>
-  isEmpty(props)
-    ? <TranslatedEmpty emptyType={type} />
-    : <BaseComponent {...props} />
+  isEmpty(props) ? (
+    <TranslatedEmpty emptyType={type} />
+  ) : (
+    <BaseComponent {...props} />
+  )
 
 export default TranslatedEmpty

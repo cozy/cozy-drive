@@ -1,12 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import SettingCategory, { ELEMENT_CHECKBOX, ELEMENT_BUTTON } from '../../components/SettingCategory'
+import SettingCategory, {
+  ELEMENT_CHECKBOX,
+  ELEMENT_BUTTON
+} from '../../components/SettingCategory'
 import { setAnalytics } from '../../actions/settings'
 import { logInfo } from '../../lib/reporter'
 import { isOnline } from '../../lib/network'
 
-export const Support = ({ t, analytics, setAnalytics, isDebug, success, failure, offline }) => (
+export const Support = ({
+  t,
+  analytics,
+  setAnalytics,
+  isDebug,
+  success,
+  failure,
+  offline
+}) => (
   <SettingCategory
     title={t('mobile.settings.support.title')}
     elements={[
@@ -47,7 +58,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setAnalytics: (value) => dispatch(setAnalytics(value)),
+  setAnalytics: value => dispatch(setAnalytics(value)),
   success: () => {
     dispatch({
       type: 'SEND_LOG_SUCCESS',
@@ -74,4 +85,6 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Support))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate()(Support)
+)

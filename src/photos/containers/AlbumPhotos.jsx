@@ -3,7 +3,13 @@ import { cozyConnect } from 'redux-cozy-client'
 import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
-import { AlbumToolbar, fetchAlbum, fetchAlbumPhotos, fetchAlbumSharings, updateAlbum } from '../ducks/albums'
+import {
+  AlbumToolbar,
+  fetchAlbum,
+  fetchAlbumPhotos,
+  fetchAlbumSharings,
+  updateAlbum
+} from '../ducks/albums'
 import { hideSelectionBar } from '../ducks/selection'
 
 import BoardView from './BoardView'
@@ -11,18 +17,18 @@ import Topbar from '../components/Topbar'
 import Alerter from '../components/Alerter'
 
 export class AlbumPhotos extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       editing: false
     }
   }
 
-  editAlbumName () {
+  editAlbumName() {
     this.setState({ editing: true })
   }
 
-  renameAlbum (name) {
+  renameAlbum(name) {
     if (name.trim() === '') {
       Alerter.error('Error.album_rename_abort')
       return
@@ -32,7 +38,8 @@ export class AlbumPhotos extends Component {
     }
 
     let updatedAlbum = { ...this.props.album, name: name }
-    this.props.updateAlbum(updatedAlbum)
+    this.props
+      .updateAlbum(updatedAlbum)
       .then(() => {
         this.setState({ editing: false })
       })
@@ -41,7 +48,7 @@ export class AlbumPhotos extends Component {
       })
   }
 
-  render () {
+  render() {
     if (!this.props.album || !this.props.shared) {
       return null
     }
@@ -50,45 +57,53 @@ export class AlbumPhotos extends Component {
 
     return (
       <div className={styles['pho-content-wrapper']}>
-        {(album.name && photos.data) &&
-          <Topbar viewName='albumContent' albumName={album.name} editing={editing} onEdit={this.renameAlbum.bind(this)} >
-            <AlbumToolbar
-              album={album}
-              sharedWithMe={shared.withMe}
-              sharedByMe={shared.byMe}
-              readOnly={shared.readOnly}
-              photos={photos.data}
-              onRename={this.editAlbumName.bind(this)}
-            />
-          </Topbar>
-        }
-        {photos.data &&
+        {album.name &&
+          photos.data && (
+            <Topbar
+              viewName="albumContent"
+              albumName={album.name}
+              editing={editing}
+              onEdit={this.renameAlbum.bind(this)}
+            >
+              <AlbumToolbar
+                album={album}
+                sharedWithMe={shared.withMe}
+                sharedByMe={shared.byMe}
+                readOnly={shared.readOnly}
+                photos={photos.data}
+                onRename={this.editAlbumName.bind(this)}
+              />
+            </Topbar>
+          )}
+        {photos.data && (
           <BoardView
             album={album}
             photos={photos}
             photoLists={[{ photos: photos.data }]}
-            photosContext='album'
+            photosContext="album"
             readOnly={shared.readOnly}
           />
-        }
+        )}
         {this.renderViewer(this.props.children)}
       </div>
     )
   }
 
-  renderViewer (children) {
+  renderViewer(children) {
     if (!children) return null
-    return React.Children.map(children, child => React.cloneElement(child, {
-      photos: this.props.photos.data
-    }))
+    return React.Children.map(children, child =>
+      React.cloneElement(child, {
+        photos: this.props.photos.data
+      })
+    )
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.props.clearSelection()
   }
 }
 
-const mapDocumentsToProps = (ownProps) => ({
+const mapDocumentsToProps = ownProps => ({
   album: fetchAlbum(ownProps.router.params.albumId),
   // TODO: not ideal, but we'll have to wait after associations are implemented
   photos: fetchAlbumPhotos(ownProps.router.params.albumId),
@@ -96,11 +111,10 @@ const mapDocumentsToProps = (ownProps) => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateAlbum: (album) => dispatch(updateAlbum(album)),
+  updateAlbum: album => dispatch(updateAlbum(album)),
   clearSelection: () => dispatch(hideSelectionBar())
 })
 
-export default cozyConnect(
-  mapDocumentsToProps,
-  mapDispatchToProps
-)(withRouter(AlbumPhotos))
+export default cozyConnect(mapDocumentsToProps, mapDispatchToProps)(
+  withRouter(AlbumPhotos)
+)

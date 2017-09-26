@@ -13,7 +13,7 @@ export const loadState = async () => {
   }
 }
 
-export const saveState = async (state) => {
+export const saveState = async state => {
   try {
     localforage.setItem('state', state)
   } catch (err) {

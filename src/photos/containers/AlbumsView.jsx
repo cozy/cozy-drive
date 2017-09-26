@@ -14,16 +14,16 @@ const Content = ({ list }) => {
   switch (fetchStatus) {
     case 'pending':
     case 'loading':
-      return <Loading loadingType='albums_fetching' />
+      return <Loading loadingType="albums_fetching" />
     case 'failed':
-      return <ErrorComponent errorType='albums' />
+      return <ErrorComponent errorType="albums" />
     default:
       return <AlbumsList albums={data} />
   }
 }
 
 export class AlbumsView extends Component {
-  render () {
+  render() {
     if (this.props.children) return this.props.children
     if (!this.props.albums) {
       return null
@@ -31,7 +31,7 @@ export class AlbumsView extends Component {
 
     return (
       <div className={styles['pho-content-wrapper']}>
-        <Topbar viewName='albums'>
+        <Topbar viewName="albums">
           <AlbumsToolbar />
         </Topbar>
         <Content list={this.props.albums} />
@@ -40,7 +40,7 @@ export class AlbumsView extends Component {
   }
 }
 
-const mapDocumentsToProps = (ownProps) => ({
+const mapDocumentsToProps = ownProps => ({
   albums: fetchAlbums(),
   sharings: fetchSharedAlbums()
 })

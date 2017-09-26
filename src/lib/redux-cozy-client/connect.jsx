@@ -9,7 +9,7 @@ const connect = (
   mapActionsToProps = null
 ) => WrappedComponent => {
   class Wrapper extends Component {
-    componentDidMount () {
+    componentDidMount() {
       const { fetchActions } = this.props
       const dispatch = this.context.store.dispatch
       for (const propName in fetchActions) {
@@ -17,7 +17,7 @@ const connect = (
       }
     }
 
-    render () {
+    render() {
       const { t, f, client, store } = this.context
       const { fetchActions } = this.props
       const props = {

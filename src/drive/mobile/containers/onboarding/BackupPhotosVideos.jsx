@@ -3,9 +3,13 @@ import { connect } from 'react-redux'
 import OnBoarding from '../../components/OnBoarding'
 import { backupImages } from '../../actions/mediaBackup'
 
-export const BackupPhotosVideos = ({ onActivate, onSkip, breadcrumbs }) =>
-(
-  <OnBoarding onActivate={onActivate} onSkip={onSkip} stepName='photos' breadcrumbs={breadcrumbs} />
+export const BackupPhotosVideos = ({ onActivate, onSkip, breadcrumbs }) => (
+  <OnBoarding
+    onActivate={onActivate}
+    onSkip={onSkip}
+    stepName="photos"
+    breadcrumbs={breadcrumbs}
+  />
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -24,7 +24,10 @@ export const setUrl = url => ({ type: SET_URL, url })
 
 // settings
 
-export const setAnalytics = (analytics, source = 'settings') => (dispatch, getState) => {
+export const setAnalytics = (analytics, source = 'settings') => (
+  dispatch,
+  getState
+) => {
   dispatch({ type: SET_ANALYTICS, analytics })
   const state = getState()
   configureReporter(analytics)
@@ -34,21 +37,39 @@ export const setAnalytics = (analytics, source = 'settings') => (dispatch, getSt
     stopTracker()
   }
 }
-export const setBackupImages = backupImages => ({ type: BACKUP_IMAGES, backupImages })
+export const setBackupImages = backupImages => ({
+  type: BACKUP_IMAGES,
+  backupImages
+})
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
-export const setBackupContacts = backupContacts => ({ type: BACKUP_CONTACTS, backupContacts })
-export const setTokenScope = (scope) => ({ type: TOKEN_SCOPE, scope })
+export const setBackupContacts = backupContacts => ({
+  type: BACKUP_CONTACTS,
+  backupContacts
+})
+export const setTokenScope = scope => ({ type: TOKEN_SCOPE, scope })
 
 // errors
 
-export const wrongAddressErrorMsg = 'mobile.onboarding.server_selection.wrong_address'
-export const wrongAddressWithEmailErrorMsg = 'mobile.onboarding.server_selection.wrong_address_with_email'
-export const wrongAddressV2ErrorMsg = 'mobile.onboarding.server_selection.wrong_address_v2'
-export const wrongAddressError = () => ({ type: ERROR, error: wrongAddressErrorMsg })
-export const wrongAddressWithEmailError = () => ({ type: ERROR, error: wrongAddressWithEmailErrorMsg })
-export const wrongAddressV2Error = () => ({ type: ERROR, error: wrongAddressV2ErrorMsg })
+export const wrongAddressErrorMsg =
+  'mobile.onboarding.server_selection.wrong_address'
+export const wrongAddressWithEmailErrorMsg =
+  'mobile.onboarding.server_selection.wrong_address_with_email'
+export const wrongAddressV2ErrorMsg =
+  'mobile.onboarding.server_selection.wrong_address_v2'
+export const wrongAddressError = () => ({
+  type: ERROR,
+  error: wrongAddressErrorMsg
+})
+export const wrongAddressWithEmailError = () => ({
+  type: ERROR,
+  error: wrongAddressWithEmailErrorMsg
+})
+export const wrongAddressV2Error = () => ({
+  type: ERROR,
+  error: wrongAddressV2ErrorMsg
+})
 export class OnBoardingError extends Error {
-  constructor (message) {
+  constructor(message) {
     super(message)
     this.name = 'OnBoardingError'
   }
@@ -57,16 +78,16 @@ export class OnBoardingError extends Error {
 // registration
 
 export const registerDevice = () => async (dispatch, getState) => {
-  const onRegister = (dispatch) => (client, url) => {
+  const onRegister = dispatch => (client, url) => {
     return onRegistered(client, url)
-    .then(url => url)
-    .catch(err => {
-      if (err.message !== REGISTRATION_ABORT) {
-        dispatch(wrongAddressError())
-        logException(err)
-      }
-      throw err
-    })
+      .then(url => url)
+      .catch(err => {
+        if (err.message !== REGISTRATION_ABORT) {
+          dispatch(wrongAddressError())
+          logException(err)
+        }
+        throw err
+      })
   }
   try {
     const url = checkURL(getState().mobile.settings.serverUrl)
@@ -80,7 +101,11 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw err
   }
 
-  initClient(getState().mobile.settings.serverUrl, onRegister(dispatch), getDeviceName())
+  initClient(
+    getState().mobile.settings.serverUrl,
+    onRegister(dispatch),
+    getDeviceName()
+  )
 
   let isV2Instance
   try {
@@ -95,26 +120,40 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw new Error('The cozy address entered is a V2 instance')
   }
 
-  return await cozy.client.authorize(true).then(({ client, token }) => {
-    dispatch(setClient(client))
-    dispatch(setTokenScope(token.scope))
-    startReplication(dispatch, getState)
-  }).catch(err => {
-    if (err.message === REGISTRATION_ABORT) {
-      cozy.client._storage.clear()
-    } else {
-      dispatch(wrongAddressError())
-      logException(err)
-    }
-    throw err
-  })
+  return cozy.client
+    .authorize(true)
+    .then(({ client, token }) => {
+      dispatch(setClient(client))
+      dispatch(setTokenScope(token.scope))
+      startReplication(dispatch, getState)
+    })
+    .catch(err => {
+      if (err.message === REGISTRATION_ABORT) {
+        cozy.client._storage.clear()
+      } else {
+        dispatch(wrongAddressError())
+        logException(err)
+      }
+      throw err
+    })
 }
 
 export const startReplication = (dispatch, getState) => {
   const firstReplication = getState().settings.firstReplication
-  const refreshFolder = () => { dispatch(openFolder(getOpenedFolderId(getState()))) }
-  const revokeClient = () => { dispatch(reduxRevokeClient()) }
-  const firstReplicationFinished = () => { dispatch(setFirstReplication(true)) }
+  const refreshFolder = () => {
+    dispatch(openFolder(getOpenedFolderId(getState())))
+  }
+  const revokeClient = () => {
+    dispatch(reduxRevokeClient())
+  }
+  const firstReplicationFinished = () => {
+    dispatch(setFirstReplication(true))
+  }
 
-  startPouchReplication(firstReplication, firstReplicationFinished, refreshFolder, revokeClient)
+  startPouchReplication(
+    firstReplication,
+    firstReplicationFinished,
+    refreshFolder,
+    revokeClient
+  )
 }

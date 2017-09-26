@@ -1,23 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const createWrapper = () => document.body.appendChild(document.createElement('div'))
+const createWrapper = () =>
+  document.body.appendChild(document.createElement('div'))
 
-const confirm = component => new Promise((resolve, reject) => {
-  const wrapper = createWrapper()
+const confirm = component =>
+  new Promise((resolve, reject) => {
+    const wrapper = createWrapper()
 
-  const abort = () => {
-    ReactDOM.unmountComponentAtNode(wrapper)
-    reject()
-  }
+    const abort = () => {
+      ReactDOM.unmountComponentAtNode(wrapper)
+      reject(new Error('abort'))
+    }
 
-  const confirm = () => {
-    ReactDOM.unmountComponentAtNode(wrapper)
-    resolve()
-  }
+    const confirm = () => {
+      ReactDOM.unmountComponentAtNode(wrapper)
+      resolve()
+    }
 
-  ReactDOM.render(React.cloneElement(component, { confirm, abort }), wrapper)
-})
+    ReactDOM.render(React.cloneElement(component, { confirm, abort }), wrapper)
+  })
 
 export default confirm
 

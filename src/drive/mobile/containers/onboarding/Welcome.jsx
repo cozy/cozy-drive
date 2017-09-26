@@ -7,13 +7,13 @@ import styles from '../../styles/onboarding'
 import { getPlatformId, isIos } from '../../lib/device'
 
 export class Welcome extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.platform = getPlatformId() !== undefined ? getPlatformId() : 'browser'
   }
 
-  render () {
+  render() {
     const { nextStep, t } = this.props
 
     return (
@@ -30,15 +30,22 @@ export class Welcome extends Component {
           </h1>
         </div>
         <footer className={styles['wizard-footer']}>
-          <button role='button'
-            className='coz-btn coz-btn--regular'
+          <button
+            role="button"
+            className="coz-btn coz-btn--regular"
             onClick={nextStep}
           >
             {t('mobile.onboarding.welcome.button')}
           </button>
-          {!isIos() && <a href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${this.platform}`} className={styles['link']}>
-            {t('mobile.onboarding.welcome.no_account_link')}
-          </a>}
+          {!isIos() && (
+            <a
+              href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${this
+                .platform}`}
+              className={styles['link']}
+            >
+              {t('mobile.onboarding.welcome.no_account_link')}
+            </a>
+          )}
         </footer>
       </div>
     )

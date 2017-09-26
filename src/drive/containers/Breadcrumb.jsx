@@ -27,12 +27,12 @@ class Breadcrumb extends Component {
     this.state.deployed ? this.closeMenu() : this.openMenu()
   }
 
-  openMenu () {
+  openMenu() {
     this.setState({ deployed: true })
     document.addEventListener('click', this.handleClickOutside, true)
   }
 
-  closeMenu () {
+  closeMenu() {
     this.setState({ deployed: false })
     document.removeEventListener('click', this.handleClickOutside, true)
   }
@@ -60,7 +60,7 @@ class Breadcrumb extends Component {
     }
   }
 
-  render () {
+  render() {
     const { t, location, path } = this.props
     const { opening, deployed } = this.state
 
@@ -87,22 +87,25 @@ class Breadcrumb extends Component {
       <div
         className={classNames(
           styles['fil-path-backdrop'],
-          {[styles['deployed']]: deployed},
-          {[styles['mobile']]: __TARGET__ === 'mobile'}
+          { [styles['deployed']]: deployed },
+          { [styles['mobile']]: __TARGET__ === 'mobile' }
         )}
       >
-        {path.length >= 2 &&
+        {path.length >= 2 && (
           <Link
             to={getFolderUrl(path[path.length - 2].id, location)}
             className={styles['fil-path-previous']}
             onClick={e => this.handleClick(e, path[path.length - 2].id, false)}
           />
-        }
-        <h2 className={styles['fil-path-title']}
+        )}
+        <h2
+          className={styles['fil-path-title']}
           onClick={this.toggleDeploy}
-          ref={ref => { this.menu = ref }}
+          ref={ref => {
+            this.menu = ref
+          }}
         >
-          { path.map((folder, index) => {
+          {path.map((folder, index) => {
             if (index < path.length - 1) {
               return (
                 <Link
@@ -110,9 +113,7 @@ class Breadcrumb extends Component {
                   className={styles['fil-path-link']}
                   onClick={e => this.handleClick(e, folder.id, true)}
                 >
-                  <a>
-                    { folder.name }
-                  </a>
+                  <a>{folder.name}</a>
                   <span className={styles['fil-path-separator']}>/</span>
                 </Link>
               )
@@ -126,18 +127,17 @@ class Breadcrumb extends Component {
                   }}
                 >
                   <span className={styles['fil-path-current-name']}>
-                    { folder.name }
+                    {folder.name}
                   </span>
-                  {path.length >= 2 &&
+                  {path.length >= 2 && (
                     <span className={styles['fil-path-down']} />
-                  }
+                  )}
 
-                  { opening && <Spinner /> }
+                  {opening && <Spinner />}
                 </span>
               )
             }
-          }) }
-
+          })}
         </h2>
       </div>
     )
@@ -153,7 +153,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goToFolder: folderId => dispatch(openFolder(folderId))
 })
 
-export default withRouter(translate()(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Breadcrumb)))
+export default withRouter(
+  translate()(connect(mapStateToProps, mapDispatchToProps)(Breadcrumb))
+)

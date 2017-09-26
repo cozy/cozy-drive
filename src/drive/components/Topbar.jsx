@@ -5,7 +5,11 @@ import React from 'react'
 import classNames from 'classnames'
 
 const Topbar = ({ children }) => (
-  <div className={classNames(styles['fil-topbar'], { [styles['mobile']]: __TARGET__ === 'mobile' })}>
+  <div
+    className={classNames(styles['fil-topbar'], {
+      [styles['mobile']]: __TARGET__ === 'mobile'
+    })}
+  >
     {children}
   </div>
 )

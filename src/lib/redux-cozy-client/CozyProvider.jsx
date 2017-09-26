@@ -21,14 +21,14 @@ export default class CozyProvider extends Component {
     store: PropTypes.object
   }
 
-  getChildContext () {
+  getChildContext() {
     return {
       store: this.props.store || this.context.store,
       client: this.props.client
     }
   }
 
-  render () {
+  render() {
     return (this.props.children && this.props.children[0]) || null
   }
 }

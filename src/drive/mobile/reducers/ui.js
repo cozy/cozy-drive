@@ -1,4 +1,7 @@
-import { SHOW_UNLINK_CONFIRMATION, HIDE_UNLINK_CONFIRMATION } from '../actions/unlink'
+import {
+  SHOW_UNLINK_CONFIRMATION,
+  HIDE_UNLINK_CONFIRMATION
+} from '../actions/unlink'
 
 export const initialState = {
   displayUnlinkConfirmation: false

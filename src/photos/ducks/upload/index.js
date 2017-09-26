@@ -36,28 +36,28 @@ const status = action => {
   }
 }
 
-const item = (state, action) => Object.assign({}, state, { status: status(action) })
+const item = (state, action) =>
+  Object.assign({}, state, { status: status(action) })
 
 const queue = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
-      return [
-        ...state,
-        ...action.files.map(f => itemInitialState(f))
-      ]
+      return [...state, ...action.files.map(f => itemInitialState(f))]
     case PURGE_UPLOAD_QUEUE:
       return []
     case UPLOAD_FILE:
     case RECEIVE_UPLOAD_SUCCESS:
     case RECEIVE_UPLOAD_ERROR:
-      return state.map(i => i.file.name !== action.file.name ? i : item(i, action))
+      return state.map(
+        i => (i.file.name !== action.file.name ? i : item(i, action))
+      )
     default:
       return state
   }
 }
 export default combineReducers({ queue })
 
-const processNextFile = (callback) => async (dispatch, getState) => {
+const processNextFile = callback => async (dispatch, getState) => {
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
   if (!item) {
     return dispatch(onQueueEmpty())
@@ -69,7 +69,11 @@ const processNextFile = (callback) => async (dispatch, getState) => {
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
   } catch (error) {
     console.log(error)
-    dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status: error.status === 409 ? CONFLICT : FAILED })
+    dispatch({
+      type: RECEIVE_UPLOAD_ERROR,
+      file,
+      status: error.status === 409 ? CONFLICT : FAILED
+    })
   }
   dispatch(processNextFile(callback))
 }
@@ -88,15 +92,12 @@ export const onQueueEmpty = () => (dispatch, getState) => {
   const loaded = getLoaded(queue)
 
   if (!conflicts.length && !errors.length) {
-    Alerter.success(
-      'UploadQueue.alert.success',
-      {smart_count: loaded.length}
-    )
+    Alerter.success('UploadQueue.alert.success', { smart_count: loaded.length })
   } else if (conflicts.length && !errors.length) {
-    Alerter.info(
-      'UploadQueue.alert.success_conflicts',
-      {smart_count: loaded.length, conflictNumber: conflicts.length}
-    )
+    Alerter.info('UploadQueue.alert.success_conflicts', {
+      smart_count: loaded.length,
+      conflictNumber: conflicts.length
+    })
   } else {
     Alerter.error('UploadQueue.alert.errors')
   }
@@ -109,5 +110,6 @@ const getErrors = queue => filterByStatus(queue, FAILED)
 const getLoaded = queue => filterByStatus(queue, LOADED)
 
 export const getUploadQueue = state => state[SLUG].queue
-export const getProcessed = state => getUploadQueue(state).filter(f => f.status !== PENDING)
+export const getProcessed = state =>
+  getUploadQueue(state).filter(f => f.status !== PENDING)
 export const getSuccessful = state => getLoaded(getUploadQueue(state))

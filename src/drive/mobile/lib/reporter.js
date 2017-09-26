@@ -9,12 +9,12 @@ export const getConfig = () => ({
   environment: __DEVELOPMENT__ ? 'development' : 'production'
 })
 
-export const configure = (enable) => {
+export const configure = enable => {
   isEnable = enable
   Raven.config(ANALYTICS_URL, getConfig()).install()
 }
 
-export const logException = (err) => {
+export const logException = err => {
   return new Promise(resolve => {
     Raven.captureException(err)
     console.warn('Raven is recording exception')
@@ -39,4 +39,5 @@ const logMessage = (message, level = 'info', force) => {
   })
 }
 
-export const logInfo = (message, force = false) => logMessage(message, 'info', force)
+export const logInfo = (message, force = false) =>
+  logMessage(message, 'info', force)

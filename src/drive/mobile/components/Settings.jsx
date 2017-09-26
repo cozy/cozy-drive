@@ -23,7 +23,7 @@ class Settings extends Component {
     this.setState(state => ({ countClick: state.countClick + 1 }))
   }
 
-  render () {
+  render() {
     const { t } = this.props
     const isDebug = this.state.countClick >= 3
     return (
@@ -33,21 +33,13 @@ class Settings extends Component {
         </Topbar>
         <div>
           <div className={styles['settings']}>
-
             <MediaBackup />
             <Contacts />
             <Support isDebug={isDebug} />
             <About onClick={this.handleClick} />
             <Unlink />
 
-            {__DEVELOPMENT__ &&
-              [
-                <hr />,
-                <h3>Debug Zone</h3>,
-                <DebugTools />
-              ]
-            }
-
+            {__DEVELOPMENT__ && [<hr />, <h3>Debug Zone</h3>, <DebugTools />]}
           </div>
           <UploadProgression />
         </div>

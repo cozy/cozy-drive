@@ -12,32 +12,28 @@ const EMIT_ERROR = 'EMIT_ERROR'
 const entries = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_MORE_ENTRIES:
-      return [
-        ...state,
-        ...action.entries
-      ]
+      return [...state, ...action.entries]
     case RECEIVE_ENTRIES:
       return action.entries
     case INSERT_ENTRIES:
-      return [
-        ...action.entries,
-        ...state
-      ]
+      return [...action.entries, ...state]
     case UPDATE_ENTRIES:
       return state.map(entry => {
-        let updatedEntry = action.entries.find(actionEntry => (actionEntry._id === entry._id))
+        let updatedEntry = action.entries.find(
+          actionEntry => actionEntry._id === entry._id
+        )
         return updatedEntry || entry
       })
     case DELETE_ENTRY:
       // TODO: quick and dirty fix for removeFromAlbum (we got IDs instead of photos)
-      const id = typeof action.entity === 'object' ? action.entity.id || action.entity._id : action.entity
+      const id =
+        typeof action.entity === 'object'
+          ? action.entity.id || action.entity._id
+          : action.entity
       // TODO: why is the back sending an id prop instead of a _id prop here???
       const idx = state.findIndex(e => e._id === id)
       if (idx === -1) return state
-      return [
-        ...state.slice(0, idx),
-        ...state.slice(idx + 1)
-      ]
+      return [...state.slice(0, idx), ...state.slice(idx + 1)]
     default:
       return state
   }
@@ -102,7 +98,9 @@ const listsReducer = (state = {}, action) => {
     case INSERT_ENTRIES:
     case UPDATE_ENTRIES:
     case DELETE_ENTRY:
-      return Object.assign({}, state, { [action.name]: listReducer(state[action.name] || {}, action) })
+      return Object.assign({}, state, {
+        [action.name]: listReducer(state[action.name] || {}, action)
+      })
     default:
       return state
   }
@@ -128,12 +126,14 @@ export const createFetchAction = (listName, saga) => {
             ? dispatch({ type: RECEIVE_MORE_ENTRIES, name: listName, ...resp })
             : dispatch({ type: RECEIVE_ENTRIES, name: listName, ...resp })
         })
-        .catch(error => dispatch({ type: RECEIVE_ERROR, name: listName, error }))
+        .catch(error =>
+          dispatch({ type: RECEIVE_ERROR, name: listName, error })
+        )
     }
   }
 }
 
-const shouldRefetch = (list) => {
+const shouldRefetch = list => {
   if (!list) {
     return true
   }
@@ -157,14 +157,13 @@ export const createInsertAction = (listName, saga) => {
   return (...args) => {
     return (dispatch, getState) => {
       const existingList = getList(getState(), listName)
-      return saga(...args)
-        .then(resp => {
-          if (existingList) {
-            return dispatch(insertAction(listName, resp))
-          } else {
-            return resp
-          }
-        })
+      return saga(...args).then(resp => {
+        if (existingList) {
+          return dispatch(insertAction(listName, resp))
+        } else {
+          return resp
+        }
+      })
     }
   }
 }
@@ -173,14 +172,13 @@ export const createUpdateAction = (listName, saga) => {
   return (...args) => {
     return (dispatch, getState) => {
       const existingList = getList(getState(), listName)
-      return saga(...args)
-        .then(resp => {
-          if (existingList) {
-            return dispatch(updateAction(listName, resp))
-          } else {
-            return resp
-          }
-        })
+      return saga(...args).then(resp => {
+        if (existingList) {
+          return dispatch(updateAction(listName, resp))
+        } else {
+          return resp
+        }
+      })
     }
   }
 }
@@ -189,13 +187,12 @@ export const createDeleteAction = (listName, saga) => {
   return (...args) => {
     return (dispatch, getState) => {
       const existingList = getList(getState(), listName)
-      return saga(...args)
-        .then(resp => {
-          if (existingList) {
-            resp.entries.forEach(e => dispatch(deleteAction(listName, e)))
-          }
-          return resp
-        })
+      return saga(...args).then(resp => {
+        if (existingList) {
+          resp.entries.forEach(e => dispatch(deleteAction(listName, e)))
+        }
+        return resp
+      })
     }
   }
 }
@@ -211,15 +208,21 @@ export const errorAction = (listName, error) => ({
 
 // TODO: remove the discrepancy between insert and deleteAction inputs (full response with entries vs single entry)
 export const insertAction = (listName, resp) => ({
-  type: INSERT_ENTRIES, name: listName, ...resp
+  type: INSERT_ENTRIES,
+  name: listName,
+  ...resp
 })
 
 export const updateAction = (listName, resp) => ({
-  type: UPDATE_ENTRIES, name: listName, ...resp
+  type: UPDATE_ENTRIES,
+  name: listName,
+  ...resp
 })
 
 export const deleteAction = (listName, entity) => ({
-  type: DELETE_ENTRY, name: listName, entity
+  type: DELETE_ENTRY,
+  name: listName,
+  entity
 })
 
 export const getList = (state, name) => state.lists[name]

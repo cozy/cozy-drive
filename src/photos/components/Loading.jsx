@@ -7,12 +7,10 @@ import classNames from 'classnames'
 export const Loading = ({ t, loadingType, noMargin, color }) => {
   return (
     <div
-      className={classNames(
-        styles['pho-loading'], {
-          [styles['pho-loading--no-margin']]: noMargin,
-          [styles[`pho-loading--${color}`]]: color
-        }
-      )}
+      className={classNames(styles['pho-loading'], {
+        [styles['pho-loading--no-margin']]: noMargin,
+        [styles[`pho-loading--${color}`]]: color
+      })}
     >
       {loadingType && <p>{t(`Loading.${loadingType}`)}</p>}
     </div>

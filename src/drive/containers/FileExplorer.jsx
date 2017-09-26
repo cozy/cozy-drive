@@ -7,10 +7,7 @@ import {
   isSelectionBarVisible,
   showSelectionBar
 } from '../ducks/selection'
-import {
-  showActionMenu,
-  hideActionMenu
-} from '../ducks/actionmenu'
+import { showActionMenu, hideActionMenu } from '../ducks/actionmenu'
 import {
   openFolder,
   getOpenedFolderId,
@@ -26,16 +23,17 @@ import {
   isActionMenuVisible
 } from '../reducers'
 
-const isRecentFilesView = (props) => props.location.pathname === '/recent'
+const isRecentFilesView = props => props.location.pathname === '/recent'
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
 
 const isUrlMatchingOpenedFolder = (props, openedFolderId) =>
-  openedFolderId && openedFolderId === getFolderIdFromRoute(props.location, props.params)
+  openedFolderId &&
+  openedFolderId === getFolderIdFromRoute(props.location, props.params)
 
 class FileExplorer extends Component {
-  componentWillMount () {
+  componentWillMount() {
     if (isRecentFilesView(this.props)) {
       this.props.fetchRecentFiles()
     } else {
@@ -45,18 +43,23 @@ class FileExplorer extends Component {
     }
   }
 
-  componentWillReceiveProps (newProps) {
-    if (urlHasChanged(this.props, newProps) &&
-        !isRecentFilesView(newProps) &&
-      !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)) {
+  componentWillReceiveProps(newProps) {
+    if (
+      urlHasChanged(this.props, newProps) &&
+      !isRecentFilesView(newProps) &&
+      !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
+    ) {
       this.props.onFolderOpen(
         getFolderIdFromRoute(newProps.location, newProps.params)
       )
     }
   }
 
-  render () {
-    return React.cloneElement(React.Children.only(this.props.children), this.props)
+  render() {
+    return React.cloneElement(
+      React.Children.only(this.props.children),
+      this.props
+    )
   }
 }
 
@@ -74,22 +77,18 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  showSelectionBar: () =>
-    dispatch(showSelectionBar()),
-  showActionMenu: fileId =>
-    dispatch(showActionMenu(fileId)),
-  hideActionMenu: () =>
-    dispatch(hideActionMenu()),
-  fetchRecentFiles: () =>
-    dispatch(fetchRecentFiles()),
+  showSelectionBar: () => dispatch(showSelectionBar()),
+  showActionMenu: fileId => dispatch(showActionMenu(fileId)),
+  hideActionMenu: () => dispatch(hideActionMenu()),
+  fetchRecentFiles: () => dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
-  onFolderOpen: folderId =>
-    dispatch(openFolder(folderId)),
-  onFileOpen: (file) =>
-    dispatch(openFileInNewTab(file)),
+  onFolderOpen: folderId => dispatch(openFolder(folderId)),
+  onFileOpen: file => dispatch(openFileInNewTab(file)),
   onFileToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FileExplorer))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(FileExplorer)
+)

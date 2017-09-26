@@ -7,20 +7,21 @@ const DOCTYPE_CONTACTS = 'io.cozy.contacts'
 
 export const requestDeviceAuthorization = () => {
   return new Promise((resolve, reject) => {
-    if (!isCordova() ||
-       !navigator.contacts) {
+    if (!isCordova() || !navigator.contacts) {
       resolve(false)
     } else {
       // to trigger the permission, we need to interact with the contacts API — we're going to do a fake-find
       navigator.contacts.find(
         ['displayName'],
-        () => { resolve(true) },
-        (e) => {
+        () => {
+          resolve(true)
+        },
+        e => {
           logException(e)
           resolve(false)
         },
         {
-          filter: (new Date()).toString(), // we just want a filter that won't match anything
+          filter: new Date().toString(), // we just want a filter that won't match anything
           multiple: false
         }
       )
@@ -55,7 +56,11 @@ const loadDeviceContacts = () => {
 const getCozyContacts = async (ids = []) => {
   let response
   try {
-    response = await cozy.client.fetchJSON('GET', '/data/io.cozy.contacts/_all_docs?include_docs=true', {keys: ids})
+    response = await cozy.client.fetchJSON(
+      'GET',
+      '/data/io.cozy.contacts/_all_docs?include_docs=true',
+      { keys: ids }
+    )
   } catch (e) {
     // exceptions might happen if the database is not created yet, which is ok
     return []
@@ -63,7 +68,7 @@ const getCozyContacts = async (ids = []) => {
   return response.rows.map(row => row.doc)
 }
 
-const cordovaContactToCozy = (contact) => {
+const cordovaContactToCozy = contact => {
   let cozyContact = {}
 
   cozyContact.fullname = contact.displayName || ''
@@ -123,10 +128,10 @@ const cordovaContactToCozy = (contact) => {
 }
 
 const filterContactsWithEmailAddress = contacts => {
-  return contacts.filter(contact => (contact.emails && contact.emails.length > 0))
+  return contacts.filter(contact => contact.emails && contact.emails.length > 0)
 }
 
-export const backupContacts = () => async (dispatch) => {
+export const backupContacts = () => async dispatch => {
   let deviceContacts
 
   try {
@@ -137,7 +142,9 @@ export const backupContacts = () => async (dispatch) => {
     return
   }
 
-  deviceContacts = filterContactsWithEmailAddress(deviceContacts).map(cordovaContactToCozy)
+  deviceContacts = filterContactsWithEmailAddress(deviceContacts).map(
+    cordovaContactToCozy
+  )
 
   let cozyContacts = await getCozyContacts()
 
@@ -149,7 +156,12 @@ export const backupContacts = () => async (dispatch) => {
     for (const cozyContact of cozyContacts) {
       if (cozyContact.email instanceof Array === false) continue
 
-      if (cozyContact.email.filter(email => (email.address && deviceContactEmails.indexOf(email.address) >= 0)).length > 0) {
+      if (
+        cozyContact.email.filter(
+          email =>
+            email.address && deviceContactEmails.indexOf(email.address) >= 0
+        ).length > 0
+      ) {
         contactAlreadySynced = true
         break
       }

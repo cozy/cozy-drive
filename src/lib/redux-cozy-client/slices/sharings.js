@@ -36,15 +36,15 @@ const documents = (state = [], action) => {
       const newState = loneRecipient
         ? { ...sharing, attributes: { ...sharing.attributes, revoked: true } }
         : {
-          ...sharing,
-          attributes: {
-            ...sharing.attributes,
-            recipients: removeRecipient(
+            ...sharing,
+            attributes: {
+              ...sharing.attributes,
+              recipients: removeRecipient(
                 sharing.attributes.recipients,
                 action.recipientId
               )
+            }
           }
-        }
       return [...state.slice(0, idx), newState, ...state.slice(idx + 1)]
     default:
       return state
@@ -247,25 +247,25 @@ const getPermissionsFor = (document, publicLink = false) => {
   // with redux-cozy-client ; some sort of doctype "schema" will be needed here
   return isFile(document)
     ? {
-      files: {
-        type: 'io.cozy.files',
-        verbs,
-        values: [_id]
+        files: {
+          type: 'io.cozy.files',
+          verbs,
+          values: [_id]
+        }
       }
-    }
     : {
-      collection: {
-        type: _type,
-        verbs,
-        values: [_id]
-      },
-      files: {
-        type: 'io.cozy.files',
-        verbs,
-        values: [`${_type}/${_id}`],
-        selector: 'referenced_by'
+        collection: {
+          type: _type,
+          verbs,
+          values: [_id]
+        },
+        files: {
+          type: 'io.cozy.files',
+          verbs,
+          values: [`${_type}/${_id}`],
+          selector: 'referenced_by'
+        }
       }
-    }
 }
 
 // selectors

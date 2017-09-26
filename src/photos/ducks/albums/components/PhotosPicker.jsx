@@ -11,7 +11,7 @@ import PhotoBoard from '../../../components/PhotoBoard'
 import Alerter from '../../../components/Alerter'
 
 class PhotosPicker extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       selected: [],
@@ -23,9 +23,10 @@ class PhotosPicker extends Component {
     this.setState(({ selected }) => {
       const idx = selected.findIndex(i => i === obj.id)
       return {
-        selected: idx === -1
-          ? [...selected, obj.id]
-          : [...selected.slice(0, idx), ...selected.slice(idx + 1)]
+        selected:
+          idx === -1
+            ? [...selected, obj.id]
+            : [...selected.slice(0, idx), ...selected.slice(idx + 1)]
       }
     })
   }
@@ -65,7 +66,11 @@ class PhotosPicker extends Component {
       }
       // TODO: refering to the client here is not ideal, we should have
       // some kind of automatic validation system on schemas
-      const unique = await this.props.client.checkUniquenessOf('io.cozy.photos.albums', 'name', name)
+      const unique = await this.props.client.checkUniquenessOf(
+        'io.cozy.photos.albums',
+        'name',
+        name
+      )
       if (!unique) {
         Alerter.error('Albums.create.error.already_exists', { name })
         this.input.focus()
@@ -77,7 +82,10 @@ class PhotosPicker extends Component {
       const album = response.data[0]
       const addedPhotos = await this.props.addToAlbum(album, selected)
 
-      Alerter.success('Albums.create.success', {name: name, smart_count: addedPhotos.length})
+      Alerter.success('Albums.create.success', {
+        name: name,
+        smart_count: addedPhotos.length
+      })
       this.props.router.push(`/albums/${album.id}`)
     } catch (error) {
       Alerter.error('Albums.create.error.generic')
@@ -97,7 +105,10 @@ class PhotosPicker extends Component {
       if (addedIds.length !== selected.length) {
         Alerter.info('Alerter.photos.already_added_photo')
       } else {
-        Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: addedPhotos.length})
+        Alerter.success('Albums.add_photos.success', {
+          name: album.name,
+          smart_count: addedPhotos.length
+        })
       }
       this.props.router.push(`/albums/${album.id}`)
     } catch (error) {
@@ -106,14 +117,14 @@ class PhotosPicker extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (!this.props.album) {
       this.input.focus()
       this.input.select()
     }
   }
 
-  render () {
+  render() {
     const { t, album } = this.props
     const { name } = this.state
     const isNew = album === null
@@ -122,35 +133,45 @@ class PhotosPicker extends Component {
         <div className={styles['pho-panel-form']}>
           <header className={styles['pho-panel-header']}>
             <div className={styles['pho-panel-wrap']}>
-              {isNew &&
+              {isNew && (
                 <div>
                   <label className={styles['coz-form-label']}>
                     {t('Albums.create.panel_form.label')}
                   </label>
                   <input
-                    type='text'
-                    ref={input => { this.input = input }}
+                    type="text"
+                    ref={input => {
+                      this.input = input
+                    }}
                     value={name}
                     onChange={this.onNameChange}
                   />
                 </div>
-              }
+              )}
               {!isNew && <h3>{album.name}</h3>}
             </div>
           </header>
           <div className={styles['pho-panel-content']}>
-            <div className={styles['pho-panel-wrap']}>
-              {this.renderBoard()}
-            </div>
+            <div className={styles['pho-panel-wrap']}>{this.renderBoard()}</div>
           </div>
           <footer className={styles['pho-panel-footer']}>
             <div className={styles['pho-panel-wrap']}>
               <div className={styles['pho-panel-controls']}>
-                <button className='coz-btn coz-btn--secondary' onClick={this.onCancel}>
+                <button
+                  className="coz-btn coz-btn--secondary"
+                  onClick={this.onCancel}
+                >
                   {t('Albums.create.panel_form.cancel')}
                 </button>
-                <button className='coz-btn coz-btn--regular' onClick={isNew ? this.onCreate : this.onUpdate}>
-                  {t(isNew ? 'Albums.create.panel_form.submit' : 'Albums.create.panel_form.update')}
+                <button
+                  className="coz-btn coz-btn--regular"
+                  onClick={isNew ? this.onCreate : this.onUpdate}
+                >
+                  {t(
+                    isNew
+                      ? 'Albums.create.panel_form.submit'
+                      : 'Albums.create.panel_form.update'
+                  )}
                 </button>
               </div>
             </div>
@@ -160,17 +181,19 @@ class PhotosPicker extends Component {
     )
   }
 
-  renderBoard () {
+  renderBoard() {
     const { f, photos } = this.props
     if (!photos) {
       return null
     }
-    const photoLists = photos.data ? getPhotosByMonth(photos.data, f, 'MMMM YYYY') : []
+    const photoLists = photos.data
+      ? getPhotosByMonth(photos.data, f, 'MMMM YYYY')
+      : []
     return (
       <PhotoBoard
         lists={photoLists}
         selected={this.state.selected}
-        photosContext='timeline'
+        photosContext="timeline"
         showSelection
         onPhotoToggle={this.onPhotoToggle}
         onPhotosSelect={this.onPhotosSelect}
@@ -183,7 +206,7 @@ class PhotosPicker extends Component {
   }
 }
 
-const mapDocumentsToProps = (ownProps) => ({
+const mapDocumentsToProps = ownProps => ({
   photos: fetchTimeline(),
   album: ownProps.params.albumId ? fetchAlbum(ownProps.params.albumId) : null
 })
@@ -193,4 +216,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   addToAlbum: (album, photos) => dispatch(addToAlbum(album, photos))
 })
 
-export default withRouter(cozyConnect(mapDocumentsToProps, mapDispatchToProps)(PhotosPicker))
+export default withRouter(
+  cozyConnect(mapDocumentsToProps, mapDispatchToProps)(PhotosPicker)
+)

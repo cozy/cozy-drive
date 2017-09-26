@@ -1,40 +1,45 @@
 const hasCordovaPlugin = () => {
-  return window.cordova !== undefined &&
-    window.cordova.InAppBrowser !== undefined
+  return (
+    window.cordova !== undefined && window.cordova.InAppBrowser !== undefined
+  )
 }
 
 export const REGISTRATION_ABORT = 'REGISTRATION_ABORT'
 
-const openRegistrationWith = inAppBrowser => new Promise((resolve, reject) => {
-  const loadStart = ({url}) => {
-    const accessCode = /\?access_code=(.+)$/.test(url)
-    const state = /\?state=(.+)$/.test(url)
+const openRegistrationWith = inAppBrowser =>
+  new Promise((resolve, reject) => {
+    const loadStart = ({ url }) => {
+      const accessCode = /\?access_code=(.+)$/.test(url)
+      const state = /\?state=(.+)$/.test(url)
 
-    if (accessCode || state) {
-      resolve(url)
+      if (accessCode || state) {
+        resolve(url)
+        removeListener()
+      }
+    }
+    const exit = () => {
+      reject(new Error(REGISTRATION_ABORT))
       removeListener()
     }
-  }
-  const exit = () => {
-    reject(new Error(REGISTRATION_ABORT))
-    removeListener()
-  }
-  const removeListener = () => {
-    inAppBrowser.removeEventListener('loadstart', loadStart)
-    inAppBrowser.removeEventListener('exit', exit)
-  }
-  inAppBrowser.addEventListener('loadstart', loadStart)
-  inAppBrowser.addEventListener('exit', exit)
-})
+    const removeListener = () => {
+      inAppBrowser.removeEventListener('loadstart', loadStart)
+      inAppBrowser.removeEventListener('exit', exit)
+    }
+    inAppBrowser.addEventListener('loadstart', loadStart)
+    inAppBrowser.addEventListener('exit', exit)
+  })
 
 export const onRegistered = (client, url) => {
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
       const target = '_blank'
       const options = 'clearcache=yes,zoom=no'
-      const inAppBrowser = window.cordova.InAppBrowser.open(url, target, options)
-      return openRegistrationWith(inAppBrowser)
-      .then(
+      const inAppBrowser = window.cordova.InAppBrowser.open(
+        url,
+        target,
+        options
+      )
+      return openRegistrationWith(inAppBrowser).then(
         url => {
           inAppBrowser.close()
           resolve(url)

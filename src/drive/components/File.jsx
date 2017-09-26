@@ -14,14 +14,15 @@ import Preview from '../components/Preview'
 
 import { getFolderUrl } from '../reducers'
 
-export const splitFilename = file => isDirectory(file)
-  ? { filename: file.name, extension: '' }
-  : {
-    extension: file.name.slice(file.name.lastIndexOf('.') + 1),
-    filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
-  }
+export const splitFilename = file =>
+  isDirectory(file)
+    ? { filename: file.name, extension: '' }
+    : {
+        extension: file.name.slice(file.name.lastIndexOf('.') + 1),
+        filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
+      }
 
-export const getClassFromMime = (attrs) => {
+export const getClassFromMime = attrs => {
   if (isDirectory(attrs)) {
     return styles['fil-file-folder']
   }
@@ -65,7 +66,9 @@ const enableTouchEvents = ev => {
   }
 
   // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
-  if (getClassDiv(ev.target).indexOf(styles['fil-content-file-select']) !== -1) {
+  if (
+    getClassDiv(ev.target).indexOf(styles['fil-content-file-select']) !== -1
+  ) {
     return false
   }
 
@@ -73,18 +76,18 @@ const enableTouchEvents = ev => {
 }
 
 class File extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       opening: false
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.gesturesHandler = new Hammer.Manager(this.fil)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
-    this.gesturesHandler.on('onpress singletap', (ev) => {
+    this.gesturesHandler.on('onpress singletap', ev => {
       if (enableTouchEvents(ev)) {
         if (ev.type === 'onpress' || this.props.selectionModeActive) {
           this.toggle(ev.srcEvent)
@@ -95,17 +98,17 @@ class File extends Component {
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.gesturesHandler.destroy()
   }
 
-  toggle (e) {
+  toggle(e) {
     e.stopPropagation()
     const { attributes, onToggle, selected } = this.props
     onToggle(attributes, selected)
   }
 
-  open (e, attributes) {
+  open(e, attributes) {
     e.stopPropagation()
     if (isDirectory(attributes)) {
       this.setState({ opening: true })
@@ -114,14 +117,33 @@ class File extends Component {
         this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
-      this.props.onFileOpen({ ...attributes, availableOffline: this.props.isAvailableOffline })
+      this.props.onFileOpen({
+        ...attributes,
+        availableOffline: this.props.isAvailableOffline
+      })
     }
   }
 
-  render ({ t, f, style, attributes, selected, selectionModeActive, onShowActionMenu, isRenaming, withSelectionCheckbox, isAvailableOffline }, { opening }) {
+  render(
+    {
+      t,
+      f,
+      style,
+      attributes,
+      selected,
+      selectionModeActive,
+      onShowActionMenu,
+      isRenaming,
+      withSelectionCheckbox,
+      isAvailableOffline
+    },
+    { opening }
+  ) {
     return (
       <div
-        ref={fil => { this.fil = fil }}
+        ref={fil => {
+          this.fil = fil
+        }}
         style={style}
         className={classNames(
           styles['fil-content-row'],
@@ -129,40 +151,75 @@ class File extends Component {
           { [styles['fil-content-row--selectable']]: selectionModeActive }
         )}
       >
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} onclick={(e) => this.toggle(e)}>
-          {withSelectionCheckbox &&
-            <span data-input='checkbox'>
-              <input
-                type='checkbox'
-                checked={selected}
-              />
+        <div
+          className={classNames(
+            styles['fil-content-cell'],
+            styles['fil-content-file-select']
+          )}
+          onClick={e => this.toggle(e)}
+        >
+          {withSelectionCheckbox && (
+            <span data-input="checkbox">
+              <input type="checkbox" checked={selected} />
               <label />
             </span>
-          }
+          )}
         </div>
-        <FileNameCell attributes={attributes} isRenaming={isRenaming} opening={opening} />
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])}>
-          <time datetime=''>{ f(attributes.updated_at || attributes.created_at, t('table.row_update_format')) }</time>
+        <FileNameCell
+          attributes={attributes}
+          isRenaming={isRenaming}
+          opening={opening}
+        />
+        <div
+          className={classNames(
+            styles['fil-content-cell'],
+            styles['fil-content-date']
+          )}
+        >
+          <time dateTime="">
+            {f(
+              attributes.updated_at || attributes.created_at,
+              t('table.row_update_format')
+            )}
+          </time>
         </div>
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])}>
+        <div
+          className={classNames(
+            styles['fil-content-cell'],
+            styles['fil-content-size']
+          )}
+        >
           {isDirectory(attributes)
             ? '—'
-            : filesize(attributes.size, {base: 10})}
+            : filesize(attributes.size, { base: 10 })}
         </div>
         {isAvailableOffline && <AvailableOfflineBadge />}
-        <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])}>
-          <button className='coz-btn coz-btn--extra' onClick={(e) => {
-            onShowActionMenu(attributes.id)
-            e.stopPropagation()
-          }} />
+        <div
+          className={classNames(
+            styles['fil-content-cell'],
+            styles['fil-content-file-action']
+          )}
+        >
+          <button
+            className="coz-btn coz-btn--extra"
+            onClick={e => {
+              onShowActionMenu(attributes.id)
+              e.stopPropagation()
+            }}
+          />
         </div>
       </div>
     )
   }
 }
 
-const AvailableOfflineBadge = (props) => (
-  <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])}>
+const AvailableOfflineBadge = props => (
+  <div
+    className={classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-status']
+    )}
+  >
     <span className={styles['fil-content-offline']} />
   </div>
 )
@@ -178,15 +235,21 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
   const url = cozy.client._url
   return (
     <div className={classes}>
-      {attributes.links && attributes.links.small && <Preview thumbnail={`${url}${attributes.links.small}`} />}
-      {isRenaming
-        ? <RenameInput />
-        : <div>
+      {attributes.links &&
+        attributes.links.small && (
+          <Preview thumbnail={`${url}${attributes.links.small}`} />
+        )}
+      {isRenaming ? (
+        <RenameInput />
+      ) : (
+        <div>
           {filename}
-          {extension && <span className={styles['fil-content-ext']}>{extension}</span>}
+          {extension && (
+            <span className={styles['fil-content-ext']}>{extension}</span>
+          )}
           {opening === true && <Spinner />}
         </div>
-      }
+      )}
     </div>
   )
 }
@@ -194,17 +257,44 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
 export default withRouter(translate()(File))
 
 export const FilePlaceholder = ({ style }) => (
-  <div
-    style={style}
-    className={styles['fil-content-row']}
-  >
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-select'])} />
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file'])}>
+  <div style={style} className={styles['fil-content-row']}>
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file-select']
+      )}
+    />
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file']
+      )}
+    >
       <div className={styles['fil-content-file-placeholder']} />
     </div>
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-date'])} />
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-size'])} />
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-status'])} />
-    <div className={classNames(styles['fil-content-cell'], styles['fil-content-file-action'])} />
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-date']
+      )}
+    />
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-size']
+      )}
+    />
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-status']
+      )}
+    />
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file-action']
+      )}
+    />
   </div>
 )

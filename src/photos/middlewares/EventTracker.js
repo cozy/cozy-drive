@@ -19,7 +19,12 @@ const tracker = store => next => action => {
       name: 'photo',
       value: action.files.length
     }
-  } else if (action.type === CREATE_DOCUMENT && action.document && action.document.type && action.document.type === DOCTYPE_ALBUM) {
+  } else if (
+    action.type === CREATE_DOCUMENT &&
+    action.document &&
+    action.document.type &&
+    action.document.type === DOCTYPE_ALBUM
+  ) {
     action.trackEvent = {
       category: CATEGORY.INTERACTION,
       action: ACTIONS.CREATION,
