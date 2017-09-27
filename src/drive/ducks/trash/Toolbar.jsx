@@ -17,6 +17,7 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
       className={classNames(
         'coz-btn',
         'coz-btn--danger-outline',
+        'coz-desktop',
         styles['fil-btn--delete']
       )}
       onClick={() => emptyTrash()}
