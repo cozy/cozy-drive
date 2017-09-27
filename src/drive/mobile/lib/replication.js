@@ -15,6 +15,7 @@ export const startReplication = async (
     }
 
     const docsWritten = await startRepeatedReplication()
+    cozy.client.settings.updateLastSync()
     if (docsWritten !== 0) refreshFolder()
   } catch (err) {
     if (
