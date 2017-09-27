@@ -92,6 +92,7 @@ export const startMediaBackup = (dir, force = false) => async (
     }
   }
 
+  cozy.client.settings.updateLastSync()
   dispatch(endMediaUpload())
 }
 
