@@ -18,6 +18,8 @@ export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
 export const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
 export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
+const ERROR_CODE_CONFLICT = 409
+
 const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
 const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
 const successMediaUpload = media => ({
@@ -101,6 +103,18 @@ const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
     await uploadLibraryItem(dirID, photo)
     dispatch(successMediaUpload(photo))
   } catch (err) {
+    if (Array.isArray(err) && err.length > 0) {
+      const firstError = err[0]
+      if (
+        firstError.status &&
+        parseInt(firstError.status) === ERROR_CODE_CONFLICT
+      ) {
+        // since it's a conflict error, the file *is* actually on the server, so we consider it a success
+        dispatch(successMediaUpload(photo))
+        return
+      }
+    }
+
     console.warn('startMediaBackup upload item error')
     console.warn(JSON.stringify(err))
     console.info(JSON.stringify(photo))
