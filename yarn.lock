@@ -1722,9 +1722,9 @@ cozy-bar@4.1.4:
     preact "^8.1.0"
     preact-compat "^3.16.0"
 
-cozy-client-js@0.3.18:
-  version "0.3.18"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.18.tgz#754ed71c6f5804d63b402cc78b842de12eccbb9b"
+cozy-client-js@0.3.19:
+  version "0.3.19"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.19.tgz#c20361a8bc6b23eb4d092360040e8765ef5e59a3"
 
 cozy-ui@3.0.0-beta46:
   version "3.0.0-beta46"
