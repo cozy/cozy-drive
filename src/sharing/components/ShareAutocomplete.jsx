@@ -6,6 +6,26 @@ import Recipient from './Recipient'
 
 import { getPrimaryEmail } from '..'
 
+// TODO: sadly we have different versions of contacts' doctype to handle...
+// A migration tool on the stack side is needed here
+const emailMatch = (input, contact) => {
+  if (!contact.email) return false
+  const regex = new RegExp(input)
+  if (Array.isArray(contact.email)) {
+    return contact.email.some(email => regex.test(email.address))
+  }
+  return regex.test(contact.email)
+}
+
+const cozyUrlMatch = (input, contact) => {
+  if (!contact.cozy || !contact.url) return false
+  const regex = new RegExp(input)
+  if (contact.cozy && Array.isArray(contact.cozy)) {
+    return contact.cozy.some(cozy => regex.test(cozy.url))
+  }
+  return regex.test(contact.url)
+}
+
 export default class ShareAutocomplete extends Component {
   state = {
     inputValue: '',
@@ -18,12 +38,7 @@ export default class ShareAutocomplete extends Component {
       ? []
       : this.props.contacts.filter(
           contact =>
-            (contact.email &&
-              contact.email.some(email =>
-                new RegExp(inputValue).test(email.address)
-              )) ||
-            (contact.cozy &&
-              contact.cozy.some(cozy => new RegExp(inputValue).test(cozy.url)))
+            emailMatch(inputValue, contact) || cozyUrlMatch(inputValue, contact)
         )
   }
 

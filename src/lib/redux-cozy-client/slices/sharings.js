@@ -149,11 +149,9 @@ export const share = (document, recipients, sharingType, sharingDesc) => async (
     )
   )
   trackSharingByEmail(document)
-  const trucmuch = dispatch(
+  return dispatch(
     createSharing(document, recipientIds, sharingType, sharingDesc)
   )
-  console.log('share dispatch?', trucmuch)
-  return trucmuch
 }
 
 export const unshare = (document, recipient) => async (dispatch, getState) => {
