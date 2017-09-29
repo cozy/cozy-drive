@@ -45,7 +45,7 @@ const Recipient = ({ t, contact, status, documentType, onUnshare }) => {
       {status && (
         <div className={styles['pho-recipient-status']}>
           <Menu
-            title={status + '  v'}
+            title={status}
             className={styles['pho-recipient-menu']}
             buttonClassName={styles['pho-recipient-menu-btn']}
             disabled={status === 'pending'}

@@ -7,9 +7,18 @@
     background-color emerald
     color            white
 
+    &:focus
+    &:not([disabled]):not([aria-disabled=true]):hover
+        background-color emerald
+
 .coz-btn-sharedWithMe
     @extend $button--share
     background-image embedurl('../assets/icons/icon-share-white.svg')
     border-color     portage
     background-color portage
     color            white
+
+    &:focus
+    &:not([disabled]):not([aria-disabled=true]):hover
+        background-color portage
+
