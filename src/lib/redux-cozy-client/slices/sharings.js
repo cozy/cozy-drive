@@ -197,7 +197,7 @@ export const shareByLink = document => {
 }
 
 export const revokeLink = document => async (dispatch, getState) => {
-  const perm = getSharingLinkPermission(getState(), document)
+  const perm = getSharingLinkPermission(getState(), document._type)
   return dispatch({
     types: [REVOKE_SHARING_LINK, RECEIVE_SHARING_LINK_REVOKE, RECEIVE_ERROR],
     doctype: document._type,
