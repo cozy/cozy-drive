@@ -290,7 +290,7 @@ const getSharingLink = (state, doctype, id) => {
 
 const getSharingLinkPermission = (state, doctype, id) => {
   const perms = getDoctypePermissions(state, doctype)
-  const type = isFile(document) ? 'files' : 'collection'
+  const type = isFile({ _type: doctype }) ? 'files' : 'collection'
   return perms.byLink.find(
     p => p.attributes.permissions[type].values.indexOf(id) !== -1
   )
