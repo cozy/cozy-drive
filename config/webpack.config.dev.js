@@ -6,10 +6,12 @@ module.exports = {
   devtool: '#source-map',
   externals: ['cozy'],
   module: {
-    rules: [{
-      test: require.resolve('cozy-bar/dist/cozy-bar.js'),
-      loader: 'imports-loader?css=./cozy-bar.css'
-    }]
+    rules: [
+      {
+        test: require.resolve('cozy-bar/dist/cozy-bar.js'),
+        loader: 'imports-loader?css=./cozy-bar.css'
+      }
+    ]
   },
   plugins: [
     new DefinePlugin({

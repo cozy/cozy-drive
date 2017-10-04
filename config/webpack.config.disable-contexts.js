@@ -3,7 +3,5 @@
 const { IgnorePlugin } = require('webpack')
 
 module.exports = {
-  plugins: [
-    new IgnorePlugin(/^\.\.\/contexts/)
-  ]
+  plugins: [new IgnorePlugin(/^\.\.\/contexts/)]
 }

@@ -31,7 +31,9 @@ module.exports = {
               loader: 'postcss-loader',
               options: {
                 sourceMap: true,
-                plugins: () => [require('autoprefixer')({ browsers: ['last 2 versions'] })]
+                plugins: () => [
+                  require('autoprefixer')({ browsers: ['last 2 versions'] })
+                ]
               }
             },
             'stylus-loader'
@@ -44,7 +46,7 @@ module.exports = {
     new LoaderOptionsPlugin({
       options: {
         stylus: {
-          use: [ require('cozy-ui/stylus')() ]
+          use: [require('cozy-ui/stylus')()]
         }
       }
     })
