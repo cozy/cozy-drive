@@ -29,7 +29,13 @@ const filesApp = combineReducers(reducers)
 export default filesApp
 
 // Selectors
-export { getVisibleFiles, getFileById, getFolderIdFromRoute, getFolderPath, getFolderUrl } from './view'
+export {
+  getVisibleFiles,
+  getFileById,
+  getFolderIdFromRoute,
+  getFolderPath,
+  getFolderUrl
+} from './view'
 export { isMenuVisible as isActionMenuVisible } from '../ducks/actionmenu'
 
 export const getSelectedFiles = state => {

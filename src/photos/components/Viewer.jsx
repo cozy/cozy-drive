@@ -15,13 +15,13 @@ const KEY_CODE_RIGHT = 39
 const ACTIONS_HIDE_DELAY = 3000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
-const MASS = 10       // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
-const FRICTION = 0.9   // When the photo is paning after a pan gesture ended suddenly, FRICTION determines how quickly the movement slows down. 0 would stop it imediately, 1 doesn't slow it down at all.
+const MASS = 10 // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
+const FRICTION = 0.9 // When the photo is paning after a pan gesture ended suddenly, FRICTION determines how quickly the movement slows down. 0 would stop it imediately, 1 doesn't slow it down at all.
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
 export class Viewer extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -48,11 +48,11 @@ export class Viewer extends Component {
     this.hideActionsTimeout = null
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.setState({...mapRouteToPhotos(nextProps.photos, nextProps.params)})
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...mapRouteToPhotos(nextProps.photos, nextProps.params) })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.onKeyDownCallback = this.onKeyDown.bind(this)
     document.addEventListener('keydown', this.onKeyDownCallback, false)
 
@@ -73,8 +73,16 @@ export class Viewer extends Component {
       this.setState(state => {
         const maxOffset = this.computeMaxOffset()
         return {
-          offsetX: clamp(-maxOffset.x, state.initialOffset.x + e.deltaX / state.scale, maxOffset.x),
-          offsetY: clamp(-maxOffset.y, state.initialOffset.y + e.deltaY / state.scale, maxOffset.y)
+          offsetX: clamp(
+            -maxOffset.x,
+            state.initialOffset.x + e.deltaX / state.scale,
+            maxOffset.x
+          ),
+          offsetY: clamp(
+            -maxOffset.y,
+            state.initialOffset.y + e.deltaY / state.scale,
+            maxOffset.y
+          )
         }
       })
     })
@@ -83,10 +91,14 @@ export class Viewer extends Component {
     this.gesturesHandler.on('pinch', e => {
       if (e.isFinal) return // hard to reproduce, but the final event seems to be causing problems and since it's just replaying the previous event, it can safely be discared
 
-      this.setState((state) => {
+      this.setState(state => {
         // first we compute the scale factor: this is the number by which we will multiply the initial scale (as it was before the gesture started) to get the final scaling value. So if the initial scale is 2, and the scale factor is 1.5, the final scale will be 3.
         // this value is clamped so so it stays within reasonable zoom limits.
-        let scaleFactor = clamp(MIN_SCALE / state.initialScale, e.scale, MAX_SCALE / state.initialScale)
+        let scaleFactor = clamp(
+          MIN_SCALE / state.initialScale,
+          e.scale,
+          MAX_SCALE / state.initialScale
+        )
 
         // When the user is zooming in or out, we want that the origin point of the gesture to stay in exactly the same place. The scaling origin is in the center of the viewer.
         // If the gesture's origin is the same as the scaling origin, this works "out of the box" — you can imagine the pixels on all sides being "pushed" towards the outside. But if the gesture's origin is not in the center, we need to offset the whole image to produce the illusion that the scaling center is there.
@@ -129,12 +141,15 @@ export class Viewer extends Component {
 
     this.gesturesHandler.on('panend', e => {
       // convert the remaining velocity into momentum
-      this.setState({
-        momentum: {
-          x: e.velocityX * MASS,
-          y: e.velocityY * MASS
-        }
-      }, this.applyMomentum.bind(this))
+      this.setState(
+        {
+          momentum: {
+            x: e.velocityX * MASS,
+            y: e.velocityY * MASS
+          }
+        },
+        this.applyMomentum.bind(this)
+      )
     })
 
     this.gesturesHandler.on('tap', this.toggleActions.bind(this))
@@ -147,35 +162,56 @@ export class Viewer extends Component {
   /**
    * Gradually applies the momentum after a pan end
    */
-  applyMomentum () {
-    this.setState(state => {
-      const maxOffset = this.computeMaxOffset()
+  applyMomentum() {
+    this.setState(
+      state => {
+        const maxOffset = this.computeMaxOffset()
 
-      return {
-        offsetX: clamp(-maxOffset.x, state.offsetX + state.momentum.x, maxOffset.x),
-        offsetY: clamp(-maxOffset.y, state.offsetY + state.momentum.y, maxOffset.y),
-        momentum: {
-          x: state.momentum.x * FRICTION,
-          y: state.momentum.y * FRICTION
+        return {
+          offsetX: clamp(
+            -maxOffset.x,
+            state.offsetX + state.momentum.x,
+            maxOffset.x
+          ),
+          offsetY: clamp(
+            -maxOffset.y,
+            state.offsetY + state.momentum.y,
+            maxOffset.y
+          ),
+          momentum: {
+            x: state.momentum.x * FRICTION,
+            y: state.momentum.y * FRICTION
+          }
         }
+      },
+      () => {
+        if (
+          Math.abs(this.state.momentum.x) > 0.1 ||
+          Math.abs(this.state.momentum.y) > 0.1
+        )
+          requestAnimationFrame(this.applyMomentum.bind(this))
       }
-    }, () => {
-      if (Math.abs(this.state.momentum.x) > 0.1 || Math.abs(this.state.momentum.y) > 0.1) requestAnimationFrame(this.applyMomentum.bind(this))
-    })
+    )
   }
 
   /**
    * Compute the maximum offset that can be applied to the photo on each axis before it goes over the edges
    * @returns {object} A point with an x and y property
    */
-  computeMaxOffset () {
+  computeMaxOffset() {
     if (this.viewer && this.photo) {
       const wrapperBoundaries = this.viewer.getBoundingClientRect()
       const photoBoundaries = this.photo.getBoundingClientRect()
 
       return {
-        x: Math.max(photoBoundaries.width / 2 - wrapperBoundaries.width / 2, 0) / this.state.scale,
-        y: Math.max(photoBoundaries.height / 2 - wrapperBoundaries.height / 2, 0) / this.state.scale
+        x:
+          Math.max(photoBoundaries.width / 2 - wrapperBoundaries.width / 2, 0) /
+          this.state.scale,
+        y:
+          Math.max(
+            photoBoundaries.height / 2 - wrapperBoundaries.height / 2,
+            0
+          ) / this.state.scale
       }
     } else {
       return {
@@ -191,7 +227,7 @@ export class Viewer extends Component {
    * - kill any remaining momentum from previous gestures
    * - hide the actions
    */
-  prepareForGesture () {
+  prepareForGesture() {
     this.setState(state => ({
       initialScale: state.scale,
       initialOffset: {
@@ -206,28 +242,32 @@ export class Viewer extends Component {
     }))
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.hideActions && !this.state.hideActions) this.hideActionsAfterDelay()
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.hideActions && !this.state.hideActions)
+      this.hideActionsAfterDelay()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDownCallback, false)
   }
 
-  onKeyDown (e) {
+  onKeyDown(e) {
     if (e.keyCode === KEY_CODE_LEFT) this.navigateToPhoto(this.state.previousID)
-    else if (e.keyCode === KEY_CODE_RIGHT) this.navigateToPhoto(this.state.nextID)
+    else if (e.keyCode === KEY_CODE_RIGHT)
+      this.navigateToPhoto(this.state.nextID)
   }
 
-  onSwipe (e) {
+  onSwipe(e) {
     // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
     if (this.state.scale > 1) return
 
-    if (e.direction === Hammer.DIRECTION_LEFT) this.navigateToPhoto(this.state.nextID)
-    else if (e.direction === Hammer.DIRECTION_RIGHT) this.navigateToPhoto(this.state.previousID)
+    if (e.direction === Hammer.DIRECTION_LEFT)
+      this.navigateToPhoto(this.state.nextID)
+    else if (e.direction === Hammer.DIRECTION_RIGHT)
+      this.navigateToPhoto(this.state.previousID)
   }
 
-  navigateToPhoto (id) {
+  navigateToPhoto(id) {
     if (this.state.singlePhoto) return
 
     this.setState({
@@ -240,53 +280,89 @@ export class Viewer extends Component {
     const router = this.props.router
     const url = router.location.pathname
     const parentPath = url.substring(0, url.lastIndexOf('/'))
-    router.push({ pathname: `${parentPath}/${id}`, query: router.location.query })
+    router.push({
+      pathname: `${parentPath}/${id}`,
+      query: router.location.query
+    })
   }
 
-  handleImageLoaded () {
+  handleImageLoaded() {
     this.setState({ isImageLoading: false })
   }
 
-  toggleActions () {
-    this.setState(state => ({...state, hideActions: !state.hideActions}))
+  toggleActions() {
+    this.setState(state => ({ ...state, hideActions: !state.hideActions }))
   }
 
-  showActions () {
-    this.setState(state => ({...state, hideActions: false}))
+  showActions() {
+    this.setState(state => ({ ...state, hideActions: false }))
   }
 
-  hideActionsAfterDelay () {
+  hideActionsAfterDelay() {
     clearTimeout(this.hideActionsTimeout)
     this.hideActionsTimeout = setTimeout(() => {
       this.setState({ hideActions: true })
     }, ACTIONS_HIDE_DELAY)
   }
 
-  render () {
-    const { isImageLoading, previousID, nextID, currentPhoto, singlePhoto, hideActions, scale, offsetX, offsetY } = this.state
+  render() {
+    const {
+      isImageLoading,
+      previousID,
+      nextID,
+      currentPhoto,
+      singlePhoto,
+      hideActions,
+      scale,
+      offsetX,
+      offsetY
+    } = this.state
     const style = {
       transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`,
       display: isImageLoading ? 'none' : 'initial'
     }
     return (
-      <div className={styles['pho-viewer-wrapper']} role='viewer' ref={viewer => { this.viewer = viewer }}>
+      <div className={styles['pho-viewer-wrapper']} role="viewer">
         <ViewerToolbar hidden={hideActions} currentPhoto={currentPhoto} />
-        {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-previous'], {[styles['pho-viewer-nav-previous--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(previousID)} />}
-        <div className={styles['pho-viewer-photo']}>
-          {currentPhoto &&
+        {!singlePhoto && (
+          <a
+            role="button"
+            className={classNames(styles['pho-viewer-nav-previous'], {
+              [styles['pho-viewer-nav-previous--hidden']]: hideActions
+            })}
+            onClick={() => this.navigateToPhoto(previousID)}
+          />
+        )}
+        <div
+          className={styles['pho-viewer-photo']}
+          ref={viewer => {
+            this.viewer = viewer
+          }}
+        >
+          {currentPhoto && (
             <ImageLoader
               photo={currentPhoto}
               onLoad={this.handleImageLoaded}
               src={`${cozy.client._url}${currentPhoto.links.large}`}
               style={style}
-              ref={photo => { this.photo = React.findDOMNode(photo) }}
+              ref={photo => {
+                this.photo = React.findDOMNode(photo)
+              }}
             />
-          }
-          {(!currentPhoto || isImageLoading) &&
-            <Loading noMargin color='white' />
-          }
+          )}
+          {(!currentPhoto || isImageLoading) && (
+              <Loading noMargin color="white" />
+            )}
         </div>
-        {!singlePhoto && <a role='button' className={classNames(styles['pho-viewer-nav-next'], {[styles['pho-viewer-nav-next--hidden']]: hideActions})} onClick={() => this.navigateToPhoto(nextID)} />}
+        {!singlePhoto && (
+          <a
+            role="button"
+            className={classNames(styles['pho-viewer-nav-next'], {
+              [styles['pho-viewer-nav-next--hidden']]: hideActions
+            })}
+            onClick={() => this.navigateToPhoto(nextID)}
+          />
+        )}
       </div>
     )
   }
@@ -299,7 +375,8 @@ const mapRouteToPhotos = (photos = [], params) => {
   let currentPhoto = photos[currentPhotoIndex]
 
   let nextID = set[(currentPhotoIndex + 1) % set.length]
-  let previousID = set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]
+  let previousID =
+    set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]
 
   return {
     singlePhoto: currentID === previousID && currentID === nextID,

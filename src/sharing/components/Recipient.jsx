@@ -15,9 +15,7 @@ const Avatar = ({ name }) => {
     'background-color': bg
   }
   return (
-    <div
-      className={styles['pho-recipient-avatar']}
-      style={style}>
+    <div className={styles['pho-recipient-avatar']} style={style}>
       <span>{initial}</span>
     </div>
   )
@@ -44,21 +42,25 @@ const Recipient = ({ t, contact, status, documentType, onUnshare }) => {
     <div className={styles['pho-recipient']}>
       <Avatar name={name} />
       <Identity name={name} url={url} />
-      {status &&
+      {status && (
         <div className={styles['pho-recipient-status']}>
           <Menu
-            title={status + '  v'}
+            title={status}
             className={styles['pho-recipient-menu']}
             buttonClassName={styles['pho-recipient-menu-btn']}
+            disabled={status === 'pending'}
           >
             <Item>
-              <a className={classNames(styles['pho-action-unshare'])} onClick={() => onUnshare(contact)}>
+              <a
+                className={classNames(styles['pho-action-unshare'])}
+                onClick={() => onUnshare(contact)}
+              >
                 {t(`${documentType}.share.unshare.title`)}
               </a>
             </Item>
           </Menu>
         </div>
-      }
+      )}
     </div>
   )
 }

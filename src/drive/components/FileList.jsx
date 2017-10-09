@@ -13,19 +13,21 @@ const FETCH_LIMIT = 50
 const ROW_HEIGHT = 50
 
 class FileList extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.resetCache(props.files)
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.fileCount !== this.props.fileCount &&
-      newProps.files.length !== this.props.files.length) {
+  componentWillReceiveProps(newProps) {
+    if (
+      newProps.fileCount !== this.props.fileCount &&
+      newProps.files.length !== this.props.files.length
+    ) {
       this.resetCache(newProps.files)
     }
   }
 
-  render () {
+  render() {
     const { fileCount, files, selected, withSelectionCheckbox } = this.props
     return (
       <InfiniteLoader
@@ -65,7 +67,8 @@ class FileList extends PureComponent {
   loadMoreRows = ({ startIndex, stopIndex }) => {
     const limit = stopIndex - startIndex + 1
     this.flagAsLoading(startIndex, stopIndex)
-    return this.props.fetchMoreFiles(this.props.displayedFolder.id, startIndex, limit)
+    return this.props
+      .fetchMoreFiles(this.props.displayedFolder.id, startIndex, limit)
       .then(() => this.flagAsLoaded(startIndex, stopIndex))
   }
 
@@ -74,9 +77,11 @@ class FileList extends PureComponent {
     this.flagAsLoaded(0, files.length - 1)
   }
 
-  flagAsLoaded = (startIndex, stopIndex) => this.flagFiles(startIndex, stopIndex, STATUS_LOADED)
+  flagAsLoaded = (startIndex, stopIndex) =>
+    this.flagFiles(startIndex, stopIndex, STATUS_LOADED)
 
-  flagAsLoading = (startIndex, stopIndex) => this.flagFiles(startIndex, stopIndex, STATUS_LOADING)
+  flagAsLoading = (startIndex, stopIndex) =>
+    this.flagFiles(startIndex, stopIndex, STATUS_LOADING)
 
   flagFiles = (startIndex, stopIndex, flag) => {
     for (var i = startIndex; i <= stopIndex; i++) this.requestedFiles[i] = flag
@@ -84,14 +89,22 @@ class FileList extends PureComponent {
 
   rowRenderer = ({ index, key, style }) => {
     const {
-      displayedFolder, selected = [], selectionModeActive, onFolderOpen, onFileOpen, onFileToggle, showActionMenu, withSelectionCheckbox
+      displayedFolder,
+      selected = [],
+      selectionModeActive,
+      onFolderOpen,
+      onFileOpen,
+      onFileToggle,
+      showActionMenu,
+      withSelectionCheckbox
     } = this.props
     const file = this.props.files[index]
     if (!file) {
       return <FilePlaceholder key={key} style={style} />
     }
     const { isRenaming, renamingFile, isAvailableOffline } = this.props
-    const isFileRenaming = isRenaming && renamingFile && renamingFile.id === file.id
+    const isFileRenaming =
+      isRenaming && renamingFile && renamingFile.id === file.id
     const isSelected = selected.find(f => f && f.id === file.id) !== undefined
     return (
       <File

@@ -10,13 +10,27 @@ export const Nav = ({ t }) => (
   <nav>
     <ul className={styles['coz-nav']}>
       <li className={styles['coz-nav-item']}>
-        <Link to='/photos' className={classNames(styles['pho-cat-photos'], styles['coz-nav-link'])} activeClassName={styles['active']}>
-          { t('Nav.photos') }
+        <Link
+          to="/photos"
+          className={classNames(
+            styles['pho-cat-photos'],
+            styles['coz-nav-link']
+          )}
+          activeClassName={styles['active']}
+        >
+          {t('Nav.photos')}
         </Link>
       </li>
       <li className={styles['coz-nav-item']}>
-        <Link to='/albums' className={classNames(styles['pho-cat-albums'], styles['coz-nav-link'])} activeClassName={styles['active']}>
-          { t('Nav.albums') }
+        <Link
+          to="/albums"
+          className={classNames(
+            styles['pho-cat-albums'],
+            styles['coz-nav-link']
+          )}
+          activeClassName={styles['active']}
+        >
+          {t('Nav.albums')}
         </Link>
       </li>
     </ul>

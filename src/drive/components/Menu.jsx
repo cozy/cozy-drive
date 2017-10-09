@@ -3,13 +3,16 @@ import styles from '../styles/menu'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
-export const Item = ({ children, onClick }) =>
-  <div onClick={onClick} className={styles['coz-menu-item']}>{children}</div>
+export const Item = ({ children, onClick }) => (
+  <div onClick={onClick} className={styles['coz-menu-item']}>
+    {children}
+  </div>
+)
 
 export default class Menu extends Component {
   state = { opened: false }
 
-  toggle = () => this.state.opened ? this.close() : this.open()
+  toggle = () => (this.state.opened ? this.close() : this.open())
 
   handleClickOutside = e => {
     if (!this.container.contains(e.target)) {
@@ -22,18 +25,18 @@ export default class Menu extends Component {
     this.close()
   }
 
-  open () {
+  open() {
     this.setState({ opened: true })
     document.addEventListener('click', this.handleClickOutside, true)
   }
 
-  close () {
+  close() {
     this.setState({ opened: false })
     document.removeEventListener('click', this.handleClickOutside, true)
   }
 
-  renderItems () {
-    return React.Children.map(this.props.children, (item) => {
+  renderItems() {
+    return React.Children.map(this.props.children, item => {
       if (!item) return item
       // ideally here, we should rely on React's type property and verify that
       // type === Item, but for some reason, preact vnodes don't have this property
@@ -46,26 +49,29 @@ export default class Menu extends Component {
     })
   }
 
-  render () {
+  render() {
     const { title, disabled, className, buttonClassName } = this.props
     const { opened } = this.state
     return (
       <div
         className={classNames(styles['coz-menu'], className)}
-        ref={ref => { this.container = ref }}
+        ref={ref => {
+          this.container = ref
+        }}
       >
         <button
-          role='button'
+          role="button"
           className={classNames('coz-btn', buttonClassName)}
           disabled={disabled}
           onClick={this.toggle}
         >
-          <span className='coz-hidden'>{title}</span>
+          <span className="coz-hidden">{title}</span>
         </button>
-        <div className={classNames(
-          styles['coz-menu-inner'],
-          { [styles['coz-menu-inner--opened']]: opened }
-        )}>
+        <div
+          className={classNames(styles['coz-menu-inner'], {
+            [styles['coz-menu-inner--opened']]: opened
+          })}
+        >
           {this.renderItems()}
         </div>
       </div>

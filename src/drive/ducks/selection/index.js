@@ -10,13 +10,17 @@ const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 
 // selectors
 export const getSelectedIds = state => state.selection.selected
-export const isSelectionBarVisible = state => state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
+export const isSelectionBarVisible = state =>
+  state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
 
 // actions
 export const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
 export const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
 export const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
-export const toggleItemSelection = (item, selected) => ({ type: selected ? UNSELECT_ITEM : SELECT_ITEM, id: item.id })
+export const toggleItemSelection = (item, selected) => ({
+  type: selected ? UNSELECT_ITEM : SELECT_ITEM,
+  id: item.id
+})
 
 // components
 export { SelectionBar }
@@ -28,16 +32,10 @@ const selected = (state = [], action) => {
   }
   switch (action.type) {
     case SELECT_ITEM:
-      return [
-        ...state,
-        action.id
-      ]
+      return [...state, action.id]
     case UNSELECT_ITEM:
       const idx = state.indexOf(action.id)
-      return [
-        ...state.slice(0, idx),
-        ...state.slice(idx + 1)
-      ]
+      return [...state.slice(0, idx), ...state.slice(idx + 1)]
     case HIDE_SELECTION_BAR:
       return []
     default:

@@ -1,12 +1,14 @@
 /* global cozy */
 
-const slugify = (text) =>
-  text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
-    .replace(/--+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '')             // Trim - from end of text
+const slugify = text =>
+  text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w-]+/g, '') // Remove all non-word chars
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, '') // Trim - from end of text
 
 const forceFileDownload = (href, filename) => {
   const element = document.createElement('a')
@@ -26,9 +28,8 @@ export const downloadArchive = async (notSecureFilename, fileIds) => {
   forceFileDownload(fullpath, filename + '.zip')
 }
 
-export const downloadFile = async (file) => {
+export const downloadFile = async file => {
   const response = await cozy.client.files.downloadById(file.id)
   const blob = await response.blob()
-  const filename = file.name
-  forceFileDownload(window.URL.createObjectURL(blob), filename)
+  forceFileDownload(window.URL.createObjectURL(blob), file.name)
 }

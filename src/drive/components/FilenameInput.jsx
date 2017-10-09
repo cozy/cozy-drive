@@ -9,7 +9,7 @@ const ESC_KEY = 27
 const valueIsEmpty = value => value.toString() === ''
 
 export default class FilenameInput extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       value: props.name || '',
@@ -19,11 +19,11 @@ export default class FilenameInput extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.textInput.focus()
   }
 
-  handleKeyDown (e) {
+  handleKeyDown(e) {
     if (e.keyCode === ENTER_KEY && !valueIsEmpty(this.state.value)) {
       this.setState({ hasBeenSubmitedOrAborted: true })
       this.submit()
@@ -33,13 +33,13 @@ export default class FilenameInput extends Component {
     }
   }
 
-  handleChange (e) {
+  handleChange(e) {
     const value = e.target.value
     this.setState({ value })
     this.props.onChange && this.props.onChange(value)
   }
 
-  handleBlur () {
+  handleBlur() {
     // On top of "normal" blurs, the event happens all the time after a submit or an abort, because this component is removed from the DOM while having the focus.
     // we want to do things only on "normal" blurs, *not* after a submit/abort
     if (!this.state.hasBeenSubmitedOrAborted) {
@@ -49,27 +49,33 @@ export default class FilenameInput extends Component {
     }
   }
 
-  submit () {
+  submit() {
     this.setState({ working: true, error: false })
-    this.props.onSubmit && this.props.onSubmit(this.state.value)
-      .then(() => this.setState({ working: false }))
-      .catch(() => this.setState({
-        working: false,
-        error: true
-      }))
+    this.props.onSubmit &&
+      this.props
+        .onSubmit(this.state.value)
+        .then(() => this.setState({ working: false }))
+        .catch(() =>
+          this.setState({
+            working: false,
+            error: true
+          })
+        )
   }
 
-  abort (accidental = false) {
+  abort(accidental = false) {
     this.props.onAbort && this.props.onAbort(accidental)
   }
 
-  render (props, { value, working, error }) {
+  render(props, { value, working, error }) {
     return (
       <div className={styles['fil-file-name-input']}>
         <input
-          type='text'
+          type="text"
           value={value}
-          ref={(input) => { this.textInput = input }}
+          ref={input => {
+            this.textInput = input
+          }}
           disabled={working}
           onChange={e => this.handleChange(e)}
           onBlur={() => this.handleBlur()}

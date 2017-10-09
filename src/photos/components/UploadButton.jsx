@@ -17,17 +17,26 @@ const styles = {
   }
 }
 
-export const UploadButton = ({ t, label, type = 'button', disabled, onUpload, className = '' }) => (
+export const UploadButton = ({
+  t,
+  label,
+  type = 'button',
+  disabled,
+  onUpload,
+  className = ''
+}) => (
   <label
-    role='button'
+    role="button"
     disabled={disabled}
-    className={`${className} ${type === 'menu-item' ? 'coz-link--upload' : 'coz-btn coz-btn--regular coz-btn--upload'}`}
+    className={`${className} ${type === 'menu-item'
+      ? 'coz-link--upload'
+      : 'coz-btn coz-btn--regular coz-btn--upload'}`}
     style={styles.parent}
   >
-    { label }
+    {label}
     <input
-      type='file'
-      accept='image/*'
+      type="file"
+      accept="image/*"
       multiple
       disabled={disabled}
       style={styles.input}
@@ -35,7 +44,8 @@ export const UploadButton = ({ t, label, type = 'button', disabled, onUpload, cl
         // e.target.files is an array-like, transform it to Array instance
         const photosArray = Array.from(e.target.files)
         onUpload(photosArray)
-      }} />
+      }}
+    />
   </label>
 )
 

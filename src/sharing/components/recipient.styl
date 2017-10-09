@@ -57,6 +57,14 @@
 
 .pho-recipient-menu-btn
     text-transform capitalize
+    padding-right  em(48px)
+    background embedurl("../assets/icon-arrow-down.svg") right em(16px) center no-repeat
+    background-color transparent
+    color            black
+
+    &:focus
+    &:not([disabled]):not([aria-disabled=true]):hover
+        background-color transparent
 
 .pho-action-unshare
     color pomegranate !important

@@ -6,7 +6,7 @@ import Nav from '../containers/Nav'
 import ButtonClient from '../../layout/pushClient/Button'
 
 const Sidebar = () => (
-  <aside class={styles['fil-sidebar']}>
+  <aside className={styles['fil-sidebar']}>
     <Nav />
     <ButtonClient />
   </aside>

@@ -9,12 +9,16 @@ import Menu, { Item } from '../../../components/Menu'
 import MoreButton from '../../../components/MoreButton'
 
 const AlbumsToolbar = ({ t }) => (
-  <div className={styles['pho-toolbar']} role='toolbar'>
-    <div className='coz-desktop'>
+  <div className={styles['pho-toolbar']} role="toolbar">
+    <div className="coz-desktop">
       <Link
-        role='button'
-        className={classNames('coz-btn', 'coz-btn--secondary', styles['pho-btn-new'])}
-        to='/albums/new'
+        role="button"
+        className={classNames(
+          'coz-btn',
+          'coz-btn--secondary',
+          styles['pho-btn-new']
+        )}
+        to="/albums/new"
       >
         {t('Toolbar.album_new')}
       </Link>
@@ -25,7 +29,7 @@ const AlbumsToolbar = ({ t }) => (
     >
       <Item>
         <div>
-          <Link to='/albums/new' className={styles['pho-btn-new']}>
+          <Link to="/albums/new" className={styles['pho-btn-new']}>
             {t('Toolbar.album_new')}
           </Link>
         </div>

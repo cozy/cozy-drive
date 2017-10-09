@@ -1,6 +1,4 @@
-import {
-  PRE_UPLOAD_FILE
-} from '../actions'
+import { PRE_UPLOAD_FILE } from '../actions'
 
 const CATEGORY = {
   INTERACTION: 'interaction'

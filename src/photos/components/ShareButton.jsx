@@ -5,7 +5,7 @@ import styles from '../styles/shareButton'
 
 export const ShareButton = ({ label, onClick }) => (
   <button
-    role='button'
+    role="button"
     className={classNames('coz-btn', 'coz-btn--secondary', 'coz-btn--share')}
     onClick={() => onClick()}
   >
@@ -15,7 +15,7 @@ export const ShareButton = ({ label, onClick }) => (
 
 export const SharedByMeButton = ({ label, onClick }) => (
   <button
-    role='button'
+    role="button"
     className={classNames('coz-btn', styles['coz-btn-shared'])}
     onClick={() => onClick()}
   >
@@ -25,7 +25,7 @@ export const SharedByMeButton = ({ label, onClick }) => (
 
 export const SharedWithMeButton = ({ label, onClick }) => (
   <button
-    role='button'
+    role="button"
     className={classNames('coz-btn', styles['coz-btn-sharedWithMe'])}
     onClick={() => onClick()}
   >

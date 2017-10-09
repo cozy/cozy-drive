@@ -9,7 +9,7 @@ import { unrevokeClient } from '../actions/authorization'
 import { registerDevice } from '../actions/settings'
 
 class RevokableWrapper extends Component {
-  logout () {
+  logout() {
     resetClient()
     this.props.unrevokeClient()
     this.props.router.replace({
@@ -18,12 +18,12 @@ class RevokableWrapper extends Component {
     })
   }
 
-  loginagain () {
+  loginagain() {
     cozy.client._storage.clear()
     this.props.registerDevice()
   }
 
-  render () {
+  render() {
     const { children, t } = this.props
     if (this.props.revoked) {
       return (
@@ -32,9 +32,13 @@ class RevokableWrapper extends Component {
             title={t('mobile.revoked.title')}
             description={t('mobile.revoked.description')}
             secondaryText={t('mobile.revoked.logout')}
-            secondaryAction={() => { this.logout() }}
+            secondaryAction={() => {
+              this.logout()
+            }}
             primaryText={t('mobile.revoked.loginagain')}
-            primaryAction={() => { this.loginagain() }}
+            primaryAction={() => {
+              this.loginagain()
+            }}
             withCross={false}
           />
           {children}
@@ -46,13 +50,18 @@ class RevokableWrapper extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   unrevokeClient: () => dispatch(unrevokeClient()),
-  registerDevice: () => dispatch(registerDevice()).then(() => { dispatch(unrevokeClient()) })
+  registerDevice: () =>
+    dispatch(registerDevice()).then(() => {
+      dispatch(unrevokeClient())
+    })
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   revoked: state.mobile.authorization.revoked
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(RevokableWrapper))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate()(RevokableWrapper)
+)

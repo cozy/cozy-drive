@@ -5,9 +5,11 @@ import { getToken, getClientUrl } from './cozy-helper'
 import { logException } from './reporter'
 
 const hasCordovaPlugin = () => {
-  return isCordova() &&
+  return (
+    isCordova() &&
     window.cordova.plugins !== undefined &&
     window.cordova.plugins.listLibraryItems !== undefined
+  )
 }
 
 export const isAuthorized = async () => {
@@ -28,7 +30,7 @@ export const requestAuthorization = async () => {
   return new Promise((resolve, reject) => {
     window.cordova.plugins.listLibraryItems.requestReadAuthorization(
       () => resolve(true),
-      (error) => {
+      error => {
         if (!error.startsWith('Permission')) {
           console.warn(error)
           logException('requestAuthorization error:', error)
@@ -44,27 +46,34 @@ export const uploadLibraryItem = (dirID, libraryItem) => {
     return new Promise(async (resolve, reject) => {
       // the cordova plugin is going to do the upload and needs all the infos to make a request to the stack
       const token = await getToken()
-      const uri = getClientUrl() +
-                  '/files/' + encodeURIComponent(dirID) +
-                  '?Name=' + encodeURIComponent(libraryItem['fileName']) +
-                  '&Type=file&Tags=library&Executable=false'
+      const uri =
+        getClientUrl() +
+        '/files/' +
+        encodeURIComponent(dirID) +
+        '?Name=' +
+        encodeURIComponent(libraryItem['fileName']) +
+        '&Type=file&Tags=library&Executable=false'
 
       const payload = {
-        'id': dirID,
-        'libraryId': libraryItem['id'],
-        'mimeType': libraryItem['mimeType'],
-        'filePath': libraryItem['filePath'],
-        'serverUrl': uri,
-        'headers': {
-          'Authorization': 'Bearer ' + token,
+        id: dirID,
+        libraryId: libraryItem['id'],
+        mimeType: libraryItem['mimeType'],
+        filePath: libraryItem['filePath'],
+        serverUrl: uri,
+        headers: {
+          Authorization: 'Bearer ' + token,
           'Content-Type': libraryItem['mimeType']
         }
       }
 
-      window.cordova.plugins.listLibraryItems.uploadItem(payload, result => {
-        if (result.errors) reject(result.errors)
-        else resolve(result.data)
-      }, reject)
+      window.cordova.plugins.listLibraryItems.uploadItem(
+        payload,
+        result => {
+          if (result.errors) reject(result.errors)
+          else resolve(result.data)
+        },
+        reject
+      )
     })
   }
 
@@ -77,9 +86,11 @@ export const getPhotos = async () => {
   if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
       window.cordova.plugins.listLibraryItems.listItems(
-        true, true, false, // includePictures, includeVideos, includeCloud
-        (response) => resolve(response.library),
-        (err) => {
+        true,
+        true,
+        false, // includePictures, includeVideos, includeCloud
+        response => resolve(response.library),
+        err => {
           console.warn(err)
           resolve(defaultReturn)
         }
@@ -93,7 +104,7 @@ export const getPhotos = async () => {
 export const getMediaFolderName = () => {
   if (_polyglot === undefined) {
     const lang = getLang()
-    const dictRequire = (lang) => require(`../../locales/${lang}`)
+    const dictRequire = lang => require(`../../locales/${lang}`)
     initTranslation(lang, dictRequire)
   }
   const dir = _polyglot.t('mobile.settings.media_backup.media_folder')

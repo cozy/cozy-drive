@@ -6,7 +6,7 @@ import URLGetter from './URLGetter'
 import SuggestionProvider from './SuggestionProvider'
 
 class IntentHandler extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -16,11 +16,11 @@ class IntentHandler extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.startService()
   }
 
-  async startService () {
+  async startService() {
     const { intentId } = this.props
 
     let component
@@ -30,9 +30,15 @@ class IntentHandler extends React.Component {
       service = await cozy.client.intents.createService(intentId, window)
       intent = service.getIntent()
 
-      if (intent.attributes.action === 'OPEN' && intent.attributes.type === 'io.cozy.suggestions') {
+      if (
+        intent.attributes.action === 'OPEN' &&
+        intent.attributes.type === 'io.cozy.suggestions'
+      ) {
         component = SuggestionProvider
-      } else if (intent.attributes.action === 'OPEN' && intent.attributes.type === 'io.cozy.files') {
+      } else if (
+        intent.attributes.action === 'OPEN' &&
+        intent.attributes.type === 'io.cozy.files'
+      ) {
         component = Embeder
       } else if (intent.attributes.action === 'GET_URL') {
         component = URLGetter
@@ -48,11 +54,13 @@ class IntentHandler extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { service, intent } = this.state
     const ServiceComponent = this.state.component
 
-    return ServiceComponent ? <ServiceComponent service={service} intent={intent} /> : null
+    return ServiceComponent ? (
+      <ServiceComponent service={service} intent={intent} />
+    ) : null
   }
 }
 

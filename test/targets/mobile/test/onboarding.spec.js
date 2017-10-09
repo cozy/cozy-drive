@@ -8,10 +8,10 @@ import { SelectServer } from '../../../../src/targets/mobile/containers/onboardi
 import { Welcome } from '../../../../src/targets/mobile/containers/onboarding/Welcome'
 
 // used for ref issue in jest tests using react-test-renderer https://facebook.github.io/react/blog/2016/11/16/react-v15.4.0.html#mocking-refs-for-snapshot-testing
-function createNodeMock (element) {
+function createNodeMock(element) {
   if (element.type === 'input') {
     return {
-      focus () {}
+      focus() {}
     }
   }
   return null
@@ -19,13 +19,11 @@ function createNodeMock (element) {
 
 describe('Onboarding', () => {
   it('should render different components', () => {
-    const options = {createNodeMock}
-    const steps = [
-      Welcome,
-      SelectServer
-    ]
+    const options = { createNodeMock }
+    const steps = [Welcome, SelectServer]
     const component = renderer.create(
-      <Wizard steps={steps} t={() => {}} />, options
+      <Wizard steps={steps} t={() => {}} />,
+      options
     )
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
@@ -43,7 +41,7 @@ describe('Onboarding', () => {
   })
 
   it('should render the SelectServer screen', () => {
-    const options = {createNodeMock}
+    const options = { createNodeMock }
     const component = renderer.create(<SelectServer t={() => {}} />, options)
 
     const tree = component.toJSON()

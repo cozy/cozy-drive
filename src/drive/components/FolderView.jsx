@@ -21,14 +21,15 @@ const toggle = (flag, state, props) => ({ [flag]: !state[flag] })
 class FolderView extends Component {
   state = {
     showAddFolder: false
-  };
+  }
 
   toggleAddFolder = () => {
     this.setState(toggle.bind(null, 'showAddFolder'))
   }
 
   createFolder = name => {
-    return this.props.actions.list.createFolder(name)
+    return this.props.actions.list
+      .createFolder(name)
       .then(() => this.toggleAddFolder())
   }
 
@@ -37,9 +38,17 @@ class FolderView extends Component {
     this.toggleAddFolder()
   }
 
-  render () {
+  render() {
     const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
-    const { files, selected, actionable, actions, Toolbar, canUpload, canCreateFolder } = this.props
+    const {
+      files,
+      selected,
+      actionable,
+      actions,
+      Toolbar,
+      canUpload,
+      canCreateFolder
+    } = this.props
     const { hideActionMenu, showSelectionBar } = this.props
 
     const { showAddFolder } = this.state
@@ -57,24 +66,27 @@ class FolderView extends Component {
           <Toolbar
             actions={toolbarActions}
             canUpload={canUpload}
-            disabled={fetchFailed || fetchPending || selectionModeActive || nothingToDo}
+            disabled={
+              fetchFailed || fetchPending || selectionModeActive || nothingToDo
+            }
             onSelectItemsClick={showSelectionBar}
           />
         </Topbar>
-        <div role='contentinfo'>
+        <div role="contentinfo">
           {__TARGET__ === 'mobile' && <UploadProgression />}
           {__TARGET__ === 'mobile' && <RatingModal />}
-          <div style={{display: selectionModeActive ? 'inherit' : 'none'}} >
+          <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
             <SelectionBar selected={selected} actions={actions.selection} />
           </div>
           <div className={styles['fil-content-table']}>
             <FileListHeader />
             <div className={styles['fil-content-body']}>
-              {showAddFolder &&
+              {showAddFolder && (
                 <AddFolder
                   onSubmit={this.createFolder}
                   onAbort={this.abortAddFolder}
-                />}
+                />
+              )}
               <FolderContent
                 {...this.props}
                 selectionModeActive={selectionModeActive}
@@ -82,12 +94,13 @@ class FolderView extends Component {
               />
             </div>
           </div>
-          {actionMenuActive &&
+          {actionMenuActive && (
             <FileActionMenu
               files={actionable}
               actions={actions.selection}
               onClose={hideActionMenu}
-            />}
+            />
+          )}
         </div>
       </Main>
     )

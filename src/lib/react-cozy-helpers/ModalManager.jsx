@@ -17,7 +17,7 @@ const reducer = (state = { show: false, component: null }, action) => {
 
 export default reducer
 
-export const showModal = (component) => ({
+export const showModal = component => ({
   type: SHOW_MODAL,
   component
 })
@@ -26,11 +26,9 @@ const hideModal = () => ({
   type: HIDE_MODAL
 })
 
-export const ModalManager = connect(
-  (state, ownProps) => ({ ...state.ui.modal })
-)(
-  ({ show, component, dispatch }) => {
-    if (!show) return null
-    return React.cloneElement(component, { onClose: () => dispatch(hideModal()) })
-  }
-)
+export const ModalManager = connect((state, ownProps) => ({
+  ...state.ui.modal
+}))(({ show, component, dispatch }) => {
+  if (!show) return null
+  return React.cloneElement(component, { onClose: () => dispatch(hideModal()) })
+})

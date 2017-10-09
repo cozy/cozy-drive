@@ -53,32 +53,55 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         action: files => dispatch(downloadFiles(files))
       },
       trash: {
-        action: files => confirm(<DeleteConfirm t={ownProps.t} fileCount={files.length} referenced={isAnyFileReferencedByAlbum(files)} />)
-          .then(() => dispatch(trashFiles(files)))
-          .catch(() => {})
+        action: files =>
+          confirm(
+            <DeleteConfirm
+              t={ownProps.t}
+              fileCount={files.length}
+              referenced={isAnyFileReferencedByAlbum(files)}
+            />
+          )
+            .then(() => dispatch(trashFiles(files)))
+            .catch(() => {})
       },
       openWith: {
         action: files => dispatch(openFileWith(files[0].id, files[0].name)),
-        displayCondition: (selections) => __TARGET__ === 'mobile' && selections.length === 1 && isFile(selections[0])
+        displayCondition: selections =>
+          __TARGET__ === 'mobile' &&
+          selections.length === 1 &&
+          isFile(selections[0])
       },
       rename: {
         action: selected => dispatch(startRenamingAsync(selected[0])),
-        displayCondition: (selections) => selections.length === 1 && isFile(selections[0])
+        displayCondition: selections =>
+          selections.length === 1 && isFile(selections[0])
       },
       availableOffline: {
         action: selected => dispatch(toggleAvailableOffline(selected[0])),
-        displayCondition: (selections) => __TARGET__ === 'mobile' && selections.length === 1 && isFile(selections[0]),
-        Component: (props) => <ConnectedToggleMenuItem {...props} />
+        displayCondition: selections =>
+          __TARGET__ === 'mobile' &&
+          selections.length === 1 &&
+          isFile(selections[0]),
+        Component: props => <ConnectedToggleMenuItem {...props} />
       },
       share: {
-        action: selected => dispatch(showModal(<ShareModal document={selected[0]} documentType='Files' sharingDesc={selected[0].name} />)),
-        displayCondition: selections => selections.length === 1 && isFile(selections[0])
+        action: selected =>
+          dispatch(
+            showModal(
+              <ShareModal
+                document={selected[0]}
+                documentType="Files"
+                sharingDesc={selected[0].name}
+              />
+            )
+          ),
+        displayCondition: selections =>
+          selections.length === 1 && isFile(selections[0])
       }
     }
   })
 })
 
-export default translate()(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FolderView))
+export default translate()(
+  connect(mapStateToProps, mapDispatchToProps)(FolderView)
+)

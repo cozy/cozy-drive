@@ -9,8 +9,7 @@ const confirm = (component, saga) => {
   }
 
   const confirm = () => {
-    saga()
-    .then(() => {
+    saga().then(() => {
       ReactDOM.unmountComponentAtNode(wrapper)
     })
   }

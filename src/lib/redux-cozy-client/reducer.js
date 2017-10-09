@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux'
 import { removeObjectProperty, mapValues } from './utils'
+import sharings, {
+  FETCH_SHARINGS,
+  getSharings,
+  getSharingDetails
+} from './slices/sharings'
 
 const FETCH_DOCUMENT = 'FETCH_DOCUMENT'
 const FETCH_COLLECTION = 'FETCH_COLLECTION'
@@ -49,7 +54,11 @@ const documents = (state = {}, action) => {
         ...state,
         'io.cozy.files': {
           ...state['io.cozy.files'],
-          ...updateFilesReferences(state['io.cozy.files'], action.ids, action.document)
+          ...updateFilesReferences(
+            state['io.cozy.files'],
+            action.ids,
+            action.document
+          )
         }
       }
     case REMOVE_REFERENCED_FILES:
@@ -57,7 +66,11 @@ const documents = (state = {}, action) => {
         ...state,
         'io.cozy.files': {
           ...state['io.cozy.files'],
-          ...removeFilesReferences(state['io.cozy.files'], action.ids, action.document)
+          ...removeFilesReferences(
+            state['io.cozy.files'],
+            action.ids,
+            action.document
+          )
         }
       }
     default:
@@ -65,43 +78,63 @@ const documents = (state = {}, action) => {
   }
 }
 
-const objectifyDocumentsArray = (documents) => {
-  let obj = {}
-  documents.forEach(doc => { obj[doc.id] = doc })
-  return obj
-}
+const objectifyDocumentsArray = documents =>
+  documents.reduce((obj, doc) => ({ ...obj, [doc.id]: doc }), {})
 
-const updateFilesReferences = (files, newlyReferencedIds, doc) => {
-  let updated = {}
-  newlyReferencedIds.forEach(id => {
-    const file = files[id]
-    file.relationships.referenced_by.data = file.relationships.referenced_by.data === null
-      ? [{ id: doc.id, type: doc.type }]
-      : [...file.relationships.referenced_by.data, { id: doc.id, type: doc.type }]
-    updated[id] = file
-  })
-  return updated
-}
+const updateFileReference = (
+  { relationships: { referenced_by, ...relationships }, ...file },
+  doc
+) => ({
+  ...file,
+  relationships: {
+    ...relationships,
+    [referenced_by.data]:
+      referenced_by.data === null
+        ? [{ id: doc.id, type: doc.type }]
+        : [...referenced_by.data, { id: doc.id, type: doc.type }]
+  }
+})
 
-const removeFilesReferences = (files, removedIds, doc) => {
-  let updated = {}
-  removedIds.forEach(id => {
-    const file = files[id]
-    file.relationships.referenced_by.data =
-      file.relationships.referenced_by.data.filter(rel => rel.type !== doc.type && rel.id !== doc.id)
-    updated[id] = file
-  })
-  return updated
-}
+const updateFilesReferences = (files, newlyReferencedIds, doc) =>
+  newlyReferencedIds.reduce(
+    (updated, id) => ({
+      ...updated,
+      [id]: updateFileReference(files[id], doc)
+    }),
+    {}
+  )
 
-const getArrayDoctype = (documents) => {
-  const doctype = documents[0].type
+const removeFileReferences = (
+  { relationships: { referenced_by, ...relationships }, ...file },
+  doc
+) => ({
+  ...file,
+  relationships: {
+    ...relationships,
+    [referenced_by.data]: referenced_by.data.filter(
+      rel => rel.type !== doc.type && rel.id !== doc.id
+    )
+  }
+})
+
+const removeFilesReferences = (files, removedIds, doc) =>
+  removedIds.reduce(
+    (updated, id) => ({
+      ...updated,
+      [id]: removeFileReferences(files[id], doc)
+    }),
+    {}
+  )
+
+const getDoctype = ({ type: doctype }) => {
   // TODO: don't know why the stack returns 'file' here..
   if (doctype === 'file') {
     return 'io.cozy.files'
   }
   return doctype
 }
+
+const getArrayDoctype = documents => getDoctype(documents[0])
 
 // collection reducers
 const collectionInitialState = {
@@ -129,8 +162,13 @@ const collection = (state = collectionInitialState, action) => {
         fetchStatus: 'loaded',
         lastFetch: Date.now(),
         hasMore: response.next !== undefined ? response.next : state.hasMore,
-        count: response.meta && response.meta.count ? response.meta.count : response.data.length,
-        ids: !action.skip ? response.data.map(doc => doc.id) : [...state.ids, ...response.data.map(doc => doc.id)]
+        count:
+          response.meta && response.meta.count
+            ? response.meta.count
+            : response.data.length,
+        ids: !action.skip
+          ? response.data.map(doc => doc.id)
+          : [...state.ids, ...response.data.map(doc => doc.id)]
       }
     case ADD_REFERENCED_FILES:
       return {
@@ -166,13 +204,14 @@ const collection = (state = collectionInitialState, action) => {
 }
 
 const collections = (state = {}, action) => {
-  const applyUpdate = (collections, updateAction) => {
-    let updated = {}
-    for (const name of updateAction.updateCollections) {
-      updated[name] = collection(collections[name], action)
-    }
-    return updated
-  }
+  const applyUpdate = (collections, updateAction) =>
+    updateAction.updateCollections.reduce(
+      (updated, name) => ({
+        ...updated,
+        [name]: collection(collections[name], action)
+      }),
+      {}
+    )
 
   switch (action.type) {
     case FETCH_COLLECTION:
@@ -202,7 +241,6 @@ const collections = (state = {}, action) => {
   }
 }
 
-import sharings, { FETCH_SHARINGS, getSharings, getSharingDetails } from './slices/sharings'
 export default combineReducers({
   collections,
   documents,
@@ -215,14 +253,14 @@ export const fetchCollection = (name, doctype, options = {}, skip = 0) => ({
   doctype,
   options,
   skip,
-  promise: (client) => client.fetchCollection(name, doctype, options, skip)
+  promise: client => client.fetchCollection(name, doctype, options, skip)
 })
 
 export const fetchDocument = (doctype, id) => ({
   types: [FETCH_DOCUMENT, RECEIVE_DATA, RECEIVE_ERROR],
   doctype,
   id,
-  promise: (client) => client.fetchDocument(doctype, id)
+  promise: client => client.fetchDocument(doctype, id)
 })
 
 export const fetchReferencedFiles = (doc, skip = 0) => ({
@@ -231,41 +269,41 @@ export const fetchReferencedFiles = (doc, skip = 0) => ({
   document: doc,
   options: {},
   skip,
-  promise: (client) => client.fetchReferencedFiles(doc, skip)
+  promise: client => client.fetchReferencedFiles(doc, skip)
 })
 
 export const createDocument = (doc, actionOptions = {}) => ({
   types: [CREATE_DOCUMENT, RECEIVE_NEW_DOCUMENT, RECEIVE_ERROR],
   document: doc,
-  promise: (client) => client.createDocument(doc),
+  promise: client => client.createDocument(doc),
   ...actionOptions
 })
 
 export const updateDocument = (doc, actionOptions = {}) => ({
   types: [UPDATE_DOCUMENT, RECEIVE_UPDATED_DOCUMENT, RECEIVE_ERROR],
   document: doc,
-  promise: (client) => client.updateDocument(doc),
+  promise: client => client.updateDocument(doc),
   ...actionOptions
 })
 
 export const deleteDocument = (doc, actionOptions = {}) => ({
   types: [DELETE_DOCUMENT, RECEIVE_DELETED_DOCUMENT, RECEIVE_ERROR],
   document: doc,
-  promise: (client) => client.deleteDocument(doc),
+  promise: client => client.deleteDocument(doc),
   ...actionOptions
 })
 
 export const createFile = (file, dirID, actionOptions = {}) => ({
   types: [CREATE_DOCUMENT, RECEIVE_NEW_DOCUMENT, RECEIVE_ERROR],
   doctype: 'io.cozy.files',
-  promise: (client) => client.createFile(file, dirID),
+  promise: client => client.createFile(file, dirID),
   ...actionOptions
 })
 
 export const trashFile = (file, actionOptions = {}) => ({
   types: [DELETE_DOCUMENT, RECEIVE_DELETED_DOCUMENT, RECEIVE_ERROR],
   document: file,
-  promise: (client) => client.trashFile(file),
+  promise: client => client.trashFile(file),
   ...actionOptions
 })
 
@@ -274,7 +312,7 @@ export const addReferencedFiles = (doc, ids) => ({
   collection: `${doc.type}/${doc.id}#files`,
   document: doc,
   ids,
-  promise: (client) => client.addReferencedFiles(doc, ids)
+  promise: client => client.addReferencedFiles(doc, ids)
 })
 
 export const removeReferencedFiles = (doc, ids) => ({
@@ -282,15 +320,18 @@ export const removeReferencedFiles = (doc, ids) => ({
   collection: `${doc.type}/${doc.id}#files`,
   document: doc,
   ids,
-  promise: (client) => client.removeReferencedFiles(doc, ids)
+  promise: client => client.removeReferencedFiles(doc, ids)
 })
 
-export const makeActionCreator = (promise) => ({ promise })
+export const makeActionCreator = promise => ({ promise })
 
-export const makeFetchMoreAction = ({ types, collection, document, doctype, options }, skip) =>
+export const makeFetchMoreAction = (
+  { types, collection, document, doctype, options },
+  skip
+) =>
   types[0] === FETCH_REFERENCED_FILES
-  ? fetchReferencedFiles(document, skip)
-  : fetchCollection(collection, doctype, options, skip)
+    ? fetchReferencedFiles(document, skip)
+    : fetchCollection(collection, doctype, options, skip)
 
 export const applySelectorForAction = (state, action) => {
   switch (action.types[0]) {
@@ -308,24 +349,27 @@ export const applySelectorForAction = (state, action) => {
   }
 }
 
-export const enhancePropsForActions = (props, fetchActions, dispatch) => mapValues(fetchActions, (action, propName) => {
-  const dataObject = props[propName]
-  switch (action.types[0]) {
-    case FETCH_COLLECTION:
-    case FETCH_REFERENCED_FILES:
-      return {
-        ...dataObject,
-        fetchMore: dataObject.hasMore
-          ? () => dispatch(makeFetchMoreAction(action, dataObject.data.length))
-          : null
-      }
-    default:
-      return dataObject
-  }
-})
+export const enhancePropsForActions = (props, fetchActions, dispatch) =>
+  mapValues(fetchActions, (action, propName) => {
+    const dataObject = props[propName]
+    switch (action.types[0]) {
+      case FETCH_COLLECTION:
+      case FETCH_REFERENCED_FILES:
+        return {
+          ...dataObject,
+          fetchMore: dataObject.hasMore
+            ? () =>
+                dispatch(makeFetchMoreAction(action, dataObject.data.length))
+            : null
+        }
+      default:
+        return dataObject
+    }
+  })
 
 // selectors
-const mapDocumentsToIds = (documents, doctype, ids) => ids.map(id => documents[doctype][id])
+const mapDocumentsToIds = (documents, doctype, ids) =>
+  ids.map(id => documents[doctype][id])
 
 export const getCollection = (state, name) => {
   const collection = state.cozy.collections[name]
@@ -334,7 +378,11 @@ export const getCollection = (state, name) => {
   }
   return {
     ...collection,
-    data: mapDocumentsToIds(state.cozy.documents, collection.type, collection.ids)
+    data: mapDocumentsToIds(
+      state.cozy.documents,
+      collection.type,
+      collection.ids
+    )
   }
 }
 
@@ -347,4 +395,5 @@ export const getDocument = (state, doctype, id) => {
 }
 
 export const isCollectionFetched = (state, name) =>
-  state.cozy.collections[name] && state.cozy.collections[name].fetchStatus === 'loaded'
+  state.cozy.collections[name] &&
+  state.cozy.collections[name].fetchStatus === 'loaded'

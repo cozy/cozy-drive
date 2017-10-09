@@ -2,18 +2,23 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Hammer from 'hammerjs'
 
-const shouldListenToSwipe = handlers => Object.keys(handlers).find(h => /^swipe/.test(h)) !== undefined
-const shouldListenToTap = handlers => Object.keys(handlers).find(h => /^tap/.test(h)) !== undefined
+const shouldListenToSwipe = handlers =>
+  Object.keys(handlers).find(h => /^swipe/.test(h)) !== undefined
+const shouldListenToTap = handlers =>
+  Object.keys(handlers).find(h => /^tap/.test(h)) !== undefined
 
 const GHOST_CLICK_DELAY = 350
 
-const withGestures = (eventHandlers) => {
+const withGestures = eventHandlers => {
   return WrappedComponent => {
     return class WithGesturesComponent extends Component {
-      componentDidMount () {
+      componentDidMount() {
         const node = ReactDOM.findDOMNode(this)
         this.hammer = new Hammer.Manager(node, {
-          recognizers: [[Hammer.Tap], [Hammer.Swipe, { direction: Hammer.DIRECTION_ALL }]]
+          recognizers: [
+            [Hammer.Tap],
+            [Hammer.Swipe, { direction: Hammer.DIRECTION_ALL }]
+          ]
         })
         this.handlers = eventHandlers(this.props)
         if (shouldListenToSwipe(this.handlers)) {
@@ -33,10 +38,13 @@ const withGestures = (eventHandlers) => {
           })
           node.addEventListener('click', e => {
             // when a click event happens, we check to see if it's related to the last touch event we received
-            if (ghostClickTimeout !== null &&
-                lastTouchEvent !== null &&
-                Math.round(lastTouchEvent.srcEvent.pageX) === Math.round(e.pageX) &&
-                Math.round(lastTouchEvent.srcEvent.pageY) === Math.round(e.pageY)) {
+            if (
+              ghostClickTimeout !== null &&
+              lastTouchEvent !== null &&
+              Math.round(lastTouchEvent.srcEvent.pageX) ===
+                Math.round(e.pageX) &&
+              Math.round(lastTouchEvent.srcEvent.pageY) === Math.round(e.pageY)
+            ) {
               // the 2 events are related, so we can fire the tap event
               e.preventDefault()
               e.stopPropagation()
@@ -48,25 +56,27 @@ const withGestures = (eventHandlers) => {
         }
       }
 
-      componentWillUnmount () {
+      componentWillUnmount() {
         this.hammer.destroy()
       }
 
-      onSwipe (e) {
-        if (e.direction === Hammer.DIRECTION_LEFT && this.handlers.swipeLeft) this.handlers.swipeLeft(e)
-        if (e.direction === Hammer.DIRECTION_RIGHT && this.handlers.swipeRight) this.handlers.swipeRight(e)
-        if (e.direction === Hammer.DIRECTION_UP && this.handlers.swipeUp) this.handlers.swipeUp(e)
-        if (e.direction === Hammer.DIRECTION_DOWN && this.handlers.swipeDown) this.handlers.swipeDown(e)
+      onSwipe(e) {
+        if (e.direction === Hammer.DIRECTION_LEFT && this.handlers.swipeLeft)
+          this.handlers.swipeLeft(e)
+        if (e.direction === Hammer.DIRECTION_RIGHT && this.handlers.swipeRight)
+          this.handlers.swipeRight(e)
+        if (e.direction === Hammer.DIRECTION_UP && this.handlers.swipeUp)
+          this.handlers.swipeUp(e)
+        if (e.direction === Hammer.DIRECTION_DOWN && this.handlers.swipeDown)
+          this.handlers.swipeDown(e)
       }
 
-      onTap (e) {
+      onTap(e) {
         this.handlers.tap(e)
       }
 
-      render () {
-        return (
-          <WrappedComponent {...this.props} />
-        )
+      render() {
+        return <WrappedComponent {...this.props} />
       }
     }
   }

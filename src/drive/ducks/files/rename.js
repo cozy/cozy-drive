@@ -40,7 +40,7 @@ export const getUpdatedName = state => state.rename.name
 export const startRenaming = file => ({ type: START_RENAMING, file, meta })
 export const updateFileName = name => ({ type: UPDATE_FILE_NAME, name })
 export const abortRenaming = () => ({ type: ABORT_RENAMING })
-export const renamed = (file) => ({ type: RENAME_SUCCESS, file })
+export const renamed = file => ({ type: RENAME_SUCCESS, file })
 export const renameFailureDuplicate = name => ({
   type: RENAME_FAILURE_DUPLICATE,
   alert: {
@@ -51,7 +51,7 @@ export const renameFailureDuplicate = name => ({
 
 // action creators async
 
-export const startRenamingAsync = file => async (dispatch) => {
+export const startRenamingAsync = file => async dispatch => {
   await dispatch(startRenaming(file))
 }
 
@@ -72,7 +72,10 @@ export const rename = () => async (dispatch, getState) => {
     }
   }
   try {
-    const updated = await cozy.client.files.updateAttributesById(renamingFile.id, {name: updatedName})
+    const updated = await cozy.client.files.updateAttributesById(
+      renamingFile.id,
+      { name: updatedName }
+    )
     dispatch(renamed(extractFileAttributes(updated)))
   } catch (e) {
     console.warn(e)

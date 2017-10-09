@@ -15,29 +15,52 @@ class BannerClient extends Component {
     seen: true
   }
 
-  async componentWillMount () {
-    const seen = await localforage.getItem(DESKTOP_BANNER) || false
-    this.setState((state) => ({...state, seen}))
+  async componentWillMount() {
+    const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
+    this.setState(state => ({ ...state, seen }))
   }
 
-  markAsSeen (element) {
+  markAsSeen(element) {
     localforage.setItem(DESKTOP_BANNER, true)
-    this.setState((state) => ({...state, seen: true}))
+    this.setState(state => ({ ...state, seen: true }))
     track(element)
   }
 
-  render () {
+  render() {
     const { t } = this.props
     if (this.state.seen) return null
 
     return (
       <div className={styles['coz-banner-client']}>
-        <a href={t('Nav.link-client')} target='_blank' className={styles['coz-btn-clientMobile']} onClick={(e) => { this.markAsSeen('banner') }} ><span>{t('Nav.btn-client-mobile')}</span></a>
+        <a
+          href={t('Nav.link-client')}
+          target="_blank"
+          className={styles['coz-btn-clientMobile']}
+          onClick={e => {
+            this.markAsSeen('banner')
+          }}
+        >
+          <span>{t('Nav.btn-client-mobile')}</span>
+        </a>
         <p className={styles['coz-banner-text']}>
           <span>{t('Nav.banner-txt-client')}</span>
-          <a href={t('Nav.link-client')} target='_blank' className={classNames('coz-btn')} onClick={(e) => { this.markAsSeen('banner') }}>{t('Nav.banner-btn-client')}</a>
+          <a
+            href={t('Nav.link-client')}
+            target="_blank"
+            className={classNames('coz-btn')}
+            onClick={e => {
+              this.markAsSeen('banner')
+            }}
+          >
+            {t('Nav.banner-btn-client')}
+          </a>
         </p>
-        <button className={classNames('coz-btn', styles['coz-btn--close'])} onClick={(e) => { this.markAsSeen('close') }} />
+        <button
+          className={classNames('coz-btn', styles['coz-btn--close'])}
+          onClick={e => {
+            this.markAsSeen('close')
+          }}
+        />
       </div>
     )
   }

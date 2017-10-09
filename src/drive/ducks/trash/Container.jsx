@@ -24,15 +24,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         action: files => dispatch(restoreFiles(files))
       },
       destroy: {
-        action: files => confirm(<DestroyConfirm t={ownProps.t} fileCount={files.length} />)
-          .then(() => dispatch(destroyFiles(files)))
-          .catch(() => {})
+        action: files =>
+          confirm(<DestroyConfirm t={ownProps.t} fileCount={files.length} />)
+            .then(() => dispatch(destroyFiles(files)))
+            .catch(() => {})
       }
     }
   })
 })
 
-export default translate()(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FolderView))
+export default translate()(
+  connect(mapStateToProps, mapDispatchToProps)(FolderView)
+)

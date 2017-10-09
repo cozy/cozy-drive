@@ -4,9 +4,13 @@ import OnBoarding from '../../components/OnBoarding'
 import { setBackupContacts } from '../../actions/settings'
 import { requestDeviceAuthorization } from '../../actions/contactsBackup'
 
-export const BackupContacts = ({ onActivate, onSkip, breadcrumbs }) =>
-(
-  <OnBoarding onActivate={onActivate} onSkip={onSkip} stepName='contacts' breadcrumbs={breadcrumbs} />
+export const BackupContacts = ({ onActivate, onSkip, breadcrumbs }) => (
+  <OnBoarding
+    onActivate={onActivate}
+    onSkip={onSkip}
+    stepName="contacts"
+    breadcrumbs={breadcrumbs}
+  />
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

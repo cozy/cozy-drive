@@ -11,19 +11,32 @@ import {
   downloadArchive
 } from 'redux-cozy-client'
 
+import AlbumToolbar from './components/AlbumToolbar'
+import AlbumsToolbar from './components/AlbumsToolbar'
+import PhotosPicker from './components/PhotosPicker'
+
 export const DOCTYPE = 'io.cozy.photos.albums'
 
 export const fetchAlbums = () => fetchCollection('albums', DOCTYPE)
-export const fetchSharedAlbums = (id) => fetchSharings(DOCTYPE)
-export const fetchAlbumPhotos = (id, skip = 0) => fetchReferencedFiles({ type: DOCTYPE, id }, skip)
-export const fetchAlbum = (id) => fetchDocument(DOCTYPE, id)
-export const fetchAlbumSharings = (id) => fetchSharings(DOCTYPE, id)
-export const createAlbum = (name, createdAt = new Date()) => createDocument({ type: DOCTYPE, name, 'created_at': createdAt }, { updateCollections: ['albums'] })
-export const updateAlbum = (album) => updateDocument(album)
-export const deleteAlbum = (album) => deleteDocument(album, { updateCollections: ['albums'] })
-export const addToAlbum = (album, photoIds) => addReferencedFiles(album, photoIds)
-export const removeFromAlbum = (album, photoIds) => removeReferencedFiles(album, photoIds)
-export const downloadAlbum = (album, photos) => downloadArchive(album.name, photos.map(p => p.id))
+export const fetchSharedAlbums = id => fetchSharings(DOCTYPE)
+export const fetchAlbumPhotos = (id, skip = 0) =>
+  fetchReferencedFiles({ type: DOCTYPE, id }, skip)
+export const fetchAlbum = id => fetchDocument(DOCTYPE, id)
+export const fetchAlbumSharings = id => fetchSharings(DOCTYPE, id)
+export const createAlbum = (name, createdAt = new Date()) =>
+  createDocument(
+    { type: DOCTYPE, name, created_at: createdAt },
+    { updateCollections: ['albums'] }
+  )
+export const updateAlbum = album => updateDocument(album)
+export const deleteAlbum = album =>
+  deleteDocument(album, { updateCollections: ['albums'] })
+export const addToAlbum = (album, photoIds) =>
+  addReferencedFiles(album, photoIds)
+export const removeFromAlbum = (album, photoIds) =>
+  removeReferencedFiles(album, photoIds)
+export const downloadAlbum = (album, photos) =>
+  downloadArchive(album.name, photos.map(p => p.id))
 
 // TODO: refactor these 3 actions somewhere...
 const ADD_TO_ALBUM = 'ADD_TO_ALBUM'
@@ -44,9 +57,5 @@ export const cancelAddToAlbum = photos => ({
   type: CANCEL_ADD_TO_ALBUM,
   photos: photos
 })
-
-import AlbumToolbar from './components/AlbumToolbar'
-import AlbumsToolbar from './components/AlbumsToolbar'
-import PhotosPicker from './components/PhotosPicker'
 
 export { AlbumToolbar, AlbumsToolbar, PhotosPicker }

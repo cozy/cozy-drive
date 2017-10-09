@@ -2,8 +2,9 @@
 import React, { Component } from 'react'
 
 // Extreme fallback: returns a direct download link to the raw image
-const getPhotoLink = async (photoId) => {
-  return await cozy.client.files.getDownloadLinkById(photoId)
+const getPhotoLink = async photoId => {
+  return cozy.client.files
+    .getDownloadLinkById(photoId)
     .then(path => `${cozy.client._url}${path}`)
 }
 
@@ -20,25 +21,26 @@ export default class ImageLoader extends Component {
     if (!this.img) return // if we already unmounted
     if (this.state.fallback !== null) return
     // extreme fallback
-    getPhotoLink(this.props.photo.id)
-      .then(url => {
-        this.img.src = url
-        this.setState({ fallback: url })
-        if (this.props.onLoad) this.props.onLoad()
-      })
+    getPhotoLink(this.props.photo.id).then(url => {
+      this.img.src = url
+      this.setState({ fallback: url })
+      if (this.props.onLoad) this.props.onLoad()
+    })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // this is needed because when opening 2 times in a row the same photo in the viewer,
     // the second time the onLoad is not fired... This will fire the onError (see above)
     this.img.src = ''
   }
 
-  render () {
+  render() {
     const { photo, src, alt, className, style = {} } = this.props
     return (
       <img
-        ref={img => { this.img = img }}
+        ref={img => {
+          this.img = img
+        }}
         className={className}
         onLoad={this.onLoad}
         onError={this.onError}

@@ -36,7 +36,11 @@ export class AddToAlbumModal extends Component {
       }
       // TODO: refering to the client here is not ideal, we should have
       // some kind of automatic validation system on schemas
-      const unique = await this.props.client.checkUniquenessOf('io.cozy.photos.albums', 'name', name)
+      const unique = await this.props.client.checkUniquenessOf(
+        'io.cozy.photos.albums',
+        'name',
+        name
+      )
       if (!unique) {
         Alerter.error('Albums.create.error.already_exists', { name })
         return
@@ -46,7 +50,10 @@ export class AddToAlbumModal extends Component {
       const album = response.data[0]
       const addedPhotos = await dispatch(addToAlbum(album, photos))
       dispatch(closeAddToAlbum())
-      Alerter.success('Albums.create.success', {name: album.name, smart_count: addedPhotos.length})
+      Alerter.success('Albums.create.success', {
+        name: album.name,
+        smart_count: addedPhotos.length
+      })
     } catch (error) {
       Alerter.error('Albums.create.error.generic')
     }
@@ -59,7 +66,10 @@ export class AddToAlbumModal extends Component {
       if (addedPhotos.length !== photos.length) {
         Alerter.info('Alerter.photos.already_added_photo')
       } else {
-        Alerter.success('Albums.add_photos.success', {name: album.name, smart_count: photos.length})
+        Alerter.success('Albums.add_photos.success', {
+          name: album.name,
+          smart_count: photos.length
+        })
       }
       dispatch(closeAddToAlbum())
     } catch (error) {
@@ -68,42 +78,47 @@ export class AddToAlbumModal extends Component {
     }
   }
 
-  render () {
+  render() {
     const { t, photos, albums } = this.props
 
     const fetchStatus = albums ? albums.fetchStatus : 'loading'
-    const isFetchingAlbums = fetchStatus === 'pending' || fetchStatus === 'loading'
+    const isFetchingAlbums =
+      fetchStatus === 'pending' || fetchStatus === 'loading'
 
     return (
       <Modal
         title={t('Albums.add_photos.title')}
         secondaryAction={this.onDismiss}
-        >
+      >
         <ModalSection className={styles['coz-modal-section']}>
           <div className={classNames(styles['coz-create-album'])}>
             <CreateAlbumForm
               onSubmitNewAlbum={name => this.onSubmitNewAlbum(name, photos)}
-              />
+            />
           </div>
-          {
-            isFetchingAlbums
-            ? <Loading loadingType='albums_fetching' />
-            : albums && albums.data.length > 0
-            ? <div className={classNames(styles['coz-select-album'])}>
-              <SelectAlbumsForm albums={albums} onSubmitSelectedAlbum={album => this.onSubmitSelectedAlbum(album, photos)} />
+          {isFetchingAlbums ? (
+            <Loading loadingType="albums_fetching" />
+          ) : albums && albums.data.length > 0 ? (
+            <div className={classNames(styles['coz-select-album'])}>
+              <SelectAlbumsForm
+                albums={albums}
+                onSubmitSelectedAlbum={album =>
+                  this.onSubmitSelectedAlbum(album, photos)}
+              />
             </div>
-            : null
-          }
+          ) : null}
         </ModalSection>
       </Modal>
     )
   }
 }
 
-const mapDocumentsToProps = (ownProps) => ({
+const mapDocumentsToProps = ownProps => ({
   albums: fetchAlbums(),
   sharings: fetchSharedAlbums()
 })
 const mapStateToProps = (state, ownProps) => ({ photos: getSelectedIds(state) })
 
-export default connect(mapStateToProps)(cozyConnect(mapDocumentsToProps)(AddToAlbumModal))
+export default connect(mapStateToProps)(
+  cozyConnect(mapDocumentsToProps)(AddToAlbumModal)
+)

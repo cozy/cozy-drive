@@ -1,46 +1,55 @@
 /* global cozy */
 import { clientRevokedMsg } from './cozy-helper'
 
-export const startReplication = (firstReplication, firstReplicationFinished, refreshFolder, revokeClient) => {
-  if (firstReplication) {
-    startRepeatedReplication(refreshFolder, revokeClient)
-  } else {
-    startFirstReplication(firstReplicationFinished, refreshFolder, revokeClient)
+export const startReplication = async (
+  hasFinishedFirstReplication,
+  firstReplicationFinished,
+  refreshFolder,
+  revokeClient
+) => {
+  try {
+    if (!hasFinishedFirstReplication) {
+      await startFirstReplication()
+      console.log('End of first replication')
+      firstReplicationFinished()
+    }
+
+    const docsWritten = await startRepeatedReplication()
+    cozy.client.settings.updateLastSync()
+    if (docsWritten !== 0) refreshFolder()
+  } catch (err) {
+    if (
+      err.message === clientRevokedMsg ||
+      err.error === 'code=400, message=Invalid JWT token'
+    ) {
+      console.warn('The device is not connected to your server anymore')
+      revokeClient()
+    } else if (err.message === 'ETIMEDOUT') {
+      console.log('replcation timed out')
+    } else {
+      console.warn(err)
+    }
   }
 }
 
-const startRepeatedReplication = (refreshFolder, revokeClient) => {
-  const options = {
-    onError: onError(revokeClient),
-    onComplete: result => {
-      if (result.docs_written !== 0) {
-        refreshFolder()
+const startRepeatedReplication = () => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      onError: reject,
+      onComplete: result => {
+        resolve(result.docs_written)
       }
     }
-  }
-  cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
-}
-
-const startFirstReplication = (firstReplicationFinished, refreshFolder, revokeClient) => {
-  const options = {
-    onError: onError(revokeClient),
-    onComplete: () => {
-      firstReplicationFinished()
-      startRepeatedReplication(refreshFolder, revokeClient)
-    }
-  }
-  cozy.client.offline.replicateFromCozy('io.cozy.files', options).then(() => {
-    console.log('End of Replication')
+    cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
   })
 }
 
-export const onError = (revokeClient) => (err) => {
-  if (err.message === clientRevokedMsg || err.error === 'code=400, message=Invalid JWT token') {
-    console.warn('Your device is no more connected to your server')
-    revokeClient()
-  } else if (err.message === 'ETIMEDOUT') {
-    console.log('timeout')
-  } else {
-    console.warn(err)
-  }
+const startFirstReplication = () => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      onError: reject,
+      onComplete: resolve
+    }
+    cozy.client.offline.replicateFromCozy('io.cozy.files', options)
+  })
 }

@@ -43,7 +43,8 @@ export const isMenuVisible = state => state.actionmenu.isVisible
 
 // actions
 export const showActionMenu = id => ({
-  type: SHOW_ACTIONMENU, id
+  type: SHOW_ACTIONMENU,
+  id
 })
 
 export const hideActionMenu = () => ({

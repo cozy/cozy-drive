@@ -1,11 +1,14 @@
 import { mockStore } from '../../../../helpers'
 import reducer from '../../../../../src/targets/mobile/reducers/settings'
 import {
-  SET_URL, setUrl,
+  SET_URL,
+  setUrl,
   setBackupImages,
   setWifiOnly,
   setAnalytics,
-  wrongAddressError, ERROR, wrongAddressErrorMsg
+  wrongAddressError,
+  ERROR,
+  wrongAddressErrorMsg
 } from '../../../../../src/targets/mobile/actions/settings'
 import { SET_CLIENT, setClient } from '../../../../../src/actions/settings'
 
@@ -14,24 +17,24 @@ describe('backup images actions creators', () => {
     const store = mockStore({})
     store.dispatch(setBackupImages(true))
     const state = store.getActions().reduce(reducer, store.getState())
-    expect(state).toEqual({backupImages: true})
+    expect(state).toEqual({ backupImages: true })
   })
 
   it('should disable backup images', () => {
     const store = mockStore({})
     store.dispatch(setBackupImages(false))
     const state = store.getActions().reduce(reducer, store.getState())
-    expect(state).toEqual({backupImages: false})
+    expect(state).toEqual({ backupImages: false })
   })
 
   it('should enable backup on wifi only', () => {
     const state = reducer({}, setWifiOnly(true))
-    expect(state).toEqual({wifiOnly: true})
+    expect(state).toEqual({ wifiOnly: true })
   })
 
   it('should disable backup on wifi only', () => {
     const state = reducer({}, setWifiOnly(false))
-    expect(state).toEqual({wifiOnly: false})
+    expect(state).toEqual({ wifiOnly: false })
   })
 })
 
@@ -40,14 +43,14 @@ describe('analytics actions creators', () => {
     const store = mockStore({})
     store.dispatch(setAnalytics(true))
     const state = store.getActions().reduce(reducer, store.getState())
-    expect(state).toEqual({analytics: true})
+    expect(state).toEqual({ analytics: true })
   })
 
   it('should disable analytics', () => {
     const store = mockStore({})
     store.dispatch(setAnalytics(false))
     const state = store.getActions().reduce(reducer, store.getState())
-    expect(state).toEqual({analytics: false})
+    expect(state).toEqual({ analytics: false })
   })
 })
 
