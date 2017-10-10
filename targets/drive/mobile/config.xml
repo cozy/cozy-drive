@@ -74,6 +74,7 @@
         <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048" />
         <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732" />
         <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048" />
+        <pod name="Sentry" />
     </platform>
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/cozy/cordova-plugin-splashscreen" />
     <preference name="ShowSplashScreenSpinner" value="false" />
@@ -92,4 +93,7 @@
     <plugin name="cordova-plugin-contacts" spec="2.3.1" />
     <plugin name="cordova-plugin-apprate" spec="~1.3.0" />
     <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items#v1.0.3" />
+    <plugin name="cordova-plugin-sentry" spec="https://github.com/mailmangroup/cordova-plugin-sentry" />
+    <preference name="DSNSTRING" value="https://9259817fbb44484b8b7a0a817d968ae4:171a3bcb3095448484aa3e709ea47e9b@sentry.cozycloud.cc/6" />
+    <plugin name="cordova-plugin-cocoapod-support" spec="~1.3.0" />
 </widget>
