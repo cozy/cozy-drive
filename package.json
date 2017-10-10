@@ -45,7 +45,7 @@
     "android:drive:publish": "(cd targets/drive/mobile && fastlane supply)",
     "ios:drive:run": "(cd targets/drive/mobile && cordova run ios --device)",
     "ios:drive:run:emulator": "(cd targets/drive/mobile && cordova run ios --emulator)",
-    "ios:drive:publish": "npm run build:drive:mobile && (cd targets/drive/mobile && fastlane ios pushtest)"
+    "ios:drive:publish": "npm run build:drive:mobile && (cd targets/drive/mobile/platforms/ios && pod install) && (cd targets/drive/mobile && fastlane ios pushtest)"
   },
   "repository": {
     "type": "git",
