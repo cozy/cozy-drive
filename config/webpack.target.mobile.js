@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const pkg = require(path.resolve(__dirname, '../package.json'))
 
-module.exports = function (production, app) {
+module.exports = function(production, app) {
   return {
     entry: {
       app: [path.resolve(__dirname, `../targets/${app}/mobile/main`)]
@@ -23,8 +23,8 @@ module.exports = function (production, app) {
         __APP_VERSION__: JSON.stringify(pkg.version)
       }),
       new ProvidePlugin({
-        'PouchDB': 'pouchdb',
-        'pouchdbFind': 'pouchdb-find',
+        PouchDB: 'pouchdb',
+        pouchdbFind: 'pouchdb-find',
         'cozy.client': 'cozy-client-js/dist/cozy-client.js',
         'cozy.bar': 'cozy-bar/dist/cozy-bar.mobile.js'
       }),
