@@ -1,6 +1,5 @@
 'use strict'
 
-const { LoaderOptionsPlugin } = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
@@ -36,19 +35,15 @@ module.exports = {
                 ]
               }
             },
-            'stylus-loader'
+            {
+              loader: 'stylus-loader',
+              options: {
+                use: [require('cozy-ui/stylus')()]
+              }
+            }
           ]
         })
       }
     ]
-  },
-  plugins: [
-    new LoaderOptionsPlugin({
-      options: {
-        stylus: {
-          use: [require('cozy-ui/stylus')()]
-        }
-      }
-    })
-  ]
+  }
 }
