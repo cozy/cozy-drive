@@ -19,6 +19,7 @@ const AppRoute = (
       <Route path="recent" component={Recent} />
       <Route path="trash(/:folderId)" component={Trash} />
       <Route path="show(/:fileId)" component={FileOpener} />
+      <Redirect from="*" to="files" />
     </Route>
   </Route>
 )
