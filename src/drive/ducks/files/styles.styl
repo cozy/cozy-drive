@@ -1,4 +1,28 @@
-.fileOpener iframe {
+.fileOpener__iframe
     width 80vw
     height 80vw
-}
+    position relative // new stacking context to be above fallback
+
+
+.fileOpener__fallback
+    // vertical-align center
+    position absolute
+    top 0
+    bottom 0
+    height 3rem // sufficient to hold all the text
+    margin auto
+
+    text-align center
+
+    // display after 2s (wait for iframe to load)
+    animation display-after-1s ease 0s
+    animation-delay 2s
+    animation-fill-mode both
+    width 100%
+
+@keyframes display-after-1s
+    0%
+        color transparent
+    100%
+        color inherit
+

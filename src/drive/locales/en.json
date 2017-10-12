@@ -83,7 +83,8 @@
       "error": {
         "generic": "An error occurred when creating the file share link, please try again."
       }
-    }
+    },
+    "viewer-fallback": "If the file has started downloading, you can close this."
   },
   "table": {
     "head_name": "Name",
