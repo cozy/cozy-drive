@@ -197,14 +197,14 @@ export const getFilePath = ({ view }, file) => {
 
 export const getFolderIdFromRoute = (location, params) => {
   if (params.folderId) return params.folderId
-  if (location.pathname.match(/^\/files/)) return ROOT_DIR_ID
+  if (location.pathname.match(/^\/folder/)) return ROOT_DIR_ID
   if (location.pathname.match(/^\/trash/)) return TRASH_DIR_ID
 }
 
 export const getFolderUrl = (folderId, location) => {
-  if (folderId === ROOT_DIR_ID) return '/files'
+  if (folderId === ROOT_DIR_ID) return '/folder'
   if (folderId === TRASH_DIR_ID) return '/trash'
-  const url = location.pathname.match(/^\/files/) ? '/files/' : '/trash/'
+  const url = location.pathname.match(/^\/folder/) ? '/folder/' : '/trash/'
   return url + folderId
 }
 

@@ -44,7 +44,7 @@ class FileOpener extends Component {
     )
 
     // Go to the parent folder
-    router.push(`/files/${parent.data.id}`)
+    router.push(`/folder/${parent.data.id}`)
   }
 
   render() {
