@@ -14,13 +14,12 @@ import { Container as Trash } from '../ducks/trash'
 const AppRoute = (
   <Route component={Layout}>
     <Route component={FileExplorer}>
-      <Redirect from="/" to="files" />
+      <Redirect from="/" to="folder" />
       <Route path="folder(/:folderId)" component={Folder} />
       <Route path="recent" component={Recent} />
       <Route path="trash(/:folderId)" component={Trash} />
-      <Route path="file(/:fileId)" component={FileOpener} />
-      <Redirect from="*" to="folder" />
     </Route>
+    <Route path="file/:fileId" component={FileOpener} />
   </Route>
 )
 
