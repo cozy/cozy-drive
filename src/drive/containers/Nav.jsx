@@ -67,7 +67,7 @@ const Nav = ({ t, location, openFiles, openRecent, openTrash }) => {
       <ul className={styles['coz-nav']}>
         <li className={styles['coz-nav-item']}>
           <ActiveLink
-            to="/files"
+            to="/folder"
             onClick={openFiles}
             className={classNames(
               styles['coz-nav-link'],

@@ -83,7 +83,8 @@
       "error": {
         "generic": "An error occurred when creating the file share link, please try again."
       }
-    }
+    },
+    "viewer-fallback": "If the file has started downloading, you can close this."
   },
   "table": {
     "head_name": "Name",
@@ -170,6 +171,7 @@
     "public_unshared_text": "One lost, ten found... or just check out with the owner for help. This file might not be lost."
   },
   "alert": {
+    "could_not_open_file": "The file could not be opened",
     "try_again": "An error has occurred, please try again in a moment.",
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
