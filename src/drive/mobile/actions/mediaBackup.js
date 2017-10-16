@@ -103,22 +103,15 @@ const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
     await uploadLibraryItem(dirID, photo)
     dispatch(successMediaUpload(photo))
   } catch (err) {
-    if (Array.isArray(err) && err.length > 0) {
-      const firstError = err[0]
-      if (
-        firstError.status &&
-        parseInt(firstError.status) === ERROR_CODE_CONFLICT
-      ) {
-        // since it's a conflict error, the file *is* actually on the server, so we consider it a success
-        dispatch(successMediaUpload(photo))
-        return
-      }
+    if (err.code && parseInt(err.code) === ERROR_CODE_CONFLICT) {
+      // since it's a conflict error, the file *is* actually on the server, so we consider it a success
+      dispatch(successMediaUpload(photo))
+    } else {
+      console.warn('startMediaBackup upload item error')
+      console.warn(JSON.stringify(err))
+      console.info(JSON.stringify(photo))
+      logException('startMediaBackup error')
     }
-
-    console.warn('startMediaBackup upload item error')
-    console.warn(JSON.stringify(err))
-    console.info(JSON.stringify(photo))
-    logException('startMediaBackup error')
   }
 }
 
