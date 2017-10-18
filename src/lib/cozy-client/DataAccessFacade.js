@@ -11,7 +11,7 @@ export default class DataAccessFacade {
     this.stackAdapter = new CozyStackAdapter()
     this.pouchAdapter = new PouchdbAdapter()
     // TODO: strategy injection
-    this.strategy = new PouchFirstStrategy()
+    this.strategy = new PouchFirstStrategy() || new OfflineStrategy()
   }
 
   setup(cozyUrl, options) {
@@ -48,7 +48,7 @@ class OfflineStrategy {
   getAdapter(doctype, stackAdapter, pouchAdapter) {
     if (isOffline()) {
       if (pouchAdapter.getDatabase(doctype) === undefined) {
-        throw `${doctype} documents cannot be accessed when offline`
+        throw new Error(`${doctype} documents cannot be accessed when offline`)
       }
       return pouchAdapter
     }
