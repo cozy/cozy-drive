@@ -104,13 +104,19 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
   } catch (_) {} // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
   try {
+    const maxBackupTime = 1000 * 60 * 5 // 5 minutes
+    const timeout = setTimeout(() => {
+      logException(`Backup duration exceeded ${maxBackupTime / 1000} seconds`)
+    }, maxBackupTime)
+
     await uploadLibraryItem(dirID, photo)
+    clearTimeout(timeout)
     dispatch(successMediaUpload(photo))
   } catch (err) {
     console.warn('startMediaBackup upload item error')
     console.warn(JSON.stringify(err))
     console.info(JSON.stringify(photo))
-    logException('startMediaBackup error')
+    logException('Backup error: ' + JSON.stringify(err))
   }
 }
 
