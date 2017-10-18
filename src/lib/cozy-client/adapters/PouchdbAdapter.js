@@ -1,14 +1,11 @@
 /* global cozy, PouchDB, pouchdbFind */
-const FILES_DOCTYPE = 'io.cozy.files'
-const FETCH_LIMIT = 50
-
-const REPLICATION_INTERVAL = 30000
-
 import {
   startDoctypeSync,
   syncDoctypeOk,
   syncDoctypeError
 } from '../slices/synchronization'
+
+const REPLICATION_INTERVAL = 30000
 
 export default class PouchdbAdapter {
   constructor() {
@@ -132,7 +129,7 @@ export default class PouchdbAdapter {
   }
 
   async deleteDocument(doc) {
-    const resp = await this.getDatabase(doc._type).remove(doc)
+    await this.getDatabase(doc._type).remove(doc)
     return { data: [doc] }
   }
 
@@ -141,26 +138,26 @@ export default class PouchdbAdapter {
   }
 
   fetchFileByPath(path) {
-    throw 'Not implemented'
+    throw new Error('Not implemented')
   }
 
   createFile(file, dirID) {
-    throw 'Not implemented'
+    throw new Error('Not implemented')
   }
 
   trashFile(file) {
-    throw 'Not implemented'
+    throw new Error('Not implemented')
   }
 
   fetchReferencedFiles(doc, skip = 0) {
-    throw 'Not implemented'
+    throw new Error('Not implemented')
   }
 
   addReferencedFiles(doc, ids) {
-    throw 'Not implemented'
+    throw new Error('Not implemented')
   }
 
   removeReferencedFiles(doc, ids) {
-    throw 'Not implemented'
+    throw new Error('Not implemented')
   }
 }

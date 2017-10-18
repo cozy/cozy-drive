@@ -30,6 +30,7 @@ describe('Redux store tests', () => {
     it('should return a default state', () => {
       expect(getCollection(reducer(undefined, {}), 'rockets')).toEqual({
         type: null,
+        options: {},
         fetchStatus: 'pending',
         lastFetch: null,
         hasMore: false,
@@ -105,7 +106,8 @@ describe('Redux store tests', () => {
       it('should update collections listed in the `updateCollections` option', () => {
         state = dispatchSuccessfulAction(
           createDocument(
-            { _type: 'io.cozy.rockets', name: 'Saturn V' },
+            'io.cozy.rockets',
+            { name: 'Saturn V' },
             {
               updateCollections: ['rockets']
             }

@@ -2,9 +2,8 @@
 import CozyStackAdapter from './adapters/CozyStackAdapter'
 import PouchdbAdapter from './adapters/PouchdbAdapter'
 
-const isOnline = () =>
-  typeof navigator !== 'undefined' ? navigator.onLine : true
-const isOffline = () => !isOnline()
+// const isOnline = () =>
+//   typeof navigator !== 'undefined' ? navigator.onLine : true
 
 export default class DataAccessFacade {
   constructor() {
@@ -44,14 +43,14 @@ class PouchFirstStrategy {
   }
 }
 
-class OfflineStrategy {
-  getAdapter(doctype, stackAdapter, pouchAdapter) {
-    if (isOffline()) {
-      if (pouchAdapter.getDatabase(doctype) === undefined) {
-        throw `${doctype} documents cannot be accessed when offline`
-      }
-      return pouchAdapter
-    }
-    return stackAdapter
-  }
-}
+// class OfflineStrategy {
+//   getAdapter(doctype, stackAdapter, pouchAdapter) {
+//     if (isOffline()) {
+//       if (pouchAdapter.getDatabase(doctype) === undefined) {
+//         throw `${doctype} documents cannot be accessed when offline`
+//       }
+//       return pouchAdapter
+//     }
+//     return stackAdapter
+//   }
+// }
