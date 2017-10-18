@@ -18,8 +18,6 @@ export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
 export const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
 export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
-const ERROR_CODE_CONFLICT = 409
-
 const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
 const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
 const successMediaUpload = media => ({
@@ -48,7 +46,7 @@ export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
   dir: It's the folder where picture will be uploaded
   force: Even if the settings are not activated, it uploads the photos
 */
-export const startMediaBackup = (dir, force = false) => async (
+export const startMediaBackup = (dirName, force = false) => async (
   dispatch,
   getState
 ) => {
@@ -79,7 +77,7 @@ export const startMediaBackup = (dir, force = false) => async (
     )
     const totalUpload = photosToUpload.length
     if (totalUpload > 0) {
-      const dirID = await getDirID(dir)
+      const dirID = await getDirID(dirName)
       let uploadCounter = 0
       for (const photo of photosToUpload) {
         if (
@@ -89,7 +87,7 @@ export const startMediaBackup = (dir, force = false) => async (
           break
         }
         dispatch(currentUploading(photo, uploadCounter++, totalUpload))
-        await dispatch(uploadPhoto(dirID, photo))
+        await dispatch(uploadPhoto(dirName, dirID, photo))
       }
     }
   }
@@ -98,20 +96,21 @@ export const startMediaBackup = (dir, force = false) => async (
   dispatch(endMediaUpload())
 }
 
-const uploadPhoto = (dirID, photo) => async (dispatch, getState) => {
+const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
+  try {
+    await cozy.client.files.statByPath(dirName + '/' + photo.fileName)
+    dispatch(successMediaUpload(photo))
+    return
+  } catch (_) {} // if an exception is throw, the file doesn't exist yet and we can safely upload it
+
   try {
     await uploadLibraryItem(dirID, photo)
     dispatch(successMediaUpload(photo))
   } catch (err) {
-    if (err.code && parseInt(err.code) === ERROR_CODE_CONFLICT) {
-      // since it's a conflict error, the file *is* actually on the server, so we consider it a success
-      dispatch(successMediaUpload(photo))
-    } else {
-      console.warn('startMediaBackup upload item error')
-      console.warn(JSON.stringify(err))
-      console.info(JSON.stringify(photo))
-      logException('startMediaBackup error')
-    }
+    console.warn('startMediaBackup upload item error')
+    console.warn(JSON.stringify(err))
+    console.info(JSON.stringify(photo))
+    logException('startMediaBackup error')
   }
 }
 
