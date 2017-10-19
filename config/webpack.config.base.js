@@ -13,7 +13,7 @@ module.exports = function(production) {
       modules: ['node_modules', SRC_DIR],
       extensions: ['.js', '.json', '.css'],
       alias: {
-        'redux-cozy-client': path.resolve(SRC_DIR, './lib/redux-cozy-client'),
+        'cozy-client': path.resolve(SRC_DIR, './lib/cozy-client'),
         'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
       }
     },

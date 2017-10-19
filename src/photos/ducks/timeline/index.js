@@ -9,7 +9,7 @@ import {
   makeActionCreator,
   createFile,
   trashFile
-} from 'redux-cozy-client'
+} from 'cozy-client'
 
 // constants
 const TIMELINE = 'timeline'
@@ -41,6 +41,7 @@ export const deletePhotos = ids => async dispatch => {
       const file = { ...rawFile, id: rawFile._id, type: rawFile._type }
       if (file.referenced_by) {
         for (const ref of file.referenced_by) {
+          console.log(ref)
           if (ref.type === ALBUMS_DOCTYPE) {
             await dispatch(removeFromAlbum(ref, [id]))
           }

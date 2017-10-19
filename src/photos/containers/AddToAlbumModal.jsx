@@ -2,7 +2,7 @@ import styles from '../styles/addToAlbum'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { cozyConnect } from 'redux-cozy-client'
+import { cozyConnect } from 'cozy-client'
 import Modal, { ModalSection } from 'cozy-ui/react/Modal'
 import classNames from 'classnames'
 

@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
-import { CozyClient, CozyProvider, cozyMiddleware, reducer } from 'redux-cozy-client'
+import { CozyClient, CozyProvider, cozyMiddleware, reducer } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
 import 'photos/styles/main'
@@ -19,17 +19,16 @@ const arrToObj = (obj = {}, varval = ['var', 'val']) => {
   return obj
 }
 
-const getQueryParameter = () => window
-  .location
-  .search
-  .substring(1)
-  .split('&')
-  .map(varval => varval.split('='))
-  .reduce(arrToObj, {})
+const getQueryParameter = () =>
+  window.location.search
+    .substring(1)
+    .split('&')
+    .map(varval => varval.split('='))
+    .reduce(arrToObj, {})
 
 document.addEventListener('DOMContentLoaded', init)
 
-function init () {
+function init() {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -40,7 +39,12 @@ function init () {
     token: sharecode
   })
 
-  if (data.cozyAppName && data.cozyAppEditor && data.cozyIconPath && data.cozyLocale) {
+  if (
+    data.cozyAppName &&
+    data.cozyAppEditor &&
+    data.cozyIconPath &&
+    data.cozyLocale
+  ) {
     cozy.bar.init({
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
@@ -58,15 +62,19 @@ function init () {
   )
 
   render(
-    <I18n lang={lang} dictRequire={(lang) => require(`photos/locales/${lang}`)}>
+    <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
       <CozyProvider store={store} client={client}>
         <Router history={hashHistory}>
-          <Route path='shared' component={props => <App albumId={id} {...props} />}>
-            <Route path=':photoId' component={Viewer} />
+          <Route
+            path="shared"
+            component={props => <App albumId={id} {...props} />}
+          >
+            <Route path=":photoId" component={Viewer} />
           </Route>
-          <Redirect from='/*' to='shared' />
+          <Redirect from="/*" to="shared" />
         </Router>
       </CozyProvider>
-    </I18n>
-  , root)
+    </I18n>,
+    root
+  )
 }

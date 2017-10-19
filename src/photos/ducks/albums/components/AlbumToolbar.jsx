@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
-import { leave } from 'redux-cozy-client'
+import { leave } from 'cozy-client'
 import { translate } from 'cozy-ui/react/I18n'
 
 import ShareButton, {

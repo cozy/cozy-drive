@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { cozyConnect, getSharingDetails } from 'redux-cozy-client'
+import { cozyConnect, getSharingDetails } from 'cozy-client'
 
 import { fetchAlbumPhotos } from '../ducks/albums'
 import ImageLoader from '../components/ImageLoader'

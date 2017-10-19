@@ -1,4 +1,4 @@
-/* global cozy */
+/* global cozy, PouchDB */
 import CozyStackAdapter from './adapters/CozyStackAdapter'
 import PouchdbAdapter from './adapters/PouchdbAdapter'
 
@@ -8,9 +8,13 @@ import PouchdbAdapter from './adapters/PouchdbAdapter'
 export default class DataAccessFacade {
   constructor() {
     this.stackAdapter = new CozyStackAdapter()
-    this.pouchAdapter = new PouchdbAdapter()
-    // TODO: strategy injection
-    this.strategy = new PouchFirstStrategy()
+    if (typeof PouchDB !== 'undefined') {
+      this.pouchAdapter = new PouchdbAdapter()
+      // TODO: strategy injection
+      this.strategy = new PouchFirstStrategy()
+    } else {
+      this.strategy = new StackOnlyStrategy()
+    }
   }
 
   setup(cozyUrl, options) {
@@ -40,6 +44,12 @@ class PouchFirstStrategy {
       return stackAdapter
     }
     return pouchAdapter
+  }
+}
+
+class StackOnlyStrategy {
+  getAdapter(doctype, stackAdapter, pouchAdapter) {
+    return stackAdapter
   }
 }
 

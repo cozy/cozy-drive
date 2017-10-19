@@ -1,7 +1,7 @@
 import styles from './share.styl'
 
 import React, { Component } from 'react'
-import { cozyConnect, fetchSharings } from 'redux-cozy-client'
+import { cozyConnect, fetchSharings } from 'cozy-client'
 import { UserAvatar } from './components/Recipient'
 import Modal from 'cozy-ui/react/Modal'
 

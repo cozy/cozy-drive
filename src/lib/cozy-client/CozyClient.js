@@ -3,6 +3,7 @@ import DataAccessFacade from './DataAccessFacade'
 import { authenticateWithCordova } from './authentication/mobile'
 
 const FILES_DOCTYPE = 'io.cozy.files'
+const SHARINGS_DOCTYPE = 'io.cozy.sharings'
 
 export default class CozyClient {
   constructor(config) {
@@ -92,6 +93,48 @@ export default class CozyClient {
 
   deleteDocument(doc) {
     return this.getAdapter(doc._type).deleteDocument(doc)
+  }
+
+  async fetchSharings(doctype) {
+    const permissions = await this.getAdapter(doctype).fetchSharingPermissions(
+      doctype
+    )
+    const sharingIds = [
+      ...permissions.byMe.map(p => p.attributes.source_id),
+      ...permissions.withMe.map(p => p.attributes.source_id)
+    ]
+    const sharings = await Promise.all(
+      sharingIds.map(id => this.getAdapter(SHARINGS_DOCTYPE).fetchSharing(id))
+    )
+    return { permissions, sharings }
+  }
+
+  createSharing(permissions, contactIds, sharingType, description) {
+    return this.getAdapter(SHARINGS_DOCTYPE).createSharing(
+      permissions,
+      contactIds,
+      sharingType,
+      description
+    )
+  }
+
+  revokeSharing(sharingId) {
+    return this.getAdapter(SHARINGS_DOCTYPE).revokeSharing(sharingId)
+  }
+
+  revokeSharingForClient(sharingId, clientId) {
+    return this.getAdapter(SHARINGS_DOCTYPE).revokeSharingForClient(
+      sharingId,
+      clientId
+    )
+  }
+
+  createSharingLink(permissions) {
+    return this.getAdapter(SHARINGS_DOCTYPE).createSharingLink(permissions)
+  }
+
+  revokeSharingLink(permission) {
+    return this.getAdapter(SHARINGS_DOCTYPE).revokeSharingLink(permission)
   }
 
   createFile(file, dirID) {
