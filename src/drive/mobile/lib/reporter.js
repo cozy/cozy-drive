@@ -27,12 +27,15 @@ export const logException = err => {
   })
 }
 
-const logMessage = (message, level = 'info', force) => {
+const logMessage = (message, serverUrl, level = 'info', force) => {
   return new Promise(resolve => {
     if (force) {
       configureReporter(true)
     }
-    Raven.captureMessage(message, {
+    Raven.setUserContext = {
+      url: serverUrl
+    }
+    Raven.captureMessage(`[${serverUrl}] ${message}`, {
       level
     })
     if (force) {
@@ -42,5 +45,5 @@ const logMessage = (message, level = 'info', force) => {
   })
 }
 
-export const logInfo = (message, force = false) =>
-  logMessage(message, 'info', force)
+export const logInfo = (message, serverUrl, force = false) =>
+  logMessage(message, serverUrl, 'info', force)
