@@ -16,7 +16,8 @@ export const Support = ({
   isDebug,
   success,
   failure,
-  offline
+  offline,
+  serverUrl
 }) => (
   <SettingCategory
     title={t('mobile.settings.support.title')}
@@ -39,7 +40,11 @@ export const Support = ({
         onClick: async () => {
           if (isOnline()) {
             try {
-              await logInfo(t('mobile.settings.support.logs.title'), true)
+              await logInfo(
+                t('mobile.settings.support.logs.title'),
+                serverUrl,
+                true
+              )
               success()
             } catch (e) {
               failure()
@@ -54,7 +59,8 @@ export const Support = ({
 )
 
 const mapStateToProps = state => ({
-  analytics: state.mobile.settings.analytics
+  analytics: state.mobile.settings.analytics,
+  serverUrl: state.mobile.settings.serverUrl
 })
 
 const mapDispatchToProps = dispatch => ({
