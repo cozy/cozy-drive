@@ -72,6 +72,19 @@ export default class ShareAutocomplete extends Component {
     }
   }
 
+  onBlur = (event, { highlightedSuggestion }) => {
+    if (highlightedSuggestion) {
+      this.props.onPick(highlightedSuggestion)
+      this.setState(state => ({ ...state, inputValue: '' }))
+    } else if (
+      this.state.inputValue !== '' &&
+      this.state.inputValue.match(/\S+@\S+/)
+    ) {
+      this.props.onPick({ email: this.state.inputValue })
+      this.setState(state => ({ ...state, inputValue: '' }))
+    }
+  }
+
   onPick = value => {
     this.props.onPick(value)
     this.setState(state => ({ ...state, inputValue: '' }))
@@ -118,8 +131,10 @@ export default class ShareAutocomplete extends Component {
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         renderSuggestion={contact => <Recipient contact={contact} />}
         renderInputComponent={props => this.renderInput(props)}
+        highlightFirstSuggestion
         inputProps={{
           onChange: this.onChange,
+          onBlur: this.onBlur,
           value: inputValue,
           type: 'email'
         }}

@@ -32,7 +32,9 @@ const documents = (state = [], action) => {
       )
       if (idx === -1) return state
       const sharing = state[idx]
-      const loneRecipient = sharing.attributes.recipients.length === 1
+      const loneRecipient =
+        sharing.attributes.recipients === undefined || // for recipient-side revocation
+        sharing.attributes.recipients.length === 1
       const newState = loneRecipient
         ? { ...sharing, attributes: { ...sharing.attributes, revoked: true } }
         : {
