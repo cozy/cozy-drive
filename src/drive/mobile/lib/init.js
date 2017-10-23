@@ -1,4 +1,4 @@
-import { configure as configureReporter } from './reporter'
+import { configureReporter } from './reporter'
 import { initClient, initBar, isClientRegistered } from './cozy-helper'
 import { revokeClient } from '../actions/authorization'
 import { startReplication } from '../actions/settings'
