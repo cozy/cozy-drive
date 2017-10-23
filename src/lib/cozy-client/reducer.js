@@ -269,7 +269,7 @@ export const fetchDocument = (doctype, id) => ({
 
 export const fetchReferencedFiles = (doc, skip = 0) => ({
   types: [FETCH_REFERENCED_FILES, RECEIVE_DATA, RECEIVE_ERROR],
-  collection: `${doc.type}/${doc.id}#files`,
+  collection: `${doc._type}/${doc.id}#files`,
   document: doc,
   options: {},
   skip,

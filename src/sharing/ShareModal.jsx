@@ -9,7 +9,7 @@ import {
   unshare,
   shareByLink,
   revokeLink
-} from 'redux-cozy-client'
+} from 'cozy-client'
 import Modal from 'cozy-ui/react/Modal'
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 

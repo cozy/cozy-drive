@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { cozyConnect } from 'redux-cozy-client'
+import { cozyConnect } from 'cozy-client'
 import { withRouter } from 'react-router'
 import styles from '../styles/layout'
 
@@ -17,18 +17,15 @@ import Topbar from '../components/Topbar'
 import Alerter from '../components/Alerter'
 
 export class AlbumPhotos extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      editing: false
-    }
+  state = {
+    editing: false
   }
 
-  editAlbumName() {
+  editAlbumName = () => {
     this.setState({ editing: true })
   }
 
-  renameAlbum(name) {
+  renameAlbum = name => {
     if (name.trim() === '') {
       Alerter.error('Error.album_rename_abort')
       return
@@ -54,7 +51,6 @@ export class AlbumPhotos extends Component {
     }
     const { album, photos, shared } = this.props
     const { editing } = this.state
-
     return (
       <div className={styles['pho-content-wrapper']}>
         {album.name &&
@@ -63,7 +59,7 @@ export class AlbumPhotos extends Component {
               viewName="albumContent"
               albumName={album.name}
               editing={editing}
-              onEdit={this.renameAlbum.bind(this)}
+              onEdit={this.renameAlbum}
             >
               <AlbumToolbar
                 album={album}
@@ -71,7 +67,7 @@ export class AlbumPhotos extends Component {
                 sharedByMe={shared.byMe}
                 readOnly={shared.readOnly}
                 photos={photos.data}
-                onRename={this.editAlbumName.bind(this)}
+                onRename={this.editAlbumName}
               />
             </Topbar>
           )}

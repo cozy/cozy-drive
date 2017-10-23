@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import { withRouter } from 'react-router'
-import { downloadFile } from 'redux-cozy-client'
+import { downloadFile } from 'cozy-client'
 
 export const ViewerToolbar = ({ t, router, hidden, currentPhoto }) => {
   const closeViewer = () => {

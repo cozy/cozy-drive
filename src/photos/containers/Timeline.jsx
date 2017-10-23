@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { cozyConnect } from 'redux-cozy-client'
+import { cozyConnect } from 'cozy-client'
 import styles from '../styles/layout'
 
 import {
