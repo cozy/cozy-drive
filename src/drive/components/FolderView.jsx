@@ -12,6 +12,7 @@ import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
 import UploadProgression from '../mobile/containers/UploadProgression'
 import RatingModal from '../mobile/containers/RatingModal'
+import FirstUploadModal from '../mobile/containers/FirstUploadModal'
 import FolderContent from './FolderContent'
 
 import styles from '../styles/folderview'
@@ -73,8 +74,13 @@ class FolderView extends Component {
           />
         </Topbar>
         <div role="contentinfo">
-          {__TARGET__ === 'mobile' && <UploadProgression />}
-          {__TARGET__ === 'mobile' && <RatingModal />}
+          {__TARGET__ === 'mobile' && (
+            <div>
+              <UploadProgression />
+              <FirstUploadModal />
+              <RatingModal />
+            </div>
+          )}
           <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
             <SelectionBar selected={selected} actions={actions.selection} />
           </div>
