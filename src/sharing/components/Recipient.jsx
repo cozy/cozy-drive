@@ -1,8 +1,9 @@
 import styles from './recipient.styl'
 
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
+import Spinner from 'cozy-ui/react/Spinner'
 import ColorHash from './colorhash'
 import Menu, { Item } from '../../photos/components/Menu'
 
@@ -35,34 +36,55 @@ export const UserAvatar = ({ name, url }) => (
   </div>
 )
 
-const Recipient = ({ t, contact, status, documentType, onUnshare }) => {
-  const name = getPrimaryEmail(contact)
-  const url = getPrimaryCozy(contact)
-  return (
-    <div className={styles['pho-recipient']}>
-      <Avatar name={name} />
-      <Identity name={name} url={url} />
-      {status && (
+class Recipient extends Component {
+  state = {
+    revoking: false
+  }
+
+  onUnshare = () => {
+    this.setState({ revoking: true })
+    this.props
+      .onUnshare(this.props.contact)
+      .then(() => this.setState({ revoking: false }))
+  }
+
+  render() {
+    const { t, contact, status, type, documentType } = this.props
+    const { revoking } = this.state
+    const name = getPrimaryEmail(contact)
+    const url = getPrimaryCozy(contact)
+    return (
+      <div className={styles['pho-recipient']}>
+        <Avatar name={name} />
+        <Identity name={name} url={url} />
         <div className={styles['pho-recipient-status']}>
-          <Menu
-            title={status}
-            className={styles['pho-recipient-menu']}
-            buttonClassName={styles['pho-recipient-menu-btn']}
-            disabled={status === 'pending'}
-          >
-            <Item>
-              <a
-                className={classNames(styles['pho-action-unshare'])}
-                onClick={() => onUnshare(contact)}
+          {revoking && <Spinner />}
+          {!revoking &&
+            status && (
+              <Menu
+                title={
+                  status === 'accepted' && type
+                    ? t(`Share.type.${type}`)
+                    : t(`Share.status.${status}`)
+                }
+                className={styles['pho-recipient-menu']}
+                buttonClassName={styles['pho-recipient-menu-btn']}
+                disabled={status === 'pending'}
               >
-                {t(`${documentType}.share.unshare.title`)}
-              </a>
-            </Item>
-          </Menu>
+                <Item>
+                  <a
+                    className={classNames(styles['pho-action-unshare'])}
+                    onClick={this.onUnshare}
+                  >
+                    {t(`${documentType}.share.unshare.title`)}
+                  </a>
+                </Item>
+              </Menu>
+            )}
         </div>
-      )}
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 export default translate()(Recipient)

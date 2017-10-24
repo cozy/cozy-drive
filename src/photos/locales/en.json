@@ -76,16 +76,16 @@
   "Share": {
     "status": {
       "pending": "Pending",
-      "accepted": {
-        "master-slave": "Can View",
-        "master-master": "Can Change"
-      },
+      "accepted": "Accepted",
       "refused": "Refused",
       "error": "Error",
       "unregistered": "Error",
       "mail-not-sent": "Error",
       "revoked": "Error"
-
+    },
+    "type": {
+      "master-slave": "Can View",
+      "master-master": "Can Change"
     }
   },
   "Albums": {
