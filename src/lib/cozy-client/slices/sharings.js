@@ -240,6 +240,9 @@ const createSharingLink = document => ({
 
 // TODO: this is a poor man's migration in order to normalize contacts
 // and should be removed after a few weeks in prod
+// Note for future-self: If you have no idea of what it means, please, erase this code.
+// Note for time-travelers: please travel a little more back in time in order to advise us
+// to get contacts right the first time
 export const fetchContacts = () => {
   const action = fetchCollection('contacts', 'io.cozy.contacts')
   action.promise = async client => {

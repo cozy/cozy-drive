@@ -50,7 +50,6 @@ export class AlbumPhotos extends Component {
       return null
     }
     const { album, photos, shared } = this.props
-    console.log(shared)
     const { editing } = this.state
     return (
       <div className={styles['pho-content-wrapper']}>
