@@ -5,6 +5,7 @@ import sharings, {
   getSharings,
   getSharingDetails
 } from './slices/sharings'
+import synchronization from './slices/synchronization'
 
 const FETCH_DOCUMENT = 'FETCH_DOCUMENT'
 const FETCH_COLLECTION = 'FETCH_COLLECTION'
@@ -38,8 +39,8 @@ const documents = (state = {}, action) => {
       const doc = action.response.data[0]
       return {
         ...state,
-        [doc.type]: {
-          ...state[doc.type],
+        [doc._type]: {
+          ...state[doc._type],
           [doc.id]: doc
         }
       }
@@ -47,7 +48,7 @@ const documents = (state = {}, action) => {
       const deleted = action.response.data[0]
       return {
         ...state,
-        [deleted.type]: removeObjectProperty(state[deleted.type], deleted.id)
+        [deleted._type]: removeObjectProperty(state[deleted._type], deleted.id)
       }
     case ADD_REFERENCED_FILES:
       return {
@@ -126,7 +127,7 @@ const removeFilesReferences = (files, removedIds, doc) =>
     {}
   )
 
-const getDoctype = ({ type: doctype }) => {
+const getDoctype = ({ _type: doctype }) => {
   // TODO: don't know why the stack returns 'file' here..
   if (doctype === 'file') {
     return 'io.cozy.files'
@@ -139,6 +140,7 @@ const getArrayDoctype = documents => getDoctype(documents[0])
 // collection reducers
 const collectionInitialState = {
   type: null,
+  options: {},
   fetchStatus: 'pending',
   lastFetch: null,
   hasMore: false,
@@ -153,6 +155,7 @@ const collection = (state = collectionInitialState, action) => {
       return {
         ...state,
         type: action.doctype || 'io.cozy.files',
+        options: action.options,
         fetchStatus: action.skip > 0 ? 'loadingMore' : 'loading'
       }
     case RECEIVE_DATA:
@@ -244,7 +247,8 @@ const collections = (state = {}, action) => {
 export default combineReducers({
   collections,
   documents,
-  sharings
+  sharings,
+  synchronization
 })
 
 export const fetchCollection = (name, doctype, options = {}, skip = 0) => ({
@@ -265,17 +269,18 @@ export const fetchDocument = (doctype, id) => ({
 
 export const fetchReferencedFiles = (doc, skip = 0) => ({
   types: [FETCH_REFERENCED_FILES, RECEIVE_DATA, RECEIVE_ERROR],
-  collection: `${doc.type}/${doc.id}#files`,
+  collection: `${doc._type}/${doc.id}#files`,
   document: doc,
   options: {},
   skip,
   promise: client => client.fetchReferencedFiles(doc, skip)
 })
 
-export const createDocument = (doc, actionOptions = {}) => ({
+export const createDocument = (doctype, doc, actionOptions = {}) => ({
   types: [CREATE_DOCUMENT, RECEIVE_NEW_DOCUMENT, RECEIVE_ERROR],
+  doctype,
   document: doc,
-  promise: client => client.createDocument(doc),
+  promise: client => client.createDocument(doctype, doc),
   ...actionOptions
 })
 

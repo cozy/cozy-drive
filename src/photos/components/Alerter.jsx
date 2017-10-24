@@ -75,7 +75,10 @@ class Alert extends Component {
           {buttonText && (
             <a
               onClick={buttonAction}
-              className={classNames('coz-btn', `coz-btn--alert-${type}`)}
+              className={classNames(
+                styles['c-btn'],
+                styles[`c-btn-alert-${type}`]
+              )}
             >
               {buttonText}
             </a>

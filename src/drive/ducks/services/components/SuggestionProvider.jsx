@@ -77,7 +77,7 @@ class SuggestionProvider extends React.Component {
             id: file._id,
             name: file.name,
             path,
-            url: window.location.origin + '/#/files/' + dirId
+            url: window.location.origin + '/#/folder/' + dirId
           }
         })
 

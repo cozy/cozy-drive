@@ -5,7 +5,7 @@ import {
   getTracker,
   createTrackerMiddleware
 } from 'cozy-ui/react/helpers/tracker'
-import { cozyMiddleware } from 'redux-cozy-client'
+import { cozyMiddleware } from 'cozy-client'
 import thunkMiddleware from 'redux-thunk'
 import eventTrackerMiddleware from '../middlewares/EventTracker'
 import rootReducer from '../reducers'

@@ -5,7 +5,7 @@ const fs = require('fs')
 const { DefinePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = function (production, app) {
+module.exports = function(production, app) {
   var entry = {
     app: path.resolve(__dirname, `../targets/${app}/web/main`)
   }
@@ -25,32 +25,48 @@ module.exports = function (production, app) {
     })
   ]
 
-  if (fs.existsSync(path.resolve(__dirname, `../targets/${app}/web/services.jsx`))) {
+  if (
+    fs.existsSync(path.resolve(__dirname, `../targets/${app}/web/services.jsx`))
+  ) {
     entry.services = path.resolve(__dirname, `../targets/${app}/web/services`)
-    plugins.push(new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, `../targets/${app}/web/services.ejs`),
-      title: `cozy-${app}`,
-      filename: 'services.html',
-      chunks: ['services'],
-      inject: 'head',
-      minify: {
-        collapseWhitespace: true
-      }
-    }))
+    plugins.push(
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, `../targets/${app}/web/services.ejs`),
+        title: `cozy-${app}`,
+        filename: 'services.html',
+        chunks: ['services'],
+        inject: 'head',
+        minify: {
+          collapseWhitespace: true
+        }
+      })
+    )
   }
 
-  if (fs.existsSync(path.resolve(__dirname, `../targets/${app}/web/public/main.jsx`))) {
-    entry['public/app'] = path.resolve(__dirname, `../targets/${app}/web/public/main`)
-    plugins.push(new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, `../targets/${app}/web/public/index.ejs`),
-      title: `cozy-${app}`,
-      filename: 'public/index.html',
-      chunks: ['public/app'],
-      inject: 'head',
-      minify: {
-        collapseWhitespace: true
-      }
-    }))
+  if (
+    fs.existsSync(
+      path.resolve(__dirname, `../targets/${app}/web/public/main.jsx`)
+    )
+  ) {
+    entry['public/app'] = path.resolve(
+      __dirname,
+      `../targets/${app}/web/public/main`
+    )
+    plugins.push(
+      new HtmlWebpackPlugin({
+        template: path.resolve(
+          __dirname,
+          `../targets/${app}/web/public/index.ejs`
+        ),
+        title: `cozy-${app}`,
+        filename: 'public/index.html',
+        chunks: ['public/app'],
+        inject: 'head',
+        minify: {
+          collapseWhitespace: true
+        }
+      })
+    )
   }
 
   return {

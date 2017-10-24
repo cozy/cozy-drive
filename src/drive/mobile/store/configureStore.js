@@ -2,10 +2,7 @@
 import { saveState } from './persistedState'
 import RavenMiddleWare from 'redux-raven-middleware'
 import { createLogger } from 'redux-logger'
-import {
-  ANALYTICS_URL,
-  getConfig as getAnalyticsConfiguration
-} from '../lib/reporter'
+import { ANALYTICS_URL, getReporterConfiguration } from '../lib/reporter'
 import { compose, createStore, applyMiddleware } from 'redux'
 import {
   shouldEnableTracking,
@@ -28,7 +25,7 @@ const configureStore = (initialState = {}) => {
   const loggerMiddleware = createLogger(loggerOptions)
   const ravenMiddleWare = RavenMiddleWare(
     ANALYTICS_URL,
-    getAnalyticsConfiguration()
+    getReporterConfiguration()
   )
   const middlewares = [thunkMiddleware, ravenMiddleWare]
   if (shouldEnableTracking() && getTracker()) {

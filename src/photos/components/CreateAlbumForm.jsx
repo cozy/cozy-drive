@@ -71,11 +71,7 @@ export class CreateAlbumForm extends Component {
             value={this.state.name}
           />
           <button
-            className={classNames(
-              'coz-btn',
-              'coz-btn--regular',
-              styles['coz-btn']
-            )}
+            className={classNames(styles['c-btn'], styles['c-btn--regular'])}
             disabled={this.state.isSubmitDisabled || this.state.isBusy}
             aria-busy={this.state.isBusy}
           >

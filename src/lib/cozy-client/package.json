@@ -1,0 +1,19 @@
+{
+  "name": "cozy-client",
+  "version": "0.1.0",
+  "description": "A simple and declarative way of managing cozy-stack API calls and resulting data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cozy/cozy-drive.git"
+  },
+  "author": "cozycloud.cc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cozy/cozy-drive/issues"
+  },
+  "homepage": "https://github.com/cozy/cozy-drive/blob/master/src/lib/cozy-client/README.md"
+}

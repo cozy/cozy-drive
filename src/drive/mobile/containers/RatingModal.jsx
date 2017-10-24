@@ -4,6 +4,7 @@ import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
 import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
+import classNames from 'classnames'
 
 import styles from '../styles/rating'
 
@@ -83,13 +84,16 @@ class EnjoyCozy extends Component {
         <ModalContent>
           <div className={styles['button-block']}>
             <button
-              className="coz-btn coz-btn--secondary"
+              className={classNames(
+                styles['c-btn'],
+                styles['c-btn--secondary']
+              )}
               onClick={() => onReply(false)}
             >
               {t('mobile.rating.enjoy.no')}
             </button>
             <button
-              className="coz-btn coz-btn--regular"
+              className={classNames(styles['c-btn'], styles['c-btn--regular'])}
               onClick={() => onReply(true)}
             >
               {t('mobile.rating.enjoy.yes')}
@@ -150,14 +154,20 @@ class FeeedbackForm extends Component {
             />
             <div className={styles['button-block']}>
               <button
-                className="coz-btn coz-btn--secondary"
+                className={classNames(
+                  styles['c-btn'],
+                  styles['c-btn--secondary']
+                )}
                 type="button"
                 onClick={() => onClose(false)}
               >
                 {t('mobile.rating.feedback.no')}
               </button>
               <button
-                className="coz-btn coz-btn--regular"
+                className={classNames(
+                  styles['c-btn'],
+                  styles['c-btn--regular']
+                )}
                 type="submit"
                 aria-busy={sending}
               >

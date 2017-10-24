@@ -16,16 +16,16 @@ import Unlink from '../containers/settings/Unlink'
 
 class Settings extends Component {
   state = {
-    countClick: 0
+    tapCount: 0
   }
 
-  handleClick = () => {
-    this.setState(state => ({ countClick: state.countClick + 1 }))
+  incrementTapCount = () => {
+    this.setState(state => ({ tapCount: state.tapCount + 1 }))
   }
 
   render() {
     const { t } = this.props
-    const isDebug = this.state.countClick >= 3
+    const isDebug = this.state.tapCount >= 3
     return (
       <Main>
         <Topbar>
@@ -36,7 +36,7 @@ class Settings extends Component {
             <MediaBackup />
             <Contacts />
             <Support isDebug={isDebug} />
-            <About onClick={this.handleClick} />
+            <About onTap={this.incrementTapCount} />
             <Unlink />
 
             {__DEVELOPMENT__ && [<hr />, <h3>Debug Zone</h3>, <DebugTools />]}

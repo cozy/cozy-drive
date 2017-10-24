@@ -1,5 +1,3 @@
-import styles from '../../../styles/toolbar'
-
 import React from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
@@ -8,14 +6,16 @@ import { translate } from 'cozy-ui/react/I18n'
 import Menu, { Item } from '../../../components/Menu'
 import MoreButton from '../../../components/MoreButton'
 
+import styles from '../../../styles/toolbar'
+
 const AlbumsToolbar = ({ t }) => (
   <div className={styles['pho-toolbar']} role="toolbar">
-    <div className="coz-desktop">
+    <div className={styles['u-hide--mob']}>
       <Link
         role="button"
         className={classNames(
-          'coz-btn',
-          'coz-btn--secondary',
+          styles['c-btn'],
+          styles['c-btn--secondary'],
           styles['pho-btn-new']
         )}
         to="/albums/new"
@@ -24,7 +24,7 @@ const AlbumsToolbar = ({ t }) => (
       </Link>
     </div>
     <Menu
-      className={classNames(styles['pho-toolbar-menu'], 'coz-mobile')}
+      className={classNames(styles['pho-toolbar-menu'], styles['u-hide--desk'])}
       button={<MoreButton />}
     >
       <Item>

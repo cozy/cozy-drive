@@ -1,9 +1,7 @@
-import styles from '../../../styles/toolbar'
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
-import { leave } from 'redux-cozy-client'
+import { leave } from 'cozy-client'
 import { translate } from 'cozy-ui/react/I18n'
 
 import ShareButton, {
@@ -26,6 +24,8 @@ import confirm from '../../../lib/confirm'
 import { ShareModal, SharingDetailsModal } from 'sharing'
 
 import classNames from 'classnames'
+
+import styles from '../../../styles/toolbar'
 
 class AlbumToolbar extends Component {
   state = {
@@ -63,7 +63,7 @@ class AlbumToolbar extends Component {
     const { deleteAlbum, leaveAlbum, selectItems, onRename } = this.props
     return (
       <div className={styles['pho-toolbar']} role="toolbar">
-        <div className="coz-desktop">
+        <div className={styles['u-hide--mob']}>
           {!sharedByMe &&
             !sharedWithMe && (
               <ShareButton
@@ -92,7 +92,10 @@ class AlbumToolbar extends Component {
           {!sharedWithMe && (
             <Item>
               <a
-                className={classNames(styles['pho-action-share'], 'coz-mobile')}
+                className={classNames(
+                  styles['pho-action-share'],
+                  styles['u-hide--desk']
+                )}
                 onClick={this.showShareModal}
               >
                 {t('Albums.share.cta')}
@@ -125,10 +128,13 @@ class AlbumToolbar extends Component {
               </Link>
             </Item>
           )}
-          <hr className="coz-mobile" />
+          <hr className={styles['u-hide--desk']} />
           <Item>
             <a
-              className={classNames(styles['pho-action-select'], 'coz-mobile')}
+              className={classNames(
+                styles['pho-action-select'],
+                styles['u-hide--desk']
+              )}
               onClick={selectItems}
             >
               {t('Toolbar.menu.select_items')}

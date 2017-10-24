@@ -32,7 +32,9 @@ const documents = (state = [], action) => {
       )
       if (idx === -1) return state
       const sharing = state[idx]
-      const loneRecipient = sharing.attributes.recipients.length === 1
+      const loneRecipient =
+        sharing.attributes.recipients === undefined || // for recipient-side revocation
+        sharing.attributes.recipients.length === 1
       const newState = loneRecipient
         ? { ...sharing, attributes: { ...sharing.attributes, revoked: true } }
         : {
@@ -237,8 +239,7 @@ const createSharingLink = document => ({
 })
 
 const createContact = ({ email }) =>
-  createDocument({
-    type: 'io.cozy.contacts',
+  createDocument('io.cozy.contacts', {
     email: [{ address: email, primary: true }]
   })
 
@@ -246,7 +247,7 @@ const getPermissionsFor = (document, publicLink = false) => {
   const { _id, _type } = document
   const verbs = publicLink ? ['GET'] : ['ALL']
   // TODO: this works for albums, but it needs to be generalized and integrated
-  // with redux-cozy-client ; some sort of doctype "schema" will be needed here
+  // with cozy-client ; some sort of doctype "schema" will be needed here
   return isFile(document)
     ? {
         files: {

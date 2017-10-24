@@ -1,6 +1,5 @@
 'use strict'
 
-const { LoaderOptionsPlugin } = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
@@ -31,22 +30,20 @@ module.exports = {
               loader: 'postcss-loader',
               options: {
                 sourceMap: true,
-                plugins: () => [require('autoprefixer')({ browsers: ['last 2 versions'] })]
+                plugins: () => [
+                  require('autoprefixer')({ browsers: ['last 2 versions'] })
+                ]
               }
             },
-            'stylus-loader'
+            {
+              loader: 'stylus-loader',
+              options: {
+                use: [require('cozy-ui/stylus')()]
+              }
+            }
           ]
         })
       }
     ]
-  },
-  plugins: [
-    new LoaderOptionsPlugin({
-      options: {
-        stylus: {
-          use: [ require('cozy-ui/stylus')() ]
-        }
-      }
-    })
-  ]
+  }
 }

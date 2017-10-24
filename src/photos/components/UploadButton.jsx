@@ -1,5 +1,8 @@
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import classNames from 'classnames'
+
+import button from 'cozy-ui/stylus/components/button'
 
 const styles = {
   parent: {
@@ -29,8 +32,12 @@ export const UploadButton = ({
     role="button"
     disabled={disabled}
     className={`${className} ${type === 'menu-item'
-      ? 'coz-link--upload'
-      : 'coz-btn coz-btn--regular coz-btn--upload'}`}
+      ? button['c-link--upload']
+      : classNames(
+          button['c-btn'],
+          button['c-btn--regular'],
+          button['c-btn--upload']
+        )}`}
     style={styles.parent}
   >
     {label}

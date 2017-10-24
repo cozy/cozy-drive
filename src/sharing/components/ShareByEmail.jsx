@@ -11,8 +11,12 @@ import styles from '../share.styl'
 class ShareByEmailWrapper extends React.Component {
   share(recipients, sharingType) {
     const { document, documentType, sharingDesc } = this.props
-    return this.props
-      .onShare(document, recipients, sharingType, sharingDesc)
+    // TODO: remove the Promise.all thing when the stack is ready for multi-contacts sharing
+    return Promise.all(
+      recipients.map(recipient =>
+        this.props.onShare(document, [recipient], sharingType, sharingDesc)
+      )
+    )
       .then(() => {
         if (recipients.length === 1) {
           Alerter.info(`${documentType}.share.shareByEmail.success`, {
@@ -110,6 +114,9 @@ class ShareByEmail extends React.Component {
 
   sendSharingLink() {
     const { recipients, sharingType } = this.state
+    if (recipients.length === 0) {
+      return
+    }
     this.props
       .onSend(recipients, sharingType)
       .then(() => {
@@ -162,8 +169,7 @@ class ShareByEmail extends React.Component {
             </option>
           </select>
           <button
-            className={classnames('coz-btn', 'coz-btn--regular')}
-            disabled={this.state.recipients.length === 0}
+            className={classnames(styles['c-btn'], styles['c-btn--regular'])}
             onClick={e => this.sendSharingLink()}
           >
             {t(`${documentType}.share.shareByEmail.send`)}

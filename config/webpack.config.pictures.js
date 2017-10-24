@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function (production) {
+module.exports = function(production) {
   return {
     module: {
       rules: [

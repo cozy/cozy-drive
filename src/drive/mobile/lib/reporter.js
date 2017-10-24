@@ -1,17 +1,21 @@
 /* global __SENTRY_TOKEN__, __DEVELOPMENT__ */
 import Raven from 'raven-js'
 
-let isEnable = false
-export const ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
+let isEnabled = false
+const PROD_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
+const DEV_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
+export const ANALYTICS_URL = __DEVELOPMENT__
+  ? DEV_ANALYTICS_URL
+  : PROD_ANALYTICS_URL
 
-export const getConfig = () => ({
-  shouldSendCallback: () => isEnable && !__DEVELOPMENT__,
+export const getReporterConfiguration = () => ({
+  shouldSendCallback: () => isEnabled,
   environment: __DEVELOPMENT__ ? 'development' : 'production'
 })
 
-export const configure = enable => {
-  isEnable = enable
-  Raven.config(ANALYTICS_URL, getConfig()).install()
+export const configureReporter = enable => {
+  isEnabled = enable
+  Raven.config(ANALYTICS_URL, getReporterConfiguration()).install()
 }
 
 export const logException = err => {
@@ -23,21 +27,23 @@ export const logException = err => {
   })
 }
 
-const logMessage = (message, level = 'info', force) => {
+const logMessage = (message, serverUrl, level = 'info', force) => {
   return new Promise(resolve => {
-    const updateConfig = force && !isEnable
-    if (updateConfig) {
-      configure(true)
+    if (force) {
+      configureReporter(true)
     }
-    Raven.captureMessage(message, {
+    Raven.setUserContext = {
+      url: serverUrl
+    }
+    Raven.captureMessage(`[${serverUrl}] ${message}`, {
       level
     })
-    if (updateConfig) {
-      configure(false)
+    if (force) {
+      configureReporter(isEnabled)
     }
     resolve()
   })
 }
 
-export const logInfo = (message, force = false) =>
-  logMessage(message, 'info', force)
+export const logInfo = (message, serverUrl, force = false) =>
+  logMessage(message, serverUrl, 'info', force)

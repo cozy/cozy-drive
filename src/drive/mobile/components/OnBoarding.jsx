@@ -38,7 +38,7 @@ export const OnBoarding = ({
     <footer className={styles['wizard-footer']}>
       <button
         role="button"
-        className={'coz-btn coz-btn--regular'}
+        className={classNames(styles['c-btn'], styles['c-btn--regular'])}
         onClick={onActivate}
       >
         {onSkip && t('mobile.onboarding.step.button')}

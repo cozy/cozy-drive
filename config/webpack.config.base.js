@@ -7,13 +7,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const SRC_DIR = path.resolve(__dirname, '../src')
 
-module.exports = function (production) {
+module.exports = function(production) {
   return {
     resolve: {
       modules: ['node_modules', SRC_DIR],
       extensions: ['.js', '.json', '.css'],
       alias: {
-        'redux-cozy-client': path.resolve(SRC_DIR, './lib/redux-cozy-client'),
+        'cozy-client': path.resolve(SRC_DIR, './lib/cozy-client'),
         'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
       }
     },
@@ -44,16 +44,16 @@ module.exports = function (production) {
                 loader: 'postcss-loader',
                 options: {
                   sourceMap: true,
-                  plugins: () => [require('autoprefixer')({ browsers: ['last 2 versions'] })]
+                  plugins: () => [
+                    require('autoprefixer')({ browsers: ['last 2 versions'] })
+                  ]
                 }
               }
             ]
           })
         }
       ],
-      noParse: [
-        /localforage\/dist/
-      ]
+      noParse: [/localforage\/dist/]
     },
     plugins: [
       new ScriptExtHtmlWebpackPlugin({
@@ -67,7 +67,12 @@ module.exports = function (production) {
           require('postcss-discard-duplicates'),
           require('postcss-discard-empty')
         ].concat(
-          production ? require('csswring')({preservehacks: true, removeallcomments: true}) : []
+          production
+            ? require('csswring')({
+                preservehacks: true,
+                removeallcomments: true
+              })
+            : []
         )
       })
     ]

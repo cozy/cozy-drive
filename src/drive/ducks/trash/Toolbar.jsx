@@ -15,9 +15,9 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
   <div className={styles['fil-toolbar-trash']} role="toolbar">
     <button
       className={classNames(
-        'coz-btn',
-        'coz-btn--danger-outline',
-        'coz-desktop',
+        styles['c-btn'],
+        styles['c-btn--danger-outline'],
+        styles['u-hide--mob'],
         styles['fil-btn--delete']
       )}
       onClick={() => emptyTrash()}

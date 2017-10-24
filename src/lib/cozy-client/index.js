@@ -1,5 +1,4 @@
 export { default as CozyProvider } from './CozyProvider'
-export { default as CozyAPI } from './CozyAPI'
 export { default as CozyClient } from './CozyClient'
 export { default as cozyConnect } from './connect'
 export { default as cozyMiddleware } from './middleware'
@@ -31,5 +30,6 @@ export {
   shareByLink,
   revokeLink
 } from './slices/sharings'
+export { startSync, isFirstSync, isSynced } from './slices/synchronization'
 
 export { downloadArchive, downloadFile } from './helpers'

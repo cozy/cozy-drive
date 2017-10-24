@@ -1,14 +1,16 @@
-import styles from '../../../styles/newAlbum'
-
 import React, { Component } from 'react'
-import { cozyConnect } from 'redux-cozy-client'
+import { cozyConnect } from 'cozy-client'
 import { withRouter } from 'react-router'
 
 import { fetchTimeline, getPhotosByMonth } from '../../timeline'
 import { createAlbum, fetchAlbum, addToAlbum } from '..'
 
+import classNames from 'classnames'
+
 import PhotoBoard from '../../../components/PhotoBoard'
 import Alerter from '../../../components/Alerter'
+
+import styles from '../../../styles/newAlbum'
 
 class PhotosPicker extends Component {
   constructor(props) {
@@ -158,13 +160,19 @@ class PhotosPicker extends Component {
             <div className={styles['pho-panel-wrap']}>
               <div className={styles['pho-panel-controls']}>
                 <button
-                  className="coz-btn coz-btn--secondary"
+                  className={classNames(
+                    styles['c-btn'],
+                    styles['c-btn--secondary']
+                  )}
                   onClick={this.onCancel}
                 >
                   {t('Albums.create.panel_form.cancel')}
                 </button>
                 <button
-                  className="coz-btn coz-btn--regular"
+                  className={classNames(
+                    styles['c-btn'],
+                    styles['c-btn--regular']
+                  )}
                   onClick={isNew ? this.onCreate : this.onUpdate}
                 >
                   {t(

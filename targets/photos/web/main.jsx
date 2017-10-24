@@ -11,7 +11,7 @@ import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
-import { CozyClient, CozyProvider, cozyMiddleware } from 'redux-cozy-client'
+import { CozyClient, CozyProvider, cozyMiddleware } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
 import photosApp from 'photos/reducers'

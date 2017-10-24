@@ -6,7 +6,7 @@ import { setClient, setFirstReplication } from '../../actions/settings'
 import { getDeviceName } from '../lib/device'
 import { openFolder, getOpenedFolderId } from '../../actions'
 import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
-import { logException, configure as configureReporter } from '../lib/reporter'
+import { logException, configureReporter } from '../lib/reporter'
 import { startTracker, stopTracker } from '../lib/tracker'
 import { revokeClient as reduxRevokeClient } from './authorization'
 

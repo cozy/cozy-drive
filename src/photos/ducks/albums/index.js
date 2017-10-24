@@ -9,7 +9,7 @@ import {
   addReferencedFiles,
   removeReferencedFiles,
   downloadArchive
-} from 'redux-cozy-client'
+} from 'cozy-client'
 
 import AlbumToolbar from './components/AlbumToolbar'
 import AlbumsToolbar from './components/AlbumsToolbar'
@@ -20,12 +20,13 @@ export const DOCTYPE = 'io.cozy.photos.albums'
 export const fetchAlbums = () => fetchCollection('albums', DOCTYPE)
 export const fetchSharedAlbums = id => fetchSharings(DOCTYPE)
 export const fetchAlbumPhotos = (id, skip = 0) =>
-  fetchReferencedFiles({ type: DOCTYPE, id }, skip)
+  fetchReferencedFiles({ _type: DOCTYPE, id }, skip)
 export const fetchAlbum = id => fetchDocument(DOCTYPE, id)
 export const fetchAlbumSharings = id => fetchSharings(DOCTYPE, id)
 export const createAlbum = (name, createdAt = new Date()) =>
   createDocument(
-    { type: DOCTYPE, name, created_at: createdAt },
+    DOCTYPE,
+    { name, created_at: createdAt },
     { updateCollections: ['albums'] }
   )
 export const updateAlbum = album => updateDocument(album)
