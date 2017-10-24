@@ -36,20 +36,50 @@ export const UserAvatar = ({ name, url }) => (
   </div>
 )
 
+const Status = translate()(
+  ({ t, revoking, status, type, documentType, onUnshare }) => (
+    <div className={styles['pho-recipient-status']}>
+      {revoking && <Spinner />}
+      {!revoking &&
+        status && (
+          <Menu
+            title={
+              status === 'accepted' && type
+                ? t(`Share.type.${type}`)
+                : t(`Share.status.${status}`)
+            }
+            className={styles['pho-recipient-menu']}
+            buttonClassName={styles['pho-recipient-menu-btn']}
+            disabled={status === 'pending'}
+          >
+            <Item>
+              <a
+                className={classNames(styles['pho-action-unshare'])}
+                onClick={onUnshare}
+              >
+                {t(`${documentType}.share.unshare.title`)}
+              </a>
+            </Item>
+          </Menu>
+        )}
+    </div>
+  )
+)
+
 class Recipient extends Component {
   state = {
     revoking: false
   }
 
   onUnshare = () => {
-    this.setState({ revoking: true })
+    this.setState(state => ({ revoking: true }))
     this.props
       .onUnshare(this.props.contact)
-      .then(() => this.setState({ revoking: false }))
+      .then(() => this.setState(state => ({ revoking: false })))
   }
 
   render() {
-    const { t, contact, status, type, documentType } = this.props
+    const { contact } = this.props
     const { revoking } = this.state
     const name = getPrimaryEmail(contact)
     const url = getPrimaryCozy(contact)
@@ -57,34 +87,14 @@ class Recipient extends Component {
       <div className={styles['pho-recipient']}>
         <Avatar name={name} />
         <Identity name={name} url={url} />
-        <div className={styles['pho-recipient-status']}>
-          {revoking && <Spinner />}
-          {!revoking &&
-            status && (
-              <Menu
-                title={
-                  status === 'accepted' && type
-                    ? t(`Share.type.${type}`)
-                    : t(`Share.status.${status}`)
-                }
-                className={styles['pho-recipient-menu']}
-                buttonClassName={styles['pho-recipient-menu-btn']}
-                disabled={status === 'pending'}
-              >
-                <Item>
-                  <a
-                    className={classNames(styles['pho-action-unshare'])}
-                    onClick={this.onUnshare}
-                  >
-                    {t(`${documentType}.share.unshare.title`)}
-                  </a>
-                </Item>
-              </Menu>
-            )}
-        </div>
+        <Status
+          {...this.props}
+          revoking={revoking}
+          onUnshare={this.onUnshare}
+        />
       </div>
     )
   }
 }
 
-export default translate()(Recipient)
+export default Recipient
