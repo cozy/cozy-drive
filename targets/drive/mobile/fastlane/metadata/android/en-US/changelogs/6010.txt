@@ -1,0 +1,1 @@
+This version fixes minor visual issues
