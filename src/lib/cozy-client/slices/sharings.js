@@ -252,7 +252,7 @@ export const fetchContacts = () => {
     )
     const data = await Promise.all(
       response.data.map(contact => {
-        return typeof contact !== 'string'
+        return typeof contact.email !== 'string'
           ? contact
           : client
               .updateDocument({
