@@ -314,7 +314,7 @@ export const trashFile = (file, actionOptions = {}) => ({
 
 export const addReferencedFiles = (doc, ids) => ({
   type: ADD_REFERENCED_FILES,
-  collection: `${doc.type}/${doc.id}#files`,
+  collection: `${doc._type}/${doc._id}#files`,
   document: doc,
   ids,
   promise: client => client.addReferencedFiles(doc, ids)
@@ -322,7 +322,7 @@ export const addReferencedFiles = (doc, ids) => ({
 
 export const removeReferencedFiles = (doc, ids) => ({
   type: REMOVE_REFERENCED_FILES,
-  collection: `${doc.type}/${doc.id}#files`,
+  collection: `${doc._type}/${doc._id}#files`,
   document: doc,
   ids,
   promise: client => client.removeReferencedFiles(doc, ids)
