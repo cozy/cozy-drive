@@ -34,15 +34,16 @@
   "Share": {
     "status": {
       "pending": "Pending",
-      "accepted": {
-        "master-slave": "Can View",
-        "master-master": "Can Change"
-      },
+      "accepted": "Accepted",
       "refused": "Refused",
       "error": "Error",
       "unregistered": "Error",
       "mail-not-sent": "Error",
       "revoked": "Error"
+    },
+    "type": {
+      "master-slave": "Can View",
+      "master-master": "Can Change"
     }
   },
   "Files": {
@@ -313,6 +314,15 @@
         "later": "No problem, we'll ask again later.",
         "feedback": "Thank you for the feedback. We'll definitely work on it!"
       }
+    },
+    "first_sync": {
+      "title": "You are about to start your first photos back up 🎉",
+      "tips": "Tips",
+      "tip_bed": "Open Cozy Drive before you go to bed or when you don't use your phone.",
+      "tip_wifi": "Enable Wi-Fi to preserve your data.",
+      "tip_lock": "Disable your lock screen.",
+      "result": "In the morning, all your photos will be stored in a safe and secure location.",
+      "button": "Got it!"
     }
   },
   "upload": {

@@ -3,8 +3,8 @@ import styles from './share.styl'
 import React, { Component } from 'react'
 import {
   cozyConnect,
-  fetchCollection,
   fetchSharings,
+  fetchContacts,
   share,
   unshare,
   shareByLink,
@@ -81,7 +81,7 @@ export default cozyConnect(
     }),
     // TODO: we shouldn't have to fetch contacts manually, it should be handled
     // automatically when using the include: ['recipients'] option
-    contacts: fetchCollection('contacts', 'io.cozy.contacts')
+    contacts: fetchContacts()
   }),
   (dispatch, ownProps) => ({
     share: (document, recipients, sharingType, sharingDesc) =>

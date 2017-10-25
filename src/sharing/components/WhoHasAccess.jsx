@@ -6,10 +6,11 @@ const WhoHasAccess = ({ recipients, documentType, onUnshare }) => (
   <div>
     {recipients
       .filter(r => r.status !== 'revoked')
-      .map(({ contact, status }) => (
+      .map(({ contact, status, type }) => (
         <Recipient
           contact={contact}
           status={status}
+          type={type}
           documentType={documentType}
           onUnshare={onUnshare}
         />
