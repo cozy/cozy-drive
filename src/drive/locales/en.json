@@ -31,6 +31,9 @@
     "empty_trash": "Empty trash",
     "share": "Share"
   },
+  "service": {
+    "bills": "Get my bills"
+  },
   "Share": {
     "status": {
       "pending": "Pending",
