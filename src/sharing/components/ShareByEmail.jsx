@@ -161,11 +161,9 @@ class ShareByEmail extends React.Component {
             value={this.state.sharingType}
             onChange={e => this.changeSharingType(e.target.value)}
           >
-            <option value="master-slave">
-              {t('Share.status.accepted.master-slave')}
-            </option>
+            <option value="master-slave">{t('Share.type.master-slave')}</option>
             <option value="master-master">
-              {t('Share.status.accepted.master-master')}
+              {t('Share.type.master-master')}
             </option>
           </select>
           <button
