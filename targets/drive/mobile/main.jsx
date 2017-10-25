@@ -31,9 +31,6 @@ if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
   // Cannot use import as we are in a condition
   require('preact/devtools')
-
-  // Export React to window for the devtools
-  window.React = React
 }
 
 const renderAppWithPersistedState = persistedState => {
