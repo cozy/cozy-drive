@@ -64,7 +64,7 @@ export default class Menu extends Component {
         {!button && (
           <button
             role="button"
-            className={classNames(styles['c-btn'], buttonClassName)}
+            className={buttonClassName || styles['c-btn']}
             disabled={disabled}
             onClick={this.toggle}
           >
