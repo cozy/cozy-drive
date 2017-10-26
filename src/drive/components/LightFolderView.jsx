@@ -10,7 +10,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import ErrorShare from './ErrorShare'
 
 import DownloadButton from './DownloadButton'
-import Menu, { Item } from './Menu'
+import Menu, { Item } from 'common/components/Menu'
 
 import {
   openFolder,
