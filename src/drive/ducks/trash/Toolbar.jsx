@@ -6,8 +6,8 @@ import { translate } from 'cozy-ui/react/I18n'
 import confirm from '../../lib/confirm'
 import classNames from 'classnames'
 
-import { MoreButton } from 'common/components/Button'
-import Menu, { Item } from 'common/components/Menu'
+import { MoreButton } from 'components/Button'
+import Menu, { Item } from 'components/Menu'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import { emptyTrash } from './actions'

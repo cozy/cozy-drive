@@ -3,8 +3,8 @@ import { Link } from 'react-router'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 
-import Menu, { Item } from 'common/components/Menu'
-import { MoreButton } from 'common/components/Button'
+import Menu, { Item } from 'components/Menu'
+import { MoreButton } from 'components/Button'
 
 import styles from '../../../styles/toolbar'
 
