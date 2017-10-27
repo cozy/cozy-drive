@@ -1,30 +1,19 @@
 /* global cozy */
 
-import { setBackupImages } from './settings'
+import { setBackupImages } from '../../actions/settings'
 import {
   getPhotos,
   uploadLibraryItem,
   isAuthorized,
   getMediaFolderName,
   requestAuthorization
-} from '../lib/media'
-import { updateStatusBackgroundService } from '../lib/background'
-import { backupAllowed } from '../lib/network'
-import { logException } from '../lib/reporter'
+} from '../../lib/media'
+import { backupAllowed } from '../../lib/network'
+import { logException } from '../../lib/reporter'
 
-export const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
-export const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
-export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
-export const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
-export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
+export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
 
-const startMediaUpload = () => ({ type: MEDIA_UPLOAD_START })
-const endMediaUpload = () => ({ type: MEDIA_UPLOAD_END })
-const successMediaUpload = media => ({
-  type: MEDIA_UPLOAD_SUCCESS,
-  id: media.id
-})
-const currentUploading = (media, uploadCounter, totalUpload) => ({
+const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
   type: CURRENT_UPLOAD,
   media,
   message: 'mobile.settings.media_backup.media_upload',
@@ -34,31 +23,24 @@ const currentUploading = (media, uploadCounter, totalUpload) => ({
   }
 })
 
-async function getDirID(path) {
-  const dir = await cozy.client.files.createDirectoryByPath(path)
-
-  return dir._id
+const getDirID = async path => {
+  const { _id } = await cozy.client.files.createDirectoryByPath(path)
+  return _id
 }
 
-export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
+const canBackup = (force, getState) => {
+  return (
+    force ||
+    (getState().mobile.settings.backupImages &&
+      backupAllowed(getState().mobile.settings.wifiOnly))
+  )
+}
 
-/*
-  dir: It's the folder where picture will be uploaded
-  force: Even if the settings are not activated, it uploads the photos
-*/
-export const startMediaBackup = (dirName, force = false) => async (
+export const startMediaBackup = (targetFolderName, force = false) => async (
   dispatch,
   getState
 ) => {
-  const canBackup = (force, getState) => {
-    return (
-      force ||
-      (getState().mobile.settings.backupImages &&
-        backupAllowed(getState().mobile.settings.wifiOnly))
-    )
-  }
-
-  dispatch(startMediaUpload())
+  dispatch({ type: MEDIA_UPLOAD_START })
 
   if (!await isAuthorized()) {
     // force is only possible if the authorization is accepted
@@ -77,7 +59,7 @@ export const startMediaBackup = (dirName, force = false) => async (
     )
     const totalUpload = photosToUpload.length
     if (totalUpload > 0) {
-      const dirID = await getDirID(dirName)
+      const dirID = await getDirID(targetFolderName)
       let uploadCounter = 0
       for (const photo of photosToUpload) {
         if (
@@ -86,20 +68,25 @@ export const startMediaBackup = (dirName, force = false) => async (
         ) {
           break
         }
-        dispatch(currentUploading(photo, uploadCounter++, totalUpload))
-        await dispatch(uploadPhoto(dirName, dirID, photo))
+        dispatch(currentMediaUpload(photo, uploadCounter++, totalUpload))
+        await dispatch(uploadPhoto(targetFolderName, dirID, photo))
       }
     }
   }
 
   cozy.client.settings.updateLastSync()
-  dispatch(endMediaUpload())
+  dispatch({ type: MEDIA_UPLOAD_END })
 }
+
+const mediaUploadSucceed = ({ id }) => ({
+  type: MEDIA_UPLOAD_SUCCESS,
+  id
+})
 
 const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
   try {
     await cozy.client.files.statByPath(dirName + '/' + photo.fileName)
-    dispatch(successMediaUpload(photo))
+    dispatch(mediaUploadSucceed(photo))
     return
   } catch (_) {} // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
@@ -111,7 +98,7 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
 
     await uploadLibraryItem(dirID, photo)
     clearTimeout(timeout)
-    dispatch(successMediaUpload(photo))
+    dispatch(mediaUploadSucceed(photo))
   } catch (err) {
     console.warn('startMediaBackup upload item error')
     console.warn(JSON.stringify(err))
@@ -135,6 +122,7 @@ export const backupImages = backupImages => async (dispatch, getState) => {
     dispatch(setBackupImages(backupImages))
   }
 
+  const { updateStatusBackgroundService } = require('../../lib/background')
   updateStatusBackgroundService(backupImages)
   if (backupImages) {
     dispatch(startMediaBackup(getMediaFolderName()))
@@ -148,4 +136,44 @@ const updateValueAfterRequestAuthorization = async value => {
     value = await requestAuthorization()
   }
   return value
+}
+
+const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
+const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
+const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
+const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
+const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
+
+const initialState = {
+  uploading: false,
+  uploaded: []
+}
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case MEDIA_UPLOAD_CANCEL:
+      return { ...state, cancelMediaBackup: true }
+    case MEDIA_UPLOAD_START:
+      return { ...state, uploading: true, cancelMediaBackup: false }
+    case MEDIA_UPLOAD_END:
+      return {
+        ...state,
+        uploading: false,
+        cancelMediaBackup: true,
+        currentUpload: undefined
+      }
+    case MEDIA_UPLOAD_SUCCESS:
+      return { ...state, uploaded: [...state.uploaded, action.id] }
+    case CURRENT_UPLOAD:
+      return {
+        ...state,
+        currentUpload: {
+          media: action.media,
+          message: action.message,
+          messageData: action.messageData
+        }
+      }
+    default:
+      return state
+  }
 }

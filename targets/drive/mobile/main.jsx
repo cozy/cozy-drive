@@ -24,7 +24,7 @@ import {
   stopHeartBeat
 } from 'drive/mobile/lib/tracker'
 import { resetClient } from 'drive/mobile/lib/cozy-helper'
-import { backupImages } from 'drive/mobile/actions/mediaBackup'
+import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { backupContacts } from 'drive/mobile/actions/contactsBackup'
 
 if (__DEVELOPMENT__) {

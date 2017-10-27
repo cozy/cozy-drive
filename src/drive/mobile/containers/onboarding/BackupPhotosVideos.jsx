@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import OnBoarding from '../../components/OnBoarding'
-import { backupImages } from '../../actions/mediaBackup'
+import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 
 export const BackupPhotosVideos = ({ onActivate, onSkip, breadcrumbs }) => (
   <OnBoarding
