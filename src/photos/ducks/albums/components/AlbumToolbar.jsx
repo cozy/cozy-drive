@@ -9,8 +9,8 @@ import ShareButton, {
   SharedWithMeButton
 } from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
-import Menu, { Item } from '../../../components/Menu'
-import MoreButton from '../../../components/MoreButton'
+import Menu, { Item } from 'components/Menu'
+import { MoreButton } from 'components/Button'
 
 import {
   isSelectionBarVisible,

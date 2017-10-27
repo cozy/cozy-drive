@@ -1,7 +1,7 @@
-import styles from '../styles/menu'
-
 import React, { Component } from 'react'
 import classNames from 'classnames'
+
+import styles from './index.styl'
 
 export const Item = ({ children, onClick }) => (
   <div onClick={onClick} className={styles['coz-menu-item']}>
@@ -50,7 +50,7 @@ export default class Menu extends Component {
   }
 
   render() {
-    const { title, disabled, className, buttonClassName } = this.props
+    const { title, disabled, className, button, buttonClassName } = this.props
     const { opened } = this.state
     return (
       <div
@@ -59,14 +59,18 @@ export default class Menu extends Component {
           this.container = ref
         }}
       >
-        <button
-          role="button"
-          className={classNames(styles['c-btn'], buttonClassName)}
-          disabled={disabled}
-          onClick={this.toggle}
-        >
-          <span className={styles['u-visuallyhidden']}>{title}</span>
-        </button>
+        {button &&
+          React.cloneElement(button, { disabled, onClick: this.toggle })}
+        {!button && (
+          <button
+            role="button"
+            className={buttonClassName || styles['c-btn']}
+            disabled={disabled}
+            onClick={this.toggle}
+          >
+            {title}
+          </button>
+        )}
         <div
           className={classNames(styles['coz-menu-inner'], {
             [styles['coz-menu-inner--opened']]: opened

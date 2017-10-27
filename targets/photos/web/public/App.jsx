@@ -5,7 +5,8 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Loading from 'photos/components/Loading'
 import ErrorComponent from 'photos/components/ErrorComponent'
 import ErrorShare from 'photos/components/ErrorShare'
-import Menu, { Item } from 'photos/components/Menu'
+import { MoreButton } from 'components/Button'
+import Menu, { Item } from 'components/Menu'
 
 import {
   fetchAlbum,
@@ -137,7 +138,7 @@ class App extends Component {
             <Menu
               title={t('Toolbar.more')}
               className={classNames(styles['pho-toolbar-menu'])}
-              buttonClassName={styles['pho-toolbar-more-btn']}
+              button={<MoreButton />}
             >
               <Item>
                 <a
