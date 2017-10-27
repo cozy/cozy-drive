@@ -127,6 +127,10 @@
 
 mime-types('fil-file-', '../assets/icons/')
 
+.fil-file
+    display flex
+    flex-direction column
+
 .fil-file-preview
     content ''
     position absolute
@@ -138,6 +142,31 @@ mime-types('fil-file-', '../assets/icons/')
     height em(32px)
     background-size cover
     background-position center center
+
+.fil-file-filename
+    flex 1 1 50%
+
+.fil-file-path
+    flex 1 1 1.5em
+    color cool-grey
+    font-size .75em
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &::before
+        content: '';
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+    span
+        position: absolute;
+        width: 100%;
+        direction: rtl;
 
 @keyframes placeHolderShimmer
     0%

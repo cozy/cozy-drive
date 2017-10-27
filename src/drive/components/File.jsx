@@ -242,12 +242,19 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
       {isRenaming ? (
         <RenameInput />
       ) : (
-        <div>
-          {filename}
-          {extension && (
-            <span className={styles['fil-content-ext']}>{extension}</span>
-          )}
-          {opening === true && <Spinner />}
+        <div className={styles['fil-file']}>
+          <div className={styles['fil-file-filename']}>
+            {filename}
+            {extension && (
+              <span className={styles['fil-content-ext']}>{extension}</span>
+            )}
+            {opening === true && <Spinner />}
+          </div>
+          <div className={styles['fil-file-path']}>
+            <span>
+              Path/to/you/prefered/files/that/you/love/so/much/forever/and/ever/fuck/yeah/madafucking/youpla/boom/le/roi/du/pain/d/epice/tavu/tmtc/OKLM/swagg
+            </span>
+          </div>
         </div>
       )}
     </div>

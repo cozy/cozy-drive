@@ -128,15 +128,29 @@ export const fetchRecentFiles = () => {
 
     try {
       const index = await cozy.client.data.defineIndex('io.cozy.files', [
+        '_id',
         'updated_at',
         'size',
         'trashed'
       ])
       const files = await cozy.client.data.query(index, {
-        selector: { updated_at: { $gt: null }, trashed: false },
+        selector: {
+          updated_at: { $gt: null },
+          trashed: false
+        },
         sort: [{ updated_at: 'desc' }],
         limit: 50
       })
+
+      const dirIds = files.map(f => f.dir_id)
+
+      const folders = await cozy.client.data.query(index, {
+        selector: {
+          _id: { $in: dirIds }
+        }
+      })
+
+      console.log(folders)
 
       return dispatch({
         type: FETCH_RECENT_SUCCESS,
