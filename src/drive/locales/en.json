@@ -12,6 +12,9 @@
     "banner-txt-client": "Tip: your pictures, bills, ID documents, all accessible anytime, from any of your device with Cozy Drive installed on your computer",
     "banner-btn-client": "Download now",
     "link-client": "https://docs.cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
     "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
   "breadcrumb": {
