@@ -5,8 +5,8 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Loading from 'photos/components/Loading'
 import ErrorComponent from 'photos/components/ErrorComponent'
 import ErrorShare from 'photos/components/ErrorShare'
-import { MoreButton } from 'common/components/Button'
-import Menu, { Item } from 'common/components/Menu'
+import { MoreButton } from 'components/Button'
+import Menu, { Item } from 'components/Menu'
 
 import {
   fetchAlbum,
