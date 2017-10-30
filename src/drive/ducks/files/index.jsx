@@ -10,6 +10,7 @@ export const RecentContainer = props => (
     isTrashContext={false}
     canUpload={false}
     canCreateFolder={false}
+    withFilePath
     {...props}
   />
 )

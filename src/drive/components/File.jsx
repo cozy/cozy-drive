@@ -135,6 +135,7 @@ class File extends Component {
       onShowActionMenu,
       isRenaming,
       withSelectionCheckbox,
+      withFilePath,
       isAvailableOffline
     },
     { opening }
@@ -169,6 +170,7 @@ class File extends Component {
           attributes={attributes}
           isRenaming={isRenaming}
           opening={opening}
+          withFilePath={withFilePath}
         />
         <div
           className={classNames(
@@ -224,7 +226,7 @@ const AvailableOfflineBadge = props => (
   </div>
 )
 
-const FileNameCell = ({ attributes, isRenaming, opening }) => {
+const FileNameCell = ({ attributes, isRenaming, opening, withFilePath }) => {
   const classes = classNames(
     styles['fil-content-cell'],
     styles['fil-content-file'],
@@ -250,9 +252,11 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
             )}
             {opening === true && <Spinner />}
           </div>
-          <div className={styles['fil-file-path']}>
-            <span>{attributes.path}</span>
-          </div>
+          {withFilePath && (
+            <div className={styles['fil-file-path']}>
+              <span>{attributes.path}</span>
+            </div>
+          )}
         </div>
       )}
     </div>
