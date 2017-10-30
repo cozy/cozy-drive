@@ -128,7 +128,6 @@ export const fetchRecentFiles = () => {
 
     try {
       const index = await cozy.client.data.defineIndex('io.cozy.files', [
-        '_id',
         'updated_at',
         'size',
         'trashed'
@@ -142,20 +141,29 @@ export const fetchRecentFiles = () => {
         limit: 50
       })
 
-      const dirIds = files.map(f => f.dir_id)
+      // fetch the list of parent dirs to get the path of recent files
+      const parentDirIds = files
+        .map(f => f.dir_id)
+        .filter((value, index, self) => self.indexOf(value) === index)
 
-      const folders = await cozy.client.data.query(index, {
-        selector: {
-          _id: { $in: dirIds }
-        }
+      const parentFolders = await cozy.client.fetchJSON(
+        'POST',
+        '/data/io.cozy.files/_all_docs?include_docs=true',
+        { keys: parentDirIds }
+      )
+
+      const filesWithPath = files.map(file => {
+        const parentFolder = parentFolders.rows.find(
+          row => row.id === file.dir_id
+        )
+        const path = parentFolder ? parentFolder.doc.path : ''
+        return { ...file, path }
       })
-
-      console.log(folders)
 
       return dispatch({
         type: FETCH_RECENT_SUCCESS,
-        fileCount: files.length,
-        files: files.map(f => ({ ...f, id: f._id }))
+        fileCount: filesWithPath.length,
+        files: filesWithPath
       })
     } catch (e) {
       return dispatch({ type: FETCH_RECENT_FAILURE, error: e })

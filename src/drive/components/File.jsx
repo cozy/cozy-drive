@@ -251,9 +251,7 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
             {opening === true && <Spinner />}
           </div>
           <div className={styles['fil-file-path']}>
-            <span>
-              Path/to/you/prefered/files/that/you/love/so/much/forever/and/ever/fuck/yeah/madafucking/youpla/boom/le/roi/du/pain/d/epice/tavu/tmtc/OKLM/swagg
-            </span>
+            <span>{attributes.path}</span>
           </div>
         </div>
       )}
