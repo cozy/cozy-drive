@@ -124,8 +124,8 @@ class File extends Component {
     }
   }
 
-  render(
-    {
+  render() {
+    const {
       t,
       f,
       style,
@@ -137,9 +137,8 @@ class File extends Component {
       withSelectionCheckbox,
       withFilePath,
       isAvailableOffline
-    },
-    { opening }
-  ) {
+    } = this.props
+    const { opening } = this.state
     return (
       <div
         ref={fil => {
