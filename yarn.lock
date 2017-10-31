@@ -1718,9 +1718,9 @@ cozy-client-js@0.3.19:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.19.tgz#c20361a8bc6b23eb4d092360040e8765ef5e59a3"
 
-cozy-ui@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-4.0.2.tgz#22813b121fa914d0dbf08879f28a22e1f63350b8"
+cozy-ui@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-4.0.3.tgz#8dcaef8a01d1f372803351a70e7d8b75ff915711"
   dependencies:
     classnames "^2.2.5"
     date-fns "^1.28.5"
@@ -1948,13 +1948,9 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^1.22.0, date-fns@^1.27.2:
+date-fns@^1.22.0, date-fns@^1.27.2, date-fns@^1.28.5:
   version "1.28.5"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.28.5.tgz#257cfc45d322df45ef5658665967ee841cd73faf"
-
-date-fns@^1.28.5:
-  version "1.29.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
 date-now@^0.1.4:
   version "0.1.4"

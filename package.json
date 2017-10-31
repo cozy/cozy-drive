@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "0.6.0",
+  "version": "0.6.10",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
@@ -151,7 +151,7 @@
     "classnames": "^2.2.0",
     "cozy-bar": "4.1.4",
     "cozy-client-js": "0.3.19",
-    "cozy-ui": "4.0.2",
+    "cozy-ui": "4.0.3",
     "date-fns": "^1.22.0",
     "diacritics": "^1.3.0",
     "filesize": "^3.3.0",

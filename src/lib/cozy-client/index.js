@@ -23,6 +23,7 @@ export {
 } from './reducer'
 export {
   fetchSharings,
+  fetchContacts,
   getSharingDetails,
   share,
   unshare,

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
-import { getDocument, createDocument } from '../reducer'
+import { getDocument, createDocument, fetchCollection } from '../reducer'
 
 export const FETCH_SHARINGS = 'FETCH_SHARINGS'
 const RECEIVE_SHARINGS_DATA = 'RECEIVE_SHARINGS_DATA'
@@ -26,7 +26,7 @@ const documents = (state = [], action) => {
       return action.response.sharings
     case RECEIVE_NEW_SHARING:
       return [...state, action.response]
-    case REVOKE_SHARING:
+    case RECEIVE_SHARING_REVOKE:
       const idx = state.findIndex(
         s => s.attributes.sharing_id === action.sharingId
       )
@@ -238,6 +238,41 @@ const createSharingLink = document => ({
   promise: client => client.createSharingLink(getPermissionsFor(document, true))
 })
 
+// TODO: this is a poor man's migration in order to normalize contacts
+// and should be removed after a few weeks in prod
+// Note for future-self: If you have no idea of what it means, please, erase this code.
+// Note for time-travelers: please travel a little more back in time in order to advise us
+// to get contacts right the first time
+export const fetchContacts = () => {
+  const action = fetchCollection('contacts', 'io.cozy.contacts')
+  action.promise = async client => {
+    const response = await client.fetchCollection(
+      'contacts',
+      'io.cozy.contacts'
+    )
+    const data = await Promise.all(
+      response.data.map(contact => {
+        return typeof contact.email !== 'string'
+          ? contact
+          : client
+              .updateDocument({
+                ...contact,
+                email: [
+                  {
+                    address: contact.email,
+                    primary: true
+                  }
+                ]
+              })
+              .then(resp => resp.data[0])
+      })
+    )
+
+    return { ...response, data }
+  }
+  return action
+}
+
 const createContact = ({ email }) =>
   createDocument('io.cozy.contacts', {
     email: [{ address: email, primary: true }]
@@ -336,7 +371,8 @@ export const getSharingStatus = (state, doctype, id) => {
   const sharings = getDocumentActiveSharings(state, doctype, id)
   return {
     shared: sharings.length !== 0,
-    owner: sharings.some(s => s.attributes.owner === true),
+    owner:
+      sharings.length === 0 || sharings.some(s => s.attributes.owner === true),
     sharingType: sharings.some(
       s => s.attributes.sharing_type === 'master-master'
     )
