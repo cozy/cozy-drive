@@ -1,4 +1,3 @@
-/* global cozy */
 import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
 
@@ -40,23 +39,11 @@ class SuggestionProvider extends React.Component {
   // fetches pretty much all the files and preloads FuzzyPathSearch
   async indexFiles() {
     return new Promise(async resolve => {
-      const index = await cozy.client.data.defineIndex('io.cozy.files', ['_id'])
-
-      let files = []
-      const limit = 100
-      const pageLimit = 500 // that's 50 000 files max
-      let page = 0
-      let response
-      do {
-        response = await cozy.client.data.query(index, {
-          selector: { _id: { $gt: null } },
-          limit: limit,
-          skip: page * limit,
-          wholeResponse: true
-        })
-        files = files.concat(response.docs)
-        ++page
-      } while (response.next && page < pageLimit)
+      const allDocs = await this.context.client.fetchCollection(
+        'files',
+        'io.cozy.files'
+      )
+      const files = allDocs.data
 
       const folders = files.filter(file => file.type === 'directory')
 
