@@ -267,7 +267,7 @@ const FileNameCell = ({ attributes, isRenaming, opening, withFilePath }) => {
               to={`/folder/${attributes.dir_id}`}
               className={styles['fil-file-path']}
             >
-              <span>{attributes.path}</span>
+              {attributes.path}
             </Link>
           )}
         </div>
