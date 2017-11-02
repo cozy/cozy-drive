@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const client = new CozyClient({
     cozyURL: `//${data.cozyDomain}`,
-    token: data.cozyToken
+    token: data.cozyToken,
+    offline: { doctypes: ['io.cozy.files'] }
   })
 
   render((

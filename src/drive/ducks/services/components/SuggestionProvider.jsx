@@ -12,6 +12,8 @@ class SuggestionProvider extends React.Component {
       const { query } = event.data
       this.provideSuggestions(query, intent)
     })
+
+    this.context.client.startReplicationFrom(() => {}) // the sync functions take a redux-style `dispatch` function as a callback, but we don't handle the replication status at the moment
   }
 
   async provideSuggestions(query, intent) {

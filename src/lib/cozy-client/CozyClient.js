@@ -48,6 +48,14 @@ export default class CozyClient {
     return this.facade.startSync(dispatch)
   }
 
+  startReplicationTo(dispatch) {
+    return this.facade.startReplicationTo(dispatch)
+  }
+
+  startReplicationFrom(dispatch) {
+    return this.facade.startReplicationFrom(dispatch)
+  }
+
   getAdapter(doctype) {
     return this.facade.getAdapter(doctype)
   }

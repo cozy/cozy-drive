@@ -6,6 +6,9 @@ import {
 } from '../slices/synchronization'
 
 const REPLICATION_INTERVAL = 30000
+export const SYNC_BIDIRECTIONAL = 'SYNC_BIDIRECTIONAL'
+export const SYNC_TO = 'SYNC_TO'
+export const SYNC_FROM = 'SYNC_FROM'
 
 export default class PouchdbAdapter {
   constructor() {
@@ -35,22 +38,34 @@ export default class PouchdbAdapter {
       .then(result => result.update_seq)
   }
 
-  async sync(dispatch) {
+  async sync(dispatch, direction = SYNC_BIDIRECTIONAL) {
     const baseUrl = await this.getReplicationBaseUrl()
     for (let doctype of this.doctypes) {
       const seqNumber = await this.getSeqNumber(doctype)
       await dispatch(startDoctypeSync(doctype, seqNumber))
-      this.syncDoctype(doctype, `${baseUrl}${doctype}`, dispatch)
+      this.syncDoctype(doctype, `${baseUrl}${doctype}`, dispatch, direction)
     }
   }
 
-  syncDoctype(doctype, replicationUrl, dispatch) {
+  syncDoctype(
+    doctype,
+    replicationUrl,
+    dispatch,
+    direction = SYNC_BIDIRECTIONAL
+  ) {
     return new Promise((resolve, reject) => {
-      this.getDatabase(doctype)
-        .sync(replicationUrl)
+      const db = this.getDatabase(doctype)
+
+      let syncHandler
+      if (direction === SYNC_TO) syncHandler = db.replicate.to(replicationUrl)
+      else if (direction === SYNC_FROM)
+        syncHandler = db.replicate.from(replicationUrl)
+      else syncHandler = db.sync(replicationUrl)
+
+      syncHandler
         .on('complete', info => {
           dispatch(syncDoctypeOk(doctype, info))
-          this.scheduleNextSync(doctype, replicationUrl, dispatch)
+          this.scheduleNextSync(doctype, replicationUrl, dispatch, direction)
           resolve(info)
         })
         .on('error', err => {
@@ -71,9 +86,9 @@ export default class PouchdbAdapter {
     })
   }
 
-  scheduleNextSync(doctype, replicationUrl, dispatch) {
+  scheduleNextSync(doctype, replicationUrl, dispatch, direction) {
     setTimeout(() => {
-      this.syncDoctype(doctype, replicationUrl, dispatch)
+      this.syncDoctype(doctype, replicationUrl, dispatch, direction)
     }, REPLICATION_INTERVAL)
   }
 
