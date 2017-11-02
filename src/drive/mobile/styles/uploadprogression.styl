@@ -1,12 +1,18 @@
-@require 'cozy-ui'
+.coz-progress {
+    height: 48px;
+    padding: 5px 16px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #d6d8da;
+    transition: bottom 0.5s ease-out, top 0.5s ease-out, opacity 0.2s ease-out;
+    display: flex;
+}
 
-.coz-alerter
-    @extends $alerts
+.coz-progress__pic {
+    width: 30px;
+    height: 30px;
+}
 
-    .coz-alert
-        bottom 3em
-
-.btn--full-width
-    @extends .c-btn
-    @extends .c-btn--regular
-    width 100%
+.coz-progress__content {
+    flex: auto;
+    margin-left: 8px;
+}

@@ -16,7 +16,6 @@ export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
 const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
   type: CURRENT_UPLOAD,
   media,
-  message: 'mobile.settings.media_backup.media_upload',
   messageData: {
     upload_counter: uploadCounter,
     total_upload: totalUpload
@@ -91,11 +90,13 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
   } catch (_) {} // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
   try {
-    const maxBackupTime = 1000 * 60 * 5 // 5 minutes
+    const MILLISECOND = 1
+    const SECOND = 1000 * MILLISECOND
+    const MINUTE = 60 * SECOND
+    const maxBackupTime = 5 * MINUTE
     const timeout = setTimeout(() => {
-      logException(`Backup duration exceeded ${maxBackupTime / 1000} seconds`)
+      logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
     }, maxBackupTime)
-
     await uploadLibraryItem(dirID, photo)
     clearTimeout(timeout)
     dispatch(mediaUploadSucceed(photo))
