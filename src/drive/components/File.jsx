@@ -11,6 +11,7 @@ import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
+import breakpointsAware from 'cozy-ui/react/helpers/breakpoints'
 
 import { getFolderUrl } from '../reducers'
 
@@ -143,7 +144,8 @@ class File extends Component {
       isRenaming,
       withSelectionCheckbox,
       withFilePath,
-      isAvailableOffline
+      isAvailableOffline,
+      breakpoints: { isExtraLarge }
     } = this.props
     const { opening } = this.state
     return (
@@ -184,10 +186,12 @@ class File extends Component {
             styles['fil-content-date']
           )}
         >
-          <time dateTime="">
+          <time dateTime={attributes.updated_at || attributes.created_at}>
             {f(
               attributes.updated_at || attributes.created_at,
-              t('table.row_update_format')
+              `${isExtraLarge
+                ? t('table.row_update_format_full')
+                : t('table.row_update_format')}`
             )}
           </time>
         </div>
@@ -272,7 +276,7 @@ const FileNameCell = ({ attributes, isRenaming, opening, withFilePath }) => {
   )
 }
 
-export default withRouter(translate()(File))
+export default breakpointsAware()(withRouter(translate()(File)))
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>

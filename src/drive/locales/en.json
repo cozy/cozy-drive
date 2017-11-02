@@ -102,6 +102,7 @@
     "head_size": "Size",
     "head_status": "Status",
     "row_update_format": "MMM D, YYYY",
+    "row_update_format_full": "MMMM D, YYYY",
     "row_read_only": "Share (Read only)",
     "row_read_write": "Share (Read & Write)",
     "row_size_symbols": {
