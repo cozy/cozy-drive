@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 import Hammer from 'hammerjs'
 
 import styles from '../styles/table'
@@ -52,11 +52,11 @@ export const getClassFromMime = attrs => {
   return styles['fil-file-' + className]
 }
 
-const getClassDiv = element => {
-  if (element.nodeName === 'DIV') {
-    return element.className
+const getParentOfType = (type, element) => {
+  if (element.nodeName.toLowerCase() === type.toLowerCase()) {
+    return element
   }
-  return getClassDiv(element.parentNode)
+  return getParentOfType(element.parentNode)
 }
 
 const enableTouchEvents = ev => {
@@ -67,7 +67,18 @@ const enableTouchEvents = ev => {
 
   // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
   if (
-    getClassDiv(ev.target).indexOf(styles['fil-content-file-select']) !== -1
+    getParentOfType('div', ev.target).className.indexOf(
+      styles['fil-content-file-select']
+    ) !== -1
+  ) {
+    return false
+  }
+
+  // remove events when they are on the file's path, because it's a different behavior
+  if (
+    getParentOfType('a', ev.target).className.indexOf(
+      styles['fil-file-path']
+    ) !== -1
   ) {
     return false
   }
@@ -252,9 +263,12 @@ const FileNameCell = ({ attributes, isRenaming, opening, withFilePath }) => {
             {opening === true && <Spinner />}
           </div>
           {withFilePath && (
-            <div className={styles['fil-file-path']}>
+            <Link
+              to={`/folder/${attributes.dir_id}`}
+              className={styles['fil-file-path']}
+            >
               <span>{attributes.path}</span>
-            </div>
+            </Link>
           )}
         </div>
       )}
