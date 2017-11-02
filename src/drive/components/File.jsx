@@ -52,11 +52,11 @@ export const getClassFromMime = attrs => {
   return styles['fil-file-' + className]
 }
 
-const getParentOfType = (type, element) => {
-  if (element.nodeName.toLowerCase() === type.toLowerCase()) {
+const getParentDiv = element => {
+  if (element.nodeName.toLowerCase() === 'div') {
     return element
   }
-  return getParentOfType(element.parentNode)
+  return getParentDiv(element.parentNode)
 }
 
 const enableTouchEvents = ev => {
@@ -67,7 +67,7 @@ const enableTouchEvents = ev => {
 
   // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
   if (
-    getParentOfType('div', ev.target).className.indexOf(
+    getParentDiv(ev.target).className.indexOf(
       styles['fil-content-file-select']
     ) !== -1
   ) {
@@ -75,11 +75,7 @@ const enableTouchEvents = ev => {
   }
 
   // remove events when they are on the file's path, because it's a different behavior
-  if (
-    getParentOfType('a', ev.target).className.indexOf(
-      styles['fil-file-path']
-    ) !== -1
-  ) {
+  if (ev.target.className.indexOf(styles['fil-file-path']) >= 0) {
     return false
   }
 
