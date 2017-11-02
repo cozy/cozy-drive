@@ -1,19 +1,22 @@
 import styles from '../../styles/toolbar'
-import classNames from 'classnames'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { translate } from 'cozy-ui/react/I18n'
-import { ROOT_DIR_ID } from '../../constants/config'
+import classNames from 'classnames'
 
-import UploadButton from '../../components/UploadButton'
-import ShareButton from '../../components/ShareButton'
+import { ROOT_DIR_ID } from '../../constants/config'
+import { alertShow } from 'cozy-ui/react/Alerter'
+import { translate } from 'cozy-ui/react/I18n'
+
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
-import QuotaAlert from '../../components/QuotaAlert'
-import { alert } from '../../lib/confirm'
-import { alertShow } from 'cozy-ui/react/Alerter'
 
+import { IntentButton } from '../../components/Intent'
+import QuotaAlert from '../../components/QuotaAlert'
+import ShareButton from '../../components/ShareButton'
+import UploadButton from '../../components/UploadButton'
+
+import { alert } from '../../lib/confirm'
 import { addToUploadQueue } from '../upload'
 import { uploadedFile, downloadFiles } from '../../actions'
 import { ShareModal } from 'sharing'
@@ -46,6 +49,20 @@ class Toolbar extends Component {
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     return (
       <div className={styles['fil-toolbar-files']} role="toolbar">
+        <IntentButton
+          className={classNames(
+            styles['c-btn'],
+            styles['c-btn--regular'],
+            styles['u-hide--mob']
+          )}
+          action="CREATE"
+          docType="io.cozy.accounts"
+          data={{
+            dataType: 'bill'
+          }}
+        >
+          {t('service.bills')}
+        </IntentButton>
         {canUpload && (
           <UploadButton
             disabled={disabled}
