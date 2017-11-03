@@ -157,7 +157,7 @@ export const fetchRecentFiles = () => {
           row => row.id === file.dir_id
         )
         const path = parentFolder ? parentFolder.doc.path : ''
-        return { ...file, path }
+        return { ...file, path, id: file._id }
       })
 
       return dispatch({
