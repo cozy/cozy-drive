@@ -31,9 +31,6 @@ const isAnyFileReferencedByAlbum = files => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isTrashContext: ownProps.isTrashContext,
-  canUpload: ownProps.canUpload,
-  canCreateFolder: ownProps.canCreateFolder,
   isRenaming: isRenaming(state),
   renamingFile: getRenamingFile(state),
   Toolbar,

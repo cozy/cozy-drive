@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 import Hammer from 'hammerjs'
 
 import styles from '../styles/table'
@@ -52,11 +52,11 @@ export const getClassFromMime = attrs => {
   return styles['fil-file-' + className]
 }
 
-const getClassDiv = element => {
-  if (element.nodeName === 'DIV') {
-    return element.className
+const getParentDiv = element => {
+  if (element.nodeName.toLowerCase() === 'div') {
+    return element
   }
-  return getClassDiv(element.parentNode)
+  return getParentDiv(element.parentNode)
 }
 
 const enableTouchEvents = ev => {
@@ -67,8 +67,15 @@ const enableTouchEvents = ev => {
 
   // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
   if (
-    getClassDiv(ev.target).indexOf(styles['fil-content-file-select']) !== -1
+    getParentDiv(ev.target).className.indexOf(
+      styles['fil-content-file-select']
+    ) !== -1
   ) {
+    return false
+  }
+
+  // remove events when they are on the file's path, because it's a different behavior
+  if (ev.target.className.indexOf(styles['fil-file-path']) >= 0) {
     return false
   }
 
@@ -124,8 +131,8 @@ class File extends Component {
     }
   }
 
-  render(
-    {
+  render() {
+    const {
       t,
       f,
       style,
@@ -135,10 +142,10 @@ class File extends Component {
       onShowActionMenu,
       isRenaming,
       withSelectionCheckbox,
+      withFilePath,
       isAvailableOffline
-    },
-    { opening }
-  ) {
+    } = this.props
+    const { opening } = this.state
     return (
       <div
         ref={fil => {
@@ -169,6 +176,7 @@ class File extends Component {
           attributes={attributes}
           isRenaming={isRenaming}
           opening={opening}
+          withFilePath={withFilePath}
         />
         <div
           className={classNames(
@@ -224,7 +232,7 @@ const AvailableOfflineBadge = props => (
   </div>
 )
 
-const FileNameCell = ({ attributes, isRenaming, opening }) => {
+const FileNameCell = ({ attributes, isRenaming, opening, withFilePath }) => {
   const classes = classNames(
     styles['fil-content-cell'],
     styles['fil-content-file'],
@@ -242,12 +250,22 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
       {isRenaming ? (
         <RenameInput />
       ) : (
-        <div>
-          {filename}
-          {extension && (
-            <span className={styles['fil-content-ext']}>{extension}</span>
+        <div className={styles['fil-file']}>
+          <div className={styles['fil-file-filename']}>
+            {filename}
+            {extension && (
+              <span className={styles['fil-content-ext']}>{extension}</span>
+            )}
+            {opening === true && <Spinner />}
+          </div>
+          {withFilePath && (
+            <Link
+              to={`/folder/${attributes.dir_id}`}
+              className={styles['fil-file-path']}
+            >
+              {attributes.path}
+            </Link>
           )}
-          {opening === true && <Spinner />}
         </div>
       )}
     </div>
