@@ -76,7 +76,10 @@ const enableTouchEvents = ev => {
   }
 
   // remove events when they are on the file's path, because it's a different behavior
-  if (ev.target.className.indexOf(styles['fil-file-path']) >= 0) {
+  if (
+    ev.target.nodeName.toLowerCase() === 'a' &&
+    ev.target.className.indexOf(styles['fil-file-path']) >= 0
+  ) {
     return false
   }
 
@@ -145,7 +148,7 @@ class File extends Component {
       withSelectionCheckbox,
       withFilePath,
       isAvailableOffline,
-      breakpoints: { isExtraLarge }
+      breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { opening } = this.state
     return (
@@ -179,6 +182,7 @@ class File extends Component {
           isRenaming={isRenaming}
           opening={opening}
           withFilePath={withFilePath}
+          isMobile={isMobile}
         />
         <div
           className={classNames(
@@ -236,7 +240,13 @@ const AvailableOfflineBadge = props => (
   </div>
 )
 
-const FileNameCell = ({ attributes, isRenaming, opening, withFilePath }) => {
+const FileNameCell = ({
+  attributes,
+  isRenaming,
+  opening,
+  withFilePath,
+  isMobile
+}) => {
   const classes = classNames(
     styles['fil-content-cell'],
     styles['fil-content-file'],
@@ -262,14 +272,17 @@ const FileNameCell = ({ attributes, isRenaming, opening, withFilePath }) => {
             )}
             {opening === true && <Spinner />}
           </div>
-          {withFilePath && (
-            <Link
-              to={`/folder/${attributes.dir_id}`}
-              className={styles['fil-file-path']}
-            >
-              {attributes.path}
-            </Link>
-          )}
+          {withFilePath &&
+            (isMobile ? (
+              <div className={styles['fil-file-path']}>{attributes.path}</div>
+            ) : (
+              <Link
+                to={`/folder/${attributes.dir_id}`}
+                className={styles['fil-file-path']}
+              >
+                {attributes.path}
+              </Link>
+            ))}
         </div>
       )}
     </div>
