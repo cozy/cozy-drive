@@ -1,6 +1,10 @@
 /* global cozy, PouchDB */
 import CozyStackAdapter from './adapters/CozyStackAdapter'
-import PouchdbAdapter from './adapters/PouchdbAdapter'
+import PouchdbAdapter, {
+  SYNC_BIDIRECTIONAL,
+  SYNC_TO,
+  SYNC_FROM
+} from './adapters/PouchdbAdapter'
 
 // const isOnline = () =>
 //   typeof navigator !== 'undefined' ? navigator.onLine : true
@@ -34,7 +38,15 @@ export default class DataAccessFacade {
   }
 
   startSync(dispatch) {
-    return this.pouchAdapter.sync(dispatch)
+    return this.pouchAdapter.sync(dispatch, SYNC_BIDIRECTIONAL)
+  }
+
+  startReplicationTo(dispatch) {
+    return this.pouchAdapter.sync(dispatch, SYNC_TO)
+  }
+
+  startReplicationFrom(dispatch) {
+    return this.pouchAdapter.sync(dispatch, SYNC_FROM)
   }
 }
 
