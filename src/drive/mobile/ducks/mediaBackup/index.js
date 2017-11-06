@@ -17,8 +17,8 @@ const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
   type: CURRENT_UPLOAD,
   media,
   messageData: {
-    upload_counter: uploadCounter,
-    total_upload: totalUpload
+    current: uploadCounter,
+    total: totalUpload
   }
 })
 

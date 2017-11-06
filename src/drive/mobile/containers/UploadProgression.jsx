@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import classnames from 'classnames'
 import styles from '../styles/uploadprogression'
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -33,34 +34,54 @@ const Progress = ({ percent, style, color, background }) => {
   )
 }
 
-const UploadProgression = ({ t, messageData, media }) => {
+const UploadProgression = ({ t, current, total, media }) => {
   return (
-    <div className={styles['coz-progress']}>
-      <Progress
-        percent={percent(messageData.upload_counter, messageData.total_upload)}
-      />
+    <div className={styles['coz-upload-status']}>
+      <Progress percent={percent(current, total)} />
       {media.filePath ? (
-        <img className={styles['coz-progress__pic']} src={media.filePath} />
+        <img className={styles['coz-progress-pic']} src={media.filePath} />
       ) : (
         <div
-          className={styles['coz-progress__pic']}
+          className={styles['coz-progress-pic']}
           style={{ border: '1px solid darkgray', backgroundColor: 'lightGray' }}
         />
       )}
-      <div className={styles['coz-progress__content']}>
+      <div className={styles['coz-upload-status__content']}>
         {t('mobile.settings.media_backup.media_upload', {
-          remaining: messageData.total_upload - messageData.upload_counter
+          remaining: total - current
         })}
       </div>
     </div>
   )
 }
 
-const mapStateToProps = state => state.mobile.mediaBackup.currentUpload
-
-const onlyIfProps = (isPropsOk, BaseComponent) => props =>
-  isPropsOk(props) ? <BaseComponent {...props} /> : null
-
-export default connect(mapStateToProps)(
-  onlyIfProps(props => props.media, translate()(UploadProgression))
+const UploadUptodate = ({ t }) => (
+  <div
+    className={classnames(
+      styles['coz-upload-status'],
+      styles['coz-upload-status--success']
+    )}
+  >
+    <div className={styles['coz-upload-status__content']}>
+      {t('mobile.settings.media_backup.media_uptodate')}
+    </div>
+  </div>
 )
+
+const mapStateToProps = state =>
+  state.mobile.mediaBackup.currentUpload
+    ? {
+        media: state.mobile.mediaBackup.currentUpload.media,
+        current: state.mobile.mediaBackup.currentUpload.messageData.current,
+        total: state.mobile.mediaBackup.currentUpload.messageData.total
+      }
+    : { media: undefined, current: undefined, total: undefined }
+
+const UploadStatus = props =>
+  props.media && props.current && props.total ? (
+    <UploadProgression {...props} />
+  ) : (
+    <UploadUptodate {...props} />
+  )
+
+export default connect(mapStateToProps)(translate()(UploadStatus))

@@ -290,7 +290,8 @@
           "label":
             "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
         },
-        "media_upload": "%{remaining} remaining pictures"
+        "media_upload": "%{remaining} remaining pictures",
+        "media_uptodate": "Media backup is up-to-date"
       },
       "support": {
         "title": "Support",
