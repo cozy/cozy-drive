@@ -1,4 +1,6 @@
 const START_SYNC = 'START_SYNC'
+const INITIAL_SYNC_OK = 'INITIAL_SYNC_OK'
+const INITIAL_SYNC_ERROR = 'INITIAL_SYNC_ERROR'
 const START_DOCTYPE_SYNC = 'START_DOCTYPE_SYNC'
 const SYNC_DOCTYPE_OK = 'SYNC_DOCTYPE_OK'
 const SYNC_DOCTYPE_ERROR = 'SYNC_DOCTYPE_ERROR'
@@ -50,12 +52,10 @@ const synchronization = (state = {}, action) => {
 
 export default synchronization
 
-export const startSync = () => async (dispatch, getState) => {
-  return dispatch({
-    type: START_SYNC,
-    promise: client => client.startSync(dispatch)
-  })
-}
+export const startSync = () => ({
+  types: [START_SYNC, INITIAL_SYNC_OK, INITIAL_SYNC_ERROR],
+  promise: (client, dispatch) => client.startSync(dispatch)
+})
 
 export const startDoctypeSync = (doctype, seqNumber = 0) => ({
   type: START_DOCTYPE_SYNC,
@@ -74,6 +74,9 @@ export const syncDoctypeError = (doctype, error) => ({
   doctype,
   error
 })
+
+export const hasSyncStarted = state =>
+  Object.keys(state.cozy.synchronization).length !== 0
 
 export const isFirstSync = state => {
   const seqNumbers = Object.keys(state.cozy.synchronization).map(
