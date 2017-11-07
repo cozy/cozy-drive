@@ -39,14 +39,16 @@ const UploadProgression = ({ t, current, total, media }) => {
     <div className={styles['coz-upload-status']}>
       <Progress percent={percent(current, total)} />
       {media.filePath ? (
-        <img className={styles['coz-progress-pic']} src={media.filePath} />
+        <div className={styles['coz-progress-pic']}>
+          <img src={media.filePath} />
+        </div>
       ) : (
         <div
           className={styles['coz-progress-pic']}
           style={{ border: '1px solid darkgray', backgroundColor: 'lightGray' }}
         />
       )}
-      <div className={styles['coz-upload-status__content']}>
+      <div className={styles['coz-upload-status-content']}>
         {t('mobile.settings.media_backup.media_upload', {
           remaining: total - current
         })}
@@ -62,7 +64,7 @@ const UploadUptodate = ({ t }) => (
       styles['coz-upload-status--success']
     )}
   >
-    <div className={styles['coz-upload-status__content']}>
+    <div className={styles['coz-upload-status-content']}>
       {t('mobile.settings.media_backup.media_uptodate')}
     </div>
   </div>

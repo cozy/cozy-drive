@@ -1,22 +1,36 @@
-.coz-upload-status {
-    height 48px
-    padding 5px 16px
-    box-sizing border-box
-    border-bottom 1px solid #d6d8da
-    transition bottom 0.5s ease-out, top 0.5s ease-out, opacity 0.2s ease-out
+@require 'cozy-ui'
+
+.coz-upload-status
     display flex
-}
+    align-items center
+    box-sizing border-box
+    border-bottom 1px solid silver
+    min-height 2.5rem
+    padding .5rem 1rem
+    transition bottom 0.5s ease-out, top 0.5s ease-out, opacity 0.2s ease-out
 
-.coz-progress-pic {
-    width 30px
-    height 30px
-}
+.coz-progress-pic
+    position relative
+    margin 0 .5rem 0 -.5rem
+    width 3rem
+    height 3rem
+    overflow hidden
 
-.coz-upload-status__content {
+    img
+        position absolute
+        top 50%
+        left 50%
+        max-width 3rem
+        max-height 3rem
+        transform translate(-50%)
+
+.coz-upload-status-content
     flex auto
-    margin-left 8px
-}
+    font-size .75em
+    text-transform uppercase
+    color charcoal-grey
+    font-weight bold
 
-.coz-upload-status--success {
-    background embedurl("../assets/icons/icon-cozy.svg") center no-repeat
-}
+.coz-upload-status--success
+    padding-left em(61px)
+    background embedurl('../assets/icons/icon-upload-OK.svg') 1rem center no-repeat
