@@ -27,8 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
 
+  const protocol = window.location ? window.location.protocol : 'https:'
+  const cozyUrl = `${protocol}//${data.cozyDomain}`
+
   const client = new CozyClient({
-    cozyURL: `//${data.cozyDomain}`,
+    cozyURL: cozyUrl,
     token: data.cozyToken
   })
 

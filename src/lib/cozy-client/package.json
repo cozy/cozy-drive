@@ -1,6 +1,6 @@
 {
   "name": "cozy-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple and declarative way of managing cozy-stack API calls and resulting data.",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/cozy/cozy-drive/issues"
   },
-  "homepage": "https://github.com/cozy/cozy-drive/blob/master/src/lib/cozy-client/README.md"
+  "homepage": "https://github.com/cozy/cozy-drive/blob/master/src/lib/cozy-client/README.md",
+  "dependencies": {
+    "pouchdb": "^6.3.4",
+    "pouchdb-find": "^6.3.4"
+  }
 }

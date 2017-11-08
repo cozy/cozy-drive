@@ -103,7 +103,8 @@ export class AddToAlbumModal extends Component {
               <SelectAlbumsForm
                 albums={albums}
                 onSubmitSelectedAlbum={album =>
-                  this.onSubmitSelectedAlbum(album, photos)}
+                  this.onSubmitSelectedAlbum(album, photos)
+                }
               />
             </div>
           ) : null}

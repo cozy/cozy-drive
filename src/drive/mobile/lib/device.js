@@ -7,6 +7,9 @@ export const isIos = () => isPlatform('ios')
 export const isAndroid = () => isPlatform('android')
 
 // device
-const hasDeviceCordovaPlugin = () => isCordova() && window.device !== undefined
+const hasCordovaDeviceNamePlugin = () =>
+  isCordova() && window.cordova.plugins.deviceName !== undefined
 export const getDeviceName = () =>
-  hasDeviceCordovaPlugin() ? window.device.model : undefined
+  hasCordovaDeviceNamePlugin()
+    ? window.cordova.plugins.deviceName.name
+    : undefined

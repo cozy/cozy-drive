@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 import Hammer from 'hammerjs'
 
 import styles from '../styles/table'
@@ -11,6 +11,7 @@ import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
+import breakpointsAware from 'cozy-ui/react/helpers/breakpoints'
 
 import { getFolderUrl } from '../reducers'
 
@@ -52,11 +53,11 @@ export const getClassFromMime = attrs => {
   return styles['fil-file-' + className]
 }
 
-const getClassDiv = element => {
-  if (element.nodeName === 'DIV') {
-    return element.className
+const getParentDiv = element => {
+  if (element.nodeName.toLowerCase() === 'div') {
+    return element
   }
-  return getClassDiv(element.parentNode)
+  return getParentDiv(element.parentNode)
 }
 
 const enableTouchEvents = ev => {
@@ -67,7 +68,17 @@ const enableTouchEvents = ev => {
 
   // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
   if (
-    getClassDiv(ev.target).indexOf(styles['fil-content-file-select']) !== -1
+    getParentDiv(ev.target).className.indexOf(
+      styles['fil-content-file-select']
+    ) !== -1
+  ) {
+    return false
+  }
+
+  // remove events when they are on the file's path, because it's a different behavior
+  if (
+    ev.target.nodeName.toLowerCase() === 'a' &&
+    ev.target.className.indexOf(styles['fil-file-path']) >= 0
   ) {
     return false
   }
@@ -124,8 +135,8 @@ class File extends Component {
     }
   }
 
-  render(
-    {
+  render() {
+    const {
       t,
       f,
       style,
@@ -135,10 +146,11 @@ class File extends Component {
       onShowActionMenu,
       isRenaming,
       withSelectionCheckbox,
-      isAvailableOffline
-    },
-    { opening }
-  ) {
+      withFilePath,
+      isAvailableOffline,
+      breakpoints: { isExtraLarge, isMobile }
+    } = this.props
+    const { opening } = this.state
     return (
       <div
         ref={fil => {
@@ -169,6 +181,8 @@ class File extends Component {
           attributes={attributes}
           isRenaming={isRenaming}
           opening={opening}
+          withFilePath={withFilePath}
+          isMobile={isMobile}
         />
         <div
           className={classNames(
@@ -176,10 +190,14 @@ class File extends Component {
             styles['fil-content-date']
           )}
         >
-          <time dateTime="">
+          <time dateTime={attributes.updated_at || attributes.created_at}>
             {f(
               attributes.updated_at || attributes.created_at,
-              t('table.row_update_format')
+              `${
+                isExtraLarge
+                  ? t('table.row_update_format_full')
+                  : t('table.row_update_format')
+              }`
             )}
           </time>
         </div>
@@ -224,7 +242,13 @@ const AvailableOfflineBadge = props => (
   </div>
 )
 
-const FileNameCell = ({ attributes, isRenaming, opening }) => {
+const FileNameCell = ({
+  attributes,
+  isRenaming,
+  opening,
+  withFilePath,
+  isMobile
+}) => {
   const classes = classNames(
     styles['fil-content-cell'],
     styles['fil-content-file'],
@@ -242,19 +266,32 @@ const FileNameCell = ({ attributes, isRenaming, opening }) => {
       {isRenaming ? (
         <RenameInput />
       ) : (
-        <div>
-          {filename}
-          {extension && (
-            <span className={styles['fil-content-ext']}>{extension}</span>
-          )}
-          {opening === true && <Spinner />}
+        <div className={styles['fil-file']}>
+          <div className={styles['fil-file-filename']}>
+            {filename}
+            {extension && (
+              <span className={styles['fil-content-ext']}>{extension}</span>
+            )}
+            {opening === true && <Spinner />}
+          </div>
+          {withFilePath &&
+            (isMobile ? (
+              <div className={styles['fil-file-path']}>{attributes.path}</div>
+            ) : (
+              <Link
+                to={`/folder/${attributes.dir_id}`}
+                className={styles['fil-file-path']}
+              >
+                {attributes.path}
+              </Link>
+            ))}
         </div>
       )}
     </div>
   )
 }
 
-export default withRouter(translate()(File))
+export default breakpointsAware()(withRouter(translate()(File)))
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>

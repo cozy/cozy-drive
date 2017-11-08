@@ -31,9 +31,6 @@ const isAnyFileReferencedByAlbum = files => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isTrashContext: ownProps.isTrashContext,
-  canUpload: ownProps.canUpload,
-  canCreateFolder: ownProps.canCreateFolder,
   isRenaming: isRenaming(state),
   renamingFile: getRenamingFile(state),
   Toolbar,
@@ -49,6 +46,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       abortAddFolder: accidental => dispatch(abortAddFolder(accidental))
     },
     selection: {
+      share: {
+        action: selected =>
+          dispatch(
+            showModal(
+              <ShareModal
+                document={selected[0]}
+                documentType="Files"
+                sharingDesc={selected[0].name}
+              />
+            )
+          ),
+        displayCondition: selections => selections.length === 1
+      },
       download: {
         action: files => dispatch(downloadFiles(files))
       },
@@ -83,20 +93,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           selections.length === 1 &&
           isFile(selections[0]),
         Component: props => <ConnectedToggleMenuItem {...props} />
-      },
-      share: {
-        action: selected =>
-          dispatch(
-            showModal(
-              <ShareModal
-                document={selected[0]}
-                documentType="Files"
-                sharingDesc={selected[0].name}
-              />
-            )
-          ),
-        displayCondition: selections =>
-          selections.length === 1 && isFile(selections[0])
       }
     }
   })

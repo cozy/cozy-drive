@@ -127,6 +127,10 @@
 
 mime-types('fil-file-', '../assets/icons/')
 
+.fil-file
+    display flex
+    flex-direction column
+
 .fil-file-preview
     content ''
     position absolute
@@ -138,6 +142,23 @@ mime-types('fil-file-', '../assets/icons/')
     height em(32px)
     background-size cover
     background-position center center
+
+.fil-file-filename
+    flex 1 1 50%
+
+.fil-file-path
+    flex 1 1 1.5em
+    color cool-grey
+    font-size .75em
+    position relative
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+    text-decoration none
+
+    &:hover,
+    &:focus
+        text-decoration underline
 
 @keyframes placeHolderShimmer
     0%
