@@ -193,9 +193,11 @@ class File extends Component {
           <time dateTime={attributes.updated_at || attributes.created_at}>
             {f(
               attributes.updated_at || attributes.created_at,
-              `${isExtraLarge
-                ? t('table.row_update_format_full')
-                : t('table.row_update_format')}`
+              `${
+                isExtraLarge
+                  ? t('table.row_update_format_full')
+                  : t('table.row_update_format')
+              }`
             )}
           </time>
         </div>
