@@ -30,6 +30,7 @@
   "toolbar": {
     "item_upload": "Upload",
     "menu_upload": "Upload files",
+    "item_more": "More",
     "menu_new_folder": "New folder",
     "menu_select": "Select items",
     "menu_download_folder": "Download folder",
