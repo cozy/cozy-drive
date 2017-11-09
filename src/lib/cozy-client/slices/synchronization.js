@@ -75,6 +75,7 @@ export const syncDoctypeError = (doctype, error) => ({
   error
 })
 
+// TODO: not ideal because it will return false if no offline doctypes have been declared in the client config
 export const hasSyncStarted = state =>
   Object.keys(state.cozy.synchronization).length !== 0
 
@@ -86,6 +87,9 @@ export const isFirstSync = state => {
 }
 
 export const isSynced = state => {
+  if (!hasSyncStarted(state)) {
+    return false
+  }
   const timestamps = Object.keys(state.cozy.synchronization).map(
     doctype => state.cozy.synchronization[doctype].lastSync
   )
