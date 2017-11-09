@@ -64,9 +64,10 @@ import { cozyMiddleware, reducer } from 'cozy-client'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import myReducers from './myapp'
 
+const client = new CozyClient({...})
 const store = createStore(
   combineReducers({...myReducers, reducer}),
-  applyMiddleware(cozyMiddleware)
+  applyMiddleware(cozyMiddleware(cozyClient))
 )
 ```
 
