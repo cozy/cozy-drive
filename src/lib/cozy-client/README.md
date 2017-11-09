@@ -79,7 +79,7 @@ import React from 'react'
 import { cozyConnect, fetchCollection } from 'cozy-client'
 
 const TodoList = ({ todos }) => {
-  const { data, fetchStatus } = props
+  const { data, fetchStatus } = todos
   if (fetchStatus !== 'loaded') {
     return <h1>Loading...</h1>
   }
