@@ -33,10 +33,14 @@ const getQueryParameter = () => window
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
+
+  const protocol = window.location ? window.location.protocol : 'https:'
+  const cozyUrl = `${protocol}//${data.cozyDomain}`
+
   const { intent } = getQueryParameter()
 
   const client = new CozyClient({
-    cozyURL: `//${data.cozyDomain}`,
+    cozyURL: cozyUrl,
     token: data.cozyToken,
     offline: { doctypes: ['io.cozy.files'] }
   })
