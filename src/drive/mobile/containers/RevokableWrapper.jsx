@@ -20,7 +20,7 @@ class RevokableWrapper extends Component {
 
   loginagain() {
     cozy.client._storage.clear()
-    this.props.registerDevice()
+    this.props.registerDevice(this.context.client)
   }
 
   render() {
@@ -52,8 +52,8 @@ class RevokableWrapper extends Component {
 
 const mapDispatchToProps = dispatch => ({
   unrevokeClient: () => dispatch(unrevokeClient()),
-  registerDevice: () =>
-    dispatch(registerDevice()).then(() => {
+  registerDevice: client =>
+    dispatch(registerDevice(client)).then(() => {
       dispatch(unrevokeClient())
     })
 })

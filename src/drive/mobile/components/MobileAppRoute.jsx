@@ -10,9 +10,9 @@ import OnBoarding from '../containers/OnBoarding'
 import Settings from '../components/Settings'
 import RevokableWrapper from '../containers/RevokableWrapper'
 
-const MobileAppRoute = requireSetup => (
+const MobileAppRoute = checkAuth => (
   <Route>
-    <Route onEnter={requireSetup} component={RevokableWrapper}>
+    <Route onEnter={checkAuth} component={RevokableWrapper}>
       {AppRoute}
       <Route component={Layout}>
         <Route path="settings" name="mobile.settings" component={Settings} />}

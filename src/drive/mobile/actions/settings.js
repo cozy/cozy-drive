@@ -1,11 +1,9 @@
 /* global cozy */
 
-import { initClient, checkURL, MAIL_EXCEPTION } from '../lib/cozy-helper'
+import { checkURL, MAIL_EXCEPTION } from '../lib/cozy-helper'
 import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../actions/settings'
-import { getDeviceName } from '../lib/device'
 import { openFolder, getOpenedFolderId } from '../../actions'
-import { REGISTRATION_ABORT, onRegistered } from '../lib/registration'
 import { logException, configureReporter } from '../lib/reporter'
 import { startTracker, stopTracker } from '../lib/tracker'
 import { revokeClient as reduxRevokeClient } from './authorization'
@@ -77,20 +75,10 @@ export class OnBoardingError extends Error {
 
 // registration
 
-export const registerDevice = () => async (dispatch, getState) => {
-  const onRegister = dispatch => (client, url) => {
-    return onRegistered(client, url)
-      .then(url => url)
-      .catch(err => {
-        if (err.message !== REGISTRATION_ABORT) {
-          dispatch(wrongAddressError())
-          logException(err)
-        }
-        throw err
-      })
-  }
+export const registerDevice = cozyClient => async (dispatch, getState) => {
+  let url
   try {
-    const url = checkURL(getState().mobile.settings.serverUrl)
+    url = checkURL(getState().mobile.settings.serverUrl)
     await dispatch(setUrl(url))
   } catch (err) {
     if (err.name === MAIL_EXCEPTION) {
@@ -101,17 +89,13 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw err
   }
 
-  initClient(
-    getState().mobile.settings.serverUrl,
-    onRegister(dispatch),
-    getDeviceName()
-  )
-
   let isV2Instance
   try {
-    isV2Instance = await cozy.client.isV2()
+    isV2Instance = await cozyClient.isV2(url)
   } catch (err) {
-    // this can happen if the HTTP request to check the instance version fails; in that case, it is likely to fail again and be caught during the authorize process, which is designed to handle this
+    // this can happen if the HTTP request to check the instance version fails;
+    // in that case, it is likely to fail again and be caught during the authorize process,
+    // which is designed to handle this
     isV2Instance = false
   }
 
@@ -120,15 +104,15 @@ export const registerDevice = () => async (dispatch, getState) => {
     throw new Error('The cozy address entered is a V2 instance')
   }
 
-  return cozy.client
-    .authorize(true)
+  return cozyClient
+    .register(getState().mobile.settings.serverUrl)
     .then(({ client, token }) => {
       dispatch(setClient(client))
       dispatch(setTokenScope(token.scope))
       startReplication(dispatch, getState)
     })
     .catch(err => {
-      if (err.message === REGISTRATION_ABORT) {
+      if (err.message === 'REGISTRATION_ABORT') {
         cozy.client._storage.clear()
       } else {
         dispatch(wrongAddressError())

@@ -1,21 +1,19 @@
 /* global __SENTRY_TOKEN__, __DEVELOPMENT__ */
 import Raven from 'raven-js'
 
-let isEnabled = false
 const PROD_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
 const DEV_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
 export const ANALYTICS_URL = __DEVELOPMENT__
   ? DEV_ANALYTICS_URL
   : PROD_ANALYTICS_URL
 
-export const getReporterConfiguration = () => ({
+export const getReporterConfiguration = (isEnabled = false) => ({
   shouldSendCallback: () => isEnabled,
   environment: __DEVELOPMENT__ ? 'development' : 'production'
 })
 
 export const configureReporter = enable => {
-  isEnabled = enable
-  Raven.config(ANALYTICS_URL, getReporterConfiguration()).install()
+  Raven.config(ANALYTICS_URL, getReporterConfiguration(enable)).install()
 }
 
 export const logException = err => {
@@ -39,7 +37,7 @@ const logMessage = (message, serverUrl, level = 'info', force) => {
       level
     })
     if (force) {
-      configureReporter(isEnabled)
+      configureReporter(false)
     }
     resolve()
   })

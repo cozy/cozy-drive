@@ -1,5 +1,5 @@
 /* global cozy */
-import { removeObjectProperties } from './utils'
+import { retry, removeObjectProperties } from './utils'
 
 const slugify = text =>
   text
@@ -57,3 +57,17 @@ export const getIndexFields = query => {
 export const sanitizeDoc = doc => {
   return removeObjectProperties(doc, ['_type'])
 }
+
+export const isV2 = url =>
+  retry(() => fetch(`${url}/status/`), 3)()
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Could not fetch cozy status')
+      } else {
+        return res.json()
+      }
+    })
+    .then(status => {
+      const version = status.datasystem !== undefined ? 2 : 3
+      return version === 2
+    })
