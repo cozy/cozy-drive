@@ -15,7 +15,7 @@ const getClientParams = device => ({
   clientKind: 'mobile',
   clientURI: 'https://github.com/cozy/cozy-drive/',
   logoURI:
-    'https://raw.githubusercontent.com/cozy/cozy-drive/master/vendor/assets/apple-touch-icon-120x120.png',
+    'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
   policyURI: 'https://files.cozycloud.cc/cgu.pdf',
   scopes: [
     'io.cozy.files',
