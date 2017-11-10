@@ -37,6 +37,9 @@ export class SelectServer extends Component {
           >
             <div className={styles['cozy-logo-white']} />
           </div>
+          <label className={styles['label']}>
+            {t('mobile.onboarding.server_selection.label')}
+          </label>
           <input
             type="url"
             className={

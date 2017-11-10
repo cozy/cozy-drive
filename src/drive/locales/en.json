@@ -219,7 +219,8 @@
         "no_account_link": "Don’t have an account? Request one here."
       },
       "server_selection": {
-        "description": "This is the web address you use to access your Cozy.",
+        "description": "Example: claudedouillet.mycozy.cloud",
+        "label": "Enter your Cozy address",
         "cozy_address_placeholder": "tonystark.mycozy.cloud",
         "button": "Next",
         "wrong_address_with_email":
