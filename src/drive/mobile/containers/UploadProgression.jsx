@@ -15,21 +15,12 @@ const Progress = ({ percent, style, color, background }) => {
     backgroundColor: background ? 'lightgray' : ''
   }
   const barStyle = {
-    display: 'inline-block',
-    position: 'absolute',
-    top: 0,
-    left: 0,
     width: `${percent}%`,
-    maxWidth: '100%',
-    height: `${2}px`,
-    borderRadius: '0 1px 1px 0',
-    transition: `${0.4}s width, ${0.4}s background-color`,
-    backgroundColor: color || 'darkblue',
     ...style
   }
   return (
     <div style={containerStyle}>
-      <div style={barStyle} />
+      <div className={styles['coz-progress']} style={barStyle} />
     </div>
   )
 }
@@ -38,16 +29,9 @@ const UploadProgression = ({ t, current, total, media }) => {
   return (
     <div className={styles['coz-upload-status']}>
       <Progress percent={percent(current, total)} />
-      {media.filePath ? (
-        <div className={styles['coz-progress-pic']}>
-          <img src={media.filePath} />
-        </div>
-      ) : (
-        <div
-          className={styles['coz-progress-pic']}
-          style={{ border: '1px solid darkgray', backgroundColor: 'lightGray' }}
-        />
-      )}
+      <div className={styles['coz-progress-pic']}>
+        {media.filePath && <img src={media.filePath} />}
+      </div>
       <div className={styles['coz-upload-status-content']}>
         {t('mobile.settings.media_backup.media_upload', {
           remaining: total - current
