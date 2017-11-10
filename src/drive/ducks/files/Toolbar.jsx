@@ -11,6 +11,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
+import { IntentButton } from '../../components/Intent'
 import QuotaAlert from '../../components/QuotaAlert'
 import ShareButton from '../../components/ShareButton'
 import UploadButton from '../../components/UploadButton'
@@ -48,6 +49,20 @@ class Toolbar extends Component {
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     return (
       <div className={styles['fil-toolbar-files']} role="toolbar">
+        <IntentButton
+          className={classNames(
+            styles['c-btn'],
+            styles['c-btn--regular'],
+            styles['u-hide--mob']
+          )}
+          action="CREATE"
+          docType="io.cozy.accounts"
+          data={{
+            dataType: 'bill'
+          }}
+        >
+          {t('service.bills')}
+        </IntentButton>
         {canUpload && (
           <UploadButton
             disabled={disabled}
