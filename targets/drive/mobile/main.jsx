@@ -17,18 +17,20 @@ import configureStore from 'drive/mobile/store/configureStore'
 import { loadState } from 'drive/mobile/store/persistedState'
 import { initServices, getLang } from 'drive/mobile/lib/init'
 import { startBackgroundService } from 'drive/mobile/lib/background'
-import { startTracker, useHistoryForTracker, startHeartBeat, stopHeartBeat } from 'drive/mobile/lib/tracker'
+import {
+  startTracker,
+  useHistoryForTracker,
+  startHeartBeat,
+  stopHeartBeat
+} from 'drive/mobile/lib/tracker'
 import { resetClient } from 'drive/mobile/lib/cozy-helper'
-import { backupImages } from 'drive/mobile/actions/mediaBackup'
+import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { backupContacts } from 'drive/mobile/actions/contactsBackup'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
   // Cannot use import as we are in a condition
   require('preact/devtools')
-
-  // Export React to window for the devtools
-  window.React = React
 }
 
 const renderAppWithPersistedState = persistedState => {
@@ -36,7 +38,7 @@ const renderAppWithPersistedState = persistedState => {
 
   initServices(store)
 
-  function isRedirectedToOnboaring (nextState, replace) {
+  function isRedirectedToOnboaring(nextState, replace) {
     const isNotAuthorized = !store.getState().mobile.settings.authorized
     if (isNotAuthorized) {
       resetClient()
@@ -47,51 +49,85 @@ const renderAppWithPersistedState = persistedState => {
     }
   }
 
-  document.addEventListener('pause', () => {
-    if (store.getState().mobile.settings.analytics) stopHeartBeat()
-  }, false)
+  document.addEventListener(
+    'pause',
+    () => {
+      if (store.getState().mobile.settings.analytics) stopHeartBeat()
+    },
+    false
+  )
 
-  document.addEventListener('resume', () => {
-    if (store.getState().mobile.settings.analytics) startHeartBeat()
-  }, false)
+  document.addEventListener(
+    'resume',
+    () => {
+      if (store.getState().mobile.settings.analytics) startHeartBeat()
+    },
+    false
+  )
 
-  document.addEventListener('deviceready', () => {
-    store.dispatch(backupImages())
-    if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
-    if (store.getState().mobile.settings.backupContacts) store.dispatch(backupContacts())
-  }, false)
+  document.addEventListener(
+    'deviceready',
+    () => {
+      store.dispatch(backupImages())
+      if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
+      if (store.getState().mobile.settings.backupContacts)
+        store.dispatch(backupContacts())
+    },
+    false
+  )
 
   useHistoryForTracker(hashHistory)
-  if (store.getState().mobile.settings.analytics) startTracker(store.getState().mobile.settings.serverUrl)
+  if (store.getState().mobile.settings.analytics)
+    startTracker(store.getState().mobile.settings.serverUrl)
 
   const root = document.querySelector('[role=application]')
 
-  render((
-    <I18n lang={getLang()} dictRequire={(lang) => require(`drive/locales/${lang}`)}>
+  render(
+    <I18n
+      lang={getLang()}
+      dictRequire={lang => require(`drive/locales/${lang}`)}
+    >
       <Provider store={store}>
-        <Router history={hashHistory} routes={MobileAppRoute(isRedirectedToOnboaring)} />
+        <Router
+          history={hashHistory}
+          routes={MobileAppRoute(isRedirectedToOnboaring)}
+        />
       </Provider>
-    </I18n>
-  ), root)
+    </I18n>,
+    root
+  )
 }
 
 // Allows to know if the launch of the application has been done by the service background
 // @see: https://git.io/vSQBC
 const isBackgroundServiceParameter = () => {
-  let queryDict = {}
-  location.search.substr(1).split('&').forEach(function (item) { queryDict[item.split('=')[0]] = item.split('=')[1] })
+  const queryDict = location.search
+    .substr(1)
+    .split('&')
+    .reduce((acc, item) => {
+      const [prop, val] = item.split('=')
+      return { ...acc, [prop]: val }
+    }, {})
 
   return queryDict.backgroundservice
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (!isBackgroundServiceParameter()) {
-    loadState().then(renderAppWithPersistedState)
-  }
-}, false)
+document.addEventListener(
+  'DOMContentLoaded',
+  () => {
+    if (!isBackgroundServiceParameter()) {
+      loadState().then(renderAppWithPersistedState)
+    }
+  },
+  false
+)
 
-document.addEventListener('deviceready', () => {
-  if (isBackgroundServiceParameter()) {
-    startBackgroundService()
-  }
-}, false)
+document.addEventListener(
+  'deviceready',
+  () => {
+    if (isBackgroundServiceParameter()) {
+      startBackgroundService()
+    }
+  },
+  false
+)

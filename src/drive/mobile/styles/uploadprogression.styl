@@ -1,12 +1,49 @@
 @require 'cozy-ui'
 
-.coz-alerter
-    @extends $alerts
+.coz-upload-status
+    display flex
+    align-items center
+    box-sizing border-box
+    border-bottom 1px solid silver
+    min-height 2.5rem
+    padding .5rem 1rem
+    transition bottom 0.5s ease-out, top 0.5s ease-out, opacity 0.2s ease-out
 
-    .coz-alert
-        bottom 3em
+.coz-progress
+    position absolute
+    background-color dodger-blue
+    border-radius 0 1px 1px 0
+    max-width 100%
+    height 2px
+    top 0
+    left 0
+    display inline-block
+    transition 0.4s width, 0.4s background-color
 
-.btn--full-width
-    @extends .c-btn
-    @extends .c-btn--regular
-    width 100%
+.coz-progress-pic
+    position relative
+    margin 0 .5rem 0 -.5rem
+    width 3rem
+    height 3rem
+    overflow hidden
+    border-radius em(4px)
+    background pale-grey embedurl('../../assets/icons/icon-type-image.svg') center center / 5rem 4rem no-repeat
+
+    img
+        position absolute
+        top 50%
+        left 50%
+        max-width 3rem
+        max-height 3rem
+        transform translate(-50%)
+
+.coz-upload-status-content
+    flex auto
+    font-size .75em
+    text-transform uppercase
+    color charcoal-grey
+    font-weight bold
+
+.coz-upload-status--success
+    padding-left em(61px)
+    background embedurl('../assets/icons/icon-upload-OK.svg') 1rem center no-repeat

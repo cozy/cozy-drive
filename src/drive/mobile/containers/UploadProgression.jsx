@@ -1,13 +1,73 @@
+import React from 'react'
 import { connect } from 'react-redux'
-import UploadProgression from '../components/UploadProgression'
+import classnames from 'classnames'
+import styles from '../styles/uploadprogression'
+import { translate } from 'cozy-ui/react/I18n'
 
-const mapStateToProps = state => ({
-  message: state.mobile.mediaBackup.currentUpload
-    ? state.mobile.mediaBackup.currentUpload.message
-    : undefined,
-  messageData: state.mobile.mediaBackup.currentUpload
-    ? state.mobile.mediaBackup.currentUpload.messageData
-    : undefined
-})
+const percent = (actual, total) => Math.floor(actual * 100 / total)
 
-export default connect(mapStateToProps)(UploadProgression)
+const Progress = ({ percent, style, color, background }) => {
+  const containerStyle = {
+    opacity: percent < 100 ? 1 : 0,
+    transition: `${0.4}s opacity}`,
+    transitionDelay: `${percent < 100 ? 0 : 0.4}s`,
+    height: `${2}px`,
+    backgroundColor: background ? 'lightgray' : ''
+  }
+  const barStyle = {
+    width: `${percent}%`,
+    ...style
+  }
+  return (
+    <div style={containerStyle}>
+      <div className={styles['coz-progress']} style={barStyle} />
+    </div>
+  )
+}
+
+const UploadProgression = ({ t, current, total, media }) => {
+  return (
+    <div className={styles['coz-upload-status']}>
+      <Progress percent={percent(current, total)} />
+      <div className={styles['coz-progress-pic']}>
+        {media.filePath && <img src={media.filePath} />}
+      </div>
+      <div className={styles['coz-upload-status-content']}>
+        {t('mobile.settings.media_backup.media_upload', {
+          remaining: total - current
+        })}
+      </div>
+    </div>
+  )
+}
+
+const UploadUptodate = ({ t }) => (
+  <div
+    className={classnames(
+      styles['coz-upload-status'],
+      styles['coz-upload-status--success']
+    )}
+  >
+    <div className={styles['coz-upload-status-content']}>
+      {t('mobile.settings.media_backup.media_uptodate')}
+    </div>
+  </div>
+)
+
+const mapStateToProps = state =>
+  state.mobile.mediaBackup.currentUpload
+    ? {
+        media: state.mobile.mediaBackup.currentUpload.media,
+        current: state.mobile.mediaBackup.currentUpload.messageData.current,
+        total: state.mobile.mediaBackup.currentUpload.messageData.total
+      }
+    : { media: undefined, current: undefined, total: undefined }
+
+const UploadStatus = props =>
+  props.media && props.current && props.total ? (
+    <UploadProgression {...props} />
+  ) : (
+    <UploadUptodate {...props} />
+  )
+
+export default connect(mapStateToProps)(translate()(UploadStatus))

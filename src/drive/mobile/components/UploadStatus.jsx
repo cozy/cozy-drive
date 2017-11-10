@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from '../styles/uploadprogression'
+import styles from '../styles/uploadstatus'
 import { translate } from 'cozy-ui/react/I18n'
 
 import Spinner from 'cozy-ui/react/Spinner'

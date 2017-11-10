@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { reducers } from '../../reducers'
 
 import { settings } from './settings'
-import { mediaBackup } from './mediaBackup'
+import mediaBackup from 'drive/mobile/ducks/mediaBackup'
 import { ui } from './ui'
 import { authorization } from './authorization'
 import { UNLINK } from '../actions/unlink'
