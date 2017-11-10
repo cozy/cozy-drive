@@ -36,7 +36,8 @@ export {
   startSync,
   isFirstSync,
   isSynced,
-  hasSyncStarted
+  hasSyncStarted,
+  isSyncInError
 } from './slices/synchronization'
 
 export { downloadArchive, downloadFile } from './helpers'
