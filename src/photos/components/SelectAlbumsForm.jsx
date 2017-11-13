@@ -29,7 +29,6 @@ const DumbAlbumsList = props => (
 
 const AlbumsList = withEmpty(
   props => props.albums.data.length === 0,
-  'albums',
   DumbAlbumsList
 )
 

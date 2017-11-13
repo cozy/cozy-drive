@@ -26,10 +26,6 @@ const DumbAlbumsList = props => (
   </div>
 )
 
-const AlbumsList = withEmpty(
-  props => props.albums.length === 0,
-  'albums',
-  DumbAlbumsList
-)
+const AlbumsList = withEmpty(props => props.albums.length === 0, DumbAlbumsList)
 
 export default AlbumsList

@@ -3,22 +3,18 @@ import styles from '../styles/emptyAndError'
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 
-export const Empty = ({ t, emptyType }) => {
+export const Empty = ({ t }) => {
   return (
     <div className={styles['pho-empty']}>
-      <h2>{t(`Empty.${emptyType}_title`)}</h2>
-      <p>{t(`Empty.${emptyType}_text`)}</p>
+      <h2>{t(`Empty.album_title`)}</h2>
+      <p>{t(`Empty.album_text`)}</p>
     </div>
   )
 }
 
 const TranslatedEmpty = translate()(Empty)
 
-export const withEmpty = (isEmpty, type, BaseComponent) => props =>
-  isEmpty(props) ? (
-    <TranslatedEmpty emptyType={type} />
-  ) : (
-    <BaseComponent {...props} />
-  )
+export const withEmpty = (isEmpty, BaseComponent) => props =>
+  isEmpty(props) ? <TranslatedEmpty /> : <BaseComponent {...props} />
 
 export default TranslatedEmpty
