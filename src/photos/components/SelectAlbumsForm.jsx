@@ -3,8 +3,8 @@ import styles from '../styles/albumsList'
 import React from 'react'
 import classNames from 'classnames'
 
-import { withError } from '../components/ErrorComponent'
-import { withEmpty } from '../components/Empty'
+import { withError } from 'components/Error/ErrorComponent'
+import { withEmpty } from 'components/Error/Empty-photos'
 
 import AlbumItem from '../containers/AlbumItem'
 

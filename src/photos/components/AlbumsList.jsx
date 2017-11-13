@@ -2,7 +2,7 @@ import styles from '../styles/albumsList'
 
 import React from 'react'
 
-import { withEmpty } from '../components/Empty'
+import { withEmpty } from 'components/Error/Empty-photos'
 import AlbumItem from '../containers/AlbumItem'
 
 const FALLBACK_CREATION_DATE = null
