@@ -1,6 +1,5 @@
 import { isCordova } from './device'
-import { _polyglot, initTranslation } from 'cozy-ui/react/I18n/translation'
-import { getLang } from './init'
+import { getTranslateFunction } from './i18n'
 import { getToken, getClientUrl } from './cozy-helper'
 import { logException } from './reporter'
 
@@ -102,12 +101,6 @@ export const getPhotos = async () => {
 }
 
 export const getMediaFolderName = () => {
-  if (_polyglot === undefined) {
-    const lang = getLang()
-    const dictRequire = lang => require(`../../locales/${lang}`)
-    initTranslation(lang, dictRequire)
-  }
-  const dir = _polyglot.t('mobile.settings.media_backup.media_folder')
-
-  return dir
+  const t = getTranslateFunction()
+  return t('mobile.settings.media_backup.media_folder')
 }
