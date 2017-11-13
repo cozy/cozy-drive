@@ -11,7 +11,6 @@
     "build:photos": "npm run build:photos:browser",
     "build:photos:browser":
       "npm run internal:build -- --env.app=photos --env.target=browser --env.production",
-    "clean:browser": "rm -rf build/*",
     "clean:drive:browser": "rm -rf build/drive/*",
     "clean:photos:browser": "rm -rf build/photos/*",
     "clean:mobile": "rm -rf targets/*/mobile/www/*",
@@ -28,8 +27,8 @@
     "prebuild:photos:browser": "npm run clean:photos:browser",
     "prebuild:drive:mobile": "npm run clean:mobile",
     "pretest": "npm run lint",
-    "prewatch:drive:browser": "npm run clean:browser",
-    "prewatch:photos:browser": "npm run clean:browser",
+    "prewatch:drive:browser": "npm run clean:drive:browser",
+    "prewatch:photos:browser": "npm run clean:photos:browser",
     "prewatch:drive:mobile": "npm run clean:mobile",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src/drive/styles --config ./.stylintrc",
