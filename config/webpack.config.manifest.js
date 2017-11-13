@@ -26,7 +26,13 @@ module.exports = function(production, app) {
           transform: transformManifest
         },
         { from: 'README.md' },
-        { from: 'LICENSE' }
+        { from: 'LICENSE' },
+        {
+          from: 'targets/.travis.yml'
+        },
+        {
+          from: 'publish_registry.sh'
+        }
       ])
     ]
   }
