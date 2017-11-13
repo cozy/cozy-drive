@@ -4,7 +4,7 @@ import SharingsCollection, {
   SHARINGS_DOCTYPE
 } from './collections/SharingsCollection'
 import { authenticateWithCordova } from './authentication/mobile'
-import { getIndexFields } from './helpers'
+import { getIndexFields, isV2 } from './helpers'
 
 const FILES_DOCTYPE = 'io.cozy.files'
 
@@ -31,6 +31,10 @@ export default class CozyClient {
       }
     })
     return cozy.client.authorize(true)
+  }
+
+  isV2(cozyURL) {
+    return isV2(cozyURL)
   }
 
   async isRegistered(clientInfos) {

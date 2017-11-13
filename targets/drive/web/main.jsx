@@ -52,11 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const store = configureStore(client)
 
-  render((
-    <I18n lang={data.cozyLocale} dictRequire={(lang) => require(`drive/locales/${lang}`)}>
+  render(
+    <I18n
+      lang={data.cozyLocale}
+      dictRequire={lang => require(`drive/locales/${lang}`)}
+    >
       <CozyProvider store={store} client={client}>
         <Router history={history} routes={AppRoute} />
       </CozyProvider>
-    </I18n>
-  ), root)
+    </I18n>,
+    root
+  )
 })

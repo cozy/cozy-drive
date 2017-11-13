@@ -16,9 +16,13 @@ import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from '../mobile/lib/reporter'
 
 const configureStore = (client, initialState = {}) => {
+  const analyticsEnabled =
+    initialState.mobile && initialState.mobile.settings.analytics
   const middlewares = [cozyMiddleware(client), thunkMiddleware]
   if (__TARGET__ === 'mobile') {
-    middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
+    middlewares.push(
+      RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration(analyticsEnabled))
+    )
   }
   if (shouldEnableTracking() && getTracker()) {
     middlewares.push(eventTrackerMiddleware)

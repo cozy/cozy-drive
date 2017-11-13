@@ -16,7 +16,7 @@ export class SelectServer extends Component {
   async setServerUrl(serverUrl) {
     this.setState({ fetching: true })
     try {
-      await this.props.registerDevice(serverUrl)
+      await this.props.registerDevice(serverUrl, this.context.client)
       this.props.nextStep()
     } catch (e) {
       console.error(e)
@@ -105,9 +105,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goBack: () => {
     ownProps.previousStep()
   },
-  registerDevice: serverUrl => {
+  registerDevice: (serverUrl, client) => {
     if (!serverUrl) return Promise.reject(new Error('serverUrl is undefined'))
-    return dispatch(registerDevice())
+    return dispatch(registerDevice(client))
   },
   updateServerUrl: e => {
     const serverUrl = e.target.value

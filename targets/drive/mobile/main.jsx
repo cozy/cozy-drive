@@ -6,16 +6,15 @@ import 'drive/mobile/styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
 import { Router, hashHistory } from 'react-router'
+import { CozyProvider } from 'cozy-client'
 
 import { I18n } from 'cozy-ui/react/I18n'
 
 import MobileAppRoute from 'drive/mobile/components/MobileAppRoute'
 
-import configureStore from 'drive/mobile/store/configureStore'
-import { loadState } from 'drive/mobile/store/persistedState'
-import { initServices, getLang } from 'drive/mobile/lib/init'
+import configureStore from 'drive/store/configureStore'
+import { loadState } from 'drive/store/persistedState'
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import {
   startTracker,
@@ -23,12 +22,20 @@ import {
   startHeartBeat,
   stopHeartBeat
 } from 'drive/mobile/lib/tracker'
-import { resetClient } from 'drive/mobile/lib/cozy-helper'
 import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { backupContacts } from 'drive/mobile/actions/contactsBackup'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
+
+import {
+  getLang,
+  resetClient,
+  initClient,
+  initBar
+} from 'drive/mobile/lib/cozy-helper'
+import { revokeClient } from 'drive/mobile/actions/authorization'
+import { startReplication } from 'drive/mobile/actions/settings'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -37,11 +44,24 @@ if (__DEVELOPMENT__) {
 }
 
 const renderAppWithPersistedState = persistedState => {
-  const store = configureStore(persistedState)
+  const cozyURL = persistedState.mobile.settings.serverUrl || ''
+  const client = initClient(cozyURL)
+  const store = configureStore(client, persistedState)
 
-  initServices(store)
+  const clientInfos = store.getState().settings.client
+  if (clientInfos) {
+    client.isRegistered(clientInfos).then(isRegistered => {
+      if (isRegistered) {
+        startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
+        initBar()
+      } else {
+        console.warn('Your device is no more connected to your server')
+        store.dispatch(revokeClient())
+      }
+    })
+  }
 
-  function isRedirectedToOnboaring(nextState, replace) {
+  const isRedirectedToOnboarding = (nextState, replace) => {
     const isNotAuthorized = !store.getState().mobile.settings.authorized
     if (isNotAuthorized) {
       resetClient()
@@ -96,12 +116,12 @@ const renderAppWithPersistedState = persistedState => {
       lang={getLang()}
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >
-      <Provider store={store}>
+      <CozyProvider store={store} client={client}>
         <Router
           history={hashHistory}
-          routes={MobileAppRoute(isRedirectedToOnboaring)}
+          routes={MobileAppRoute(isRedirectedToOnboarding)}
         />
-      </Provider>
+      </CozyProvider>
     </I18n>,
     root
   )
