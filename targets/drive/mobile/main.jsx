@@ -43,8 +43,10 @@ if (__DEVELOPMENT__) {
   require('preact/devtools')
 }
 
-const renderAppWithPersistedState = persistedState => {
-  const cozyURL = persistedState.mobile.settings.serverUrl || ''
+const renderAppWithPersistedState = (persistedState = {}) => {
+  const cozyURL = persistedState.mobile
+    ? persistedState.mobile.settings.serverUrl
+    : ''
   const client = initClient(cozyURL)
   const store = configureStore(client, persistedState)
 
