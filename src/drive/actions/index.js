@@ -129,7 +129,6 @@ export const fetchRecentFiles = () => {
     try {
       const index = await cozy.client.data.defineIndex('io.cozy.files', [
         'updated_at',
-        'size',
         'trashed'
       ])
       const files = await cozy.client.data.query(index, {
