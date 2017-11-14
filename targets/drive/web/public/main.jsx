@@ -9,7 +9,7 @@ import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/components/PublicLayout'
 
 import LightFolderView from 'drive/components/LightFolderView'
-import ErrorShare from 'drive/components/ErrorShare'
+import ErrorShare from 'components/Error/ErrorShare-drive'
 
 document.addEventListener('DOMContentLoaded', init)
 
@@ -18,15 +18,14 @@ const arrToObj = (obj = {}, [key, val = true]) => {
   return obj
 }
 
-const getQueryParameter = () => window
-  .location
-  .search
-  .substring(1)
-  .split('&')
-  .map(varval => varval.split('='))
-  .reduce(arrToObj, {})
+const getQueryParameter = () =>
+  window.location.search
+    .substring(1)
+    .split('&')
+    .map(varval => varval.split('='))
+    .reduce(arrToObj, {})
 
-function init () {
+function init() {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -40,23 +39,29 @@ function init () {
   }
 
   if (directdownload) {
-    cozy.client.files.getDownloadLinkById(id).then(
-      link => { window.location = `${cozy.client._url}${link}` }
-    ).catch(e => {
-      cozy.bar.init({
-        appName: data.cozyAppName,
-        appEditor: data.cozyAppEditor,
-        iconPath: data.cozyIconPath,
-        lang: data.cozyLocale,
-        replaceTitleOnMobile: true
+    cozy.client.files
+      .getDownloadLinkById(id)
+      .then(link => {
+        window.location = `${cozy.client._url}${link}`
       })
-      render(
-        <I18n lang={lang} dictRequire={(lang) => require(`drive/locales/${lang}`)}>
-          <ErrorShare errorType={`public_unshared`} />
-        </I18n>,
-        root
-      )
-    })
+      .catch(e => {
+        cozy.bar.init({
+          appName: data.cozyAppName,
+          appEditor: data.cozyAppEditor,
+          iconPath: data.cozyIconPath,
+          lang: data.cozyLocale,
+          replaceTitleOnMobile: true
+        })
+        render(
+          <I18n
+            lang={lang}
+            dictRequire={lang => require(`drive/locales/${lang}`)}
+          >
+            <ErrorShare errorType={`public_unshared`} />
+          </I18n>,
+          root
+        )
+      })
   } else {
     if (__DEVELOPMENT__) {
       // Enables React dev tools for Preact
@@ -68,7 +73,12 @@ function init () {
     }
     const store = configureStore()
 
-    if (data.cozyAppName && data.cozyAppEditor && data.cozyIconPath && data.cozyLocale) {
+    if (
+      data.cozyAppName &&
+      data.cozyAppEditor &&
+      data.cozyIconPath &&
+      data.cozyLocale
+    ) {
       cozy.bar.init({
         appName: data.cozyAppName,
         appEditor: data.cozyAppEditor,
@@ -79,13 +89,13 @@ function init () {
     }
 
     render(
-      <I18n lang={lang} dictRequire={(lang) => require(`drive/locales/${lang}`)}>
+      <I18n lang={lang} dictRequire={lang => require(`drive/locales/${lang}`)}>
         <Provider store={store}>
           <Router history={hashHistory}>
             <Route component={PublicLayout}>
-              <Route path='files(/:folderId)' component={LightFolderView} />
+              <Route path="files(/:folderId)" component={LightFolderView} />
             </Route>
-            <Redirect from='/*' to={`files/${id}`} />
+            <Redirect from="/*" to={`files/${id}`} />
           </Router>
         </Provider>
       </I18n>,

@@ -2,7 +2,7 @@ import styles from '../styles/albumsList'
 
 import React from 'react'
 
-import { withEmpty } from '../components/Empty'
+import { withEmpty } from 'components/Error/Empty-photos'
 import AlbumItem from '../containers/AlbumItem'
 
 const FALLBACK_CREATION_DATE = null
@@ -26,10 +26,6 @@ const DumbAlbumsList = props => (
   </div>
 )
 
-const AlbumsList = withEmpty(
-  props => props.albums.length === 0,
-  'albums',
-  DumbAlbumsList
-)
+const AlbumsList = withEmpty(props => props.albums.length === 0, DumbAlbumsList)
 
 export default AlbumsList
