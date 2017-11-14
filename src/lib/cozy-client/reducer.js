@@ -156,11 +156,7 @@ const collection = (state = collectionInitialState, action) => {
         ...state,
         type: action.doctype || 'io.cozy.files',
         options: action.options,
-        fetchStatus:
-          action.skip > 0
-            ? 'loadingMore'
-            : // we don't change the status for a refetch
-              state.fetchStatus === 'loaded' ? 'loaded' : 'loading'
+        fetchStatus: action.skip > 0 ? 'loadingMore' : 'loading'
       }
     case RECEIVE_DATA:
       const response = action.response
@@ -264,14 +260,6 @@ export const fetchCollection = (name, doctype, options = {}, skip = 0) => ({
   promise: client => client.fetchCollection(name, doctype, options, skip)
 })
 
-export const refetchCollections = () => (dispatch, getState) => {
-  const collections = getCollections(getState())
-  return Object.keys(collections).map(name => {
-    const { type, options } = collections[name]
-    dispatch(fetchCollection(name, type, options))
-  })
-}
-
 export const fetchDocument = (doctype, id) => ({
   types: [FETCH_DOCUMENT, RECEIVE_DATA, RECEIVE_ERROR],
   doctype,
@@ -326,7 +314,7 @@ export const trashFile = (file, actionOptions = {}) => ({
 
 export const addReferencedFiles = (doc, ids) => ({
   type: ADD_REFERENCED_FILES,
-  collection: `${doc._type}/${doc._id}#files`,
+  collection: `${doc.type}/${doc.id}#files`,
   document: doc,
   ids,
   promise: client => client.addReferencedFiles(doc, ids)
@@ -334,7 +322,7 @@ export const addReferencedFiles = (doc, ids) => ({
 
 export const removeReferencedFiles = (doc, ids) => ({
   type: REMOVE_REFERENCED_FILES,
-  collection: `${doc._type}/${doc._id}#files`,
+  collection: `${doc.type}/${doc.id}#files`,
   document: doc,
   ids,
   promise: client => client.removeReferencedFiles(doc, ids)
@@ -388,19 +376,15 @@ export const enhancePropsForActions = (props, fetchActions, dispatch) =>
 const mapDocumentsToIds = (documents, doctype, ids) =>
   ids.map(id => documents[doctype][id])
 
-const getCollections = state => state.cozy.collections
-
-const getDocuments = state => state.cozy.documents
-
 export const getCollection = (state, name) => {
-  const collection = getCollections(state)[name]
+  const collection = state.cozy.collections[name]
   if (!collection) {
     return { ...collectionInitialState, data: null }
   }
   return {
     ...collection,
     data: mapDocumentsToIds(
-      getDocuments(state),
+      state.cozy.documents,
       collection.type,
       collection.ids
     )

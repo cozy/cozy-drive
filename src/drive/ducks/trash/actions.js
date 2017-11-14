@@ -11,12 +11,7 @@ export const DESTROY_FILES_SUCCESS = 'DESTROY_FILES_SUCCESS'
 export const DESTROY_FILES_FAILURE = 'DESTROY_FILES_FAILURE'
 
 export const emptyTrash = () => async dispatch => {
-  dispatch({
-    type: EMPTY_TRASH,
-    alert: {
-      message: 'alert.empty_trash_progress'
-    }
-  })
+  dispatch({ type: EMPTY_TRASH })
   try {
     await cozy.client.files.clearTrash()
   } catch (err) {

@@ -1,21 +1,18 @@
 import styles from '../../styles/toolbar'
-
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import classNames from 'classnames'
 
-import { ROOT_DIR_ID } from '../../constants/config'
-import { alertShow } from 'cozy-ui/react/Alerter'
+import React from 'react'
+import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import { ROOT_DIR_ID } from '../../constants/config'
 
-import { MoreButton } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
-
-import QuotaAlert from '../../components/QuotaAlert'
-import ShareButton from '../../components/ShareButton'
 import UploadButton from '../../components/UploadButton'
-
+import ShareButton from '../../components/ShareButton'
+import Menu, { Item } from '../../components/Menu'
+import QuotaAlert from '../../components/QuotaAlert'
 import { alert } from '../../lib/confirm'
+import { alertShow } from 'cozy-ui/react/Alerter'
+
 import { addToUploadQueue } from '../upload'
 import { uploadedFile, downloadFiles } from '../../actions'
 import { ShareModal } from 'sharing'
@@ -29,7 +26,7 @@ const ALERT_LEVEL_INFO = 'info'
 const ALERT_LEVEL_ERROR = 'error'
 const ALERT_LEVEL_SUCCESS = 'success'
 
-class Toolbar extends Component {
+class Toolbar extends React.Component {
   state = {
     showShareModal: false
   }
@@ -73,7 +70,7 @@ class Toolbar extends Component {
           title={t('toolbar.item_more')}
           disabled={disabled}
           className={styles['fil-toolbar-menu']}
-          button={<MoreButton />}
+          buttonClassName={styles['fil-toolbar-more-btn']}
         >
           {notRootfolder && (
             <Item>

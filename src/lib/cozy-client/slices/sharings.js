@@ -252,7 +252,7 @@ export const fetchContacts = () => {
     )
     const data = await Promise.all(
       response.data.map(contact => {
-        return typeof contact.email !== 'string'
+        return typeof contact !== 'string'
           ? contact
           : client
               .updateDocument({
@@ -371,8 +371,7 @@ export const getSharingStatus = (state, doctype, id) => {
   const sharings = getDocumentActiveSharings(state, doctype, id)
   return {
     shared: sharings.length !== 0,
-    owner:
-      sharings.length === 0 || sharings.some(s => s.attributes.owner === true),
+    owner: sharings.some(s => s.attributes.owner === true),
     sharingType: sharings.some(
       s => s.attributes.sharing_type === 'master-master'
     )
@@ -419,9 +418,10 @@ const getSharingRecipients = (state, sharings) =>
     .reduce((a, b) => a.concat(b), [])
 
 const buildSharingLink = (id, doctype, sharecode) =>
-  `${window.location.origin}/public?sharecode=${sharecode}&id=${id}${
-    doctype === 'file' ? '&directdownload' : ''
-  }`
+  `${window.location.origin}/public?sharecode=${sharecode}&id=${id}${doctype ===
+  'file'
+    ? '&directdownload'
+    : ''}`
 
 // helpers
 const isFile = ({ _type, type }) =>

@@ -1,6 +1,4 @@
-/* global cozy */
-import PouchDB from 'pouchdb'
-import pouchdbFind from 'pouchdb-find'
+/* global cozy, PouchDB, pouchdbFind */
 import {
   startDoctypeSync,
   syncDoctypeOk,
@@ -8,27 +6,20 @@ import {
 } from '../slices/synchronization'
 
 const REPLICATION_INTERVAL = 30000
-export const SYNC_BIDIRECTIONAL = 'SYNC_BIDIRECTIONAL'
-export const SYNC_TO = 'SYNC_TO'
-export const SYNC_FROM = 'SYNC_FROM'
 
 export default class PouchdbAdapter {
   constructor() {
     PouchDB.plugin(pouchdbFind)
     this.instances = {}
     this.doctypes = []
-    this.replicationBaseUrl = null
   }
 
   registerDoctypes(doctypes) {
     this.doctypes = doctypes
-    for (let doctype of this.doctypes) {
-      this.instances[doctype] = new PouchDB(doctype)
-    }
   }
 
   getDatabase(doctype) {
-    return this.instances[doctype]
+    return cozy.client.offline.getDatabase(doctype) // For now we let cozy-client-js creates PouchDB instances
   }
 
   getReplicationBaseUrl() {
@@ -44,73 +35,45 @@ export default class PouchdbAdapter {
       .then(result => result.update_seq)
   }
 
-  async startSync(dispatch, direction = SYNC_BIDIRECTIONAL) {
-    try {
-      const infos = await this.sync(dispatch, direction)
-      this.scheduleNextSync(dispatch, direction)
-      return infos
-    } catch (err) {
-      this.scheduleNextSync(dispatch, direction)
-      throw err
-    }
-  }
-
-  sync(dispatch, direction) {
-    return this.getReplicationBaseUrl().then(baseUrl =>
-      Promise.all(
-        this.doctypes.map(doctype =>
-          this.syncDoctype(doctype, `${baseUrl}${doctype}`, dispatch, direction)
-        )
-      )
-    )
-  }
-
-  async syncDoctype(doctype, replicationUrl, dispatch, direction) {
-    try {
+  async sync(dispatch) {
+    const baseUrl = await this.getReplicationBaseUrl()
+    for (let doctype of this.doctypes) {
       const seqNumber = await this.getSeqNumber(doctype)
-      dispatch(startDoctypeSync(doctype, seqNumber))
-      const syncInfos = await this.syncDatabase(
-        doctype,
-        replicationUrl,
-        direction
-      )
-      dispatch(syncDoctypeOk(doctype, syncInfos))
-      return syncInfos
-    } catch (syncError) {
-      dispatch(syncDoctypeError(doctype, syncError))
-      throw syncError
+      await dispatch(startDoctypeSync(doctype, seqNumber))
+      this.syncDoctype(doctype, `${baseUrl}${doctype}`, dispatch)
     }
   }
 
-  syncDatabase(doctype, replicationUrl, direction) {
+  syncDoctype(doctype, replicationUrl, dispatch) {
     return new Promise((resolve, reject) => {
-      const db = this.getDatabase(doctype)
-
-      let syncHandler
-      if (direction === SYNC_TO) syncHandler = db.replicate.to(replicationUrl)
-      else if (direction === SYNC_FROM)
-        syncHandler = db.replicate.from(replicationUrl)
-      else syncHandler = db.sync(replicationUrl)
-
-      syncHandler.on('complete', info => resolve(info)).on('error', err => {
-        if (err.error === 'code=400, message=Expired token') {
-          return cozy.client.authorize().then(({ client, token }) => {
-            cozy.client.auth
-              .refreshToken(client, token)
-              .then(newToken => cozy.client.saveCredentials(client, newToken))
-              .then(credentials => reject(err))
-          })
-        } else if (err.status !== 404) {
-          // A 404 error on some doctypes is perfectly normal when there is no data
-          reject(err)
-        }
-      })
+      this.getDatabase(doctype)
+        .sync(replicationUrl)
+        .on('complete', info => {
+          dispatch(syncDoctypeOk(doctype, info))
+          this.scheduleNextSync(doctype, replicationUrl, dispatch)
+          resolve(info)
+        })
+        .on('error', err => {
+          if (err.error === 'code=400, message=Expired token') {
+            return cozy.client.authorize().then(({ client, token }) => {
+              cozy.client.auth
+                .refreshToken(cozy, client, token)
+                .then(newToken => cozy.client.saveCredentials(client, newToken))
+                .then(credentials => this.syncDoctype(doctype, replicationUrl))
+            })
+          } else if (err.status !== 404) {
+            // A 404 error on some doctypes is perfectly normal when there is no data
+            dispatch(syncDoctypeError(doctype, err))
+            this.scheduleNextSync(doctype, replicationUrl, dispatch)
+            reject(err)
+          }
+        })
     })
   }
 
-  scheduleNextSync(dispatch, direction) {
+  scheduleNextSync(doctype, replicationUrl, dispatch) {
     setTimeout(() => {
-      this.sync(dispatch, direction)
+      this.syncDoctype(doctype, replicationUrl, dispatch)
     }, REPLICATION_INTERVAL)
   }
 

@@ -5,7 +5,7 @@ import styles from './pushClient'
 import { translate } from 'cozy-ui/react/I18n'
 
 import React, { Component } from 'react'
-import { track, isLinux, isAndroid, isIOS, DESKTOP_BANNER } from '.'
+import { track, DESKTOP_BANNER } from '.'
 
 import classNames from 'classnames'
 import localforage from 'localforage'
@@ -30,17 +30,10 @@ class BannerClient extends Component {
     const { t } = this.props
     if (this.state.seen) return null
 
-    const mobileLink = isIOS()
-      ? 'Nav.link-client-ios'
-      : isAndroid() ? 'Nav.link-client-android' : 'Nav.link-client'
-    const desktopLink = isLinux()
-      ? 'Nav.link-client'
-      : 'Nav.link-client-desktop'
-
     return (
       <div className={styles['coz-banner-client']}>
         <a
-          href={t(mobileLink)}
+          href={t('Nav.link-client')}
           target="_blank"
           className={styles['coz-btn-clientMobile']}
           onClick={e => {
@@ -52,7 +45,7 @@ class BannerClient extends Component {
         <p className={styles['coz-banner-text']}>
           <span>{t('Nav.banner-txt-client')}</span>
           <a
-            href={t(desktopLink)}
+            href={t('Nav.link-client')}
             target="_blank"
             className={classNames(styles['c-btn'])}
             onClick={e => {

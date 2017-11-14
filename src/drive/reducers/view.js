@@ -4,7 +4,6 @@ import {
   OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
-  FETCH_RECENT,
   FETCH_RECENT_SUCCESS,
   FETCH_RECENT_FAILURE,
   FETCH_MORE_FILES_SUCCESS,
@@ -43,8 +42,6 @@ const openedFolderId = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER:
       return action.folderId
-    case FETCH_RECENT:
-      return null
     default:
       return state
   }

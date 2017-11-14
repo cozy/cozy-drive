@@ -6,8 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import confirm from '../../lib/confirm'
 import classNames from 'classnames'
 
-import { MoreButton } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
+import Menu, { Item } from '../../components/Menu'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import { emptyTrash } from './actions'
@@ -30,7 +29,7 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
       title={t('toolbar.item_more')}
       disabled={disabled}
       className={styles['fil-toolbar-menu']}
-      button={<MoreButton />}
+      buttonClassName={styles['fil-toolbar-more-btn']}
     >
       <Item>
         <a className={styles['fil-action-delete']} onClick={() => emptyTrash()}>

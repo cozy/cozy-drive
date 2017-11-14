@@ -28,9 +28,10 @@ export class SharingDetailsModal extends Component {
           </div>
           <div className={styles['pho-share-details-perm']}>
             {t(
-              `${documentType}.share.details.${
-                sharing.sharingType === 'master-slave' ? 'ro' : 'rw'
-              }`
+              `${documentType}.share.details.${sharing.sharingType ===
+              'master-slave'
+                ? 'ro'
+                : 'rw'}`
             )}
           </div>
         </div>

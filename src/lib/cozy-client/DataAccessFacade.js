@@ -1,12 +1,6 @@
-/* global cozy */
+/* global cozy, PouchDB */
 import CozyStackAdapter from './adapters/CozyStackAdapter'
-import PouchdbAdapter, {
-  SYNC_BIDIRECTIONAL,
-  SYNC_TO,
-  SYNC_FROM
-} from './adapters/PouchdbAdapter'
-
-const FILES_DOCTYPE = 'io.cozy.files'
+import PouchdbAdapter from './adapters/PouchdbAdapter'
 
 // const isOnline = () =>
 //   typeof navigator !== 'undefined' ? navigator.onLine : true
@@ -14,26 +8,20 @@ const FILES_DOCTYPE = 'io.cozy.files'
 export default class DataAccessFacade {
   constructor() {
     this.stackAdapter = new CozyStackAdapter()
-    this.pouchAdapter = new PouchdbAdapter()
-  }
-
-  setup(cozyUrl, options) {
-    const { offline, ...rest } = options
-    // TODO: For now we let cozy-client-js handle offline for files so that we don't break cozy-drive
-    const config =
-      offline &&
-      offline.doctypes &&
-      offline.doctypes.indexOf(FILES_DOCTYPE) !== -1
-        ? { cozyURL: cozyUrl, offline: { doctypes: [FILES_DOCTYPE] }, ...rest }
-        : { cozyURL: cozyUrl, ...rest }
-    // TODO: Get rid of cozy-client-js
-    cozy.client.init(config)
-    if (offline && offline.doctypes) {
-      this.pouchAdapter.registerDoctypes(offline.doctypes)
+    if (typeof PouchDB !== 'undefined') {
+      this.pouchAdapter = new PouchdbAdapter()
       // TODO: strategy injection
       this.strategy = new PouchFirstStrategy()
     } else {
       this.strategy = new StackOnlyStrategy()
+    }
+  }
+
+  setup(cozyUrl, options) {
+    const config = { cozyURL: cozyUrl, ...options }
+    cozy.client.init(config) // TODO: For now we let cozy-client-js creates PouchDB instances
+    if (config.offline) {
+      this.pouchAdapter.registerDoctypes(config.offline.doctypes)
     }
   }
 
@@ -46,15 +34,7 @@ export default class DataAccessFacade {
   }
 
   startSync(dispatch) {
-    return this.pouchAdapter.startSync(dispatch, SYNC_BIDIRECTIONAL)
-  }
-
-  startReplicationTo(dispatch) {
-    return this.pouchAdapter.startSync(dispatch, SYNC_TO)
-  }
-
-  startReplicationFrom(dispatch) {
-    return this.pouchAdapter.startSync(dispatch, SYNC_FROM)
+    return this.pouchAdapter.sync(dispatch)
   }
 }
 

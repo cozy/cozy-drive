@@ -11,10 +11,7 @@
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
     "banner-txt-client": "Tip: your pictures, bills, ID documents, all accessible anytime, from any of your device with Cozy Drive installed on your computer",
     "banner-btn-client": "Download now",
-    "link-client": "https://cozy.io/en/download/",
-    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
-    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
-    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client": "https://docs.cozy.io/en/download/",
     "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
   "breadcrumb": {
@@ -24,21 +21,15 @@
     "title_activity": "Activity",
     "title_trash": "Trash"
   },
-  "Toolbar": {
-    "more": "More"
-  },
   "toolbar": {
     "item_upload": "Upload",
-    "menu_upload": "Upload files",
     "item_more": "More",
+    "menu_upload": "Upload files",
     "menu_new_folder": "New folder",
     "menu_select": "Select items",
     "menu_download_folder": "Download folder",
     "empty_trash": "Empty trash",
     "share": "Share"
-  },
-  "service": {
-    "bills": "Get my bills"
   },
   "Share": {
     "status": {
@@ -103,7 +94,6 @@
     "head_size": "Size",
     "head_status": "Status",
     "row_update_format": "MMM D, YYYY",
-    "row_update_format_full": "MMMM D, YYYY",
     "row_read_only": "Share (Read only)",
     "row_read_write": "Share (Read & Write)",
     "row_size_symbols": {
@@ -188,7 +178,6 @@
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
     "destroy_file_success": "The selection has been deleted permanently.",
-    "empty_trash_progress": "Your trash is being emptied. This might take a few moments.",
     "empty_trash_success": "The trash has been emptied.",
     "folder_name": "The element %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
