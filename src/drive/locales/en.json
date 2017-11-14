@@ -367,6 +367,9 @@
       "tip_lock": "Disable your lock screen.",
       "result": "In the morning, all your photos will be stored in a safe and secure location.",
       "button": "Got it!"
+    },
+    "notifications": {
+      "backup_paused": "Your photos backup is paused. Keep the application open and prevent the screen from going to sleep to complete the backup."
     }
   },
   "upload": {

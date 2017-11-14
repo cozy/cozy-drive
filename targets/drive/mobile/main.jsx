@@ -26,6 +26,9 @@ import {
 import { resetClient } from 'drive/mobile/lib/cozy-helper'
 import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { backupContacts } from 'drive/mobile/actions/contactsBackup'
+import { getTranslateFunction } from 'drive/mobile/lib/i18n'
+import { scheduleNotification } from 'drive/mobile/lib/notification'
+import { isIos } from 'drive/mobile/lib/device'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -53,6 +56,12 @@ const renderAppWithPersistedState = persistedState => {
     'pause',
     () => {
       if (store.getState().mobile.settings.analytics) stopHeartBeat()
+      if (store.getState().mobile.mediaBackup.currentUpload && isIos()) {
+        const t = getTranslateFunction()
+        scheduleNotification({
+          text: t('mobile.notifications.backup_paused')
+        })
+      }
     },
     false
   )
