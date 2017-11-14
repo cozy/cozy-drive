@@ -1,3 +1,4 @@
+/* global cozy */
 import styles from '../../styles/toolbar'
 
 import React, { Component } from 'react'
@@ -36,6 +37,8 @@ class Toolbar extends Component {
   }
 
   render() {
+    const cozyDev = cozy.client._url === 'http://cozy.tools:8080'
+    const cozyRecette = cozy.client._url === 'https://recette.cozy.works'
     const {
       t,
       disabled,
@@ -49,20 +52,25 @@ class Toolbar extends Component {
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     return (
       <div className={styles['fil-toolbar-files']} role="toolbar">
-        <IntentButton
-          className={classNames(
-            styles['c-btn'],
-            styles['c-btn--regular'],
-            styles['u-hide--mob']
-          )}
-          action="CREATE"
-          docType="io.cozy.accounts"
-          data={{
-            dataType: 'bill'
-          }}
-        >
-          {t('service.bills')}
-        </IntentButton>
+        {cozyDev || cozyRecette
+          ? (console.warn('IntentButton is displayed only on dev or recette'),
+            (
+              <IntentButton
+                className={classNames(
+                  styles['c-btn'],
+                  styles['c-btn--regular'],
+                  styles['u-hide--mob']
+                )}
+                action="CREATE"
+                docType="io.cozy.accounts"
+                data={{
+                  dataType: 'bill'
+                }}
+              >
+                {t('service.bills')}
+              </IntentButton>
+            ))
+          : null}
         {canUpload && (
           <UploadButton
             disabled={disabled}
