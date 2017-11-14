@@ -6,13 +6,11 @@ const cozyMiddleware = client => ({ dispatch, getState }) => {
     }
 
     if (!type && !types) {
-      return promise(client, dispatch, getState).then(action =>
-        dispatch(action)
-      )
+      return promise(client).then(action => dispatch(action))
     }
 
     if (type) {
-      return promise(client, dispatch, getState).then(response => {
+      return promise(client).then(response => {
         next({ ...rest, response, type })
         return response
       })
@@ -21,7 +19,7 @@ const cozyMiddleware = client => ({ dispatch, getState }) => {
     const [REQUEST, SUCCESS, FAILURE] = types
     next({ ...rest, type: REQUEST })
 
-    return promise(client, dispatch, getState)
+    return promise(client)
       .then(
         response => {
           next({ ...rest, response, type: SUCCESS })

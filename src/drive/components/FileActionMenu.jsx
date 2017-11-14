@@ -79,7 +79,7 @@ const Menu = props => {
         return (
           <Component
             className={styles[`fil-action-${actionName}`]}
-            onClick={() => Promise.resolve(actions[actionName].action(files))}
+            onClick={() => actions[actionName].action(files)}
             files={files}
           >
             {t(`SelectionBar.${actionName}`)}

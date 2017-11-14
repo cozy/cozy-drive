@@ -113,8 +113,7 @@ class ShareByLink extends React.Component {
             <ShareWithLink
               shareLink={link}
               onCopy={() =>
-                this.setState(state => ({ ...state, copied: true }))
-              }
+                this.setState(state => ({ ...state, copied: true }))}
               copied={copied}
               documentType={documentType}
             />

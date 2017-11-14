@@ -141,13 +141,13 @@ export default class CozyStackAdapter {
     // WARN: the stack API is probably not ideal here: referencedFiles are in the 'included' property
     // (that should be used when fetching an entity AND its relations) and the 'data' property
     // only contains uplets { id, type }
-    const { included, meta } = await cozy.client.data.fetchReferencedFiles(
-      normalized,
-      {
-        skip,
-        limit: FETCH_LIMIT
-      }
-    )
+    const {
+      included,
+      meta
+    } = await cozy.client.data.fetchReferencedFiles(normalized, {
+      skip,
+      limit: FETCH_LIMIT
+    })
     // we forge a standard response with a 'data' property
     return {
       data: !included

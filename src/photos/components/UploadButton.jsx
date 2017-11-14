@@ -31,15 +31,13 @@ export const UploadButton = ({
   <label
     role="button"
     disabled={disabled}
-    className={`${className} ${
-      type === 'menu-item'
-        ? button['c-link--upload']
-        : classNames(
-            button['c-btn'],
-            button['c-btn--regular'],
-            button['c-btn--upload']
-          )
-    }`}
+    className={`${className} ${type === 'menu-item'
+      ? button['c-link--upload']
+      : classNames(
+          button['c-btn'],
+          button['c-btn--regular'],
+          button['c-btn--upload']
+        )}`}
     style={styles.parent}
   >
     {label}

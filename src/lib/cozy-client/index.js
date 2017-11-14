@@ -6,7 +6,6 @@ export {
   default as reducer,
   makeActionCreator,
   fetchCollection,
-  refetchCollections,
   fetchDocument,
   fetchReferencedFiles,
   addReferencedFiles,
@@ -32,11 +31,6 @@ export {
   shareByLink,
   revokeLink
 } from './slices/sharings'
-export {
-  startSync,
-  isFirstSync,
-  isSynced,
-  hasSyncStarted
-} from './slices/synchronization'
+export { startSync, isFirstSync, isSynced } from './slices/synchronization'
 
 export { downloadArchive, downloadFile } from './helpers'

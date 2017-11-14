@@ -4,6 +4,10 @@
 .fil-toolbar-trash
     margin-left auto
 
+    .fil-toolbar-more-btn
+        @extends $button--secondary
+        @extends $button--more
+
 .fil-toolbar-trash
     .fil-btn--delete
         padding-left         em(44px, 16px)
@@ -17,7 +21,7 @@
             margin-left      0
             margin-right     em(16px)
 
-    .fil-toolbar-menu
+    .fil-toolbar-more-btn
         display none
 
 .fil-toolbar-files
@@ -48,12 +52,14 @@
     .fil-toolbar-files
     .fil-toolbar-trash
         .fil-toolbar-menu
-            display block
             .fil-action-upload
             .fil-action-share
             .fil-action-select
             hr // temporary while there is only select after hr
                 display block
+
+    .fil-toolbar-trash .fil-toolbar-more-btn
+            display inline-flex
 
 @media (max-width: (768/basefont)rem)
     .fil-toolbar-files
@@ -62,6 +68,12 @@
         top      0
         right    0
         z-index  $nav-index
+
+        .fil-toolbar-more-btn
+            border        0
+            margin-right  0
+            height        em(48px, 14px)
+            opacity       .5
 
 @media (max-width: (768/basefont)rem)
     .fil-public-download

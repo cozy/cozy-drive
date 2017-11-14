@@ -54,11 +54,11 @@ export default class ShareAutocomplete extends Component {
   }
 
   onChange = (event, { newValue, method }) => {
-    if (typeof newValue !== 'object') {
-      this.setState(state => ({ ...state, inputValue: newValue }))
-    } else if (method === 'click' || method === 'enter') {
-      // A suggestion has been picked
+    // A suggestion has been picked
+    if (typeof newValue === 'object') {
       this.onPick(newValue)
+    } else {
+      this.setState(state => ({ ...state, inputValue: newValue }))
     }
   }
 

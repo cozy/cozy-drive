@@ -2,17 +2,12 @@ import React from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 
-import styles from './index.styl'
+import styles from '../styles/toolbar'
 
 const MoreButton = ({ t, disabled, onClick }) => (
   <button
     role="button"
-    className={classNames(
-      styles['c-btn'],
-      styles['c-btn--secondary'],
-      styles['c-btn--more'],
-      styles['dri-btn--more']
-    )}
+    className={classNames(styles['c-btn'], styles['pho-toolbar-more-btn'])}
     disabled={disabled}
     onClick={onClick}
   >

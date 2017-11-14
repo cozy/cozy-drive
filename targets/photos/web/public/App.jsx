@@ -5,14 +5,9 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Loading from 'photos/components/Loading'
 import ErrorComponent from 'photos/components/ErrorComponent'
 import ErrorShare from 'photos/components/ErrorShare'
-import { MoreButton } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
+import Menu, { Item } from 'photos/components/Menu'
 
-import {
-  fetchAlbum,
-  fetchAlbumPhotos,
-  downloadAlbum
-} from 'photos/ducks/albums'
+import { fetchAlbum, fetchAlbumPhotos, downloadAlbum } from 'photos/ducks/albums'
 
 import classNames from 'classnames'
 import styles from './index.styl'
@@ -26,10 +21,9 @@ class App extends Component {
     this.setState(({ selected }) => {
       const idx = selected.findIndex(i => i === obj.id)
       return {
-        selected:
-          idx === -1
-            ? [...selected, obj.id]
-            : [...selected.slice(0, idx), ...selected.slice(idx + 1)]
+        selected: idx === -1
+          ? [...selected, obj.id]
+          : [...selected.slice(0, idx), ...selected.slice(idx + 1)]
       }
     })
   }
@@ -52,10 +46,9 @@ class App extends Component {
   }
 
   onDownload = () => {
-    const photos =
-      this.state.selected.length !== 0
-        ? this.getSelectedPhotos()
-        : this.props.photos.data
+    const photos = this.state.selected.length !== 0
+      ? this.getSelectedPhotos()
+      : this.props.photos.data
     downloadAlbum(this.props.album, photos)
   }
 
@@ -65,30 +58,25 @@ class App extends Component {
     return selected.map(id => photos.data.find(p => p.id === id))
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { albumId } = this.props
     if (!albumId) {
       return this.setState({ error: 'Missing ID' })
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     const { album, photos } = nextProps
     if (photos.fetchStatus === 'failed' && album === null) {
-      this.setState({ error: 'Fetch error' })
+      this.setState({error: 'Fetch error'})
     }
   }
 
-  render() {
+  render () {
     const { t, album, photos } = this.props
     if (this.state.error) {
       return (
-        <div
-          className={classNames(
-            styles['pho-public-layout'],
-            styles['pho-public-layout--full']
-          )}
-        >
+        <div className={classNames(styles['pho-public-layout'], styles['pho-public-layout--full'])}>
           <ErrorShare errorType={`public_album_unshared`} />
         </div>
       )
@@ -100,15 +88,10 @@ class App extends Component {
         </div>
       )
     }
-    if (
-      !album ||
-      !photos ||
-      photos.fetchStatus === 'pending' ||
-      photos.fetchStatus === 'loading'
-    ) {
+    if (!album || !photos || photos.fetchStatus === 'pending' || photos.fetchStatus === 'loading') {
       return (
         <div className={styles['pho-public-layout']}>
-          <Loading loadingType="photos_fetching" />
+          <Loading loadingType='photos_fetching' />
         </div>
       )
     }
@@ -116,21 +99,12 @@ class App extends Component {
     const { selected } = this.state
     return (
       <div className={styles['pho-public-layout']}>
-        <div
-          className={classNames(
-            styles['pho-content-header'],
-            styles['--no-icon']
-          )}
-        >
+        <div className={classNames(styles['pho-content-header'], styles['--no-icon'])}>
           <h2 className={styles['pho-content-title']}>{album.name}</h2>
-          <div className={styles['pho-toolbar']} role="toolbar">
+          <div className={styles['pho-toolbar']} role='toolbar'>
             <button
-              role="button"
-              className={classNames(
-                styles['c-btn'],
-                styles['c-btn--secondary'],
-                styles['pho-public-download']
-              )}
+              role='button'
+              className={classNames('coz-btn', 'coz-btn--secondary', styles['pho-public-download'])}
               onClick={this.onDownload}
             >
               {t('Toolbar.album_download')}
@@ -138,7 +112,7 @@ class App extends Component {
             <Menu
               title={t('Toolbar.more')}
               className={classNames(styles['pho-toolbar-menu'])}
-              button={<MoreButton />}
+              buttonClassName={styles['pho-toolbar-more-btn']}
             >
               <Item>
                 <a
@@ -166,17 +140,15 @@ class App extends Component {
     )
   }
 
-  renderViewer(children) {
+  renderViewer (children) {
     if (!children) return null
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        photos: this.props.photos.data
-      })
-    )
+    return React.Children.map(children, child => React.cloneElement(child, {
+      photos: this.props.photos.data
+    }))
   }
 }
 
-const mapDocumentsToProps = ownProps => ({
+const mapDocumentsToProps = (ownProps) => ({
   album: fetchAlbum(ownProps.albumId),
   // TODO: not ideal, but we'll have to wait after associations are implemented
   photos: fetchAlbumPhotos(ownProps.albumId)

@@ -74,9 +74,9 @@ const AlbumItemDesc = ({ t, photoCount, shared }) => (
     {t('Albums.album_item_description', { smart_count: photoCount })}
     {(shared.byMe || shared.withMe) &&
       ` - ${t(
-        `Albums.album_item_shared_${
-          shared.sharingType === 'master-slave' ? 'ro' : 'rw'
-        }`
+        `Albums.album_item_shared_${shared.sharingType === 'master-slave'
+          ? 'ro'
+          : 'rw'}`
       )}`}
   </h4>
 )

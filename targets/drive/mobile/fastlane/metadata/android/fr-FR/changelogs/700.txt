@@ -1,7 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version :
-
-- Amélioration de l'onglet "Récent" : le chemin des dossiers est affiché
-- Amélioration de la sélection des contacts dans le formulaire de partage
-- Correction de plusieurs problèmes liés au partage
-- Correction de problèmes mineurs (presque invisibles pour les utilisateurs)

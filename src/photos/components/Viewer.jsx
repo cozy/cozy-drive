@@ -351,8 +351,8 @@ export class Viewer extends Component {
             />
           )}
           {(!currentPhoto || isImageLoading) && (
-            <Loading noMargin color="white" />
-          )}
+              <Loading noMargin color="white" />
+            )}
         </div>
         {!singlePhoto && (
           <a

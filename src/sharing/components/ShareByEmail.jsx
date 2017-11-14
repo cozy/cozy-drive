@@ -57,8 +57,7 @@ class ShareByEmailWrapper extends React.Component {
       <div>
         <ShareByEmail
           onSend={(recipient, sharingType) =>
-            this.share(recipient, sharingType)
-          }
+            this.share(recipient, sharingType)}
           contacts={contacts}
           documentType={documentType}
         />
