@@ -1,6 +1,8 @@
 @require 'cozy-ui'
 
 .wizard
+    @extend $form
+    @extend $form-text
     display flex
     flex-direction column
     width   85vw
@@ -71,16 +73,16 @@ pomegranate
         font-size  em(18px)
         max-width  25em
 
-    .label
-        display block
+        &.error
+            color pomegranate
+            font-size em(12px)
+            font-style italic
+
+    .coz-form-label
         text-align left
 
     .input
         width            100%
-        border           1px solid transparent
-        padding-left     0
-        font-size        em(22px)
-        background-color white
 
         &::placeholder
             color   charcoal-grey
@@ -89,10 +91,6 @@ pomegranate
         &.error
             color pomegranate
             border-color pomegranate
-
-        &:focus
-            border-color
-             charcoal-grey
 
     .wizard-footer
         display flex
@@ -108,6 +106,9 @@ pomegranate
 .select-server
     .description
         text-align left
+
+    .description p
+        margin 0
 
 .welcome .logo-wrapper, .select-server .logo-wrapper
     background dodger-blue

@@ -7,10 +7,19 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import { registerDevice, setUrl } from '../../actions/settings'
 import styles from '../../styles/onboarding'
+import Spinner from 'cozy-ui/react/Spinner'
 
 export class SelectServer extends Component {
   componentDidMount() {
     this.serverInput.focus()
+  }
+
+  componentDidUpdate() {
+    if (this.props.error) {
+      this.serverInput.focus()
+      this.serverInput.select()
+    }
+    console.log(this.state)
   }
 
   render() {
@@ -22,6 +31,7 @@ export class SelectServer extends Component {
       serverUrl,
       error
     } = this.props
+    const { fetching } = this.state
     return (
       <div className={classNames(styles['wizard'], styles['select-server'])}>
         <header className={styles['wizard-header']}>
@@ -37,7 +47,7 @@ export class SelectServer extends Component {
           >
             <div className={styles['cozy-logo-white']} />
           </div>
-          <label className={styles['label']}>
+          <label className={styles['coz-form-label']}>
             {t('mobile.onboarding.server_selection.label')}
           </label>
           <input
@@ -62,9 +72,10 @@ export class SelectServer extends Component {
             </p>
           )}
           {error && (
-            <p className={styles['description']} style={{ color: 'red' }}>
-              <ReactMarkdown source={t(error)} />
-            </p>
+            <ReactMarkdown
+              className={classNames(styles['description'], styles['error'])}
+              source={t(error)}
+            />
           )}
         </div>
         <footer className={styles['wizard-footer']}>
@@ -75,6 +86,7 @@ export class SelectServer extends Component {
             disabled={error || !serverUrl}
           >
             {t('mobile.onboarding.server_selection.button')}
+            {fetching && <Spinner />}
           </button>
         </footer>
       </div>
