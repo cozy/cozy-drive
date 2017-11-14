@@ -2086,11 +2086,12 @@ cozy-bar@4.3.7:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-cozy-client-js@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.4.0.tgz#8317d9d076dfad9bb1eb6f97e113d0fa26a49d57"
+cozy-client-js@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.4.1.tgz#dca585a0f4ec07fc4571cb0600934b928499d001"
   dependencies:
     pouchdb "6.1.1"
+    pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
 
 cozy-client-js@^0.3.19:
@@ -6885,9 +6886,54 @@ postcss@^6.0.1:
     source-map "^0.6.1"
     supports-color "^4.4.0"
 
+"pouchdb-adapter-cordova-sqlite@https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a":
+  version "2.0.2"
+  resolved "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
+  dependencies:
+    pouchdb-adapter-websql-core "^6.1.1"
+
+pouchdb-adapter-utils@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-adapter-utils/-/pouchdb-adapter-utils-6.3.4.tgz#fc1f4a9a2356087bcded7cb630e5ef69ef692d25"
+  dependencies:
+    pouchdb-binary-utils "6.3.4"
+    pouchdb-collections "6.3.4"
+    pouchdb-errors "6.3.4"
+    pouchdb-md5 "6.3.4"
+    pouchdb-merge "6.3.4"
+    pouchdb-utils "6.3.4"
+
+pouchdb-adapter-websql-core@^6.1.1:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-adapter-websql-core/-/pouchdb-adapter-websql-core-6.3.4.tgz#658d9e5d296cccf146a19d8b8eca5d47f3dfe412"
+  dependencies:
+    pouchdb-adapter-utils "6.3.4"
+    pouchdb-binary-utils "6.3.4"
+    pouchdb-collections "6.3.4"
+    pouchdb-errors "6.3.4"
+    pouchdb-json "6.3.4"
+    pouchdb-merge "6.3.4"
+    pouchdb-utils "6.3.4"
+
+pouchdb-binary-utils@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-binary-utils/-/pouchdb-binary-utils-6.3.4.tgz#9bfd1b4b3d8caccfd2b6046b1316b4f70afea9f6"
+  dependencies:
+    buffer-from "0.1.1"
+
 pouchdb-collate@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/pouchdb-collate/-/pouchdb-collate-1.2.0.tgz#cae3b830fca124b7f97d23046e4faa311ec3828c"
+
+pouchdb-collections@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-collections/-/pouchdb-collections-6.3.4.tgz#24f4dd3d7aabd630b2f5f26353fe09ddd4ef7afa"
+
+pouchdb-errors@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-errors/-/pouchdb-errors-6.3.4.tgz#abc1a84242e9276a1102e5cba1802aa08e5be45a"
+  dependencies:
+    inherits "2.0.3"
 
 pouchdb-extend@^0.1.2:
   version "0.1.2"
@@ -6921,11 +6967,34 @@ pouchdb-find@^0.10.4:
     pouchdb-upsert "~2.0.1"
     spark-md5 "2.0.2"
 
+pouchdb-json@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-json/-/pouchdb-json-6.3.4.tgz#8fcc5f8d77776e9ffb029b10a3a50c60ceca6151"
+  dependencies:
+    vuvuzela "1.0.3"
+
+pouchdb-md5@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-md5/-/pouchdb-md5-6.3.4.tgz#364987fa184a33a48cfc7eb175a279fca113a4e8"
+  dependencies:
+    pouchdb-binary-utils "6.3.4"
+    spark-md5 "3.0.0"
+
+pouchdb-merge@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-merge/-/pouchdb-merge-6.3.4.tgz#6c843304affafe2f66225586ee5d44f1079a7678"
+
 pouchdb-promise@5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/pouchdb-promise/-/pouchdb-promise-5.4.0.tgz#e277ac6bda1ac8504597abb5c43a7c3a9e56866f"
   dependencies:
     lie "3.0.4"
+
+pouchdb-promise@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-promise/-/pouchdb-promise-6.3.4.tgz#817052fa2320293dd2dbc4be2f1cc81b02be30c2"
+  dependencies:
+    lie "3.1.1"
 
 pouchdb-promise@^5.4.3:
   version "5.4.5"
@@ -6938,6 +7007,19 @@ pouchdb-upsert@~2.0.1:
   resolved "https://registry.yarnpkg.com/pouchdb-upsert/-/pouchdb-upsert-2.0.2.tgz#c746cc9945e52d8c78e42f63ade0666777996712"
   dependencies:
     pouchdb-promise "^5.4.3"
+
+pouchdb-utils@6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/pouchdb-utils/-/pouchdb-utils-6.3.4.tgz#3926541ae439c019d9738d5e5c3aa9bb110e6a25"
+  dependencies:
+    argsarray "0.0.1"
+    clone-buffer "1.0.0"
+    immediate "3.0.6"
+    inherits "2.0.3"
+    pouchdb-collections "6.3.4"
+    pouchdb-errors "6.3.4"
+    pouchdb-promise "6.3.4"
+    uuid "^3.1.0"
 
 pouchdb@6.1.1:
   version "6.1.1"
