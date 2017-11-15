@@ -152,6 +152,7 @@ class App extends Component {
           </div>
         </div>
         <PhotoBoard
+          photosContext="shared_album"
           lists={[{ photos: data }]}
           selected={selected}
           showSelection={selected.length !== 0}
