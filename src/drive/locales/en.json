@@ -219,7 +219,7 @@
         "no_account_link": "Don’t have an account? Request one here."
       },
       "server_selection": {
-        "description": "Example: claudedouillet.mycozy.cloud",
+        "description": "Example: https://claudedouillet.mycozy.cloud",
         "label": "Enter your Cozy address",
         "cozy_address_placeholder": "tonystark.mycozy.cloud",
         "button": "Next",

@@ -7,9 +7,24 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import { registerDevice, setUrl } from '../../actions/settings'
 import styles from '../../styles/onboarding'
-import Spinner from 'cozy-ui/react/Spinner'
 
 export class SelectServer extends Component {
+  state = {
+    fetching: false
+  }
+
+  async setServerUrl(serverUrl) {
+    this.setState({ fetching: true })
+    try {
+      await this.props.registerDevice(serverUrl)
+      this.props.nextStep()
+    } catch (e) {
+      console.error(e)
+    } finally {
+      this.setState({ fetching: false })
+    }
+  }
+
   componentDidMount() {
     this.serverInput.focus()
   }
@@ -19,18 +34,10 @@ export class SelectServer extends Component {
       this.serverInput.focus()
       this.serverInput.select()
     }
-    console.log(this.state)
   }
 
   render() {
-    const {
-      t,
-      goBack,
-      selectServer,
-      updateServerUrl,
-      serverUrl,
-      error
-    } = this.props
+    const { t, goBack, updateServerUrl, serverUrl, error } = this.props
     const { fetching } = this.state
     return (
       <div className={classNames(styles['wizard'], styles['select-server'])}>
@@ -67,7 +74,7 @@ export class SelectServer extends Component {
             value={serverUrl}
           />
           {!error && (
-            <p className={styles['description']}>
+            <p className={classNames(styles['description'], styles['info'])}>
               {t('mobile.onboarding.server_selection.description')}
             </p>
           )}
@@ -82,11 +89,11 @@ export class SelectServer extends Component {
           <button
             role="button"
             className={classNames(styles['c-btn'], styles['c-btn--regular'])}
-            onClick={() => selectServer(serverUrl)}
+            onClick={() => this.setServerUrl(serverUrl)}
             disabled={error || !serverUrl}
+            aria-busy={fetching}
           >
             {t('mobile.onboarding.server_selection.button')}
-            {fetching && <Spinner />}
           </button>
         </footer>
       </div>
@@ -98,13 +105,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goBack: () => {
     ownProps.previousStep()
   },
-  selectServer: serverUrl => {
-    if (!serverUrl) return
-    dispatch(registerDevice())
-      .then(() => {
-        ownProps.nextStep()
-      })
-      .catch(err => console.error(err))
+  registerDevice: serverUrl => {
+    if (!serverUrl) return Promise.reject(new Error('serverUrl is undefined'))
+    return dispatch(registerDevice())
   },
   updateServerUrl: e => {
     const serverUrl = e.target.value
