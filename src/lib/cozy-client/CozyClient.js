@@ -1,6 +1,7 @@
 /* global cozy */
 import DataAccessFacade from './DataAccessFacade'
 import { authenticateWithCordova } from './authentication/mobile'
+import { getIndexFields } from './helpers'
 
 const FILES_DOCTYPE = 'io.cozy.files'
 const SHARINGS_DOCTYPE = 'io.cozy.sharings'
@@ -174,7 +175,7 @@ export default class CozyClient {
     if (!this.indexes[name]) {
       this.indexes[name] = await this.getAdapter(doctype).createIndex(
         doctype,
-        this.getIndexFields(options)
+        getIndexFields(options)
       )
     }
     return this.indexes[name]
@@ -188,16 +189,5 @@ export default class CozyClient {
       ])
     }
     return this.indexes[name]
-  }
-
-  getIndexFields(options) {
-    const { selector, sort } = options
-    if (sort) {
-      // We filter possible duplicated fields
-      return [...Object.keys(selector), ...Object.keys(sort)].filter(
-        (f, i, arr) => arr.indexOf(f) === i
-      )
-    }
-    return Object.keys(selector)
   }
 }

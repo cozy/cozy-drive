@@ -1,4 +1,5 @@
 /* global cozy */
+import { removeObjectProperties } from './utils'
 
 const slugify = text =>
   text
@@ -32,4 +33,27 @@ export const downloadFile = async file => {
   const response = await cozy.client.files.downloadById(file.id)
   const blob = await response.blob()
   forceFileDownload(window.URL.createObjectURL(blob), file.name)
+}
+
+/**
+ * Compute fields that should be indexed for a mango
+ * query to work
+ *
+ * @param  {Object} query - Mango query
+ * @return {Array} - Fields that should be indexed for this query to work
+ */
+export const getIndexFields = query => {
+  const { selector, sort } = query
+  if (sort) {
+    // We filter possible duplicated fields
+    return [...Object.keys(selector), ...Object.keys(sort)].filter(
+      (f, i, arr) => arr.indexOf(f) === i
+    )
+  }
+  return Object.keys(selector)
+}
+
+/** Remove special fields */
+export const sanitizeDoc = doc => {
+  return removeObjectProperties(doc, ['_type'])
 }
