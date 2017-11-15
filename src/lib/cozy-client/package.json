@@ -1,6 +1,6 @@
 {
   "name": "cozy-client",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A simple and declarative way of managing cozy-stack API calls and resulting data.",
   "main": "index.js",
   "scripts": {
