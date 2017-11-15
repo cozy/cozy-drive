@@ -60,6 +60,8 @@
     "share": {
       "cta": "Share",
       "title": "Share with others",
+      "sharedByMe": "Shared by me",
+      "sharedWithMe": "Shared with me",
       "shareByLink": {
         "title": "By public link",
         "subtitle": "Share by link",

@@ -216,6 +216,20 @@ class File extends Component {
             ? '—'
             : filesize(attributes.size, { base: 10 })}
         </div>
+        <div
+          className={classNames(
+            styles['fil-content-cell'],
+            styles['fil-content-status']
+          )}
+        >
+          {!shared.shared
+            ? '—'
+            : shared.byMe
+              ? `${t('Files.share.sharedByMe')} (${t(
+                  `Share.type.${shared.sharingType}`
+                )})`
+              : t('Files.share.sharedWithMe')}
+        </div>
         {isAvailableOffline && <AvailableOfflineBadge />}
         <div
           className={classNames(
