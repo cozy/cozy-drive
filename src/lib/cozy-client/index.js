@@ -17,7 +17,9 @@ export {
   getDocument,
   createDocument,
   updateDocument,
+  updateDocuments,
   deleteDocument,
+  deleteDocuments,
   createFile,
   trashFile,
   CREATE_DOCUMENT

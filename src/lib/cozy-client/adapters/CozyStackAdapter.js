@@ -1,4 +1,6 @@
 /* global cozy */
+import { getIndexFields, sanitizeDoc } from '../helpers'
+
 const FILES_DOCTYPE = 'io.cozy.files'
 const FETCH_LIMIT = 50
 
@@ -52,7 +54,7 @@ export default class CozyStackAdapter {
       wholeResponse: true, // WARN: mandatory to get the full JSONAPI response
       ...options,
       // TODO: type and class should not be necessary, it's just a temp fix for a stack bug
-      fields: [...fields, '_id', '_type', 'class'],
+      fields: fields ? [...fields, '_id', '_type', 'class'] : undefined,
       skip,
       sort
     }
@@ -103,10 +105,27 @@ export default class CozyStackAdapter {
     return { data: [{ ...doc, _rev: updated._rev }] }
   }
 
+  async updateDocuments(doctype, query, iterator) {
+    const index = await this.createIndex(doctype, getIndexFields(query))
+    const docs = await this.queryDocuments(doctype, index, query)
+    const updatedDocs = docs.data.map(iterator).map(sanitizeDoc)
+    await cozy.client.fetchJSON('POST', `/data/${doctype}/_bulk_docs`, {
+      docs: updatedDocs
+    })
+    return { data: updatedDocs }
+  }
+
   async deleteDocument(doc) {
     /* const deleted = */ await cozy.client.data.delete(doc._type, doc)
     // we forge a standard response with a 'data' property
     return { data: [doc] }
+  }
+
+  async deleteDocuments(doctype, query) {
+    return this.updateDocuments(doctype, query, doc => ({
+      ...doc,
+      _deleted: true
+    }))
   }
 
   createIndex(doctype, fields) {

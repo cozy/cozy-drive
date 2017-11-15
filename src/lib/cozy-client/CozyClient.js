@@ -1,6 +1,7 @@
 /* global cozy */
 import DataAccessFacade from './DataAccessFacade'
 import { authenticateWithCordova } from './authentication/mobile'
+import { getIndexFields } from './helpers'
 
 const FILES_DOCTYPE = 'io.cozy.files'
 const SHARINGS_DOCTYPE = 'io.cozy.sharings'
@@ -99,8 +100,57 @@ export default class CozyClient {
     return this.getAdapter(doc._type).updateDocument(doc)
   }
 
+  /**
+   * Update documents in bulk.
+   *
+   * All documents matching the query will be retrieved before updating.
+   *
+   * @example
+   * ```
+   * await dispatch(
+   *   updateDocuments(
+   *     'io.cozy.bank.transactions',
+   *     {
+   *       selector: { accountId: '1921680010' }
+   *     },
+   *     {
+   *       updateCollections: ['transactions']
+   *     },
+   *     transaction => ({ ...transaction, amount: transaction.amount + 10 })
+   *   )
+   * )
+   * ```
+   *
+   * @param  {String} doctype  - Doctype of the documents that will be updated
+   * @param  {Object} query    - Mango query to select which documents will be updated
+   * @param  {Function} iterator - Function that will update the documents
+   * @return {Promise}
+   */
+  updateDocuments(doctype, query, iterator) {
+    return this.getAdapter(doctype).updateDocuments(doctype, query, iterator)
+  }
+
   deleteDocument(doc) {
     return this.getAdapter(doc._type).deleteDocument(doc)
+  }
+
+  /**
+   * Delete documents in bulk.
+   *
+   * All documents matching the query will be retrieved before deleting.
+   *
+   * @example
+   * ```
+   * await dispatch(deleteDocuments('io.cozy.bank.operations', {
+   *   selector: { account: account.id }
+   * }, {
+   *   updateCollections: ['transactions']
+   * }))
+   * ```
+   *
+   */
+  deleteDocuments(doctype, query) {
+    return this.getAdapter(doctype).deleteDocuments(doctype, query)
   }
 
   async fetchSharings(doctype) {
@@ -174,7 +224,7 @@ export default class CozyClient {
     if (!this.indexes[name]) {
       this.indexes[name] = await this.getAdapter(doctype).createIndex(
         doctype,
-        this.getIndexFields(options)
+        getIndexFields(options)
       )
     }
     return this.indexes[name]
@@ -188,16 +238,5 @@ export default class CozyClient {
       ])
     }
     return this.indexes[name]
-  }
-
-  getIndexFields(options) {
-    const { selector, sort } = options
-    if (sort) {
-      // We filter possible duplicated fields
-      return [...Object.keys(selector), ...Object.keys(sort)].filter(
-        (f, i, arr) => arr.indexOf(f) === i
-      )
-    }
-    return Object.keys(selector)
   }
 }

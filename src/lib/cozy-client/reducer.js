@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux'
-import { removeObjectProperty, mapValues } from './utils'
+import {
+  removeObjectProperty,
+  removeObjectProperties,
+  mapValues
+} from './utils'
 import sharings, {
   FETCH_SHARINGS,
   getSharings,
@@ -13,10 +17,14 @@ const RECEIVE_DATA = 'RECEIVE_DATA'
 const RECEIVE_ERROR = 'RECEIVE_ERROR'
 export const CREATE_DOCUMENT = 'CREATE_DOCUMENT'
 const UPDATE_DOCUMENT = 'UPDATE_DOCUMENT'
+const UPDATE_DOCUMENTS = 'UPDATE_DOCUMENTS'
 const DELETE_DOCUMENT = 'DELETE_DOCUMENT'
+const DELETE_DOCUMENTS = 'DELETE_DOCUMENTS'
 const RECEIVE_NEW_DOCUMENT = 'RECEIVE_NEW_DOCUMENT'
 const RECEIVE_UPDATED_DOCUMENT = 'RECEIVE_UPDATED_DOCUMENT'
+const RECEIVE_UPDATED_DOCUMENTS = 'RECEIVE_UPDATED_DOCUMENTS'
 const RECEIVE_DELETED_DOCUMENT = 'RECEIVE_DELETED_DOCUMENT'
+const RECEIVE_DELETED_DOCUMENTS = 'RECEIVE_DELETED_DOCUMENTS'
 const FETCH_REFERENCED_FILES = 'FETCH_REFERENCED_FILES'
 const ADD_REFERENCED_FILES = 'ADD_REFERENCED_FILES'
 const REMOVE_REFERENCED_FILES = 'REMOVE_REFERENCED_FILES'
@@ -44,11 +52,31 @@ const documents = (state = {}, action) => {
           [doc.id]: doc
         }
       }
+    case RECEIVE_UPDATED_DOCUMENTS:
+      const udocs = action.response.data
+      const doctype = udocs[0]._type
+      return {
+        ...state,
+        [doctype]: {
+          ...state[doctype],
+          ...udocs.reduce((res, doc) => (res[doc.id] = doc) && res, {})
+        }
+      }
     case RECEIVE_DELETED_DOCUMENT:
       const deleted = action.response.data[0]
       return {
         ...state,
         [deleted._type]: removeObjectProperty(state[deleted._type], deleted.id)
+      }
+    case RECEIVE_DELETED_DOCUMENTS:
+      const docs = action.response.data
+      const firstDeleted = docs[0]
+      return {
+        ...state,
+        [firstDeleted._type]: removeObjectProperties(
+          state[firstDeleted._type],
+          docs.map(d => d.id)
+        )
       }
     case ADD_REFERENCED_FILES:
       return {
@@ -205,6 +233,13 @@ const collection = (state = collectionInitialState, action) => {
         ...state,
         ids: state.ids.filter(id => id !== action.response.data[0].id)
       }
+    case RECEIVE_DELETED_DOCUMENTS:
+      const deletedIds = new Set(action.response.data.map(doc => doc.id))
+      const newIds = state.ids.filter(id => !deletedIds.has(id))
+      return {
+        ...state,
+        ids: newIds
+      }
     default:
       return state
   }
@@ -236,6 +271,7 @@ const collections = (state = {}, action) => {
       }
     case RECEIVE_NEW_DOCUMENT:
     case RECEIVE_DELETED_DOCUMENT:
+    case RECEIVE_DELETED_DOCUMENTS:
       if (!action.updateCollections) {
         return state
       }
@@ -303,10 +339,27 @@ export const updateDocument = (doc, actionOptions = {}) => ({
   ...actionOptions
 })
 
+export const updateDocuments = (
+  doctype,
+  query,
+  iterator,
+  actionOptions = {}
+) => ({
+  types: [UPDATE_DOCUMENTS, RECEIVE_UPDATED_DOCUMENTS, RECEIVE_ERROR],
+  promise: client => client.updateDocuments(doctype, query, iterator),
+  ...actionOptions
+})
+
 export const deleteDocument = (doc, actionOptions = {}) => ({
   types: [DELETE_DOCUMENT, RECEIVE_DELETED_DOCUMENT, RECEIVE_ERROR],
   document: doc,
   promise: client => client.deleteDocument(doc),
+  ...actionOptions
+})
+
+export const deleteDocuments = (doctype, query, actionOptions = {}) => ({
+  types: [DELETE_DOCUMENTS, RECEIVE_DELETED_DOCUMENTS, RECEIVE_ERROR],
+  promise: client => client.deleteDocuments(doctype, query),
   ...actionOptions
 })
 
