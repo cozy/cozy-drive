@@ -297,7 +297,7 @@ export const fetchCollection = (name, doctype, options = {}, skip = 0) => ({
   doctype,
   options,
   skip,
-  promise: client => client.fetchCollection(name, doctype, options, skip)
+  promise: client => client.fetchDocuments(name, doctype, options, skip)
 })
 
 export const refetchCollections = () => (dispatch, getState) => {

@@ -4,10 +4,6 @@ import { getIndexFields, sanitizeDoc } from '../helpers'
 const FILES_DOCTYPE = 'io.cozy.files'
 const FETCH_LIMIT = 50
 
-export const SHARED_BY_LINK = 'sharedByLink'
-export const SHARED_WITH_ME = 'sharedWithMe'
-export const SHARED_WITH_OTHERS = 'sharedWithOthers'
-
 export default class CozyStackAdapter {
   async fetchDocuments(doctype) {
     // WARN: cozy-client-js lacks a cozy.data.findAll method that uses this route
@@ -192,64 +188,6 @@ export default class CozyStackAdapter {
     const normalized = { ...doc, _id: doc.id }
     await cozy.client.data.removeReferencedFiles(normalized, ids)
     return ids
-  }
-
-  async fetchSharingPermissions(doctype) {
-    const fetchPermissions = (doctype, sharingType) =>
-      cozy.client.fetchJSON(
-        'GET',
-        `/permissions/doctype/${doctype}/${sharingType}`
-      )
-
-    const byMe = await fetchPermissions(doctype, SHARED_WITH_OTHERS)
-    const byLink = await fetchPermissions(doctype, SHARED_BY_LINK)
-    const withMe = await fetchPermissions(doctype, SHARED_WITH_ME)
-
-    return { byMe, byLink, withMe }
-  }
-
-  fetchSharing(id) {
-    return cozy.client.fetchJSON('GET', `/sharings/${id}`)
-  }
-
-  createSharing(permissions, contactIds, sharingType, description) {
-    return cozy.client.fetchJSON('POST', '/sharings/', {
-      desc: description,
-      permissions,
-      recipients: contactIds.map(contactId => ({
-        recipient: {
-          id: contactId,
-          type: 'io.cozy.contacts'
-        }
-      })),
-      sharing_type: sharingType
-    })
-  }
-
-  revokeSharing(sharingId) {
-    return cozy.client.fetchJSON('DELETE', `/sharings/${sharingId}`)
-  }
-
-  revokeSharingForClient(sharingId, clientId) {
-    return cozy.client.fetchJSON(
-      'DELETE',
-      `/sharings/${sharingId}/recipient/${clientId}`
-    )
-  }
-
-  createSharingLink(permissions) {
-    return cozy.client.fetchJSON('POST', `/permissions?codes=email`, {
-      data: {
-        type: 'io.cozy.permissions',
-        attributes: {
-          permissions
-        }
-      }
-    })
-  }
-
-  revokeSharingLink(permission) {
-    return cozy.client.fetchJSON('DELETE', `/permissions/${permission._id}`)
   }
 }
 

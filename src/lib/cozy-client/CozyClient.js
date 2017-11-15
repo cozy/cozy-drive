@@ -1,21 +1,25 @@
 /* global cozy */
 import DataAccessFacade from './DataAccessFacade'
+import SharingsCollection, {
+  SHARINGS_DOCTYPE
+} from './collections/SharingsCollection'
 import { authenticateWithCordova } from './authentication/mobile'
 import { getIndexFields } from './helpers'
 
 const FILES_DOCTYPE = 'io.cozy.files'
-const SHARINGS_DOCTYPE = 'io.cozy.sharings'
 
 export default class CozyClient {
   constructor(config) {
     const { cozyURL, ...options } = config
     this.options = options
+    this.collections = {}
     this.indexes = {}
     this.specialDirectories = {}
     this.facade = new DataAccessFacade()
     if (cozyURL) {
       this.facade.setup(cozyURL, options)
     }
+    this.defineSpecialCollections()
   }
 
   register(cozyUrl) {
@@ -45,6 +49,21 @@ export default class CozyClient {
     }
   }
 
+  defineCollection(doctype, collectionAdapter) {
+    this.collections[doctype] = collectionAdapter
+  }
+
+  defineSpecialCollections() {
+    this.defineCollection(SHARINGS_DOCTYPE, new SharingsCollection())
+  }
+
+  getCollection(doctype) {
+    if (!this.collections[doctype]) {
+      throw new Error(`No collection found for doctype ${doctype}`)
+    }
+    return this.collections[doctype]
+  }
+
   startSync(dispatch) {
     return this.facade.startSync(dispatch)
   }
@@ -61,9 +80,9 @@ export default class CozyClient {
     return this.facade.getAdapter(doctype)
   }
 
-  async fetchCollection(name, doctype, options = {}, skip = 0) {
+  async fetchDocuments(queryName, doctype, options = {}, skip = 0) {
     if (options.selector) {
-      const index = await this.getCollectionIndex(name, doctype, options)
+      const index = await this.getQueryIndex(queryName, doctype, options)
       return this.getAdapter(doctype).queryDocuments(doctype, index, {
         ...options,
         skip
@@ -153,54 +172,12 @@ export default class CozyClient {
     return this.getAdapter(doctype).deleteDocuments(doctype, query)
   }
 
-  async fetchSharings(doctype) {
-    const permissions = await this.getAdapter(doctype).fetchSharingPermissions(
-      doctype
-    )
-    const sharingIds = [
-      ...permissions.byMe.map(p => p.attributes.source_id),
-      ...permissions.withMe.map(p => p.attributes.source_id)
-    ]
-    const sharings = await Promise.all(
-      sharingIds.map(id => this.getAdapter(SHARINGS_DOCTYPE).fetchSharing(id))
-    )
-    return { permissions, sharings }
-  }
-
-  createSharing(permissions, contactIds, sharingType, description) {
-    return this.getAdapter(SHARINGS_DOCTYPE).createSharing(
-      permissions,
-      contactIds,
-      sharingType,
-      description
-    )
-  }
-
-  revokeSharing(sharingId) {
-    return this.getAdapter(SHARINGS_DOCTYPE).revokeSharing(sharingId)
-  }
-
-  revokeSharingForClient(sharingId, clientId) {
-    return this.getAdapter(SHARINGS_DOCTYPE).revokeSharingForClient(
-      sharingId,
-      clientId
-    )
-  }
-
-  createSharingLink(permissions) {
-    return this.getAdapter(SHARINGS_DOCTYPE).createSharingLink(permissions)
-  }
-
-  revokeSharingLink(permission) {
-    return this.getAdapter(SHARINGS_DOCTYPE).revokeSharingLink(permission)
-  }
-
   createFile(file, dirID) {
-    return this.getAdapter(FILES_DOCTYPE).createFile(file, dirID)
+    return this.getCollection(FILES_DOCTYPE).createFile(file, dirID)
   }
 
   trashFile(file) {
-    return this.getAdapter(FILES_DOCTYPE).trashFile(file)
+    return this.getCollection(FILES_DOCTYPE).trashFile(file)
   }
 
   async ensureDirectoryExists(path) {
@@ -220,14 +197,14 @@ export default class CozyClient {
     return existingDocs.length === 0
   }
 
-  async getCollectionIndex(name, doctype, options) {
-    if (!this.indexes[name]) {
-      this.indexes[name] = await this.getAdapter(doctype).createIndex(
+  async getQueryIndex(queryName, doctype, options) {
+    if (!this.indexes[queryName]) {
+      this.indexes[queryName] = await this.getAdapter(doctype).createIndex(
         doctype,
         getIndexFields(options)
       )
     }
-    return this.indexes[name]
+    return this.indexes[queryName]
   }
 
   async getUniqueIndex(doctype, property) {
