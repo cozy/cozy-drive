@@ -6,6 +6,7 @@ import {
   syncDoctypeOk,
   syncDoctypeError
 } from '../slices/synchronization'
+import { getIndexFields, sanitizeDoc } from '../helpers'
 
 const REPLICATION_INTERVAL = 30000
 export const SYNC_BIDIRECTIONAL = 'SYNC_BIDIRECTIONAL'
@@ -165,9 +166,25 @@ export default class PouchdbAdapter {
     return { data: [{ ...doc, _rev: resp.rev }] }
   }
 
+  async updateDocuments(doctype, query, iterator) {
+    const db = this.getDatabase(doctype)
+    await db.createIndex({
+      index: getIndexFields(query)
+    })
+    const docs = await db.find(query)
+    const updatedDocs = docs.map(iterator).map(sanitizeDoc)
+    await db.bulkDocs(updatedDocs)
+    return { data: updatedDocs }
+  }
+
   async deleteDocument(doc) {
     await this.getDatabase(doc._type).remove(doc)
     return { data: [doc] }
+  }
+
+  async deleteDocuments(doctype, query) {
+    const deleteDoc = doc => ({ ...doc, _deleted: true })
+    return this.updateDocuments(doctype, query, deleteDoc)
   }
 
   createIndex(doctype, fields) {

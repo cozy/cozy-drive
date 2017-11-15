@@ -100,8 +100,16 @@ export default class CozyClient {
     return this.getAdapter(doc._type).updateDocument(doc)
   }
 
+  updateDocuments(doctype, query, iterator) {
+    return this.getAdapter(doctype).updateDocuments(doctype, query, iterator)
+  }
+
   deleteDocument(doc) {
     return this.getAdapter(doc._type).deleteDocument(doc)
+  }
+
+  deleteDocuments(doctype, query) {
+    return this.getAdapter(doctype).deleteDocuments(doctype, query)
   }
 
   async fetchSharings(doctype) {

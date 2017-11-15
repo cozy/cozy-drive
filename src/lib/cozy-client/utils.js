@@ -24,3 +24,14 @@ export const removeObjectProperty = (obj, prop) => {
     return result
   }, {})
 }
+
+export const removeObjectProperties = (obj, props) => {
+  const sProps = new Set(props)
+  const res = Object.keys(obj).reduce((result, key) => {
+    if (!sProps.has(key)) {
+      result[key] = obj[key]
+    }
+    return result
+  }, {})
+  return res
+}
