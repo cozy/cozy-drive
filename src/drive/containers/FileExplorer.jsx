@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
+import { fetchSharings } from 'cozy-client'
+
 import {
   toggleItemSelection,
   isSelectionBarVisible,
@@ -34,6 +36,7 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) =>
 
 class FileExplorer extends Component {
   componentWillMount() {
+    this.props.fetchSharings()
     if (isRecentFilesView(this.props)) {
       this.props.fetchRecentFiles()
     } else {
@@ -80,6 +83,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   showSelectionBar: () => dispatch(showSelectionBar()),
   showActionMenu: fileId => dispatch(showActionMenu(fileId)),
   hideActionMenu: () => dispatch(hideActionMenu()),
+  fetchSharings: () => dispatch(fetchSharings('io.cozy.files')),
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),

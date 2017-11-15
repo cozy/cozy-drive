@@ -4,7 +4,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import File, { FilePlaceholder } from '../components/File'
+import File, { FilePlaceholder } from '../containers/File'
 
 const STATUS_LOADING = 1
 const STATUS_LOADED = 2

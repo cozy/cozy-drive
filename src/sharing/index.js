@@ -1,5 +1,6 @@
 import ShareModal from './ShareModal'
 import SharingDetailsModal from './SharingDetailsModal'
+import SharedBadge from './components/SharedBadge'
 
 const getPrimaryOrFirst = property => obj => {
   if (!obj[property] || obj[property].length === 0) return ''
@@ -18,4 +19,4 @@ export const getPrimaryCozy = contact =>
     ? getPrimaryOrFirst('cozy')(contact).url
     : contact.url
 
-export { ShareModal, SharingDetailsModal }
+export { ShareModal, SharingDetailsModal, SharedBadge }

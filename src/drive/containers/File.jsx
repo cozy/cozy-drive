@@ -1,5 +1,6 @@
 /* global cozy */
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { withRouter, Link } from 'react-router'
@@ -12,6 +13,8 @@ import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
 import breakpointsAware from 'cozy-ui/react/helpers/breakpoints'
+import { SharedBadge } from 'sharing'
+import { getSharingDetails } from 'cozy-client'
 
 import { getFolderUrl } from '../reducers'
 
@@ -148,6 +151,7 @@ class File extends Component {
       withSelectionCheckbox,
       withFilePath,
       isAvailableOffline,
+      shared,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { opening } = this.state
@@ -183,6 +187,7 @@ class File extends Component {
           opening={opening}
           withFilePath={withFilePath}
           isMobile={isMobile}
+          shared={shared}
         />
         <div
           className={classNames(
@@ -247,7 +252,8 @@ const FileNameCell = ({
   isRenaming,
   opening,
   withFilePath,
-  isMobile
+  isMobile,
+  shared
 }) => {
   const classes = classNames(
     styles['fil-content-cell'],
@@ -263,6 +269,13 @@ const FileNameCell = ({
         attributes.links.small && (
           <Preview thumbnail={`${url}${attributes.links.small}`} />
         )}
+      {(shared.byMe || shared.withMe) && (
+        <SharedBadge
+          byMe={shared.byMe}
+          className={styles['fil-content-shared']}
+          xsmall
+        />
+      )}
       {isRenaming ? (
         <RenameInput />
       ) : (
@@ -291,7 +304,11 @@ const FileNameCell = ({
   )
 }
 
-export default breakpointsAware()(withRouter(translate()(File)))
+const FileWithSharedStatus = connect((state, ownProps) => ({
+  shared: getSharingDetails(state, 'io.cozy.files', ownProps.attributes.id)
+}))(File)
+
+export default breakpointsAware()(withRouter(translate()(FileWithSharedStatus)))
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>
