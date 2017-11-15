@@ -3,7 +3,10 @@ import {
   reducer as cozyReducer,
   fetchCollection,
   getCollection,
-  createDocument
+  createDocument,
+  updateDocument,
+  updateDocuments,
+  deleteDocuments
 } from '..'
 
 const reducer = combineReducers({ cozy: cozyReducer })
@@ -119,5 +122,34 @@ describe('Redux store tests', () => {
         expect(collection.data[3]).toEqual(fakeResponse.data[0])
       })
     })
+
+    describe('When a document is successfully updated on the server', () => {
+      const fakeResponse = {
+        data: [
+          {
+            id: '33dda00f0eec15bc3b3c59a615001ac7',
+            _type: 'io.cozy.rockets',
+            name: 'Falcon X'
+          }
+        ]
+      }
+
+      it('should update collections listed in the `updateCollections` option', () => {
+        state = dispatchSuccessfulAction(
+          updateDocument(
+            'io.cozy.rockets',
+            { name: 'Saturn V' },
+            {
+              updateCollections: ['rockets']
+            }
+          ),
+          fakeResponse,
+          state
+        )
+        collection = getCollection(state, 'rockets')
+        expect(collection.data[0]).toEqual(fakeResponse.data[0])
+      })
+    })
+
   })
 })
