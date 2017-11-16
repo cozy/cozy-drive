@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { fetchSharings } from 'cozy-client'
+import { fetchSharings, getSharingDetails } from 'cozy-client'
 
 import {
   toggleItemSelection,
@@ -75,6 +75,7 @@ const mapStateToProps = (state, ownProps) => ({
   files: getVisibleFiles(state),
   selected: getSelectedFiles(state),
   actionable: getActionableFiles(state),
+  shared: getSharingDetails(state, 'io.cozy.files', ownProps.params.folderId),
   selectionModeActive: isSelectionBarVisible(state),
   actionMenuActive: isActionMenuVisible(state)
 })

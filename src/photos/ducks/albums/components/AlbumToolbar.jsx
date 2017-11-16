@@ -4,10 +4,6 @@ import { withRouter, Link } from 'react-router'
 import { leave } from 'cozy-client'
 import { translate } from 'cozy-ui/react/I18n'
 
-import ShareButton, {
-  SharedByMeButton,
-  SharedWithMeButton
-} from '../../../components/ShareButton'
 import Alerter from '../../../components/Alerter'
 import Menu, { Item } from 'components/Menu'
 import { MoreButton } from 'components/Button'
@@ -21,7 +17,13 @@ import { deleteAlbum, downloadAlbum } from '..'
 import DestroyConfirm from '../../../components/DestroyConfirm'
 import QuitConfirm from '../../../components/QuitConfirm'
 import confirm from '../../../lib/confirm'
-import { ShareModal, SharingDetailsModal } from 'sharing'
+import {
+  ShareButton,
+  SharedByMeButton,
+  SharedWithMeButton,
+  ShareModal,
+  SharingDetailsModal
+} from 'sharing'
 
 import classNames from 'classnames'
 

@@ -36,7 +36,8 @@
     "menu_select": "Select items",
     "menu_download_folder": "Download folder",
     "empty_trash": "Empty trash",
-    "share": "Share"
+    "share": "Share",
+    "leave": "Leave shared folder & delete it"
   },
   "service": {
     "bills": "Get my bills"

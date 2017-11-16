@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import styles from '../styles/shareButton'
+import styles from './button'
 
 export const ShareButton = ({ label, onClick }) => (
   <button

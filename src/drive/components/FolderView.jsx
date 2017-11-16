@@ -42,6 +42,7 @@ class FolderView extends Component {
   render() {
     const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
     const {
+      params,
       files,
       selected,
       actionable,
@@ -65,6 +66,7 @@ class FolderView extends Component {
         <Topbar>
           <Breadcrumb />
           <Toolbar
+            folderId={params.folderId}
             actions={toolbarActions}
             canUpload={canUpload}
             disabled={
