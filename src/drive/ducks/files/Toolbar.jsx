@@ -2,6 +2,7 @@
 import styles from '../../styles/toolbar'
 
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 
@@ -255,9 +256,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   downloadAll: folder => dispatch(downloadFiles(folder)),
   leaveFolder: folder =>
-    dispatch(leave(folder)).then(() => dispatch(trashFiles([folder])))
+    dispatch(leave(folder))
+      .then(() => dispatch(trashFiles([folder])))
+      .then(() => ownProps.router.push(`/folder/${folder.parent.id}`))
 })
 
 export default translate()(
-  connect(mapStateToProps, mapDispatchToProps)(Toolbar)
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
 )
