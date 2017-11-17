@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
+import { SHARINGS_DOCTYPE } from '../collections/SharingsCollection'
 import { getDocument, createDocument, fetchCollection } from '../reducer'
 
 export const FETCH_SHARINGS = 'FETCH_SHARINGS'
@@ -136,7 +137,8 @@ export const fetchSharings = (doctype, id = null, options = {}) => ({
   doctype,
   id,
   options,
-  promise: client => client.fetchSharings(doctype)
+  promise: client =>
+    client.getCollection(SHARINGS_DOCTYPE).findByDoctype(doctype)
 })
 
 export const share = (document, recipients, sharingType, sharingDesc) => async (
@@ -167,13 +169,17 @@ export const unshare = (document, recipient) => async (dispatch, getState) => {
     recipientId: recipient._id,
     promise: client =>
       loneRecipient
-        ? client.revokeSharing(sharing.attributes.sharing_id)
-        : client.revokeSharingForClient(
-            sharing.attributes.sharing_id,
-            sharing.attributes.recipients.find(
-              r => r.recipient.id === recipient._id
-            ).Client.client_id
-          )
+        ? client
+            .getCollection(SHARINGS_DOCTYPE)
+            .revoke(sharing.attributes.sharing_id)
+        : client
+            .getCollection(SHARINGS_DOCTYPE)
+            .revokeForClient(
+              sharing.attributes.sharing_id,
+              sharing.attributes.recipients.find(
+                r => r.recipient.id === recipient._id
+              ).Client.client_id
+            )
   })
 }
 
@@ -189,7 +195,10 @@ export const leave = document => async (dispatch, getState) => {
     doctype: document._type,
     id: document._id,
     sharingId: sharing.attributes.sharing_id,
-    promise: client => client.revokeSharing(sharing.attributes.sharing_id)
+    promise: client =>
+      client
+        .getCollection(SHARINGS_DOCTYPE)
+        .revoke(sharing.attributes.sharing_id)
   })
 }
 
@@ -209,7 +218,7 @@ export const revokeLink = document => async (dispatch, getState) => {
     doctype: document._type,
     id: document._id,
     permission: perm,
-    promise: client => client.revokeSharingLink(perm)
+    promise: client => client.getCollection(SHARINGS_DOCTYPE).revokeLink(perm)
   })
 }
 
@@ -223,19 +232,19 @@ const createSharing = (
   doctype: document._type,
   id: document._id,
   promise: client =>
-    client.createSharing(
-      getPermissionsFor(document),
-      contactIds,
-      sharingType,
-      description
-    )
+    client
+      .getCollection(SHARINGS_DOCTYPE)
+      .create(getPermissionsFor(document), contactIds, sharingType, description)
 })
 
 const createSharingLink = document => ({
   types: [CREATE_SHARING_LINK, RECEIVE_NEW_SHARING_LINK, RECEIVE_ERROR],
   doctype: document._type,
   id: document._id,
-  promise: client => client.createSharingLink(getPermissionsFor(document, true))
+  promise: client =>
+    client
+      .getCollection(SHARINGS_DOCTYPE)
+      .createLink(getPermissionsFor(document, true))
 })
 
 // TODO: this is a poor man's migration in order to normalize contacts
@@ -246,10 +255,7 @@ const createSharingLink = document => ({
 export const fetchContacts = () => {
   const action = fetchCollection('contacts', 'io.cozy.contacts')
   action.promise = async client => {
-    const response = await client.fetchCollection(
-      'contacts',
-      'io.cozy.contacts'
-    )
+    const response = await client.fetchDocuments('contacts', 'io.cozy.contacts')
     const data = await Promise.all(
       response.data.map(contact => {
         return typeof contact.email !== 'string'

@@ -41,7 +41,7 @@ class SuggestionProvider extends React.Component {
   // fetches pretty much all the files and preloads FuzzyPathSearch
   async indexFiles() {
     return new Promise(async resolve => {
-      const allDocs = await this.context.client.fetchCollection(
+      const allDocs = await this.context.client.fetchDocuments(
         'files',
         'io.cozy.files'
       )

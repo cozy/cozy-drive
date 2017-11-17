@@ -36,7 +36,8 @@
     "menu_select": "Select items",
     "menu_download_folder": "Download folder",
     "empty_trash": "Empty trash",
-    "share": "Share"
+    "share": "Share",
+    "leave": "Leave shared folder & delete it"
   },
   "service": {
     "bills": "Get my bills"
@@ -60,6 +61,14 @@
     "share": {
       "cta": "Share",
       "title": "Share with others",
+      "details": {
+        "title": "Sharing details",
+        "createdAt": "On %{date}",
+        "ro": "Read only",
+        "rw": "Read/write"
+      },
+      "sharedByMe": "Shared by me",
+      "sharedWithMe": "Shared with me",
       "shareByLink": {
         "title": "By public link",
         "subtitle": "Share by link",

@@ -25,7 +25,7 @@ Collections are simply lists of documents of the same type: when you fetch a col
 import { CozyClient } from 'cozy-client'
 
 const client = new CozyClient({...})
-client.fetchCollection('timeline', 'io.cozy.files', {
+client.fetchDocuments('timeline', 'io.cozy.files', {
   fields: ['name', 'size', 'updated_at', 'metadata'],
   selector: {
     class: 'image',

@@ -23,6 +23,7 @@ const AlbumsList = props =>
         <AlbumItem
           album={a}
           key={a.id}
+          thumbnail
           onServerError={props.onServerError}
           onClick={props.onSubmitSelectedAlbum}
         />

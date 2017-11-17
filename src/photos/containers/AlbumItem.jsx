@@ -6,20 +6,10 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { cozyConnect, getSharingDetails } from 'cozy-client'
+import { SharedBadge } from 'sharing'
 
 import { fetchAlbumPhotos } from '../ducks/albums'
 import ImageLoader from '../components/ImageLoader'
-
-const SharedIcon = ({ byMe }) => (
-  <div className={styles['pho-album-shared']}>
-    <div
-      className={classNames(
-        styles['pho-album-shared-icon'],
-        styles[byMe ? '--by-me' : '--with-me']
-      )}
-    />
-  </div>
-)
 
 const AlbumItemLink = ({ router, album, image, title, desc }) => {
   const parentPath = router.location.pathname
@@ -68,9 +58,15 @@ const ClickableAlbumItem = ({
   )
 }
 
-const AlbumItemDesc = ({ t, photoCount, shared }) => (
+const AlbumItemDesc = ({ t, photoCount, shared, thumbnail }) => (
   <h4 className={styles['pho-album-description']}>
-    {(shared.byMe || shared.withMe) && <SharedIcon byMe={shared.byMe} />}
+    {(shared.byMe || shared.withMe) && (
+      <SharedBadge
+        byMe={shared.byMe}
+        className={styles['pho-album-shared']}
+        small={thumbnail}
+      />
+    )}
     {t('Albums.album_item_description', { smart_count: photoCount })}
     {(shared.byMe || shared.withMe) &&
       ` - ${t(
@@ -83,7 +79,7 @@ const AlbumItemDesc = ({ t, photoCount, shared }) => (
 
 export class AlbumItem extends Component {
   render() {
-    const { t, album, shared, photos, onClick } = this.props
+    const { t, album, shared, photos, onClick, thumbnail } = this.props
     const disabled = shared.readOnly
     if (photos.fetchStatus !== 'loaded') {
       return null
@@ -106,6 +102,7 @@ export class AlbumItem extends Component {
         t={t}
         album={album}
         shared={shared}
+        thumbnail={thumbnail}
         photoCount={photos.count}
       />
     )
