@@ -1,6 +1,8 @@
 @require 'cozy-ui'
 
 .wizard
+    @extend $form
+    @extend $form-text
     display flex
     flex-direction column
     width   85vw
@@ -20,7 +22,7 @@
             cursor          pointer
             text-transform  uppercase
             text-align      right
-            color           #95999d
+            color           cool-grey
             margin-left     auto
 
         .close-button
@@ -34,7 +36,7 @@
                 border-radius    3px
                 width            2px
                 height           2em
-                background-color #95999d
+                background-color cool-grey
 
             &::after
                 transform rotate(-45deg);
@@ -51,7 +53,7 @@
         box-shadow    0 1px 3px rgba(50, 54, 63, .19), 0 4px 12px rgba(50, 54, 63, .12)
 
         &.error
-            background #f52d2d
+            background pomegranate
 
     .illustration
         margin .5em auto
@@ -61,6 +63,8 @@
     .wizard-main
         margin auto
         padding 0 .5em
+        width 100%
+        box-sizing border-box
 
     .title
         margin    .25em auto
@@ -72,19 +76,30 @@
         font-size  em(18px)
         max-width  25em
 
+        &.error
+            color pomegranate
+            font-size em(12px)
+            font-style italic
+
+        &.info
+            color cool-grey
+            font-size em(12px)
+            font-style italic
+
+    .coz-form-label
+        text-align left
+
     .input
         width            100%
-        border           none
-        padding-left     0
-        font-size        em(22px)
-        background-color white
 
         &::placeholder
-            color   #32363f
+            color   charcoal-grey
             opacity .5
 
         &.error
-            color #f52d2d
+            color pomegranate
+            border-color pomegranate
+
 
     .wizard-footer
         display flex
@@ -95,14 +110,17 @@
             margin          1.5em .5em 0em .5em
             text-align      left
             text-decoration none
-            color           #297ef2
+            color           dodger-blue
 
 .select-server
     .description
         text-align left
 
+    .description p
+        margin 0
+
 .welcome .logo-wrapper, .select-server .logo-wrapper
-    background #297ef2
+    background dodger-blue
 
 
 // ASSETS
