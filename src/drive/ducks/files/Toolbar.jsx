@@ -18,8 +18,13 @@ import UploadButton from '../../components/UploadButton'
 
 import { alert } from '../../lib/confirm'
 import { addToUploadQueue } from '../upload'
-import { uploadedFile, downloadFiles } from '../../actions'
-import { ShareButton, SharedWithMeButton, ShareModal } from 'sharing'
+import { uploadedFile, downloadFiles, trashFiles } from '../../actions'
+import {
+  ShareButton,
+  SharedWithMeButton,
+  ShareModal,
+  SharingDetailsModal
+} from 'sharing'
 import { leave, getSharingDetails } from 'cozy-client'
 
 const toggleShowShareModal = state => ({
@@ -102,6 +107,7 @@ class Toolbar extends Component {
           <SharedWithMeButton
             label={t('Files.share.sharedWithMe')}
             onClick={() => this.setState(toggleShowShareModal)}
+            className={styles['u-hide--mob']}
           />
         )}
         <Menu
@@ -110,13 +116,24 @@ class Toolbar extends Component {
           className={styles['fil-toolbar-menu']}
           button={<MoreButton />}
         >
-          {notRootfolder && (
+          {notRootfolder &&
+            !shared.withMe && (
+              <Item>
+                <a
+                  className={styles['fil-action-share']}
+                  onClick={() => this.setState(toggleShowShareModal)}
+                >
+                  {t('toolbar.share')}
+                </a>
+              </Item>
+            )}
+          {shared.withMe && (
             <Item>
               <a
                 className={styles['fil-action-share']}
                 onClick={() => this.setState(toggleShowShareModal)}
               >
-                {t('toolbar.share')}
+                {t('Files.share.sharedWithMe')}
               </a>
             </Item>
           )}
@@ -170,14 +187,24 @@ class Toolbar extends Component {
             </Item>
           )}
         </Menu>
-        {this.state.showShareModal && (
-          <ShareModal
-            document={displayedFolder}
-            documentType="Files"
-            sharingDesc={displayedFolder.name}
-            onClose={() => this.setState(toggleShowShareModal)}
-          />
-        )}
+        {this.state.showShareModal &&
+          !shared.withMe && (
+            <ShareModal
+              document={displayedFolder}
+              documentType="Files"
+              sharingDesc={displayedFolder.name}
+              onClose={() => this.setState(toggleShowShareModal)}
+            />
+          )}
+        {this.state.showShareModal &&
+          shared.withMe && (
+            <SharingDetailsModal
+              document={displayedFolder}
+              documentType="Files"
+              sharing={shared}
+              onClose={() => this.setState(toggleShowShareModal)}
+            />
+          )}
       </div>
     )
   }
@@ -227,7 +254,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )
   },
   downloadAll: folder => dispatch(downloadFiles(folder)),
-  leaveFolder: folder => dispatch(leave(folder))
+  leaveFolder: folder =>
+    dispatch(leave(folder)).then(() => dispatch(trashFiles([folder])))
 })
 
 export default translate()(

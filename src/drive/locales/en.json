@@ -61,6 +61,12 @@
     "share": {
       "cta": "Share",
       "title": "Share with others",
+      "details": {
+        "title": "Sharing details",
+        "createdAt": "On %{date}",
+        "ro": "Read only",
+        "rw": "Read/write"
+      },
       "sharedByMe": "Shared by me",
       "sharedWithMe": "Shared with me",
       "shareByLink": {
