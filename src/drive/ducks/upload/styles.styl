@@ -4,10 +4,10 @@
 .upload-queue
     @extend $popover
     position fixed
-    bottom   em(8px)
-    right    em(24px)
-    height   em(210px)
-    width    em(480px)
+    bottom   .5rem
+    right    1.5rem
+    height   13.125rem
+    width    30rem
     max-width 90%
     border   1px solid silver
     border-radius    4px
@@ -29,7 +29,7 @@
     color            charcoal-grey
     font-weight      bold
     margin           0
-    padding          em(8px) em(16px) em(8px)
+    padding          .5rem 1rem .5rem
 
     .upload-queue-header-inner
         display flex
@@ -51,7 +51,7 @@ progress.upload-queue-progress
     border     none
     display    block
     width      100%
-    height     em(2px)
+    height     .125rem
     margin     0
 
 progress.upload-queue-progress::-webkit-progress-bar
@@ -65,7 +65,7 @@ progress.upload-queue-progress::-moz-progress-bar
     overflow auto
 
 .upload-queue--collapsed
-    height em(40px)
+    height 2.5rem
 
     .upload-queue-content
         visibility none
@@ -89,16 +89,16 @@ progress.upload-queue-progress::-moz-progress-bar
     align-items     center
     flex            0 0 auto
     width           100%
-    max-width       'calc(100vw - %s)' % em(220px)
+    max-width       'calc(100vw - %s)' % 13.75rem
     border-bottom   1px solid silver
 
     .item-cell
         box-sizing  border-box
-        padding     em(15px) em(32px)
+        padding     .9375rem 2rem
         font-size   14px
 
     .item-cell.item-file
-        padding-left   em(60px)
+        padding-left   3.75rem
         font-size      16px
         line-height    1.3
         white-space    nowrap
@@ -109,7 +109,7 @@ progress.upload-queue-progress::-moz-progress-bar
     .item-file
         flex        0 0 85%
         user-select none
-        background-position em(15px) center
+        background-position .9375rem center
         background-repeat no-repeat
 
     mime-types('item-type-', '../../assets/icons/')
@@ -124,7 +124,7 @@ progress.upload-queue-progress::-moz-progress-bar
     .item-pending
         text-transform uppercase
         color          dodger-blue
-        font-size      em(12px)
+        font-size      .75rem
         font-weight    bold
         line-height    2em
 
