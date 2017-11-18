@@ -1,4 +1,4 @@
-import { getLang } from './init'
+import { getLang } from './cozy-helper'
 import { _polyglot, initTranslation } from 'cozy-ui/react/I18n/translation'
 
 // used when translating things outside of components, eg. native UIs
