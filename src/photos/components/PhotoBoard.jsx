@@ -5,7 +5,7 @@ import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import { translate } from 'cozy-ui/react/I18n'
 
 import PhotoList from './PhotoList'
-import Empty from 'components/Error/Empty-photos'
+import Empty from 'components/Error/Empty'
 import Loading from './Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
 import classNames from 'classnames'
@@ -77,7 +77,7 @@ export class PhotoBoard extends Component {
       return <Loading loadingType="photos_fetching" />
     }
     if (!isFetching && (lists.length === 0 || lists[0].photos.length === 0)) {
-      return <Empty emptyType={`${photosContext}_photos`} />
+      return <Empty type="photos" emptyType={`${photosContext}_photos`} />
     }
 
     return (

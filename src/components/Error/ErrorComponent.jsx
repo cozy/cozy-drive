@@ -2,7 +2,7 @@ import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import classNames from 'classnames'
 
-import styles from './empty'
+import styles from './empty.styl'
 
 export const ErrorComponent = ({ t, errorType }) => {
   return (
