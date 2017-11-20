@@ -54,6 +54,19 @@ const UploadUptodate = ({ t }) => (
   </div>
 )
 
+const UploadAbortedWifi = ({ t }) => (
+  <div
+    className={classnames(
+      styles['coz-upload-status'],
+      styles['coz-upload-status--waiting']
+    )}
+  >
+    <div className={styles['coz-upload-status-content']}>
+      {t('mobile.settings.media_backup.media_wifi')}
+    </div>
+  </div>
+)
+
 const mapStateToProps = state =>
   state.mobile.mediaBackup.currentUpload
     ? {
@@ -61,13 +74,18 @@ const mapStateToProps = state =>
         current: state.mobile.mediaBackup.currentUpload.messageData.current,
         total: state.mobile.mediaBackup.currentUpload.messageData.total
       }
-    : { media: undefined, current: undefined, total: undefined }
+    : {
+        media: undefined,
+        current: undefined,
+        total: undefined,
+        aborted: state.mobile.mediaBackup.abortedMediaBackup
+      }
 
-const UploadStatus = props =>
-  props.media && props.current && props.total ? (
-    <UploadProgression {...props} />
-  ) : (
-    <UploadUptodate {...props} />
-  )
+const UploadStatus = props => {
+  if (props.media && props.current && props.total)
+    return <UploadProgression {...props} />
+  else if (props.aborted) return <UploadAbortedWifi {...props} />
+  else return <UploadUptodate {...props} />
+}
 
 export default connect(mapStateToProps)(translate()(UploadStatus))

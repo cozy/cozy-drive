@@ -17,16 +17,10 @@ export const watchNetworkState = onConnectionChange => {
 const hasCordovaPlugin = () =>
   window.navigator.connection !== undefined && window.Connection !== undefined
 
-export const getConnectionType = () =>
+const getConnectionType = () =>
   hasCordovaPlugin() ? navigator.connection.type : WIFI
 
-const isWifi = connection => connection === WIFI
-
-// TODO: rename this function
-// There is no reason for a function in a `network.js` file
-// to be called something about `backup`...
-export const backupAllowed = wifiOnly =>
-  isWifi(getConnectionType()) || !wifiOnly
+export const isWifi = () => getConnectionType() === WIFI
 
 export const isOnline = () =>
   hasCordovaPlugin() ? navigator.connection !== NONE : navigator.onLine
