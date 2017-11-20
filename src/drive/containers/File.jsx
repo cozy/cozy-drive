@@ -222,15 +222,19 @@ class File extends Component {
             styles['fil-content-status']
           )}
         >
-          {!shared.shared
-            ? '—'
-            : shared.byMe
-              ? `${t('Files.share.sharedByMe')} (${t(
-                  `Share.type.${shared.sharingType}`
-                )})`
-              : t('Files.share.sharedWithMe')}
+          {isAvailableOffline && (
+            <span className={styles['fil-content-offline']} />
+          )}
+          <span className={styles['fil-content-sharestatus']}>
+            {!shared.shared
+              ? '—'
+              : shared.byMe
+                ? `${t('Files.share.sharedByMe')} (${t(
+                    `Share.type.${shared.sharingType}`
+                  )})`
+                : t('Files.share.sharedWithMe')}
+          </span>
         </div>
-        {isAvailableOffline && <AvailableOfflineBadge />}
         <div
           className={classNames(
             styles['fil-content-cell'],
@@ -249,17 +253,6 @@ class File extends Component {
     )
   }
 }
-
-const AvailableOfflineBadge = props => (
-  <div
-    className={classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-status']
-    )}
-  >
-    <span className={styles['fil-content-offline']} />
-  </div>
-)
 
 const FileNameCell = ({
   attributes,
