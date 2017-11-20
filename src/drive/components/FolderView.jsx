@@ -10,7 +10,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import { SelectionBar } from '../ducks/selection'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
-import UploadProgression from '../mobile/containers/UploadProgression'
+import MediaBackupProgression from '../mobile/containers/MediaBackupProgression'
 import RatingModal from '../mobile/containers/RatingModal'
 import FirstUploadModal from '../mobile/containers/FirstUploadModal'
 import FolderContent from './FolderContent'
@@ -78,7 +78,7 @@ class FolderView extends Component {
         <div role="contentinfo">
           {__TARGET__ === 'mobile' && (
             <div>
-              <UploadProgression />
+              <MediaBackupProgression />
               <FirstUploadModal />
               <RatingModal />
             </div>
