@@ -34,7 +34,7 @@ const UploadProgression = ({ t, current, total, media }) => {
       </div>
       <div className={styles['coz-upload-status-content']}>
         {t('mobile.settings.media_backup.media_upload', {
-          remaining: total - current
+          smart_count: total - current
         })}
       </div>
     </div>

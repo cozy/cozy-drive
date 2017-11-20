@@ -14,8 +14,10 @@
     "banner-btn-client": "Download now",
     "link-client": "https://cozy.io/en/download/",
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
-    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
-    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-android":
+      "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios":
+      "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
     "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
   "breadcrumb": {
@@ -210,7 +212,8 @@
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
     "destroy_file_success": "The selection has been deleted permanently.",
-    "empty_trash_progress": "Your trash is being emptied. This might take a few moments.",
+    "empty_trash_progress":
+      "Your trash is being emptied. This might take a few moments.",
     "empty_trash_success": "The trash has been emptied.",
     "folder_name":
       "The element %{folderName} already exists, please choose a new name.",
@@ -300,7 +303,8 @@
           "label":
             "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
         },
-        "media_upload": "%{remaining} remaining pictures",
+        "media_upload":
+          "%{smart_count} remaining picture |||| %{smart_count} remaining pictures",
         "media_uptodate": "Media backup is up-to-date",
         "media_wifi": "Please connect to a WIFI"
       },
@@ -373,14 +377,17 @@
     "first_sync": {
       "title": "You are about to start your first photos back up 🎉",
       "tips": "Tips",
-      "tip_bed": "Open Cozy Drive before you go to bed or when you don't use your phone.",
+      "tip_bed":
+        "Open Cozy Drive before you go to bed or when you don't use your phone.",
       "tip_wifi": "Enable Wi-Fi to preserve your data.",
       "tip_lock": "Disable your lock screen.",
-      "result": "In the morning, all your photos will be stored in a safe and secure location.",
+      "result":
+        "In the morning, all your photos will be stored in a safe and secure location.",
       "button": "Got it!"
     },
     "notifications": {
-      "backup_paused": "Your photos backup is paused. Keep the application open and prevent the screen from going to sleep to complete the backup."
+      "backup_paused":
+        "Your photos backup is paused. Keep the application open and prevent the screen from going to sleep to complete the backup."
     }
   },
   "upload": {
