@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.drive.mobile" version="0.6.10" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cozy.drive.mobile" version="0.7.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -86,10 +86,10 @@
     <plugin name="cordova-plugin-file-opener2" spec="2.0.7" />
     <plugin name="cordova-plugin-network-information" spec="1.3.2" />
     <plugin name="cordova-plugin-background-fetch" spec="4.0.0" />
-    <plugin name="cordova-plugin-device" spec="1.1.6" />
     <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
     <plugin name="io.cozy.jsbackgroundservice" spec="https://github.com/cozy/cordova-jsbackgroundservice#v1.2.0" />
     <plugin name="cordova-plugin-contacts" spec="2.3.1" />
     <plugin name="cordova-plugin-apprate" spec="~1.3.0" />
     <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items#v1.0.7" />
+    <plugin name="cordova-plugin-device-name" spec="1.3.2" />
 </widget>

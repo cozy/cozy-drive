@@ -30,13 +30,15 @@ export const DeleteButton = ({
   <label
     role="button"
     disabled={disabled}
-    className={`${className} ${type === 'menu-item'
-      ? button['c-link--delete']
-      : classNames(
-          button['c-btn'],
-          button['c-btn--danger'],
-          button['c-btn--delete']
-        )}`}
+    className={`${className} ${
+      type === 'menu-item'
+        ? button['c-link--delete']
+        : classNames(
+            button['c-btn'],
+            button['c-btn--danger'],
+            button['c-btn--delete']
+          )
+    }`}
     style={styles.parent}
   >
     {label}

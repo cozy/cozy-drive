@@ -10,7 +10,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import ErrorShare from './ErrorShare'
 
 import DownloadButton from './DownloadButton'
-import Menu, { Item } from './Menu'
+import Menu, { Item } from 'components/Menu'
 
 import {
   openFolder,
@@ -54,7 +54,8 @@ class DumbFolderView extends React.Component {
               label={t('toolbar.menu_download_folder')}
               className={toolbarstyles['fil-public-download']}
               onDownload={() =>
-                this.props.onDownload([this.props.displayedFolder])}
+                this.props.onDownload([this.props.displayedFolder])
+              }
             />
             <Menu
               title={t('toolbar.item_more')}
@@ -68,7 +69,8 @@ class DumbFolderView extends React.Component {
                 <a
                   className={toolbarstyles['fil-action-download']}
                   onClick={() =>
-                    this.props.onDownload([this.props.displayedFolder])}
+                    this.props.onDownload([this.props.displayedFolder])
+                  }
                 >
                   {t('toolbar.menu_download_folder')}
                 </a>

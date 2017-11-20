@@ -39,8 +39,9 @@ export class Welcome extends Component {
           </button>
           {!isIos() && (
             <a
-              href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${this
-                .platform}`}
+              href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${
+                this.platform
+              }`}
               className={styles['link']}
             >
               {t('mobile.onboarding.welcome.no_account_link')}

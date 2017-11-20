@@ -2,7 +2,7 @@
 
 const path = require('path')
 const fs = require('fs')
-const { DefinePlugin } = require('webpack')
+const { DefinePlugin, ProvidePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = function(production, app) {
@@ -22,6 +22,10 @@ module.exports = function(production, app) {
       minify: {
         collapseWhitespace: true
       }
+    }),
+    new ProvidePlugin({
+      PouchDB: 'pouchdb',
+      pouchdbFind: 'pouchdb-find'
     })
   ]
 

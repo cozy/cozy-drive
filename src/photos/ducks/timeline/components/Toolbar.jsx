@@ -6,8 +6,8 @@ import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
 
 import UploadButton from '../../../components/UploadButton'
-import Menu, { Item } from '../../../components/Menu'
-import MoreButton from '../../../components/MoreButton'
+import Menu, { Item } from 'components/Menu'
+import { MoreButton } from 'components/Button'
 
 import { showSelectionBar, isSelectionBarVisible } from '../../selection'
 
