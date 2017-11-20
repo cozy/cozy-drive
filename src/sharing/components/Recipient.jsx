@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 import Spinner from 'cozy-ui/react/Spinner'
 import ColorHash from './colorhash'
-import Menu, { Item } from '../../photos/components/Menu'
+import Menu, { Item } from 'components/Menu'
 
 import { getPrimaryEmail, getPrimaryCozy } from '..'
 

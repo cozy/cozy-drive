@@ -4,7 +4,7 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import React, { Component } from 'react'
 import localforage from 'localforage'
-import { track, DESKTOP_BANNER } from '.'
+import { track, isLinux, DESKTOP_BANNER } from '.'
 
 class ButtonClient extends Component {
   state = {
@@ -21,7 +21,7 @@ class ButtonClient extends Component {
     return (
       this.state.seen && (
         <a
-          href={t('Nav.link-client')}
+          href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
           target="_blank"
           className={styles['coz-btn-client']}
           onClick={e => {

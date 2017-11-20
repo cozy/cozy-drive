@@ -15,12 +15,14 @@ const sortByCreationDate = (a, b) => {
 }
 
 const DumbAlbumsList = props => (
-  <div className={styles['pho-album-list']}>
-    {props.albums
-      .sort(sortByCreationDate)
-      .map(a => (
-        <AlbumItem album={a} key={a.id} onServerError={props.onServerError} />
-      ))}
+  <div role="contentinfo">
+    <div className={styles['pho-album-list']}>
+      {props.albums
+        .sort(sortByCreationDate)
+        .map(a => (
+          <AlbumItem album={a} key={a.id} onServerError={props.onServerError} />
+        ))}
+    </div>
   </div>
 )
 

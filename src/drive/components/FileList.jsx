@@ -96,7 +96,8 @@ class FileList extends PureComponent {
       onFileOpen,
       onFileToggle,
       showActionMenu,
-      withSelectionCheckbox
+      withSelectionCheckbox,
+      withFilePath
     } = this.props
     const file = this.props.files[index]
     if (!file) {
@@ -120,6 +121,7 @@ class FileList extends PureComponent {
         attributes={file}
         selectionModeActive={selectionModeActive}
         withSelectionCheckbox={withSelectionCheckbox}
+        withFilePath={withFilePath}
         isAvailableOffline={isAvailableOffline && isAvailableOffline(file.id)}
       />
     )
