@@ -6,7 +6,7 @@ import Topbar from '../../components/Topbar'
 import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from 'cozy-ui/react/I18n'
-import UploadProgression from '../containers/UploadProgression'
+import UploadStatus from '../containers/UploadStatus'
 
 import About from '../containers/settings/About'
 import Support from '../containers/settings/Support'
@@ -41,7 +41,7 @@ class Settings extends Component {
 
             {__DEVELOPMENT__ && [<hr />, <h3>Debug Zone</h3>, <DebugTools />]}
           </div>
-          <UploadProgression />
+          <UploadStatus />
         </div>
       </Main>
     )

@@ -14,10 +14,10 @@
     @extend        $popover
     z-index        $file-action-menu
     position       fixed
-    bottom         em(9px)
-    width          "calc(100% - %s)" % em(16px)
-    margin         0 em(8px)
-    padding-bottom em(5px)
+    bottom         .5625rem
+    width          "calc(100% - %s)" % 1rem
+    margin         0 .5rem
+    padding-bottom .3125rem
 
     &.with-transition
         transition transform .1s ease-out
@@ -26,19 +26,19 @@
         margin-top 0
 
 .fil-actionmenu-header
-    padding     em(20px) em(24px) em(20px) em(20px)
+    padding     1.25rem 1.5rem 1.25rem 1.25rem
     font-size   16px
     font-weight bold
 
 .fil-actionmenu-file
-    margin-left   em(19px)
-    padding-left  em(45px)
+    margin-left   1.1875rem
+    padding-left  2.8125rem
     background-position 0 center
     background-repeat no-repeat
 
 .fil-action-availableOffline
     position relative
-    background embedurl('../assets/icons/icon-phone-download.svg') em(16px) center no-repeat
+    background embedurl('../assets/icons/icon-phone-download.svg') 1rem center no-repeat
 
     [class^='toggle']
         position absolute
@@ -46,15 +46,15 @@
         transform translateY(-50%)
         margin-left 1em
 .fil-action-openWith
-    background embedurl("../assets/icons/icon-link-out-16.svg") em(16px) center no-repeat
+    background embedurl("../assets/icons/icon-link-out-16.svg") 1rem center no-repeat
 .fil-action-download
-    background embedurl("../assets/icons/icon-download-16.svg") em(16px) center no-repeat
+    background embedurl("../assets/icons/icon-download-16.svg") 1rem center no-repeat
 .fil-action-destroy
 .fil-action-trash
-    background embedurl("../assets/icons/icon-delete-16.svg") em(16px) center no-repeat
+    background embedurl("../assets/icons/icon-delete-16.svg") 1rem center no-repeat
 .fil-action-restore
-    background embedurl("../assets/icons/icon-restore.svg") em(16px) center no-repeat
+    background embedurl("../assets/icons/icon-restore.svg") 1rem center no-repeat
 .fil-action-rename
-    background embedurl("../assets/icons/icon-rename.svg") em(16px) center no-repeat
+    background embedurl("../assets/icons/icon-rename.svg") 1rem center no-repeat
 .fil-action-share
-    background embedurl("../assets/icons/icon-share-grey.svg") em(16px) center no-repeat
+    background embedurl("../assets/icons/icon-share-grey.svg") 1rem center no-repeat

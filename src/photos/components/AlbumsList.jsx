@@ -2,7 +2,7 @@ import styles from '../styles/albumsList'
 
 import React from 'react'
 
-import { withEmpty } from '../components/Empty'
+import Empty from 'components/Error/Empty-photos'
 import AlbumItem from '../containers/AlbumItem'
 
 const FALLBACK_CREATION_DATE = null
@@ -14,22 +14,23 @@ const sortByCreationDate = (a, b) => {
   )
 }
 
-const DumbAlbumsList = props => (
-  <div role="contentinfo">
-    <div className={styles['pho-album-list']}>
-      {props.albums
-        .sort(sortByCreationDate)
-        .map(a => (
-          <AlbumItem album={a} key={a.id} onServerError={props.onServerError} />
-        ))}
+const AlbumsList = props =>
+  props.albums.length === 0 ? (
+    <Empty emptyType="albums" />
+  ) : (
+    <div role="contentinfo">
+      <div className={styles['pho-album-list']}>
+        {props.albums
+          .sort(sortByCreationDate)
+          .map(a => (
+            <AlbumItem
+              album={a}
+              key={a.id}
+              onServerError={props.onServerError}
+            />
+          ))}
+      </div>
     </div>
-  </div>
-)
-
-const AlbumsList = withEmpty(
-  props => props.albums.length === 0,
-  'albums',
-  DumbAlbumsList
-)
+  )
 
 export default AlbumsList

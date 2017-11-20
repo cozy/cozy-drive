@@ -1,10 +1,8 @@
 /* global cozy */
+import { getIndexFields, sanitizeDoc } from '../helpers'
+
 const FILES_DOCTYPE = 'io.cozy.files'
 const FETCH_LIMIT = 50
-
-export const SHARED_BY_LINK = 'sharedByLink'
-export const SHARED_WITH_ME = 'sharedWithMe'
-export const SHARED_WITH_OTHERS = 'sharedWithOthers'
 
 export default class CozyStackAdapter {
   async fetchDocuments(doctype) {
@@ -52,7 +50,7 @@ export default class CozyStackAdapter {
       wholeResponse: true, // WARN: mandatory to get the full JSONAPI response
       ...options,
       // TODO: type and class should not be necessary, it's just a temp fix for a stack bug
-      fields: [...fields, '_id', '_type', 'class'],
+      fields: fields ? [...fields, '_id', '_type', 'class'] : undefined,
       skip,
       sort
     }
@@ -103,10 +101,27 @@ export default class CozyStackAdapter {
     return { data: [{ ...doc, _rev: updated._rev }] }
   }
 
+  async updateDocuments(doctype, query, iterator) {
+    const index = await this.createIndex(doctype, getIndexFields(query))
+    const docs = await this.queryDocuments(doctype, index, query)
+    const updatedDocs = docs.data.map(iterator).map(sanitizeDoc)
+    await cozy.client.fetchJSON('POST', `/data/${doctype}/_bulk_docs`, {
+      docs: updatedDocs
+    })
+    return { data: updatedDocs }
+  }
+
   async deleteDocument(doc) {
     /* const deleted = */ await cozy.client.data.delete(doc._type, doc)
     // we forge a standard response with a 'data' property
     return { data: [doc] }
+  }
+
+  async deleteDocuments(doctype, query) {
+    return this.updateDocuments(doctype, query, doc => ({
+      ...doc,
+      _deleted: true
+    }))
   }
 
   createIndex(doctype, fields) {
@@ -173,64 +188,6 @@ export default class CozyStackAdapter {
     const normalized = { ...doc, _id: doc.id }
     await cozy.client.data.removeReferencedFiles(normalized, ids)
     return ids
-  }
-
-  async fetchSharingPermissions(doctype) {
-    const fetchPermissions = (doctype, sharingType) =>
-      cozy.client.fetchJSON(
-        'GET',
-        `/permissions/doctype/${doctype}/${sharingType}`
-      )
-
-    const byMe = await fetchPermissions(doctype, SHARED_WITH_OTHERS)
-    const byLink = await fetchPermissions(doctype, SHARED_BY_LINK)
-    const withMe = await fetchPermissions(doctype, SHARED_WITH_ME)
-
-    return { byMe, byLink, withMe }
-  }
-
-  fetchSharing(id) {
-    return cozy.client.fetchJSON('GET', `/sharings/${id}`)
-  }
-
-  createSharing(permissions, contactIds, sharingType, description) {
-    return cozy.client.fetchJSON('POST', '/sharings/', {
-      desc: description,
-      permissions,
-      recipients: contactIds.map(contactId => ({
-        recipient: {
-          id: contactId,
-          type: 'io.cozy.contacts'
-        }
-      })),
-      sharing_type: sharingType
-    })
-  }
-
-  revokeSharing(sharingId) {
-    return cozy.client.fetchJSON('DELETE', `/sharings/${sharingId}`)
-  }
-
-  revokeSharingForClient(sharingId, clientId) {
-    return cozy.client.fetchJSON(
-      'DELETE',
-      `/sharings/${sharingId}/recipient/${clientId}`
-    )
-  }
-
-  createSharingLink(permissions) {
-    return cozy.client.fetchJSON('POST', `/permissions?codes=email`, {
-      data: {
-        type: 'io.cozy.permissions',
-        attributes: {
-          permissions
-        }
-      }
-    })
-  }
-
-  revokeSharingLink(permission) {
-    return cozy.client.fetchJSON('DELETE', `/permissions/${permission._id}`)
   }
 }
 

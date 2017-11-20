@@ -17,7 +17,9 @@ export {
   getDocument,
   createDocument,
   updateDocument,
+  updateDocuments,
   deleteDocument,
+  deleteDocuments,
   createFile,
   trashFile,
   CREATE_DOCUMENT
@@ -25,6 +27,7 @@ export {
 export {
   fetchSharings,
   fetchContacts,
+  getSharings,
   getSharingDetails,
   share,
   unshare,
@@ -36,7 +39,8 @@ export {
   startSync,
   isFirstSync,
   isSynced,
-  hasSyncStarted
+  hasSyncStarted,
+  isSyncInError
 } from './slices/synchronization'
 
 export { downloadArchive, downloadFile } from './helpers'

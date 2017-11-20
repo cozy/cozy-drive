@@ -2,6 +2,7 @@
 import { getLang } from './init'
 import { LocalStorage as Storage } from 'cozy-client-js'
 import { SOFTWARE_NAME, SOFTWARE_ID } from './constants'
+import { isIos } from './device'
 
 export const clientRevokedMsg = 'Client has been revoked'
 const getStorage = () => new Storage()
@@ -15,7 +16,7 @@ const getClientParams = device => ({
   clientKind: 'mobile',
   clientURI: 'https://github.com/cozy/cozy-drive/',
   logoURI:
-    'https://raw.githubusercontent.com/cozy/cozy-drive/master/vendor/assets/apple-touch-icon-120x120.png',
+    'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
   policyURI: 'https://files.cozycloud.cc/cgu.pdf',
   scopes: [
     'io.cozy.files',
@@ -33,10 +34,12 @@ const getAuth = (onRegister, device) => ({
 export const initClient = (url, onRegister = null, device = 'Device') => {
   if (url) {
     console.log(`Cozy Client initializes a connection with ${url}`)
+    const offline = { doctypes: ['io.cozy.files'] }
+    if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
     cozy.client.init({
       cozyURL: url,
       oauth: getAuth(onRegister, device),
-      offline: { doctypes: ['io.cozy.files'] }
+      offline
     })
   }
 }

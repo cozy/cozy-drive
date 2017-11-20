@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import UploadProgression from '../components/UploadProgression'
+import UploadStatus from '../components/UploadStatus'
 
 const mapStateToProps = state => ({
   message: state.mobile.mediaBackup.currentUpload
@@ -10,4 +10,4 @@ const mapStateToProps = state => ({
     : undefined
 })
 
-export default connect(mapStateToProps)(UploadProgression)
+export default connect(mapStateToProps)(UploadStatus)

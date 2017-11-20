@@ -1,7 +1,7 @@
 import React from 'react'
 import Spinner from 'cozy-ui/react/Spinner'
-import Oops from './Oops'
-import Empty, { EmptyTrash } from './Empty'
+import Oops from 'components/Error/Oops'
+import Empty, { EmptyTrash } from 'components/Error/Empty-drive'
 import FileList from './FileList'
 
 const EmptyContent = props => {

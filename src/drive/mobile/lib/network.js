@@ -17,12 +17,10 @@ export const watchNetworkState = onConnectionChange => {
 const hasCordovaPlugin = () =>
   window.navigator.connection !== undefined && window.Connection !== undefined
 
-export const getConnectionType = () =>
+const getConnectionType = () =>
   hasCordovaPlugin() ? navigator.connection.type : WIFI
 
-export const onWifi = connection => connection === WIFI
+export const isWifi = () => getConnectionType() === WIFI
 
-export const backupAllowed = wifiOnly =>
-  onWifi(getConnectionType()) || !wifiOnly
 export const isOnline = () =>
   hasCordovaPlugin() ? navigator.connection !== NONE : navigator.onLine

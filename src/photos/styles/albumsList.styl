@@ -30,12 +30,8 @@
     .pho-album-shared
         position static
         display inline-block
-        vertical-align middle
+        vertical-align bottom
         margin-right .5em
-
-        .pho-album-shared-icon
-            padding .6em
-            background-size 50%
 
 .pho-album-list--selectable
     .pho-album-link
@@ -80,21 +76,6 @@
     position          absolute
     top               em(175px)
     right             em(10px)
-    padding           em(2px)
-    background-color  white
-    border-radius     50%
-
-    .pho-album-shared-icon
-        padding              em(16px)
-        background-image     embedurl('../assets/icons/icon-share-white.svg')
-        background-position  center
-        background-repeat    no-repeat
-        border-radius        50%
-
-        &.--by-me
-            background-color     emerald
-        &.--with-me
-            background-color     portage
 
 @media (max-width: (480/basefont)rem)
     .pho-album

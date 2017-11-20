@@ -3,35 +3,33 @@ import styles from '../styles/albumsList'
 import React from 'react'
 import classNames from 'classnames'
 
-import { withError } from '../components/ErrorComponent'
-import { withEmpty } from '../components/Empty'
+import { withError } from 'components/Error/ErrorComponent'
+import Empty from 'components/Error/Empty-photos'
 
 import AlbumItem from '../containers/AlbumItem'
 
-const DumbAlbumsList = props => (
-  <div
-    className={classNames(
-      styles['pho-album-list'],
-      styles['pho-album-list--thumbnails'],
-      styles['pho-album-list--selectable']
-    )}
-  >
-    {props.albums.data.map(a => (
-      <AlbumItem
-        album={a}
-        key={a.id}
-        onServerError={props.onServerError}
-        onClick={props.onSubmitSelectedAlbum}
-      />
-    ))}
-  </div>
-)
-
-const AlbumsList = withEmpty(
-  props => props.albums.data.length === 0,
-  'albums',
-  DumbAlbumsList
-)
+const AlbumsList = props =>
+  props.albums.data.length === 0 ? (
+    <Empty emptyType="albums" />
+  ) : (
+    <div
+      className={classNames(
+        styles['pho-album-list'],
+        styles['pho-album-list--thumbnails'],
+        styles['pho-album-list--selectable']
+      )}
+    >
+      {props.albums.data.map(a => (
+        <AlbumItem
+          album={a}
+          key={a.id}
+          thumbnail
+          onServerError={props.onServerError}
+          onClick={props.onSubmitSelectedAlbum}
+        />
+      ))}
+    </div>
+  )
 
 const DumbAlbumsView = props => (
   <div>

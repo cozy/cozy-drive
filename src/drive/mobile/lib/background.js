@@ -3,7 +3,7 @@ import { initServices } from './init'
 import { logException } from './reporter'
 import { loadState } from '../store/persistedState'
 import { getMediaFolderName } from './media'
-import { startMediaBackup } from '../actions/mediaBackup'
+import { startMediaBackup } from 'drive/mobile/ducks/mediaBackup'
 import { isCordova, isIos, isAndroid, getPlatformId } from './device'
 
 /*
@@ -85,7 +85,7 @@ const backgroundService = () =>
     console.log('BackgroundFetch initiated')
 
     loadState()
-      .then(persistedState => configureStore(persistedState))
+      .then(persistedState => ({} || configureStore(persistedState)))
       .then(store => {
         initServices(store)
         return store.dispatch(startMediaBackup(getMediaFolderName()))

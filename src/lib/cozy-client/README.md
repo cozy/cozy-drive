@@ -25,7 +25,7 @@ Collections are simply lists of documents of the same type: when you fetch a col
 import { CozyClient } from 'cozy-client'
 
 const client = new CozyClient({...})
-client.fetchCollection('timeline', 'io.cozy.files', {
+client.fetchDocuments('timeline', 'io.cozy.files', {
   fields: ['name', 'size', 'updated_at', 'metadata'],
   selector: {
     class: 'image',
@@ -64,9 +64,10 @@ import { cozyMiddleware, reducer } from 'cozy-client'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import myReducers from './myapp'
 
+const client = new CozyClient({...})
 const store = createStore(
   combineReducers({...myReducers, reducer}),
-  applyMiddleware(cozyMiddleware)
+  applyMiddleware(cozyMiddleware(cozyClient))
 )
 ```
 
@@ -79,7 +80,7 @@ import React from 'react'
 import { cozyConnect, fetchCollection } from 'cozy-client'
 
 const TodoList = ({ todos }) => {
-  const { data, fetchStatus } = props
+  const { data, fetchStatus } = todos
   if (fetchStatus !== 'loaded') {
     return <h1>Loading...</h1>
   }

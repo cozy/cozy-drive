@@ -9,7 +9,7 @@ import withGestures from '../lib/withGestures'
 import Hammer from 'hammerjs'
 
 import Spinner from 'cozy-ui/react/Spinner'
-import { splitFilename, getClassFromMime } from './File'
+import { splitFilename, getClassFromMime } from '../containers/File'
 import { isAvailableOffline } from '../ducks/files/availableOffline'
 
 class MenuItem extends Component {

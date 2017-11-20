@@ -3,7 +3,10 @@ import {
   reducer as cozyReducer,
   fetchCollection,
   getCollection,
-  createDocument
+  createDocument,
+  updateDocument,
+  updateDocuments,
+  deleteDocuments
 } from '..'
 
 const reducer = combineReducers({ cozy: cozyReducer })
@@ -117,6 +120,103 @@ describe('Redux store tests', () => {
         )
         collection = getCollection(state, 'rockets')
         expect(collection.data[3]).toEqual(fakeResponse.data[0])
+      })
+    })
+
+    describe('When a document is successfully updated on the server', () => {
+      const fakeResponse = {
+        data: [
+          {
+            id: '33dda00f0eec15bc3b3c59a615001ac7',
+            _type: 'io.cozy.rockets',
+            name: 'Falcon X'
+          }
+        ]
+      }
+
+      it('should update collections listed in the `updateCollections` option', () => {
+        state = dispatchSuccessfulAction(
+          updateDocument(
+            'io.cozy.rockets',
+            { name: 'Saturn V' },
+            {
+              updateCollections: ['rockets']
+            }
+          ),
+          fakeResponse,
+          state
+        )
+        collection = getCollection(state, 'rockets')
+        expect(collection.data[0]).toEqual(fakeResponse.data[0])
+      })
+    })
+
+    describe('When documents are successfully updated on the server', () => {
+      const fakeResponse = {
+        data: [
+          {
+            id: '33dda00f0eec15bc3b3c59a615001ac7',
+            name: 'Falcon X',
+            _type: 'io.cozy.rockets'
+          },
+          {
+            id: '33dda00f0eec15bc3b3c59a615001ac8',
+            name: 'Falcon Light',
+            _type: 'io.cozy.rockets'
+          }
+        ]
+      }
+
+      it('should update collections listed in the `updateCollections` option', () => {
+        state = dispatchSuccessfulAction(
+          updateDocuments(
+            'io.cozy.rockets',
+            { selector: {} },
+            {
+              updateCollections: ['rockets']
+            }
+          ),
+          fakeResponse,
+          state
+        )
+        collection = getCollection(state, 'rockets')
+        expect(collection.data[0]).toEqual(fakeResponse.data[0])
+      })
+    })
+
+    describe('When documents are successfully deleted on the server', () => {
+      const fakeResponse = {
+        data: [
+          {
+            id: '33dda00f0eec15bc3b3c59a615001ac7',
+            _deleted: true,
+            _type: 'io.cozy.rockets'
+          },
+          {
+            id: '33dda00f0eec15bc3b3c59a615001ac8',
+            _deleted: true,
+            _type: 'io.cozy.rockets'
+          }
+        ]
+      }
+
+      it('should update collections listed in the `updateCollections` option', () => {
+        state = dispatchSuccessfulAction(
+          deleteDocuments(
+            'io.cozy.rockets',
+            { selector: {} },
+            {
+              updateCollections: ['rockets']
+            }
+          ),
+          fakeResponse,
+          state
+        )
+        collection = getCollection(state, 'rockets')
+        expect(collection.ids.length).toBe(1)
+        expect(collection.ids[0]).toBe('33dda00f0eec15bc3b3c59a615001ac9')
+        expect(collection.data.length).toBe(1)
+        expect(collection.data[0].id).toBe('33dda00f0eec15bc3b3c59a615001ac9')
       })
     })
   })

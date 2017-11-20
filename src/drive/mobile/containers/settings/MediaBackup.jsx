@@ -10,7 +10,7 @@ import {
   backupImages,
   startMediaBackup,
   cancelMediaBackup
-} from '../../actions/mediaBackup'
+} from 'drive/mobile/ducks/mediaBackup'
 
 export const MediaBackup = ({
   t,

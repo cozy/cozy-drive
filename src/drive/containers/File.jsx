@@ -1,5 +1,6 @@
 /* global cozy */
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { withRouter, Link } from 'react-router'
@@ -12,6 +13,8 @@ import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
 import breakpointsAware from 'cozy-ui/react/helpers/breakpoints'
+import { SharedBadge } from 'sharing'
+import { getSharingDetails } from 'cozy-client'
 
 import { getFolderUrl } from '../reducers'
 
@@ -148,6 +151,7 @@ class File extends Component {
       withSelectionCheckbox,
       withFilePath,
       isAvailableOffline,
+      shared,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { opening } = this.state
@@ -183,6 +187,7 @@ class File extends Component {
           opening={opening}
           withFilePath={withFilePath}
           isMobile={isMobile}
+          shared={shared}
         />
         <div
           className={classNames(
@@ -211,7 +216,25 @@ class File extends Component {
             ? '—'
             : filesize(attributes.size, { base: 10 })}
         </div>
-        {isAvailableOffline && <AvailableOfflineBadge />}
+        <div
+          className={classNames(
+            styles['fil-content-cell'],
+            styles['fil-content-status']
+          )}
+        >
+          {isAvailableOffline && (
+            <span className={styles['fil-content-offline']} />
+          )}
+          <span className={styles['fil-content-sharestatus']}>
+            {!shared.shared
+              ? '—'
+              : shared.byMe
+                ? `${t('Files.share.sharedByMe')} (${t(
+                    `Share.type.${shared.sharingType}`
+                  )})`
+                : t('Files.share.sharedWithMe')}
+          </span>
+        </div>
         <div
           className={classNames(
             styles['fil-content-cell'],
@@ -231,23 +254,13 @@ class File extends Component {
   }
 }
 
-const AvailableOfflineBadge = props => (
-  <div
-    className={classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-status']
-    )}
-  >
-    <span className={styles['fil-content-offline']} />
-  </div>
-)
-
 const FileNameCell = ({
   attributes,
   isRenaming,
   opening,
   withFilePath,
-  isMobile
+  isMobile,
+  shared
 }) => {
   const classes = classNames(
     styles['fil-content-cell'],
@@ -263,6 +276,13 @@ const FileNameCell = ({
         attributes.links.small && (
           <Preview thumbnail={`${url}${attributes.links.small}`} />
         )}
+      {(shared.byMe || shared.withMe) && (
+        <SharedBadge
+          byMe={shared.byMe}
+          className={styles['fil-content-shared']}
+          xsmall
+        />
+      )}
       {isRenaming ? (
         <RenameInput />
       ) : (
@@ -291,7 +311,11 @@ const FileNameCell = ({
   )
 }
 
-export default breakpointsAware()(withRouter(translate()(File)))
+const FileWithSharedStatus = connect((state, ownProps) => ({
+  shared: getSharingDetails(state, 'io.cozy.files', ownProps.attributes.id)
+}))(File)
+
+export default breakpointsAware()(withRouter(translate()(FileWithSharedStatus)))
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>

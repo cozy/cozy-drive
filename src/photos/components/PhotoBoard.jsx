@@ -5,9 +5,9 @@ import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import { translate } from 'cozy-ui/react/I18n'
 
 import PhotoList from './PhotoList'
-import Empty from './Empty'
+import Empty from 'components/Error/Empty-photos'
 import Loading from './Loading'
-import ErrorComponent from './ErrorComponent'
+import ErrorComponent from 'components/Error/ErrorComponent'
 import classNames from 'classnames'
 
 const Spinner = () => <div className={styles['pho-list-spinner']} />

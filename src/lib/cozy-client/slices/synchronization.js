@@ -36,14 +36,38 @@ const doctypeSync = (state = doctypeSyncInitialState, action) => {
   }
 }
 
-const synchronization = (state = {}, action) => {
+const syncInitialState = {
+  started: false,
+  initialStatus: 'pending',
+  doctypes: {}
+}
+
+const synchronization = (state = syncInitialState, action) => {
   switch (action.type) {
+    case START_SYNC:
+      return {
+        ...state,
+        started: true
+      }
+    case INITIAL_SYNC_OK:
+      return {
+        ...state,
+        initialStatus: 'ok'
+      }
+    case INITIAL_SYNC_ERROR:
+      return {
+        ...state,
+        initialStatus: 'error'
+      }
     case START_DOCTYPE_SYNC:
     case SYNC_DOCTYPE_OK:
     case SYNC_DOCTYPE_ERROR:
       return {
         ...state,
-        [action.doctype]: doctypeSync(state[action.doctype], action)
+        doctypes: {
+          ...state.doctypes,
+          [action.doctype]: doctypeSync(state.doctypes[action.doctype], action)
+        }
       }
     default:
       return state
@@ -75,19 +99,19 @@ export const syncDoctypeError = (doctype, error) => ({
   error
 })
 
-export const hasSyncStarted = state =>
-  Object.keys(state.cozy.synchronization).length !== 0
+export const hasSyncStarted = state => state.cozy.synchronization.started
+
+export const isSyncOk = state =>
+  state.cozy.synchronization.initialStatus === 'ok'
+
+export const isSyncInError = state =>
+  state.cozy.synchronization.initialStatus === 'error'
 
 export const isFirstSync = state => {
-  const seqNumbers = Object.keys(state.cozy.synchronization).map(
-    doctype => state.cozy.synchronization[doctype].seqNumber
+  const seqNumbers = Object.keys(state.cozy.synchronization.doctypes).map(
+    doctype => state.cozy.synchronization.doctypes[doctype].seqNumber
   )
   return seqNumbers.every(number => number === 0)
 }
 
-export const isSynced = state => {
-  const timestamps = Object.keys(state.cozy.synchronization).map(
-    doctype => state.cozy.synchronization[doctype].lastSync
-  )
-  return timestamps.every(ts => ts !== null)
-}
+export const isSynced = state => isSyncOk(state) || isSyncInError(state)

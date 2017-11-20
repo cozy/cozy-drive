@@ -10,7 +10,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import { SelectionBar } from '../ducks/selection'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
-import UploadProgression from '../mobile/containers/UploadProgression'
+import MediaBackupProgression from '../mobile/containers/MediaBackupProgression'
 import RatingModal from '../mobile/containers/RatingModal'
 import FirstUploadModal from '../mobile/containers/FirstUploadModal'
 import FolderContent from './FolderContent'
@@ -42,6 +42,7 @@ class FolderView extends Component {
   render() {
     const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
     const {
+      params,
       files,
       selected,
       actionable,
@@ -65,6 +66,7 @@ class FolderView extends Component {
         <Topbar>
           <Breadcrumb />
           <Toolbar
+            folderId={params.folderId}
             actions={toolbarActions}
             canUpload={canUpload}
             disabled={
@@ -76,7 +78,7 @@ class FolderView extends Component {
         <div role="contentinfo">
           {__TARGET__ === 'mobile' && (
             <div>
-              <UploadProgression />
+              <MediaBackupProgression />
               <FirstUploadModal />
               <RatingModal />
             </div>

@@ -6,7 +6,7 @@ import { AlbumsToolbar, fetchAlbums, fetchSharedAlbums } from '../ducks/albums'
 
 import AlbumsList from '../components/AlbumsList'
 import Loading from '../components/Loading'
-import ErrorComponent from '../components/ErrorComponent'
+import ErrorComponent from 'components/Error/ErrorComponent'
 import Topbar from '../components/Topbar'
 
 const Content = ({ list }) => {
