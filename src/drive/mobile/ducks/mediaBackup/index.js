@@ -27,32 +27,35 @@ const getDirID = async path => {
   return _id
 }
 
-const canBackup = (force, getState) => {
+const canBackup = (isManualBackup, getState) => {
   const backupOnAnyNetworkType = !getState().mobile.settings.wifiOnly
 
   return (
-    force ||
-    (getState().mobile.settings.backupImages &&
-      (isWifi() || backupOnAnyNetworkType))
+    (isManualBackup || getState().mobile.settings.backupImages) &&
+    (isWifi() || backupOnAnyNetworkType)
   )
 }
 
-export const startMediaBackup = (targetFolderName, force = false) => async (
-  dispatch,
-  getState
-) => {
+export const startMediaBackup = (
+  targetFolderName,
+  isManualBackup = false
+) => async (dispatch, getState) => {
   dispatch({ type: MEDIA_UPLOAD_START })
 
   if (!await isAuthorized()) {
-    // force is only possible if the authorization is accepted
-    force = await updateValueAfterRequestAuthorization(force)
+    const promptForPermissions = isManualBackup
+    const receivedAuthorisation = await updateValueAfterRequestAuthorization(
+      promptForPermissions
+    )
+    // manual backup is only possible if the authorization is accepted
+    if (isManualBackup && !receivedAuthorisation) isManualBackup = false
     // disable backupImages when authorization is refused
-    if (getState().mobile.settings.backupImages && !force) {
+    if (getState().mobile.settings.backupImages && !receivedAuthorisation) {
       await dispatch(setBackupImages(false))
     }
   }
 
-  if (canBackup(force, getState)) {
+  if (canBackup(isManualBackup, getState)) {
     const photosOnDevice = await getPhotos()
     const alreadyUploaded = getState().mobile.mediaBackup.uploaded
     const photosToUpload = photosOnDevice.filter(
@@ -65,7 +68,7 @@ export const startMediaBackup = (targetFolderName, force = false) => async (
       for (const photo of photosToUpload) {
         if (
           getState().mobile.mediaBackup.cancelMediaBackup ||
-          !canBackup(force, getState)
+          !canBackup(isManualBackup, getState)
         ) {
           break
         }
