@@ -29,9 +29,7 @@ const UploadProgression = ({ t, current, total, media }) => {
   return (
     <div className={styles['coz-upload-status']}>
       <Progress percent={percent(current, total)} />
-      <div className={styles['coz-progress-pic']}>
-        {media.filePath && <img src={media.filePath} />}
-      </div>
+      <div className={styles['coz-progress-pic']} />
       <div className={styles['coz-upload-status-content']}>
         {t('mobile.settings.media_backup.media_upload', {
           smart_count: total - current
