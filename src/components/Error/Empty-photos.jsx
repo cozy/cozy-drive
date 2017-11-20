@@ -1,4 +1,4 @@
-import styles from './empty-photos'
+import styles from './empty'
 
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
