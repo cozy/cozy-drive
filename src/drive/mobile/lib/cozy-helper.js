@@ -38,6 +38,10 @@ export const initClient = url => {
 }
 
 export const initBar = () => {
+  // Prevents the bar to be initialized 2 times in a row after the onboarding
+  if (document.getElementById('coz-bar')) {
+    return
+  }
   cozy.bar.init({
     appName: 'Drive',
     appEditor: 'Cozy',
