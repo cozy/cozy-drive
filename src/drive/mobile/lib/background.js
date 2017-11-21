@@ -1,7 +1,7 @@
-import configureStore from '../store/configureStore'
-import { initServices } from './init'
-import { logException } from './reporter'
-import { loadState } from '../store/persistedState'
+import configureStore from '../../store/configureStore'
+import { initClient } from './cozy-helper'
+import { logException, configureReporter } from './reporter'
+import { loadState } from '../../store/persistedState'
 import { getMediaFolderName } from './media'
 import { startMediaBackup } from 'drive/mobile/ducks/mediaBackup'
 import { isCordova, isIos, isAndroid, getPlatformId } from './device'
@@ -85,9 +85,12 @@ const backgroundService = () =>
     console.log('BackgroundFetch initiated')
 
     loadState()
-      .then(persistedState => ({} || configureStore(persistedState)))
-      .then(store => {
-        initServices(store)
+      .then(persistedState => {
+        const cozyURL = persistedState.mobile.settings.serverUrl
+        const analyticsEnabled = persistedState.mobile.settings.analytics
+        configureReporter(analyticsEnabled)
+        const client = initClient(cozyURL)
+        const store = configureStore(client, persistedState)
         return store.dispatch(startMediaBackup(getMediaFolderName()))
       })
       .then(resolve)
