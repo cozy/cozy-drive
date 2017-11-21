@@ -7,13 +7,16 @@ export const ANALYTICS_URL = __DEVELOPMENT__
   ? DEV_ANALYTICS_URL
   : PROD_ANALYTICS_URL
 
-export const getReporterConfiguration = (isEnabled = false) => ({
+let isEnabled = false
+
+export const getReporterConfiguration = () => ({
   shouldSendCallback: () => isEnabled,
   environment: __DEVELOPMENT__ ? 'development' : 'production'
 })
 
 export const configureReporter = enable => {
-  Raven.config(ANALYTICS_URL, getReporterConfiguration(enable)).install()
+  isEnabled = enable
+  Raven.config(ANALYTICS_URL, getReporterConfiguration()).install()
 }
 
 export const logException = err => {
@@ -37,7 +40,7 @@ const logMessage = (message, serverUrl, level = 'info', force) => {
       level
     })
     if (force) {
-      configureReporter(false)
+      configureReporter(isEnabled)
     }
     resolve()
   })

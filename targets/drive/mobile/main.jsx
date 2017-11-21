@@ -27,7 +27,6 @@ import { backupContacts } from 'drive/mobile/actions/contactsBackup'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
-
 import {
   getLang,
   resetClient,
@@ -36,6 +35,7 @@ import {
 } from 'drive/mobile/lib/cozy-helper'
 import { revokeClient } from 'drive/mobile/actions/authorization'
 import { startReplication } from 'drive/mobile/actions/settings'
+import { configureReporter } from 'drive/mobile/lib/reporter'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -47,6 +47,9 @@ const renderAppWithPersistedState = (persistedState = {}) => {
   const cozyURL = persistedState.mobile
     ? persistedState.mobile.settings.serverUrl
     : ''
+  const analyticsEnabled =
+    persistedState.mobile && persistedState.mobile.settings.analytics
+  configureReporter(analyticsEnabled)
   const client = initClient(cozyURL)
   const store = configureStore(client, persistedState)
 

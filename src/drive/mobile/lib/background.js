@@ -1,6 +1,6 @@
 import configureStore from '../../store/configureStore'
 import { initClient } from './cozy-helper'
-import { logException } from './reporter'
+import { logException, configureReporter } from './reporter'
 import { loadState } from '../../store/persistedState'
 import { getMediaFolderName } from './media'
 import { startMediaBackup } from 'drive/mobile/ducks/mediaBackup'
@@ -87,6 +87,8 @@ const backgroundService = () =>
     loadState()
       .then(persistedState => {
         const cozyURL = persistedState.mobile.settings.serverUrl
+        const analyticsEnabled = persistedState.mobile.settings.analytics
+        configureReporter(analyticsEnabled)
         const client = initClient(cozyURL)
         const store = configureStore(client, persistedState)
         return store.dispatch(startMediaBackup(getMediaFolderName()))
