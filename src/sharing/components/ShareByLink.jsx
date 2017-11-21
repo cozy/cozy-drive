@@ -31,46 +31,49 @@ export const ShareWithLinkToggle = (
 
 export const ShareWithLink = (
   { shareLink, onCopy, copied, documentType },
-  { t }
-) => (
-  <div className={styles['coz-form']}>
-    <h4>{t(`${documentType}.share.sharingLink.title`)}</h4>
-    <div className={styles['pho-input-dual']}>
-      <div>
-        <input type="text" name="" id="" value={shareLink} />
-      </div>
-      <div>
-        {!copied && (
-          <CopyToClipboard text={shareLink} onCopy={onCopy}>
-            <div>
-              <button
-                className={classnames(
-                  styles['c-btn'],
-                  styles['c-btn--secondary'],
-                  styles['pho-btn-copy']
-                )}
-              >
-                {t(`${documentType}.share.sharingLink.copy`)}
-              </button>
-            </div>
-          </CopyToClipboard>
-        )}
-        {copied && (
-          <button
-            className={classnames(
-              styles['c-btn'],
-              styles['c-btn--secondary'],
-              styles['pho-btn-copied']
-            )}
-            aria-disabled
-          >
-            {t(`${documentType}.share.sharingLink.copied`)}
-          </button>
-        )}
+  { t, client }
+) => {
+  const fullShareLink = client.getUrl() + shareLink
+  return (
+    <div className={styles['coz-form']}>
+      <h4>{t(`${documentType}.share.sharingLink.title`)}</h4>
+      <div className={styles['pho-input-dual']}>
+        <div>
+          <input type="text" name="" id="" value={fullShareLink} />
+        </div>
+        <div>
+          {!copied && (
+            <CopyToClipboard text={fullShareLink} onCopy={onCopy}>
+              <div>
+                <button
+                  className={classnames(
+                    styles['c-btn'],
+                    styles['c-btn--secondary'],
+                    styles['pho-btn-copy']
+                  )}
+                >
+                  {t(`${documentType}.share.sharingLink.copy`)}
+                </button>
+              </div>
+            </CopyToClipboard>
+          )}
+          {copied && (
+            <button
+              className={classnames(
+                styles['c-btn'],
+                styles['c-btn--secondary'],
+                styles['pho-btn-copied']
+              )}
+              aria-disabled
+            >
+              {t(`${documentType}.share.sharingLink.copied`)}
+            </button>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 class ShareByLink extends React.Component {
   state = {

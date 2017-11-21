@@ -33,6 +33,10 @@ export default class CozyClient {
     return cozy.client.authorize(true)
   }
 
+  getUrl() {
+    return this.facade.getUrl()
+  }
+
   isV2(cozyURL) {
     return isV2(cozyURL)
   }

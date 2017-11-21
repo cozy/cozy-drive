@@ -425,7 +425,7 @@ const getSharingRecipients = (state, sharings) =>
     .reduce((a, b) => a.concat(b), [])
 
 const buildSharingLink = (id, doctype, sharecode) =>
-  `${window.location.origin}/public?sharecode=${sharecode}&id=${id}${
+  `/public?sharecode=${sharecode}&id=${id}${
     doctype === 'file' ? '&directdownload' : ''
   }`
 
