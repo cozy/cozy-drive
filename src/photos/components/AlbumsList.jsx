@@ -2,7 +2,7 @@ import styles from '../styles/albumsList'
 
 import React from 'react'
 
-import Empty from 'components/Error/Empty'
+import { EmptyPhotos } from 'components/Error/Empty'
 import AlbumItem from '../containers/AlbumItem'
 
 const FALLBACK_CREATION_DATE = null
@@ -16,7 +16,7 @@ const sortByCreationDate = (a, b) => {
 
 const AlbumsList = props =>
   props.albums.length === 0 ? (
-    <Empty type="photos" emptyType="albums" />
+    <EmptyPhotos emptyType="albums" />
   ) : (
     <div role="contentinfo">
       <div className={styles['pho-album-list']}>

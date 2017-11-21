@@ -4,13 +4,13 @@ import React from 'react'
 import classNames from 'classnames'
 
 import { withError } from 'components/Error/ErrorComponent'
-import Empty from 'components/Error/Empty'
+import { EmptyPhotos } from 'components/Error/Empty'
 
 import AlbumItem from '../containers/AlbumItem'
 
 const AlbumsList = props =>
   props.albums.data.length === 0 ? (
-    <Empty type="photos" emptyType="albums" />
+    <EmptyPhotos emptyType="albums" />
   ) : (
     <div
       className={classNames(

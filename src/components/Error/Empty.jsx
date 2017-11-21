@@ -7,11 +7,13 @@ const Empty = translate()(({ t, type, canUpload, emptyType }) => {
   return (
     <div className={styles[`c-empty-${type}`]}>
       {emptyType ? (
-        <h2>{t(`empty.${emptyType}_title`)}</h2>
+        <div>
+          <h2>{t(`empty.${emptyType}_title`)}</h2>
+          <p>{t(`empty.${emptyType}_text`)}</p>
+        </div>
       ) : (
         <h2>{t('empty.title')}</h2>
       )}
-      {emptyType && <p>{t(`empty.${emptyType}_text`)}</p>}
       {canUpload && <p>{t('empty.text')}</p>}
     </div>
   )
@@ -19,7 +21,11 @@ const Empty = translate()(({ t, type, canUpload, emptyType }) => {
 
 export default Empty
 
-const EmptyTrash = translate()(({ t }) => {
+export const EmptyDrive = props => <Empty type="drive" {...props} />
+
+export const EmptyPhotos = props => <Empty type="photos" {...props} />
+
+export const EmptyTrash = translate()(({ t }) => {
   return (
     <div className={styles['c-trash-empty']}>
       <h2>{t('empty.trash.title')}</h2>
@@ -27,5 +33,3 @@ const EmptyTrash = translate()(({ t }) => {
     </div>
   )
 })
-
-export { EmptyTrash }
