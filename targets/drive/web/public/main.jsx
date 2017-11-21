@@ -9,7 +9,7 @@ import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/components/PublicLayout'
 
 import LightFolderView from 'drive/components/LightFolderView'
-import ErrorShare from 'components/Error/ErrorShare-drive'
+import ErrorShare from 'components/Error/ErrorShare'
 
 document.addEventListener('DOMContentLoaded', init)
 

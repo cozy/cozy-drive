@@ -2,7 +2,6 @@ import styles from './empty.styl'
 
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
-import classNames from 'classnames'
 
 const Empty = translate()(({ t, type, canUpload, emptyType }) => {
   return (

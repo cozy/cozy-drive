@@ -6,7 +6,7 @@ import styles from './empty.styl'
 
 export const ErrorComponent = ({ t, errorType }) => {
   return (
-    <div className={styles['pho-error']}>
+    <div className={styles['c-error']}>
       <h2>{t(`Error.${errorType}_title`)}</h2>
       <button
         role="button"

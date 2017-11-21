@@ -44,6 +44,11 @@ $empty
     &:before
         background  embedurl('../../drive/assets/icons/icon-type-folder.svg') center center / cover no-repeat
 
+.c-empty-photos
+    @extend $empty
+    &:before
+        background  embedurl('../../photos/assets/icons/icon-main-app.svg') center center / cover no-repeat
+
 .c-trash-empty
     @extend $empty
     &:before
@@ -52,18 +57,13 @@ $empty
 
         @media (max-width: (1023/basefont)rem)
             height 5rem
-.pho-error
+
+.c-error
     @extend $empty
     &:before
         background  embedurl('../../photos/assets/icons/icon-image-broken.svg') center center / cover no-repeat
 
-.c-empty-photos
-    @extend $empty
-    &:before
-        background  embedurl('../../photos/assets/icons/icon-main-app.svg') center center / cover no-repeat
-
-.pho-errorShare
-.fil-errorShare
+.c-error-share
     @extend $empty
     &:before
         background  embedurl('../../photos/assets/icons/icon-cloud-wrong.svg') center center / contain no-repeat
