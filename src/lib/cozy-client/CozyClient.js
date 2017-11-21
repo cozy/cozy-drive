@@ -173,11 +173,11 @@ export default class CozyClient {
   }
 
   createFile(file, dirID) {
-    return this.getCollection(FILES_DOCTYPE).createFile(file, dirID)
+    return this.getAdapter(FILES_DOCTYPE).createFile(file, dirID)
   }
 
   trashFile(file) {
-    return this.getCollection(FILES_DOCTYPE).trashFile(file)
+    return this.getAdapter(FILES_DOCTYPE).trashFile(file)
   }
 
   async ensureDirectoryExists(path) {
