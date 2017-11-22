@@ -8,7 +8,7 @@ import { track, isLinux, DESKTOP_BANNER } from '.'
 
 class ButtonClient extends Component {
   state = {
-    seen: true
+    seen: false
   }
 
   async componentWillMount() {
@@ -18,20 +18,19 @@ class ButtonClient extends Component {
 
   render() {
     const { t } = this.props
-    return (
-      this.state.seen && (
-        <a
-          href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
-          target="_blank"
-          className={styles['coz-btn-client']}
-          onClick={e => {
-            track('button')
-          }}
-        >
-          <span>{t('Nav.btn-client')}</span>
-        </a>
-      )
-    )
+    // show the button if the banner has been marked as seen
+    return this.state.seen ? (
+      <a
+        href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
+        target="_blank"
+        className={styles['coz-btn-client']}
+        onClick={e => {
+          track('button')
+        }}
+      >
+        <span>{t('Nav.btn-client')}</span>
+      </a>
+    ) : null
   }
 }
 
