@@ -326,7 +326,7 @@ const getDoctypePermissions = (state, doctype) => {
 const getSharingLink = (state, doctype, id) => {
   const perm = getSharingLinkPermission(state, doctype, id)
   return perm
-    ? buildSharingLink(id, doctype, perm.attributes.codes.email)
+    ? buildSharingLink(state, id, doctype, perm.attributes.codes.email)
     : null
 }
 
@@ -424,8 +424,35 @@ const getSharingRecipients = (state, sharings) =>
     )
     .reduce((a, b) => a.concat(b), [])
 
-const buildSharingLink = (id, doctype, sharecode) =>
-  `/public?sharecode=${sharecode}&id=${id}${
+const getAppForDoctype = doctype => {
+  switch (doctype) {
+    case 'io.cozy.files':
+      return 'drive'
+    case 'io.cozy.photos.albums':
+      return 'photos'
+    default:
+      throw new Error(
+        `Sharing link: don't know which app to use for doctype ${doctype}`
+      )
+  }
+}
+
+const getAppUrl = (state, doctype) => {
+  // TODO: here we access a slice of state we don't "own" and that's a pb
+  // we should store the cozy url in the store ourselves
+  if (state.mobile && state.mobile.settings) {
+    const host = state.mobile.settings.serverUrl
+    const app = getAppForDoctype(doctype)
+    return host.replace(
+      /^(https?:\/\/)(\w+)\.(\w+)\.(\w+)/g,
+      `$1$2-${app}.$3.$4`
+    )
+  }
+  return window.location.origin
+}
+
+const buildSharingLink = (state, id, doctype, sharecode) =>
+  `${getAppUrl(state, doctype)}/public?sharecode=${sharecode}&id=${id}${
     doctype === 'file' ? '&directdownload' : ''
   }`
 
