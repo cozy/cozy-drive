@@ -12,7 +12,7 @@ import { I18n } from 'cozy-ui/react/I18n'
 import 'photos/styles/main'
 
 import App from './App'
-import Viewer from 'photos/components/Viewer'
+import Viewer from 'viewer'
 
 const arrToObj = (obj = {}, varval = ['var', 'val']) => {
   obj[varval[0]] = varval[1]

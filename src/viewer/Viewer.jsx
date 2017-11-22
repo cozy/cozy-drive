@@ -1,5 +1,5 @@
 /* global cozy */
-import styles from '../styles/viewer'
+import styles from './viewer'
 import classNames from 'classnames'
 
 import React, { Component } from 'react'
@@ -7,8 +7,8 @@ import { withRouter } from 'react-router'
 import Hammer from 'hammerjs'
 
 import ViewerToolbar from './ViewerToolbar'
-import Loading from './Loading'
-import ImageLoader from './ImageLoader'
+import Spinner from 'cozy-ui/react/Spinner'
+import { ImageLoader } from 'components/Image'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
@@ -351,7 +351,7 @@ export class Viewer extends Component {
             />
           )}
           {(!currentPhoto || isImageLoading) && (
-            <Loading noMargin color="white" />
+            <Spinner size="xxlarge" middle="true" noMargin color="white" />
           )}
         </div>
         {!singlePhoto && (

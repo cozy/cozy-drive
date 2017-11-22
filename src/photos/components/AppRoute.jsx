@@ -5,7 +5,7 @@ import Layout from './Layout'
 import Timeline from '../containers/Timeline'
 import AlbumsView from '../containers/AlbumsView'
 import AlbumPhotos from '../containers/AlbumPhotos'
-import Viewer from '../components/Viewer'
+import Viewer from 'viewer'
 import { PhotosPicker } from '../ducks/albums'
 
 export const ComingSoon = () => <p style="margin-left: 2em">Coming soon!</p>

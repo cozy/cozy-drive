@@ -1,4 +1,4 @@
-import styles from '../styles/viewerToolbar'
+import styles from './viewerToolbar'
 import classNames from 'classnames'
 
 import React from 'react'

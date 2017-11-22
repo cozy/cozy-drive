@@ -5,7 +5,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 
-import ImageLoader from './ImageLoader'
+import { ImageLoader } from 'components/Image'
 
 const getStyleFromBox = box => {
   let style = {}
