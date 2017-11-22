@@ -12,7 +12,7 @@
     "banner-btn-client": "Download now",
     "link-client": "https://docs.cozy.io/en/download/"
   },
-  "Empty": {
+  "empty": {
     "timeline_photos_title": "You don't have any photos yet.",
     "timeline_photos_text": "Click the \"Upload\" button to add photos.",
     "albums_title": "You don't have any album yet.",

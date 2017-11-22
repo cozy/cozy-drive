@@ -2,11 +2,11 @@ import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import classNames from 'classnames'
 
-import styles from './empty-photos'
+import styles from './empty.styl'
 
 export const ErrorComponent = ({ t, errorType }) => {
   return (
-    <div className={styles['pho-error']}>
+    <div className={styles['c-error']}>
       <h2>{t(`Error.${errorType}_title`)}</h2>
       <button
         role="button"

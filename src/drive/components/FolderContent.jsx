@@ -1,7 +1,7 @@
 import React from 'react'
 import Spinner from 'cozy-ui/react/Spinner'
 import Oops from 'components/Error/Oops'
-import Empty, { EmptyTrash } from 'components/Error/Empty-drive'
+import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import FileList from './FileList'
 
 const EmptyContent = props => {
@@ -9,7 +9,7 @@ const EmptyContent = props => {
   if (isTrashContext && !props.params.folderId) {
     return <EmptyTrash />
   }
-  return <Empty canUpload={canUpload} />
+  return <EmptyDrive canUpload={canUpload} />
 }
 
 const FolderContent = props => {
