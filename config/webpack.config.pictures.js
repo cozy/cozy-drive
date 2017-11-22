@@ -17,7 +17,7 @@ module.exports = function(production) {
           exclude: /(sprites|icons)/,
           loader: 'file-loader',
           options: {
-            path: 'img',
+            outputPath: 'img',
             name: `[name]${production ? '.[hash]' : ''}.[ext]`
           }
         }
