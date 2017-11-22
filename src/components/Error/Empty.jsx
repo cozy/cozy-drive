@@ -3,13 +3,13 @@ import styles from './empty.styl'
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 
-const Empty = translate()(({ t, type, canUpload, emptyType }) => {
+const Empty = translate()(({ t, type, canUpload, localeKey }) => {
   return (
     <div className={styles[`c-empty-${type}`]}>
-      {emptyType ? (
+      {localeKey ? (
         <div>
-          <h2>{t(`empty.${emptyType}_title`)}</h2>
-          <p>{t(`empty.${emptyType}_text`)}</p>
+          <h2>{t(`empty.${localeKey}_title`)}</h2>
+          <p>{t(`empty.${localeKey}_text`)}</p>
         </div>
       ) : (
         <h2>{t('empty.title')}</h2>

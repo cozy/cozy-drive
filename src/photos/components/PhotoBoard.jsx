@@ -77,7 +77,7 @@ export class PhotoBoard extends Component {
       return <Loading loadingType="photos_fetching" />
     }
     if (!isFetching && (lists.length === 0 || lists[0].photos.length === 0)) {
-      return <EmptyPhotos emptyType={`${photosContext}_photos`} />
+      return <EmptyPhotos localeKey={`${photosContext}_photos`} />
     }
 
     return (

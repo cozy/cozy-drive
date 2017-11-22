@@ -10,7 +10,7 @@ import AlbumItem from '../containers/AlbumItem'
 
 const AlbumsList = props =>
   props.albums.data.length === 0 ? (
-    <EmptyPhotos emptyType="albums" />
+    <EmptyPhotos localeKey="albums" />
   ) : (
     <div
       className={classNames(

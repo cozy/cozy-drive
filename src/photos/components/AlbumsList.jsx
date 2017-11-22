@@ -16,7 +16,7 @@ const sortByCreationDate = (a, b) => {
 
 const AlbumsList = props =>
   props.albums.length === 0 ? (
-    <EmptyPhotos emptyType="albums" />
+    <EmptyPhotos localeKey="albums" />
   ) : (
     <div role="contentinfo">
       <div className={styles['pho-album-list']}>
