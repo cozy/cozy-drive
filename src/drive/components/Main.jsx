@@ -4,7 +4,7 @@ import styles from '../styles/main'
 
 import React from 'react'
 
-import BannerClient from '../../layout/pushClient/Banner'
+import BannerClient from '../../components/pushClient/Banner'
 
 const Main = ({ children }) => (
   <main className={styles['fil-content']}>
