@@ -8,7 +8,7 @@ import { track, isLinux, DESKTOP_BANNER } from '.'
 
 class ButtonClient extends Component {
   state = {
-    seen: true
+    seen: false
   }
 
   async componentWillMount() {
