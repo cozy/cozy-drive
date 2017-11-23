@@ -7,6 +7,9 @@ set -e
 #   COZY_BUILD_BRANCH: the name of the build branch from which the script
 #                      creates dev releases
 
+[ -z "${COZY_BUILD_BRANCH}" ] && COZY_BUILD_BRANCH="build-"${COZY_APP_SLUG}
+
+
 if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
     echo "No deployment: in pull-request"
     exit 0
@@ -25,6 +28,10 @@ if [ -z "${COZY_APP_VERSION}" ]; then
     fi
 fi
 
+if [ -z "${COZY_APP_SLUG}" ]; then
+    COZY_APP_SLUG="$(jq -r '.slug' < "${manfile}")"
+fi
+
 if [ -z "${COZY_BUILD_URL}" ]; then
     url="https://github.com/${TRAVIS_REPO_SLUG}/archive"
     if [ -n "${TRAVIS_TAG}" ]; then
@@ -41,5 +48,5 @@ printf 'Publishing version "%s" from "%s" (%s)\n' "${COZY_APP_VERSION}" "${COZY_
 curl -sS --fail -X POST \
     -H "Content-Type: application/json" \
     -H "Authorization: Token ${REGISTRY_TOKEN}" \
-    -d "{\"version\": \"${COZY_APP_VERSION}\", \"url\": \"${COZY_BUILD_URL}\", \"sha256\": \"${shasum}\"}" \
-    "https://registry.cozy.io/registry/versions"
+    -d "{\"editor\": \"${REGISTRY_EDITOR}\", \"version\": \"${COZY_APP_VERSION}\", \"url\": \"${COZY_BUILD_URL}\", \"sha256\": \"${shasum}\", \"type\": \"webapp\"}" \
+    "https://int-registry.cozy.io/registry/${COZY_APP_SLUG}"
