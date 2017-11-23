@@ -1,8 +1,9 @@
-/* global cozy, document, __APP_VERSION__, __ALLOW_HTTP__ */
+/* global cozy, document, __APP_VERSION__, */
 import { LocalStorage as Storage } from 'cozy-client-js'
 import { CozyClient } from 'cozy-client'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { getDeviceName, isIos } from './device'
+import { disableBackgroundService } from './background'
 
 export const clientRevokedMsg = 'Client has been revoked'
 
@@ -51,7 +52,11 @@ export const initBar = () => {
   })
 }
 
-export function resetClient() {
+export function resetClient(clientInfo = null) {
+  if (clientInfo && cozy.client.auth.unregisterClient) {
+    cozy.client.auth.unregisterClient(clientInfo)
+  }
+
   // reset cozy-bar
   if (document.getElementById('coz-bar')) {
     document.getElementById('coz-bar').remove()
@@ -64,49 +69,8 @@ export function resetClient() {
   if (cozy.client._storage) {
     cozy.client._storage.clear()
   }
-}
 
-export const MAIL_EXCEPTION = 'MAIL_EXCEPTION'
-export const SCHEME_EXCEPTION = 'SCHEME_EXCEPTION'
-
-class SchemeError extends Error {
-  constructor(message) {
-    super(message)
-    this.name = SCHEME_EXCEPTION
-  }
-}
-
-class MailError extends Error {
-  constructor(message) {
-    super(message)
-    this.name = MAIL_EXCEPTION
-  }
-}
-
-export const checkURL = url => {
-  if (url.indexOf('@') > -1) {
-    throw new MailError('You typed an email address.')
-  }
-
-  let scheme = 'https://'
-  if (__ALLOW_HTTP__) {
-    if (!url.startsWith(scheme)) {
-      scheme = 'http://'
-    }
-    console.warn("development mode: we don't check SSL requirement")
-  }
-  if (/(.*):\/\/(.*)/.test(url) && !url.startsWith(scheme)) {
-    if (__ALLOW_HTTP__) {
-      throw new SchemeError(
-        `The supported protocols are http:// or https:// (development mode)`
-      )
-    }
-    throw new SchemeError(`The only supported protocol is ${scheme}`)
-  }
-  if (!url.startsWith(scheme)) {
-    url = `${scheme}${url}`
-  }
-  return url
+  disableBackgroundService()
 }
 
 export const getToken = async () => {

@@ -240,7 +240,8 @@
         "wrong_address_v2":
           "You have just entered the address of old Cozy version. This application is only compatible with the latest version. [Please refer to our site for more information.](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
         "wrong_address":
-          "This address doesn’t seem to be a cozy. Please check the address you provide."
+          "This address doesn’t seem to be a cozy. Please check the address you provide.",
+        "wrong_address_cosy": "Woops, the address is not correct. Try with \"cozy\" with a \"z\"!"
       },
       "files": {
         "title": "Access your drive",

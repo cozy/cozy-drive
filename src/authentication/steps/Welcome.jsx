@@ -3,18 +3,11 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 
-import styles from '../../styles/onboarding'
-import { getPlatformId, isIos } from '../../lib/device'
+import styles from '../styles'
 
 export class Welcome extends Component {
-  constructor(props) {
-    super(props)
-
-    this.platform = getPlatformId() !== undefined ? getPlatformId() : 'browser'
-  }
-
   render() {
-    const { nextStep, t } = this.props
+    const { t, selectServer, register, allowRegistration } = this.props
 
     return (
       <div className={classNames(styles['wizard'], styles['welcome'])}>
@@ -33,11 +26,15 @@ export class Welcome extends Component {
           <button
             role="button"
             className={classNames(styles['c-btn'], styles['c-btn--regular'])}
-            onClick={nextStep}
+            onClick={selectServer}
           >
             {t('mobile.onboarding.welcome.button')}
           </button>
-          {!isIos() && (
+          {allowRegistration ? (
+            <a className={styles['link']} onClick={register}>
+              {t('mobile.onboarding.welcome.sign_up')}
+            </a>
+          ) : (
             <a
               href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${
                 this.platform

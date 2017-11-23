@@ -25,36 +25,6 @@
             color           cool-grey
             margin-left     auto
 
-        .close-button
-            width      2em
-            height     2em
-            cursor     pointer
-
-            &::after, &::before
-                content          ''
-                position         absolute
-                border-radius    3px
-                width            2px
-                height           2em
-                background-color cool-grey
-
-            &::after
-                transform rotate(-45deg);
-
-            &::before
-                transform rotate(45deg);
-
-    .logo-wrapper
-        max-width     3.5em
-        height        3.5em
-        margin        .5em auto 3em auto
-        padding       1.25em
-        border-radius 50%
-        box-shadow    0 1px 3px rgba(50, 54, 63, .19), 0 4px 12px rgba(50, 54, 63, .12)
-
-        &.error
-            background pomegranate
-
     .illustration
         margin .5em auto
         height 14em
@@ -76,58 +46,14 @@
         font-size  1.125rem
         max-width  25em
 
-        &.error
-            color pomegranate
-            font-size em(12px)
-            font-style italic
-
-        &.info
-            color cool-grey
-            font-size em(12px)
-            font-style italic
-
-    .coz-form-label
-        text-align left
-
-    .input
-        width            100%
-
-        &::placeholder
-            color   charcoal-grey
-            opacity .5
-
-        &.error
-            color pomegranate
-            border-color pomegranate
-
 
     .wizard-footer
         display flex
         flex-direction column
         margin-bottom 1.5em
 
-        > .link
-            margin          1.5em .5em 0em .5em
-            text-align      left
-            text-decoration none
-            color           dodger-blue
-
-.select-server
-    .description
-        text-align left
-
-    .description p
-        margin 0
-
-.welcome .logo-wrapper, .select-server .logo-wrapper
-    background dodger-blue
-
 
 // ASSETS
-.cozy-logo-white
-    height  3.5em
-    background embedurl("../assets/icons/icon-cozy.svg") center no-repeat
-    background-size contain
 
 .illustration-photos
     background      embedurl("../assets/illustrations/illustration-photos.svg") center no-repeat
