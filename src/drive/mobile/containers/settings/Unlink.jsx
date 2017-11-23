@@ -58,7 +58,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),
   unlink: client => {
     dispatch(unlink(client))
-    ownProps.router.replace('/onboarding')
   }
 })
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import OnBoarding from '../../components/OnBoarding'
+import OnBoardingStep from '../../components/OnBoardingStep'
 import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 
 export const BackupPhotosVideos = ({ onActivate, onSkip, breadcrumbs }) => (
-  <OnBoarding
+  <OnBoardingStep
     onActivate={onActivate}
     onSkip={onSkip}
     stepName="photos"

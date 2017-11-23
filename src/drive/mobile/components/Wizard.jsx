@@ -14,6 +14,10 @@ export default class Wizard extends Component {
   }
 
   nextStep() {
+    if (this.state.step >= this.props.steps.length - 1) {
+      this.props.onComplete()
+      return
+    }
     this.setState({ step: this.state.step + 1 })
   }
 
@@ -23,23 +27,13 @@ export default class Wizard extends Component {
   }
 
   render() {
-    const Step = this.props.steps.concat(this.props.breadcrumbSteps)[
-      this.state.step
-    ]
-    if (!Step) {
-      if (this.props.location.state && this.props.location.state.nextPathname) {
-        this.props.router.replace(this.props.location.state.nextPathname)
-      } else {
-        this.props.router.replace('/')
-      }
-    }
-    const Breadcrumbs =
-      this.state.step < this.props.steps.length ? null : (
-        <Breadcrumb
-          currentStep={this.state.step + 1 - this.props.steps.length}
-          totalSteps={this.props.breadcrumbSteps.length}
-        />
-      )
+    const Step = this.props.steps[this.state.step]
+    const Breadcrumbs = (
+      <Breadcrumb
+        currentStep={this.state.step + 1}
+        totalSteps={this.props.steps.length}
+      />
+    )
 
     return (
       <Step
