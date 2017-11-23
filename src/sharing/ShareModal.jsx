@@ -5,7 +5,6 @@ import {
   cozyConnect,
   fetchSharings,
   fetchContacts,
-  fetchApps,
   share,
   unshare,
   shareByLink,
