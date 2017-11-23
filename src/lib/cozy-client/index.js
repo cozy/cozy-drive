@@ -27,6 +27,7 @@ export {
 export {
   fetchSharings,
   fetchContacts,
+  fetchApps,
   getSharings,
   getSharingDetails,
   share,

@@ -3,6 +3,7 @@ import DataAccessFacade from './DataAccessFacade'
 import SharingsCollection, {
   SHARINGS_DOCTYPE
 } from './collections/SharingsCollection'
+import AppsCollection, { APPS_DOCTYPE } from './collections/AppsCollection'
 import { authenticateWithCordova } from './authentication/mobile'
 import { getIndexFields, isV2 } from './helpers'
 
@@ -63,6 +64,7 @@ export default class CozyClient {
 
   defineSpecialCollections() {
     this.defineCollection(SHARINGS_DOCTYPE, new SharingsCollection())
+    this.defineCollection(APPS_DOCTYPE, new AppsCollection())
   }
 
   getCollection(doctype) {
