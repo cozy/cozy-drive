@@ -12,7 +12,6 @@ export const getLang = () =>
 export const initClient = url => {
   const offline = { doctypes: ['io.cozy.files'] }
   if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
-  console.log('test')
   return new CozyClient({
     cozyURL: url,
     oauth: {
