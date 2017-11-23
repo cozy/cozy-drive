@@ -1,7 +1,14 @@
 import { combineReducers } from 'redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
 import { SHARINGS_DOCTYPE } from '../collections/SharingsCollection'
-import { getDocument, createDocument, fetchCollection } from '../reducer'
+import { APPS_DOCTYPE } from '../collections/AppsCollection'
+import {
+  getDocument,
+  createDocument,
+  fetchCollection,
+  makeFetchCollection,
+  getCollection
+} from '../reducer'
 
 export const FETCH_SHARINGS = 'FETCH_SHARINGS'
 const RECEIVE_SHARINGS_DATA = 'RECEIVE_SHARINGS_DATA'
@@ -138,7 +145,8 @@ export const fetchSharings = (doctype, id = null, options = {}) => ({
   id,
   options,
   promise: client =>
-    client.getCollection(SHARINGS_DOCTYPE).findByDoctype(doctype)
+    client.getCollection(SHARINGS_DOCTYPE).findByDoctype(doctype),
+  dependencies: [fetchApps()]
 })
 
 export const share = (document, recipients, sharingType, sharingDesc) => async (
@@ -247,6 +255,24 @@ const createSharingLink = document => ({
       .createLink(getPermissionsFor(document, true))
 })
 
+export const fetchApps = () =>
+  makeFetchCollection('apps', APPS_DOCTYPE, client =>
+    client.getCollection(APPS_DOCTYPE).all()
+  )
+
+const getApps = state => getCollection(state, 'apps').data
+
+const getAppUrl = (state, appName) => {
+  const apps = getApps(state)
+  const app = apps.find(
+    a => a.attributes.slug === appName && a.attributes.state === 'ready'
+  )
+  if (!app) {
+    throw new Error(`Sharing link: app ${appName} not installed`)
+  }
+  return app.links.related
+}
+
 // TODO: this is a poor man's migration in order to normalize contacts
 // and should be removed after a few weeks in prod
 // Note for future-self: If you have no idea of what it means, please, erase this code.
@@ -326,7 +352,7 @@ const getDoctypePermissions = (state, doctype) => {
 const getSharingLink = (state, doctype, id) => {
   const perm = getSharingLinkPermission(state, doctype, id)
   return perm
-    ? buildSharingLink(id, doctype, perm.attributes.codes.email)
+    ? buildSharingLink(state, id, doctype, perm.attributes.codes.email)
     : null
 }
 
@@ -424,10 +450,25 @@ const getSharingRecipients = (state, sharings) =>
     )
     .reduce((a, b) => a.concat(b), [])
 
-const buildSharingLink = (id, doctype, sharecode) =>
-  `${window.location.origin}/public?sharecode=${sharecode}&id=${id}${
+const getAppUrlForDoctype = (state, doctype) => {
+  switch (doctype) {
+    case 'io.cozy.files':
+      return getAppUrl(state, 'drive')
+    case 'io.cozy.photos.albums':
+      return getAppUrl(state, 'photos')
+    default:
+      throw new Error(
+        `Sharing link: don't know which app to use for doctype ${doctype}`
+      )
+  }
+}
+
+const buildSharingLink = (state, id, doctype, sharecode) => {
+  const appUrl = getAppUrlForDoctype(state, doctype)
+  return `${appUrl}public?sharecode=${sharecode}&id=${id}${
     doctype === 'file' ? '&directdownload' : ''
   }`
+}
 
 // helpers
 const isFile = ({ _type, type }) =>

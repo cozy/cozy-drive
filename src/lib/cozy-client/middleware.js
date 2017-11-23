@@ -1,6 +1,8 @@
+import { applySelectorForAction } from './reducer'
+
 const cozyMiddleware = client => ({ dispatch, getState }) => {
   return next => action => {
-    const { promise, type, types, ...rest } = action
+    const { promise, type, types, dependencies, ...rest } = action
     if (!promise) {
       return next(action)
     }
@@ -21,7 +23,18 @@ const cozyMiddleware = client => ({ dispatch, getState }) => {
     const [REQUEST, SUCCESS, FAILURE] = types
     next({ ...rest, type: REQUEST })
 
-    return promise(client, dispatch, getState)
+    let depsPromises = []
+    if (dependencies) {
+      dependencies.forEach(dep => {
+        const status = applySelectorForAction(getState(), dep).fetchStatus
+        if (status === 'pending') {
+          depsPromises.push(dispatch(dep))
+        }
+      })
+    }
+
+    return Promise.all(depsPromises)
+      .then(() => promise(client, dispatch, getState))
       .then(
         response => {
           next({ ...rest, response, type: SUCCESS })

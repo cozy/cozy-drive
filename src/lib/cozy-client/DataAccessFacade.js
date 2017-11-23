@@ -13,11 +13,13 @@ const FILES_DOCTYPE = 'io.cozy.files'
 
 export default class DataAccessFacade {
   constructor() {
+    this.url = null
     this.stackAdapter = new CozyStackAdapter()
     this.pouchAdapter = new PouchdbAdapter()
   }
 
   setup(cozyUrl, options) {
+    this.url = cozyUrl
     const { offline, ...rest } = options
     // TODO: For now we let cozy-client-js handle offline for files so that we don't break cozy-drive
     const config =
@@ -35,6 +37,10 @@ export default class DataAccessFacade {
     } else {
       this.strategy = new StackOnlyStrategy()
     }
+  }
+
+  getUrl() {
+    return this.url
   }
 
   getAdapter(doctype) {
