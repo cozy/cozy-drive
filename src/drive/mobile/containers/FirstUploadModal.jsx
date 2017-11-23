@@ -54,13 +54,12 @@ const OnlyOnceFirstUploadModal = withPersistentState(
 const mapStateToProps = state => {
   const {
     uploading = false,
-    currentUpload = { messageData: { total_upload: 0 } }
+    currentUpload = { messageData: { total: 0 } }
   } = state.mobile.mediaBackup
   const { messageData } = currentUpload
   return {
     uploading:
-      uploading &&
-      messageData['total_upload'] >= MINIMUM_LONG_UPLOAD_FILES_COUNT
+      uploading && messageData['total'] >= MINIMUM_LONG_UPLOAD_FILES_COUNT
   }
 }
 
