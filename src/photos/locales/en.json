@@ -140,7 +140,8 @@
         "emailPlaceholder": "Enter email address or name of your recipient",
         "send": "Send",
         "genericSuccess": "You sent an invite to %{count} contacts.",
-        "success": "You sent an invite to %{email}."
+        "success": "You sent an invite to %{email}.",
+        "comingsoon": "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
       },
       "unshare": {
         "title": "Remove from album",

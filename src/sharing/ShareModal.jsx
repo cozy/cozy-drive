@@ -53,10 +53,10 @@ export class ShareModal extends Component {
       </TabPanel>
     ]
 
+    tabs.push(
+      <Tab name="email">{t(`${documentType}.share.shareByEmail.title`)}</Tab>
+    )
     if (enableEmailSharing) {
-      tabs.push(
-        <Tab name="email">{t(`${documentType}.share.shareByEmail.title`)}</Tab>
-      )
       tabPanels.push(
         <TabPanel name="email">
           {loaded && (
@@ -70,6 +70,23 @@ export class ShareModal extends Component {
               onUnshare={unshare}
             />
           )}
+        </TabPanel>
+      )
+    } else {
+      tabPanels.push(
+        <TabPanel name="email">
+          <div className={styles['coz-form-group']}>
+            <p
+              className={styles['coz-form-desc']}
+              style={
+                {
+                  width: '30rem'
+                } /* no need for a class as it is temporary screen */
+              }
+            >
+              {t(`${documentType}.share.shareByEmail.comingsoon`)}
+            </p>
+          </div>
         </TabPanel>
       )
     }
