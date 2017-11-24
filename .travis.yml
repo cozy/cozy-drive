@@ -8,8 +8,8 @@ branches:
   - build
 env:
   matrix:
-  - COZY_BUILD_APP=drive
-  - COZY_BUILD_APP=photos
+  - COZY_APP_SLUG=drive
+  - COZY_APP_SLUG=photos
   global:
   - CXX=g++-4.8
   - secure: OLcPuglkDbRd9Xf8WmPAlAWTmdXDb+SNVc7+WKQjIap5Ej58BBTtaAYR8kzFKSWmvWWSnvKmOYJfOHvWIOfkzlwhGLnk/xUnCCsjWmWNjOmnL5x74gCbfEgyU+rIwr2c4/hpzjcywTVBIhL4l/Bxjn+Op+NepKYMNTKko9qB7fA+nDglX/t3VObC9kEXwXElOOgLHNpbfQLEJxdEqXm8hVMmfjA/wSQnX96GqWhKWqMMPyjAxwkxYXFa04AgeTV3C8y4x7YxiuaE8cKZfi+DYX8DyV0XdBVKJTBKTGEaTbotewmXf7F+zsZ6Rg46HvQskSmckMqMKzZfGLFKsVELt6wyNVdVwptWXfu9o2FrXvvHj1krOltN5kQPKLwSmQH4RSlekQ+JYpRN4e+w4dNazILk1pAMu7+EqBTdH5khkDxeA1LAfFVuZz3QP1/fczF/PXSMsaQa779XXKf8dsEP5S8dHjpCOLSI506E+sWa/tu1mSZoaL+jGPovhiygsPUjbjqUmim3Dz+22y2E8jGrEeIdTEcoDXrvjcqwSNvs2LXlgOtgjxP47Fb3Enk18BUpVL2LMTmwF8FbglfKOTOFHHuhT/lQjtptT6NBu0tKi8fcJ/jj3patUj2kbqo85FYext/VrPN42uIXkDCxu9bEnyaGkBpl3qgD7F0J/gJSa10=
@@ -33,7 +33,7 @@ before_install:
 - echo "password = $TX_PASSWD" >> ~/.transifexrc
 script:
 - yarn test
-- yarn build:$COZY_BUILD_APP:browser
+- yarn build:$COZY_APP_SLUG:browser
 after_success:
-- test $TRAVIS_BRANCH = "master" && yarn run deploy:$COZY_BUILD_APP -- --branch=build-$COZY_BUILD_APP
-- test $TRAVIS_BRANCH = "prod" && yarn run deploy:$COZY_BUILD_APP -- --branch=latest-$COZY_BUILD_APP
+- test $TRAVIS_BRANCH = "master" && yarn run deploy:$COZY_APP_SLUG -- --branch=build-$COZY_APP_SLUG
+- test $TRAVIS_BRANCH = "prod" && yarn run deploy:$COZY_APP_SLUG -- --branch=latest-$COZY_APP_SLUG

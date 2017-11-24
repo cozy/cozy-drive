@@ -291,14 +291,29 @@ export default combineReducers({
   synchronization
 })
 
-export const fetchCollection = (name, doctype, options = {}, skip = 0) => ({
+export const makeFetchCollection = (
+  name,
+  doctype,
+  promise,
+  options = {},
+  skip = 0
+) => ({
   types: [FETCH_COLLECTION, RECEIVE_DATA, RECEIVE_ERROR],
   collection: name,
   doctype,
   options,
   skip,
-  promise: client => client.fetchDocuments(name, doctype, options, skip)
+  promise
 })
+
+export const fetchCollection = (name, doctype, options = {}, skip = 0) =>
+  makeFetchCollection(
+    name,
+    doctype,
+    client => client.fetchDocuments(name, doctype, options, skip),
+    options,
+    skip
+  )
 
 export const refetchCollections = () => (dispatch, getState) => {
   const collections = getCollections(getState())

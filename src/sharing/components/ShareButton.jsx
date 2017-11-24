@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import styles from './button'
 
-export const ShareButton = ({ label, onClick, className }) => (
+export const ShareButton = ({ label, onClick, className, ...props }) => (
   <button
     role="button"
     className={classNames(
@@ -13,22 +13,24 @@ export const ShareButton = ({ label, onClick, className }) => (
       className
     )}
     onClick={() => onClick()}
+    {...props}
   >
     {label}
   </button>
 )
 
-export const SharedByMeButton = ({ label, onClick, className }) => (
+export const SharedByMeButton = ({ label, onClick, className, ...props }) => (
   <button
     role="button"
     className={classNames(styles['c-btn'], styles['coz-btn-shared'], className)}
     onClick={() => onClick()}
+    {...props}
   >
     {label}
   </button>
 )
 
-export const SharedWithMeButton = ({ label, onClick, className }) => (
+export const SharedWithMeButton = ({ label, onClick, className, ...props }) => (
   <button
     role="button"
     className={classNames(
@@ -37,6 +39,7 @@ export const SharedWithMeButton = ({ label, onClick, className }) => (
       className
     )}
     onClick={() => onClick()}
+    {...props}
   >
     {label}
   </button>

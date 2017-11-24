@@ -7,9 +7,9 @@ module.exports = function(production) {
         {
           test: /\.svg$/,
           include: /(sprites|icons)/,
-          loader: 'svg-sprite-loader',
+          loader: 'file-loader',
           options: {
-            name: '[name]_[hash]'
+            name: `[name]${production ? '.[hash]' : ''}.[ext]`
           }
         },
         {
@@ -17,7 +17,7 @@ module.exports = function(production) {
           exclude: /(sprites|icons)/,
           loader: 'file-loader',
           options: {
-            path: 'img',
+            outputPath: 'img',
             name: `[name]${production ? '.[hash]' : ''}.[ext]`
           }
         }

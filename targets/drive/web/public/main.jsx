@@ -1,15 +1,15 @@
 /* global cozy __DEVELOPMENT__ */
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
+import { CozyClient, CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/components/PublicLayout'
 
 import LightFolderView from 'drive/components/LightFolderView'
-import ErrorShare from 'components/Error/ErrorShare-drive'
+import ErrorShare from 'components/Error/ErrorShare'
 
 document.addEventListener('DOMContentLoaded', init)
 
@@ -31,12 +31,13 @@ function init() {
   const data = root.dataset
   const { id, sharecode, directdownload } = getQueryParameter()
 
-  if (data.cozyDomain) {
-    cozy.client.init({
-      cozyURL: `//${data.cozyDomain}`,
-      token: sharecode
-    })
-  }
+  const protocol = window.location ? window.location.protocol : 'https:'
+  const cozyUrl = `${protocol}//${data.cozyDomain}`
+
+  const client = new CozyClient({
+    cozyURL: cozyUrl,
+    token: sharecode
+  })
 
   if (directdownload) {
     cozy.client.files
@@ -71,7 +72,7 @@ function init() {
       // Export React to window for the devtools
       window.React = React
     }
-    const store = configureStore()
+    const store = configureStore(client)
 
     if (
       data.cozyAppName &&
@@ -90,14 +91,14 @@ function init() {
 
     render(
       <I18n lang={lang} dictRequire={lang => require(`drive/locales/${lang}`)}>
-        <Provider store={store}>
+        <CozyProvider store={store} client={client}>
           <Router history={hashHistory}>
             <Route component={PublicLayout}>
               <Route path="files(/:folderId)" component={LightFolderView} />
             </Route>
             <Redirect from="/*" to={`files/${id}`} />
           </Router>
-        </Provider>
+        </CozyProvider>
       </I18n>,
       root
     )

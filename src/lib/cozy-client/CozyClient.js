@@ -3,8 +3,9 @@ import DataAccessFacade from './DataAccessFacade'
 import SharingsCollection, {
   SHARINGS_DOCTYPE
 } from './collections/SharingsCollection'
+import AppsCollection, { APPS_DOCTYPE } from './collections/AppsCollection'
 import { authenticateWithCordova } from './authentication/mobile'
-import { getIndexFields } from './helpers'
+import { getIndexFields, isV2 } from './helpers'
 
 const FILES_DOCTYPE = 'io.cozy.files'
 
@@ -33,6 +34,14 @@ export default class CozyClient {
     return cozy.client.authorize(true)
   }
 
+  getUrl() {
+    return this.facade.getUrl()
+  }
+
+  isV2(cozyURL) {
+    return isV2(cozyURL)
+  }
+
   async isRegistered(clientInfos) {
     if (!clientInfos) return false
     try {
@@ -55,6 +64,7 @@ export default class CozyClient {
 
   defineSpecialCollections() {
     this.defineCollection(SHARINGS_DOCTYPE, new SharingsCollection())
+    this.defineCollection(APPS_DOCTYPE, new AppsCollection())
   }
 
   getCollection(doctype) {
@@ -173,11 +183,11 @@ export default class CozyClient {
   }
 
   createFile(file, dirID) {
-    return this.getCollection(FILES_DOCTYPE).createFile(file, dirID)
+    return this.getAdapter(FILES_DOCTYPE).createFile(file, dirID)
   }
 
   trashFile(file) {
-    return this.getCollection(FILES_DOCTYPE).trashFile(file)
+    return this.getAdapter(FILES_DOCTYPE).trashFile(file)
   }
 
   async ensureDirectoryExists(path) {

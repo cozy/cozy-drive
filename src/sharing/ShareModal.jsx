@@ -32,41 +32,71 @@ export class ShareModal extends Component {
     } = this.props
     // TODO: temporary
     const loaded = contacts.fetchStatus === 'loaded'
+
+    const enableEmailSharing = window.location.search
+      .toLowerCase()
+      .includes('sharingiscaring')
+
+    const tabs = [
+      <Tab name="link">{t(`${documentType}.share.shareByLink.title`)}</Tab>
+    ]
+    const tabPanels = [
+      <TabPanel name="link">
+        <ShareByLink
+          document={this.props.document}
+          documentType={documentType}
+          checked={!!sharing.sharingLink}
+          link={sharing.sharingLink}
+          onEnable={shareByLink}
+          onDisable={revokeLink}
+        />
+      </TabPanel>
+    ]
+
+    tabs.push(
+      <Tab name="email">{t(`${documentType}.share.shareByEmail.title`)}</Tab>
+    )
+    if (enableEmailSharing) {
+      tabPanels.push(
+        <TabPanel name="email">
+          {loaded && (
+            <ShareByEmail
+              document={this.props.document}
+              documentType={documentType}
+              recipients={sharing.recipients}
+              contacts={contacts.data}
+              sharingDesc={sharingDesc}
+              onShare={share}
+              onUnshare={unshare}
+            />
+          )}
+        </TabPanel>
+      )
+    } else {
+      tabPanels.push(
+        <TabPanel name="email">
+          <div className={styles['coz-form-group']}>
+            <p
+              className={styles['coz-form-desc']}
+              style={
+                {
+                  maxWidth: '30rem'
+                } /* no need for a class as it is temporary screen */
+              }
+            >
+              {t(`${documentType}.share.shareByEmail.comingsoon`)}
+            </p>
+          </div>
+        </TabPanel>
+      )
+    }
+
     return (
       <Modal title={t(`${documentType}.share.title`)} secondaryAction={onClose}>
-        <Tabs initialActiveTab="email">
-          <TabList className={styles['pho-share-modal-tabs']}>
-            <Tab name="email">
-              {t(`${documentType}.share.shareByEmail.title`)}
-            </Tab>
-            <Tab name="link">
-              {t(`${documentType}.share.shareByLink.title`)}
-            </Tab>
-          </TabList>
+        <Tabs initialActiveTab="link">
+          <TabList className={styles['pho-share-modal-tabs']}>{tabs}</TabList>
           <TabPanels className={styles['pho-share-modal-content']}>
-            <TabPanel name="email">
-              {loaded && (
-                <ShareByEmail
-                  document={this.props.document}
-                  documentType={documentType}
-                  recipients={sharing.recipients}
-                  contacts={contacts.data}
-                  sharingDesc={sharingDesc}
-                  onShare={share}
-                  onUnshare={unshare}
-                />
-              )}
-            </TabPanel>
-            <TabPanel name="link">
-              <ShareByLink
-                document={this.props.document}
-                documentType={documentType}
-                checked={!!sharing.sharingLink}
-                link={sharing.sharingLink}
-                onEnable={shareByLink}
-                onDisable={revokeLink}
-              />
-            </TabPanel>
+            {tabPanels}
           </TabPanels>
         </Tabs>
       </Modal>

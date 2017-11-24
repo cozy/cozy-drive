@@ -10,8 +10,8 @@
     "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
     "banner-txt-client":
-      "Tip: your pictures, bills, ID documents, all accessible anytime, from any of your device with Cozy Drive installed on your computer",
-    "banner-btn-client": "Download now",
+      "Add your documents and photos to your Cozy from your computer: they will be safe and available at any moment!",
+    "banner-btn-client": "Install now",
     "link-client": "https://cozy.io/en/download/",
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
     "link-client-android":
@@ -83,7 +83,8 @@
         "emailPlaceholder": "Enter email address or name of your recipient",
         "send": "Send",
         "genericSuccess": "You sent an invite to %{count} contacts.",
-        "success": "You sent an invite to %{email}."
+        "success": "You sent an invite to %{email}.",
+        "comingsoon": "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
       },
       "unshare": {
         "title": "Remove from sharing",

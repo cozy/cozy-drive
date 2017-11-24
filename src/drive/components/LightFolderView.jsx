@@ -7,7 +7,7 @@ import FolderContent from './FolderContent'
 import FileListHeader from './FileListHeader'
 import Topbar from './Topbar'
 import Breadcrumb from '../containers/Breadcrumb'
-import ErrorShare from 'components/Error/ErrorShare-drive'
+import ErrorShare from 'components/Error/ErrorShare'
 
 import DownloadButton from './DownloadButton'
 import Menu, { Item } from 'components/Menu'

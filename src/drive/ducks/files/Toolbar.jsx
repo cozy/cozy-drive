@@ -99,7 +99,7 @@ class Toolbar extends Component {
           !shared.withMe && (
             <ShareButton
               disabled={disabled}
-              onShare={() => this.setState(toggleShowShareModal)}
+              onClick={() => this.setState(toggleShowShareModal)}
               label={t('toolbar.share')}
               className={styles['u-hide--mob']}
             />

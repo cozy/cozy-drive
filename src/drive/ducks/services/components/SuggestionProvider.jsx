@@ -1,5 +1,6 @@
 import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
+import { getTypeFromMimeType } from '../../../containers/File'
 
 class SuggestionProvider extends React.Component {
   componentDidMount() {
@@ -31,7 +32,8 @@ class SuggestionProvider extends React.Component {
           title: result.name,
           subtitle: result.path,
           term: result.name,
-          onSelect: 'open:' + result.url
+          onSelect: 'open:' + result.url,
+          icon: result.icon
         }))
       },
       intent.attributes.client
@@ -66,7 +68,8 @@ class SuggestionProvider extends React.Component {
             id: file._id,
             name: file.name,
             path,
-            url: window.location.origin + '/#/folder/' + dirId
+            url: window.location.origin + '/#/folder/' + dirId,
+            icon: getIconUrl(file.mime)
           }
         })
 
@@ -75,6 +78,27 @@ class SuggestionProvider extends React.Component {
       resolve()
     })
   }
+}
+
+const iconsContext = require.context(
+  '../../../assets/icons/',
+  false,
+  /icon-type-.*.svg$/
+)
+const icons = iconsContext.keys().reduce((acc, item) => {
+  acc[item.replace(/\.\/icon-type-(.*)\.svg/, '$1')] = iconsContext(item)
+  return acc
+}, {})
+
+function getIconUrl(mimetype) {
+  const keyIcon =
+    getTypeFromMimeType(icons)(mimetype) ||
+    console.warn(
+      `No icon found, you may need to add a mapping for ${mimetype}`
+    ) ||
+    'files'
+
+  return `${window.location.origin}/${icons[keyIcon]}`
 }
 
 export default SuggestionProvider

@@ -8,7 +8,7 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import Sidebar from './Sidebar'
 import Alerter from './Alerter'
-import BannerClient from '../../layout/pushClient/Banner'
+import BannerClient from '../../components/pushClient/Banner'
 
 import { UploadQueue } from '../ducks/upload'
 

@@ -69,18 +69,21 @@ class AlbumToolbar extends Component {
           {!sharedByMe &&
             !sharedWithMe && (
               <ShareButton
+                disabled={disabled}
                 label={t('Albums.share.cta')}
                 onClick={this.showShareModal}
               />
             )}
           {sharedByMe && (
             <SharedByMeButton
+              disabled={disabled}
               label={t('Albums.share.sharedByMe')}
               onClick={this.showShareModal}
             />
           )}
           {sharedWithMe && (
             <SharedWithMeButton
+              disabled={disabled}
               label={t('Albums.share.sharedWithMe')}
               onClick={this.showSharingDetailsModal}
             />

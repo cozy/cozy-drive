@@ -2,11 +2,18 @@
 import Raven from 'raven-js'
 
 let isEnabled = false
-const PROD_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
-const DEV_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
-export const ANALYTICS_URL = __DEVELOPMENT__
-  ? DEV_ANALYTICS_URL
-  : PROD_ANALYTICS_URL
+
+const getAnalyticsUrl = () => {
+  if (typeof __SENTRY_TOKEN__ === 'undefined') {
+    return ''
+  }
+
+  const PROD_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
+  const DEV_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
+  return __DEVELOPMENT__ ? DEV_ANALYTICS_URL : PROD_ANALYTICS_URL
+}
+
+export const ANALYTICS_URL = getAnalyticsUrl()
 
 export const getReporterConfiguration = () => ({
   shouldSendCallback: () => isEnabled,

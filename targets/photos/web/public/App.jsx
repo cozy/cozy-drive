@@ -4,7 +4,7 @@ import { cozyConnect } from 'cozy-client'
 import PhotoBoard from 'photos/components/PhotoBoard'
 import Loading from 'photos/components/Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
-import ErrorShare from 'components/Error/ErrorShare-photos'
+import ErrorShare from 'components/Error/ErrorShare'
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 

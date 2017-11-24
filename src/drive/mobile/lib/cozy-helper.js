@@ -1,50 +1,48 @@
 /* global cozy, document, __APP_VERSION__, __ALLOW_HTTP__ */
-import { getLang } from './init'
 import { LocalStorage as Storage } from 'cozy-client-js'
-import { SOFTWARE_NAME, SOFTWARE_ID } from './constants'
-import { isIos } from './device'
+import { CozyClient } from 'cozy-client'
+import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
+import { getDeviceName, isIos } from './device'
 
 export const clientRevokedMsg = 'Client has been revoked'
-const getStorage = () => new Storage()
-const getClientName = device => `${SOFTWARE_NAME} (${device})`
 
-const getClientParams = device => ({
-  redirectURI: 'http://localhost',
-  softwareID: SOFTWARE_ID,
-  clientName: getClientName(device),
-  softwareVersion: __APP_VERSION__,
-  clientKind: 'mobile',
-  clientURI: 'https://github.com/cozy/cozy-drive/',
-  logoURI:
-    'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
-  policyURI: 'https://files.cozycloud.cc/cgu.pdf',
-  scopes: [
-    'io.cozy.files',
-    'io.cozy.contacts',
-    'io.cozy.jobs:POST:sendmail:worker'
-  ]
-})
+export const getLang = () =>
+  navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 
-const getAuth = (onRegister, device) => ({
-  storage: getStorage(),
-  clientParams: getClientParams(device),
-  onRegistered: onRegister
-})
-
-export const initClient = (url, onRegister = null, device = 'Device') => {
-  if (url) {
-    console.log(`Cozy Client initializes a connection with ${url}`)
-    const offline = { doctypes: ['io.cozy.files'] }
-    if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
-    cozy.client.init({
-      cozyURL: url,
-      oauth: getAuth(onRegister, device),
-      offline
-    })
-  }
+export const initClient = url => {
+  const offline = { doctypes: ['io.cozy.files'] }
+  if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
+  return new CozyClient({
+    cozyURL: url,
+    oauth: {
+      storage: new Storage(),
+      clientParams: {
+        redirectURI: 'http://localhost',
+        softwareID: SOFTWARE_ID,
+        clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
+        softwareVersion: __APP_VERSION__,
+        clientKind: 'mobile',
+        clientURI: 'https://github.com/cozy/cozy-drive/',
+        logoURI:
+          'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
+        policyURI: 'https://files.cozycloud.cc/cgu.pdf',
+        scopes: [
+          'io.cozy.files',
+          'io.cozy.contacts',
+          'io.cozy.apps:GET',
+          'io.cozy.jobs:POST:sendmail:worker'
+        ]
+      }
+    },
+    offline
+  })
 }
 
 export const initBar = () => {
+  // Prevents the bar to be initialized 2 times in a row after the onboarding
+  if (document.getElementById('coz-bar')) {
+    return
+  }
   cozy.bar.init({
     appName: 'Drive',
     appEditor: 'Cozy',
@@ -52,21 +50,6 @@ export const initBar = () => {
     lang: getLang(),
     replaceTitleOnMobile: true
   })
-}
-
-export const isClientRegistered = async client => {
-  return cozy.client.auth
-    .getClient(client)
-    .then(client => true)
-    .catch(err => {
-      if (err.message === clientRevokedMsg) {
-        return false
-      }
-      // this is the error sent if we are offline
-      if (err.message === 'Failed to fetch') {
-        return true
-      }
-    })
 }
 
 export function resetClient() {

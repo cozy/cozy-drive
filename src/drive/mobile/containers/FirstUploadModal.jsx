@@ -3,7 +3,7 @@ import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
-import styles from '../styles/uploadprogression'
+import styles from '../styles/uploadstatus'
 import { isIos } from '../lib/device'
 
 const MINIMUM_LONG_UPLOAD_FILES_COUNT = 50
@@ -27,8 +27,19 @@ const FirstUploadModal = translate()(({ t, onClose }) => (
 
 const showOnceOnUpload = WrappedComponent => {
   return class extends Component {
-    state = {
-      viewed: false
+    constructor(props) {
+      super(props)
+      this.restored = false
+      this.state = {
+        viewed: false
+      }
+    }
+
+    componentStateRestored() {
+      this.restored = true
+      // As this method is called after the persisted state has been restored, we must trigger an update
+      // by making a dumb setState call
+      this.setState(prevState => prevState)
     }
 
     markAsViewed = () => {
@@ -36,6 +47,10 @@ const showOnceOnUpload = WrappedComponent => {
     }
 
     render() {
+      // we don't want to render unless the state is restored to avoid flashing
+      if (!this.restored) {
+        return null
+      }
       const { uploading } = this.props
       const { viewed } = this.state
 
@@ -54,13 +69,12 @@ const OnlyOnceFirstUploadModal = withPersistentState(
 const mapStateToProps = state => {
   const {
     uploading = false,
-    currentUpload = { messageData: { total_upload: 0 } }
+    currentUpload = { messageData: { total: 0 } }
   } = state.mobile.mediaBackup
   const { messageData } = currentUpload
   return {
     uploading:
-      uploading &&
-      messageData['total_upload'] >= MINIMUM_LONG_UPLOAD_FILES_COUNT
+      uploading && messageData['total'] >= MINIMUM_LONG_UPLOAD_FILES_COUNT
   }
 }
 
