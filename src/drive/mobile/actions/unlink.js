@@ -10,7 +10,12 @@ export const showUnlinkConfirmation = () => ({ type: SHOW_UNLINK_CONFIRMATION })
 export const hideUnlinkConfirmation = () => ({ type: HIDE_UNLINK_CONFIRMATION })
 
 // action creators async
-export const unlink = clientInfo => {
-  resetClient(clientInfo)
+export const unlink = (clientSettings, client) => {
+  if (cozy.client.auth.unregisterClient) {
+    cozy.client.auth.unregisterClient(clientSettings)
+  }
+  resetClient(client)
+  disableBackgroundService()
+
   return { type: UNLINK }
 }
