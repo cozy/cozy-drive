@@ -1,49 +1,61 @@
-import styles from './viewerToolbar'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 
-import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
-import { withRouter } from 'react-router'
 import { downloadFile } from 'cozy-client'
 
-export const ViewerToolbar = ({ t, router, hidden, currentPhoto }) => {
-  const closeViewer = () => {
-    // go to parent
-    let url = router.location.pathname
-    router.push({
-      pathname: url.substring(0, url.lastIndexOf('/')),
-      query: router.location.query
-    })
+import styles from './viewerToolbar'
+
+const ACTIONS_HIDE_DELAY = 3000
+
+class ViewerToolbar extends Component {
+  componentDidMount() {
+    this.hideActionsAfterDelay()
   }
-  return (
-    <div
-      className={classNames(styles['pho-viewer-toolbar'], {
-        [styles['pho-viewer-toolbar--hidden']]: hidden
-      })}
-      role="viewer-toolbar"
-    >
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.hidden && !this.props.hidden) this.hideActionsAfterDelay()
+  }
+
+  hideActionsAfterDelay() {
+    clearTimeout(this.hideActionsTimeout)
+    this.hideActionsTimeout = setTimeout(() => {
+      this.props.onHide()
+    }, ACTIONS_HIDE_DELAY)
+  }
+
+  render() {
+    const { t, hidden, currentFile, onClose } = this.props
+    return (
       <div
-        className={classNames(
-          styles['coz-selectionbar'],
-          styles['pho-viewer-toolbar-actions']
-        )}
+        className={classNames(styles['pho-viewer-toolbar'], {
+          [styles['pho-viewer-toolbar--hidden']]: hidden
+        })}
+        role="viewer-toolbar"
       >
-        <button
-          className={styles['coz-action-download']}
-          onClick={() => downloadFile(currentPhoto)}
+        <div
+          className={classNames(
+            styles['coz-selectionbar'],
+            styles['pho-viewer-toolbar-actions']
+          )}
         >
-          {t('Viewer.actions.download')}
-        </button>
+          <button
+            className={styles['coz-action-download']}
+            onClick={() => downloadFile(currentFile)}
+          >
+            {t('Viewer.actions.download')}
+          </button>
+        </div>
+        <div
+          className={styles['pho-viewer-toolbar-close']}
+          onClick={onClose}
+          title={t('Viewer.close')}
+        >
+          <div className={styles['pho-viewer-toolbar-close-cross']} />
+        </div>
       </div>
-      <div
-        className={styles['pho-viewer-toolbar-close']}
-        onClick={closeViewer}
-        title={t('Viewer.close')}
-      >
-        <div className={styles['pho-viewer-toolbar-close-cross']} />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
-export default translate()(withRouter(ViewerToolbar))
+export default translate()(ViewerToolbar)
