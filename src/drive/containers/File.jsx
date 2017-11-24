@@ -42,9 +42,12 @@ export const getTypeFromMimeType = (collection, prefix = '') => mimetype => {
     return type
   }
   if (type === 'application') {
-    const key = subtype.match(Object.keys(mappingMimetypeSubtype).join('|'))[0]
-    return mappingMimetypeSubtype[key]
+    const existingType = subtype.match(
+      Object.keys(mappingMimetypeSubtype).join('|')
+    )
+    return existingType ? mappingMimetypeSubtype[existingType[0]] : undefined
   }
+  return undefined
 }
 
 export const getClassFromMime = attrs => {
@@ -53,7 +56,12 @@ export const getClassFromMime = attrs => {
   }
 
   return styles[
-    'fil-file-' + getTypeFromMimeType(styles, 'fil-file-')(attrs.mime)
+    'fil-file-' +
+      (getTypeFromMimeType(styles, 'fil-file-')(attrs.mime) ||
+        console.warn(
+          `No icon found, you may need to add a mapping for ${attrs.mime}`
+        ) ||
+        'files')
   ]
 }
 
