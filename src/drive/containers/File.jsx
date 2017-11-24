@@ -27,6 +27,7 @@ export const splitFilename = file =>
       }
 
 const mappingMimetypeSubtype = {
+  word: 'text',
   zip: 'zip',
   pdf: 'pdf',
   spreadsheet: 'sheet',
@@ -41,7 +42,8 @@ export const getTypeFromMimeType = (collection, prefix = '') => mimetype => {
     return type
   }
   if (type === 'application') {
-    return mappingMimetypeSubtype[subtype]
+    const key = subtype.match(Object.keys(mappingMimetypeSubtype).join('|'))[0]
+    return mappingMimetypeSubtype[key]
   }
 }
 
