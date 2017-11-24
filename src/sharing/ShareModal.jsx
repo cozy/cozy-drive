@@ -80,7 +80,7 @@ export class ShareModal extends Component {
               className={styles['coz-form-desc']}
               style={
                 {
-                  width: '30rem'
+                  maxWidth: '30rem'
                 } /* no need for a class as it is temporary screen */
               }
             >
