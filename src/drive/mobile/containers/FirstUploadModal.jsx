@@ -27,8 +27,19 @@ const FirstUploadModal = translate()(({ t, onClose }) => (
 
 const showOnceOnUpload = WrappedComponent => {
   return class extends Component {
-    state = {
-      viewed: false
+    constructor(props) {
+      super(props)
+      this.restored = false
+      this.state = {
+        viewed: false
+      }
+    }
+
+    componentStateRestored() {
+      this.restored = true
+      // As this method is called after the persisted state has been restored, we must trigger an update
+      // by making a dumb setState call
+      this.setState(prevState => prevState)
     }
 
     markAsViewed = () => {
@@ -36,6 +47,10 @@ const showOnceOnUpload = WrappedComponent => {
     }
 
     render() {
+      // we don't want to render unless the state is restored to avoid flashing
+      if (!this.restored) {
+        return null
+      }
       const { uploading } = this.props
       const { viewed } = this.state
 
