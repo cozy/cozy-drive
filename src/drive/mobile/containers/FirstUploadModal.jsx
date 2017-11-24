@@ -3,7 +3,7 @@ import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
-import styles from '../styles/uploadprogression'
+import styles from '../styles/uploadstatus'
 import { isIos } from '../lib/device'
 
 const MINIMUM_LONG_UPLOAD_FILES_COUNT = 50
