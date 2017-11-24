@@ -1,5 +1,6 @@
 import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
+import { getTypeFromMimeType } from '../../../containers/File'
 
 class SuggestionProvider extends React.Component {
   componentDidMount() {
@@ -89,15 +90,9 @@ const icons = iconsContext.keys().reduce((acc, item) => {
   return acc
 }, {})
 
-const mapMimeIcon = {
-  'image/jpeg': 'image',
-  'image/png': 'image',
-  'application/pdf': 'pdf'
-}
-
 function getIconUrl(mimetype) {
   const keyIcon =
-    mapMimeIcon[mimetype] ||
+    getTypeFromMimeType(icons)(mimetype) ||
     console.warn(
       `No icon found, you may need to add a mapping for ${mimetype}`
     ) ||

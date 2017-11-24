@@ -26,34 +26,33 @@ export const splitFilename = file =>
         filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
       }
 
+const mappingMimetypeSubtype = {
+  zip: 'zip',
+  pdf: 'pdf',
+  spreadsheet: 'sheet',
+  excel: 'sheet',
+  presentation: 'slide',
+  powerpoint: 'slide'
+}
+
+export const getTypeFromMimeType = (collection, prefix = '') => mimetype => {
+  const [type, subtype] = mimetype.split('/')
+  if (collection[prefix + type]) {
+    return type
+  }
+  if (type === 'application') {
+    return mappingMimetypeSubtype[subtype]
+  }
+}
+
 export const getClassFromMime = attrs => {
   if (isDirectory(attrs)) {
     return styles['fil-file-folder']
   }
 
-  const [type, subtype] = attrs.mime.split('/')
-  let className = 'files'
-
-  if (styles['fil-file-' + type]) {
-    className = type
-  } else if (type === 'application') {
-    // for mime types with an `application` type, we need to consider the subtype
-    const correlationTable = {
-      zip: 'zip',
-      pdf: 'pdf',
-      spreadsheet: 'sheet',
-      excel: 'sheet',
-      presentation: 'slide',
-      powerpoint: 'slide'
-    }
-
-    const reg = new RegExp(Object.keys(correlationTable).join('|'))
-    const result = subtype.match(reg)
-
-    if (result) className = correlationTable[result[0]]
-  }
-
-  return styles['fil-file-' + className]
+  return styles[
+    'fil-file-' + getTypeFromMimeType(styles, 'fil-file-')(attrs.mime)
+  ]
 }
 
 const getParentDiv = element => {
