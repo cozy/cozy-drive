@@ -10,7 +10,13 @@
     "banner-txt-client":
       "Add your documents and photos to your Cozy from your computer: they will be safe and available at any moment!",
     "banner-btn-client": "Install now",
-    "link-client": "https://docs.cozy.io/en/download/"
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android":
+      "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios":
+      "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
   "empty": {
     "timeline_photos_title": "You don't have any photos yet.",
