@@ -84,8 +84,6 @@
             background  embedurl('./assets/icon-type-slide.svg') center center / cover no-repeat
         &--text:before
             background  embedurl('./assets/icon-type-text.svg') center center / cover no-repeat
-        &--video:before
-            background  embedurl('./assets/icon-type-video.svg') center center / cover no-repeat
         &--zip:before
             background  embedurl('./assets/icon-type-zip.svg') center center / cover no-repeat
         &--pdf:before
@@ -95,6 +93,13 @@
         &:before
             background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
 
+    .pho-viewer-videoviewer
+        text-align      center
+
+        video
+            width       100%
+            max-width   500px
+            height      auto
 
 @media (max-width: (1023/basefont)rem)
     .pho-viewer-nav-previous, .pho-viewer-nav-next

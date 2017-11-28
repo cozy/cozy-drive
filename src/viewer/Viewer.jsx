@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import ViewerToolbar from './ViewerToolbar'
 import ImageViewer from './ImageViewer'
 import AudioViewer from './AudioViewer'
+import VideoViewer from './VideoViewer'
 import NoViewer from './NoViewer'
 
 import styles from './viewer'
@@ -120,6 +121,14 @@ export default class Viewer extends Component {
       case 'audio':
         return (
           <AudioViewer
+            file={file}
+            onSwipeLeft={this.onNext}
+            onSwipeRight={this.onPrevious}
+          />
+        )
+      case 'video':
+        return (
+          <VideoViewer
             file={file}
             onSwipeLeft={this.onNext}
             onSwipeRight={this.onPrevious}
