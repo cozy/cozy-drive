@@ -12,7 +12,7 @@ import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
-import breakpointsAware from 'cozy-ui/react/helpers/breakpoints'
+import { withBreakpoints } from 'cozy-ui/react'
 import { SharedBadge } from 'sharing'
 import { getSharingDetails } from 'cozy-client'
 
@@ -333,7 +333,7 @@ const FileWithSharedStatus = connect((state, ownProps) => ({
   shared: getSharingDetails(state, 'io.cozy.files', ownProps.attributes.id)
 }))(File)
 
-export default breakpointsAware()(withRouter(translate()(FileWithSharedStatus)))
+export default withBreakpoints()(withRouter(translate()(FileWithSharedStatus)))
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>
