@@ -1,12 +1,5 @@
-/* global cozy */
 import React, { Component } from 'react'
-
-// Extreme fallback: returns a direct download link to the raw image
-const getPhotoLink = async photoId => {
-  return cozy.client.files
-    .getDownloadLinkById(photoId)
-    .then(path => `${cozy.client._url}${path}`)
-}
+import { getDownloadLink } from 'cozy-client'
 
 export default class ImageLoader extends Component {
   state = {
@@ -20,8 +13,8 @@ export default class ImageLoader extends Component {
   onError = () => {
     if (!this.img) return // if we already unmounted
     if (this.state.fallback !== null) return
-    // extreme fallback
-    getPhotoLink(this.props.photo.id).then(url => {
+    // extreme fallback: uses a direct download link to the raw image
+    getDownloadLink(this.props.photo).then(url => {
       this.img.src = url
       this.setState({ fallback: url })
       if (this.props.onLoad) this.props.onLoad()

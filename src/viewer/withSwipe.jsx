@@ -9,7 +9,6 @@ const withSwipe = WrappedComponent => {
     }
 
     onSwipe = e => {
-      console.log(e)
       if (e.direction === Hammer.DIRECTION_LEFT && this.props.onSwipeLeft)
         this.props.onSwipeLeft()
       else if (

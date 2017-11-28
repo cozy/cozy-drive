@@ -61,6 +61,7 @@
         box-shadow  0 6px 24px 0 rgba(0, 0, 0, 0.5)
 
     .pho-viewer-noviewer
+    .pho-viewer-audioviewer
         text-align      center
 
         &:before
@@ -69,10 +70,10 @@
             margin      0 auto
             width       10rem
             height      8.75rem
-            background  embedurl('./assets/icon-type-files.svg') center center / cover no-repeat
 
-        &--audio:before
-            background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
+    .pho-viewer-noviewer
+        &:before
+            background  embedurl('./assets/icon-type-files.svg') center center / cover no-repeat
         &--bin:before
             background  embedurl('./assets/icon-type-bin.svg') center center / cover no-repeat
         &--code:before
@@ -90,8 +91,9 @@
         &--pdf:before
             background  embedurl('./assets/icon-type-pdf.svg') center center / cover no-repeat
 
-        .pho-viewer-noviewer-filename
-            text-align  center
+    .pho-viewer-audioviewer
+        &:before
+            background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
 
 
 @media (max-width: (1023/basefont)rem)
