@@ -12,6 +12,14 @@ import styles from './viewer'
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
 
+const isAndroid = () =>
+  window.navigator.userAgent &&
+  window.navigator.userAgent.indexOf('Android') >= 0
+const isIOS = () =>
+  window.navigator.userAgent &&
+  /iPad|iPhone|iPod/.test(window.navigator.userAgent)
+const isMobile = () => isAndroid() || isIOS()
+
 export default class Viewer extends Component {
   state = {
     controlsHidden: false
@@ -108,40 +116,27 @@ export default class Viewer extends Component {
 
   renderViewer(file) {
     if (!file) return null
+    const ComponentName = this.getViewerComponentName(file)
+    return (
+      <ComponentName
+        file={file}
+        onSwipeLeft={this.onNext}
+        onSwipeRight={this.onPrevious}
+        onTap={this.showControls}
+      />
+    )
+  }
+
+  getViewerComponentName(file) {
     switch (file.class) {
       case 'image':
-        return (
-          <ImageViewer
-            file={file}
-            onSwipeLeft={this.onNext}
-            onSwipeRight={this.onPrevious}
-            onTap={this.showControls}
-          />
-        )
+        return ImageViewer
       case 'audio':
-        return (
-          <AudioViewer
-            file={file}
-            onSwipeLeft={this.onNext}
-            onSwipeRight={this.onPrevious}
-          />
-        )
+        return AudioViewer
       case 'video':
-        return (
-          <VideoViewer
-            file={file}
-            onSwipeLeft={this.onNext}
-            onSwipeRight={this.onPrevious}
-          />
-        )
+        return isMobile() ? NoViewer : VideoViewer
       default:
-        return (
-          <NoViewer
-            file={file}
-            onSwipeLeft={this.onNext}
-            onSwipeRight={this.onPrevious}
-          />
-        )
+        return NoViewer
     }
   }
 }
