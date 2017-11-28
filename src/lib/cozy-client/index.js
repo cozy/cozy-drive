@@ -44,4 +44,4 @@ export {
   isSyncInError
 } from './slices/synchronization'
 
-export { downloadArchive, downloadFile } from './helpers'
+export { downloadArchive, downloadFile, getDownloadLink } from './helpers'

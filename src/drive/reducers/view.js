@@ -205,6 +205,7 @@ export const getFolderIdFromRoute = (location, params) => {
 }
 
 export const getFolderUrl = (folderId, location) => {
+  if (folderId === undefined) return '/folder'
   if (folderId === ROOT_DIR_ID) return '/folder'
   if (folderId === TRASH_DIR_ID) return '/trash'
   const url = location.pathname.match(/^\/folder/) ? '/folder/' : '/trash/'

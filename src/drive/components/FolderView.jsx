@@ -40,7 +40,12 @@ class FolderView extends Component {
   }
 
   render() {
-    const { isTrashContext, actionMenuActive, selectionModeActive } = this.props
+    const {
+      children,
+      isTrashContext,
+      actionMenuActive,
+      selectionModeActive
+    } = this.props
     const {
       params,
       files,
@@ -102,6 +107,7 @@ class FolderView extends Component {
               />
             </div>
           </div>
+          {this.renderViewer(children)}
           {actionMenuActive && (
             <FileActionMenu
               files={actionable}
@@ -111,6 +117,15 @@ class FolderView extends Component {
           )}
         </div>
       </Main>
+    )
+  }
+
+  renderViewer(children) {
+    if (!children) return null
+    return React.Children.map(children, child =>
+      React.cloneElement(child, {
+        files: this.props.files || []
+      })
     )
   }
 }

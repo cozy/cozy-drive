@@ -1,18 +1,12 @@
 /* global cozy */
-import styles from '../styles/viewer'
-import classNames from 'classnames'
+import styles from './viewer'
 
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
 import Hammer from 'hammerjs'
 
-import ViewerToolbar from './ViewerToolbar'
-import Loading from './Loading'
-import ImageLoader from './ImageLoader'
+import Spinner from 'cozy-ui/react/Spinner'
+import { ImageLoader } from 'components/Image'
 
-const KEY_CODE_LEFT = 37
-const KEY_CODE_RIGHT = 39
-const ACTIONS_HIDE_DELAY = 3000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
 const MASS = 10 // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
@@ -20,13 +14,12 @@ const FRICTION = 0.9 // When the photo is paning after a pan gesture ended sudde
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
-export class Viewer extends Component {
+export default class ImageViewer extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      isImageLoading: true,
-      ...mapRouteToPhotos(props.photos, props.params),
+      isLoading: true,
       scale: 1,
       offsetX: 0,
       offsetY: 0,
@@ -38,24 +31,13 @@ export class Viewer extends Component {
       momentum: {
         x: 0,
         y: 0
-      },
-      hideActions: false
+      }
     }
 
-    this.navigateToPhoto = this.navigateToPhoto.bind(this)
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
-
-    this.hideActionsTimeout = null
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ ...mapRouteToPhotos(nextProps.photos, nextProps.params) })
   }
 
   componentDidMount() {
-    this.onKeyDownCallback = this.onKeyDown.bind(this)
-    document.addEventListener('keydown', this.onKeyDownCallback, false)
-
     this.gesturesHandler = new Hammer(this.viewer)
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
 
@@ -152,11 +134,7 @@ export class Viewer extends Component {
       )
     })
 
-    this.gesturesHandler.on('tap', this.toggleActions.bind(this))
-
-    document.addEventListener('mousemove', this.showActions.bind(this))
-
-    this.hideActionsAfterDelay()
+    if (this.props.onTap) this.gesturesHandler.on('tap', this.props.onTap())
   }
 
   /**
@@ -237,153 +215,69 @@ export class Viewer extends Component {
       momentum: {
         x: 0,
         y: 0
-      },
-      hideActions: true
+      }
     }))
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.hideActions && !this.state.hideActions)
-      this.hideActionsAfterDelay()
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDownCallback, false)
-  }
-
-  onKeyDown(e) {
-    if (e.keyCode === KEY_CODE_LEFT) this.navigateToPhoto(this.state.previousID)
-    else if (e.keyCode === KEY_CODE_RIGHT)
-      this.navigateToPhoto(this.state.nextID)
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.file &&
+      this.props.file &&
+      nextProps.file.id !== this.props.file.id
+    ) {
+      this.setState({
+        isLoading: true,
+        scale: 1,
+        offsetX: 0,
+        offsetY: 0
+      })
+    }
   }
 
   onSwipe(e) {
     // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
     if (this.state.scale > 1) return
 
-    if (e.direction === Hammer.DIRECTION_LEFT)
-      this.navigateToPhoto(this.state.nextID)
-    else if (e.direction === Hammer.DIRECTION_RIGHT)
-      this.navigateToPhoto(this.state.previousID)
-  }
-
-  navigateToPhoto(id) {
-    if (this.state.singlePhoto) return
-
-    this.setState({
-      isImageLoading: true,
-      hideActions: true,
-      scale: 1,
-      offsetX: 0,
-      offsetY: 0
-    })
-    const router = this.props.router
-    const url = router.location.pathname
-    const parentPath = url.substring(0, url.lastIndexOf('/'))
-    router.push({
-      pathname: `${parentPath}/${id}`,
-      query: router.location.query
-    })
+    if (e.direction === Hammer.DIRECTION_LEFT && this.props.onSwipeLeft)
+      this.props.onSwipeLeft()
+    else if (e.direction === Hammer.DIRECTION_RIGHT && this.props.onSwipeRight)
+      this.props.onSwipeRight()
   }
 
   handleImageLoaded() {
-    this.setState({ isImageLoading: false })
-  }
-
-  toggleActions() {
-    this.setState(state => ({ ...state, hideActions: !state.hideActions }))
-  }
-
-  showActions() {
-    this.setState(state => ({ ...state, hideActions: false }))
-  }
-
-  hideActionsAfterDelay() {
-    clearTimeout(this.hideActionsTimeout)
-    this.hideActionsTimeout = setTimeout(() => {
-      this.setState({ hideActions: true })
-    }, ACTIONS_HIDE_DELAY)
+    this.setState({ isLoading: false })
   }
 
   render() {
-    const {
-      isImageLoading,
-      previousID,
-      nextID,
-      currentPhoto,
-      singlePhoto,
-      hideActions,
-      scale,
-      offsetX,
-      offsetY
-    } = this.state
+    const { file } = this.props
+
+    const { isLoading, scale, offsetX, offsetY } = this.state
     const style = {
       transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`,
-      display: isImageLoading ? 'none' : 'initial'
+      display: isLoading ? 'none' : 'initial'
     }
     return (
-      <div className={styles['pho-viewer-wrapper']} role="viewer">
-        <ViewerToolbar hidden={hideActions} currentPhoto={currentPhoto} />
-        {!singlePhoto && (
-          <a
-            role="button"
-            className={classNames(styles['pho-viewer-nav-previous'], {
-              [styles['pho-viewer-nav-previous--hidden']]: hideActions
-            })}
-            onClick={() => this.navigateToPhoto(previousID)}
+      <div
+        className={styles['pho-viewer-photo']}
+        ref={viewer => {
+          this.viewer = viewer
+        }}
+      >
+        {file && (
+          <ImageLoader
+            photo={file}
+            onLoad={this.handleImageLoaded}
+            src={`${cozy.client._url}${file.links.large}`}
+            style={style}
+            ref={photo => {
+              this.photo = React.findDOMNode(photo)
+            }}
           />
         )}
-        <div
-          className={styles['pho-viewer-photo']}
-          ref={viewer => {
-            this.viewer = viewer
-          }}
-        >
-          {currentPhoto && (
-            <ImageLoader
-              photo={currentPhoto}
-              onLoad={this.handleImageLoaded}
-              src={`${cozy.client._url}${currentPhoto.links.large}`}
-              style={style}
-              ref={photo => {
-                this.photo = React.findDOMNode(photo)
-              }}
-            />
-          )}
-          {(!currentPhoto || isImageLoading) && (
-            <Loading noMargin color="white" />
-          )}
-        </div>
-        {!singlePhoto && (
-          <a
-            role="button"
-            className={classNames(styles['pho-viewer-nav-next'], {
-              [styles['pho-viewer-nav-next--hidden']]: hideActions
-            })}
-            onClick={() => this.navigateToPhoto(nextID)}
-          />
+        {(!file || isLoading) && (
+          <Spinner size="xxlarge" middle="true" noMargin color="white" />
         )}
       </div>
     )
   }
 }
-
-const mapRouteToPhotos = (photos = [], params) => {
-  let set = photos.map(photo => photo.id)
-  let currentID = params.photoId
-  let currentPhotoIndex = set.indexOf(currentID)
-  let currentPhoto = photos[currentPhotoIndex]
-
-  let nextID = set[(currentPhotoIndex + 1) % set.length]
-  let previousID =
-    set[currentPhotoIndex - 1 >= 0 ? currentPhotoIndex - 1 : set.length - 1]
-
-  return {
-    singlePhoto: currentID === previousID && currentID === nextID,
-    currentPhoto,
-    previousID,
-    nextID
-  }
-}
-
-export default withRouter(Viewer)

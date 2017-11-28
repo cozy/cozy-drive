@@ -35,6 +35,11 @@ export const downloadFile = async file => {
   forceFileDownload(window.URL.createObjectURL(blob), file.name)
 }
 
+export const getDownloadLink = file =>
+  cozy.client.files
+    .getDownloadLinkById(file.id)
+    .then(path => `${cozy.client._url}${path}`)
+
 /**
  * Compute fields that should be indexed for a mango
  * query to work

@@ -12,7 +12,7 @@ import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
-import breakpointsAware from 'cozy-ui/react/helpers/breakpoints'
+import { withBreakpoints } from 'cozy-ui/react'
 import { SharedBadge } from 'sharing'
 import { getSharingDetails } from 'cozy-client'
 
@@ -140,10 +140,19 @@ class File extends Component {
         this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
-      this.props.onFileOpen({
-        ...attributes,
-        availableOffline: this.props.isAvailableOffline
-      })
+      if (this.props.isAvailableOffline) {
+        this.props.onFileOpen({
+          ...attributes,
+          availableOffline: this.props.isAvailableOffline
+        })
+      } else if (this.props.withFilePath) {
+        // we're in /recent view and, as a mango query lacks the thumbnails links, we can't use the viewer
+        this.props.onFileOpen({ ...attributes })
+      } else {
+        this.props.router.push(
+          `${this.props.location.pathname}/file/${attributes.id}`
+        )
+      }
     }
   }
 
@@ -324,7 +333,7 @@ const FileWithSharedStatus = connect((state, ownProps) => ({
   shared: getSharingDetails(state, 'io.cozy.files', ownProps.attributes.id)
 }))(File)
 
-export default breakpointsAware()(withRouter(translate()(FileWithSharedStatus)))
+export default withBreakpoints()(withRouter(translate()(FileWithSharedStatus)))
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>
