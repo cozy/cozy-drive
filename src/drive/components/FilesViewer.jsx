@@ -8,7 +8,7 @@ const getParentPath = router => {
   return url.substring(0, url.lastIndexOf('/'))
 }
 
-export default class FileViewer extends Component {
+export default class FilesViewer extends Component {
   render() {
     if (this.props.files.length === 0) return null
     const files = this.props.files.filter(f => f.type !== 'directory')

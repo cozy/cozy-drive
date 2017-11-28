@@ -24,7 +24,7 @@ export default withSwipe(
         <div className={styles['pho-viewer-photo']}>
           <div className={styles['pho-viewer-videoviewer']}>
             {fileDownloadUrl && (
-              <video width="480" src={fileDownloadUrl} controls="controls" />
+              <video src={fileDownloadUrl} controls="controls" />
             )}
             {fileDownloadUrl && <p>{file.name}</p>}
             {!fileDownloadUrl && (
