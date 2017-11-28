@@ -10,7 +10,7 @@ import { registerDevice } from '../actions/settings'
 
 class RevokableWrapper extends Component {
   logout() {
-    resetClient()
+    resetClient(this.context.client)
     this.props.unrevokeClient()
     this.props.router.replace({
       pathname: '/onboarding',
