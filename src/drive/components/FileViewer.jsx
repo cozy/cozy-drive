@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
 import Viewer from 'viewer'
 
 import { getFolderUrl } from '../reducers'
@@ -9,7 +8,7 @@ const getParentPath = router => {
   return url.substring(0, url.lastIndexOf('/'))
 }
 
-class FileViewer extends Component {
+export default class FileViewer extends Component {
   render() {
     if (this.props.files.length === 0) return null
     const files = this.props.files.filter(f => f.type !== 'directory')
@@ -33,5 +32,3 @@ class FileViewer extends Component {
     )
   }
 }
-
-export default withRouter(FileViewer)

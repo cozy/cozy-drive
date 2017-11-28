@@ -27,16 +27,16 @@ export default class Viewer extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.onKeyDown, false)
+    document.addEventListener('keyup', this.onKeyUp, false)
     document.addEventListener('mousemove', this.showControls)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDownCallback, false)
+    document.removeEventListener('keyup', this.onKeyUp, false)
     document.removeEventListener('mousemove', this.showControls)
   }
 
-  onKeyDown = e => {
+  onKeyUp = e => {
     if (e.keyCode === KEY_CODE_LEFT) this.onPrevious()
     else if (e.keyCode === KEY_CODE_RIGHT) this.onNext()
   }
