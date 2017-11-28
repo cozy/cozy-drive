@@ -140,10 +140,19 @@ class File extends Component {
         this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
-      this.props.onFileOpen({
-        ...attributes,
-        availableOffline: this.props.isAvailableOffline
-      })
+      if (this.props.isAvailableOffline) {
+        this.props.onFileOpen({
+          ...attributes,
+          availableOffline: this.props.isAvailableOffline
+        })
+      } else if (this.props.withFilePath) {
+        // we're in /recent view and, as a mango query lacks the thumbnails links, we can't use the viewer
+        this.props.onFileOpen({ ...attributes })
+      } else {
+        this.props.router.push(
+          `${this.props.location.pathname}/file/${attributes.id}`
+        )
+      }
     }
   }
 

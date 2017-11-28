@@ -25,7 +25,7 @@ import {
   isActionMenuVisible
 } from '../reducers'
 
-const isRecentFilesView = props => props.location.pathname === '/recent'
+const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
@@ -59,10 +59,8 @@ class FileExplorer extends Component {
   }
 
   render() {
-    return React.cloneElement(
-      React.Children.only(this.props.children),
-      this.props
-    )
+    const { children, ...props } = this.props
+    return React.cloneElement(React.Children.only(children), props)
   }
 }
 

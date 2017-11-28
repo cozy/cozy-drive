@@ -410,5 +410,15 @@
     "item": {
       "pending": "Pending"
     }
+  },
+  "Viewer": {
+    "close": "Close",
+    "noviewer": {
+      "title": "The viewer doesn't know how to read this type of file yet.",
+      "download": "Download this file"
+    },
+    "actions": {
+      "download": "Download"
+    }
   }
 }

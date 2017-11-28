@@ -3,6 +3,7 @@ import classNames from 'classnames'
 
 import ViewerToolbar from './ViewerToolbar'
 import ImageViewer from './ImageViewer'
+import NoViewer from './NoViewer'
 
 import styles from './viewer'
 
@@ -14,20 +15,26 @@ export default class Viewer extends Component {
     controlsHidden: false
   }
 
-  showControls = () => this.setState({ controlsHidden: false })
-  hideControls = () => this.setState({ controlsHidden: true })
+  showControls = () => {
+    this.setState({ controlsHidden: false })
+    document.removeEventListener('mousemove', this.showControls)
+  }
+  hideControls = () => {
+    this.setState({ controlsHidden: true })
+    document.addEventListener('mousemove', this.showControls)
+  }
 
   componentDidMount() {
-    this.onKeyDownCallback = this.onKeyDown.bind(this)
-    document.addEventListener('keydown', this.onKeyDownCallback, false)
+    document.addEventListener('keydown', this.onKeyDown, false)
     document.addEventListener('mousemove', this.showControls)
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDownCallback, false)
+    document.removeEventListener('mousemove', this.showControls)
   }
 
-  onKeyDown(e) {
+  onKeyDown = e => {
     if (e.keyCode === KEY_CODE_LEFT) this.onPrevious()
     else if (e.keyCode === KEY_CODE_RIGHT) this.onNext()
   }
@@ -60,7 +67,6 @@ export default class Viewer extends Component {
 
   render() {
     const { files, currentIndex, onClose } = this.props
-
     const currentFile = files[currentIndex]
     const fileCount = files.length
     const hasPrevious = currentIndex > 0
@@ -84,12 +90,7 @@ export default class Viewer extends Component {
             onClick={this.onPrevious}
           />
         )}
-        <ImageViewer
-          file={currentFile}
-          onSwipeLeft={this.onNext}
-          onSwipeRight={this.onPrevious}
-          onTap={this.showControls}
-        />
+        {this.renderViewer(currentFile)}
         {hasNext && (
           <a
             role="button"
@@ -101,5 +102,28 @@ export default class Viewer extends Component {
         )}
       </div>
     )
+  }
+
+  renderViewer(file) {
+    if (!file) return null
+    switch (file.class) {
+      case 'image':
+        return (
+          <ImageViewer
+            file={file}
+            onSwipeLeft={this.onNext}
+            onSwipeRight={this.onPrevious}
+            onTap={this.showControls}
+          />
+        )
+      default:
+        return (
+          <NoViewer
+            file={file}
+            onSwipeLeft={this.onNext}
+            onSwipeRight={this.onPrevious}
+          />
+        )
+    }
   }
 }

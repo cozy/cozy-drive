@@ -60,6 +60,39 @@
         max-height  100%
         box-shadow  0 6px 24px 0 rgba(0, 0, 0, 0.5)
 
+    .pho-viewer-noviewer
+        text-align      center
+
+        &:before
+            content     ''
+            display     block
+            margin      0 auto
+            width       10rem
+            height      8.75rem
+            background  embedurl('./assets/icon-type-files.svg') center center / cover no-repeat
+
+        &--audio:before
+            background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
+        &--bin:before
+            background  embedurl('./assets/icon-type-bin.svg') center center / cover no-repeat
+        &--code:before
+            background  embedurl('./assets/icon-type-code.svg') center center / cover no-repeat
+        &--spreadsheet:before
+            background  embedurl('./assets/icon-type-sheet.svg') center center / cover no-repeat
+        &--slide:before
+            background  embedurl('./assets/icon-type-slide.svg') center center / cover no-repeat
+        &--text:before
+            background  embedurl('./assets/icon-type-text.svg') center center / cover no-repeat
+        &--video:before
+            background  embedurl('./assets/icon-type-video.svg') center center / cover no-repeat
+        &--zip:before
+            background  embedurl('./assets/icon-type-zip.svg') center center / cover no-repeat
+        &--pdf:before
+            background  embedurl('./assets/icon-type-pdf.svg') center center / cover no-repeat
+
+        .pho-viewer-noviewer-filename
+            text-align  center
+
 
 @media (max-width: (1023/basefont)rem)
     .pho-viewer-nav-previous, .pho-viewer-nav-next

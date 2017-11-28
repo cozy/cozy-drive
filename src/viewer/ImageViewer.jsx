@@ -38,7 +38,6 @@ export default class ImageViewer extends Component {
   }
 
   componentDidMount() {
-    console.log('mount')
     this.gesturesHandler = new Hammer(this.viewer)
     this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
 

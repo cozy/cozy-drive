@@ -6,6 +6,7 @@ import Layout from './Layout'
 import FileExplorer from '../containers/FileExplorer'
 import Settings from '../mobile/components/Settings'
 import OnBoarding from '../mobile/containers/OnBoarding'
+import FileViewer from './FileViewer'
 
 import {
   FolderContainer as Folder,
@@ -20,7 +21,12 @@ const AppRoute = (
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
-        <Route path="folder(/:folderId)" component={Folder} />
+        <Route path="folder" component={Folder}>
+          <Route path="file/:fileId" component={FileViewer} />
+        </Route>
+        <Route path="folder/:folderId" component={Folder}>
+          <Route path="file/:fileId" component={FileViewer} />
+        </Route>
         <Route path="recent" component={Recent} />
         <Route path="trash(/:folderId)" component={Trash} />
       </Route>
