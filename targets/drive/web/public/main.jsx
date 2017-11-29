@@ -25,7 +25,7 @@ const getQueryParameter = () =>
     .map(varval => varval.split('='))
     .reduce(arrToObj, {})
 
-function init() {
+async function init() {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -39,7 +39,23 @@ function init() {
     token: sharecode
   })
 
-  if (directdownload) {
+  let useDirectDownload
+
+  if (directdownload !== undefined) useDirectDownload = true
+  else {
+    try {
+      const response = await client.fetchDocument('io.cozy.files', id)
+      const { data = [] } = response
+      const isFile = data.length > 0 && data[0].type === 'file'
+      useDirectDownload = isFile
+    }
+    catch (e) {
+      console.warn(e)
+      useDirectDownload = false
+    }
+  }
+
+  if (useDirectDownload) {
     cozy.client.files
       .getDownloadLinkById(id)
       .then(link => {
