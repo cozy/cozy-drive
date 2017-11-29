@@ -1,5 +1,5 @@
 /* global cozy */
-import styles from './viewer'
+import styles from './styles'
 
 import React, { Component } from 'react'
 import Hammer from 'hammerjs'
@@ -37,21 +37,57 @@ export default class ImageViewer extends Component {
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
   }
 
-  componentDidMount() {
-    this.gesturesHandler = new Hammer(this.viewer)
-    this.gesturesHandler.on('swipe', this.onSwipe.bind(this))
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.file &&
+      this.props.file &&
+      nextProps.file.id !== this.props.file.id
+    ) {
+      this.setState({
+        isLoading: true,
+        scale: 1,
+        offsetX: 0,
+        offsetY: 0
+      })
+    }
+  }
 
-    this.gesturesHandler.get('pinch').set({ enable: true })
-    this.gesturesHandler.get('pan').set({ direction: Hammer.DIRECTION_ALL })
+  componentDidMount() {
+    if (this.props.gestures) this.setupGestures()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.gestures) this.setupGestures()
+  }
+
+  componentWillUnmount() {
+    this.tearDownGestures()
+  }
+
+  tearDownGestures() {
+    this.gestures.off('panstart')
+    this.gestures.off('pinchstart')
+    this.gestures.off('pinchend')
+    this.gestures.off('pan')
+    this.gestures.off('pinch')
+    this.gestures.off('panend')
+  }
+
+  setupGestures() {
+    this.gestures = this.props.gestures
+    this.viewer = this.props.gesturesRef
+
+    this.gestures.get('pinch').set({ enable: true })
+    this.gestures.get('pan').set({ direction: Hammer.DIRECTION_ALL })
 
     // During a gesture, everything is computed with a base value (the state of the image when the gesture starts) and a delta (a translation / zoom, described by the gesture). When a gesture starts, we record the current state of the image.
-    this.gesturesHandler.on('panstart', this.prepareForGesture.bind(this))
-    this.gesturesHandler.on('pinchstart', this.prepareForGesture.bind(this))
+    this.gestures.on('panstart', this.prepareForGesture.bind(this))
+    this.gestures.on('pinchstart', this.prepareForGesture.bind(this))
     // It frequently happens that at the end of a pinch gesture, a pan gesture is detected — because the fingers don't come off the screen at exactly the same time. Reseting the values at the end of the pinch makes sure the values are correct for the (accidental) pan event.
-    this.gesturesHandler.on('pinchend', this.prepareForGesture.bind(this))
+    this.gestures.on('pinchend', this.prepareForGesture.bind(this))
 
     // during a pan, we add the gestures delta to the initial offset to get the new offset. The new offset is then scaled : if the pan distance was 100px, but the image was scaled 2x, the actual offset should only be 50px. FInally, this value is clamped to make sure the user can't pan further than the edges.
-    this.gesturesHandler.on('pan', e => {
+    this.gestures.on('pan', e => {
       this.setState(state => {
         const maxOffset = this.computeMaxOffset()
         return {
@@ -70,7 +106,7 @@ export default class ImageViewer extends Component {
     })
 
     // pinching / zooming / scaling is a bit more complicated, because the gesture's center has to be taken into account
-    this.gesturesHandler.on('pinch', e => {
+    this.gestures.on('pinch', e => {
       if (e.isFinal) return // hard to reproduce, but the final event seems to be causing problems and since it's just replaying the previous event, it can safely be discared
 
       this.setState(state => {
@@ -121,7 +157,7 @@ export default class ImageViewer extends Component {
       })
     })
 
-    this.gesturesHandler.on('panend', e => {
+    this.gestures.on('panend', e => {
       // convert the remaining velocity into momentum
       this.setState(
         {
@@ -133,8 +169,6 @@ export default class ImageViewer extends Component {
         this.applyMomentum.bind(this)
       )
     })
-
-    if (this.props.onTap) this.gesturesHandler.on('tap', this.props.onTap())
   }
 
   /**
@@ -219,31 +253,6 @@ export default class ImageViewer extends Component {
     }))
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.file &&
-      this.props.file &&
-      nextProps.file.id !== this.props.file.id
-    ) {
-      this.setState({
-        isLoading: true,
-        scale: 1,
-        offsetX: 0,
-        offsetY: 0
-      })
-    }
-  }
-
-  onSwipe(e) {
-    // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
-    if (this.state.scale > 1) return
-
-    if (e.direction === Hammer.DIRECTION_LEFT && this.props.onSwipeLeft)
-      this.props.onSwipeLeft()
-    else if (e.direction === Hammer.DIRECTION_RIGHT && this.props.onSwipeRight)
-      this.props.onSwipeRight()
-  }
-
   handleImageLoaded() {
     this.setState({ isLoading: false })
   }
@@ -257,12 +266,7 @@ export default class ImageViewer extends Component {
       display: isLoading ? 'none' : 'initial'
     }
     return (
-      <div
-        className={styles['pho-viewer-photo']}
-        ref={viewer => {
-          this.viewer = viewer
-        }}
-      >
+      <div className={styles['pho-viewer-photo']}>
         {file && (
           <ImageLoader
             photo={file}
