@@ -11,6 +11,8 @@ import {
 import { isWifi } from '../../lib/network'
 import { logException } from '../../lib/reporter'
 
+const ERROR_CODE_TOO_LARGE = 413
+
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
 
 const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
@@ -97,22 +99,28 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
     return
   } catch (_) {} // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
+  const MILLISECOND = 1
+  const SECOND = 1000 * MILLISECOND
+  const MINUTE = 60 * SECOND
+  const maxBackupTime = 5 * MINUTE
+  const timeout = setTimeout(() => {
+    logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
+  }, maxBackupTime)
+
   try {
-    const MILLISECOND = 1
-    const SECOND = 1000 * MILLISECOND
-    const MINUTE = 60 * SECOND
-    const maxBackupTime = 5 * MINUTE
-    const timeout = setTimeout(() => {
-      logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
-    }, maxBackupTime)
     await uploadLibraryItem(dirID, photo)
     clearTimeout(timeout)
     dispatch(mediaUploadSucceed(photo))
   } catch (err) {
-    console.warn('startMediaBackup upload item error')
-    console.warn(JSON.stringify(err))
-    console.info(JSON.stringify(photo))
-    logException('Backup error: ' + JSON.stringify(err))
+    if (err.code && parseInt(err.code) === ERROR_CODE_TOO_LARGE) {
+      clearTimeout(timeout)
+      dispatch({ type: MEDIA_UPLOAD_QUOTA })
+    } else {
+      console.warn('startMediaBackup upload item error')
+      console.warn(JSON.stringify(err))
+      console.info(JSON.stringify(photo))
+      logException('Backup error: ' + JSON.stringify(err))
+    }
   }
 }
 
@@ -152,12 +160,14 @@ const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
 const MEDIA_UPLOAD_ABORT = 'MEDIA_UPLOAD_ABORT'
 const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
 const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
+const MEDIA_UPLOAD_QUOTA = 'MEDIA_UPLOAD_QUOTA'
 const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
 
 const initialState = {
   uploading: false,
   cancelMediaBackup: false,
   abortedMediaBackup: false,
+  diskQuotaReached: false,
   uploaded: []
 }
 
@@ -168,12 +178,15 @@ export default (state = initialState, action) => {
         ...state,
         uploading: true,
         cancelMediaBackup: false,
-        abortedMediaBackup: false
+        abortedMediaBackup: false,
+        diskQuotaReached: false
       }
     case MEDIA_UPLOAD_CANCEL:
       return { ...state, cancelMediaBackup: true }
     case MEDIA_UPLOAD_ABORT:
       return { ...state, abortedMediaBackup: true }
+    case MEDIA_UPLOAD_QUOTA:
+      return { ...state, diskQuotaReached: true }
     case MEDIA_UPLOAD_END:
       return {
         ...state,

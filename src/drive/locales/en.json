@@ -308,7 +308,9 @@
         "media_upload":
           "%{smart_count} remaining picture |||| %{smart_count} remaining pictures",
         "media_uptodate": "Media backup is up-to-date",
-        "media_wifi": "Please connect to a WIFI"
+        "no_wifi": "Please connect to a WIFI",
+        "quota": "Storage limit nearly reached",
+        "quota_contact": "Manage your storage space"
       },
       "support": {
         "title": "Support",
@@ -375,6 +377,15 @@
         "later": "No problem, we'll ask again later.",
         "feedback": "Thank you for the feedback. We'll definitely work on it!"
       }
+    },
+    "quota_feedback": {
+      "title": "Need more storage space?",
+      "description": "Let us know your storage needs for your files and photos. We will contact you to adapt our offer.",
+      "button": "Send",
+      "email_subject": "Extra storage space request",
+      "title_sent": "Thanks for your message!",
+      "text_sent": "We're going to look into your request and we'll reach out to you as soon as possible.",
+      "button_sent": "Close"
     },
     "first_sync": {
       "title": "You are about to start your first photos back up 🎉",
