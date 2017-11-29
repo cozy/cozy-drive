@@ -126,6 +126,7 @@ export class SelectServer extends Component {
           </label>
           <input
             type="text"
+            autoCapitalize="none"
             className={
               error
                 ? classNames(styles['input'], styles['error'])
@@ -141,9 +142,10 @@ export class SelectServer extends Component {
             value={value}
           />
           {!error && (
-            <p className={classNames(styles['description'], styles['info'])}>
-              {t('mobile.onboarding.server_selection.description')}
-            </p>
+            <ReactMarkdown
+              className={classNames(styles['description'], styles['info'])}
+              source={t('mobile.onboarding.server_selection.description')}
+            />
           )}
           {error && (
             <ReactMarkdown
