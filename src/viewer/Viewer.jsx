@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
-import ViewerToolbar from './ViewerToolbar'
+import ViewerControls from './ViewerControls'
 import ImageViewer from './ImageViewer'
 import AudioViewer from './AudioViewer'
 import VideoViewer from './VideoViewer'
 import NoViewer from './NoViewer'
 
-import styles from './viewer'
+import styles from './styles'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
@@ -21,27 +20,12 @@ const isIOS = () =>
 const isMobile = () => isAndroid() || isIOS()
 
 export default class Viewer extends Component {
-  state = {
-    controlsHidden: false
-  }
-
-  showControls = () => {
-    this.setState({ controlsHidden: false })
-    document.removeEventListener('mousemove', this.showControls)
-  }
-  hideControls = () => {
-    this.setState({ controlsHidden: true })
-    document.addEventListener('mousemove', this.showControls)
-  }
-
   componentDidMount() {
     document.addEventListener('keyup', this.onKeyUp, false)
-    document.addEventListener('mousemove', this.showControls)
   }
 
   componentWillUnmount() {
     document.removeEventListener('keyup', this.onKeyUp, false)
-    document.removeEventListener('mousemove', this.showControls)
   }
 
   onKeyUp = e => {
@@ -81,35 +65,18 @@ export default class Viewer extends Component {
     const fileCount = files.length
     const hasPrevious = currentIndex > 0
     const hasNext = currentIndex < fileCount - 1
-
-    const { controlsHidden } = this.state
     return (
       <div className={styles['pho-viewer-wrapper']} role="viewer">
-        <ViewerToolbar
-          hidden={controlsHidden}
-          onHide={this.hideControls}
+        <ViewerControls
           currentFile={currentFile}
           onClose={onClose}
-        />
-        {hasPrevious && (
-          <a
-            role="button"
-            className={classNames(styles['pho-viewer-nav-previous'], {
-              [styles['pho-viewer-nav-previous--hidden']]: controlsHidden
-            })}
-            onClick={this.onPrevious}
-          />
-        )}
-        {this.renderViewer(currentFile)}
-        {hasNext && (
-          <a
-            role="button"
-            className={classNames(styles['pho-viewer-nav-next'], {
-              [styles['pho-viewer-nav-next--hidden']]: controlsHidden
-            })}
-            onClick={this.onNext}
-          />
-        )}
+          hasPrevious={hasPrevious}
+          hasNext={hasNext}
+          onPrevious={this.onPrevious}
+          onNext={this.onNext}
+        >
+          {this.renderViewer(currentFile)}
+        </ViewerControls>
       </div>
     )
   }

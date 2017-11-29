@@ -3,7 +3,7 @@ import { getDownloadLink } from 'cozy-client'
 import Spinner from 'cozy-ui/react/Spinner'
 
 import withSwipe from './withSwipe'
-import styles from './viewer'
+import styles from './styles'
 
 export default withSwipe(
   class VideoViewer extends Component {

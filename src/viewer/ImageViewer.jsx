@@ -1,5 +1,5 @@
 /* global cozy */
-import styles from './viewer'
+import styles from './styles'
 
 import React, { Component } from 'react'
 import Hammer from 'hammerjs'

@@ -5,7 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import Button from 'cozy-ui/react/Button'
 
 import withSwipe from './withSwipe'
-import styles from './viewer'
+import styles from './styles'
 
 export default translate()(
   withSwipe(
