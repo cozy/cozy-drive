@@ -74,6 +74,7 @@ export default class Viewer extends Component {
           hasNext={hasNext}
           onPrevious={this.onPrevious}
           onNext={this.onNext}
+          isMobile={isMobile()}
         >
           {this.renderViewer(currentFile)}
         </ViewerControls>
@@ -84,14 +85,7 @@ export default class Viewer extends Component {
   renderViewer(file) {
     if (!file) return null
     const ComponentName = this.getViewerComponentName(file)
-    return (
-      <ComponentName
-        file={file}
-        onSwipeLeft={this.onNext}
-        onSwipeRight={this.onPrevious}
-        onTap={this.showControls}
-      />
-    )
+    return <ComponentName file={file} />
   }
 
   getViewerComponentName(file) {

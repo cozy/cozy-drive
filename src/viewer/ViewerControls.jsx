@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import Hammer from 'hammerjs'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { downloadFile } from 'cozy-client'
@@ -10,7 +11,8 @@ const ACTIONS_HIDE_DELAY = 3000
 
 class ViewerControls extends Component {
   state = {
-    hidden: false
+    hidden: false,
+    gestures: null
   }
 
   showControls = () => {
@@ -26,16 +28,9 @@ class ViewerControls extends Component {
     document.addEventListener('mousemove', this.showControls)
   }
 
-  onPreviousClick = () => {
+  onTap = () => {
     if (this.state.hidden) this.showControls()
     else this.hideAfterDelay()
-    this.props.onPrevious()
-  }
-
-  onNextClick = () => {
-    if (this.state.hidden) this.showControls()
-    else this.hideAfterDelay()
-    this.props.onNext()
   }
 
   hideAfterDelay = () => {
@@ -45,8 +40,21 @@ class ViewerControls extends Component {
     }, ACTIONS_HIDE_DELAY)
   }
 
+  onSwipe = e => {
+    if (e.direction === Hammer.DIRECTION_LEFT) this.props.onNext()
+    else if (e.direction === Hammer.DIRECTION_RIGHT) this.props.onPrevious()
+  }
+
   componentDidMount() {
     this.hideAfterDelay()
+    const gestures = new Hammer(React.findDOMNode(this.wrapped))
+    gestures.on('swipe', this.onSwipe)
+    gestures.on('tap', this.onTap)
+    this.setState({ gestures })
+  }
+
+  componentWillUnmount() {
+    this.state.gestures.destroy()
   }
 
   render() {
@@ -56,11 +64,19 @@ class ViewerControls extends Component {
       onClose,
       hasPrevious,
       hasNext,
+      onPrevious,
+      onNext,
+      isMobile,
       children
     } = this.props
     const { hidden } = this.state
     return (
-      <div className={styles['pho-viewer-controls']}>
+      <div
+        className={styles['pho-viewer-controls']}
+        ref={wrapped => {
+          this.wrapped = wrapped
+        }}
+      >
         <div
           className={classNames(styles['pho-viewer-toolbar'], {
             [styles['pho-viewer-toolbar--hidden']]: hidden
@@ -90,43 +106,53 @@ class ViewerControls extends Component {
             <div className={styles['pho-viewer-toolbar-close-cross']} />
           </div>
         </div>
-        {hasPrevious && (
-          <div
-            role="button"
-            className={classNames(
-              styles['pho-viewer-nav'],
-              styles['pho-viewer-nav--previous'],
-              {
-                [styles['pho-viewer-nav--visible']]: !hidden
-              }
-            )}
-            onClick={this.onPreviousClick}
-            onMouseEnter={this.showControls}
-            onMouseLeave={this.hideControls}
-          >
-            <div className={styles['pho-viewer-nav-arrow']} />
-          </div>
-        )}
-        {children}
-        {hasNext && (
-          <div
-            role="button"
-            className={classNames(
-              styles['pho-viewer-nav'],
-              styles['pho-viewer-nav--next'],
-              {
-                [styles['pho-viewer-nav--visible']]: !hidden
-              }
-            )}
-            onClick={this.onNextClick}
-            onMouseEnter={this.showControls}
-            onMouseLeave={this.hideControls}
-          >
-            <div className={styles['pho-viewer-nav-arrow']} />
-          </div>
-        )}
+        {!isMobile &&
+          hasPrevious && (
+            <div
+              role="button"
+              className={classNames(
+                styles['pho-viewer-nav'],
+                styles['pho-viewer-nav--previous'],
+                {
+                  [styles['pho-viewer-nav--visible']]: !hidden
+                }
+              )}
+              onClick={onPrevious}
+              onMouseEnter={this.showControls}
+              onMouseLeave={this.hideControls}
+            >
+              <div className={styles['pho-viewer-nav-arrow']} />
+            </div>
+          )}
+        {this.renderChildren(children)}
+        {!isMobile &&
+          hasNext && (
+            <div
+              role="button"
+              className={classNames(
+                styles['pho-viewer-nav'],
+                styles['pho-viewer-nav--next'],
+                {
+                  [styles['pho-viewer-nav--visible']]: !hidden
+                }
+              )}
+              onClick={onNext}
+              onMouseEnter={this.showControls}
+              onMouseLeave={this.hideControls}
+            >
+              <div className={styles['pho-viewer-nav-arrow']} />
+            </div>
+          )}
       </div>
     )
+  }
+
+  renderChildren(children) {
+    if (!children) return null
+    return React.cloneElement(children[0], {
+      gestures: this.state.gestures,
+      gesturesRef: this.wrapped
+    })
   }
 }
 
