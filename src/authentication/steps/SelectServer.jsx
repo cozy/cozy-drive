@@ -7,15 +7,15 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import styles from '../styles'
 
-const ERR_WRONG_ADDRESS =
-  'mobile.onboarding.server_selection.wrong_address_with_email'
-const ERR_EMAIL = 'mobile.onboarding.server_selection.wrong_address'
+const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
+const ERR_EMAIL = 'mobile.onboarding.server_selection.wrong_address_with_email'
 const ERR_V2 = 'mobile.onboarding.server_selection.wrong_address_v2'
 const ERR_COSY = 'mobile.onboarding.server_selection.wrong_address_cosy'
 
 export class SelectServer extends Component {
   state = {
     value: '',
+    fetching: false,
     error: null
   }
 
@@ -24,7 +24,10 @@ export class SelectServer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.externalError) this.setState({ error: ERR_WRONG_ADDRESS })
+    this.setState({
+      error: nextProps.externalError ? ERR_WRONG_ADDRESS : null,
+      fetching: nextProps.fetching
+    })
   }
 
   componentDidUpdate() {
@@ -72,6 +75,8 @@ export class SelectServer extends Component {
       return
     }
 
+    this.setState({ fetching: true })
+
     let isV2Instance
     const cozyClient = this.context.client
     try {
@@ -82,7 +87,10 @@ export class SelectServer extends Component {
     }
 
     if (isV2Instance) {
-      this.setState({ error: ERR_V2 })
+      this.setState({
+        error: ERR_V2,
+        fetching: false
+      })
       return
     }
 
@@ -90,8 +98,8 @@ export class SelectServer extends Component {
   }
 
   render() {
-    const { value, error } = this.state
-    const { t, previousStep, fetching } = this.props
+    const { value, error, fetching } = this.state
+    const { t, previousStep } = this.props
     return (
       <form
         className={classNames(styles['wizard'], styles['select-server'])}
@@ -117,7 +125,7 @@ export class SelectServer extends Component {
             {t('mobile.onboarding.server_selection.label')}
           </label>
           <input
-            type="url"
+            type="text"
             className={
               error
                 ? classNames(styles['input'], styles['error'])
