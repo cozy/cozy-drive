@@ -465,9 +465,7 @@ const getAppUrlForDoctype = (state, doctype) => {
 
 const buildSharingLink = (state, id, doctype, sharecode) => {
   const appUrl = getAppUrlForDoctype(state, doctype)
-  return `${appUrl}public?sharecode=${sharecode}&id=${id}${
-    doctype === 'file' ? '&directdownload' : ''
-  }`
+  return `${appUrl}public?sharecode=${sharecode}&id=${id}`
 }
 
 // helpers
