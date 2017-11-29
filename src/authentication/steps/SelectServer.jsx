@@ -127,6 +127,8 @@ export class SelectServer extends Component {
           <input
             type="text"
             autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="off"
             className={
               error
                 ? classNames(styles['input'], styles['error'])
