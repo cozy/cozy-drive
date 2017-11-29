@@ -2098,9 +2098,9 @@ cozy-bar@4.5.0:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-cozy-client-js@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.4.1.tgz#dca585a0f4ec07fc4571cb0600934b928499d001"
+cozy-client-js@0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.4.3.tgz#e414267239304b00b16ef6f433e085b5c053ae70"
   dependencies:
     pouchdb "6.1.1"
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
@@ -6901,9 +6901,9 @@ postcss@^6.0.1:
     source-map "^0.6.1"
     supports-color "^4.4.0"
 
-"pouchdb-adapter-cordova-sqlite@https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a":
+"pouchdb-adapter-cordova-sqlite@git+https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a":
   version "2.0.2"
-  resolved "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
+  resolved "git+https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
   dependencies:
     pouchdb-adapter-websql-core "^6.1.1"
 

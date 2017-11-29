@@ -1,6 +1,6 @@
 'use strict'
 
-const { DefinePlugin, ProvidePlugin, optimize } = require('webpack')
+const { DefinePlugin, optimize } = require('webpack')
 
 module.exports = {
   output: {
@@ -23,9 +23,6 @@ module.exports = {
       __PIWIK_SITEID_MOBILE__: 12,
       __PIWIK_DIMENSION_ID_APP__: 1,
       __PIWIK_TRACKER_URL__: JSON.stringify('https://piwik.cozycloud.cc')
-    }),
-    new ProvidePlugin({
-      'cozy.client': 'cozy-client-js/dist/cozy-client.js'
     })
   ]
 }
