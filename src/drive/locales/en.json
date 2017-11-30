@@ -430,6 +430,10 @@
     },
     "actions": {
       "download": "Download"
+    },
+    "loading": {
+      "error": "This file could not be loaded. Do you have a working internet connection right now?",
+      "retry": "Retry"
     }
   }
 }

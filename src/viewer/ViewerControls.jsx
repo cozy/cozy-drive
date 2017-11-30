@@ -93,7 +93,9 @@ class ViewerControls extends Component {
           >
             <button
               className={styles['coz-action-download']}
-              onClick={() => downloadFile(currentFile)}
+              onClick={() => {
+                downloadFile(currentFile)
+              }}
             >
               {t('Viewer.actions.download')}
             </button>
