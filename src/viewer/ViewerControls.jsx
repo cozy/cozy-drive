@@ -54,7 +54,7 @@ class ViewerControls extends Component {
   }
 
   componentWillUnmount() {
-    this.state.gestures.destroy()
+    if (this.state.gestures) this.state.gestures.destroy()
   }
 
   render() {
