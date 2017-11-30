@@ -20,7 +20,7 @@ export default class AudioViewer extends Component {
     const { fileDownloadUrl } = this.state
     return (
       <div className={styles['pho-viewer-audioviewer']}>
-        <p>{file.name}</p>
+        <p className={styles['pho-viewer-filename']}>{file.name}</p>
         {fileDownloadUrl && <audio src={fileDownloadUrl} controls="controls" />}
         {!fileDownloadUrl && (
           <Spinner size="xxlarge" middle="true" noMargin color="white" />

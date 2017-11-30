@@ -17,7 +17,7 @@ export default translate()(
             styles[`pho-viewer-noviewer--${file.class}`]
           )}
         >
-          <p className={styles['pho-viewer-noviewer-filename']}>{file.name}</p>
+          <p className={styles['pho-viewer-filename']}>{file.name}</p>
           <h2>{t('Viewer.noviewer.title')}</h2>
           <Button
             theme="regular"
