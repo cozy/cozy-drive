@@ -4,7 +4,9 @@ import styles from './styles'
 import React, { Component } from 'react'
 import Hammer from 'hammerjs'
 
+import { translate } from 'cozy-ui/react/I18n'
 import Spinner from 'cozy-ui/react/Spinner'
+import Button from 'cozy-ui/react/Button'
 import { ImageLoader } from 'components/Image'
 
 const MIN_SCALE = 1
@@ -14,7 +16,7 @@ const FRICTION = 0.9 // When the photo is paning after a pan gesture ended sudde
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
-export default class ImageViewer extends Component {
+class ImageViewer extends Component {
   constructor(props) {
     super(props)
 
@@ -53,6 +55,9 @@ export default class ImageViewer extends Component {
   }
 
   componentDidMount() {
+    this.loadertimeout = setTimeout(() => {
+      this.setState(state => ({ ...state, canceled: true }))
+    }, this.TTL)
     if (this.props.gestures) this.setupGestures()
   }
 
@@ -267,9 +272,41 @@ export default class ImageViewer extends Component {
 
   handleImageLoaded() {
     this.setState({ isLoading: false })
+    clearTimeout(this.loadertimeout)
+  }
+
+  reload() {
+    this.setState(state => ({ ...state, loading: true, canceled: false }))
+    this.loadertimeout = setTimeout(
+      () => this.setState(state => ({ ...state, canceled: true })),
+      this.TTL
+    )
   }
 
   render() {
+    if (this.state.canceled) {
+      const { t } = this.props
+      return (
+        <div
+          className={styles['pho-viewer-photo']}
+          ref={viewer => {
+            this.viewer = viewer
+          }}
+        >
+          <div className={styles['pho-viewer-canceled']}>
+            <h2>{t('Viewer.loading.error')}</h2>
+            <Button
+              theme="regular"
+              onClick={() => {
+                this.reload()
+              }}
+            >
+              {t('Viewer.loading.retry')}
+            </Button>
+          </div>
+        </div>
+      )
+    }
     const { file } = this.props
 
     const { isLoading, scale, offsetX, offsetY } = this.state
@@ -297,3 +334,4 @@ export default class ImageViewer extends Component {
     )
   }
 }
+export default translate()(ImageViewer)
