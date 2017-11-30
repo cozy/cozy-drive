@@ -19,16 +19,14 @@ export default class VideoViewer extends Component {
     const { file } = this.props
     const { fileDownloadUrl } = this.state
     return (
-      <div className={styles['pho-viewer-photo']}>
-        <div className={styles['pho-viewer-videoviewer']}>
-          {fileDownloadUrl && (
-            <video src={fileDownloadUrl} controls="controls" />
-          )}
-          {fileDownloadUrl && <p>{file.name}</p>}
-          {!fileDownloadUrl && (
-            <Spinner size="xxlarge" middle="true" noMargin color="white" />
-          )}
-        </div>
+      <div className={styles['pho-viewer-videoviewer']}>
+        {fileDownloadUrl && <video src={fileDownloadUrl} controls="controls" />}
+        {fileDownloadUrl && (
+          <p className={styles['pho-viewer-filename']}>{file.name}</p>
+        )}
+        {!fileDownloadUrl && (
+          <Spinner size="xxlarge" middle="true" noMargin color="white" />
+        )}
       </div>
     )
   }

@@ -54,7 +54,7 @@ class ViewerControls extends Component {
   }
 
   componentWillUnmount() {
-    this.state.gestures.destroy()
+    if (this.state.gestures) this.state.gestures.destroy()
   }
 
   render() {
@@ -151,7 +151,8 @@ class ViewerControls extends Component {
     if (!children) return null
     return React.cloneElement(children[0], {
       gestures: this.state.gestures,
-      gesturesRef: this.wrapped
+      gesturesRef: this.wrapped,
+      onSwipe: this.onSwipe
     })
   }
 }

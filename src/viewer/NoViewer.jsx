@@ -11,25 +11,21 @@ export default translate()(
     render() {
       const { t, file } = this.props
       return (
-        <div className={styles['pho-viewer-photo']}>
-          <div
-            className={classNames(
-              styles['pho-viewer-noviewer'],
-              styles[`pho-viewer-noviewer--${file.class}`]
-            )}
+        <div
+          className={classNames(
+            styles['pho-viewer-noviewer'],
+            styles[`pho-viewer-noviewer--${file.class}`]
+          )}
+        >
+          <p className={styles['pho-viewer-filename']}>{file.name}</p>
+          <h2>{t('Viewer.noviewer.title')}</h2>
+          <Button
+            theme="regular"
+            className={styles['pho-viewer-noviewer-download']}
+            onClick={() => downloadFile(file)}
           >
-            <p className={styles['pho-viewer-noviewer-filename']}>
-              {file.name}
-            </p>
-            <h2>{t('Viewer.noviewer.title')}</h2>
-            <Button
-              theme="regular"
-              className={styles['pho-viewer-noviewer-download']}
-              onClick={() => downloadFile(file)}
-            >
-              {t('Viewer.noviewer.download')}
-            </Button>
-          </div>
+            {t('Viewer.noviewer.download')}
+          </Button>
         </div>
       )
     }

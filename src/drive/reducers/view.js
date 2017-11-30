@@ -168,14 +168,31 @@ const lastFetch = (state = null, action) => {
   }
 }
 
+// TODO: temp
+const filesWithLinks = (state = {}, action) => {
+  switch (action.type) {
+    case 'FETCH_FILES_LINKS_SUCCESS':
+      const { folderId, files } = action
+      return { ...state, [folderId]: files }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   displayedFolder,
   openedFolderId,
   fileCount,
   files,
+  // TODO: temp
+  filesWithLinks,
   fetchStatus,
   lastFetch
 })
+
+// TODO: temp
+export const getFilesWithLinks = ({ view }, folderId) =>
+  view.filesWithLinks[folderId]
 
 export const getVisibleFiles = ({ view }) => view.files
 

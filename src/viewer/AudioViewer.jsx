@@ -19,16 +19,12 @@ export default class AudioViewer extends Component {
     const { file } = this.props
     const { fileDownloadUrl } = this.state
     return (
-      <div className={styles['pho-viewer-photo']}>
-        <div className={styles['pho-viewer-audioviewer']}>
-          <p>{file.name}</p>
-          {fileDownloadUrl && (
-            <audio src={fileDownloadUrl} controls="controls" />
-          )}
-          {!fileDownloadUrl && (
-            <Spinner size="xxlarge" middle="true" noMargin color="white" />
-          )}
-        </div>
+      <div className={styles['pho-viewer-audioviewer']}>
+        <p className={styles['pho-viewer-filename']}>{file.name}</p>
+        {fileDownloadUrl && <audio src={fileDownloadUrl} controls="controls" />}
+        {!fileDownloadUrl && (
+          <Spinner size="xxlarge" middle="true" noMargin color="white" />
+        )}
       </div>
     )
   }
