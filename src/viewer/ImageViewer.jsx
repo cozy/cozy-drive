@@ -48,6 +48,7 @@ class ImageViewer extends Component {
     ) {
       this.setState({
         isLoading: true,
+        canceled: false,
         scale: 1,
         offsetX: 0,
         offsetY: 0
@@ -81,7 +82,7 @@ class ImageViewer extends Component {
   }
 
   reload() {
-    this.setState(state => ({ ...state, loading: true, canceled: false }))
+    this.setState(state => ({ ...state, isLoading: true, canceled: false }))
     this.loadertimeout = setTimeout(
       () => this.setState(state => ({ ...state, canceled: true })),
       TTL
