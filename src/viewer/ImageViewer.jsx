@@ -65,6 +65,8 @@ export default class ImageViewer extends Component {
   }
 
   tearDownGestures() {
+    this.gestures.off('swipe')
+    this.gestures.on('swipe', this.props.onSwipe)
     this.gestures.off('panstart')
     this.gestures.off('pinchstart')
     this.gestures.off('pinchend')
@@ -73,9 +75,19 @@ export default class ImageViewer extends Component {
     this.gestures.off('panend')
   }
 
+  onSwipe = e => {
+    // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
+    if (this.state.scale > 1) return
+    this.props.onSwipe(e)
+  }
+
   setupGestures() {
     this.gestures = this.props.gestures
     this.viewer = this.props.gesturesRef
+
+    // We replace the swipe handler by ours
+    this.gestures.off('swipe')
+    this.gestures.on('swipe', this.onSwipe)
 
     this.gestures.get('pinch').set({ enable: true })
     this.gestures.get('pan').set({ direction: Hammer.DIRECTION_ALL })
