@@ -30,10 +30,18 @@
     background-color     transparent
     transition           .4s opacity ease-out
     opacity              0
+    display              flex
+    align-items          center
+    justify-content      center
+    flex-direction       column
 
     .pho-viewer-nav-arrow
-        height            100%
-        background-repeat no-repeat
+        height em(70px)
+        width  em(70px)
+        border-radius       50%
+        background-color    charcoal-grey
+        background-repeat   no-repeat
+        background-position center center
 
     &--visible:hover
         opacity           1
@@ -41,15 +49,15 @@
     &--previous
         left 0
         .pho-viewer-nav-arrow
+            align-self          flex-start
             margin-left         em(40px)
             background-image    embedurl('./assets/icon-arrow-left.svg')
-            background-position left center
     &--next
         right 0
         .pho-viewer-nav-arrow
-            margin-right         em(40px)
+            align-self          flex-end
+            margin-right        em(40px)
             background-image    embedurl('./assets/icon-arrow-right.svg')
-            background-position right center
 
 .pho-viewer-imageviewer
 .pho-viewer-noviewer
@@ -130,7 +138,8 @@
     flex-shrink 0
     width       100%
     height      em(90px)
-    background-color    alpha(charcoal-grey, .33)
+    // background-color    alpha(charcoal-grey, .33)
+    background linear-gradient(to bottom, alpha(charcoal-grey, .50), alpha(charcoal-grey, .33), alpha(charcoal-grey, 0))
     transition .4s opacity ease-out
 
     &--hidden
