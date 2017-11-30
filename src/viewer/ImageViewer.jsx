@@ -266,7 +266,7 @@ export default class ImageViewer extends Component {
       display: isLoading ? 'none' : 'initial'
     }
     return (
-      <div className={styles['pho-viewer-photo']}>
+      <div className={styles['pho-viewer-imageviewer']}>
         {file && (
           <ImageLoader
             photo={file}
