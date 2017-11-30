@@ -39,6 +39,7 @@
         height em(70px)
         width  em(70px)
         border-radius       50%
+        opacity             0.7
         background-color    charcoal-grey
         background-repeat   no-repeat
         background-position center center
@@ -63,6 +64,7 @@
 .pho-viewer-noviewer
 .pho-viewer-audioviewer
 .pho-viewer-videoviewer
+.pho-viewer-canceled
     position         relative
     display          flex
     flex             1 1 100%
@@ -90,6 +92,7 @@
         max-width     90%
         text-overflow ellipsis
 
+.pho-viewer-canceled
 .pho-viewer-noviewer
 .pho-viewer-audioviewer
     display flex
@@ -103,6 +106,10 @@
         margin      0 auto
         width       10rem
         height      8.75rem
+
+.pho-viewer-canceled
+    &:before
+        background  embedurl('./assets/icon-cloud-wrong.svg') center center / contain no-repeat
 
 .pho-viewer-noviewer
     &:before
@@ -124,15 +131,7 @@
 
 .pho-viewer-audioviewer
     &:before
-        background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
-        
-
-    .pho-viewer-canceled
-        @extend $empty
-        &:before
-            background  embedurl('./assets/icon-cloud-wrong.svg') center center / contain no-repeat
-        h2
-            color white
+        background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat 
 
 @media (max-width: (1023/basefont)rem)
     .pho-viewer-nav-previous, .pho-viewer-nav-next

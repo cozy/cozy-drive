@@ -9,6 +9,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import Button from 'cozy-ui/react/Button'
 import { ImageLoader } from 'components/Image'
 
+const TTL = 6000
 const MIN_SCALE = 1
 const MAX_SCALE = 6
 const MASS = 10 // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
@@ -51,13 +52,12 @@ class ImageViewer extends Component {
         offsetX: 0,
         offsetY: 0
       })
+      this.setLoaderTimeout()
     }
   }
 
   componentDidMount() {
-    this.loadertimeout = setTimeout(() => {
-      this.setState(state => ({ ...state, canceled: true }))
-    }, this.TTL)
+    this.setLoaderTimeout()
     if (this.props.gestures) this.setupGestures()
   }
 
@@ -67,6 +67,25 @@ class ImageViewer extends Component {
 
   componentWillUnmount() {
     this.tearDownGestures()
+  }
+
+  setLoaderTimeout() {
+    this.loadertimeout = setTimeout(() => {
+      this.setState(state => ({ ...state, canceled: true }))
+    }, TTL)
+  }
+
+  handleImageLoaded() {
+    this.setState({ isLoading: false })
+    clearTimeout(this.loadertimeout)
+  }
+
+  reload() {
+    this.setState(state => ({ ...state, loading: true, canceled: false }))
+    this.loadertimeout = setTimeout(
+      () => this.setState(state => ({ ...state, canceled: true })),
+      TTL
+    )
   }
 
   tearDownGestures() {
@@ -270,40 +289,20 @@ class ImageViewer extends Component {
     }))
   }
 
-  handleImageLoaded() {
-    this.setState({ isLoading: false })
-    clearTimeout(this.loadertimeout)
-  }
-
-  reload() {
-    this.setState(state => ({ ...state, loading: true, canceled: false }))
-    this.loadertimeout = setTimeout(
-      () => this.setState(state => ({ ...state, canceled: true })),
-      this.TTL
-    )
-  }
-
   render() {
     if (this.state.canceled) {
       const { t } = this.props
       return (
-        <div
-          className={styles['pho-viewer-photo']}
-          ref={viewer => {
-            this.viewer = viewer
-          }}
-        >
-          <div className={styles['pho-viewer-canceled']}>
-            <h2>{t('Viewer.loading.error')}</h2>
-            <Button
-              theme="regular"
-              onClick={() => {
-                this.reload()
-              }}
-            >
-              {t('Viewer.loading.retry')}
-            </Button>
-          </div>
+        <div className={styles['pho-viewer-canceled']}>
+          <h2>{t('Viewer.loading.error')}</h2>
+          <Button
+            theme="regular"
+            onClick={() => {
+              this.reload()
+            }}
+          >
+            {t('Viewer.loading.retry')}
+          </Button>
         </div>
       )
     }
