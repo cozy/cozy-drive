@@ -45,7 +45,7 @@ export const Unlink = (
         secondaryAction={hideUnlinkConfirmation}
         primaryType="danger"
         primaryText={t('mobile.settings.unlink.confirmation.unlink')}
-        primaryAction={() => unlink(clientSettings, client)}
+        primaryAction={() => unlink(client, clientSettings)}
       />
     )}
   </div>
@@ -59,8 +59,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   showUnlinkConfirmation: () => dispatch(showUnlinkConfirmation()),
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),
-  unlink: (clientSettings, client) => {
-    dispatch(unlink(clientSettings, client))
+  unlink: (client, clientSettings) => {
+    dispatch(unlink(client, clientSettings))
     ownProps.router.replace('/onboarding')
   }
 })
