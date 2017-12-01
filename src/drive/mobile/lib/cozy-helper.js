@@ -53,11 +53,10 @@ export const initBar = () => {
   })
 }
 
-export function resetClient(clientInfo = null) {
+export function resetClient(client, clientInfo = null) {
   if (clientInfo && cozy.client.auth.unregisterClient) {
     cozy.client.auth.unregisterClient(clientInfo)
   }
-
   // reset cozy-bar
   if (document.getElementById('coz-bar')) {
     document.getElementById('coz-bar').remove()
@@ -66,6 +65,8 @@ export function resetClient(clientInfo = null) {
   if (cozy.client.offline.destroyAllDatabase) {
     cozy.client.offline.destroyAllDatabase()
   }
+  // reset cozy-clien
+  client.resetStore()
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()

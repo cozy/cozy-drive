@@ -51,6 +51,8 @@ const configureStore = (client, initialState = {}) => {
     )
   }
 
+  client.attachStore(store)
+
   return store
 }
 

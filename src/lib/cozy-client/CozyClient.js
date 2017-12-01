@@ -17,6 +17,7 @@ export default class CozyClient {
     this.indexes = {}
     this.specialDirectories = {}
     this.facade = new DataAccessFacade()
+    this.store = null
     if (cozyURL) {
       this.facade.setup(cozyURL, options)
     }
@@ -32,6 +33,14 @@ export default class CozyClient {
       }
     })
     return cozy.client.authorize(true)
+  }
+
+  attachStore(store) {
+    this.store = store
+  }
+
+  resetStore() {
+    this.store.dispatch({ type: 'RESET_STORE' })
   }
 
   getUrl() {

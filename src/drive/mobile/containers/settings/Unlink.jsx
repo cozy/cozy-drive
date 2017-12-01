@@ -12,14 +12,17 @@ import {
   unlink
 } from '../../actions/unlink'
 
-export const Unlink = ({
-  t,
-  showUnlinkConfirmation,
-  hideUnlinkConfirmation,
-  displayUnlinkConfirmation,
-  unlink,
-  client
-}) => (
+export const Unlink = (
+  {
+    t,
+    showUnlinkConfirmation,
+    hideUnlinkConfirmation,
+    displayUnlinkConfirmation,
+    unlink,
+    clientSettings
+  },
+  { client }
+) => (
   <div>
     <SettingCategory
       title={t('mobile.settings.unlink.title')}
@@ -42,7 +45,7 @@ export const Unlink = ({
         secondaryAction={hideUnlinkConfirmation}
         primaryType="danger"
         primaryText={t('mobile.settings.unlink.confirmation.unlink')}
-        primaryAction={() => unlink(client)}
+        primaryAction={() => unlink(clientSettings, client)}
       />
     )}
   </div>
@@ -50,14 +53,14 @@ export const Unlink = ({
 
 const mapStateToProps = state => ({
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,
-  client: state.settings.client
+  clientSettings: state.settings.client
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   showUnlinkConfirmation: () => dispatch(showUnlinkConfirmation()),
   hideUnlinkConfirmation: () => dispatch(hideUnlinkConfirmation()),
-  unlink: client => {
-    dispatch(unlink(client))
+  unlink: (clientSettings, client) => {
+    dispatch(unlink(clientSettings, client))
   }
 })
 
