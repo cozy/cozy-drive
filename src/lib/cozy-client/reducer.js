@@ -284,12 +284,21 @@ const collections = (state = {}, action) => {
   }
 }
 
-export default combineReducers({
+const cozyReducer = combineReducers({
   collections,
   documents,
   sharings,
   synchronization
 })
+
+const rootReducer = (state, action) => {
+  if (action.type === 'RESET_STORE') {
+    state = undefined
+  }
+  return cozyReducer(state, action)
+}
+
+export default rootReducer
 
 export const makeFetchCollection = (
   name,
