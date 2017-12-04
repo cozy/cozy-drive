@@ -8,6 +8,7 @@
 
 .coz-nav-link
     @extend .c-nav-link
+    position relative
 
 .fil-cat-files
     background-image: embedurl("../assets/icons/icon-folder.svg")
@@ -48,8 +49,13 @@
 @media (max-width: (1023/basefont)rem)
 
     [class^='coz-nav']
-        [class^='coz-spinner']:before
-            width .5rem
-            height .5rem
-            position relative
-            top em(-2px)
+        [class^='coz-spinner']
+            position absolute
+            top .7em
+            left 60%
+
+            &:before
+                width .5rem
+                height .5rem
+
+
