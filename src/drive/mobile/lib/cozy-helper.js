@@ -49,7 +49,8 @@ export const initBar = () => {
     appEditor: 'Cozy',
     iconPath: require('../../../../targets/drive/vendor/assets/app-icon.svg'),
     lang: getLang(),
-    replaceTitleOnMobile: true
+    replaceTitleOnMobile: true,
+    displayOnMobile: false
   })
 }
 
