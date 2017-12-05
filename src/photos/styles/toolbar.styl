@@ -1,5 +1,44 @@
 @require 'cozy-ui'
 
+.c-btn
+    @extend $button
+
+.c-btn--regular
+    @extend $button--regular
+
+.c-btn--secondary
+    @extend $button--secondary
+
+.c-btn--danger
+    @extend $button--danger
+
+.c-btn--danger-outline
+    @extend $button--danger-outline
+
+.c-btn--share
+    @extend $button--share
+
+.c-btn--send
+    @extend $button--send
+
+.c-btn--download
+    @extend $button--download
+
+.c-btn--upload
+    @extend $button--upload
+
+.c-link--upload
+    @extend $link--upload
+
+.c-btn--delete
+    @extend $button--delete
+
+.u-hide--mob
+    @extend $hide--mob
+
+.u-hide--desk
+    @extend $hide--desk
+
 .pho-toolbar
     display flex
     margin-left auto
@@ -22,7 +61,7 @@
             background embedurl("../assets/icons/icon-trash-red.svg") em(16px) center no-repeat
 
     .pho-btn-new
-        @extend .c-btn
-        @extend .c-btn--secondary
-        @extend .c-btn--upload
+        @extend $button
+        @extend $button--secondary
+        @extend $button--upload
         background-image embedurl("../assets/icons/icon-album-add.svg")
