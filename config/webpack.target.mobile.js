@@ -15,6 +15,17 @@ module.exports = function(production, app) {
       path: path.resolve(__dirname, `../targets/${app}/mobile/www`),
       filename: '[name].js'
     },
+    module: {
+      rules: [
+        {
+            test: /\.(eot|ttf|woff|woff2)$/,
+            loader: 'file-loader',
+            options: {
+              name: `[name].[ext]`
+            }
+        }
+      ]
+    },
     plugins: [
       new DefinePlugin({
         __ALLOW_HTTP__: !production,
