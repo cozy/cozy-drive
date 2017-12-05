@@ -34,9 +34,11 @@
     text-overflow  ellipsis
     overflow       hidden
     white-space    nowrap
-    line-height    1
 
 @media (max-width: (768/basefont)rem)
+    .fil-path-backdrop
+        min-width 0
+
     .fil-path-title
         display        flex
         flex-direction column-reverse
@@ -48,7 +50,7 @@
         align-items   center
         box-sizing    border-box
         height        $coz-bar-size
-        padding       0 2.35em 0 .25em
+        padding       0 .25em
 
     .fil-path-down
         display inline-block
@@ -78,9 +80,15 @@
             color   charcoal-grey
             background white
 
+        .fil-path-link-name
+            text-overflow  ellipsis
+            overflow       hidden
+            white-space    nowrap
+
         .fil-path-current
             height     $coz-bar-size
             box-shadow inset 0 -1px 0 0 silver
+            padding-right 2.35em
 
     .fil-path-backdrop.mobile
         left 0

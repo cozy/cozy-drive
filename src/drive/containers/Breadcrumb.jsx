@@ -107,7 +107,9 @@ class Breadcrumb extends Component {
                   className={styles['fil-path-link']}
                   onClick={e => this.navigateToFolder(e, folder.id)}
                 >
-                  <a>{folder.name}</a>
+                  <span className={styles['fil-path-link-name']}>
+                    {folder.name}
+                  </span>
                   <span className={styles['fil-path-separator']}>/</span>
                 </Link>
               )
