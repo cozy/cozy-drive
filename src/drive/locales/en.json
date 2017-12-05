@@ -131,7 +131,8 @@
       "EB": "EB",
       "ZB": "ZB",
       "YB": "YB"
-    }
+    },
+    "load_more": "Load More"
   },
   "SelectionBar": {
     "selected_count": "item selected |||| items selected",
