@@ -17,41 +17,35 @@
             margin-left      0
             margin-right     1rem
 
-    .fil-toolbar-menu
+.fil-toolbar-menu
+    a
+    label
+        &.fil-action-upload
+            background embedurl('../assets/icons/icon-upload-16.svg') 1rem center no-repeat
+        &.fil-action-newfolder
+            background embedurl('../assets/icons/icon-folder-add-16.svg') 1rem center no-repeat
+        &.fil-action-download
+            background embedurl("../assets/icons/icon-download-16.svg") 1rem center no-repeat
+        &.fil-action-select
+            background embedurl('../assets/icons/icon-checkbox-16.svg') 1rem center no-repeat
+        &.fil-action-delete
+            background embedurl('../assets/icons/icon-trash-dark.svg') 1rem center no-repeat
+        &.fil-action-share
+            background embedurl('../assets/icons/icon-share-dark.svg') 1rem center no-repeat
+
+    .fil-action-upload
+    .fil-action-share
         display none
-
-.fil-toolbar-files
-.fil-toolbar-trash
-    .fil-toolbar-menu
-        a
-        label
-            &.fil-action-upload
-                background embedurl('../assets/icons/icon-upload-16.svg') 1rem center no-repeat
-            &.fil-action-newfolder
-                background embedurl('../assets/icons/icon-folder-add-16.svg') 1rem center no-repeat
-            &.fil-action-download
-                background embedurl("../assets/icons/icon-download-16.svg") 1rem center no-repeat
-            &.fil-action-select
-                background embedurl('../assets/icons/icon-checkbox-16.svg') 1rem center no-repeat
-            &.fil-action-delete
-                background embedurl('../assets/icons/icon-trash-dark.svg') 1rem center no-repeat
-            &.fil-action-share
-                background embedurl('../assets/icons/icon-share-dark.svg') 1rem center no-repeat
-
-        .fil-action-upload
-        .fil-action-share
-            display none
 
 
 @media (max-width: (1023/basefont)rem)
-    .fil-toolbar-files
-    .fil-toolbar-trash
-        .fil-toolbar-menu
+    .fil-toolbar-menu
+        display block
+        left 1em
+        .fil-action-upload
+        .fil-action-share
+        .fil-action-select
             display block
-            .fil-action-upload
-            .fil-action-share
-            .fil-action-select
-                display block
 
 @media (max-width: (768/basefont)rem)
     .fil-toolbar-files

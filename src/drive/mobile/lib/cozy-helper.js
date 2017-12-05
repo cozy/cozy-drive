@@ -39,7 +39,7 @@ export const initClient = url => {
   })
 }
 
-export const initBar = () => {
+export const initBar = async client => {
   // Prevents the bar to be initialized 2 times in a row after the onboarding
   if (document.getElementById('coz-bar')) {
     return
@@ -49,8 +49,10 @@ export const initBar = () => {
     appEditor: 'Cozy',
     iconPath: require('../../../../targets/drive/vendor/assets/app-icon.svg'),
     lang: getLang(),
-    replaceTitleOnMobile: true,
-    displayOnMobile: false
+    cozyURL: client.getUrl(),
+    token: await getToken(),
+    replaceTitleOnMobile: false,
+    displayOnMobile: true
   })
 }
 

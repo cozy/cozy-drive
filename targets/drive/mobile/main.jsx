@@ -57,7 +57,7 @@ const renderAppWithPersistedState = (persistedState = {}) => {
     client.isRegistered(clientInfos).then(isRegistered => {
       if (isRegistered) {
         startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
-        initBar()
+        initBar(client)
       } else {
         console.warn('Your device is no more connected to your server')
         store.dispatch(revokeClient())
