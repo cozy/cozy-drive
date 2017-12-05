@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     appEditor: data.cozyAppEditor,
     iconPath: data.cozyIconPath,
     lang: data.cozyLocale,
-    replaceTitleOnMobile: true
+    replaceTitleOnMobile: false
   })
 
   let history = hashHistory

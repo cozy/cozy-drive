@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import { ROOT_DIR_ID } from '../../constants/config'
 import { alertShow } from 'cozy-ui/react/Alerter'
 import { translate } from 'cozy-ui/react/I18n'
+import { withBreakpoints } from 'cozy-ui/react'
 
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
@@ -27,6 +28,8 @@ import {
   SharingDetailsModal
 } from 'sharing'
 import { leave, getSharingDetails } from 'cozy-client'
+
+const { BarRight } = cozy.bar
 
 const toggleShowShareModal = state => ({
   ...state,
@@ -55,11 +58,93 @@ class Toolbar extends Component {
       canUpload,
       uploadFiles,
       downloadAll,
-      leaveFolder
+      leaveFolder,
+      breakpoints: { isMobile }
     } = this.props
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     const hasWriteAccess =
       canUpload && (!shared.withMe || shared.sharingType === 'master-master')
+
+    const MoreMenu = (
+      <Menu
+        title={t('toolbar.item_more')}
+        disabled={disabled}
+        className={styles['fil-toolbar-menu']}
+        button={<MoreButton />}
+      >
+        {notRootfolder &&
+          !shared.withMe && (
+            <Item>
+              <a
+                className={styles['fil-action-share']}
+                onClick={() => this.setState(toggleShowShareModal)}
+              >
+                {t('toolbar.share')}
+              </a>
+            </Item>
+          )}
+        {shared.withMe && (
+          <Item>
+            <a
+              className={styles['fil-action-share']}
+              onClick={() => this.setState(toggleShowShareModal)}
+            >
+              {t('Files.share.sharedWithMe')}
+            </a>
+          </Item>
+        )}
+        {hasWriteAccess && (
+          <Item>
+            <UploadButton
+              onUpload={files => uploadFiles(files, displayedFolder)}
+              label={t('toolbar.menu_upload')}
+              className={styles['fil-action-upload']}
+            />
+          </Item>
+        )}
+        {actions.addFolder &&
+          hasWriteAccess && (
+            <Item>
+              <a
+                className={styles['fil-action-newfolder']}
+                onClick={actions.addFolder}
+              >
+                {t('toolbar.menu_new_folder')}
+              </a>
+            </Item>
+          )}
+        {notRootfolder && (
+          <Item>
+            <a
+              className={styles['fil-action-download']}
+              onClick={() => downloadAll([displayedFolder])}
+            >
+              {t('toolbar.menu_download_folder')}
+            </a>
+          </Item>
+        )}
+        <Item>
+          <a
+            className={styles['fil-action-select']}
+            onClick={onSelectItemsClick}
+          >
+            {t('toolbar.menu_select')}
+          </a>
+        </Item>
+        {shared.withMe && <hr />}
+        {shared.withMe && (
+          <Item>
+            <a
+              className={classNames(styles['fil-action-delete'])}
+              onClick={() => leaveFolder(displayedFolder)}
+            >
+              {t('toolbar.leave')}
+            </a>
+          </Item>
+        )}
+      </Menu>
+    )
+
     return (
       <div className={styles['fil-toolbar-files']} role="toolbar">
         {!shared.withMe &&
@@ -111,83 +196,9 @@ class Toolbar extends Component {
             className={styles['u-hide--mob']}
           />
         )}
-        <Menu
-          title={t('toolbar.item_more')}
-          disabled={disabled}
-          className={styles['fil-toolbar-menu']}
-          button={<MoreButton />}
-        >
-          {notRootfolder &&
-            !shared.withMe && (
-              <Item>
-                <a
-                  className={styles['fil-action-share']}
-                  onClick={() => this.setState(toggleShowShareModal)}
-                >
-                  {t('toolbar.share')}
-                </a>
-              </Item>
-            )}
-          {shared.withMe && (
-            <Item>
-              <a
-                className={styles['fil-action-share']}
-                onClick={() => this.setState(toggleShowShareModal)}
-              >
-                {t('Files.share.sharedWithMe')}
-              </a>
-            </Item>
-          )}
-          {hasWriteAccess && (
-            <Item>
-              <UploadButton
-                onUpload={files => uploadFiles(files, displayedFolder)}
-                label={t('toolbar.menu_upload')}
-                className={styles['fil-action-upload']}
-              />
-            </Item>
-          )}
-          {actions.addFolder &&
-            hasWriteAccess && (
-              <Item>
-                <a
-                  className={styles['fil-action-newfolder']}
-                  onClick={actions.addFolder}
-                >
-                  {t('toolbar.menu_new_folder')}
-                </a>
-              </Item>
-            )}
-          {notRootfolder && (
-            <Item>
-              <a
-                className={styles['fil-action-download']}
-                onClick={() => downloadAll([displayedFolder])}
-              >
-                {t('toolbar.menu_download_folder')}
-              </a>
-            </Item>
-          )}
-          <Item>
-            <a
-              className={styles['fil-action-select']}
-              onClick={onSelectItemsClick}
-            >
-              {t('toolbar.menu_select')}
-            </a>
-          </Item>
-          {shared.withMe && <hr />}
-          {shared.withMe && (
-            <Item>
-              <a
-                className={classNames(styles['fil-action-delete'])}
-                onClick={() => leaveFolder(displayedFolder)}
-              >
-                {t('toolbar.leave')}
-              </a>
-            </Item>
-          )}
-        </Menu>
+
+        {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
+
         {this.state.showShareModal &&
           !shared.withMe && (
             <ShareModal
@@ -262,5 +273,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default translate()(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
+  withRouter(
+    withBreakpoints()(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
+  )
 )
