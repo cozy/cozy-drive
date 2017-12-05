@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import OnBoarding from '../../components/OnBoarding'
+import OnBoardingStep from '../../components/OnBoardingStep'
 import { setAnalytics } from '../../actions/settings'
 
 export const Analytics = ({ onActivate, onSkip, breadcrumbs }) => (
-  <OnBoarding
+  <OnBoardingStep
     onActivate={onActivate}
     onSkip={onSkip}
     stepName="analytics"

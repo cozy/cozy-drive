@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import OnBoarding from '../../components/OnBoarding'
+import OnBoardingStep from '../../components/OnBoardingStep'
 import { setBackupContacts } from '../../actions/settings'
 import { requestDeviceAuthorization } from '../../actions/contactsBackup'
 
 export const BackupContacts = ({ onActivate, onSkip, breadcrumbs }) => (
-  <OnBoarding
+  <OnBoardingStep
     onActivate={onActivate}
     onSkip={onSkip}
     stepName="contacts"

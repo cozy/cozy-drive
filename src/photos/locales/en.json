@@ -223,8 +223,16 @@
   },
   "Viewer": {
     "close": "Close",
+    "noviewer": {
+      "title": "The viewer doesn't know how to read this type of file yet.",
+      "download": "Download this file"
+    },
     "actions": {
       "download": "Download"
+    },
+    "loading": {
+      "error": "This file could not be loaded. Do you have a working internet connection right now?",
+      "retry": "Retry"
     }
   },
   "destroyconfirmation": {

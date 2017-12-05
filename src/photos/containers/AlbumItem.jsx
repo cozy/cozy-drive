@@ -9,7 +9,7 @@ import { cozyConnect, getSharingDetails } from 'cozy-client'
 import { SharedBadge } from 'sharing'
 
 import { fetchAlbumPhotos } from '../ducks/albums'
-import ImageLoader from '../components/ImageLoader'
+import { ImageLoader } from 'components/Image'
 
 const AlbumItemLink = ({ router, album, image, title, desc }) => {
   const parentPath = router.location.pathname

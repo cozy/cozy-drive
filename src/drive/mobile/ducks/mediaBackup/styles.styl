@@ -1,4 +1,5 @@
 @require 'cozy-ui'
+@require '../../styles/feedback'
 
 .coz-upload-status
     display flex
@@ -27,7 +28,7 @@
     height 3rem
     overflow hidden
     border-radius 0.25rem
-    background pale-grey embedurl('../../assets/icons/icon-type-image.svg') center center / 5rem 4rem no-repeat
+    background pale-grey embedurl('../../../assets/icons/icon-type-image.svg') center center / 5rem 4rem no-repeat
 
     img
         position absolute
@@ -46,10 +47,25 @@
     color charcoal-grey
     font-weight bold
 
+.coz-upload-status-link
+    display block
+    margin auto
+    color dodger-blue
+    padding .5rem
+    padding-left 1.6rem
+    margin-top .3rem
+    text-transform uppercase
+    border 0
+    background embedurl('../../assets/icons/icon-paperplane-blue.svg') .2rem center no-repeat
+
 .coz-upload-status--success
     padding-left 3.8125rem
-    background embedurl('../assets/icons/icon-upload-OK.svg') 1rem center no-repeat
+    background embedurl('../../assets/icons/icon-upload-OK.svg') 1rem center no-repeat
 
 .coz-upload-status--waiting
     padding-left em(61px)
-    background embedurl('../assets/icons/icon-upload-waiting.svg') 1rem center no-repeat
+    background embedurl('../../assets/icons/icon-upload-waiting.svg') 1rem center no-repeat
+
+.coz-upload-status--error
+    padding-left em(61px)
+    background embedurl('../../assets/icons/icon-upload-error.svg') 1rem center no-repeat

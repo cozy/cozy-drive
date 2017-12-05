@@ -75,7 +75,7 @@ export const openTrash = () => {
   return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
 }
 
-export const openFolder = folderId => {
+export const openFolder = (folderId, client) => {
   return async (dispatch, getState) => {
     dispatch({
       type: OPEN_FOLDER,
@@ -84,6 +84,16 @@ export const openFolder = folderId => {
         cancelSelection: true
       }
     })
+    // TODO: temp fix for the thumbnails links on mobile
+    if (isCordova() && client) {
+      client.fetchFilesForLinks(folderId).then(resp =>
+        dispatch({
+          type: 'FETCH_FILES_LINKS_SUCCESS',
+          folderId,
+          files: resp
+        })
+      )
+    }
     try {
       const settings = getState().settings
       const offline = settings.offline && settings.firstReplication

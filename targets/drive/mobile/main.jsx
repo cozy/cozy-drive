@@ -6,12 +6,12 @@ import 'drive/mobile/styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, hashHistory } from 'react-router'
+import { hashHistory } from 'react-router'
 import { CozyProvider } from 'cozy-client'
 
 import { I18n } from 'cozy-ui/react/I18n'
 
-import MobileAppRoute from 'drive/mobile/components/MobileAppRoute'
+import DriveMobileRouter from 'drive/mobile/containers/DriveMobileRouter'
 
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
@@ -29,7 +29,6 @@ import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
 import {
   getLang,
-  resetClient,
   initClient,
   initBar
 } from 'drive/mobile/lib/cozy-helper'
@@ -64,17 +63,6 @@ const renderAppWithPersistedState = (persistedState = {}) => {
         store.dispatch(revokeClient())
       }
     })
-  }
-
-  const isRedirectedToOnboarding = (nextState, replace) => {
-    const isNotAuthorized = !store.getState().mobile.settings.authorized
-    if (isNotAuthorized) {
-      resetClient()
-      replace({
-        pathname: '/onboarding',
-        state: { nextPathname: nextState.location.pathname }
-      })
-    }
   }
 
   document.addEventListener(
@@ -122,10 +110,9 @@ const renderAppWithPersistedState = (persistedState = {}) => {
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >
       <CozyProvider store={store} client={client}>
-        <Router
+        <DriveMobileRouter
           history={hashHistory}
-          routes={MobileAppRoute(isRedirectedToOnboarding)}
-        />
+          />
       </CozyProvider>
     </I18n>,
     root

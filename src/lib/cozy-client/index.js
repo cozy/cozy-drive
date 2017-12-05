@@ -2,6 +2,7 @@ export { default as CozyProvider } from './CozyProvider'
 export { default as CozyClient } from './CozyClient'
 export { default as cozyConnect } from './connect'
 export { default as cozyMiddleware } from './middleware'
+export { default as withClient } from './withClient'
 export {
   default as reducer,
   makeActionCreator,
@@ -44,4 +45,4 @@ export {
   isSyncInError
 } from './slices/synchronization'
 
-export { downloadArchive, downloadFile } from './helpers'
+export { downloadArchive, downloadFile, getDownloadLink } from './helpers'

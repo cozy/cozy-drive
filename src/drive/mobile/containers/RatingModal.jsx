@@ -6,7 +6,7 @@ import withPersistentState from '../lib/withPersistentState'
 import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
 import classNames from 'classnames'
 
-import styles from '../styles/rating'
+import styles from '../styles/feedback'
 
 const SCREEN_ENJOY = 'SCREEN_ENJOY'
 const SCREEN_FEEDBACK = 'SCREEN_FEEDBACK'
