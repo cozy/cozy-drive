@@ -4,12 +4,11 @@ import styles from './styles'
 import React, { Component } from 'react'
 import Hammer from 'hammerjs'
 
-import { translate } from 'cozy-ui/react/I18n'
 import Spinner from 'cozy-ui/react/Spinner'
-import Button from 'cozy-ui/react/Button'
 import { ImageLoader } from 'components/Image'
 
-const TTL = 6000
+import NoNetwork from './NoNetwork'
+
 const MIN_SCALE = 1
 const MAX_SCALE = 6
 const MASS = 10 // If a paning gesture is released while the finger is still moving, the photo will keep paning for a little longer (a if you threw the photo). MASS determines how much the photo will keep paning (the higher the number, the more it will keep going)
@@ -17,12 +16,11 @@ const FRICTION = 0.9 // When the photo is paning after a pan gesture ended sudde
 
 const clamp = (min, value, max) => Math.max(min, Math.min(max, value))
 
-class ImageViewer extends Component {
+export default class ImageViewer extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      isLoading: true,
+      canceled: false,
       scale: 1,
       offsetX: 0,
       offsetY: 0,
@@ -36,8 +34,6 @@ class ImageViewer extends Component {
         y: 0
       }
     }
-
-    this.handleImageLoaded = this.handleImageLoaded.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,18 +43,15 @@ class ImageViewer extends Component {
       nextProps.file.id !== this.props.file.id
     ) {
       this.setState({
-        isLoading: true,
         canceled: false,
         scale: 1,
         offsetX: 0,
         offsetY: 0
       })
-      this.setLoaderTimeout()
     }
   }
 
   componentDidMount() {
-    this.setLoaderTimeout()
     if (this.props.gestures) this.setupGestures()
   }
 
@@ -70,23 +63,12 @@ class ImageViewer extends Component {
     this.tearDownGestures()
   }
 
-  setLoaderTimeout() {
-    this.loadertimeout = setTimeout(() => {
-      this.setState(state => ({ ...state, canceled: true }))
-    }, TTL)
+  reload = () => {
+    this.setState(state => ({ ...state, canceled: false }))
   }
 
-  handleImageLoaded() {
-    this.setState({ isLoading: false })
-    clearTimeout(this.loadertimeout)
-  }
-
-  reload() {
-    this.setState(state => ({ ...state, isLoading: true, canceled: false }))
-    this.loadertimeout = setTimeout(
-      () => this.setState(state => ({ ...state, canceled: true })),
-      TTL
-    )
+  onImageError = () => {
+    this.setState(state => ({ ...state, canceled: true }))
   }
 
   tearDownGestures() {
@@ -208,6 +190,56 @@ class ImageViewer extends Component {
     })
   }
 
+  render() {
+    if (this.state.canceled) {
+      return <NoNetwork onReload={this.reload} />
+    }
+    const { file } = this.props
+
+    const { scale, offsetX, offsetY } = this.state
+    const style = {
+      transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`
+    }
+    return (
+      <div className={styles['pho-viewer-imageviewer']}>
+        {file && (
+          <ImageLoader
+            photo={file}
+            src={`${cozy.client._url}${file.links.large}`}
+            style={style}
+            ref={photo => {
+              this.photo = React.findDOMNode(photo)
+            }}
+            onError={this.onImageError}
+            preloader={() => (
+              <Spinner size="xxlarge" middle="true" noMargin color="white" />
+            )}
+          />
+        )}
+      </div>
+    )
+  }
+
+  /**
+   * Things to do when a gesture starts:
+   * - saves the current scale and offset, which will be used as base values for calculations
+   * - kill any remaining momentum from previous gestures
+   * - hide the actions
+   */
+  prepareForGesture() {
+    this.setState(state => ({
+      initialScale: state.scale,
+      initialOffset: {
+        x: state.offsetX,
+        y: state.offsetY
+      },
+      momentum: {
+        x: 0,
+        y: 0
+      }
+    }))
+  }
+
   /**
    * Gradually applies the momentum after a pan end
    */
@@ -269,69 +301,4 @@ class ImageViewer extends Component {
       }
     }
   }
-
-  /**
-   * Things to do when a gesture starts:
-   * - saves the current scale and offset, which will be used as base values for calculations
-   * - kill any remaining momentum from previous gestures
-   * - hide the actions
-   */
-  prepareForGesture() {
-    this.setState(state => ({
-      initialScale: state.scale,
-      initialOffset: {
-        x: state.offsetX,
-        y: state.offsetY
-      },
-      momentum: {
-        x: 0,
-        y: 0
-      }
-    }))
-  }
-
-  render() {
-    if (this.state.canceled) {
-      const { t } = this.props
-      return (
-        <div className={styles['pho-viewer-canceled']}>
-          <h2>{t('Viewer.loading.error')}</h2>
-          <Button
-            theme="regular"
-            onClick={() => {
-              this.reload()
-            }}
-          >
-            {t('Viewer.loading.retry')}
-          </Button>
-        </div>
-      )
-    }
-    const { file } = this.props
-
-    const { isLoading, scale, offsetX, offsetY } = this.state
-    const style = {
-      transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`,
-      display: isLoading ? 'none' : 'initial'
-    }
-    return (
-      <div className={styles['pho-viewer-imageviewer']}>
-        {file && (
-          <ImageLoader
-            photo={file}
-            onLoad={this.handleImageLoaded}
-            src={`${cozy.client._url}${file.links.large}`}
-            style={style}
-            ref={photo => {
-              this.photo = React.findDOMNode(photo)
-            }}
-          />
-        )}
-        {(!file || isLoading) && (
-          <Spinner size="xxlarge" middle="true" noMargin color="white" />
-        )}
-      </div>
-    )
-  }
 }
-export default translate()(ImageViewer)

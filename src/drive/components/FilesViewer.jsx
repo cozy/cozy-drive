@@ -17,7 +17,12 @@ class FilesViewer extends Component {
     // TODO: temp fix for thumbnail links on mobile
     if (isCordova() && !this.props.filesWithLinks) return null
     const files = isCordova()
-      ? this.props.filesWithLinks.filter(f => f.type !== 'directory')
+      ? this.props.filesWithLinks
+          .filter(f => f.type !== 'directory')
+          .map(f => ({
+            ...f,
+            isAvailableOffline: this.props.isAvailableOffline(f.id)
+          }))
       : this.props.files.filter(f => f.type !== 'directory')
     const { params, router } = this.props
     const currentIndex = files.findIndex(f => f.id === params.fileId)
