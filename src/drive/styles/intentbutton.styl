@@ -2,8 +2,11 @@
 
 // This ugly rules hide the default close button of the modal
 .intentButton
-    button[class*="coz-btn-modal-close"]
-        display: none
+    [class*="coz-btn-modal-close"]
+        top: 4px
+        right: 4px
+    .coz-modal-intent
+        max-width: none
 
 .intentViewer
     iframe
