@@ -1,31 +1,27 @@
 @require 'cozy-ui'
 
 .coz-nav
-    @extend .c-nav
+    @extend $nav
 
 .coz-nav-item
-    @extend .c-nav-item
+    @extend $nav-item
 
 .coz-nav-link
-    @extend .c-nav-link
+    @extend $nav-link
 
 .pho-cat-photos
     background-image: embedurl("../assets/icons/icon-image.svg")
     &.active
-        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-image-active.svg")
 .pho-cat-albums
     background-image: embedurl("../assets/icons/icon-album.svg")
     &.active
-        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-album-active.svg")
 .pho-cat-shared
     background-image: embedurl("../assets/icons/icon-share.svg")
     &.active
-        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-share-active.svg")
 .pho-cat-trash
     background-image: embedurl("../assets/icons/icon-trash.svg")
     &.active
-        @extend .c-nav-link.is-active
         background-image: embedurl("../assets/icons/icon-trash-active.svg")
