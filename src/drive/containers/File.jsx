@@ -98,181 +98,24 @@ const enableTouchEvents = ev => {
   return true
 }
 
-class File extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      opening: false
-    }
-  }
+const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => (
+  <div
+    className={classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-file-select']
+    )}
+    onClick={onClick}
+  >
+    {withSelectionCheckbox && (
+      <span data-input="checkbox">
+        <input type="checkbox" checked={selected} />
+        <label />
+      </span>
+    )}
+  </div>
+)
 
-  componentDidMount() {
-    this.gesturesHandler = new Hammer.Manager(this.fil)
-    this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
-    this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
-    this.gesturesHandler.on('onpress singletap', ev => {
-      if (enableTouchEvents(ev)) {
-        if (ev.type === 'onpress' || this.props.selectionModeActive) {
-          this.toggle(ev.srcEvent)
-        } else {
-          this.open(ev.srcEvent, this.props.attributes)
-        }
-      }
-    })
-  }
-
-  componentWillUnmount() {
-    this.gesturesHandler.destroy()
-  }
-
-  toggle(e) {
-    e.stopPropagation()
-    const { attributes, onToggle, selected } = this.props
-    onToggle(attributes, selected)
-  }
-
-  open(e, attributes) {
-    e.stopPropagation()
-    if (isDirectory(attributes)) {
-      this.setState({ opening: true })
-      this.props.onFolderOpen(attributes.id).then(() => {
-        this.setState({ opening: false })
-        this.props.router.push(getFolderUrl(attributes.id, this.props.location))
-      })
-    } else {
-      if (this.props.isAvailableOffline) {
-        this.props.onFileOpen({
-          ...attributes,
-          availableOffline: this.props.isAvailableOffline
-        })
-      } else if (this.props.withFilePath) {
-        // we're in /recent view and, as a mango query lacks the thumbnails links, we can't use the viewer
-        this.props.onFileOpen({ ...attributes })
-      } else {
-        this.props.router.push(
-          `${this.props.location.pathname}/file/${attributes.id}`
-        )
-      }
-    }
-  }
-
-  render() {
-    const {
-      t,
-      f,
-      style,
-      attributes,
-      selected,
-      selectionModeActive,
-      onShowActionMenu,
-      isRenaming,
-      withSelectionCheckbox,
-      withFilePath,
-      isAvailableOffline,
-      shared,
-      breakpoints: { isExtraLarge, isMobile }
-    } = this.props
-    const { opening } = this.state
-    return (
-      <div
-        ref={fil => {
-          this.fil = fil
-        }}
-        style={style}
-        className={classNames(
-          styles['fil-content-row'],
-          selected ? styles['fil-content-row-selected'] : '',
-          { [styles['fil-content-row--selectable']]: selectionModeActive }
-        )}
-      >
-        <div
-          className={classNames(
-            styles['fil-content-cell'],
-            styles['fil-content-file-select']
-          )}
-          onClick={e => this.toggle(e)}
-        >
-          {withSelectionCheckbox && (
-            <span data-input="checkbox">
-              <input type="checkbox" checked={selected} />
-              <label />
-            </span>
-          )}
-        </div>
-        <FileNameCell
-          attributes={attributes}
-          isRenaming={isRenaming}
-          opening={opening}
-          withFilePath={withFilePath}
-          isMobile={isMobile}
-          shared={shared}
-        />
-        <div
-          className={classNames(
-            styles['fil-content-cell'],
-            styles['fil-content-date']
-          )}
-        >
-          <time dateTime={attributes.updated_at || attributes.created_at}>
-            {f(
-              attributes.updated_at || attributes.created_at,
-              `${
-                isExtraLarge
-                  ? t('table.row_update_format_full')
-                  : t('table.row_update_format')
-              }`
-            )}
-          </time>
-        </div>
-        <div
-          className={classNames(
-            styles['fil-content-cell'],
-            styles['fil-content-size']
-          )}
-        >
-          {isDirectory(attributes)
-            ? '—'
-            : filesize(attributes.size, { base: 10 })}
-        </div>
-        <div
-          className={classNames(
-            styles['fil-content-cell'],
-            styles['fil-content-status']
-          )}
-        >
-          {isAvailableOffline && (
-            <span className={styles['fil-content-offline']} />
-          )}
-          <span className={styles['fil-content-sharestatus']}>
-            {!shared.shared
-              ? '—'
-              : shared.byMe
-                ? `${t('Files.share.sharedByMe')} (${t(
-                    `Share.type.${shared.sharingType}`
-                  )})`
-                : t('Files.share.sharedWithMe')}
-          </span>
-        </div>
-        <div
-          className={classNames(
-            styles['fil-content-cell'],
-            styles['fil-content-file-action']
-          )}
-        >
-          <button
-            className={classNames(styles['c-btn'], styles['c-btn-extra'])}
-            onClick={e => {
-              onShowActionMenu(attributes.id)
-              e.stopPropagation()
-            }}
-          />
-        </div>
-      </div>
-    )
-  }
-}
-
-const FileNameCell = ({
+const FileName = ({
   attributes,
   isRenaming,
   opening,
@@ -329,11 +172,202 @@ const FileNameCell = ({
   )
 }
 
-const FileWithSharedStatus = connect((state, ownProps) => ({
-  shared: getSharingDetails(state, 'io.cozy.files', ownProps.attributes.id)
-}))(File)
+const LastUpdate = ({ date, format, f }) => (
+  <div
+    className={classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-date']
+    )}
+  >
+    <time dateTime={date}>{f(date, format)}</time>
+  </div>
+)
 
-export default withBreakpoints()(withRouter(translate()(FileWithSharedStatus)))
+const Size = ({ filesize = '-' }) => (
+  <div
+    className={classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-size']
+    )}
+  >
+    {filesize}
+  </div>
+)
+
+const Status = ({ isAvailableOffline, shareStatus }) => (
+  <div
+    className={classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-status']
+    )}
+  >
+    {isAvailableOffline && <span className={styles['fil-content-offline']} />}
+    <span className={styles['fil-content-sharestatus']}>{shareStatus}</span>
+  </div>
+)
+
+const FileAction = ({ onClick }) => (
+  <div
+    className={classNames(
+      styles['fil-content-cell'],
+      styles['fil-content-file-action']
+    )}
+  >
+    <button
+      className={classNames(styles['c-btn'], styles['c-btn-extra'])}
+      onClick={onClick}
+    />
+  </div>
+)
+
+class File extends Component {
+  state = {
+    opening: false
+  }
+
+  componentDidMount() {
+    this.gesturesHandler = new Hammer.Manager(this.filerow)
+    this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
+    this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
+    this.gesturesHandler.on('onpress singletap', ev => {
+      if (enableTouchEvents(ev)) {
+        if (ev.type === 'onpress' || this.props.selectionModeActive) {
+          this.toggle(ev.srcEvent)
+        } else {
+          this.open(ev.srcEvent, this.props.attributes)
+        }
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this.gesturesHandler.destroy()
+  }
+
+  toggle(e) {
+    e.stopPropagation()
+    const { attributes, onToggle, selected } = this.props
+    onToggle(attributes, selected)
+  }
+
+  open(e, attributes) {
+    e.stopPropagation()
+    if (isDirectory(attributes)) {
+      this.setState(state => ({ ...state, opening: true }))
+      this.props.onFolderOpen(attributes.id).then(() => {
+        this.setState(state => ({ ...state, opening: false }))
+        this.props.router.push(getFolderUrl(attributes.id, this.props.location))
+      })
+    } else {
+      if (this.props.isAvailableOffline) {
+        this.props.onFileOpen({
+          ...attributes,
+          availableOffline: this.props.isAvailableOffline
+        })
+      } else if (this.props.withFilePath) {
+        // we're in /recent view and, as a mango query lacks the thumbnails links, we can't use the viewer
+        this.props.onFileOpen({ ...attributes })
+      } else {
+        this.props.router.push(
+          `${this.props.location.pathname}/file/${attributes.id}`
+        )
+      }
+    }
+  }
+
+  render() {
+    const {
+      t,
+      f,
+      attributes,
+      selected,
+      selectionModeActive,
+      onShowActionMenu,
+      isRenaming,
+      withSelectionCheckbox,
+      withFilePath,
+      isAvailableOffline,
+      shared,
+      breakpoints: { isExtraLarge, isMobile }
+    } = this.props
+    const { opening } = this.state
+    const filContentRowSelected = classNames(
+      styles['fil-content-row'],
+      selected ? styles['fil-content-row-selected'] : '',
+      { [styles['fil-content-row--selectable']]: selectionModeActive }
+    )
+    return (
+      <div
+        ref={filerow => {
+          this.filerow = filerow
+        }}
+        className={filContentRowSelected}
+      >
+        <SelectBox
+          withSelectionCheckbox={withSelectionCheckbox}
+          selected={selected}
+          onClick={e => this.toggle(e)}
+        />
+        <FileName
+          attributes={attributes}
+          isRenaming={isRenaming}
+          opening={opening}
+          withFilePath={withFilePath}
+          isMobile={isMobile}
+          shared={shared}
+        />
+        <LastUpdate
+          date={attributes.updated_at || attributes.created_at}
+          format={`${
+            isExtraLarge
+              ? t('table.row_update_format_full')
+              : t('table.row_update_format')
+          }`}
+          f={f}
+        />
+        <Size
+          filesize={
+            isDirectory(attributes)
+              ? undefined
+              : filesize(attributes.size, { base: 10 })
+          }
+        />
+        <Status
+          isAvailableOffline={isAvailableOffline}
+          shareStatus={
+            !shared.shared
+              ? '—'
+              : shared.byMe
+                ? `${t('Files.share.sharedByMe')} (${t(
+                    `Share.type.${shared.sharingType}`
+                  )})`
+                : t('Files.share.sharedWithMe')
+          }
+        />
+        <FileAction
+          onClick={e => {
+            onShowActionMenu(attributes.id)
+            e.stopPropagation()
+          }}
+        />
+      </div>
+    )
+  }
+}
+
+export default withBreakpoints()(
+  withRouter(
+    translate()(
+      connect((state, ownProps) => ({
+        shared: getSharingDetails(
+          state,
+          'io.cozy.files',
+          ownProps.attributes.id
+        )
+      }))(File)
+    )
+  )
+)
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>
