@@ -94,7 +94,7 @@ const saveFile = (dirEntry, fileData, fileName) =>
     )
   })
 
-const openFileWithCordova = (uri, mimetype) =>
+export const openFileWithCordova = (uri, mimetype) =>
   new Promise((resolve, reject) => {
     window.cordova.plugins.fileOpener2.open(decodeURIComponent(uri), mimetype, {
       error: reject,
@@ -132,10 +132,15 @@ export const saveAndOpenWithCordova = (file, filename) =>
       .catch(reject)
   })
 
-export const openOfflineFile = file =>
+export const getNativeFile = file =>
   new Promise(async (resolve, reject) => {
     const entry = await getCozyEntry()
-    const fileEntry = await getEntry(`${entry.nativeURL}${file.id}`)
+    resolve(getEntry(`${entry.nativeURL}${file.id}`))
+  })
+
+export const openOfflineFile = file =>
+  new Promise(async (resolve, reject) => {
+    const fileEntry = await getNativeFile(file)
     return openFileWithCordova(fileEntry.nativeURL, file.mime)
       .then(resolve)
       .catch(reject)

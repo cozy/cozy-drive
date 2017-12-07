@@ -5,6 +5,7 @@ import ImageViewer from './ImageViewer'
 import AudioViewer from './AudioViewer'
 import VideoViewer from './VideoViewer'
 import PdfViewer from './PdfViewer'
+import NativePdfViewer from './NativePdfViewer'
 import NoViewer from './NoViewer'
 
 import styles from './styles'
@@ -89,8 +90,9 @@ export default class Viewer extends Component {
 
   renderViewer(file) {
     if (!file) return null
+    const { onClose } = this.props
     const ComponentName = this.getViewerComponentName(file)
-    return <ComponentName file={file} />
+    return <ComponentName file={file} onClose={onClose} />
   }
 
   getViewerComponentName(file) {
@@ -102,7 +104,7 @@ export default class Viewer extends Component {
       case 'video':
         return isMobile() ? NoViewer : VideoViewer
       case 'pdf':
-        return isCordova() ? NoViewer : PdfViewer
+        return isCordova() ? NativePdfViewer : PdfViewer
       default:
         return NoViewer
     }

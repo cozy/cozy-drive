@@ -94,4 +94,5 @@
     <plugin name="cordova-plugin-device-name" spec="1.3.2" />
     <plugin name="cordova-plugin-sqlite-2" spec="~1.0.4" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="0.8.5" />
+    <plugin name="cordova-plugin-document-viewer" spec="~0.9.7" />
 </widget>
