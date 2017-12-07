@@ -54,12 +54,11 @@ export default class SharingsCollection {
     const withMe = await fetchPermissions(doctype, SHARED_WITH_ME).catch(
       () => []
     )
-
     return { byMe, byLink, withMe }
   }
 
   fetchSharing(id) {
-    return cozy.client.fetchJSON('GET', `/sharings/${id}`)
+    return cozy.client.fetchJSON('GET', `/sharings/${id}`).catch(() => ({}))
   }
 
   revoke(sharingId) {
