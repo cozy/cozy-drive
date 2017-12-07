@@ -67,12 +67,15 @@ class ViewerControls extends Component {
       onPrevious,
       onNext,
       isMobile,
+      expanded,
       children
     } = this.props
     const { hidden } = this.state
     return (
       <div
-        className={styles['pho-viewer-controls']}
+        className={classNames(styles['pho-viewer-controls'], {
+          [styles['pho-viewer-controls--expanded']]: expanded
+        })}
         ref={wrapped => {
           this.wrapped = wrapped
         }}

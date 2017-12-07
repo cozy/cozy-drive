@@ -65,6 +65,8 @@ export default class Viewer extends Component {
     const fileCount = files.length
     const hasPrevious = currentIndex > 0
     const hasNext = currentIndex < fileCount - 1
+    // this `expanded` property makes the next/previous controls cover the displayed image
+    const expanded = currentFile && currentFile.class === 'image'
     return (
       <div className={styles['pho-viewer-wrapper']} role="viewer">
         <ViewerControls
@@ -75,6 +77,7 @@ export default class Viewer extends Component {
           onPrevious={this.onPrevious}
           onNext={this.onNext}
           isMobile={isMobile()}
+          expanded={expanded}
         >
           {this.renderViewer(currentFile)}
         </ViewerControls>

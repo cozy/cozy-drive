@@ -16,16 +16,24 @@
 
 .pho-viewer-controls
     display         flex
-    flex-direction  column
+    flex-direction  row
     width           100%
     height          100%
 
+    &--expanded
+        flex-direction column
+
+        .pho-viewer-nav
+            position   fixed
+            margin-top 0
+            top        em(90px)
+            bottom     0
+            width      40%
+
 .pho-viewer-nav
-    position             fixed
+    margin-top           em(90px)
     z-index              $modal-index + 1
-    top                  em(90px)
-    bottom               0
-    width                40%
+    width                20%
     cursor               pointer
     background-color     transparent
     transition           .4s opacity ease-out
@@ -67,18 +75,12 @@
 .pho-viewer-canceled
     position         relative
     display          flex
-    flex             1 1 100%
+    margin-left      20%
+    width            60%
     max-height       100%
-    max-width        100%
     justify-content  center
     align-items      center
     flex-direction   column
-
-    img
-        display     block
-        max-width   100%
-        max-height  100%
-        box-shadow  0 6px 24px 0 rgba(0, 0, 0, 0.5)
 
     video
         width       100%
@@ -91,6 +93,24 @@
     .pho-viewer-filename
         max-width     90%
         text-overflow ellipsis
+
+.pho-viewer-imageviewer
+.pho-viewer-nav + .pho-viewer-noviewer
+.pho-viewer-nav + .pho-viewer-audioviewer
+.pho-viewer-nav + .pho-viewer-videoviewer
+.pho-viewer-nav + .pho-viewer-canceled
+    margin-left 0
+
+.pho-viewer-imageviewer
+    flex             1 1 100%
+    width            auto
+    max-width        100%
+
+    img
+        display     block
+        max-width   100%
+        max-height  100%
+        box-shadow  0 6px 24px 0 rgba(0, 0, 0, 0.5)
 
 .pho-viewer-canceled
 .pho-viewer-noviewer
