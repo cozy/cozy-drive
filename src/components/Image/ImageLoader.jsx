@@ -150,7 +150,10 @@ export default class ImageLoader extends Component {
           src={loadedSource}
         />
       )
-    } else {
+    } else if (
+      this.props.preloader &&
+      typeof this.props.preloader === 'function'
+    ) {
       return this.props.preloader(this.props)
     }
   }
