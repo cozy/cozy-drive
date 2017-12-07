@@ -30,6 +30,14 @@
             bottom     0
             width      40%
 
+        .pho-viewer-toolbar
+            background linear-gradient(to bottom, alpha(charcoal-grey, .50), alpha(charcoal-grey, .33), alpha(charcoal-grey, 0))
+
+        .pho-viewer-canceled
+            height      100%
+        .pho-viewer-nav + .pho-viewer-canceled
+            margin-left 20%
+
 .pho-viewer-nav
     margin-top           em(90px)
     z-index              $modal-index + 1
@@ -72,6 +80,7 @@
 .pho-viewer-noviewer
 .pho-viewer-audioviewer
 .pho-viewer-videoviewer
+.pho-viewer-pdfviewer
 .pho-viewer-canceled
     position         relative
     display          flex
@@ -87,6 +96,10 @@
         max-width   500px
         height      auto
 
+    object
+        width       100%
+        height      100%
+
     h2
         max-width   90%
 
@@ -95,6 +108,7 @@
         text-overflow ellipsis
 
 .pho-viewer-imageviewer
+.pho-viewer-nav + .pho-viewer-pdfviewer
 .pho-viewer-nav + .pho-viewer-noviewer
 .pho-viewer-nav + .pho-viewer-audioviewer
 .pho-viewer-nav + .pho-viewer-videoviewer
@@ -154,6 +168,15 @@
         background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat 
 
 @media (max-width: (1023/basefont)rem)
+    .pho-viewer-imageviewer
+    .pho-viewer-noviewer
+    .pho-viewer-audioviewer
+    .pho-viewer-videoviewer
+    .pho-viewer-pdfviewer
+    .pho-viewer-canceled
+        margin-left      0
+        width            100%
+
     .pho-viewer-nav-previous, .pho-viewer-nav-next
         display none
 
@@ -164,6 +187,25 @@
 :local
     @extend $selectionbar
 
+// here we force the action buttons to stay on the right
+.coz-selection-bar
+    justify-content flex-end
+
++medium-screen()
+    .coz-selectionbar
+        justify-content flex-end
+        padding-right   0
+
+// here we force the action buttons to not show the label even on desktop
+.pho-viewer-toolbar-actions
+    button
+        width         em(90px)
+        overflow      hidden
+        text-indent   -5000px
+        padding-left  0
+        color         transparent
+        background-position em(12px)
+
 .pho-viewer-toolbar
     position    fixed
     z-index     $modal-index + 1
@@ -171,8 +213,6 @@
     flex-shrink 0
     width       100%
     height      em(90px)
-    // background-color    alpha(charcoal-grey, .33)
-    background linear-gradient(to bottom, alpha(charcoal-grey, .50), alpha(charcoal-grey, .33), alpha(charcoal-grey, 0))
     transition .4s opacity ease-out
 
     &--hidden
@@ -183,7 +223,7 @@
     z-index           0
     display           flex
     align-items       center
-    justify-content   center
+    justify-content   flex-end
     width             100%
     height            auto
     background-color  transparent
@@ -192,7 +232,7 @@
 .pho-viewer-toolbar-close
     position         fixed
     top              0
-    right            0
+    left             0
     display          flex
     align-items      center
     justify-content  center
@@ -202,12 +242,8 @@
 
 
 .pho-viewer-toolbar-close-cross
-    width    3em
-    height   3em
-
-    &:hover,
-    &:focus
-        background-color alpha(black, .25)
+    width  1.5em
+    height 1.5em
 
     &::after, &::before
         content     ''
@@ -215,7 +251,7 @@
         margin           .2em 1.4em
         border-radius    3px
         width            2px
-        height           2.5em
+        height           1.5em
         background-color white
 
     &::after
@@ -238,8 +274,6 @@
 
     .pho-viewer-toolbar-close-cross
         margin auto
-        width  1.5em
-        height 1.5em
 
         &::after, &::before
             margin  .1em .7em

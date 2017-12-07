@@ -4,6 +4,7 @@ import ViewerControls from './ViewerControls'
 import ImageViewer from './ImageViewer'
 import AudioViewer from './AudioViewer'
 import VideoViewer from './VideoViewer'
+import PdfViewer from './PdfViewer'
 import NoViewer from './NoViewer'
 
 import styles from './styles'
@@ -18,6 +19,7 @@ const isIOS = () =>
   window.navigator.userAgent &&
   /iPad|iPhone|iPod/.test(window.navigator.userAgent)
 const isMobile = () => isAndroid() || isIOS()
+const isCordova = () => window.cordova !== undefined
 
 export default class Viewer extends Component {
   componentDidMount() {
@@ -99,6 +101,8 @@ export default class Viewer extends Component {
         return AudioViewer
       case 'video':
         return isMobile() ? NoViewer : VideoViewer
+      case 'pdf':
+        return isMobile() || isCordova() ? NoViewer : PdfViewer
       default:
         return NoViewer
     }
