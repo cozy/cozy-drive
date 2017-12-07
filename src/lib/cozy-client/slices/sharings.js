@@ -340,7 +340,9 @@ const getPermissionsFor = (document, publicLink = false) => {
 
 // selectors
 const getSharing = (state, id) =>
-  state.cozy.sharings.documents.find(s => s.attributes.sharing_id === id)
+  state.cozy.sharings.documents.find(
+    s => s.attributes && s.attributes.sharing_id === id
+  )
 const getContact = (state, id) => getDocument(state, 'io.cozy.contacts', id)
 const getDoctypePermissions = (state, doctype) => {
   if (state.cozy.sharings.permissions[doctype]) {
@@ -360,7 +362,11 @@ const getSharingLinkPermission = (state, doctype, id) => {
   const perms = getDoctypePermissions(state, doctype)
   const type = isFile({ _type: doctype }) ? 'files' : 'collection'
   return perms.byLink.find(
-    p => p.attributes.permissions[type].values.indexOf(id) !== -1
+    p =>
+      p.attributes &&
+      p.attributes.permissions &&
+      p.attributes.permissions[type] &&
+      p.attributes.permissions[type].values.indexOf(id) !== -1
   )
 }
 
@@ -370,8 +376,13 @@ const getSharingForRecipient = (state, document, recipient) => {
     document._type,
     document._id
   )
-  return sharings.find(s =>
-    s.attributes.recipients.find(r => r.recipient.id === recipient._id)
+  return sharings.find(
+    s =>
+      s.attributes &&
+      s.attributes.recipients &&
+      s.attributes.recipients.find(
+        r => r.recipient && r.recipient.id === recipient._id
+      )
   )
 }
 
@@ -386,7 +397,7 @@ const getDocumentActiveSharings = (state, doctype, id) => {
     )
   ]
     .map(p => getSharing(state, p.attributes.source_id))
-    .filter(s => !s.attributes.revoked)
+    .filter(s => s && s.attributes && !s.attributes.revoked)
 }
 
 export const getSharings = (state, doctype, options = {}) => {
