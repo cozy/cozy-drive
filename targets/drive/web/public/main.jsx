@@ -1,4 +1,6 @@
 /* global cozy __DEVELOPMENT__ */
+import 'babel-polyfill'
+
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
@@ -10,8 +12,6 @@ import PublicLayout from 'drive/components/PublicLayout'
 
 import LightFolderView from 'drive/components/LightFolderView'
 import ErrorShare from 'components/Error/ErrorShare'
-
-document.addEventListener('DOMContentLoaded', init)
 
 const arrToObj = (obj = {}, [key, val = true]) => {
   obj[key] = val
@@ -25,7 +25,7 @@ const getQueryParameter = () =>
     .map(varval => varval.split('='))
     .reduce(arrToObj, {})
 
-async function init() {
+const init = async () => {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -120,3 +120,5 @@ async function init() {
     )
   }
 }
+
+document.addEventListener('DOMContentLoaded', init)
