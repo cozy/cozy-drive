@@ -5,6 +5,9 @@ import Viewer from 'viewer'
 import { getFolderUrl } from '../reducers'
 import { getFilesWithLinks } from '../reducers/view'
 import { isCordova } from '../mobile/lib/device'
+import { fetchMoreFiles } from '../actions'
+
+const LIMIT = 30
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -12,6 +15,22 @@ const getParentPath = router => {
 }
 
 class FilesViewer extends Component {
+  fetchMore() {
+    const { files, params, fetchMoreFiles } = this.props
+    const currentIndex = files.findIndex(f => f.id === params.fileId)
+    if (files.length - currentIndex <= 5) {
+      fetchMoreFiles(params.folderId, files.length, LIMIT)
+    }
+  }
+
+  componentDidMount() {
+    this.fetchMore()
+  }
+
+  componentWillReceiveProps(props, nextProps) {
+    this.fetchMore()
+  }
+
   render() {
     if (this.props.files.length === 0) return null
     // TODO: temp fix for thumbnail links on mobile
@@ -39,24 +58,32 @@ class FilesViewer extends Component {
       <Viewer
         files={files}
         currentIndex={currentIndex}
-        onChange={nextFile =>
+        onChange={nextFile => {
           router.push({
             pathname: `${getParentPath(router)}/${nextFile.id}`
           })
-        }
-        onClose={() =>
+        }}
+        onClose={() => {
           router.push({
             pathname: getFolderUrl(params.folderId, router.location)
           })
-        }
+        }}
       />
     )
   }
 }
 
-export default connect((state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
   filesWithLinks: getFilesWithLinks(
     state,
     ownProps.params.folderId || 'io.cozy.files.root-dir'
   )
-}))(FilesViewer)
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchMoreFiles: (folderId, skip, limit) => {
+    dispatch(fetchMoreFiles(folderId, skip, limit))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilesViewer)
