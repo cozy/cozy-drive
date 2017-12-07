@@ -1,5 +1,10 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "schedule": ["every monday before 9am"],
+  "timezone": "Europe/Paris",
+  "major": {
+    "ignoreDeps": ["pouchdb-find", "react-router", "cordova"]
+  }
 }
