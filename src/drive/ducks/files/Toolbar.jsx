@@ -160,7 +160,8 @@ class Toolbar extends Component {
                   action="CREATE"
                   docType="io.cozy.accounts"
                   data={{
-                    dataType: 'bill'
+                    dataType: 'bill',
+                    closeable: false
                   }}
                 >
                   {t('service.bills')}

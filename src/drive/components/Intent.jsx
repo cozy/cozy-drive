@@ -29,7 +29,10 @@ class IntentButton extends React.Component {
     return (
       <span className={classNames(styles['intentButton'])}>
         {modalIsOpen && (
-          <Modal secondaryAction={() => this.closeModal()}>
+          <Modal
+            secondaryAction={() => this.closeModal()}
+            className={classNames(styles['coz-modal-intent'])}
+          >
             <Intent
               action={action}
               docType={docType}
