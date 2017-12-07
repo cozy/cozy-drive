@@ -1,7 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import { downloadFile } from 'cozy-client'
-import { openOfflineFile } from 'drive/mobile/lib/filesystem'
+import { isCordova } from 'drive/mobile/lib/device'
+import { openOfflineFile, openOnlineFile } from 'drive/mobile/lib/filesystem'
 import { translate } from 'cozy-ui/react/I18n'
 import Button from 'cozy-ui/react/Button'
 
@@ -16,11 +17,13 @@ const NoViewer = ({ t, file }) => (
   >
     <p className={styles['pho-viewer-filename']}>{file.name}</p>
     <h2>{t('Viewer.noviewer.title')}</h2>
-    {file.isAvailableOffline ? (
+    {isCordova() ? (
       <Button
         theme="regular"
         className={styles['pho-viewer-noviewer-download']}
-        onClick={() => openOfflineFile(file)}
+        onClick={() =>
+          file.isAvailableOffline ? openOfflineFile(file) : openOnlineFile(file)
+        }
       >
         {t('Viewer.noviewer.openWith')}
       </Button>

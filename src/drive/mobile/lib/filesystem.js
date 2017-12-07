@@ -1,3 +1,4 @@
+/* global cozy */
 import { isAndroid } from './device'
 
 const ERROR_GET_DIRECTORY = 'Error to get directory'
@@ -126,9 +127,7 @@ export const temporarySave = (file, filename) =>
 export const saveAndOpenWithCordova = (file, filename) =>
   new Promise((resolve, reject) => {
     temporarySave(file, filename)
-      .then(entry =>
-        openFileWithCordova(decodeURIComponent(entry.nativeURL), file.type)
-      )
+      .then(entry => openFileWithCordova(entry.nativeURL, file.type))
       .then(resolve)
       .catch(reject)
   })
@@ -138,6 +137,15 @@ export const openOfflineFile = file =>
     const entry = await getCozyEntry()
     const fileEntry = await getEntry(`${entry.nativeURL}${file.id}`)
     return openFileWithCordova(fileEntry.nativeURL, file.mime)
+      .then(resolve)
+      .catch(reject)
+  })
+
+export const openOnlineFile = file =>
+  new Promise(async (resolve, reject) => {
+    const response = await cozy.client.files.downloadById(file.id)
+    const blob = await response.blob()
+    return saveAndOpenWithCordova(blob, file.name)
       .then(resolve)
       .catch(reject)
   })
