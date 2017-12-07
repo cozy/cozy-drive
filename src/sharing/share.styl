@@ -1,5 +1,11 @@
 @require 'cozy-ui'
 
+.c-btn
+    @extend $button
+
+.c-btn--secondary
+    @extend $button--secondary
+
 :global
     label[for='pho-album-share-toggle']
         cursor pointer
@@ -45,7 +51,7 @@
     input[type=text]
         width 100%
 
-    
+
 
     .pho-input-dual
         display flex
