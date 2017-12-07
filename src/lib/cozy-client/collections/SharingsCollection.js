@@ -44,15 +44,21 @@ export default class SharingsCollection {
         `/permissions/doctype/${doctype}/${sharingType}`
       )
 
-    const byMe = await fetchPermissions(doctype, SHARED_WITH_OTHERS)
-    const byLink = await fetchPermissions(doctype, SHARED_BY_LINK)
-    const withMe = await fetchPermissions(doctype, SHARED_WITH_ME)
-
+    // if we catch an exception (server's error), we init values with empty array
+    const byMe = await fetchPermissions(doctype, SHARED_WITH_OTHERS).catch(
+      () => []
+    )
+    const byLink = await fetchPermissions(doctype, SHARED_BY_LINK).catch(
+      () => []
+    )
+    const withMe = await fetchPermissions(doctype, SHARED_WITH_ME).catch(
+      () => []
+    )
     return { byMe, byLink, withMe }
   }
 
   fetchSharing(id) {
-    return cozy.client.fetchJSON('GET', `/sharings/${id}`)
+    return cozy.client.fetchJSON('GET', `/sharings/${id}`).catch(() => ({}))
   }
 
   revoke(sharingId) {
