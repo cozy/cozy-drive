@@ -200,16 +200,6 @@
         justify-content flex-end
         padding-right   0
 
-// here we force the action buttons to not show the label even on desktop
-.pho-viewer-toolbar-actions
-    button
-        width         em(90px)
-        overflow      hidden
-        text-indent   -5000px
-        padding-left  0
-        color         transparent
-        background-position em(12px)
-
 .pho-viewer-toolbar
     position    fixed
     z-index     $modal-index + 1
@@ -218,6 +208,7 @@
     width       100%
     height      em(90px)
     transition .4s opacity ease-out
+    pointer-events none // especially important for pdf viewers, where there might be additional controls in the top area
 
     &--hidden
         opacity 0
@@ -232,6 +223,16 @@
     height            auto
     background-color  transparent
 
+    // here we force the action buttons to not show the label even on desktop
+    button
+        width         em(90px)
+        overflow      hidden
+        text-indent   -5000px
+        padding-left  0
+        color         transparent
+        background-position em(12px)
+        pointer-events initial
+
 
 .pho-viewer-toolbar-close
     position         fixed
@@ -243,6 +244,7 @@
     width            em(90px)
     height           em(90px)
     cursor           pointer
+    pointer-events   initial
 
 
 .pho-viewer-toolbar-close-cross
