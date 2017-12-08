@@ -23,6 +23,7 @@ import { getVisibleFiles } from '../reducers'
 
 import styles from '../styles/folderview'
 import toolbarstyles from '../styles/toolbar'
+import { getFolderIdFromRoute } from '../reducers/view'
 
 class DumbFolderView extends React.Component {
   state = {
@@ -30,14 +31,18 @@ class DumbFolderView extends React.Component {
   }
 
   componentWillMount() {
-    this.props.onFolderOpen(this.props.params.folderId).then(e => {
-      if (
-        e.type === 'OPEN_FOLDER_FAILURE' &&
-        /no permission doc for token/.test(e.error.reason.errors[0].detail)
-      ) {
-        this.setState(state => ({ ...state, revoked: true }))
-      }
-    })
+    this.props
+      .onFolderOpen(
+        getFolderIdFromRoute(this.props.location, this.props.params)
+      )
+      .then(e => {
+        if (
+          e.type === 'OPEN_FOLDER_FAILURE' &&
+          /no permission doc for token/.test(e.error.reason.errors[0].detail)
+        ) {
+          this.setState(state => ({ ...state, revoked: true }))
+        }
+      })
   }
 
   render() {
