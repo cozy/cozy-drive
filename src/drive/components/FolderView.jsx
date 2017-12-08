@@ -6,6 +6,7 @@ import Main from './Main'
 import Topbar from './Topbar'
 import FileListHeader from './FileListHeader'
 
+import { ROOT_DIR_ID } from '../constants/config'
 import Breadcrumb from '../containers/Breadcrumb'
 import { SelectionBar } from '../ducks/selection'
 import AddFolder from './AddFolder'
@@ -63,6 +64,9 @@ class FolderView extends Component {
     const fetchFailed = this.props.fetchStatus === 'failed'
     const fetchPending = this.props.fetchStatus === 'pending'
     const nothingToDo = isTrashContext && files.length === 0
+    const isRootfolder =
+      this.props.displayedFolder &&
+      this.props.displayedFolder.id === ROOT_DIR_ID
 
     const toolbarActions = {}
     if (canCreateFolder) toolbarActions.addFolder = this.toggleAddFolder
@@ -83,7 +87,7 @@ class FolderView extends Component {
         <div role="contentinfo">
           {__TARGET__ === 'mobile' && (
             <div>
-              <MediaBackupProgression />
+              {isRootfolder && <MediaBackupProgression />}
               <FirstUploadModal />
               <RatingModal />
             </div>
