@@ -102,7 +102,7 @@ export default class Viewer extends Component {
       case 'video':
         return isMobile() ? NoViewer : VideoViewer
       case 'pdf':
-        return isMobile() || isCordova() ? NoViewer : PdfViewer
+        return isCordova() ? NoViewer : PdfViewer
       default:
         return NoViewer
     }
