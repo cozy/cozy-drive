@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Viewer from 'viewer'
 
 import { getFolderUrl } from '../reducers'
-import { getFilesWithLinks } from '../reducers/view'
+import { getFilesWithLinks, getFolderIdFromRoute } from '../reducers/view'
 import { isCordova } from '../mobile/lib/device'
 import { fetchMoreFiles } from '../actions'
 
@@ -16,10 +16,14 @@ const getParentPath = router => {
 
 class FilesViewer extends Component {
   fetchMore() {
-    const { files, params, fetchMoreFiles } = this.props
+    const { files, params, location, fetchMoreFiles } = this.props
     const currentIndex = files.findIndex(f => f.id === params.fileId)
     if (files.length - currentIndex <= 5) {
-      fetchMoreFiles(params.folderId, files.length, LIMIT)
+      fetchMoreFiles(
+        getFolderIdFromRoute(location, params),
+        files.length,
+        LIMIT
+      )
     }
   }
 
@@ -76,7 +80,7 @@ class FilesViewer extends Component {
 const mapStateToProps = (state, ownProps) => ({
   filesWithLinks: getFilesWithLinks(
     state,
-    ownProps.params.folderId || 'io.cozy.files.root-dir'
+    getFolderIdFromRoute(ownProps.location, ownProps.params)
   )
 })
 

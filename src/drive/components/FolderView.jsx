@@ -9,6 +9,7 @@ import FileListHeader from './FileListHeader'
 import { ROOT_DIR_ID } from '../constants/config'
 import Breadcrumb from '../containers/Breadcrumb'
 import { SelectionBar } from '../ducks/selection'
+import { getFolderIdFromRoute } from '../reducers/view'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
 import MediaBackupProgression from '../mobile/containers/MediaBackupProgression'
@@ -48,7 +49,6 @@ class FolderView extends Component {
       selectionModeActive
     } = this.props
     const {
-      params,
       files,
       selected,
       actionable,
@@ -64,9 +64,11 @@ class FolderView extends Component {
     const fetchFailed = this.props.fetchStatus === 'failed'
     const fetchPending = this.props.fetchStatus === 'pending'
     const nothingToDo = isTrashContext && files.length === 0
-    const isRootfolder =
-      this.props.displayedFolder &&
-      this.props.displayedFolder.id === ROOT_DIR_ID
+    const folderId = getFolderIdFromRoute(
+      this.props.location,
+      this.props.params
+    )
+    const isRootfolder = folderId === ROOT_DIR_ID
 
     const toolbarActions = {}
     if (canCreateFolder) toolbarActions.addFolder = this.toggleAddFolder
@@ -75,7 +77,7 @@ class FolderView extends Component {
         <Topbar>
           <Breadcrumb />
           <Toolbar
-            folderId={params.folderId}
+            folderId={folderId}
             actions={toolbarActions}
             canUpload={canUpload}
             disabled={

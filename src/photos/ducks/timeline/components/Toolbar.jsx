@@ -14,14 +14,7 @@ import { showSelectionBar, isSelectionBarVisible } from '../../selection'
 import { addToUploadQueue } from '../../upload'
 import { uploadPhoto } from '../'
 
-export const Toolbar = ({
-  t,
-  disabled = false,
-  uploadPhotos,
-  deleteAlbum,
-  selectItems,
-  params
-}) => (
+export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
   <div className={styles['pho-toolbar']} role="toolbar">
     <UploadButton
       className={styles['u-hide--mob']}
