@@ -35,7 +35,7 @@
     "watch:drive:standalone": "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=mobile --port 8084 --display-modules --display-chunks --inline --hot",
     "watch:photos": "npm run watch:photos:browser",
     "watch:photos:browser": "npm run internal:watch -- --env.app=photos --env.target=browser",
-    "mobile:drive:icon": "(cd targets/drive/mobile && splashicon-generator --imagespath='./res/model')",
+    "mobile:drive:icon": "(cd targets/drive/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model')",
     "mobile:drive:prepare": "(cd targets/drive/mobile && cordova prepare)",
     "android:drive:run": "(cd targets/drive/mobile && cordova run android --device)",
     "android:drive:run:emulator": "(cd targets/drive/mobile && cordova run android --emulator)",
