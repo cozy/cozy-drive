@@ -1,7 +1,7 @@
 import styles from '../styles/photoList'
 
 import React, { Component } from 'react'
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import { withContentRect } from 'react-measure'
 import { translate } from 'cozy-ui/react/I18n'
 
 import PhotoList from './PhotoList'
@@ -64,7 +64,9 @@ export class PhotoBoard extends Component {
       onPhotosUnselect,
       fetchStatus,
       hasMore,
-      onFetchMore
+      onFetchMore,
+      measureRef,
+      contentRect: { entry: { width } }
     } = this.props
 
     const isError = fetchStatus === 'failed'
@@ -81,7 +83,10 @@ export class PhotoBoard extends Component {
     }
 
     return (
-      <div className={showSelection ? styles['pho-list-selection'] : ''}>
+      <div
+        className={showSelection ? styles['pho-list-selection'] : ''}
+        ref={measureRef}
+      >
         {lists.map(photoList => (
           <PhotoList
             key={photoList.title}
@@ -94,15 +99,17 @@ export class PhotoBoard extends Component {
             onPhotoToggle={onPhotoToggle}
             onPhotosSelect={onPhotosSelect}
             onPhotosUnselect={onPhotosUnselect}
-            containerWidth={402}
+            containerWidth={width}
           />
         ))}
         {hasMore && (
-          <MoreButton onClick={onFetchMore}>{t('Board.load_more')}</MoreButton>
+          <MoreButton width={width} onClick={onFetchMore}>
+            {t('Board.load_more')}
+          </MoreButton>
         )}
       </div>
     )
   }
 }
 
-export default translate()(PhotoBoard)
+export default translate()(withContentRect()(PhotoBoard))
