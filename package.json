@@ -4,17 +4,23 @@
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
-    "build:drive:browser": "npm run internal:build -- --env.app=drive --env.target=browser --env.production",
-    "build:drive:mobile": "npm run internal:build -- --env.app=drive --env.target=mobile --env.production",
+    "build:drive:browser":
+      "npm run internal:build -- --env.app=drive --env.target=browser --env.production",
+    "build:drive:mobile":
+      "npm run internal:build -- --env.app=drive --env.target=mobile --env.production",
     "build:photos": "npm run build:photos:browser",
-    "build:photos:browser": "npm run internal:build -- --env.app=photos --env.target=browser --env.production",
+    "build:photos:browser":
+      "npm run internal:build -- --env.app=photos --env.target=browser --env.production",
     "clean:drive:browser": "rm -rf build/drive/*",
     "clean:photos:browser": "rm -rf build/photos/*",
     "clean:mobile": "rm -rf targets/*/mobile/www/*",
-    "deploy:drive": "git-directory-deploy --directory=build/drive/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
-    "deploy:photos": "git-directory-deploy --directory=build/photos/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
+    "deploy:drive":
+      "git-directory-deploy --directory=build/drive/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
+    "deploy:photos":
+      "git-directory-deploy --directory=build/photos/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
     "internal:build": "webpack --config webpack.config.js --bail",
-    "internal:watch": "webpack --config webpack.config.js --watch --display-modules --display-chunks",
+    "internal:watch":
+      "webpack --config webpack.config.js --watch --display-modules --display-chunks",
     "tx": "tx pull --all || true",
     "preinternal:build": "npm-run-all lint tx",
     "prebuild:drive:browser": "npm run clean:drive:browser",
@@ -30,21 +36,34 @@
     "precommit": "lint-staged",
     "test": "node_modules/.bin/jest --coverage --config=jest.config.json",
     "watch:drive": "npm run watch:drive:browser",
-    "watch:drive:browser": "npm run internal:watch -- --env.app=drive --env.target=browser",
-    "watch:drive:mobile": "npm run internal:watch -- --env.app=drive --env.target=mobile",
-    "watch:drive:standalone": "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=mobile --port 8084 --display-modules --display-chunks --inline --hot",
+    "watch:drive:browser":
+      "npm run internal:watch -- --env.app=drive --env.target=browser",
+    "watch:drive:mobile":
+      "npm run internal:watch -- --env.app=drive --env.target=mobile",
+    "watch:drive:standalone":
+      "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=mobile --port 8084 --display-modules --display-chunks --inline --hot",
     "watch:photos": "npm run watch:photos:browser",
-    "watch:photos:browser": "npm run internal:watch -- --env.app=photos --env.target=browser",
-    "mobile:drive:icon": "(cd targets/drive/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model')",
-    "mobile:drive:prepare": "(cd targets/drive/mobile && cordova prepare)",
-    "android:drive:run": "(cd targets/drive/mobile && cordova run android --device)",
-    "android:drive:run:emulator": "(cd targets/drive/mobile && cordova run android --emulator)",
-    "android:drive:release": "npm run build:drive:mobile && (cd targets/drive/mobile && cordova build android --release)",
-    "android:drive:signed": "npm run android:drive:release && (cd targets/drive/mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/android-release-unsigned.apk)",
-    "android:drive:publish": "(cd targets/drive/mobile && fastlane supply)",
-    "ios:drive:run": "(cd targets/drive/mobile && cordova run ios --device)",
-    "ios:drive:run:emulator": "(cd targets/drive/mobile && cordova run ios --emulator)",
-    "ios:drive:publish": "npm run build:drive:mobile && (cd targets/drive/mobile && fastlane ios pushtest)"
+    "watch:photos:browser":
+      "npm run internal:watch -- --env.app=photos --env.target=browser",
+    "genicon:drive:mobile":
+      "(cd targets/drive/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model')",
+    "prepare:drive:mobile": "(cd targets/drive/mobile && cordova prepare)",
+    "run:drive:android":
+      "(cd targets/drive/mobile && cordova run android --device)",
+    "run:drive:android:emulator":
+      "(cd targets/drive/mobile && cordova run android --emulator)",
+    "build:drive:android":
+      "npm run build:drive:mobile && (cd targets/drive/mobile && cordova build android --release)",
+    "sign:drive:android":
+      "(cd targets/drive/mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/android-release-unsigned.apk)",
+    "buildsigner:drive:android":
+      "npm run build:drive:android && sign:drive:android",
+    "publish:drive:android": "(cd targets/drive/mobile && fastlane supply)",
+    "run:drive:ios": "(cd targets/drive/mobile && cordova run ios --device)",
+    "run:drive:ios:emulator":
+      "(cd targets/drive/mobile && cordova run ios --emulator)",
+    "publish:drive:ios":
+      "npm run build:drive:mobile && (cd targets/drive/mobile && fastlane ios pushtest)"
   },
   "repository": {
     "type": "git",
@@ -163,19 +182,12 @@
     "redux-thunk": "^2.1.0"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "styl"
-    ],
+    "moduleFileExtensions": ["js", "jsx", "json", "styl"],
     "moduleNameMapper": {
       "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
       "styles": "identity-obj-proxy"
     },
-    "transformIgnorePatterns": [
-      "node_modules/(?!cozy-ui)"
-    ],
+    "transformIgnorePatterns": ["node_modules/(?!cozy-ui)"],
     "globals": {
       "__ALLOW_HTTP__": false,
       "__TARGET__": "browser",
@@ -193,11 +205,7 @@
       "prettier/react",
       "prettier/standard"
     ],
-    "plugins": [
-      "react",
-      "prettier",
-      "standard"
-    ],
+    "plugins": ["react", "prettier", "standard"],
     "parser": "babel-eslint",
     "parserOptions": {
       "ecmaFeatures": {
@@ -224,9 +232,6 @@
     "singleQuote": true
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,jsx}": [
-      "prettier --write",
-      "git add"
-    ]
+    "{src,test}/**/*.{js,jsx}": ["prettier --write", "git add"]
   }
 }
