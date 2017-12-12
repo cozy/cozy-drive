@@ -10,8 +10,8 @@ const LOADING = 'LOADING'
 const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
-const withFileUrl = WrappedComponent =>
-  class Wrapper extends Component {
+const withFileUrl = BaseComponent =>
+  class extends Component {
     state = {
       status: LOADING,
       downloadUrl: null
@@ -65,7 +65,7 @@ const withFileUrl = WrappedComponent =>
       if (this.state.status === FAILED) {
         return <NoNetworkViewer onReload={this.reset} />
       }
-      return <WrappedComponent {...this.props} url={this.state.downloadUrl} />
+      return <BaseComponent {...this.props} url={this.state.downloadUrl} />
     }
   }
 
