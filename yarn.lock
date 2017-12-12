@@ -2086,9 +2086,9 @@ cozy-bar@4.5.4:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-cozy-client-js@0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.4.3.tgz#e414267239304b00b16ef6f433e085b5c053ae70"
+cozy-client-js@0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.4.4.tgz#420709f6d7174742bdfe0fe78efeaf7bad850164"
   dependencies:
     pouchdb "6.1.1"
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
