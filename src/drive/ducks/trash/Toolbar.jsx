@@ -28,7 +28,7 @@ const Toolbar = ({
       title={t('toolbar.item_more')}
       disabled={disabled}
       className={styles['fil-toolbar-menu']}
-      button={<MoreButton />}
+      button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
     >
       <Item>
         <a className={styles['fil-action-delete']} onClick={() => emptyTrash()}>

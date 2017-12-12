@@ -92,7 +92,7 @@ class AlbumToolbar extends Component {
         <Menu
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
-          button={<MoreButton />}
+          button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
         >
           {!sharedWithMe && (
             <Item>
