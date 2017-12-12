@@ -89,7 +89,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         rename: {
           action: selected => dispatch(startRenamingAsync(selected[0])),
           displayCondition: selections =>
-            hasWriteAccess && selections.length === 1 && isFile(selections[0])
+            hasWriteAccess && selections.length === 1
         },
         availableOffline: {
           action: selected => dispatch(toggleAvailableOffline(selected[0])),
