@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { logException, logInfo } from '../lib/reporter'
 import { setFirstReplication, setOffline } from '../../actions/settings'
 import classNames from 'classnames'
-import styles from 'cozy-ui/stylus/components/button'
+import styles from '../styles/debugtools'
 
 const Button = ({ onClick, children }) => (
   <button
