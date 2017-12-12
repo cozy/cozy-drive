@@ -16,12 +16,12 @@ export const Layout = ({ t, children }) => (
   <div className={classNames(styles['pho-wrapper'], styles['coz-sticky'])}>
     <Sidebar />
 
+    <Alerter t={t} />
+    <UploadQueue />
     <main className={styles['pho-content']}>
       {__TARGET__ !== 'mobile' && <BannerClient />}
       {children}
     </main>
-    <Alerter t={t} />
-    <UploadQueue />
   </div>
 )
 

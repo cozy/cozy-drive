@@ -17,8 +17,8 @@ const Layout = ({ t, children }) => (
     <Sidebar />
     <OldAlerter />
     <Alerter t={t} />
-    {children}
     <UploadQueue />
+    {children}
     <ModalManager />
   </div>
 )

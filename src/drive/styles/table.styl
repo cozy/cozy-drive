@@ -23,8 +23,6 @@
     flex      1 1 auto
     display   flex
     flex-direction column
-    // Because it needs a height to be scrollable. Don't ask.
-    height    1px
     overflow  auto
 
 .fil-content-header
@@ -56,9 +54,6 @@
     &:hover
         background-color rgba(24, 122, 255, 0.1)
 
-.fil-content-cell.fil-content-file
-    color charcoalGrey
-
 .fil-content-ext
     color coolGrey
 
@@ -85,12 +80,16 @@
 
 .fil-content-cell.fil-content-file
     position       relative
-    padding-left   2.8125rem
+    display flex
+    align-items center
+    height 100%
+    padding   0 2rem 0 2.8125rem
     font-size      16px
     line-height    1.3
     white-space    nowrap
     overflow       hidden
     text-overflow  ellipsis
+    color charcoalGrey
 
 .fil-content-file-openable
     cursor pointer

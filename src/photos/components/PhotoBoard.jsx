@@ -81,32 +81,26 @@ export class PhotoBoard extends Component {
     }
 
     return (
-      <AutoSizer>
-        {({ width, height }) => (
-          <div className={showSelection ? styles['pho-list-selection'] : ''}>
-            {lists.map(photoList => (
-              <PhotoList
-                key={photoList.title}
-                title={photoList.title}
-                photos={photoList.photos}
-                selected={selected.filter(id =>
-                  photoList.photos.find(p => p.id === id)
-                )}
-                showSelection={showSelection}
-                onPhotoToggle={onPhotoToggle}
-                onPhotosSelect={onPhotosSelect}
-                onPhotosUnselect={onPhotosUnselect}
-                containerWidth={width}
-              />
-            ))}
-            {hasMore && (
-              <MoreButton width={width} onClick={onFetchMore}>
-                {t('Board.load_more')}
-              </MoreButton>
+      <div className={showSelection ? styles['pho-list-selection'] : ''}>
+        {lists.map(photoList => (
+          <PhotoList
+            key={photoList.title}
+            title={photoList.title}
+            photos={photoList.photos}
+            selected={selected.filter(id =>
+              photoList.photos.find(p => p.id === id)
             )}
-          </div>
+            showSelection={showSelection}
+            onPhotoToggle={onPhotoToggle}
+            onPhotosSelect={onPhotosSelect}
+            onPhotosUnselect={onPhotosUnselect}
+            containerWidth={402}
+          />
+        ))}
+        {hasMore && (
+          <MoreButton onClick={onFetchMore}>{t('Board.load_more')}</MoreButton>
         )}
-      </AutoSizer>
+      </div>
     )
   }
 }
