@@ -12,7 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <hook src="scripts/update-config-version.sh" type="before_build" />
-    <engine name="android" spec="6.1.2" />
+    <engine name="android" spec="6.4.0" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
         <allow-intent href="market:*" />
@@ -35,7 +35,7 @@
         <splash density="port-xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
         <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
     </platform>
-    <engine name="ios" spec="4.5.1" />
+    <engine name="ios" spec="4.5.4" />
     <platform name="ios">
         <preference name="StatusBarOverlaysWebView" value="false" />
         <preference name="StatusBarStyle" value="default" />
