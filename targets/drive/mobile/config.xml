@@ -95,4 +95,7 @@
     <plugin name="cordova-plugin-sqlite-2" spec="~1.0.4" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="0.8.5" />
     <plugin name="cordova-plugin-document-viewer" spec="~0.9.7" />
+    <plugin name="cordova-plugin-customurlscheme" spec="~4.3.0">
+        <variable name="URL_SCHEME" value="cozydrive" />
+    </plugin>
 </widget>
