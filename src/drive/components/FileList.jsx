@@ -4,11 +4,43 @@ import { translate } from 'cozy-ui/react/I18n'
 import File, { FilePlaceholder } from '../containers/File'
 import LoadMore from './LoadMore'
 
+require('intersection-observer') // polyfill for safari
+
 const LIMIT = 30
 
 class FileList extends PureComponent {
   state = {
     isLoading: false
+  }
+
+  intersectionObserver = null
+  loadMoreElement = null
+
+  componentWillMount() {
+    this.intersectionObserver = new IntersectionObserver(
+      this.checkIntersectionsEntries
+    )
+  }
+
+  checkIntersectionsEntries = intersectionEntries => {
+    if (intersectionEntries.filter(entry => entry.isIntersecting).length > 0) {
+      this.loadMoreRows(LIMIT)
+    }
+  }
+
+  updateLoadMoreElement = element => {
+    if (this.loadMoreElement) {
+      this.intersectionObserver.unobserve(this.loadMoreElement)
+    }
+
+    if (element) {
+      this.loadMoreElement = React.findDOMNode(element)
+      this.intersectionObserver.observe(this.loadMoreElement)
+    }
+  }
+
+  componentWillUnmount() {
+    this.intersectionObserver.disconnect()
   }
 
   render() {
@@ -19,9 +51,7 @@ class FileList extends PureComponent {
         })}
         {this.props.files.length < this.props.fileCount && (
           <LoadMore
-            ref={elt => {
-              this.button = elt
-            }}
+            ref={this.updateLoadMoreElement}
             onClick={() => {
               this.loadMoreRows(LIMIT)
             }}
