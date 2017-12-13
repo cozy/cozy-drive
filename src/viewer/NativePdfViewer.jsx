@@ -8,8 +8,6 @@ import {
 import NoViewer from './NoViewer'
 import Spinner from 'cozy-ui/react/Spinner'
 import classNames from 'classnames'
-import Button from 'cozy-ui/react/Button'
-import { translate } from 'cozy-ui/react/I18n'
 
 import styles from './styles'
 
@@ -116,7 +114,7 @@ class NativePdfViewer extends Component {
   }
 
   render() {
-    const { file, t } = this.props
+    const { file } = this.props
     const { opening, error } = this.state
 
     if (opening && !error)
@@ -131,16 +129,9 @@ class NativePdfViewer extends Component {
           )}
         >
           <p className={styles['pho-viewer-filename']}>{file.name}</p>
-          <Button
-            theme="regular"
-            className={styles['pho-viewer-noviewer-download']}
-            onClick={this.openPdfInExternalViewer}
-          >
-            {t('Viewer.reopen')}
-          </Button>
         </div>
       )
   }
 }
 
-export default translate()(NativePdfViewer)
+export default NativePdfViewer

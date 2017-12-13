@@ -425,7 +425,6 @@
   },
   "Viewer": {
     "close": "Close",
-    "reopen": "Open again",
     "noviewer": {
       "title": "The viewer doesn't know how to read this type of file yet.",
       "download": "Download this file",
