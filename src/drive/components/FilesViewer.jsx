@@ -16,9 +16,9 @@ const getParentPath = router => {
 
 class FilesViewer extends Component {
   fetchMore() {
-    const { files, params, location, fetchMoreFiles } = this.props
+    const { files, params, location, fetchMoreFiles, fileCount } = this.props
     const currentIndex = files.findIndex(f => f.id === params.fileId)
-    if (files.length - currentIndex <= 5) {
+    if (files.length !== fileCount && files.length - currentIndex <= 5) {
       fetchMoreFiles(
         getFolderIdFromRoute(location, params),
         files.length,
@@ -81,7 +81,8 @@ const mapStateToProps = (state, ownProps) => ({
   filesWithLinks: getFilesWithLinks(
     state,
     getFolderIdFromRoute(ownProps.location, ownProps.params)
-  )
+  ),
+  fileCount: state.view.fileCount
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
