@@ -82,6 +82,7 @@ const renderAppWithPersistedState = (persistedState = {}) => {
   document.addEventListener(
     'resume',
     () => {
+      store.dispatch(backupImages())
       if (store.getState().mobile.settings.analytics) startHeartBeat()
     },
     false
