@@ -25,7 +25,7 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
     <Menu
       disabled={disabled}
       className={styles['pho-toolbar-menu']}
-      button={<MoreButton />}
+      button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
     >
       <Item>
         <UploadButton

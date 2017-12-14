@@ -70,7 +70,7 @@ class Toolbar extends Component {
         title={t('toolbar.item_more')}
         disabled={disabled}
         className={styles['fil-toolbar-menu']}
-        button={<MoreButton />}
+        button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
       >
         {notRootfolder &&
           !shared.withMe && (

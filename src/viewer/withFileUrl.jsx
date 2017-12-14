@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { getDownloadLink } from 'cozy-client'
 import Spinner from 'cozy-ui/react/Spinner'
 
-import NoNetwork from './NoNetwork'
+import NoNetworkViewer from './NoNetworkViewer'
 
 const TTL = 6000
 
@@ -10,8 +10,8 @@ const LOADING = 'LOADING'
 const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
-const withFileUrl = WrappedComponent =>
-  class Wrapper extends Component {
+const withFileUrl = BaseComponent =>
+  class extends Component {
     state = {
       status: LOADING,
       downloadUrl: null
@@ -63,9 +63,9 @@ const withFileUrl = WrappedComponent =>
         return <Spinner size="xxlarge" middle="true" noMargin color="white" />
       }
       if (this.state.status === FAILED) {
-        return <NoNetwork onReload={this.reset} />
+        return <NoNetworkViewer onReload={this.reset} />
       }
-      return <WrappedComponent {...this.props} url={this.state.downloadUrl} />
+      return <BaseComponent {...this.props} url={this.state.downloadUrl} />
     }
   }
 

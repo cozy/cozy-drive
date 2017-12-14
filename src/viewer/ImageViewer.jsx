@@ -7,7 +7,7 @@ import Hammer from 'hammerjs'
 import Spinner from 'cozy-ui/react/Spinner'
 import { ImageLoader } from 'components/Image'
 
-import NoNetwork from './NoNetwork'
+import NoNetworkViewer from './NoNetworkViewer'
 
 const MIN_SCALE = 1
 const MAX_SCALE = 6
@@ -192,7 +192,7 @@ export default class ImageViewer extends Component {
 
   render() {
     if (this.state.canceled) {
-      return <NoNetwork onReload={this.reload} />
+      return <NoNetworkViewer onReload={this.reload} />
     }
     const { file } = this.props
 
