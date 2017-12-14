@@ -8,6 +8,7 @@ import {
 import NoViewer from './NoViewer'
 import Spinner from 'cozy-ui/react/Spinner'
 import classNames from 'classnames'
+import { translate } from 'cozy-ui/react/I18n'
 
 import styles from './styles'
 
@@ -74,16 +75,18 @@ class NativePdfViewer extends Component {
   }
 
   openPdfInExternalViewer = () => {
+    const { t } = this.props
+
     cordova.plugins.SitewaertsDocumentViewer.viewDocument(
       this.nativeFileUrl,
       'application/pdf',
       {
         ...VIEWER_OPTIONS,
         documentView: {
-          closeLabel: this.props.t('Viewer.close')
+          closeLabel: t('Viewer.close')
         },
         navigationView: {
-          closeLabel: this.props.t('Viewer.close')
+          closeLabel: t('Viewer.close')
         },
         title: this.props.file.name
       },
@@ -134,4 +137,4 @@ class NativePdfViewer extends Component {
   }
 }
 
-export default NativePdfViewer
+export default translate()(NativePdfViewer)
