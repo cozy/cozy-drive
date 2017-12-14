@@ -15,6 +15,7 @@ import Preview from '../components/Preview'
 import { withBreakpoints } from 'cozy-ui/react'
 import { SharedBadge } from 'sharing'
 import { getSharingDetails } from 'cozy-client'
+import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
 
 import { getFolderUrl } from '../reducers'
 
@@ -26,30 +27,6 @@ export const splitFilename = file =>
         filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
       }
 
-const mappingMimetypeSubtype = {
-  word: 'text',
-  zip: 'zip',
-  pdf: 'pdf',
-  spreadsheet: 'sheet',
-  excel: 'sheet',
-  presentation: 'slide',
-  powerpoint: 'slide'
-}
-
-export const getTypeFromMimeType = (collection, prefix = '') => mimetype => {
-  const [type, subtype] = mimetype.split('/')
-  if (collection[prefix + type]) {
-    return type
-  }
-  if (type === 'application') {
-    const existingType = subtype.match(
-      Object.keys(mappingMimetypeSubtype).join('|')
-    )
-    return existingType ? mappingMimetypeSubtype[existingType[0]] : undefined
-  }
-  return undefined
-}
-
 export const getClassFromMime = attrs => {
   if (isDirectory(attrs)) {
     return styles['fil-file-folder']
@@ -57,7 +34,7 @@ export const getClassFromMime = attrs => {
 
   return styles[
     'fil-file-' +
-      (getTypeFromMimeType(styles, 'fil-file-')(attrs.mime) ||
+      (getFileTypeFromMime(styles, 'fil-file-')(attrs.mime) ||
         console.warn(
           `No icon found, you may need to add a mapping for ${attrs.mime}`
         ) ||
