@@ -111,16 +111,18 @@ const objectifyDocumentsArray = documents =>
   documents.reduce((obj, doc) => ({ ...obj, [doc.id]: doc }), {})
 
 const updateFileReference = (
-  { relationships: { referenced_by, ...relationships }, ...file },
+  { relationships: { referenced_by: referencedBy, ...relationships }, ...file },
   doc
 ) => ({
   ...file,
   relationships: {
     ...relationships,
-    [referenced_by.data]:
-      referenced_by.data === null
-        ? [{ id: doc.id, type: doc.type }]
-        : [...referenced_by.data, { id: doc.id, type: doc.type }]
+    referenced_by: {
+      data:
+        referencedBy.data === null
+          ? [{ id: doc.id, type: doc.type }]
+          : [...referencedBy.data, { id: doc.id, type: doc.type }]
+    }
   }
 })
 
@@ -134,15 +136,17 @@ const updateFilesReferences = (files, newlyReferencedIds, doc) =>
   )
 
 const removeFileReferences = (
-  { relationships: { referenced_by, ...relationships }, ...file },
+  { relationships: { referenced_by: referencedBy, ...relationships }, ...file },
   doc
 ) => ({
   ...file,
   relationships: {
     ...relationships,
-    [referenced_by.data]: referenced_by.data.filter(
-      rel => rel.type !== doc.type && rel.id !== doc.id
-    )
+    referenced_by: {
+      data: referencedBy.data.filter(
+        rel => rel.type !== doc.type && rel.id !== doc.id
+      )
+    }
   }
 })
 
