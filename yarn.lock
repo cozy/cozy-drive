@@ -2400,13 +2400,13 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
-csswring@5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/csswring/-/csswring-5.1.1.tgz#f412b794d87c272f2487e42c05b1b857004f40a9"
+csswring@6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/csswring/-/csswring-6.0.2.tgz#3c2ede6a0570613bec6d0921280de4adf971c868"
   dependencies:
-    minimist "^1.1.0"
+    minimist "^1.2.0"
     onecolor "^3.0.4"
-    postcss "^5.0.0"
+    postcss "^6.0.9"
 
 ctype@0.5.3:
   version "0.5.3"
@@ -7240,7 +7240,7 @@ postcss@5.2.18, postcss@^5.0.0, postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.1
     source-map "^0.5.6"
     supports-color "^3.2.3"
 
-postcss@^6.0.1:
+postcss@^6.0.1, postcss@^6.0.9:
   version "6.0.14"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.14.tgz#5534c72114739e75d0afcf017db853099f562885"
   dependencies:
