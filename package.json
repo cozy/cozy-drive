@@ -125,7 +125,7 @@
     "style-loader": "0.13.2",
     "stylint": "1.5.9",
     "stylus": "0.54.5",
-    "stylus-loader": "2.5.1",
+    "stylus-loader": "3.0.1",
     "svg-sprite-loader": "0.0.31",
     "webpack": "3.10.0",
     "webpack-dev-server": "1.16.5",
