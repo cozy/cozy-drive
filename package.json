@@ -88,7 +88,7 @@
     "cordova": "6.5.0",
     "css-loader": "0.26.4",
     "css-mqpacker": "4.0.1",
-    "csswring": "5.1.1",
+    "csswring": "6.0.2",
     "enzyme": "2.9.1",
     "eslint": "4.13.1",
     "eslint-config-prettier": "2.9.0",
