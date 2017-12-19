@@ -1,8 +1,6 @@
 /* global __SENTRY_TOKEN__, __DEVELOPMENT__ */
 import Raven from 'raven-js'
 
-let isEnabled = false
-
 const getAnalyticsUrl = () => {
   if (typeof __SENTRY_TOKEN__ === 'undefined') {
     return ''
@@ -16,12 +14,11 @@ const getAnalyticsUrl = () => {
 export const ANALYTICS_URL = getAnalyticsUrl()
 
 export const getReporterConfiguration = () => ({
-  shouldSendCallback: () => isEnabled,
+  shouldSendCallback: true,
   environment: __DEVELOPMENT__ ? 'development' : 'production'
 })
 
-export const configureReporter = enable => {
-  isEnabled = enable
+export const configureReporter = () => {
   Raven.config(ANALYTICS_URL, getReporterConfiguration()).install()
 }
 
@@ -34,23 +31,17 @@ export const logException = err => {
   })
 }
 
-const logMessage = (message, serverUrl, level = 'info', force) => {
+const logMessage = (message, serverUrl, level = 'info') => {
   return new Promise(resolve => {
-    if (force) {
-      configureReporter(true)
-    }
     Raven.setUserContext = {
       url: serverUrl
     }
     Raven.captureMessage(`[${serverUrl}] ${message}`, {
       level
     })
-    if (force) {
-      configureReporter(isEnabled)
-    }
     resolve()
   })
 }
 
-export const logInfo = (message, serverUrl, force = false) =>
-  logMessage(message, serverUrl, 'info', force)
+export const logInfo = (message, serverUrl) =>
+  logMessage(message, serverUrl, 'info')

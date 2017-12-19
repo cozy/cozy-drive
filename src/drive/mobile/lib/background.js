@@ -87,8 +87,7 @@ const backgroundService = () =>
     loadState()
       .then(persistedState => {
         const cozyURL = persistedState.mobile.settings.serverUrl
-        const analyticsEnabled = persistedState.mobile.settings.analytics
-        configureReporter(analyticsEnabled)
+        configureReporter()
         const client = initClient(cozyURL)
         const store = configureStore(client, persistedState)
         return store.dispatch(startMediaBackup(getMediaFolderName()))

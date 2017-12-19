@@ -40,11 +40,7 @@ export const Support = ({
         onClick: async () => {
           if (isOnline()) {
             try {
-              await logInfo(
-                t('mobile.settings.support.logs.title'),
-                serverUrl,
-                true
-              )
+              await logInfo(t('mobile.settings.support.logs.title'), serverUrl)
               success()
             } catch (e) {
               failure()
