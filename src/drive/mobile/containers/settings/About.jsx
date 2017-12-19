@@ -23,7 +23,7 @@ class About extends Component {
           {
             type: ELEMENT_TEXT,
             label: t('mobile.settings.about.account'),
-            value: <a href="{serverUrl}">{serverUrl}</a>
+            value: <a href={serverUrl}>{serverUrl}</a>
           },
           {
             type: ELEMENT_TEXT,
