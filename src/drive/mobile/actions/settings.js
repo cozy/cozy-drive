@@ -1,7 +1,6 @@
 import { startReplication as startPouchReplication } from '../lib/replication'
 import { setClient, setFirstReplication } from '../../actions/settings'
 import { openFolder, getOpenedFolderId } from '../../actions'
-import { configureReporter } from '../lib/reporter'
 import { startTracker, stopTracker } from '../lib/tracker'
 import { revokeClient as reduxRevokeClient } from './authorization'
 import { resetClient } from '../lib/cozy-helper'
@@ -26,7 +25,6 @@ export const setAnalytics = (analytics, source = 'settings') => (
 ) => {
   dispatch({ type: SET_ANALYTICS, analytics })
   const state = getState()
-  configureReporter(analytics)
   if (analytics && state.mobile) {
     startTracker(state.mobile.settings.serverUrl)
   } else if (analytics === false) {
