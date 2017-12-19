@@ -22,9 +22,11 @@ export const configureReporter = () => {
   Raven.config(ANALYTICS_URL, getReporterConfiguration()).install()
 }
 
-export const logException = err => {
+export const logException = (err, extraContext = null) => {
   return new Promise(resolve => {
-    Raven.captureException(err)
+    extraContext
+      ? Raven.captureException(err, { extra: extraContext })
+      : Raven.captureException(err)
     console.warn('Raven is recording exception')
     console.error(err)
     resolve()

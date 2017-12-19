@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import classNames from 'classnames'
 
 import { translate } from 'cozy-ui/react/I18n'
+import { logException } from 'drive/mobile/lib/reporter'
 
 import styles from '../styles'
 
@@ -60,9 +61,7 @@ export class SelectServer extends Component {
       parsedURL = new URL(url)
 
       if (parsedURL.protocol === 'http:' && !__ALLOW_HTTP__) {
-        this.setState({ error: ERR_WRONG_ADDRESS })
-        console.warn('Only https protocol is allowed')
-        return
+        throw new Error('Only https protocol is allowed')
       }
 
       if (/\..*cosy.*\..+$/.test(parsedURL.host)) {
@@ -72,6 +71,7 @@ export class SelectServer extends Component {
       }
     } catch (e) {
       this.setState({ error: ERR_WRONG_ADDRESS })
+      logException(e, { tentativeUrl: url, onboardingStep: 'checking URL' })
       return
     }
 
@@ -82,6 +82,7 @@ export class SelectServer extends Component {
     try {
       isV2Instance = await cozyClient.isV2(url)
     } catch (err) {
+      logException(err, { tentativeUrl: url, onboardingStep: 'checking isV2' })
       // this can happen if the HTTP request to check the instance version fails; in that case, it is likely to fail again and be caught during the authorize process, which is designed to handle this
       isV2Instance = false
     }
