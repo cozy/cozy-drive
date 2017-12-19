@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { logException } from 'drive/mobile/lib/reporter'
@@ -127,11 +128,9 @@ export class SelectServer extends Component {
         </header>
         <div className={styles['wizard-main']}>
           <div
-            className={
-              error
-                ? classNames(styles['logo-wrapper'], styles['error'])
-                : styles['logo-wrapper']
-            }
+            className={classNames(styles['logo-wrapper'], {
+              [styles['error']]: error
+            })}
           >
             <div className={styles['cozy-logo-white']} />
           </div>
@@ -143,11 +142,9 @@ export class SelectServer extends Component {
             autoCapitalize="none"
             autoCorrect="off"
             autoComplete="off"
-            className={
-              error
-                ? classNames(styles['input'], styles['error'])
-                : styles['input']
-            }
+            className={classNames(styles['input'], {
+              [styles['error']]: error
+            })}
             placeholder={t(
               'mobile.onboarding.server_selection.cozy_address_placeholder'
             )}
@@ -185,6 +182,19 @@ export class SelectServer extends Component {
       </form>
     )
   }
+}
+
+SelectServer.propTypes = {
+  t: PropTypes.func.isRequired,
+  previousStep: PropTypes.func.isRequired,
+  nextStep: PropTypes.func.isRequired,
+  fetching: PropTypes.bool,
+  externalError: PropTypes.object
+}
+
+SelectServer.defaultProps = {
+  fetching: false,
+  externalError: null
 }
 
 export default translate()(SelectServer)
