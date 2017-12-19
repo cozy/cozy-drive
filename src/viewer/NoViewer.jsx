@@ -98,7 +98,7 @@ class NoViewer extends React.Component {
             if (/^Activity not found/.test(error.message)) {
               Alerter.error('Viewer.error.noapp', error)
             } else {
-              logException('a debug exception', error)
+              logException(error)
               Alerter.error('Viewer.error.generic', error)
             }
           }}
