@@ -1,5 +1,11 @@
 @require 'cozy-ui'
 
+.c-btn
+    @extend $button
+
+.c-btn--secondary
+    @extend $button--secondary
+
 :global
     label[for='pho-album-share-toggle']
         cursor pointer
@@ -17,8 +23,8 @@
 
     .pho-share-modal-footer
         padding 0
-        background-color pale-grey
-        color            charcoal-grey
+        background-color paleGrey
+        color            charcoalGrey
         font-weight      bold
 
         p
@@ -35,7 +41,7 @@
             margin 0
 
         .coz-form-desc
-          color cool-grey
+          color coolGrey
 
         .coz-select
             flex 0 0 49%
@@ -45,7 +51,7 @@
     input[type=text]
         width 100%
 
-    
+
 
     .pho-input-dual
         display flex

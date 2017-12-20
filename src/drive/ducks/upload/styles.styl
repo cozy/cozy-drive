@@ -25,8 +25,8 @@
     transform  translate(0)
 
 .upload-queue-header
-    background-color pale-grey
-    color            charcoal-grey
+    background-color paleGrey
+    color            charcoalGrey
     font-weight      bold
     margin           0
     padding          .5rem 1rem .5rem
@@ -41,7 +41,7 @@
         background 0
         margin 0
         padding .4em 0 .4em .8em
-        color dodger-blue
+        color dodgerBlue
         text-transform uppercase
         font-size .8em
 
@@ -57,9 +57,9 @@ progress.upload-queue-progress
 progress.upload-queue-progress::-webkit-progress-bar
     background-color silver
 progress.upload-queue-progress::-webkit-progress-value
-    background-color dodger-blue
+    background-color dodgerBlue
 progress.upload-queue-progress::-moz-progress-bar
-    background-color dodger-blue
+    background-color dodgerBlue
 
 .upload-queue-content
     overflow auto
@@ -79,7 +79,7 @@ progress.upload-queue-progress::-moz-progress-bar
     background-color rgba(245, 44, 44, 0.1)
 
 .upload-queue-item--done
-    background-color pale-grey
+    background-color paleGrey
 
 .upload-queue-item
     height          50px
@@ -104,7 +104,7 @@ progress.upload-queue-progress::-moz-progress-bar
         white-space    nowrap
         overflow       hidden
         text-overflow  ellipsis
-        color          charcoal-grey
+        color          charcoalGrey
 
     .item-file
         flex        0 0 85%
@@ -115,7 +115,7 @@ progress.upload-queue-progress::-moz-progress-bar
     mime-types('item-type-', '../../assets/icons/')
 
     .item-ext
-        color cool-grey
+        color coolGrey
 
     .item-status
         flex       0 0 15%
@@ -123,7 +123,7 @@ progress.upload-queue-progress::-moz-progress-bar
 
     .item-pending
         text-transform uppercase
-        color          dodger-blue
+        color          dodgerBlue
         font-size      .75rem
         font-weight    bold
         line-height    2em
@@ -158,16 +158,19 @@ progress.upload-queue-progress::-moz-progress-bar
     $coz-bar-border-size = 1px
 
     .upload-queue
-        position static
+        top $coz-bar-size
+        bottom auto
+        right 0
+        left 0
         transform none
-        z-index $app-index
+        z-index $app-index + 3
         width 100%
         max-width 100%
         height auto
         max-height 0
         border-radius 0
         border 0
-        background 0
+        background-color white
         box-shadow none
 
         &:before
@@ -187,5 +190,5 @@ progress.upload-queue-progress::-moz-progress-bar
 
     .upload-queue-header
         background 0
-        color dodger-blue
+        color dodgerBlue
         text-transform uppercase

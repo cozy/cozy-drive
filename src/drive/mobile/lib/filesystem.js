@@ -1,3 +1,4 @@
+/* global cozy */
 import { isAndroid } from './device'
 
 const ERROR_GET_DIRECTORY = 'Error to get directory'
@@ -24,30 +25,14 @@ export const getEntry = path =>
   })
 
 export const getCozyEntry = () =>
-  new Promise((resolve, reject) => {
-    getEntry(getRootPath() + getCozyPath())
-      .then(resolve)
-      .catch(() => {
-        createCozyPath()
-          .then(resolve)
-          .catch(reject)
-      })
-  })
+  getEntry(getRootPath() + getCozyPath()).catch(() => createCozyPath())
 
 export const createCozyPath = () =>
-  new Promise((resolve, reject) => {
-    getEntry(getRootPath())
-      .then(entry => {
-        getDirectory(entry, COZY_PATH)
-          .then(entry => {
-            getDirectory(entry, COZY_FILES_PATH)
-              .then(resolve)
-              .catch(reject)
-          })
-          .catch(reject)
-      })
-      .catch(reject)
-  })
+  getEntry(getRootPath()).then(entry =>
+    getDirectory(entry, COZY_PATH).then(entry =>
+      getDirectory(entry, COZY_FILES_PATH)
+    )
+  )
 
 export const getDirectory = (rootDirEntry, folderName) =>
   new Promise((resolve, reject) => {
@@ -93,12 +78,14 @@ const saveFile = (dirEntry, fileData, fileName) =>
     )
   })
 
-const openFileWithCordova = (uri, mimetype) =>
+export const openFileWithCordova = (URI, mimetype) =>
   new Promise((resolve, reject) => {
-    window.cordova.plugins.fileOpener2.open(decodeURIComponent(uri), mimetype, {
+    const decodedURI = decodeURIComponent(URI)
+    const callbacks = {
       error: reject,
       success: resolve
-    })
+    }
+    window.cordova.plugins.fileOpener2.open(decodedURI, mimetype, callbacks)
   })
 
 export const deleteOfflineFile = async filename => {
@@ -108,36 +95,31 @@ export const deleteOfflineFile = async filename => {
 }
 
 export const saveFileWithCordova = (fileData, fileName) =>
-  new Promise((resolve, reject) => {
-    getCozyEntry()
-      .then(entry => saveFile(entry, fileData, fileName))
-      .then(resolve)
-      .catch(reject)
-  })
+  getCozyEntry().then(entry => saveFile(entry, fileData, fileName))
 
 export const temporarySave = (file, filename) =>
-  new Promise((resolve, reject) => {
-    getEntry(getTemporaryRootPath())
-      .then(entry => saveFile(entry, file, filename))
-      .then(resolve)
-      .catch(reject)
-  })
+  getEntry(getTemporaryRootPath()).then(entry =>
+    saveFile(entry, file, filename)
+  )
 
 export const saveAndOpenWithCordova = (file, filename) =>
-  new Promise((resolve, reject) => {
-    temporarySave(file, filename)
-      .then(entry =>
-        openFileWithCordova(decodeURIComponent(entry.nativeURL), file.type)
-      )
-      .then(resolve)
-      .catch(reject)
-  })
+  temporarySave(file, filename).then(entry =>
+    openFileWithCordova(entry.nativeURL, file.type)
+  )
 
-export const openOfflineFile = file =>
-  new Promise(async (resolve, reject) => {
-    const entry = await getCozyEntry()
-    const fileEntry = await getEntry(`${entry.nativeURL}${file.id}`)
-    return openFileWithCordova(fileEntry.nativeURL, file.mime)
-      .then(resolve)
-      .catch(reject)
-  })
+export const getNativeFile = async file => {
+  const entry = await getCozyEntry()
+  return getEntry(`${entry.nativeURL}${file.id}`)
+}
+
+export const openOfflineFile = async file => {
+  const fileEntry = await getNativeFile(file)
+  return openFileWithCordova(fileEntry.nativeURL, file.mime)
+}
+
+export const createTemporaryLocalFile = async (id, filename) => {
+  const response = await cozy.client.files.downloadById(id)
+  const blob = await response.blob()
+  const localFile = await temporarySave(blob, filename)
+  return localFile
+}

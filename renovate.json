@@ -1,0 +1,7 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "schedule": ["before 9am on Monday"],
+  "timezone": "Europe/Paris"
+}

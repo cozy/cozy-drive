@@ -1,5 +1,41 @@
 @require 'cozy-ui'
 
+.c-btn
+    @extend $button
+
+.c-btn--regular
+    @extend $button--regular
+
+.c-btn--secondary
+    @extend $button--secondary
+
+.c-btn--danger
+    @extend $button--danger
+
+.c-btn--danger-outline
+    @extend $button--danger-outline
+
+.c-btn--share
+    @extend $button--share
+
+.c-btn--send
+    @extend $button--send
+
+.c-btn--download
+    @extend $button--download
+
+.c-btn--upload
+    @extend $button--upload
+
+.c-btn--delete
+    @extend $button--delete
+
+.u-hide--mob
+    @extend $hide--mob
+
+.u-hide--desk
+    @extend $hide--desk
+
 .fil-toolbar-files
 .fil-toolbar-trash
     margin-left auto
@@ -17,41 +53,35 @@
             margin-left      0
             margin-right     1rem
 
-    .fil-toolbar-menu
+.fil-toolbar-menu
+    a
+    label
+        &.fil-action-upload
+            background embedurl('../assets/icons/icon-upload-16.svg') 1rem center no-repeat
+        &.fil-action-newfolder
+            background embedurl('../assets/icons/icon-folder-add-16.svg') 1rem center no-repeat
+        &.fil-action-download
+            background embedurl("../assets/icons/icon-download-16.svg") 1rem center no-repeat
+        &.fil-action-select
+            background embedurl('../assets/icons/icon-checkbox-16.svg') 1rem center no-repeat
+        &.fil-action-delete
+            background embedurl('../assets/icons/icon-trash-dark.svg') 1rem center no-repeat
+        &.fil-action-share
+            background embedurl('../assets/icons/icon-share-dark.svg') 1rem center no-repeat
+
+    .fil-action-upload
+    .fil-action-share
         display none
-
-.fil-toolbar-files
-.fil-toolbar-trash
-    .fil-toolbar-menu
-        a
-        label
-            &.fil-action-upload
-                background embedurl('../assets/icons/icon-upload-16.svg') 1rem center no-repeat
-            &.fil-action-newfolder
-                background embedurl('../assets/icons/icon-folder-add-16.svg') 1rem center no-repeat
-            &.fil-action-download
-                background embedurl("../assets/icons/icon-download-16.svg") 1rem center no-repeat
-            &.fil-action-select
-                background embedurl('../assets/icons/icon-checkbox-16.svg') 1rem center no-repeat
-            &.fil-action-delete
-                background embedurl('../assets/icons/icon-trash-dark.svg') 1rem center no-repeat
-            &.fil-action-share
-                background embedurl('../assets/icons/icon-share-dark.svg') 1rem center no-repeat
-
-        .fil-action-upload
-        .fil-action-share
-            display none
 
 
 @media (max-width: (1023/basefont)rem)
-    .fil-toolbar-files
-    .fil-toolbar-trash
-        .fil-toolbar-menu
+    .fil-toolbar-menu
+        display block
+        left 1em
+        .fil-action-upload
+        .fil-action-share
+        .fil-action-select
             display block
-            .fil-action-upload
-            .fil-action-share
-            .fil-action-select
-                display block
 
 @media (max-width: (768/basefont)rem)
     .fil-toolbar-files

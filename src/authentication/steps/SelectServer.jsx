@@ -2,8 +2,10 @@
 import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
+import { logException } from 'drive/mobile/lib/reporter'
 
 import styles from '../styles'
 
@@ -20,81 +22,94 @@ export class SelectServer extends Component {
   }
 
   componentDidMount() {
-    this.serverInput.focus()
+    this.input.focus()
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
+    this.setState(state => ({
+      ...state,
       error: nextProps.externalError ? ERR_WRONG_ADDRESS : null,
       fetching: nextProps.fetching
-    })
+    }))
   }
 
   componentDidUpdate() {
     if (this.state.error) {
-      this.serverInput.focus()
-      this.serverInput.select()
+      this.input.focus()
+      this.input.select()
     }
   }
 
-  validateValue(e) {
-    this.setState({ value: e.target.value, error: null })
+  onChange(value) {
+    if (this.state.error) {
+      this.setState(state => ({ ...state, error: null }))
+    }
+    this.setState(state => ({ ...state, value: value.trim() }))
   }
 
   onSubmit = async e => {
     e.preventDefault()
-    if (!this.state.value) return
+    const value = this.state.value
+    let error
 
-    let url = this.state.value
-
-    if (url.indexOf('@') > -1) {
-      this.setState({ error: ERR_EMAIL })
-      return
+    if (this.hasAtSign(value)) {
+      error = ERR_EMAIL
+    }
+    if (this.hasMispelledCozy(value)) {
+      error = ERR_COSY
     }
 
-    // prepend the protocol if ommited
-    if (/^http(s)?:\/\//.test(url) === false) url = 'https://' + url
-
-    let parsedURL
-    try {
-      parsedURL = new URL(url)
-
-      if (parsedURL.protocol === 'http:' && !__ALLOW_HTTP__) {
-        this.setState({ error: ERR_WRONG_ADDRESS })
-        console.warn('Only https protocol is allowed')
-        return
-      }
-
-      if (/\..*cosy.*\..+$/.test(parsedURL.host)) {
-        // if the hostname contains "cosy" in the part before the TLD
-        this.setState({ error: ERR_COSY })
-        return
-      }
-    } catch (e) {
-      this.setState({ error: ERR_WRONG_ADDRESS })
-      return
+    const url = this.getUrl(value)
+    if (
+      !(url instanceof URL) ||
+      (url.protocol === 'http:' && !__ALLOW_HTTP__)
+    ) {
+      error = ERR_WRONG_ADDRESS
+    }
+    if (error) {
+      this.setState(state => ({ ...state, error }))
+      logException(new Error(error), {
+        tentativeUrl: value,
+        onboardingStep: 'validating URL'
+      })
+      return false
     }
 
-    this.setState({ fetching: true })
+    this.setState(state => ({ ...state, fetching: true }))
 
-    let isV2Instance
-    const cozyClient = this.context.client
-    try {
-      isV2Instance = await cozyClient.isV2(url)
-    } catch (err) {
-      // this can happen if the HTTP request to check the instance version fails; in that case, it is likely to fail again and be caught during the authorize process, which is designed to handle this
-      isV2Instance = false
-    }
-
-    if (isV2Instance) {
-      this.setState({
+    if (await this.isV2URL(url)) {
+      this.setState(state => ({
+        ...state,
         error: ERR_V2,
         fetching: false
-      })
-      return
+      }))
     }
+    this.props.nextStep(url.toString())
+  }
 
-    this.props.nextStep(url)
+  isV2URL = async url => {
+    try {
+      return await this.context.client.isV2(url)
+    } catch (err) {
+      logException(err, {
+        tentativeUrl: url,
+        onboardingStep: 'checking is V2 URL'
+      })
+      // this can happen if the HTTP request to check the instance version fails; in that case, it is likely to fail again and be caught during the authorize process, which is designedto handle this
+      return false
+    }
+  }
+
+  hasMispelledCozy = value => /\..*cosy.*\./.test(value)
+  hasAtSign = value => /.*@.*/.test(value)
+
+  getUrl = value => {
+    try {
+      return new URL(/^http(s)?:\/\//.test(value) ? value : `https://${value}`)
+    } catch (err) {
+      this.setState(state => ({ ...state, error: ERR_WRONG_ADDRESS }))
+      logException(err, { tentativeUrl: value, onboardingStep: 'checking URL' })
+    }
   }
 
   render() {
@@ -113,11 +128,9 @@ export class SelectServer extends Component {
         </header>
         <div className={styles['wizard-main']}>
           <div
-            className={
-              error
-                ? classNames(styles['logo-wrapper'], styles['error'])
-                : styles['logo-wrapper']
-            }
+            className={classNames(styles['logo-wrapper'], {
+              [styles['error']]: error
+            })}
           >
             <div className={styles['cozy-logo-white']} />
           </div>
@@ -129,18 +142,18 @@ export class SelectServer extends Component {
             autoCapitalize="none"
             autoCorrect="off"
             autoComplete="off"
-            className={
-              error
-                ? classNames(styles['input'], styles['error'])
-                : styles['input']
-            }
+            className={classNames(styles['input'], {
+              [styles['error']]: error
+            })}
             placeholder={t(
               'mobile.onboarding.server_selection.cozy_address_placeholder'
             )}
             ref={input => {
-              this.serverInput = input
+              this.input = input
             }}
-            onChange={this.validateValue.bind(this)}
+            onChange={({ target: { value } }) => {
+              this.onChange(value)
+            }}
             value={value}
           />
           {!error && (
@@ -169,6 +182,19 @@ export class SelectServer extends Component {
       </form>
     )
   }
+}
+
+SelectServer.propTypes = {
+  t: PropTypes.func.isRequired,
+  previousStep: PropTypes.func.isRequired,
+  nextStep: PropTypes.func.isRequired,
+  fetching: PropTypes.bool,
+  externalError: PropTypes.object
+}
+
+SelectServer.defaultProps = {
+  fetching: false,
+  externalError: null
 }
 
 export default translate()(SelectServer)

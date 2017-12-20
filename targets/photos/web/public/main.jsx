@@ -12,7 +12,7 @@ import { I18n } from 'cozy-ui/react/I18n'
 import 'photos/styles/main'
 
 import App from './App'
-import Viewer from 'viewer'
+import PhotosViewer from 'photos/components/PhotosViewer'
 
 const arrToObj = (obj = {}, varval = ['var', 'val']) => {
   obj[varval[0]] = varval[1]
@@ -69,7 +69,7 @@ function init() {
             path="shared"
             component={props => <App albumId={id} {...props} />}
           >
-            <Route path=":photoId" component={Viewer} />
+            <Route path=":photoId" component={PhotosViewer} />
           </Route>
           <Redirect from="/*" to="shared" />
         </Router>

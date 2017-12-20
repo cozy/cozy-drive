@@ -1,8 +1,10 @@
+/* global cozy */
 import styles from '../../styles/toolbar'
 
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import { withBreakpoints } from 'cozy-ui/react'
 import confirm from '../../lib/confirm'
 import classNames from 'classnames'
 
@@ -12,25 +14,21 @@ import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import { emptyTrash } from './actions'
 
-const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
-  <div className={styles['fil-toolbar-trash']} role="toolbar">
-    <button
-      className={classNames(
-        styles['c-btn'],
-        styles['c-btn--danger-outline'],
-        styles['u-hide--mob'],
-        styles['fil-btn--delete']
-      )}
-      onClick={() => emptyTrash()}
-      disabled={disabled}
-    >
-      {t('toolbar.empty_trash')}
-    </button>
+const { BarRight } = cozy.bar
+
+const Toolbar = ({
+  t,
+  disabled,
+  emptyTrash,
+  onSelectItemsClick,
+  breakpoints: { isMobile }
+}) => {
+  const MoreMenu = (
     <Menu
       title={t('toolbar.item_more')}
       disabled={disabled}
       className={styles['fil-toolbar-menu']}
-      button={<MoreButton />}
+      button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
     >
       <Item>
         <a className={styles['fil-action-delete']} onClick={() => emptyTrash()}>
@@ -44,8 +42,27 @@ const Toolbar = ({ t, disabled, emptyTrash, onSelectItemsClick }) => (
         </a>
       </Item>
     </Menu>
-  </div>
-)
+  )
+
+  return (
+    <div className={styles['fil-toolbar-trash']} role="toolbar">
+      <button
+        className={classNames(
+          styles['c-btn'],
+          styles['c-btn--danger-outline'],
+          styles['u-hide--mob'],
+          styles['fil-btn--delete']
+        )}
+        onClick={() => emptyTrash()}
+        disabled={disabled}
+      >
+        {t('toolbar.empty_trash')}
+      </button>
+
+      {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
+    </div>
+  )
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   emptyTrash: () =>
@@ -54,4 +71,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       .catch(() => {})
 })
 
-export default translate()(connect(null, mapDispatchToProps)(Toolbar))
+export default translate()(
+  withBreakpoints()(connect(null, mapDispatchToProps)(Toolbar))
+)

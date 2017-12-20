@@ -1,8 +1,19 @@
 @require 'cozy-ui'
 
+.c-btn
+    @extend $button
+
+.c-btn--regular
+    @extend $button--regular
+
 .wizard
     @extend $form
     @extend $form-text
+    position fixed
+    top 0
+    left 0
+    height 100%
+    z-index $bar-index
     display flex
     flex-direction column
     width   85vw
@@ -22,7 +33,7 @@
             cursor          pointer
             text-transform  uppercase
             text-align      right
-            color           cool-grey
+            color           coolGrey
             margin-left     auto
 
     .illustration

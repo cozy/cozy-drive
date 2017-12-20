@@ -353,7 +353,10 @@ const getDoctypePermissions = (state, doctype) => {
 
 const getSharingLink = (state, doctype, id) => {
   const perm = getSharingLinkPermission(state, doctype, id)
-  return perm
+  return perm &&
+    perm.attributes &&
+    perm.attributes.codes &&
+    perm.attributes.codes.email
     ? buildSharingLink(state, id, doctype, perm.attributes.codes.email)
     : null
 }

@@ -1,4 +1,4 @@
-/* global __TARGET__ */
+/* global __TARGET__ cozy */
 import styles from '../styles/breadcrumb'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config'
@@ -10,8 +10,30 @@ import { connect } from 'react-redux'
 import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'
+import { withBreakpoints } from 'cozy-ui/react'
 
 import { getFolderPath, getFolderUrl } from '../reducers'
+
+const { BarCenter, BarLeft } = cozy.bar
+
+const renamePathNames = (path, location, t) => {
+  if (location.pathname === '/recent') {
+    path.unshift({
+      name: t('breadcrumb.title_recent')
+    })
+  }
+
+  path.forEach(folder => {
+    if (folder.id === ROOT_DIR_ID) {
+      folder.name = t('breadcrumb.title_drive')
+    } else if (folder.id === TRASH_DIR_ID) {
+      folder.name = t('breadcrumb.title_trash')
+    }
+    if (!folder.name) folder.name = '…'
+  })
+
+  return path
+}
 
 class Breadcrumb extends Component {
   state = {
@@ -37,18 +59,16 @@ class Breadcrumb extends Component {
     document.removeEventListener('click', this.handleClickOutside, true)
   }
 
-  handleClick = (e, folderId, animate) => {
+  navigateToFolder = (e, folderId) => {
     const { router, location, goToFolder, getFolderUrl } = this.props
     e.preventDefault()
-    if (animate) {
-      this.toggleOpening()
-      if (this.state.deployed) this.toggleDeploy()
-    }
+
+    this.toggleOpening()
+    if (this.state.deployed) this.toggleDeploy()
+
     goToFolder(folderId).then(() => {
-      if (animate) {
-        this.toggleOpening()
-        this.toggleDeploy()
-      }
+      this.toggleOpening()
+      this.toggleDeploy()
       router.push(getFolderUrl(folderId, location))
     })
   }
@@ -61,29 +81,10 @@ class Breadcrumb extends Component {
   }
 
   render() {
-    const { t, location, path } = this.props
+    const { location, path } = this.props
     const { opening, deployed } = this.state
 
-    if (location.pathname === '/recent') {
-      path.unshift({
-        name: t('breadcrumb.title_recent')
-      })
-    }
-
-    if (!path) {
-      return null
-    }
-
-    path.forEach(folder => {
-      if (folder.id === ROOT_DIR_ID) {
-        folder.name = t('breadcrumb.title_drive')
-      } else if (folder.id === TRASH_DIR_ID) {
-        folder.name = t('breadcrumb.title_trash')
-      }
-      if (!folder.name) folder.name = '…'
-    })
-
-    return (
+    return path ? (
       <div
         className={classNames(
           styles['fil-path-backdrop'],
@@ -91,13 +92,6 @@ class Breadcrumb extends Component {
           { [styles['mobile']]: __TARGET__ === 'mobile' }
         )}
       >
-        {path.length >= 2 && (
-          <Link
-            to={getFolderUrl(path[path.length - 2].id, location)}
-            className={styles['fil-path-previous']}
-            onClick={e => this.handleClick(e, path[path.length - 2].id, false)}
-          />
-        )}
         <h2
           className={styles['fil-path-title']}
           onClick={this.toggleDeploy}
@@ -111,9 +105,11 @@ class Breadcrumb extends Component {
                 <Link
                   to={getFolderUrl(folder.id, location)}
                   className={styles['fil-path-link']}
-                  onClick={e => this.handleClick(e, folder.id, true)}
+                  onClick={e => this.navigateToFolder(e, folder.id)}
                 >
-                  <a>{folder.name}</a>
+                  <span className={styles['fil-path-link-name']}>
+                    {folder.name}
+                  </span>
                   <span className={styles['fil-path-separator']}>/</span>
                 </Link>
               )
@@ -140,12 +136,52 @@ class Breadcrumb extends Component {
           })}
         </h2>
       </div>
+    ) : null
+  }
+}
+
+class PreviousButton extends Component {
+  navigateToFolder = folderId => {
+    const { router, location, goToFolder, getFolderUrl } = this.props
+    goToFolder(folderId).then(() => {
+      router.push(getFolderUrl(folderId, location))
+    })
+  }
+
+  render({ location, path }) {
+    const previousFolderId = path[path.length - 2].id
+    return (
+      <button
+        className={styles['fil-path-previous']}
+        onClick={() => this.navigateToFolder(previousFolderId)}
+      />
     )
   }
 }
 
+const MobileAwareBreadcrumb = props => {
+  return props.breakpoints.isMobile ? (
+    <div>
+      {props.path.length >= 2 && (
+        <BarLeft>
+          <PreviousButton {...props} />
+        </BarLeft>
+      )}
+      <BarCenter>
+        <Breadcrumb {...props} />
+      </BarCenter>
+    </div>
+  ) : (
+    <Breadcrumb {...props} />
+  )
+}
+
 const mapStateToProps = (state, ownProps) => ({
-  path: getFolderPath(state, ownProps.location, ownProps.isPublic),
+  path: renamePathNames(
+    getFolderPath(state, ownProps.location, ownProps.isPublic),
+    ownProps.location,
+    ownProps.t
+  ),
   getFolderUrl
 })
 
@@ -153,6 +189,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goToFolder: folderId => dispatch(openFolder(folderId))
 })
 
-export default withRouter(
-  translate()(connect(mapStateToProps, mapDispatchToProps)(Breadcrumb))
+export default withBreakpoints()(
+  withRouter(
+    translate()(
+      connect(mapStateToProps, mapDispatchToProps)(MobileAwareBreadcrumb)
+    )
+  )
 )

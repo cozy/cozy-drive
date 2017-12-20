@@ -1,8 +1,7 @@
-/* globals __DEVELOPMENT__ */
+/* globals __DEVELOPMENT__ cozy */
 
 import React, { Component } from 'react'
 import Main from '../../components/Main'
-import Topbar from '../../components/Topbar'
 import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from 'cozy-ui/react/I18n'
@@ -13,6 +12,8 @@ import Support from '../containers/settings/Support'
 import MediaBackup from '../containers/settings/MediaBackup'
 import Contacts from '../containers/settings/Contacts'
 import Unlink from '../containers/settings/Unlink'
+
+const { BarCenter } = cozy.bar
 
 class Settings extends Component {
   state = {
@@ -28,9 +29,11 @@ class Settings extends Component {
     const isDebug = this.state.tapCount >= 3
     return (
       <Main>
-        <Topbar>
-          <h2>{t('mobile.settings.title')}</h2>
-        </Topbar>
+        <BarCenter>
+          <h2 className={styles['settings__title']}>
+            {t('mobile.settings.title')}
+          </h2>
+        </BarCenter>
         <div>
           <div className={styles['settings']}>
             <MediaBackup />

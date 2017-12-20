@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import Viewer from 'viewer'
 
 import { getFolderUrl } from '../reducers'
-import { getFilesWithLinks } from '../reducers/view'
+import { getFilesWithLinks, getFolderIdFromRoute } from '../reducers/view'
 import { isCordova } from '../mobile/lib/device'
+import { fetchMoreFiles } from '../actions'
+
+const LIMIT = 30
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -12,12 +15,37 @@ const getParentPath = router => {
 }
 
 class FilesViewer extends Component {
+  fetchMore() {
+    const { files, params, location, fetchMoreFiles, fileCount } = this.props
+    const currentIndex = files.findIndex(f => f.id === params.fileId)
+    if (files.length !== fileCount && files.length - currentIndex <= 5) {
+      fetchMoreFiles(
+        getFolderIdFromRoute(location, params),
+        files.length,
+        LIMIT
+      )
+    }
+  }
+
+  componentDidMount() {
+    this.fetchMore()
+  }
+
+  componentWillReceiveProps(props, nextProps) {
+    this.fetchMore()
+  }
+
   render() {
     if (this.props.files.length === 0) return null
     // TODO: temp fix for thumbnail links on mobile
     if (isCordova() && !this.props.filesWithLinks) return null
     const files = isCordova()
-      ? this.props.filesWithLinks.filter(f => f.type !== 'directory')
+      ? this.props.filesWithLinks
+          .filter(f => f.type !== 'directory')
+          .map(f => ({
+            ...f,
+            isAvailableOffline: this.props.isAvailableOffline(f.id)
+          }))
       : this.props.files.filter(f => f.type !== 'directory')
     const { params, router } = this.props
     const currentIndex = files.findIndex(f => f.id === params.fileId)
@@ -34,24 +62,33 @@ class FilesViewer extends Component {
       <Viewer
         files={files}
         currentIndex={currentIndex}
-        onChange={nextFile =>
+        onChange={nextFile => {
           router.push({
             pathname: `${getParentPath(router)}/${nextFile.id}`
           })
-        }
-        onClose={() =>
+        }}
+        onClose={() => {
           router.push({
             pathname: getFolderUrl(params.folderId, router.location)
           })
-        }
+        }}
       />
     )
   }
 }
 
-export default connect((state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
   filesWithLinks: getFilesWithLinks(
     state,
-    ownProps.params.folderId || 'io.cozy.files.root-dir'
-  )
-}))(FilesViewer)
+    getFolderIdFromRoute(ownProps.location, ownProps.params)
+  ),
+  fileCount: state.view.fileCount
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchMoreFiles: (folderId, skip, limit) => {
+    dispatch(fetchMoreFiles(folderId, skip, limit))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilesViewer)

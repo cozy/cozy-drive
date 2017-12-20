@@ -21,7 +21,7 @@ const AlbumsToolbar = ({ t }) => (
     </div>
     <Menu
       className={classNames(styles['pho-toolbar-menu'], styles['u-hide--desk'])}
-      button={<MoreButton />}
+      button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
     >
       <Item>
         <div>

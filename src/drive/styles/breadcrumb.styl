@@ -7,7 +7,7 @@
 
 .fil-path-link
     font-weight      normal
-    color            cool-grey
+    color            coolGrey
     text-decoration  none
     cursor           pointer
 
@@ -16,14 +16,11 @@
         padding-right .3em
 
 .fil-path-previous
-    position   absolute
-    right      100%
-    top        0
-    display    none
     width      $coz-bar-size
-    height     $coz-bar-size - 1px//don't cover the cozy bar bottom border
+    height     $coz-bar-size
     border     0
-    background white embedurl('../assets/icons/icon-arrow-left.svg') center center no-repeat
+    flex-shrink 0
+    background embedurl('../assets/icons/icon-arrow-left.svg') center center no-repeat
 
 .fil-path-down
     display     none
@@ -37,16 +34,10 @@
     text-overflow  ellipsis
     overflow       hidden
     white-space    nowrap
-    line-height    1
 
 @media (max-width: (768/basefont)rem)
     .fil-path-backdrop
-        margin   0
-        position fixed
-        top      0
-        left     2.5em
-        right    0
-        z-index  $nav-index
+        min-width 0
 
     .fil-path-title
         display        flex
@@ -59,10 +50,7 @@
         align-items   center
         box-sizing    border-box
         height        $coz-bar-size
-        padding       0 2.35em 0 .25em
-
-    .fil-path-previous
-        display block
+        padding       0 .25em
 
     .fil-path-down
         display inline-block
@@ -72,14 +60,14 @@
         display none
 
     .fil-path-backdrop.deployed
+        margin   0
+        position fixed
+        top      0
+        right    0
         bottom     0
         left       0
 
-        .fil-path-previous
-            left 0
-
         .fil-path-title
-            background white
             z-index    $popover-index
             box-shadow 0 1px 0 0 #d6d8da, 0 6px 24px 0 rgba(50, 54, 63, .24)
 
@@ -89,11 +77,18 @@
 
         .fil-path-link
             display flex
-            color   charcoal-grey
+            color   charcoalGrey
+            background white
+
+        .fil-path-link-name
+            text-overflow  ellipsis
+            overflow       hidden
+            white-space    nowrap
 
         .fil-path-current
             height     $coz-bar-size
             box-shadow inset 0 -1px 0 0 silver
+            padding-right 2.35em
 
     .fil-path-backdrop.mobile
         left 0
@@ -101,12 +96,3 @@
         .fil-path-previous
             left   0
             right  auto
-
-        .fil-path-link
-        .fil-path-current
-            padding-left 1rem
-
-        .fil-path-previous + .fil-path-title
-            .fil-path-link
-            .fil-path-current
-                padding-left $coz-bar-size

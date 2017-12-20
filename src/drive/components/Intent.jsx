@@ -29,7 +29,10 @@ class IntentButton extends React.Component {
     return (
       <span className={classNames(styles['intentButton'])}>
         {modalIsOpen && (
-          <Modal secondaryAction={() => this.closeModal()}>
+          <Modal
+            secondaryAction={() => this.closeModal()}
+            className={classNames(styles['coz-modal-intent'])}
+          >
             <Intent
               action={action}
               docType={docType}
@@ -48,16 +51,13 @@ class IntentButton extends React.Component {
 
 class Intent extends React.Component {
   componentDidMount() {
-    const { action, docType, data, closeModal } = this.props
+    const { action, docType, data } = this.props
     cozy.client.intents
       .create(action, docType, {
         ...data,
         exposeIntentFrameRemoval: true
       })
       .start(this.intentViewer)
-      .then(() => {
-        closeModal()
-      })
   }
 
   render() {

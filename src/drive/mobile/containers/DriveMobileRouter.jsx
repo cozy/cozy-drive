@@ -12,12 +12,16 @@ class DriveMobileRouter extends Component {
     const wasRevoked = this.props.isRevoked
     this.props.saveServerUrl(url)
     this.props.saveCredentials(clientInfo, token)
-    if (wasRevoked) router.replace('/')
-    else router.replace('/onboarding')
+    if (wasRevoked) {
+      this.context.client.resetStore()
+      router.replace('/')
+    } else {
+      router.replace('/onboarding')
+    }
   }
 
   afterLogout = () => {
-    this.props.unlink()
+    this.props.unlink(this.context.client)
   }
 
   render(props) {
@@ -45,7 +49,7 @@ const mapDispatchToProps = dispatch => ({
   saveServerUrl: url => dispatch(setUrl(url)),
   saveCredentials: (clientInfo, token) =>
     dispatch(saveCredentials(clientInfo, token)),
-  unlink: () => dispatch(unlink())
+  unlink: client => dispatch(unlink(client))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

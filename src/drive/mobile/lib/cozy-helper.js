@@ -39,25 +39,28 @@ export const initClient = url => {
   })
 }
 
-export const initBar = () => {
+export const initBar = async client => {
   // Prevents the bar to be initialized 2 times in a row after the onboarding
   if (document.getElementById('coz-bar')) {
     return
   }
+
   cozy.bar.init({
     appName: 'Drive',
     appEditor: 'Cozy',
     iconPath: require('../../../../targets/drive/vendor/assets/app-icon.svg'),
     lang: getLang(),
-    replaceTitleOnMobile: true
+    cozyURL: client.getUrl(),
+    token: getTokenWithNoException(),
+    replaceTitleOnMobile: false,
+    displayOnMobile: true
   })
 }
 
-export function resetClient(clientInfo = null) {
+export function resetClient(client, clientInfo = null) {
   if (clientInfo && cozy.client.auth.unregisterClient) {
     cozy.client.auth.unregisterClient(clientInfo)
   }
-
   // reset cozy-bar
   if (document.getElementById('coz-bar')) {
     document.getElementById('coz-bar').remove()
@@ -66,6 +69,8 @@ export function resetClient(clientInfo = null) {
   if (cozy.client.offline.destroyAllDatabase) {
     cozy.client.offline.destroyAllDatabase()
   }
+  // reset cozy-client
+  client.resetStore()
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()
@@ -77,6 +82,14 @@ export function resetClient(clientInfo = null) {
 export const getToken = async () => {
   const credentials = await cozy.client.authorize()
   return credentials.token.accessToken
+}
+
+const getTokenWithNoException = async () => {
+  try {
+    return await getToken()
+  } catch (_) {
+    return null
+  }
 }
 
 export const getClientUrl = () => cozy.client._url

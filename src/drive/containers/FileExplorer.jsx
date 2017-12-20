@@ -75,7 +75,11 @@ const mapStateToProps = (state, ownProps) => ({
   files: getVisibleFiles(state),
   selected: getSelectedFiles(state),
   actionable: getActionableFiles(state),
-  shared: getSharingDetails(state, 'io.cozy.files', ownProps.params.folderId),
+  shared: getSharingDetails(
+    state,
+    'io.cozy.files',
+    getFolderIdFromRoute(ownProps.location, ownProps.params)
+  ),
   selectionModeActive: isSelectionBarVisible(state),
   actionMenuActive: isActionMenuVisible(state)
 })
