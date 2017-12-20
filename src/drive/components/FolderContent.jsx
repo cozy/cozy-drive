@@ -3,6 +3,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import FileList from './FileList'
+import styles from '../styles/foldercontent'
 
 const EmptyContent = props => {
   const { isTrashContext, canUpload } = props
@@ -16,7 +17,14 @@ const FolderContent = props => {
   const { fetchStatus, files, isAddingFolder } = props
   switch (fetchStatus) {
     case 'pending':
-      return <Spinner size="xxlarge" loadingType="message" middle="true" />
+      return (
+        <Spinner
+          size="xxlarge"
+          loadingType="message"
+          middle="true"
+          className={styles['content-spinner']}
+        />
+      )
     case 'failed':
       return <Oops />
     case 'loaded':
