@@ -44,13 +44,14 @@ export const initBar = async client => {
   if (document.getElementById('coz-bar')) {
     return
   }
+
   cozy.bar.init({
     appName: 'Drive',
     appEditor: 'Cozy',
     iconPath: require('../../../../targets/drive/vendor/assets/app-icon.svg'),
     lang: getLang(),
     cozyURL: client.getUrl(),
-    token: await getToken(),
+    token: getTokenWithNoException(),
     replaceTitleOnMobile: false,
     displayOnMobile: true
   })
@@ -81,6 +82,14 @@ export function resetClient(client, clientInfo = null) {
 export const getToken = async () => {
   const credentials = await cozy.client.authorize()
   return credentials.token.accessToken
+}
+
+const getTokenWithNoException = async () => {
+  try {
+    return await getToken()
+  } catch (_) {
+    return null
+  }
 }
 
 export const getClientUrl = () => cozy.client._url
