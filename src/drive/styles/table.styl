@@ -144,6 +144,7 @@ mime-types('fil-file-', '../assets/icons/')
     display flex
     flex-direction column
     justify-content center
+    width 100%
 
 .fil-file-preview
     content ''
@@ -159,6 +160,9 @@ mime-types('fil-file-', '../assets/icons/')
 
 .fil-file-filename
     flex 0 0 1.3em
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
 
 .fil-file-path
     flex 0 0 1.2em
