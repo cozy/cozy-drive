@@ -17,7 +17,7 @@
     color           coolGrey
 
 .fil-content-head
-    flex 0 0 em(31px, 16px)
+    flex 0 0 2rem
 
 .fil-content-body
     flex      1 1 auto
@@ -29,17 +29,17 @@
 .fil-content-cell
     box-sizing  border-box
     padding     .9375rem 2rem
-    font-size   14px
+    font-size   .875rem
 
 .fil-content-row
-    height          50px
+    height          3rem
     box-sizing      border-box
     display         flex
     flex-direction  row
     align-items     center
     flex            0 0 auto
     width           100%
-    border-bottom   1px solid silver
+    border-bottom   .0625rem solid silver
 
     &:hover
         background-color paleGrey
@@ -58,12 +58,12 @@
     color coolGrey
 
 .fil-content-header
-    padding         em(8px, 12px) em(28px, 12px)
-    font-size       12px
+    padding         .5rem 1.75rem
+    font-size       .75rem
     text-transform  uppercase
 
 .fil-content-header:first-child
-    padding em(8px, 12px)
+    padding .5rem
 
 .fil-content-file-action
     display     none
@@ -84,7 +84,7 @@
     align-items center
     height 100%
     padding   0 2rem 0 2.8125rem
-    font-size      16px
+    font-size      1rem
     line-height    1.3
     white-space    nowrap
     overflow       hidden
@@ -96,8 +96,8 @@
 
 .fil-content-shared
     position    absolute
-    margin-left em(-20px)
-    margin-top  em(16px)
+    margin-left -1.25rem
+    margin-top  1rem
 
 .fil-content-date
 .fil-content-size
@@ -108,18 +108,17 @@
 
     .fil-content-offline
         display none
-        width em(20px, 14px)
-        height em(20px, 14px)
-        background malachite embedurl('../assets/icons/icon-phone-download-white.svg') center center / .9em no-repeat
+        width 1.25rem
+        height 1.25rem
+        background malachite embedurl('../assets/icons/icon-phone-download-white.svg') center center / .9rem no-repeat
         border-radius 50%
 
 .fil-content-file-select
-    basefont = 14px
-    flex       0 0 em(32px, basefont)
+    flex       0 0 2rem
     opacity    0
     padding    .9375rem .5rem
     text-align center
-    font-size  basefont
+    font-size  .875rem
     cursor     default
 
     [data-input="checkbox"] label
@@ -159,15 +158,15 @@ mime-types('fil-file-', '../assets/icons/')
     background-position center center
 
 .fil-file-filename
-    flex 0 0 1.3em
+    flex 0 0 1.3rem
     overflow hidden
     text-overflow ellipsis
     white-space nowrap
 
 .fil-file-path
-    flex 0 0 1.2em
+    flex 0 0 1.2rem
     color coolGrey
-    font-size .75em
+    font-size .75rem
     position relative
     overflow hidden
     text-overflow ellipsis
@@ -180,9 +179,9 @@ mime-types('fil-file-', '../assets/icons/')
 
 @keyframes placeHolderShimmer
     0%
-        background-position -468px 0
+        background-position -29.25rem 0
     100%
-        background-position 468px 0
+        background-position 29.25rem 0
 
 .fil-content-file-placeholder
     animation-duration        1s
@@ -190,11 +189,11 @@ mime-types('fil-file-', '../assets/icons/')
     animation-iteration-count infinite
     animation-name            placeHolderShimmer
     animation-timing-function linear
-    border-radius 3px
+    border-radius .1875rem
     background #f6f7f8
     background #eeeeee
     background linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%)
-    background-size 800px 104px
+    background-size 50rem 6.5rem
     height   1.25rem
     width    67%
     position relative
@@ -221,8 +220,8 @@ mime-types('fil-file-', '../assets/icons/')
 
     .fil-content-status
         display    block
-        flex       0 0 em(30px, 14px)
-        padding    0 0 0 1em
+        flex       0 0 1.875rem
+        padding    0 0 0 1rem
 
         .fil-content-offline
             display inline-block
@@ -232,7 +231,7 @@ mime-types('fil-file-', '../assets/icons/')
 
     .fil-content-file-action
         display    block
-        flex       0 0 em(46px, 14px)
+        flex       0 0 2.875rem
         padding    0
 
     .fil-content-cell.fil-content-file
