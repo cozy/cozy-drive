@@ -8,7 +8,7 @@
     width 100%
     padding-top em(30px)
 
-@media (max-width: (768/basefont)rem)
++small-screen()
     .pho-public-layout--full
         reset()
         position: absolute;
@@ -29,10 +29,10 @@
     background-position  em(17px, 16px) center
     background-repeat    no-repeat
 
-@media (max-width: (768/basefont)rem)
++small-screen()
     .pho-public-download
         display none
 
-@media (min-width: (769/basefont)rem)
++small-screen('min')
     .pho-toolbar-menu
         display none

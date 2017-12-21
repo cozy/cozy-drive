@@ -11,14 +11,14 @@
     @extend $button-client
     margin em(16px, 13px)
 
-    @media (max-width: (1023/basefont)rem)
+    +medium-screen()
         display none
 
 // Banner
 .coz-banner-client
     position relative
 
-    @media (min-width: (769/basefont)rem)
+    +small-screen('min')
         margin-top     em(-30px)
         margin-bottom  em(30px)
 
@@ -26,7 +26,7 @@
         @extend $button-client-mobile
         margin  0
 
-        @media (min-width: (1024/basefont)rem)
+        +medium-screen('min')
             display none
 
     .coz-banner-text
@@ -34,7 +34,7 @@
         margin 0
         cursor default
 
-        @media (max-width: (1023/basefont)rem)
+        +medium-screen()
             display none
 
         span

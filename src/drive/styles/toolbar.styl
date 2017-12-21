@@ -68,7 +68,7 @@
         display none
 
 
-@media (max-width: (1023/basefont)rem)
++medium-screen()
     .fil-toolbar-menu
         display block
         left 1em
@@ -77,7 +77,7 @@
         .fil-action-select
             display block
 
-@media (max-width: (768/basefont)rem)
++small-screen()
     .fil-toolbar-files
     .fil-toolbar-trash
         position fixed
@@ -85,10 +85,9 @@
         right    0
         z-index  $nav-index
 
-@media (max-width: (768/basefont)rem)
     .fil-public-download
         display none
 
-@media (min-width: (769/basefont)rem)
++small-screen('min')
     .fil-toolbar-menu--public
         display none

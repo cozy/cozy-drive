@@ -10,7 +10,7 @@ $coz-bar-size = 48px
     margin-right  em(32px)
     margin-left   em(32px)
 
-    @media (max-width: (768/basefont)rem)
+    +small-screen()
         margin   0
         position fixed
         top      0
@@ -26,7 +26,7 @@ $coz-bar-size = 48px
     background   embedurl('../assets/icons/icon-back.svg')
     cursor       pointer
 
-    @media (max-width: (480/basefont)rem)
+    +tiny-screen()
         width           1em
         height          1em
         background-size cover
@@ -43,8 +43,8 @@ $coz-bar-size = 48px
         padding 0.17em 0.3em 0.17em 0.4em
         max-width 100%
 
-    @media (max-width: (768/basefont)rem)
+    +small-screen()
        font-size(20px)
 
-    @media (max-width: (480/basefont)rem)
+    +tiny-screen()
        white-space   nowrap
