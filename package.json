@@ -96,7 +96,7 @@
     "copy-webpack-plugin": "4.3.0",
     "cordova": "6.5.0",
     "css-loader": "0.28.7",
-    "css-mqpacker": "4.0.1",
+    "css-mqpacker": "6.0.1",
     "csswring": "6.0.2",
     "enzyme": "2.9.1",
     "eslint": "4.13.1",
