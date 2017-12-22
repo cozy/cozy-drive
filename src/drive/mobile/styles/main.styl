@@ -18,7 +18,9 @@ html {
 }
 
 :global
-    [role=banner] .coz-bar-btn.coz-bar-burger{
-        visibility hidden
-        flex 0 0 .22em
+    // this weird selector is here to temporarily hide some buttons in the cozy-bar on mobile:
+    // profile, connected devices, support, logout
+    [role=banner] .coz-drawer--settings > div > hr:nth-child(1),
+    [role=banner] .coz-drawer--settings > div > ul:not(.coz-nav-group--inactive) {
+        visibility: hidden;
     }

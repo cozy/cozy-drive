@@ -51,7 +51,8 @@ export const initBar = async client => {
     iconPath: require('../../../../targets/drive/vendor/assets/app-icon.svg'),
     lang: getLang(),
     cozyURL: client.getUrl(),
-    token: getTokenWithNoException(),
+    token: await getTokenWithNoException(),
+    renewToken: () => client.register(client.getUrl()),
     replaceTitleOnMobile: false,
     displayOnMobile: true
   })
