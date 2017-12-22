@@ -77,14 +77,14 @@ export class SelectServer extends Component {
 
     this.setState(state => ({ ...state, fetching: true }))
 
-    if (await this.isV2URL(url)) {
+    if (await this.isV2URL(value)) {
       this.setState(state => ({
         ...state,
         error: ERR_V2,
         fetching: false
       }))
     }
-    this.props.nextStep(url.toString())
+    this.props.nextStep(value)
   }
 
   isV2URL = async url => {
