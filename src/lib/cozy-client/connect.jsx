@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect as reduxConnect } from 'react-redux'
-
+import PropTypes from 'prop-types'
 import { applySelectorForAction, enhancePropsForActions } from '.'
 import { mapValues, filterValues } from './utils'
 
@@ -29,6 +29,10 @@ const connect = (
       }
       return <WrappedComponent {...props} />
     }
+  }
+
+  Wrapper.contextTypes = {
+    store: PropTypes.object.isRequired
   }
 
   const makeMapStateToProps = (initialState, initialOwnProps) => {
