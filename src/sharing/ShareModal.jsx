@@ -54,6 +54,7 @@ export class ShareModal extends Component {
       shareByLink,
       revokeLink,
       contacts,
+      document,
       documentType = 'Document'
     } = this.props
 
@@ -61,7 +62,7 @@ export class ShareModal extends Component {
       <Modal title={t(`${documentType}.share.title`)} dismissAction={onClose}>
         <div className={styles['share-modal-content']}>
           <ShareByEmailComingSoon
-            document={this.props.document}
+            document={document}
             documentType={documentType}
             recipients={sharing.recipients}
             contacts={contacts.data}
