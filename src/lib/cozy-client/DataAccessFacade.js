@@ -18,16 +18,20 @@ export default class DataAccessFacade {
     this.pouchAdapter = new PouchdbAdapter()
   }
 
-  setup(cozyUrl, options) {
-    this.url = cozyUrl
-    const { offline, ...rest } = options
+  setup(cozyURL, options) {
+    this.url = cozyURL
+    const { offline } = options
+
     // TODO: For now we let cozy-client-js handle offline for files so that we don't break cozy-drive
-    const config =
-      offline &&
-      offline.doctypes &&
-      offline.doctypes.indexOf(FILES_DOCTYPE) !== -1
-        ? { cozyURL: cozyUrl, offline: { doctypes: [FILES_DOCTYPE] }, ...rest }
-        : { cozyURL: cozyUrl, ...rest }
+    const hasFilesDoctype =
+      offline && offline.doctypes && offline.doctypes.includes(FILES_DOCTYPE)
+
+    const config = {
+      ...options,
+      cozyURL,
+      offline: hasFilesDoctype ? { doctypes: [FILES_DOCTYPE] } : offline
+    }
+
     // TODO: Get rid of cozy-client-js
     cozy.client.init(config)
     if (offline && offline.doctypes) {
