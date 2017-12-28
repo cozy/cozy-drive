@@ -47,7 +47,9 @@ const ShareTypeSelect = props => (
     }}
   >
     {props.options.map(option => (
-      <option value={option.value}>{option.label}</option>
+      <option value={option.value} disabled={option.disabled}>
+        {option.label}
+      </option>
     ))}
   </select>
 )
@@ -84,8 +86,16 @@ ShareSubmit.defaultProps = {
 
 class ShareByEmail extends Component {
   sharingTypes = [
-    { value: 'one-way', label: this.context.t('Share.type.one-way') },
-    { value: 'two-way', label: this.context.t('Share.type.two-way') }
+    {
+      value: 'one-way',
+      label: this.context.t('Share.type.one-way'),
+      disabled: true
+    },
+    {
+      value: 'two-way',
+      label: this.context.t('Share.type.two-way'),
+      disabled: false
+    }
   ]
 
   initialState = {
