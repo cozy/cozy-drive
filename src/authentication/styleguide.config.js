@@ -1,0 +1,3 @@
+module.exports = {
+  components: '*.js'
+}
