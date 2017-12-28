@@ -1,11 +1,5 @@
 @require 'cozy-ui'
 
-.c-btn
-    @extend $button
-
-.c-btn--close
-    @extend $button--close
-
 // Desktop Button
 .coz-btn-client
     @extend $button-client
@@ -40,10 +34,9 @@
         span
             padding-right 2rem
 
-    .c-btn--close
+    .close-banner
         position   absolute
         right      0
         top        50%
         transform  translateY(-50%)
         margin     0
-        filter     brightness(0) invert(1)

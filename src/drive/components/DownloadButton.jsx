@@ -1,21 +1,15 @@
 import React from 'react'
-import classnames from 'classnames'
-import styles from 'cozy-ui/stylus/components/button'
+import { Button, Icon } from 'cozy-ui/react'
 
 const DownloadButton = ({ label, disabled = false, onDownload, className }) => (
-  <button
-    role="button"
+  <Button
     disabled={disabled}
-    className={classnames(
-      className,
-      styles['c-btn'],
-      styles['c-btn--regular'],
-      styles['c-btn--download']
-    )}
+    className={className}
     onClick={() => onDownload()}
   >
+    <Icon icon="download" />
     {label}
-  </button>
+  </Button>
 )
 
 export default DownloadButton

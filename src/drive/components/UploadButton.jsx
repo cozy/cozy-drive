@@ -1,4 +1,5 @@
 import React from 'react'
+import { Icon } from 'cozy-ui/react'
 
 const styles = {
   parent: {
@@ -23,6 +24,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     className={className}
     style={styles.parent}
   >
+    <Icon icon="upload" />
     {label}
     <input
       type="file"

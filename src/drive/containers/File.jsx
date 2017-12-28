@@ -12,7 +12,7 @@ import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
-import { withBreakpoints } from 'cozy-ui/react'
+import { Button, Icon, withBreakpoints } from 'cozy-ui/react'
 import { SharedBadge } from 'sharing'
 import { getSharingDetails } from 'cozy-client'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
@@ -190,10 +190,9 @@ const FileAction = ({ onClick }) => (
       styles['fil-content-file-action']
     )}
   >
-    <button
-      className={classNames(styles['c-btn'], styles['c-btn-extra'])}
-      onClick={onClick}
-    />
+    <Button theme="action" onClick={onClick}>
+      <Icon icon="dots" color="charcoalGrey" width="17" height="17" />
+    </Button>
   </div>
 )
 

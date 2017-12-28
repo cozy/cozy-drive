@@ -1,7 +1,7 @@
 import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import classnames from 'classnames'
 import Toggle from 'cozy-ui/react/Toggle'
+import { Button } from 'cozy-ui/react'
 
 import styles from '../share.styl'
 
@@ -43,29 +43,20 @@ export const ShareWithLink = (
         {!copied && (
           <CopyToClipboard text={shareLink} onCopy={onCopy}>
             <div>
-              <button
-                className={classnames(
-                  styles['c-btn'],
-                  styles['c-btn--secondary'],
-                  styles['pho-btn-copy']
-                )}
-              >
+              <Button theme="secondary" className={styles['pho-btn-copy']}>
                 {t(`${documentType}.share.sharingLink.copy`)}
-              </button>
+              </Button>
             </div>
           </CopyToClipboard>
         )}
         {copied && (
-          <button
-            className={classnames(
-              styles['c-btn'],
-              styles['c-btn--secondary'],
-              styles['pho-btn-copied']
-            )}
+          <Button
+            theme="secondary"
+            className={styles['pho-btn-copied']}
             aria-disabled
           >
             {t(`${documentType}.share.sharingLink.copied`)}
-          </button>
+          </Button>
         )}
       </div>
     </div>

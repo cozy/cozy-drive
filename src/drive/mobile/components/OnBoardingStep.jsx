@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import { translate } from 'cozy-ui/react/I18n'
+import { Button } from 'cozy-ui/react'
 import styles from '../styles/onboarding'
 
 export const OnBoarding = ({
@@ -36,14 +37,10 @@ export const OnBoarding = ({
       </p>
     </div>
     <footer className={styles['wizard-footer']}>
-      <button
-        role="button"
-        className={classNames(styles['c-btn'], styles['c-btn--regular'])}
-        onClick={onActivate}
-      >
+      <Button onClick={onActivate}>
         {onSkip && t('mobile.onboarding.step.button')}
         {!onSkip && t('mobile.onboarding.step.next')}
-      </button>
+      </Button>
       {breadcrumbs}
     </footer>
   </div>

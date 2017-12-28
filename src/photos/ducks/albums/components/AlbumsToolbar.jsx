@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
+import { Icon } from 'cozy-ui/react'
 
 import Menu, { Item } from 'components/Menu'
 import { MoreButton } from 'components/Button'
@@ -16,6 +17,7 @@ const AlbumsToolbar = ({ t }) => (
         className={classNames(styles['pho-btn-new'])}
         to="/albums/new"
       >
+        <Icon icon="album-add" />
         {t('Toolbar.album_new')}
       </Link>
     </div>

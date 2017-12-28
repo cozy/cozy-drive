@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
+import { Button } from 'cozy-ui/react'
 import { logException } from 'drive/mobile/lib/reporter'
 
 import styles from '../styles'
@@ -170,14 +171,9 @@ export class SelectServer extends Component {
           )}
         </div>
         <footer className={styles['wizard-footer']}>
-          <button
-            role="button"
-            className={classNames(styles['c-btn'], styles['c-btn--regular'])}
-            disabled={error || !value || fetching}
-            aria-busy={fetching}
-          >
+          <Button disabled={error || !value || fetching} aria-busy={fetching}>
             {t('mobile.onboarding.server_selection.button')}
-          </button>
+          </Button>
         </footer>
       </form>
     )
