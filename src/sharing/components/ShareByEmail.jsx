@@ -129,7 +129,6 @@ class ShareByEmail extends React.Component {
     const { recipients } = this.state
     return (
       <div className={styles['coz-form-group']}>
-        <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
         <div className={styles['coz-form']}>
           <label className={styles['coz-form-label']} htmlFor="email">
             {t(`${documentType}.share.shareByEmail.email`)}

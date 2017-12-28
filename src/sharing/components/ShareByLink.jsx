@@ -11,7 +11,7 @@ export const ShareWithLinkToggle = (
 ) => (
   <div className={styles['coz-form-group']}>
     <h3>{t(`${documentType}.share.shareByLink.subtitle`)}</h3>
-    <div className={styles['pho-input-dual']}>
+    <div className={styles['input-dual']}>
       <div>
         <label htmlFor="" className={styles['coz-form-desc']}>
           {t(`${documentType}.share.shareByLink.desc`)}
@@ -19,7 +19,7 @@ export const ShareWithLinkToggle = (
       </div>
       <div>
         <Toggle
-          id="pho-album-share-toggle"
+          id="share-toggle"
           name="share"
           checked={active}
           onToggle={onToggle}
@@ -35,7 +35,7 @@ export const ShareWithLink = (
 ) => (
   <div className={styles['coz-form']}>
     <h4>{t(`${documentType}.share.sharingLink.title`)}</h4>
-    <div className={styles['pho-input-dual']}>
+    <div className={styles['input-dual']}>
       <div>
         <input type="text" name="" id="" value={shareLink} />
       </div>
@@ -112,7 +112,7 @@ class ShareByLink extends React.Component {
           )}
 
         {loading && (
-          <div className={styles['pho-share-modal-footer']}>
+          <div className={styles['share-modal-footer']}>
             <p>{t(`${documentType}.share.gettingLink`)}</p>
           </div>
         )}
