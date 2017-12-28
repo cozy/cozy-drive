@@ -55,8 +55,8 @@
       "revoked": "Error"
     },
     "type": {
-      "master-slave": "Can View",
-      "master-master": "Can Change"
+      "one-way": "Can View (coming soon)",
+      "two-way": "Can Change"
     }
   },
   "Files": {

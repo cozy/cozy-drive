@@ -8,17 +8,13 @@ export const SHARED_WITH_OTHERS = 'sharedWithOthers'
 export default class SharingsCollection {
   // TODO: find a more standard arg list
   create(permissions, contactIds, sharingType, description) {
-    return cozy.client.fetchJSON('POST', '/sharings/', {
-      desc: description,
+    const payload = {
+      description,
       permissions,
-      recipients: contactIds.map(contactId => ({
-        recipient: {
-          id: contactId,
-          type: 'io.cozy.contacts'
-        }
-      })),
+      recipients: contactIds,
       sharing_type: sharingType
-    })
+    }
+    return cozy.client.fetchJSON('POST', '/sharings/', payload)
   }
 
   destroy(id) {
@@ -27,38 +23,37 @@ export default class SharingsCollection {
 
   async findByDoctype(doctype) {
     const permissions = await this.fetchSharingPermissions(doctype)
-    const sharingIds = [
-      ...permissions.byMe.map(p => p.attributes.source_id),
-      ...permissions.withMe.map(p => p.attributes.source_id)
+    const getSharingsURL = permission => permission.links.related
+    const sharingURLs = [
+      ...permissions.byMe.map(getSharingsURL),
+      ...permissions.withMe.map(getSharingsURL)
     ]
     const sharings = await Promise.all(
-      sharingIds.map(id => this.fetchSharing(id))
+      sharingURLs.map(url => this.fetchSharing(url))
     )
     return { permissions, sharings }
   }
 
   async fetchSharingPermissions(doctype) {
     const fetchPermissions = (doctype, sharingType) =>
-      cozy.client.fetchJSON(
-        'GET',
-        `/permissions/doctype/${doctype}/${sharingType}`
-      )
+      cozy.client
+        .fetchJSON('GET', `/permissions/doctype/${doctype}/${sharingType}`)
+        .catch(e => {
+          console.error(e)
+          return []
+        })
 
-    // if we catch an exception (server's error), we init values with empty array
-    const byMe = await fetchPermissions(doctype, SHARED_WITH_OTHERS).catch(
-      () => []
-    )
-    const byLink = await fetchPermissions(doctype, SHARED_BY_LINK).catch(
-      () => []
-    )
-    const withMe = await fetchPermissions(doctype, SHARED_WITH_ME).catch(
-      () => []
-    )
+    const byMe = await fetchPermissions(doctype, SHARED_WITH_OTHERS)
+    const byLink = await fetchPermissions(doctype, SHARED_BY_LINK)
+    const withMe = await fetchPermissions(doctype, SHARED_WITH_ME)
     return { byMe, byLink, withMe }
   }
 
-  fetchSharing(id) {
-    return cozy.client.fetchJSON('GET', `/sharings/${id}`).catch(() => ({}))
+  fetchSharing(url) {
+    return cozy.client.fetchJSON('GET', url).catch(e => {
+      console.error(e)
+      return {}
+    })
   }
 
   revoke(sharingId) {

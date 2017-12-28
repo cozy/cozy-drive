@@ -12,12 +12,8 @@ import styles from '../share.styl'
 class ShareByEmailWrapper extends React.Component {
   share(recipients, sharingType) {
     const { document, documentType, sharingDesc } = this.props
-    // TODO: remove the Promise.all thing when the stack is ready for multi-contacts sharing
-    return Promise.all(
-      recipients.map(recipient =>
-        this.props.onShare(document, [recipient], sharingType, sharingDesc)
-      )
-    )
+    this.props
+      .onShare(document, recipients, sharingType, sharingDesc)
       .then(() => {
         if (recipients.length === 1) {
           Alerter.info(`${documentType}.share.shareByEmail.success`, {
@@ -39,7 +35,7 @@ class ShareByEmailWrapper extends React.Component {
 
   unshare(recipient) {
     const { document, documentType } = this.props
-    return this.props
+    this.props
       .onUnshare(document, recipient)
       .then(() => {
         Alerter.info(`${documentType}.share.unshare.success`, {
@@ -81,7 +77,7 @@ class ShareByEmail extends React.Component {
     super(props)
     this.state = {
       recipients: [],
-      sharingType: 'master-slave'
+      sharingType: 'two-way'
     }
   }
 
@@ -110,7 +106,7 @@ class ShareByEmail extends React.Component {
     this.setState(state => ({
       ...state,
       recipients: [],
-      sharingType: 'master-slave'
+      sharingType: 'two-way'
     }))
   }
 
@@ -119,14 +115,8 @@ class ShareByEmail extends React.Component {
     if (recipients.length === 0) {
       return
     }
-    this.props
-      .onSend(recipients, sharingType)
-      .then(() => {
-        this.reset()
-      })
-      .catch(() => {
-        this.reset()
-      })
+    this.props.onSend(recipients, sharingType)
+    this.reset()
   }
 
   changeSharingType(sharingType) {
@@ -163,12 +153,14 @@ class ShareByEmail extends React.Component {
             value={this.state.sharingType}
             onChange={e => this.changeSharingType(e.target.value)}
           >
-            <option value="master-slave">{t('Share.type.master-slave')}</option>
-            <option value="master-master">
-              {t('Share.type.master-master')}
-            </option>
+            <option value="one-way">{t('Share.type.one-way')}</option>
+            <option value="two-way">{t('Share.type.two-way')}</option>
           </select>
-          <Button onClick={e => this.sendSharingLink()}>
+          <Button
+            onClick={e => {
+              this.sendSharingLink()
+            }}
+          >
             {t(`${documentType}.share.shareByEmail.send`)}
           </Button>
         </div>

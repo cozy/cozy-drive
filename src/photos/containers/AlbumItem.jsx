@@ -71,7 +71,7 @@ const AlbumItemDesc = ({ t, photoCount, shared, thumbnail }) => (
     {(shared.byMe || shared.withMe) &&
       ` - ${t(
         `Albums.album_item_shared_${
-          shared.sharingType === 'master-slave' ? 'ro' : 'rw'
+          shared.sharingType === 'one-way' ? 'ro' : 'rw'
         }`
       )}`}
   </h4>

@@ -212,7 +212,7 @@ Depending on whether this action creator is called with or without a document ID
   withMe: <boolean>,
   byLink: <boolean>,
   readOnly: <boolean>,
-  sharingType: 'master-slave' | 'master-master',
+  sharingType: 'one-way' | 'two-way',
   owner
  }
  ```
