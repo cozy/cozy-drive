@@ -100,8 +100,8 @@
       "revoked": "Error"
     },
     "type": {
-      "master-slave": "Can View",
-      "master-master": "Can Change"
+      "one-way": "Can View (coming soon)",
+      "two-way": "Can Change"
     }
   },
   "Albums": {
@@ -147,7 +147,8 @@
         "send": "Send",
         "genericSuccess": "You sent an invite to %{count} contacts.",
         "success": "You sent an invite to %{email}.",
-        "comingsoon": "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
+        "comingsoon":
+          "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
       },
       "unshare": {
         "title": "Remove from album",
@@ -232,7 +233,8 @@
       "download": "Download"
     },
     "loading": {
-      "error": "This file could not be loaded. Do you have a working internet connection right now?",
+      "error":
+        "This file could not be loaded. Do you have a working internet connection right now?",
       "retry": "Retry"
     }
   },

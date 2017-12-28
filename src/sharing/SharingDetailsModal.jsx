@@ -29,7 +29,7 @@ export class SharingDetailsModal extends Component {
           <div className={styles['pho-share-details-perm']}>
             {t(
               `${documentType}.share.details.${
-                sharing.sharingType === 'master-slave' ? 'ro' : 'rw'
+                sharing.sharingType === 'one-way' ? 'ro' : 'rw'
               }`
             )}
           </div>

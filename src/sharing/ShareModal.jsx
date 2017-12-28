@@ -109,9 +109,7 @@ export default cozyConnect(
     sharing: fetchSharings(ownProps.document._type, ownProps.document._id, {
       include: ['recipients']
     }),
-    // TODO: we shouldn't have to fetch contacts manually, it should be handled
-    // automatically when using the include: ['recipients'] option
-    contacts: fetchContacts()
+    contacts: fetchContacts() // TODO: we shouldn't have to fetch contacts manually, it should be handled automatically when using the include: ['recipients'] option
   }),
   (dispatch, ownProps) => ({
     share: (document, recipients, sharingType, sharingDesc) =>
