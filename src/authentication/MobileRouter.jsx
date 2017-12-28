@@ -3,6 +3,7 @@ import { Router, withRouter } from 'react-router'
 
 import Authentication from './Authentication'
 import Revoked from './Revoked'
+import { logException } from 'drive/mobile/lib/reporter'
 
 const MobileRouter = ({
   history,
@@ -13,7 +14,13 @@ const MobileRouter = ({
   onLogout
 }) => {
   if (!isAuthenticated) {
-    return <Authentication router={history} onComplete={onAuthenticated} />
+    return (
+      <Authentication
+        router={history}
+        onComplete={onAuthenticated}
+        onException={logException}
+      />
+    )
   } else if (isRevoked) {
     return (
       <Revoked

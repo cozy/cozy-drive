@@ -6,8 +6,6 @@ import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
-import { logException } from 'drive/mobile/lib/reporter'
-
 import styles from '../styles'
 
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
@@ -69,7 +67,7 @@ export class SelectServer extends Component {
     }
     if (error) {
       this.setState(state => ({ ...state, error }))
-      logException(new Error(error), {
+      this.props.onException(new Error(error), {
         tentativeUrl: value,
         onboardingStep: 'validating URL'
       })
@@ -92,7 +90,7 @@ export class SelectServer extends Component {
     try {
       return await this.context.client.isV2(url)
     } catch (err) {
-      logException(err, {
+      this.props.onException(err, {
         tentativeUrl: url,
         onboardingStep: 'checking is V2 URL'
       })
@@ -109,7 +107,10 @@ export class SelectServer extends Component {
       return new URL(/^http(s)?:\/\//.test(value) ? value : `https://${value}`)
     } catch (err) {
       this.setState(state => ({ ...state, error: ERR_WRONG_ADDRESS }))
-      logException(err, { tentativeUrl: value, onboardingStep: 'checking URL' })
+      this.props.onException(err, {
+        tentativeUrl: value,
+        onboardingStep: 'checking URL'
+      })
     }
   }
 
@@ -185,7 +186,8 @@ SelectServer.propTypes = {
   previousStep: PropTypes.func.isRequired,
   nextStep: PropTypes.func.isRequired,
   fetching: PropTypes.bool,
-  externalError: PropTypes.object
+  externalError: PropTypes.object,
+  onException: PropTypes.func.isRequired
 }
 
 SelectServer.defaultProps = {

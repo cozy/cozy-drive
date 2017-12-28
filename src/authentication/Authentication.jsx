@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 import Welcome from './steps/Welcome'
 import SelectServer from './steps/SelectServer'
 
-import { logException } from 'drive/mobile/lib/reporter'
-
 const STEP_WELCOME = 'STEP_WELCOME'
 const STEP_EXISTING_SERVER = 'STEP_EXISTING_SERVER'
 
@@ -49,7 +47,7 @@ class Authentication extends Component {
       })
     } catch (err) {
       this.setState({ generalError: err })
-      logException(err, {
+      this.props.onException(err, {
         tentativeUrl: url,
         onboardingStep: 'connecting to server'
       })
@@ -78,6 +76,7 @@ class Authentication extends Component {
             previousStep={() => this.onAbort()}
             externalError={generalError}
             fetching={fetching}
+            onException={this.props.onException}
           />
         )
       default:
