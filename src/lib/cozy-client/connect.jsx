@@ -4,6 +4,12 @@ import PropTypes from 'prop-types'
 import { applySelectorForAction, enhancePropsForActions } from '.'
 import { mapValues, filterValues } from './utils'
 
+const storeShape = PropTypes.shape({
+  subscribe: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  getState: PropTypes.func.isRequired
+})
+
 const connect = (
   mapDocumentsToProps,
   mapActionsToProps = null
@@ -32,7 +38,7 @@ const connect = (
   }
 
   Wrapper.contextTypes = {
-    store: PropTypes.object.isRequired
+    store: storeShape.isRequired
   }
 
   const makeMapStateToProps = (initialState, initialOwnProps) => {
