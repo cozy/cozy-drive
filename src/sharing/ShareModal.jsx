@@ -11,10 +11,36 @@ import {
   revokeLink
 } from 'cozy-client'
 import Modal from 'cozy-ui/react/Modal'
-import { Tab, Tabs, TabList, TabPanels, TabPanel } from 'cozy-ui/react/Tabs'
 
 import ShareByLink from './components/ShareByLink'
 import ShareByEmail from './components/ShareByEmail'
+
+const shunt = (cond, BaseComponent, OtherComponent) => props =>
+  cond() ? <BaseComponent {...props} /> : <OtherComponent {...props} />
+
+const ComingSoon = (props, context) => (
+  <div className={styles['coz-form-group']}>
+    <p
+      className={styles['coz-form-desc']}
+      style={
+        {
+          maxWidth: '30rem'
+        } /* no need for a class as it is temporary screen */
+      }
+    >
+      {context.t(`${props.documentType}.share.shareByEmail.comingsoon`)}
+    </p>
+  </div>
+)
+
+const displayShareEmail = () =>
+  new URL(window.location).searchParams.get('sharingiscaring') !== null
+
+const ShareByEmailComingSoon = shunt(
+  displayShareEmail,
+  ShareByEmail,
+  ComingSoon
+)
 
 export class ShareModal extends Component {
   render() {
@@ -30,75 +56,29 @@ export class ShareModal extends Component {
       contacts,
       documentType = 'Document'
     } = this.props
-    // TODO: temporary
-    const loaded = contacts.fetchStatus === 'loaded'
-
-    const enableEmailSharing = window.location.search
-      .toLowerCase()
-      .includes('sharingiscaring')
-
-    const tabs = [
-      <Tab name="link">{t(`${documentType}.share.shareByLink.title`)}</Tab>
-    ]
-    const tabPanels = [
-      <TabPanel name="link">
-        <ShareByLink
-          document={this.props.document}
-          documentType={documentType}
-          checked={!!sharing.sharingLink}
-          link={sharing.sharingLink}
-          onEnable={shareByLink}
-          onDisable={revokeLink}
-        />
-      </TabPanel>
-    ]
-
-    tabs.push(
-      <Tab name="email">{t(`${documentType}.share.shareByEmail.title`)}</Tab>
-    )
-    if (enableEmailSharing) {
-      tabPanels.push(
-        <TabPanel name="email">
-          {loaded && (
-            <ShareByEmail
-              document={this.props.document}
-              documentType={documentType}
-              recipients={sharing.recipients}
-              contacts={contacts.data}
-              sharingDesc={sharingDesc}
-              onShare={share}
-              onUnshare={unshare}
-            />
-          )}
-        </TabPanel>
-      )
-    } else {
-      tabPanels.push(
-        <TabPanel name="email">
-          <div className={styles['coz-form-group']}>
-            <p
-              className={styles['coz-form-desc']}
-              style={
-                {
-                  maxWidth: '30rem'
-                } /* no need for a class as it is temporary screen */
-              }
-            >
-              {t(`${documentType}.share.shareByEmail.comingsoon`)}
-            </p>
-          </div>
-        </TabPanel>
-      )
-    }
 
     return (
-      <Modal title={t(`${documentType}.share.title`)} secondaryAction={onClose}>
-        <Tabs initialActiveTab="link">
-          <TabList className={styles['pho-share-modal-tabs']}>{tabs}</TabList>
-          <TabPanels className={styles['pho-share-modal-content']}>
-            {tabPanels}
-          </TabPanels>
-        </Tabs>
+      <Modal title={t(`${documentType}.share.title`)} dismissAction={onClose}>
+        <div className={styles['share-modal-content']}>
+          <ShareByEmailComingSoon
+            document={this.props.document}
+            documentType={documentType}
+            recipients={sharing.recipients}
+            contacts={contacts.data}
+            sharingDesc={sharingDesc}
+            onShare={share}
+            onUnshare={unshare}
+          />
+          <hr className={styles['divider']} />
+          <ShareByLink
+            document={this.props.document}
+            documentType={documentType}
+            checked={!!sharing.sharingLink}
+            link={sharing.sharingLink}
+            onEnable={shareByLink}
+            onDisable={revokeLink}
+          />
+        </div>
       </Modal>
     )
   }
