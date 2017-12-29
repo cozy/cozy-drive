@@ -70,6 +70,7 @@ const ShareSubmit = props => (
     onClick={e => {
       props.onSubmit()
     }}
+    busy={props.loading}
   >
     {props.label}
   </Button>
@@ -77,11 +78,13 @@ const ShareSubmit = props => (
 
 ShareSubmit.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  label: PropTypes.string
+  label: PropTypes.string,
+  loading: PropTypes.bool
 }
 
 ShareSubmit.defaultProps = {
-  label: 'Submit'
+  label: 'Submit',
+  loading: false
 }
 
 class ShareByEmail extends Component {
@@ -100,19 +103,11 @@ class ShareByEmail extends Component {
 
   initialState = {
     recipients: [],
-    sharingType: 'two-way'
+    sharingType: 'two-way',
+    loading: false
   }
 
   state = { ...this.initialState }
-
-  sendSharingLink = () => {
-    const { recipients, sharingType } = this.state
-    if (recipients.length === 0) {
-      return
-    }
-    this.share(recipients, sharingType)
-    this.reset()
-  }
 
   reset = () => {
     this.setState(state => ({ ...this.initialState }))
@@ -147,8 +142,13 @@ class ShareByEmail extends Component {
     }))
   }
 
-  share = (recipients, sharingType) => {
+  share = () => {
     const { document, documentType, sharingDesc, onShare } = this.props
+    const { recipients, sharingType } = this.state
+    if (recipients.length === 0) {
+      return
+    }
+    this.setState(state => ({ ...state, loading: true }))
     onShare(document, recipients, sharingType, sharingDesc)
       .then(() => {
         if (recipients.length === 1) {
@@ -162,9 +162,11 @@ class ShareByEmail extends Component {
             count: recipients.length
           })
         }
+        this.reset()
       })
       .catch(err => {
         Alerter.error('Error.generic')
+        this.reset()
         throw err
       })
   }
@@ -198,7 +200,8 @@ class ShareByEmail extends Component {
           />
           <ShareSubmit
             label={t(`${documentType}.share.shareByEmail.send`)}
-            onSubmit={this.sendSharingLink}
+            onSubmit={this.share}
+            loading={this.state.loading}
           />
         </div>
       </div>
