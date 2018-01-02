@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { connect as reduxConnect } from 'react-redux'
-
+import PropTypes from 'prop-types'
 import { applySelectorForAction, enhancePropsForActions } from '.'
 import { mapValues, filterValues } from './utils'
+
+const storeShape = PropTypes.shape({
+  subscribe: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  getState: PropTypes.func.isRequired
+})
 
 const connect = (
   mapDocumentsToProps,
@@ -29,6 +35,10 @@ const connect = (
       }
       return <WrappedComponent {...props} />
     }
+  }
+
+  Wrapper.contextTypes = {
+    store: storeShape.isRequired
   }
 
   const makeMapStateToProps = (initialState, initialOwnProps) => {
