@@ -79,7 +79,7 @@
   },
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
-    "autoprefixer": "6.7.7",
+    "autoprefixer": "7.2.4",
     "babel-core": "6.26.0",
     "babel-eslint": "8.0.3",
     "babel-jest": "21.2.0",
