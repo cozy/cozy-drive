@@ -41,6 +41,7 @@ export default class CozyClient {
 
   resetStore() {
     this.store.dispatch({ type: 'RESET_STORE' })
+    this.facade.destroyAllDatabases()
   }
 
   getUrl() {
