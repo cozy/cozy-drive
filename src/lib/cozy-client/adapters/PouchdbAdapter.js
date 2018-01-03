@@ -19,6 +19,8 @@ export default class PouchdbAdapter {
     this.instances = {}
     this.doctypes = []
     this.replicationBaseUrl = null
+    this.syncHandlers = {}
+    this.nextSyncTimeout = null
   }
 
   registerDoctypes(doctypes) {
@@ -48,10 +50,10 @@ export default class PouchdbAdapter {
   async startSync(dispatch, direction = SYNC_BIDIRECTIONAL) {
     try {
       const infos = await this.sync(dispatch, direction)
-      this.scheduleNextSync(dispatch, direction)
+      this.nextSyncTimeout = this.scheduleNextSync(dispatch, direction)
       return infos
     } catch (err) {
-      this.scheduleNextSync(dispatch, direction)
+      this.nextSyncTimeout = this.scheduleNextSync(dispatch, direction)
       throw err
     }
   }
@@ -83,6 +85,10 @@ export default class PouchdbAdapter {
     }
   }
 
+  async unsyncDoctype(doctype) {
+    this.unsyncDatabase(doctype)
+  }
+
   syncDatabase(doctype, replicationUrl, direction) {
     return new Promise((resolve, reject) => {
       const db = this.getDatabase(doctype)
@@ -106,11 +112,18 @@ export default class PouchdbAdapter {
           reject(err)
         }
       })
+
+      this.syncHandlers[doctype] = syncHandler
     })
   }
 
+  unsyncDatabase(doctype) {
+    this.syncHandlers[doctype].cancel()
+    delete this.syncHandlers[doctype]
+  }
+
   scheduleNextSync(dispatch, direction) {
-    setTimeout(() => {
+    return setTimeout(() => {
       this.sync(dispatch, direction)
     }, REPLICATION_INTERVAL)
   }
@@ -213,5 +226,40 @@ export default class PouchdbAdapter {
 
   removeReferencedFiles(doc, ids) {
     throw new Error('Not implemented')
+  }
+
+  destroyAllDatabases() {
+    if (this.nextSyncTimeout) {
+      this.clearNextSyncTimeout()
+    }
+
+    return Promise.all(
+      this.doctypes.map(async doctype => this.destroyDatabase(doctype))
+    )
+  }
+
+  clearNextSyncTimeout() {
+    clearTimeout(this.nextSyncTimeout)
+  }
+
+  hasDatabase(doctype) {
+    return this.instances[doctype] !== undefined
+  }
+
+  async destroyDatabase(doctype) {
+    if (!this.hasDatabase(doctype)) {
+      return false
+    }
+
+    // unsync the database
+    await this.unsyncDoctype(doctype)
+
+    // then destroy the database
+    const destroyResult = await this.getDatabase(doctype).destroy()
+
+    // then set undefined in the instances
+    delete this.instances[doctype]
+
+    return destroyResult
   }
 }

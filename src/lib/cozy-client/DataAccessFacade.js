@@ -62,6 +62,10 @@ export default class DataAccessFacade {
   startReplicationFrom(dispatch) {
     return this.pouchAdapter.startSync(dispatch, SYNC_FROM)
   }
+
+  destroyAllDatabases() {
+    this.pouchAdapter.destroyAllDatabases()
+  }
 }
 
 class PouchFirstStrategy {
