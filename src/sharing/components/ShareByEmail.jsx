@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 
 import { Button } from 'cozy-ui/react'
 import Alerter from 'photos/components/Alerter'
@@ -187,12 +186,7 @@ class ShareByEmail extends Component {
             recipients={recipients}
           />
         </div>
-        <div
-          className={classnames(
-            styles['coz-form-controls'],
-            styles['coz-form-controls--dispatch']
-          )}
-        >
+        <div className={styles['share-type-control']}>
           <ShareTypeSelect
             options={this.sharingTypes}
             value={this.state.sharingType}
