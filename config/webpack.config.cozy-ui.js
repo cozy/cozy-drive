@@ -2,7 +2,7 @@
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-module.exports = {
+module.exports = (production) => ({
   resolve: {
     extensions: ['.styl']
   },
@@ -20,7 +20,7 @@ module.exports = {
             {
               loader: 'css-loader',
               options: {
-                sourceMap: true,
+                sourceMap: !production,
                 importLoaders: 1,
                 modules: true,
                 localIdentName: '[local]--[hash:base64:5]'
@@ -29,7 +29,7 @@ module.exports = {
             {
               loader: 'postcss-loader',
               options: {
-                sourceMap: true,
+                sourceMap: !production,
                 plugins: () => [
                   require('autoprefixer')({ browsers: ['last 2 versions'] })
                 ]
@@ -46,4 +46,4 @@ module.exports = {
       }
     ]
   }
-}
+})
