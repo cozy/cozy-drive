@@ -60,7 +60,11 @@ export class ShareModal extends Component {
     } = this.props
 
     return (
-      <Modal title={t(`${documentType}.share.title`)} dismissAction={onClose}>
+      <Modal
+        title={t(`${documentType}.share.title`)}
+        dismissAction={onClose}
+        className={styles['share-modal']}
+      >
         <div className={styles['share-modal-content']}>
           {withSharingCheck(document, documentType, t)(
             <ShareByEmailComingSoon
