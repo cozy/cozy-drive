@@ -119,7 +119,8 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
       console.warn('startMediaBackup upload item error')
       console.warn(JSON.stringify(err))
       console.info(JSON.stringify(photo))
-      logException('Backup error: ' + JSON.stringify(err))
+      const reason = err.message ? err.message : JSON.stringify(err)
+      logException('Backup error: ' + reason, null, ['backup error'])
     }
   }
 }
