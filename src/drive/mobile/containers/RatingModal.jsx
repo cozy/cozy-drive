@@ -147,9 +147,7 @@ class FeeedbackForm extends Component {
               <Button className={'secondary'} onClick={() => onClose(false)}>
                 {t('mobile.rating.feedback.no')}
               </Button>
-              <Button aria-busy={sending}>
-                {t('mobile.rating.feedback.yes')}
-              </Button>
+              <Button busy={sending}>{t('mobile.rating.feedback.yes')}</Button>
             </div>
           </form>
         </ModalContent>

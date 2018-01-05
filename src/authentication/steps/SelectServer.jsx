@@ -171,7 +171,7 @@ export class SelectServer extends Component {
           )}
         </div>
         <footer className={styles['wizard-footer']}>
-          <Button disabled={error || !value || fetching} aria-busy={fetching}>
+          <Button disabled={error || !value || fetching} busy={fetching}>
             {t('mobile.onboarding.server_selection.button')}
           </Button>
         </footer>
