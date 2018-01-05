@@ -66,8 +66,10 @@ export default class ShareAutocomplete extends Component {
   onKeyPress = event => {
     // The user wants to add an unknown email
     if (
-      (event.key === 'Enter' || event.keyCode === 13) &&
-      this.state.inputValue !== ''
+      ((event.key === 'Enter' || event.keyCode === 13) &&
+        this.state.inputValue !== '') ||
+      ((event.key === 'Space' || event.keyCode === 32) &&
+        /^.+@.+/.test(this.state.inputValue))
     ) {
       this.onPick({ email: this.state.inputValue })
     }
