@@ -40,16 +40,10 @@
     &.active
         background-image: embedurl("../assets/icons/icon-settings-active.svg")
 
-@media (max-width: (1023/basefont)rem)
-
-    [class^='coz-nav']
-        [class^='coz-spinner']
-            position absolute
-            top .7em
-            left 60%
-
-            &:before
-                width .5rem
-                height .5rem
++medium-screen()
+    .nav-spinner
+        position absolute
+        top .7rem
+        left 60%
 
 

@@ -3,12 +3,12 @@ import styles from '../styles/photoList'
 import React, { Component } from 'react'
 import { withContentRect } from 'react-measure'
 import { translate } from 'cozy-ui/react/I18n'
+import { Button } from 'cozy-ui/react'
 
 import PhotoList from './PhotoList'
 import { EmptyPhotos } from 'components/Error/Empty'
 import Loading from './Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
-import classNames from 'classnames'
 
 const Spinner = () => <div className={styles['pho-list-spinner']} />
 
@@ -34,17 +34,14 @@ class MoreButton extends Component {
     return (
       <div style={{ width: width }} className={styles['pho-list-morebutton']}>
         {fetching && (
-          <button className={styles['c-btn']} disabled>
-            <Spinner />
-          </button>
+          <Button disabled theme="secondary">
+            <Spinner nomargin />
+          </Button>
         )}
         {!fetching && (
-          <button
-            className={classNames(styles['c-btn'], styles['c-btn--secondary'])}
-            onClick={() => this.handleClick()}
-          >
+          <Button theme="secondary" onClick={() => this.handleClick()}>
             {children}
-          </button>
+          </Button>
         )}
       </div>
     )

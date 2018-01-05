@@ -1,11 +1,5 @@
 @require 'cozy-ui'
 
-.c-btn
-    @extend $button
-
-.c-btn--regular
-    @extend $button--regular
-
 .wizard
     @extend $form
     @extend $form-text
@@ -24,12 +18,12 @@
     .wizard-header
         display         flex
         flex-direction  row
-        margin-top      2em
+        margin-top      2rem
         justify-content flex-start
 
         .button-previous
-            width      2em
-            height     2em
+            width      2rem
+            height     2rem
             cursor     pointer
             background-size contain
             background-position center
@@ -39,47 +33,47 @@
                 background-image embedurl("./assets/icons/icon-cross-grey.svg")
 
     .logo-wrapper
-        max-width     3.5em
-        height        3.5em
-        margin        .5em auto 3em auto
-        padding       1.25em
+        max-width     3.5rem
+        height        3.5rem
+        margin        .5rem auto 3rem auto
+        padding       1.25rem
         border-radius 50%
-        box-shadow    0 1px 3px rgba(50, 54, 63, .19), 0 4px 12px rgba(50, 54, 63, .12)
+        box-shadow    0 .0625rem .1875rem rgba(50, 54, 63, .19), 0 .25rem .75rem rgba(50, 54, 63, .12)
 
         &.error
             background pomegranate
 
     .wizard-main
         margin auto
-        padding 0 .5em
+        padding 0 .5rem
         width 100%
         box-sizing border-box
 
     .title
-        margin    .25em auto
-        font-size 1.5em
+        margin    .25rem auto
+        font-size 1.5rem
 
     .description
         text-align center
-        margin     .5em 0
+        margin     .5rem 0
         font-size  1.125rem
-        max-width  25em
+        max-width  25rem
 
         &.error
             color pomegranate
-            font-size em(12px)
+            font-size .75rem
             font-style italic
 
         &.info
             color coolGrey
-            font-size em(12px)
+            font-size .75rem
             font-style italic
 
     .coz-form-label
         text-align left
 
     .input
-        width            100%
+        width 100%
 
         &::placeholder
             color   charcoalGrey
@@ -93,10 +87,10 @@
     .wizard-footer
         display flex
         flex-direction column
-        margin-bottom 1.5em
+        margin-bottom 1.5rem
 
         > .link
-            margin          1.5em .5em 0em .5em
+            margin          1.5rem .5rem 0rem .5rem
             text-align      left
             text-decoration none
             color           dodgerBlue
@@ -114,6 +108,6 @@
 
 // ASSETS
 .cozy-logo-white
-    height  3.5em
+    height  3.5rem
     background embedurl("./assets/icons/icon-cozy.svg") center no-repeat
     background-size contain

@@ -6,8 +6,8 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import React, { Component } from 'react'
 import { track, isLinux, isAndroid, isIOS, DESKTOP_BANNER } from '.'
+import { Button, ButtonLink, Icon } from 'cozy-ui/react'
 
-import classNames from 'classnames'
 import localforage from 'localforage'
 
 class BannerClient extends Component {
@@ -39,35 +39,38 @@ class BannerClient extends Component {
 
     return (
       <div className={styles['coz-banner-client']}>
-        <a
+        <ButtonLink
           href={t(mobileLink)}
-          target="_blank"
+          target
           className={styles['coz-btn-clientMobile']}
           onClick={e => {
             this.markAsSeen('banner')
           }}
         >
           <span>{t('Nav.btn-client-mobile')}</span>
-        </a>
+        </ButtonLink>
         <p className={styles['coz-banner-text']}>
           <span>{t('Nav.banner-txt-client')}</span>
-          <a
+          <ButtonLink
             href={t(desktopLink)}
-            target="_blank"
-            className={classNames(styles['c-btn'])}
+            target
+            theme="alpha"
             onClick={e => {
               this.markAsSeen('banner')
             }}
           >
             {t('Nav.banner-btn-client')}
-          </a>
+          </ButtonLink>
         </p>
-        <button
-          className={classNames(styles['c-btn'], styles['c-btn--close'])}
+        <Button
+          theme="close"
+          className={styles['close-banner']}
           onClick={e => {
             this.markAsSeen('close')
           }}
-        />
+        >
+          <Icon icon="cross" width="24" height="24" />
+        </Button>
       </div>
     )
   }

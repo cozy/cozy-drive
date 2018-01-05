@@ -15,23 +15,8 @@
 .c-btn--danger-outline
     @extend $button--danger-outline
 
-.c-btn--share
-    @extend $button--share
-
-.c-btn--send
-    @extend $button--send
-
-.c-btn--download
-    @extend $button--download
-
-.c-btn--upload
-    @extend $button--upload
-
 .c-link--upload
     @extend $link--upload
-
-.c-btn--delete
-    @extend $button--delete
 
 .u-hide--mob
     @extend $hide--mob
@@ -45,23 +30,21 @@
 
     a
         &.pho-action-newalbum
-            background embedurl("../assets/icons/icon-album-add.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-album-add.svg") 1rem center no-repeat
         &.pho-action-select
-            background embedurl("../assets/icons/icon-checkbox.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-checkbox.svg") 1rem center no-repeat
         &.pho-action-rename
-            background embedurl("../assets/icons/icon-pen.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-pen.svg") 1rem center no-repeat
         &.pho-action-addphotos
-            background embedurl("../assets/icons/icon-album-add.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-album-add.svg") 1rem center no-repeat
         &.pho-action-share
-            background embedurl("../assets/icons/icon-share.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-share.svg") 1rem center no-repeat
         &.pho-action-download
-            background embedurl("../assets/icons/icon-download-16.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-download-16.svg") 1rem center no-repeat
         &.pho-action-delete
             color pomegranate
-            background embedurl("../assets/icons/icon-trash-red.svg") em(16px) center no-repeat
+            background embedurl("../assets/icons/icon-trash-red.svg") 1rem center no-repeat
 
     .pho-btn-new
         @extend $button
         @extend $button--secondary
-        @extend $button--upload
-        background-image embedurl("../assets/icons/icon-album-add.svg")

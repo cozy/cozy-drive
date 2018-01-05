@@ -2,6 +2,7 @@ import styles from '../styles/createAlbumForm'
 
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import { Button } from 'cozy-ui/react'
 
 import classNames from 'classnames'
 
@@ -70,13 +71,13 @@ export class CreateAlbumForm extends Component {
             placeholder={t('Albums.create.inline_form.placeholder')}
             value={this.state.name}
           />
-          <button
-            className={classNames(styles['c-btn'], styles['c-btn--regular'])}
+          <Button
+            className={styles['create-button']}
             disabled={this.state.isSubmitDisabled || this.state.isBusy}
             aria-busy={this.state.isBusy}
           >
             {t('Albums.create.inline_form.create_button')}
-          </button>
+          </Button>
         </div>
       </form>
     )

@@ -1,10 +1,10 @@
 /* global cozy AppRate */
 import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
+import { Button } from 'cozy-ui/react'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
 import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
-import classNames from 'classnames'
 
 import styles from '../styles/feedback'
 
@@ -83,21 +83,12 @@ class EnjoyCozy extends Component {
       <Modal title={t('mobile.rating.enjoy.title')} withCross={false}>
         <ModalContent>
           <div className={styles['button-block']}>
-            <button
-              className={classNames(
-                styles['c-btn'],
-                styles['c-btn--secondary']
-              )}
-              onClick={() => onReply(false)}
-            >
+            <Button theme={'secondary'} onClick={() => onReply(false)}>
               {t('mobile.rating.enjoy.no')}
-            </button>
-            <button
-              className={classNames(styles['c-btn'], styles['c-btn--regular'])}
-              onClick={() => onReply(true)}
-            >
+            </Button>
+            <Button onClick={() => onReply(true)}>
               {t('mobile.rating.enjoy.yes')}
-            </button>
+            </Button>
           </div>
         </ModalContent>
       </Modal>
@@ -153,26 +144,10 @@ class FeeedbackForm extends Component {
               ref={this.registerElement.bind(this)}
             />
             <div className={styles['button-block']}>
-              <button
-                className={classNames(
-                  styles['c-btn'],
-                  styles['c-btn--secondary']
-                )}
-                type="button"
-                onClick={() => onClose(false)}
-              >
+              <Button className={'secondary'} onClick={() => onClose(false)}>
                 {t('mobile.rating.feedback.no')}
-              </button>
-              <button
-                className={classNames(
-                  styles['c-btn'],
-                  styles['c-btn--regular']
-                )}
-                type="submit"
-                aria-busy={sending}
-              >
-                {t('mobile.rating.feedback.yes')}
-              </button>
+              </Button>
+              <Button busy={sending}>{t('mobile.rating.feedback.yes')}</Button>
             </div>
           </form>
         </ModalContent>

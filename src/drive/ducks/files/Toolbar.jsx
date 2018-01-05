@@ -152,11 +152,7 @@ class Toolbar extends Component {
             ? (console.warn('IntentButton is displayed only on dev or recette'),
               (
                 <IntentButton
-                  className={classNames(
-                    styles['c-btn'],
-                    styles['c-btn--regular'],
-                    styles['u-hide--mob']
-                  )}
+                  className={classNames(styles['c-btn'], styles['u-hide--mob'])}
                   action="CREATE"
                   docType="io.cozy.accounts"
                   data={{
@@ -173,12 +169,7 @@ class Toolbar extends Component {
             disabled={disabled}
             onUpload={files => uploadFiles(files, displayedFolder)}
             label={t('toolbar.item_upload')}
-            className={classNames(
-              styles['c-btn'],
-              styles['c-btn--regular'],
-              styles['c-btn--upload'],
-              styles['u-hide--mob']
-            )}
+            className={classNames(styles['c-btn'], styles['u-hide--mob'])}
           />
         )}
         {notRootfolder &&

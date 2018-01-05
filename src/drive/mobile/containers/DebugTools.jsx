@@ -3,17 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { logException, logInfo } from '../lib/reporter'
 import { setFirstReplication, setOffline } from '../../actions/settings'
-import classNames from 'classnames'
-import styles from '../styles/debugtools'
-
-const Button = ({ onClick, children }) => (
-  <button
-    onClick={onClick}
-    className={classNames(styles['c-btn'], styles['c-btn--regular'])}
-  >
-    {children}
-  </button>
-)
+import { Button } from 'cozy-ui/react'
 
 const Checkbox = ({ onChange, value, title }) => (
   <div>

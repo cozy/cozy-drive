@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { cozyConnect } from 'cozy-client'
 import { withRouter } from 'react-router'
+import { Button } from 'cozy-ui/react'
 
 import { fetchTimeline, getPhotosByMonth } from '../../timeline'
 import { createAlbum, fetchAlbum, addToAlbum } from '..'
-
-import classNames from 'classnames'
 
 import PhotoBoard from '../../../components/PhotoBoard'
 import Alerter from '../../../components/Alerter'
@@ -159,28 +158,16 @@ class PhotosPicker extends Component {
           <footer className={styles['pho-panel-footer']}>
             <div className={styles['pho-panel-wrap']}>
               <div className={styles['pho-panel-controls']}>
-                <button
-                  className={classNames(
-                    styles['c-btn'],
-                    styles['c-btn--secondary']
-                  )}
-                  onClick={this.onCancel}
-                >
+                <Button theme="secondary" onClick={this.onCancel}>
                   {t('Albums.create.panel_form.cancel')}
-                </button>
-                <button
-                  className={classNames(
-                    styles['c-btn'],
-                    styles['c-btn--regular']
-                  )}
-                  onClick={isNew ? this.onCreate : this.onUpdate}
-                >
+                </Button>
+                <Button onClick={isNew ? this.onCreate : this.onUpdate}>
                   {t(
                     isNew
                       ? 'Albums.create.panel_form.submit'
                       : 'Albums.create.panel_form.update'
                   )}
-                </button>
+                </Button>
               </div>
             </div>
           </footer>

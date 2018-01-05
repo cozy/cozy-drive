@@ -5,6 +5,7 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Loading from 'photos/components/Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
 import ErrorShare from 'components/Error/ErrorShare'
+import { Button, Icon } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
@@ -124,17 +125,14 @@ class App extends Component {
         >
           <h2 className={styles['pho-content-title']}>{album.name}</h2>
           <div className={styles['pho-toolbar']} role="toolbar">
-            <button
-              role="button"
-              className={classNames(
-                styles['c-btn'],
-                styles['c-btn--secondary'],
-                styles['pho-public-download']
-              )}
+            <Button
+              theme='secondary'
+              className={styles['pho-public-download']}
               onClick={this.onDownload}
             >
+              <Icon icon="download" />
               {t('Toolbar.album_download')}
-            </button>
+            </Button>
             <Menu
               title={t('Toolbar.more')}
               className={classNames(styles['pho-toolbar-menu'])}

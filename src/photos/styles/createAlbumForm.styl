@@ -1,18 +1,12 @@
 @require 'cozy-ui'
 
-.c-btn
-    @extend $button
-
-.c-btn--regular
-    @extend $button--regular
-
 .pho-create-album-form
     @extend $form-text
 
     .coz-create-album-label
         display         block
         color           coolGrey
-        font-size       .75em
+        font-size       .75rem
         line-height     1.5
         text-transform  uppercase
 
@@ -26,21 +20,21 @@
             flex-grow    1
 
         .coz-input-text,
-        .c-btn
-            font-size  1em
-            height     3em
-            margin-right .3em
+        .create-button
+            font-size  1rem
+            height     3rem
+            margin-right .3rem
             align-self stretch
 
-        .c-btn
+        .create-button
             margin-right 0
-            padding-left 2.5em
-            padding-right 2.5em
+            padding-left 2.5rem
+            padding-right 2.5rem
 
             &[aria-busy=true]
-                padding-right 1em
+                padding-right 1rem
 
-@media (max-width: (1023/basefont)rem)
-    .pho-create-album-form .coz-inline-form .c-btn
-        padding-left 1.5em
-        padding-right 1.5em
++medium-screen()
+    .pho-create-album-form .coz-inline-form .create-button
+        padding-left 1.5rem
+        padding-right 1.5rem
