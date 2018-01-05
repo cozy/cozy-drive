@@ -4,7 +4,7 @@ import styles from '../../styles/toolbar'
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import { withBreakpoints } from 'cozy-ui/react'
+import { Button, Icon, withBreakpoints } from 'cozy-ui/react'
 import confirm from '../../lib/confirm'
 import classNames from 'classnames'
 
@@ -46,18 +46,15 @@ const Toolbar = ({
 
   return (
     <div className={styles['fil-toolbar-trash']} role="toolbar">
-      <button
-        className={classNames(
-          styles['c-btn'],
-          styles['c-btn--danger-outline'],
-          styles['u-hide--mob'],
-          styles['fil-btn--delete']
-        )}
+      <Button
+        theme={'danger-outline'}
+        className={classNames(styles['u-hide--mob'])}
         onClick={() => emptyTrash()}
         disabled={disabled}
       >
+        <Icon icon="delete" />
         {t('toolbar.empty_trash')}
-      </button>
+      </Button>
 
       {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
     </div>

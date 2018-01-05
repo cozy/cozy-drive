@@ -6,9 +6,9 @@
     display flex
     flex-direction column
     width 100%
-    padding-top em(30px)
+    padding-top 1.875rem
 
-@media (max-width: (768/basefont)rem)
++small-screen()
     .pho-public-layout--full
         reset()
         position: absolute;
@@ -21,18 +21,12 @@
 
 .pho-content-header.--no-icon
     left 0
-    padding-left em(15px)
+    padding-left .9375rem
 
-.pho-public-download
-    padding-left         em(44px, 16px)
-    background-image     embedurl('../../../../src/photos/assets/icons/icon-download-16.svg')
-    background-position  em(17px, 16px) center
-    background-repeat    no-repeat
-
-@media (max-width: (768/basefont)rem)
++small-screen()
     .pho-public-download
         display none
 
-@media (min-width: (769/basefont)rem)
++small-screen('min')
     .pho-toolbar-menu
         display none

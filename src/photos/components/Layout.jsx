@@ -6,15 +6,20 @@ import React from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 
-import Sidebar from './Sidebar'
-import Alerter from './Alerter'
+import Sidebar from 'cozy-ui/react/Sidebar'
+import Nav from '../components/Nav'
+import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
+import Alerter from './Alerter'
 
 import { UploadQueue } from '../ducks/upload'
 
 export const Layout = ({ t, children }) => (
   <div className={classNames(styles['pho-wrapper'], styles['coz-sticky'])}>
-    <Sidebar />
+    <Sidebar className={styles['pho-sidebar']}>
+      <Nav />
+      <ButtonClient />
+    </Sidebar>
 
     <Alerter t={t} />
     <UploadQueue />

@@ -1,6 +1,7 @@
 /* global cozy */
 import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
+import { Button, Icon } from 'cozy-ui/react'
 import classnames from 'classnames'
 import styles from './styles'
 
@@ -67,18 +68,10 @@ class QuotaModal extends Component {
               ref={this.registerElement}
             />
             <div className={styles['button-block']}>
-              <button
-                className={classnames(
-                  styles['c-btn'],
-                  styles['c-btn--regular'],
-                  styles['c-btn--paperplane']
-                )}
-                type="submit"
-                disabled={sending}
-                aria-busy={sending}
-              >
+              <Button disabled={sending} aria-busy={sending}>
+                <Icon icon="paperplane" />
                 {t('mobile.quota_feedback.button')}
-              </button>
+              </Button>
             </div>
           </form>
         </ModalContent>

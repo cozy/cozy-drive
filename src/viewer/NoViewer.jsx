@@ -38,7 +38,6 @@ class OpenWithCordovaButton extends React.Component {
     return (
       <Button
         busy={this.state.loading}
-        theme="regular"
         className={styles['pho-viewer-noviewer-download']}
         onClick={this.onClick}
       >
@@ -50,7 +49,6 @@ class OpenWithCordovaButton extends React.Component {
 
 const OpenWithWebButton = ({ t, url }) => (
   <Button
-    theme="regular"
     className={styles['pho-viewer-noviewer-download']}
     onClick={() => window.open(url, '_system')}
   >
@@ -60,7 +58,6 @@ const OpenWithWebButton = ({ t, url }) => (
 
 const DownloadButton = ({ t, file }) => (
   <Button
-    theme="regular"
     className={styles['pho-viewer-noviewer-download']}
     onClick={() => downloadFile(file)}
   >

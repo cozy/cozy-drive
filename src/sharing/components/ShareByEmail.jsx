@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import { Button } from 'cozy-ui/react'
 
 import Alerter from 'photos/components/Alerter'
 import ShareAutocomplete from './ShareAutocomplete'
@@ -167,12 +168,9 @@ class ShareByEmail extends React.Component {
               {t('Share.type.master-master')}
             </option>
           </select>
-          <button
-            className={classnames(styles['c-btn'], styles['c-btn--regular'])}
-            onClick={e => this.sendSharingLink()}
-          >
+          <Button onClick={e => this.sendSharingLink()}>
             {t(`${documentType}.share.shareByEmail.send`)}
-          </button>
+          </Button>
         </div>
       </div>
     )

@@ -1,32 +1,26 @@
 @require 'cozy-ui'
 
-.c-btn
-    @extend $button
-
-.c-btn--close
-    @extend $button--close
-
 // Desktop Button
 .coz-btn-client
     @extend $button-client
-    margin em(16px, 13px)
+    margin 1rem
 
-    @media (max-width: (1023/basefont)rem)
+    +medium-screen()
         display none
 
 // Banner
 .coz-banner-client
     position relative
 
-    @media (min-width: (769/basefont)rem)
-        margin-top     em(-30px)
-        margin-bottom  em(30px)
+    +small-screen('min')
+        margin-top     -1.875rem
+        margin-bottom  1.875rem
 
     .coz-btn-clientMobile
         @extend $button-client-mobile
         margin  0
 
-        @media (min-width: (1024/basefont)rem)
+        +medium-screen('min')
             display none
 
     .coz-banner-text
@@ -34,16 +28,15 @@
         margin 0
         cursor default
 
-        @media (max-width: (1023/basefont)rem)
+        +medium-screen()
             display none
 
         span
-            padding-right 2em
+            padding-right 2rem
 
-    .c-btn--close
+    .close-banner
         position   absolute
         right      0
         top        50%
         transform  translateY(-50%)
         margin     0
-        filter     brightness(0) invert(1)

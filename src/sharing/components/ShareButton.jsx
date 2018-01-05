@@ -1,48 +1,41 @@
 import React from 'react'
 import classNames from 'classnames'
+import { Button, Icon } from 'cozy-ui/react'
 
 import styles from './button'
 
 export const ShareButton = ({ label, onClick, className, ...props }) => (
-  <button
-    role="button"
-    className={classNames(
-      styles['c-btn'],
-      styles['c-btn--secondary'],
-      styles['c-btn--share'],
-      className
-    )}
+  <Button
+    theme="secondary"
+    className={className}
     onClick={() => onClick()}
     {...props}
   >
+    <Icon icon="share" />
     {label}
-  </button>
+  </Button>
 )
 
 export const SharedByMeButton = ({ label, onClick, className, ...props }) => (
-  <button
-    role="button"
-    className={classNames(styles['c-btn'], styles['coz-btn-shared'], className)}
+  <Button
+    className={classNames(styles['coz-btn-shared'], className)}
     onClick={() => onClick()}
     {...props}
   >
+    <Icon icon="share" />
     {label}
-  </button>
+  </Button>
 )
 
 export const SharedWithMeButton = ({ label, onClick, className, ...props }) => (
-  <button
-    role="button"
-    className={classNames(
-      styles['c-btn'],
-      styles['coz-btn-sharedWithMe'],
-      className
-    )}
+  <Button
+    className={classNames(styles['coz-btn-sharedWithMe'], className)}
     onClick={() => onClick()}
     {...props}
   >
+    <Icon icon="share" />
     {label}
-  </button>
+  </Button>
 )
 
 export default ShareButton

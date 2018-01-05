@@ -1,6 +1,6 @@
 @require 'cozy-ui'
 
-$coz-bar-size = 48px
+$coz-bar-size = 3rem
 
 .fil-topbar
     display     flex
@@ -8,7 +8,8 @@ $coz-bar-size = 48px
     margin-bottom .625rem
     margin-right 2rem
     margin-left 2rem
+    flex 0 0 auto
 
-@media (max-width: (768/basefont)rem)
++small-screen()
     .fil-topbar
         display none

@@ -1,14 +1,5 @@
 @require 'cozy-ui'
 
-.c-btn
-    @extend $button
-
-.c-btn--regular
-    @extend $button--regular
-
-.c-btn--secondary
-    @extend $button--secondary
-
 .pho-panel
     position          fixed
     top               0
@@ -29,24 +20,24 @@
 .pho-panel-header
 .pho-panel-footer
     background-color  paleGrey
-    flex              0 0 em(50px)
+    flex              0 0 3.125rem
 
 .pho-panel-header
-    padding-bottom 1em
+    padding-bottom 1rem
 
     input[type=text]
         width             100%
-        max-width         20em
-        padding           .5em .3em .35em
+        max-width         20rem
+        padding           .5rem .3rem .35rem
         background-color  white
-        font-size         1.5em
+        font-size         1.5rem
 
     h3
-        font-size 1.5em
-        margin    1em 0 0.5em
+        font-size 1.5rem
+        margin    1rem 0 0.5rem
 
 .pho-panel-footer
-    padding .6em 0 0
+    padding .6rem 0 0
 
     .pho-panel-controls
         display          flex
@@ -59,10 +50,10 @@
     width 100%
 
     .pho-panel-wrap
-        max-width   em(1088px)
+        max-width   68rem
         padding 0
 
 .pho-panel-wrap
-    max-width   em(1024px)
+    max-width   64rem
     margin      0 auto
-    padding     0 em(32px)
+    padding     0 2rem

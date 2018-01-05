@@ -1,27 +1,21 @@
 @require 'cozy-ui'
 
-.c-btn
-    @extend $button
-
-.c-btn--secondary
-    @extend $button--secondary
-
-.c-btn--more
-    @extend $button--more
-
-.c-btn-extra
-    @extend $button-extra
-
 .u-visuallyhidden
     @extend $visuallyhidden
 
-@media (max-width: (1023/basefont)rem)
+.dri-btn--more
+    svg
+        margin 0
+
++medium-screen()
     .dri-btn--more
         display inline-flex
 
-@media (max-width: (768/basefont)rem)
++small-screen()
     .dri-btn--more
-        border        0
-        margin-right  0
-        height        em(48px, 14px)
-        opacity       .5
+        border           0
+        margin-right     0
+        height           3rem
+        padding          .5rem .75rem
+        opacity          .5
+        background-color transparent

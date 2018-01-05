@@ -6,13 +6,13 @@
 .suggestionsContainer
     position absolute
     top 100%
-    margin-top 1px
+    margin-top .0625rem
     z-index $alert-index-mobile
     width 100%
-    max-height em(170px)
+    max-height 10.625rem
     overflow auto
-    border 1px solid silver
-    border-radius 4px
+    border .0625rem solid silver
+    border-radius .25rem
     background white
     display none
 
@@ -24,11 +24,11 @@
 
 .suggestionsList
     margin 0
-    padding 10px 0
+    padding .625rem 0
     list-style none
 
 .suggestion
-    padding 10px
+    padding .625rem
 
 .suggestionHighlighted
     background paleGrey
@@ -36,12 +36,12 @@
 .recipientsContainer
     display        flex
     flex-wrap      wrap
-    padding        em(8px)
-    border-radius  2px
-    border         1px solid silver
+    padding        .5rem
+    border-radius  .125rem
+    border         .0625rem solid silver
 
     &:hover
-        border 1px solid coolGrey
+        border .0625rem solid coolGrey
 
     &:last-child
         flex-grow 1
@@ -49,7 +49,7 @@
 
     input[type=email]
         width   100%
-        padding 0.5em
+        padding .5rem
         border  none
         &:hover
         &:focus
@@ -57,18 +57,18 @@
 
 .recipientChip
     background-color silver
-    border-radius em(32px)
-    height        em(32px)
-    line-height   em(32px)
-    padding       0 em(16px)
-    margin        0 em(8px) em(8px) 0
+    border-radius 2rem
+    height        2rem
+    line-height   2rem
+    padding       0 1rem
+    margin        0 .5rem .5rem 0
 
 .removeRecipient
     display          inline-block
-    height           em(20px)
-    width            em(20px)
-    line-height      em(16px)
-    margin           0 -8px 0 8px
+    height           1.25rem
+    width            1.25rem
+    line-height      1rem
+    margin           0 -.5rem 0 .5rem
     background-color coolGrey
     border           none
     border-radius    50%

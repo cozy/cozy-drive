@@ -5,6 +5,7 @@ import styles from '../styles/nav'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
+import { withBreakpoints } from 'cozy-ui/react'
 
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
@@ -35,6 +36,7 @@ class CustomLink extends Component {
       location,
       to,
       activeClassName,
+      breakpoints: { isMobile, isTablet },
       children,
       ...props
     } = this.props
@@ -53,13 +55,18 @@ class CustomLink extends Component {
     return (
       <a {...props} onClick={e => this.open(e)}>
         {children}
-        {opening && <Spinner />}
+        {opening && (
+          <Spinner
+            className={styles['nav-spinner']}
+            size={`${isMobile || isTablet ? 'tiny' : 'medium'}`}
+          />
+        )}
       </a>
     )
   }
 }
 
-const ActiveLink = withRouter(CustomLink)
+const ActiveLink = withBreakpoints()(withRouter(CustomLink))
 
 const Nav = ({ t, location, openFiles, openRecent, openTrash }) => {
   return (
