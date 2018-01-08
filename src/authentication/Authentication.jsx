@@ -90,7 +90,7 @@ class Authentication extends Component {
 Authentication.propTypes = {
   onComplete: PropTypes.func.isRequired,
   onException: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 }
 
 export default Authentication

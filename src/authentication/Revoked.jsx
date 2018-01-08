@@ -47,7 +47,7 @@ class Revoked extends Component {
 Revoked.propTypes = {
   onLogout: PropTypes.func.isRequired,
   onLogBackIn: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 }
 
 export default translate()(Revoked)
