@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { downloadFile } from 'cozy-client'
 import { logException } from '../drive/mobile/lib/reporter'
 import { translate } from 'cozy-ui/react/I18n'
-import Button from 'cozy-ui/react/Button'
+import { Button } from 'cozy-ui/react/Button'
 import Alerter from 'photos/components/Alerter'
 import { isCordova } from 'drive/mobile/lib/device'
 import {
