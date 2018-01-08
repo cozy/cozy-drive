@@ -1,6 +1,7 @@
 /* global cozy */
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Modal from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -25,6 +26,7 @@ class Revoked extends Component {
   }
 
   render({ t }) {
+    console.log('REVOKED')
     return (
       <Modal
         title={t('mobile.revoked.title')}
@@ -42,4 +44,11 @@ class Revoked extends Component {
     )
   }
 }
+
+Revoked.propTypes = {
+  onLogout: PropTypes.func.isRequired,
+  onLogBackIn: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired
+}
+
 export default translate()(Revoked)
