@@ -144,7 +144,7 @@ class FeeedbackForm extends Component {
               ref={this.registerElement.bind(this)}
             />
             <div className={styles['button-block']}>
-              <Button className={'secondary'} onClick={() => onClose(false)}>
+              <Button theme={'secondary'} onClick={() => onClose(false)}>
                 {t('mobile.rating.feedback.no')}
               </Button>
               <Button busy={sending}>{t('mobile.rating.feedback.yes')}</Button>
