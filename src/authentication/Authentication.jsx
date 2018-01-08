@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 import Welcome from './steps/Welcome'
 import SelectServer from './steps/SelectServer'
 
@@ -35,19 +35,20 @@ class Authentication extends Component {
   }
 
   connectToServer = async url => {
+    const { onComplete, onException, router } = this.props
     try {
       this.setState({ generalError: null, fetching: true })
       const cozyClient = this.context.client
       const { client, token } = await cozyClient.register(url)
-      this.props.onComplete({
+      onComplete({
         url,
-        clientInfo: client,
         token,
-        router: this.props.router
+        clientInfo: client,
+        router: router
       })
     } catch (err) {
       this.setState({ generalError: err })
-      this.props.onException(err, {
+      onException(err, {
         tentativeUrl: url,
         onboardingStep: 'connecting to server'
       })
@@ -57,6 +58,7 @@ class Authentication extends Component {
   }
 
   render() {
+    const { onException } = this.props
     const { currentStepIndex, generalError, fetching } = this.state
     const currentStep = this.steps[currentStepIndex]
 
@@ -76,13 +78,19 @@ class Authentication extends Component {
             previousStep={() => this.onAbort()}
             externalError={generalError}
             fetching={fetching}
-            onException={this.props.onException}
+            onException={onException}
           />
         )
       default:
         return null
     }
   }
+}
+
+Authentication.propTypes = {
+  onComplete: PropTypes.func.isRequired,
+  onException: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired
 }
 
 export default Authentication
