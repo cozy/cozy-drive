@@ -59,12 +59,10 @@ export class SelectServer extends Component {
     }
 
     const url = this.getUrl(value)
-    if (
-      !(url instanceof URL) ||
-      (url.protocol === 'http:' && !__ALLOW_HTTP__)
-    ) {
+    if (url === '' || (/^http:/.test(url) && !__ALLOW_HTTP__)) {
       error = ERR_WRONG_ADDRESS
     }
+
     if (error) {
       this.setState(state => ({ ...state, error }))
       this.props.onException(new Error(error), {
@@ -76,7 +74,7 @@ export class SelectServer extends Component {
 
     this.setState(state => ({ ...state, fetching: true }))
 
-    if (await this.isV2URL(value)) {
+    if (await this.isV2URL(url)) {
       this.setState(state => ({
         ...state,
         error: ERR_V2,
@@ -84,7 +82,7 @@ export class SelectServer extends Component {
       }))
     }
 
-    this.props.nextStep(value)
+    this.props.nextStep(url)
   }
 
   isV2URL = async url => {
@@ -110,12 +108,10 @@ export class SelectServer extends Component {
   getUrl = value => {
     try {
       return new URL(/^http(s)?:\/\//.test(value) ? value : `https://${value}`)
+        .toString()
+        .replace(/\/$/, '')
     } catch (err) {
-      this.setState(state => ({ ...state, error: ERR_WRONG_ADDRESS }))
-      this.props.onException(err, {
-        tentativeUrl: value,
-        onboardingStep: 'checking URL'
-      })
+      return ''
     }
   }
 
