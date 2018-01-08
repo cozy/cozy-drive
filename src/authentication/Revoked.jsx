@@ -26,7 +26,6 @@ class Revoked extends Component {
   }
 
   render({ t }) {
-    console.log('REVOKED')
     return (
       <Modal
         title={t('mobile.revoked.title')}
@@ -39,7 +38,7 @@ class Revoked extends Component {
         primaryAction={() => {
           this.logBackIn()
         }}
-        withCross={false}
+        closable={false}
       />
     )
   }
