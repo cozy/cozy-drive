@@ -151,13 +151,13 @@ class ShareByEmail extends Component {
     onShare(document, recipients, sharingType, sharingDesc)
       .then(() => {
         if (recipients.length === 1) {
-          Alerter.info(`${documentType}.share.shareByEmail.success`, {
+          Alerter.success(`${documentType}.share.shareByEmail.success`, {
             email: recipients[0].id
               ? getPrimaryEmail(recipients[0])
               : recipients[0].email
           })
         } else {
-          Alerter.info(`${documentType}.share.shareByEmail.genericSuccess`, {
+          Alerter.success(`${documentType}.share.shareByEmail.genericSuccess`, {
             count: recipients.length
           })
         }
