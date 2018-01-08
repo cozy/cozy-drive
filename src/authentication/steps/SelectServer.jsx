@@ -83,12 +83,17 @@ export class SelectServer extends Component {
         fetching: false
       }))
     }
+
     this.props.nextStep(value)
   }
 
   isV2URL = async url => {
     try {
-      return await this.context.client.isV2(url)
+      if (this.context.client.isV2) {
+        return await this.context.client.isV2(url)
+      } else {
+        return false
+      }
     } catch (err) {
       this.props.onException(err, {
         tentativeUrl: url,
