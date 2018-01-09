@@ -3,7 +3,7 @@ import styles from './share.styl'
 import React, { Component } from 'react'
 import { cozyConnect, fetchSharings } from 'cozy-client'
 import { UserAvatar } from './components/Recipient'
-import Modal from 'cozy-ui/react/Modal'
+import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 
 const Owner = UserAvatar
 
@@ -16,24 +16,21 @@ export class SharingDetailsModal extends Component {
         title={t(`${documentType}.share.details.title`)}
         secondaryAction={onClose}
       >
-        <div className={styles['pho-share-modal-content']}>
-          <Owner
-            name={t(`${documentType}.share.sharedWithMe`)}
-            url={sharing.sharer.url}
-          />
-          <div className={styles['pho-share-details-created']}>
+        <ModalContent>
+          <Owner name={t(`${documentType}.share.sharedWithMe`)} />
+          <div className={styles['share-details-created']}>
             {t(`${documentType}.share.details.createdAt`, {
               date: f(document.created_at || null, 'Do MMMM YYYY')
             })}
           </div>
-          <div className={styles['pho-share-details-perm']}>
+          <div className={styles['share-details-perm']}>
             {t(
               `${documentType}.share.details.${
                 sharing.sharingType === 'one-way' ? 'ro' : 'rw'
               }`
             )}
           </div>
-        </div>
+        </ModalContent>
       </Modal>
     )
   }

@@ -24,6 +24,7 @@ import { uploadedFile, downloadFiles, trashFiles } from '../../actions'
 import {
   ShareButton,
   SharedWithMeButton,
+  SharedByMeButton,
   ShareModal,
   SharingDetailsModal
 } from 'sharing'
@@ -40,7 +41,57 @@ const ALERT_LEVEL_INFO = 'info'
 const ALERT_LEVEL_ERROR = 'error'
 const ALERT_LEVEL_SUCCESS = 'success'
 
-class Toolbar extends Component {
+const ActionShare = props => {
+  const { highlighted, shared, onClick } = props
+
+  let label, component
+
+  if (shared.withMe) {
+    label = 'Files.share.sharedWithMe'
+    component = SharedWithMeButton
+  } else if (shared.byMe) {
+    label = 'Files.share.sharedByMe'
+    component = SharedByMeButton
+  } else {
+    label = 'toolbar.share'
+    component = ShareButton
+  }
+
+  return highlighted ? (
+    <component
+      label={t(label)}
+      onClick={onClick}
+      className={styles['u-hide--mob']}
+    />
+  ) : (
+    <a
+      className={classNames(styles['fil-action-share'], styles['u-hide--desk'])}
+      onClick={onClick}
+    >
+      {t(label)}
+    </a>
+  )
+}
+
+const ActionUpload = props => {
+  const { highlighted, disabled, onUpload, visible } = props
+  return highlighted ? (
+    <UploadButton
+      disabled={disabled}
+      onUpload={onUpload}
+      label={t('toolbar.item_upload')}
+      className={classNames(styles['c-btn'], styles['u-hide--mob'])}
+    />
+  ) : (
+    <UploadButton
+      onUpload={onUpload}
+      label={t('toolbar.menu_upload')}
+      className={styles['fil-action-upload']}
+    />
+  )
+}
+
+class FilesToolbar extends Component {
   state = {
     showShareModal: false
   }
@@ -63,7 +114,16 @@ class Toolbar extends Component {
     } = this.props
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
     const hasWriteAccess =
-      canUpload && (!shared.withMe || shared.sharingType === 'master-master')
+      canUpload && (!shared.withMe || shared.sharingType === 'two-way')
+
+    const commonActions = []
+    const conditionalActions = []
+
+    return (
+      <div className={styles['fil-toolbar-files']} role="toolbar">
+        <ActionUpload />
+      </div>
+    )
 
     const MoreMenu = (
       <Menu
@@ -73,7 +133,7 @@ class Toolbar extends Component {
         button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
       >
         {notRootfolder &&
-          !shared.withMe && (
+          !shared.shared && (
             <Item>
               <a
                 className={styles['fil-action-share']}
@@ -164,16 +224,17 @@ class Toolbar extends Component {
                 </IntentButton>
               ))
             : null)}
-        {hasWriteAccess && (
-          <UploadButton
-            disabled={disabled}
-            onUpload={files => uploadFiles(files, displayedFolder)}
-            label={t('toolbar.item_upload')}
-            className={classNames(styles['c-btn'], styles['u-hide--mob'])}
-          />
-        )}
+        {hasWriteAccess &&
+          !shared.shared && (
+            <UploadButton
+              disabled={disabled}
+              onUpload={files => uploadFiles(files, displayedFolder)}
+              label={t('toolbar.item_upload')}
+              className={classNames(styles['c-btn'], styles['u-hide--mob'])}
+            />
+          )}
         {notRootfolder &&
-          !shared.withMe && (
+          !shared.shared && (
             <ShareButton
               disabled={disabled}
               onClick={() => this.setState(toggleShowShareModal)}
@@ -184,6 +245,13 @@ class Toolbar extends Component {
         {shared.withMe && (
           <SharedWithMeButton
             label={t('Files.share.sharedWithMe')}
+            onClick={() => this.setState(toggleShowShareModal)}
+            className={styles['u-hide--mob']}
+          />
+        )}
+        {shared.byMe && (
+          <SharedByMeButton
+            label={t('Files.share.sharedByMe')}
             onClick={() => this.setState(toggleShowShareModal)}
             className={styles['u-hide--mob']}
           />
@@ -266,6 +334,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 export default translate()(
   withRouter(
-    withBreakpoints()(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
+    withBreakpoints()(
+      connect(mapStateToProps, mapDispatchToProps)(FilesToolbar)
+    )
   )
 )
