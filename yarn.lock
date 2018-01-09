@@ -2193,9 +2193,9 @@ cozy-client-js@^0.3.19:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
 
-cozy-ui@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-7.0.1.tgz#1d21d238035a64bdfb2331479b3c11e6c7d0106f"
+cozy-ui@7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-7.0.2.tgz#76c605249a4a1e4a676952fd764cf02c76a7024f"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     classnames "^2.2.5"
@@ -10056,6 +10056,10 @@ webpack-merge@1.1.2:
     lodash.isplainobject "^4.0.6"
     lodash.mergewith "^4.6.0"
     lodash.unionwith "^4.6.0"
+
+webpack-node-externals@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-1.6.0.tgz#232c62ec6092b100635a3d29d83c1747128df9bd"
 
 webpack-sources@^0.1.2:
   version "0.1.5"
