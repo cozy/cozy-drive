@@ -1,0 +1,2 @@
+Merci d'utiliser Cozy Drive ! ☁️
+Cette version corrige simplement un problème dans notre gestion d'erreurs !
