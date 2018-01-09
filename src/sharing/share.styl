@@ -1,21 +1,29 @@
 @require 'cozy-ui'
 
+.divider
+    border 0
+    background-color silver
+    height 1px
+    margin-top 0
+
 :global
-    label[for='pho-album-share-toggle']
+    label[for='share-toggle']
         cursor pointer
 
 :local
-    .pho-share-modal-content
+    .share-modal
+        max-width 33rem !important // waiting for modal size presets in cozy-ui
+
+    .share-modal-content
         @extend $form
         @extend $form-text
         @extend $form-button
         @extend $form-select
-        padding 0 1.5rem 1.5rem
 
-    .pho-share-modal-tabs
-        padding 0 .5rem
+        > div
+            margin 0 1.5rem 1.5rem
 
-    .pho-share-modal-footer
+    .share-modal-footer
         padding 0
         background-color paleGrey
         color            charcoalGrey
@@ -31,21 +39,39 @@
         h3
           margin .3rem 0 0
 
+        h4
+            margin 0 0 .3rem 0
+
         .coz-form
             margin 0
 
         .coz-form-desc
           color coolGrey
 
-        .coz-select
+    .share-type-control
+        display flex
+        flex-direction row
+        justify-content space-between
+        padding 1rem 0 0
+
+        select
             flex 0 0 49%
-            height 2.5rem
-            padding-bottom .4375rem
+
+        button
+            flex 0 0 49%
+            margin 0
+
+    @media (max-width 32em)
+        .share-type-control
+            flex-direction column
+
+            select
+                margin-bottom .5rem
 
     input[type=text]
         width 100%
 
-    .pho-input-dual
+    .input-dual
         display flex
         align-items center
 
@@ -68,21 +94,21 @@
             > :last-child
                 flex-basis auto
 
-    .pho-btn-copy
+    .btn-copy
         width 100%
         height 3rem
         margin 0
 
-    .pho-share-details-created
-    .pho-share-details-perm
+    .share-details-created
+    .share-details-perm
         font-size            1rem
         margin               0.5rem 0 0.5rem 3rem
         padding-left         1.5rem
         background-position  0 center
         background-repeat    no-repeat
 
-    .pho-share-details-created
+    .share-details-created
         background-image     embedurl('./assets/icon-clock-16.svg')
 
-    .pho-share-details-perm
+    .share-details-perm
         background-image     embedurl('./assets/icon-pen-16.svg')

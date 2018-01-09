@@ -1,91 +1,126 @@
-import React from 'react'
-import classnames from 'classnames'
-import { Button } from 'cozy-ui/react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
+import { Button } from 'cozy-ui/react'
 import Alerter from 'photos/components/Alerter'
-import ShareAutocomplete from './ShareAutocomplete'
-import WhoHasAccess from './WhoHasAccess'
+import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
 
 import styles from '../share.styl'
 
-class ShareByEmailWrapper extends React.Component {
-  share(recipients, sharingType) {
-    const { document, documentType, sharingDesc } = this.props
-    // TODO: remove the Promise.all thing when the stack is ready for multi-contacts sharing
-    return Promise.all(
-      recipients.map(recipient =>
-        this.props.onShare(document, [recipient], sharingType, sharingDesc)
-      )
-    )
-      .then(() => {
-        if (recipients.length === 1) {
-          Alerter.info(`${documentType}.share.shareByEmail.success`, {
-            email: recipients[0].id
-              ? getPrimaryEmail(recipients[0])
-              : recipients[0].email
-          })
-        } else {
-          Alerter.info(`${documentType}.share.shareByEmail.genericSuccess`, {
-            count: recipients.length
-          })
-        }
-      })
-      .catch(err => {
-        Alerter.error('Error.generic')
-        throw err
-      })
-  }
+const ShareRecipientsInput = props => (
+  <div>
+    <label className={styles['coz-form-label']} htmlFor="email">
+      {props.label}
+    </label>
+    <ShareAutosuggest
+      contacts={props.contacts}
+      recipients={props.recipients}
+      onPick={props.onPick}
+      onRemove={props.onRemove}
+    />
+  </div>
+)
 
-  unshare(recipient) {
-    const { document, documentType } = this.props
-    return this.props
-      .onUnshare(document, recipient)
-      .then(() => {
-        Alerter.info(`${documentType}.share.unshare.success`, {
-          email: getPrimaryEmail(recipient)
-        })
-      })
-      .catch(err => {
-        Alerter.error('Error.generic')
-        throw err
-      })
-  }
-
-  render() {
-    const { document, documentType, contacts, recipients } = this.props
-    return (
-      <div>
-        <ShareByEmail
-          onSend={(recipient, sharingType) =>
-            this.share(recipient, sharingType)
-          }
-          contacts={contacts}
-          documentType={documentType}
-        />
-        <WhoHasAccess
-          document={document}
-          documentType={documentType}
-          recipients={recipients}
-          onUnshare={recipient => this.unshare(recipient)}
-        />
-      </div>
-    )
-  }
+ShareRecipientsInput.propTypes = {
+  label: PropTypes.string,
+  contacts: PropTypes.array,
+  recipients: PropTypes.array,
+  onPick: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired
 }
 
-export default ShareByEmailWrapper
+ShareRecipientsInput.defaultProps = {
+  label: 'To:',
+  contacts: [],
+  recipients: []
+}
 
-class ShareByEmail extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      recipients: [],
-      sharingType: 'master-slave'
+const ShareTypeSelect = props => (
+  <select
+    name="select"
+    className={styles['coz-select']}
+    value={props.value}
+    onChange={e => {
+      props.onChange(e.target.value)
+    }}
+  >
+    {props.options.map(option => (
+      <option value={option.value} disabled={option.disabled}>
+        {option.label}
+      </option>
+    ))}
+  </select>
+)
+
+ShareTypeSelect.propTypes = {
+  onChange: PropTypes.func,
+  options: PropTypes.array.isRequired,
+  value: PropTypes.string
+}
+
+ShareTypeSelect.defaultProps = {
+  onChange: console.log,
+  value: ''
+}
+
+const ShareSubmit = props => (
+  <Button
+    onClick={e => {
+      props.onSubmit()
+    }}
+    busy={props.loading}
+  >
+    {props.label}
+  </Button>
+)
+
+ShareSubmit.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  loading: PropTypes.bool
+}
+
+ShareSubmit.defaultProps = {
+  label: 'Submit',
+  loading: false
+}
+
+class ShareByEmail extends Component {
+  sharingTypes = [
+    {
+      value: 'one-way',
+      label: this.context.t('Share.type.one-way'),
+      disabled: true
+    },
+    {
+      value: 'two-way',
+      label: this.context.t('Share.type.two-way'),
+      disabled: false
     }
+  ]
+
+  initialState = {
+    recipients: [],
+    sharingType: 'two-way',
+    loading: false
   }
 
-  onRecipientPick(recipient) {
+  state = { ...this.initialState }
+
+  reset = () => {
+    this.setState(state => ({ ...this.initialState }))
+  }
+
+  onChange = value => {
+    this.setState(state => ({ ...state, sharingType: value }))
+  }
+
+  onSubmit = () => {
+    this.sendSharingLink()
+  }
+
+  onRecipientPick = recipient => {
     const existing = this.state.recipients.find(r => r === recipient)
     if (!existing) {
       this.setState(state => ({
@@ -95,7 +130,7 @@ class ShareByEmail extends React.Component {
     }
   }
 
-  onRecipientRemove(recipient) {
+  onRecipientRemove = recipient => {
     const idx = this.state.recipients.findIndex(r => r === recipient)
     this.setState(state => ({
       ...state,
@@ -106,73 +141,78 @@ class ShareByEmail extends React.Component {
     }))
   }
 
-  reset() {
-    this.setState(state => ({
-      ...state,
-      recipients: [],
-      sharingType: 'master-slave'
-    }))
-  }
-
-  sendSharingLink() {
+  share = () => {
+    const { document, documentType, sharingDesc, onShare } = this.props
     const { recipients, sharingType } = this.state
     if (recipients.length === 0) {
       return
     }
-    this.props
-      .onSend(recipients, sharingType)
+    this.setState(state => ({ ...state, loading: true }))
+    onShare(document, recipients, sharingType, sharingDesc)
       .then(() => {
+        if (recipients.length === 1) {
+          Alerter.success(`${documentType}.share.shareByEmail.success`, {
+            email: recipients[0].id
+              ? getPrimaryEmail(recipients[0])
+              : recipients[0].email
+          })
+        } else {
+          Alerter.success(`${documentType}.share.shareByEmail.genericSuccess`, {
+            count: recipients.length
+          })
+        }
         this.reset()
       })
-      .catch(() => {
+      .catch(err => {
+        Alerter.error('Error.generic')
         this.reset()
+        throw err
       })
-  }
-
-  changeSharingType(sharingType) {
-    this.setState(state => ({ ...state, sharingType }))
   }
 
   render() {
     const { t } = this.context
     const { contacts, documentType } = this.props
     const { recipients } = this.state
+
     return (
       <div className={styles['coz-form-group']}>
-        <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
         <div className={styles['coz-form']}>
-          <label className={styles['coz-form-label']} htmlFor="email">
-            {t(`${documentType}.share.shareByEmail.email`)}
-          </label>
-          <ShareAutocomplete
-            contacts={contacts}
-            recipients={recipients}
+          <ShareRecipientsInput
+            label={t(`${documentType}.share.shareByEmail.email`)}
             onPick={recipient => this.onRecipientPick(recipient)}
             onRemove={recipient => this.onRecipientRemove(recipient)}
+            contacts={contacts}
+            recipients={recipients}
           />
         </div>
-        <div
-          className={classnames(
-            styles['coz-form-controls'],
-            styles['coz-form-controls--dispatch']
-          )}
-        >
-          <select
-            name="select"
-            className={styles['coz-select']}
+        <div className={styles['share-type-control']}>
+          <ShareTypeSelect
+            options={this.sharingTypes}
             value={this.state.sharingType}
-            onChange={e => this.changeSharingType(e.target.value)}
-          >
-            <option value="master-slave">{t('Share.type.master-slave')}</option>
-            <option value="master-master">
-              {t('Share.type.master-master')}
-            </option>
-          </select>
-          <Button onClick={e => this.sendSharingLink()}>
-            {t(`${documentType}.share.shareByEmail.send`)}
-          </Button>
+            onChange={this.onChange}
+          />
+          <ShareSubmit
+            label={t(`${documentType}.share.shareByEmail.send`)}
+            onSubmit={this.share}
+            loading={this.state.loading}
+          />
         </div>
       </div>
     )
   }
 }
+
+ShareByEmail.propTypes = {
+  contacts: PropTypes.array,
+  document: PropTypes.object.isRequired,
+  documentType: PropTypes.string.isRequired,
+  sharingDesc: PropTypes.string.isRequired,
+  onShare: PropTypes.func.isRequired
+}
+
+ShareByEmail.defaultProps = {
+  contacts: []
+}
+
+export default ShareByEmail

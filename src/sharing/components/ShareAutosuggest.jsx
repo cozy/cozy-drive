@@ -3,6 +3,7 @@ import Autosuggest from 'react-autosuggest'
 
 import styles from './autosuggest.styl'
 import Recipient from './Recipient'
+import { Icon } from 'cozy-ui/react'
 
 import { getPrimaryEmail } from '..'
 
@@ -65,8 +66,10 @@ export default class ShareAutocomplete extends Component {
   onKeyPress = event => {
     // The user wants to add an unknown email
     if (
-      (event.key === 'Enter' || event.keyCode === 13) &&
-      this.state.inputValue !== ''
+      ((event.key === 'Enter' || event.keyCode === 13) &&
+        this.state.inputValue !== '') ||
+      ((event.key === 'Space' || event.keyCode === 32) &&
+        /^.+@.+/.test(this.state.inputValue))
     ) {
       this.onPick({ email: this.state.inputValue })
     }
@@ -98,21 +101,21 @@ export default class ShareAutocomplete extends Component {
 
   renderInput(props) {
     return (
-      <div className={styles.recipientsContainer}>
+      <div className={styles['recipientsContainer']}>
         {this.props.recipients.map(recipient => (
-          <div className={styles.recipientChip}>
+          <div className={styles['recipientChip']}>
             <span>
               {recipient.id ? getPrimaryEmail(recipient) : recipient.email}
             </span>
             <button
-              className={styles.removeRecipient}
+              className={styles['removeRecipient']}
               onClick={() => this.onRemove(recipient)}
-            />
+            >
+              <Icon icon="cross" width="16" height="16" />
+            </button>
           </div>
         ))}
-        <div>
-          <input {...props} onKeyPress={this.onKeyPress} />
-        </div>
+        <input {...props} onKeyPress={this.onKeyPress} />
       </div>
     )
   }

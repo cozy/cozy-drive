@@ -99,7 +99,7 @@ const permissions = (state = {}, action) => {
             {
               attributes: {
                 permissions: {
-                  rule0: { type: action.doctype, values: [action.id] }
+                  files: { type: action.doctype, values: [action.id] }
                 },
                 source_id: action.response.attributes.sharing_id,
                 type: 'io.cozy.sharings'
@@ -157,7 +157,9 @@ export const share = (document, recipients, sharingType, sharingDesc) => async (
     recipients.map(
       recipient =>
         recipient.id ||
-        dispatch(createContact(recipient)).then(c => c.data[0].id)
+        dispatch(createContact(recipient))
+          .then(response => response.data[0])
+          .then(contact => contact.id)
     )
   )
   trackSharingByEmail(document)
@@ -233,7 +235,7 @@ export const revokeLink = document => async (dispatch, getState) => {
 const createSharing = (
   document,
   contactIds,
-  sharingType = 'master-slave',
+  sharingType = 'two-way',
   description = ''
 ) => ({
   types: [CREATE_SHARING, RECEIVE_NEW_SHARING, RECEIVE_ERROR],
@@ -344,12 +346,11 @@ const getSharing = (state, id) =>
     s => s.attributes && s.attributes.sharing_id === id
   )
 const getContact = (state, id) => getDocument(state, 'io.cozy.contacts', id)
-const getDoctypePermissions = (state, doctype) => {
-  if (state.cozy.sharings.permissions[doctype]) {
-    return state.cozy.sharings.permissions[doctype]
-  }
-  return doctypePermsetInitialState
-}
+
+const getDoctypePermissions = (state, doctype) =>
+  state.cozy.sharings.permissions[doctype]
+    ? state.cozy.sharings.permissions[doctype]
+    : doctypePermsetInitialState
 
 const getSharingLink = (state, doctype, id) => {
   const perm = getSharingLinkPermission(state, doctype, id)
@@ -393,10 +394,10 @@ const getDocumentActiveSharings = (state, doctype, id) => {
   const perms = getDoctypePermissions(state, doctype)
   return [
     ...perms.byMe.filter(
-      perm => perm.attributes.permissions['rule0'].values.indexOf(id) !== -1
+      perm => perm.attributes.permissions.files.values.indexOf(id) !== -1
     ),
     ...perms.withMe.filter(
-      perm => perm.attributes.permissions['rule0'].values.indexOf(id) !== -1
+      perm => perm.attributes.permissions.rule0.values.indexOf(id) !== -1
     )
   ]
     .map(p => getSharing(state, p.attributes.source_id))
@@ -407,8 +408,8 @@ export const getSharings = (state, doctype, options = {}) => {
   const perms = getDoctypePermissions(state, doctype)
   const type = doctype === 'io.cozy.files' ? 'files' : 'collection'
   return {
-    byMe: perms.byMe.map(p => p.attributes.permissions['rule0'].values[0]),
-    withMe: perms.withMe.map(p => p.attributes.permissions['rule0'].values[0]),
+    byMe: perms.byMe.map(p => p.attributes.permissions.files.values[0]),
+    withMe: perms.withMe.map(p => p.attributes.permissions.rule0.values[0]),
     byLink: perms.byLink.map(p => p.attributes.permissions[type].values[0])
   }
 }
@@ -419,11 +420,9 @@ export const getSharingStatus = (state, doctype, id) => {
     shared: sharings.length !== 0,
     owner:
       sharings.length === 0 || sharings.some(s => s.attributes.owner === true),
-    sharingType: sharings.some(
-      s => s.attributes.sharing_type === 'master-master'
-    )
-      ? 'master-master'
-      : 'master-slave',
+    sharingType: sharings.some(s => s.attributes.sharing_type === 'two-way')
+      ? 'two-way'
+      : 'one-way',
     sharings
   }
 }
@@ -444,7 +443,7 @@ export const getSharingDetails = (state, doctype, id, options = {}) => {
       shared && !owner
         ? { name: 'John Doe', url: sharings[0].attributes.sharer.url }
         : null,
-    readOnly: !owner && sharingType === 'master-slave',
+    readOnly: !owner && sharingType === 'one-way',
     recipients: shared && owner ? getSharingRecipients(state, sharings) : [],
     byMe: shared && owner === true,
     withMe: shared && !owner,
