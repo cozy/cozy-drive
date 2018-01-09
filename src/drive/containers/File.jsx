@@ -55,11 +55,11 @@ const enableTouchEvents = ev => {
     return false
   }
 
-  // remove event when it's checkbox (it's already trigger, but Hammer don't respect stopPropagation)
+  const parentDiv = getParentDiv(ev.target)
+  // remove event when it's the checkbox or the more button
   if (
-    getParentDiv(ev.target).className.indexOf(
-      styles['fil-content-file-select']
-    ) !== -1
+    parentDiv.className.indexOf(styles['fil-content-file-select']) !== -1 ||
+    parentDiv.className.indexOf(styles['fil-content-file-action']) !== -1
   ) {
     return false
   }
