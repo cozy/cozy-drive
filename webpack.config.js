@@ -9,7 +9,7 @@ module.exports = function(env) {
     require('./config/webpack.config.base')(production),
     require('./config/webpack.config.disable-contexts'),
     require('./config/webpack.config.preact'),
-    require('./config/webpack.config.cozy-ui'),
+    require('./config/webpack.config.cozy-ui')(production),
     require('./config/webpack.config.pictures')(production),
     require('./config/webpack.config.vendors')(production, app),
     require('./config/webpack.config.manifest')(production, app),

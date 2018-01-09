@@ -1,6 +1,7 @@
 /* global cozy */
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Modal from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -37,9 +38,16 @@ class Revoked extends Component {
         primaryAction={() => {
           this.logBackIn()
         }}
-        withCross={false}
+        closable={false}
       />
     )
   }
 }
+
+Revoked.propTypes = {
+  onLogout: PropTypes.func.isRequired,
+  onLogBackIn: PropTypes.func.isRequired,
+  router: PropTypes.object
+}
+
 export default translate()(Revoked)

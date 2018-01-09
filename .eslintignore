@@ -1,0 +1,3 @@
+node_modules/**
+src/authentication/node_modules/**
+src/authentication/build/**
