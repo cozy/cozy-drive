@@ -19,9 +19,23 @@ class Toolbar extends Component {
       breakpoints: { isMobile }
     } = this.props
 
-    const actions = React.Children.toArray(children)
-    const highlightedActions = actions.filter(child => child.props.highlighted)
-    const secondaryActions = actions.filter(child => !child.props.highlighted)
+    const sortActions = (sortedActions, action) =>
+      action.props.highlighted
+        ? {
+            secondaryActions: [...sortedActions.secondaryActions],
+            highlightedActions: [...sortedActions.highlightedActions, action]
+          }
+        : {
+            secondaryActions: [...sortedActions.secondaryActions, action],
+            highlightedActions: [...sortedActions.highlightedActions]
+          }
+
+    const { highlightedActions, secondaryActions } = React.Children.toArray(
+      children
+    ).reduce(sortActions, {
+      highlightedActions: [],
+      secondaryActions: []
+    })
 
     const MoreMenu = (
       <Menu

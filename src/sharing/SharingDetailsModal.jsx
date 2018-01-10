@@ -2,10 +2,8 @@ import styles from './share.styl'
 
 import React, { Component } from 'react'
 import { cozyConnect, fetchSharings } from 'cozy-client'
-import { UserAvatar } from './components/Recipient'
+import { UserAvatar as Owner } from './components/Recipient'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
-
-const Owner = UserAvatar
 
 export class SharingDetailsModal extends Component {
   render() {
