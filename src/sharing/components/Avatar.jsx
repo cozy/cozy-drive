@@ -1,3 +1,4 @@
+import React from 'react'
 import ColorHash from './colorhash'
 import styles from './recipient.styl'
 
