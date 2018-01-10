@@ -7,12 +7,16 @@ import PropTypes from 'prop-types'
 const withLocales = Wrapped => {
   const Wrapper = (props, context) => {
     const { lang } = context
-    // We pluck a subset of the locales not to ship all Drive locales
-    // when we distribute our component
-    const locales = require(`!!./json-pluck-loader?key=mobile.onboarding;mobile.revoked!drive/locales/${lang}.json`)
     return (
       // Wrap into its own I18n to provide its own locales
-      <I18n dictRequire={() => locales} lang={lang}>
+      // We pluck a subset of the locales not to ship all Drive locales
+      // when we distribute our component
+      <I18n
+        dictRequire={lang =>
+          require(`!!./json-pluck-loader?key=mobile.onboarding;mobile.revoked!drive/locales/${lang}.json`)
+        }
+        lang={lang}
+      >
         <Wrapped {...props} />
       </I18n>
     )
