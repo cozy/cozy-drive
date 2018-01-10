@@ -445,10 +445,10 @@ export const getSharingDetails = (state, doctype, id, options = {}) => {
 
 const getSharingRecipients = (state, sharings) =>
   sharings
-    .filter(sharing => sharing.attributes.recipients)
+    .filter(sharing => sharing.relationships.recipients.data)
     .map(sharing =>
-      sharing.attributes.recipients.map(info => ({
-        contact: getContact(state, info.recipient.id),
+      sharing.relationships.recipients.data.map(info => ({
+        contact: getContact(state, info.id),
         status: info.status,
         type: sharing.attributes.sharing_type
       }))
