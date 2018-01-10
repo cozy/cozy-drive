@@ -62,74 +62,71 @@ const documents = (state = [], action) => {
 }
 
 const doctypePermsetInitialState = {
-  fetchStatus: 'loading',
+  fetchStatus: 'pending',
   byMe: [],
   byLink: [],
   withMe: []
 }
 
-const permissions = (state = {}, action) => {
+const doctypePermissions = (state = doctypePermsetInitialState, action) => {
   let idx
   switch (action.type) {
     case FETCH_SHARINGS:
-      if (state[action.doctype]) {
-        return {
-          ...state,
-          [action.doctype]: { ...state[action.doctype], fetchStatus: 'loading' }
-        }
-      }
-      return { ...state, [action.doctype]: doctypePermsetInitialState }
+      return { ...state, fetchStatus: 'loading' }
     case RECEIVE_SHARINGS_DATA:
       return {
-        ...state,
-        [action.doctype]: {
-          fetchStatus: 'loaded',
-          ...action.response.permissions
-        }
+        fetchStatus: 'loaded',
+        ...action.response.permissions
       }
     case RECEIVE_FETCH_SHARINGS_ERROR:
-      return { ...state, [action.doctype]: { fetchStatus: 'error' } }
+      return { ...state, fetchStatus: 'error' }
     case RECEIVE_NEW_SHARING:
       return {
         ...state,
-        [action.doctype]: {
-          ...state[action.doctype],
-          byMe: [
-            ...state[action.doctype].byMe,
-            {
-              attributes: {
-                permissions: {
-                  files: { type: action.doctype, values: [action.id] }
-                },
-                source_id: action.response.attributes.sharing_id,
-                type: 'io.cozy.sharings'
-              }
+        byMe: [
+          ...state.byMe,
+          {
+            attributes: {
+              permissions: {
+                files: { type: action.doctype, values: [action.id] }
+              },
+              source_id: action.response.attributes.sharing_id,
+              type: 'io.cozy.sharings'
             }
-          ]
-        }
+          }
+        ]
       }
     case RECEIVE_NEW_SHARING_LINK:
       return {
         ...state,
-        [action.doctype]: {
-          ...state[action.doctype],
-          byLink: [...state[action.doctype].byLink, action.response]
-        }
+        byLink: [...state.byLink, action.response]
       }
     case REVOKE_SHARING_LINK:
-      idx = state[action.doctype].byLink.findIndex(
-        p => action.permission._id === p._id
-      )
+      idx = state.byLink.findIndex(p => action.permission._id === p._id)
       if (idx === -1) return state
       return {
         ...state,
-        [action.doctype]: {
-          ...state[action.doctype],
-          byLink: [
-            ...state[action.doctype].byLink.slice(0, idx),
-            ...state[action.doctype].byLink.slice(idx + 1)
-          ]
-        }
+        byLink: [...state.byLink.slice(0, idx), ...state.byLink.slice(idx + 1)]
+      }
+    default:
+      return state
+  }
+}
+
+const permissions = (state = {}, action) => {
+  switch (action.type) {
+    case FETCH_SHARINGS:
+    case RECEIVE_SHARINGS_DATA:
+    case RECEIVE_FETCH_SHARINGS_ERROR:
+    case RECEIVE_NEW_SHARING:
+    case RECEIVE_NEW_SHARING_LINK:
+    case REVOKE_SHARING_LINK:
+      if (!action.doctype) {
+        return state
+      }
+      return {
+        ...state,
+        [action.doctype]: doctypePermissions(state[action.doctype], action)
       }
     default:
       return state
@@ -352,7 +349,7 @@ const getDoctypePermissions = (state, doctype) =>
     ? state.cozy.sharings.permissions[doctype]
     : doctypePermsetInitialState
 
-const getSharingLink = (state, doctype, id) => {
+export const getSharingLink = (state, doctype, id) => {
   const perm = getSharingLinkPermission(state, doctype, id)
   return perm &&
     perm.attributes &&
