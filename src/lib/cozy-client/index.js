@@ -31,6 +31,7 @@ export {
   fetchApps,
   getSharings,
   getSharingDetails,
+  getSharingLink,
   share,
   unshare,
   leave,
