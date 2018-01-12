@@ -14,7 +14,7 @@
     "deploy:drive": "git-directory-deploy --directory=build/drive/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
     "deploy:photos": "git-directory-deploy --directory=build/photos/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
     "internal:build": "webpack --config webpack.config.js --bail",
-    "internal:watch": "webpack --config webpack.config.js --watch --display-modules --display-chunks",
+    "internal:watch": "webpack --config webpack.config.js --watch --progress",
     "tx": "tx pull --all || true",
     "preinternal:build": "npm-run-all lint tx",
     "prebuild:drive:browser": "npm run clean:drive:browser",
