@@ -14,11 +14,11 @@
     "build:analyze": "source-map-explorer build/index.js"
   },
   "devDependencies": {
-    "cozy-ui": "^6.0.3",
-    "jest": "^22.0.4",
-    "react-styleguidist": "^6.1.0",
-    "webpack": "^3.10.0",
-    "webpack-node-externals": "^1.6.0"
+    "cozy-ui": "6.0.3",
+    "jest": "22.0.6",
+    "react-styleguidist": "6.1.0",
+    "webpack": "3.10.0",
+    "webpack-node-externals": "1.6.0"
   },
   "peerDependencies": {
     "cozy-ui": "^6.0.3"
