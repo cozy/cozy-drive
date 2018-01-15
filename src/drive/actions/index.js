@@ -137,29 +137,19 @@ export const fetchRecentFiles = () => {
     })
 
     try {
-      const index = await cozy.client.data.defineIndex('io.cozy.files', [
-        'updated_at',
-        'trashed'
-      ])
-      const files = await cozy.client.data.query(index, {
-        selector: {
-          updated_at: { $gt: null },
-          trashed: false
-        },
-        sort: [{ updated_at: 'desc' }],
-        limit: 50
-      })
+      const isLocallyAvailable = isCordova()
+      const files = await (isLocallyAvailable
+        ? getRecentFilesFromPouchDB()
+        : fetchRecentFilesFromStack())
 
       // fetch the list of parent dirs to get the path of recent files
       const parentDirIds = files
         .map(f => f.dir_id)
         .filter((value, index, self) => self.indexOf(value) === index)
 
-      const parentFolders = await cozy.client.fetchJSON(
-        'POST',
-        '/data/io.cozy.files/_all_docs?include_docs=true',
-        { keys: parentDirIds }
-      )
+      const parentFolders = await (isLocallyAvailable
+        ? getFilesInBatchFromPouchDB(parentDirIds)
+        : fetchFilesInBatchFromStack(parentDirIds))
 
       const filesWithPath = files.map(file => {
         const parentFolder = parentFolders.rows.find(
@@ -178,6 +168,50 @@ export const fetchRecentFiles = () => {
       return dispatch({ type: FETCH_RECENT_FAILURE, error: e })
     }
   }
+}
+
+const RECENT_FILES_INDEX_FIELDS = ['updated_at', 'trashed']
+const RECENT_FILES_QUERY_OPTIONS = {
+  selector: {
+    updated_at: { $gt: null },
+    trashed: false
+  },
+  sort: [{ updated_at: 'desc' }],
+  limit: 50
+}
+
+const fetchRecentFilesFromStack = async () => {
+  const index = await cozy.client.data.defineIndex(
+    'io.cozy.files',
+    RECENT_FILES_INDEX_FIELDS
+  )
+  return cozy.client.data.query(index, RECENT_FILES_QUERY_OPTIONS)
+}
+
+const getRecentFilesFromPouchDB = async () => {
+  const db = cozy.client.offline.getDatabase('io.cozy.files')
+  await db.createIndex({
+    index: {
+      fields: RECENT_FILES_INDEX_FIELDS
+    }
+  })
+  const files = await db.find(RECENT_FILES_QUERY_OPTIONS)
+  return files.docs
+}
+
+const fetchFilesInBatchFromStack = ids =>
+  cozy.client.fetchJSON(
+    'POST',
+    '/data/io.cozy.files/_all_docs?include_docs=true',
+    { keys: ids }
+  )
+
+const getFilesInBatchFromPouchDB = ids => {
+  const db = cozy.client.offline.getDatabase('io.cozy.files')
+  return db.allDocs({
+    include_docs: true,
+    keys: ids
+  })
 }
 
 export const fetchMoreFiles = (folderId, skip, limit) => {
