@@ -98,4 +98,5 @@
     <plugin name="cordova-plugin-customurlscheme" spec="~4.3.0">
         <variable name="URL_SCHEME" value="cozydrive" />
     </plugin>
+    <plugin name="cordova-plugin-localization-strings" spec="https://github.com/kelvinhokk/cordova-plugin-localization-strings.git" />
 </widget>
