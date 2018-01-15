@@ -128,7 +128,7 @@
     "stylus-loader": "3.0.1",
     "svg-sprite-loader": "0.0.31",
     "webpack": "3.10.0",
-    "webpack-dev-server": "2.9.7",
+    "webpack-dev-server": "2.11.0",
     "webpack-merge": "1.1.2"
   },
   "dependencies": {
