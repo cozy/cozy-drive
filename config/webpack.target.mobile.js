@@ -13,7 +13,8 @@ module.exports = function(production, app) {
     },
     output: {
       path: path.resolve(__dirname, `../targets/${app}/mobile/www`),
-      filename: '[name].js'
+      filename: '[name].js',
+      publicPath: process.env.PUBLIC_PATH
     },
     module: {
       rules: [
