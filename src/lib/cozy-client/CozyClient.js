@@ -10,7 +10,7 @@ import { getIndexFields, isV2 as isV2Helper } from './helpers'
 const FILES_DOCTYPE = 'io.cozy.files'
 
 export default class CozyClient {
-  constructor(config) {
+  constructor(config = {}) {
     const { cozyURL, ...options } = config
     this.options = options
     this.collections = {}
@@ -96,19 +96,31 @@ export default class CozyClient {
     return this.facade.startReplicationFrom(dispatch)
   }
 
-  getAdapter(doctype) {
+  getAdapter(doctype, policy) {
+    if (policy === 'network') {
+      return this.facade.stackAdapter
+    } else if (policy === 'cache') {
+      return this.facade.pouchAdapter
+    }
     return this.facade.getAdapter(doctype)
   }
 
-  async fetchDocuments(queryName, doctype, options = {}, skip = 0) {
+  async fetchDocuments(queryName, doctype, opts = {}, skip = 0) {
+    const { policy, ...options } = opts
+    const adapter = this.getAdapter(doctype, policy)
     if (options.selector) {
-      const index = await this.getQueryIndex(queryName, doctype, options)
-      return this.getAdapter(doctype).queryDocuments(doctype, index, {
+      const index = await this.getQueryIndex(
+        queryName,
+        doctype,
+        options,
+        policy
+      )
+      return adapter.queryDocuments(doctype, index, {
         ...options,
         skip
       })
     }
-    return this.getAdapter(doctype).fetchDocuments(doctype)
+    return adapter.fetchDocuments(doctype)
   }
 
   fetchDocument(doctype, id) {
@@ -223,12 +235,13 @@ export default class CozyClient {
     return existingDocs.length === 0
   }
 
-  async getQueryIndex(queryName, doctype, options) {
+  async getQueryIndex(queryName, doctype, options, policy) {
+    const adapterOpts = { policy }
     if (!this.indexes[queryName]) {
-      this.indexes[queryName] = await this.getAdapter(doctype).createIndex(
+      this.indexes[queryName] = await this.getAdapter(
         doctype,
-        getIndexFields(options)
-      )
+        policy
+      ).createIndex(doctype, getIndexFields(options))
     }
     return this.indexes[queryName]
   }

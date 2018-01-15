@@ -319,11 +319,17 @@ export const makeFetchCollection = (
   promise
 })
 
-export const fetchCollection = (name, doctype, options = {}, skip = 0) =>
+export const fetchCollection = (
+  name,
+  doctype,
+  options = {},
+  skip = 0,
+  policy
+) =>
   makeFetchCollection(
     name,
     doctype,
-    client => client.fetchDocuments(name, doctype, options, skip),
+    client => client.fetchDocuments(name, doctype, options, skip, policy),
     options,
     skip
   )
