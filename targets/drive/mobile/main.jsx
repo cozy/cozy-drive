@@ -38,6 +38,9 @@ if (__DEVELOPMENT__) {
   require('preact/devtools')
 }
 
+// Register callback for when the app is launched through cozydrive:// link
+window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(hashHistory)
+
 const renderAppWithPersistedState = (persistedState = {}) => {
   const cozyURL = persistedState.mobile
     ? persistedState.mobile.settings.serverUrl
