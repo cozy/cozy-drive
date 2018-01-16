@@ -11,6 +11,9 @@
     @extend $nav-link
     position relative
 
+.coz-nav-link[disabled]
+    pointer-events none
+
 .fil-cat-files
     background-image: embedurl("../assets/icons/icon-folder.svg")
     &.active

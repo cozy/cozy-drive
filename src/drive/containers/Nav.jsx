@@ -24,8 +24,10 @@ class CustomLink extends Component {
   open(e) {
     e.preventDefault()
     this.setState({ opening: true })
+    this.props.onActiveChange()
     this.props.onClick().then(() => {
       this.setState({ opening: false })
+      this.props.onActiveChange()
       this.props.router.push(this.props.to)
     })
   }
@@ -68,66 +70,83 @@ class CustomLink extends Component {
 
 const ActiveLink = withBreakpoints()(withRouter(CustomLink))
 
-const Nav = ({ t, location, openFiles, openRecent, openTrash }) => {
-  return (
-    <nav>
-      <ul className={styles['coz-nav']}>
-        <li className={styles['coz-nav-item']}>
-          <ActiveLink
-            to="/folder"
-            onClick={openFiles}
-            className={classNames(
-              styles['coz-nav-link'],
-              styles['fil-cat-files']
-            )}
-            activeClassName={styles['active']}
-          >
-            {t('Nav.item_drive')}
-          </ActiveLink>
-        </li>
-        <li className={styles['coz-nav-item']}>
-          <ActiveLink
-            to="/recent"
-            onClick={openRecent}
-            className={classNames(
-              styles['coz-nav-link'],
-              styles['fil-cat-recent']
-            )}
-            activeClassName={styles['active']}
-          >
-            {t('Nav.item_recent')}
-          </ActiveLink>
-        </li>
-        <li className={styles['coz-nav-item']}>
-          <ActiveLink
-            to="/trash"
-            onClick={openTrash}
-            className={classNames(
-              styles['coz-nav-link'],
-              styles['fil-cat-trash']
-            )}
-            activeClassName={styles['active']}
-          >
-            {t('Nav.item_trash')}
-          </ActiveLink>
-        </li>
-        {__TARGET__ === 'mobile' && (
+class Nav extends Component {
+  state = {
+    opening: false
+  }
+
+  toggleOpening = () => this.setState(state => ({ opening: !state.opening }))
+
+  render() {
+    const { t, openFiles, openRecent, openTrash } = this.props
+    const { opening } = this.state
+    return (
+      <nav>
+        <ul className={styles['coz-nav']}>
           <li className={styles['coz-nav-item']}>
-            <Link
-              to="/settings"
+            <ActiveLink
+              to="/folder"
+              onClick={openFiles}
+              onActiveChange={this.toggleOpening}
               className={classNames(
                 styles['coz-nav-link'],
-                styles['fil-cat-settings']
+                styles['fil-cat-files']
               )}
               activeClassName={styles['active']}
+              disabled={opening}
             >
-              {t('Nav.item_settings')}
-            </Link>
+              {t('Nav.item_drive')}
+            </ActiveLink>
           </li>
-        )}
-      </ul>
-    </nav>
-  )
+          <li className={styles['coz-nav-item']}>
+            <ActiveLink
+              to="/recent"
+              onClick={openRecent}
+              onActiveChange={this.toggleOpening}
+              className={classNames(
+                styles['coz-nav-link'],
+                styles['fil-cat-recent']
+              )}
+              activeClassName={styles['active']}
+              disabled={opening}
+            >
+              {t('Nav.item_recent')}
+            </ActiveLink>
+          </li>
+          <li className={styles['coz-nav-item']}>
+            <ActiveLink
+              to="/trash"
+              onClick={openTrash}
+              onActiveChange={this.toggleOpening}
+              className={classNames(
+                styles['coz-nav-link'],
+                styles['fil-cat-trash']
+              )}
+              activeClassName={styles['active']}
+              disabled={opening}
+            >
+              {t('Nav.item_trash')}
+            </ActiveLink>
+          </li>
+          {__TARGET__ === 'mobile' && (
+            <li className={styles['coz-nav-item']}>
+              <Link
+                to="/settings"
+                className={classNames(
+                  styles['coz-nav-link'],
+                  styles['fil-cat-settings']
+                )}
+                activeClassName={styles['active']}
+                disabled={opening}
+              >
+                {t('Nav.item_settings')}
+              </Link>
+            </li>
+          )}
+        </ul>
+      </nav>
+    )
+  }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
