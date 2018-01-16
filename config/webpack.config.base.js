@@ -17,6 +17,7 @@ module.exports = function(production) {
         'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
       }
     },
+    stats: { chunks: false, modules: false },
     module: {
       rules: [
         {
