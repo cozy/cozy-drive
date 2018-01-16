@@ -1,48 +1,24 @@
 @require 'components/nav.styl'
 @require 'settings/breakpoints.styl'
 
-.coz-nav
+.c-nav
     @extend $nav
 
-.coz-nav-item
+.c-nav-item
     @extend $nav-item
 
-.coz-nav-link
+.c-nav-link
     @extend $nav-link
     position relative
 
-.coz-nav-link[disabled]
-    pointer-events none
+    &[disabled]
+        pointer-events none
 
-.fil-cat-files
-    background-image: embedurl("../assets/icons/icon-folder.svg")
-    &.active
-        background-image: embedurl("../assets/icons/icon-folder-active.svg")
+.c-nav-icon
+    @extend $nav-item-icon
 
-.fil-cat-recent
-    background-image: embedurl("../assets/icons/icon-clock.svg")
-    &.active
-        background-image: embedurl("../assets/icons/icon-clock-active.svg")
-
-.fil-cat-shared
-    background-image: embedurl("../assets/icons/icon-shared.svg")
-    &.active
-        background-image: embedurl("../assets/icons/icon-shared-active.svg")
-
-.fil-cat-activity
-    background-image: embedurl("../assets/icons/icon-dashboard.svg")
-    &.active
-        background-image: embedurl("../assets/icons/icon-dashboard-active.svg")
-
-.fil-cat-trash
-    background-image: embedurl("../assets/icons/icon-trash.svg")
-    &.active
-        background-image: embedurl("../assets/icons/icon-trash-active.svg")
-
-.fil-cat-settings
-    background-image: embedurl("../assets/icons/icon-settings.svg")
-    &.active
-        background-image: embedurl("../assets/icons/icon-settings-active.svg")
+.c-nav-text
+    @extend $nav-item-text
 
 +medium-screen()
     .nav-spinner
