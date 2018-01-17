@@ -83,7 +83,7 @@
     line-height    1.3
     white-space    nowrap
     overflow       hidden
-    text-overflow  ellipsis
+    
     color charcoalGrey
 
 .fil-content-file-openable
@@ -154,9 +154,23 @@ mime-types('fil-file-', '../assets/icons/')
 
 .fil-file-filename
     flex 0 0 1.3rem
-    overflow hidden
-    text-overflow ellipsis
-    white-space nowrap
+
+.fil-file-filename-wrapper
+    display table
+    width   100%
+    border-collapse collapse
+
+    .fil-file-filename-and-ext
+        display table-cell
+        max-width 1px
+        width 100%
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
+
+    .fil-file-filename-spinner
+        display table-cell
+        white-space nowrap
 
 .fil-file-path
     flex 0 0 1.2rem
