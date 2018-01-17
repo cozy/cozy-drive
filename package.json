@@ -153,7 +153,7 @@
     "preact": "8.2.7",
     "preact-compat": "3.17.0",
     "prop-types": "^15.5.10",
-    "raven-js": "^3.10.0",
+    "raven-js": "3.22.1",
     "react-autosuggest": "^9.3.2",
     "react-copy-to-clipboard": "^5.0.0",
     "react-markdown": "^3.0.0",
