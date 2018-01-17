@@ -32,8 +32,8 @@ module.exports = function(production, app) {
         __ALLOW_HTTP__: !production,
         __TARGET__: JSON.stringify('mobile'),
         __SENTRY_TOKEN__: production
-          ? JSON.stringify('9259817fbb44484b8b7a0a817d968ae4')
-          : JSON.stringify('29bd1255b6d544a1b65435a634c9ff67'),
+          ? JSON.stringify('9259817fbb44484b8b7a0a817d968ae4:171a3bcb3095448484aa3e709ea47e9b')
+          : JSON.stringify('29bd1255b6d544a1b65435a634c9ff67:ba312a96643d4f98aee26c6378c74212'),
         __APP_VERSION__: JSON.stringify(pkg.version)
       }),
       new ProvidePlugin({
