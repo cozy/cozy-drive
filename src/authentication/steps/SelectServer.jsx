@@ -8,7 +8,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
 import styles from '../styles'
 
-require('url-polyfill')
+require('whatwg-url')
 
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
 const ERR_EMAIL = 'mobile.onboarding.server_selection.wrong_address_with_email'
