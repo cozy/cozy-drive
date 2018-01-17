@@ -5917,6 +5917,10 @@ url-parse@^1.1.8:
     querystringify "~1.0.0"
     requires-port "~1.0.0"
 
+url-polyfill@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.0.10.tgz#097b81b3cf7556bfc396a3c8633044d410e36685"
+
 url@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/url/-/url-0.11.0.tgz#3838e97cfc60521eb73c525a8e55bfdd9e2e28f1"
@@ -6157,7 +6161,7 @@ whatwg-fetch@>=0.10.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
 
-whatwg-url@^6.3.0, whatwg-url@^6.4.0:
+whatwg-url@^6.3.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-6.4.0.tgz#08fdf2b9e872783a7a1f6216260a1d66cc722e08"
   dependencies:
