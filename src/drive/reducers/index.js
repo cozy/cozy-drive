@@ -30,6 +30,7 @@ export default filesApp
 
 // Selectors
 export {
+  isNavigating,
   getVisibleFiles,
   getFileById,
   getFolderIdFromRoute,
