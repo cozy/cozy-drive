@@ -23,5 +23,7 @@
   "peerDependencies": {
     "cozy-ui": "^6.0.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "whatwg-url": "^6.4.0"
+  }
 }
