@@ -5,7 +5,7 @@ import { Button, Icon } from 'cozy-ui/react'
 import classnames from 'classnames'
 import styles from './styles'
 
-const FEEDBACK_EMAIL = 'feedback@cozycloud.cc'
+const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
 
 class QuotaModal extends Component {
   state = {
