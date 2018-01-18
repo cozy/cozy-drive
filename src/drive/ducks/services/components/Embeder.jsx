@@ -1,8 +1,7 @@
 import React from 'react'
-import styles from '../services.styl'
 import util from 'cozy-ui/stylus/utilities/text'
 import Spinner from 'cozy-ui/react/Spinner'
-import { getFileDownloadUrl } from '../../../actions'
+import FileOpener from '../../../ducks/files/FileOpenerExternal'
 
 class Embeder extends React.Component {
   constructor(props) {
@@ -22,8 +21,7 @@ class Embeder extends React.Component {
 
     try {
       const { id } = service.getData()
-      const url = await getFileDownloadUrl(id)
-      this.setState({ url, loading: false })
+      this.setState({ fileId: id, loading: false })
     } catch (error) {
       this.setState({ error, loading: false })
     }
@@ -38,9 +36,7 @@ class Embeder extends React.Component {
         {this.state.error && (
           <pre className={util['u-error']}>{this.state.error.toString()}</pre>
         )}
-        {this.state.url && (
-          <embed className={styles.fullscreen} src={this.state.url} />
-        )}
+        {this.state.fileId && <FileOpener fileId={this.state.fileId} />}
       </div>
     )
   }

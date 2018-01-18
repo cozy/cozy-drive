@@ -4,6 +4,23 @@ import { getIndexFields, sanitizeDoc } from '../helpers'
 const FILES_DOCTYPE = 'io.cozy.files'
 const FETCH_LIMIT = 50
 
+const assert = (pred, msg) => {
+  if (!pred) {
+    throw new Error(msg)
+  }
+}
+
+const normalizeDoc = (doc, doctype) => {
+  const id = doc._id || doc.id
+  assert(id, 'Document without id !')
+  assert(doctype, 'Must call normalizeDoc with a doctype')
+  const normalized = Object.assign({ id, _id: id, _type: doctype }, doc)
+  if (doctype === FILES_DOCTYPE) {
+    Object.assign(normalized, doc.attributes)
+  }
+  return normalized
+}
+
 export default class CozyStackAdapter {
   async fetchDocuments(doctype) {
     // WARN: cozy-client-js lacks a cozy.data.findAll method that uses this route
@@ -59,16 +76,12 @@ export default class CozyStackAdapter {
     let data, meta, next
     if (doctype === FILES_DOCTYPE) {
       const response = await cozy.client.files.query(index, queryOptions)
-      data = response.data.map(doc =>
-        Object.assign({ _id: doc.id, _type: doctype }, doc, doc.attributes)
-      )
+      data = response.data.map(doc => normalizeDoc(doc, doctype))
       meta = response.meta
       next = meta.count > skip + FETCH_LIMIT
     } else {
       const response = await cozy.client.data.query(index, queryOptions)
-      data = response.docs.map(doc =>
-        Object.assign({ id: doc._id, _type: doctype }, doc)
-      )
+      data = response.docs.map(doc => normalizeDoc(doc, doctype))
       meta = {}
       next = response.next
     }
@@ -78,10 +91,14 @@ export default class CozyStackAdapter {
   }
 
   async fetchDocument(doctype, id) {
-    const doc = await cozy.client.data.find(doctype, id)
-    // we normalize again...
-    const normalized = { ...doc, id: doc._id, _type: doc._type }
-    return { data: [normalized] }
+    let doc
+    if (doctype === FILES_DOCTYPE) {
+      doc = normalizeDoc(await cozy.client.files.statById(id, false), doctype)
+    } else {
+      doc = normalizeDoc(await cozy.client.data.find(doctype, id), doctype)
+    }
+
+    return { data: [doc] }
   }
 
   async createDocument(doctype, doc) {

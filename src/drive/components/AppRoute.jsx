@@ -11,7 +11,7 @@ import FilesViewer from './FilesViewer'
 import {
   FolderContainer as Folder,
   RecentContainer as Recent,
-  FileOpener
+  FileOpenerExternal
 } from '../ducks/files'
 import { Container as Trash } from '../ducks/trash'
 
@@ -33,7 +33,7 @@ const AppRoute = (
       {__TARGET__ === 'mobile' && (
         <Route path="settings" component={Settings} />
       )}
-      <Route path="file/:fileId" component={FileOpener} />
+      <Route path="file/:fileId" component={FileOpenerExternal} />
     </Route>
     {__TARGET__ === 'mobile' && (
       <Route path="onboarding" component={OnBoarding} />
