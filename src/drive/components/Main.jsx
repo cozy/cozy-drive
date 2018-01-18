@@ -10,7 +10,7 @@ import BannerClient from '../../components/pushClient/Banner'
 const Main = ({ children, working = false }) => (
   <main
     className={classNames(styles['fil-content'], {
-      '--working': working
+      [styles['--working']]: working
     })}
   >
     {__TARGET__ !== 'mobile' && <BannerClient />}

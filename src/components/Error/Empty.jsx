@@ -4,9 +4,8 @@ import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 
 const Empty = translate()(({ t, type, canUpload, localeKey }) => {
-  // The role="main" is here to get a blur effect on mobile when loading
   return (
-    <div role="main" className={styles[`c-empty-${type}`]}>
+    <div className={styles[`c-empty-${type}`]}>
       {localeKey ? (
         <div>
           <h2>{t(`empty.${localeKey}_title`)}</h2>
