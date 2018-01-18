@@ -4,8 +4,9 @@ import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 
 const Empty = translate()(({ t, type, canUpload, localeKey }) => {
+  // The role="main" is here to get a blur effect on mobile when loading
   return (
-    <div className={styles[`c-empty-${type}`]}>
+    <div role="main" className={styles[`c-empty-${type}`]}>
       {localeKey ? (
         <div>
           <h2>{t(`empty.${localeKey}_title`)}</h2>
@@ -27,7 +28,7 @@ export const EmptyPhotos = props => <Empty type="photos" {...props} />
 
 export const EmptyTrash = translate()(({ t }) => {
   return (
-    <div className={styles['c-trash-empty']}>
+    <div role="main" className={styles['c-trash-empty']}>
       <h2>{t('empty.trash.title')}</h2>
       <p>{t('empty.trash.text')}</p>
     </div>

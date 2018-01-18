@@ -22,7 +22,8 @@ import {
   getVisibleFiles,
   getSelectedFiles,
   getActionableFiles,
-  isActionMenuVisible
+  isActionMenuVisible,
+  isNavigating
 } from '../reducers'
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
@@ -67,6 +68,7 @@ class FileExplorer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  isNavigating: isNavigating(state),
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,

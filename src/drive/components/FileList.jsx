@@ -44,8 +44,9 @@ class FileList extends PureComponent {
   }
 
   render() {
+    // The role="main" is here to get a blur effect on mobile when loading
     return (
-      <div>
+      <div role="main">
         {this.props.files.map((file, index) => {
           return this.rowRenderer({ index, key: file.id })
         })}

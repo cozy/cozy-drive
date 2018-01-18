@@ -8,3 +8,16 @@ div:focus
 
     +small-screen()
         padding 0
+
+:global
+    .--working
+        // we forbid clicks when loading something to avoid concurrent data fetches and consequent flash effects
+        pointer-events none
+
+        // on mobile, we blur the main content during loading for visual feedback
+        // due to a FF bug, we can't apply the blur on <main> because position:fixed contents (like the empty folder content)
+        // get position changes (they go to the top)
+        // Consequently, we add a role="main" attribute to the content to be blurred (FileList and Empty)
+        +small-screen()
+            [role=main]
+                filter blur(1px)
