@@ -11,16 +11,51 @@
     background-color paleGrey
     transition bottom 0.5s ease-out, top 0.5s ease-out, opacity 0.2s ease-out
 
-.coz-progress
-    position absolute
+progress
+    -webkit-appearance none
+    -moz-appearance    none
+    border     none
+    display    block
+    width      100%
+    height     .125rem
+    margin     0
+    background lightgray
+
+progress::-webkit-progress-bar
+    background-color silver
+progress::-webkit-progress-value
     background-color dodgerBlue
-    border-radius 0 .0625rem .0625rem 0
-    max-width 100%
-    height .125rem
+progress::-moz-progress-bar
+    background-color dodgerBlue
+
+.infinite-progress
+  width 100%
+  height .125rem
+  background lightgray
+  position relative
+  overflow hidden
+  margin-top .5rem
+
+  &:before
+    content ""
+    display block
+    height 100%
+    width 0
+    position absolute
     top 0
     left 0
-    display inline-block
-    transition 0.4s width, 0.4s background-color
+    background dodgerBlue
+    animation squashstretch 1s linear infinite alternate
+
+@keyframes squashstretch
+  0%
+    width 10%
+  50%
+    width 80%
+    left 10%
+  100%
+    width 10%
+    left 90%
 
 .coz-progress-pic
     position relative

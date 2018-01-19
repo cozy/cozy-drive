@@ -10,12 +10,10 @@ import UploadUptodate from '../ducks/mediaBackup/UploadUptodate'
 const mapStateToProps = state =>
   state.mobile.mediaBackup.currentUpload
     ? {
-        media: state.mobile.mediaBackup.currentUpload.media,
         current: state.mobile.mediaBackup.currentUpload.messageData.current,
         total: state.mobile.mediaBackup.currentUpload.messageData.total
       }
     : {
-        media: undefined,
         current: undefined,
         total: undefined,
         aborted: state.mobile.mediaBackup.abortedMediaBackup,
@@ -23,12 +21,10 @@ const mapStateToProps = state =>
       }
 
 const UploadStatus = props => {
-  const { t, current, total, media, aborted, quotaError } = props
+  const { t, current, total, aborted, quotaError } = props
 
-  if (media !== undefined && current !== undefined && total !== undefined)
-    return (
-      <UploadProgression t={t} current={current} total={total} media={media} />
-    )
+  if (current !== undefined && total !== undefined)
+    return <UploadProgression t={t} current={current} total={total} />
   else if (aborted) return <UploadAbortedWifi t={t} />
   else if (quotaError) return <UploadQuotaError t={t} />
   else return <UploadUptodate t={t} />
