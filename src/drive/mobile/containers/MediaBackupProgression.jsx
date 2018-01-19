@@ -25,7 +25,7 @@ const mapStateToProps = state =>
 const UploadStatus = props => {
   const { t, current, total, media, aborted, quotaError } = props
 
-  if (media && current && total)
+  if (media !== undefined && current !== undefined && total !== undefined)
     return (
       <UploadProgression t={t} current={current} total={total} media={media} />
     )
