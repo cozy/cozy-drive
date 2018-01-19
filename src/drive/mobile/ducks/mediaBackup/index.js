@@ -70,6 +70,7 @@ export const startMediaBackup = (
       for (const photo of photosToUpload) {
         if (
           getState().mobile.mediaBackup.cancelMediaBackup ||
+          getState().mobile.mediaBackup.diskQuotaReached ||
           !canBackup(isManualBackup, getState)
         ) {
           break
