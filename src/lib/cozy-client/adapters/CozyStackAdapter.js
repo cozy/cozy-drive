@@ -130,11 +130,12 @@ export default class CozyStackAdapter {
 
   // TODO: temp method for drive mobile so that we can fetch the thumbnails links
   // that are absent from the Pouch docs
-  // it only fetches 200 docs, so the viewer won't work with large folders :/
-  async fetchFilesForLinks(folderId) {
+  async fetchFilesForLinks(folderId, skip = 0) {
     const response = await cozy.client.fetchJSON(
       'GET',
-      `/files/${encodeURIComponent(folderId)}?page[skip]=0&page[limit]=200`
+      `/files/${encodeURIComponent(
+        folderId
+      )}?page[skip]=${skip}&page[limit]=${FETCH_LIMIT}`
     )
     return response.relations('contents').map(f => normalizeFile(f))
   }

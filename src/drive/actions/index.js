@@ -75,7 +75,7 @@ export const openTrash = () => {
   return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
 }
 
-export const openFolder = (folderId, client) => {
+export const openFolder = folderId => {
   return async (dispatch, getState) => {
     dispatch({
       type: OPEN_FOLDER,
@@ -84,16 +84,6 @@ export const openFolder = (folderId, client) => {
         cancelSelection: true
       }
     })
-    // TODO: temp fix for the thumbnails links on mobile
-    if (isCordova() && client) {
-      client.fetchFilesForLinks(folderId).then(resp =>
-        dispatch({
-          type: 'FETCH_FILES_LINKS_SUCCESS',
-          folderId,
-          files: resp
-        })
-      )
-    }
     try {
       const settings = getState().settings
       const offline = settings.offline && settings.firstReplication
@@ -180,12 +170,21 @@ const RECENT_FILES_QUERY_OPTIONS = {
   limit: 50
 }
 
-const fetchRecentFilesFromStack = async () => {
+export const fetchRecentFilesFromStack = async () => {
   const index = await cozy.client.data.defineIndex(
     'io.cozy.files',
     RECENT_FILES_INDEX_FIELDS
   )
-  return cozy.client.data.query(index, RECENT_FILES_QUERY_OPTIONS)
+  const resp = await cozy.client.files.query(index, {
+    ...RECENT_FILES_QUERY_OPTIONS,
+    wholeResponse: true
+  })
+  return resp.data.map(f => ({
+    ...f,
+    _id: f.id,
+    _type: f.type,
+    ...f.attributes
+  }))
 }
 
 const getRecentFilesFromPouchDB = async () => {

@@ -247,8 +247,8 @@ class File extends Component {
           ...attributes,
           availableOffline: this.props.isAvailableOffline
         })
-      } else if (viewPath === '/recent' || viewPath === '/trash') {
-        this.props.onFileOpen({ ...attributes })
+        // } else if (viewPath === '/recent' || viewPath === '/trash') {
+        //   this.props.onFileOpen({ ...attributes })
       } else {
         this.props.router.push(`${viewPath}/file/${attributes.id}`)
       }

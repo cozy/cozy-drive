@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Viewer from 'viewer'
-
-import { getFolderUrl } from '../reducers'
-import { getFilesWithLinks, getFolderIdFromRoute } from '../reducers/view'
+import { LoadingViewer } from 'viewer/Viewer'
+import Alerter from 'photos/components/Alerter'
 import { isCordova } from '../mobile/lib/device'
-import { fetchMoreFiles } from '../actions'
+import { getFolderIdFromRoute } from '../reducers/view'
+import { fetchMoreFiles, fetchRecentFilesFromStack } from '../actions'
 
-const LIMIT = 30
+const LIMIT = 50
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -15,15 +15,23 @@ const getParentPath = router => {
 }
 
 class FilesViewer extends Component {
-  fetchMore() {
-    const { files, params, location, fetchMoreFiles, fileCount } = this.props
-    const currentIndex = files.findIndex(f => f.id === params.fileId)
-    if (files.length !== fileCount && files.length - currentIndex <= 5) {
-      fetchMoreFiles(
-        getFolderIdFromRoute(location, params),
-        files.length,
-        LIMIT
-      )
+  state = {
+    filesWithLinks: null,
+    loading: false
+  }
+
+  componentWillMount() {
+    if (isCordova()) {
+      this.setState(state => ({ ...state, loading: true }))
+      this.fetchFilesWithLinks()
+        .then(files => {
+          this.setState(state => ({
+            ...state,
+            filesWithLinks: files,
+            loading: false
+          }))
+        })
+        .catch(() => Alerter.error('Viewer.error.noNetwork'))
     }
   }
 
@@ -35,27 +43,77 @@ class FilesViewer extends Component {
     this.fetchMore()
   }
 
-  render() {
-    if (this.props.files.length === 0) return null
-    // TODO: temp fix for thumbnail links on mobile
-    if (isCordova() && !this.props.filesWithLinks) return null
-    const files = isCordova()
-      ? this.props.filesWithLinks
+  needLinks() {
+    return isCordova() && this.state.loading
+  }
+
+  getFiles() {
+    return isCordova()
+      ? this.state.filesWithLinks
           .filter(f => f.type !== 'directory')
           .map(f => ({
             ...f,
             isAvailableOffline: this.props.isAvailableOffline(f.id)
           }))
       : this.props.files.filter(f => f.type !== 'directory')
+  }
+
+  // if we get close of the last file fetched, but we know there are more in the folder
+  // (it shouldn't happen in /recent), we fetch 50 more files
+  fetchMore() {
+    if (this.needLinks()) return
+    const files = isCordova() ? this.state.filesWithLinks : this.props.files
+    const { params, location, fetchMoreFiles, fileCount } = this.props
+    const currentIndex = files.findIndex(f => f.id === params.fileId)
+    if (files.length !== fileCount && files.length - currentIndex <= 5) {
+      const folderId = getFolderIdFromRoute(location, params)
+      if (isCordova()) {
+        this.context.client
+          .fetchFilesForLinks(folderId, files.length)
+          .then(files => {
+            this.setState(state => ({
+              ...state,
+              filesWithLinks: [...state.filesWithLinks, ...files]
+            }))
+          })
+      } else {
+        fetchMoreFiles(folderId, files.length, LIMIT)
+      }
+    }
+  }
+
+  fetchFilesWithLinks() {
+    const { params, location } = this.props
+    const folderId = getFolderIdFromRoute(location, params)
+    if (!folderId) {
+      // we must be in /recent
+      return fetchRecentFilesFromStack()
+    } else {
+      return this.context.client.fetchFilesForLinks(folderId)
+    }
+  }
+
+  onClose = () => {
+    const { router } = this.props
+    const url = router.location.pathname
+    router.push({
+      pathname: url.substring(0, url.lastIndexOf('/file'))
+    })
+  }
+
+  render() {
+    if (this.needLinks()) {
+      return <LoadingViewer />
+    }
+    const files = this.getFiles()
+    if (files.length === 0) return null
     const { params, router } = this.props
     const currentIndex = files.findIndex(f => f.id === params.fileId)
     // TODO: if we can't find the file, that's probably because the user is trying to open
     // a direct link to a file that wasn't in the first 50 files of the containing folder
     // (it comes from a fetchMore...)
     if (currentIndex === -1) {
-      router.push({
-        pathname: getFolderUrl(params.folderId, router.location)
-      })
+      this.onClose()
       return null
     }
     return (
@@ -67,21 +125,13 @@ class FilesViewer extends Component {
             pathname: `${getParentPath(router)}/${nextFile.id}`
           })
         }}
-        onClose={() => {
-          router.push({
-            pathname: getFolderUrl(params.folderId, router.location)
-          })
-        }}
+        onClose={this.onClose}
       />
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  filesWithLinks: getFilesWithLinks(
-    state,
-    getFolderIdFromRoute(ownProps.location, ownProps.params)
-  ),
   fileCount: state.view.fileCount
 })
 
