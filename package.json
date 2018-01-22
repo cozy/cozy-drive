@@ -165,6 +165,7 @@
     "redux-mock-store": "^1.2.3",
     "redux-raven-middleware": "^1.2.0",
     "redux-thunk": "^2.1.0",
+    "url-polyfill": "^1.0.11",
     "webpack-node-externals": "^1.6.0"
   },
   "eslintConfig": {
