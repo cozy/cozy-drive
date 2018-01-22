@@ -32,11 +32,7 @@ export const UploadButton = ({
   <label
     role="button"
     disabled={disabled}
-    className={`${className} ${
-      type === 'menu-item'
-        ? button['c-link--upload']
-        : classNames(button['c-btn'])
-    }`}
+    className={`${className} ${type === 'menu-item' ? '' : button['c-btn']}`}
     style={styles.parent}
   >
     <Icon icon="upload" />

@@ -1,3 +1,4 @@
+@require 'settings/breakpoints.styl'
 @require 'components/button.styl'
 @require 'utilities/display.styl'
 
@@ -16,26 +17,21 @@
 .c-btn--danger-outline
     @extend $button--danger-outline
 
-.c-link--upload
-    @extend $link--upload
-
 .u-hide--mob
     @extend $hide--mob
 
 .u-hide--desk
     @extend $hide--desk
 
+.u-hide--tablet
+    @extend $hide--tablet
+
 .pho-toolbar
     display flex
     margin-left auto
 
     a
-        &.pho-action-upload
-            display inline-flex
-            padding-left 1rem
 
-            svg
-                margin-right .5rem
         &.pho-action-newalbum
             background embedurl("../assets/icons/icon-album-add.svg") 1rem center no-repeat
         &.pho-action-select
@@ -55,3 +51,11 @@
     .pho-btn-new
         @extend $button
         @extend $button--secondary
+
+    +medium-screen()
+        .pho-action-upload
+            display inline-flex
+            padding-left 1rem
+
+            svg
+                margin-right .5rem
