@@ -4,7 +4,7 @@ import styles from './styles'
 
 const UploadProgression = ({ t, current, total }) => {
   return (
-    <div>
+    <div className={styles['coz-upload-status-wrapper']}>
       <progress max={total} value={current} />
       <div className={styles['coz-upload-status']}>
         <div className={styles['coz-progress-pic']} />

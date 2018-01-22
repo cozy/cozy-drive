@@ -1,6 +1,9 @@
 @require 'settings/palette.styl'
 @require '../../styles/feedback'
 
+.coz-upload-status-wrapper
+    position relative
+
 .coz-upload-status
     display flex
     align-items center
@@ -12,6 +15,9 @@
     transition bottom 0.5s ease-out, top 0.5s ease-out, opacity 0.2s ease-out
 
 progress
+    position absolute
+    top 0
+    left 0
     -webkit-appearance none
     -moz-appearance    none
     border     none
