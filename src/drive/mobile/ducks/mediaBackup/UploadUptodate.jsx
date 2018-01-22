@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const UploadUptodate = ({ t }) => (
@@ -14,5 +15,9 @@ const UploadUptodate = ({ t }) => (
     </div>
   </div>
 )
+
+UploadUptodate.propTypes = {
+  t: PropTypes.func.isRequired
+}
 
 export default UploadUptodate

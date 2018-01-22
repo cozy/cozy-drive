@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const UploadProgression = ({ t, current, total }) => {
@@ -16,6 +17,12 @@ const UploadProgression = ({ t, current, total }) => {
       </div>
     </div>
   )
+}
+
+UploadProgression.propTypes = {
+  current: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  t: PropTypes.func.isRequired
 }
 
 export default UploadProgression
