@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { Button, Icon } from 'cozy-ui/react'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
@@ -80,6 +81,11 @@ class QuotaModal extends Component {
   }
 }
 
+QuotaModal.propTypes = {
+  t: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired
+}
+
 class UploadQuotaError extends Component {
   state = {
     modalOpened: false
@@ -114,6 +120,10 @@ class UploadQuotaError extends Component {
       </div>
     )
   }
+}
+
+UploadQuotaError.propTypes = {
+  t: PropTypes.func.isRequired
 }
 
 export default UploadQuotaError

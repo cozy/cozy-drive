@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import PropTypes from 'prop-types'
 
 import UploadProgression from '../ducks/mediaBackup/UploadProgression'
 import UploadAbortedWifi from '../ducks/mediaBackup/UploadAbortedWifi'
@@ -28,6 +29,14 @@ const UploadStatus = props => {
   else if (aborted) return <UploadAbortedWifi t={t} />
   else if (quotaError) return <UploadQuotaError t={t} />
   else return <UploadUptodate t={t} />
+}
+
+UploadStatus.propTypes = {
+  t: PropTypes.func.isRequired,
+  current: PropTypes.number,
+  total: PropTypes.number,
+  aborted: PropTypes.bool,
+  quotaError: PropTypes.bool
 }
 
 export default connect(mapStateToProps)(translate()(UploadStatus))
