@@ -14,9 +14,10 @@ export const startReplication = async (
       firstReplicationFinished()
     }
 
-    const docsWritten = await startRepeatedReplication()
+    /* const docsWritten = */ await startRepeatedReplication()
     cozy.client.settings.updateLastSync()
-    if (docsWritten !== 0) refreshFolder()
+    // NB: this refresh breaks the recent view if it is displayed during replication
+    // if (docsWritten !== 0) refreshFolder()
   } catch (err) {
     if (
       err.message === clientRevokedMsg ||
