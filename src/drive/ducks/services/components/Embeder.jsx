@@ -1,8 +1,8 @@
+/* global cozy */
 import React from 'react'
-import styles from '../services.styl'
 import util from 'cozy-ui/stylus/utilities/text'
 import Spinner from 'cozy-ui/react/Spinner'
-import { getFileDownloadUrl } from '../../../actions'
+import Viewer from 'viewer'
 
 class Embeder extends React.Component {
   constructor(props) {
@@ -22,8 +22,8 @@ class Embeder extends React.Component {
 
     try {
       const { id } = service.getData()
-      const url = await getFileDownloadUrl(id)
-      this.setState({ url, loading: false })
+      const stats = await cozy.client.files.statById(id, false)
+      this.setState({ file: { ...stats.attributes, id }, loading: false })
     } catch (error) {
       this.setState({ error, loading: false })
     }
@@ -38,8 +38,8 @@ class Embeder extends React.Component {
         {this.state.error && (
           <pre className={util['u-error']}>{this.state.error.toString()}</pre>
         )}
-        {this.state.url && (
-          <embed className={styles.fullscreen} src={this.state.url} />
+        {this.state.file && (
+          <Viewer files={[this.state.file]} currentIndex={0} />
         )}
       </div>
     )
