@@ -191,6 +191,8 @@ export class SelectServer extends Component {
             <ReactMarkdown
               className={classNames(styles['description'], styles['info'])}
               source={t('mobile.onboarding.server_selection.description')}
+              disallowedTypes={['link']}
+              unwrapDisallowed
             />
           )}
           {error && (
