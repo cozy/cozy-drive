@@ -25,8 +25,9 @@ const mapStateToProps = state =>
 
 const UploadStatus = props => {
   const { t, current, total, aborted, quotaError, serverUrl } = props
-  const storageUpgradeUrl =
-    serverUrl.replace(/(\w+)\./, '$1-settings.') + '/#/storage'
+  const storageUpgradeUrl = serverUrl
+    ? serverUrl.replace(/(\w+)\./, '$1-settings.') + '/#/storage'
+    : ''
 
   if (current !== undefined && total !== undefined)
     return <UploadProgression t={t} current={current} total={total} />
