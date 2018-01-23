@@ -9,7 +9,8 @@ import UploadQuotaError from '../ducks/mediaBackup/UploadQuotaError'
 import UploadUptodate from '../ducks/mediaBackup/UploadUptodate'
 
 const mapStateToProps = state =>
-  state.mobile.mediaBackup.currentUpload
+  state.mobile.mediaBackup.currentUpload &&
+  !state.mobile.mediaBackup.diskQuotaReached
     ? {
         current: state.mobile.mediaBackup.currentUpload.messageData.current,
         total: state.mobile.mediaBackup.currentUpload.messageData.total
@@ -18,16 +19,19 @@ const mapStateToProps = state =>
         current: undefined,
         total: undefined,
         aborted: state.mobile.mediaBackup.abortedMediaBackup,
-        quotaError: state.mobile.mediaBackup.diskQuotaReached
+        quotaError: state.mobile.mediaBackup.diskQuotaReached,
+        serverUrl: state.mobile.settings.serverUrl
       }
 
 const UploadStatus = props => {
-  const { t, current, total, aborted, quotaError } = props
+  const { t, current, total, aborted, quotaError, serverUrl } = props
+  const storageUpgradeUrl =
+    serverUrl.replace(/(\w+)\./, '$1-settings.') + '/#/storage'
 
   if (current !== undefined && total !== undefined)
     return <UploadProgression t={t} current={current} total={total} />
   else if (aborted) return <UploadAbortedWifi t={t} />
-  else if (quotaError) return <UploadQuotaError t={t} />
+  else if (quotaError) return <UploadQuotaError t={t} url={storageUpgradeUrl} />
   else return <UploadUptodate t={t} />
 }
 
@@ -36,7 +40,8 @@ UploadStatus.propTypes = {
   current: PropTypes.number,
   total: PropTypes.number,
   aborted: PropTypes.bool,
-  quotaError: PropTypes.bool
+  quotaError: PropTypes.bool,
+  serverUrl: PropTypes.string
 }
 
 export default connect(mapStateToProps)(translate()(UploadStatus))
