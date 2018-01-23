@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import Viewer from 'viewer'
 import { LoadingViewer } from 'viewer/Viewer'
 import Alerter from 'photos/components/Alerter'
-import { isCordova } from '../mobile/lib/device'
 import { getFolderIdFromRoute } from '../reducers/view'
 import { fetchMoreFiles, fetchRecentFilesFromStack } from '../actions'
 
-const LIMIT = 50
+const LIMIT = 30
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -21,7 +20,7 @@ class FilesViewer extends Component {
   }
 
   componentWillMount() {
-    if (isCordova()) {
+    if (this.needLinks()) {
       this.setState(state => ({ ...state, loading: true }))
       this.fetchFilesWithLinks()
         .then(files => {
@@ -44,11 +43,15 @@ class FilesViewer extends Component {
   }
 
   needLinks() {
-    return isCordova() && this.state.loading
+    return this.props.files.some(f => f.class === 'image' && !f.links)
+  }
+
+  isFetchingLinks() {
+    return this.needLinks() && this.state.loading
   }
 
   getFiles() {
-    return isCordova()
+    return this.needLinks()
       ? this.state.filesWithLinks
           .filter(f => f.type !== 'directory')
           .map(f => ({
@@ -61,13 +64,15 @@ class FilesViewer extends Component {
   // if we get close of the last file fetched, but we know there are more in the folder
   // (it shouldn't happen in /recent), we fetch 50 more files
   fetchMore() {
-    if (this.needLinks()) return
-    const files = isCordova() ? this.state.filesWithLinks : this.props.files
+    if (this.isFetchingLinks()) return
+    const files = this.needLinks()
+      ? this.state.filesWithLinks
+      : this.props.files
     const { params, location, fetchMoreFiles, fileCount } = this.props
     const currentIndex = files.findIndex(f => f.id === params.fileId)
     if (files.length !== fileCount && files.length - currentIndex <= 5) {
       const folderId = getFolderIdFromRoute(location, params)
-      if (isCordova()) {
+      if (this.needLinks()) {
         this.context.client
           .fetchFilesForLinks(folderId, files.length)
           .then(files => {
@@ -102,7 +107,7 @@ class FilesViewer extends Component {
   }
 
   render() {
-    if (this.needLinks()) {
+    if (this.isFetchingLinks()) {
       return <LoadingViewer />
     }
     const files = this.getFiles()
@@ -113,6 +118,7 @@ class FilesViewer extends Component {
     // a direct link to a file that wasn't in the first 50 files of the containing folder
     // (it comes from a fetchMore...)
     if (currentIndex === -1) {
+      console.warn("can't find the file " + params.fileId)
       this.onClose()
       return null
     }

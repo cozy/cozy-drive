@@ -1,13 +1,37 @@
-/* global cozy */
+/* global cozy emit */
 import { clientRevokedMsg } from './cozy-helper'
 
 export const startReplication = async (
+  hasIndexes,
   hasFinishedFirstReplication,
   firstReplicationFinished,
   refreshFolder,
-  revokeClient
+  revokeClient,
+  indexesCreated
 ) => {
   try {
+    if (!hasIndexes) {
+      const db = cozy.client.offline.getDatabase('io.cozy.files')
+      const folderIndex = await db.createIndex({
+        index: { fields: ['dir_id', 'type', 'name'] }
+      })
+      const ddoc = {
+        _id: '_design/my_index',
+        views: {
+          recent_files: {
+            map: function(doc) {
+              if (!doc.trashed) emit(doc.updated_at)
+            }.toString()
+          }
+        }
+      }
+      await db.put(ddoc)
+      indexesCreated({
+        folders: folderIndex.id,
+        recent: 'my_index/recent_files'
+      })
+    }
+
     if (!hasFinishedFirstReplication) {
       await startFirstReplication()
       console.log('End of first replication')
