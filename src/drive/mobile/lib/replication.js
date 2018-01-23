@@ -21,7 +21,7 @@ export const startReplication = async (
         views: {
           recent_files: {
             map: function(doc) {
-              if (!doc.trashed) emit(doc.updated_at)
+              if (!doc.trashed && doc.type !== 'directory') emit(doc.updated_at)
             }.toString()
           }
         }
