@@ -121,8 +121,8 @@ export default class CozyClient {
 
   // TODO: temp method for drive mobile so that we can fetch the thumbnails links
   // that are absent from the Pouch docs
-  fetchFilesForLinks(folderId) {
-    return this.facade.stackAdapter.fetchFilesForLinks(folderId)
+  fetchFilesForLinks(folderId, skip = 0) {
+    return this.facade.stackAdapter.fetchFilesForLinks(folderId, skip)
   }
 
   fetchReferencedFiles(doc, skip = 0) {

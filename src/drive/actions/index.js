@@ -75,7 +75,7 @@ export const openTrash = () => {
   return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
 }
 
-export const openFolder = (folderId, client) => {
+export const openFolder = folderId => {
   return async (dispatch, getState) => {
     dispatch({
       type: OPEN_FOLDER,
@@ -84,45 +84,134 @@ export const openFolder = (folderId, client) => {
         cancelSelection: true
       }
     })
-    // TODO: temp fix for the thumbnails links on mobile
-    if (isCordova() && client) {
-      client.fetchFilesForLinks(folderId).then(resp =>
-        dispatch({
-          type: 'FETCH_FILES_LINKS_SUCCESS',
-          folderId,
-          files: resp
-        })
-      )
-    }
     try {
       const settings = getState().settings
-      const offline = settings.offline && settings.firstReplication
-      const folder = await cozy.client.files.statById(folderId, offline)
-      const parentId = folder.attributes.dir_id
-      const parent =
-        !!parentId &&
-        (await cozy.client.files.statById(parentId, offline).catch(ex => {
-          if (ex.status === 403) {
-            console.warn("User don't have access to parent folder")
-          } else {
-            throw ex
-          }
-        }))
-      const contents = folder.relationships.contents
-      // folder.relations('contents') returns null when the trash is empty
-      // the filter call is a temporary fix due to a cozy-client-js bug
-      const files =
-        folder.relations('contents').filter(f => f !== undefined) || []
+      const offline =
+        settings.offline && settings.firstReplication && settings.indexes
+      // PB: Pouch Mango queries don't return the total count...
+      // and so the fetchMore button would not be displayed unless... see FileList
+      const folder = offline
+        ? await getFolderFromPouchDB(settings.indexes.folders, folderId)
+        : await getFolderFromStack(folderId)
+
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
-        folder: Object.assign(extractFileAttributes(folder), {
-          parent: !!parent && extractFileAttributes(parent)
-        }),
-        fileCount: contents.meta.count || 0,
-        files: files.map(c => extractFileAttributes(c))
+        folder,
+        fileCount: folder.contents.meta.count || 0,
+        files: folder.contents.data
       })
     } catch (err) {
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
+    }
+  }
+}
+
+const getFolderFromStack = async folderId => {
+  const folder = await cozy.client.files.statById(folderId, false, {
+    limit: 30
+  })
+  const parentId = folder.attributes.dir_id
+  const parent =
+    !!parentId &&
+    (await cozy.client.files.statById(parentId).catch(ex => {
+      if (ex.status === 403) {
+        console.warn("User don't have access to parent folder")
+      } else {
+        throw ex
+      }
+    }))
+  // folder.relations('contents') returns null when the trash is empty
+  // the filter call is a temporary fix due to a cozy-client-js bug
+  const files = folder.relations('contents').filter(f => f !== undefined) || []
+  return {
+    ...extractFileAttributes(folder),
+    contents: {
+      data: files.map(f => extractFileAttributes(f)),
+      meta: {
+        count: folder.relationships.contents.meta.count
+      }
+    },
+    parent: !!parent && extractFileAttributes(parent)
+  }
+}
+
+const getFolderContentsFromStack = async (folderId, skip = 0, limit = 30) => {
+  const folder = await cozy.client.files.statById(folderId, false, {
+    skip,
+    limit
+  })
+  const files = folder.relations('contents').filter(f => f !== undefined) || []
+  return files.map(c => extractFileAttributes(c))
+}
+
+const normalizeFileFromPouchDB = f => ({
+  ...f,
+  id: f._id,
+  _type: 'io.cozy.files'
+})
+
+const getFolderFromPouchDB = async (index, folderId) => {
+  const db = cozy.client.offline.getDatabase('io.cozy.files')
+  const folder = await db.get(folderId)
+  const parent = !!folder.dir_id && (await db.get(folder.dir_id))
+  const files = await getFolderContentsFromPouchDB(index, folderId)
+  return {
+    ...normalizeFileFromPouchDB(folder),
+    contents: {
+      data: files,
+      meta: {}
+    },
+    parent: !!parent && normalizeFileFromPouchDB(parent)
+  }
+}
+
+const getFolderContentsFromPouchDB = async (
+  index,
+  folderId,
+  skip = 0,
+  limit = 30
+) => {
+  const db = cozy.client.offline.getDatabase('io.cozy.files')
+  const resp = await db.find({
+    selector: {
+      dir_id: folderId,
+      name: { $gte: null },
+      type: { $gte: null }
+    },
+    use_index: index,
+    sort: ['dir_id', { type: 'desc' }, { name: 'desc' }],
+    limit,
+    skip
+  })
+  const files = resp.docs
+    .filter(f => f._id !== TRASH_DIR_ID)
+    .map(f => normalizeFileFromPouchDB(f))
+  return files
+}
+
+export const fetchMoreFiles = (folderId, skip, limit) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
+    try {
+      const settings = getState().settings
+      const offline =
+        settings.offline && settings.firstReplication && settings.indexes
+      const files = offline
+        ? await getFolderContentsFromPouchDB(
+            settings.indexes.folders,
+            folderId,
+            skip,
+            limit
+          )
+        : await getFolderContentsFromStack(folderId, skip, limit)
+      return dispatch({
+        type: FETCH_MORE_FILES_SUCCESS,
+        files,
+        skip,
+        limit
+      })
+    } catch (err) {
+      return dispatch({ type: FETCH_MORE_FILES_FAILURE, error: err })
     }
   }
 }
@@ -137,9 +226,11 @@ export const fetchRecentFiles = () => {
     })
 
     try {
-      const isLocallyAvailable = isCordova()
+      const settings = getState().settings
+      const isLocallyAvailable =
+        isCordova() && settings.firstReplication && settings.indexes
       const files = await (isLocallyAvailable
-        ? getRecentFilesFromPouchDB()
+        ? getRecentFilesFromPouchDB(settings.indexes.recent)
         : fetchRecentFilesFromStack())
 
       // fetch the list of parent dirs to get the path of recent files
@@ -177,26 +268,38 @@ const RECENT_FILES_QUERY_OPTIONS = {
     trashed: false
   },
   sort: [{ updated_at: 'desc' }],
-  limit: 50
+  limit: 30
 }
 
-const fetchRecentFilesFromStack = async () => {
+export const fetchRecentFilesFromStack = async () => {
   const index = await cozy.client.data.defineIndex(
     'io.cozy.files',
     RECENT_FILES_INDEX_FIELDS
   )
-  return cozy.client.data.query(index, RECENT_FILES_QUERY_OPTIONS)
+  const resp = await cozy.client.files.query(index, {
+    ...RECENT_FILES_QUERY_OPTIONS,
+    wholeResponse: true
+  })
+  return resp.data.map(f => ({
+    ...f,
+    _id: f.id,
+    _type: f.type,
+    ...f.attributes
+  }))
 }
 
-const getRecentFilesFromPouchDB = async () => {
+const getRecentFilesFromPouchDB = async index => {
   const db = cozy.client.offline.getDatabase('io.cozy.files')
-  await db.createIndex({
-    index: {
-      fields: RECENT_FILES_INDEX_FIELDS
-    }
+  const files = await db.query(index, {
+    limit: 30,
+    include_docs: true,
+    descending: true
   })
-  const files = await db.find(RECENT_FILES_QUERY_OPTIONS)
-  return files.docs
+  return files.rows.map(f => ({
+    ...f.doc,
+    id: f.id,
+    _type: 'io.cozy.files'
+  }))
 }
 
 const fetchFilesInBatchFromStack = ids =>
@@ -212,30 +315,6 @@ const getFilesInBatchFromPouchDB = ids => {
     include_docs: true,
     keys: ids
   })
-}
-
-export const fetchMoreFiles = (folderId, skip, limit) => {
-  return async (dispatch, getState) => {
-    dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
-    try {
-      const settings = getState().settings
-      const offline = settings.offline && settings.firstReplication
-      const folder = await cozy.client.files.statById(folderId, offline, {
-        skip,
-        limit
-      })
-      const files =
-        folder.relations('contents').filter(f => f !== undefined) || []
-      return dispatch({
-        type: FETCH_MORE_FILES_SUCCESS,
-        files: files.map(c => extractFileAttributes(c)),
-        skip,
-        limit
-      })
-    } catch (err) {
-      return dispatch({ type: FETCH_MORE_FILES_FAILURE, error: err })
-    }
-  }
 }
 
 export const getFileDownloadUrl = async id => {

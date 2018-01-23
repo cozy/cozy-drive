@@ -27,8 +27,15 @@ const AppRoute = (
         <Route path="folder/:folderId" component={Folder}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
-        <Route path="recent" component={Recent} />
-        <Route path="trash(/:folderId)" component={Trash} />
+        <Route path="recent" component={Recent}>
+          <Route path="file/:fileId" component={FilesViewer} />
+        </Route>
+        <Route path="trash" component={Trash}>
+          <Route path="file/:fileId" component={FilesViewer} />
+        </Route>
+        <Route path="trash/:folderId" component={Trash}>
+          <Route path="file/:fileId" component={FilesViewer} />
+        </Route>
       </Route>
       {__TARGET__ === 'mobile' && (
         <Route path="settings" component={Settings} />

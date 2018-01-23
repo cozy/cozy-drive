@@ -1,5 +1,9 @@
 import { startReplication as startPouchReplication } from '../lib/replication'
-import { setClient, setFirstReplication } from '../../actions/settings'
+import {
+  setClient,
+  setFirstReplication,
+  setPouchIndexes
+} from '../../actions/settings'
 import { openFolder, getOpenedFolderId } from '../../actions'
 import { startTracker, stopTracker } from '../lib/tracker'
 import { revokeClient as reduxRevokeClient } from './authorization'
@@ -50,6 +54,7 @@ export const saveCredentials = (client, token) => (dispatch, getState) => {
 
 export const startReplication = (dispatch, getState) => {
   const firstReplication = getState().settings.firstReplication
+  const hasIndexes = getState().settings.indexes
   const refreshFolder = () => {
     dispatch(openFolder(getOpenedFolderId(getState())))
   }
@@ -60,11 +65,16 @@ export const startReplication = (dispatch, getState) => {
   const firstReplicationFinished = () => {
     dispatch(setFirstReplication(true))
   }
+  const indexesCreated = indexes => {
+    dispatch(setPouchIndexes(indexes))
+  }
 
   startPouchReplication(
+    hasIndexes,
     firstReplication,
     firstReplicationFinished,
     refreshFolder,
-    revokeClient
+    revokeClient,
+    indexesCreated
   )
 }
