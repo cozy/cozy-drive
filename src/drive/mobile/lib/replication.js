@@ -10,9 +10,10 @@ export const startReplication = async (
   indexesCreated
 ) => {
   try {
+    let db, folderIndex
     if (!hasIndexes) {
-      const db = cozy.client.offline.getDatabase('io.cozy.files')
-      const folderIndex = await db.createIndex({
+      db = cozy.client.offline.getDatabase('io.cozy.files')
+      folderIndex = await db.createIndex({
         index: { fields: ['dir_id', 'type', 'name'] }
       })
       const ddoc = {
@@ -34,7 +35,22 @@ export const startReplication = async (
 
     if (!hasFinishedFirstReplication) {
       await startFirstReplication()
-      console.log('End of first replication')
+      console.log('End of first replication, warming up indexes')
+      // we execute a first query so that the index is really created
+      await db.query('my_index/recent_files', {
+        limit: 0
+      })
+      // not sure this one is really necessary...
+      await db.find({
+        selector: {
+          dir_id: { $gte: null },
+          name: { $gte: null },
+          type: { $gte: null }
+        },
+        use_index: folderIndex.id,
+        limit: 0
+      })
+      console.log('indexes ready')
       firstReplicationFinished()
     }
 
