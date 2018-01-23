@@ -1,5 +1,8 @@
+Aujourd’hui est le dernier du reste de notre vie ! 🎉
+Nous lançons officiellement notre plateforme avec ses apps. Nous espérons que vous allez aimez notre version 1 ! 😎
+
 Merci d'utiliser Cozy Drive ! ☁️
 Dans cette version :
-• Un message d'erreur spécifique apparait lorsqu'une adresse mail est insérée dans le champ d'adresse de l'instance.
-• Ajout d'une fonctionnalité "cachée" de support (envoi des logs de l'application)
-• Différents bugs ont été corrigés.
+- amélioration des performances, particulièrement une fois que l'initialisation est terminée
+- amélioration du retour visuel lors de la sauvegarde des photos
+- de nombreuses corrections de bogues
