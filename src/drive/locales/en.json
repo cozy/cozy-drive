@@ -439,5 +439,8 @@
       "generic": "An error occurred when opening this file, please try again.",
       "noNetwork": "You're currently offline."
     }
+  },
+  "FileOpenerExternal": {
+    "fileNotFoundError": "Error: file not found"
   }
 }
