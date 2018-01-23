@@ -20,7 +20,10 @@ export default class ImageViewer extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       canceled: false,
+      needLinks: false,
+      links: null,
       scale: 1,
       offsetX: 0,
       offsetY: 0,
@@ -36,14 +39,24 @@ export default class ImageViewer extends Component {
     }
   }
 
+  componentWillMount() {
+    if (!this.props.file.links) {
+      this.setState({ needLinks: true })
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.file &&
       this.props.file &&
       nextProps.file.id !== this.props.file.id
     ) {
+      this.tearDownGestures()
       this.setState({
+        loading: true,
         canceled: false,
+        needLinks: !nextProps.file.links,
+        links: null,
         scale: 1,
         offsetX: 0,
         offsetY: 0
@@ -52,11 +65,25 @@ export default class ImageViewer extends Component {
   }
 
   componentDidMount() {
-    if (this.props.gestures) this.setupGestures()
+    this.fetchLinksIfNecessary()
+    if (this.props.gestures) this.initGestures()
   }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.gestures) this.setupGestures()
+  componentDidUpdate(prevProps, prevState) {
+    const wasLoading =
+      prevState.loading && !this.state.loading && !this.state.canceled
+    this.fetchLinksIfNecessary()
+    if (!prevProps.gestures) this.initGestures()
+    if (wasLoading) this.setupGestures()
+  }
+
+  fetchLinksIfNecessary() {
+    if (this.state.needLinks && !this.state.canceled) {
+      cozy.client.files
+        .statById(this.props.file.id, false)
+        .then(resp => this.setState({ needLinks: false, links: resp.links }))
+        .catch(() => this.setState({ canceled: true }))
+    }
   }
 
   componentWillUnmount() {
@@ -64,11 +91,20 @@ export default class ImageViewer extends Component {
   }
 
   reload = () => {
-    this.setState(state => ({ ...state, canceled: false }))
+    this.setState(state => ({
+      ...state,
+      needLinks: true,
+      loading: true,
+      canceled: false
+    }))
   }
 
   onImageError = () => {
-    this.setState(state => ({ ...state, canceled: true }))
+    this.setState(state => ({ ...state, loading: false, canceled: true }))
+  }
+
+  onImageLoad = () => {
+    this.setState(state => ({ ...state, loading: false }))
   }
 
   tearDownGestures() {
@@ -85,13 +121,18 @@ export default class ImageViewer extends Component {
   onSwipe = e => {
     // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
     if (this.state.scale > 1) return
+    // a pan event is triggered after the swipe and may trigger a getBoundingClientRect error
+    this.gestures.off('pan')
+    this.gestures.off('panend')
     this.props.onSwipe(e)
   }
 
-  setupGestures() {
+  initGestures() {
     this.gestures = this.props.gestures
     this.viewer = this.props.gesturesRef
+  }
 
+  setupGestures() {
     // We replace the swipe handler by ours
     this.gestures.off('swipe')
     this.gestures.on('swipe', this.onSwipe)
@@ -107,6 +148,7 @@ export default class ImageViewer extends Component {
 
     // during a pan, we add the gestures delta to the initial offset to get the new offset. The new offset is then scaled : if the pan distance was 100px, but the image was scaled 2x, the actual offset should only be 50px. FInally, this value is clamped to make sure the user can't pan further than the edges.
     this.gestures.on('pan', e => {
+      console.log('pan', e)
       this.setState(state => {
         const maxOffset = this.computeMaxOffset()
         return {
@@ -194,28 +236,32 @@ export default class ImageViewer extends Component {
     if (this.state.canceled) {
       return <NoNetworkViewer onReload={this.reload} />
     }
-    const { file } = this.props
-
+    const file = {
+      ...this.props.file,
+      links: this.props.file.links || this.state.links
+    }
     const { scale, offsetX, offsetY } = this.state
     const style = {
       transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`
     }
     return (
       <div className={styles['pho-viewer-imageviewer']}>
-        {file && (
-          <ImageLoader
-            photo={file}
-            src={`${cozy.client._url}${file.links.large}`}
-            style={style}
-            ref={photo => {
-              this.photo = React.findDOMNode(photo)
-            }}
-            onError={this.onImageError}
-            preloader={() => (
-              <Spinner size="xxlarge" middle="true" noMargin color="white" />
-            )}
-          />
+        {(this.state.needLinks || this.state.loading) && (
+          <Spinner size="xxlarge" middle="true" noMargin color="white" />
         )}
+        {!this.state.needLinks &&
+          file && (
+            <ImageLoader
+              photo={file}
+              src={`${cozy.client._url}${file.links.large}`}
+              style={style}
+              ref={photo => {
+                this.photo = React.findDOMNode(photo)
+              }}
+              onLoad={this.onImageLoad}
+              onError={this.onImageError}
+            />
+          )}
       </div>
     )
   }
