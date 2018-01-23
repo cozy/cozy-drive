@@ -148,7 +148,6 @@ export default class ImageViewer extends Component {
 
     // during a pan, we add the gestures delta to the initial offset to get the new offset. The new offset is then scaled : if the pan distance was 100px, but the image was scaled 2x, the actual offset should only be 50px. FInally, this value is clamped to make sure the user can't pan further than the edges.
     this.gestures.on('pan', e => {
-      console.log('pan', e)
       this.setState(state => {
         const maxOffset = this.computeMaxOffset()
         return {
