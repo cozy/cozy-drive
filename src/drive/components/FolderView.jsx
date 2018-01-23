@@ -63,6 +63,7 @@ class FolderView extends Component {
 
     const fetchFailed = this.props.fetchStatus === 'failed'
     const fetchPending = this.props.fetchStatus === 'pending'
+    const isNavigating = this.props.isNavigating
     const nothingToDo = isTrashContext && files.length === 0
     const folderId = getFolderIdFromRoute(
       this.props.location,
@@ -73,7 +74,7 @@ class FolderView extends Component {
     const toolbarActions = {}
     if (canCreateFolder) toolbarActions.addFolder = this.toggleAddFolder
     return (
-      <Main>
+      <Main working={isNavigating}>
         <Topbar>
           <Breadcrumb />
           <Toolbar

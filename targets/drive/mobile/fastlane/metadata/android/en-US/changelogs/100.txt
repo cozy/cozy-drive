@@ -1,5 +1,8 @@
+Today is day one! 🎉
+We are officially launching our platform along with the apps. We hope you will like our version 1! 😎
+
 Thank you for using Cozy Drive! ☁️
 In this release:
-• A specific error message is shown when an email address is entered instead of the Cozy URL during the connection.
-• Added a "hidden" feature for support purpose (to send application logs when interacting with us).
-• Various bug fixes.
+- improved performance, especially once the initialization is done
+- improved visual feedback during photos backup
+- many bug fixes

@@ -27,7 +27,7 @@ export const EmptyPhotos = props => <Empty type="photos" {...props} />
 
 export const EmptyTrash = translate()(({ t }) => {
   return (
-    <div className={styles['c-trash-empty']}>
+    <div role="main" className={styles['c-trash-empty']}>
       <h2>{t('empty.trash.title')}</h2>
       <p>{t('empty.trash.text')}</p>
     </div>

@@ -15,7 +15,7 @@ const ALERT_RATING = 'ALERT_RATING'
 const BUTTON_INDEX_RATE = 1
 const BUTTON_INDEX_LATER = 2
 
-const FEEDBACK_EMAIL = 'feedback@cozycloud.cc'
+const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
 const PROMPT_AFTER_BOOTS = 5
 
 // RatingModal is the base component

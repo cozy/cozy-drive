@@ -24,10 +24,9 @@ $ yarn install
 mobile specific:
 
 ```sh
-$ yarn mobile:drive:icon
+$ yarn genicon:drive:mobile
 $ yarn build:drive:mobile
-$ cd targets/drive/mobile
-$ cordova prepare
+$ yarn prepare:drive:mobile
 ```
 
 or if you develop :loop::

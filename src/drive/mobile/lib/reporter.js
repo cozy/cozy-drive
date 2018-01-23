@@ -1,4 +1,4 @@
-/* global __SENTRY_TOKEN__, __DEVELOPMENT__ */
+/* global __SENTRY_TOKEN__, __DEVELOPMENT__, __APP_VERSION__ */
 import Raven from 'raven-js'
 
 const getAnalyticsUrl = () => {
@@ -15,7 +15,9 @@ export const ANALYTICS_URL = getAnalyticsUrl()
 
 export const getReporterConfiguration = () => ({
   shouldSendCallback: true,
-  environment: __DEVELOPMENT__ ? 'development' : 'production'
+  environment: __DEVELOPMENT__ ? 'development' : 'production',
+  release: __APP_VERSION__,
+  allowSecretKey: true
 })
 
 export const configureReporter = () => {

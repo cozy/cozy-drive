@@ -1,6 +1,6 @@
 {
   "name": "cozy-authentication",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Component providing login to a Cozy",
   "main": "build/index.js",
   "author": "Cozy",
@@ -14,14 +14,15 @@
     "build:analyze": "source-map-explorer build/index.js"
   },
   "devDependencies": {
-    "cozy-ui": "6.0.3",
     "jest": "22.0.6",
     "react-styleguidist": "6.1.0",
     "webpack": "3.10.0",
     "webpack-node-externals": "1.6.0"
   },
   "peerDependencies": {
-    "cozy-ui": "^6.0.3"
+    "cozy-ui": "^7.0.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "url-polyfill": "^1.0.10"
+  }
 }

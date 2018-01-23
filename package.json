@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "0.10.3",
+  "version": "1.0.0",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
@@ -102,6 +102,7 @@
     "eslint-plugin-standard": "3.0.1",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.6",
+    "fs-extra": "^5.0.0",
     "git-directory-deploy": "1.5.1",
     "html-webpack-plugin": "2.30.1",
     "husky": "0.14.3",
@@ -126,10 +127,11 @@
     "stylint": "1.5.9",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
-    "svg-sprite-loader": "0.0.31",
+    "svg-sprite-loader": "3.6.2",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.11.0",
-    "webpack-merge": "1.1.2"
+    "webpack-merge": "1.1.2",
+    "xml2js": "^0.4.19"
   },
   "dependencies": {
     "classnames": "^2.2.0",
@@ -151,7 +153,7 @@
     "preact": "8.2.7",
     "preact-compat": "3.17.0",
     "prop-types": "^15.5.10",
-    "raven-js": "^3.10.0",
+    "raven-js": "3.22.1",
     "react-autosuggest": "^9.3.2",
     "react-copy-to-clipboard": "^5.0.0",
     "react-markdown": "^3.0.0",
@@ -163,30 +165,8 @@
     "redux-mock-store": "^1.2.3",
     "redux-raven-middleware": "^1.2.0",
     "redux-thunk": "^2.1.0",
+    "url-polyfill": "^1.0.11",
     "webpack-node-externals": "^1.6.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "styl"
-    ],
-    "moduleNameMapper": {
-      "\\.(png|gif|jpe?g|svg)$": "<rootDir>/test/__mocks__/fileMock.js",
-      "styles": "identity-obj-proxy"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!cozy-ui)"
-    ],
-    "globals": {
-      "__ALLOW_HTTP__": false,
-      "__TARGET__": "browser",
-      "__SENTRY_TOKEN__": "token",
-      "__APP_VERSION__": "0.0.1",
-      "__DEVELOPMENT__": true,
-      "cozy": {}
-    }
   },
   "eslintConfig": {
     "extends": [

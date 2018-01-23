@@ -126,11 +126,17 @@ const FileName = ({
       ) : (
         <div className={styles['fil-file']}>
           <div className={styles['fil-file-filename']}>
-            {filename}
-            {extension && (
-              <span className={styles['fil-content-ext']}>{extension}</span>
-            )}
-            {opening === true && <Spinner />}
+            <div className={styles['fil-file-filename-wrapper']}>
+              <div className={styles['fil-file-filename-and-ext']}>
+                {filename}
+                {extension && (
+                  <span className={styles['fil-content-ext']}>{extension}</span>
+                )}
+              </div>
+              <div className={styles['fil-file-filename-spinner']}>
+                {opening === true && <Spinner />}
+              </div>
+            </div>
           </div>
           {withFilePath &&
             (isMobile ? (
@@ -241,8 +247,6 @@ class File extends Component {
           ...attributes,
           availableOffline: this.props.isAvailableOffline
         })
-      } else if (viewPath === '/recent' || viewPath === '/trash') {
-        this.props.onFileOpen({ ...attributes })
       } else {
         this.props.router.push(`${viewPath}/file/${attributes.id}`)
       }

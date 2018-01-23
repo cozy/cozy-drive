@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { withClient, fetchSharings, getSharingDetails } from 'cozy-client'
+import { fetchSharings, getSharingDetails } from 'cozy-client'
 
 import {
   toggleItemSelection,
@@ -22,7 +22,8 @@ import {
   getVisibleFiles,
   getSelectedFiles,
   getActionableFiles,
-  isActionMenuVisible
+  isActionMenuVisible,
+  isNavigating
 } from '../reducers'
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
@@ -67,6 +68,7 @@ class FileExplorer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  isNavigating: isNavigating(state),
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
@@ -92,13 +94,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
-  // TODO: we must pass the client here so that we can fetch the thumbnails links on mobile
-  onFolderOpen: folderId => dispatch(openFolder(folderId, ownProps.client)),
+  onFolderOpen: folderId => dispatch(openFolder(folderId)),
   onFileOpen: file => dispatch(openFileInNewTab(file)),
   onFileToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected))
 })
 
-export default withClient(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(FileExplorer))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(FileExplorer)
 )

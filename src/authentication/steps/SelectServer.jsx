@@ -8,6 +8,8 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
 import styles from '../styles'
 
+require('url-polyfill')
+
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
 const ERR_EMAIL = 'mobile.onboarding.server_selection.wrong_address_with_email'
 const ERR_V2 = 'mobile.onboarding.server_selection.wrong_address_v2'
@@ -105,11 +107,37 @@ export class SelectServer extends Component {
   hasMispelledCozy = value => /\..*cosy.*\./.test(value)
   hasAtSign = value => /.*@.*/.test(value)
 
+  appendDomain = (value, domain) =>
+    /\./.test(value) ? value : `${value}.${domain}`
+  prependProtocol = value =>
+    /^http(s)?:\/\//.test(value) ? value : `https://${value}`
+  removeAppSlug = value => {
+    const matchedSlugs = /^https?:\/\/\w+(-\w+)\./gi.exec(value)
+
+    return matchedSlugs ? value.replace(matchedSlugs[1], '') : value
+  }
+  normalizeURL = (value, defaultDomain) => {
+    const valueWithProtocol = this.prependProtocol(value)
+    const valueWithProtocolAndDomain = this.appendDomain(
+      valueWithProtocol,
+      defaultDomain
+    )
+
+    const isDefaultDomain = new RegExp(`${defaultDomain}$`).test(
+      valueWithProtocolAndDomain
+    )
+
+    return isDefaultDomain
+      ? this.removeAppSlug(valueWithProtocolAndDomain)
+      : valueWithProtocolAndDomain
+  }
+
   getUrl = value => {
     try {
-      return new URL(/^http(s)?:\/\//.test(value) ? value : `https://${value}`)
-        .toString()
-        .replace(/\/$/, '')
+      const defaultDomain = 'mycozy.cloud'
+      const normalizedURL = this.normalizeURL(value, defaultDomain)
+
+      return new URL(normalizedURL).toString().replace(/\/$/, '')
     } catch (err) {
       return ''
     }
@@ -163,6 +191,8 @@ export class SelectServer extends Component {
             <ReactMarkdown
               className={classNames(styles['description'], styles['info'])}
               source={t('mobile.onboarding.server_selection.description')}
+              disallowedTypes={['link']}
+              unwrapDisallowed
             />
           )}
           {error && (

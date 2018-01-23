@@ -27,6 +27,32 @@ import { isDirectory } from '../ducks/files/files'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
+const hasDisplayedSomething = (state = false, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER_SUCCESS:
+    case FETCH_RECENT_SUCCESS:
+      return true
+    default:
+      return state
+  }
+}
+
+const isOpening = (state = false, action) => {
+  switch (action.type) {
+    case OPEN_FOLDER:
+    case FETCH_RECENT:
+      return true
+    case OPEN_FOLDER_SUCCESS:
+    case FETCH_RECENT_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
+export const isNavigating = ({ view }) =>
+  view.hasDisplayedSomething && view.isOpening
+
 // reducer for the currently displayed folder properties
 const displayedFolder = (state = null, action) => {
   switch (action.type) {
@@ -168,24 +194,13 @@ const lastFetch = (state = null, action) => {
   }
 }
 
-// TODO: temp
-const filesWithLinks = (state = {}, action) => {
-  switch (action.type) {
-    case 'FETCH_FILES_LINKS_SUCCESS':
-      const { folderId, files } = action
-      return { ...state, [folderId]: files }
-    default:
-      return state
-  }
-}
-
 export default combineReducers({
+  hasDisplayedSomething,
+  isOpening,
   displayedFolder,
   openedFolderId,
   fileCount,
   files,
-  // TODO: temp
-  filesWithLinks,
   fetchStatus,
   lastFetch
 })

@@ -1,39 +1,28 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
-const percent = (actual, total) => Math.floor(actual * 100 / total)
-
-const Progress = ({ percent, style, color, background }) => {
-  const containerStyle = {
-    opacity: percent < 100 ? 1 : 0,
-    transition: `${0.4}s opacity}`,
-    transitionDelay: `${percent < 100 ? 0 : 0.4}s`,
-    height: `${2}px`,
-    backgroundColor: background ? 'lightgray' : ''
-  }
-  const barStyle = {
-    width: `${percent}%`,
-    ...style
-  }
+const UploadProgression = ({ t, current, total }) => {
   return (
-    <div style={containerStyle}>
-      <div className={styles['coz-progress']} style={barStyle} />
+    <div className={styles['coz-upload-status-wrapper']}>
+      <progress max={total} value={current} />
+      <div className={styles['coz-upload-status']}>
+        <div className={styles['coz-progress-pic']} />
+        <div className={styles['coz-upload-status-content']}>
+          {t('mobile.settings.media_backup.media_upload', {
+            smart_count: total - current
+          })}
+          <div className={styles['infinite-progress']} />
+        </div>
+      </div>
     </div>
   )
 }
 
-const UploadProgression = ({ t, current, total, media }) => {
-  return (
-    <div className={styles['coz-upload-status']}>
-      <Progress percent={percent(current, total)} />
-      <div className={styles['coz-progress-pic']} />
-      <div className={styles['coz-upload-status-content']}>
-        {t('mobile.settings.media_backup.media_upload', {
-          smart_count: total - current
-        })}
-      </div>
-    </div>
-  )
+UploadProgression.propTypes = {
+  current: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  t: PropTypes.func.isRequired
 }
 
 export default UploadProgression

@@ -2,6 +2,7 @@
   "extends": [
     "config:base"
   ],
+  "pinVersions": true,
   "schedule": ["before 9am on Monday"],
   "timezone": "Europe/Paris"
 }

@@ -384,17 +384,6 @@
         "feedback": "Thank you for the feedback. We'll definitely work on it!"
       }
     },
-    "quota_feedback": {
-      "title": "Need more storage space?",
-      "description":
-        "Let us know your storage needs for your files and photos. We will contact you to adapt our offer.",
-      "button": "Send",
-      "email_subject": "Extra storage space request",
-      "title_sent": "Thanks for your message!",
-      "text_sent":
-        "We're going to look into your request and we'll reach out to you as soon as possible.",
-      "button_sent": "Close"
-    },
     "first_sync": {
       "title": "You are about to start your first photos back up 🎉",
       "tips": "Tips",
@@ -447,7 +436,8 @@
     },
     "error": {
       "noapp": "No application found to handle this file.",
-      "generic": "An error occurred when opening this file, please try again."
+      "generic": "An error occurred when opening this file, please try again.",
+      "noNetwork": "You're currently offline."
     }
   }
 }

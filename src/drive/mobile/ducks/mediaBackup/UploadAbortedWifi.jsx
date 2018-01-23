@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const UploadAbortedWifi = ({ t }) => (
@@ -14,5 +15,9 @@ const UploadAbortedWifi = ({ t }) => (
     </div>
   </div>
 )
+
+UploadAbortedWifi.propTypes = {
+  t: PropTypes.func.isRequired
+}
 
 export default UploadAbortedWifi

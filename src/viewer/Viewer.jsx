@@ -8,6 +8,8 @@ import PdfViewer from './PdfViewer'
 import NativePdfViewer from './NativePdfViewer'
 import NoViewer from './NoViewer'
 
+import Spinner from 'cozy-ui/react/Spinner'
+
 import styles from './styles'
 
 const KEY_CODE_LEFT = 37
@@ -21,6 +23,12 @@ const isIOS = () =>
   /iPad|iPhone|iPod/.test(window.navigator.userAgent)
 const isMobile = () => isAndroid() || isIOS()
 const isCordova = () => window.cordova !== undefined
+
+const ViewerWrapper = ({ children }) => (
+  <div className={styles['pho-viewer-wrapper']} role="viewer">
+    {children}
+  </div>
+)
 
 export default class Viewer extends Component {
   componentDidMount() {
@@ -71,7 +79,7 @@ export default class Viewer extends Component {
     // this `expanded` property makes the next/previous controls cover the displayed image
     const expanded = currentFile && currentFile.class === 'image'
     return (
-      <div className={styles['pho-viewer-wrapper']} role="viewer">
+      <ViewerWrapper>
         <ViewerControls
           currentFile={currentFile}
           onClose={onClose}
@@ -84,7 +92,7 @@ export default class Viewer extends Component {
         >
           {this.renderViewer(currentFile)}
         </ViewerControls>
-      </div>
+      </ViewerWrapper>
     )
   }
 
@@ -110,3 +118,10 @@ export default class Viewer extends Component {
     }
   }
 }
+
+// TODO: This is a temporary export for FilesViewer that has to deal with fetching file links on mobile
+export const LoadingViewer = () => (
+  <ViewerWrapper>
+    <Spinner size="xxlarge" middle="true" noMargin color="white" />
+  </ViewerWrapper>
+)

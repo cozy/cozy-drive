@@ -8,7 +8,11 @@ export const isAndroid = () => isPlatform('android')
 
 // device
 const hasCordovaDeviceNamePlugin = () =>
-  isCordova() && window.cordova.plugins.deviceName !== undefined
+  isCordova() &&
+  window.cordova &&
+  window.cordova.plugins &&
+  window.cordova.plugins.deviceName !== undefined
+
 export const getDeviceName = () =>
   hasCordovaDeviceNamePlugin()
     ? window.cordova.plugins.deviceName.name
