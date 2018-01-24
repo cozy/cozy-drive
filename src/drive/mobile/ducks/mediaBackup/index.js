@@ -25,7 +25,7 @@ const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
 })
 
 const getDirID = async path => {
-  const { _id } = await cozy.client.files.createDirectoryByPath(path)
+  const { _id } = await cozy.client.files.createDirectoryByPath(path, false)
   return _id
 }
 
