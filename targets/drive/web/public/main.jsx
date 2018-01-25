@@ -48,8 +48,7 @@ const init = async () => {
       const { data = [] } = response
       const isFile = data.length > 0 && data[0].type === 'file'
       useDirectDownload = isFile
-    }
-    catch (e) {
+    } catch (e) {
       console.warn(e)
       useDirectDownload = false
     }
