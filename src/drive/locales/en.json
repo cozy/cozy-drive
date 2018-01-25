@@ -207,10 +207,12 @@
     "download_file": {
       "offline": "You should be connected to download this file",
       "missing": "This file is missing"
-    },
+    }
+  },
+  "Error": {
     "public_unshared_title": "Sorry, this link is no longer available.",
     "public_unshared_text":
-      "One lost, ten found... or just check out with the owner for help. This file might not be lost."
+      "This link has expired, or it was removed by its owner. Let him or her know that you missed it!"
   },
   "alert": {
     "could_not_open_file": "The file could not be opened",
@@ -439,5 +441,8 @@
       "generic": "An error occurred when opening this file, please try again.",
       "noNetwork": "You're currently offline."
     }
+  },
+  "FileOpenerExternal": {
+    "fileNotFoundError": "Error: file not found"
   }
 }

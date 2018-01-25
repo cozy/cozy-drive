@@ -16,7 +16,6 @@ import {
   openFolder,
   getOpenedFolderId,
   fetchMoreFiles,
-  openFileInNewTab,
   downloadFiles
 } from '../actions'
 import { getVisibleFiles } from '../reducers'
@@ -25,10 +24,35 @@ import styles from '../styles/folderview'
 import toolbarstyles from '../styles/toolbar'
 import { getFolderIdFromRoute } from '../reducers/view'
 
+import Viewer from 'viewer'
+
 class DumbFolderView extends React.Component {
   state = {
-    revoked: false
+    revoked: false,
+    viewerOpened: false,
+    currentViewedIndex: null
   }
+
+  showInViewer = file => {
+    const { files, fileCount, params, location, fetchMoreFiles } = this.props
+    const currentIndex = this.props.files.findIndex(f => f.id === file.id)
+    this.setState(state => ({
+      ...state,
+      viewerOpened: true,
+      currentViewedIndex: currentIndex
+    }))
+    if (files.length !== fileCount && files.length - currentIndex <= 5) {
+      const folderId = getFolderIdFromRoute(location, params)
+      fetchMoreFiles(folderId, files.length, 30)
+    }
+  }
+
+  closeViewer = () =>
+    this.setState(state => ({
+      ...state,
+      viewerOpened: false,
+      currentViewedIndex: null
+    }))
 
   componentWillMount() {
     this.props
@@ -50,6 +74,7 @@ class DumbFolderView extends React.Component {
     if (this.state.revoked) {
       return <ErrorShare errorType={`public_unshared`} />
     }
+    const { viewerOpened, currentViewedIndex } = this.state
     return (
       <Main>
         <Topbar>
@@ -87,7 +112,19 @@ class DumbFolderView extends React.Component {
           <div className={styles['fil-content-table']}>
             <FileListHeader />
             <div className={styles['fil-content-body']}>
-              <FolderContent withSelectionCheckbox={false} {...this.props} />
+              <FolderContent
+                onFileOpen={this.showInViewer}
+                withSelectionCheckbox={false}
+                {...this.props}
+              />
+              {viewerOpened && (
+                <Viewer
+                  files={this.props.files}
+                  currentIndex={currentViewedIndex}
+                  onChange={this.showInViewer}
+                  onClose={this.closeViewer}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -109,7 +146,6 @@ const mapDispatchToProps = dispatch => ({
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId => dispatch(openFolder(folderId)),
-  onFileOpen: file => dispatch(openFileInNewTab(file)),
   onDownload: files => dispatch(downloadFiles(files))
 })
 

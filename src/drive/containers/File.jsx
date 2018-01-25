@@ -241,15 +241,10 @@ class File extends Component {
         this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
-      const viewPath = this.props.location.pathname
-      if (this.props.isAvailableOffline) {
-        this.props.onFileOpen({
-          ...attributes,
-          availableOffline: this.props.isAvailableOffline
-        })
-      } else {
-        this.props.router.push(`${viewPath}/file/${attributes.id}`)
-      }
+      this.props.onFileOpen({
+        ...attributes,
+        availableOffline: this.props.isAvailableOffline
+      })
     }
   }
 
