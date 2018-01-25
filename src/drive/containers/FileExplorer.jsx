@@ -15,7 +15,7 @@ import {
   getOpenedFolderId,
   fetchRecentFiles,
   fetchMoreFiles,
-  openFileInNewTab
+  openLocalFile
 } from '../actions'
 import {
   getFolderIdFromRoute,
@@ -95,7 +95,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId => dispatch(openFolder(folderId)),
-  onFileOpen: file => dispatch(openFileInNewTab(file)),
+  onFileOpen: file => {
+    if (file.availableOffline) {
+      return dispatch(openLocalFile(file))
+    }
+    const viewPath = ownProps.location.pathname
+    ownProps.router.push(`${viewPath}/file/${file.id}`)
+  },
   onFileToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected))
 })

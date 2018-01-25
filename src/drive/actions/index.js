@@ -322,28 +322,20 @@ export const getFileDownloadUrl = async id => {
   return `${cozy.client._url}${link}`
 }
 
-export const openFileInNewTab = file => {
+export const openLocalFile = file => {
   return async dispatch => {
-    if (file.availableOffline) {
-      openOfflineFile(file).catch(error => {
-        console.error('openFileInNewTab', error)
-        dispatch(
-          openWithNoAppError({
-            cancelSelection: true,
-            hideActionMenu: true
-          })
-        )
-      })
-    } else {
-      const newTab = window.open('about:blank', '_blank') // must be done before the async calls, otherwise pop-up blockers are trigered
-
-      const href = await getFileDownloadUrl(file.id)
-      if (isCordova()) {
-        newTab.executeScript({ code: `window.location.href = '${href}'` })
-      } else {
-        newTab.location.href = href
-      }
+    if (!file.availableOffline) {
+      console.error('openLocalFile: this file is not available offline')
     }
+    openOfflineFile(file).catch(error => {
+      console.error('openLocalFile', error)
+      dispatch(
+        openWithNoAppError({
+          cancelSelection: true,
+          hideActionMenu: true
+        })
+      )
+    })
   }
 }
 
