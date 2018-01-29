@@ -94,13 +94,13 @@ const icons = iconsContext.keys().reduce((acc, item) => {
 
 function getIconUrl(file) {
   const keyIcon =
-    (file.type === TYPE_DIRECTORY
+    file.type === TYPE_DIRECTORY
       ? 'folder'
-      : getFileTypeFromMime(icons)(file.mime)) ||
-    console.warn(
-      `No icon found, you may need to add a mapping for ${mimetype}`
-    ) ||
-    'files'
+      : getFileTypeFromMime(icons)(file.mime) ||
+        console.warn(
+          `No icon found, you may need to add a mapping for ${file.mime}`
+        ) ||
+        'files'
 
   return `${window.location.origin}/${icons[keyIcon]}`
 }
