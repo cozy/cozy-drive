@@ -40,15 +40,25 @@ class FilesViewer extends Component {
     })
   }
 
-  getCurrentIndex() {
-    const { files, params } = this.props
-    return files.findIndex(f => f.id === params.fileId)
+  onChange = nextFile => {
+    const { router } = this.props
+    router.push({
+      pathname: `${getParentPath(router)}/${nextFile.id}`
+    })
+  }
+
+  getViewableFiles() {
+    return this.props.files.filter(f => f.type !== 'directory')
+  }
+
+  getCurrentIndex(files = this.getViewableFiles()) {
+    return files.findIndex(f => f.id === this.props.params.fileId)
   }
 
   render() {
-    const { files, router } = this.props
+    const files = this.getViewableFiles()
     if (files.length === 0) return null
-    const currentIndex = this.getCurrentIndex()
+    const currentIndex = this.getCurrentIndex(files)
     // TODO: if we can't find the file, that's probably because the user is trying to open
     // a direct link to a file that wasn't in the first 50 files of the containing folder
     // (it comes from a fetchMore...)
@@ -61,11 +71,7 @@ class FilesViewer extends Component {
       <Viewer
         files={files}
         currentIndex={currentIndex}
-        onChange={nextFile => {
-          router.push({
-            pathname: `${getParentPath(router)}/${nextFile.id}`
-          })
-        }}
+        onChange={this.onChange}
         onClose={this.onClose}
       />
     )
