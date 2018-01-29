@@ -3,7 +3,6 @@
 import styles from '../styles/nav'
 
 import React, { Component } from 'react'
-import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 
@@ -96,7 +95,9 @@ class Nav extends Component {
               <span className={styles['c-nav-icon']}>
                 <Icon icon="folder" />
               </span>
-              <span className={styles['c-nav-text']}>{t('Nav.item_drive')}</span>
+              <span className={styles['c-nav-text']}>
+                {t('Nav.item_drive')}
+              </span>
             </ActiveLink>
           </li>
           <li className={styles['c-nav-item']}>
@@ -111,7 +112,9 @@ class Nav extends Component {
               <span className={styles['c-nav-icon']}>
                 <Icon icon="clock" />
               </span>
-              <span className={styles['c-nav-text']}>{t('Nav.item_recent')}</span>
+              <span className={styles['c-nav-text']}>
+                {t('Nav.item_recent')}
+              </span>
             </ActiveLink>
           </li>
           <li className={styles['c-nav-item']}>
@@ -126,7 +129,9 @@ class Nav extends Component {
               <span className={styles['c-nav-icon']}>
                 <Icon icon="trash" />
               </span>
-              <span className={styles['c-nav-text']}>{t('Nav.item_trash')}</span>
+              <span className={styles['c-nav-text']}>
+                {t('Nav.item_trash')}
+              </span>
             </ActiveLink>
           </li>
           {__TARGET__ === 'mobile' && (
@@ -140,7 +145,9 @@ class Nav extends Component {
                 <span className={styles['c-nav-icon']}>
                   <Icon icon="gear" />
                 </span>
-                <span className={styles['c-nav-text']}>{t('Nav.item_settings')}</span>
+                <span className={styles['c-nav-text']}>
+                  {t('Nav.item_settings')}
+                </span>
               </Link>
             </li>
           )}
