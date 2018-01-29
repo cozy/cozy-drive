@@ -64,6 +64,7 @@ export class ShareModal extends Component {
         title={t(`${documentType}.share.title`)}
         dismissAction={onClose}
         className={styles['share-modal']}
+        into="body"
       >
         <div className={styles['share-modal-content']}>
           {withSharingCheck(document, documentType, t)(

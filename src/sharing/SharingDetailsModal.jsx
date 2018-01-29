@@ -15,6 +15,7 @@ export class SharingDetailsModal extends Component {
       <Modal
         title={t(`${documentType}.share.details.title`)}
         secondaryAction={onClose}
+        into="body"
       >
         <div className={styles['pho-share-modal-content']}>
           <Owner
