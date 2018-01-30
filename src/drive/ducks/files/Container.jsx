@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const hasWriteAccess =
-    !ownProps.shared.withMe || ownProps.shared.sharingType === 'master-master'
+    !ownProps.shared.withMe || ownProps.shared.sharingType === 'two-way'
   return {
     actions: Object.assign({}, ownProps.actions, {
       list: {

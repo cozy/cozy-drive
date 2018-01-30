@@ -48,19 +48,11 @@
         &.fil-action-share
             background embedurl('../assets/icons/icon-share-dark.svg') 1rem center no-repeat
 
-    .fil-action-upload
-    .fil-action-share
-        display none
-
 
 +medium-screen()
     .fil-toolbar-menu
         display block
         left 1em
-        .fil-action-upload
-        .fil-action-share
-        .fil-action-select
-            display block
 
 +small-screen()
     .fil-toolbar-files
@@ -69,9 +61,6 @@
         top      0
         right    0
         z-index  $nav-index
-
-    .fil-public-download
-        display none
 
 +small-screen('min')
     .fil-toolbar-menu--public

@@ -18,6 +18,7 @@ export const getPrimaryCozy = contact =>
 export { default as ShareModal } from './ShareModal'
 export { default as SharingDetailsModal } from './SharingDetailsModal'
 export { default as SharedBadge } from './components/SharedBadge'
+export { default as Avatar } from './components/Avatar'
 export {
   default as ShareButton,
   SharedByMeButton,

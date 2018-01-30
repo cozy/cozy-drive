@@ -1,6 +1,5 @@
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
-import { Icon } from 'cozy-ui/react'
 import classNames from 'classnames'
 
 import button from '../styles/toolbar'
@@ -39,7 +38,6 @@ export const UploadButton = ({
     }`}
     style={styles.parent}
   >
-    <Icon icon="upload" />
     {label}
     <input
       type="file"

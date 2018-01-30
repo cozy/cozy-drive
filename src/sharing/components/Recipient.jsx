@@ -4,23 +4,10 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 import Spinner from 'cozy-ui/react/Spinner'
-import ColorHash from './colorhash'
 import Menu, { Item } from 'components/Menu'
+import Avatar from './Avatar'
 
 import { getPrimaryEmail, getPrimaryCozy } from '..'
-
-const Avatar = ({ name }) => {
-  const initial = name.charAt(0)
-  const bg = ColorHash().getColor(name)
-  const style = {
-    'background-color': bg
-  }
-  return (
-    <div className={styles['pho-recipient-avatar']} style={style}>
-      <span>{initial}</span>
-    </div>
-  )
-}
 
 const Identity = ({ name, url }) => (
   <div className={styles['pho-recipient-idents']}>
