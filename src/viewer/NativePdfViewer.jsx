@@ -121,7 +121,7 @@ class NativePdfViewer extends Component {
     const { opening, error } = this.state
 
     if (opening && !error)
-      return <Spinner size="xxlarge" middle="true" noMargin color="white" />
+      return <Spinner size="xxlarge" middle noMargin color="white" />
     else if (error) return <NoViewer file={file} />
     else
       return (

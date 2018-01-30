@@ -246,7 +246,7 @@ export default class ImageViewer extends Component {
     return (
       <div className={styles['pho-viewer-imageviewer']}>
         {(this.state.needLinks || this.state.loading) && (
-          <Spinner size="xxlarge" middle="true" noMargin color="white" />
+          <Spinner size="xxlarge" middle noMargin color="white" />
         )}
         {!this.state.needLinks &&
           file && (

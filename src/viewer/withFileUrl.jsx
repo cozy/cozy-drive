@@ -60,7 +60,7 @@ const withFileUrl = BaseComponent =>
 
     render() {
       if (this.state.status === LOADING) {
-        return <Spinner size="xxlarge" middle="true" noMargin color="white" />
+        return <Spinner size="xxlarge" middle noMargin color="white" />
       }
       if (this.state.status === FAILED) {
         return <NoNetworkViewer onReload={this.reset} />

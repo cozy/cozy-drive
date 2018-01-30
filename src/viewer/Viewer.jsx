@@ -122,6 +122,6 @@ export default class Viewer extends Component {
 // TODO: This is a temporary export for FilesViewer that has to deal with fetching file links on mobile
 export const LoadingViewer = () => (
   <ViewerWrapper>
-    <Spinner size="xxlarge" middle="true" noMargin color="white" />
+    <Spinner size="xxlarge" middle noMargin color="white" />
   </ViewerWrapper>
 )
