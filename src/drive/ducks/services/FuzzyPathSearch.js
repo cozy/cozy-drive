@@ -74,6 +74,7 @@ class FuzzyPathSearch {
     let wordsFromPreviousQuery = []
 
     for (let currentQuerySegment of query) {
+      let wasInPreviousQuery = false
       for (let previousQuerySegment of this.previousQuery) {
         if (currentQuerySegment.word.includes(previousQuerySegment.word)) {
           if (currentQuerySegment.word !== previousQuerySegment.word) {
@@ -84,12 +85,13 @@ class FuzzyPathSearch {
             wordsFromPreviousQuery.push(currentQuerySegment)
           }
 
+          wasInPreviousQuery = true
           continue
         }
       }
 
       // this segment wasn't included in any previous query segment so it's a new word and we prioritize it
-      priorizedWords.push(currentQuerySegment)
+      if (!wasInPreviousQuery) priorizedWords.push(currentQuerySegment)
     }
 
     return this.sortQuerybyLength(priorizedWords).concat(
@@ -106,6 +108,11 @@ class FuzzyPathSearch {
 
     files.forEach(file => {
       let fileScore = 0
+      const pathArray = removeDiacritics(
+        (file.path + '/' + file.name).toLowerCase()
+      )
+        .split('/')
+        .filter(pathChunk => !!pathChunk)
 
       for (let word of words) {
         // let the magic begin...
@@ -113,9 +120,6 @@ class FuzzyPathSearch {
         let wordScore = 0
         let wordOccurenceValue = 10000
         let firstOccurence = true
-        const pathArray = removeDiacritics(
-          (file.path + '/' + file.name).toLowerCase()
-        ).split('/')
         const maxDepth = pathArray.length
 
         for (let depth = 0; depth < maxDepth; ++depth) {
@@ -159,7 +163,7 @@ class FuzzyPathSearch {
     })
 
     suggestions.sort((a, b) => {
-      const score = a.score - b.score
+      const score = b.score - a.score
       return score !== 0 ? score : a.file.path.localeCompare(b.file.path)
     })
 
