@@ -49,31 +49,31 @@ class SuggestionProvider extends React.Component {
         'files',
         'io.cozy.files'
       )
-      const files = allDocs.data
 
+      const files = allDocs.data
       const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 
-      const normalizedFiles = files
-        .filter(file => file.trashed !== true)
-        .map(file => {
-          const isDir = file.type === TYPE_DIRECTORY
-          const dirId = isDir ? file._id : file.dir_id
-          let path
-          if (isDir) {
-            path = file.path
-          } else {
-            const parentDir = folders.find(folder => folder._id === file.dir_id)
-            path = parentDir && parentDir.path ? parentDir.path : ''
-          }
+      const notInTrash = file => file.trashed !== true
 
-          return {
-            id: file._id,
-            name: file.name,
-            path,
-            url: window.location.origin + '/#/folder/' + dirId,
-            icon: getIconUrl(file)
-          }
-        })
+      const normalizedFiles = files.filter(notInTrash).map(file => {
+        const isDir = file.type === TYPE_DIRECTORY
+        const dirId = isDir ? file._id : file.dir_id
+        let path
+        if (isDir) {
+          path = file.path
+        } else {
+          const parentDir = folders.find(folder => folder._id === file.dir_id)
+          path = parentDir && parentDir.path ? parentDir.path : ''
+        }
+
+        return {
+          id: file._id,
+          name: file.name,
+          path,
+          url: window.location.origin + '/#/folder/' + dirId,
+          icon: getIconUrl(file)
+        }
+      })
 
       this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
       this.hasIndexedFiles = true
