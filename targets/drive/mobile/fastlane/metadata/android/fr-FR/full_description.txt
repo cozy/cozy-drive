@@ -1,13 +1,23 @@
-Nous avons tous une vie et une vie numérique. Cozy les réunit. Dans votre Cozy, vous mettez toutes vos données personnelles : photos, santé, bancaire, vacances, alors inaccessibles aux autres et aux entreprises.
-Dans sa version Bêta (qui remplace l’ancienne version V2), Cozy vous propose une première application sur mobile : Cozy Drive.
+« Service d’utilité publique » - Entendu à Futur en Seine 2017
+« La nouvelle alternative aux drives actuels qui vous veut du bien » - Utilisateur N°1789
+« Cozy ? Même ma mère va comprendre !» - Lu sur Twitter
 
-Fonctionnalités de Cozy Drive :
-• Sauvegardez les photos prises depuis votre mobile, elles seront accessibles sur votre PC et tablette.
-• Accédez à vos fichiers les plus importants en mode hors connexion.
-• Partagez vos photos avec qui vous voulez quand vous le souhaitez ! Qu'ils aient un Cozy ou non.
+Stockez, gérez, partagez tous vos fichiers, photos et documents et même récupérez vos factures en toute sécurité avec Cozy Drive, et profitez d'un espace de stockage gratuit de 5 Go.
 
-Prêt à adopter Cozy ? Installez Cozy Drive et décuplez les capacités de votre Cozy, votre nouveau cloud personnel. Pour plus d’informations sur Cozy, venez nous rendre visite sur https://cozy.io.
+Avec Cozy Drive, vous pouvez facilement :
 
-Votre avis compte pour nous alors rejoignez la communauté de milliers de Cozynautes et partagez vos impressions sur notre forum : https://forum.cozy.io/
+- Sauvegarder et synchroniser tous vos documents importants (carte d’identité, photos de vacances, avis d’imposition, fiches de salaires...)
+- Accéder à vos documents n’importe quand, n’importe ou même en mode avion depuis votre bureau, votre smartphone ou tablette
+- Récupérer automatiquement vos documents administratifs de vos principaux fournisseurs de service (opérateur mobile, fournisseur d’énergie, assureur, internet, santé...).
+- Rester synchronisé.e lors de vos voyages et déplacements professionnels
 
-Et n’oubliez pas (dans la langue de Snowden) : Make Internet Great Again with Cozy! 
+Cozy Drive pour smartphone et tablette intègre :
+
+- 5 Go d'espace de stockage gratuit pour sauvegarder tous vos documents pour ne plus jamais les perdre
+- Un accès hors ligne à vos fichiers et dossiers
+- Un espace vraiment sécurisé et garanti par une équipe d’experts de la sécurité
+- Imaginé, développé et hébergé en France
+
+Envie d’en savoir plus ? Consultez notre guide en ligne https://support.cozy.io.
+
+Si vous ne trouvez pas l’information recherchée, nous vous invitons à nous contacter directement à claude@cozycloud.cc. Claude sera ravi de vous répondre !
