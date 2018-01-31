@@ -1,10 +1,10 @@
-/* global cozy */
 import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
-import { Button } from 'cozy-ui/react'
+import Button from 'cozy-ui/react/Button'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
 import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
+import FeedbackForm from './FeedbackForm'
 
 import styles from '../styles/feedback'
 
@@ -15,7 +15,6 @@ const ALERT_RATING = 'ALERT_RATING'
 const BUTTON_INDEX_RATE = 1
 const BUTTON_INDEX_LATER = 2
 
-const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
 const PROMPT_AFTER_BOOTS = 5
 
 // RatingModal is the base component
@@ -66,7 +65,7 @@ class RatingModal extends Component {
     return this.state.screen === SCREEN_ENJOY ? (
       <EnjoyCozy onReply={this.onUserReply} />
     ) : (
-      <FeeedbackForm onClose={this.onCloseFeedback} />
+      <FeedbackForm onClose={this.onCloseFeedback} />
     )
   }
 }
@@ -91,71 +90,6 @@ const EnjoyCozy = (props, context) => {
   )
 }
 
-class FeeedbackForm extends Component {
-  state = {
-    sending: false
-  }
-
-  submitForm = async e => {
-    e.preventDefault()
-    const { t } = this.context
-    const mailData = {
-      mode: 'from',
-      to: [{ name: 'Support', email: FEEDBACK_EMAIL }],
-      subject: t('mobile.rating.email.subject'),
-      parts: [{ type: 'text/plain', body: this.textarea.value.toString() }]
-    }
-
-    try {
-      this.setState({ sending: true })
-      await cozy.client.jobs.create('sendmail', mailData)
-    } catch (e) {
-      // Sending the email failed; this can happen because of insuficient permissions for example. Not a big deal either in this context.
-    }
-
-    this.setState({ sending: false })
-    this.props.onClose(true)
-  }
-
-  registerElement(element) {
-    this.textarea = element
-  }
-
-  render() {
-    const { onClose } = this.props
-    const { sending } = this.state
-    const { t } = this.context
-    return (
-      <Modal
-        title={t('mobile.rating.feedback.title')}
-        dismissAction={() => onClose(false)}
-      >
-        <ModalContent className={styles['feedback-form']}>
-          <form className={'coz-form'} onSubmit={this.submitForm}>
-            <textarea
-              className={styles['feedback-text']}
-              placeholder={t('mobile.rating.email.placeholder')}
-              ref={this.registerElement.bind(this)}
-            />
-            <div className={styles['button-block']}>
-              <Button
-                theme={'secondary'}
-                onClick={e => {
-                  e.preventDefault()
-                  onClose(false)
-                }}
-              >
-                {t('mobile.rating.feedback.no')}
-              </Button>
-              <Button busy={sending}>{t('mobile.rating.feedback.yes')}</Button>
-            </div>
-          </form>
-        </ModalContent>
-      </Modal>
-    )
-  }
-}
-
 // promptRating is not a component because the native UI is used instead
 const promptRating = async ({
   title,
@@ -165,34 +99,36 @@ const promptRating = async ({
   later,
   softwareName,
   softwareID
-}) => {
-  if (window.AppRate) {
-    window.AppRate.preferences = {
-      displayAppName: softwareName,
-      inAppReview: true,
-      storeAppURL: {
-        ios: softwareID,
-        android: `market://details?id=${softwareID}`
-      },
-      customLocale: {
-        title,
-        message,
-        cancelButtonLabel: no,
-        laterButtonLabel: later,
-        rateButtonLabel: yes,
-        yesButtonLabel: yes,
-        noButtonLabel: no
-      },
-      callbacks: {
-        onButtonClicked: Promise.resolve
+}) =>
+  new Promise((resolve, reject) => {
+    if (!window.AppRate) resolve('No AppRate found')
+    try {
+      window.AppRate.preferences = {
+        displayAppName: softwareName,
+        inAppReview: true,
+        storeAppURL: {
+          ios: softwareID,
+          android: `market://details?id=${softwareID}`
+        },
+        customLocale: {
+          title,
+          message,
+          cancelButtonLabel: no,
+          laterButtonLabel: later,
+          rateButtonLabel: yes,
+          yesButtonLabel: yes,
+          noButtonLabel: no
+        },
+        callbacks: {
+          onButtonClicked: resolve
+        }
       }
-    }
 
-    window.AppRate.promptForRating()
-  } else {
-    Promise.resolve()
-  }
-}
+      window.AppRate.promptForRating()
+    } catch (e) {
+      reject(e)
+    }
+  })
 
 // Enhance the base component with HOCs
 const withBootDelay = (WrappedComponent, showAfterBoots) => {
