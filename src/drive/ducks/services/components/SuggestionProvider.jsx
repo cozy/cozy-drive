@@ -53,7 +53,8 @@ class SuggestionProvider extends React.Component {
       const files = allDocs.data
       const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 
-      const notInTrash = file => file.trashed !== true
+      const notInTrash = file =>
+        !file.trashed || !/^\/\.cozy_trash/.test(file.path)
 
       const normalizedFiles = files.filter(notInTrash).map(file => {
         const isDir = file.type === TYPE_DIRECTORY
