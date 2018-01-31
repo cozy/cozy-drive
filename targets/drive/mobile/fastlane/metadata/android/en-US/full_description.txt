@@ -1,13 +1,23 @@
-We all have a life and a digital life. Cozy gathers them. In your Cozy, you have all your personal data: pictures, health, bank, holidays, accessible only by you.
-Here comes the first Cozy mobile app, in its Beta version (replacing the old V2 version): Cozy Drive.
+"Public utility service" - Heard at a tradeshow
+"The new alternative to current drives that wants your good" - User N ° 1789
+"Cozy? Even my mother will understand! "- Read on Twitter
 
-Cozy Drive Features:
-• Save all the photos from your smartphone, they will be available on your PC and tablet as well.
-• Access your most important files offline.
-• Share pictures with anybody you want! Whether or not they already use Cozy.
+Store, manage, share all your files, photos and documents, and even get your bills safe with Cozy Drive, and enjoy free 5GB storage.
 
-Ready to get Cozy? Install Cozy Drive and enhance your Cozy, your new personal cloud. For more information about Cozy, please go to our website: https://cozy.io
+With Cozy Drive, you can easily:
 
-We want to hear from you. Join the Cozy Community and share your feedbacks on our forum: https://forum.cozy.io/
+- Save and synchronize all your important documents (identity card, holiday photos, tax notices, pay slips ...)
+- Access your documents anytime, anywhere, even in airplane mode from your desktop, smartphone or tablet
+- Automatically recover your administrative documents from your main service providers (mobile operator, energy supplier, insurer, internet, health ...).
+- Stay synchronized during your travels and business trips
 
-And don't forget: Make Internet Great Again with Cozy!
+Cozy Drive for smartphone and tablets integrates:
+
+- 5 GB of free storage space to save all your documents so you never lose them again
+- Offline access to your files and folders
+- A really secure space guaranteed by a team of security experts
+- Imagined, developed and hosted in France
+
+Want to know more? Check out our online https://help.cozy.io guide.
+
+If you can not find the information you are looking for, we invite you to contact us directly at claude@cozycloud.cc. Claude will be happy to answer you!
