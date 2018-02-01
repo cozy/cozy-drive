@@ -327,6 +327,12 @@
           "label":
             "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
         },
+        "feedback": {
+          "title": "Help improve Cozy Drive",
+          "description":
+            "Send your feedback to help us improve Cozy Drive. Click on the button below, explain the problem or make a suggestion and send it. You're done!",
+          "button": "leave feedback"
+        },
         "logs": {
           "title": "Help us to understand your problem",
           "description":
