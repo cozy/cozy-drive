@@ -6,6 +6,7 @@ import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { Button } from 'cozy-ui/react/Button'
 
 import styles from '../styles/feedback'
+import { logInfo } from '../lib/reporter'
 
 const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
 
@@ -26,6 +27,10 @@ class FeedbackForm extends Component {
 
     try {
       this.setState({ sending: true })
+      logInfo(
+        `feedback logs: ${this.textarea.value.toString().substr(0, 40)}`,
+        cozy.client._url
+      )
       await cozy.client.jobs.create('sendmail', mailData)
     } catch (e) {
       // Sending the email failed; this can happen because of insuficient permissions for example. Not a big deal either in this context.
