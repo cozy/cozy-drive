@@ -23,6 +23,6 @@
     "cozy-ui": "^7.0.2"
   },
   "dependencies": {
-    "url-polyfill": "^1.0.10"
+    "url-polyfill": "1.0.11"
   }
 }

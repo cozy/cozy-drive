@@ -6457,7 +6457,7 @@ url-parse@^1.1.8:
     querystringify "~1.0.0"
     requires-port "~1.0.0"
 
-url-polyfill@^1.0.10:
+url-polyfill@1.0.11:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.0.11.tgz#f3a76d3795f42a459c2df4a1a69a5713c5cfa6d4"
 
