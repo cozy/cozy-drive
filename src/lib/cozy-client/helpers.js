@@ -61,7 +61,7 @@ export const getIndexFields = query => {
 
 /** Remove special fields */
 export const sanitizeDoc = doc => {
-  return omit(doc, ['_type'])
+  return omit(doc, ['_type', 'id'])
 }
 
 export const isV2 = url =>
