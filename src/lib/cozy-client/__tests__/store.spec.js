@@ -123,6 +123,28 @@ describe('Redux store tests', () => {
       })
     })
 
+    describe('When no document have been updated on the server', () => {
+      const fakeResponse = { data: [] }
+
+      it('should do nothing', () => {
+        collection = getCollection(state, 'rockets')
+        const before = collection.data[0]
+        state = dispatchSuccessfulAction(
+          updateDocument(
+            'io.cozy.rockets',
+            { name: 'Saturn V' },
+            {
+              updateCollections: ['rockets']
+            }
+          ),
+          fakeResponse,
+          state
+        )
+        collection = getCollection(state, 'rockets')
+        expect(collection.data[0]).toEqual(before)
+      })
+    })
+
     describe('When a document is successfully updated on the server', () => {
       const fakeResponse = {
         data: [
@@ -181,6 +203,28 @@ describe('Redux store tests', () => {
         )
         collection = getCollection(state, 'rockets')
         expect(collection.data[0]).toEqual(fakeResponse.data[0])
+      })
+    })
+
+    describe('When no documents have been deleted on the server', () => {
+      const fakeResponse = { data: [] }
+
+      it('should do nothing', () => {
+        collection = getCollection(state, 'rockets')
+        const before = collection.ids
+        state = dispatchSuccessfulAction(
+          deleteDocuments(
+            'io.cozy.rockets',
+            { selector: {} },
+            {
+              updateCollections: ['rockets']
+            }
+          ),
+          fakeResponse,
+          state
+        )
+        collection = getCollection(state, 'rockets')
+        expect(collection.ids).toEqual(before)
       })
     })
 

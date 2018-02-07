@@ -32,8 +32,10 @@ const REMOVE_REFERENCED_FILES = 'REMOVE_REFERENCED_FILES'
 const documents = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_DATA:
+      if (action.response.data.length === 0) {
+        return state
+      }
       const { data } = action.response
-      if (data.length === 0) return state
       const dataDoctype = getArrayDoctype(data)
       return {
         ...state,
@@ -44,6 +46,9 @@ const documents = (state = {}, action) => {
       }
     case RECEIVE_NEW_DOCUMENT:
     case RECEIVE_UPDATED_DOCUMENT:
+      if (action.response.data.length === 0) {
+        return state
+      }
       const doc = action.response.data[0]
       return {
         ...state,
@@ -53,6 +58,9 @@ const documents = (state = {}, action) => {
         }
       }
     case RECEIVE_UPDATED_DOCUMENTS:
+      if (action.response.data.length === 0) {
+        return state
+      }
       const udocs = action.response.data
       const doctype = udocs[0]._type
       return {
@@ -63,12 +71,18 @@ const documents = (state = {}, action) => {
         }
       }
     case RECEIVE_DELETED_DOCUMENT:
+      if (action.response.data.length === 0) {
+        return state
+      }
       const deleted = action.response.data[0]
       return {
         ...state,
         [deleted._type]: removeObjectProperty(state[deleted._type], deleted.id)
       }
     case RECEIVE_DELETED_DOCUMENTS:
+      if (action.response.data.length === 0) {
+        return state
+      }
       const docs = action.response.data
       const firstDeleted = docs[0]
       return {
