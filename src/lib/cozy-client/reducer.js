@@ -1,9 +1,6 @@
 import { combineReducers } from 'redux'
-import {
-  removeObjectProperty,
-  removeObjectProperties,
-  mapValues
-} from './utils'
+import { mapValues } from './utils'
+import omit from 'lodash/omit'
 import sharings, {
   FETCH_SHARINGS,
   getSharings,
@@ -77,7 +74,7 @@ const documents = (state = {}, action) => {
       const deleted = action.response.data[0]
       return {
         ...state,
-        [deleted._type]: removeObjectProperty(state[deleted._type], deleted.id)
+        [deleted._type]: omit(state[deleted._type], deleted.id)
       }
     case RECEIVE_DELETED_DOCUMENTS:
       if (action.response.data.length === 0) {
@@ -87,7 +84,7 @@ const documents = (state = {}, action) => {
       const firstDeleted = docs[0]
       return {
         ...state,
-        [firstDeleted._type]: removeObjectProperties(
+        [firstDeleted._type]: omit(
           state[firstDeleted._type],
           docs.map(d => d.id)
         )

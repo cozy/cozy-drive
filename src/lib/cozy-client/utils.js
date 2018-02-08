@@ -16,26 +16,6 @@ export const filterValues = (object, filter) => {
   return result
 }
 
-export const removeObjectProperty = (obj, prop) => {
-  return Object.keys(obj).reduce((result, key) => {
-    if (key !== prop) {
-      result[key] = obj[key]
-    }
-    return result
-  }, {})
-}
-
-export const removeObjectProperties = (obj, props) => {
-  const sProps = new Set(props)
-  const res = Object.keys(obj).reduce((result, key) => {
-    if (!sProps.has(key)) {
-      result[key] = obj[key]
-    }
-    return result
-  }, {})
-  return res
-}
-
 export const sleep = (time, args) => {
   return new Promise(resolve => {
     setTimeout(resolve, time, args)
