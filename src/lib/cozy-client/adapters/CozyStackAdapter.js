@@ -21,6 +21,9 @@ const normalizeDoc = (doc, doctype) => {
   return normalized
 }
 
+const normalizeDocs = (docs, doctype) =>
+  docs.map(doc => normalizeDoc(doc, doctype))
+
 export default class CozyStackAdapter {
   async fetchDocuments(doctype) {
     // WARN: cozy-client-js lacks a cozy.data.findAll method that uses this route
@@ -125,7 +128,7 @@ export default class CozyStackAdapter {
     await cozy.client.fetchJSON('POST', `/data/${doctype}/_bulk_docs`, {
       docs: updatedDocs
     })
-    return { data: updatedDocs }
+    return { data: normalizeDocs(updatedDocs, doctype) }
   }
 
   async deleteDocument(doc) {
