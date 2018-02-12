@@ -68,7 +68,7 @@ export default class DataAccessFacade {
   }
 }
 
-class PouchFirstStrategy {
+export class PouchFirstStrategy {
   getAdapter(doctype, stackAdapter, pouchAdapter) {
     if (pouchAdapter.getDatabase(doctype) === undefined) {
       return stackAdapter
@@ -77,7 +77,7 @@ class PouchFirstStrategy {
   }
 }
 
-class StackOnlyStrategy {
+export class StackOnlyStrategy {
   getAdapter(doctype, stackAdapter, pouchAdapter) {
     return stackAdapter
   }
