@@ -21,6 +21,7 @@ const shunt = (cond, BaseComponent, OtherComponent) => props =>
 
 const ComingSoon = (props, context) => (
   <div className={styles['coz-form-group']}>
+    <h3>{context.t(`${props.documentType}.share.shareByEmail.subtitle`)}</h3>
     <p
       className={styles['coz-form-desc']}
       style={
@@ -67,6 +68,15 @@ export class ShareModal extends Component {
         into="body"
       >
         <div className={styles['share-modal-content']}>
+          <ShareByLink
+            document={this.props.document}
+            documentType={documentType}
+            checked={!!sharing.sharingLink}
+            link={sharing.sharingLink}
+            onEnable={shareByLink}
+            onDisable={revokeLink}
+          />
+          <hr className={styles['divider']} />
           {withSharingCheck(document, documentType, t)(
             <ShareByEmailComingSoon
               document={document}
@@ -78,15 +88,6 @@ export class ShareModal extends Component {
               onUnshare={unshare}
             />
           )}
-          <hr className={styles['divider']} />
-          <ShareByLink
-            document={this.props.document}
-            documentType={documentType}
-            checked={!!sharing.sharingLink}
-            link={sharing.sharingLink}
-            onEnable={shareByLink}
-            onDisable={revokeLink}
-          />
         </div>
       </Modal>
     )
