@@ -8,7 +8,7 @@ const FileListHeader = ({ t }) => (
   <div
     className={classNames(
       styles['fil-content-head'],
-      styles['fil-content-row']
+      styles['fil-content-row-head']
     )}
   >
     <div
