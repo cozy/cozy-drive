@@ -90,7 +90,7 @@
     "css-mqpacker": "6.0.1",
     "csswring": "6.0.2",
     "enzyme": "2.9.1",
-    "eslint": "4.15.0",
+    "eslint": "4.17.0",
     "eslint-config-prettier": "2.9.0",
     "eslint-config-standard": "10.2.1",
     "eslint-config-standard-react": "5.0.0",
