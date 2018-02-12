@@ -44,11 +44,10 @@ const ShareByEmailComingSoon = shunt(
   ComingSoon
 )
 
-export class ShareModal extends Component {
+class ModalContent extends Component {
   render() {
     const { t } = this.context
     const {
-      onClose,
       sharing,
       sharingDesc,
       share,
@@ -61,35 +60,28 @@ export class ShareModal extends Component {
     } = this.props
 
     return (
-      <Modal
-        title={t(`${documentType}.share.title`)}
-        dismissAction={onClose}
-        className={styles['share-modal']}
-        into="body"
-      >
-        <div className={styles['share-modal-content']}>
-          <ShareByLink
-            document={this.props.document}
+      <div className={styles['share-modal-content']}>
+        <ShareByLink
+          document={document}
+          documentType={documentType}
+          checked={!!sharing.sharingLink}
+          link={sharing.sharingLink}
+          onEnable={shareByLink}
+          onDisable={revokeLink}
+        />
+        <hr className={styles['divider']} />
+        {withSharingCheck(document, documentType, t)(
+          <ShareByEmailComingSoon
+            document={document}
             documentType={documentType}
-            checked={!!sharing.sharingLink}
-            link={sharing.sharingLink}
-            onEnable={shareByLink}
-            onDisable={revokeLink}
+            recipients={sharing.recipients}
+            contacts={contacts.data}
+            sharingDesc={sharingDesc}
+            onShare={share}
+            onUnshare={unshare}
           />
-          <hr className={styles['divider']} />
-          {withSharingCheck(document, documentType, t)(
-            <ShareByEmailComingSoon
-              document={document}
-              documentType={documentType}
-              recipients={sharing.recipients}
-              contacts={contacts.data}
-              sharingDesc={sharingDesc}
-              onShare={share}
-              onUnshare={unshare}
-            />
-          )}
-        </div>
-      </Modal>
+        )}
+      </div>
     )
   }
 }
@@ -153,7 +145,7 @@ const withSharingCheck = ({ id, type }, documentType, t) => BaseComponent => {
   )
 }
 
-export default cozyConnect(
+const ConnectedModalContent = cozyConnect(
   ownProps => ({
     sharing: fetchSharings(ownProps.document._type, ownProps.document._id, {
       include: ['recipients']
@@ -167,4 +159,28 @@ export default cozyConnect(
     shareByLink: document => dispatch(shareByLink(document)),
     revokeLink: document => dispatch(revokeLink(document))
   })
-)(ShareModal)
+)(ModalContent)
+
+export class ShareModal extends Component {
+  render() {
+    const { t } = this.context
+    const { onClose, sharing, document, documentType = 'Document' } = this.props
+
+    return (
+      <Modal
+        title={t(`${documentType}.share.title`)}
+        dismissAction={onClose}
+        className={styles['share-modal']}
+        into="body"
+      >
+        <ConnectedModalContent
+          sharing={sharing}
+          document={document}
+          documentType={documentType}
+        />
+      </Modal>
+    )
+  }
+}
+
+export default ShareModal
