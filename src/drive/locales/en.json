@@ -72,11 +72,11 @@
       "sharedByMe": "Shared by me",
       "sharedWithMe": "Shared with me",
       "shareByLink": {
-        "title": "By public link",
-        "subtitle": "Share by link",
+        "subtitle": "By public link",
         "desc": "Anyone with the provided link can see and download your files."
       },
       "shareByEmail": {
+        "subtitle": "By email",
         "email": "To:",
         "emailPlaceholder": "Enter email address or name of your recipient",
         "send": "Send",
