@@ -28,9 +28,9 @@ cache:
   - node_modules
 before_install:
 - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
-- travis_retry pip3.5 install --user transifex-client==0.12.5
+- travis_retry pip3.5 install --user transifex-client
 - install -m0644 .transifexrc.tpl ~/.transifexrc
-- echo "token = $TX_PASSWD" >> ~/.transifexrc
+- echo "password = $TX_PASSWD" >> ~/.transifexrc
 - cat ~/.transifexrc
 script:
 - yarn test
