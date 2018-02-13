@@ -30,8 +30,8 @@ before_install:
 - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
 - travis_retry pip3.5 install --user transifex-client
 - install -m0644 .transifexrc.tpl ~/.transifexrc
+- echo "password = $TX_TOKEN" >> ~/.transifexrc
 - cat ~/.transifexrc
-- tx --version
 script:
 - yarn test
 - yarn build:$COZY_APP_SLUG:browser
