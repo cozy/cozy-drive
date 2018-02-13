@@ -13,7 +13,7 @@ env:
   global:
   - CXX=g++-4.8
   - secure: OLcPuglkDbRd9Xf8WmPAlAWTmdXDb+SNVc7+WKQjIap5Ej58BBTtaAYR8kzFKSWmvWWSnvKmOYJfOHvWIOfkzlwhGLnk/xUnCCsjWmWNjOmnL5x74gCbfEgyU+rIwr2c4/hpzjcywTVBIhL4l/Bxjn+Op+NepKYMNTKko9qB7fA+nDglX/t3VObC9kEXwXElOOgLHNpbfQLEJxdEqXm8hVMmfjA/wSQnX96GqWhKWqMMPyjAxwkxYXFa04AgeTV3C8y4x7YxiuaE8cKZfi+DYX8DyV0XdBVKJTBKTGEaTbotewmXf7F+zsZ6Rg46HvQskSmckMqMKzZfGLFKsVELt6wyNVdVwptWXfu9o2FrXvvHj1krOltN5kQPKLwSmQH4RSlekQ+JYpRN4e+w4dNazILk1pAMu7+EqBTdH5khkDxeA1LAfFVuZz3QP1/fczF/PXSMsaQa779XXKf8dsEP5S8dHjpCOLSI506E+sWa/tu1mSZoaL+jGPovhiygsPUjbjqUmim3Dz+22y2E8jGrEeIdTEcoDXrvjcqwSNvs2LXlgOtgjxP47Fb3Enk18BUpVL2LMTmwF8FbglfKOTOFHHuhT/lQjtptT6NBu0tKi8fcJ/jj3patUj2kbqo85FYext/VrPN42uIXkDCxu9bEnyaGkBpl3qgD7F0J/gJSa10=
-  - secure: ETxIWcIEt4Czior+8ViiROQIM6/pElngZFFfVPAwsPb4wlFvAdC7MkOLrOxwR6CuTvproCMrnvj+uOp8jZlmQRUw8dmESrkldH7ivjRO6YPPZo6JYgxgI4bIvsT3ol86Fvol5YR5LxyPiOJjBqQMEzVtWOnvuGct/wT8dV+5NnmPPikfT7KKIj+sAvcZ34G2v9JGZ6n+4KjUBGFTOY4KUiCQRryL+n61+k8JnHygx5pevbSDisBVlrejmyVoGkboWzc14ZwQl2MhjET9pJzpguVwxuQJy5OGtW63syZyMaG7hR/dNMP90xJqViQC+kjvtm8yL4Oi6VbpJlQ1G5D7kku4ulvcayG1nGOGa3O7OMIg3QDnriwEgaXTicZ8Zwwg9lhPAXn7j1GkPVbf8HNcrC3wlcFbFhbGbxmQBjoS/Ce6XzuJqUTFuDOPYrohLo1mIdxr0rHwU7tqIYZ+eZuR505++gRNDTzP7nLpv4xyF8u1hoVr639CK8UibiFYVVjmQtEKgMKeOr8rkyPyQSNV4HZ9fR157o96ahCe6DZ4+d3RMWVQaEW36RUUhltSlVsi6xwkU9sBEhrwBIzOMSbnPix29IX+sWdaeMZgl/bh7JqBOJiUArO7t2SAlDU/uJxmP5lpQckJpNd1exxNWsQ+fEMXDCw1tqt4al1ziPAjXRQ=
+  - secure: P0CjCC+hrojtfmNrL4NWvwr48Zh2Rhiw7Lk49SArDjfP/keTLd2LBi5cfQzDj6A3Vt7u4Xyd4r4N/25gt8IHs8ipnPjqIJmFdyUfDqUASnYceahpkEP1W4K9/Bb4nCQoMkMR5ImSoZ7hLa/9CMsG0emfAxwgI5vDKkyOh2dgJK1LvQek1B8qoOsDpG43i6XRIrqILuI6yg/50++V1632Fv1TneSveOZCCDBCAmms67Sdom0vgq+C5w3LgOb8MO3gASJiP5rRe8h8wEnXqVnBvz58cRetOZNapAXIXKBvpS/7Nv+YE0ZZOFZQPe/4xiZHwHXiJ61r08A2zBce1LzvZUL8N27a3TqmmEQzpYtNVrmT1SYe9Ikdukbjou6O/tBcDp0WnS9zyMMfTRR3rN4k5BMoCEXBdxGDTLipyhFAUj+fOI1NR0+JAa9mBg2aQ/OhWH6NvZIANkXpZSPeCBBhaLwy2vA9fJOfcIbce30HXLVgxURtiScEPubM2VmHSjZExMkPHPGx0ljQak/jysSRwokIvKlnnvJ0l1nVLhXnRJ+2ZIoBicEuFfDpI+m6wl1xLy2CvqeBdXtW8Kpr/mBFL3y43b2aMP7nUaQaI/KOdSJCHoNH1GDfyZ0UHYeEqDGyQtbjHoA3A89IMSPru5p0Hb1eSu6RV5BDYOQuhvFDvoE=
 addons:
   apt:
     sources:
@@ -30,7 +30,7 @@ before_install:
 - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
 - travis_retry pip3.5 install --user transifex-client==0.12.5
 - install -m0644 .transifexrc.tpl ~/.transifexrc
-- echo "token = $TX_PASSWD" >> ~/.transifexrc
+- echo "password = $TX_PASSWD" >> ~/.transifexrc
 script:
 - yarn test
 - yarn build:$COZY_APP_SLUG:browser
