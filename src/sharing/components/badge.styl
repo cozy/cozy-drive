@@ -1,28 +1,32 @@
 @require 'cozy-ui'
 
 .shared-badge
-    background-color  white
-    border-radius     50%
-    padding           .125rem
+    display flex
+    align-items center
+    justify-content center
+    border-radius 50%
+    background-clip padding-box
 
     &.--small
-        .shared-badge-icon
-            padding         .6rem
-            background-size 50%
-    &.--xsmall
-        padding .0625rem
-        .shared-badge-icon
-            padding         .3rem
-            background-size 60%
+        border .125rem solid white
+        width 1.5rem
+        height 1.5rem
 
-.shared-badge-icon
-    padding              1rem
-    background-image     embedurl('../assets/icon-share-white.svg')
-    background-position  center
-    background-repeat    no-repeat
-    border-radius        50%
+        .shared-badge-icon
+            width .75rem
+            height .75rem
+
+    &.--xsmall
+        border .0625rem solid white
+        width .75rem
+        height .75rem
+
+        .shared-badge-icon
+            width .375rem
+            height .375rem
 
     &.--by-me
         background-color emerald
+
     &.--with-me
         background-color portage
