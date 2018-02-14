@@ -17,7 +17,8 @@ export const Support = ({
   success,
   failure,
   offline,
-  serverUrl
+  serverUrl,
+  sendFeedback
 }) => (
   <SettingCategory
     title={t('mobile.settings.support.title')}
@@ -48,6 +49,16 @@ export const Support = ({
           } else {
             offline()
           }
+        }
+      },
+      {
+        type: ELEMENT_BUTTON,
+        title: t('mobile.settings.support.feedback.title'),
+        description: t('mobile.settings.support.feedback.description'),
+        text: t('mobile.settings.support.feedback.button'),
+        theme: 'regular',
+        onClick: () => {
+          sendFeedback()
         }
       }
     ]}

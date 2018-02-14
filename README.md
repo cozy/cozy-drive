@@ -173,7 +173,7 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [freenode]: http://webchat.freenode.net/?randomnick=1&channels=%23cozycloud&uio=d4
 [forum]: https://forum.cozy.io/
 [github]: https://github.com/cozy/
-[twitter]: https://twitter.com/mycozycloud
+[twitter]: https://twitter.com/cozycloud
 [nvm]: https://github.com/creationix/nvm
 [ndenv]: https://github.com/riywo/ndenv
 [cozy-dev]: https://github.com/cozy/cozy-dev/

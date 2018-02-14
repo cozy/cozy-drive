@@ -114,9 +114,9 @@ const FileName = ({
         attributes.links.small && (
           <Preview thumbnail={`${url}${attributes.links.small}`} />
         )}
-      {(shared.byMe || shared.withMe) && (
+      {(shared.byMe || shared.withMe || shared.byLink) && (
         <SharedBadge
-          byMe={shared.byMe}
+          byMe={shared.byMe || shared.byLink}
           className={styles['fil-content-shared']}
           xsmall
         />
@@ -196,7 +196,7 @@ const FileAction = ({ onClick }) => (
       styles['fil-content-file-action']
     )}
   >
-    <Button theme="action" onClick={onClick}>
+    <Button theme="action" onClick={onClick} extension="narrow">
       <Icon icon="dots" color="charcoalGrey" width="17" height="17" />
     </Button>
   </div>

@@ -105,6 +105,7 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
   const MINUTE = 60 * SECOND
   const maxBackupTime = 5 * MINUTE
   const timeout = setTimeout(() => {
+    console.info(JSON.stringify(photo))
     logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
   }, maxBackupTime)
 

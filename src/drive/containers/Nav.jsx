@@ -3,7 +3,6 @@
 import styles from '../styles/nav'
 
 import React, { Component } from 'react'
-import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 
@@ -11,6 +10,7 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
 
 import Spinner from 'cozy-ui/react/Spinner'
+import Icon from 'cozy-ui/react/Icon'
 import { openFiles, openTrash, openRecent } from '../actions'
 
 class CustomLink extends Component {
@@ -82,64 +82,72 @@ class Nav extends Component {
     const { opening } = this.state
     return (
       <nav>
-        <ul className={styles['coz-nav']}>
-          <li className={styles['coz-nav-item']}>
+        <ul className={styles['c-nav']}>
+          <li className={styles['c-nav-item']}>
             <ActiveLink
               to="/folder"
               onClick={openFiles}
               onActiveChange={this.toggleOpening}
-              className={classNames(
-                styles['coz-nav-link'],
-                styles['fil-cat-files']
-              )}
-              activeClassName={styles['active']}
+              className={styles['c-nav-link']}
+              activeClassName={styles['is-active']}
               disabled={opening}
             >
-              {t('Nav.item_drive')}
+              <span className={styles['c-nav-icon']}>
+                <Icon icon="folder" />
+              </span>
+              <span className={styles['c-nav-text']}>
+                {t('Nav.item_drive')}
+              </span>
             </ActiveLink>
           </li>
-          <li className={styles['coz-nav-item']}>
+          <li className={styles['c-nav-item']}>
             <ActiveLink
               to="/recent"
               onClick={openRecent}
               onActiveChange={this.toggleOpening}
-              className={classNames(
-                styles['coz-nav-link'],
-                styles['fil-cat-recent']
-              )}
-              activeClassName={styles['active']}
+              className={styles['c-nav-link']}
+              activeClassName={styles['is-active']}
               disabled={opening}
             >
-              {t('Nav.item_recent')}
+              <span className={styles['c-nav-icon']}>
+                <Icon icon="clock" />
+              </span>
+              <span className={styles['c-nav-text']}>
+                {t('Nav.item_recent')}
+              </span>
             </ActiveLink>
           </li>
-          <li className={styles['coz-nav-item']}>
+          <li className={styles['c-nav-item']}>
             <ActiveLink
               to="/trash"
               onClick={openTrash}
               onActiveChange={this.toggleOpening}
-              className={classNames(
-                styles['coz-nav-link'],
-                styles['fil-cat-trash']
-              )}
-              activeClassName={styles['active']}
+              className={styles['c-nav-link']}
+              activeClassName={styles['is-active']}
               disabled={opening}
             >
-              {t('Nav.item_trash')}
+              <span className={styles['c-nav-icon']}>
+                <Icon icon="trash" />
+              </span>
+              <span className={styles['c-nav-text']}>
+                {t('Nav.item_trash')}
+              </span>
             </ActiveLink>
           </li>
           {__TARGET__ === 'mobile' && (
-            <li className={styles['coz-nav-item']}>
+            <li className={styles['c-nav-item']}>
               <Link
                 to="/settings"
-                className={classNames(
-                  styles['coz-nav-link'],
-                  styles['fil-cat-settings']
-                )}
-                activeClassName={styles['active']}
+                className={styles['c-nav-link']}
+                activeClassName={styles['is-active']}
                 disabled={opening}
               >
-                {t('Nav.item_settings')}
+                <span className={styles['c-nav-icon']}>
+                  <Icon icon="gear" />
+                </span>
+                <span className={styles['c-nav-text']}>
+                  {t('Nav.item_settings')}
+                </span>
               </Link>
             </li>
           )}

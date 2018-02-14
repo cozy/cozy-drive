@@ -1,6 +1,7 @@
 import styles from '../../../styles/toolbar'
 
 import React from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
@@ -33,7 +34,10 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
           disabled={disabled}
           label={t('Toolbar.menu.photo_upload')}
           type="menu-item"
-          className={styles['u-hide--desk']}
+          className={classNames(
+            styles['u-hide--tablet'],
+            styles['pho-action-upload']
+          )}
         />
       </Item>
       <hr className={styles['u-hide--desk']} />

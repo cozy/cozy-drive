@@ -2,6 +2,8 @@ import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
 
+const TYPE_DIRECTORY = 'directory'
+
 class SuggestionProvider extends React.Component {
   componentDidMount() {
     const { intent } = this.props
@@ -47,14 +49,20 @@ class SuggestionProvider extends React.Component {
         'files',
         'io.cozy.files'
       )
-      const files = allDocs.data
 
-      const folders = files.filter(file => file.type === 'directory')
+      const files = allDocs.data
+      const folders = files.filter(file => file.type === TYPE_DIRECTORY)
+
+      const notInTrash = file =>
+        !file.trashed && !/^\/\.cozy_trash/.test(file.path)
+      const notOrphans = file =>
+        folders.find(folder => folder._id === file.dir_id) !== undefined
 
       const normalizedFiles = files
-        .filter(file => file.trashed === false)
+        .filter(notInTrash)
+        .filter(notOrphans)
         .map(file => {
-          const isDir = file.type === 'directory'
+          const isDir = file.type === TYPE_DIRECTORY
           const dirId = isDir ? file._id : file.dir_id
           let path
           if (isDir) {
@@ -69,7 +77,7 @@ class SuggestionProvider extends React.Component {
             name: file.name,
             path,
             url: window.location.origin + '/#/folder/' + dirId,
-            icon: getIconUrl(file.mime)
+            icon: getIconUrl(file)
           }
         })
 
@@ -90,13 +98,15 @@ const icons = iconsContext.keys().reduce((acc, item) => {
   return acc
 }, {})
 
-function getIconUrl(mimetype) {
+function getIconUrl(file) {
   const keyIcon =
-    getFileTypeFromMime(icons)(mimetype) ||
-    console.warn(
-      `No icon found, you may need to add a mapping for ${mimetype}`
-    ) ||
-    'files'
+    file.type === TYPE_DIRECTORY
+      ? 'folder'
+      : getFileTypeFromMime(icons)(file.mime) ||
+        console.warn(
+          `No icon found, you may need to add a mapping for ${file.mime}`
+        ) ||
+        'files'
 
   return `${window.location.origin}/${icons[keyIcon]}`
 }

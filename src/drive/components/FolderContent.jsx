@@ -21,7 +21,7 @@ const FolderContent = props => {
         <Spinner
           size="xxlarge"
           loadingType="message"
-          middle="true"
+          middle
           className={styles['content-spinner']}
         />
       )

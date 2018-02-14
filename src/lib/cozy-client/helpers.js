@@ -1,5 +1,6 @@
 /* global cozy */
-import { retry, removeObjectProperties } from './utils'
+import omit from 'lodash/omit'
+import { retry } from './utils'
 
 const slugify = text =>
   text
@@ -60,7 +61,7 @@ export const getIndexFields = query => {
 
 /** Remove special fields */
 export const sanitizeDoc = doc => {
-  return removeObjectProperties(doc, ['_type'])
+  return omit(doc, ['_type', 'id'])
 }
 
 export const isV2 = url =>

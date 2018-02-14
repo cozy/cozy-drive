@@ -884,7 +884,7 @@ pouchdb-errors@6.3.4:
   dependencies:
     inherits "2.0.3"
 
-pouchdb-find@^6.3.4:
+pouchdb-find@6.3.4:
   version "6.3.4"
   resolved "https://registry.yarnpkg.com/pouchdb-find/-/pouchdb-find-6.3.4.tgz#27163e3d9a82bab2cc6db1deb73447762e8bd705"
   dependencies:
@@ -937,7 +937,7 @@ pouchdb-utils@6.3.4:
     pouchdb-promise "6.3.4"
     uuid "^3.1.0"
 
-pouchdb@^6.3.4:
+pouchdb@6.3.4:
   version "6.3.4"
   resolved "https://registry.yarnpkg.com/pouchdb/-/pouchdb-6.3.4.tgz#e3c8596d19cc12f7474ca48d5d3800affaf701b1"
   dependencies:

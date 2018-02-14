@@ -1,64 +1,38 @@
-@require 'settings/breakpoints.styl'
-@require 'settings/palette.styl'
+@require 'components/table.styl'
 @import './mimetypes'
 
 .fil-content-table
-    position        relative
-    display         flex
-    flex-direction  column
-    flex            1 1 100%
-    height          100%
-    text-align      left
-    color           coolGrey
+    @extend $table
 
 .fil-content-head
-    flex 0 0 2rem
+    @extend $table-head
 
 .fil-content-body
-    flex      1 1 auto
-    display   flex
-    flex-direction column
-    overflow  auto
+    @extend $table-body
 
-.fil-content-header
 .fil-content-cell
-    box-sizing  border-box
-    padding     .9375rem 2rem
-    font-size   .875rem
+    @extend $table-cell
+
+.fil-content-row-head
+    @extend $table-row-head
 
 .fil-content-row
-    height          3rem
-    box-sizing      border-box
-    display         flex
-    flex-direction  row
-    align-items     center
-    flex            0 0 auto
-    width           100%
-    border-bottom   .0625rem solid silver
-
-    &:hover
-        background-color paleGrey
-    &.fil-content-head:hover
-        background-color white
+    @extend $table-row
 
     &--center
         justify-content center
 
 .fil-content-row-selected
-    background-color rgba(24, 122, 255, 0.1)
-    &:hover
-        background-color rgba(24, 122, 255, 0.1)
+    @extend $table-row-selected
 
 .fil-content-ext
     color coolGrey
 
 .fil-content-header
-    padding         .5rem 1.75rem
-    font-size       .75rem
-    text-transform  uppercase
+    @extend $table-header
 
-.fil-content-header:first-child
-    padding .5rem
+    &:first-child
+        padding .5rem
 
 .fil-content-file-action
     display     none
@@ -83,7 +57,6 @@
     line-height    1.3
     white-space    nowrap
     overflow       hidden
-    
     color charcoalGrey
 
 .fil-content-file-openable
@@ -212,17 +185,11 @@ mime-types('fil-file-', '../assets/icons/')
         .fil-content-body
             margin-bottom 3rem
 
-    .fil-content-row
-        max-width  100vw
-
 +small-screen()
     .fil-content-head
     .fil-content-date
     .fil-content-size
         display none
-
-    .fil-content-body
-        max-height  100%
 
     .fil-content-file
         flex 1 1 auto

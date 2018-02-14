@@ -8,7 +8,9 @@ const mappingMimetypeSubtype = {
   powerpoint: 'slide'
 }
 
-export const getFileTypeFromMime = (collection, prefix = '') => mimetype => {
+export const getFileTypeFromMime = (collection, prefix = '') => (
+  mimetype = ''
+) => {
   const [type, subtype] = mimetype.split('/')
   if (collection[prefix + type]) {
     return type
