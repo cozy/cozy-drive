@@ -114,9 +114,9 @@ const FileName = ({
         attributes.links.small && (
           <Preview thumbnail={`${url}${attributes.links.small}`} />
         )}
-      {(shared.byMe || shared.withMe) && (
+      {(shared.byMe || shared.withMe || shared.byLink) && (
         <SharedBadge
-          byMe={shared.byMe}
+          byMe={shared.byMe || shared.byLink}
           className={styles['fil-content-shared']}
           xsmall
         />
