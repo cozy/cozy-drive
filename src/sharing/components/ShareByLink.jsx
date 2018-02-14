@@ -34,7 +34,6 @@ export const ShareWithLink = (
   { t }
 ) => (
   <div className={styles['coz-form']}>
-    <h4>{t(`${documentType}.share.sharingLink.title`)}</h4>
     <div className={styles['input-dual']}>
       <div>
         <input type="text" name="" id="" value={shareLink} />
