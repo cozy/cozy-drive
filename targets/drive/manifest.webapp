@@ -76,6 +76,11 @@
       "description": "Required by the cozy-bar to display Claudy and know which applications are coming soon",
       "type": "io.cozy.settings",
       "verbs": ["GET"]
+    },
+    "oauth": {
+      "description": "Required to display the cozy-desktop banner",
+      "type": "io.cozy.oauth.clients",
+      "verbs": ["GET"]
     }
   }
 }
