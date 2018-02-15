@@ -6,46 +6,52 @@ PLATFORM = { :ios => "platforms/ios", :android => "platforms/android" }
 SECURITY = { :ios => "keys/ios", :android => "keys/android" }
 BUILD = { :ios => "build/ios", :android => "build/android" }
 
-
 def build(platform)
   sh "cordova build #{platform} --release"
 end
 
-
 platform :ios do
-
 
   # path to xcodeproj folder
   xcodeproj = "#{PLATFORM[:ios]}/#{APP_NAME}.xcodeproj"
-
 
   desc "Create an app identifier on the developer member center and iTunes Connect"
   lane :create do
     produce(app_name: APP_NAME)
   end
 
-
   desc "Codesign, Archive and upload the app to Testflight"
   lane :pushtest do
-
     # Get certificate
     cert(output_path: "#{SECURITY[:ios]}")
-
     # Get provisioning profile
     sigh(output_path: "#{SECURITY[:ios]}/testflight")
-
     # Build the
     build('ios')
-
     # Recreate schemes to ensure a smooth transition from cordova to gym
     recreate_schemes(project: xcodeproj)
-
     # Archive app into ipa
     gym(scheme: APP_NAME, project: xcodeproj, output_directory: "#{BUILD[:ios]}", output_name: APP_FILENAME)
-
     # Upload to Testflight
     pilot(distribute_external: false, ipa: "#{BUILD[:ios]}/#{APP_FILENAME}.ipa")
-
   end
 
+end
+
+platform :android do
+  
+  desc "Build Release"
+  lane :build_release do
+    gradle(
+      task: 'assemble',
+      build_type: 'Release',
+      project_dir: "#{PLATFORM[:android]}",
+      properties: {
+        "android.injected.signing.store.file" => '../keys/android/cozy-drive-release-key.jks',
+        #"android.injected.signing.store.password" => 'xyz',
+        #"android.injected.signing.key.alias" => 'FastlaneIonic',
+        #"android.injected.signing.key.password" => 'xyz',
+      }
+    )
+  end
 end
