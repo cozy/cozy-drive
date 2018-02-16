@@ -102,7 +102,7 @@ const promptRating = async ({
   softwareID
 }) =>
   new Promise((resolve, reject) => {
-    if (!window.AppRate) resolve('No AppRate found')
+    if (!window.AppRate) reject(new Error('No AppRate found'))
     try {
       window.AppRate.preferences = {
         displayAppName: softwareName,
