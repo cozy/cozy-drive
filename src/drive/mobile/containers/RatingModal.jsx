@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
-import Button from 'cozy-ui/react/Button'
+import { Button } from 'cozy-ui/react'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
 import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
