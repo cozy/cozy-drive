@@ -1,3 +1,4 @@
+/* global cozy */
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
 
 export const track = element => {
@@ -18,3 +19,11 @@ export const isIOS = () =>
   /iPad|iPhone|iPod/.test(window.navigator.userAgent)
 
 export const DESKTOP_BANNER = 'desktop_banner'
+
+export const isClientAlreadyInstalled = async () => {
+  const resp = await cozy.client.fetchJSON('GET', '/settings/clients')
+  return resp.some(
+    device =>
+      device.attributes.software_id === 'github.com/cozy-labs/cozy-desktop'
+  )
+}
