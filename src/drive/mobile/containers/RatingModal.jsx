@@ -15,7 +15,8 @@ const ALERT_RATING = 'ALERT_RATING'
 const BUTTON_INDEX_RATE = 1
 const BUTTON_INDEX_LATER = 2
 
-const PROMPT_AFTER_BOOTS = 5
+const PROMPT_AFTER_BOOTS = 10
+const PROMPT_AFTER_DAYS = 7
 
 // RatingModal is the base component
 class RatingModal extends Component {
@@ -138,6 +139,8 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
   class WithBootDelay extends Component {
     state = {
       bootCount: 0,
+      promptAfter:
+        new Date().getTime() + PROMPT_AFTER_DAYS * 24 * 60 * 60 * 1000,
       prompted: false
     }
 
@@ -163,8 +166,12 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
     }
 
     render() {
-      const { bootCount, prompted } = this.state
-      const visible = prompted === false && bootCount >= showAfterBoots
+      const { bootCount, promptAfter, prompted } = this.state
+      const timeRemainingBeforePrompt = promptAfter - new Date().getTime()
+      const visible =
+        prompted === false &&
+        bootCount >= showAfterBoots &&
+        timeRemainingBeforePrompt <= 0
       return (
         visible && (
           <WrappedComponent
