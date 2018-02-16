@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { Button } from 'cozy-ui/react'
 import { connect } from 'react-redux'
@@ -71,6 +72,12 @@ class RatingModal extends Component {
   }
 }
 
+RatingModal.propTypes = {
+  alert: PropTypes.func.isRequired,
+  dontShowAgain: PropTypes.func.isRequired,
+  showLater: PropTypes.func.isRequired
+}
+
 // sub-components
 const EnjoyCozy = (props, context) => {
   const { onReply } = props
@@ -89,6 +96,10 @@ const EnjoyCozy = (props, context) => {
       </ModalContent>
     </Modal>
   )
+}
+
+EnjoyCozy.propTypes = {
+  onReply: PropTypes.func.isRequired
 }
 
 // promptRating is not a component because the native UI is used instead
