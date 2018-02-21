@@ -45,7 +45,7 @@ platform :android do
       track: 'beta', 
       apk: apk_path, 
       package_name: 'io.cozy.drive.mobile',
-      json_key: '../keys/android/Google Play Android Developer-2d56b6aa13db.json'
+      json_key: 'keys/android/Google Play Android Developer-2d56b6aa13db.json'
     )
   end
 end
