@@ -43,6 +43,7 @@
     "sign:drive:android": "(cd targets/drive/mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/release/android-release-unsigned.apk)",
     "buildsigned:drive:android": "npm run build:drive:android && npm run sign:drive:android",
     "publish:drive:android": "(cd targets/drive/mobile && fastlane supply)",
+    "publishbeta:drive:android": "(cd targets/drive/mobile && fastlane android pushbeta)",
     "run:drive:ios": "(cd targets/drive/mobile && cordova run ios --device)",
     "run:drive:ios:emulator": "(cd targets/drive/mobile && cordova run ios --emulator)",
     "publish:drive:ios": "npm run build:drive:mobile && (cd targets/drive/mobile && fastlane ios pushtest)"
