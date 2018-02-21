@@ -11,7 +11,6 @@ def build(platform)
 end
 
 platform :ios do
-
   # path to xcodeproj folder
   xcodeproj = "#{PLATFORM[:ios]}/#{APP_NAME}.xcodeproj"
 
@@ -35,23 +34,18 @@ platform :ios do
     # Upload to Testflight
     pilot(distribute_external: false, ipa: "#{BUILD[:ios]}/#{APP_FILENAME}.ipa")
   end
-
 end
 
 platform :android do
+  apk_path = "#{BUILD[:android]}/cozy-drive.apk"
   
-  desc "Build Release"
-  lane :build_release do
-    gradle(
-      task: 'assemble',
-      build_type: 'Release',
-      project_dir: "#{PLATFORM[:android]}",
-      properties: {
-        "android.injected.signing.store.file" => '../keys/android/cozy-drive-release-key.jks',
-        #"android.injected.signing.store.password" => 'xyz',
-        #"android.injected.signing.key.alias" => 'FastlaneIonic',
-        #"android.injected.signing.key.password" => 'xyz',
-      }
+  desc "Build, sign and upload APK to the Beta channel"
+  lane :pushbeta do
+    upload_to_play_store(
+      track: 'beta', 
+      apk: apk_path, 
+      package_name: 'io.cozy.drive.mobile',
+      json_key: '../keys/android/Google Play Android Developer-2d56b6aa13db.json'
     )
   end
 end
