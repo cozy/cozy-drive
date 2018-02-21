@@ -1,5 +1,13 @@
 /* global cozy */
-
+import {
+  MEDIA_UPLOAD_START,
+  MEDIA_UPLOAD_END,
+  MEDIA_UPLOAD_ABORT,
+  MEDIA_UPLOAD_SUCCESS,
+  MEDIA_UPLOAD_CANCEL,
+  MEDIA_UPLOAD_QUOTA,
+  CURRENT_UPLOAD
+} from './reducer'
 import { setBackupImages } from '../../actions/settings'
 import {
   getPhotos,
@@ -127,8 +135,6 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
   }
 }
 
-// backupImages
-
 export const backupImages = backupImages => async (dispatch, getState) => {
   if (backupImages === undefined) {
     backupImages = getState().mobile.settings.backupImages
@@ -158,60 +164,4 @@ const updateValueAfterRequestAuthorization = async value => {
   return value
 }
 
-const MEDIA_UPLOAD_START = 'MEDIA_UPLOAD_START'
-const MEDIA_UPLOAD_END = 'MEDIA_UPLOAD_END'
-const MEDIA_UPLOAD_ABORT = 'MEDIA_UPLOAD_ABORT'
-const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
-const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
-const MEDIA_UPLOAD_QUOTA = 'MEDIA_UPLOAD_QUOTA'
-const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
-
-const initialState = {
-  uploading: false,
-  cancelMediaBackup: false,
-  abortedMediaBackup: false,
-  diskQuotaReached: false,
-  uploaded: []
-}
-
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case MEDIA_UPLOAD_START:
-      return {
-        ...state,
-        uploading: true,
-        cancelMediaBackup: false,
-        abortedMediaBackup: false,
-        diskQuotaReached: false
-      }
-    case MEDIA_UPLOAD_CANCEL:
-      return { ...state, cancelMediaBackup: true }
-    case MEDIA_UPLOAD_ABORT:
-      return { ...state, abortedMediaBackup: true }
-    case MEDIA_UPLOAD_QUOTA:
-      return { ...state, diskQuotaReached: true }
-    case MEDIA_UPLOAD_END:
-      return {
-        ...state,
-        uploading: false,
-        cancelMediaBackup: true,
-        currentUpload: undefined
-      }
-    case MEDIA_UPLOAD_SUCCESS:
-      return {
-        ...state,
-        uploaded: [...state.uploaded, action.id]
-      }
-    case CURRENT_UPLOAD:
-      return {
-        ...state,
-        currentUpload: {
-          media: action.media,
-          message: action.message,
-          messageData: action.messageData
-        }
-      }
-    default:
-      return state
-  }
-}
+export { default } from './reducer'
