@@ -136,6 +136,11 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
 }
 
 export const backupImages = backupImages => async (dispatch, getState) => {
+  // TODO: it looks like the media backup is triggered twice at app init, but I couldn't figure why :/
+  // This fixes the issue, but we'll need to figure out why it is triggered twice...
+  if (getState().mobile.mediaBackup.running === true) {
+    return
+  }
   if (backupImages === undefined) {
     backupImages = getState().mobile.settings.backupImages
   } else {
