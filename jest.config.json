@@ -1,5 +1,9 @@
 {
   "roots": ["<rootDir>/src"],
+  "moduleFileExtensions": ["js", "jsx", "json", "styl"],
+  "moduleNameMapper": {
+    "styles": "identity-obj-proxy"
+  },
   "transformIgnorePatterns": [
     "node_modules/(?!cozy-ui)/"
   ]

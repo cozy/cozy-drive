@@ -316,6 +316,7 @@
         "media_upload":
           "%{smart_count} remaining picture |||| %{smart_count} remaining pictures",
         "media_uptodate": "Media backup is up-to-date",
+        "preparing": "Searching for media to backup...",
         "no_wifi": "Please connect to a WIFI",
         "quota": "Storage limit nearly reached",
         "quota_contact": "Manage your storage space"

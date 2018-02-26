@@ -1,5 +1,5 @@
 /* global cozy emit */
-import { clientRevokedMsg } from './cozy-helper'
+const clientRevokedMsg = 'Client has been revoked'
 
 export const startReplication = async (
   hasIndexes,
