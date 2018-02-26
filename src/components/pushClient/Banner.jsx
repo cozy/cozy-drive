@@ -76,6 +76,7 @@ class BannerClient extends Component {
         </p>
         <Button
           theme="close"
+          extension="narrow"
           className={styles['close-banner']}
           onClick={e => {
             this.markAsSeen('close')
