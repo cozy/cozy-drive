@@ -69,7 +69,6 @@ const doctypePermsetInitialState = {
 }
 
 const doctypePermissions = (state = doctypePermsetInitialState, action) => {
-  let idx
   switch (action.type) {
     case FETCH_SHARINGS:
       return { ...state, fetchStatus: 'loading' }
@@ -102,11 +101,10 @@ const doctypePermissions = (state = doctypePermsetInitialState, action) => {
         byLink: [...state.byLink, action.response]
       }
     case REVOKE_SHARING_LINK:
-      idx = state.byLink.findIndex(p => action.permission._id === p._id)
-      if (idx === -1) return state
+      const permIds = action.permissions.map(p => p._id)
       return {
         ...state,
-        byLink: [...state.byLink.slice(0, idx), ...state.byLink.slice(idx + 1)]
+        byLink: state.byLink.filter(p => permIds.indexOf(p._id) === -1)
       }
     default:
       return state
@@ -215,7 +213,9 @@ export const shareByLink = document => {
 }
 
 export const revokeLink = document => async (dispatch, getState) => {
-  const perm = getSharingLinkPermission(
+  // Because some duplicate links have been created in the past, we must ensure
+  // we revoke all of them
+  const perms = getSharingLinkPermissions(
     getState(),
     document._type,
     document._id
@@ -224,8 +224,8 @@ export const revokeLink = document => async (dispatch, getState) => {
     types: [REVOKE_SHARING_LINK, RECEIVE_SHARING_LINK_REVOKE, RECEIVE_ERROR],
     doctype: document._type,
     id: document._id,
-    permission: perm,
-    promise: client => client.getCollection(SHARINGS_DOCTYPE).revokeLink(perm)
+    permissions: perms,
+    promise: client => client.getCollection(SHARINGS_DOCTYPE).revokeLink(perms)
   })
 }
 
@@ -360,9 +360,15 @@ export const getSharingLink = (state, doctype, id) => {
 }
 
 const getSharingLinkPermission = (state, doctype, id) => {
+  const perms = getSharingLinkPermissions(state, doctype, id)
+  return perms.length === 0 ? null : perms[0]
+}
+
+// This shouldn't have happened, but unfortunately some duplicate sharing links have been created in the past
+const getSharingLinkPermissions = (state, doctype, id) => {
   const perms = getDoctypePermissions(state, doctype)
   const type = isFile({ _type: doctype }) ? 'files' : 'collection'
-  return perms.byLink.find(
+  return perms.byLink.filter(
     p =>
       p.attributes &&
       p.attributes.permissions &&
