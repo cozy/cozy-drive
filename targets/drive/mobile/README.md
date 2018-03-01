@@ -65,8 +65,6 @@ $ cordova run ios
 
 ## :lock: Create Release
 
-## TODO: update this part
-
 ### Android
 
 Create these folders:
@@ -86,9 +84,25 @@ You must have this files:
 To generate a signed APK on `targets/drive/mobile/build/android/` and publish on Google Play:
 
 ```
-$ npm run android:publish
+$ npm run buildsigned:drive:android
+$ npm run publish:drive:android
 ```
 
+Or if you want to publish the release on the beta track:
+
+```
+$ npm run buildsigned:drive:android
+$ npm run publishbeta:drive:android
+```
+
+### iOS
+
+Open XCode and sign in to your Apple account. This account should be part of the Cozy team with the proper access rights so you can download the Cozy Cloud signing certificates.
+Once you have the certificates, change the projects signing process to use these certificates and run:
+
+```
+$ npm run publish:drive:ios
+```
 
 ## :rainbow: Icons & Splashscreen
 
@@ -110,3 +124,24 @@ Should be a 1024x1024px.
 Your splash must be 2732x2732px as it now is the largest resolution (used by iPad Pro 12.9"), and the artwork should fit a center square (1200x1200px). This Photoshop splash screen template provides the recommended size and guidelines of the artwork’s safe zone.
 
 - `mobile/res/model/splash.png`
+
+## :newspaper_roll: Uploading sourcemaps to Sentry
+
+First, you will need to create a `.sentryclirc` file in `~/` that will contain the following data:
+
+```
+[defaults]
+url=https://sentry.cozycloud.cc/
+project=cozy-drive-dev
+org=sentry
+[auth]
+token = {token}
+```
+
+Replace `{token}` with a token that you can generate by going to [this page](https://sentry.cozycloud.cc/api/) (Profile -> API). The token should have the `project:write` and `project:releases` permissions.
+
+Once the file is created, and after you've ran the proper build commands, you can upload the sourcemaps with
+
+```sh
+$ yarn sentry:drive:mobile
+```

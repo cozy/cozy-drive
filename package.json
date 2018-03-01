@@ -45,7 +45,8 @@
     "publishbeta:drive:android": "(cd targets/drive/mobile && fastlane android pushbeta)",
     "run:drive:ios": "(cd targets/drive/mobile && cordova run ios --device)",
     "run:drive:ios:emulator": "(cd targets/drive/mobile && cordova run ios --emulator)",
-    "publish:drive:ios": "npm run build:drive:mobile && (cd targets/drive/mobile && fastlane ios pushtest)"
+    "publish:drive:ios": "npm run build:drive:mobile && (cd targets/drive/mobile && fastlane ios pushtest)",
+    "sentry:drive:mobile": "sentry-cli releases files $npm_package_version upload-sourcemaps ./targets/drive/mobile/www"
   },
   "repository": {
     "type": "git",
@@ -70,6 +71,7 @@
   },
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
+    "@sentry/cli": "^1.30.1",
     "autoprefixer": "7.2.6",
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.1",
