@@ -3,7 +3,7 @@
 const { DefinePlugin, ProvidePlugin } = require('webpack')
 
 module.exports = {
-  devtool: '#source-map',
+  devtool: 'cheap-module-eval-source-map',
   externals: ['cozy'],
   module: {
     rules: [
