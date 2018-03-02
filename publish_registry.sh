@@ -49,4 +49,4 @@ curl -sS --fail -X POST \
     -H "Content-Type: application/json" \
     -H "Authorization: Token ${REGISTRY_TOKEN}" \
     -d "{\"editor\": \"${REGISTRY_EDITOR}\", \"version\": \"${COZY_APP_VERSION}\", \"url\": \"${COZY_BUILD_URL}\", \"sha256\": \"${shasum}\", \"type\": \"webapp\"}" \
-    "https://int-registry.cozycloud.cc/registry/${COZY_APP_SLUG}"
+    "https://staging-apps-registry.cozycloud.cc/registry/${COZY_APP_SLUG}"

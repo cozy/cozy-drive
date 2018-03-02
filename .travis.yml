@@ -1,4 +1,3 @@
-language: node_js
 matrix:
   fast_finish: true
 env:
