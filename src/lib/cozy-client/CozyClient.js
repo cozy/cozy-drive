@@ -58,12 +58,14 @@ export default class CozyClient {
       await cozy.client.auth.getClient(clientInfos)
       return true
     } catch (err) {
-      // this is the error sent if we are offline
-      if (err.message === 'Failed to fetch') {
-        return true
-      } else {
-        console.warn(err)
+      if (err.message === 'Client has been revoked') {
         return false
+      } else {
+        console.log(
+          'Error while retrieving oauth client information, but client is not revoked'
+        )
+        console.warn(err)
+        return true
       }
     }
   }
