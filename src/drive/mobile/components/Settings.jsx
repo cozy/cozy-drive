@@ -6,7 +6,6 @@ import Main from '../../components/Main'
 import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from 'cozy-ui/react/I18n'
-import UploadStatus from '../containers/UploadStatus'
 
 import About from '../containers/settings/About'
 import Support from '../containers/settings/Support'
@@ -58,7 +57,6 @@ class Settings extends Component {
 
             {__DEVELOPMENT__ && [<hr />, <h3>Debug Zone</h3>, <DebugTools />]}
           </div>
-          <UploadStatus />
           {this.state.displayFeedback && (
             <FeedbackForm onClose={this.hideFeedbackForm} />
           )}

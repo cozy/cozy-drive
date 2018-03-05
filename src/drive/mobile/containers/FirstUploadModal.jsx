@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
+import { Button } from 'cozy-ui/react'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
-import styles from '../styles/uploadstatus'
 import { isIos } from '../lib/device'
 
 const MINIMUM_LONG_UPLOAD_FILES_COUNT = 50
@@ -18,9 +18,9 @@ const FirstUploadModal = translate()(({ t, onClose }) => (
         {isIos() && <li>{t('mobile.first_sync.tip_lock')}</li>}
       </ul>
       <p>{t('mobile.first_sync.result')}</p>
-      <button onClick={onClose} className={styles['btn--full-width']}>
+      <Button onClick={onClose} extension="full">
         {t('mobile.first_sync.button')}
-      </button>
+      </Button>
     </ModalContent>
   </Modal>
 ))

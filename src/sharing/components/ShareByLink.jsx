@@ -6,7 +6,7 @@ import { Button } from 'cozy-ui/react'
 import styles from '../share.styl'
 
 export const ShareWithLinkToggle = (
-  { active, onToggle, documentType },
+  { active, loading, onToggle, documentType },
   { t }
 ) => (
   <div className={styles['coz-form-group']}>
@@ -22,6 +22,7 @@ export const ShareWithLinkToggle = (
           id="share-toggle"
           name="share"
           checked={active}
+          disabled={loading}
           onToggle={onToggle}
         />
       </div>
@@ -95,6 +96,7 @@ class ShareByLink extends React.Component {
       <div>
         <ShareWithLinkToggle
           active={checked}
+          loading={loading}
           onToggle={checked => this.toggleShareLink(checked)}
           documentType={documentType}
         />

@@ -1,4 +1,4 @@
-/* global cozy */
+/* global cozy __APP_VERSION__ */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -18,11 +18,20 @@ class FeedbackForm extends Component {
   submitForm = async e => {
     e.preventDefault()
     const { t } = this.context
+    const envInfo =
+      `Cozy Drive Mobile v${__APP_VERSION__}` +
+      `\nOn ${navigator.platform}` +
+      `\nFrom ${navigator.vendor}` +
+      `\n${navigator.userAgent}`
+
+    const mailContent =
+      this.textarea.value.toString() + '\n_______________\n' + envInfo
+
     const mailData = {
       mode: 'from',
       to: [{ name: 'Support', email: FEEDBACK_EMAIL }],
       subject: t('mobile.rating.email.subject'),
-      parts: [{ type: 'text/plain', body: this.textarea.value.toString() }]
+      parts: [{ type: 'text/plain', body: mailContent }]
     }
 
     try {

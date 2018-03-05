@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
-import Button from 'cozy-ui/react/Button'
+import { Button } from 'cozy-ui/react'
 import { connect } from 'react-redux'
 import withPersistentState from '../lib/withPersistentState'
 import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
@@ -15,7 +16,8 @@ const ALERT_RATING = 'ALERT_RATING'
 const BUTTON_INDEX_RATE = 1
 const BUTTON_INDEX_LATER = 2
 
-const PROMPT_AFTER_BOOTS = 5
+const PROMPT_AFTER_BOOTS = 10
+const PROMPT_AFTER_DAYS = 7
 
 // RatingModal is the base component
 class RatingModal extends Component {
@@ -70,6 +72,12 @@ class RatingModal extends Component {
   }
 }
 
+RatingModal.propTypes = {
+  alert: PropTypes.func.isRequired,
+  dontShowAgain: PropTypes.func.isRequired,
+  showLater: PropTypes.func.isRequired
+}
+
 // sub-components
 const EnjoyCozy = (props, context) => {
   const { onReply } = props
@@ -90,6 +98,10 @@ const EnjoyCozy = (props, context) => {
   )
 }
 
+EnjoyCozy.propTypes = {
+  onReply: PropTypes.func.isRequired
+}
+
 // promptRating is not a component because the native UI is used instead
 const promptRating = async ({
   title,
@@ -101,7 +113,7 @@ const promptRating = async ({
   softwareID
 }) =>
   new Promise((resolve, reject) => {
-    if (!window.AppRate) resolve('No AppRate found')
+    if (!window.AppRate) reject(new Error('No AppRate found'))
     try {
       window.AppRate.preferences = {
         displayAppName: softwareName,
@@ -138,6 +150,8 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
   class WithBootDelay extends Component {
     state = {
       bootCount: 0,
+      promptAfter:
+        new Date().getTime() + PROMPT_AFTER_DAYS * 24 * 60 * 60 * 1000,
       prompted: false
     }
 
@@ -163,8 +177,12 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
     }
 
     render() {
-      const { bootCount, prompted } = this.state
-      const visible = prompted === false && bootCount >= showAfterBoots
+      const { bootCount, promptAfter, prompted } = this.state
+      const timeRemainingBeforePrompt = promptAfter - new Date().getTime()
+      const visible =
+        prompted === false &&
+        bootCount >= showAfterBoots &&
+        timeRemainingBeforePrompt <= 0
       return (
         visible && (
           <WrappedComponent

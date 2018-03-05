@@ -5,8 +5,6 @@ import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { getDeviceName, isIos } from './device'
 import { disableBackgroundService } from './background'
 
-export const clientRevokedMsg = 'Client has been revoked'
-
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 

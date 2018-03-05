@@ -78,7 +78,11 @@ export default class SharingsCollection {
     })
   }
 
-  revokeLink(permission) {
-    return cozy.client.fetchJSON('DELETE', `/permissions/${permission._id}`)
+  revokeLink(permissions) {
+    return Promise.all(
+      permissions.map(p =>
+        cozy.client.fetchJSON('DELETE', `/permissions/${p._id}`)
+      )
+    )
   }
 }

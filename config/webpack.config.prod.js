@@ -6,10 +6,11 @@ module.exports = {
   output: {
     filename: '[name].[hash].min.js'
   },
-  devtool: false,
+  devtool: 'source-map',
   plugins: [
     new optimize.UglifyJsPlugin({
       mangle: true,
+      sourceMap: true,
       compress: {
         warnings: false
       }

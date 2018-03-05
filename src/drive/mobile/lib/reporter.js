@@ -1,17 +1,10 @@
 /* global __SENTRY_TOKEN__, __DEVELOPMENT__, __APP_VERSION__ */
 import Raven from 'raven-js'
 
-const getAnalyticsUrl = () => {
-  if (typeof __SENTRY_TOKEN__ === 'undefined') {
-    return ''
-  }
-
-  const PROD_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
-  const DEV_ANALYTICS_URL = `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/2`
-  return __DEVELOPMENT__ ? DEV_ANALYTICS_URL : PROD_ANALYTICS_URL
-}
-
-export const ANALYTICS_URL = getAnalyticsUrl()
+export const ANALYTICS_URL =
+  typeof __SENTRY_TOKEN__ === 'undefined'
+    ? ''
+    : `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
 
 export const getReporterConfiguration = () => ({
   shouldSendCallback: true,
