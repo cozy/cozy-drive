@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { mapValues } from './utils'
 import omit from 'lodash/omit'
+import uniq from 'lodash/uniqBy'
 import sharings, {
   FETCH_SHARINGS,
   getSharings,
@@ -216,9 +217,10 @@ const collection = (state = collectionInitialState, action) => {
           response.meta && response.meta.count
             ? response.meta.count
             : response.data.length,
-        ids: !action.skip
-          ? response.data.map(doc => doc.id)
-          : [...state.ids, ...response.data.map(doc => doc.id)]
+        ids:
+          !action.skip || !action.merge
+            ? response.data.map(doc => doc.id)
+            : uniq([...state.ids, ...response.data.map(doc => doc.id)])
       }
     case ADD_REFERENCED_FILES:
       return {
