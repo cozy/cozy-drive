@@ -46,7 +46,7 @@
     "run:drive:ios": "(cd targets/drive/mobile && cordova run ios --device)",
     "run:drive:ios:emulator": "(cd targets/drive/mobile && cordova run ios --emulator)",
     "publish:drive:ios": "npm run build:drive:mobile && (cd targets/drive/mobile && fastlane ios pushtest)",
-    "sentry:drive:mobile": "sentry-cli releases files $npm_package_version upload-sourcemaps ./targets/drive/mobile/www"
+    "sentry:drive:mobile": "sentry-cli releases files $npm_package_version upload-sourcemaps --url-prefix 'file:///android_asset/www/' ./targets/drive/mobile/www"
   },
   "repository": {
     "type": "git",
