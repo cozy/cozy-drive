@@ -12,14 +12,14 @@ class SuggestionProvider extends React.Component {
     // re-attach the message listener for the intent to receive the suggestion requests
     window.addEventListener('message', event => {
       if (event.origin !== intent.attributes.client) return null
-      const { query } = event.data
-      this.provideSuggestions(query, intent)
+      const { query, id } = event.data
+      this.provideSuggestions(query, id, intent)
     })
 
     this.context.client.startReplicationFrom(() => {}) // the sync functions take a redux-style `dispatch` function as a callback, but we don't handle the replication status at the moment
   }
 
-  async provideSuggestions(query, intent) {
+  async provideSuggestions(query, id, intent) {
     if (!this.hasIndexedFiles) {
       await this.indexFiles()
     }
@@ -29,6 +29,7 @@ class SuggestionProvider extends React.Component {
     window.parent.postMessage(
       {
         type: `intent-${intent._id}:data`,
+        id,
         suggestions: searchResults.map(result => ({
           id: result.id,
           title: result.name,
