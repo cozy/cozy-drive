@@ -1,14 +1,11 @@
 /* global cozy */
-import styles from '../styles/albumsList'
+import styles from '../../../styles/albumsList'
 import classNames from 'classnames'
 
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
-import { connect } from 'react-redux'
-import { cozyConnect, getSharingDetails } from 'cozy-client'
-import { SharedBadge } from 'sharing'
+import { translate } from 'cozy-ui/react/I18n'
 
-import { fetchAlbumPhotos } from '../ducks/albums'
 import { ImageLoader } from 'components/Image'
 
 const AlbumItemLink = ({ router, album, image, title, desc }) => {
@@ -58,34 +55,33 @@ const ClickableAlbumItem = ({
   )
 }
 
-const AlbumItemDesc = ({ t, photoCount, shared, thumbnail }) => (
-  <h4 className={styles['pho-album-description']}>
-    {(shared.byMe || shared.withMe) && (
-      <SharedBadge
-        byMe={shared.byMe}
-        className={styles['pho-album-shared']}
-        small={thumbnail}
-      />
-    )}
-    {t('Albums.album_item_description', { smart_count: photoCount })}
-    {(shared.byMe || shared.withMe) &&
-      ` - ${t(
-        `Albums.album_item_shared_${
-          shared.sharingType === 'one-way' ? 'ro' : 'rw'
-        }`
-      )}`}
-  </h4>
+const AlbumItemDesc = translate()(
+  ({ t, photoCount, shared = {}, thumbnail }) => (
+    <h4 className={styles['pho-album-description']}>
+      {(shared.byMe || shared.withMe) && (
+        <SharedBadge
+          byMe={shared.byMe}
+          className={styles['pho-album-shared']}
+          small={thumbnail}
+        />
+      )}
+      {t('Albums.album_item_description', { smart_count: photoCount })}
+      {(shared.byMe || shared.withMe) &&
+        ` - ${t(
+          `Albums.album_item_shared_${
+            shared.sharingType === 'one-way' ? 'ro' : 'rw'
+          }`
+        )}`}
+    </h4>
+  )
 )
 
-export class AlbumItem extends Component {
+export default class AlbumItem extends Component {
   render() {
-    const { t, album, shared, photos, onClick, thumbnail } = this.props
+    const { t, album, shared = {}, onClick, thumbnail } = this.props
     const disabled = shared.readOnly
-    if (photos.fetchStatus !== 'loaded') {
-      return null
-    }
-
-    const coverPhoto = photos.data[0] || null
+    const photos = album.photos.data
+    const coverPhoto = photos[0] || null
     const image = !coverPhoto ? (
       <div className={styles['pho-album-photo-item']} />
     ) : (
@@ -103,7 +99,7 @@ export class AlbumItem extends Component {
         album={album}
         shared={shared}
         thumbnail={thumbnail}
-        photoCount={photos.count}
+        photoCount={album.photos.count}
       />
     )
 
@@ -132,14 +128,3 @@ export class AlbumItem extends Component {
     )
   }
 }
-
-const mapStateToProps = (state, ownProps) => ({
-  shared: getSharingDetails(state, ownProps.album._type, ownProps.album._id)
-})
-const mapDocumentsToProps = ownProps => ({
-  photos: fetchAlbumPhotos(ownProps.album.id)
-})
-
-export default cozyConnect(mapDocumentsToProps)(
-  connect(mapStateToProps)(AlbumItem)
-)

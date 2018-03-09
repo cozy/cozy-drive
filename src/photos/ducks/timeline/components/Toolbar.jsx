@@ -1,21 +1,15 @@
 import styles from '../../../styles/toolbar'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
 
 import UploadButton from '../../../components/UploadButton'
 import Menu, { Item } from 'components/Menu'
 import { MoreButton } from 'components/Button'
 
-import { showSelectionBar, isSelectionBarVisible } from '../../selection'
-
-import { addToUploadQueue } from '../../upload'
-import { uploadPhoto } from '../'
-
-export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
+const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
   <div className={styles['pho-toolbar']} role="toolbar">
     <UploadButton
       className={styles['u-hide--mob']}
@@ -50,20 +44,11 @@ export const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
   </div>
 )
 
-const mapStateToProps = (state, ownProps) => ({
-  disabled: isSelectionBarVisible(state)
-})
+Toolbar.propTypes = {
+  disabled: PropTypes.bool,
+  uploadPhotos: PropTypes.func.isRequired,
+  selectItems: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
+}
 
-export const mapDispatchToProps = (dispatch, ownProps) => ({
-  selectItems: () => dispatch(showSelectionBar()),
-  uploadPhotos: photos =>
-    dispatch(
-      addToUploadQueue(photos, photo =>
-        uploadPhoto(photo, ownProps.t('UploadQueue.path'))
-      )
-    )
-})
-
-export default withRouter(
-  translate()(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
-)
+export default translate()(Toolbar)

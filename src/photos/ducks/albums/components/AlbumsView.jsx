@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { cozyConnect } from 'cozy-client'
-import styles from '../styles/layout'
+import styles from '../../../styles/layout'
 
-import { AlbumsToolbar, fetchAlbums, fetchSharedAlbums } from '../ducks/albums'
-
-import AlbumsList from '../components/AlbumsList'
-import Loading from '../components/Loading'
+import AlbumsToolbar from './AlbumsToolbar'
+import AlbumsList from './AlbumsList'
+import Loading from '../../../components/Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
-import Topbar from '../components/Topbar'
+import Topbar from '../../../components/Topbar'
 
 const Content = ({ list }) => {
   const { fetchStatus, data } = list
@@ -22,13 +20,12 @@ const Content = ({ list }) => {
   }
 }
 
-export class AlbumsView extends Component {
+export default class AlbumsView extends Component {
   render() {
     if (this.props.children) return this.props.children
     if (!this.props.albums) {
       return null
     }
-
     return (
       <div className={styles['pho-content-wrapper']}>
         <Topbar viewName="albums">
@@ -39,10 +36,3 @@ export class AlbumsView extends Component {
     )
   }
 }
-
-const mapDocumentsToProps = ownProps => ({
-  albums: fetchAlbums(),
-  sharings: fetchSharedAlbums()
-})
-
-export default cozyConnect(mapDocumentsToProps)(AlbumsView)

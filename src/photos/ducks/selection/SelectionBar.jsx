@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { getSelectedIds, hideSelectionBar } from '.'
+import { getSelected, hideSelectionBar } from '.'
 import SelectionBar from 'cozy-ui/react/SelectionBar'
 
 const mapStateToProps = state => ({
-  selected: getSelectedIds(state)
+  selected: getSelected(state)
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,9 +1,9 @@
-import styles from '../styles/albumsList'
+import styles from '../../../styles/albumsList'
 
 import React from 'react'
 
 import { EmptyPhotos } from 'components/Error/Empty'
-import AlbumItem from '../containers/AlbumItem'
+import AlbumItem from './AlbumItem'
 
 const FALLBACK_CREATION_DATE = null
 const sortByCreationDate = (a, b) => {

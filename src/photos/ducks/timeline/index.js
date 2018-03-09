@@ -1,92 +1,41 @@
-/* global cozy */
-import Toolbar from './components/Toolbar'
-import DeleteConfirm from './components/DeleteConfirm'
-import { hideSelectionBar, getSelectedIds } from '../selection'
-import { FILE_DOCTYPE } from '../../constants/config'
-import { DOCTYPE as ALBUMS_DOCTYPE, removeFromAlbum } from '../albums'
-import {
-  fetchCollection,
-  makeActionCreator,
-  createFile,
-  trashFile
-} from 'cozy-client'
+import React from 'react'
+import { Query } from 'cozy-client'
+import Timeline from './components/Timeline'
+import PhotoBoard from '../../components/PhotoBoard'
 
 // constants
 const TIMELINE = 'timeline'
 const FILES_DOCTYPE = 'io.cozy.files'
 
-export const fetchTimeline = (skip = 0) =>
-  fetchCollection(TIMELINE, FILES_DOCTYPE, {
-    fields: ['dir_id', 'name', 'size', 'updated_at', 'metadata'],
-    selector: {
+const TIMELINE_QUERY = client =>
+  client
+    .find(FILES_DOCTYPE)
+    .where({
       class: 'image',
       trashed: false
-    },
-    sort: {
+    })
+    .select(['dir_id', 'name', 'size', 'updated_at', 'metadata'])
+    .sortBy({
       'metadata.datetime': 'desc'
-    }
-  })
+    })
 
-export const uploadPhoto = (file, dirPath) =>
-  makeActionCreator(async client => {
-    const dirID = await client.ensureDirectoryExists(dirPath)
-    return createFile(file, dirID, { updateCollections: ['timeline'] })
-  })
-
-// TODO: find a cleaner way
-export const deletePhotos = ids => async dispatch => {
-  for (const id of ids) {
-    try {
-      const rawFile = await cozy.client.data.find(FILE_DOCTYPE, id)
-      const file = { ...rawFile, id: rawFile._id, type: rawFile._type }
-      if (file.referenced_by) {
-        for (const ref of file.referenced_by) {
-          console.log(ref)
-          if (ref.type === ALBUMS_DOCTYPE) {
-            await dispatch(removeFromAlbum(ref, [id]))
-          }
-        }
+const TIMELINE_MUTATIONS = (mutate, ownProps) => ({
+  uploadPhoto: (file, dirPath) =>
+    mutate(client => client.upload(file, dirPath), {
+      updateQueries: {
+        [TIMELINE]: (previousData, result) => [result.data, ...previousData]
       }
-      await dispatch(trashFile(file, { updateCollections: ['timeline'] }))
-    } catch (e) {
-      console.log(e)
-    }
-    dispatch(hideSelectionBar())
-  }
-}
-
-// selectors
-export const isRelated = (state, photos) => {
-  if (!photos) {
-    return false
-  }
-  const ids = getSelectedIds(state)
-  for (const id of ids) {
-    for (const photo of photos) {
-      if (
-        photo.id === id &&
-        photo.relationships &&
-        photo.relationships.referenced_by &&
-        photo.relationships.referenced_by.data &&
-        photo.relationships.referenced_by.data.length > 0
-      ) {
-        const refs = photo.relationships.referenced_by.data
-        for (const ref of refs) {
-          if (ref.type === ALBUMS_DOCTYPE) {
-            return true
-          }
-        }
+    }),
+  deletePhoto: photo =>
+    mutate(client => client.destroy(photo), {
+      updateQueries: {
+        [TIMELINE]: (previousData, result) =>
+          previousData.filter(p => p._id !== result.data.id)
       }
-    }
-  }
-  return false
-}
+    })
+})
 
-// components
-export { Toolbar }
-export { DeleteConfirm }
-
-export const getPhotosByMonth = (photos, f, format) => {
+const getPhotosByMonth = photos => {
   let sections = {}
   photos.forEach(p => {
     const datetime =
@@ -108,8 +57,38 @@ export const getPhotosByMonth = (photos, f, format) => {
 
   return sortedMonths.map(month => {
     return {
-      title: f(month, format),
+      month,
       photos: sections[month]
     }
   })
 }
+
+export default props => (
+  <Query query={TIMELINE_QUERY} as={TIMELINE} mutations={TIMELINE_MUTATIONS}>
+    {({ data, ...result }, mutations) => (
+      <Timeline
+        lists={data ? getPhotosByMonth(data) : []}
+        data={data}
+        {...mutations}
+        {...result}
+        {...props}
+      />
+    )}
+  </Query>
+)
+
+export const TimelineBoard = ({ selection, ...props }) => (
+  <Query query={TIMELINE_QUERY}>
+    {({ data, ...result }) => (
+      <PhotoBoard
+        lists={data ? getPhotosByMonth(data) : []}
+        photosContext="timeline"
+        onPhotoToggle={selection.toggle}
+        onPhotosSelect={selection.select}
+        onPhotosUnselect={selection.unselect}
+        {...result}
+        {...props}
+      />
+    )}
+  </Query>
+)

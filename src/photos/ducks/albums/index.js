@@ -1,62 +1,170 @@
-import {
-  fetchCollection,
-  fetchDocument,
-  fetchReferencedFiles,
-  fetchSharings,
-  createDocument,
-  updateDocument,
-  deleteDocument,
-  addReferencedFiles,
-  removeReferencedFiles,
-  downloadArchive
-} from 'cozy-client'
-
-import AlbumToolbar from './components/AlbumToolbar'
-import AlbumsToolbar from './components/AlbumsToolbar'
+import React from 'react'
+import { withRouter } from 'react-router'
+import { Query, withMutations } from 'cozy-client'
+import AlbumsView from './components/AlbumsView'
+import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
+import AddToAlbumModal from './components/AddToAlbumModal'
+import Alerter from '../../components/Alerter'
 
 export const DOCTYPE = 'io.cozy.photos.albums'
 
-export const fetchAlbums = () => fetchCollection('albums', DOCTYPE)
-export const fetchSharedAlbums = id => fetchSharings(DOCTYPE)
-export const fetchAlbumPhotos = (id, skip = 0) =>
-  fetchReferencedFiles({ _type: DOCTYPE, id }, skip)
-export const fetchAlbum = id => fetchDocument(DOCTYPE, id)
-export const fetchAlbumSharings = id => fetchSharings(DOCTYPE, id)
-export const createAlbum = (name, createdAt = new Date()) =>
-  createDocument(
-    DOCTYPE,
-    { name, created_at: createdAt },
-    { updateCollections: ['albums'] }
-  )
-export const updateAlbum = album => updateDocument(album)
-export const deleteAlbum = album =>
-  deleteDocument(album, { updateCollections: ['albums'] })
-export const addToAlbum = (album, photoIds) =>
-  addReferencedFiles(album, photoIds)
-export const removeFromAlbum = (album, photoIds) =>
-  removeReferencedFiles(album, photoIds)
-export const downloadAlbum = (album, photos) =>
-  downloadArchive(album.name, photos.map(p => p.id))
+const ALBUMS_QUERY = client => client.all(DOCTYPE).include(['photos'])
 
-// TODO: refactor these 3 actions somewhere...
-const ADD_TO_ALBUM = 'ADD_TO_ALBUM'
-const ADD_TO_ALBUM_SUCCESS = 'ADD_TO_ALBUM_SUCCESS'
-const CANCEL_ADD_TO_ALBUM = 'CANCEL_ADD_TO_ALBUM'
-
-export const openAddToAlbum = photos => ({
-  type: ADD_TO_ALBUM,
-  photos: photos
-})
-
-export const closeAddToAlbum = () => {
-  const meta = { cancelSelection: true }
-  return { type: ADD_TO_ALBUM_SUCCESS, meta }
+const addPhotos = async (album, photos) => {
+  try {
+    /* const addedPhotos = */ await album.photos.add(photos)
+    // if (addedPhotos.length !== photos.length) {
+    //   Alerter.info('Alerter.photos.already_added_photo')
+    // } else {
+    Alerter.success('Albums.add_photos.success', {
+      name: album.name,
+      smart_count: photos.length
+    })
+    // }
+  } catch (error) {
+    Alerter.error('Albums.add_photos.error.reference')
+  }
 }
 
-export const cancelAddToAlbum = photos => ({
-  type: CANCEL_ADD_TO_ALBUM,
-  photos: photos
+const ALBUMS_MUTATIONS = (mutate, ownProps) => ({
+  addPhotos,
+  createAlbum: async (name, photos, createdAt = new Date()) => {
+    try {
+      if (!name) {
+        Alerter.error('Albums.create.error.name_missing')
+        return
+      }
+      // TODO: refering to the client here is not ideal, we should have
+      // some kind of automatic validation system on schemas
+      // const unique = await this.props.client.checkUniquenessOf(
+      //   'io.cozy.photos.albums',
+      //   'name',
+      //   name
+      // )
+      // if (!unique) {
+      //   Alerter.error('Albums.create.error.already_exists', { name })
+      //   return
+      // }
+      const response = await mutate(
+        client =>
+          client.create(DOCTYPE, { name, created_at: createdAt }, { photos }),
+        {
+          updateQueries: {
+            albums: (previousData, result) => [result.data, ...previousData]
+          }
+        }
+      )
+      const album = response.data
+      Alerter.success('Albums.create.success', {
+        name: album.name,
+        smart_count: photos.length
+      })
+      return album
+    } catch (error) {
+      Alerter.error('Albums.create.error.generic')
+    }
+  }
 })
 
-export { AlbumToolbar, AlbumsToolbar, PhotosPicker }
+const ALBUM_QUERY = (client, ownProps) =>
+  client.get(DOCTYPE, ownProps.router.params.albumId).include(['photos'])
+
+const ALBUM_MUTATIONS = (mutate, ownProps) => ({
+  updateAlbum: album => mutate(client => client.save(album)),
+  deleteAlbum: album =>
+    mutate(client => client.destroy(album), {
+      updateQueries: {
+        albums: (previousData, result) =>
+          previousData.filter(a => a.id !== album.id)
+      }
+    }),
+  addPhotos,
+  removePhotos: async (album, photos, clearSelection) => {
+    try {
+      await album.photos.remove(photos)
+      Alerter.success('Albums.remove_photos.success', {
+        album_name: album.name
+      })
+      clearSelection()
+    } catch (e) {
+      Alerter.error('Albums.remove_photos.error.generic')
+    }
+  }
+})
+
+const ConnectedAlbumsView = props => (
+  <Query query={ALBUMS_QUERY} as="albums">
+    {result => <AlbumsView albums={result} {...props} />}
+  </Query>
+)
+
+const ConnectedAddToAlbumModal = props => (
+  <Query query={ALBUMS_QUERY} as="albums" mutations={ALBUMS_MUTATIONS}>
+    {(result, { createAlbum, addPhotos }) => (
+      <AddToAlbumModal
+        {...result}
+        createAlbum={createAlbum}
+        addPhotos={addPhotos}
+        {...props}
+      />
+    )}
+  </Query>
+)
+
+const ConnectedAlbumPhotos = withRouter(props => (
+  <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
+    {({ data }, { updateAlbum, deleteAlbum, removePhotos }) => (
+      <AlbumPhotos
+        album={data ? data[0] : null}
+        updateAlbum={updateAlbum}
+        deleteAlbum={deleteAlbum}
+        removePhotos={removePhotos}
+        {...props}
+      />
+    )}
+  </Query>
+))
+
+const CreateAlbumPicker = withMutations(ALBUMS_MUTATIONS)(PhotosPicker)
+
+const ConnectedPhotosPicker = withRouter(({ params, ...props }) => {
+  return params.albumId ? (
+    <Query query={ALBUM_QUERY} mutations={ALBUMS_MUTATIONS} {...props}>
+      {({ data }, { addPhotos }) => (
+        <PhotosPicker album={data ? data[0] : null} addPhotos={addPhotos} />
+      )}
+    </Query>
+  ) : (
+    <CreateAlbumPicker />
+  )
+})
+
+export {
+  ConnectedAlbumsView as AlbumsView,
+  ConnectedPhotosPicker as PhotosPicker,
+  ConnectedAlbumPhotos as AlbumPhotos,
+  ConnectedAddToAlbumModal as AddToAlbumModal
+}
+
+export const belongsToAlbums = photos => {
+  if (!photos) {
+    return false
+  }
+  for (const photo of photos) {
+    if (
+      photo.relationships &&
+      photo.relationships.referenced_by &&
+      photo.relationships.referenced_by.data &&
+      photo.relationships.referenced_by.data.length > 0
+    ) {
+      const refs = photo.relationships.referenced_by.data
+      for (const ref of refs) {
+        if (ref.type === DOCTYPE) {
+          return true
+        }
+      }
+    }
+  }
+  return false
+}
