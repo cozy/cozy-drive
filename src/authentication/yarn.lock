@@ -3829,9 +3829,9 @@ markdown-table@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-1.1.1.tgz#4b3dd3a133d1518b8ef0dbc709bf2a1b4824bc8c"
 
-markdown-to-jsx@^6.3.1:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-6.4.1.tgz#95fe617b5790fec6f4e0399a296e3a2f10fffaad"
+markdown-to-jsx@^6.4.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-6.5.1.tgz#e3373c47cd94ab19b759384612e693240c5cdbf2"
   dependencies:
     prop-types "^15.5.10"
     unquote "^1.1.0"
@@ -5121,9 +5121,9 @@ react-icons@^2.2.7:
   dependencies:
     react-icon-base "2.1.0"
 
-react-styleguidist@6.2.5:
-  version "6.2.5"
-  resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-6.2.5.tgz#fe4da35d999220425012c8b0350f06608d734d6d"
+react-styleguidist@6.2.7:
+  version "6.2.7"
+  resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-6.2.7.tgz#e7e7509b73439fb3899a9dfa13125def2c25c08f"
   dependencies:
     ast-types "^0.10.1"
     buble "^0.19.2"
@@ -5160,7 +5160,7 @@ react-styleguidist@6.2.5:
     loader-utils "^1.1.0"
     lodash "^4.17.4"
     lowercase-keys "^1.0.0"
-    markdown-to-jsx "^6.3.1"
+    markdown-to-jsx "^6.4.1"
     minimist "^1.2.0"
     ora "^1.3.0"
     prop-types "^15.6.0"
