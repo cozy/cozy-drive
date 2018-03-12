@@ -120,7 +120,7 @@
     "postcss-assets-webpack-plugin": "1.1.0",
     "postcss-discard-duplicates": "2.1.0",
     "postcss-loader": "2.1.1",
-    "prettier": "1.10.2",
+    "prettier": "1.11.1",
     "react": "15.6.2",
     "react-addons-test-utils": "15.6.2",
     "react-dom": "15.6.2",
