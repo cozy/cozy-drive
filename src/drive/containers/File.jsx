@@ -196,9 +196,12 @@ const FileAction = ({ onClick }) => (
       styles['fil-content-file-action']
     )}
   >
-    <Button theme="action" onClick={onClick} extension="narrow">
-      <Icon icon="dots" color="charcoalGrey" width="17" height="17" />
-    </Button>
+    <Button
+      theme="action"
+      onClick={onClick}
+      extension="narrow"
+      icon={<Icon icon="dots" color="charcoalGrey" width="17" height="17" />}
+    />
   </div>
 )
 

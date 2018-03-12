@@ -65,9 +65,8 @@ const SettingCategory = ({ title, elements }) => (
                 theme={element.theme}
                 onClick={element.onClick}
                 className={styles['settings__button']}
-              >
-                {element.text}
-              </Button>
+                label={element.text}
+              />
             )}
           </div>
         )

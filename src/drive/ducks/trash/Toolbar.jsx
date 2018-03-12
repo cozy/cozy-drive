@@ -51,10 +51,9 @@ const Toolbar = ({
         className={classNames(styles['u-hide--mob'])}
         onClick={() => emptyTrash()}
         disabled={disabled}
-      >
-        <Icon icon="delete" />
-        {t('toolbar.empty_trash')}
-      </Button>
+        icon={<Icon icon="delete" />}
+        label={t('toolbar.empty_trash')}
+      />
 
       {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
     </div>

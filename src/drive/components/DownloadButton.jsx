@@ -6,10 +6,9 @@ const DownloadButton = ({ label, disabled = false, onDownload, className }) => (
     disabled={disabled}
     className={className}
     onClick={() => onDownload()}
-  >
-    <Icon icon="download" />
-    {label}
-  </Button>
+    icon={<Icon icon="download" />}
+    label={label}
+  />
 )
 
 export default DownloadButton

@@ -40,9 +40,8 @@ class OpenWithCordovaButton extends React.Component {
         busy={this.state.loading}
         className={styles['pho-viewer-noviewer-download']}
         onClick={this.onClick}
-      >
-        {t('Viewer.noviewer.openWith')}
-      </Button>
+        label={t('Viewer.noviewer.openWith')}
+      />
     )
   }
 }
@@ -51,18 +50,16 @@ const OpenWithWebButton = ({ t, url }) => (
   <Button
     className={styles['pho-viewer-noviewer-download']}
     onClick={() => window.open(url, '_system')}
-  >
-    {t('Viewer.noviewer.openWith')}
-  </Button>
+    label={t('Viewer.noviewer.openWith')}
+  />
 )
 
 const DownloadButton = ({ t, file }) => (
   <Button
     className={styles['pho-viewer-noviewer-download']}
     onClick={() => downloadFile(file)}
-  >
-    {t('Viewer.noviewer.download')}
-  </Button>
+    label={t('Viewer.noviewer.download')}
+  />
 )
 
 const NoViewerButton = ({ file, fallbackUrl, t, onError }) => {

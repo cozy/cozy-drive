@@ -75,9 +75,8 @@ export class CreateAlbumForm extends Component {
             className={styles['create-button']}
             disabled={this.state.isSubmitDisabled || this.state.isBusy}
             aria-busy={this.state.isBusy}
-          >
-            {t('Albums.create.inline_form.create_button')}
-          </Button>
+            label={t('Albums.create.inline_form.create_button')}
+          />
         </div>
       </form>
     )

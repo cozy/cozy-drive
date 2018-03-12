@@ -28,10 +28,11 @@ class DebugTools extends Component {
     return (
       <div>
         <h4>Sentry</h4>
-        <Button onClick={() => this.sendSentryException()}>
-          send exception
-        </Button>
-        <Button onClick={() => this.sendSentryMessage()}>send message</Button>
+        <Button
+          onClick={() => this.sendSentryException()}
+          label="send exception"
+        />
+        <Button onClick={() => this.sendSentryMessage()} label="send message" />
         <h4>Offline</h4>
         <Checkbox
           title="First Replication"
@@ -44,7 +45,10 @@ class DebugTools extends Component {
           onChange={this.props.setOffline}
         />
         <h4>Pouchdb</h4>
-        <Button onClick={() => this.stopReplication()}>stop replication</Button>
+        <Button
+          onClick={() => this.stopReplication()}
+          label="stop replication"
+        />
         <hr />
       </div>
     )

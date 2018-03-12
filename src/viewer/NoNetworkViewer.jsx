@@ -7,9 +7,11 @@ import styles from './styles'
 const NoNetworkViewer = ({ t, onReload }) => (
   <div className={styles['pho-viewer-canceled']}>
     <h2>{t('Viewer.loading.error')}</h2>
-    <Button theme="regular" onClick={onReload}>
-      {t('Viewer.loading.retry')}
-    </Button>
+    <Button
+      theme="regular"
+      onClick={onReload}
+      label={t('Viewer.loading.retry')}
+    />
   </div>
 )
 

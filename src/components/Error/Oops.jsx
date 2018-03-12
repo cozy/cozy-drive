@@ -12,7 +12,7 @@ const Oops = ({ t }) => (
   <div className={styles['fil-oops']}>
     <h2>{t('error.open_folder')}</h2>
     <p>
-      <Button onClick={reload}>{t('error.button.reload')}</Button>
+      <Button onClick={reload} label={t('error.button.reload')} />
     </p>
   </div>
 )
