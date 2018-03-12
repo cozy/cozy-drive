@@ -129,7 +129,7 @@ class App extends Component {
               theme='secondary'
               className={styles['pho-public-download']}
               onClick={this.onDownload}
-              icon={<Icon icon="download" />}
+              icon="download"
               label={t('Toolbar.album_download')}
             />
             <Menu

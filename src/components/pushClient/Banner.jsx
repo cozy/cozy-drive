@@ -79,7 +79,7 @@ class BannerClient extends Component {
           onClick={e => {
             this.markAsSeen('close')
           }}
-          icon={<Icon icon="cross" width="24" height="24" />}
+          icon="cross"
         />
       </div>
     )

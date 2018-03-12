@@ -6,7 +6,7 @@ const DownloadButton = ({ label, disabled = false, onDownload, className }) => (
     disabled={disabled}
     className={className}
     onClick={() => onDownload()}
-    icon={<Icon icon="download" />}
+    icon="download"
     label={label}
   />
 )

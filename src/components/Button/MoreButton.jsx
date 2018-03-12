@@ -11,7 +11,7 @@ const MoreButton = ({ t, disabled, onClick, children }) => (
     disabled={disabled}
     onClick={onClick}
     extension="narrow"
-    icon={<Icon icon="dots" width="17" height="17" />}
+    icon="dots"
     label={<span className={styles['u-visuallyhidden']}>{children}</span>}
   />
 )
