@@ -13,7 +13,7 @@ import {
   isClientAlreadyInstalled,
   DESKTOP_BANNER
 } from '.'
-import { Button, ButtonLink, Icon } from 'cozy-ui/react'
+import { Button, ButtonLink } from 'cozy-ui/react'
 
 import localforage from 'localforage'
 

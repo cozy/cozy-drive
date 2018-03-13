@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { Button, Icon } from 'cozy-ui/react'
+import { Button } from 'cozy-ui/react'
 
 import styles from './button'
 
