@@ -12,8 +12,9 @@ const MoreButton = ({ t, disabled, onClick, children }) => (
     onClick={onClick}
     extension="narrow"
     icon="dots"
-    label={<span className={styles['u-visuallyhidden']}>{children}</span>}
-  />
+  >
+    <span className={styles['u-visuallyhidden']}>{children}</span>
+  </Button>
 )
 
 export default translate()(MoreButton)
