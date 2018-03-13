@@ -3,8 +3,7 @@ import styles from '../styles/intentbutton'
 /* global cozy */
 import React from 'react'
 import classNames from 'classnames'
-
-import Modal from 'cozy-ui/react/Modal'
+import { Modal, Button } from 'cozy-ui/react'
 
 class IntentButton extends React.Component {
   state = {
@@ -24,7 +23,7 @@ class IntentButton extends React.Component {
   }
 
   render() {
-    const { className, data, action, docType, children } = this.props
+    const { className, data, action, docType, label } = this.props
     const { modalIsOpen } = this.state
     return (
       <span className={classNames(styles['intentButton'])}>
@@ -41,9 +40,11 @@ class IntentButton extends React.Component {
             />
           </Modal>
         )}
-        <button className={className} onClick={() => this.openModal()}>
-          {children}
-        </button>
+        <Button
+          className={className}
+          onClick={() => this.openModal()}
+          label={label}
+        />
       </span>
     )
   }

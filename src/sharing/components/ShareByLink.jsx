@@ -43,9 +43,11 @@ export const ShareWithLink = (
         {!copied && (
           <CopyToClipboard text={shareLink} onCopy={onCopy}>
             <div>
-              <Button theme="secondary" className={styles['pho-btn-copy']}>
-                {t(`${documentType}.share.sharingLink.copy`)}
-              </Button>
+              <Button
+                theme="secondary"
+                className={styles['pho-btn-copy']}
+                label={t(`${documentType}.share.sharingLink.copy`)}
+              />
             </div>
           </CopyToClipboard>
         )}
@@ -53,10 +55,9 @@ export const ShareWithLink = (
           <Button
             theme="secondary"
             className={styles['pho-btn-copied']}
+            label={t(`${documentType}.share.sharingLink.copied`)}
             aria-disabled
-          >
-            {t(`${documentType}.share.sharingLink.copied`)}
-          </Button>
+          />
         )}
       </div>
     </div>

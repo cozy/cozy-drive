@@ -34,14 +34,14 @@ class MoreButton extends Component {
     return (
       <div style={{ width: width }} className={styles['pho-list-morebutton']}>
         {fetching && (
-          <Button disabled theme="secondary">
-            <Spinner nomargin />
-          </Button>
+          <Button disabled theme="secondary" label={<Spinner nomargin />} />
         )}
         {!fetching && (
-          <Button theme="secondary" onClick={() => this.handleClick()}>
-            {children}
-          </Button>
+          <Button
+            theme="secondary"
+            onClick={() => this.handleClick()}
+            label={children}
+          />
         )}
       </div>
     )

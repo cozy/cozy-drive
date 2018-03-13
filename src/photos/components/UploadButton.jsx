@@ -34,20 +34,22 @@ export const UploadButton = ({
     className={`${className} ${type === 'menu-item' ? '' : button['c-btn']}`}
     style={styles.parent}
   >
-    <Icon icon="upload" />
-    {label}
-    <input
-      type="file"
-      accept="image/*"
-      multiple
-      disabled={disabled}
-      style={styles.input}
-      onChange={e => {
-        // e.target.files is an array-like, transform it to Array instance
-        const photosArray = Array.from(e.target.files)
-        onUpload(photosArray)
-      }}
-    />
+    <span>
+      <Icon icon="upload" />
+      {label}
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        disabled={disabled}
+        style={styles.input}
+        onChange={e => {
+          // e.target.files is an array-like, transform it to Array instance
+          const photosArray = Array.from(e.target.files)
+          onUpload(photosArray)
+        }}
+      />
+    </span>
   </label>
 )
 

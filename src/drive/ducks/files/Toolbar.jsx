@@ -152,16 +152,15 @@ class Toolbar extends Component {
             ? (console.warn('IntentButton is displayed only on dev or recette'),
               (
                 <IntentButton
-                  className={classNames(styles['c-btn'], styles['u-hide--mob'])}
+                  className={styles['u-hide--mob']}
                   action="CREATE"
                   docType="io.cozy.accounts"
                   data={{
                     dataType: 'bill',
                     closeable: false
                   }}
-                >
-                  {t('service.bills')}
-                </IntentButton>
+                  label={t('service.bills')}
+                />
               ))
             : null)}
         {hasWriteAccess && (

@@ -1,6 +1,6 @@
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button, Icon } from 'cozy-ui/react'
+import { Button } from 'cozy-ui/react'
 
 import styles from './index.styl'
 
@@ -11,8 +11,8 @@ const MoreButton = ({ t, disabled, onClick, children }) => (
     disabled={disabled}
     onClick={onClick}
     extension="narrow"
+    icon="dots"
   >
-    <Icon icon="dots" width="17" height="17" />
     <span className={styles['u-visuallyhidden']}>{children}</span>
   </Button>
 )

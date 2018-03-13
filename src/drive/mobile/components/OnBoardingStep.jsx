@@ -37,10 +37,14 @@ export const OnBoarding = ({
       </p>
     </div>
     <footer className={styles['wizard-footer']}>
-      <Button onClick={onActivate}>
-        {onSkip && t('mobile.onboarding.step.button')}
-        {!onSkip && t('mobile.onboarding.step.next')}
-      </Button>
+      <Button
+        onClick={onActivate}
+        label={t(
+          onSkip
+            ? 'mobile.onboarding.step.button'
+            : 'mobile.onboarding.step.next'
+        )}
+      />
       {breadcrumbs}
     </footer>
   </div>

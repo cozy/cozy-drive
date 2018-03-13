@@ -158,16 +158,19 @@ class PhotosPicker extends Component {
           <footer className={styles['pho-panel-footer']}>
             <div className={styles['pho-panel-wrap']}>
               <div className={styles['pho-panel-controls']}>
-                <Button theme="secondary" onClick={this.onCancel}>
-                  {t('Albums.create.panel_form.cancel')}
-                </Button>
-                <Button onClick={isNew ? this.onCreate : this.onUpdate}>
-                  {t(
+                <Button
+                  theme="secondary"
+                  onClick={this.onCancel}
+                  label={t('Albums.create.panel_form.cancel')}
+                />
+                <Button
+                  onClick={isNew ? this.onCreate : this.onUpdate}
+                  label={t(
                     isNew
                       ? 'Albums.create.panel_form.submit'
                       : 'Albums.create.panel_form.update'
                   )}
-                </Button>
+                />
               </div>
             </div>
           </footer>

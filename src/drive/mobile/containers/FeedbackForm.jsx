@@ -76,10 +76,9 @@ class FeedbackForm extends Component {
                   e.preventDefault()
                   onClose(false)
                 }}
-              >
-                {t('mobile.rating.feedback.no')}
-              </Button>
-              <Button busy={sending}>{t('mobile.rating.feedback.yes')}</Button>
+                label={t('mobile.rating.feedback.no')}
+              />
+              <Button busy={sending} label={t('mobile.rating.feedback.yes')} />
             </div>
           </form>
         </ModalContent>

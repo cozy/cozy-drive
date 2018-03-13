@@ -70,9 +70,8 @@ const ShareSubmit = props => (
       props.onSubmit()
     }}
     busy={props.loading}
-  >
-    {props.label}
-  </Button>
+    label={props.label}
+  />
 )
 
 ShareSubmit.propTypes = {

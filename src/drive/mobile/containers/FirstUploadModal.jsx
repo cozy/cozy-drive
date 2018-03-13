@@ -18,9 +18,11 @@ const FirstUploadModal = translate()(({ t, onClose }) => (
         {isIos() && <li>{t('mobile.first_sync.tip_lock')}</li>}
       </ul>
       <p>{t('mobile.first_sync.result')}</p>
-      <Button onClick={onClose} extension="full">
-        {t('mobile.first_sync.button')}
-      </Button>
+      <Button
+        onClick={onClose}
+        extension="full"
+        label={t('mobile.first_sync.button')}
+      />
     </ModalContent>
   </Modal>
 ))
