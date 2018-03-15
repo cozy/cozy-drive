@@ -2466,7 +2466,7 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.4.0, core-js@^2.5.0:
+core-js@^2.4.0, core-js@^2.5.0, core-js@^2.5.3:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
@@ -2495,11 +2495,12 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cozy-bar@4.8.8:
-  version "4.8.8"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-4.8.8.tgz#43a9ca4f5d58611fe7da666a5a9c369ebadb2734"
+cozy-bar@4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-4.9.0.tgz#47370988a3d5d667ed41bda80aaed51e623bae16"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
+    core-js "^2.5.3"
     cozy-client-js "^0.3.19"
     localforage "^1.5.5"
     node-polyglot "^2.2.2"
@@ -2524,9 +2525,9 @@ cozy-client-js@^0.3.19:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
 
-cozy-ui@7.6.0:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-7.6.0.tgz#f01703c69449db32bd09ef9a180c20b032566805"
+cozy-ui@7.7.2:
+  version "7.7.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-7.7.2.tgz#0466d5084cab47c36a200701a8e4798001884024"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     classnames "^2.2.5"

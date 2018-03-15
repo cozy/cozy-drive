@@ -8,9 +8,10 @@ export const ErrorComponent = ({ t, errorType }) => {
   return (
     <div className={styles['c-error']}>
       <h2>{t(`Error.${errorType}_title`)}</h2>
-      <Button onClick={() => window.location.reload()}>
-        {t('Error.refresh')}
-      </Button>
+      <Button
+        onClick={() => window.location.reload()}
+        label={t('Error.refresh')}
+      />
     </div>
   )
 }

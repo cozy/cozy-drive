@@ -12,9 +12,11 @@ const LoadMore = ({ onClick, isLoading, text }) => (
       styles['fil-content-row--center']
     )}
   >
-    <Button theme="secondary" onClick={onClick}>
-      {isLoading ? <Spinner noMargin /> : text}
-    </Button>
+    <Button
+      theme="secondary"
+      onClick={onClick}
+      label={isLoading ? <Spinner noMargin /> : text}
+    />
   </div>
 )
 

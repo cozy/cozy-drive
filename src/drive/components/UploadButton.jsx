@@ -24,19 +24,21 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     className={className}
     style={styles.parent}
   >
-    <Icon icon="upload" />
-    {label}
-    <input
-      type="file"
-      multiple
-      style={styles.input}
-      disabled={disabled}
-      onChange={e => {
-        if (e.target.files) {
-          onUpload(Array.from(e.target.files))
-        }
-      }}
-    />
+    <span>
+      <Icon icon="upload" />
+      {label}
+      <input
+        type="file"
+        multiple
+        style={styles.input}
+        disabled={disabled}
+        onChange={e => {
+          if (e.target.files) {
+            onUpload(Array.from(e.target.files))
+          }
+        }}
+      />
+    </span>
   </label>
 )
 

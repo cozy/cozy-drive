@@ -16,6 +16,8 @@ import Modal from 'cozy-ui/react/Modal'
 import ShareByLink from './components/ShareByLink'
 import ShareByEmail from './components/ShareByEmail'
 
+require('url-polyfill')
+
 const shunt = (cond, BaseComponent, OtherComponent) => props =>
   cond() ? <BaseComponent {...props} /> : <OtherComponent {...props} />
 

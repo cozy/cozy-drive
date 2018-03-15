@@ -24,9 +24,10 @@ export class Welcome extends Component {
           </h1>
         </div>
         <footer className={styles['wizard-footer']}>
-          <Button onClick={selectServer}>
-            {t('mobile.onboarding.welcome.button')}
-          </Button>
+          <Button
+            onClick={selectServer}
+            label={t('mobile.onboarding.welcome.button')}
+          />
           {allowRegistration ? (
             <a className={styles['link']} onClick={register}>
               {t('mobile.onboarding.welcome.sign_up')}

@@ -86,12 +86,15 @@ const EnjoyCozy = (props, context) => {
     <Modal title={t('mobile.rating.enjoy.title')} withCross={false}>
       <ModalContent>
         <div className={styles['button-block']}>
-          <Button theme={'secondary'} onClick={() => onReply(false)}>
-            {t('mobile.rating.enjoy.no')}
-          </Button>
-          <Button onClick={() => onReply(true)}>
-            {t('mobile.rating.enjoy.yes')}
-          </Button>
+          <Button
+            theme={'secondary'}
+            onClick={() => onReply(false)}
+            label={t('mobile.rating.enjoy.no')}
+          />
+          <Button
+            onClick={() => onReply(true)}
+            label={t('mobile.rating.enjoy.yes')}
+          />
         </div>
       </ModalContent>
     </Modal>
