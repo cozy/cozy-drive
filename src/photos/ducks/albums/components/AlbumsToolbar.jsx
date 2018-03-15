@@ -14,7 +14,7 @@ const AlbumsToolbar = ({ t }) => (
     <div className={styles['u-hide--mob']}>
       <ButtonLink
         theme="secondary"
-        href="/albums/new"
+        href="#/albums/new"
         icon="album-add"
         label={t('Toolbar.album_new')}
       />
