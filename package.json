@@ -157,7 +157,7 @@
     "pouchdb": "6.4.2",
     "pouchdb-find": "0.10.5",
     "preact": "8.2.7",
-    "preact-compat": "3.17.0",
+    "preact-compat": "3.18.0",
     "prop-types": "15.6.0",
     "raven-js": "3.22.1",
     "react-autosuggest": "9.3.2",
