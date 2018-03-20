@@ -11,7 +11,6 @@ import { resetClient } from '../lib/cozy-helper'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES = 'BACKUP_IMAGES'
-export const BACKUP_CONTACTS = 'BACKUP_CONTACTS'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_ANALYTICS = 'SET_ANALYTICS'
@@ -40,10 +39,6 @@ export const setBackupImages = backupImages => ({
   backupImages
 })
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
-export const setBackupContacts = backupContacts => ({
-  type: BACKUP_CONTACTS,
-  backupContacts
-})
 export const setTokenScope = scope => ({ type: TOKEN_SCOPE, scope })
 
 export const saveCredentials = (client, token) => (dispatch, getState) => {
