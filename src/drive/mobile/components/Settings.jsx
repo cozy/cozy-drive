@@ -10,7 +10,6 @@ import { translate } from 'cozy-ui/react/I18n'
 import About from '../containers/settings/About'
 import Support from '../containers/settings/Support'
 import MediaBackup from '../containers/settings/MediaBackup'
-import Contacts from '../containers/settings/Contacts'
 import Unlink from '../containers/settings/Unlink'
 import FeedbackForm from '../containers/FeedbackForm'
 
@@ -47,7 +46,6 @@ class Settings extends Component {
         <div>
           <div className={styles['settings']}>
             <MediaBackup />
-            <Contacts />
             <Support
               isDebug={isDebug}
               sendFeedback={this.displayFeedbackForm}

@@ -27,7 +27,6 @@ export const initClient = url => {
         policyURI: 'https://files.cozycloud.cc/cgu.pdf',
         scopes: [
           'io.cozy.files',
-          'io.cozy.contacts',
           'io.cozy.apps:GET',
           'io.cozy.jobs:POST:sendmail:worker'
         ]
