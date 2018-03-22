@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "jest": "22.0.6",
-    "react-styleguidist": "6.2.5",
+    "react-styleguidist": "6.2.7",
     "webpack": "3.11.0",
     "webpack-node-externals": "1.6.0"
   },

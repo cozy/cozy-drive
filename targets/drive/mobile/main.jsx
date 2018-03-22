@@ -23,7 +23,6 @@ import {
   stopHeartBeat
 } from 'drive/mobile/lib/tracker'
 import { backupImages } from 'drive/mobile/ducks/mediaBackup'
-import { backupContacts } from 'drive/mobile/actions/contactsBackup'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
@@ -90,8 +89,6 @@ const renderAppWithPersistedState = (persistedState = {}) => {
     () => {
       store.dispatch(backupImages())
       if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
-      if (store.getState().mobile.settings.backupContacts)
-        store.dispatch(backupContacts())
     },
     false
   )

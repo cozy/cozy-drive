@@ -218,9 +218,9 @@ const collection = (state = collectionInitialState, action) => {
             ? response.meta.count
             : response.data.length,
         ids:
-          !action.skip || !action.merge
-            ? response.data.map(doc => doc.id)
-            : uniq([...state.ids, ...response.data.map(doc => doc.id)])
+          action.skip || action.merge
+            ? uniq([...state.ids, ...response.data.map(doc => doc.id)])
+            : response.data.map(doc => doc.id)
       }
     case ADD_REFERENCED_FILES:
       return {
