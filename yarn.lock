@@ -1471,6 +1471,10 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
+bowser@^1.7.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.9.3.tgz#6643ae4d783f31683f6d23156976b74183862162"
+
 bplist-creator@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/bplist-creator/-/bplist-creator-0.0.7.tgz#37df1536092824b87c42f957b01344117372ae45"
@@ -1845,6 +1849,10 @@ center-align@^0.1.1:
   dependencies:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
+
+chain-function@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/chain-function/-/chain-function-1.0.0.tgz#0d4ab37e7e18ead0bdc47b920764118ce58733dc"
 
 chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
@@ -2542,9 +2550,9 @@ cozy-client-js@^0.3.19:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
 
-cozy-ui@7.7.2:
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-7.7.2.tgz#0466d5084cab47c36a200701a8e4798001884024"
+cozy-ui@7.9.2:
+  version "7.9.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-7.9.2.tgz#523f88aa12d343ec05030ba40b91dcf9686d4dcf"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     classnames "^2.2.5"
@@ -2553,6 +2561,7 @@ cozy-ui@7.7.2:
     md5 "^2.2.0"
     normalize.css "^7.0.0"
     preact-portal "^1.1.2"
+    react-select "2.0.0-alpha.7"
     stylus "^0.54.5"
 
 create-ecdh@^4.0.0:
@@ -2639,6 +2648,12 @@ crypto-browserify@^3.0.0, crypto-browserify@^3.11.0:
 css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
+
+css-in-js-utils@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/css-in-js-utils/-/css-in-js-utils-2.0.0.tgz#5af1dd70f4b06b331f48d22a3d86e0786c0b9435"
+  dependencies:
+    hyphenate-style-name "^1.0.2"
 
 css-loader@0.28.10:
   version "0.28.10"
@@ -3053,6 +3068,10 @@ dom-converter@~0.1:
   resolved "https://registry.yarnpkg.com/dom-converter/-/dom-converter-0.1.4.tgz#a45ef5727b890c9bffe6d7c876e7b19cb0e17f3b"
   dependencies:
     utila "~0.3"
+
+dom-helpers@^3.2.0:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.3.1.tgz#fc1a4e15ffdf60ddde03a480a9c0fece821dd4a6"
 
 dom-serializer@0, dom-serializer@~0.1.0:
   version "0.1.0"
@@ -4258,6 +4277,13 @@ github-url-from-username-repo@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/github-url-from-username-repo/-/github-url-from-username-repo-1.0.2.tgz#7dd79330d2abe69c10c2cef79714c97215791dfa"
 
+glam@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/glam/-/glam-5.0.1.tgz#b965a46f1a7f9ba3a23d16430b2e706f63c80ee8"
+  dependencies:
+    fbjs "^0.8.16"
+    inline-style-prefixer "^3.0.8"
+
 glob-base@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/glob-base/-/glob-base-0.3.0.tgz#dbb164f6221b1c0b1ccf82aea328b497df0ea3c4"
@@ -4779,6 +4805,10 @@ hyperquest@~1.2.0:
     duplexer2 "~0.0.2"
     through2 "~0.6.3"
 
+hyphenate-style-name@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
+
 iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@^0.4.5, iconv-lite@~0.4.13:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
@@ -4930,6 +4960,13 @@ inline-source-map@~0.6.0:
   resolved "https://registry.yarnpkg.com/inline-source-map/-/inline-source-map-0.6.2.tgz#f9393471c18a79d1724f863fa38b586370ade2a5"
   dependencies:
     source-map "~0.5.3"
+
+inline-style-prefixer@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.8.tgz#8551b8e5b4d573244e66a34b04f7d32076a2b534"
+  dependencies:
+    bowser "^1.7.3"
+    css-in-js-utils "^2.0.0"
 
 inquirer@^0.10.0:
   version "0.10.1"
@@ -8609,6 +8646,12 @@ querystringify@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-1.0.0.tgz#6286242112c5b712fa654e526652bf6a13ff05cb"
 
+raf@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
+  dependencies:
+    performance-now "^2.1.0"
+
 randomatic@^1.1.3:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-1.1.7.tgz#c7abe9cc8b87c0baa876b19fde83fd464797e38c"
@@ -8691,6 +8734,12 @@ react-dom@15.6.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
+react-input-autosize@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-markdown@3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-3.1.4.tgz#4f37aa5ac4f78f64f93b41b12ad0c08e92eb1680"
@@ -8708,6 +8757,10 @@ react-measure@2.0.2:
     get-node-dimensions "^1.2.0"
     prop-types "^15.5.10"
     resize-observer-polyfill "^1.4.2"
+
+react-node-resolver@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-node-resolver/-/react-node-resolver-1.0.1.tgz#1798a729c0e218bf2f0e8ddf79c550d4af61d83a"
 
 react-redux@5.0.6, react-redux@^5.0.6:
   version "5.0.6"
@@ -8732,6 +8785,24 @@ react-router@3.2.0:
     prop-types "^15.5.6"
     warning "^3.0.0"
 
+react-scroll-captor@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-scroll-captor/-/react-scroll-captor-1.0.1.tgz#3f912df72ab8e7f46d4fa27d8707131ffe59b353"
+  dependencies:
+    react-node-resolver "^1.0.1"
+
+react-select@2.0.0-alpha.7:
+  version "2.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/react-select/-/react-select-2.0.0-alpha.7.tgz#a806863af7e03e98adc79869cd0ae8042ae43d38"
+  dependencies:
+    classnames "^2.2.5"
+    glam "^5.0.1"
+    prop-types "^15.6.0"
+    raf "^3.4.0"
+    react-input-autosize "^2.2.1"
+    react-scroll-captor "^1.0.1"
+    react-transition-group "^2.2.1"
+
 react-test-renderer@15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.6.2.tgz#d0333434fc2c438092696ca770da5ed48037efa8"
@@ -8744,6 +8815,17 @@ react-themeable@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"
   dependencies:
     object-assign "^3.0.0"
+
+react-transition-group@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.2.1.tgz#e9fb677b79e6455fd391b03823afe84849df4a10"
+  dependencies:
+    chain-function "^1.0.0"
+    classnames "^2.2.5"
+    dom-helpers "^3.2.0"
+    loose-envify "^1.3.1"
+    prop-types "^15.5.8"
+    warning "^3.0.0"
 
 react@15.6.2:
   version "15.6.2"
