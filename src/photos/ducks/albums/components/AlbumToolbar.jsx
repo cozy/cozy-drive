@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
-import { leave } from 'cozy-client'
+import { leave, revokeLink as revokeSharingLink } from 'cozy-client'
 import { translate } from 'cozy-ui/react/I18n'
 
 import Alerter from '../../../components/Alerter'
@@ -196,7 +196,8 @@ export const mapDispatchToProps = (dispatch, ownProps) => ({
   selectItems: () => dispatch(showSelectionBar()),
   deleteAlbum: album =>
     confirm(<DestroyConfirm t={ownProps.t} albumName={album.name} />, () =>
-      dispatch(deleteAlbum(album))
+      dispatch(revokeSharingLink(album))
+        .then(dispatch(deleteAlbum(album)))
         .then(() => {
           ownProps.router.replace('albums')
           Alerter.success('Albums.remove_album.success', { name: album.name })
