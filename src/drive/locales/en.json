@@ -18,7 +18,7 @@
       "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
     "link-client-ios":
       "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
-    "link-client-web": "https://cozy.io/fr/try-it"
+    "link-client-web": "https://cozy.io/try-it"
   },
   "breadcrumb": {
     "title_drive": "Drive",
