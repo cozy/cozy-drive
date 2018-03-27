@@ -10,6 +10,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import ErrorShare from 'components/Error/ErrorShare'
 
 import DownloadButton from './DownloadButton'
+import { CozyHomeLink } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
 import {
@@ -86,7 +87,9 @@ class DumbFolderView extends React.Component {
               onDownload={() =>
                 this.props.onDownload([this.props.displayedFolder])
               }
+              theme="secondary"
             />
+            <CozyHomeLink from="link-sharing-drive" />
             <Menu
               title={t('toolbar.item_more')}
               className={classnames(
