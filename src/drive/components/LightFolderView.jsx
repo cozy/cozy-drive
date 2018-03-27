@@ -81,6 +81,7 @@ class DumbFolderView extends React.Component {
         <Topbar>
           <Breadcrumb isPublic />
           <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
+            <CozyHomeLink from="link-sharing-drive" />
             <DownloadButton
               label={t('toolbar.menu_download_folder')}
               className={toolbarstyles['fil-public-download']}
@@ -89,7 +90,6 @@ class DumbFolderView extends React.Component {
               }
               theme="secondary"
             />
-            <CozyHomeLink from="link-sharing-drive" />
             <Menu
               title={t('toolbar.item_more')}
               className={classnames(

@@ -125,6 +125,7 @@ class App extends Component {
         >
           <h2 className={styles['pho-content-title']}>{album.name}</h2>
           <div className={styles['pho-toolbar']} role="toolbar">
+            <CozyHomeLink from="link-sharing-photos" />
             <Button
               theme='secondary'
               className={styles['pho-public-download']}
@@ -132,7 +133,6 @@ class App extends Component {
               icon="download"
               label={t('Toolbar.album_download')}
             />
-            <CozyHomeLink from="link-sharing-photos" />
             <Menu
               title={t('Toolbar.more')}
               className={classNames(styles['pho-toolbar-menu'])}
