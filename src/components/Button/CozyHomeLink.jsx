@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { ButtonLink } from 'cozy-ui/react'
 
-const CozyHomeLink = ({ t, from }) => (
+const CozyHomeLink = ({ from }, { t }) => (
   <ButtonLink
     label={t('Share.create-cozy')}
     href={`https://cozy.io/try-it${
@@ -12,12 +12,11 @@ const CozyHomeLink = ({ t, from }) => (
   />
 )
 
-CozyHome.propTypes = {
-  t: PropTypes.func.isRequired,
+CozyHomeLink.propTypes = {
   from: PropTypes.string
 }
 
-CozyHome.defaultProps = {
+CozyHomeLink.defaultProps = {
   from: ''
 }
 
