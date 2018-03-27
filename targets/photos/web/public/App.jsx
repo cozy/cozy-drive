@@ -6,7 +6,7 @@ import Loading from 'photos/components/Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
 import ErrorShare from 'components/Error/ErrorShare'
 import { Button, Icon } from 'cozy-ui/react'
-import { MoreButton, CozyHome } from 'components/Button'
+import { MoreButton, CozyHomeLink } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
 import {
@@ -132,7 +132,7 @@ class App extends Component {
               icon="download"
               label={t('Toolbar.album_download')}
             />
-            <CozyHome from="link-sharing-photos" />
+            <CozyHomeLink from="link-sharing-photos" />
             <Menu
               title={t('Toolbar.more')}
               className={classNames(styles['pho-toolbar-menu'])}
