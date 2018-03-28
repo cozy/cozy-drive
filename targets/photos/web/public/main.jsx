@@ -6,9 +6,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
-import { CozyClient, CozyProvider, cozyMiddleware, reducer } from 'cozy-client'
+import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
+import doctypes from '../doctypes'
+import appReducers from 'photos/reducers'
 import 'photos/styles/main'
 
 import App from './App'
@@ -35,8 +37,9 @@ function init() {
   const { id, sharecode } = getQueryParameter()
 
   const client = new CozyClient({
-    cozyURL: `//${data.cozyDomain}`,
-    token: sharecode
+    uri: `//${data.cozyDomain}`,
+    token: sharecode,
+    schema: doctypes
   })
 
   if (
@@ -56,22 +59,20 @@ function init() {
 
   const store = createStore(
     combineReducers({
-      cozy: reducer
+      ...appReducers,
+      cozy: client.reducer()
     }),
-    applyMiddleware(cozyMiddleware(client), thunkMiddleware, createLogger())
+    applyMiddleware(thunkMiddleware, createLogger())
   )
 
   render(
     <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
       <CozyProvider store={store} client={client}>
         <Router history={hashHistory}>
-          <Route
-            path="shared"
-            component={props => <App albumId={id} {...props} />}
-          >
+          <Route path="shared/:albumId" component={App}>
             <Route path=":photoId" component={PhotosViewer} />
           </Route>
-          <Redirect from="/*" to="shared" />
+          <Redirect from="/*" to={`shared/${id}`} />
         </Router>
       </CozyProvider>
     </I18n>,

@@ -5,13 +5,13 @@ import { translate } from 'cozy-ui/react/I18n'
 import Menu, { Item } from 'components/Menu'
 import { MoreButton } from 'components/Button'
 
-// import {
-//   ShareButton,
-//   SharedByMeButton,
-//   SharedWithMeButton,
-//   ShareModal,
-//   SharingDetailsModal
-// } from 'sharing'
+import {
+  ShareButton,
+  // SharedByMeButton,
+  // SharedWithMeButton,
+  ShareModal
+  // SharingDetailsModal
+} from 'sharing'
 
 import classNames from 'classnames'
 
@@ -44,22 +44,26 @@ class AlbumToolbar extends Component {
       t,
       location,
       album,
-      photos,
       sharedWithMe,
-      sharedByMe,
+      // sharedByMe,
       readOnly,
       disabled = false
     } = this.props
     const {
       downloadAlbum,
       deleteAlbum,
-      leaveAlbum,
+      // leaveAlbum,
       selectItems,
       onRename
     } = this.props
     return (
       <div className={styles['pho-toolbar']} role="toolbar">
         <div className={styles['u-hide--mob']}>
+          <ShareButton
+            disabled={disabled}
+            label={t('Albums.share.cta')}
+            onClick={this.showShareModal}
+          />
           {/* !sharedByMe &&
             !sharedWithMe && (
               <ShareButton
@@ -161,14 +165,14 @@ class AlbumToolbar extends Component {
             </Item>
           ) */}
         </Menu>
-        {/* this.state.showShareModal && (
+        {this.state.showShareModal && (
           <ShareModal
             document={album}
             documentType="Albums"
             sharingDesc={album.name}
             onClose={this.closeShareModal}
           />
-        ) */}
+        )}
         {/* this.state.showSharingDetailsModal && (
           <SharingDetailsModal
             document={album}

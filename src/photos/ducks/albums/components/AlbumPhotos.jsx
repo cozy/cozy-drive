@@ -120,7 +120,6 @@ class AlbumPhotos extends Component {
                     sharedWithMe={shared.withMe}
                     sharedByMe={shared.byMe}
                     readOnly={shared.readOnly}
-                    photos={album.photos.data}
                     onRename={this.editAlbumName}
                     downloadAlbum={this.downloadAlbum}
                     deleteAlbum={this.deleteAlbum}
