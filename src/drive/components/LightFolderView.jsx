@@ -61,10 +61,7 @@ class DumbFolderView extends React.Component {
         getFolderIdFromRoute(this.props.location, this.props.params)
       )
       .then(e => {
-        if (
-          e.type === 'OPEN_FOLDER_FAILURE' &&
-          /no permission doc for token/.test(e.error.reason.errors[0].detail)
-        ) {
+        if (e.type === 'OPEN_FOLDER_FAILURE') {
           this.setState(state => ({ ...state, revoked: true }))
         }
       })
