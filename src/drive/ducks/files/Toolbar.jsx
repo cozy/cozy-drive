@@ -24,6 +24,7 @@ import { uploadedFile, downloadFiles, trashFiles } from '../../actions'
 import {
   ShareButton,
   SharedWithMeButton,
+  SharedByMeButton,
   ShareModal,
   SharingDetailsModal
 } from 'sharing'
@@ -59,6 +60,7 @@ class Toolbar extends Component {
       uploadFiles,
       downloadAll,
       leaveFolder,
+      trashFolder,
       breakpoints: { isMobile }
     } = this.props
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
@@ -98,7 +100,10 @@ class Toolbar extends Component {
             <UploadButton
               onUpload={files => uploadFiles(files, displayedFolder)}
               label={t('toolbar.menu_upload')}
-              className={styles['fil-action-upload']}
+              className={classNames(
+                styles['fil-action-upload'],
+                styles['u-hide--desk']
+              )}
             />
           </Item>
         )}
@@ -131,17 +136,27 @@ class Toolbar extends Component {
             {t('toolbar.menu_select')}
           </a>
         </Item>
-        {shared.withMe && <hr />}
-        {shared.withMe && (
-          <Item>
-            <a
-              className={classNames(styles['fil-action-delete'])}
-              onClick={() => leaveFolder(displayedFolder)}
-            >
-              {t('toolbar.leave')}
-            </a>
-          </Item>
-        )}
+        {notRootfolder && <hr />}
+        {notRootfolder &&
+          (shared.withMe ? (
+            <Item>
+              <a
+                className={classNames(styles['fil-action-delete'])}
+                onClick={() => leaveFolder(displayedFolder)}
+              >
+                {t('toolbar.leave')}
+              </a>
+            </Item>
+          ) : (
+            <Item>
+              <a
+                className={classNames(styles['fil-action-delete'])}
+                onClick={() => trashFolder(displayedFolder)}
+              >
+                {t('toolbar.trash')}
+              </a>
+            </Item>
+          ))}
       </Menu>
     )
 
@@ -172,7 +187,7 @@ class Toolbar extends Component {
           />
         )}
         {notRootfolder &&
-          !shared.withMe && (
+          !(shared.withMe || shared.byMe || shared.byLink) && (
             <ShareButton
               disabled={disabled}
               onClick={() => this.setState(toggleShowShareModal)}
@@ -187,6 +202,14 @@ class Toolbar extends Component {
             className={styles['u-hide--mob']}
           />
         )}
+        {shared.byMe ||
+          (shared.byLink && (
+            <SharedByMeButton
+              label={t('Files.share.sharedByMe')}
+              onClick={() => this.setState(toggleShowShareModal)}
+              className={styles['u-hide--mob']}
+            />
+          ))}
 
         {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
 
@@ -260,7 +283,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   leaveFolder: folder =>
     dispatch(leave(folder))
       .then(() => dispatch(trashFiles([folder])))
-      .then(() => ownProps.router.push(`/folder/${folder.parent.id}`))
+      .then(() => ownProps.router.push(`/folder/${folder.parent.id}`)),
+  trashFolder: folder =>
+    dispatch(trashFiles([folder])).then(() => {
+      ownProps.router.push(`/folder/${folder.parent.id}`)
+    })
 })
 
 export default translate()(
