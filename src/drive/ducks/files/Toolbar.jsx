@@ -59,6 +59,7 @@ class Toolbar extends Component {
       uploadFiles,
       downloadAll,
       leaveFolder,
+      trashFolder,
       breakpoints: { isMobile }
     } = this.props
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
@@ -134,17 +135,27 @@ class Toolbar extends Component {
             {t('toolbar.menu_select')}
           </a>
         </Item>
-        {shared.withMe && <hr />}
-        {shared.withMe && (
-          <Item>
-            <a
-              className={classNames(styles['fil-action-delete'])}
-              onClick={() => leaveFolder(displayedFolder)}
-            >
-              {t('toolbar.leave')}
-            </a>
-          </Item>
-        )}
+        {notRootfolder && <hr />}
+        {notRootfolder &&
+          (shared.withMe ? (
+            <Item>
+              <a
+                className={classNames(styles['fil-action-delete'])}
+                onClick={() => leaveFolder(displayedFolder)}
+              >
+                {t('toolbar.leave')}
+              </a>
+            </Item>
+          ) : (
+            <Item>
+              <a
+                className={classNames(styles['fil-action-delete'])}
+                onClick={() => trashFolder(displayedFolder)}
+              >
+                {t('toolbar.trash')}
+              </a>
+            </Item>
+          ))}
       </Menu>
     )
 
@@ -263,7 +274,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   leaveFolder: folder =>
     dispatch(leave(folder))
       .then(() => dispatch(trashFiles([folder])))
-      .then(() => ownProps.router.push(`/folder/${folder.parent.id}`))
+      .then(() => ownProps.router.push(`/folder/${folder.parent.id}`)),
+  trashFolder: folder =>
+    dispatch(trashFiles([folder])).then(() => {
+      ownProps.router.push(`/folder/${folder.parent.id}`)
+    })
 })
 
 export default translate()(
