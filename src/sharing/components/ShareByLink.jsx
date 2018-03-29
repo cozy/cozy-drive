@@ -71,6 +71,7 @@ class ShareByLink extends React.Component {
   }
 
   toggleShareLink(checked) {
+    this.setState(state => ({ ...state, copied: false }))
     if (checked) {
       this.createShareLink()
     } else {
