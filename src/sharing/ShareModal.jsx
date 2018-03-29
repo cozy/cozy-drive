@@ -2,7 +2,6 @@ import styles from './share.styl'
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Query } from 'cozy-client'
 import Modal from 'cozy-ui/react/Modal'
 
 import { default as DumbShareByLink } from './components/ShareByLink'
@@ -205,22 +204,6 @@ const withSharingCheck = ({ id, type }, documentType, t) => BaseComponent => {
     BaseComponent
   )
 }
-
-// const ConnectedModalContent = cozyConnect(
-//   ownProps => ({
-//     sharing: fetchSharings(ownProps.document._type, ownProps.document._id, {
-//       include: ['recipients']
-//     }),
-//     contacts: fetchContacts() // TODO: we shouldn't have to fetch contacts manually, it should be handled automatically when using the include: ['recipients'] option
-//   }),
-//   (dispatch, ownProps) => ({
-//     share: (document, recipients, sharingType, sharingDesc) =>
-//       dispatch(share(document, recipients, sharingType, sharingDesc)),
-//     unshare: (document, recipient) => dispatch(unshare(document, recipient)),
-//     shareByLink: document => dispatch(shareByLink(document)),
-//     revokeLink: document => dispatch(revokeLink(document))
-//   })
-// )(ModalContent)
 
 export class ShareModal extends Component {
   render() {

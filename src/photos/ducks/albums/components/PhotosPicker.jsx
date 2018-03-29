@@ -96,7 +96,11 @@ class PhotosPicker extends Component {
                       label={t('Albums.create.panel_form.cancel')}
                     />
                     <Button
-                      onClick={isNew ? this.onCreate : this.onUpdate}
+                      onClick={() =>
+                        isNew
+                          ? this.onCreate(selected)
+                          : this.onUpdate(selected)
+                      }
                       label={t(
                         isNew
                           ? 'Albums.create.panel_form.submit'
