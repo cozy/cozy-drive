@@ -98,7 +98,10 @@ class Toolbar extends Component {
             <UploadButton
               onUpload={files => uploadFiles(files, displayedFolder)}
               label={t('toolbar.menu_upload')}
-              className={styles['fil-action-upload']}
+              className={classNames(
+                styles['fil-action-upload'],
+                styles['u-hide--desk']
+              )}
             />
           </Item>
         )}
