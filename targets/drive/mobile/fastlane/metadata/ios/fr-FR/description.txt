@@ -1,18 +1,23 @@
-Stockez, gérez, partagez tous vos fichiers, photos et documents et même récupérez vos factures en toute sécurité avec Cozy Drive, et profitez d'un espace de stockage gratuit de 5 Go. Premier domicile numérique du marché, Cozy vous aide à connecter, simplifier et augmenter votre vie numérique.
+Cozy Drive est l’application de sauvegarde, de synchronisation et de sécurisation de tous vos fichiers sur Cozy.
+Premier domicile numérique du marché, Cozy vous aide à connecter, simplifier et augmenter votre vie numérique pour reprendre le contrôle de vos données.
 
 Avec Cozy Drive, vous pouvez facilement :
 
-- Sauvegarder et synchroniser tous vos documents importants (carte d’identité, photos de vacances, avis d’imposition, fiches de salaires...)
-- Accéder à vos documents n’importe quand, n’importe ou même en mode avion depuis votre Bureau, votre iPhone ou votre iPad
+- Sauvegarder et synchroniser gratuitement tous vos documents importants (carte d’identité, photos de vacances, avis d’imposition, fiches de salaires...)
+- Accéder à vos documents n’importe quand, n’importe ou même en mode avion depuis votre bureau, votre smartphone ou tablette
 - Récupérer automatiquement vos documents administratifs de vos principaux fournisseurs de service (opérateur mobile, fournisseur d’énergie, assureur, internet, santé...).
 - Rester synchronisé.e lors de vos voyages et déplacements professionnels
 
-Cozy Drive pour iPhone et iPad intègre :
+Les médias en parlent déjà
+• TechCrunch, Le Point, France Info, France Inter, Le Figaro, Mashable, Assurbanque 2.0, 01.net, les Echos du Net, L’Usine Digitale…
 
-- 5 Go d'espace de stockage gratuit pour sauvegarder tous vos documents pour ne plus jamais les perdre
+Cozy Drive pour smartphone et tablette intègre :
+
+- 5 Go d'espace de stockage gratuit à vie pour sauvegarder tous vos documents pour ne plus jamais les perdre
 - Un accès hors ligne à vos fichiers et dossiers
 - Un espace vraiment sécurisé et garanti par une équipe d’experts de la sécurité
-- Imaginé, développé et hébergé en France
+- Deux options d'hébergement pour mieux contrôler vos données personnelles -> sur nos serveurs hébergés en France
+-> sur votre propre serveur
 
 Envie d’en savoir plus ? Consultez notre guide en ligne https://support.cozy.io.
 
