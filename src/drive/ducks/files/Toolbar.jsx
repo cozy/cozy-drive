@@ -24,6 +24,7 @@ import { uploadedFile, downloadFiles, trashFiles } from '../../actions'
 import {
   ShareButton,
   SharedWithMeButton,
+  SharedByMeButton,
   ShareModal,
   SharingDetailsModal
 } from 'sharing'
@@ -186,7 +187,7 @@ class Toolbar extends Component {
           />
         )}
         {notRootfolder &&
-          !shared.withMe && (
+          !(shared.withMe || shared.byMe || shared.byLink) && (
             <ShareButton
               disabled={disabled}
               onClick={() => this.setState(toggleShowShareModal)}
@@ -201,6 +202,14 @@ class Toolbar extends Component {
             className={styles['u-hide--mob']}
           />
         )}
+        {shared.byMe ||
+          (shared.byLink && (
+            <SharedByMeButton
+              label={t('Files.share.sharedByMe')}
+              onClick={() => this.setState(toggleShowShareModal)}
+              className={styles['u-hide--mob']}
+            />
+          ))}
 
         {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
 
