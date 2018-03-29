@@ -10,6 +10,7 @@ import Breadcrumb from '../containers/Breadcrumb'
 import ErrorShare from 'components/Error/ErrorShare'
 
 import DownloadButton from './DownloadButton'
+import { CozyHomeLink } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
 import {
@@ -60,10 +61,7 @@ class DumbFolderView extends React.Component {
         getFolderIdFromRoute(this.props.location, this.props.params)
       )
       .then(e => {
-        if (
-          e.type === 'OPEN_FOLDER_FAILURE' &&
-          /no permission doc for token/.test(e.error.reason.errors[0].detail)
-        ) {
+        if (e.type === 'OPEN_FOLDER_FAILURE') {
           this.setState(state => ({ ...state, revoked: true }))
         }
       })
@@ -86,7 +84,9 @@ class DumbFolderView extends React.Component {
               onDownload={() =>
                 this.props.onDownload([this.props.displayedFolder])
               }
+              theme="secondary"
             />
+            <CozyHomeLink from="link-sharing-drive" />
             <Menu
               title={t('toolbar.item_more')}
               className={classnames(

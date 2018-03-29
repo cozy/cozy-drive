@@ -102,7 +102,8 @@
     "type": {
       "one-way": "Can View (coming soon)",
       "two-way": "Can Change"
-    }
+    },
+    "create-cozy": "Create my cozy"
   },
   "Albums": {
     "album_item_description": "%{smart_count} photo |||| %{smart_count} photos",
