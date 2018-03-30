@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'cozy-ui/react/Modal'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
+import Alerter from 'photos/components/Alerter'
 
 import { default as DumbShareByLink } from './components/ShareByLink'
 import { default as DumbShareByEmail } from './components/ShareByEmail'
@@ -29,9 +30,9 @@ const trackSharingByLink = document => track(document, 'shareByLink')
 const shunt = (cond, BaseComponent, OtherComponent) => props =>
   cond() ? <BaseComponent {...props} /> : <OtherComponent {...props} />
 
-const ComingSoon = (props, context) => (
+const ComingSoon = ({ documentType }, { t }) => (
   <div className={styles['coz-form-group']}>
-    <h3>{context.t(`${props.documentType}.share.shareByEmail.subtitle`)}</h3>
+    <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
     <p
       className={styles['coz-form-desc']}
       style={
@@ -40,7 +41,16 @@ const ComingSoon = (props, context) => (
         } /* no need for a class as it is temporary screen */
       }
     >
-      {context.t(`${props.documentType}.share.shareByEmail.comingsoon`)}
+      {t(`${documentType}.share.shareByEmail.comingsoon`)}
+    </p>
+  </div>
+)
+
+const Failed = ({ documentType }, { t }) => (
+  <div className={styles['coz-form-group']}>
+    <h3>{t(`${documentType}.share.shareByLink.subtitle`)}</h3>
+    <p className={styles['coz-form-desc']}>
+      {t(`${documentType}.share.shareByLink.fetchFailed`)}
     </p>
   </div>
 )
@@ -70,19 +80,24 @@ class ShareByLink extends Component {
   }
 
   share = document => {
-    trackSharingByLink(document)
+    const { documentType } = this.props
     return this.collection(document)
       .createSharingLink(document)
-      .then(link =>
+      .then(link => {
+        trackSharingByLink(document)
         this.setState(state => ({
           ...state,
           link
         }))
-      )
-      .catch(() => this.setState(state => ({ ...state, status: 'failed' })))
+      })
+      .catch(e => {
+        Alerter.error(`${documentType}.share.error.generic`)
+        console.log(e)
+      })
   }
 
   revoke = document => {
+    const { documentType } = this.props
     return this.collection(document)
       .revokeSharingLink(document)
       .then(link =>
@@ -91,7 +106,10 @@ class ShareByLink extends Component {
           link: null
         }))
       )
-      .catch(() => this.setState(state => ({ ...state, status: 'failed' })))
+      .catch(e => {
+        Alerter.error(`${documentType}.share.error.revoke`)
+        console.log(e)
+      })
   }
 
   collection(document) {
@@ -101,6 +119,7 @@ class ShareByLink extends Component {
   render() {
     const { document, documentType } = this.props
     const { link, status } = this.state
+    if (status === 'failed') return <Failed documentType={documentType} />
     if (status !== 'loaded') return null
     return (
       <DumbShareByLink

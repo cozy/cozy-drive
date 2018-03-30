@@ -263,7 +263,7 @@ class File extends Component {
       withSelectionCheckbox,
       withFilePath,
       isAvailableOffline,
-      shared,
+      shared = { shared: false },
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { opening } = this.state
@@ -331,19 +331,7 @@ class File extends Component {
   }
 }
 
-export default withBreakpoints()(
-  withRouter(
-    translate()(
-      connect((state, ownProps) => ({
-        shared: getSharingDetails(
-          state,
-          'io.cozy.files',
-          ownProps.attributes.id
-        )
-      }))(File)
-    )
-  )
-)
+export default withBreakpoints()(withRouter(translate()(File)))
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>

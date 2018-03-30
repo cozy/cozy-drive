@@ -8,7 +8,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, hashHistory } from 'react-router'
 import { I18n } from 'cozy-ui/react/I18n'
-import { CozyClient, CozyProvider } from 'cozy-client'
+import CozyClient, { CozyProvider } from 'cozy-client'
 import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
 
 import AppRoute from 'drive/components/AppRoute'
@@ -31,6 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const cozyUrl = `${protocol}//${data.cozyDomain}`
 
   const client = new CozyClient({
+    uri: cozyUrl,
+    token: data.cozyToken
+  })
+
+  // TODO: Get rid of cozy-client-js
+  cozy.client.init({
     cozyURL: cozyUrl,
     token: data.cozyToken
   })

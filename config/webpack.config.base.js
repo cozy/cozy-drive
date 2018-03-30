@@ -12,21 +12,9 @@ module.exports = function(production, app) {
     resolve: {
       modules: ['node_modules', SRC_DIR],
       extensions: ['.js', '.json', '.css'],
-      alias:
-        app === 'photos'
-          ? {
-              'react-cozy-helpers': path.resolve(
-                SRC_DIR,
-                './lib/react-cozy-helpers'
-              )
-            }
-          : {
-              'cozy-client': path.resolve(SRC_DIR, './lib/cozy-client'),
-              'react-cozy-helpers': path.resolve(
-                SRC_DIR,
-                './lib/react-cozy-helpers'
-              )
-            }
+      alias: {
+        'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
+      }
     },
     stats: { chunks: false, modules: false },
     module: {

@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { fetchSharings, getSharingDetails } from 'cozy-client'
-
 import {
   toggleItemSelection,
   isSelectionBarVisible,
@@ -37,7 +35,6 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) =>
 
 class FileExplorer extends Component {
   componentWillMount() {
-    this.props.fetchSharings()
     if (isRecentFilesView(this.props)) {
       this.props.fetchRecentFiles()
     } else {
@@ -77,11 +74,6 @@ const mapStateToProps = (state, ownProps) => ({
   files: getVisibleFiles(state),
   selected: getSelectedFiles(state),
   actionable: getActionableFiles(state),
-  shared: getSharingDetails(
-    state,
-    'io.cozy.files',
-    getFolderIdFromRoute(ownProps.location, ownProps.params)
-  ),
   selectionModeActive: isSelectionBarVisible(state),
   actionMenuActive: isActionMenuVisible(state)
 })
@@ -90,7 +82,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   showSelectionBar: () => dispatch(showSelectionBar()),
   showActionMenu: fileId => dispatch(showActionMenu(fileId)),
   hideActionMenu: () => dispatch(hideActionMenu()),
-  fetchSharings: () => dispatch(fetchSharings('io.cozy.files')),
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),

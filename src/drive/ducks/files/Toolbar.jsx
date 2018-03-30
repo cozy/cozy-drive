@@ -28,7 +28,6 @@ import {
   ShareModal,
   SharingDetailsModal
 } from 'sharing'
-import { leave, getSharingDetails } from 'cozy-client'
 
 const { BarRight } = cozy.bar
 
@@ -52,14 +51,14 @@ class Toolbar extends Component {
     const {
       t,
       disabled,
-      shared,
+      shared = { byMe: false, WithMe: false, byLink: false },
       displayedFolder,
       actions,
       onSelectItemsClick,
       canUpload,
       uploadFiles,
       downloadAll,
-      leaveFolder,
+      leaveFolder = () => {},
       trashFolder,
       breakpoints: { isMobile }
     } = this.props
@@ -237,8 +236,7 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  displayedFolder: state.view.displayedFolder,
-  shared: getSharingDetails(state, 'io.cozy.files', ownProps.folderId)
+  displayedFolder: state.view.displayedFolder
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -280,10 +278,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )
   },
   downloadAll: folder => dispatch(downloadFiles(folder)),
-  leaveFolder: folder =>
-    dispatch(leave(folder))
-      .then(() => dispatch(trashFiles([folder])))
-      .then(() => ownProps.router.push(`/folder/${folder.parent.id}`)),
+  // leaveFolder: folder =>
+  //   dispatch(leave(folder))
+  //     .then(() => dispatch(trashFiles([folder])))
+  //     .then(() => ownProps.router.push(`/folder/${folder.parent.id}`)),
   trashFolder: folder =>
     dispatch(trashFiles([folder])).then(() => {
       ownProps.router.push(`/folder/${folder.parent.id}`)
