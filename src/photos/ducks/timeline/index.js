@@ -19,15 +19,15 @@ const TIMELINE_QUERY = client =>
       'metadata.datetime': 'desc'
     })
 
-const TIMELINE_MUTATIONS = (mutate, ownProps) => ({
+const TIMELINE_MUTATIONS = (client, ownProps) => ({
   uploadPhoto: (file, dirPath) =>
-    mutate(client => client.upload(file, dirPath), {
+    client.upload(file, dirPath, {
       updateQueries: {
         [TIMELINE]: (previousData, result) => [result.data, ...previousData]
       }
     }),
   deletePhoto: photo =>
-    mutate(client => client.destroy(photo), {
+    client.destroy(photo, {
       updateQueries: {
         [TIMELINE]: (previousData, result) =>
           previousData.filter(p => p._id !== result.data.id)

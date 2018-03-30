@@ -1,6 +1,5 @@
 /* global cozy */
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { withRouter, Link } from 'react-router'
@@ -14,7 +13,6 @@ import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
 import { Button, Icon, withBreakpoints } from 'cozy-ui/react'
 import { SharedBadge } from 'sharing'
-import { getSharingDetails } from 'cozy-client'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
 
 import { getFolderUrl } from '../reducers'

@@ -13,54 +13,49 @@ const ALBUMS_QUERY = client => client.all(DOCTYPE).include(['photos'])
 
 const addPhotos = async (album, photos) => {
   try {
-    /* const addedPhotos = */ await album.photos.add(photos)
-    // if (addedPhotos.length !== photos.length) {
-    //   Alerter.info('Alerter.photos.already_added_photo')
-    // } else {
-    Alerter.success('Albums.add_photos.success', {
-      name: album.name,
-      smart_count: photos.length
-    })
-    // }
+    const addedPhotos = await album.photos.add(photos)
+    if (addedPhotos.length !== photos.length) {
+      Alerter.info('Alerter.photos.already_added_photo')
+    } else {
+      Alerter.success('Albums.add_photos.success', {
+        name: album.name,
+        smart_count: photos.length
+      })
+    }
   } catch (error) {
     Alerter.error('Albums.add_photos.error.reference')
   }
 }
 
-const ALBUMS_MUTATIONS = (mutate, ownProps) => ({
+const ALBUMS_MUTATIONS = (client, ownProps) => ({
   addPhotos,
-  createAlbum: async (name, photos, createdAt = new Date()) => {
+  createAlbum: async (name, photos, created_at = new Date()) => {
     try {
       if (!name) {
         Alerter.error('Albums.create.error.name_missing')
         return
       }
-      // TODO: refering to the client here is not ideal, we should have
-      // some kind of automatic validation system on schemas
-      // const unique = await this.props.client.checkUniquenessOf(
-      //   'io.cozy.photos.albums',
-      //   'name',
-      //   name
-      // )
-      // if (!unique) {
-      //   Alerter.error('Albums.create.error.already_exists', { name })
-      //   return
-      // }
-      const response = await mutate(
-        client =>
-          client.create(DOCTYPE, { name, created_at: createdAt }, { photos }),
+      const album = { _type: DOCTYPE, name, created_at }
+      const unique = await client.validate(album)
+      if (unique !== true) {
+        Alerter.error('Albums.create.error.already_exists', { name })
+        return
+      }
+      const resp = await client.create(
+        DOCTYPE,
+        album,
+        { photos },
         {
           updateQueries: {
             albums: (previousData, result) => [result.data, ...previousData]
           }
         }
       )
-      const album = response.data
       Alerter.success('Albums.create.success', {
         name: album.name,
         smart_count: photos.length
       })
-      return album
+      return resp.data
     } catch (error) {
       Alerter.error('Albums.create.error.generic')
     }
@@ -70,10 +65,10 @@ const ALBUMS_MUTATIONS = (mutate, ownProps) => ({
 const ALBUM_QUERY = (client, ownProps) =>
   client.get(DOCTYPE, ownProps.router.params.albumId).include(['photos'])
 
-const ALBUM_MUTATIONS = (mutate, ownProps) => ({
-  updateAlbum: album => mutate(client => client.save(album)),
+const ALBUM_MUTATIONS = (client, ownProps) => ({
+  updateAlbum: album => client.save(album),
   deleteAlbum: album =>
-    mutate(client => client.destroy(album), {
+    client.destroy(album, {
       updateQueries: {
         albums: (previousData, result) =>
           previousData.filter(a => a.id !== album.id)
