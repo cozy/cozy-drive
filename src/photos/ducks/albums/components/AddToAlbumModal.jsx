@@ -19,7 +19,7 @@ class AddToAlbumModal extends Component {
       createAlbum,
       addPhotos,
       onDismiss,
-      onSuccess
+      onSuccess = () => {}
     } = this.props
 
     const isFetchingAlbums =

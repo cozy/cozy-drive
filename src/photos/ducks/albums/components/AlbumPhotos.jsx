@@ -130,6 +130,7 @@ class AlbumPhotos extends Component {
             {this.state.showAddAlbumModal && (
               <AddToAlbumModal
                 onDismiss={this.hideAddAlbumModal}
+                onSuccess={selection.clear}
                 photos={selected}
               />
             )}

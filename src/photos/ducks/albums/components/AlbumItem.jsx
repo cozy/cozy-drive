@@ -58,13 +58,13 @@ const ClickableAlbumItem = ({
 const AlbumItemDesc = translate()(
   ({ t, photoCount, shared = {}, thumbnail }) => (
     <h4 className={styles['pho-album-description']}>
-      {(shared.byMe || shared.withMe) && (
+      {/* (shared.byMe || shared.withMe) && (
         <SharedBadge
           byMe={shared.byMe}
           className={styles['pho-album-shared']}
           small={thumbnail}
         />
-      )}
+      ) */}
       {t('Albums.album_item_description', { smart_count: photoCount })}
       {(shared.byMe || shared.withMe) &&
         ` - ${t(

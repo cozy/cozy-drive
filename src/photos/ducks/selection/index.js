@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { combineReducers } from 'redux'
-import { connect } from 'react-redux'
-import SelectionBar from './SelectionBar'
+import SelectionBar from 'cozy-ui/react/SelectionBar'
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
@@ -12,21 +10,16 @@ const TOGGLE_SELECTION_BAR = 'TOGGLE_SELECTION_BAR'
 const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 
-// selectors
-export const getSelected = state => state.selection.selected
-export const isSelectionBarVisible = state =>
-  state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
-
 // actions
-export const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
-export const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
-export const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
-export const toggleItemSelection = (item, selected) => ({
+const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
+const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
+// const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
+const toggleItemSelection = (item, selected) => ({
   type: selected ? UNSELECT_ITEM : SELECT_ITEM,
   item
 })
-export const addToSelection = items => ({ type: ADD_TO_SELECTION, items })
-export const removeFromSelection = items => ({
+const addToSelection = items => ({ type: ADD_TO_SELECTION, items })
+const removeFromSelection = items => ({
   type: REMOVE_FROM_SELECTION,
   items
 })
@@ -73,35 +66,38 @@ const isSelectionBarOpened = (state = false, action) => {
   }
 }
 
-export const reducer = combineReducers({
-  selected,
-  isSelectionBarOpened
-})
+export default class Selection extends Component {
+  state = {
+    selected: selected(undefined, {}),
+    opened: isSelectionBarOpened(undefined, {})
+  }
 
-class Selection extends Component {
-  componentWillUnmount() {
-    // console.log('unmount selection')
-    // this.props.clear()
+  toggle = (id, selected) => this.dispatch(toggleItemSelection(id, selected))
+  select = ids => this.dispatch(addToSelection(ids))
+  unselect = ids => this.dispatch(removeFromSelection(ids))
+  clear = () => this.dispatch(hideSelectionBar())
+  show = () => this.dispatch(showSelectionBar())
+
+  dispatch(action) {
+    this.setState(state => ({
+      ...state,
+      selected: selected(state.selected, action),
+      opened: isSelectionBarOpened(state.opened, action)
+    }))
   }
 
   render() {
     const { children, actions } = this.props
-    const {
-      selected,
-      active,
-      toggle,
-      select,
-      unselect,
-      clear,
-      show
-    } = this.props
+    const { selected, opened } = this.state
+
+    const active = selected.length !== 0 || opened
 
     const selectionActions = {
-      toggle,
-      select,
-      unselect,
-      clear,
-      show
+      toggle: this.toggle,
+      select: this.select,
+      unselect: this.unselect,
+      clear: this.clear,
+      show: this.show
     }
 
     if (!actions) {
@@ -120,36 +116,15 @@ class Selection extends Component {
     })
     return (
       <div>
-        {active && <SelectionBar actions={checkedActions} />}
-        {children(selected, active, {
-          toggle,
-          select,
-          unselect,
-          clear,
-          show
-        })}
+        {active && (
+          <SelectionBar
+            selected={selected}
+            hideSelectionBar={this.clear}
+            actions={checkedActions}
+          />
+        )}
+        {children(selected, active, selectionActions)}
       </div>
     )
   }
 }
-
-const mapStateToProps = (state, ownProps) => ({
-  selected: getSelected(state),
-  active: isSelectionBarVisible(state)
-})
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  toggle: (id, selected) => {
-    dispatch(toggleItemSelection(id, selected))
-  },
-  select: ids => {
-    dispatch(addToSelection(ids))
-  },
-  unselect: ids => {
-    dispatch(removeFromSelection(ids))
-  },
-  clear: () => dispatch(hideSelectionBar()),
-  show: () => dispatch(showSelectionBar())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Selection)

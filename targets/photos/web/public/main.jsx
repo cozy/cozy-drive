@@ -10,7 +10,6 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
 import doctypes from '../doctypes'
-import appReducers from 'photos/reducers'
 import 'photos/styles/main'
 
 import App from './App'
@@ -59,7 +58,6 @@ function init() {
 
   const store = createStore(
     combineReducers({
-      ...appReducers,
       cozy: client.reducer()
     }),
     applyMiddleware(thunkMiddleware, createLogger())
