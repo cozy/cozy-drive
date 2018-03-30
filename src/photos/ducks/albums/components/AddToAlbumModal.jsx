@@ -18,7 +18,8 @@ class AddToAlbumModal extends Component {
       fetchStatus,
       createAlbum,
       addPhotos,
-      onDismiss
+      onDismiss,
+      onSuccess
     } = this.props
 
     const isFetchingAlbums =
@@ -30,7 +31,9 @@ class AddToAlbumModal extends Component {
           <div className={classNames(styles['coz-create-album'])}>
             <CreateAlbumForm
               onSubmitNewAlbum={name =>
-                createAlbum(name, photos).then(onDismiss)
+                createAlbum(name, photos)
+                  .then(onDismiss)
+                  .then(onSuccess)
               }
             />
           </div>
@@ -41,7 +44,9 @@ class AddToAlbumModal extends Component {
               <SelectAlbumsForm
                 albums={{ data, fetchStatus }}
                 onSubmitSelectedAlbum={album =>
-                  addPhotos(album, photos).then(onDismiss)
+                  addPhotos(album, photos)
+                    .then(onDismiss)
+                    .then(onSuccess)
                 }
               />
             </div>

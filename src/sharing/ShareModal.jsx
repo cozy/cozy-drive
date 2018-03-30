@@ -3,11 +3,28 @@ import styles from './share.styl'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'cozy-ui/react/Modal'
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
 
 import { default as DumbShareByLink } from './components/ShareByLink'
 import { default as DumbShareByEmail } from './components/ShareByEmail'
 
 require('url-polyfill')
+
+const isFile = ({ _type }) => _type === 'io.cozy.files'
+
+const track = (document, action) => {
+  const tracker = getTracker()
+  if (!tracker) {
+    return
+  }
+  tracker.push([
+    'trackEvent',
+    isFile(document) ? 'Drive' : 'Photos',
+    action,
+    `${action}${isFile(document) ? 'File' : 'Album'}`
+  ])
+}
+const trackSharingByLink = document => track(document, 'shareByLink')
 
 const shunt = (cond, BaseComponent, OtherComponent) => props =>
   cond() ? <BaseComponent {...props} /> : <OtherComponent {...props} />
@@ -53,7 +70,7 @@ class ShareByLink extends Component {
   }
 
   share = document => {
-    // trackSharingByLink(document)
+    trackSharingByLink(document)
     return this.collection(document)
       .createSharingLink(document)
       .then(link =>

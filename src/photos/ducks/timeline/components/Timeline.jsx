@@ -77,6 +77,7 @@ export default class Timeline extends Component {
               {this.state.showAddAlbumModal && (
                 <AddToAlbumModal
                   onDismiss={this.hideAddAlbumModal}
+                  onSuccess={selection.clear}
                   photos={selected}
                 />
               )}

@@ -119,40 +119,18 @@ class App extends Component {
   }
 }
 
-class ConnectedApp extends Component {
-  componentDidMount() {
-    console.log('didmount')
-  }
-
-  render() {
-    return (
-      <Query
-        query={client =>
-          client
-            .get('io.cozy.photos.albums', this.props.router.params.albumId)
-            .include(['photos'])
-        }
-      >
-        {({ data, fetchStatus }) => (
-          <App album={data ? data[0] : null} fetchStatus={fetchStatus} />
-        )}
-      </Query>
-    )
-  }
-}
-
-// const ConnectedApp = props => (
-//   <Query
-//     query={client =>
-//       client
-//         .get('io.cozy.photos.albums', props.router.params.albumId)
-//         .include(['photos'])
-//     }
-//   >
-//     {({ data, fetchStatus }) => (
-//       <App album={data ? data[0] : null} fetchStatus={fetchStatus} />
-//     )}
-//   </Query>
-// )
+const ConnectedApp = props => (
+  <Query
+    query={client =>
+      client
+        .get('io.cozy.photos.albums', props.router.params.albumId)
+        .include(['photos'])
+    }
+  >
+    {({ data, fetchStatus }) => (
+      <App album={data ? data[0] : null} fetchStatus={fetchStatus} />
+    )}
+  </Query>
+)
 
 export default ConnectedApp

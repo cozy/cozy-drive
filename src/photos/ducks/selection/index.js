@@ -80,8 +80,8 @@ export const reducer = combineReducers({
 
 class Selection extends Component {
   componentWillUnmount() {
-    console.log('unmount selection')
-    this.props.clear()
+    // console.log('unmount selection')
+    // this.props.clear()
   }
 
   render() {
