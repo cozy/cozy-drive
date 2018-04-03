@@ -40,6 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     cozyURL: cozyUrl,
     token: data.cozyToken
   })
+  // TODO: horrible yet necessary hack to avoid a regression
+  cozy.client.sharingLinks = {
+    revokeLink: document =>
+      client.collection('io.cozy.files').revokeSharingLink(document)
+  }
 
   cozy.bar.init({
     appName: data.cozyAppName,

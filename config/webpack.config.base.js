@@ -21,7 +21,7 @@ module.exports = function(production, app) {
       rules: [
         {
           test: /\.js$/,
-          exclude: /(node_modules|cozy-(bar|client-js))/,
+          exclude: /node_modules\/(?!cozy-client\/)/,
           loader: 'babel-loader'
         },
         {

@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import createReactContext from 'create-react-context'
 import SelectionBar from 'cozy-ui/react/SelectionBar'
+
+const SelectionContext = createReactContext([])
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
@@ -87,7 +90,7 @@ export default class Selection extends Component {
   }
 
   render() {
-    const { children, actions } = this.props
+    const { children, actions = {} } = this.props
     const { selected, opened } = this.state
 
     const active = selected.length !== 0 || opened
@@ -100,10 +103,6 @@ export default class Selection extends Component {
       show: this.show
     }
 
-    if (!actions) {
-      return children(selected, active, selectionActions)
-    }
-
     const realActions =
       typeof actions === 'function' ? actions(selectionActions) : actions
 
@@ -114,17 +113,22 @@ export default class Selection extends Component {
           ? { action: realActions[k] }
           : realActions[k]
     })
+
     return (
-      <div>
-        {active && (
-          <SelectionBar
-            selected={selected}
-            hideSelectionBar={this.clear}
-            actions={checkedActions}
-          />
-        )}
-        {children(selected, active, selectionActions)}
-      </div>
+      <SelectionContext.Provider value={selected}>
+        <div>
+          {active && (
+            <SelectionBar
+              selected={selected}
+              hideSelectionBar={this.clear}
+              actions={checkedActions}
+            />
+          )}
+          {children(selected, active, selectionActions)}
+        </div>
+      </SelectionContext.Provider>
     )
   }
 }
+
+export const Consumer = SelectionContext.Consumer

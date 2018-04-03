@@ -2550,20 +2550,20 @@ cozy-client-js@^0.3.19:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
 
-cozy-client@^1.0.0-beta.2:
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-1.0.0-beta.2.tgz#be2a555175abf6e270d724c259aa8662a330d9c9"
+cozy-client@^1.0.0-beta.3:
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-1.0.0-beta.3.tgz#7c730b1feaab60286d811172b08476e1aad3d2ab"
   dependencies:
-    cozy-stack-client "^1.0.0-beta.2"
+    cozy-stack-client "^1.0.0-beta.3"
     lodash "^4.17.5"
     prop-types "^15.6.0"
     react "^16.2.0"
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-cozy-stack-client@^1.0.0-beta.2:
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-1.0.0-beta.2.tgz#6df46292b80a7eecc9fd7ae61e9f64e49f77d5d5"
+cozy-stack-client@^1.0.0-beta.3:
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-1.0.0-beta.3.tgz#fd1c3dece70acd498c4fa5c6c62ccf6a59a5f4a6"
 
 cozy-ui@7.9.2:
   version "7.9.2"
@@ -2613,6 +2613,13 @@ create-react-class@^15.5.1, create-react-class@^15.6.0:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+create-react-context@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.1.tgz#425a3d96f4b7690c2fbf20aed5aeae2e2007a959"
+  dependencies:
+    fbjs "^0.8.0"
+    gud "^1.0.0"
 
 cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
@@ -3869,7 +3876,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.16, fbjs@^0.8.9:
+fbjs@^0.8.0, fbjs@^0.8.16, fbjs@^0.8.9:
   version "0.8.16"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
   dependencies:
@@ -4428,6 +4435,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@~4.1.6:
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
+
+gud@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
 
 hammerjs@2.0.8, hammerjs@^2.0.8:
   version "2.0.8"
