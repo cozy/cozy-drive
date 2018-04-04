@@ -12,6 +12,7 @@ import {
   isReferencedByAlbum,
   ALBUMS_DOCTYPE
 } from '../ducks/files/files'
+import { revokeLink as revokeSharingLink } from 'cozy-client'
 import * as availableOffline from '../ducks/files/availableOffline'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
@@ -433,7 +434,7 @@ export const trashFiles = files => {
           }
         }
 
-        await cozy.client.sharingLinks.revokeLink(file)
+        dispatch(revokeSharingLink(file))
       }
     } catch (err) {
       if (!isAlreadyInTrash(err)) {

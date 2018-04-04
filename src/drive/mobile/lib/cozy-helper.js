@@ -11,35 +11,28 @@ export const getLang = () =>
 export const initClient = url => {
   const offline = { doctypes: ['io.cozy.files'] }
   if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
-
-  const oauth = {
-    storage: new Storage(),
-    clientParams: {
-      redirectURI: 'http://localhost',
-      softwareID: SOFTWARE_ID,
-      clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
-      softwareVersion: __APP_VERSION__,
-      clientKind: 'mobile',
-      clientURI: 'https://github.com/cozy/cozy-drive/',
-      logoURI:
-        'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
-      policyURI: 'https://files.cozycloud.cc/cgu.pdf',
-      scopes: [
-        'io.cozy.files',
-        'io.cozy.apps:GET',
-        'io.cozy.jobs:POST:sendmail:worker'
-      ]
-    }
-  }
-  // TODO: Get rid of cozy-client-js
-  cozy.client.init({
-    cozyURL: url,
-    oauth,
-    offline
-  })
   return new CozyClient({
-    uri: url,
-    oauth
+    cozyURL: url,
+    oauth: {
+      storage: new Storage(),
+      clientParams: {
+        redirectURI: 'http://localhost',
+        softwareID: SOFTWARE_ID,
+        clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
+        softwareVersion: __APP_VERSION__,
+        clientKind: 'mobile',
+        clientURI: 'https://github.com/cozy/cozy-drive/',
+        logoURI:
+          'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
+        policyURI: 'https://files.cozycloud.cc/cgu.pdf',
+        scopes: [
+          'io.cozy.files',
+          'io.cozy.apps:GET',
+          'io.cozy.jobs:POST:sendmail:worker'
+        ]
+      }
+    },
+    offline
   })
 }
 

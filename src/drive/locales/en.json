@@ -75,9 +75,7 @@
       "sharedWithMe": "Shared with me",
       "shareByLink": {
         "subtitle": "By public link",
-        "desc": "Anyone with the provided link can see and download your files.",
-        "fetchFailed":
-          "Woops! It seems your connectivity is limited, try again later when it gets better."
+        "desc": "Anyone with the provided link can see and download your files."
       },
       "shareByEmail": {
         "subtitle": "By email",
@@ -109,9 +107,7 @@
       "gettingLink": "Getting your link...",
       "error": {
         "generic":
-          "An error occurred when creating the file share link, please try again.",
-        "revoke":
-          "An error occurred when revoking the file share link, please try again."
+          "An error occurred when creating the file share link, please try again."
       },
       "specialCase": {
         "base": "This %{type} cannot be shared but with a link as it",

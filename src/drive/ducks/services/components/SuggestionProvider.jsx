@@ -16,7 +16,7 @@ class SuggestionProvider extends React.Component {
       this.provideSuggestions(query, id, intent)
     })
 
-    // this.context.client.startReplicationFrom(() => {}) // the sync functions take a redux-style `dispatch` function as a callback, but we don't handle the replication status at the moment
+    this.context.client.startReplicationFrom(() => {}) // the sync functions take a redux-style `dispatch` function as a callback, but we don't handle the replication status at the moment
   }
 
   async provideSuggestions(query, id, intent) {
@@ -46,10 +46,11 @@ class SuggestionProvider extends React.Component {
   // fetches pretty much all the files and preloads FuzzyPathSearch
   async indexFiles() {
     return new Promise(async resolve => {
-      const allDocs = await this.context.client
-        .collection('io.cozy.files')
-        .all({ limit: null })
-      console.log(allDocs)
+      const allDocs = await this.context.client.fetchDocuments(
+        'files',
+        'io.cozy.files'
+      )
+
       const files = allDocs.data
       const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 

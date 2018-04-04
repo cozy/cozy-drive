@@ -1,5 +1,6 @@
 /* global cozy */
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { withRouter, Link } from 'react-router'
@@ -12,7 +13,8 @@ import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
 import { Button, Icon, withBreakpoints } from 'cozy-ui/react'
-import { SharedBadge } from 'sharing'
+import { SharedBadge } from '../sharing'
+import { getSharingDetails } from 'cozy-client'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
 
 import { getFolderUrl } from '../reducers'
@@ -261,7 +263,7 @@ class File extends Component {
       withSelectionCheckbox,
       withFilePath,
       isAvailableOffline,
-      shared = { shared: false },
+      shared,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { opening } = this.state
@@ -329,7 +331,19 @@ class File extends Component {
   }
 }
 
-export default withBreakpoints()(withRouter(translate()(File)))
+export default withBreakpoints()(
+  withRouter(
+    translate()(
+      connect((state, ownProps) => ({
+        shared: getSharingDetails(
+          state,
+          'io.cozy.files',
+          ownProps.attributes.id
+        )
+      }))(File)
+    )
+  )
+)
 
 export const FilePlaceholder = ({ style }) => (
   <div style={style} className={styles['fil-content-row']}>

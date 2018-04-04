@@ -1,5 +1,5 @@
 /* global __DEVELOPMENT__, __TARGET__ */
-import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
+import { compose, createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import RavenMiddleWare from 'redux-raven-middleware'
 import {
@@ -7,6 +7,7 @@ import {
   getTracker,
   createTrackerMiddleware
 } from 'cozy-ui/react/helpers/tracker'
+import { cozyMiddleware } from 'cozy-client'
 import thunkMiddleware from 'redux-thunk'
 import eventTrackerMiddleware from '../middlewares/EventTracker'
 import rootReducer from '../reducers'
@@ -15,7 +16,7 @@ import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from '../mobile/lib/reporter'
 
 const configureStore = (client, initialState = {}) => {
-  const middlewares = [thunkMiddleware]
+  const middlewares = [cozyMiddleware(client), thunkMiddleware]
   if (__TARGET__ === 'mobile') {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
   }
@@ -30,9 +31,7 @@ const configureStore = (client, initialState = {}) => {
     (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
   const store = createStore(
-    __TARGET__ === 'mobile'
-      ? combineReducers({ cozy: client.reducer(), ...mobileRootReducer })
-      : combineReducers({ cozy: client.reducer(), ...rootReducer }),
+    __TARGET__ === 'mobile' ? mobileRootReducer : rootReducer,
     initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
@@ -52,7 +51,7 @@ const configureStore = (client, initialState = {}) => {
     )
   }
 
-  client.setStore(store)
+  client.attachStore(store)
 
   return store
 }

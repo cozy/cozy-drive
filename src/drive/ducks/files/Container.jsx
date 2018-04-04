@@ -7,7 +7,7 @@ import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
-import { ShareModal } from 'sharing'
+import { ShareModal } from '../../sharing'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
@@ -39,9 +39,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const hasWriteAccess =
-    !ownProps.shared ||
-    !ownProps.shared.withMe ||
-    ownProps.shared.sharingType === 'master-master'
+    !ownProps.shared.withMe || ownProps.shared.sharingType === 'master-master'
   return {
     actions: Object.assign({}, ownProps.actions, {
       list: {
