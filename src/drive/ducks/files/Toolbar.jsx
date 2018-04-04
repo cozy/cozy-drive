@@ -27,7 +27,7 @@ import {
   SharedByMeButton,
   ShareModal,
   SharingDetailsModal
-} from 'sharing'
+} from '../../sharing'
 import { leave, getSharingDetails } from 'cozy-client'
 
 const { BarRight } = cozy.bar

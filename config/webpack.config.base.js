@@ -7,22 +7,33 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const SRC_DIR = path.resolve(__dirname, '../src')
 
-module.exports = function(production) {
+module.exports = function(production, app) {
   return {
     resolve: {
       modules: ['node_modules', SRC_DIR],
       extensions: ['.js', '.json', '.css'],
-      alias: {
-        'cozy-client': path.resolve(SRC_DIR, './lib/cozy-client'),
-        'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
-      }
+      alias:
+        app === 'photos'
+          ? {
+              'react-cozy-helpers': path.resolve(
+                SRC_DIR,
+                './lib/react-cozy-helpers'
+              )
+            }
+          : {
+              'cozy-client': path.resolve(SRC_DIR, './lib/cozy-client'),
+              'react-cozy-helpers': path.resolve(
+                SRC_DIR,
+                './lib/react-cozy-helpers'
+              )
+            }
     },
     stats: { chunks: false, modules: false },
     module: {
       rules: [
         {
           test: /\.js$/,
-          exclude: /(node_modules|cozy-(bar|client-js))/,
+          exclude: /node_modules\/(?!cozy-client\/)/,
           loader: 'babel-loader'
         },
         {

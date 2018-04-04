@@ -6,7 +6,7 @@ module.exports = function(env) {
   const { target = 'browser', app = 'drive' } = env
   const production = env.production === true
   return merge(
-    require('./config/webpack.config.base')(production),
+    require('./config/webpack.config.base')(production, app),
     require('./config/webpack.config.disable-contexts'),
     require('./config/webpack.config.preact'),
     require('./config/webpack.config.cozy-ui')(production),

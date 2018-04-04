@@ -70,6 +70,11 @@
       "verbs": [
         "GET"
       ]
+    },
+    "oauth": {
+      "description": "Required to display the cozy-desktop banner",
+      "type": "io.cozy.oauth.clients",
+      "verbs": ["GET"]
     }
   }
 }

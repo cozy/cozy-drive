@@ -13,6 +13,11 @@ const photoDimensionsFallback = { width: 1, height: 1 }
 const adaptRowHeight = containerWidth => 180 + (containerWidth || 1800) / 30
 
 export class PhotoList extends Component {
+  isPhotoSelected(photo, selected) {
+    const selectedIds = selected.map(p => p._id)
+    return selectedIds.indexOf(photo._id) !== -1
+  }
+
   render() {
     const {
       t,
@@ -64,10 +69,8 @@ export class PhotoList extends Component {
       }
     )
 
-    const photoIds = photos.map(p => p.id)
-    const allSelected =
-      selected.length === photoIds.length &&
-      selected.every(id => photoIds.indexOf(id) !== -1)
+    const selectedIds = selected.map(p => p._id)
+    const allSelected = photos.every(p => selectedIds.indexOf(p._id) !== -1)
     // we need to process the right position of the last photo of the first row so that we can align
     // the SELECT ALL button with the photo
     const firstRowTop = layout.boxes[0].top
@@ -100,7 +103,7 @@ export class PhotoList extends Component {
             allSelected && (
               <a
                 style={{ marginRight: `${firstRowLastBoxRight}px` }}
-                onClick={() => onPhotosUnselect(photoIds)}
+                onClick={() => onPhotosUnselect(photos)}
               >
                 {t('Board.unselect_all')}
               </a>
@@ -110,7 +113,7 @@ export class PhotoList extends Component {
             !allSelected && (
               <a
                 style={{ marginRight: `${firstRowLastBoxRight}px` }}
-                onClick={() => onPhotosSelect(photoIds)}
+                onClick={() => onPhotosSelect(photos)}
               >
                 {t('Board.select_all')}
               </a>
@@ -128,7 +131,7 @@ export class PhotoList extends Component {
               photo={photo}
               box={layout.boxes[index]}
               key={photo.id}
-              selected={selected.indexOf(photo.id) !== -1}
+              selected={this.isPhotoSelected(photo, selected)}
               onToggle={onPhotoToggle}
             />
           ))}

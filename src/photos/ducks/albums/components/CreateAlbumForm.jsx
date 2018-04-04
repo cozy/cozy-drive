@@ -1,4 +1,4 @@
-import styles from '../styles/createAlbumForm'
+import styles from '../../../styles/createAlbumForm'
 
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'

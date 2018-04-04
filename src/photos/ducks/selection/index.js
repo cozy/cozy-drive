@@ -1,6 +1,8 @@
-import { combineReducers } from 'redux'
-import { downloadArchive } from 'cozy-client'
-import SelectionBar from './SelectionBar'
+import React, { Component } from 'react'
+import createReactContext from 'create-react-context'
+import SelectionBar from 'cozy-ui/react/SelectionBar'
+
+const SelectionContext = createReactContext([])
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
@@ -11,26 +13,19 @@ const TOGGLE_SELECTION_BAR = 'TOGGLE_SELECTION_BAR'
 const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 
-// selectors
-export const getSelectedIds = state => state.selection.selected
-export const isSelectionBarVisible = state =>
-  state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
-
 // actions
-export const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
-export const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
-export const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
-export const toggleItemSelection = (item, selected) => ({
+const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
+const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
+// const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
+const toggleItemSelection = (item, selected) => ({
   type: selected ? UNSELECT_ITEM : SELECT_ITEM,
-  id: item.id
+  item
 })
-export const addToSelection = ids => ({ type: ADD_TO_SELECTION, ids })
-export const removeFromSelection = ids => ({ type: REMOVE_FROM_SELECTION, ids })
-export const downloadSelection = selected =>
-  downloadArchive('selection', selected)
-
-// components
-export { SelectionBar }
+const addToSelection = items => ({ type: ADD_TO_SELECTION, items })
+const removeFromSelection = items => ({
+  type: REMOVE_FROM_SELECTION,
+  items
+})
 
 // reducers
 const selected = (state = [], action) => {
@@ -39,15 +34,18 @@ const selected = (state = [], action) => {
   }
   switch (action.type) {
     case SELECT_ITEM:
-      return [...state, action.id]
+      return [...state, action.item]
     case UNSELECT_ITEM:
-      const idx = state.indexOf(action.id)
-      return [...state.slice(0, idx), ...state.slice(idx + 1)]
+      return state.filter(i => i._id !== action.item.id)
     case ADD_TO_SELECTION:
-      const newIds = action.ids.filter(id => state.indexOf(id) === -1)
-      return [...state, ...newIds]
+      const selectedIds = state.map(i => i._id)
+      const newItems = action.items.filter(
+        i => selectedIds.indexOf(i._id) === -1
+      )
+      return [...state, ...newItems]
     case REMOVE_FROM_SELECTION:
-      return state.filter(id => action.ids.indexOf(id) === -1)
+      const itemIds = action.items.map(i => i._id)
+      return state.filter(i => itemIds.indexOf(i._id) === -1)
     case HIDE_SELECTION_BAR:
       return []
     default:
@@ -71,7 +69,69 @@ const isSelectionBarOpened = (state = false, action) => {
   }
 }
 
-export default combineReducers({
-  selected,
-  isSelectionBarOpened
-})
+export default class Selection extends Component {
+  state = {
+    selected: selected(undefined, {}),
+    opened: isSelectionBarOpened(undefined, {})
+  }
+
+  toggle = (id, selected) => this.dispatch(toggleItemSelection(id, selected))
+  select = ids => this.dispatch(addToSelection(ids))
+  unselect = ids => this.dispatch(removeFromSelection(ids))
+  clear = () => this.dispatch(hideSelectionBar())
+  show = () => this.dispatch(showSelectionBar())
+
+  dispatch(action) {
+    this.setState(state => ({
+      ...state,
+      selected: selected(state.selected, action),
+      opened: isSelectionBarOpened(state.opened, action)
+    }))
+  }
+
+  render() {
+    const { children, actions = {} } = this.props
+    const { selected, opened } = this.state
+
+    const active = selected.length !== 0 || opened
+
+    const selectionActions = {
+      toggle: this.toggle,
+      select: this.select,
+      unselect: this.unselect,
+      clear: this.clear,
+      show: this.show
+    }
+
+    const realActions =
+      typeof actions === 'function' ? actions(selectionActions) : actions
+
+    let checkedActions = {}
+    Object.keys(realActions).map(k => {
+      checkedActions[k] =
+        typeof realActions[k] === 'function'
+          ? { action: realActions[k] }
+          : realActions[k]
+    })
+
+    const hasActions = Object.keys(checkedActions).length > 0
+
+    return (
+      <SelectionContext.Provider value={selected}>
+        <div>
+          {active &&
+            hasActions && (
+              <SelectionBar
+                selected={selected}
+                hideSelectionBar={this.clear}
+                actions={checkedActions}
+              />
+            )}
+          {children(selected, active, selectionActions)}
+        </div>
+      </SelectionContext.Provider>
+    )
+  }
+}
+
+export const Consumer = SelectionContext.Consumer
