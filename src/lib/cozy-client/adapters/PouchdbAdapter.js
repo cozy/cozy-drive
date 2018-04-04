@@ -160,7 +160,8 @@ export default class PouchdbAdapter {
 
   async fetchDocument(doctype, id) {
     const resp = await this.getDatabase(doctype).get(id, { revs_info: true }) // We need the revs_info option to get the _rev property
-    return { data: [{ ...resp, id: resp.id, _id: resp.id, _type: doctype }] }
+    const docID = resp.id || resp._id || id
+    return { data: [{ ...resp, id: docID, _id: docID, _type: doctype }] }
   }
 
   async createDocument(doctype, doc) {
