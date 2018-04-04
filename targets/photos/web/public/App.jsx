@@ -56,56 +56,58 @@ class App extends Component {
     }
     const { data, next, fetchMore } = album.photos
     return (
-      <Selection>
-        {(selected, active, selection) => (
-          <div className={styles['pho-public-layout']}>
-            <div
-              className={classNames(
-                styles['pho-content-header'],
-                styles['--no-icon']
-              )}
-            >
-              <h2 className={styles['pho-content-title']}>{album.name}</h2>
-              <div className={styles['pho-toolbar']} role="toolbar">
-                <Button
-                  theme="secondary"
-                  className={styles['pho-public-download']}
-                  onClick={() => this.onDownload(selected)}
-                  icon="download"
-                  label={t('Toolbar.album_download')}
-                />
-                <CozyHomeLink from="link-sharing-photos" />
-                <Menu
-                  title={t('Toolbar.more')}
-                  className={classNames(styles['pho-toolbar-menu'])}
-                  button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
-                >
-                  <Item>
-                    <a
-                      className={classNames(styles['pho-public-download'])}
-                      onClick={() => this.onDownload(selected)}
-                    >
-                      {t('Toolbar.album_download')}
-                    </a>
-                  </Item>
-                </Menu>
+      <div className={styles['pho-public-layout']}>
+        <Selection>
+          {(selected, active, selection) => (
+            <div>
+              <div
+                className={classNames(
+                  styles['pho-content-header'],
+                  styles['--no-icon']
+                )}
+              >
+                <h2 className={styles['pho-content-title']}>{album.name}</h2>
+                <div className={styles['pho-toolbar']} role="toolbar">
+                  <Button
+                    theme="secondary"
+                    className={styles['pho-public-download']}
+                    onClick={() => this.onDownload(selected)}
+                    icon="download"
+                    label={t('Toolbar.album_download')}
+                  />
+                  <CozyHomeLink from="link-sharing-photos" />
+                  <Menu
+                    title={t('Toolbar.more')}
+                    className={classNames(styles['pho-toolbar-menu'])}
+                    button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+                  >
+                    <Item>
+                      <a
+                        className={classNames(styles['pho-public-download'])}
+                        onClick={() => this.onDownload(selected)}
+                      >
+                        {t('Toolbar.album_download')}
+                      </a>
+                    </Item>
+                  </Menu>
+                </div>
               </div>
+              <PhotoBoard
+                photosContext="shared_album"
+                lists={[{ photos: data }]}
+                selected={selected}
+                showSelection={active}
+                onPhotoToggle={selection.toggle}
+                onPhotosSelect={selection.select}
+                onPhotosUnselect={selection.unselect}
+                hasMore={next}
+                onFetchMore={fetchMore}
+              />
+              {this.renderViewer(this.props.children)}
             </div>
-            <PhotoBoard
-              photosContext="shared_album"
-              lists={[{ photos: data }]}
-              selected={selected}
-              showSelection={active}
-              onPhotoToggle={selection.toggle}
-              onPhotosSelect={selection.select}
-              onPhotosUnselect={selection.unselect}
-              hasMore={next}
-              onFetchMore={fetchMore}
-            />
-            {this.renderViewer(this.props.children)}
-          </div>
-        )}
-      </Selection>
+          )}
+        </Selection>
+      </div>
     )
   }
 

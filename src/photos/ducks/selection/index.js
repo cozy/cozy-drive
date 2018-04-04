@@ -114,16 +114,19 @@ export default class Selection extends Component {
           : realActions[k]
     })
 
+    const hasActions = Object.keys(checkedActions).length > 0
+
     return (
       <SelectionContext.Provider value={selected}>
         <div>
-          {active && (
-            <SelectionBar
-              selected={selected}
-              hideSelectionBar={this.clear}
-              actions={checkedActions}
-            />
-          )}
+          {active &&
+            hasActions && (
+              <SelectionBar
+                selected={selected}
+                hideSelectionBar={this.clear}
+                actions={checkedActions}
+              />
+            )}
           {children(selected, active, selectionActions)}
         </div>
       </SelectionContext.Provider>
