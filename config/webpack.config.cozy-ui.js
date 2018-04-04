@@ -2,7 +2,7 @@
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-module.exports = (production) => ({
+module.exports = production => ({
   resolve: {
     extensions: ['.styl']
   },
@@ -38,6 +38,7 @@ module.exports = (production) => ({
             {
               loader: 'stylus-loader',
               options: {
+                sourceMap: !production,
                 use: [require('cozy-ui/stylus')()]
               }
             }
