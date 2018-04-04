@@ -16,7 +16,7 @@
     "internal:build": "webpack --config webpack.config.js --bail",
     "internal:watch": "webpack --config webpack.config.js --watch --progress",
     "tx": "tx pull --all || true",
-    
+    "preinternal:build": "npm-run-all lint tx",
     "prebuild:drive:browser": "npm run clean:drive:browser",
     "prebuild:photos:browser": "npm run clean:photos:browser",
     "prebuild:drive:mobile": "npm run clean:mobile",
