@@ -4,7 +4,7 @@ import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
-import CozyClient, { CozyProvider } from 'cozy-client'
+import { CozyClient, CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
 import configureStore from 'drive/store/configureStore'
@@ -35,11 +35,6 @@ const init = async () => {
   const cozyUrl = `${protocol}//${data.cozyDomain}`
 
   const client = new CozyClient({
-    uri: cozyUrl,
-    token: sharecode
-  })
-
-  cozy.client.init({
     cozyURL: cozyUrl,
     token: sharecode
   })
@@ -49,8 +44,9 @@ const init = async () => {
   if (directdownload !== undefined) useDirectDownload = true
   else {
     try {
-      const { data } = await client.collection('io.cozy.files').get(id)
-      const isFile = data && data.type === 'file'
+      const response = await client.fetchDocument('io.cozy.files', id)
+      const { data = [] } = response
+      const isFile = data.length > 0 && data[0].type === 'file'
       useDirectDownload = isFile
     } catch (e) {
       console.warn(e)
@@ -59,14 +55,12 @@ const init = async () => {
   }
 
   if (useDirectDownload) {
-    client
-      .collection('io.cozy.files')
+    cozy.client.files
       .getDownloadLinkById(id)
       .then(link => {
-        window.location = link
+        window.location = `${cozy.client._url}${link}`
       })
       .catch(e => {
-        console.log(e)
         cozy.bar.init({
           appName: data.cozyAppName,
           appEditor: data.cozyAppEditor,
