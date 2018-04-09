@@ -130,7 +130,7 @@
     "style-loader": "0.20.3",
     "stylint": "1.5.9",
     "stylus": "0.54.5",
-    "stylus-loader": "3.0.1",
+    "stylus-loader": "3.0.2",
     "svg-sprite-loader": "3.7.3",
     "webpack": "3.11.0",
     "webpack-dev-server": "2.11.2",
