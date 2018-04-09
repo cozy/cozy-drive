@@ -6,11 +6,34 @@ export const ANALYTICS_URL =
     ? ''
     : `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
 
+// normalize files path on mobile, see https://github.com/getsentry/sentry-cordova/blob/17e8b3395e8ce391ecf28658d0487b97487bb509/src/js/SentryCordova.ts#L213
+const normalizeUrl = (url, pathStripRe) =>
+  'app://' + url.replace(/^file\:\/\//, '').replace(pathStripRe, '')
+
+const normalizeData = data => {
+  const PATH_STRIP_RE = /^.*\/[^\.]+(\.app|CodePush|.*(?=\/))/
+
+  if (data.culprit) {
+    data.culprit = normalizeUrl(data.culprit, PATH_STRIP_RE)
+  }
+  const stacktrace =
+    data.stacktrace || (data.exception && data.exception.values[0].stacktrace)
+  if (stacktrace) {
+    stacktrace.frames.forEach(frame => {
+      if (frame.filename !== '[native code]') {
+        frame.filename = normalizeUrl(frame.filename, PATH_STRIP_RE)
+      }
+    })
+  }
+  return data
+}
+
 export const getReporterConfiguration = () => ({
   shouldSendCallback: true,
   environment: __DEVELOPMENT__ ? 'development' : 'production',
   release: __APP_VERSION__,
-  allowSecretKey: true
+  allowSecretKey: true,
+  dataCallback: normalizeData
 })
 
 export const configureReporter = () => {
