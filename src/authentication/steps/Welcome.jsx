@@ -5,6 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
 
 import styles from '../styles'
+import { getPlatformId } from '../../drive/mobile/lib/device'
 
 export class Welcome extends Component {
   render() {
@@ -34,9 +35,8 @@ export class Welcome extends Component {
             </a>
           ) : (
             <a
-              href={`https://cozy.io/fr/try-it?from=io.cozy.drive.mobile&os=${
-                this.platform
-              }`}
+              href={`https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatformId() ||
+                'browser'}`}
               className={styles['link']}
             >
               {t('mobile.onboarding.welcome.no_account_link')}
