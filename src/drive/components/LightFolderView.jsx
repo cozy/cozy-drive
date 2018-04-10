@@ -86,7 +86,7 @@ class DumbFolderView extends React.Component {
               }
               theme="secondary"
             />
-            <CozyHomeLink from="link-sharing-drive" />
+            <CozyHomeLink from="sharing-drive" />
             <Menu
               title={t('toolbar.item_more')}
               className={classnames(

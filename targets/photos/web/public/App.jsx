@@ -75,7 +75,7 @@ class App extends Component {
                     icon="download"
                     label={t('Toolbar.album_download')}
                   />
-                  <CozyHomeLink from="link-sharing-photos" />
+                  <CozyHomeLink from="sharing-photos" />
                   <Menu
                     title={t('Toolbar.more')}
                     className={classNames(styles['pho-toolbar-menu'])}
