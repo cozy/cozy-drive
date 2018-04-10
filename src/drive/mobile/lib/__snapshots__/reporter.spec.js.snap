@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Normalization function should normalize stacktraces 1`] = `
+Object {
+  "exception": Object {
+    "values": Array [
+      Object {
+        "stacktrace": Object {
+          "frames": Array [
+            Object {
+              "filename": "app://app.js",
+              "random": 5,
+            },
+            Object {
+              "filename": "/app.js",
+            },
+            Object {
+              "filename": "/app.js",
+            },
+            Object {
+              "filename": "[native code]",
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`Normalization function should normalize the culprit 1`] = `
+Object {
+  "culprit": "app://app.js",
+}
+`;

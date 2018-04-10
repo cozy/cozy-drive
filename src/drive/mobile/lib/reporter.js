@@ -10,7 +10,7 @@ export const ANALYTICS_URL =
 const normalizeUrl = (url, pathStripRe) =>
   url.replace(/^file:\/\//, 'app://').replace(pathStripRe, '')
 
-const normalizeData = data => {
+export const normalizeData = data => {
   const PATH_STRIP_RE = /^.*\/[^.]+(\.app|CodePush|.*(?=\/))/
 
   if (data.culprit) {
