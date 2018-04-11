@@ -13,8 +13,8 @@
   },
   "locales": {
     "en": {
-      "short_description": "Cozy Drive is the app to save, sync and secure your files on your Cozy",
-      "long_description": "With Cozy Drive, you can:\n- Save and sync all your important files for free (passport, holiday photos, tax declarations, payslips…)\n- Access your documents any place, any time or even in flight mode from your office, smartphone or tablet;\n- Share links to files and folders with who you like;\n- Automatically retrieve administrative documents from your main service providers (internet and phone providers, insurers, health professionals, …)\n- Stay in sync during your travels with our mobile apps",
+      "short_description": "Cozy Drive helps you to save, sync and secure your files on your Cozy.",
+      "long_description": "With Cozy Drive, you can easily:\n- Store your important files and keep them secure in your Cozy\n- Access to all your documents online & offline, from your desktop, and on your smartphone or tablet\n- Share links to files ans folders with who you like;\n- Automatically retrieve bills, payrolls, tax notices and other data from your main online services (internet, energy, retail, mobile, energy, travel...)\n- Upload files to your Cozy from your Android",
       "screenshots": ["screenshots/en/screeenshot01.png", "screenshots/en/screeenshot02.png", "screenshots/en/screeenshot03.png", "screenshots/en/screeenshot04.png"]
     },
     "fr": {
