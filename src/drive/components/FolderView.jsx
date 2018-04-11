@@ -111,6 +111,8 @@ class FolderView extends Component {
                 {...this.props}
                 selectionModeActive={selectionModeActive}
                 isAddingFolder={showAddFolder}
+                isLoading={fetchPending || isNavigating}
+                isInError={fetchFailed}
               />
             </div>
           </div>
