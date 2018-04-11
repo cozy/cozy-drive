@@ -15,11 +15,13 @@
   "locales": {
     "fr": {
       "short_description": "Cozy Photos est l’application de visualisation et gestion de vos photos sur Cozy.",
-      "long_description": "Avec Cozy Photos vous pourrez :\n- Visualiser toutes les photos présentes dans votre Cozy, classées par date;\n- Organisez vos photos en albums;\n- Partager vos albums avec qui vous le souhaitez."
+      "long_description": "Avec Cozy Photos vous pourrez :\n- Visualiser toutes les photos présentes dans votre Cozy, classées par date;\n- Organisez vos photos en albums;\n- Partager vos albums avec qui vous le souhaitez.",
+      "screenshots": ["screenshots/fr/screeenshot01.png", "screenshots/fr/screeenshot02.png", "screenshots/fr/screeenshot03.png"]
     },
     "en": {
       "short_description": "Cozy Photos is your photo viewing and management app on your Cozy.",
-      "long_description": "With Cozy Photos, you can:\ny\n- Organize your photos in albums;\n- Share the albums with whoever you like."
+      "long_description": "With Cozy Photos, you can:\ny\n- Organize your photos in albums;\n- Share the albums with whoever you like.",
+      "screenshots": ["screenshots/en/screeenshot01.png", "screenshots/en/screeenshot02.png", "screenshots/en/screeenshot03.png"]
     }
   },
   "routes": {
