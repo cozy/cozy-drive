@@ -13,3 +13,6 @@ trim_trailing_whitespace = false
 
 [*.styl]
 indent_size = 4
+
+[*.xml]
+indent_size = 4
