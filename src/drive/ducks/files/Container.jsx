@@ -7,7 +7,7 @@ import confirm from '../../lib/confirm'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
-import { ShareModal } from 'sharing'
+import { ShareModal } from '../../sharing'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'

@@ -29,9 +29,6 @@ module.exports = function(production, app) {
         { from: 'LICENSE' },
         {
           from: 'targets/.travis.yml'
-        },
-        {
-          from: 'publish_registry.sh'
         }
       ])
     ]

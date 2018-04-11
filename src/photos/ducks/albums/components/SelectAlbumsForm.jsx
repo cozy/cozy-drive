@@ -1,4 +1,4 @@
-import styles from '../styles/albumsList'
+import styles from '../../../styles/albumsList'
 
 import React from 'react'
 import classNames from 'classnames'
@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { withError } from 'components/Error/ErrorComponent'
 import { EmptyPhotos } from 'components/Error/Empty'
 
-import AlbumItem from '../containers/AlbumItem'
+import AlbumItem from './AlbumItem'
 
 const AlbumsList = props =>
   props.albums.data.length === 0 ? (
@@ -47,7 +47,7 @@ export const AlbumsView = props => {
   if (!props.albums) {
     return null
   }
-  const error = props.albums.fetchingStatus === 'failed'
+  const error = props.albums.fetchStatus === 'failed'
   return (
     <ErrorAlbumsView
       error={error}

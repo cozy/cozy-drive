@@ -2,28 +2,37 @@ import styles from './share.styl'
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  cozyConnect,
-  fetchSharings,
-  fetchContacts,
-  share,
-  unshare,
-  shareByLink,
-  revokeLink
-} from 'cozy-client'
 import Modal from 'cozy-ui/react/Modal'
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
+import Alerter from 'photos/components/Alerter'
 
-import ShareByLink from './components/ShareByLink'
-import ShareByEmail from './components/ShareByEmail'
+import { default as DumbShareByLink } from './components/ShareByLink'
+import { default as DumbShareByEmail } from './components/ShareByEmail'
 
 require('url-polyfill')
+
+const isFile = ({ _type }) => _type === 'io.cozy.files'
+
+const track = (document, action) => {
+  const tracker = getTracker()
+  if (!tracker) {
+    return
+  }
+  tracker.push([
+    'trackEvent',
+    isFile(document) ? 'Drive' : 'Photos',
+    action,
+    `${action}${isFile(document) ? 'File' : 'Album'}`
+  ])
+}
+const trackSharingByLink = document => track(document, 'shareByLink')
 
 const shunt = (cond, BaseComponent, OtherComponent) => props =>
   cond() ? <BaseComponent {...props} /> : <OtherComponent {...props} />
 
-const ComingSoon = (props, context) => (
+const ComingSoon = ({ documentType }, { t }) => (
   <div className={styles['coz-form-group']}>
-    <h3>{context.t(`${props.documentType}.share.shareByEmail.subtitle`)}</h3>
+    <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
     <p
       className={styles['coz-form-desc']}
       style={
@@ -32,13 +41,119 @@ const ComingSoon = (props, context) => (
         } /* no need for a class as it is temporary screen */
       }
     >
-      {context.t(`${props.documentType}.share.shareByEmail.comingsoon`)}
+      {t(`${documentType}.share.shareByEmail.comingsoon`)}
+    </p>
+  </div>
+)
+
+const Failed = ({ documentType }, { t }) => (
+  <div className={styles['coz-form-group']}>
+    <h3>{t(`${documentType}.share.shareByLink.subtitle`)}</h3>
+    <p className={styles['coz-form-desc']}>
+      {t(`${documentType}.share.shareByLink.fetchFailed`)}
     </p>
   </div>
 )
 
 const displayShareEmail = () =>
   new URL(window.location).searchParams.get('sharingiscaring') !== null
+
+class ShareByLink extends Component {
+  state = {
+    link: null,
+    status: 'pending'
+  }
+
+  componentDidMount() {
+    const { document } = this.props
+    this.setState(state => ({ ...state, status: 'loading' }))
+    this.collection(document)
+      .getSharingLink(document)
+      .then(link =>
+        this.setState(state => ({
+          ...state,
+          status: 'loaded',
+          link
+        }))
+      )
+      .catch(() => this.setState(state => ({ ...state, status: 'failed' })))
+  }
+
+  share = document => {
+    const { documentType } = this.props
+    return this.collection(document)
+      .createSharingLink(document)
+      .then(link => {
+        trackSharingByLink(document)
+        this.setState(state => ({
+          ...state,
+          link
+        }))
+      })
+      .catch(e => {
+        Alerter.error(`${documentType}.share.error.generic`)
+        console.log(e)
+      })
+  }
+
+  revoke = document => {
+    const { documentType } = this.props
+    return this.collection(document)
+      .revokeSharingLink(document)
+      .then(link =>
+        this.setState(state => ({
+          ...state,
+          link: null
+        }))
+      )
+      .catch(e => {
+        Alerter.error(`${documentType}.share.error.revoke`)
+        console.log(e)
+      })
+  }
+
+  collection(document) {
+    return this.context.client.collection(document._type)
+  }
+
+  render() {
+    const { document, documentType } = this.props
+    const { link, status } = this.state
+    if (status === 'failed') return <Failed documentType={documentType} />
+    if (status !== 'loaded') return null
+    return (
+      <DumbShareByLink
+        document={document}
+        documentType={documentType}
+        checked={link !== null}
+        link={link}
+        onEnable={this.share}
+        onDisable={this.revoke}
+      />
+    )
+  }
+}
+
+// TODO: wrap it into a Query when the sharing is ready
+const ShareByEmail = ({
+  document,
+  documentType,
+  sharingDesc,
+  share = () => {},
+  unshare = () => {},
+  recipients = [],
+  contacts = { data: [] }
+}) => (
+  <DumbShareByEmail
+    document={document}
+    documentType={documentType}
+    recipients={recipients}
+    contacts={contacts.data}
+    sharingDesc={sharingDesc}
+    onShare={share}
+    onUnshare={unshare}
+  />
+)
 
 const ShareByEmailComingSoon = shunt(
   displayShareEmail,
@@ -49,38 +164,17 @@ const ShareByEmailComingSoon = shunt(
 class ModalContent extends Component {
   render() {
     const { t } = this.context
-    const {
-      sharing,
-      sharingDesc,
-      share,
-      unshare,
-      shareByLink,
-      revokeLink,
-      contacts,
-      document,
-      documentType = 'Document'
-    } = this.props
+    const { sharingDesc, document, documentType = 'Document' } = this.props
 
     return (
       <div className={styles['share-modal-content']}>
-        <ShareByLink
-          document={document}
-          documentType={documentType}
-          checked={!!sharing.sharingLink}
-          link={sharing.sharingLink}
-          onEnable={shareByLink}
-          onDisable={revokeLink}
-        />
+        <ShareByLink document={document} documentType={documentType} />
         <hr className={styles['divider']} />
         {withSharingCheck(document, documentType, t)(
           <ShareByEmailComingSoon
             document={document}
             documentType={documentType}
-            recipients={sharing.recipients}
-            contacts={contacts.data}
             sharingDesc={sharingDesc}
-            onShare={share}
-            onUnshare={unshare}
           />
         )}
       </div>
@@ -147,26 +241,10 @@ const withSharingCheck = ({ id, type }, documentType, t) => BaseComponent => {
   )
 }
 
-const ConnectedModalContent = cozyConnect(
-  ownProps => ({
-    sharing: fetchSharings(ownProps.document._type, ownProps.document._id, {
-      include: ['recipients']
-    }),
-    contacts: fetchContacts() // TODO: we shouldn't have to fetch contacts manually, it should be handled automatically when using the include: ['recipients'] option
-  }),
-  (dispatch, ownProps) => ({
-    share: (document, recipients, sharingType, sharingDesc) =>
-      dispatch(share(document, recipients, sharingType, sharingDesc)),
-    unshare: (document, recipient) => dispatch(unshare(document, recipient)),
-    shareByLink: document => dispatch(shareByLink(document)),
-    revokeLink: document => dispatch(revokeLink(document))
-  })
-)(ModalContent)
-
 export class ShareModal extends Component {
   render() {
     const { t } = this.context
-    const { onClose, sharing, document, documentType = 'Document' } = this.props
+    const { onClose, document, documentType = 'Document' } = this.props
 
     return (
       <Modal
@@ -175,11 +253,7 @@ export class ShareModal extends Component {
         className={styles['share-modal']}
         into="body"
       >
-        <ConnectedModalContent
-          sharing={sharing}
-          document={document}
-          documentType={documentType}
-        />
+        <ModalContent document={document} documentType={documentType} />
       </Modal>
     )
   }

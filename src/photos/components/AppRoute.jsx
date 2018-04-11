@@ -2,11 +2,9 @@ import React from 'react'
 import { Route, Redirect } from 'react-router'
 
 import Layout from './Layout'
-import Timeline from '../containers/Timeline'
-import AlbumsView from '../containers/AlbumsView'
-import AlbumPhotos from '../containers/AlbumPhotos'
+import Timeline from '../ducks/timeline'
+import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import PhotosViewer from '../components/PhotosViewer'
-import { PhotosPicker } from '../ducks/albums'
 
 export const ComingSoon = () => <p style="margin-left: 2em">Coming soon!</p>
 

@@ -1,0 +1,74 @@
+@require 'components/button.styl'
+@require 'settings/palette.styl'
+
+.pho-recipient
+    display flex
+    flex-direction row
+    align-items center
+
+    & + .pho-recipient
+        margin-top 1.5rem
+
+.pho-avatar
+    display flex
+    flex-direction row
+    align-items center
+
+.pho-recipient-avatar
+    position relative
+    flex 0 0 auto
+    border-radius 50%
+    margin-right .5rem
+    width 2.5rem
+    height 2.5rem
+
+    span
+        position absolute
+        top 50%
+        left 50%
+        transform translateX(-50%) translateY(-50%)
+        font-size 1.125rem
+        font-weight bold
+        line-height 1rem
+        text-transform uppercase
+        color white
+
+.pho-recipient-idents
+    flex 1 1 auto
+
+.pho-recipient-status
+    flex 0 0 auto
+    font-size .875rem
+    color coolGrey
+
+.pho-recipient-user
+.pho-recipient-url
+    text-overflow ellipsis
+    overflow hidden
+    white-space nowrap
+    line-height 1.3
+
+.pho-recipient-user
+    font-size 1rem
+    font-weight bold
+
+.pho-recipient-url
+    font-size .875rem
+    color coolGrey
+
+.pho-recipient-menu-btn
+    @extend $button
+    text-transform capitalize
+    padding-right  3rem
+    background embedurl("../assets/icon-arrow-down.svg") right 1rem center no-repeat
+    background-color transparent
+    color            black
+
+    &:focus
+    &:not([disabled]):not([aria-disabled=true]):hover
+        background-color transparent
+
+.pho-action-unshare
+    color pomegranate !important
+    text-decoration none !important
+    background embedurl("../assets/icon-trash-red.svg") 1rem center no-repeat

@@ -65,7 +65,7 @@ const processNextFile = callback => async (dispatch, getState) => {
   const file = item.file
   try {
     dispatch({ type: UPLOAD_FILE, file })
-    await dispatch(callback(file))
+    await callback(file)
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
   } catch (error) {
     console.log(error)

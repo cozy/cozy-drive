@@ -52,6 +52,7 @@ export class PhotoBoard extends Component {
   render() {
     const {
       t,
+      f,
       lists,
       selected,
       photosContext,
@@ -61,7 +62,7 @@ export class PhotoBoard extends Component {
       onPhotosUnselect,
       fetchStatus,
       hasMore,
-      onFetchMore,
+      fetchMore,
       measureRef,
       contentRect: { entry: { width } }
     } = this.props
@@ -86,12 +87,13 @@ export class PhotoBoard extends Component {
       >
         {lists.map(photoList => (
           <PhotoList
-            key={photoList.title}
-            title={photoList.title}
+            key={photoList.title || photoList.month}
+            title={
+              photoList.title ||
+              (photoList.month ? f(photoList.month, 'MMMM YYYY') : '')
+            }
             photos={photoList.photos}
-            selected={selected.filter(id =>
-              photoList.photos.find(p => p.id === id)
-            )}
+            selected={selected}
             showSelection={showSelection}
             onPhotoToggle={onPhotoToggle}
             onPhotosSelect={onPhotosSelect}
@@ -100,7 +102,7 @@ export class PhotoBoard extends Component {
           />
         ))}
         {hasMore && (
-          <MoreButton width={width} onClick={onFetchMore}>
+          <MoreButton width={width} onClick={fetchMore}>
             {t('Board.load_more')}
           </MoreButton>
         )}

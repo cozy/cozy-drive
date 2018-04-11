@@ -76,7 +76,7 @@ your app is available at http://drive.cozy.tools:8080.
 
 ### Run on you mobile phone or your tablet :phone:
 
-[See specific documentation](mobile/README.md).
+[See specific documentation](targets/drive/mobile/README.md).
 
 
 ### Living on the edge

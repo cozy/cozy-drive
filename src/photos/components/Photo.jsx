@@ -42,7 +42,7 @@ const Photo = props => {
           data-input="checkbox"
           onClick={e => {
             e.stopImmediatePropagation()
-            onToggle({ id: photo.id }, selected)
+            onToggle(photo, selected)
           }}
         >
           <input type="checkbox" checked={selected} />

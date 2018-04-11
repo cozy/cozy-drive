@@ -137,7 +137,9 @@
       "shareByLink": {
         "subtitle": "By public link",
         "desc":
-          "Anyone with the provided link can see and download your photos."
+          "Anyone with the provided link can see and download your photos.",
+        "fetchFailed":
+          "Woops! It seems your connectivity is limited, try again later when it gets better."
       },
       "shareByEmail": {
         "title": "By email",
@@ -170,7 +172,9 @@
       "gettingLink": "Getting your link...",
       "error": {
         "generic":
-          "An error occurred when creating the album share link, please try again."
+          "An error occurred when creating the album share link, please try again.",
+        "revoke":
+          "An error occurred when revoking the album share link, please try again."
       }
     },
     "create": {

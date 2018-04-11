@@ -1,7 +1,7 @@
 import styles from './share.styl'
 
 import React, { Component } from 'react'
-import { cozyConnect, fetchSharings } from 'cozy-client'
+// import { cozyConnect, fetchSharings } from 'cozy-client'
 import { UserAvatar } from './components/Recipient'
 import Modal from 'cozy-ui/react/Modal'
 
@@ -40,6 +40,6 @@ export class SharingDetailsModal extends Component {
   }
 }
 
-export default cozyConnect(ownProps => ({
-  sharing: fetchSharings(ownProps.document._type, ownProps.document._id)
-}))(SharingDetailsModal)
+// export default cozyConnect(ownProps => ({
+//   sharing: fetchSharings(ownProps.document._type, ownProps.document._id)
+// }))(SharingDetailsModal)

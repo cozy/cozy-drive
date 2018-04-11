@@ -1,0 +1,77 @@
+@require 'settings/palette.styl'
+@require 'settings/z-index.styl'
+
+.container
+    position relative
+
+.suggestionsContainer
+    position absolute
+    top 100%
+    margin-top .0625rem
+    z-index $alert-index-mobile
+    width 100%
+    max-height 10.625rem
+    overflow auto
+    border .0625rem solid silver
+    border-radius .25rem
+    background white
+    display none
+
+.suggestionsContainerOpen
+    display block
+
+.input
+    width 100%
+
+.suggestionsList
+    margin 0
+    padding .625rem 0
+    list-style none
+
+.suggestion
+    padding .625rem
+
+.suggestionHighlighted
+    background paleGrey
+
+.recipientsContainer
+    display flex
+    flex-wrap wrap
+    padding .5rem
+    border-radius .125rem
+    border 1px solid silver
+    max-height 6.75rem
+    overflow auto
+
+    &:hover
+        border .0625rem solid coolGrey
+
+    input[type=email]
+        width   100%
+        padding .5rem
+        border  none
+        &:hover
+        &:focus
+            border none
+
+.recipientChip
+    display inline-flex
+    align-items center
+    flex 0 0 auto
+    background-color paleGrey
+    border-radius .125rem
+    height 1.75rem
+    line-height 1.75rem
+    padding .25rem .5rem
+    margin .25rem .5rem .25rem 0
+
+
+.removeRecipient
+    border 0
+    background-color transparent
+    padding .6rem 0 0 0
+    margin-left .3rem
+    cursor pointer
+
+    &:hover
+        color slateGrey

@@ -1,28 +1,16 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
-import { leave, revokeLink as revokeSharingLink } from 'cozy-client'
 import { translate } from 'cozy-ui/react/I18n'
 
-import Alerter from '../../../components/Alerter'
 import Menu, { Item } from 'components/Menu'
 import { MoreButton } from 'components/Button'
 
 import {
-  isSelectionBarVisible,
-  showSelectionBar
-} from '../../../ducks/selection'
-
-import { deleteAlbum, downloadAlbum } from '..'
-import DestroyConfirm from '../../../components/DestroyConfirm'
-import QuitConfirm from '../../../components/QuitConfirm'
-import confirm from '../../../lib/confirm'
-import {
   ShareButton,
-  SharedByMeButton,
-  SharedWithMeButton,
-  ShareModal,
-  SharingDetailsModal
+  // SharedByMeButton,
+  // SharedWithMeButton,
+  ShareModal
+  // SharingDetailsModal
 } from 'sharing'
 
 import classNames from 'classnames'
@@ -56,17 +44,27 @@ class AlbumToolbar extends Component {
       t,
       location,
       album,
-      photos,
       sharedWithMe,
-      sharedByMe,
+      // sharedByMe,
       readOnly,
       disabled = false
     } = this.props
-    const { deleteAlbum, leaveAlbum, selectItems, onRename } = this.props
+    const {
+      downloadAlbum,
+      deleteAlbum,
+      // leaveAlbum,
+      selectItems,
+      onRename
+    } = this.props
     return (
       <div className={styles['pho-toolbar']} role="toolbar">
         <div className={styles['u-hide--mob']}>
-          {!sharedByMe &&
+          <ShareButton
+            disabled={disabled}
+            label={t('Albums.share.cta')}
+            onClick={this.showShareModal}
+          />
+          {/* !sharedByMe &&
             !sharedWithMe && (
               <ShareButton
                 disabled={disabled}
@@ -87,7 +85,7 @@ class AlbumToolbar extends Component {
               label={t('Albums.share.sharedWithMe')}
               onClick={this.showSharingDetailsModal}
             />
-          )}
+          ) */}
         </div>
         <Menu
           disabled={disabled}
@@ -110,7 +108,7 @@ class AlbumToolbar extends Component {
           <Item>
             <a
               className={classNames(styles['pho-action-download'])}
-              onClick={() => downloadAlbum(album, photos)}
+              onClick={downloadAlbum}
             >
               {t('Toolbar.menu.download_album')}
             </a>
@@ -150,22 +148,22 @@ class AlbumToolbar extends Component {
             <Item>
               <a
                 className={classNames(styles['pho-action-delete'])}
-                onClick={() => deleteAlbum(album)}
+                onClick={deleteAlbum}
               >
                 {t('Toolbar.menu.album_delete')}
               </a>
             </Item>
           )}
-          {sharedWithMe && (
+          {/* sharedWithMe && (
             <Item>
               <a
                 className={classNames(styles['pho-action-delete'])}
-                onClick={() => leaveAlbum(album)}
+                onClick={leaveAlbum}
               >
                 {t('Toolbar.menu.album_quit')}
               </a>
             </Item>
-          )}
+          ) */}
         </Menu>
         {this.state.showShareModal && (
           <ShareModal
@@ -175,47 +173,17 @@ class AlbumToolbar extends Component {
             onClose={this.closeShareModal}
           />
         )}
-        {this.state.showSharingDetailsModal && (
+        {/* this.state.showSharingDetailsModal && (
           <SharingDetailsModal
             document={album}
             documentType="Albums"
             sharingDesc={album.name}
             onClose={this.closeSharingDetailsModal}
           />
-        )}
+        ) */}
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  disabled: isSelectionBarVisible(state)
-})
-
-export const mapDispatchToProps = (dispatch, ownProps) => ({
-  selectItems: () => dispatch(showSelectionBar()),
-  deleteAlbum: album =>
-    confirm(<DestroyConfirm t={ownProps.t} albumName={album.name} />, () =>
-      dispatch(revokeSharingLink(album))
-        .then(dispatch(deleteAlbum(album)))
-        .then(() => {
-          ownProps.router.replace('albums')
-          Alerter.success('Albums.remove_album.success', { name: album.name })
-        })
-        .catch(() => Alerter.error('Albums.remove_album.error.generic'))
-    ),
-  leaveAlbum: album =>
-    confirm(<QuitConfirm t={ownProps.t} albumName={album.name} />, () =>
-      dispatch(leave(album))
-        .then(() => dispatch(deleteAlbum(album)))
-        .then(() => {
-          ownProps.router.replace('albums')
-          Alerter.success('Albums.quit_album.success', { name: album.name })
-        })
-        .catch(() => Alerter.error('Albums.quit_album.error.generic'))
-    )
-})
-
-export default withRouter(
-  translate()(connect(mapStateToProps, mapDispatchToProps)(AlbumToolbar))
-)
+export default withRouter(translate()(AlbumToolbar))

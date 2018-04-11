@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from './Container'
-export { default as FileOpenerExternal } from './FileOpenerExternal'
+export { default as FileOpenerExternal } from './FileOpenerExternal.jsx'
 
 export const FolderContainer = props => (
   <Container isTrashContext={false} canUpload canCreateFolder {...props} />

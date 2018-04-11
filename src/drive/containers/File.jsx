@@ -13,7 +13,7 @@ import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
 import { Button, Icon, withBreakpoints } from 'cozy-ui/react'
-import { SharedBadge } from 'sharing'
+import { SharedBadge } from '../sharing'
 import { getSharingDetails } from 'cozy-client'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
 

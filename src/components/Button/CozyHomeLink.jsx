@@ -6,8 +6,8 @@ import { ButtonLink } from 'cozy-ui/react'
 const CozyHomeLink = ({ from }, { t }) => (
   <ButtonLink
     label={t('Share.create-cozy')}
-    href={`https://cozy.io/try-it${
-      from ? `?from=${encodeURIComponent(from)}` : ''
+    href={` https://manager.cozycloud.cc/cozy/create${
+      from ? `?pk_campaign=${encodeURIComponent(from)}` : ''
     }`}
   />
 )

@@ -1,5 +1,10 @@
+/* global cozy */
 import React, { Component } from 'react'
-import { getDownloadLink } from 'cozy-client'
+
+const getDownloadLink = file =>
+  cozy.client.files
+    .getDownloadLinkById(file.id)
+    .then(path => `${cozy.client._url}${path}`)
 
 const TTL = 6000
 
@@ -71,12 +76,21 @@ export default class ImageLoader extends Component {
     if (this.shouldLoadPrimary()) {
       this.createLoader(this.props.src)
     } else if (this.shouldLoadFallbackUrl()) {
-      getDownloadLink(this.props.photo)
+      this.getDownloadLink(this.props.photo)
         .then(url => this.setState(state => ({ ...state, fallbackUrl: url })))
         .catch(error => this.allIsLost(error))
     } else if (this.shouldLoadFallback()) {
       this.createLoader(this.state.fallbackUrl)
     }
+  }
+
+  // for compatibility reasons, we try to use cozy-client but fallback on cozy-client-js
+  getDownloadLink(photo) {
+    return this.context.client
+      ? this.context.client
+          .collection('io.cozy.files')
+          .getDownloadLinkById(photo._id)
+      : getDownloadLink(photo)
   }
 
   componentWillUnmount() {

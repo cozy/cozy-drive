@@ -39,6 +39,7 @@
     "menu_download_folder": "Download folder",
     "empty_trash": "Empty trash",
     "share": "Share",
+    "trash": "Remove",
     "leave": "Leave shared folder & delete it"
   },
   "service": {
