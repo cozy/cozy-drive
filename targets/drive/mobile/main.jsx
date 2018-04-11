@@ -38,79 +38,9 @@ if (__DEVELOPMENT__) {
 }
 
 // Register callback for when the app is launched through cozydrive:// link
-window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(hashHistory)
-
-const renderAppWithPersistedState = (persistedState = {}) => {
-  const cozyURL = persistedState.mobile
-    ? persistedState.mobile.settings.serverUrl
-    : ''
-  configureReporter()
-  const client = initClient(cozyURL)
-  const store = configureStore(client, persistedState)
-
-  const clientInfos = store.getState().settings.client
-  if (clientInfos) {
-    client.isRegistered(clientInfos).then(isRegistered => {
-      if (isRegistered) {
-        startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
-        initBar(client)
-      } else {
-        console.warn('Your device is no more connected to your server')
-        store.dispatch(revokeClient())
-      }
-    })
-  }
-
-  document.addEventListener(
-    'pause',
-    () => {
-      if (store.getState().mobile.settings.analytics) stopHeartBeat()
-      if (store.getState().mobile.mediaBackup.currentUpload && isIos()) {
-        const t = getTranslateFunction()
-        scheduleNotification({
-          text: t('mobile.notifications.backup_paused')
-        })
-      }
-    },
-    false
-  )
-
-  document.addEventListener(
-    'resume',
-    () => {
-      store.dispatch(backupImages())
-      if (store.getState().mobile.settings.analytics) startHeartBeat()
-    },
-    false
-  )
-
-  document.addEventListener(
-    'deviceready',
-    () => {
-      store.dispatch(backupImages())
-      if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
-    },
-    false
-  )
-
-  useHistoryForTracker(hashHistory)
-  if (store.getState().mobile.settings.analytics)
-    startTracker(store.getState().mobile.settings.serverUrl)
-
-  const root = document.querySelector('[role=application]')
-
-  render(
-    <I18n
-      lang={getLang()}
-      dictRequire={lang => require(`drive/locales/${lang}`)}
-    >
-      <CozyProvider store={store} client={client}>
-        <DriveMobileRouter history={hashHistory} />
-      </CozyProvider>
-    </I18n>,
-    root
-  )
-}
+window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
+  hashHistory
+)
 
 // Allows to know if the launch of the application has been done by the service background
 // @see: https://git.io/vSQBC
@@ -126,22 +56,89 @@ const isBackgroundServiceParameter = () => {
   return queryDict.backgroundservice
 }
 
-document.addEventListener(
-  'DOMContentLoaded',
-  () => {
-    if (!isBackgroundServiceParameter()) {
-      loadState().then(renderAppWithPersistedState)
-    }
-  },
-  false
-)
+var app = {
+  store: {},
 
-document.addEventListener(
-  'deviceready',
-  () => {
-    if (isBackgroundServiceParameter()) {
+  initialize: function() {
+    this.bindEvents()
+  },
+
+  bindEvents: function() {
+    document.addEventListener(
+      'deviceready',
+      this.onDeviceReady.bind(this),
+      false
+    )
+    document.addEventListener('resume', this.onResume.bind(this), false)
+    document.addEventListener('pause', this.onPause.bind(this), false)
+  },
+
+  startApplication: async function() {
+    const persistedState = await loadState()
+    const cozyURL = persistedState.mobile
+      ? persistedState.mobile.settings.serverUrl
+      : ''
+    configureReporter()
+    const client = initClient(cozyURL)
+    this.store = configureStore(client, persistedState)
+    const store = this.store
+
+    const clientInfos = store.getState().settings.client
+    if (clientInfos) {
+      const isRegistered = await client.isRegistered(clientInfos)
+      if (isRegistered) {
+        startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
+        initBar(client)
+      } else {
+        console.warn('Your device is no more connected to your server')
+        store.dispatch(revokeClient())
+      }
+    }
+
+    useHistoryForTracker(hashHistory)
+    if (store.getState().mobile.settings.analytics)
+      startTracker(store.getState().mobile.settings.serverUrl)
+
+    const root = document.querySelector('[role=application]')
+
+    render(
+      <I18n
+        lang={getLang()}
+        dictRequire={lang => require(`drive/locales/${lang}`)}
+      >
+        <CozyProvider store={store} client={client}>
+          <DriveMobileRouter history={hashHistory} />
+        </CozyProvider>
+      </I18n>,
+      root
+    )
+  },
+
+  onDeviceReady: async function() {
+    if (!isBackgroundServiceParameter()) {
+      this.startApplication()
+    } else {
       startBackgroundService()
     }
+
+    // this.store.dispatch(backupImages())
+    if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
   },
-  false
-)
+
+  onResume: function() {
+    this.store.dispatch(backupImages())
+    if (this.store.getState().mobile.settings.analytics) startHeartBeat()
+  },
+
+  onPause: function() {
+    if (this.store.getState().mobile.settings.analytics) stopHeartBeat()
+    if (this.store.getState().mobile.mediaBackup.currentUpload && isIos()) {
+      const t = getTranslateFunction()
+      scheduleNotification({
+        text: t('mobile.notifications.backup_paused')
+      })
+    }
+  }
+}
+
+app.initialize()
