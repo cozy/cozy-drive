@@ -115,6 +115,8 @@ class DumbFolderView extends React.Component {
               <FolderContent
                 onFileOpen={this.showInViewer}
                 withSelectionCheckbox={false}
+                isLoading={this.props.fetchStatus === 'pending'}
+                isInError={this.props.fetchStatus === 'failed'}
                 {...this.props}
               />
               {viewerOpened && (
