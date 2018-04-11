@@ -1,19 +1,25 @@
 {
   "name": "Photos",
   "slug": "photos",
+  "type": "webapp",
   "icon": "public/app-icon.svg",
-  "description": "Photos manager for Cozy v3",
-  "category": "cozy",
-  "source": "https://github.com/cozy/cozy-drive.git@build-photos",
+  "categories": ["cozy"],
+  "source": "https://github.com/cozy/cozy-drive",
   "editor": "Cozy",
+  "name_prefix": "Cozy",
   "developer": {
     "name": "Cozy",
     "url": "https://cozy.io"
   },
-  "default_locale": "en",
+  "langs": ["en", "fr"],
   "locales": {
     "fr": {
-      "description": "Gestionnaire de photos pour Cozy v3"
+      "short_description": "Cozy Photos est l’application de visualisation et gestion de vos photos sur Cozy.",
+      "long_description": "Avec Cozy Photos vous pourrez :\n- Visualiser toutes les photos présentes dans votre Cozy, classées par date;\n- Organisez vos photos en albums;\n- Partager vos albums avec qui vous le souhaitez."
+    },
+    "en": {
+      "short_description": "Cozy Photos is your photo viewing and management app on your Cozy.",
+      "long_description": "With Cozy Photos, you can:\ny\n- Organize your photos in albums;\n- Share the albums with whoever you like."
     }
   },
   "routes": {
