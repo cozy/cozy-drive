@@ -4,6 +4,9 @@ import {
   OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
+  SORT_FOLDER,
+  SORT_FOLDER_SUCCESS,
+  SORT_FOLDER_FAILURE,
   FETCH_RECENT,
   FETCH_RECENT_SUCCESS,
   FETCH_RECENT_FAILURE,
@@ -94,6 +97,18 @@ const fileCount = (state = null, action) => {
   }
 }
 
+const sort = (state = null, action) => {
+  switch (action.type) {
+    case SORT_FOLDER:
+      return {
+        attribute: action.sortAttribute,
+        order: action.sortOrder
+      }
+    default:
+      return state
+  }
+}
+
 const updateItem = (file, files) => {
   const withoutFile = files.filter(f => f.id !== file.id)
   return insertItem(file, withoutFile)
@@ -135,6 +150,7 @@ const files = (state = [], action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
+    case SORT_FOLDER_SUCCESS:
       return action.files
     case FETCH_MORE_FILES_SUCCESS:
       const clone = state.slice(0)
@@ -175,6 +191,7 @@ const fetchStatus = (state = 'pending', action) => {
     case DESTROY_FILES_FAILURE:
       return 'loaded'
     case OPEN_FOLDER_FAILURE:
+    case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_FAILURE:
       return 'failed'
     default:
@@ -186,6 +203,8 @@ const lastFetch = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case OPEN_FOLDER_FAILURE:
+    case SORT_FOLDER_SUCCESS:
+    case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_SUCCESS:
     case FETCH_RECENT_FAILURE:
       return Date.now()
@@ -200,6 +219,7 @@ export default combineReducers({
   displayedFolder,
   openedFolderId,
   fileCount,
+  sort,
   files,
   fetchStatus,
   lastFetch
@@ -210,6 +230,8 @@ export const getFilesWithLinks = ({ view }, folderId) =>
   view.filesWithLinks[folderId]
 
 export const getVisibleFiles = ({ view }) => view.files
+
+export const getSort = ({ view }) => view.sort
 
 export const getFileById = ({ view }, id) => {
   const file = view.files.find(f => f && f.id && f.id === id)

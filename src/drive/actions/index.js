@@ -20,6 +20,9 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
 export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
+export const SORT_FOLDER = 'SORT_FOLDER'
+export const SORT_FOLDER_SUCCESS = 'SORT_FOLDER_SUCCESS'
+export const SORT_FOLDER_FAILURE = 'SORT_FOLDER_FAILURE'
 export const FETCH_RECENT = 'FETCH_RECENT'
 export const FETCH_RECENT_SUCCESS = 'FETCH_RECENT_SUCCESS'
 export const FETCH_RECENT_FAILURE = 'FETCH_RECENT_FAILURE'
@@ -86,13 +89,10 @@ export const openFolder = folderId => {
       }
     })
     try {
-      const settings = getState().settings
-      const offline =
-        settings.offline && settings.firstReplication && settings.indexes
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList
-      const folder = offline
-        ? await getFolderFromPouchDB(settings.indexes.folders, folderId)
+      const folder = shouldWorkFromPouchDB(getState())
+        ? await getFolderFromPouchDB(getPouchFolderIndex(getState()), folderId)
         : await getFolderFromStack(folderId)
 
       return dispatch({
@@ -190,16 +190,66 @@ const getFolderContentsFromPouchDB = async (
   return files
 }
 
+export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: SORT_FOLDER,
+      folderId,
+      sortAttribute,
+      sortOrder,
+      meta: {
+        cancelSelection: true
+      }
+    })
+    try {
+      const files = await getSortedFolderFromStack(
+        folderId,
+        sortAttribute,
+        sortOrder
+      )
+      console.log(files)
+
+      return dispatch({
+        type: SORT_FOLDER_SUCCESS,
+        files
+      })
+    } catch (err) {
+      return dispatch({ type: SORT_FOLDER_FAILURE, error: err })
+    }
+  }
+}
+
+const getSortedFolderFromStack = async (
+  folderId,
+  sortAttribute,
+  sortOrder = 'asc'
+) => {
+  const index = await cozy.client.data.defineIndex('io.cozy.files', [
+    sortAttribute
+  ])
+  const resp = await cozy.client.files.query(index, {
+    selector: {
+      dir_id: folderId
+    },
+    sort: [{ [sortAttribute]: sortOrder }],
+    limit: 30,
+    wholeResponse: true
+  })
+  return resp.data.map(f => ({
+    ...f,
+    _id: f.id,
+    _type: f.type,
+    ...f.attributes
+  }))
+}
+
 export const fetchMoreFiles = (folderId, skip, limit) => {
   return async (dispatch, getState) => {
     dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
     try {
-      const settings = getState().settings
-      const offline =
-        settings.offline && settings.firstReplication && settings.indexes
-      const files = offline
+      const files = shouldWorkFromPouchDB(getState())
         ? await getFolderContentsFromPouchDB(
-            settings.indexes.folders,
+            getPouchFolderIndex(getState()),
             folderId,
             skip,
             limit
@@ -228,8 +278,7 @@ export const fetchRecentFiles = () => {
 
     try {
       const settings = getState().settings
-      const isLocallyAvailable =
-        isCordova() && settings.firstReplication && settings.indexes
+      const isLocallyAvailable = shouldWorkFromPouchDB(getState())
       const files = await (isLocallyAvailable
         ? getRecentFilesFromPouchDB(settings.indexes.recent)
         : fetchRecentFilesFromStack())
@@ -302,6 +351,18 @@ const getRecentFilesFromPouchDB = async index => {
     _type: 'io.cozy.files'
   }))
 }
+
+const shouldWorkFromPouchDB = state => {
+  const settings = state.settings
+  return (
+    isCordova() &&
+    settings.offline &&
+    settings.firstReplication &&
+    settings.indexes
+  )
+}
+
+const getPouchFolderIndex = state => state.settings.indexes.folders
 
 const fetchFilesInBatchFromStack = ids =>
   cozy.client.fetchJSON(
