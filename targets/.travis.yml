@@ -10,6 +10,10 @@ matrix:
 env:
   global:
   - secure: o/nsZldstzAs5kcTYSeDaooDWKVvUt3fidB513p0DT1GfytSM7p293IMxc/ToXromgg2vphWNqxHLofKz2yzRT+CORDRvZ7B4u++4mPPfS2u9gCLuaVPsFn/GYTgbZKMQyQsz+p113b8NJz1RNaFjvJmPzimfiYPYy/JHEMlzYZjQ4BpGKUg6vDkS7vbuxBFYdrWLgY4zkj8wPARqMuUEmhOnUMnogqN/OGXtLwj5FeTJ2Kxa2JM6QlXzvr34xSsJ0N6J7VEGSqmrZhkEEGCPvy/G11diakEUtMMBvWBHJJna8T7r96efAI9ze8b1jIlGoRDesslBeWOUthGuqSTN2GiZ98XyWJdEAVGF1j8eXlW1xRxQPe0Hkp99dfnDdSVV7zmefScj2MaIbCN/cLfyWDgiXFwKVLzQPQRoaPDm8w0/X5T5MWz962MOsjwuBkoz8uEEqJqRqdZoXbzXb9kJEx7kbUnvlYZ0Nc1mCsRFhn45wVzTQt+izdmZIjw+Bl3NsRzRSNrmygapEBNZhF2mpnibwCFdXLlG+Zlzfk72IWkTr3gQB49ZdEMYh+fYPYAE70F0ISyEf4Ff14ioKrQINRTSTLs6bR0/RyMr0eiBS7V0nXayG8J9ze1HggRLHK4I/0VJFPI+ou9KK0IndjrIhuftDJV6Vr646pQsfY9bsw=
+before_install:
+- TRAVIS_TAG=${TRAVIS_TAG/drive-/}
+- TRAVIS_TAG=${TRAVIS_TAG/photos-/}
+- echo Final value for TRAVIS_TAG is $TRAVIS_TAG
 script:
 - yarn add cozy-app-publish
 - yarn cozy-app-publish --token $REGISTRY_TOKEN --build-dir '.'
