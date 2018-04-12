@@ -30,6 +30,11 @@ import { getLang, initClient, initBar } from 'drive/mobile/lib/cozy-helper'
 import { revokeClient } from 'drive/mobile/actions/authorization'
 import { startReplication } from 'drive/mobile/actions/settings'
 import { configureReporter } from 'drive/mobile/lib/reporter'
+import { addToUploadQueue } from '../../../src/drive/ducks/upload/index'
+import { getEntry } from '../../../src/drive/mobile/lib/filesystem'
+import { ROOT_DIR_ID } from '../../../src/drive/constants/config'
+import { uploadedFile } from '../../../src/drive/actions/index'
+import { alertShow } from 'cozy-ui/react/Alerter'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -41,6 +46,78 @@ if (__DEVELOPMENT__) {
 window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
   hashHistory
 )
+
+function uploadIntent(intent, store) {
+  if (intent['android.intent.extra.STREAM']) {
+    const contentFiles = Array.isArray(intent['android.intent.extra.STREAM'])
+      ? intent['android.intent.extra.STREAM']
+      : [intent['android.intent.extra.STREAM']]
+    contentFiles.forEach(content => {
+      window.FilePath.resolveNativePath(
+        content,
+        async filePath => {
+          console.log('Here is the filepath', filePath)
+          const dirEntry = await getEntry(filePath)
+          console.log('Here is the directoryentry', dirEntry)
+          dirEntry.file(file => {
+            file.lastModifiedDate = new Date(file.lastModifiedDate)
+            console.log('this is binary file', file)
+            store.dispatch(
+              addToUploadQueue(
+                [file],
+                ROOT_DIR_ID,
+                uploadedFile,
+                (loaded, quotas, conflicts, errors) => {
+                  let action = { type: '' } // dummy action, we only use it to trigger an alert notification
+                  if (conflicts.length > 0) {
+                    action.alert = alertShow(
+                      'upload.alert.success_conflicts',
+                      {
+                        smart_count: loaded.length,
+                        conflictNumber: conflicts.length
+                      },
+                      'info'
+                    )
+                  } else if (errors.length > 0) {
+                    action.alert = alertShow(
+                      'upload.alert.errors',
+                      null,
+                      'error'
+                    )
+                  } else {
+                    action.alert = alertShow(
+                      'upload.alert.success',
+                      { smart_count: loaded.length },
+                      'success'
+                    )
+                  }
+
+                  return action
+                }
+              )
+            )
+          })
+          // need to use addToUploadQueue() to upload files
+        },
+        error => {
+          console.error('Here is the error', error.message)
+        }
+      )
+    })
+  }
+}
+
+function registerShareWithCozyDriveIntent(store) {
+  console.log('registerShareWithCozyDriveIntent')
+  window.plugins.intentShim.onIntent(function({
+    action,
+    extras = 'No extras in intent'
+  }) {
+    console.log('Action' + JSON.stringify(action))
+    console.log('Launch Intent Extras: ' + JSON.stringify(extras))
+    uploadIntent(extras, store)
+  })
+}
 
 // Allows to know if the launch of the application has been done by the service background
 // @see: https://git.io/vSQBC
@@ -123,11 +200,13 @@ var app = {
 
     // this.store.dispatch(backupImages())
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
+    registerShareWithCozyDriveIntent(this.store)
   },
 
   onResume: function() {
     this.store.dispatch(backupImages())
     if (this.store.getState().mobile.settings.analytics) startHeartBeat()
+    registerShareWithCozyDriveIntent(this.store)
   },
 
   onPause: function() {

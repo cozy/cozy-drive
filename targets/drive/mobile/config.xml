@@ -111,4 +111,5 @@
     <plugin name="cordova-plugin-localization-strings" spec="https://github.com/kelvinhokk/cordova-plugin-localization-strings.git" />
     <plugin name="com-darryncampbell-cordova-plugin-intent" spec="https://github.com/darryncampbell/darryncampbell-cordova-plugin-intent.git" />
     <plugin name="cordova-custom-config" spec="~5.0.2" />
+    <plugin name="cordova-plugin-filepath" spec="~1.0.2" />
 </widget>
