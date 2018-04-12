@@ -16,4 +16,4 @@ before_install:
 - echo Final value for TRAVIS_TAG is $TRAVIS_TAG
 script:
 - yarn add cozy-app-publish
-- yarn cozy-app-publish --token $REGISTRY_TOKEN --build-dir '.'
+- yarn cozy-app-publish --token $REGISTRY_TOKEN --build-dir '.' --build-url https://github.com/$TRAVIS_REPO_SLUG/archive/$TRAVIS_COMMIT.tar.gz
