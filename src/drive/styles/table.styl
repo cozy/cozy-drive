@@ -34,6 +34,26 @@
     &:first-child
         padding .5rem
 
+.fil-content-header-sortable:hover:after
+.fil-content-header-sortasc:after
+.fil-content-header-sortdesc:after
+    display inline-block
+    content ''
+    margin-left .5rem
+    width .75rem
+    height .75rem
+
+.fil-content-header-sortable:hover:after
+    background transparent embedurl('../assets/icons/icon-arrow-down.svg') center .0625rem no-repeat
+.fil-content-header-sortasc:after
+    background transparent embedurl('../assets/icons/icon-arrow-up-grey.svg') center .0625rem no-repeat
+.fil-content-header-sortdesc:after
+    background transparent embedurl('../assets/icons/icon-arrow-down-grey.svg') center .0625rem no-repeat
+
+.fil-content-header-sortdesc
+.fil-content-header-sortasc
+    color charcoalGrey
+
 .fil-content-file-action
     display     none
     text-align  right

@@ -20,6 +20,7 @@ const FileListHeader = ({ t }) => (
     <div
       className={classNames(
         styles['fil-content-header'],
+        styles['fil-content-header-sortable'],
         styles['fil-content-file']
       )}
     >
@@ -28,6 +29,7 @@ const FileListHeader = ({ t }) => (
     <div
       className={classNames(
         styles['fil-content-header'],
+        styles['fil-content-header-sortasc'],
         styles['fil-content-date']
       )}
     >
@@ -36,6 +38,7 @@ const FileListHeader = ({ t }) => (
     <div
       className={classNames(
         styles['fil-content-header'],
+        styles['fil-content-header-sortdesc'],
         styles['fil-content-size']
       )}
     >
