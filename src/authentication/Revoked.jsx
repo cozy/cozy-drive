@@ -11,8 +11,10 @@ class Revoked extends Component {
   }
 
   async logBackIn() {
-    const url = cozy.client._url
-    cozy.client._storage.clear()
+    const url = this.props.url || cozy.client._url
+    if (cozy.client) {
+      cozy.client._storage.clear()
+    }
     try {
       const cozyClient = this.context.client
       const { client, token } = await cozyClient.register(url)
@@ -47,7 +49,8 @@ class Revoked extends Component {
 Revoked.propTypes = {
   onLogout: PropTypes.func.isRequired,
   onLogBackIn: PropTypes.func.isRequired,
-  router: PropTypes.object
+  router: PropTypes.object,
+  url: PropTypes.string
 }
 
 export default translate()(Revoked)
