@@ -34,10 +34,12 @@ const SortableHeaderCell = ({
   css,
   order = null,
   defaultOrder,
-  onClick
+  onSort
 }) => (
   <div
-    onClick={onClick}
+    onClick={() =>
+      onSort(attr, order ? (order === 'asc' ? 'desc' : 'asc') : defaultOrder)
+    }
     className={classNames(
       styles['fil-content-header'],
       styles[`fil-content-${css}`],
@@ -79,15 +81,7 @@ const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => (
           {...props}
           t={t}
           order={isActive ? actualSort.order : null}
-          onClick={() =>
-            onFolderSort(
-              folderId,
-              props.attr,
-              isActive
-                ? actualSort.order === 'asc' ? 'desc' : 'asc'
-                : props.defaultOrder
-            )
-          }
+          onSort={(attr, order) => onFolderSort(folderId, attr, order)}
         />
       )
     })}
