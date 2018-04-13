@@ -63,7 +63,9 @@ class Stack {
       limit,
       wholeResponse: true
     })
-    return resp.data.map(f => extractFileAttributes(f))
+    return resp.data
+      .filter(f => f.attributes.name !== '.cozy_trash') // this query returns the trash folder without an ID...
+      .map(f => extractFileAttributes(f))
   }
 
   RECENT_FILES_INDEX_FIELDS = ['updated_at', 'trashed']
