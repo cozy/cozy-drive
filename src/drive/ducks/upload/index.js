@@ -76,11 +76,11 @@ const processNextFile = (
     // TODO: is the extractFileAttributes call really necessary?
     dispatch(fileUploadedCallback(extractFileAttributes(uploadedFile)))
   } catch (error) {
-    let status
-
-    if (error.status === 400) status = CONFLICT
-    else if (error.status === 413) status = QUOTA
-    else status = FAILED
+    const statusError = {
+      400: CONFLICT,
+      413: QUOTA
+    }
+    const status = statusError[error.status] || FAILED
 
     dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
   }
