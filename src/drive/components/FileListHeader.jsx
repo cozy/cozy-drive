@@ -8,10 +8,13 @@ import { translate } from 'cozy-ui/react/I18n'
 import { sortFolder, getOpenedFolderId } from '../actions'
 import { getSort } from '../reducers'
 
-const sortableAttrs = [
-  { label: 'name', attr: 'name', css: 'file' },
-  { label: 'update', attr: 'updated_at', css: 'date' }
+const SORTABLE_ATTRIBUTES = [
+  { label: 'name', attr: 'name', css: 'file', defaultOrder: 'asc' },
+  { label: 'update', attr: 'updated_at', css: 'date', defaultOrder: 'desc' }
+  // TODO: activate sorting by size when it's ready on the back side
+  // { label: 'size', attr: 'size', css: 'size', defaultOrder: 'desc' }
 ]
+const DEFAULT_SORT = { attribute: 'name', order: 'asc' }
 
 const HeaderCell = ({ t, label, css }) => (
   <div
@@ -24,14 +27,25 @@ const HeaderCell = ({ t, label, css }) => (
   </div>
 )
 
-const SortableHeaderCell = ({ t, label, attr, css, order = null, onClick }) => (
+const SortableHeaderCell = ({
+  t,
+  label,
+  attr,
+  css,
+  order = null,
+  defaultOrder,
+  onClick
+}) => (
   <div
     onClick={onClick}
     className={classNames(
       styles['fil-content-header'],
       styles[`fil-content-${css}`],
       {
-        [styles['fil-content-header-sortable']]: order === null,
+        [styles['fil-content-header-sortableasc']]:
+          order === null && defaultOrder === 'asc',
+        [styles['fil-content-header-sortabledesc']]:
+          order === null && defaultOrder === 'desc',
         [styles['fil-content-header-sortasc']]: order === 'asc',
         [styles['fil-content-header-sortdesc']]: order === 'desc'
       }
@@ -54,21 +68,24 @@ const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => (
         styles['fil-content-file-select']
       )}
     />
-    {sortableAttrs.map(props => {
+    {SORTABLE_ATTRIBUTES.map(props => {
       if (!canSort) {
         return <HeaderCell {...props} t={t} />
       }
-      const isActive = sort && sort.attribute === props.attr
+      const actualSort = sort || DEFAULT_SORT
+      const isActive = actualSort && actualSort.attribute === props.attr
       return (
         <SortableHeaderCell
           {...props}
           t={t}
-          order={isActive ? sort.order : null}
+          order={isActive ? actualSort.order : null}
           onClick={() =>
             onFolderSort(
               folderId,
               props.attr,
-              isActive && sort.order === 'desc' ? 'asc' : 'desc'
+              isActive
+                ? actualSort.order === 'asc' ? 'desc' : 'asc'
+                : props.defaultOrder
             )
           }
         />
