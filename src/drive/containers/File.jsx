@@ -12,7 +12,7 @@ import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
 import Preview from '../components/Preview'
-import { Button, Icon, withBreakpoints } from 'cozy-ui/react'
+import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedBadge } from '../sharing'
 import { getSharingDetails } from 'cozy-client'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
@@ -98,7 +98,9 @@ const FileName = ({
   opening,
   withFilePath,
   isMobile,
-  shared
+  shared,
+  formattedSize,
+  formattedUpdatedAt
 }) => {
   const classes = classNames(
     styles['fil-content-cell'],
@@ -140,29 +142,39 @@ const FileName = ({
           </div>
           {withFilePath &&
             (isMobile ? (
-              <div className={styles['fil-file-path']}>{attributes.path}</div>
+              <MidEllipsis
+                className={styles['fil-file-path']}
+                text={attributes.path}
+              />
             ) : (
               <Link
                 to={`/folder/${attributes.dir_id}`}
                 className={styles['fil-file-path']}
               >
-                {attributes.path}
+                <MidEllipsis text={attributes.path} />
               </Link>
             ))}
+          {!withFilePath && (
+            <div className={styles['fil-file-infos']}>
+              {`${formattedUpdatedAt}${
+                formattedSize ? ` - ${formattedSize}` : ''
+              }`}
+            </div>
+          )}
         </div>
       )}
     </div>
   )
 }
 
-const LastUpdate = ({ date, format, f }) => (
+const LastUpdate = ({ date, formatted }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
       styles['fil-content-date']
     )}
   >
-    <time dateTime={date}>{f(date, format)}</time>
+    <time dateTime={date}>{formatted}</time>
   </div>
 )
 
@@ -272,6 +284,17 @@ class File extends Component {
       selected ? styles['fil-content-row-selected'] : '',
       { [styles['fil-content-row--selectable']]: selectionModeActive }
     )
+    const formattedSize = isDirectory(attributes)
+      ? undefined
+      : filesize(attributes.size, { base: 10 })
+
+    const updatedAt = attributes.updated_at || attributes.created_at
+    const formattedUpdatedAt = f(
+      updatedAt,
+      isExtraLarge
+        ? t('table.row_update_format_full')
+        : t('table.row_update_format')
+    )
     return (
       <div
         ref={filerow => {
@@ -291,23 +314,11 @@ class File extends Component {
           withFilePath={withFilePath}
           isMobile={isMobile}
           shared={shared}
+          formattedSize={formattedSize}
+          formattedUpdatedAt={formattedUpdatedAt}
         />
-        <LastUpdate
-          date={attributes.updated_at || attributes.created_at}
-          format={`${
-            isExtraLarge
-              ? t('table.row_update_format_full')
-              : t('table.row_update_format')
-          }`}
-          f={f}
-        />
-        <Size
-          filesize={
-            isDirectory(attributes)
-              ? undefined
-              : filesize(attributes.size, { base: 10 })
-          }
-        />
+        <LastUpdate date={updatedAt} formatted={formattedUpdatedAt} />
+        <Size filesize={formattedSize} />
         <Status
           isAvailableOffline={isAvailableOffline}
           shareStatus={
