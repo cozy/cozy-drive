@@ -10,8 +10,7 @@ import { getSort } from '../reducers'
 
 const sortableAttrs = [
   { label: 'name', attr: 'name', css: 'file' },
-  { label: 'update', attr: 'updated_at', css: 'date' },
-  { label: 'size', attr: 'size', css: 'size' }
+  { label: 'update', attr: 'updated_at', css: 'date' }
 ]
 
 const SortableHeaderCell = ({ t, label, attr, css, order = null, onClick }) => (
@@ -64,6 +63,14 @@ const FileListHeader = ({ t, folderId, sort, onFolderSort }) => (
     <div
       className={classNames(
         styles['fil-content-header'],
+        styles['fil-content-size']
+      )}
+    >
+      {t('table.head_size')}
+    </div>
+    <div
+      className={classNames(
+        styles['fil-content-header'],
         styles['fil-content-status']
       )}
     >
@@ -71,34 +78,6 @@ const FileListHeader = ({ t, folderId, sort, onFolderSort }) => (
     </div>
   </div>
 )
-
-// {/* <div
-//       className={classNames(
-//         styles['fil-content-header'],
-//         styles['fil-content-header-sortable'],
-//         styles['fil-content-file']
-//       )}
-//     >
-//       {t('table.head_name')}
-//     </div>
-//     <div
-//       className={classNames(
-//         styles['fil-content-header'],
-//         styles['fil-content-header-sortasc'],
-//         styles['fil-content-date']
-//       )}
-//     >
-//       {t('table.head_update')}
-//     </div>
-//     <div
-//       className={classNames(
-//         styles['fil-content-header'],
-//         styles['fil-content-header-sortdesc'],
-//         styles['fil-content-size']
-//       )}
-//     >
-//       {t('table.head_size')}
-//     </div> */}
 
 const mapStateToProps = state => ({
   sort: getSort(state),
