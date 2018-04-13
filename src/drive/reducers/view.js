@@ -104,6 +104,9 @@ const sort = (state = null, action) => {
         attribute: action.sortAttribute,
         order: action.sortOrder
       }
+    case OPEN_FOLDER_SUCCESS:
+    case FETCH_RECENT_SUCCESS:
+      return null
     default:
       return state
   }

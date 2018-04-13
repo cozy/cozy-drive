@@ -197,14 +197,17 @@ const shouldWorkFromPouchDB = state => {
   )
 }
 
-export const extractFileAttributes = f => ({
-  ...f.attributes,
-  id: f._id,
-  _id: f._id,
-  _type: 'io.cozy.files',
-  links: f.links,
-  relationships: f.relationships
-})
+export const extractFileAttributes = f => {
+  const id = f.id || f._id
+  return {
+    ...f.attributes,
+    id,
+    _id: id,
+    _type: 'io.cozy.files',
+    links: f.links,
+    relationships: f.relationships
+  }
+}
 
 const normalizeFileFromPouchDB = f => ({
   ...f,
