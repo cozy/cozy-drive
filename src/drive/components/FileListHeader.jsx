@@ -13,6 +13,17 @@ const sortableAttrs = [
   { label: 'update', attr: 'updated_at', css: 'date' }
 ]
 
+const HeaderCell = ({ t, label, css }) => (
+  <div
+    className={classNames(
+      styles['fil-content-header'],
+      styles[`fil-content-${css}`]
+    )}
+  >
+    {t(`table.head_${label}`)}
+  </div>
+)
+
 const SortableHeaderCell = ({ t, label, attr, css, order = null, onClick }) => (
   <div
     onClick={onClick}
@@ -30,7 +41,7 @@ const SortableHeaderCell = ({ t, label, attr, css, order = null, onClick }) => (
   </div>
 )
 
-const FileListHeader = ({ t, folderId, sort, onFolderSort }) => (
+const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => (
   <div
     className={classNames(
       styles['fil-content-head'],
@@ -44,6 +55,9 @@ const FileListHeader = ({ t, folderId, sort, onFolderSort }) => (
       )}
     />
     {sortableAttrs.map(props => {
+      if (!canSort) {
+        return <HeaderCell {...props} t={t} />
+      }
       const isActive = sort && sort.attribute === props.attr
       return (
         <SortableHeaderCell

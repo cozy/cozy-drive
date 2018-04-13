@@ -54,6 +54,7 @@ class FolderView extends Component {
       actionable,
       actions,
       Toolbar,
+      canSort,
       canUpload,
       canCreateFolder
     } = this.props
@@ -99,7 +100,7 @@ class FolderView extends Component {
             <SelectionBar selected={selected} actions={actions.selection} />
           </div>
           <div className={styles['fil-content-table']}>
-            <FileListHeader />
+            <FileListHeader canSort={canSort} />
             <div className={styles['fil-content-body']}>
               {showAddFolder && (
                 <AddFolder
