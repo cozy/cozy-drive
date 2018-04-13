@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 
 import { ROOT_DIR_ID } from '../../constants/config'
-import { alertShow } from 'cozy-ui/react/Alerter'
+import { alertShow } from '../alerter'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 

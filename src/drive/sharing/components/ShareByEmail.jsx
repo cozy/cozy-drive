@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from 'cozy-ui/react'
-import Alerter from 'photos/components/Alerter'
+import { Alerter, Button } from 'cozy-ui/react'
 import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
 
