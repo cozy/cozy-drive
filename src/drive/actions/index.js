@@ -219,9 +219,13 @@ export const openLocalFile = file => {
 }
 
 export const uploadedFile = file => {
-  return {
-    type: UPLOAD_FILE_SUCCESS,
-    file: extractFileAttributes(file)
+  return (dispatch, getState) => {
+    return dispatch({
+      type: UPLOAD_FILE_SUCCESS,
+      file: extractFileAttributes(file),
+      currentFileCount: getState().view.fileCount,
+      currentSort: getSort(getState())
+    })
   }
 }
 
@@ -265,10 +269,12 @@ export const createFolder = name => {
         name: name,
         dirID: getState().view.displayedFolder.id
       })
+      const sort = getSort(getState())
       dispatch({
         type: CREATE_FOLDER_SUCCESS,
         folder: extractFileAttributes(folder),
-        currentFileCount
+        currentFileCount,
+        currentSort: sort
       })
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {

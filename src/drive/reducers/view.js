@@ -117,13 +117,30 @@ const updateItem = (file, files) => {
   return insertItem(file, withoutFile)
 }
 
-const insertItem = (file, array, currentItemCount) => {
-  const index = indexFor(file, array, (a, b) => {
+const getCompareFn = (currentSort = null) => {
+  const sort = currentSort || { attribute: 'name', order: 'asc' }
+  if (sort.attribute === 'updated_at') {
+    return (a, b) => {
+      const ta = new Date(a).getTime()
+      const tb = new Date(b).getTime()
+      return sort.order === 'desc' ? (ta > tb ? 1 : -1) : ta > tb ? -1 : 1
+    }
+  }
+  // We always return the compare fn for name by default, so
+  // that adding new sorting fields will not break this function (it
+  // will need to be updated though)
+  return (a, b) => {
     if (a.type !== b.type) {
       return isDirectory(a) ? -1 : 1
     }
-    return a.name.localeCompare(b.name)
-  })
+    return sort.order === 'desc'
+      ? b.name.localeCompare(a.name)
+      : a.name.localeCompare(b.name)
+  }
+}
+
+const insertItem = (file, array, currentItemCount, currentSort = null) => {
+  const index = indexFor(file, array, getCompareFn(currentSort))
   // if we only have partially fetched the file list and the new item
   // position is in the unfetched part of the list, we don't add the item
   // to the list
@@ -164,9 +181,19 @@ const files = (state = [], action) => {
     case RENAME_SUCCESS:
       return updateItem(action.file, state)
     case UPLOAD_FILE_SUCCESS:
-      return insertItem(action.file, state)
+      return insertItem(
+        action.file,
+        state,
+        action.currentFileCount,
+        action.currentSort
+      )
     case CREATE_FOLDER_SUCCESS:
-      return insertItem(action.folder, state, action.currentFileCount)
+      return insertItem(
+        action.folder,
+        state,
+        action.currentFileCount,
+        action.currentSort
+      )
     case TRASH_FILES_SUCCESS:
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
