@@ -180,7 +180,7 @@ var app = {
 
   getCozyURL: async function() {
     if (this.cozyURL) return this.cozyURL
-    const persistedState = await this.getPersistedState()
+    const persistedState = (await this.getPersistedState()) || {}
     this.cozyURL = persistedState.mobile
       ? persistedState.mobile.settings.serverUrl
       : ''
