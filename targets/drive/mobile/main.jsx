@@ -47,76 +47,106 @@ window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
   hashHistory
 )
 
-function uploadIntent(intent, store) {
-  if (intent['android.intent.extra.STREAM']) {
-    const contentFiles = Array.isArray(intent['android.intent.extra.STREAM'])
-      ? intent['android.intent.extra.STREAM']
-      : [intent['android.intent.extra.STREAM']]
-    contentFiles.forEach(content => {
-      window.FilePath.resolveNativePath(
-        content,
-        async filePath => {
-          console.log('Here is the filepath', filePath)
-          const dirEntry = await getEntry(filePath)
-          console.log('Here is the directoryentry', dirEntry)
-          dirEntry.file(file => {
-            file.lastModifiedDate = new Date(file.lastModifiedDate)
-            console.log('this is binary file', file)
-            store.dispatch(
-              addToUploadQueue(
-                [file],
-                ROOT_DIR_ID,
-                uploadedFile,
-                (loaded, quotas, conflicts, errors) => {
-                  let action = { type: '' } // dummy action, we only use it to trigger an alert notification
-                  if (conflicts.length > 0) {
-                    action.alert = alertShow(
-                      'upload.alert.success_conflicts',
-                      {
-                        smart_count: loaded.length,
-                        conflictNumber: conflicts.length
-                      },
-                      'info'
-                    )
-                  } else if (errors.length > 0) {
-                    action.alert = alertShow(
-                      'upload.alert.errors',
-                      null,
-                      'error'
-                    )
-                  } else {
-                    action.alert = alertShow(
-                      'upload.alert.success',
-                      { smart_count: loaded.length },
-                      'success'
-                    )
-                  }
+const resolveNativePath = path =>
+  new Promise((resolve, reject) => {
+    window.FilePath.resolveNativePath(path, resolve, reject)
+  })
 
-                  return action
-                }
-              )
-            )
-          })
-          // need to use addToUploadQueue() to upload files
-        },
-        error => {
-          console.error('Here is the error', error.message)
-        }
-      )
+const getFile = dirEntry =>
+  new Promise((resolve, reject) => {
+    dirEntry.file(file => {
+      // directoryEntry.file.lastModifiedDate is an integer instead of a Date
+      file.lastModifiedDate = new Date(file.lastModifiedDate)
+      resolve(file)
     })
+  })
+const getFiles = contentFiles =>
+  Promise.all(
+    contentFiles.map(async content => {
+      const filepath = await resolveNativePath(content)
+      const dirEntry = await getEntry(filepath)
+      const file = await getFile(dirEntry)
+      return file
+    })
+  )
+
+const uploadFiles = (files, store) => {
+  store.dispatch(
+    addToUploadQueue(
+      files,
+      ROOT_DIR_ID,
+      uploadedFile,
+      (loaded, quotas, conflicts, errors) => {
+        let action = { type: '' } // dummy action, we only use it to trigger an alert notification
+        if (conflicts.length > 0) {
+          action.alert = alertShow(
+            'upload.alert.success_conflicts',
+            {
+              smart_count: loaded.length,
+              conflictNumber: conflicts.length
+            },
+            'info'
+          )
+        } else if (errors.length > 0) {
+          action.alert = alertShow('upload.alert.errors', null, 'error')
+        } else {
+          action.alert = alertShow(
+            'upload.alert.success',
+            { smart_count: loaded.length },
+            'success'
+          )
+        }
+
+        return action
+      }
+    )
+  )
+}
+
+const intentHandler = store => async ({
+  action,
+  extras = 'No extras in intent'
+}) => {
+  if (extras['android.intent.extra.STREAM']) {
+    const contentFiles = Array.isArray(extras['android.intent.extra.STREAM'])
+      ? extras['android.intent.extra.STREAM']
+      : [extras['android.intent.extra.STREAM']]
+    const files = await getFiles(contentFiles)
+    uploadFiles(files, store)
   }
 }
 
-function registerShareWithCozyDriveIntent(store) {
-  console.log('registerShareWithCozyDriveIntent')
-  window.plugins.intentShim.onIntent(function({
-    action,
-    extras = 'No extras in intent'
-  }) {
-    console.log('Action' + JSON.stringify(action))
-    console.log('Launch Intent Extras: ' + JSON.stringify(extras))
-    uploadIntent(extras, store)
-  })
+const startApplication = async function(store, client) {
+  configureReporter()
+  const { client: clientInfos } = store.getState().settings
+  if (clientInfos) {
+    const isRegistered = await client.isRegistered(clientInfos)
+    if (isRegistered) {
+      startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
+      initBar(client)
+    } else {
+      console.warn('Your device is no more connected to your server')
+      store.dispatch(revokeClient())
+    }
+  }
+
+  useHistoryForTracker(hashHistory)
+  if (store.getState().mobile.settings.analytics)
+    startTracker(store.getState().mobile.settings.serverUrl)
+
+  const root = document.querySelector('[role=application]')
+
+  render(
+    <I18n
+      lang={getLang()}
+      dictRequire={lang => require(`drive/locales/${lang}`)}
+    >
+      <CozyProvider store={store} client={client}>
+        <DriveMobileRouter history={hashHistory} />
+      </CozyProvider>
+    </I18n>,
+    root
+  )
 }
 
 // Allows to know if the launch of the application has been done by the service background
@@ -134,8 +164,6 @@ const isBackgroundServiceParameter = () => {
 }
 
 var app = {
-  store: {},
-
   initialize: function() {
     this.bindEvents()
   },
@@ -150,68 +178,64 @@ var app = {
     document.addEventListener('pause', this.onPause.bind(this), false)
   },
 
-  startApplication: async function() {
-    const persistedState = await loadState()
-    const cozyURL = persistedState.mobile
+  getCozyURL: async function() {
+    if (this.cozyURL) return this.cozyURL
+    const persistedState = await this.getPersistedState()
+    this.cozyURL = persistedState.mobile
       ? persistedState.mobile.settings.serverUrl
       : ''
-    configureReporter()
-    const client = initClient(cozyURL)
+    return this.cozyURL
+  },
+
+  getPersistedState: async function() {
+    if (this.persistedState) return this.persistedState
+    this.persistedState = await loadState()
+    return this.persistedState
+  },
+
+  getClient: async function() {
+    if (this.client) return this.client
+    const cozyURL = await this.getCozyURL()
+    this.client = initClient(cozyURL)
+    return this.client
+  },
+
+  getStore: async function() {
+    if (this.store) return this.store
+    const client = await this.getClient()
+    const persistedState = await this.getPersistedState()
     this.store = configureStore(client, persistedState)
-    const store = this.store
-
-    const clientInfos = store.getState().settings.client
-    if (clientInfos) {
-      const isRegistered = await client.isRegistered(clientInfos)
-      if (isRegistered) {
-        startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
-        initBar(client)
-      } else {
-        console.warn('Your device is no more connected to your server')
-        store.dispatch(revokeClient())
-      }
-    }
-
-    useHistoryForTracker(hashHistory)
-    if (store.getState().mobile.settings.analytics)
-      startTracker(store.getState().mobile.settings.serverUrl)
-
-    const root = document.querySelector('[role=application]')
-
-    render(
-      <I18n
-        lang={getLang()}
-        dictRequire={lang => require(`drive/locales/${lang}`)}
-      >
-        <CozyProvider store={store} client={client}>
-          <DriveMobileRouter history={hashHistory} />
-        </CozyProvider>
-      </I18n>,
-      root
-    )
+    return this.store
   },
 
   onDeviceReady: async function() {
+    const store = await this.getStore()
+    const client = await this.getClient()
+    window.plugins.intentShim.onIntent(intentHandler(store))
+    window.plugins.intentShim.getIntent(intentHandler(store), err => {
+      console.error('Error getting launch intent', err)
+    })
+
     if (!isBackgroundServiceParameter()) {
-      this.startApplication()
+      startApplication(store, client)
     } else {
       startBackgroundService()
     }
 
-    // this.store.dispatch(backupImages())
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
-    registerShareWithCozyDriveIntent(this.store)
+    store.dispatch(backupImages())
   },
 
-  onResume: function() {
-    this.store.dispatch(backupImages())
-    if (this.store.getState().mobile.settings.analytics) startHeartBeat()
-    registerShareWithCozyDriveIntent(this.store)
+  onResume: async function() {
+    const store = await this.getStore()
+    store.dispatch(backupImages())
+    if (store.getState().mobile.settings.analytics) startHeartBeat()
   },
 
-  onPause: function() {
-    if (this.store.getState().mobile.settings.analytics) stopHeartBeat()
-    if (this.store.getState().mobile.mediaBackup.currentUpload && isIos()) {
+  onPause: async function() {
+    const store = await this.getStore()
+    if (store.getState().mobile.settings.analytics) stopHeartBeat()
+    if (store.getState().mobile.mediaBackup.currentUpload && isIos()) {
       const t = getTranslateFunction()
       scheduleNotification({
         text: t('mobile.notifications.backup_paused')
