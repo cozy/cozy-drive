@@ -185,8 +185,10 @@ const fetchStatus = (state = 'pending', action) => {
     // when the app is launched or when the user use the back button
     case EMPTY_TRASH: // we temporarily display the spinner when working in the trashed
     case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
+    case SORT_FOLDER:
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
+    case SORT_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
     case EMPTY_TRASH_SUCCESS:
     case EMPTY_TRASH_FAILURE:
