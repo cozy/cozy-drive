@@ -17,6 +17,7 @@
     <hook src="scripts/update-config-version.sh" type="before_build" />
     <engine name="android" spec="6.4.0" />
     <platform name="android">
+        <hook src="scripts/copy-build-extras-gradle.js" type="before_build" />
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
         <allow-intent href="market:*" />
         <custom-config-file target="AndroidManifest.xml" parent="./application/activity/[@android:name='MainActivity']">
