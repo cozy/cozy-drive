@@ -66,21 +66,8 @@ class Stack {
     const items = resp.data
       .filter(f => f.attributes.name !== '.cozy_trash') // this query returns the trash folder without an ID...
       .map(f => extractFileAttributes(f))
-    if (sortAttribute === 'updated_at') {
-      return items
-    }
-    // Sadly CouchDB only supports a single sort direction for all fields,
-    // so we can't sort by type to separate folders and files and have to
-    // do it by hand
-    const folders = items.reduce(
-      (acc, f) => (f.type === 'directory' ? [...acc, f] : acc),
-      []
-    )
-    const files = items.reduce(
-      (acc, f) => (f.type !== 'directory' ? [...acc, f] : acc),
-      []
-    )
-    return [...folders, ...files]
+
+    return sortFilesAndFolders(items, sortAttribute)
   }
 
   RECENT_FILES_INDEX_FIELDS = ['updated_at', 'trashed']
@@ -119,9 +106,10 @@ class Stack {
 }
 
 class PouchDB {
-  constructor({ folder, recent }) {
-    this.folderIdex = folder
+  constructor({ folder, recent, sort }) {
+    this.folderIndex = folder
     this.recentIndex = recent
+    this.sortIndexes = sort
   }
 
   getFolder = async folderId => {
@@ -147,7 +135,7 @@ class PouchDB {
         name: { $gte: null },
         type: { $gte: null }
       },
-      use_index: this.folderIdex,
+      use_index: this.folderIndex,
       sort: ['dir_id', { type: 'desc' }, { name: 'desc' }],
       limit,
       skip
@@ -158,8 +146,34 @@ class PouchDB {
     return files
   }
 
-  getSortedFolder = () => {
-    // TODO
+  getSortedFolder = async (
+    folderId,
+    sortAttribute,
+    sortOrder = 'asc',
+    skip = 0,
+    limit = 30
+  ) => {
+    const index = this.sortIndexes[sortAttribute]
+    if (!index) {
+      throw new Error(`Can't sort on ${sortAttribute}`)
+    }
+    const db = cozy.client.offline.getDatabase('io.cozy.files')
+    const resp = await db.find({
+      selector: {
+        dir_id: folderId,
+        [sortAttribute]: { $gte: null }
+      },
+      use_index: index,
+      sort: [{ [sortAttribute]: sortOrder }],
+      skip,
+      limit
+    })
+
+    const items = resp.docs
+      .filter(f => f._id !== TRASH_DIR_ID) // this query returns the trash folder without an ID...
+      .map(f => normalizeFileFromPouchDB(f))
+
+    return sortFilesAndFolders(items, sortAttribute)
   }
 
   getRecentFiles = async () => {
@@ -185,22 +199,10 @@ class PouchDB {
   }
 }
 
-const memoize = fn => {
-  let res
-  return (...args) => {
-    if (typeof res === 'undefined') {
-      res = fn(...args)
-    }
-    return res
-  }
-}
-
-export const getAdapter = memoize(
-  state =>
-    shouldWorkFromPouchDB(state)
-      ? new PouchDB(state.settings.indexes)
-      : new Stack()
-)
+export const getAdapter = state =>
+  shouldWorkFromPouchDB(state)
+    ? new PouchDB(state.settings.indexes)
+    : new Stack()
 
 const shouldWorkFromPouchDB = state => {
   const settings = state.settings
@@ -229,3 +231,21 @@ const normalizeFileFromPouchDB = f => ({
   id: f._id,
   _type: 'io.cozy.files'
 })
+
+const sortFilesAndFolders = (items, sortAttribute) => {
+  if (sortAttribute === 'updated_at') {
+    return items
+  }
+  // Sadly CouchDB only supports a single sort direction for all fields,
+  // so we can't sort by type to separate folders and files and have to
+  // do it by hand
+  const folders = items.reduce(
+    (acc, f) => (f.type === 'directory' ? [...acc, f] : acc),
+    []
+  )
+  const files = items.reduce(
+    (acc, f) => (f.type !== 'directory' ? [...acc, f] : acc),
+    []
+  )
+  return [...folders, ...files]
+}

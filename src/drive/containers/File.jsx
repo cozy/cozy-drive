@@ -141,6 +141,7 @@ const FileName = ({
             </div>
           </div>
           {withFilePath &&
+            attributes.path &&
             (isMobile ? (
               <MidEllipsis
                 className={styles['fil-file-path']}

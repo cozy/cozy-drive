@@ -2,7 +2,7 @@
 const clientRevokedMsg = 'Client has been revoked'
 
 export const startReplication = async (
-  hasIndexes,
+  existingIndexes,
   hasFinishedFirstReplication,
   firstReplicationFinished,
   refreshFolder,
@@ -10,12 +10,22 @@ export const startReplication = async (
   indexesCreated
 ) => {
   try {
-    let db, folderIndex
-    if (!hasIndexes) {
-      db = cozy.client.offline.getDatabase('io.cozy.files')
-      folderIndex = await db.createIndex({
-        index: { fields: ['dir_id', 'type', 'name'] }
+    const db = cozy.client.offline.getDatabase('io.cozy.files')
+    const createIndex = async fields => {
+      const index = await db.createIndex({
+        index: { fields }
       })
+      return index.id
+    }
+
+    let indexes = existingIndexes || {}
+
+    if (!indexes.folders) {
+      indexes.folders = await createIndex(['dir_id', 'type', 'name'])
+      indexesCreated(indexes)
+    }
+
+    if (!indexes.recent) {
       const ddoc = {
         _id: '_design/my_index',
         views: {
@@ -27,10 +37,17 @@ export const startReplication = async (
         }
       }
       await db.put(ddoc)
-      indexesCreated({
-        folders: folderIndex.id,
-        recent: 'my_index/recent_files'
-      })
+      indexes.recent = 'my_index/recent_files'
+      indexesCreated(indexes)
+    }
+
+    if (!indexes.sort) {
+      indexes.sort = {
+        name: await createIndex(['name']),
+        updated_at: await createIndex(['updated_at']),
+        size: await createIndex(['size'])
+      }
+      indexesCreated(indexes)
     }
 
     if (!hasFinishedFirstReplication) {
@@ -41,15 +58,17 @@ export const startReplication = async (
         limit: 0
       })
       // not sure this one is really necessary...
-      await db.find({
-        selector: {
-          dir_id: { $gte: null },
-          name: { $gte: null },
-          type: { $gte: null }
-        },
-        use_index: folderIndex.id,
-        limit: 0
-      })
+      if (indexes.folders) {
+        await db.find({
+          selector: {
+            dir_id: { $gte: null },
+            name: { $gte: null },
+            type: { $gte: null }
+          },
+          use_index: indexes.folders,
+          limit: 0
+        })
+      }
       console.log('indexes ready')
       firstReplicationFinished()
     }
