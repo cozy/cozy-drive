@@ -25,7 +25,7 @@
     "prewatch:drive:mobile": "npm run clean:mobile",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src/drive/styles --config ./.stylintrc",
-    "lint:js": "eslint \"{src,test}/**/*.{js,jsx}\"",
+    "lint:js": "eslint --ignore-pattern node_modules \"{src,test}/**/*.{js,jsx}\"",
     "precommit": "lint-staged",
     "test": "node_modules/.bin/jest --coverage --config=jest.config.json",
     "watch:drive": "npm run watch:drive:browser",
