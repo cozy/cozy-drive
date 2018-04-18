@@ -60,25 +60,27 @@ const SortableHeaderCell = ({
 
 const MobileSortMenu = ({ t, sort, onSort, onClose }) => (
   <ActionMenu onClose={onClose}>
-    {SORTABLE_ATTRIBUTES.map(({ attr }) => [
-      { attr, order: 'asc' },
-      { attr, order: 'desc' }
-    ])
-      .reduce((acc, val) => [...acc, ...val], [])
-      .map(({ attr, order }) => (
-        <MenuItem
-          className={classNames(styles['fil-sort-menu-item'], {
-            [styles['fil-sort-menu-item-selected']]:
-              sort.order === order && sort.attribute === attr
-          })}
-          onClick={() => {
-            onSort(attr, order)
-            onClose()
-          }}
-        >
-          {t(`table.mobile.head_${attr}_${order}`)}
-        </MenuItem>
-      ))}
+    <div className={styles['fil-sort-menu']}>
+      {SORTABLE_ATTRIBUTES.map(({ attr }) => [
+        { attr, order: 'asc' },
+        { attr, order: 'desc' }
+      ])
+        .reduce((acc, val) => [...acc, ...val], [])
+        .map(({ attr, order }) => (
+          <MenuItem
+            className={classNames(styles['fil-sort-menu-item'], {
+              [styles['fil-sort-menu-item-selected']]:
+                sort.order === order && sort.attribute === attr
+            })}
+            onClick={() => {
+              onSort(attr, order)
+              onClose()
+            }}
+          >
+            {t(`table.mobile.head_${attr}_${order}`)}
+          </MenuItem>
+        ))}
+    </div>
   </ActionMenu>
 )
 
