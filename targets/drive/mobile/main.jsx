@@ -68,13 +68,19 @@ const getFile = dirEntry =>
       reader.readAsArrayBuffer(file)
     })
   })
+
 const getFiles = contentFiles =>
   Promise.all(
     contentFiles.map(async content => {
-      const filepath = await resolveNativePath(content)
-      const dirEntry = await getEntry(filepath)
-      const file = await getFile(dirEntry)
-      return file
+      try {
+        const filepath = await resolveNativePath(content)
+        const dirEntry = await getEntry(filepath)
+        const file = await getFile(dirEntry)
+        return file
+      } catch (err) {
+        console.error(err)
+        throw new Error(`Unable to get files: ${err.message}`)
+      }
     })
   )
 
