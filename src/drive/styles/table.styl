@@ -34,10 +34,30 @@
     &:first-child
         padding .5rem
 
+.fil-content-mobile-head
+    @extend $table-head
+    display none
+
 .fil-content-mobile-header
     @extend $table-header
     padding 1rem
-    display none
+
+.fil-sort-menu-item
+    color charcoalGrey
+    border-left 5px solid transparent
+
+    &.fil-sort-menu-item-selected
+        border-left 5px solid dodgerBlue
+        font-weight bold
+
+        &:after
+            display inline-block
+            content ''
+            position absolute
+            right 0.5rem
+            width 2rem
+            height 1.5rem
+            background transparent embedurl('../assets/icons/icon-check-blue.svg') center .0625rem no-repeat
 
 .fil-content-header-sortableasc:hover:after
 .fil-content-header-sortabledesc:hover:after
@@ -255,32 +275,12 @@ mime-types('fil-file-', '../assets/icons/')
         height 4rem
 
     .fil-content-head
-        display block
-    
-    .fil-content-header
     .fil-content-date
     .fil-content-size
         display none
 
-    .fil-content-mobile-header
+    .fil-content-mobile-head
         display block
-    
-    .fil-sort-menu-item
-        color charcoalGrey
-        border-left 5px solid transparent
-
-        &.fil-sort-menu-item-selected
-            border-left 5px solid dodgerBlue
-            font-weight bold
-
-            &:after
-                display inline-block
-                content ''
-                position absolute
-                right 0.5rem
-                width 2rem
-                height 1.5rem
-                background transparent embedurl('../assets/icons/icon-check-blue.svg') center .0625rem no-repeat
 
     .fil-content-file
         flex 1 1 auto

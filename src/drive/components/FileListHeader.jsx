@@ -82,7 +82,7 @@ const MobileSortMenu = ({ t, sort, onSort, onClose }) => (
   </ActionMenu>
 )
 
-class FileListHeader extends Component {
+class MobileHeader extends Component {
   state = {
     showSortMenu: false
   }
@@ -92,20 +92,15 @@ class FileListHeader extends Component {
 
   render() {
     const { t, folderId, canSort, sort, onFolderSort } = this.props
+    if (!canSort) return null
     const actualSort = sort || DEFAULT_SORT
     return (
       <div
         className={classNames(
-          styles['fil-content-head'],
+          styles['fil-content-mobile-head'],
           styles['fil-content-row-head']
         )}
       >
-        <div
-          className={classNames(
-            styles['fil-content-header'],
-            styles['fil-content-file-select']
-          )}
-        />
         <div
           onClick={this.showSortMenu}
           className={classNames(styles['fil-content-mobile-header'], {
@@ -114,36 +109,6 @@ class FileListHeader extends Component {
           })}
         >
           {t(`table.mobile.head_${actualSort.attribute}_${actualSort.order}`)}
-        </div>
-        {SORTABLE_ATTRIBUTES.map(props => {
-          if (!canSort) {
-            return <HeaderCell {...props} t={t} />
-          }
-          const isActive = actualSort && actualSort.attribute === props.attr
-          return (
-            <SortableHeaderCell
-              {...props}
-              t={t}
-              order={isActive ? actualSort.order : null}
-              onSort={(attr, order) => onFolderSort(folderId, attr, order)}
-            />
-          )
-        })}
-        <div
-          className={classNames(
-            styles['fil-content-header'],
-            styles['fil-content-size']
-          )}
-        >
-          {t('table.head_size')}
-        </div>
-        <div
-          className={classNames(
-            styles['fil-content-header'],
-            styles['fil-content-header-status']
-          )}
-        >
-          {t('table.head_status')}
         </div>
         {this.state.showSortMenu && (
           <MobileSortMenu
@@ -158,6 +123,55 @@ class FileListHeader extends Component {
   }
 }
 
+const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => {
+  const actualSort = sort || DEFAULT_SORT
+  return (
+    <div
+      className={classNames(
+        styles['fil-content-head'],
+        styles['fil-content-row-head']
+      )}
+    >
+      <div
+        className={classNames(
+          styles['fil-content-header'],
+          styles['fil-content-file-select']
+        )}
+      />
+      {SORTABLE_ATTRIBUTES.map(props => {
+        if (!canSort) {
+          return <HeaderCell {...props} t={t} />
+        }
+        const isActive = actualSort && actualSort.attribute === props.attr
+        return (
+          <SortableHeaderCell
+            {...props}
+            t={t}
+            order={isActive ? actualSort.order : null}
+            onSort={(attr, order) => onFolderSort(folderId, attr, order)}
+          />
+        )
+      })}
+      <div
+        className={classNames(
+          styles['fil-content-header'],
+          styles['fil-content-size']
+        )}
+      >
+        {t('table.head_size')}
+      </div>
+      <div
+        className={classNames(
+          styles['fil-content-header'],
+          styles['fil-content-header-status']
+        )}
+      >
+        {t('table.head_status')}
+      </div>
+    </div>
+  )
+}
+
 const mapStateToProps = state => ({
   sort: getSort(state),
   folderId: getOpenedFolderId(state)
@@ -170,3 +184,7 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(
   translate()(FileListHeader)
 )
+export const MobileFileListHeader = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(MobileHeader))
