@@ -106,7 +106,10 @@ class FolderView extends Component {
           onDrop={this.onDrop}
         >
           <div className={styles['fil-content-dropzone-teaser']}>
-            <div className={styles['fil-content-dropzone-teaser-content']} />
+            <div className={styles['fil-content-dropzone-teaser-claudy']} />
+            <div className={styles['fil-content-dropzone-teaser-content']}>
+              Drop files to upload them to the current folder
+            </div>
           </div>
           {__TARGET__ === 'mobile' && (
             <div>
