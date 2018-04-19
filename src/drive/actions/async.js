@@ -214,7 +214,7 @@ class PouchDB {
           : []
       return [...folders, ...files]
     } else {
-      return await query()
+      return query()
     }
   }
 
@@ -273,21 +273,3 @@ const normalizeFileFromPouchDB = f => ({
   id: f._id,
   _type: 'io.cozy.files'
 })
-
-const sortFilesAndFolders = (items, sortAttribute) => {
-  if (sortAttribute === 'updated_at') {
-    return items
-  }
-  // Sadly CouchDB only supports a single sort direction for all fields,
-  // so we can't sort by type to separate folders and files and have to
-  // do it by hand
-  const folders = items.reduce(
-    (acc, f) => (f.type === 'directory' ? [...acc, f] : acc),
-    []
-  )
-  const files = items.reduce(
-    (acc, f) => (f.type !== 'directory' ? [...acc, f] : acc),
-    []
-  )
-  return [...folders, ...files]
-}
