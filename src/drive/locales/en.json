@@ -138,7 +138,15 @@
       "ZB": "ZB",
       "YB": "YB"
     },
-    "load_more": "Load More"
+    "load_more": "Load More",
+    "mobile": {
+      "head_name_asc": "A-Z",
+      "head_name_desc": "Z-A",
+      "head_updated_at_asc": "Oldest first",
+      "head_updated_at_desc": "Most recent first",
+      "head_size_asc": "Lightest first",
+      "head_size_desc": "Heavier first"
+    }
   },
   "SelectionBar": {
     "selected_count": "item selected |||| items selected",

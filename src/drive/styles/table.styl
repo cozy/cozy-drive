@@ -34,6 +34,57 @@
     &:first-child
         padding .5rem
 
+.fil-content-mobile-head
+    @extend $table-head
+    display none
+
+.fil-content-mobile-header
+    @extend $table-header
+    padding 1rem
+
+.fil-sort-menu
+    padding .5rem 0
+
+.fil-sort-menu-item
+    color charcoalGrey
+    border-left 5px solid transparent
+
+    &.fil-sort-menu-item-selected
+        border-left 5px solid dodgerBlue
+        font-weight bold
+
+        &:after
+            display inline-block
+            content ''
+            position absolute
+            right 0.5rem
+            width 2rem
+            height 1.5rem
+            background transparent embedurl('../assets/icons/icon-check-blue.svg') center .0625rem no-repeat
+
+.fil-content-header-sortableasc:hover:after
+.fil-content-header-sortabledesc:hover:after
+.fil-content-header-sortasc:after
+.fil-content-header-sortdesc:after
+    display inline-block
+    content ''
+    margin-left .5rem
+    width .75rem
+    height .75rem
+
+.fil-content-header-sortableasc:hover:after
+    background transparent embedurl('../assets/icons/icon-arrow-up.svg') center .0625rem no-repeat
+.fil-content-header-sortabledesc:hover:after
+    background transparent embedurl('../assets/icons/icon-arrow-down.svg') center .0625rem no-repeat
+.fil-content-header-sortasc:after
+    background transparent embedurl('../assets/icons/icon-arrow-up-grey.svg') center .0625rem no-repeat
+.fil-content-header-sortdesc:after
+    background transparent embedurl('../assets/icons/icon-arrow-down-grey.svg') center .0625rem no-repeat
+
+.fil-content-header-sortdesc
+.fil-content-header-sortasc
+    color charcoalGrey
+
 .fil-content-file-action
     display     none
     text-align  right
@@ -72,6 +123,7 @@
     flex 0 0 15%
 
 .fil-content-status
+.fil-content-header-status
     flex 0 0 25%
 
     .fil-content-offline
@@ -146,7 +198,8 @@ mime-types('fil-file-', '../assets/icons/')
         white-space nowrap
 
 .fil-file-path
-    flex 0 0 1.2rem
+.fil-file-infos
+    flex 0 0 1rem
     color coolGrey
     font-size .75rem
     position relative
@@ -158,6 +211,9 @@ mime-types('fil-file-', '../assets/icons/')
     &:hover,
     &:focus
         text-decoration underline
+
+.fil-file-infos
+    display none
 
 @keyframes placeHolderShimmer
     0%
@@ -218,10 +274,16 @@ mime-types('fil-file-', '../assets/icons/')
             margin-bottom 3rem
 
 +small-screen()
+    .fil-content-row
+        height 4rem
+
     .fil-content-head
     .fil-content-date
     .fil-content-size
         display none
+
+    .fil-content-mobile-head
+        display block
 
     .fil-content-file
         flex 1 1 auto
@@ -263,3 +325,6 @@ mime-types('fil-file-', '../assets/icons/')
 
     .fil-file-preview
         left 1rem
+
+    .fil-file-infos
+        display block

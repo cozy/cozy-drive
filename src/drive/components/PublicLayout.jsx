@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { Alerter } from 'cozy-ui/react/Alerter'
+import { Alerter } from '../ducks/alerter'
 
 import styles from '../styles/layout'
 
