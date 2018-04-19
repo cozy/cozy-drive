@@ -1,6 +1,10 @@
 /* global cozy */
 import { getAdapter, extractFileAttributes } from './async'
-import { getSort } from '../reducers'
+import {
+  getSort,
+  getLoadedFilesCount,
+  getLoadedFoldersCount
+} from '../reducers'
 import { isCordova } from '../mobile/lib/device'
 import {
   saveFileWithCordova,
@@ -143,7 +147,9 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
               sort.attribute,
               sort.order,
               skip,
-              limit
+              limit,
+              getLoadedFoldersCount(getState()),
+              getLoadedFilesCount(getState())
             )
       return dispatch({
         type: FETCH_MORE_FILES_SUCCESS,

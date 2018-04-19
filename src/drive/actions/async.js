@@ -49,25 +49,46 @@ class Stack {
     sortAttribute,
     sortOrder = 'asc',
     skip = 0,
-    limit = 30
+    limit = 30,
+    loadedFoldersCount = 0,
+    loadedFilesCount = 0
   ) => {
+    const shouldSeparateFilesAndFolders = sortAttribute === 'name'
     const index = await cozy.client.data.defineIndex('io.cozy.files', [
       sortAttribute
     ])
-    const resp = await cozy.client.files.query(index, {
-      selector: {
-        dir_id: folderId
-      },
-      sort: [{ [sortAttribute]: sortOrder }],
-      skip,
-      limit,
-      wholeResponse: true
-    })
-    const items = resp.data
-      .filter(f => f.attributes.name !== '.cozy_trash') // this query returns the trash folder without an ID...
-      .map(f => extractFileAttributes(f))
+    const query = (selector, skipRows = skip) =>
+      cozy.client.files
+        .query(index, {
+          selector,
+          sort: [{ [sortAttribute]: sortOrder }],
+          skip: skipRows,
+          limit,
+          wholeResponse: true
+        })
+        .then(resp => resp.data.map(f => extractFileAttributes(f)))
 
-    return sortFilesAndFolders(items, sortAttribute)
+    if (shouldSeparateFilesAndFolders) {
+      const folders = await query({ dir_id: folderId, type: 'directory' })
+      const files =
+        folders.length < limit
+          ? await query(
+              { dir_id: folderId, type: { $ne: 'directory' } },
+              loadedFilesCount
+            )
+          : []
+      return [
+        // this query returns the trash folder without an ID...
+        // and we don't want to filter that in the query function because
+        // it'll mess with the pagination...
+        ...folders.filter(f => f.name !== '.cozy_trash'),
+        ...files
+      ]
+    } else {
+      return await query({ dir_id: folderId }).filter(
+        f => f.name !== '.cozy_trash'
+      )
+    }
   }
 
   RECENT_FILES_INDEX_FIELDS = ['updated_at', 'trashed']
@@ -151,7 +172,9 @@ class PouchDB {
     sortAttribute,
     sortOrder = 'asc',
     skip = 0,
-    limit = 30
+    limit = 30,
+    loadedFoldersCount = 0,
+    loadedFilesCount = 0
   ) => {
     const index = this.sortIndexes[sortAttribute]
     if (!index) {
