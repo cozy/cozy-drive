@@ -163,6 +163,7 @@
     "raven-js": "3.22.1",
     "react-autosuggest": "9.3.2",
     "react-copy-to-clipboard": "5.0.1",
+    "react-dropzone": "^4.2.9",
     "react-markdown": "3.1.4",
     "react-measure": "2.0.2",
     "react-redux": "5.0.6",
