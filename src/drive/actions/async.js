@@ -85,9 +85,8 @@ class Stack {
         ...files
       ]
     } else {
-      return await query({ dir_id: folderId }).filter(
-        f => f.name !== '.cozy_trash'
-      )
+      const resp = await query({ dir_id: folderId })
+      return resp.filter(f => f.name !== '.cozy_trash')
     }
   }
 
