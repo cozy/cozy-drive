@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 
 import { ROOT_DIR_ID } from '../../constants/config'
-import { alertShow } from '../alerter'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 
@@ -15,12 +14,15 @@ import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
 import { IntentButton } from '../../components/Intent'
-import QuotaAlert from '../../components/QuotaAlert'
 import UploadButton from '../../components/UploadButton'
 
-import { alert } from '../../lib/confirm'
 import { addToUploadQueue } from '../upload'
-import { uploadedFile, downloadFiles, trashFiles } from '../../actions'
+import {
+  uploadedFile,
+  uploadQueueProcessed,
+  downloadFiles,
+  trashFiles
+} from '../../actions'
 import {
   ShareButton,
   SharedWithMeButton,
@@ -36,10 +38,6 @@ const toggleShowShareModal = state => ({
   ...state,
   showShareModal: !state.showShareModal
 })
-
-const ALERT_LEVEL_INFO = 'info'
-const ALERT_LEVEL_ERROR = 'error'
-const ALERT_LEVEL_SUCCESS = 'success'
 
 class Toolbar extends Component {
   state = {
@@ -248,34 +246,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         files,
         displayedFolder.id,
         file => uploadedFile(file),
-        (loaded, quotas, conflicts, errors) => {
-          let action = { type: '' } // dummy action, we only use it to trigger an alert notification
-
-          if (quotas.length > 0) {
-            // quota errors have their own modal instead of a notification
-            alert(<QuotaAlert t={ownProps.t} />)
-          } else if (conflicts.length > 0) {
-            action.alert = alertShow(
-              'upload.alert.success_conflicts',
-              { smart_count: loaded.length, conflictNumber: conflicts.length },
-              ALERT_LEVEL_INFO
-            )
-          } else if (errors.length > 0) {
-            action.alert = alertShow(
-              'upload.alert.errors',
-              null,
-              ALERT_LEVEL_ERROR
-            )
-          } else {
-            action.alert = alertShow(
-              'upload.alert.success',
-              { smart_count: loaded.length },
-              ALERT_LEVEL_SUCCESS
-            )
-          }
-
-          return action
-        }
+        (loaded, quotas, conflicts, errors) =>
+          uploadQueueProcessed(loaded, quotas, conflicts, errors, ownProps.t)
       )
     )
   },
