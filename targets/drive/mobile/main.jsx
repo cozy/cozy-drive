@@ -55,18 +55,32 @@ const resolveNativePath = path =>
 const getFile = dirEntry =>
   new Promise((resolve, reject) => {
     dirEntry.file(file => {
-      // directoryEntry.file.lastModifiedDate is an integer instead of a Date
-      file.lastModifiedDate = new Date(file.lastModifiedDate)
-      resolve(file)
+      // window.File is modified by cordova, so we need this trick
+      const reader = new FileReader()
+      reader.onloadend = function() {
+        const blob = new Blob([new Uint8Array(this.result)], {
+          type: file.type
+        })
+        blob.name = file.name
+        blob.lastModifiedDate = new Date(file.lastModifiedDate)
+        resolve(blob)
+      }
+      reader.readAsArrayBuffer(file)
     })
   })
+
 const getFiles = contentFiles =>
   Promise.all(
     contentFiles.map(async content => {
-      const filepath = await resolveNativePath(content)
-      const dirEntry = await getEntry(filepath)
-      const file = await getFile(dirEntry)
-      return file
+      try {
+        const filepath = await resolveNativePath(content)
+        const dirEntry = await getEntry(filepath)
+        const file = await getFile(dirEntry)
+        return file
+      } catch (err) {
+        console.error(err)
+        throw new Error(`Unable to get files: ${err.message}`)
+      }
     })
   )
 
