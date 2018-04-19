@@ -85,7 +85,6 @@ class FilesViewer extends Component {
 
   render() {
     const files = this.getViewableFiles()
-    if (files.length === 0) return null
     const currentIndex = this.getCurrentIndex(files)
     // If we can't find the file, we fallback to the (potentially loading)
     // direct stat made by the viewer
