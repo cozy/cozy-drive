@@ -175,27 +175,47 @@ class PouchDB {
     loadedFoldersCount = 0,
     loadedFilesCount = 0
   ) => {
+    const shouldSeparateFilesAndFolders = sortAttribute === 'name'
     const index = this.sortIndexes[sortAttribute]
     if (!index) {
       throw new Error(`Can't sort on ${sortAttribute}`)
     }
     const db = cozy.client.offline.getDatabase('io.cozy.files')
-    const resp = await db.find({
-      selector: {
-        dir_id: folderId,
-        [sortAttribute]: { $gte: null }
-      },
-      use_index: index,
-      sort: [{ [sortAttribute]: sortOrder }],
-      skip,
-      limit
-    })
+    const query = (selector = {}, skipRows = skip) =>
+      db
+        .find({
+          selector: {
+            ...selector,
+            ...{
+              dir_id: folderId,
+              _id: { $ne: TRASH_DIR_ID },
+              [sortAttribute]: { $gte: null }
+            }
+          },
+          use_index: index,
+          sort: [{ [sortAttribute]: sortOrder }],
+          skip: skipRows,
+          limit
+        })
+        .then(resp => resp.docs.map(f => normalizeFileFromPouchDB(f)))
 
-    const items = resp.docs
-      .filter(f => f._id !== TRASH_DIR_ID) // this query returns the trash folder without an ID...
-      .map(f => normalizeFileFromPouchDB(f))
-
-    return sortFilesAndFolders(items, sortAttribute)
+    if (shouldSeparateFilesAndFolders) {
+      const folders = await query({
+        type: 'directory'
+      })
+      const files =
+        folders.length < limit
+          ? await query(
+              {
+                type: { $ne: 'directory' }
+              },
+              loadedFilesCount
+            )
+          : []
+      return [...folders, ...files]
+    } else {
+      return await query()
+    }
   }
 
   getRecentFiles = async () => {

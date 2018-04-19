@@ -49,6 +49,7 @@ class FileList extends PureComponent {
     // We're in /recent
     if (!this.props.displayedFolder) return false
     if (isCordova()) {
+      console.log(this.props.files.length < LIMIT, !this.state.hasNoMoreRows)
       if (this.props.files.length < LIMIT) return false
       return !this.state.hasNoMoreRows
     }
