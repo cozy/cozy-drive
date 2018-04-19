@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 
 import ViewerControls from './ViewerControls'
 import ImageViewer from './ImageViewer'
@@ -24,8 +25,12 @@ const isIOS = () =>
 const isMobile = () => isAndroid() || isIOS()
 const isCordova = () => window.cordova !== undefined
 
-const ViewerWrapper = ({ children }) => (
-  <div className={styles['pho-viewer-wrapper']} role="viewer">
+const ViewerWrapper = ({ style, className, children }) => (
+  <div
+    style={style}
+    className={cx(styles['pho-viewer-wrapper'], className)}
+    role="viewer"
+  >
     {children}
   </div>
 )
@@ -71,7 +76,7 @@ export default class Viewer extends Component {
   }
 
   render() {
-    const { files, currentIndex, onClose } = this.props
+    const { files, style, className, currentIndex, onClose } = this.props
     const currentFile = files[currentIndex]
     const fileCount = files.length
     const hasPrevious = currentIndex > 0
@@ -79,7 +84,7 @@ export default class Viewer extends Component {
     // this `expanded` property makes the next/previous controls cover the displayed image
     const expanded = currentFile && currentFile.class === 'image'
     return (
-      <ViewerWrapper>
+      <ViewerWrapper style={style} className={className}>
         <ViewerControls
           currentFile={currentFile}
           onClose={onClose}
