@@ -59,10 +59,12 @@ class FileOpener extends Component {
         {fileNotFound && <FileNotFoundError />}
         {!loading &&
           !fileNotFound && (
-            <div>
-              <h3>{file.name}</h3>
-              <Viewer files={[file]} currentIndex={0} onChange={doNothing} />
-            </div>
+            <Viewer
+              style={{ top: '3rem' }}
+              files={[file]}
+              currentIndex={0}
+              onChange={doNothing}
+            />
           )}
       </div>
     )

@@ -1,4 +1,4 @@
- /* global __DEVELOPMENT__ */
+/* global __DEVELOPMENT__ */
 
 import 'babel-polyfill'
 
@@ -23,16 +23,15 @@ const arrToObj = (obj = {}, varval = ['var', 'val']) => {
   return obj
 }
 
-const getQueryParameter = () => window
-  .location
-  .search
-  .substring(1)
-  .split('&')
-  .map(varval => varval.split('='))
-  .reduce(arrToObj, {})
+const getQueryParameter = () =>
+  window.location.search
+    .substring(1)
+    .split('&')
+    .map(varval => varval.split('='))
+    .reduce(arrToObj, {})
 
 document.addEventListener('DOMContentLoaded', () => {
-  const root = document.querySelector('[role=application]')
+  const root = document.getElementById('main')
   const data = root.dataset
 
   const protocol = window.location ? window.location.protocol : 'https:'
@@ -47,10 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const store = configureStore(client)
 
-  render((
-    <I18n lang={data.cozyLocale} dictRequire={(lang) => require(`drive/locales/${lang}`)}>
+  render(
+    <I18n
+      lang={data.cozyLocale}
+      dictRequire={lang => require(`drive/locales/${lang}`)}
+    >
       <CozyProvider store={store} client={client}>
         <IntentHandler intentId={intent} />
       </CozyProvider>
-    </I18n>), root)
+    </I18n>,
+    root
+  )
 })
