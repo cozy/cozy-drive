@@ -34,6 +34,7 @@
     &:first-child
         padding .5rem
 
+<<<<<<< HEAD
 .fil-content-mobile-head
     @extend $table-head
     display none
@@ -90,6 +91,35 @@
 .fil-content-header-sortabledesc
 .fil-content-header-sortableasc
     cursor pointer
+=======
+.fil-content-dropzone
+    border 1px solid grey
+
+.fil-content-dropzone-active
+    box-shadow inset 0 0 0 4px dodgerBlue
+
+.fil-content-dropzone-teaser
+    position absolute
+    left 50%
+    bottom 2rem
+
+.fil-content-dropzone-teaser-content
+    margin 0 auto
+    width 3.5em
+    height 3.5em
+    border-radius 100%
+    border none
+    background-color dodgerBlue
+    background-image embedurl('../assets/icons/icon-claudy.svg')
+    background-repeat no-repeat
+    background-size 2.5em
+    background-position .5em
+    box-shadow 0 1px 3px 0 rgba(50, 54, 63, 0.19), 0 6px 18px 0 rgba(50, 54, 63, 0.39)
+    animation none
+    cursor pointer
+    transition all .2s ease-out
+    outline 0
+>>>>>>> feat: Added basic support for files drop on desktop
 
 .fil-content-file-action
     display     none

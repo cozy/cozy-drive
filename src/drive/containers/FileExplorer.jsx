@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { translate } from 'cozy-ui/react/I18n'
 
 import { fetchSharings, getSharingDetails } from 'cozy-client'
 
@@ -10,12 +11,15 @@ import {
   showSelectionBar
 } from '../ducks/selection'
 import { showActionMenu, hideActionMenu } from '../ducks/actionmenu'
+import { addToUploadQueue } from '../ducks/upload'
 import {
   openFolder,
   getOpenedFolderId,
   fetchRecentFiles,
   fetchMoreFiles,
-  openLocalFile
+  openLocalFile,
+  uploadedFile,
+  uploadQueueProcessed
 } from '../actions'
 import {
   getFolderIdFromRoute,
@@ -103,9 +107,20 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.router.push(`${viewPath}/file/${file.id}`)
   },
   onFileToggle: (file, selected) =>
-    dispatch(toggleItemSelection(file, selected))
+    dispatch(toggleItemSelection(file, selected)),
+  uploadFiles: (files, folderId) => {
+    dispatch(
+      addToUploadQueue(
+        files,
+        folderId,
+        file => uploadedFile(file),
+        (loaded, quotas, conflicts, errors) =>
+          uploadQueueProcessed(loaded, quotas, conflicts, errors, ownProps.t)
+      )
+    )
+  }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(FileExplorer)
+export default translate()(
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(FileExplorer))
 )
