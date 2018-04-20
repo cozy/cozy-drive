@@ -1,4 +1,5 @@
 @require 'components/table.styl'
+@require 'settings/z-index.styl'
 @import './mimetypes'
 
 .fil-content-table
@@ -34,7 +35,6 @@
     &:first-child
         padding .5rem
 
-<<<<<<< HEAD
 .fil-content-mobile-head
     @extend $table-head
     display none
@@ -91,21 +91,35 @@
 .fil-content-header-sortabledesc
 .fil-content-header-sortableasc
     cursor pointer
-=======
 .fil-content-dropzone
     border 1px solid grey
 
 .fil-content-dropzone-active
-    box-shadow inset 0 0 0 4px dodgerBlue
+    box-shadow outset 0 0 0 4px dodgerBlue
+    background-color #F1F7FF
 
 .fil-content-dropzone-teaser
-    position absolute
-    left 50%
-    bottom 2rem
+    position  absolute
+    z-index   $overlay-index
+    left      50%
+    transform translateX(-50%)
+    bottom    2rem
+    display   flex
+    flex-direction column
+    align-items    center
+
+@keyframes pulse
+  from
+    transform scale3d(1, 1, 1)
+  50%
+    transform scale3d(1.25, 1.25, 1.25)
+  to
+    transform scale3d(1, 1, 1)
 
 .fil-content-dropzone-teaser-claudy
-    width 3.5em
+    width  3.5em
     height 3.5em
+    margin-bottom 1rem
     border-radius 100%
     border none
     background-color dodgerBlue
@@ -114,15 +128,25 @@
     background-size 2.5em
     background-position .5em
     box-shadow 0 1px 3px 0 rgba(50, 54, 63, 0.19), 0 6px 18px 0 rgba(50, 54, 63, 0.39)
-    animation none
+    animation-name pulse
+    animation-duration 2s
+    animation-iteration-count infinite
     cursor pointer
-    transition all .2s ease-out
     outline 0
->>>>>>> feat: Added basic support for files drop on desktop
 
 .fil-content-dropzone-teaser-content
     background-color dodgerBlue
+    border-radius 2px
+    text-align center
     color white
+    padding 1rem
+    box-shadow 0 1px 3px 0 rgba(50, 54, 63, 0.19), 0 6px 18px 0 rgba(50, 54, 63, 0.39)
+
+    & > p
+        margin-top 0
+
+    .fil-content-dropzone-teaser-folder
+        font-weight bold
 
 .fil-content-file-action
     display     none

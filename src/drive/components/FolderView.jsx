@@ -1,5 +1,6 @@
 /* global __TARGET__ */
 import React, { Component } from 'react'
+import cx from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 import Dropzone from 'react-dropzone'
 
@@ -24,7 +25,8 @@ const toggle = (flag, state, props) => ({ [flag]: !state[flag] })
 
 class FolderView extends Component {
   state = {
-    showAddFolder: false
+    showAddFolder: false,
+    dropzoneActive: false
   }
 
   toggleAddFolder = () => {
@@ -42,13 +44,18 @@ class FolderView extends Component {
     this.toggleAddFolder()
   }
 
-  onDrop = (acceptedFiles, rejectedFiles) => {
-    console.log(acceptedFiles)
+  onDragEnter = () =>
+    this.setState(state => ({ ...state, dropzoneActive: true }))
+  onDragLeave = () =>
+    this.setState(state => ({ ...state, dropzoneActive: false }))
+
+  onDrop = files => {
     const folderId = getFolderIdFromRoute(
       this.props.location,
       this.props.params
     )
-    this.props.uploadFiles(acceptedFiles, folderId)
+    this.setState(state => ({ ...state, dropzoneActive: false }))
+    this.props.uploadFiles(files, folderId)
   }
 
   render() {
@@ -59,6 +66,7 @@ class FolderView extends Component {
       selectionModeActive
     } = this.props
     const {
+      displayedFolder,
       files,
       selected,
       actionable,
@@ -70,7 +78,7 @@ class FolderView extends Component {
     } = this.props
     const { hideActionMenu, showSelectionBar } = this.props
 
-    const { showAddFolder } = this.state
+    const { showAddFolder, dropzoneActive } = this.state
 
     const fetchFailed = this.props.fetchStatus === 'failed'
     const fetchPending = this.props.fetchStatus === 'pending'
@@ -102,15 +110,22 @@ class FolderView extends Component {
           role="contentinfo"
           disableClick
           style={{}}
-          activeClassName={styles['fil-content-dropzone-active']}
+          activeClassName={'test'}
           onDrop={this.onDrop}
+          onDragEnter={this.onDragEnter}
+          onDragLeave={this.onDragLeave}
         >
-          <div className={styles['fil-content-dropzone-teaser']}>
-            <div className={styles['fil-content-dropzone-teaser-claudy']} />
-            <div className={styles['fil-content-dropzone-teaser-content']}>
-              Drop files to upload them to the current folder
+          {dropzoneActive && (
+            <div className={styles['fil-content-dropzone-teaser']}>
+              <div className={styles['fil-content-dropzone-teaser-claudy']} />
+              <div className={styles['fil-content-dropzone-teaser-content']}>
+                <p>Drop files to upload them to:</p>
+                <span className={styles['fil-content-dropzone-teaser-folder']}>
+                  {displayedFolder && displayedFolder.name}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
           {__TARGET__ === 'mobile' && (
             <div>
               {isRootfolder && <MediaBackupProgression />}
@@ -125,7 +140,11 @@ class FolderView extends Component {
           <div className={styles['fil-content-table']}>
             <MobileFileListHeader canSort={canSort} />
             <FileListHeader canSort={canSort} />
-            <div className={styles['fil-content-body']}>
+            <div
+              className={cx(styles['fil-content-body'], {
+                [styles['fil-content-dropzone-active']]: dropzoneActive
+              })}
+            >
               {showAddFolder && (
                 <AddFolder
                   onSubmit={this.createFolder}
