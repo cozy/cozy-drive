@@ -116,7 +116,10 @@
       }
     },
     "viewer-fallback":
-      "If the file has started downloading, you can close this."
+      "If the file has started downloading, you can close this.",
+    "dropzone": {
+      "teaser": "Drop files to upload them to:"
+    }
   },
   "table": {
     "head_name": "Name",

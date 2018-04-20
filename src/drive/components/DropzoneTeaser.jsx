@@ -2,13 +2,13 @@ import React from 'react'
 import { translate } from 'cozy-ui/react'
 import styles from '../styles/dropzone'
 
-const DropzoneTeaser = (t, currentFolderName) => (
+const DropzoneTeaser = ({ t, currentFolder }) => (
   <div className={styles['fil-dropzone-teaser']}>
     <div className={styles['fil-dropzone-teaser-claudy']} />
     <div className={styles['fil-dropzone-teaser-content']}>
-      <p>Drop files to upload them to:</p>
+      <p>{t('Files.dropzone.teaser')}</p>
       <span className={styles['fil-dropzone-teaser-folder']}>
-        {currentFolderName}
+        {(currentFolder && currentFolder.name) || 'Drive'}
       </span>
     </div>
   </div>
