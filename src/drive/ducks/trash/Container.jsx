@@ -12,6 +12,7 @@ import { restoreFiles, destroyFiles } from './actions'
 
 const mapStateToProps = (state, ownProps) => ({
   isTrashContext: true,
+  canDrop: false,
   canUpload: false,
   Toolbar,
   isAvailableOffline: isAvailableOffline(state)

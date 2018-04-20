@@ -6,6 +6,7 @@ export const FolderContainer = props => (
   <Container
     isTrashContext={false}
     canSort
+    canDrop
     canUpload
     canCreateFolder
     {...props}
@@ -15,6 +16,7 @@ export const RecentContainer = props => (
   <Container
     isTrashContext={false}
     canSort={false}
+    canDrop={false}
     canUpload={false}
     canCreateFolder={false}
     withFilePath
