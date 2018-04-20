@@ -110,7 +110,7 @@ class FolderView extends Component {
         </Topbar>
         <Dropzone
           role="contentinfo"
-          disabled={!canDrop}
+          disabled={__TARGET__ === 'mobile' || !canDrop}
           disableClick
           style={{}}
           onDrop={this.onDrop}
