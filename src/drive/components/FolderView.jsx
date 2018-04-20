@@ -117,11 +117,7 @@ class FolderView extends Component {
           onDragEnter={this.onDragEnter}
           onDragLeave={this.onDragLeave}
         >
-          {dropzoneActive && (
-            <DropzoneTeaser
-              currentFolderName={displayedFolder && displayedFolder.name}
-            />
-          )}
+          {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
           {__TARGET__ === 'mobile' && (
             <div>
               {isRootfolder && <MediaBackupProgression />}
