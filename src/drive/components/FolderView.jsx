@@ -18,6 +18,7 @@ import MediaBackupProgression from '../mobile/containers/MediaBackupProgression'
 import RatingModal from '../mobile/containers/RatingModal'
 import FirstUploadModal from '../mobile/containers/FirstUploadModal'
 import FolderContent from './FolderContent'
+import DropzoneTeaser from './DropzoneTeaser'
 
 import styles from '../styles/folderview'
 
@@ -73,6 +74,7 @@ class FolderView extends Component {
       actions,
       Toolbar,
       canSort,
+      canDrop,
       canUpload,
       canCreateFolder
     } = this.props
@@ -108,23 +110,17 @@ class FolderView extends Component {
         </Topbar>
         <Dropzone
           role="contentinfo"
+          disabled={!canDrop}
           disableClick
           style={{}}
-          activeClassName={'test'}
           onDrop={this.onDrop}
           onDragEnter={this.onDragEnter}
           onDragLeave={this.onDragLeave}
         >
           {dropzoneActive && (
-            <div className={styles['fil-content-dropzone-teaser']}>
-              <div className={styles['fil-content-dropzone-teaser-claudy']} />
-              <div className={styles['fil-content-dropzone-teaser-content']}>
-                <p>Drop files to upload them to:</p>
-                <span className={styles['fil-content-dropzone-teaser-folder']}>
-                  {displayedFolder && displayedFolder.name}
-                </span>
-              </div>
-            </div>
+            <DropzoneTeaser
+              currentFolderName={displayedFolder && displayedFolder.name}
+            />
           )}
           {__TARGET__ === 'mobile' && (
             <div>
