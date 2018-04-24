@@ -135,9 +135,13 @@
     .fil-content-offline
         display none
         width 1.25rem
+        margin-left 1rem
         height 1.25rem
         background malachite embedurl('../assets/icons/icon-phone-download-white.svg') center center / .9rem no-repeat
         border-radius 50%
+
+    .fil-content-sharestatus
+        margin-left 1rem
 
 .fil-content-file-select
     flex       0 0 2rem
@@ -296,8 +300,8 @@ mime-types('fil-file-', '../assets/icons/')
 
     .fil-content-status
         display    block
-        flex       0 0 1.875rem
-        padding    0 0 0 1rem
+        flex       0 0 auto
+        padding    0
 
         .fil-content-offline
             display inline-block
@@ -307,12 +311,13 @@ mime-types('fil-file-', '../assets/icons/')
 
     .fil-content-file-action
         display    block
-        flex       0 0 2.875rem
+        flex       0 0 3rem
         padding    0
 
     .fil-content-cell.fil-content-file
         padding-left 3.8125rem
         background-position 1rem center
+        padding-right 0
 
     .fil-content-cell.fil-content-file-select
         display none
