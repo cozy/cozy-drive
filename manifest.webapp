@@ -1,7 +1,9 @@
 {
   "name": "Drive",
   "slug": "drive",
+  "version": "1.4.0",
   "type": "webapp",
+  "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
   "categories": ["cozy"],
   "source": "https://github.com/cozy/cozy-drive",
@@ -68,8 +70,6 @@
       "href": "/services"
     }
   ],
-  "version": "1.3.1",
-  "licence": "AGPL-3.0",
   "permissions": {
     "files": {
       "description": "Required to access the files",
