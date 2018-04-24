@@ -103,13 +103,15 @@ class ViewerControls extends Component {
               {t('Viewer.actions.download')}
             </button>
           </div>
-          <div
-            className={styles['pho-viewer-toolbar-close']}
-            onClick={onClose}
-            title={t('Viewer.close')}
-          >
-            <div className={styles['pho-viewer-toolbar-close-cross']} />
-          </div>
+          {onClose && (
+            <div
+              className={styles['pho-viewer-toolbar-close']}
+              onClick={onClose}
+              title={t('Viewer.close')}
+            >
+              <div className={styles['pho-viewer-toolbar-close-cross']} />
+            </div>
+          )}
         </div>
         {!isMobile &&
           hasPrevious && (

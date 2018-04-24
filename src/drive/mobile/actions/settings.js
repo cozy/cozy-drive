@@ -49,7 +49,7 @@ export const saveCredentials = (client, token) => (dispatch, getState) => {
 
 export const startReplication = (dispatch, getState) => {
   const firstReplication = getState().settings.firstReplication
-  const hasIndexes = getState().settings.indexes
+  const indexes = getState().settings.indexes
   const refreshFolder = () => {
     dispatch(openFolder(getOpenedFolderId(getState())))
   }
@@ -65,7 +65,7 @@ export const startReplication = (dispatch, getState) => {
   }
 
   startPouchReplication(
-    hasIndexes,
+    indexes,
     firstReplication,
     firstReplicationFinished,
     refreshFolder,

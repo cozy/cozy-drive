@@ -1,6 +1,7 @@
+/* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Viewer from 'viewer'
+import Viewer, { LoadingViewer } from 'viewer'
 import { getFolderIdFromRoute } from '../reducers/view'
 import { fetchMoreFiles } from '../actions'
 
@@ -12,7 +13,12 @@ const getParentPath = router => {
 }
 
 class FilesViewer extends Component {
+  state = {
+    currentFile: null
+  }
+
   componentDidMount() {
+    this.fetchFileIfNecessary()
     this.fetchMoreIfNecessary()
   }
 
@@ -20,7 +26,29 @@ class FilesViewer extends Component {
     this.fetchMoreIfNecessary()
   }
 
-  // if we get close of the last file fetched, but we know there are more in the folder
+  // If we can't find the file in the loaded files, that's probably because the user is trying to open
+  // a direct link to a file that wasn't in the first 50 files of the containing folder
+  // (it comes from a fetchMore...) ; we load the file attributes directly as a contingency measure
+  fetchFileIfNecessary() {
+    if (this.getCurrentIndex() !== -1) return
+    if (this.state.currentFile)
+      this.setState(state => ({ ...state, currentFile: null }))
+
+    cozy.client.files
+      .statById(this.props.params.fileId)
+      .then(resp => {
+        this.setState(state => ({
+          ...state,
+          currentFile: { ...resp, ...resp.attributes, id: resp._id }
+        }))
+      })
+      .catch(e => {
+        console.warn("can't find the file")
+        this.onClose()
+      })
+  }
+
+  // If we get close of the last file fetched, but we know there are more in the folder
   // (it shouldn't happen in /recent), we fetch 50 more files
   fetchMoreIfNecessary() {
     const { files, params, location, fetchMoreFiles, fileCount } = this.props
@@ -57,15 +85,21 @@ class FilesViewer extends Component {
 
   render() {
     const files = this.getViewableFiles()
-    if (files.length === 0) return null
     const currentIndex = this.getCurrentIndex(files)
-    // TODO: if we can't find the file, that's probably because the user is trying to open
-    // a direct link to a file that wasn't in the first 50 files of the containing folder
-    // (it comes from a fetchMore...)
+    // If we can't find the file, we fallback to the (potentially loading)
+    // direct stat made by the viewer
     if (currentIndex === -1) {
-      console.warn("can't find the file")
-      this.onClose()
-      return null
+      if (!this.state.currentFile) {
+        return <LoadingViewer />
+      }
+      return (
+        <Viewer
+          files={[this.state.currentFile]}
+          currentIndex={0}
+          onChange={this.onChange}
+          onClose={this.onClose}
+        />
+      )
     }
     return (
       <Viewer

@@ -65,19 +65,23 @@ class SuggestionProvider extends React.Component {
         .map(file => {
           const isDir = file.type === TYPE_DIRECTORY
           const dirId = isDir ? file._id : file.dir_id
-          let path
+          const urlToFolder = `${window.location.origin}/#/folder/${dirId}`
+
+          let path, url
           if (isDir) {
             path = file.path
+            url = urlToFolder
           } else {
             const parentDir = folders.find(folder => folder._id === file.dir_id)
             path = parentDir && parentDir.path ? parentDir.path : ''
+            url = `${urlToFolder}/file/${file._id}`
           }
 
           return {
             id: file._id,
             name: file.name,
             path,
-            url: window.location.origin + '/#/folder/' + dirId,
+            url,
             icon: getIconUrl(file)
           }
         })

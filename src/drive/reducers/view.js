@@ -4,6 +4,9 @@ import {
   OPEN_FOLDER,
   OPEN_FOLDER_SUCCESS,
   OPEN_FOLDER_FAILURE,
+  SORT_FOLDER,
+  SORT_FOLDER_SUCCESS,
+  SORT_FOLDER_FAILURE,
   FETCH_RECENT,
   FETCH_RECENT_SUCCESS,
   FETCH_RECENT_FAILURE,
@@ -94,18 +97,50 @@ const fileCount = (state = null, action) => {
   }
 }
 
+const sort = (state = null, action) => {
+  switch (action.type) {
+    case SORT_FOLDER:
+      return {
+        attribute: action.sortAttribute,
+        order: action.sortOrder
+      }
+    case OPEN_FOLDER_SUCCESS:
+    case FETCH_RECENT_SUCCESS:
+      return null
+    default:
+      return state
+  }
+}
+
 const updateItem = (file, files) => {
   const withoutFile = files.filter(f => f.id !== file.id)
   return insertItem(file, withoutFile)
 }
 
-const insertItem = (file, array, currentItemCount) => {
-  const index = indexFor(file, array, (a, b) => {
+const getCompareFn = (currentSort = null) => {
+  const sort = currentSort || { attribute: 'name', order: 'asc' }
+  if (sort.attribute === 'updated_at') {
+    return (a, b) => {
+      const ta = new Date(a).getTime()
+      const tb = new Date(b).getTime()
+      return sort.order === 'desc' ? (ta > tb ? 1 : -1) : ta > tb ? -1 : 1
+    }
+  }
+  // We always return the compare fn for name by default, so
+  // that adding new sorting fields will not break this function (it
+  // will need to be updated though)
+  return (a, b) => {
     if (a.type !== b.type) {
       return isDirectory(a) ? -1 : 1
     }
-    return a.name.localeCompare(b.name)
-  })
+    return sort.order === 'desc'
+      ? b.name.localeCompare(a.name)
+      : a.name.localeCompare(b.name)
+  }
+}
+
+const insertItem = (file, array, currentItemCount, currentSort = null) => {
+  const index = indexFor(file, array, getCompareFn(currentSort))
   // if we only have partially fetched the file list and the new item
   // position is in the unfetched part of the list, we don't add the item
   // to the list
@@ -135,6 +170,7 @@ const files = (state = [], action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
+    case SORT_FOLDER_SUCCESS:
       return action.files
     case FETCH_MORE_FILES_SUCCESS:
       const clone = state.slice(0)
@@ -145,9 +181,19 @@ const files = (state = [], action) => {
     case RENAME_SUCCESS:
       return updateItem(action.file, state)
     case UPLOAD_FILE_SUCCESS:
-      return insertItem(action.file, state)
+      return insertItem(
+        action.file,
+        state,
+        action.currentFileCount,
+        action.currentSort
+      )
     case CREATE_FOLDER_SUCCESS:
-      return insertItem(action.folder, state, action.currentFileCount)
+      return insertItem(
+        action.folder,
+        state,
+        action.currentFileCount,
+        action.currentSort
+      )
     case TRASH_FILES_SUCCESS:
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
@@ -166,8 +212,10 @@ const fetchStatus = (state = 'pending', action) => {
     // when the app is launched or when the user use the back button
     case EMPTY_TRASH: // we temporarily display the spinner when working in the trashed
     case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
+    case SORT_FOLDER:
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
+    case SORT_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
     case EMPTY_TRASH_SUCCESS:
     case EMPTY_TRASH_FAILURE:
@@ -175,6 +223,7 @@ const fetchStatus = (state = 'pending', action) => {
     case DESTROY_FILES_FAILURE:
       return 'loaded'
     case OPEN_FOLDER_FAILURE:
+    case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_FAILURE:
       return 'failed'
     default:
@@ -186,6 +235,8 @@ const lastFetch = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case OPEN_FOLDER_FAILURE:
+    case SORT_FOLDER_SUCCESS:
+    case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_SUCCESS:
     case FETCH_RECENT_FAILURE:
       return Date.now()
@@ -200,6 +251,7 @@ export default combineReducers({
   displayedFolder,
   openedFolderId,
   fileCount,
+  sort,
   files,
   fetchStatus,
   lastFetch
@@ -210,6 +262,13 @@ export const getFilesWithLinks = ({ view }, folderId) =>
   view.filesWithLinks[folderId]
 
 export const getVisibleFiles = ({ view }) => view.files
+
+export const getLoadedFilesCount = ({ view }) =>
+  view.files.filter(f => f.type !== 'directory').length
+export const getLoadedFoldersCount = ({ view }) =>
+  view.files.filter(f => f.type === 'directory').length
+
+export const getSort = ({ view }) => view.sort
 
 export const getFileById = ({ view }, id) => {
   const file = view.files.find(f => f && f.id && f.id === id)

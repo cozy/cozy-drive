@@ -4,7 +4,7 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import Main from './Main'
 import Topbar from './Topbar'
-import FileListHeader from './FileListHeader'
+import FileListHeader, { MobileFileListHeader } from './FileListHeader'
 
 import { ROOT_DIR_ID } from '../constants/config'
 import Breadcrumb from '../containers/Breadcrumb'
@@ -54,6 +54,7 @@ class FolderView extends Component {
       actionable,
       actions,
       Toolbar,
+      canSort,
       canUpload,
       canCreateFolder
     } = this.props
@@ -99,7 +100,8 @@ class FolderView extends Component {
             <SelectionBar selected={selected} actions={actions.selection} />
           </div>
           <div className={styles['fil-content-table']}>
-            <FileListHeader />
+            <MobileFileListHeader canSort={canSort} />
+            <FileListHeader canSort={canSort} />
             <div className={styles['fil-content-body']}>
               {showAddFolder && (
                 <AddFolder
@@ -111,6 +113,8 @@ class FolderView extends Component {
                 {...this.props}
                 selectionModeActive={selectionModeActive}
                 isAddingFolder={showAddFolder}
+                isLoading={fetchPending || isNavigating}
+                isInError={fetchFailed}
               />
             </div>
           </div>

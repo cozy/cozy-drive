@@ -7,7 +7,7 @@ import selectionReducer, { getSelectedIds } from '../ducks/selection'
 import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
 import renameReducer from '../ducks/files/rename'
 import upload from '../ducks/upload'
-import alerterReducer from 'cozy-ui/react/Alerter'
+import alerterReducer from '../ducks/alerter'
 import availableOffline from '../ducks/files/availableOffline'
 import { reducer } from 'cozy-client'
 import uiReducer from 'react-cozy-helpers'
@@ -35,7 +35,10 @@ export {
   getFileById,
   getFolderIdFromRoute,
   getFolderPath,
-  getFolderUrl
+  getFolderUrl,
+  getSort,
+  getLoadedFilesCount,
+  getLoadedFoldersCount
 } from './view'
 export { isMenuVisible as isActionMenuVisible } from '../ducks/actionmenu'
 
