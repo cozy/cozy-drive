@@ -20,7 +20,7 @@
     "webpack-node-externals": "1.6.0"
   },
   "peerDependencies": {
-    "cozy-ui": "^7.0.2"
+    "cozy-ui": "7.18.0"
   },
   "dependencies": {
     "url-polyfill": "1.0.11"
