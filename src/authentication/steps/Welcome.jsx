@@ -6,6 +6,7 @@ import { Button } from 'cozy-ui/react'
 
 import styles from '../styles'
 
+const isCordova = () => window.cordova !== undefined
 const getPlatformId = () =>
   isCordova() ? window.cordova.platformId : undefined
 
