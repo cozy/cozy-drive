@@ -53,7 +53,7 @@ class BannerClient extends Component {
       <div className={styles['coz-banner-client']}>
         <ButtonLink
           href={t(mobileLink)}
-          target
+          target="_blank"
           className={styles['coz-btn-clientMobile']}
           onClick={e => {
             this.markAsSeen('banner')
@@ -64,7 +64,7 @@ class BannerClient extends Component {
           <span>{t('Nav.banner-txt-client')}</span>
           <ButtonLink
             href={t(desktopLink)}
-            target
+            target="_blank"
             theme="alpha"
             onClick={e => {
               this.markAsSeen('banner')
