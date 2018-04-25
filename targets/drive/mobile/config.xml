@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.drive.mobile" version="1.4.0"
+<widget id="io.cozy.drive.mobile" version="1.4.1"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:cdv="http://cordova.apache.org/ns/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -22,9 +22,9 @@
         <allow-intent href="market:*" />
         <custom-config-file target="AndroidManifest.xml" parent="./application/activity/[@android:name='MainActivity']">
             <intent-filter android:label="Cozy Drive">
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEND__DISABLED" />
+                <action android:name="android.intent.action.SEND_MULTIPLE__DISABLED" />
+                <category android:name="android.intent.category.DEFAULT__DISABLED" />
                 <data android:mimeType="*/*" />
             </intent-filter>
         </custom-config-file>
