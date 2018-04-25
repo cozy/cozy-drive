@@ -5,7 +5,10 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
 
 import styles from '../styles'
-import { getPlatformId } from '../../drive/mobile/lib/device'
+
+const isCordova = () => window.cordova !== undefined
+const getPlatformId = () =>
+  isCordova() ? window.cordova.platformId : undefined
 
 export class Welcome extends Component {
   render() {

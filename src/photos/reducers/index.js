@@ -1,5 +1,5 @@
 import upload from '../ducks/upload'
-import alerterReducer from 'cozy-ui/react/Alerter'
+import alerterReducer from '../../drive/ducks/alerter'
 
 export default {
   upload,
