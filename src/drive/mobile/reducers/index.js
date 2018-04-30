@@ -7,7 +7,6 @@ import { default as mediaBackup } from '../ducks/mediaBackup'
 
 import { ui } from './ui'
 import { authorization } from './authorization'
-import { UNLINK } from '../actions/unlink'
 
 const mobile = combineReducers({
   authorization,
@@ -16,17 +15,7 @@ const mobile = combineReducers({
   ui
 })
 
-const appReducer = combineReducers({
+export default {
   ...reducers,
   mobile
-})
-
-const rootReducer = (state, action) => {
-  if (action.type === UNLINK) {
-    state = undefined
-  }
-
-  return appReducer(state, action)
 }
-
-export default rootReducer

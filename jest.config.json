@@ -6,5 +6,8 @@
   },
   "transformIgnorePatterns": [
     "node_modules/(?!cozy-ui)/"
+  ],
+  "testMatch": [
+    "**/(*.)(spec|test).js?(x)"
   ]
 }

@@ -47,17 +47,21 @@
   },
   "Share": {
     "status": {
+      "owner": "Owner",
       "pending": "Pending",
-      "accepted": "Accepted",
+      "ready": "Accepted",
       "refused": "Refused",
       "error": "Error",
       "unregistered": "Error",
-      "mail-not-sent": "Error",
+      "mail-not-sent": "Pending",
       "revoked": "Error"
     },
     "type": {
-      "one-way": "Can View (coming soon)",
+      "one-way": "Can View",
       "two-way": "Can Change"
+    },
+    "recipients": {
+      "accessCount": "%{count} people have access"
     },
     "create-cozy": "Create my cozy"
   },
@@ -69,10 +73,15 @@
         "title": "Sharing details",
         "createdAt": "On %{date}",
         "ro": "Read only",
-        "rw": "Read/write"
+        "rw": "Read/write",
+        "desc": {
+          "ro": "You can view, download, and add this content to your Cozy. You will get updates by the owner, but you won't be able to update this content yourself.",
+          "rw": "You can view, update, delete and add this content to your Cozy. Updates you make will be seen on other Cozies."
+        }
       },
       "sharedByMe": "Shared by me",
       "sharedWithMe": "Shared with me",
+      "sharedBy": "Shared by %{name}",
       "shareByLink": {
         "subtitle": "By public link",
         "desc": "Anyone with the provided link can see and download your files."
@@ -87,9 +96,13 @@
         "comingsoon":
           "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
       },
-      "unshare": {
+      "revoke": {
         "title": "Remove from sharing",
         "success": "You removed this shared file from %{email}."
+      },
+      "revokeSelf": {
+        "title": "Remove me from sharing",
+        "success": "You were removed from this sharing."
       },
       "sharingLink": {
         "title": "Link to share",

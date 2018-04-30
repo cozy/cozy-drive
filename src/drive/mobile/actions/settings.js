@@ -14,7 +14,7 @@ export const BACKUP_IMAGES = 'BACKUP_IMAGES'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const ERROR = 'ERROR'
 export const SET_ANALYTICS = 'SET_ANALYTICS'
-export const TOKEN_SCOPE = 'TOKEN_SCOPE'
+export const SET_TOKEN = 'SET_TOKEN'
 
 // url
 
@@ -39,11 +39,11 @@ export const setBackupImages = backupImages => ({
   backupImages
 })
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
-export const setTokenScope = scope => ({ type: TOKEN_SCOPE, scope })
+export const setToken = token => ({ type: SET_TOKEN, token })
 
 export const saveCredentials = (client, token) => (dispatch, getState) => {
   dispatch(setClient(client))
-  dispatch(setTokenScope(token.scope))
+  dispatch(setToken(token))
   startReplication(dispatch, getState)
 }
 

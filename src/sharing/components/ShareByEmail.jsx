@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Button } from 'cozy-ui/react'
-import Alerter from 'legacy-alerter/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
 
@@ -90,7 +90,7 @@ class ShareByEmail extends Component {
     {
       value: 'one-way',
       label: this.context.t('Share.type.one-way'),
-      disabled: true
+      disabled: false
     },
     {
       value: 'two-way',
@@ -141,13 +141,31 @@ class ShareByEmail extends Component {
   }
 
   share = () => {
-    const { document, documentType, sharingDesc, onShare } = this.props
+    const {
+      document,
+      documentType,
+      sharingDesc,
+      onShare,
+      createContact
+    } = this.props
     const { recipients, sharingType } = this.state
     if (recipients.length === 0) {
       return
     }
     this.setState(state => ({ ...state, loading: true }))
-    onShare(document, recipients, sharingType, sharingDesc)
+    Promise.all(
+      recipients.map(
+        recipient =>
+          recipient.id
+            ? recipient
+            : createContact('io.cozy.contacts', {
+                email: [{ address: recipient.email, primary: true }]
+              }).then(resp => resp.data)
+      )
+    )
+      .then(recipients =>
+        onShare(document, recipients, sharingType, sharingDesc)
+      )
       .then(() => {
         if (recipients.length === 1) {
           Alerter.success(`${documentType}.share.shareByEmail.success`, {
@@ -207,7 +225,8 @@ ShareByEmail.propTypes = {
   document: PropTypes.object.isRequired,
   documentType: PropTypes.string.isRequired,
   sharingDesc: PropTypes.string.isRequired,
-  onShare: PropTypes.func.isRequired
+  onShare: PropTypes.func.isRequired,
+  createContact: PropTypes.func.isRequired
 }
 
 ShareByEmail.defaultProps = {
