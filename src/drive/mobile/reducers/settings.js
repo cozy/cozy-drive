@@ -6,8 +6,9 @@ import {
   BACKUP_CONTACTS,
   SET_ANALYTICS,
   WIFI_ONLY,
-  TOKEN_SCOPE
+  SET_TOKEN
 } from '../actions/settings'
+import { UNLINK } from '../actions/unlink'
 
 export const initialState = {
   serverUrl: '',
@@ -33,8 +34,10 @@ export const settings = (state = initialState, action) => {
       return { ...state, authorized: true }
     case WIFI_ONLY:
       return { ...state, wifiOnly: action.wifiOnly }
-    case TOKEN_SCOPE:
-      return { ...state, tokenScope: action.scope }
+    case SET_TOKEN:
+      return { ...state, token: action.token }
+    case UNLINK:
+      return initialState
     default:
       return state
   }

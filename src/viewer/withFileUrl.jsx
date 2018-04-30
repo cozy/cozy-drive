@@ -1,5 +1,5 @@
+/* global cozy */
 import React, { Component } from 'react'
-import { getDownloadLink } from 'cozy-client'
 import Spinner from 'cozy-ui/react/Spinner'
 
 import NoNetworkViewer from './NoNetworkViewer'
@@ -38,7 +38,7 @@ const withFileUrl = BaseComponent =>
         () => this.setState(state => ({ ...state, status: FAILED })),
         TTL
       )
-      getDownloadLink(this.props.file)
+      this.getDownloadLink(this.props.file)
         .then(url => {
           this.clearTimeout()
           this.setState(state => ({ downloadUrl: url, status: LOADED }))
@@ -47,6 +47,17 @@ const withFileUrl = BaseComponent =>
           this.clearTimeout()
           this.setState(state => ({ ...state, status: FAILED }))
         })
+    }
+
+    // for compatibility reasons, we try to use cozy-client but fallback on cozy-client-js
+    getDownloadLink(file) {
+      return this.context.client
+        ? this.context.client
+            .collection('io.cozy.files')
+            .getDownloadLinkById(file._id)
+        : cozy.client.files
+            .getDownloadLinkById(file._id)
+            .then(path => `${cozy.client._url}${path}`)
     }
 
     clearTimeout() {

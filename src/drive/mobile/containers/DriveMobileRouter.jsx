@@ -6,14 +6,15 @@ import MobileRouter from 'authentication/MobileRouter'
 
 import { setUrl, saveCredentials } from '../actions/settings'
 import { unlink } from '../actions/unlink'
+import { restoreCozyClientJs } from 'drive/mobile/lib/cozy-helper'
 
 class DriveMobileRouter extends Component {
-  afterAuthentication = ({ url, clientInfo, token, router }) => {
+  afterAuthentication = async ({ url, clientInfo, token, router }) => {
     const wasRevoked = this.props.isRevoked
     this.props.saveServerUrl(url)
     this.props.saveCredentials(clientInfo, token)
+    await restoreCozyClientJs(url, clientInfo, token)
     if (wasRevoked) {
-      this.context.client.resetStore()
       router.replace('/')
     } else {
       router.replace('/onboarding')

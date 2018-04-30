@@ -1,45 +1,68 @@
 import styles from './share.styl'
 
 import React, { Component } from 'react'
-// import { cozyConnect, fetchSharings } from 'cozy-client'
-import { UserAvatar } from './components/Recipient'
-import Modal from 'cozy-ui/react/Modal'
+import { UserAvatar as Owner } from './components/Recipient'
+import WhoHasAccess from './components/WhoHasAccess'
 
-const Owner = UserAvatar
+import Modal from 'cozy-ui/react/Modal'
 
 export class SharingDetailsModal extends Component {
   render() {
     const { t, f } = this.context
-    const { onClose, sharing, document, documentType = 'Document' } = this.props
+    const {
+      onClose,
+      sharingType,
+      owner,
+      recipients,
+      document,
+      documentType = 'Document',
+      onRevoke
+    } = this.props
     return (
       <Modal
         title={t(`${documentType}.share.details.title`)}
         secondaryAction={onClose}
+        className={styles['share-modal']}
         into="body"
       >
-        <div className={styles['pho-share-modal-content']}>
-          <Owner
-            name={t(`${documentType}.share.sharedWithMe`)}
-            url={sharing.sharer.url}
-          />
-          <div className={styles['pho-share-details-created']}>
-            {t(`${documentType}.share.details.createdAt`, {
-              date: f(document.created_at || null, 'Do MMMM YYYY')
+        <div className={styles['share-modal-content']}>
+          <div className={styles['share-details']}>
+            <Owner
+              name={t(`${documentType}.share.sharedBy`, { name: owner.name })}
+              url={owner.instance}
+            />
+            <div className={styles['share-details-created']}>
+              {t(`${documentType}.share.details.createdAt`, {
+                date: f(document.created_at || null, 'Do MMMM YYYY')
+              })}
+            </div>
+            <div className={styles['share-details-perm']}>
+              {t(
+                `${documentType}.share.details.${
+                  sharingType === 'one-way' ? 'ro' : 'rw'
+                }`
+              )}
+            </div>
+            <div className={styles['share-details-perm-desc']}>
+              {t(
+                `${documentType}.share.details.desc.${
+                  sharingType === 'one-way' ? 'ro' : 'rw'
+                }`
+              )}
+            </div>
+          </div>
+          <hr className={styles['divider']} />
+          <WhoHasAccess
+            title={t('Share.recipients.accessCount', {
+              count: recipients.length
             })}
-          </div>
-          <div className={styles['pho-share-details-perm']}>
-            {t(
-              `${documentType}.share.details.${
-                sharing.sharingType === 'one-way' ? 'ro' : 'rw'
-              }`
-            )}
-          </div>
+            recipients={recipients}
+            document={document}
+            documentType={documentType}
+            onRevoke={onRevoke}
+          />
         </div>
       </Modal>
     )
   }
 }
-
-// export default cozyConnect(ownProps => ({
-//   sharing: fetchSharings(ownProps.document._type, ownProps.document._id)
-// }))(SharingDetailsModal)

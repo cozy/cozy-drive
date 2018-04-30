@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux'
-
 import view, { getFileById } from './view'
 import settings from './settings'
 
@@ -8,11 +6,9 @@ import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
 import renameReducer from '../ducks/files/rename'
 import upload from '../ducks/upload'
 import availableOffline from '../ducks/files/availableOffline'
-import { reducer } from 'cozy-client'
 import uiReducer from 'react-cozy-helpers'
 
 export const reducers = {
-  cozy: reducer,
   ui: uiReducer,
   view,
   settings,
@@ -23,8 +19,7 @@ export const reducers = {
   availableOffline
 }
 
-const filesApp = combineReducers(reducers)
-export default filesApp
+export default reducers
 
 // Selectors
 export {

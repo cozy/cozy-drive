@@ -2,6 +2,7 @@ import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import Toggle from 'cozy-ui/react/Toggle'
 import { Button } from 'cozy-ui/react'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import styles from '../share.styl'
 
@@ -84,10 +85,18 @@ class ShareByLink extends React.Component {
     this.props
       .onEnable(this.props.document)
       .then(() => this.setState(state => ({ ...state, loading: false })))
+      .catch(e => {
+        this.setState(state => ({ ...state, loading: false }))
+        Alerter.error(`${this.props.documentType}.share.error.generic`)
+        console.log(e)
+      })
   }
 
   deleteShareLink() {
-    this.props.onDisable(this.props.document)
+    this.props.onDisable(this.props.document).catch(e => {
+      Alerter.error(`${this.propsdocumentType}.share.error.revoke`)
+      console.log(e)
+    })
   }
 
   render() {
