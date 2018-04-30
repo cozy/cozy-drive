@@ -4,10 +4,9 @@ import { translate } from 'cozy-ui/react/I18n'
 import File, { FilePlaceholder } from '../containers/File'
 import LoadMore from './LoadMore'
 import { isCordova } from '../mobile/lib/device'
+import { FILES_FETCH_LIMIT } from '../constants/config'
 
 require('intersection-observer') // polyfill for safari
-
-const LIMIT = 30
 
 class FileList extends PureComponent {
   state = {
@@ -26,7 +25,7 @@ class FileList extends PureComponent {
 
   checkIntersectionsEntries = intersectionEntries => {
     if (intersectionEntries.filter(entry => entry.isIntersecting).length > 0) {
-      this.loadMoreRows(LIMIT)
+      this.loadMoreRows(FILES_FETCH_LIMIT)
     }
   }
 
@@ -49,7 +48,7 @@ class FileList extends PureComponent {
     // We're in /recent
     if (!this.props.displayedFolder) return false
     if (isCordova()) {
-      if (this.props.files.length < LIMIT) return false
+      if (this.props.files.length < FILES_FETCH_LIMIT) return false
       return !this.state.hasNoMoreRows
     }
     return this.props.files.length < this.props.fileCount
@@ -65,7 +64,7 @@ class FileList extends PureComponent {
           <LoadMore
             ref={this.updateLoadMoreElement}
             onClick={() => {
-              this.loadMoreRows(LIMIT)
+              this.loadMoreRows(FILES_FETCH_LIMIT)
             }}
             isLoading={this.state.isLoading}
           />
@@ -84,7 +83,7 @@ class FileList extends PureComponent {
           ...state,
           isLoading: false,
           // if we get less files than the limit, there should be no more files to load
-          hasNoMoreRows: resp.files.length < LIMIT
+          hasNoMoreRows: resp.files.length < FILES_FETCH_LIMIT
         }))
       })
       .catch(() => {

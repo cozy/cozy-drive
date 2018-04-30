@@ -26,6 +26,7 @@ import toolbarstyles from '../styles/toolbar'
 import { getFolderIdFromRoute } from '../reducers/view'
 
 import Viewer from 'viewer'
+import { FILES_FETCH_LIMIT } from '../constants/config'
 
 class DumbFolderView extends React.Component {
   state = {
@@ -44,7 +45,7 @@ class DumbFolderView extends React.Component {
     }))
     if (files.length !== fileCount && files.length - currentIndex <= 5) {
       const folderId = getFolderIdFromRoute(location, params)
-      fetchMoreFiles(folderId, files.length, 30)
+      fetchMoreFiles(folderId, files.length, FILES_FETCH_LIMIT)
     }
   }
 

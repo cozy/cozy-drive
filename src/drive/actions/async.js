@@ -1,11 +1,11 @@
 /* global cozy */
 import { isCordova } from '../mobile/lib/device'
-import { TRASH_DIR_ID } from '../constants/config.js'
+import { TRASH_DIR_ID, FILES_FETCH_LIMIT } from '../constants/config.js'
 
 class Stack {
   getFolder = async folderId => {
     const folder = await cozy.client.files.statById(folderId, false, {
-      limit: 30
+      limit: FILES_FETCH_LIMIT
     })
     const parentId = folder.attributes.dir_id
     const parent =
@@ -32,7 +32,7 @@ class Stack {
     }
   }
 
-  getFolderContents = async (folderId, skip = 0, limit = 30) => {
+  getFolderContents = async (folderId, skip = 0, limit = FILES_FETCH_LIMIT) => {
     const folder = await cozy.client.files.statById(folderId, false, {
       skip,
       limit
@@ -49,7 +49,7 @@ class Stack {
     sortAttribute,
     sortOrder = 'asc',
     skip = 0,
-    limit = 30,
+    limit = FILES_FETCH_LIMIT,
     loadedFoldersCount = 0,
     loadedFilesCount = 0
   ) => {
@@ -97,7 +97,7 @@ class Stack {
       trashed: false
     },
     sort: [{ updated_at: 'desc' }],
-    limit: 30
+    limit: FILES_FETCH_LIMIT
   }
 
   getRecentFiles = async () => {
@@ -147,7 +147,7 @@ class PouchDB {
     }
   }
 
-  getFolderContents = async (folderId, skip = 0, limit = 30) => {
+  getFolderContents = async (folderId, skip = 0, limit = FILES_FETCH_LIMIT) => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     const resp = await db.find({
       selector: {
@@ -171,7 +171,7 @@ class PouchDB {
     sortAttribute,
     sortOrder = 'asc',
     skip = 0,
-    limit = 30,
+    limit = FILES_FETCH_LIMIT,
     loadedFoldersCount = 0,
     loadedFilesCount = 0
   ) => {
@@ -221,7 +221,7 @@ class PouchDB {
   getRecentFiles = async () => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     const files = await db.query(this.recentIndex, {
-      limit: 30,
+      limit: FILES_FETCH_LIMIT,
       include_docs: true,
       descending: true
     })
