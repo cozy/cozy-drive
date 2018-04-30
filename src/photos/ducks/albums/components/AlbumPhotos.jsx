@@ -144,8 +144,8 @@ class AlbumPhotos extends Component {
                 onPhotosSelect={selection.select}
                 onPhotosUnselect={selection.unselect}
                 fetchStatus={album.photos.fetchStatus}
-                hasMore={album.photos.next}
-                fetchMore={album.photos.fetchMore}
+                hasMore={album.photos.hasMore}
+                fetchMore={() => album.photos.fetchMore()}
               />
             )}
             {this.renderViewer(this.props.children)}
