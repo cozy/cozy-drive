@@ -15,6 +15,7 @@ import styles from './styles'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
+const KEY_CODE_ESCAPE = 27
 
 const isAndroid = () =>
   window.navigator.userAgent &&
@@ -47,6 +48,7 @@ export default class Viewer extends Component {
   onKeyUp = e => {
     if (e.keyCode === KEY_CODE_LEFT) this.onPrevious()
     else if (e.keyCode === KEY_CODE_RIGHT) this.onNext()
+    else if (e.keyCode === KEY_CODE_ESCAPE) this.onClose()
   }
 
   onNext = () => {
@@ -67,6 +69,12 @@ export default class Viewer extends Component {
     const prevIndex = currentIndex - 1
     const prevFile = files[prevIndex]
     this.onChange(prevFile, prevIndex)
+  }
+
+  onClose = () => {
+    if (this.props.onClose) {
+      this.props.onClose()
+    }
   }
 
   onChange(nextFile, nextIndex) {
