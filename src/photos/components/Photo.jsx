@@ -1,4 +1,3 @@
-/* global cozy */
 import styles from '../styles/photoList'
 
 import React from 'react'
@@ -26,7 +25,7 @@ const getStyleFromBox = box => {
   return style
 }
 
-const Photo = props => {
+const Photo = (props, { client }) => {
   const { photo, box, selected = false, onToggle, router } = props
   const style = getStyleFromBox(box)
   return (
@@ -58,7 +57,7 @@ const Photo = props => {
             photo={photo}
             className={styles['pho-photo-item']}
             style={style}
-            src={`${cozy.client._url}${photo.links.small}`}
+            src={`${client.options.uri}${photo.links.small}`}
           />
         </Link>
       </div>
