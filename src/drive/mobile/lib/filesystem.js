@@ -21,7 +21,10 @@ export const getCozyPath = () => COZY_PATH + '/' + COZY_FILES_PATH + '/'
 
 export const getEntry = path =>
   new Promise((resolve, reject) => {
-    window.resolveLocalFileSystemURL(path, resolve, reject)
+    window.resolveLocalFileSystemURL(path, resolve, err => {
+      console.error(`${path} could not be resolved: ${err.message}`)
+      reject(err)
+    })
   })
 
 export const getCozyEntry = () =>
