@@ -132,6 +132,7 @@
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
     "svg-sprite-loader": "3.7.3",
+    "tostr": "^0.1.0",
     "webpack": "3.11.0",
     "webpack-dev-server": "2.11.2",
     "webpack-merge": "1.1.2",
