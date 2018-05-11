@@ -100,7 +100,14 @@ export const intentHandler = store => async ({
     const contentFiles = Array.isArray(extras['android.intent.extra.STREAM'])
       ? extras['android.intent.extra.STREAM']
       : [extras['android.intent.extra.STREAM']]
-    const files = await getFiles(contentFiles)
-    uploadFiles(files, store)
+    try {
+      const files = await getFiles(contentFiles)
+      uploadFiles(files, store)
+    } catch (err) {
+      store.dispatch({
+        type: 'INTENT_IMPORT_FAILED',
+        alert: alertShow('intents.alert.error', null, 'info')
+      })
+    }
   }
 }
