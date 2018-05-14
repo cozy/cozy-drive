@@ -1,18 +1,16 @@
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button } from 'cozy-ui/react'
-
-import styles from './empty.styl'
+import { Empty, Button } from 'cozy-ui/react'
+import EmptyIcon from '!!svg-sprite-loader!../../photos/assets/icons/icon-image-broken.svg'
 
 export const ErrorComponent = ({ t, errorType }) => {
   return (
-    <div className={styles['c-error']}>
-      <h2>{t(`Error.${errorType}_title`)}</h2>
+    <Empty title={t(`Error.${errorType}_title`)} icon={EmptyIcon}>
       <Button
         onClick={() => window.location.reload()}
         label={t('Error.refresh')}
       />
-    </div>
+    </Empty>
   )
 }
 

@@ -1,14 +1,15 @@
-import styles from './empty.styl'
-
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import { Empty } from 'cozy-ui/react'
+import EmptyIcon from '!!svg-sprite-loader!../../photos/assets/icons/icon-cloud-wrong.svg'
 
 export const ErrorShare = ({ t, errorType }) => {
   return (
-    <div className={styles['c-error--share']}>
-      <h2>{t(`Error.${errorType}_title`)}</h2>
-      <p>{t(`Error.${errorType}_text`)}</p>
-    </div>
+    <Empty
+      icon={EmptyIcon}
+      title={t(`Error.${errorType}_title`)}
+      text={t(`Error.${errorType}_text`)}
+    />
   )
 }
 
