@@ -35,6 +35,7 @@ import { getEntry } from '../../../src/drive/mobile/lib/filesystem'
 import { ROOT_DIR_ID } from '../../../src/drive/constants/config'
 import { uploadedFile } from '../../../src/drive/actions/index'
 import { alertShow } from 'cozy-ui/react/Alerter'
+import { updateUserAgent } from '../../../src/drive/mobile/lib/cozy-helper'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -131,6 +132,11 @@ const intentHandler = store => async ({
 }
 
 const startApplication = async function(store, client) {
+  try {
+    updateUserAgent()
+  } catch (err) {
+    // we do nothing with this exception handling
+  }
   configureReporter()
   const { client: clientInfos } = store.getState().settings
   if (clientInfos) {
