@@ -58,6 +58,18 @@ const getFiles = contentFiles =>
     })
   )
 
+const base64toBlob = (dataURI, type) => {
+  const byteString = atob(dataURI)
+  const ab = new ArrayBuffer(byteString.length)
+  const ia = new Uint8Array(ab)
+
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i)
+  }
+
+  return new Blob([ab], { type })
+}
+
 const uploadFiles = (files, store) => {
   store.dispatch(
     addToUploadQueue(
@@ -109,5 +121,50 @@ export const intentHandler = store => async ({
         alert: alertShow('intents.alert.error', null, 'info')
       })
     }
+  }
+}
+
+const utiToMime = {
+  'com.adobe.pdf': 'application/pdf',
+  'com.adobe.postscript': 'application/postscript',
+  'com.compuserve.gif': 'image/gif',
+  'com.microsoft.bmp': 'image/bmp',
+  'com.microsoft.word.doc': 'application/msword',
+  'com.microsoft.excel.xls': 'application/vnd.ms-excel',
+  'com.microsoft.powerpoint.ppt': 'application/mspowerpoint'
+  // see https://developer.apple.com/library/content/documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html#//apple_ref/doc/uid/TP40009259-SW1
+}
+
+const getMimeTypeFromUTI = utis => {
+  const knowUTIs = Object.keys(utiToMime)
+  const firstKnownUTI = knowUTIs.find(uti => utis.indexOf(uti) >= 0)
+
+  return firstKnownUTI ? utiToMime[firstKnownUTI] : ''
+}
+
+export const intentHandlerIOS = store => async intent => {
+  const files = await Promise.all(
+    intent.items.map(async item => {
+      if (item.uti === 'public.image') {
+        const blob = base64toBlob(item.data, item.type)
+        blob.name = item.name
+        return blob
+      } else {
+        const dirEntry = await getEntry(item.data)
+        if (!dirEntry.type) dirEntry.type = getMimeTypeFromUTI(item.utis)
+        const file = await getFile(dirEntry)
+
+        return file
+      }
+    })
+  )
+
+  try {
+    uploadFiles(files, store)
+  } catch (err) {
+    store.dispatch({
+      type: 'INTENT_IMPORT_FAILED',
+      alert: alertShow('intents.alert.errors', null, 'info')
+    })
   }
 }
