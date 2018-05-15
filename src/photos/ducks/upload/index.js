@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import Alerter from '../../components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import UploadQueue from './UploadQueue'
 
@@ -92,14 +92,18 @@ export const onQueueEmpty = () => (dispatch, getState) => {
   const loaded = getLoaded(queue)
 
   if (!conflicts.length && !errors.length) {
-    Alerter.success('UploadQueue.alert.success', { smart_count: loaded.length })
+    Alerter.success(
+      t('UploadQueue.alert.success', { smart_count: loaded.length })
+    )
   } else if (conflicts.length && !errors.length) {
-    Alerter.info('UploadQueue.alert.success_conflicts', {
-      smart_count: loaded.length,
-      conflictNumber: conflicts.length
-    })
+    Alerter.info(
+      t('UploadQueue.alert.success_conflicts', {
+        smart_count: loaded.length,
+        conflictNumber: conflicts.length
+      })
+    )
   } else {
-    Alerter.error('UploadQueue.alert.errors')
+    Alerter.error(t('UploadQueue.alert.errors'))
   }
 }
 

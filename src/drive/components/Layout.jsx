@@ -9,9 +9,6 @@ import Sidebar from 'cozy-ui/react/Sidebar'
 import Nav from '../containers/Nav'
 import ButtonClient from '../../components/pushClient/Button'
 import { UploadQueue } from '../ducks/upload'
-// TODO: we use the cozy-ui Alerter only for the ShareByEmail component
-// we use the old redux-based one on the rest...
-import { Alerter as OldAlerter } from '../ducks/alerter'
 import Alerter from 'cozy-ui/react/Alerter'
 
 const Layout = ({ t, children }) => (
@@ -20,8 +17,7 @@ const Layout = ({ t, children }) => (
       <Nav />
       <ButtonClient />
     </Sidebar>
-    <OldAlerter />
-    <Alerter t={t} />
+    <Alerter />
     <UploadQueue />
     {children}
     <ModalManager />

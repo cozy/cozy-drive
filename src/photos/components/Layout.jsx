@@ -11,7 +11,7 @@ import Nav, { NavItem, NavIcon, NavText, genNavLink } from 'cozy-ui/react/Nav'
 import { Link as RRNavLink } from 'react-router'
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
-import Alerter from './Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
 
 const NavLink = genNavLink(RRNavLink)
@@ -36,7 +36,7 @@ export const Layout = ({ t, children }) => (
       <ButtonClient />
     </Sidebar>
 
-    <Alerter t={t} />
+    <Alerter />
     <UploadQueue />
     <main className={styles['pho-content']}>
       {__TARGET__ !== 'mobile' && <BannerClient />}

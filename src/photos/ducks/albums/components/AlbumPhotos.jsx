@@ -9,7 +9,7 @@ import { AddToAlbumModal } from '..'
 
 import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
-import Alerter from 'photos/components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 import DestroyConfirm from 'photos/components/DestroyConfirm'
 import QuitConfirm from 'photos/components/QuitConfirm'
 import confirm from 'photos/lib/confirm'
@@ -33,7 +33,7 @@ class AlbumPhotos extends Component {
 
   renameAlbum = name => {
     if (name.trim() === '') {
-      Alerter.error('Error.album_rename_abort')
+      Alerter.error(t('Error.album_rename_abort'))
       return
     } else if (name === this.props.album.name) {
       this.setState({ editing: false })
@@ -47,7 +47,7 @@ class AlbumPhotos extends Component {
         this.setState({ editing: false })
       })
       .catch(() => {
-        Alerter.error('Error.generic')
+        Alerter.error(t('Error.generic'))
       })
   }
 
@@ -70,9 +70,11 @@ class AlbumPhotos extends Component {
       deleteAlbum(album)
         .then(() => {
           router.replace('albums')
-          Alerter.success('Albums.remove_album.success', { name: album.name })
+          Alerter.success(
+            t('Albums.remove_album.success', { name: album.name })
+          )
         })
-        .catch(() => Alerter.error('Albums.remove_album.error.generic'))
+        .catch(() => Alerter.error(t('Albums.remove_album.error.generic')))
     )
   }
 
@@ -83,9 +85,9 @@ class AlbumPhotos extends Component {
         .then(() => deleteAlbum(album))
         .then(() => {
           router.replace('albums')
-          Alerter.success('Albums.quit_album.success', { name: album.name })
+          Alerter.success(t('Albums.quit_album.success', { name: album.name }))
         })
-        .catch(() => Alerter.error('Albums.quit_album.error.generic'))
+        .catch(() => Alerter.error(t('Albums.quit_album.error.generic')))
     )
   }
 

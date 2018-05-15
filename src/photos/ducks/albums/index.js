@@ -5,7 +5,7 @@ import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
-import Alerter from '../../components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 
 export const DOCTYPE = 'io.cozy.photos.albums'
 
@@ -15,15 +15,17 @@ const addPhotos = async (album, photos) => {
   try {
     const addedPhotos = await album.photos.add(photos)
     if (addedPhotos.length !== photos.length) {
-      Alerter.info('Alerter.photos.already_added_photo')
+      Alerter.info(t('Alerter.photos.already_added_photo'))
     } else {
-      Alerter.success('Albums.add_photos.success', {
-        name: album.name,
-        smart_count: photos.length
-      })
+      Alerter.success(
+        t('Albums.add_photos.success', {
+          name: album.name,
+          smart_count: photos.length
+        })
+      )
     }
   } catch (error) {
-    Alerter.error('Albums.add_photos.error.reference')
+    Alerter.error(t('Albums.add_photos.error.reference'))
   }
 }
 
@@ -32,13 +34,13 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
   createAlbum: async (name, photos, created_at = new Date()) => {
     try {
       if (!name) {
-        Alerter.error('Albums.create.error.name_missing')
+        Alerter.error(t('Albums.create.error.name_missing'))
         return
       }
       const album = { _type: DOCTYPE, name, created_at }
       const unique = await client.validate(album)
       if (unique !== true) {
-        Alerter.error('Albums.create.error.already_exists', { name })
+        Alerter.error(t('Albums.create.error.already_exists', { name }))
         return
       }
       const resp = await client.create(
@@ -51,13 +53,15 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
           }
         }
       )
-      Alerter.success('Albums.create.success', {
-        name: album.name,
-        smart_count: photos.length
-      })
+      Alerter.success(
+        t('Albums.create.success', {
+          name: album.name,
+          smart_count: photos.length
+        })
+      )
       return resp.data
     } catch (error) {
-      Alerter.error('Albums.create.error.generic')
+      Alerter.error(t('Albums.create.error.generic'))
     }
   }
 })
@@ -78,12 +82,14 @@ const ALBUM_MUTATIONS = (client, ownProps) => ({
   removePhotos: async (album, photos, clearSelection) => {
     try {
       await album.photos.remove(photos)
-      Alerter.success('Albums.remove_photos.success', {
-        album_name: album.name
-      })
+      Alerter.success(
+        t('Albums.remove_photos.success', {
+          album_name: album.name
+        })
+      )
       clearSelection()
     } catch (e) {
-      Alerter.error('Albums.remove_photos.error.generic')
+      Alerter.error(t('Albums.remove_photos.error.generic'))
     }
   }
 })
