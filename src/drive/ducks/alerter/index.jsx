@@ -36,6 +36,7 @@ const reducer = (state = [], action) => {
 export default reducer
 
 // Action creators
+// TODO : ajouter les différents niveaux d'alerte possible
 export const alertShow = (
   message,
   messageData = null,
