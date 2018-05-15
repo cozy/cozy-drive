@@ -155,20 +155,21 @@ const FileName = ({
                 <MidEllipsis text={attributes.path} />
               </Link>
             ))}
-          {!withFilePath && (
-            <div className={styles['fil-file-infos']}>
-              {`${formattedUpdatedAt}${
-                formattedSize ? ` - ${formattedSize}` : ''
-              }`}
-            </div>
-          )}
+          {!withFilePath &&
+            (isDirectory(attributes) || (
+              <div className={styles['fil-file-infos']}>
+                {`${formattedUpdatedAt}${
+                  formattedSize ? ` - ${formattedSize}` : ''
+                }`}
+              </div>
+            ))}
         </div>
       )}
     </div>
   )
 }
 
-const LastUpdate = ({ date, formatted }) => (
+const LastUpdate = ({ date, formatted = '-' }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -318,7 +319,10 @@ class File extends Component {
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
         />
-        <LastUpdate date={updatedAt} formatted={formattedUpdatedAt} />
+        <LastUpdate
+          date={updatedAt}
+          formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
+        />
         <Size filesize={formattedSize} />
         <Status
           isAvailableOffline={isAvailableOffline}
