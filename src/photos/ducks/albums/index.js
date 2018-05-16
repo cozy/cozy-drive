@@ -32,13 +32,13 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
   createAlbum: async (name, photos, created_at = new Date()) => {
     try {
       if (!name) {
-        Alerter.error(t('Albums.create.error.name_missing'))
+        Alerter.error('Albums.create.error.name_missing')
         return
       }
       const album = { _type: DOCTYPE, name, created_at }
       const unique = await client.validate(album)
       if (unique !== true) {
-        Alerter.error(t('Albums.create.error.already_exists', { name }))
+        Alerter.error('Albums.create.error.already_exists', { name })
         return
       }
       const resp = await client.create(
@@ -51,15 +51,13 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
           }
         }
       )
-      Alerter.success(
-        t('Albums.create.success', {
-          name: album.name,
-          smart_count: photos.length
-        })
-      )
+      Alerter.success('Albums.create.success', {
+        name: album.name,
+        smart_count: photos.length
+      })
       return resp.data
     } catch (error) {
-      Alerter.error(t('Albums.create.error.generic'))
+      Alerter.error('Albums.create.error.generic')
     }
   }
 })
@@ -80,14 +78,12 @@ const ALBUM_MUTATIONS = (client, ownProps) => ({
   removePhotos: async (album, photos, clearSelection) => {
     try {
       await album.photos.remove(photos)
-      Alerter.success(
-        t('Albums.remove_photos.success', {
-          album_name: album.name
-        })
-      )
+      Alerter.success('Albums.remove_photos.success', {
+        album_name: album.name
+      })
       clearSelection()
     } catch (e) {
-      Alerter.error(t('Albums.remove_photos.error.generic'))
+      Alerter.error('Albums.remove_photos.error.generic')
     }
   }
 })

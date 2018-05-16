@@ -33,7 +33,7 @@ class AlbumPhotos extends Component {
 
   renameAlbum = name => {
     if (name.trim() === '') {
-      Alerter.error(t('Error.album_rename_abort'))
+      Alerter.error('Error.album_rename_abort')
       return
     } else if (name === this.props.album.name) {
       this.setState({ editing: false })
@@ -47,7 +47,7 @@ class AlbumPhotos extends Component {
         this.setState({ editing: false })
       })
       .catch(() => {
-        Alerter.error(t('Error.generic'))
+        Alerter.error('Error.generic')
       })
   }
 
@@ -70,11 +70,9 @@ class AlbumPhotos extends Component {
       deleteAlbum(album)
         .then(() => {
           router.replace('albums')
-          Alerter.success(
-            t('Albums.remove_album.success', { name: album.name })
-          )
+          Alerter.success('Albums.remove_album.success', { name: album.name })
         })
-        .catch(() => Alerter.error(t('Albums.remove_album.error.generic')))
+        .catch(() => Alerter.error('Albums.remove_album.error.generic'))
     )
   }
 
@@ -85,9 +83,9 @@ class AlbumPhotos extends Component {
         .then(() => deleteAlbum(album))
         .then(() => {
           router.replace('albums')
-          Alerter.success(t('Albums.quit_album.success', { name: album.name }))
+          Alerter.success('Albums.quit_album.success', { name: album.name })
         })
-        .catch(() => Alerter.error(t('Albums.quit_album.error.generic')))
+        .catch(() => Alerter.error('Albums.quit_album.error.generic'))
     )
   }
 
