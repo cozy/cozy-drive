@@ -30,7 +30,7 @@ import { getLang, initClient, initBar } from 'drive/mobile/lib/cozy-helper'
 import { revokeClient } from 'drive/mobile/actions/authorization'
 import { startReplication } from 'drive/mobile/actions/settings'
 import { configureReporter } from 'drive/mobile/lib/reporter'
-import { intentHandler, intentHandlerIOS } from 'drive/mobile/lib/intents'
+import { intentHandlerAndroid, intentHandlerIOS } from 'drive/mobile/lib/intents'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -143,14 +143,18 @@ var app = {
   onDeviceReady: async function() {
     const store = await this.getStore()
     const client = await this.getClient()
-    window.plugins.intentShim.onIntent(intentHandler(store))
-    window.plugins.intentShim.getIntent(intentHandler(store), err => {
-      console.error('Error getting launch intent', err)
-    })
-    cordova.openwith.init(() => {
+    if (isIos()) {
+      cordova.openwith.init(() => {
       cordova.openwith.setLoggedIn(true)
       cordova.openwith.addHandler(intentHandlerIOS(store))
     }, err => console.warn('Error initilizaing openwith iOS', err))
+    }
+    else {
+      window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
+      window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
+        console.error('Error getting launch intent', err)
+      })
+    }
 
     if (!isBackgroundServiceParameter()) {
       startApplication(store, client)
