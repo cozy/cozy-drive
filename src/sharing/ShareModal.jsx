@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'cozy-ui/react/Modal'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
-import Alerter from 'photos/components/Alerter'
+import Alerter from 'legacy-alerter/Alerter'
 
 import { default as DumbShareByLink } from './components/ShareByLink'
 import { default as DumbShareByEmail } from './components/ShareByEmail'
