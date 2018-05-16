@@ -17,7 +17,7 @@ const Layout = ({ t, children }) => (
       <Nav />
       <ButtonClient />
     </Sidebar>
-    <Alerter />
+    <Alerter t={t} />
     <UploadQueue />
     {children}
     <ModalManager />

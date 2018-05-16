@@ -4,7 +4,7 @@ import { downloadFile } from 'cozy-client'
 import { logException } from '../drive/mobile/lib/reporter'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
-import Alerter from 'photos/components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 import { isCordova } from 'drive/mobile/lib/device'
 import {
   openOfflineFile,
@@ -74,6 +74,7 @@ class NoViewer extends React.Component {
     error: null
   }
   render() {
+    Alerter.error('Viewer.error.noapp')
     const { t, file, fallbackUrl = false } = this.props
     return (
       <div
