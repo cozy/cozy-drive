@@ -245,8 +245,12 @@ export const uploadQueueProcessed = (loaded, quotas, conflicts, errors, t) => {
   let action = { type: '' } // dummy action, we only use it to trigger an alert notification
 
   if (quotas.length > 0) {
-    // quota errors have their own modal instead of a notification
-    alert(<QuotaAlert t={t} />)
+    // quota errors have their own modal instead of a notification, if possible
+    if (t) {
+      alert(<QuotaAlert t={t} />)
+    } else {
+      action.alert = alertShow('quotaalert.desc', null, ALERT_LEVEL_ERROR)
+    }
   } else if (conflicts.length > 0) {
     action.alert = alertShow(
       'upload.alert.success_conflicts',

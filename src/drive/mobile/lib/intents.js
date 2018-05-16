@@ -2,7 +2,7 @@ import { getEntry } from './filesystem'
 import { alertShow } from '../../ducks/alerter/index'
 import { addToUploadQueue } from '../../ducks/upload/index'
 import { ROOT_DIR_ID } from '../../constants/config'
-import { uploadedFile } from '../../actions/index'
+import { uploadedFile, uploadQueueProcessed } from '../../actions/index'
 
 const getFile = dirEntry =>
   new Promise((resolve, reject) => {
@@ -64,29 +64,8 @@ const uploadFiles = (files, store) => {
       files,
       ROOT_DIR_ID,
       uploadedFile,
-      (loaded, quotas, conflicts, errors) => {
-        let action = { type: '' } // dummy action, we only use it to trigger an alert notification
-        if (conflicts.length > 0) {
-          action.alert = alertShow(
-            'upload.alert.success_conflicts',
-            {
-              smart_count: loaded.length,
-              conflictNumber: conflicts.length
-            },
-            'info'
-          )
-        } else if (errors.length > 0) {
-          action.alert = alertShow('upload.alert.errors', null, 'error')
-        } else {
-          action.alert = alertShow(
-            'upload.alert.success',
-            { smart_count: loaded.length },
-            'success'
-          )
-        }
-
-        return action
-      }
+      (loaded, quotas, conflicts, errors) =>
+        uploadQueueProcessed(loaded, quotas, conflicts, errors)
     )
   )
 }
