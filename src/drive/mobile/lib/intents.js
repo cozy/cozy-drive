@@ -82,7 +82,7 @@ const uploadFiles = (files, store) => {
   )
 }
 
-export const intentHandler = store => async ({
+export const intentHandlerAndroid = store => async ({
   action,
   extras = 'No extras in intent',
   ...args
