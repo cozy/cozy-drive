@@ -15,17 +15,15 @@ const addPhotos = async (album, photos) => {
   try {
     const addedPhotos = await album.photos.add(photos)
     if (addedPhotos.length !== photos.length) {
-      Alerter.info(t('Alerter.photos.already_added_photo'))
+      Alerter.info('Alerter.photos.already_added_photo')
     } else {
-      Alerter.success(
-        t('Albums.add_photos.success', {
-          name: album.name,
-          smart_count: photos.length
-        })
-      )
+      Alerter.success('Albums.add_photos.success', {
+        name: album.name,
+        smart_count: photos.length
+      })
     }
   } catch (error) {
-    Alerter.error(t('Albums.add_photos.error.reference'))
+    Alerter.error('Albums.add_photos.error.reference')
   }
 }
 

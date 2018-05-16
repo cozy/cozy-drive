@@ -92,18 +92,14 @@ export const onQueueEmpty = () => (dispatch, getState) => {
   const loaded = getLoaded(queue)
 
   if (!conflicts.length && !errors.length) {
-    Alerter.success(
-      t('UploadQueue.alert.success', { smart_count: loaded.length })
-    )
+    Alerter.success('UploadQueue.alert.success', { smart_count: loaded.length })
   } else if (conflicts.length && !errors.length) {
-    Alerter.info(
-      t('UploadQueue.alert.success_conflicts', {
-        smart_count: loaded.length,
-        conflictNumber: conflicts.length
-      })
-    )
+    Alerter.info('UploadQueue.alert.success_conflicts', {
+      smart_count: loaded.length,
+      conflictNumber: conflicts.length
+    })
   } else {
-    Alerter.error(t('UploadQueue.alert.errors'))
+    Alerter.error('UploadQueue.alert.errors')
   }
 }
 

@@ -36,7 +36,7 @@ export const Layout = ({ t, children }) => (
       <ButtonClient />
     </Sidebar>
 
-    <Alerter />
+    <Alerter t={t} />
     <UploadQueue />
     <main className={styles['pho-content']}>
       {__TARGET__ !== 'mobile' && <BannerClient />}
