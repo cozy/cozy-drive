@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 
 import { ROOT_DIR_ID } from '../../constants/config'
-import Alerter from 'cozy-ui/react/Alerter'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 
@@ -242,35 +241,13 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-    const { t } = ownProps
     dispatch(
       addToUploadQueue(
         files,
         displayedFolder.id,
         file => uploadedFile(file),
-        (loaded, quotas, conflicts, errors) => {
-          let action = { type: '' } // dummy action, we only use it to trigger an alert notification
-
-          if (quotas.length > 0) {
-            // quota errors have their own modal instead of a notification
-            alert(<QuotaAlert t={t} />)
-          } else if (conflicts.length > 0) {
-            action.alert = Alerter.info(
-              t('upload.alert.success_conflicts', {
-                smart_count: loaded.length,
-                conflictNumber: conflicts.length
-              })
-            )
-          } else if (errors.length > 0) {
-            action.alert = Alerter.error(t('upload.alert.errors'))
-          } else {
-            action.alert = Alerter.success(
-              t('upload.alert.success', { smart_count: loaded.length })
-            )
-          }
-
-          return action
-        }
+        (loaded, quotas, conflicts, errors) =>
+          uploadQueueProcessed(loaded, quotas, conflicts, errors, ownProps.t)
       )
     )
   },
