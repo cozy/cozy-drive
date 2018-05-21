@@ -1,7 +1,7 @@
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import { Empty, Button } from 'cozy-ui/react'
-import EmptyIcon from '!!svg-sprite-loader!../../drive/assets/icons/icon-folder-broken.svg'
+import EmptyIcon from '../../drive/assets/icons/icon-folder-broken.svg'
 
 const reload = () => {
   window.location.reload()

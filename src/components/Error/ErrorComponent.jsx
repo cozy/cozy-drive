@@ -1,7 +1,7 @@
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import { Empty, Button } from 'cozy-ui/react'
-import EmptyIcon from '!!svg-sprite-loader!../../photos/assets/icons/icon-image-broken.svg'
+import EmptyIcon from '../../photos/assets/icons/icon-image-broken.svg'
 
 export const ErrorComponent = ({ t, errorType }) => {
   return (

@@ -2,9 +2,9 @@ import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import { Empty } from 'cozy-ui/react'
 
-import DriveIcon from '!!svg-sprite-loader!../../drive/assets/icons/icon-type-folder.svg'
-import PhotosIcon from '!!svg-sprite-loader!../../photos/assets/icons/icon-main-app.svg'
-import TrashIcon from '!!svg-sprite-loader!../../drive/assets/icons/icon-trash-big.svg'
+import DriveIcon from '../../drive/assets/icons/icon-type-folder.svg'
+import PhotosIcon from '../../photos/assets/icons/icon-main-app.svg'
+import TrashIcon from '../../drive/assets/icons/icon-trash-big.svg'
 
 const EmptyIcon = {
   drive: DriveIcon,
