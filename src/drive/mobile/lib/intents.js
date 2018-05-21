@@ -4,18 +4,28 @@ import { addToUploadQueue } from '../../ducks/upload/index'
 import { ROOT_DIR_ID } from '../../constants/config'
 import { uploadedFile, uploadQueueProcessed } from '../../actions/index'
 
-const getFile = dirEntry =>
+const getFile = (dirEntry, type = '') =>
   new Promise((resolve, reject) => {
     dirEntry.file(file => {
       // window.File is modified by cordova, so we need this trick
       const reader = new FileReader()
       reader.onloadend = function() {
+        if (file.type) type = file.type
+
         const blob = new Blob([new Uint8Array(this.result)], {
-          type: file.type
+          type
         })
-        const ext = file.type.split('/')[1].replace('jpeg', 'jpg')
-        const regex = new RegExp(`.${ext}$`)
-        blob.name = regex.test(file.name) ? file.name : `${file.name}.${ext}`
+
+        const mimeParts = type.split('/')
+
+        if (mimeParts && mimeParts[1]) {
+          const ext = mimeParts[1].replace('jpeg', 'jpg')
+          const regex = new RegExp(`.${ext}$`)
+          blob.name = regex.test(file.name) ? file.name : `${file.name}.${ext}`
+        } else {
+          blob.name = file.name
+        }
+
         blob.lastModifiedDate = new Date(file.lastModifiedDate)
         resolve(blob)
       }
@@ -130,8 +140,7 @@ export const intentHandlerIOS = store => async intent => {
         return blob
       } else {
         const dirEntry = await getEntry(item.data)
-        if (!dirEntry.type) dirEntry.type = getMimeTypeFromUTI(item.utis)
-        const file = await getFile(dirEntry)
+        const file = await getFile(dirEntry, getMimeTypeFromUTI(item.utis))
 
         return file
       }
