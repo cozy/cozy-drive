@@ -9,7 +9,7 @@ import { AddToAlbumModal } from '..'
 
 import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
-import Alerter from 'photos/components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 import DestroyConfirm from 'photos/components/DestroyConfirm'
 import QuitConfirm from 'photos/components/QuitConfirm'
 import confirm from 'photos/lib/confirm'

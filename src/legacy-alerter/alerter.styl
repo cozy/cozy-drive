@@ -1,0 +1,64 @@
+@require 'settings/z-index.styl'
+
+.pho-alerter
+    alert-width = 40rem
+    .coz-alert
+        position          fixed
+        z-index           $alert-index-mobile
+        top               auto
+        right             0
+        bottom            3rem
+        left              0
+        display           block
+        box-sizing        border-box
+        box-shadow        0 .375rem 1.125rem 0 rgba(50, 54, 63, .23)
+        background-color  emerald
+        padding           .8rem 1rem
+        color             white
+        opacity           1
+        transition        bottom .5s ease-out, top .5s ease-out, opacity .2s ease-out
+        cursor            pointer
+
+        p
+            margin      0
+            line-height 1.5
+
+        .coz-alert-title
+            font-weight bold
+
+        &.coz-alert--hidden
+            bottom                     -25%
+            top                        auto
+            opacity                    0
+            transition-timing-function ease-in
+
+    .coz-alert--error
+        background-color pomegranate
+
+    .coz-alert--success
+        background-color emerald
+
+    .coz-alert--info
+        background-color slateGrey
+
+
+    @media all and (min-width alert-width)
+        .coz-alert
+            z-index       $alert-index
+            top           1rem
+            bottom        auto
+            left          50%
+            margin-left   -(alert-width / 2)
+            max-width     alert-width
+            padding       1rem 1.5rem
+            width         100%
+            border-radius .625rem
+
+            &.coz-alert--hidden
+                top     -25%
+                bottom  auto
+
+    .coz-overlay
+    .coz-alert
+        // Specify z-index to bypass upload button z-index
+        z-index $modal-index

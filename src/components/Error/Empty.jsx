@@ -1,35 +1,36 @@
-import styles from './empty.styl'
-
 import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import { Empty } from 'cozy-ui/react'
 
-const Empty = translate()(({ t, type, canUpload, localeKey }) => {
+import DriveIcon from '../../drive/assets/icons/icon-type-folder.svg'
+import PhotosIcon from '../../photos/assets/icons/icon-main-app.svg'
+import TrashIcon from '../../drive/assets/icons/icon-trash-big.svg'
+
+const EmptyIcon = {
+  drive: DriveIcon,
+  photos: PhotosIcon,
+  trash: TrashIcon
+}
+
+const EmptyCanvas = translate()(({ t, type, canUpload, localeKey }) => {
   return (
-    <div className={styles[`c-empty-${type}`]}>
-      {localeKey ? (
-        <div>
-          <h2>{t(`empty.${localeKey}_title`)}</h2>
-          <p>{t(`empty.${localeKey}_text`)}</p>
-        </div>
-      ) : (
-        <h2>{t('empty.title')}</h2>
-      )}
-      {canUpload && <p>{t('empty.text')}</p>}
-    </div>
+    <Empty
+      icon={EmptyIcon[type]}
+      title={localeKey ? t(`empty.${localeKey}_title`) : t('empty.title')}
+      text={
+        (localeKey && t(`empty.${localeKey}_text`)) ||
+        (canUpload && t('empty.text'))
+      }
+    />
   )
 })
 
-export default Empty
+export default EmptyCanvas
 
-export const EmptyDrive = props => <Empty type="drive" {...props} />
+export const EmptyDrive = props => <EmptyCanvas type="drive" {...props} />
 
-export const EmptyPhotos = props => <Empty type="photos" {...props} />
+export const EmptyPhotos = props => <EmptyCanvas type="photos" {...props} />
 
-export const EmptyTrash = translate()(({ t }) => {
-  return (
-    <div role="main" className={styles['c-trash-empty']}>
-      <h2>{t('empty.trash.title')}</h2>
-      <p>{t('empty.trash.text')}</p>
-    </div>
-  )
-})
+export const EmptyTrash = props => (
+  <EmptyCanvas type="trash" localeKey="trash" {...props} />
+)

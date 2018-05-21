@@ -22,7 +22,7 @@ import {
 import { revokeLink as revokeSharingLink } from 'cozy-client'
 import * as availableOffline from '../ducks/files/availableOffline'
 import { alert } from '../lib/confirm'
-import { alertShow } from 'cozy-ui/react/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 import QuotaAlert from '../components/QuotaAlert'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
@@ -61,9 +61,7 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const getOpenedFolderId = state => state.view.openedFolderId
 
 const HTTP_CODE_CONFLICT = 409
-const ALERT_LEVEL_INFO = 'info'
 const ALERT_LEVEL_ERROR = 'error'
-const ALERT_LEVEL_SUCCESS = 'success'
 
 export const META_DEFAULTS = {
   cancelSelection: true,
@@ -242,32 +240,25 @@ export const uploadedFile = file => {
 }
 
 export const uploadQueueProcessed = (loaded, quotas, conflicts, errors, t) => {
-  let action = { type: '' } // dummy action, we only use it to trigger an alert notification
-
   if (quotas.length > 0) {
     // quota errors have their own modal instead of a notification, if possible
     if (t) {
       alert(<QuotaAlert t={t} />)
     } else {
-      action.alert = alertShow('quotaalert.desc', null, ALERT_LEVEL_ERROR)
+      Alerter.info('quotaalert.desc')
     }
   } else if (conflicts.length > 0) {
-    action.alert = alertShow(
-      'upload.alert.success_conflicts',
-      { smart_count: loaded.length, conflictNumber: conflicts.length },
-      ALERT_LEVEL_INFO
-    )
+    Alerter.info('upload.alert.success_conflicts', {
+      smart_count: loaded.length,
+      conflictNumber: conflicts.length
+    })
   } else if (errors.length > 0) {
-    action.alert = alertShow('upload.alert.errors', null, ALERT_LEVEL_ERROR)
+    Alerter.error('upload.alert.errors')
   } else {
-    action.alert = alertShow(
-      'upload.alert.success',
-      { smart_count: loaded.length },
-      ALERT_LEVEL_SUCCESS
-    )
+    Alerter.success('upload.alert.success', {
+      smart_count: loaded.length
+    })
   }
-
-  return action
 }
 
 export const abortAddFolder = accidental => {
