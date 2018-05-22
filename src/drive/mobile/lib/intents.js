@@ -1,5 +1,5 @@
 import { getEntry } from './filesystem'
-import { alertShow } from '../../ducks/alerter/index'
+import Alerter from 'cozy-ui/react/Alerter'
 import { addToUploadQueue } from '../../ducks/upload/index'
 import { ROOT_DIR_ID } from '../../constants/config'
 import { uploadedFile, uploadQueueProcessed } from '../../actions/index'
@@ -105,10 +105,7 @@ export const intentHandlerAndroid = store => async ({
       const files = await getFiles(contentFiles)
       uploadFiles(files, store)
     } catch (err) {
-      store.dispatch({
-        type: 'INTENT_IMPORT_FAILED',
-        alert: alertShow('intents.alert.error', null, 'info')
-      })
+      Alerter.info('intents.alert.error')
     }
   }
 }
@@ -150,9 +147,6 @@ export const intentHandlerIOS = store => async intent => {
   try {
     uploadFiles(files, store)
   } catch (err) {
-    store.dispatch({
-      type: 'INTENT_IMPORT_FAILED',
-      alert: alertShow('intents.alert.errors', null, 'info')
-    })
+    Alerter.info('intents.alert.error')
   }
 }
