@@ -118,7 +118,8 @@
     "viewer-fallback":
       "If the file has started downloading, you can close this.",
     "dropzone": {
-      "teaser": "Drop files to upload them to:"
+      "teaser": "Drop files to upload them to:",
+      "noFolderSupport": "Folder drag&drop is currently not supported by your browser. Please upload your files manually."
     }
   },
   "table": {
