@@ -74,7 +74,6 @@ class NoViewer extends React.Component {
     error: null
   }
   render() {
-    Alerter.error('Viewer.error.noapp')
     const { t, file, fallbackUrl = false } = this.props
     return (
       <div
