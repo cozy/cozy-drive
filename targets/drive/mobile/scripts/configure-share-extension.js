@@ -27,6 +27,11 @@ module.exports = function (context) {
       substitute: `<dict><key>com.apple.security.application-groups</key><array><string>group.io.cozy.drive.mobile.shareextension</string></array></dict>`
     },
     {
+      file: 'Cozy Drive/Entitlements-Release.plist',
+      pattern: /<dict>[^]*?<\/dict>/m,
+      substitute: `<dict><key>com.apple.security.application-groups</key><array><string>group.io.cozy.drive.mobile.shareextension</string></array></dict>`
+    },
+    {
       file: 'Cozy Drive.xcodeproj/project.pbxproj',
       pattern: /com.apple.ApplicationGroups.iOS = {[^]*?enabled = 0;/m,
       substitute: `com.apple.ApplicationGroups.iOS = {\nenabled = 1;`
