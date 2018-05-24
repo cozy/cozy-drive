@@ -25,6 +25,7 @@
       "screenshots": ["screenshots/fr/screeenshot01.png", "screenshots/fr/screeenshot02.png", "screenshots/fr/screeenshot03.png", "screenshots/fr/screeenshot04.png"]
     }
   },
+  "screenshots": ["screenshots/fr/screeenshot01.png", "screenshots/fr/screeenshot02.png", "screenshots/fr/screeenshot03.png", "screenshots/fr/screeenshot04.png"],
   "langs": ["en", "fr"],
   "platforms": [
     {
