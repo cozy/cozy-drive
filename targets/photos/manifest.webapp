@@ -26,6 +26,7 @@
       "screenshots": ["screenshots/en/screeenshot01.jpg", "screenshots/en/screeenshot02.jpg", "screenshots/en/screeenshot03.jpg"]
     }
   },
+  "screenshots": ["screenshots/fr/screeenshot01.jpg", "screenshots/fr/screeenshot02.jpg", "screenshots/fr/screeenshot03.jpg"],
   "routes": {
     "/": {
       "folder": "/",
