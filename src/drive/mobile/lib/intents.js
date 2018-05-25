@@ -136,17 +136,27 @@ export const intentHandlerIOS = store => async intent => {
         blob.name = item.name
         return blob
       } else {
-        const dirEntry = await getEntry(item.data)
-        const file = await getFile(dirEntry, getMimeTypeFromUTI(item.utis))
+        try {
+          const dirEntry = await getEntry(item.data)
+          const file = await getFile(dirEntry, getMimeTypeFromUTI(item.utis))
 
-        return file
+          return file
+        } catch (e) {
+          return null
+        }
       }
     })
   )
 
-  try {
-    uploadFiles(files, store)
-  } catch (err) {
+  const validFiles = files.filter(file => file)
+  if (validFiles.length === 0) {
     Alerter.info('intents.alert.error')
+    return
+  } else {
+    try {
+      uploadFiles(validFiles, store)
+    } catch (err) {
+      Alerter.info('intents.alert.error')
+    }
   }
 }
