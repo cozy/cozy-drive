@@ -143,13 +143,7 @@ var app = {
   onDeviceReady: async function() {
     const store = await this.getStore()
     const client = await this.getClient()
-    if (isIos()) {
-      cordova.openwith.init(() => {
-      cordova.openwith.setLoggedIn(true)
-      cordova.openwith.addHandler(intentHandlerIOS(store))
-    }, err => console.warn('Error initilizaing openwith iOS', err))
-    }
-    else {
+    if (!isIos()) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
       window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
         console.error('Error getting launch intent', err)

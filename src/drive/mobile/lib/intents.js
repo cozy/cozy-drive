@@ -151,7 +151,6 @@ export const intentHandlerIOS = store => async intent => {
   const validFiles = files.filter(file => file)
   if (validFiles.length === 0) {
     Alerter.info('intents.alert.error')
-    return
   } else {
     try {
       uploadFiles(validFiles, store)
