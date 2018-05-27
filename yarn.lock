@@ -71,9 +71,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@sentry/cli@1.30.3":
-  version "1.30.3"
-  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.30.3.tgz#02d0f7781c1ee5e1be5a4312a325fbe8b1b37231"
+"@sentry/cli@1.32.0":
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.32.0.tgz#24fc0639529e5b033ac475b603d73a8dcf032e03"
   dependencies:
     https-proxy-agent "^2.1.1"
     node-fetch "^1.7.3"
