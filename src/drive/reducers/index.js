@@ -7,7 +7,6 @@ import selectionReducer, { getSelectedIds } from '../ducks/selection'
 import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
 import renameReducer from '../ducks/files/rename'
 import upload from '../ducks/upload'
-import alerterReducer from '../ducks/alerter'
 import availableOffline from '../ducks/files/availableOffline'
 import { reducer } from 'cozy-client'
 import uiReducer from 'react-cozy-helpers'
@@ -21,7 +20,6 @@ export const reducers = {
   actionmenu: actionmenuReducer,
   selection: selectionReducer,
   rename: renameReducer,
-  alerts: alerterReducer,
   availableOffline
 }
 

@@ -30,11 +30,7 @@ import { getLang, initClient, initBar } from 'drive/mobile/lib/cozy-helper'
 import { revokeClient } from 'drive/mobile/actions/authorization'
 import { startReplication } from 'drive/mobile/actions/settings'
 import { configureReporter } from 'drive/mobile/lib/reporter'
-import { addToUploadQueue } from '../../../src/drive/ducks/upload/index'
-import { getEntry } from '../../../src/drive/mobile/lib/filesystem'
-import { ROOT_DIR_ID } from '../../../src/drive/constants/config'
-import { uploadedFile } from '../../../src/drive/actions/index'
-import { alertShow } from 'cozy-ui/react/Alerter'
+import { intentHandlerAndroid, intentHandlerIOS } from 'drive/mobile/lib/intents'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -47,90 +43,12 @@ window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
   hashHistory
 )
 
-const resolveNativePath = path =>
-  new Promise((resolve, reject) => {
-    window.FilePath.resolveNativePath(path, resolve, reject)
-  })
-
-const getFile = dirEntry =>
-  new Promise((resolve, reject) => {
-    dirEntry.file(file => {
-      // window.File is modified by cordova, so we need this trick
-      const reader = new FileReader()
-      reader.onloadend = function() {
-        const blob = new Blob([new Uint8Array(this.result)], {
-          type: file.type
-        })
-        blob.name = file.name
-        blob.lastModifiedDate = new Date(file.lastModifiedDate)
-        resolve(blob)
-      }
-      reader.readAsArrayBuffer(file)
-    })
-  })
-
-const getFiles = contentFiles =>
-  Promise.all(
-    contentFiles.map(async content => {
-      try {
-        const filepath = await resolveNativePath(content)
-        const dirEntry = await getEntry(filepath)
-        const file = await getFile(dirEntry)
-        return file
-      } catch (err) {
-        console.error(err)
-        throw new Error(`Unable to get files: ${err.message}`)
-      }
-    })
-  )
-
-const uploadFiles = (files, store) => {
-  store.dispatch(
-    addToUploadQueue(
-      files,
-      ROOT_DIR_ID,
-      uploadedFile,
-      (loaded, quotas, conflicts, errors) => {
-        let action = { type: '' } // dummy action, we only use it to trigger an alert notification
-        if (conflicts.length > 0) {
-          action.alert = alertShow(
-            'upload.alert.success_conflicts',
-            {
-              smart_count: loaded.length,
-              conflictNumber: conflicts.length
-            },
-            'info'
-          )
-        } else if (errors.length > 0) {
-          action.alert = alertShow('upload.alert.errors', null, 'error')
-        } else {
-          action.alert = alertShow(
-            'upload.alert.success',
-            { smart_count: loaded.length },
-            'success'
-          )
-        }
-
-        return action
-      }
-    )
-  )
-}
-
-const intentHandler = store => async ({
-  action,
-  extras = 'No extras in intent'
-}) => {
-  if (extras['android.intent.extra.STREAM']) {
-    const contentFiles = Array.isArray(extras['android.intent.extra.STREAM'])
-      ? extras['android.intent.extra.STREAM']
-      : [extras['android.intent.extra.STREAM']]
-    const files = await getFiles(contentFiles)
-    uploadFiles(files, store)
-  }
-}
-
 const startApplication = async function(store, client) {
+  try {
+    updateUserAgent()
+  } catch (err) {
+    // we do nothing with this exception handling
+  }
   configureReporter()
   const { client: clientInfos } = store.getState().settings
   if (clientInfos) {
@@ -225,10 +143,12 @@ var app = {
   onDeviceReady: async function() {
     const store = await this.getStore()
     const client = await this.getClient()
-    window.plugins.intentShim.onIntent(intentHandler(store))
-    window.plugins.intentShim.getIntent(intentHandler(store), err => {
-      console.error('Error getting launch intent', err)
-    })
+    if (!isIos()) {
+      window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
+      window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
+        console.error('Error getting launch intent', err)
+      })
+    }
 
     if (!isBackgroundServiceParameter()) {
       startApplication(store, client)

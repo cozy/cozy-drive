@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import Viewer, { LoadingViewer } from 'viewer'
 import { getFolderIdFromRoute } from '../reducers/view'
 import { fetchMoreFiles } from '../actions'
-
-const LIMIT = 30
+import { FILES_FETCH_LIMIT } from '../constants/config'
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -56,7 +55,7 @@ class FilesViewer extends Component {
     const currentIndex = files.findIndex(f => f.id === params.fileId)
     if (files.length !== fileCount && files.length - currentIndex <= 5) {
       const folderId = getFolderIdFromRoute(location, params)
-      fetchMoreFiles(folderId, files.length, LIMIT)
+      fetchMoreFiles(folderId, files.length, FILES_FETCH_LIMIT)
     }
   }
 

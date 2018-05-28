@@ -1,7 +1,7 @@
 {
   "name": "Drive",
   "slug": "drive",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -25,6 +25,7 @@
       "screenshots": ["screenshots/fr/screeenshot01.png", "screenshots/fr/screeenshot02.png", "screenshots/fr/screeenshot03.png", "screenshots/fr/screeenshot04.png"]
     }
   },
+  "screenshots": ["screenshots/fr/screeenshot01.png", "screenshots/fr/screeenshot02.png", "screenshots/fr/screeenshot03.png", "screenshots/fr/screeenshot04.png"],
   "langs": ["en", "fr"],
   "platforms": [
     {

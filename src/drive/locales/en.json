@@ -116,7 +116,11 @@
       }
     },
     "viewer-fallback":
-      "If the file has started downloading, you can close this."
+      "If the file has started downloading, you can close this.",
+    "dropzone": {
+      "teaser": "Drop files to upload them to:",
+      "noFolderSupport": "Folder drag&drop is currently not supported by your browser. Please upload your files manually."
+    }
   },
   "table": {
     "head_name": "Name",
@@ -203,11 +207,8 @@
   "empty": {
     "title": "You don’t have any files in this folder.",
     "text": "Click the \"upload\" button to add files to this folder.",
-    "trash": {
-      "title": "You don’t have any deleted files.",
-      "text":
-        "Move files you don't need anymore to the Trash and permanently delete items to free up storage page."
-    }
+    "trash_title": "You don’t have any deleted files.",
+    "trash_text": "Move files you don't need anymore to the Trash and permanently delete items to free up storage page."
   },
   "error": {
     "open_folder": "Something went wrong when opening the folder.",
@@ -426,6 +427,11 @@
       "success_conflicts":
         "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
       "errors": "Errors occurred during the file upload."
+    }
+  },
+  "intents": {
+    "alert": {
+      "error": "Unable to automatically upload the file, please upload it manually with the upload menu."
     }
   },
   "UploadQueue": {

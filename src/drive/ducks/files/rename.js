@@ -1,7 +1,8 @@
 /* global cozy */
 
 import { getFiles } from './files'
-import { META_DEFAULTS as meta, extractFileAttributes } from '../../actions'
+import { META_DEFAULTS as meta } from '../../actions'
+import { extractFileAttributes } from '../../actions/async.js'
 
 // constants
 

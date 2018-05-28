@@ -5,6 +5,7 @@ import {
   getLoadedFilesCount,
   getLoadedFoldersCount
 } from '../reducers'
+import React from 'react'
 import { isCordova } from '../mobile/lib/device'
 import {
   saveFileWithCordova,
@@ -20,6 +21,9 @@ import {
 } from '../ducks/files/files'
 import { revokeLink as revokeSharingLink } from 'cozy-client'
 import * as availableOffline from '../ducks/files/availableOffline'
+import { alert } from '../lib/confirm'
+import Alerter from 'cozy-ui/react/Alerter'
+import QuotaAlert from '../components/QuotaAlert'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -231,6 +235,28 @@ export const uploadedFile = file => {
       file: extractFileAttributes(file),
       currentFileCount: getState().view.fileCount,
       currentSort: getSort(getState())
+    })
+  }
+}
+
+export const uploadQueueProcessed = (loaded, quotas, conflicts, errors, t) => {
+  if (quotas.length > 0) {
+    // quota errors have their own modal instead of a notification, if possible
+    if (t) {
+      alert(<QuotaAlert t={t} />)
+    } else {
+      Alerter.info('quotaalert.desc')
+    }
+  } else if (conflicts.length > 0) {
+    Alerter.info('upload.alert.success_conflicts', {
+      smart_count: loaded.length,
+      conflictNumber: conflicts.length
+    })
+  } else if (errors.length > 0) {
+    Alerter.error('upload.alert.errors')
+  } else {
+    Alerter.success('upload.alert.success', {
+      smart_count: loaded.length
     })
   }
 }

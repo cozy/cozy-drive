@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import Alerter from '../../components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import UploadQueue from './UploadQueue'
 

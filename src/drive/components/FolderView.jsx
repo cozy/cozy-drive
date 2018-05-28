@@ -5,6 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import Main from './Main'
 import Topbar from './Topbar'
 import FileListHeader, { MobileFileListHeader } from './FileListHeader'
+import Dropzone from './Dropzone'
 
 import { ROOT_DIR_ID } from '../constants/config'
 import Breadcrumb from '../containers/Breadcrumb'
@@ -49,16 +50,18 @@ class FolderView extends Component {
       selectionModeActive
     } = this.props
     const {
+      displayedFolder,
       files,
       selected,
       actionable,
       actions,
       Toolbar,
       canSort,
+      canDrop,
       canUpload,
       canCreateFolder
     } = this.props
-    const { hideActionMenu, showSelectionBar } = this.props
+    const { hideActionMenu, showSelectionBar, uploadFiles } = this.props
 
     const { showAddFolder } = this.state
 
@@ -88,7 +91,12 @@ class FolderView extends Component {
             onSelectItemsClick={showSelectionBar}
           />
         </Topbar>
-        <div role="contentinfo">
+        <Dropzone
+          role="contentinfo"
+          disabled={__TARGET__ === 'mobile' || !canDrop}
+          displayedFolder={displayedFolder}
+          onDrop={uploadFiles}
+        >
           {__TARGET__ === 'mobile' && (
             <div>
               {isRootfolder && <MediaBackupProgression />}
@@ -99,7 +107,8 @@ class FolderView extends Component {
           <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
             <SelectionBar selected={selected} actions={actions.selection} />
           </div>
-          <div className={styles['fil-content-table']}>
+
+          <div className={styles['fil-content-table']} role="table">
             <MobileFileListHeader canSort={canSort} />
             <FileListHeader canSort={canSort} />
             <div className={styles['fil-content-body']}>
@@ -126,7 +135,7 @@ class FolderView extends Component {
               onClose={hideActionMenu}
             />
           )}
-        </div>
+        </Dropzone>
       </Main>
     )
   }

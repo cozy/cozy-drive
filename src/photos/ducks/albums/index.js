@@ -5,7 +5,7 @@ import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
-import Alerter from '../../components/Alerter'
+import Alerter from 'cozy-ui/react/Alerter'
 
 export const DOCTYPE = 'io.cozy.photos.albums'
 
