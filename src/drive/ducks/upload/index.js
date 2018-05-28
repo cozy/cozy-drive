@@ -74,8 +74,9 @@ const processNextFile = (
     const uploadedFile = await cozy.client.files.create(file, { dirID })
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
     // TODO: is the extractFileAttributes call really necessary?
-    dispatch(fileUploadedCallback(extractFileAttributes(uploadedFile)))
+    fileUploadedCallback(extractFileAttributes(uploadedFile))
   } catch (error) {
+    console.warn(error)
     const statusError = {
       400: CONFLICT,
       413: QUOTA
@@ -106,7 +107,7 @@ export const onQueueEmpty = callback => (dispatch, getState) => {
   const conflicts = getConflicts(queue)
   const errors = getErrors(queue)
 
-  return dispatch(callback(loaded, quotas, conflicts, errors))
+  return callback(loaded, quotas, conflicts, errors)
 }
 
 // selectors
