@@ -77,7 +77,7 @@
   "devDependencies": {
     "@sentry/cli": "1.32.0",
     "autoprefixer": "7.2.6",
-    "babel-core": "6.26.0",
+    "babel-core": "6.26.3",
     "babel-eslint": "8.2.3",
     "babel-jest": "21.2.0",
     "babel-loader": "6.4.1",
