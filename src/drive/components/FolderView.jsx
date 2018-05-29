@@ -109,7 +109,9 @@ class FolderView extends Component {
           </div>
 
           <div className={styles['fil-content-table']} role="table">
-            <MobileFileListHeader canSort={canSort} />
+            {__TARGET__ !== 'mobile' && ( // temporary disabling of sorting on mobile because of perf issues
+              <MobileFileListHeader canSort={canSort} />
+            )}
             <FileListHeader canSort={canSort} />
             <div className={styles['fil-content-body']}>
               {showAddFolder && (
