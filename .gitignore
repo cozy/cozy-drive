@@ -30,6 +30,7 @@ desktop.ini
 # Editors / IDEs
 .floo
 .flooignore
+.brackets.json
 
 # Mobile
 targets/*/mobile/hooks
