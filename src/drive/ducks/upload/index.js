@@ -57,8 +57,6 @@ const queue = (state = [], action) => {
 }
 export default combineReducers({ queue })
 
-const extractFileAttributes = f => Object.assign({}, f, f.attributes)
-
 const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
@@ -73,8 +71,7 @@ const processNextFile = (
     dispatch({ type: UPLOAD_FILE, file })
     const uploadedFile = await cozy.client.files.create(file, { dirID })
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
-    // TODO: is the extractFileAttributes call really necessary?
-    fileUploadedCallback(extractFileAttributes(uploadedFile))
+    fileUploadedCallback(uploadedFile)
   } catch (error) {
     console.warn(error)
     const statusError = {
