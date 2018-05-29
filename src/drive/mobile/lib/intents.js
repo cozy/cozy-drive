@@ -85,7 +85,7 @@ const uploadFiles = (files, store) => {
     addToUploadQueue(
       files,
       ROOT_DIR_ID,
-      uploadedFile,
+      file => store.dispatch(uploadedFile(file)),
       (loaded, quotas, conflicts, errors) =>
         uploadQueueProcessed(loaded, quotas, conflicts, errors)
     )
