@@ -1,11 +1,11 @@
 /* globals __DEVELOPMENT__ cozy */
 
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import Main from '../../components/Main'
 import styles from '../styles/settings'
 import DebugTools from '../containers/DebugTools'
 import { translate } from 'cozy-ui/react/I18n'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import About from '../containers/settings/About'
 import Support from '../containers/settings/Support'
@@ -30,7 +30,7 @@ class Settings extends Component {
   }
   hideFeedbackForm = result => {
     this.setState(state => ({ ...state, displayFeedback: false }))
-    result && this.props.alert('mobile.rating.alert.feedback')
+    result && Alerter.info('mobile.rating.alert.feedback')
   }
 
   render() {
@@ -64,12 +64,4 @@ class Settings extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  alert: message =>
-    dispatch({
-      type: 'ALERT_RATING',
-      alert: { message }
-    })
-})
-
-export default translate()(connect(null, mapDispatchToProps)(Settings))
+export default translate()(Settings)

@@ -50,8 +50,6 @@ export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
 export const TRASH_FILES_FAILURE = 'TRASH_FILES_FAILURE'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
-export const DOWNLOAD_FILE_E_MISSING = 'DOWNLOAD_FILE_E_MISSING'
-export const DOWNLOAD_FILE_E_OFFLINE = 'DOWNLOAD_FILE_E_OFFLINE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
@@ -61,7 +59,6 @@ export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const getOpenedFolderId = state => state.view.openedFolderId
 
 const HTTP_CODE_CONFLICT = 409
-const ALERT_LEVEL_ERROR = 'error'
 
 export const META_DEFAULTS = {
   cancelSelection: true,
@@ -261,19 +258,6 @@ export const uploadQueueProcessed = (loaded, quotas, conflicts, errors, t) => {
   }
 }
 
-export const abortAddFolder = accidental => {
-  const action = {
-    type: ABORT_ADD_FOLDER,
-    accidental
-  }
-  if (accidental) {
-    action.alert = {
-      message: 'alert.folder_abort'
-    }
-  }
-  return action
-}
-
 export const createFolder = name => {
   return async (dispatch, getState) => {
     const existingFolder = getState().view.files.find(
@@ -281,12 +265,10 @@ export const createFolder = name => {
     )
     const currentFileCount = getState().view.fileCount
     if (existingFolder) {
+      Alerter.error('alert.folder_name', { folderName: name })
       dispatch({
         type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        alert: {
-          message: 'alert.folder_name',
-          messageData: { folderName: name }
-        }
+        folderName: name
       })
       throw new Error('alert.folder_name')
     }
@@ -310,19 +292,15 @@ export const createFolder = name => {
       })
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
+        Alerter.error('alert.folder_name', { folderName: name })
         dispatch({
           type: CREATE_FOLDER_FAILURE_DUPLICATE,
-          alert: {
-            message: 'alert.folder_name',
-            messageData: { folderName: name }
-          }
+          folderName: name
         })
       } else {
+        Alerter.error('alert.folder_generic')
         dispatch({
-          type: CREATE_FOLDER_FAILURE_GENERIC,
-          alert: {
-            message: 'alert.folder_generic'
-          }
+          type: CREATE_FOLDER_FAILURE_GENERIC
         })
       }
       throw err
@@ -354,20 +332,16 @@ export const trashFiles = files => {
       }
     } catch (err) {
       if (!isAlreadyInTrash(err)) {
+        Alerter.error('alert.try_again')
         return dispatch({
-          type: TRASH_FILES_FAILURE,
-          alert: {
-            message: 'alert.try_again'
-          }
+          type: TRASH_FILES_FAILURE
         })
       }
     }
+    Alerter.success('alert.trash_file_success')
     return dispatch({
       type: TRASH_FILES_SUCCESS,
-      ids: files.map(f => f.id),
-      alert: {
-        message: 'alert.trash_file_success'
-      }
+      ids: files.map(f => f.id)
     })
   }
 }
@@ -418,13 +392,9 @@ const makeAvailableOffline = file => async dispatch => {
 const isMissingFile = error => error.status === 404
 
 const downloadFileError = (error, meta) => {
-  const message = isMissingFile(error)
+  return isMissingFile(error)
     ? 'error.download_file.missing'
     : 'error.download_file.offline'
-  const type = isMissingFile(error)
-    ? DOWNLOAD_FILE_E_MISSING
-    : DOWNLOAD_FILE_E_OFFLINE
-  return { type, alert: { message, level: ALERT_LEVEL_ERROR }, meta }
 }
 
 const downloadFile = (file, meta) => {
@@ -432,7 +402,7 @@ const downloadFile = (file, meta) => {
     const response = await cozy.client.files
       .downloadById(file.id)
       .catch(error => {
-        dispatch(downloadFileError(error, meta))
+        Alerter.error(downloadFileError(error, meta))
         throw error
       })
     const blob = await response.blob()

@@ -9,7 +9,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Spinner, translate } from 'cozy-ui/react'
+import { Spinner, Alerter, translate } from 'cozy-ui/react'
 import util from 'cozy-ui/stylus/utilities/text'
 import styles from './styles'
 import Viewer from 'viewer'
@@ -38,6 +38,7 @@ class FileOpener extends Component {
       this.setState({ file, loading: false })
     } catch (e) {
       this.setState({ fileNotFound: true, loading: false })
+      Alerter.error('alert.could_not_open_file')
     }
   }
 
