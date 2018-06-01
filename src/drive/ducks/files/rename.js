@@ -1,4 +1,5 @@
 /* global cozy */
+import Alerter from 'cozy-ui/react/Alerter'
 
 import { getFiles } from './files'
 import { META_DEFAULTS as meta } from '../../actions'
@@ -10,7 +11,6 @@ const START_RENAMING = 'START_RENAMING'
 const ABORT_RENAMING = 'ABORT_RENAMING'
 export const RENAME_SUCCESS = 'RENAME_SUCCESS'
 const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME'
-const RENAME_FAILURE_DUPLICATE = 'RENAME_FAILURE_DUPLICATE'
 
 // reducers
 
@@ -42,13 +42,6 @@ export const startRenaming = file => ({ type: START_RENAMING, file, meta })
 export const updateFileName = name => ({ type: UPDATE_FILE_NAME, name })
 export const abortRenaming = () => ({ type: ABORT_RENAMING })
 export const renamed = file => ({ type: RENAME_SUCCESS, file })
-export const renameFailureDuplicate = name => ({
-  type: RENAME_FAILURE_DUPLICATE,
-  alert: {
-    message: 'alert.folder_name',
-    messageData: { folderName: name }
-  }
-})
 
 // action creators async
 
@@ -68,7 +61,7 @@ export const rename = () => async (dispatch, getState) => {
       dispatch(abortRenaming())
       return
     } else {
-      dispatch(renameFailureDuplicate(updatedName))
+      Alerter.error('alert.folder_name', { folderName: name })
       throw new Error('alert.folder_name')
     }
   }

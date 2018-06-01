@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
-import { Button } from 'cozy-ui/react'
-import { connect } from 'react-redux'
+import { Alerter, Button } from 'cozy-ui/react'
 import withPersistentState from '../lib/withPersistentState'
 import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
 import FeedbackForm from './FeedbackForm'
@@ -11,7 +10,6 @@ import styles from '../styles/feedback'
 
 const SCREEN_ENJOY = 'SCREEN_ENJOY'
 const SCREEN_FEEDBACK = 'SCREEN_FEEDBACK'
-const ALERT_RATING = 'ALERT_RATING'
 
 const BUTTON_INDEX_RATE = 1
 const BUTTON_INDEX_LATER = 2
@@ -40,13 +38,13 @@ class RatingModal extends Component {
         })
 
         if (buttonIndex === BUTTON_INDEX_LATER) {
-          this.props.alert('mobile.rating.alert.later')
+          Alerter.info('mobile.rating.alert.later')
           this.props.showLater()
         } else if (buttonIndex === BUTTON_INDEX_RATE) {
-          this.props.alert('mobile.rating.alert.rated')
+          Alerter.info('mobile.rating.alert.rated')
           this.props.dontShowAgain()
         } else {
-          this.props.alert('mobile.rating.alert.declined')
+          Alerter.info('mobile.rating.alert.declined')
           this.props.dontShowAgain()
         }
       } catch (e) {
@@ -59,7 +57,7 @@ class RatingModal extends Component {
   }
 
   onCloseFeedback = gaveFeedback => {
-    if (gaveFeedback) this.props.alert('mobile.rating.alert.feedback')
+    if (gaveFeedback) Alerter.info('mobile.rating.alert.feedback')
     this.props.dontShowAgain()
   }
 
@@ -73,7 +71,6 @@ class RatingModal extends Component {
 }
 
 RatingModal.propTypes = {
-  alert: PropTypes.func.isRequired,
   dontShowAgain: PropTypes.func.isRequired,
   showLater: PropTypes.func.isRequired
 }
@@ -203,19 +200,7 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
   return WithBootDelay
 }
 
-const mapDispatchToProps = dispatch => ({
-  alert: message =>
-    dispatch({
-      type: ALERT_RATING,
-      alert: { message }
-    })
-})
-
-const ConnectedRatingModal = connect(null, mapDispatchToProps)(RatingModal)
-const DelayedRatingModal = withBootDelay(
-  ConnectedRatingModal,
-  PROMPT_AFTER_BOOTS
-)
+const DelayedRatingModal = withBootDelay(RatingModal, PROMPT_AFTER_BOOTS)
 const PersistentRatingModal = withPersistentState(
   DelayedRatingModal,
   'DelayedRatingModal'
