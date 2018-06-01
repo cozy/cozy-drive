@@ -90,8 +90,11 @@ const fileCount = (state = null, action) => {
     case TRASH_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
       return state - action.ids.length
+    // This looks counter-intuitive to decrement the file count here,
+    // but we're in the trash, so when we restore files from the trash,
+    // the file count of the trash decrements
     case RESTORE_FILES_SUCCESS:
-      return state + action.ids.length
+      return state - action.ids.length
     default:
       return state
   }

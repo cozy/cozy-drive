@@ -16,7 +16,6 @@ import { ConnectedToggleMenuItem } from '../../components/FileActionMenu'
 
 import {
   createFolder,
-  abortAddFolder,
   openFileWith,
   downloadFiles,
   trashFiles,
@@ -43,10 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     actions: Object.assign({}, ownProps.actions, {
       list: {
-        createFolder: name => dispatch(createFolder(name)),
-        // TODO: a bit sad of dispatching an action only to show an alert...
-        // we should find a better way...
-        abortAddFolder: accidental => dispatch(abortAddFolder(accidental))
+        createFolder: name => dispatch(createFolder(name))
       },
       selection: {
         share: {

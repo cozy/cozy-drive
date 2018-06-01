@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import Alerter from 'cozy-ui/react/Alerter'
 import SettingCategory, {
   ELEMENT_CHECKBOX,
   ELEMENT_BUTTON
@@ -14,9 +15,6 @@ export const Support = ({
   analytics,
   setAnalytics,
   isDebug,
-  success,
-  failure,
-  offline,
   serverUrl,
   sendFeedback
 }) => (
@@ -42,12 +40,12 @@ export const Support = ({
           if (isOnline()) {
             try {
               await logInfo(t('mobile.settings.support.logs.title'), serverUrl)
-              success()
+              Alerter.info('mobile.settings.support.logs.success')
             } catch (e) {
-              failure()
+              Alerter.error('mobile.settings.support.logs.error')
             }
           } else {
-            offline()
+            Alerter.error('alert.offline')
           }
         }
       },
@@ -71,31 +69,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setAnalytics: value => dispatch(setAnalytics(value)),
-  success: () => {
-    dispatch({
-      type: 'SEND_LOG_SUCCESS',
-      alert: {
-        message: 'mobile.settings.support.logs.success'
-      }
-    })
-  },
-  failure: () => {
-    dispatch({
-      type: 'SEND_LOG_FAILURE',
-      alert: {
-        message: 'mobile.settings.support.logs.error'
-      }
-    })
-  },
-  offline: () => {
-    dispatch({
-      type: 'SEND_LOG_FAILURE',
-      alert: {
-        message: 'alert.offline'
-      }
-    })
-  }
+  setAnalytics: value => dispatch(setAnalytics(value))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

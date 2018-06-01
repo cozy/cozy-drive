@@ -1,6 +1,7 @@
 /* global __TARGET__ */
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import Main from './Main'
 import Topbar from './Topbar'
@@ -38,7 +39,9 @@ class FolderView extends Component {
   }
 
   abortAddFolder = accidental => {
-    this.props.actions.list.abortAddFolder(accidental)
+    if (accidental) {
+      Alerter.info('alert.folder_abort')
+    }
     this.toggleAddFolder()
   }
 
