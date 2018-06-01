@@ -1,4 +1,4 @@
-/* global __DEVELOPMENT__ */
+/* global __DEVELOPMENT__, cozy */
 
 import 'babel-polyfill'
 
@@ -6,8 +6,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import IntentHandler from 'drive/ducks/services'
 import { I18n } from 'cozy-ui/react/I18n'
-import { CozyClient, CozyProvider } from 'cozy-client'
-import configureStore from 'drive/store/configureStore'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -39,21 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const { intent } = getQueryParameter()
 
-  const client = new CozyClient({
+  // we still need cozy-client-js for intents and offline
+  // cozy-client is not used right now
+  cozy.client.init({
     cozyURL: cozyUrl,
-    token: data.cozyToken
+    token: data.cozyToken,
+    offline: { doctypes: ['io.cozy.files'] }
   })
-
-  const store = configureStore(client)
 
   render(
     <I18n
       lang={data.cozyLocale}
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >
-      <CozyProvider store={store} client={client}>
-        <IntentHandler intentId={intent} />
-      </CozyProvider>
+      <IntentHandler intentId={intent} />
     </I18n>,
     root
   )
