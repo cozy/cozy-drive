@@ -1,3 +1,4 @@
+/* global cozy */
 import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
@@ -13,10 +14,11 @@ class SuggestionProvider extends React.Component {
     window.addEventListener('message', event => {
       if (event.origin !== intent.attributes.client) return null
       const { query, id } = event.data
-      this.provideSuggestions(query, id, intent)
+      // sometimes we get messages with undefined query & id, no idea why
+      if (query && id) {
+        this.provideSuggestions(query, id, intent)
+      }
     })
-
-    this.context.client.startReplicationFrom(() => {}) // the sync functions take a redux-style `dispatch` function as a callback, but we don't handle the replication status at the moment
   }
 
   async provideSuggestions(query, id, intent) {
@@ -46,12 +48,24 @@ class SuggestionProvider extends React.Component {
   // fetches pretty much all the files and preloads FuzzyPathSearch
   async indexFiles() {
     return new Promise(async resolve => {
-      const allDocs = await this.context.client.fetchDocuments(
-        'files',
-        'io.cozy.files'
-      )
+      const index = await cozy.client.data.defineIndex('io.cozy.files', ['_id'])
 
-      const files = allDocs.data
+      let files = []
+      const limit = 100
+      const pageLimit = 500 // that's 50 000 files max
+      let page = 0
+      let response
+      do {
+        response = await cozy.client.data.query(index, {
+          selector: { _id: { $gt: null } },
+          limit: limit,
+          skip: page * limit,
+          wholeResponse: true
+        })
+        files = files.concat(response.docs)
+        ++page
+      } while (response.next && page < pageLimit)
+
       const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 
       const notInTrash = file =>
@@ -98,6 +112,7 @@ const iconsContext = require.context(
   false,
   /icon-type-.*.svg$/
 )
+
 const icons = iconsContext.keys().reduce((acc, item) => {
   acc[item.replace(/\.\/icon-type-(.*)\.svg/, '$1')] = iconsContext(item)
   return acc
@@ -107,13 +122,15 @@ function getIconUrl(file) {
   const keyIcon =
     file.type === TYPE_DIRECTORY
       ? 'folder'
-      : getFileTypeFromMime(icons)(file.mime) ||
-        console.warn(
-          `No icon found, you may need to add a mapping for ${file.mime}`
-        ) ||
-        'files'
+      : getFileTypeFromMime(icons)(file.mime) || 'files'
 
-  return `${window.location.origin}/${icons[keyIcon]}`
+  const icon = icons[keyIcon].default
+
+  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='${
+    icon.viewBox
+  }'>${icon.content}<use href='#${
+    icon.id
+  }' x='0' y='0' width='32' height='32'/></svg>`.replace(/#/g, '%23')
 }
 
 export default SuggestionProvider
