@@ -136,7 +136,7 @@
     "stylint": "1.5.9",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
-    "svg-sprite-loader": "3.7.3",
+    "svg-sprite-loader": "3.8.0",
     "tostr": "0.1.0",
     "webpack": "3.11.0",
     "webpack-dev-server": "2.11.2",
