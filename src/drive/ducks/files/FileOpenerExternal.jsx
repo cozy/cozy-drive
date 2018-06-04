@@ -34,7 +34,11 @@ class FileOpener extends Component {
   async loadFileInfo() {
     try {
       this.setState({ fileNotFound: false })
-      const file = await cozy.client.files.statById(getFileId(this.props))
+      const resp = await cozy.client.files.statById(
+        getFileId(this.props),
+        false
+      )
+      const file = { ...resp, ...resp.attributes, id: resp._id }
       this.setState({ file, loading: false })
     } catch (e) {
       this.setState({ fileNotFound: true, loading: false })
