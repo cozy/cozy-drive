@@ -19,6 +19,7 @@ const LOADED = 'loaded'
 const FAILED = 'failed'
 const CONFLICT = 'conflict'
 const QUOTA = 'quota'
+const NETWORK = 'network'
 
 const itemInitialState = file => ({
   file,
@@ -75,10 +76,14 @@ const processNextFile = (
   } catch (error) {
     console.warn(error)
     const statusError = {
-      400: CONFLICT,
+      409: CONFLICT,
       413: QUOTA
     }
-    const status = statusError[error.status] || FAILED
+
+    const status =
+      statusError[error.status] ||
+      (/Failed to fetch$/.exec(error.toString()) && NETWORK) ||
+      FAILED
 
     dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
   }
@@ -102,9 +107,10 @@ export const onQueueEmpty = callback => (dispatch, getState) => {
   const loaded = getLoaded(queue)
   const quotas = getQuotaErrors(queue)
   const conflicts = getConflicts(queue)
+  const networkErrors = getNetworkErrors(queue)
   const errors = getErrors(queue)
 
-  return callback(loaded, quotas, conflicts, errors)
+  return callback(loaded, quotas, conflicts, networkErrors, errors)
 }
 
 // selectors
@@ -112,6 +118,7 @@ const filterByStatus = (queue, status) => queue.filter(f => f.status === status)
 const getConflicts = queue => filterByStatus(queue, CONFLICT)
 const getErrors = queue => filterByStatus(queue, FAILED)
 const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
+const getNetworkErrors = queue => filterByStatus(queue, NETWORK)
 const getLoaded = queue => filterByStatus(queue, LOADED)
 
 export const getUploadQueue = state => state[SLUG].queue

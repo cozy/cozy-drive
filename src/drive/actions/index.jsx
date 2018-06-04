@@ -236,7 +236,14 @@ export const uploadedFile = file => {
   }
 }
 
-export const uploadQueueProcessed = (loaded, quotas, conflicts, errors, t) => {
+export const uploadQueueProcessed = (
+  loaded,
+  quotas,
+  conflicts,
+  networkErrors,
+  errors,
+  t
+) => {
   if (quotas.length > 0) {
     // quota errors have their own modal instead of a notification, if possible
     if (t) {
@@ -249,8 +256,10 @@ export const uploadQueueProcessed = (loaded, quotas, conflicts, errors, t) => {
       smart_count: loaded.length,
       conflictNumber: conflicts.length
     })
+  } else if (networkErrors.length > 0) {
+    Alerter.info('upload.alert.network')
   } else if (errors.length > 0) {
-    Alerter.error('upload.alert.errors')
+    Alerter.info('upload.alert.errors')
   } else {
     Alerter.success('upload.alert.success', {
       smart_count: loaded.length

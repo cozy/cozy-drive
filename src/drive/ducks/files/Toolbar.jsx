@@ -246,8 +246,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         files,
         displayedFolder.id,
         file => dispatch(uploadedFile(file)),
-        (loaded, quotas, conflicts, errors) =>
-          uploadQueueProcessed(loaded, quotas, conflicts, errors, ownProps.t)
+        (loaded, quotas, conflicts, networkErrors, errors) =>
+          uploadQueueProcessed(
+            loaded,
+            quotas,
+            conflicts,
+            networkErrors,
+            errors,
+            ownProps.t
+          )
       )
     )
   },
