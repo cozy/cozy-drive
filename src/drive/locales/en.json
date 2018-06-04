@@ -426,7 +426,8 @@
         "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
       "success_conflicts":
         "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
-      "errors": "Errors occurred during the file upload."
+      "errors": "Errors occurred during the file upload.",
+      "network": "You are currenly offline. Please try again once you're connected."
     }
   },
   "intents": {

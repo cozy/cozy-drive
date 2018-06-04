@@ -142,12 +142,9 @@ progress.upload-queue-progress::-moz-progress-bar
         @extend $icon
         background-image embedurl('./assets/icons/icon-cross.svg')
 
-    .item-failed
-        @extend $icon-16
-        @extend $icon
-        background-image embedurl('./assets/icons/icon-warning.svg')
-
-    .item-conflict
+    .item-failed,
+    .item-conflict,
+    .item-network
         @extend $icon-16
         @extend $icon
         background-image embedurl('./assets/icons/icon-warning.svg')
