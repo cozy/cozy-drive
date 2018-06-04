@@ -36,7 +36,7 @@ const Item = translate()(({ t, file, status, type }) => {
       className={classNames(styles['upload-queue-item'], {
         [styles['upload-queue-item--done']]: status === 'loaded',
         [styles['upload-queue-item--error']]:
-          status === 'failed' || status === 'conflict'
+          status === 'failed' || status === 'conflict' || status === 'network'
       })}
     >
       <div
