@@ -47,6 +47,12 @@ export default class PouchdbAdapter {
       .then(result => result.update_seq)
   }
 
+  scheduleNextSync(dispatch, direction) {
+    return setTimeout(() => {
+      this.startSync(dispatch, direction)
+    }, REPLICATION_INTERVAL)
+  }
+
   async startSync(dispatch, direction = SYNC_BIDIRECTIONAL) {
     try {
       const infos = await this.sync(dispatch, direction)
@@ -120,12 +126,6 @@ export default class PouchdbAdapter {
   unsyncDatabase(doctype) {
     this.syncHandlers[doctype].cancel()
     delete this.syncHandlers[doctype]
-  }
-
-  scheduleNextSync(dispatch, direction) {
-    return setTimeout(() => {
-      this.sync(dispatch, direction)
-    }, REPLICATION_INTERVAL)
   }
 
   async fetchDocuments(doctype) {
