@@ -91,27 +91,3 @@ const getTokenWithNoException = async () => {
 }
 
 export const getClientUrl = () => cozy.client._url
-
-const getUpdatedUserAgent = navigator => {
-  const deviceName = getDeviceName() || 'unknown device name'
-  const identifier = getIdentifier(navigator) || 'unknown identifier'
-  const version = getVersion(navigator) || 'unknown version'
-  const userAgent = getUserAgent(navigator) || 'unknown user-agent'
-  return `${deviceName} ${identifier}-${version} ${userAgent}`
-}
-const getIdentifier = navigator =>
-  navigator && navigator.appInfo && navigator.appInfo.identifier
-const getVersion = navigator =>
-  navigator && navigator.appInfo && navigator.appInfo.version
-const getUserAgent = navigator => navigator && navigator.userAgent
-
-export const updateUserAgent = () => {
-  try {
-    window.UserAgent.set(getUpdatedUserAgent(window.navigator))
-  } catch (err) {
-    console.error(
-      `Unable to update User-Agent with cordova plugin: ${err.message}`
-    )
-    throw err
-  }
-}
