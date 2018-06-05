@@ -44,11 +44,6 @@ window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
 )
 
 const startApplication = async function(store, client) {
-  try {
-    updateUserAgent()
-  } catch (err) {
-    // we do nothing with this exception handling
-  }
   configureReporter()
   const { client: clientInfos } = store.getState().settings
   if (clientInfos) {
