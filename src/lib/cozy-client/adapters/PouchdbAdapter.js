@@ -6,6 +6,7 @@ import {
   syncDoctypeOk,
   syncDoctypeError
 } from '../slices/synchronization'
+import { updateDocumentsFromPouch } from '../reducer'
 import { getIndexFields, sanitizeDoc } from '../helpers'
 
 const REPLICATION_INTERVAL = 30000
@@ -81,7 +82,8 @@ export default class PouchdbAdapter {
       const syncInfos = await this.syncDatabase(
         doctype,
         replicationUrl,
-        direction
+        direction,
+        dispatch
       )
       dispatch(syncDoctypeOk(doctype, syncInfos))
       return syncInfos
@@ -95,7 +97,7 @@ export default class PouchdbAdapter {
     this.unsyncDatabase(doctype)
   }
 
-  syncDatabase(doctype, replicationUrl, direction) {
+  syncDatabase(doctype, replicationUrl, direction, dispatch) {
     return new Promise((resolve, reject) => {
       const db = this.getDatabase(doctype)
 
@@ -116,6 +118,13 @@ export default class PouchdbAdapter {
         } else if (err.status !== 404) {
           // A 404 error on some doctypes is perfectly normal when there is no data
           reject(err)
+        }
+      })
+
+      syncHandler.on('change', info => {
+        if (info.direction === 'pull') {
+          const docs = info.change.docs
+          dispatch(updateDocumentsFromPouch(doctype, docs))
         }
       })
 
