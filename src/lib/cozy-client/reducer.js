@@ -21,6 +21,8 @@ const DELETE_DOCUMENTS = 'DELETE_DOCUMENTS'
 const RECEIVE_NEW_DOCUMENT = 'RECEIVE_NEW_DOCUMENT'
 const RECEIVE_UPDATED_DOCUMENT = 'RECEIVE_UPDATED_DOCUMENT'
 const RECEIVE_UPDATED_DOCUMENTS = 'RECEIVE_UPDATED_DOCUMENTS'
+const RECEIVE_UPDATED_DOCUMENTS_FROM_POUCH =
+  'RECEIVE_UPDATED_DOCUMENTS_FROM_POUCH'
 const RECEIVE_DELETED_DOCUMENT = 'RECEIVE_DELETED_DOCUMENT'
 const RECEIVE_DELETED_DOCUMENTS = 'RECEIVE_DELETED_DOCUMENTS'
 const FETCH_REFERENCED_FILES = 'FETCH_REFERENCED_FILES'
@@ -55,7 +57,7 @@ const documents = (state = {}, action) => {
           [doc.id]: doc
         }
       }
-    case RECEIVE_UPDATED_DOCUMENTS:
+    case RECEIVE_UPDATED_DOCUMENTS: {
       if (action.response.data.length === 0) {
         return state
       }
@@ -68,6 +70,18 @@ const documents = (state = {}, action) => {
           ...udocs.reduce((res, doc) => (res[doc.id] = doc) && res, {})
         }
       }
+    }
+    case RECEIVE_UPDATED_DOCUMENTS_FROM_POUCH: {
+      const udocs = action.docs
+      const doctype = action.doctype
+      return {
+        ...state,
+        [doctype]: {
+          ...state[doctype],
+          ...udocs.reduce((res, doc) => (res[doc.id] = doc) && res, {})
+        }
+      }
+    }
     case RECEIVE_DELETED_DOCUMENT:
       if (action.response.data.length === 0) {
         return state
@@ -389,6 +403,12 @@ export const updateDocuments = (
   types: [UPDATE_DOCUMENTS, RECEIVE_UPDATED_DOCUMENTS, RECEIVE_ERROR],
   promise: client => client.updateDocuments(doctype, query, iterator),
   ...actionOptions
+})
+
+export const updateDocumentsFromPouch = (doctype, docs) => ({
+  type: RECEIVE_UPDATED_DOCUMENTS_FROM_POUCH,
+  doctype,
+  docs
 })
 
 export const deleteDocument = (doc, actionOptions = {}) => ({
