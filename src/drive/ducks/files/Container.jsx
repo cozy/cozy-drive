@@ -89,7 +89,10 @@ const ConnectedFolderView = translate()(
 )
 
 const FolderViewWithSharingContext = props =>
-  !props.displayedFolder ? null : (
+  // props.displayedFolder is null on the recent file view for example
+  !props.displayedFolder ? (
+    <ConnectedFolderView {...props} hasWriteAccess={false} />
+  ) : (
     <SharedDocument docId={props.displayedFolder.id}>
       {({ hasWriteAccess }) => (
         <ConnectedFolderView {...props} hasWriteAccess={hasWriteAccess} />
