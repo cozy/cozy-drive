@@ -15,7 +15,7 @@ import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from '../mobile/lib/reporter'
 
 const configureStore = (client, initialState = {}) => {
-  const middlewares = [thunkMiddleware]
+  const middlewares = [thunkMiddleware.withExtraArgument(client)]
   if (__TARGET__ === 'mobile') {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
   }
