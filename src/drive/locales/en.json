@@ -176,7 +176,7 @@
     "restore": "Restore",
     "close": "Close",
     "openWith": "Open with",
-    "availableOffline": "Make available offline"
+    "phone-download": "Make available offline"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",

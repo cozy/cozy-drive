@@ -193,7 +193,11 @@ const Status = ({ isAvailableOffline, id }) => (
       styles['fil-content-status']
     )}
   >
-    {isAvailableOffline && <span className={styles['fil-content-offline']} />}
+    {isAvailableOffline && (
+      <span className={styles['fil-content-offline']}>
+        <Icon icon="phone-download" color="white" width="14" height="14" />
+      </span>
+    )}
     <SharedStatus docId={id} className={styles['fil-content-sharestatus']} />
   </div>
 )

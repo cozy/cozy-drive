@@ -134,10 +134,12 @@
 
     .fil-content-offline
         display none
+        justify-content center
+        align-items center
         width 1.25rem
         margin-left 1rem
         height 1.25rem
-        background malachite embedurl('../assets/icons/icon-phone-download-white.svg') center center / .9rem no-repeat
+        background-color malachite
         border-radius 50%
 
     .fil-content-sharestatus
@@ -304,7 +306,7 @@ mime-types('fil-file-', '../assets/icons/')
         padding    0
 
         .fil-content-offline
-            display inline-block
+            display inline-flex
 
         .fil-content-sharestatus
             display none
