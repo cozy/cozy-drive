@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1
         },
-        availableOffline: {
+        'phone-download': {
           action: selected => dispatch(toggleAvailableOffline(selected[0])),
           displayCondition: selections =>
             __TARGET__ === 'mobile' &&
