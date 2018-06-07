@@ -1,4 +1,3 @@
-/* global cozy */
 import { combineReducers } from 'redux'
 
 import UploadQueue from './UploadQueue'
@@ -21,8 +20,8 @@ const CONFLICT = 'conflict'
 const QUOTA = 'quota'
 const NETWORK = 'network'
 
-const itemInitialState = file => ({
-  file,
+const itemInitialState = item => ({
+  ...item,
   status: PENDING
 })
 
@@ -62,17 +61,27 @@ const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
   dirID
-) => async (dispatch, getState) => {
+) => async (dispatch, getState, client) => {
+  if (!client) {
+    throw new Error(
+      'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
+    )
+  }
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
   if (!item) {
     return dispatch(onQueueEmpty(queueCompletedCallback))
   }
-  const file = item.file
+  const { file, entry, isDirectory } = item
   try {
     dispatch({ type: UPLOAD_FILE, file })
-    const uploadedFile = await cozy.client.files.create(file, { dirID })
+    if (entry && isDirectory) {
+      const newDir = await uploadDirectory(client, entry, dirID)
+      fileUploadedCallback(newDir)
+    } else {
+      const uploadedFile = await uploadFile(client, file, dirID)
+      fileUploadedCallback(uploadedFile)
+    }
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
-    fileUploadedCallback(uploadedFile)
   } catch (error) {
     console.warn(error)
     const statusError = {
@@ -90,13 +99,51 @@ const processNextFile = (
   dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
 
+const getFileFromEntry = entry => new Promise(resolve => entry.file(resolve))
+
+const uploadDirectory = async (client, directory, dirID) => {
+  const newDir = await createFolder(client, directory.name, dirID)
+  const dirReader = directory.createReader()
+  return new Promise((resolve, reject) => {
+    const entriesReader = async entries => {
+      for (let i = 0; i < entries.length; i += 1) {
+        const entry = entries[i]
+        if (entry.isFile) {
+          await uploadFile(client, await getFileFromEntry(entry), newDir.id)
+        } else if (entry.isDirectory) {
+          await uploadDirectory(client, entry, newDir.id)
+        }
+      }
+      resolve(newDir)
+    }
+    dirReader.readEntries(entriesReader)
+  })
+}
+
+const createFolder = async (client, name, dirID) => {
+  const resp = await client
+    .collection('io.cozy.files')
+    .createDirectory({ name, dirId: dirID })
+  return resp.data
+}
+
+const uploadFile = async (client, file, dirID) => {
+  const resp = await client
+    .collection('io.cozy.files')
+    .createFile(file, { dirId: dirID })
+  return resp.data
+}
+
 export const addToUploadQueue = (
   files,
   dirID,
   fileUploadedCallback,
   queueCompletedCallback
 ) => async dispatch => {
-  dispatch({ type: ADD_TO_UPLOAD_QUEUE, files })
+  dispatch({
+    type: ADD_TO_UPLOAD_QUEUE,
+    files: extractFilesEntries(files)
+  })
   dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
 
@@ -125,3 +172,22 @@ export const getUploadQueue = state => state[SLUG].queue
 export const getProcessed = state =>
   getUploadQueue(state).filter(f => f.status !== PENDING)
 export const getSuccessful = state => getLoaded(getUploadQueue(state))
+
+// DOM helpers
+const extractFilesEntries = items => {
+  let results = []
+  for (let i = 0; i < items.length; i += 1) {
+    const item = items[i]
+    if (item.webkitGetAsEntry != null && item.webkitGetAsEntry()) {
+      const entry = item.webkitGetAsEntry()
+      results.push({
+        file: item.getAsFile(),
+        isDirectory: entry.isDirectory === true,
+        entry
+      })
+    } else {
+      results.push({ file: item, isDirectory: false, entry: null })
+    }
+  }
+  return results
+}
