@@ -62,7 +62,8 @@ export const restoreCozyClientJs = (uri, clientInfos, token) => {
         ...clientInfos,
         scopes: token.scope
       }
-    }
+    },
+    offline: { doctypes: ['io.cozy.files'] }
   })
 
   cozy.client.saveCredentials(clientInfos, token)
