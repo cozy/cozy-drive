@@ -150,7 +150,7 @@ var app = {
     const store = await this.getStore()
     const client = await this.getClient()
 
-    if (window.plugins.intentShim) {
+    if (window.plugins && window.plugins.intentShim) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
       window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
         console.error('Error getting launch intent', err)
