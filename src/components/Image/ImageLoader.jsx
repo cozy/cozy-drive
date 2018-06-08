@@ -1,11 +1,6 @@
 /* global cozy */
 import React, { Component } from 'react'
 
-const getDownloadLink = file =>
-  cozy.client.files
-    .getDownloadLinkById(file.id)
-    .then(path => `${cozy.client._url}${path}`)
-
 const TTL = 6000
 
 const LOADING = 'LOADING'
@@ -90,7 +85,9 @@ export default class ImageLoader extends Component {
       ? this.context.client
           .collection('io.cozy.files')
           .getDownloadLinkById(photo._id)
-      : getDownloadLink(photo)
+      : cozy.client.files
+          .getDownloadLinkById(photo._id)
+          .then(path => `${cozy.client._url}${path}`)
   }
 
   componentWillUnmount() {

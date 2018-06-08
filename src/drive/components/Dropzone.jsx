@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import Alerter from 'cozy-ui/react/Alerter'
 import { translate } from 'cozy-ui/react'
 
 import styles from '../styles/dropzone'
@@ -22,18 +21,8 @@ export default class StatefulDropzone extends Component {
     const folderId = this.props.displayedFolder.id
     this.setState(state => ({ ...state, dropzoneActive: false }))
     if (!canDrop(evt)) return
-    if (canHandleFolders(evt)) {
-      const filesToUpload = await getFilesFromItems(evt)
-      // sometimes browsers can't detect a file's mimetype, but if all files have no type,
-      // we're certainly on FF that have a bug that prevents folder drop
-      if (filesToUpload.every(f => !f.type)) {
-        Alerter.info('Files.dropzone.noFolderSupport')
-      } else {
-        this.props.onDrop(filesToUpload, folderId)
-      }
-    } else {
-      this.props.onDrop(files, folderId)
-    }
+    const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
+    this.props.onDrop(filesToUpload, folderId)
   }
 
   render() {
@@ -73,48 +62,6 @@ const canHandleFolders = evt => {
   if (!evt.dataTransfer) return false
   const dt = evt.dataTransfer
   return dt.items && dt.items.length && dt.items[0].webkitGetAsEntry != null
-}
-
-const getFileFromEntry = entry => new Promise(resolve => entry.file(resolve))
-
-const getFilesFromDirectory = directory => {
-  const dirReader = directory.createReader()
-  return new Promise((resolve, reject) => {
-    let results = []
-    const entriesReader = async entries => {
-      for (let i = 0; i < entries.length; i += 1) {
-        const entry = entries[i]
-        if (entry.isFile) {
-          results.push(await getFileFromEntry(entry))
-        } else if (entry.isDirectory) {
-          results = results.concat(await getFilesFromDirectory(entry))
-        }
-      }
-      resolve(results)
-    }
-    dirReader.readEntries(entriesReader)
-  })
-}
-
-const getFilesFromItems = async evt => {
-  let results = []
-  const items = evt.dataTransfer.items
-  for (let i = 0; i < items.length; i += 1) {
-    const item = items[i]
-    if (item.webkitGetAsEntry != null && item.webkitGetAsEntry()) {
-      const entry = item.webkitGetAsEntry()
-      if (entry.isFile && item.getAsFile()) {
-        results.push(item.getAsFile())
-      } else if (entry.isDirectory) {
-        results = results.concat(await getFilesFromDirectory(entry, entry.name))
-      }
-    } else if (item.getAsFile != null) {
-      if (item.kind == null || (item.kind === 'file' && item.getAsFile())) {
-        results.push(item.getAsFile())
-      }
-    }
-  }
-  return results
 }
 
 const canDrop = evt => {

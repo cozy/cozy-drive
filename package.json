@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.5.2",
+  "version": "1.5.4",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
@@ -49,6 +49,7 @@
     "sentry:drive:mobile": "sentry-cli releases -o sentry -p cozy-drive-v3 files $npm_package_version upload-sourcemaps ./targets/drive/mobile/www",
     "version:drive:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./targets/drive/manifest.webapp",
     "version:drive:config": "replace 'version=\"\\d+\\.\\d+\\.\\d+\"' 'version=\"'$npm_package_version'\"' ./targets/drive/mobile/config.xml",
+    "version:drive:useragent": "replace 'value=\"(.+)\\d+\\.\\d+\\.\\d+\"' 'value=\"$1'$npm_package_version'\"' ./targets/drive/mobile/config.xml",
     "version:drive": "npm-run-all --parallel 'version:drive:*'",
     "version:photos": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./targets/photos/manifest.webapp"
   },
@@ -75,9 +76,9 @@
   },
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
-    "@sentry/cli": "1.32.0",
+    "@sentry/cli": "1.32.1",
     "autoprefixer": "7.2.6",
-    "babel-core": "6.26.0",
+    "babel-core": "6.26.3",
     "babel-eslint": "8.2.3",
     "babel-jest": "21.2.0",
     "babel-loader": "6.4.1",
@@ -106,7 +107,7 @@
     "eslint-plugin-node": "5.2.1",
     "eslint-plugin-prettier": "2.6.0",
     "eslint-plugin-promise": "3.8.0",
-    "eslint-plugin-react": "7.7.0",
+    "eslint-plugin-react": "7.9.1",
     "eslint-plugin-standard": "3.1.0",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.11",
@@ -132,11 +133,11 @@
     "replace": "1.0.0",
     "script-ext-html-webpack-plugin": "1.8.8",
     "splashicon-generator": "0.2.12",
-    "style-loader": "0.20.3",
+    "style-loader": "0.21.0",
     "stylint": "1.5.9",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
-    "svg-sprite-loader": "3.7.3",
+    "svg-sprite-loader": "3.8.0",
     "tostr": "0.1.0",
     "webpack": "3.11.0",
     "webpack-dev-server": "2.11.2",
@@ -146,13 +147,13 @@
   "dependencies": {
     "classnames": "2.2.5",
     "cozy-bar": "4.10.4",
-    "cozy-client": "1.0.0-beta.5",
+    "cozy-client": "1.0.0-beta.9",
     "cozy-client-js": "0.6.2",
-    "cozy-ui": "9.0.1",
-    "create-react-context": "0.2.1",
+    "cozy-ui": "9.3.1",
+    "create-react-context": "0.2.2",
     "date-fns": "1.29.0",
     "diacritics": "1.3.0",
-    "filesize": "3.6.0",
+    "filesize": "3.6.1",
     "hammerjs": "2.0.8",
     "intersection-observer": "0.5.0",
     "justified-layout": "2.1.1",
@@ -162,7 +163,7 @@
     "piwik-react-router": "0.8.2",
     "pouchdb": "6.4.2",
     "pouchdb-find": "0.10.5",
-    "preact": "8.2.7",
+    "preact": "8.2.9",
     "preact-compat": "3.18.0",
     "prop-types": "15.6.0",
     "raven-js": "3.22.1",
@@ -179,7 +180,7 @@
     "redux-raven-middleware": "1.2.0",
     "redux-thunk": "2.2.0",
     "url-polyfill": "1.0.11",
-    "webpack-node-externals": "1.6.0"
+    "webpack-node-externals": "1.7.2"
   },
   "eslintConfig": {
     "extends": [

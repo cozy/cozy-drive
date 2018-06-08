@@ -26,7 +26,7 @@ import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
-import { getLang, initClient, initBar } from 'drive/mobile/lib/cozy-helper'
+import { getLang, initClient, initBar, restoreCozyClientJs } from 'drive/mobile/lib/cozy-helper'
 import { revokeClient } from 'drive/mobile/actions/authorization'
 import { startReplication } from 'drive/mobile/actions/settings'
 import { configureReporter } from 'drive/mobile/lib/reporter'
@@ -44,20 +44,24 @@ window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
 )
 
 const startApplication = async function(store, client) {
-  try {
-    updateUserAgent()
-  } catch (err) {
-    // we do nothing with this exception handling
-  }
   configureReporter()
   const { client: clientInfos } = store.getState().settings
-  if (clientInfos) {
-    const isRegistered = await client.isRegistered(clientInfos)
-    if (isRegistered) {
+    const { token } = store.getState().mobile.settings
+  if (clientInfos && token) {
+    const oauthClient = client.getOrCreateStackClient()
+    oauthClient.setOAuthOptions(clientInfos);
+    oauthClient.setCredentials(token)
+
+    try {
+      await oauthClient.fetchInformation()
+
+      await restoreCozyClientJs(client.options.uri, clientInfos, token)
+
       startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
       initBar(client)
-    } else {
-      console.warn('Your device is no more connected to your server')
+    }
+    catch (e) {
+      console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
     }
   }
@@ -98,6 +102,8 @@ const isBackgroundServiceParameter = () => {
 var app = {
   initialize: function() {
     this.bindEvents()
+
+    if (__DEVELOPMENT__ && typeof cordova === 'undefined') this.onDeviceReady()
   },
 
   bindEvents: function() {
@@ -143,7 +149,8 @@ var app = {
   onDeviceReady: async function() {
     const store = await this.getStore()
     const client = await this.getClient()
-    if (!isIos()) {
+
+    if (window.plugins && window.plugins.intentShim) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
       window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
         console.error('Error getting launch intent', err)

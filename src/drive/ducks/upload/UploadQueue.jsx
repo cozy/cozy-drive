@@ -125,7 +125,7 @@ class UploadQueue extends Component {
             {queue.map(item => (
               <Item
                 file={item.file.name}
-                type={item.file.type}
+                type={item.isDirectory ? 'folder' : item.file.type}
                 status={item.status}
               />
             ))}

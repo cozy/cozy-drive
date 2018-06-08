@@ -25,12 +25,10 @@ import {
 } from '../../actions'
 import {
   ShareButton,
-  SharedWithMeButton,
-  SharedByMeButton,
   ShareModal,
-  SharingDetailsModal
-} from '../../sharing'
-import { leave, getSharingDetails } from 'cozy-client'
+  SharedDocument,
+  SharedRecipients
+} from 'sharing'
 
 const { BarRight } = cozy.bar
 
@@ -50,20 +48,21 @@ class Toolbar extends Component {
     const {
       t,
       disabled,
-      shared,
       displayedFolder,
       actions,
       onSelectItemsClick,
       canUpload,
+      hasWriteAccess,
+      isShared,
+      isSharedWithMe,
       uploadFiles,
       downloadAll,
-      leaveFolder,
       trashFolder,
+      onLeave,
       breakpoints: { isMobile }
     } = this.props
+
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
-    const hasWriteAccess =
-      canUpload && (!shared.withMe || shared.sharingType === 'master-master')
 
     const MoreMenu = (
       <Menu
@@ -72,39 +71,26 @@ class Toolbar extends Component {
         className={styles['fil-toolbar-menu']}
         button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
       >
-        {notRootfolder &&
-          !shared.withMe && (
-            <Item>
-              <a
-                className={styles['fil-action-share']}
-                onClick={() => this.setState(toggleShowShareModal)}
-              >
-                {t('toolbar.share')}
-              </a>
-            </Item>
-          )}
-        {shared.withMe && (
+        {notRootfolder && (
           <Item>
             <a
               className={styles['fil-action-share']}
               onClick={() => this.setState(toggleShowShareModal)}
             >
-              {t('Files.share.sharedWithMe')}
+              {t(isSharedWithMe ? 'Files.share.sharedWithMe' : 'toolbar.share')}
             </a>
           </Item>
         )}
-        {hasWriteAccess && (
-          <Item>
-            <UploadButton
-              onUpload={files => uploadFiles(files, displayedFolder)}
-              label={t('toolbar.menu_upload')}
-              className={classNames(
-                styles['fil-action-upload'],
-                styles['u-hide--desk']
-              )}
-            />
-          </Item>
-        )}
+        {canUpload &&
+          hasWriteAccess && (
+            <Item>
+              <UploadButton
+                onUpload={files => uploadFiles(files, displayedFolder)}
+                label={t('toolbar.menu_upload')}
+                className={styles['fil-action-upload']}
+              />
+            </Item>
+          )}
         {actions.addFolder &&
           hasWriteAccess && (
             <Item>
@@ -136,11 +122,15 @@ class Toolbar extends Component {
         </Item>
         {notRootfolder && <hr />}
         {notRootfolder &&
-          (shared.withMe ? (
+          (isSharedWithMe ? (
             <Item>
               <a
                 className={classNames(styles['fil-action-delete'])}
-                onClick={() => leaveFolder(displayedFolder)}
+                onClick={() =>
+                  onLeave(displayedFolder).then(() =>
+                    trashFolder(displayedFolder)
+                  )
+                }
               >
                 {t('toolbar.leave')}
               </a>
@@ -160,83 +150,56 @@ class Toolbar extends Component {
 
     return (
       <div className={styles['fil-toolbar-files']} role="toolbar">
-        {!shared.withMe &&
-          (cozyDev || cozyRecette
-            ? (console.warn('IntentButton is displayed only on dev or recette'),
-              (
-                <IntentButton
-                  className={styles['u-hide--mob']}
-                  action="CREATE"
-                  docType="io.cozy.accounts"
-                  data={{
-                    dataType: 'bill',
-                    closeable: false
-                  }}
-                  label={t('service.bills')}
-                />
-              ))
-            : null)}
-        {hasWriteAccess && (
-          <UploadButton
-            disabled={disabled}
-            onUpload={files => uploadFiles(files, displayedFolder)}
-            label={t('toolbar.item_upload')}
-            className={classNames(styles['c-btn'], styles['u-hide--mob'])}
-          />
-        )}
-        {notRootfolder &&
-          !(shared.withMe || shared.byMe || shared.byLink) && (
-            <ShareButton
-              disabled={disabled}
-              onClick={() => this.setState(toggleShowShareModal)}
-              label={t('toolbar.share')}
+        {!isShared &&
+          (cozyDev || cozyRecette ? (
+            <IntentButton
               className={styles['u-hide--mob']}
+              action="CREATE"
+              docType="io.cozy.accounts"
+              data={{
+                dataType: 'bill',
+                closeable: false
+              }}
+              label={t('service.bills')}
+            />
+          ) : null)}
+        {!isShared &&
+          canUpload &&
+          hasWriteAccess && (
+            <UploadButton
+              disabled={disabled}
+              onUpload={files => uploadFiles(files, displayedFolder)}
+              label={t('toolbar.item_upload')}
+              className={classNames(styles['c-btn'], styles['u-hide--mob'])}
             />
           )}
-        {shared.withMe && (
-          <SharedWithMeButton
-            label={t('Files.share.sharedWithMe')}
+        {notRootfolder && <SharedRecipients docId={displayedFolder.id} />}
+        {notRootfolder && (
+          <ShareButton
+            docId={displayedFolder.id}
+            disabled={disabled}
             onClick={() => this.setState(toggleShowShareModal)}
             className={styles['u-hide--mob']}
           />
         )}
-        {shared.byMe ||
-          (shared.byLink && (
-            <SharedByMeButton
-              label={t('Files.share.sharedByMe')}
-              onClick={() => this.setState(toggleShowShareModal)}
-              className={styles['u-hide--mob']}
-            />
-          ))}
 
         {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
 
-        {this.state.showShareModal &&
-          !shared.withMe && (
-            <ShareModal
-              document={displayedFolder}
-              documentType="Files"
-              sharingDesc={displayedFolder.name}
-              onClose={() => this.setState(toggleShowShareModal)}
-            />
-          )}
-        {this.state.showShareModal &&
-          shared.withMe && (
-            <SharingDetailsModal
-              document={displayedFolder}
-              documentType="Files"
-              sharing={shared}
-              onClose={() => this.setState(toggleShowShareModal)}
-            />
-          )}
+        {this.state.showShareModal && (
+          <ShareModal
+            document={displayedFolder}
+            documentType="Files"
+            sharingDesc={displayedFolder.name}
+            onClose={() => this.setState(toggleShowShareModal)}
+          />
+        )}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  displayedFolder: state.view.displayedFolder,
-  shared: getSharingDetails(state, 'io.cozy.files', ownProps.folderId)
+  displayedFolder: state.view.displayedFolder
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -259,18 +222,31 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )
   },
   downloadAll: folder => dispatch(downloadFiles(folder)),
-  leaveFolder: folder =>
-    dispatch(leave(folder))
-      .then(() => dispatch(trashFiles([folder])))
-      .then(() => ownProps.router.push(`/folder/${folder.parent.id}`)),
   trashFolder: folder =>
     dispatch(trashFiles([folder])).then(() => {
       ownProps.router.push(`/folder/${folder.parent.id}`)
     })
 })
 
+const ToolbarWithSharingContext = props =>
+  !props.displayedFolder ? null : (
+    <SharedDocument docId={props.displayedFolder.id}>
+      {({ isShared, isSharedWithMe, hasWriteAccess, onLeave }) => (
+        <Toolbar
+          {...props}
+          hasWriteAccess={hasWriteAccess}
+          isShared={isShared}
+          isSharedWithMe={isSharedWithMe}
+          onLeave={onLeave}
+        />
+      )}
+    </SharedDocument>
+  )
+
 export default translate()(
   withRouter(
-    withBreakpoints()(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
+    withBreakpoints()(
+      connect(mapStateToProps, mapDispatchToProps)(ToolbarWithSharingContext)
+    )
   )
 )

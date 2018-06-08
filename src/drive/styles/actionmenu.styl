@@ -1,28 +1,4 @@
-@require 'components/popover.styl'
-@require 'settings/z-index.styl'
-
-.fil-actionmenu-backdrop
-    position   fixed
-    z-index    $overlay-index
-    top        0
-    right      0
-    bottom     0
-    left       0
-    display    block
-    background rgba(50, 54, 63, 0.5)
-
 .fil-actionmenu
-    @extend        $popover
-    z-index        $file-action-menu
-    position       fixed
-    bottom         .5625rem
-    width          "calc(100% - %s)" % 1rem
-    margin         0 .5rem
-    padding-bottom .3125rem
-
-    &.with-transition
-        transition transform .1s ease-out
-
     hr
         margin-top 0
 
@@ -37,7 +13,7 @@
     background-position 0 center
     background-repeat no-repeat
 
-.fil-action-availableOffline
+.fil-action-phone-download
     position relative
     background embedurl('../assets/icons/icon-phone-download.svg') 1rem center no-repeat
 
