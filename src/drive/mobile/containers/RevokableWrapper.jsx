@@ -1,5 +1,3 @@
-/* global cozy */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Modal from 'cozy-ui/react/Modal'

@@ -58,6 +58,8 @@ const getPreviousToken = async store => {
 const startApplication = async function(store, client) {
   configureReporter()
 
+  let shouldInitBar = false
+
   try {
     const { client: clientInfos } = store.getState().settings
     const token = await getPreviousToken(store)
@@ -68,18 +70,21 @@ const startApplication = async function(store, client) {
 
     await oauthClient.fetchInformation()
     await restoreCozyClientJs(client.options.uri, clientInfos, token)
+    shouldInitBar = true
     startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
-
   } catch (e) {
     if (e.message === 'Failed to fetch') {
       // the server is not responding, but it doesn't mean we're revoked yet
-      initBar(client)
+      shouldInitBar = true
     }
     else {
       console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
       resetClient(client)
     }
+  }
+  finally {
+    if (shouldInitBar) initBar(client)
   }
 
   useHistoryForTracker(hashHistory)
