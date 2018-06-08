@@ -65,15 +65,6 @@
         "PUT"
       ]
     },
-    "sharings": {
-      "description": "Required to to share photos",
-      "type": "io.cozy.sharings",
-      "methods": [
-        "GET",
-        "POST",
-        "PUT"
-      ]
-    },
     "contacts": {
       "description": "Required to to share photos with your contacts",
       "type": "io.cozy.contacts",
