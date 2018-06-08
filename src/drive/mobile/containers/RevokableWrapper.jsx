@@ -19,7 +19,6 @@ class RevokableWrapper extends Component {
   }
 
   loginagain() {
-    cozy.client._storage.clear()
     this.props.registerDevice(this.context.client)
   }
 

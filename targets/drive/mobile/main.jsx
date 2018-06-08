@@ -62,24 +62,24 @@ const startApplication = async function(store, client) {
     const { client: clientInfos } = store.getState().settings
     const token = await getPreviousToken(store)
 
-    if (clientInfos && token) {
-      const oauthClient = client.getOrCreateStackClient()
-      oauthClient.setOAuthOptions(clientInfos);
-      oauthClient.setCredentials(token)
+    const oauthClient = client.getOrCreateStackClient()
+    oauthClient.setOAuthOptions(clientInfos);
+    oauthClient.setCredentials(token)
 
-      await oauthClient.fetchInformation()
+    await oauthClient.fetchInformation()
+    await restoreCozyClientJs(client.options.uri, clientInfos, token)
+    startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
 
-      await restoreCozyClientJs(client.options.uri, clientInfos, token)
-
-      startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
+  } catch (e) {
+    if (e.message === 'Failed to fetch') {
+      // the server is not responding, but it doesn't mean we're revoked yet
       initBar(client)
     }
-  }
-  catch (e) {
-    console.warn(e)
-    console.warn('Your device is not connected to your server anymore')
-    store.dispatch(revokeClient())
-    resetClient(client)
+    else {
+      console.warn('Your device is not connected to your server anymore')
+      store.dispatch(revokeClient())
+      resetClient(client)
+    }
   }
 
   useHistoryForTracker(hashHistory)
