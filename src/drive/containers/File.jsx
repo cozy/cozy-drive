@@ -117,6 +117,7 @@ const FileName = ({
             style={`background-image: url(${src});`}
           />
         )}
+      />
       {withSharedBadge && (
         <SharedBadge
           docId={attributes.id}
