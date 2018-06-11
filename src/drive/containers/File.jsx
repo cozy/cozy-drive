@@ -94,6 +94,7 @@ const FileName = ({
   isRenaming,
   opening,
   withFilePath,
+  withSharedBadge,
   isMobile,
   formattedSize,
   formattedUpdatedAt
@@ -116,12 +117,13 @@ const FileName = ({
             style={`background-image: url(${src});`}
           />
         )}
-      />
-      <SharedBadge
-        docId={attributes.id}
-        className={styles['fil-content-shared']}
-        xsmall
-      />
+      {withSharedBadge && (
+        <SharedBadge
+          docId={attributes.id}
+          className={styles['fil-content-shared']}
+          xsmall
+        />
+      )}
       {isRenaming ? (
         <RenameInput />
       ) : (
@@ -279,6 +281,7 @@ class File extends Component {
       isRenaming,
       withSelectionCheckbox,
       withFilePath,
+      withSharedBadge,
       isAvailableOffline,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
@@ -316,6 +319,7 @@ class File extends Component {
           isRenaming={isRenaming}
           opening={opening}
           withFilePath={withFilePath}
+          withSharedBadge={withSharedBadge}
           isMobile={isMobile}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
