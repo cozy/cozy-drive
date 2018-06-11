@@ -1,5 +1,3 @@
-/* global cozy */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Modal from 'cozy-ui/react/Modal'
@@ -19,7 +17,6 @@ class RevokableWrapper extends Component {
   }
 
   loginagain() {
-    cozy.client._storage.clear()
     this.props.registerDevice(this.context.client)
   }
 

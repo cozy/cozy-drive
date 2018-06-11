@@ -26,11 +26,12 @@ import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
-import { getLang, initClient, initBar, restoreCozyClientJs } from 'drive/mobile/lib/cozy-helper'
+import { getLang, initClient, initBar, restoreCozyClientJs, resetClient } from 'drive/mobile/lib/cozy-helper'
 import { revokeClient } from 'drive/mobile/actions/authorization'
-import { startReplication } from 'drive/mobile/actions/settings'
+import { startReplication, setToken } from 'drive/mobile/actions/settings'
 import { configureReporter } from 'drive/mobile/lib/reporter'
 import { intentHandlerAndroid, intentHandlerIOS } from 'drive/mobile/lib/intents'
+import { LocalStorage as Storage } from 'cozy-client-js'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -43,27 +44,47 @@ window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
   hashHistory
 )
 
+const getPreviousToken = async store => {
+  if (store.getState().mobile.settings.token) return store.getState().mobile.settings.token
+  else {
+    // transition from version 1.5.3 to the next one, we recover the token stored by cozy-client-js
+    const cozyClientStorage = new Storage()
+    const { token } = await cozyClientStorage.load('creds')
+    store.dispatch(setToken(token))
+    return token
+  }
+}
+
 const startApplication = async function(store, client) {
   configureReporter()
-  const { client: clientInfos } = store.getState().settings
-    const { token } = store.getState().mobile.settings
-  if (clientInfos && token) {
+
+  let shouldInitBar = false
+
+  try {
+    const { client: clientInfos } = store.getState().settings
+    const token = await getPreviousToken(store)
+
     const oauthClient = client.getOrCreateStackClient()
     oauthClient.setOAuthOptions(clientInfos);
     oauthClient.setCredentials(token)
 
-    try {
-      await oauthClient.fetchInformation()
-
-      await restoreCozyClientJs(client.options.uri, clientInfos, token)
-
-      startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
-      initBar(client)
+    await oauthClient.fetchInformation()
+    await restoreCozyClientJs(client.options.uri, clientInfos, token)
+    shouldInitBar = true
+    startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
+  } catch (e) {
+    if (e.message === 'Failed to fetch') {
+      // the server is not responding, but it doesn't mean we're revoked yet
+      shouldInitBar = true
     }
-    catch (e) {
+    else {
       console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
+      resetClient(client)
     }
+  }
+  finally {
+    if (shouldInitBar) initBar(client)
   }
 
   useHistoryForTracker(hashHistory)

@@ -1,4 +1,3 @@
-/* global cozy */
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
@@ -10,7 +9,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from '../ducks/files/RenameInput'
 import { isDirectory } from '../ducks/files/files'
 import Spinner from 'cozy-ui/react/Spinner'
-import Preview from '../components/Preview'
+import { ImageLoader } from 'components/Image'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedBadge, SharedStatus } from 'sharing'
 import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
@@ -107,12 +106,16 @@ const FileName = ({
     { [styles['fil-content-file-openable']]: !isRenaming }
   )
   const { filename, extension } = splitFilename(attributes)
-  const url = cozy.client._url
   return (
     <div className={classes}>
-      {attributes.links &&
-        attributes.links.small && (
-          <Preview thumbnail={`${url}${attributes.links.small}`} />
+      <ImageLoader
+        file={attributes}
+        size="small"
+        render={src => (
+          <div
+            className={styles['fil-file-preview']}
+            style={`background-image: url(${src});`}
+          />
         )}
       {withSharedBadge && (
         <SharedBadge
