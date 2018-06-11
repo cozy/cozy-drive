@@ -102,6 +102,7 @@ class FileList extends PureComponent {
       showActionMenu,
       withSelectionCheckbox,
       withFilePath,
+      withSharedBadge = true,
       isRenaming,
       renamingFile,
       isAvailableOffline
@@ -127,6 +128,7 @@ class FileList extends PureComponent {
         selectionModeActive={selectionModeActive}
         withSelectionCheckbox={withSelectionCheckbox}
         withFilePath={withFilePath}
+        withSharedBadge={withSharedBadge}
         isAvailableOffline={isAvailableOffline && isAvailableOffline(file.id)}
       />
     )

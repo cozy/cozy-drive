@@ -14,6 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
   isTrashContext: true,
   canDrop: false,
   canUpload: false,
+  withSharedBadge: false,
   Toolbar,
   isAvailableOffline: isAvailableOffline(state)
 })
