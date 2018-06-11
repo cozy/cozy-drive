@@ -1,4 +1,3 @@
-/* global cozy */
 import styles from './styles'
 
 import React, { Component } from 'react'
@@ -22,8 +21,6 @@ export default class ImageViewer extends Component {
     this.state = {
       loading: true,
       canceled: false,
-      needLinks: false,
-      links: null,
       scale: 1,
       offsetX: 0,
       offsetY: 0,
@@ -39,12 +36,6 @@ export default class ImageViewer extends Component {
     }
   }
 
-  componentWillMount() {
-    if (!this.props.file.links) {
-      this.setState({ needLinks: true })
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.file &&
@@ -55,8 +46,6 @@ export default class ImageViewer extends Component {
       this.setState({
         loading: true,
         canceled: false,
-        needLinks: !nextProps.file.links,
-        links: null,
         scale: 1,
         offsetX: 0,
         offsetY: 0
@@ -65,25 +54,14 @@ export default class ImageViewer extends Component {
   }
 
   componentDidMount() {
-    this.fetchLinksIfNecessary()
     if (this.props.gestures) this.initGestures()
   }
 
   componentDidUpdate(prevProps, prevState) {
     const wasLoading =
       prevState.loading && !this.state.loading && !this.state.canceled
-    this.fetchLinksIfNecessary()
     if (!prevProps.gestures) this.initGestures()
     if (wasLoading) this.setupGestures()
-  }
-
-  fetchLinksIfNecessary() {
-    if (this.state.needLinks && !this.state.canceled) {
-      cozy.client.files
-        .statById(this.props.file.id, false)
-        .then(resp => this.setState({ needLinks: false, links: resp.links }))
-        .catch(() => this.setState({ canceled: true }))
-    }
   }
 
   componentWillUnmount() {
@@ -93,7 +71,6 @@ export default class ImageViewer extends Component {
   reload = () => {
     this.setState(state => ({
       ...state,
-      needLinks: true,
       loading: true,
       canceled: false
     }))
@@ -235,32 +212,35 @@ export default class ImageViewer extends Component {
     if (this.state.canceled) {
       return <NoNetworkViewer onReload={this.reload} />
     }
-    const file = {
-      ...this.props.file,
-      links: this.props.file.links || this.state.links
-    }
+    const { file } = this.props
     const { scale, offsetX, offsetY } = this.state
     const style = {
       transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`
     }
     return (
       <div className={styles['pho-viewer-imageviewer']}>
-        {(this.state.needLinks || this.state.loading) && (
+        {this.state.loading && (
           <Spinner size="xxlarge" middle noMargin color="white" />
         )}
-        {!this.state.needLinks &&
-          file && (
-            <ImageLoader
-              photo={file}
-              src={`${cozy.client._url}${file.links.large}`}
-              style={style}
-              ref={photo => {
-                this.photo = React.findDOMNode(photo)
-              }}
-              onLoad={this.onImageLoad}
-              onError={this.onImageError}
-            />
-          )}
+        {file && (
+          <ImageLoader
+            file={file}
+            size="large"
+            ref={photo => {
+              this.photo = React.findDOMNode(photo)
+            }}
+            onError={this.onImageError}
+            key={file.id}
+            render={src => (
+              <img
+                style={style}
+                alt={file.name}
+                src={src}
+                onLoad={this.onImageLoad}
+              />
+            )}
+          />
+        )}
       </div>
     )
   }
