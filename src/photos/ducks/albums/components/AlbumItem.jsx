@@ -86,10 +86,15 @@ export default class AlbumItem extends Component {
       <div className={styles['pho-album-photo-item']} />
     ) : (
       <ImageLoader
-        className={styles['pho-album-photo-item']}
-        alt={`${album.name} album cover`}
-        photo={coverPhoto}
-        src={`${cozy.client._url}${coverPhoto.links.small}`}
+        file={coverPhoto}
+        size="small"
+        render={src => (
+          <img
+            src={src}
+            className={styles['pho-album-photo-item']}
+            alt={`${album.name} album cover`}
+          />
+        )}
       />
     )
 

@@ -1,171 +1,142 @@
 /* global cozy */
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 const TTL = 6000
 
-const LOADING = 'LOADING'
-const LOADED = 'LOADED'
 const PENDING = 'PENDING'
+const LOADING_LINK = 'LOADING_LINK'
+const LOADING_FALLBACK = 'LOADING_FALLBACK'
+const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
-// This component handles the load and display of an image fetched from the cozy-stack:
-// It first tries to load the provided `src` (it should be the link to a thumbnail) ;
-// If it fails, it tries to fetch the download url for the provided `photo`, and then
-// it tries to load the raw image. If one of these image loadings (done by instantiating an `Image`)
-// is successful, the image is shown.
-export default class ImageLoader extends Component {
+class ImageLoader extends Component {
   state = {
-    fallbackUrl: null,
-    primaryStatus: LOADING,
-    fallbackStatus: PENDING
-  }
-
-  isLoadingPrimary() {
-    return this.state.primaryStatus === LOADING
-  }
-  shouldLoadPrimary() {
-    return this.isLoadingPrimary() && !this.img
-  }
-  isPrimaryLoaded() {
-    return this.state.primaryStatus === LOADED
-  }
-  isLoadingFallback() {
-    return (
-      this.state.primaryStatus === FAILED &&
-      this.state.fallbackStatus === LOADING
-    )
-  }
-  shouldLoadFallbackUrl() {
-    return this.isLoadingFallback() && !this.state.fallbackUrl
-  }
-  shouldLoadFallback() {
-    return this.isLoadingFallback() && this.state.fallbackUrl && !this.img
-  }
-  isFallbackLoaded() {
-    return this.state.fallbackStatus === LOADED
-  }
-  hasSomethingToShow() {
-    return this.isPrimaryLoaded() || this.isFallbackLoaded()
+    status: PENDING,
+    src: null
   }
 
   componentDidMount() {
-    if (this.shouldLoadPrimary()) {
-      this.createLoader(this.props.src)
+    this.loadNextSrc()
+  }
+
+  componentDidUpdate(prevProps) {
+    const currentId = this.getFileId(this.props.file)
+    const prevId = this.getFileId(prevProps.file)
+
+    if (currentId !== prevId) {
+      this.setState(
+        {
+          status: PENDING,
+          src: null
+        },
+        this.loadNextSrc
+      )
     }
   }
 
-  // If the component is reused to display another image, we reset the state so that
-  // `componentWillUpdate` gets triggered
-  componentWillReceiveProps(nextProps) {
-    if (this.props.src !== nextProps.src) {
-      this.setState(state => ({
-        primaryStatus: nextProps.src ? LOADING : PENDING,
-        fallbackUrl: null,
-        fallbackStatus: PENDING
-      }))
+  getFileId(file) {
+    return file.id || file._id
+  }
+
+  loadNextSrc(lastError = null) {
+    const { status } = this.state
+
+    if (status === PENDING) this.loadLink()
+    else if (status === LOADING_LINK) this.loadFallback()
+    else if (status === LOADING_FALLBACK) {
+      this.setState({ status: FAILED })
+      this.props.onError(lastError)
     }
   }
 
-  // Here is the main logic: depending on the state, we trigger the different fetch we need
-  componentDidUpdate() {
-    if (this.shouldLoadPrimary()) {
-      this.createLoader(this.props.src)
-    } else if (this.shouldLoadFallbackUrl()) {
-      this.getDownloadLink(this.props.photo)
-        .then(url => this.setState(state => ({ ...state, fallbackUrl: url })))
-        .catch(error => this.allIsLost(error))
-    } else if (this.shouldLoadFallback()) {
-      this.createLoader(this.state.fallbackUrl)
+  checkImageSource(src) {
+    return new Promise((resolve, reject) => {
+      this.img = new Image()
+      this.img.onload = resolve
+      this.img.onerror = reject
+      this.img.src = src
+      this.timeout = setTimeout(reject, TTL)
+    })
+  }
+
+  async getFileLink(file) {
+    if (file.links) return file.links
+    else {
+      const response = await cozy.client.files.statById(
+        this.getFileId(file),
+        false
+      )
+      if (!response.links) throw new Error('Could not fetch file links')
+      return response.links
     }
   }
 
-  // for compatibility reasons, we try to use cozy-client but fallback on cozy-client-js
-  getDownloadLink(photo) {
+  async loadLink() {
+    this.setState({ status: LOADING_LINK })
+    const { file, size } = this.props
+    const { client } = this.context
+
+    try {
+      const links = await this.getFileLinks(file, size)
+      const link = links[size]
+
+      if (!link) throw new Error(`${size} link is not available`)
+
+      const src = client.options.uri + link
+      await this.checkImageSource(src)
+      this.setState({
+        status: LOADED,
+        src
+      })
+    } catch (e) {
+      this.loadNextSrc(e)
+    }
+  }
+
+  async loadFallback() {
+    this.setState({ status: LOADING_FALLBACK })
+    const { file } = this.props
+
+    try {
+      const src = await this.getDownloadLink(this.getFileId(file))
+      await this.checkImageSource(src)
+      this.setState({
+        status: LOADED,
+        src
+      })
+    } catch (e) {
+      this.loadNextSrc(e)
+    }
+  }
+
+  getDownloadLink(fileId) {
     return this.context.client
       ? this.context.client
           .collection('io.cozy.files')
-          .getDownloadLinkById(photo._id)
+          .getDownloadLinkById(fileId)
       : cozy.client.files
-          .getDownloadLinkById(photo._id)
+          .getDownloadLinkById(fileId)
           .then(path => `${cozy.client._url}${path}`)
   }
 
-  componentWillUnmount() {
-    this.destroyLoader()
-  }
-
-  createLoader(src) {
-    this.destroyLoader()
-    this.img = new Image()
-    this.img.onload = this.handleLoad
-    this.img.onerror = this.handleError
-    this.img.src = src
-    this.timeout = setTimeout(this.allIsLost, TTL)
-  }
-
-  destroyLoader() {
-    clearTimeout(this.timeout)
-    if (this.img) {
-      this.img.onload = null
-      this.img.onerror = null
-      this.img = null
-    }
-  }
-
-  handleLoad = event => {
-    this.destroyLoader()
-    if (this.isLoadingPrimary()) {
-      this.setState(state => ({ ...state, primaryStatus: LOADED }))
-    } else {
-      this.setState(state => ({ ...state, fallbackStatus: LOADED }))
-    }
-    if (this.props.onLoad) this.props.onLoad(event)
-  }
-
-  handleError = error => {
-    this.destroyLoader()
-    if (this.isLoadingPrimary()) {
-      this.setState(state => ({
-        ...state,
-        primaryStatus: FAILED,
-        fallbackStatus: LOADING
-      }))
-    } else {
-      this.allIsLost(error)
-    }
-  }
-
-  allIsLost = error => {
-    // As this method can be called in 3 different contexts, we have to ensure a coherent state
-    this.destroyLoader()
-    this.setState(state => ({
-      ...state,
-      primaryStatus: FAILED,
-      fallbackStatus: FAILED
-    }))
-    if (this.props.onError) this.props.onError(error)
-  }
-
   render() {
-    if (this.hasSomethingToShow()) {
-      const { photo, src, alt, className, style = {} } = this.props
-      const loadedSource = this.isPrimaryLoaded() ? src : this.state.fallbackUrl
-      return (
-        <img
-          ref={img => {
-            this.img = img
-          }}
-          className={className}
-          style={Object.assign({}, style)}
-          alt={alt || photo.name}
-          src={loadedSource}
-        />
-      )
-    } else if (
-      this.props.preloader &&
-      typeof this.props.preloader === 'function'
-    ) {
-      return this.props.preloader(this.props)
-    }
+    const { src } = this.state
+    const { render } = this.props
+    return src ? render(src) : false
   }
 }
+
+ImageLoader.propTypes = {
+  file: PropTypes.object.isRequired,
+  render: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  onError: PropTypes.func
+}
+
+ImageLoader.defaultProps = {
+  size: 'small',
+  onError: () => {}
+}
+
+export default ImageLoader
