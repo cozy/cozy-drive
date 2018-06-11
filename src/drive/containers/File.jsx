@@ -109,10 +109,7 @@ const FileName = ({
   const url = cozy.client._url
   return (
     <div className={classes}>
-      {attributes.links &&
-        attributes.links.small && (
-          <Preview thumbnail={`${url}${attributes.links.small}`} />
-        )}
+      <Preview file={attributes} size="small" />
       <SharedBadge
         docId={attributes.id}
         className={styles['fil-content-shared']}
