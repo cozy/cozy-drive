@@ -1,4 +1,3 @@
-/* global cozy */
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
@@ -106,7 +105,6 @@ const FileName = ({
     { [styles['fil-content-file-openable']]: !isRenaming }
   )
   const { filename, extension } = splitFilename(attributes)
-  const url = cozy.client._url
   return (
     <div className={classes}>
       <ImageLoader

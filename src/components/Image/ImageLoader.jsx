@@ -1,5 +1,5 @@
 /* global cozy */
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 const TTL = 6000
@@ -10,7 +10,7 @@ const LOADING_FALLBACK = 'LOADING_FALLBACK'
 const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
-class ImageLoader extends Component {
+class ImageLoader extends React.Component {
   state = {
     status: PENDING,
     src: null
@@ -18,21 +18,6 @@ class ImageLoader extends Component {
 
   componentDidMount() {
     this.loadNextSrc()
-  }
-
-  componentDidUpdate(prevProps) {
-    const currentId = this.getFileId(this.props.file)
-    const prevId = this.getFileId(prevProps.file)
-
-    if (currentId !== prevId) {
-      this.setState(
-        {
-          status: PENDING,
-          src: null
-        },
-        this.loadNextSrc
-      )
-    }
   }
 
   getFileId(file) {

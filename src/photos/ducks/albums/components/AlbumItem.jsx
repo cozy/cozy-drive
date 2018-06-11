@@ -1,4 +1,3 @@
-/* global cozy */
 import styles from '../../../styles/albumsList'
 import classNames from 'classnames'
 

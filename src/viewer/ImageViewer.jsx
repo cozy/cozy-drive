@@ -1,4 +1,3 @@
-/* global cozy */
 import styles from './styles'
 
 import React, { Component } from 'react'
@@ -231,6 +230,7 @@ export default class ImageViewer extends Component {
               this.photo = React.findDOMNode(photo)
             }}
             onError={this.onImageError}
+            key={file.id}
             render={src => (
               <img
                 style={style}
