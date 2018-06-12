@@ -46,6 +46,10 @@ class ImageLoader extends React.Component {
         () => reject(new Error('Loading image took too long')),
         TTL
       )
+    }).finally(() => {
+      clearTimeout(this.timeout)
+      this.img.onload = this.img.onerror = null
+      this.img = null
     })
   }
 
