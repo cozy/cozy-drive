@@ -20,6 +20,14 @@ class ImageLoader extends React.Component {
     this.loadNextSrc()
   }
 
+  componentWillUnmount() {
+    if (this.img) {
+      this.img.onload = this.img.onerror = null
+      this.img.src = ''
+      clearTimeout(this.timeout)
+    }
+  }
+
   getFileId(file) {
     return file.id || file._id
   }
@@ -49,6 +57,7 @@ class ImageLoader extends React.Component {
     }).finally(() => {
       clearTimeout(this.timeout)
       this.img.onload = this.img.onerror = null
+      this.img.src = ''
       this.img = null
     })
   }
