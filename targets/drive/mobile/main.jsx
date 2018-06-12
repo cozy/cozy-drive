@@ -77,14 +77,14 @@ const startApplication = async function(store, client) {
       // the server is not responding, but it doesn't mean we're revoked yet
       shouldInitBar = true
     }
-    else if (store.getState().mobile.settings.serverUrl) {
+    else {
       console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
       resetClient(client)
     }
   }
   finally {
-    if (shouldInitBar) initBar(client.options.uri, client)
+    if (shouldInitBar) initBar(client)
   }
 
   useHistoryForTracker(hashHistory)
