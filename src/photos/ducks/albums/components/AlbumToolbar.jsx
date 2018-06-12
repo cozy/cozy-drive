@@ -5,13 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import Menu, { Item } from 'components/Menu'
 import { MoreButton } from 'components/Button'
 
-import {
-  ShareButton,
-  // SharedByMeButton,
-  // SharedWithMeButton,
-  ShareModal
-  // SharingDetailsModal
-} from 'sharing'
+import { ShareButton, ShareModal } from 'sharing'
 
 import classNames from 'classnames'
 
@@ -19,8 +13,7 @@ import styles from '../../../styles/toolbar'
 
 class AlbumToolbar extends Component {
   state = {
-    showShareModal: false,
-    showSharingDetailsModal: false
+    showShareModal: false
   }
 
   showShareModal = () => {
@@ -29,14 +22,6 @@ class AlbumToolbar extends Component {
 
   closeShareModal = () => {
     this.setState({ showShareModal: false })
-  }
-
-  showSharingDetailsModal = () => {
-    this.setState({ showSharingDetailsModal: true })
-  }
-
-  closeSharingDetailsModal = () => {
-    this.setState({ showSharingDetailsModal: false })
   }
 
   render() {
@@ -64,28 +49,6 @@ class AlbumToolbar extends Component {
             label={t('Albums.share.cta')}
             onClick={this.showShareModal}
           />
-          {/* !sharedByMe &&
-            !sharedWithMe && (
-              <ShareButton
-                disabled={disabled}
-                label={t('Albums.share.cta')}
-                onClick={this.showShareModal}
-              />
-            )}
-          {sharedByMe && (
-            <SharedByMeButton
-              disabled={disabled}
-              label={t('Albums.share.sharedByMe')}
-              onClick={this.showShareModal}
-            />
-          )}
-          {sharedWithMe && (
-            <SharedWithMeButton
-              disabled={disabled}
-              label={t('Albums.share.sharedWithMe')}
-              onClick={this.showSharingDetailsModal}
-            />
-          ) */}
         </div>
         <Menu
           disabled={disabled}
@@ -168,19 +131,10 @@ class AlbumToolbar extends Component {
         {this.state.showShareModal && (
           <ShareModal
             document={album}
-            documentType="Albums"
             sharingDesc={album.name}
             onClose={this.closeShareModal}
           />
         )}
-        {/* this.state.showSharingDetailsModal && (
-          <SharingDetailsModal
-            document={album}
-            documentType="Albums"
-            sharingDesc={album.name}
-            onClose={this.closeSharingDetailsModal}
-          />
-        ) */}
       </div>
     )
   }
