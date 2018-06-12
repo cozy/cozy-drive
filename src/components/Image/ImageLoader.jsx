@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TTL = 6000
+const TTL = 10000
 
 const PENDING = 'PENDING'
 const LOADING_LINK = 'LOADING_LINK'
