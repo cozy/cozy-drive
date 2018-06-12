@@ -130,7 +130,7 @@ const ConnectedApp = props => (
     }
   >
     {({ data, fetchStatus }) => (
-      <App album={data ? data[0] : null} fetchStatus={fetchStatus} />
+      <App album={data ? data[0] : null} fetchStatus={fetchStatus} {...props} />
     )}
   </Query>
 )
