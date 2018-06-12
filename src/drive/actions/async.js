@@ -126,8 +126,8 @@ class Stack {
 }
 
 class PouchDB {
-  constructor({ folder, recent, sort }) {
-    this.folderIndex = folder
+  constructor({ folders, recent, sort }) {
+    this.folderIndex = folders
     this.recentIndex = recent
     this.sortIndexes = sort
   }
