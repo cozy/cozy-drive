@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import { Query, withMutations } from 'cozy-client'
+import SharingProvider from 'sharing'
 import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
@@ -89,9 +90,11 @@ const ALBUM_MUTATIONS = (client, ownProps) => ({
 })
 
 const ConnectedAlbumsView = props => (
-  <Query query={ALBUMS_QUERY} as="albums">
-    {result => <AlbumsView albums={result} {...props} />}
-  </Query>
+  <SharingProvider doctype="io.cozy.photos.albums" documentType="Albums">
+    <Query query={ALBUMS_QUERY} as="albums">
+      {result => <AlbumsView albums={result} {...props} />}
+    </Query>
+  </SharingProvider>
 )
 
 const ConnectedAddToAlbumModal = props => (
