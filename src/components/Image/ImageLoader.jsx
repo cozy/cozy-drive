@@ -30,6 +30,7 @@ class ImageLoader extends React.Component {
     if (status === PENDING) this.loadLink()
     else if (status === LOADING_LINK) this.loadFallback()
     else if (status === LOADING_FALLBACK) {
+      console.warn('failed loading thumbnail', lastError)
       this.setState({ status: FAILED })
       this.props.onError(lastError)
     }
@@ -41,11 +42,14 @@ class ImageLoader extends React.Component {
       this.img.onload = resolve
       this.img.onerror = reject
       this.img.src = src
-      this.timeout = setTimeout(reject, TTL)
+      this.timeout = setTimeout(
+        () => reject(new Error('Loading image took too long')),
+        TTL
+      )
     })
   }
 
-  async getFileLink(file) {
+  async getFileLinks(file) {
     if (file.links) return file.links
     else {
       const response = await cozy.client.files.statById(

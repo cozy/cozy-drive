@@ -108,16 +108,18 @@ const FileName = ({
   const { filename, extension } = splitFilename(attributes)
   return (
     <div className={classes}>
-      <ImageLoader
-        file={attributes}
-        size="small"
-        render={src => (
-          <div
-            className={styles['fil-file-preview']}
-            style={`background-image: url(${src});`}
-          />
-        )}
-      />
+      {attributes.class === 'image' && (
+        <ImageLoader
+          file={attributes}
+          size="small"
+          render={src => (
+            <div
+              className={styles['fil-file-preview']}
+              style={`background-image: url(${src});`}
+            />
+          )}
+        />
+      )}
       {withSharedBadge && (
         <SharedBadge
           docId={attributes.id}
