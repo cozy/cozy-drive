@@ -85,7 +85,7 @@ export const startReplication = async (
       console.warn('The device is not connected to your server anymore')
       revokeClient()
     } else if (err.message === 'ETIMEDOUT') {
-      console.log('replcation timed out')
+      console.log('replication timed out')
     } else {
       console.warn(err)
     }

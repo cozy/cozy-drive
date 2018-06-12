@@ -7,10 +7,11 @@ class Stack {
     const folder = await cozy.client.files.statById(folderId, false, {
       limit: FILES_FETCH_LIMIT
     })
+
     const parentId = folder.attributes.dir_id
     const parent =
       !!parentId &&
-      (await cozy.client.files.statById(parentId).catch(ex => {
+      (await cozy.client.files.statById(parentId, false).catch(ex => {
         if (ex.status === 403) {
           console.warn("User don't have access to parent folder")
         } else {
@@ -126,8 +127,8 @@ class Stack {
 }
 
 class PouchDB {
-  constructor({ folder, recent, sort }) {
-    this.folderIndex = folder
+  constructor({ folders, recent, sort }) {
+    this.folderIndex = folders
     this.recentIndex = recent
     this.sortIndexes = sort
   }

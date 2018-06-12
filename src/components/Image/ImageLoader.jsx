@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TTL = 6000
+const TTL = 10000
 
 const PENDING = 'PENDING'
 const LOADING_LINK = 'LOADING_LINK'
@@ -20,6 +20,14 @@ class ImageLoader extends React.Component {
     this.loadNextSrc()
   }
 
+  componentWillUnmount() {
+    if (this.img) {
+      this.img.onload = this.img.onerror = null
+      this.img.src = ''
+      clearTimeout(this.timeout)
+    }
+  }
+
   getFileId(file) {
     return file.id || file._id
   }
@@ -30,6 +38,7 @@ class ImageLoader extends React.Component {
     if (status === PENDING) this.loadLink()
     else if (status === LOADING_LINK) this.loadFallback()
     else if (status === LOADING_FALLBACK) {
+      console.warn('failed loading thumbnail', lastError)
       this.setState({ status: FAILED })
       this.props.onError(lastError)
     }
@@ -41,11 +50,19 @@ class ImageLoader extends React.Component {
       this.img.onload = resolve
       this.img.onerror = reject
       this.img.src = src
-      this.timeout = setTimeout(reject, TTL)
+      this.timeout = setTimeout(
+        () => reject(new Error('Loading image took too long')),
+        TTL
+      )
+    }).finally(() => {
+      clearTimeout(this.timeout)
+      this.img.onload = this.img.onerror = null
+      this.img.src = ''
+      this.img = null
     })
   }
 
-  async getFileLink(file) {
+  async getFileLinks(file) {
     if (file.links) return file.links
     else {
       const response = await cozy.client.files.statById(
