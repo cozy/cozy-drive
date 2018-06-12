@@ -12,7 +12,7 @@ export default class OnBoarding extends Component {
   onboardingSteps = [Files, BackupPhotosVideos, Analytics]
 
   redirectToApp() {
-    initBar(this.context.client)
+    initBar(this.context.client.client.uri, this.context.client)
     this.props.router.replace('/')
   }
 
