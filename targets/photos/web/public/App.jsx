@@ -54,7 +54,7 @@ class App extends Component {
         </div>
       )
     }
-    const { data, next, fetchMore } = album.photos
+    const { data, hasMore } = album.photos
     return (
       <div className={styles['pho-public-layout']}>
         <Selection>
@@ -100,8 +100,8 @@ class App extends Component {
                 onPhotoToggle={selection.toggle}
                 onPhotosSelect={selection.select}
                 onPhotosUnselect={selection.unselect}
-                hasMore={next}
-                onFetchMore={fetchMore}
+                hasMore={hasMore}
+                fetchMore={() => album.photos.fetchMore()}
               />
               {this.renderViewer(this.props.children)}
             </div>
