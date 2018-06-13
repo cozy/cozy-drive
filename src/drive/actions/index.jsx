@@ -19,7 +19,6 @@ import {
   isReferencedByAlbum,
   ALBUMS_DOCTYPE
 } from '../ducks/files/files'
-import { revokeLink as revokeSharingLink } from 'cozy-client'
 import * as availableOffline from '../ducks/files/availableOffline'
 import { alert } from '../lib/confirm'
 import Alerter from 'cozy-ui/react/Alerter'
@@ -317,42 +316,39 @@ export const createFolder = name => {
   }
 }
 
-export const trashFiles = files => {
-  const meta = META_DEFAULTS
-  return async dispatch => {
-    dispatch({ type: TRASH_FILES, files, meta })
-    const trashed = []
-    try {
-      for (const file of files) {
-        trashed.push(await cozy.client.files.trashById(file.id))
+export const trashFiles = files => async (dispatch, _, client) => {
+  dispatch({ type: TRASH_FILES, files, meta: META_DEFAULTS })
+  const trashed = []
+  try {
+    for (const file of files) {
+      trashed.push(await cozy.client.files.trashById(file.id))
 
-        if (isReferencedByAlbum(file)) {
-          for (const ref of file.relationships.referenced_by.data) {
-            if (ref.type === ALBUMS_DOCTYPE) {
-              await cozy.client.data.removeReferencedFiles(
-                { _type: ref.type, _id: ref.id },
-                file.id
-              )
-            }
+      if (isReferencedByAlbum(file)) {
+        for (const ref of file.relationships.referenced_by.data) {
+          if (ref.type === ALBUMS_DOCTYPE) {
+            await cozy.client.data.removeReferencedFiles(
+              { _type: ref.type, _id: ref.id },
+              file.id
+            )
           }
         }
+      }
 
-        dispatch(revokeSharingLink(file))
-      }
-    } catch (err) {
-      if (!isAlreadyInTrash(err)) {
-        Alerter.error('alert.try_again')
-        return dispatch({
-          type: TRASH_FILES_FAILURE
-        })
-      }
+      client.collection('io.cozy.permissions').revokeSharingLink(file)
     }
-    Alerter.success('alert.trash_file_success')
-    return dispatch({
-      type: TRASH_FILES_SUCCESS,
-      ids: files.map(f => f.id)
-    })
+  } catch (err) {
+    if (!isAlreadyInTrash(err)) {
+      Alerter.error('alert.try_again')
+      return dispatch({
+        type: TRASH_FILES_FAILURE
+      })
+    }
   }
+  Alerter.success('alert.trash_file_success')
+  return dispatch({
+    type: TRASH_FILES_SUCCESS,
+    ids: files.map(f => f.id)
+  })
 }
 
 export const downloadFiles = files => {

@@ -54,10 +54,15 @@ const Photo = (props, { client }) => {
           }}
         >
           <ImageLoader
-            photo={photo}
-            className={styles['pho-photo-item']}
-            style={style}
-            src={`${client.options.uri}${photo.links.small}`}
+            file={photo}
+            size="small"
+            render={src => (
+              <img
+                src={src}
+                className={styles['pho-photo-item']}
+                style={style}
+              />
+            )}
           />
         </Link>
       </div>

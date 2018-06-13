@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
@@ -15,7 +15,7 @@
     "deploy:photos": "git-directory-deploy --directory=build/photos/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
     "internal:build": "webpack --config webpack.config.js --bail",
     "internal:watch": "webpack --config webpack.config.js --watch --progress",
-    "tx": "tx pull --all || true",
+    "tx": "tx pull --all --no-interactive || true",
     "preinternal:build": "npm-run-all lint tx",
     "prebuild:drive:browser": "npm run clean:drive:browser",
     "prebuild:photos:browser": "npm run clean:photos:browser",
@@ -146,8 +146,8 @@
   },
   "dependencies": {
     "classnames": "2.2.5",
-    "cozy-bar": "4.10.4",
-    "cozy-client": "1.0.0-beta.9",
+    "cozy-bar": "5.0.5",
+    "cozy-client": "1.0.0-beta.10",
     "cozy-client-js": "0.6.2",
     "cozy-ui": "9.3.1",
     "create-react-context": "0.2.2",

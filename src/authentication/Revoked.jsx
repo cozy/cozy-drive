@@ -11,8 +11,9 @@ class Revoked extends Component {
   }
 
   async logBackIn() {
-    const url = this.props.url || cozy.client._url
-    if (cozy.client) {
+    const url =
+      this.props.url || cozy.client._url || this.context.client.options.uri
+    if (cozy.client && cozy.client._storage) {
       cozy.client._storage.clear()
     }
     try {
@@ -24,7 +25,9 @@ class Revoked extends Component {
         token,
         router: this.props.router
       })
-    } catch (_) {}
+    } catch (e) {
+      console.warn(e)
+    }
   }
 
   render({ t }) {
