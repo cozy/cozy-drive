@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { Alerter, Button } from 'cozy-ui/react'
 import withPersistentState from '../lib/withPersistentState'
-import { SOFTWARE_ID, SOFTWARE_NAME } from '../lib/constants'
+import { SOFTWARE_ID, SOFTWARE_NAME, APP_STORE_ID } from '../lib/constants'
 import FeedbackForm from './FeedbackForm'
 
 import styles from '../styles/feedback'
@@ -34,6 +34,7 @@ class RatingModal extends Component {
           no: t('mobile.rating.rate.no'),
           later: t('mobile.rating.rate.later'),
           softwareID: SOFTWARE_ID,
+          appStoreID: APP_STORE_ID,
           softwareName: SOFTWARE_NAME
         })
 
@@ -110,7 +111,8 @@ const promptRating = async ({
   no,
   later,
   softwareName,
-  softwareID
+  softwareID,
+  appStoreID
 }) =>
   new Promise((resolve, reject) => {
     if (!window.AppRate) reject(new Error('No AppRate found'))
@@ -119,7 +121,7 @@ const promptRating = async ({
         displayAppName: softwareName,
         inAppReview: true,
         storeAppURL: {
-          ios: softwareID,
+          ios: appStoreID,
           android: `market://details?id=${softwareID}`
         },
         customLocale: {
