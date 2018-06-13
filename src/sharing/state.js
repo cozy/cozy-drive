@@ -6,9 +6,20 @@ const ADD_SHARING_LINK = 'ADD_SHARING_LINK'
 const REVOKE_SHARING_LINK = 'REVOKE_SHARING_LINK'
 
 // actions
-export const receiveSharings = data => ({
+export const receiveSharings = ({
+  sharings = [],
+  permissions = [],
+  apps = []
+}) => ({
   type: RECEIVE_SHARINGS,
-  data: { sharings: [], permissions: [], apps: [], ...data }
+  data: {
+    sharings: sharings.filter(
+      // we filter sharings revoked by the recipient
+      s => s.attributes.owner || s.attributes.members[0].status !== 'revoked'
+    ),
+    permissions,
+    apps
+  }
 })
 export const addSharing = data => ({ type: ADD_SHARING, data })
 export const revokeRecipient = (sharing, email) => ({
@@ -25,10 +36,19 @@ export const revokeSharingLink = permissions => ({
 
 // reducers
 const byIdInitialState = { sharings: [], permissions: [] }
-const updateByIdItem = (state, id, updater) => ({
-  ...state,
-  [id]: updater(state[id] || byIdInitialState)
-})
+const isItemEmpty = item =>
+  item.sharings.length === 0 && item.permissions.length === 0
+const updateByIdItem = (state, id, updater) => {
+  const { [id]: byIdState, ...rest } = state
+  const update = updater(byIdState || byIdInitialState)
+  return isItemEmpty(update)
+    ? rest
+    : {
+        ...rest,
+        [id]: update
+      }
+}
+
 const indexSharing = (state = {}, sharing) =>
   getSharedDocIds(sharing).reduce(
     (byId, id) =>
