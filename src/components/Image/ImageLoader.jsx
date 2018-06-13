@@ -45,6 +45,13 @@ class ImageLoader extends React.Component {
   }
 
   checkImageSource(src) {
+    const cleanImageLoader = () => {
+      clearTimeout(this.timeout)
+      this.img.onload = this.img.onerror = null
+      this.img.src = ''
+      this.img = null
+    }
+
     return new Promise((resolve, reject) => {
       this.img = new Image()
       this.img.onload = resolve
@@ -54,12 +61,7 @@ class ImageLoader extends React.Component {
         () => reject(new Error('Loading image took too long')),
         TTL
       )
-    }).finally(() => {
-      clearTimeout(this.timeout)
-      this.img.onload = this.img.onerror = null
-      this.img.src = ''
-      this.img = null
-    })
+    }).then(cleanImageLoader, cleanImageLoader)
   }
 
   async getFileLinks(file) {
