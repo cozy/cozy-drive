@@ -2,8 +2,16 @@
 import { isCordova } from '../mobile/lib/device'
 import { TRASH_DIR_ID, FILES_FETCH_LIMIT } from '../constants/config.js'
 
+export const shouldShowRecentsFirst = (
+  folderPath,
+  parentPath,
+  specialFolders
+) =>
+  specialFolders.indexOf(folderPath) !== -1 ||
+  specialFolders.indexOf(parentPath) !== -1
+
 class Stack {
-  getFolder = async folderId => {
+  getFolder = async (folderId, specialFolders = []) => {
     const folder = await cozy.client.files.statById(folderId, false, {
       limit: FILES_FETCH_LIMIT
     })
@@ -19,12 +27,25 @@ class Stack {
         }
       }))
 
-    const files =
-      folder.relations('contents').filter(f => f !== undefined) || []
+    const recentsFirst =
+      !!parent &&
+      shouldShowRecentsFirst(
+        folder.attributes.path,
+        parent.attributes.path,
+        specialFolders
+      )
+
+    const files = recentsFirst
+      ? await this.getSortedFolder(folderId, 'updated_at', 'desc')
+      : folder
+          .relations('contents')
+          .filter(f => f !== undefined)
+          .map(f => extractFileAttributes(f)) || []
+
     return {
       ...extractFileAttributes(folder),
       contents: {
-        data: files.map(f => extractFileAttributes(f)),
+        data: files,
         meta: {
           count: folder.relationships.contents.meta.count
         }

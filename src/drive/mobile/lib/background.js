@@ -5,6 +5,7 @@ import { loadState } from '../../store/persistedState'
 import { getMediaFolderName } from './media'
 import { startMediaBackup } from 'drive/mobile/ducks/mediaBackup'
 import { isCordova, isIos, isAndroid, getPlatformId } from './device'
+import { getTranslateFunction } from './i18n'
 
 /*
   This files is split on 4 parts:
@@ -89,7 +90,11 @@ const backgroundService = () =>
         const cozyURL = persistedState.mobile.settings.serverUrl
         configureReporter()
         const client = initClient(cozyURL)
-        const store = configureStore(client, persistedState)
+        const store = configureStore(
+          client,
+          getTranslateFunction(),
+          persistedState
+        )
         return store.dispatch(startMediaBackup(getMediaFolderName()))
       })
       .then(resolve)
