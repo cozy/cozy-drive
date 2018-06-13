@@ -95,7 +95,6 @@ describe('Sharing state', () => {
       revokeSelf(SHARING_1)
     )
     expect(state.byDocId).toEqual({
-      folder_1: { sharings: [], permissions: [] },
       folder_2: { sharings: [SHARING_2.id], permissions: [] }
     })
   })
