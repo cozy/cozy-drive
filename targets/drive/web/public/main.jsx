@@ -5,7 +5,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/components/PublicLayout'
@@ -95,7 +95,11 @@ const init = async () => {
       token: sharecode
     })
 
-    const store = configureStore(client)
+    const polyglot = initTranslation(data.cozyLocale, lang =>
+      require(`drive/locales/${lang}`)
+    )
+
+    const store = configureStore(client, polyglot.t.bind(polyglot))
 
     if (
       data.cozyAppName &&
@@ -113,7 +117,7 @@ const init = async () => {
     }
 
     render(
-      <I18n lang={lang} dictRequire={lang => require(`drive/locales/${lang}`)}>
+      <I18n lang={lang} polyglot={polyglot}>
         <CozyProvider store={store} client={client}>
           <Router history={hashHistory}>
             <Route component={PublicLayout}>

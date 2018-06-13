@@ -108,6 +108,9 @@ const sort = (state = null, action) => {
         order: action.sortOrder
       }
     case OPEN_FOLDER_SUCCESS:
+      return action.recentsFirst
+        ? { attribute: 'updated_at', order: 'desc' }
+        : null
     case FETCH_RECENT_SUCCESS:
       return null
     default:

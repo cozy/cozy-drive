@@ -9,7 +9,7 @@ import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
 import { CozyProvider } from 'cozy-client'
 
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 
 import DriveMobileRouter from 'drive/mobile/containers/DriveMobileRouter'
 
@@ -26,11 +26,20 @@ import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
-import { getLang, initClient, initBar, restoreCozyClientJs, resetClient } from 'drive/mobile/lib/cozy-helper'
+import {
+  getLang,
+  initClient,
+  initBar,
+  restoreCozyClientJs,
+  resetClient
+} from 'drive/mobile/lib/cozy-helper'
 import { revokeClient } from 'drive/mobile/actions/authorization'
 import { startReplication, setToken } from 'drive/mobile/actions/settings'
 import { configureReporter } from 'drive/mobile/lib/reporter'
-import { intentHandlerAndroid, intentHandlerIOS } from 'drive/mobile/lib/intents'
+import {
+  intentHandlerAndroid,
+  intentHandlerIOS
+} from 'drive/mobile/lib/intents'
 import { LocalStorage as Storage } from 'cozy-client-js'
 
 if (__DEVELOPMENT__) {
@@ -45,7 +54,8 @@ window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
 )
 
 const getPreviousToken = async store => {
-  if (store.getState().mobile.settings.token) return store.getState().mobile.settings.token
+  if (store.getState().mobile.settings.token)
+    return store.getState().mobile.settings.token
   else {
     // transition from version 1.5.3 to the next one, we recover the token stored by cozy-client-js
     const cozyClientStorage = new Storage()
@@ -55,7 +65,7 @@ const getPreviousToken = async store => {
   }
 }
 
-const startApplication = async function(store, client) {
+const startApplication = async function(store, client, polyglot) {
   configureReporter()
 
   let shouldInitBar = false
@@ -65,7 +75,7 @@ const startApplication = async function(store, client) {
     const token = await getPreviousToken(store)
 
     const oauthClient = client.getOrCreateStackClient()
-    oauthClient.setOAuthOptions(clientInfos);
+    oauthClient.setOAuthOptions(clientInfos)
     oauthClient.setCredentials(token)
 
     await oauthClient.fetchInformation()
@@ -76,14 +86,12 @@ const startApplication = async function(store, client) {
     if (e.message === 'Failed to fetch') {
       // the server is not responding, but it doesn't mean we're revoked yet
       shouldInitBar = true
-    }
-    else if (store.getState().mobile.settings.serverUrl) {
+    } else if (store.getState().mobile.settings.serverUrl) {
       console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
       resetClient(client)
     }
-  }
-  finally {
+  } finally {
     if (shouldInitBar) initBar(client)
   }
 
@@ -94,10 +102,7 @@ const startApplication = async function(store, client) {
   const root = document.querySelector('[role=application]')
 
   render(
-    <I18n
-      lang={getLang()}
-      dictRequire={lang => require(`drive/locales/${lang}`)}
-    >
+    <I18n lang={getLang()} polyglot={polyglot}>
       <CozyProvider store={store} client={client}>
         <DriveMobileRouter history={hashHistory} />
       </CozyProvider>
@@ -159,17 +164,32 @@ var app = {
     return this.client
   },
 
+  getPolyglot: function() {
+    if (!this.polyglot) {
+      this.polyglot = initTranslation(getLang(), lang =>
+        require(`drive/locales/${lang}`)
+      )
+    }
+    return this.polyglot
+  },
+
   getStore: async function() {
     if (this.store) return this.store
     const client = await this.getClient()
+    const polyglot = this.getPolyglot()
     const persistedState = await this.getPersistedState()
-    this.store = configureStore(client, persistedState)
+    this.store = configureStore(
+      client,
+      polyglot.t.bind(polyglot),
+      persistedState
+    )
     return this.store
   },
 
   onDeviceReady: async function() {
     const store = await this.getStore()
     const client = await this.getClient()
+    const polyglot = await this.getPolyglot()
 
     if (window.plugins && window.plugins.intentShim) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
@@ -179,7 +199,7 @@ var app = {
     }
 
     if (!isBackgroundServiceParameter()) {
-      startApplication(store, client)
+      startApplication(store, client, polyglot)
     } else {
       startBackgroundService()
     }

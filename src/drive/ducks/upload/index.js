@@ -61,7 +61,7 @@ const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
   dirID
-) => async (dispatch, getState, client) => {
+) => async (dispatch, getState, { client }) => {
   if (!client) {
     throw new Error(
       'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
