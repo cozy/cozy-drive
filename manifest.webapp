@@ -1,16 +1,16 @@
 {
   "name": "Photos",
   "slug": "photos",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
   "categories": ["cozy"],
   "source": "https://github.com/cozy/cozy-drive",
-  "editor": "Cozy Cloud",
+  "editor": "Cozy",
   "name_prefix": "Cozy",
   "developer": {
-    "name": "Cozy",
+    "name": "Cozy Cloud",
     "url": "https://cozy.io"
   },
   "langs": ["en", "fr"],
