@@ -209,7 +209,8 @@
           "skipUndeclared": true
         }
       ],
-      "react/jsx-no-bind": 1
+      "react/jsx-no-bind": 1,
+      "camelcase": "off"
     },
     "env": {
       "browser": true,
