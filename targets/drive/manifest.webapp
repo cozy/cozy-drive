@@ -7,10 +7,10 @@
   "icon": "public/app-icon.svg",
   "categories": ["cozy"],
   "source": "https://github.com/cozy/cozy-drive",
-  "editor": "Cozy Cloud",
+  "editor": "Cozy",
   "name_prefix": "Cozy",
   "developer": {
-    "name": "Cozy",
+    "name": "Cozy Cloud",
     "url": "https://cozy.io"
   },
   "locales": {
