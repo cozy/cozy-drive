@@ -1,11 +1,7 @@
 {
   "name": "Photos",
   "slug": "photos",
-<<<<<<< HEAD
-  "version": "1.5.6",
-=======
   "version": "1.5.7",
->>>>>>> chore: Bumped versions for dev deployment
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
