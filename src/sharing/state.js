@@ -14,8 +14,7 @@ export const receiveSharings = ({
   type: RECEIVE_SHARINGS,
   data: {
     sharings: sharings.filter(
-      // we filter sharings revoked by the recipient
-      s => s.attributes.owner || s.attributes.members[0].status !== 'revoked'
+      s => !areAllRecipientsRevoked(s) && !hasBeenSelfRevoked(s)
     ),
     permissions,
     apps
@@ -24,7 +23,15 @@ export const receiveSharings = ({
 export const addSharing = data => ({ type: ADD_SHARING, data })
 export const revokeRecipient = (sharing, email) => ({
   type: REVOKE_RECIPIENT,
-  sharing,
+  // we form the updated sharing here so that we can "forget" it in the byId reducer if
+  // there is no not-revoked member remaining
+  sharing: {
+    ...sharing,
+    attributes: {
+      ...sharing.attributes,
+      members: sharing.attributes.members.filter(m => m.email !== email)
+    }
+  },
   email
 })
 export const revokeSelf = sharing => ({ type: REVOKE_SELF, sharing })
@@ -102,6 +109,11 @@ const byDocId = (state = {}, action) => {
       )
     case ADD_SHARING:
       return indexSharing(state, action.data)
+    case REVOKE_RECIPIENT:
+      if (areAllRecipientsRevoked(action.sharing)) {
+        return forgetSharing(state, action.sharing)
+      }
+      return state
     case ADD_SHARING_LINK:
       return indexPermission(state, action.data)
     case REVOKE_SELF:
@@ -147,17 +159,7 @@ const sharings = (state = [], action) => {
       return [...state, action.data]
     case REVOKE_RECIPIENT:
       return state.map(s => {
-        return s.id !== action.sharing.id
-          ? s
-          : {
-              ...s,
-              attributes: {
-                ...s.attributes,
-                members: s.attributes.members.filter(
-                  m => m.email !== action.email
-                )
-              }
-            }
+        return s.id !== action.sharing.id ? s : action.sharing
       })
     case REVOKE_SELF:
       return state.filter(s => s.id !== action.sharing.id)
@@ -261,6 +263,14 @@ const getPermissionDocIds = perm =>
   Object.keys(perm.attributes.permissions)
     .map(k => perm.attributes.permissions[k].values)
     .reduce((acc, val) => [...acc, ...val], [])
+
+const areAllRecipientsRevoked = sharing =>
+  sharing.attributes.owner &&
+  sharing.attributes.members.filter(m => m.status !== 'revoked').length === 1
+
+const hasBeenSelfRevoked = sharing =>
+  !sharing.attributes.owner &&
+  sharing.attributes.members[0].status === 'revoked'
 
 const getDocumentSharingType = (sharing, docId) => {
   if (!sharing) return null
