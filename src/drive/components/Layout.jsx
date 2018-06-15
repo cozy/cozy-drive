@@ -2,7 +2,6 @@ import styles from '../styles/layout'
 
 import React from 'react'
 import classNames from 'classnames'
-import { ModalManager } from 'react-cozy-helpers'
 import { translate } from 'cozy-ui/react/I18n'
 
 import Sidebar from 'cozy-ui/react/Sidebar'
@@ -20,7 +19,6 @@ const Layout = ({ t, children }) => (
     <Alerter t={t} />
     <UploadQueue />
     {children}
-    <ModalManager />
   </div>
 )
 
