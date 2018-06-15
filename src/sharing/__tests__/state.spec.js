@@ -41,6 +41,37 @@ describe('Sharing state', () => {
     expect(state.sharings).toEqual([SHARING_1, SHARING_2])
   })
 
+  it('should filter out sharings revoked by all recipients', () => {
+    const SHARING_2bis = {
+      ...SHARING_2,
+      attributes: {
+        ...SHARING_2.attributes,
+        members: [
+          {
+            status: 'owner',
+            name: 'Jane Doe',
+            email: 'jane@doe.com',
+            instance: 'http://cozy.tools:8080'
+          },
+          {
+            status: 'revoked',
+            name: 'John Doe',
+            email: 'john@doe.com',
+            instance: 'http://cozy.local:8080'
+          }
+        ]
+      }
+    }
+    const state = reducer(
+      undefined,
+      receiveSharings({ sharings: [SHARING_1, SHARING_2bis] })
+    )
+    expect(state.byDocId).toEqual({
+      folder_1: { sharings: [SHARING_1.id], permissions: [] }
+    })
+    expect(state.sharings).toEqual([SHARING_1])
+  })
+
   it('should index received permissions', () => {
     const state = reducer(
       undefined,
