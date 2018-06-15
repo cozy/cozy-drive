@@ -6,10 +6,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import ColorHash from './colorhash'
 import Menu, { Item } from 'components/Menu'
 
-import { getPrimaryEmail, getPrimaryCozy } from '..'
-
-const getDisplayName = ({ name, public_name, email }) =>
-  name || public_name || email
+import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
 const Avatar = ({ name }) => {
   const initial = name.charAt(0)
