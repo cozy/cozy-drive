@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
+import { ModalManager } from 'react-cozy-helpers'
 
 import Main from './Main'
 import Topbar from './Topbar'
@@ -141,6 +142,7 @@ class FolderView extends Component {
             />
           )}
         </Dropzone>
+        <ModalManager />
       </Main>
     )
   }
