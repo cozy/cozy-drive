@@ -6,6 +6,8 @@ import WhoHasAccess from './components/WhoHasAccess'
 
 import Modal from 'cozy-ui/react/Modal'
 
+import { getDisplayName } from '.'
+
 export class SharingDetailsModal extends Component {
   render() {
     const { t, f } = this.context
@@ -28,7 +30,9 @@ export class SharingDetailsModal extends Component {
         <div className={styles['share-modal-content']}>
           <div className={styles['share-details']}>
             <Owner
-              name={t(`${documentType}.share.sharedBy`, { name: owner.name })}
+              name={t(`${documentType}.share.sharedBy`, {
+                name: getDisplayName(owner)
+              })}
               url={owner.instance}
             />
             <div className={styles['share-details-created']}>
