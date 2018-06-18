@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-import { downloadFile } from 'cozy-client'
 import { logException } from '../drive/mobile/lib/reporter'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
@@ -54,10 +53,10 @@ const OpenWithWebButton = ({ t, url }) => (
   />
 )
 
-const DownloadButton = ({ t, file }) => (
+const DownloadButton = ({ t, file }, { client }) => (
   <Button
     className={styles['pho-viewer-noviewer-download']}
-    onClick={() => downloadFile(file)}
+    onClick={() => client.collection('io.cozy.files').download(file)}
     label={t('Viewer.noviewer.download')}
   />
 )
