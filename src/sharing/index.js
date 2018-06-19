@@ -35,6 +35,9 @@ const getPrimaryOrFirst = property => obj => {
   return obj[property].find(property => property.primary) || obj[property][0]
 }
 
+export const getDisplayName = ({ name, public_name, email }) =>
+  name || public_name || email
+
 // TODO: sadly we have different versions of contacts' doctype to handle...
 // A migration tool on the stack side is needed here
 export const getPrimaryEmail = contact =>

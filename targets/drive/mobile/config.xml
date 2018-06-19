@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.drive.mobile" version="1.5.6" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cozy.drive.mobile" version="1.5.7" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -12,7 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <hook src="scripts/update-config-version.sh" type="before_build" />
-    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.5.6" />
+    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.5.7" />
     <engine name="android" spec="6.4.0" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
@@ -72,18 +72,7 @@
         <icon height="152" src="res/icons/ios/icon-76-2x.png" width="152" />
         <icon height="167" src="res/icons/ios/icon-83.5-2x.png" width="167" />
         <icon height="1024" src="store/icons/icon-1024.jpg" width="1024" />
-        <splash height="1136" src="res/screens/ios/screen-iphone-568h-2x.png" width="640" />
-        <splash height="480" src="res/screens/ios/screen-iphone-portrait.png" width="320" />
-        <splash height="960" src="res/screens/ios/screen-iphone-portrait-2x.png" width="640" />
-        <splash height="1334" src="res/screens/ios/screen-iphone-portrait-667h.png" width="750" />
-        <splash height="2208" src="res/screens/ios/screen-iphone-portrait-736h.png" width="1242" />
-        <splash height="1242" src="res/screens/ios/screen-iphone-landscape-736h.png" width="2208" />
-        <splash height="1024" src="res/screens/ios/screen-ipad-portrait.png" width="768" />
-        <splash height="2048" src="res/screens/ios/screen-ipad-portrait-2x.png" width="1536" />
-        <splash height="768" src="res/screens/ios/screen-ipad-landscape.png" width="1024" />
-        <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048" />
-        <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732" />
-        <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048" />
+        <splash src="res/screens/ios/Default@2x~universal~anyany.png" />
     </platform>
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/cozy/cordova-plugin-splashscreen" />
     <preference name="ShowSplashScreenSpinner" value="false" />

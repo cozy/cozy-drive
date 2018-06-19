@@ -6,7 +6,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import ColorHash from './colorhash'
 import Menu, { Item } from 'components/Menu'
 
-import { getPrimaryEmail, getPrimaryCozy } from '..'
+import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
 const Avatar = ({ name }) => {
   const initial = name.charAt(0)
@@ -23,7 +23,7 @@ const Avatar = ({ name }) => {
 
 export const RecipientsAvatars = ({ recipients }) => (
   <div className={styles['pho-recipients-avatars']}>
-    {recipients.map(({ name }) => <Avatar name={name} />)}
+    {recipients.map(recipient => <Avatar name={getDisplayName(recipient)} />)}
   </div>
 )
 
@@ -34,10 +34,10 @@ const Identity = ({ name, url }) => (
   </div>
 )
 
-export const UserAvatar = ({ name, url }) => (
+export const UserAvatar = ({ url, ...rest }) => (
   <div className={styles['pho-avatar']}>
-    <Avatar name={name} />
-    <Identity name={name} url={url} />
+    <Avatar name={getDisplayName(rest)} />
+    <Identity name={getDisplayName(rest)} url={url} />
   </div>
 )
 
@@ -91,10 +91,10 @@ class Status extends Component {
   }
 }
 
-const Recipient = ({ instance, name, ...rest }) => (
+const Recipient = ({ instance, ...rest }) => (
   <div className={styles['pho-recipient']}>
-    <Avatar name={name} />
-    <Identity name={name} url={instance} />
+    <Avatar name={getDisplayName(rest)} />
+    <Identity name={getDisplayName(rest)} url={instance} />
     <Status instance={instance} {...rest} />
   </div>
 )

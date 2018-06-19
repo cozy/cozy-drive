@@ -2,8 +2,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import { showModal } from 'react-cozy-helpers'
 import confirm from '../../lib/confirm'
-import { SharedDocument } from 'sharing'
+import { SharedDocument, ShareModal } from 'sharing'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
@@ -43,6 +44,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         createFolder: name => dispatch(createFolder(name))
       },
       selection: {
+        share: {
+          action: selected =>
+            dispatch(
+              showModal(
+                <ShareModal
+                  document={selected[0]}
+                  documentType="Files"
+                  sharingDesc={selected[0].name}
+                />
+              )
+            ),
+          displayCondition: selections =>
+            hasWriteAccess && selections.length === 1
+        },
         download: {
           action: files => dispatch(downloadFiles(files))
         },

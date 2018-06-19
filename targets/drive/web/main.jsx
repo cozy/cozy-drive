@@ -7,7 +7,7 @@ import 'drive/styles/main'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, hashHistory } from 'react-router'
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
 
@@ -55,13 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
   }
 
-  const store = configureStore(client)
+  const polyglot = initTranslation(data.cozyLocale, lang =>
+    require(`drive/locales/${lang}`)
+  )
+
+  const store = configureStore(client, polyglot.t.bind(polyglot))
 
   render(
-    <I18n
-      lang={data.cozyLocale}
-      dictRequire={lang => require(`drive/locales/${lang}`)}
-    >
+    <I18n lang={data.cozyLocale} polyglot={polyglot}>
       <CozyProvider store={store} client={client}>
         <Router history={history} routes={AppRoute} />
       </CozyProvider>

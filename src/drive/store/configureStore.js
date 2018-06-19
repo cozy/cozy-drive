@@ -14,8 +14,8 @@ import mobileRootReducer from '../mobile/reducers'
 import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from '../mobile/lib/reporter'
 
-const configureStore = (client, initialState = {}) => {
-  const middlewares = [thunkMiddleware.withExtraArgument(client)]
+const configureStore = (client, t, initialState = {}) => {
+  const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
   if (__TARGET__ === 'mobile') {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
   }

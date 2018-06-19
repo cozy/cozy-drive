@@ -1,5 +1,9 @@
 /* global cozy */
-import { getAdapter, extractFileAttributes } from './async'
+import {
+  getAdapter,
+  extractFileAttributes,
+  shouldShowRecentsFirst
+} from './async'
 import {
   getSort,
   getLoadedFilesCount,
@@ -77,7 +81,7 @@ export const openTrash = () => {
 }
 
 export const openFolder = folderId => {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { client, t }) => {
     dispatch({
       type: OPEN_FOLDER,
       folderId,
@@ -86,15 +90,28 @@ export const openFolder = folderId => {
       }
     })
     try {
+      const specialFolders = [
+        t('mobile.settings.media_backup.media_folder'),
+        `/${t('Nav.item_collect')}`
+      ]
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList
-      const folder = await getAdapter(getState()).getFolder(folderId)
-
+      const folder = await getAdapter(getState()).getFolder(
+        folderId,
+        specialFolders
+      )
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder,
         fileCount: folder.contents.meta.count || 0,
-        files: folder.contents.data
+        files: folder.contents.data,
+        recentsFirst:
+          !!folder.parent &&
+          shouldShowRecentsFirst(
+            folder.path,
+            folder.parent.path,
+            specialFolders
+          )
       })
     } catch (err) {
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
@@ -316,7 +333,7 @@ export const createFolder = name => {
   }
 }
 
-export const trashFiles = files => async (dispatch, _, client) => {
+export const trashFiles = files => async (dispatch, _, { client }) => {
   dispatch({ type: TRASH_FILES, files, meta: META_DEFAULTS })
   const trashed = []
   try {
