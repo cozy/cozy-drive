@@ -1,4 +1,10 @@
 /* global prompt */
+const REGISTRATION_ABORT = 'REGISTRATION_ABORT'
+
+// With InAppBrowser
+
+const onIOS = () =>
+  window.cordova !== undefined && window.cordova.platformId === 'ios'
 
 const hasCordovaPlugin = () => {
   return (
@@ -6,10 +12,55 @@ const hasCordovaPlugin = () => {
   )
 }
 
-const REGISTRATION_ABORT = 'REGISTRATION_ABORT'
+// With SafariViewController
 
-export const authenticateWithCordova = url => {
-  if (hasCordovaPlugin()) {
+const hasSafariPlugin = async () => window.SafariViewController !== undefined
+
+const isSafariPluginAvailable = async () => {
+  return new Promise(resolve => {
+    if (!hasSafariPlugin()) {
+      resolve(false)
+      return
+    }
+    window.SafariViewController.isAvailable(available => resolve(available))
+  })
+}
+
+export const authenticateWithCordova = async url => {
+  const isSafari = await isSafariPluginAvailable()
+  if (onIOS() && isSafari) {
+    return new Promise((resolve, reject) => {
+      window.SafariViewController.show(
+        {
+          url: url,
+          transition: 'curl' // (this only works in iOS 9.1/9.2 and lower) unless animated is false you can choose from: curl, flip, fade, slide (default)
+          // enterReaderModeIfAvailable: readerMode, // default false
+          // tintColor: "#00ffff", // default is ios blue
+          // barColor: "#0000ff", // on iOS 10+ you can change the background color as well
+          // controlTintColor: "#ffffff" // on iOS 10+ you can override the default tintColor
+        },
+        // this success handler will be invoked for the lifecycle events 'opened', 'loaded' and 'closed'
+        result => {
+          if (result.event === 'closed') {
+            reject(new Error(REGISTRATION_ABORT))
+          }
+        },
+        error => {
+          console.log('KO: ' + error)
+          reject(new Error(REGISTRATION_ABORT))
+        }
+      )
+
+      const handle = window.handleOpenURL
+      window.handleOpenURL = url => {
+        window.SafariViewController.hide()
+        resolve(url)
+        if (handle) {
+          window.handleOpenURL = handle
+        }
+      }
+    })
+  } else if (hasCordovaPlugin()) {
     return new Promise((resolve, reject) => {
       const target = '_blank'
       const options = 'clearcache=yes,zoom=no'
