@@ -482,5 +482,14 @@
   },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
+  },
+  "TOS": {
+    "updated": {
+      "title": "GDPR comes into reality !",
+      "detail": "In the context of the General Data Protection Regulation, [our Terms of Service have been updated](%{link}) and will apply to all our Cozy users on May 25, 2018.",
+      "cta": "Accept TOS and continue",
+      "disconnect": "Refuse and disconnect",
+      "error": "Something went wrong, please try again later"
+    }
   }
 }
