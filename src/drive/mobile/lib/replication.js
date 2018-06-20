@@ -1,4 +1,9 @@
 /* global cozy emit */
+import PouchDB from 'pouchdb'
+import pouchdbDebug from 'pouchdb-debug'
+
+PouchDB.debug.enable('pouchdb:find')
+
 const clientRevokedMsg = 'Client has been revoked'
 
 export const startReplication = async (
@@ -21,7 +26,12 @@ export const startReplication = async (
     let indexes = existingIndexes || {}
 
     if (!indexes.folders) {
-      indexes.folders = await createIndex(['dir_id', 'type', 'name'])
+      indexes.folders = await createIndex([
+        'dir_id',
+        'type',
+        'name',
+        'updated_at'
+      ])
       indexesCreated(indexes)
     }
 

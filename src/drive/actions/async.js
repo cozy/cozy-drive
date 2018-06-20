@@ -198,33 +198,59 @@ class PouchDB {
     loadedFilesCount = 0
   ) => {
     const shouldSeparateFilesAndFolders = sortAttribute === 'name'
-    const index = this.sortIndexes[sortAttribute]
+    let index = this.sortIndexes[sortAttribute]
     if (!index) {
       throw new Error(`Can't sort on ${sortAttribute}`)
     }
     const db = cozy.client.offline.getDatabase('io.cozy.files')
-    const query = (selector = {}, skipRows = skip) =>
-      db
-        .find({
+    const query = async (selector = {}, skipRows = skip) => {
+      console.time('index')
+      const idx = await db.createIndex({
+        index: { fields: ['dir_id', 'name', 'type'] }
+      })
+      index = idx.id
+      console.timeEnd('index')
+
+      try {
+        console.time('query')
+        const a = await db.find({
           selector: {
             ...selector,
             ...{
               dir_id: folderId,
               _id: { $ne: TRASH_DIR_ID },
-              [sortAttribute]: { $gte: null }
+              [sortAttribute]: { $gt: null }
             }
           },
           use_index: index,
-          sort: [{ [sortAttribute]: sortOrder }],
+          sort: [
+            { dir_id: sortOrder },
+            { [sortAttribute]: sortOrder },
+            { type: sortOrder }
+          ],
           skip: skipRows,
           limit
         })
-        .then(resp => resp.docs.map(f => normalizeFileFromPouchDB(f)))
+        console.timeEnd('query')
+
+        //      console.time('sort')
+        const b = await a.docs.map(f => normalizeFileFromPouchDB(f))
+        //      console.timeEnd('sort')
+
+        return b
+      } catch (e) {
+        console.warn(e)
+        throw e
+      }
+    }
 
     if (shouldSeparateFilesAndFolders) {
+      console.time('getfolders')
       const folders = await query({
         type: 'directory'
       })
+      console.timeEnd('getfolders')
+      console.time('getfiles')
       const files =
         folders.length < limit
           ? await query(
@@ -234,6 +260,7 @@ class PouchDB {
               loadedFilesCount
             )
           : []
+      console.timeEnd('getfiles')
       return [...folders, ...files]
     } else {
       return query()
@@ -271,10 +298,8 @@ export const getAdapter = state =>
 const shouldWorkFromPouchDB = state => {
   const settings = state.settings
   return (
-    isCordova() &&
-    settings.offline &&
-    settings.firstReplication &&
-    settings.indexes
+    //    isCordova() &&
+    settings.offline && settings.firstReplication && settings.indexes
   )
 }
 
