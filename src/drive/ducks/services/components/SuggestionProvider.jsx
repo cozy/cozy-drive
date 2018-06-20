@@ -1,7 +1,7 @@
 /* global cozy */
 import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
-import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
+import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
 const TYPE_DIRECTORY = 'directory'
 
@@ -112,7 +112,7 @@ function getIconUrl(file) {
   const keyIcon =
     file.type === TYPE_DIRECTORY
       ? 'folder'
-      : getFileTypeFromMime(icons)(file.mime) || 'files'
+      : getFileMimetype(icons)(file) || 'files'
 
   const icon = icons[keyIcon].default
 
