@@ -11,8 +11,30 @@ const getPlatformId = () =>
   isCordova() ? window.cordova.platformId : undefined
 
 export class Welcome extends Component {
+  registerRender = () => {
+    const { t, register, allowRegistration } = this.props
+
+    if (allowRegistration) {
+      return (
+        <a className={styles['link']} onClick={register}>
+          {t('mobile.onboarding.welcome.sign_up')}
+        </a>
+      )
+    }
+
+    return (
+      <a
+        href={`https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatformId() ||
+          'browser'}`}
+        className={styles['link']}
+      >
+        {t('mobile.onboarding.welcome.no_account_link')}
+      </a>
+    )
+  }
+
   render() {
-    const { t, selectServer, register, allowRegistration } = this.props
+    const { t, selectServer } = this.props
 
     return (
       <div className={classNames(styles['wizard'], styles['welcome'])}>
@@ -32,19 +54,7 @@ export class Welcome extends Component {
             onClick={selectServer}
             label={t('mobile.onboarding.welcome.button')}
           />
-          {allowRegistration ? (
-            <a className={styles['link']} onClick={register}>
-              {t('mobile.onboarding.welcome.sign_up')}
-            </a>
-          ) : (
-            <a
-              href={`https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatformId() ||
-                'browser'}`}
-              className={styles['link']}
-            >
-              {t('mobile.onboarding.welcome.no_account_link')}
-            </a>
-          )}
+          {this.registerRender()}
         </footer>
       </div>
     )
