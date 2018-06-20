@@ -1,14 +1,12 @@
 import React from 'react'
-import classNames from 'classnames'
+import { Layout } from 'cozy-ui/react/Layout'
 import Alerter from 'cozy-ui/react/Alerter'
 
-import styles from '../styles/layout'
-
 const PublicLayout = ({ t, children }) => (
-  <div className={classNames(styles['fil-wrapper'], styles['coz-sticky'])}>
+  <Layout>
     <Alerter t={t} />
     {children}
-  </div>
+  </Layout>
 )
 
 export default PublicLayout

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import classnames from 'classnames'
 
 import Main from './Main'
+import { Content } from 'cozy-ui/react/Layout'
 import FolderContent from './FolderContent'
 import FileListHeader from './FileListHeader'
 import Topbar from './Topbar'
@@ -109,7 +110,7 @@ class DumbFolderView extends React.Component {
             </Menu>
           </div>
         </Topbar>
-        <div role="contentinfo">
+        <Content>
           <div className={styles['fil-content-table']}>
             <FileListHeader />
             <div className={styles['fil-content-body']}>
@@ -130,7 +131,7 @@ class DumbFolderView extends React.Component {
               )}
             </div>
           </div>
-        </div>
+        </Content>
       </Main>
     )
   }
