@@ -1,9 +1,7 @@
 import mime from 'mime-types'
 
 const getMimetypeFromFilename = name => {
-  if (/\.heic$/i.test(name)) return 'image/heic'
-  else if (/\.heif$/i.test(name)) return 'image/heif'
-  else return mime.lookup(name) || 'application/octet-stream'
+  return mime.lookup(name) || 'application/octet-stream'
 }
 
 const mappingMimetypeSubtype = {
