@@ -14,9 +14,9 @@ const hasCordovaPlugin = () => {
 
 // With SafariViewController
 
-const hasSafariPlugin = async () => window.SafariViewController !== undefined
+const hasSafariPlugin = () => window.SafariViewController !== undefined
 
-const isSafariPluginAvailable = async () => {
+const isSafariPluginAvailable = () => {
   return new Promise(resolve => {
     if (!hasSafariPlugin()) {
       resolve(false)
