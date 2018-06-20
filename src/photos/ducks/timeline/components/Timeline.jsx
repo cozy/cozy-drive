@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styles from '../../../styles/layout'
+
+import { Content } from 'cozy-ui/react/Layout'
 import Topbar from '../../../components/Topbar'
 import Toolbar from './Toolbar'
 import DeleteConfirm from './DeleteConfirm'
@@ -73,7 +75,7 @@ export default class Timeline extends Component {
                 selectItems={selection.show}
               />
             </Topbar>
-            <div role="contentinfo">
+            <Content>
               {this.state.showAddAlbumModal && (
                 <AddToAlbumModal
                   onDismiss={this.hideAddAlbumModal}
@@ -93,7 +95,7 @@ export default class Timeline extends Component {
                 hasMore={hasMore}
                 fetchMore={fetchMore}
               />
-            </div>
+            </Content>
             {this.renderViewer(this.props.children)}
           </div>
         )}

@@ -2,6 +2,7 @@ import styles from '../../../styles/albumsList'
 
 import React from 'react'
 
+import { Content } from 'cozy-ui/react/Layout'
 import { EmptyPhotos } from 'components/Error/Empty'
 import AlbumItem from './AlbumItem'
 
@@ -18,7 +19,7 @@ const AlbumsList = props =>
   props.albums.length === 0 ? (
     <EmptyPhotos localeKey="albums" />
   ) : (
-    <div role="contentinfo">
+    <Content>
       <div className={styles['pho-album-list']}>
         {props.albums
           .sort(sortByCreationDate)
@@ -30,7 +31,7 @@ const AlbumsList = props =>
             />
           ))}
       </div>
-    </div>
+    </Content>
   )
 
 export default AlbumsList

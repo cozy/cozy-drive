@@ -96,7 +96,7 @@ class FolderView extends Component {
           />
         </Topbar>
         <Dropzone
-          role="contentinfo"
+          role="main"
           disabled={__TARGET__ === 'mobile' || !canDrop}
           displayedFolder={displayedFolder}
           onDrop={uploadFiles}
