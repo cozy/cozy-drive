@@ -1,16 +1,29 @@
+import mime from 'mime-types'
+
+const getMimetypeFromFilename = name => {
+  if (/\.heic$/i.test(name)) return 'image/heic'
+  else if (/\.heif$/i.test(name)) return 'image/heif'
+  else return mime.lookup(name) || 'application/octet-stream'
+}
+
 const mappingMimetypeSubtype = {
   word: 'text',
+  text: 'text',
   zip: 'zip',
   pdf: 'pdf',
   spreadsheet: 'sheet',
   excel: 'sheet',
+  sheet: 'sheet',
   presentation: 'slide',
   powerpoint: 'slide'
 }
 
-export const getFileTypeFromMime = (collection, prefix = '') => (
-  mimetype = ''
-) => {
+export const getFileMimetype = (collection, prefix = '') => file => {
+  const mimetype =
+    file.mime === 'application/octet-stream'
+      ? getMimetypeFromFilename(file.name.toLowerCase())
+      : file.mime
+
   const [type, subtype] = mimetype.split('/')
   if (collection[prefix + type]) {
     return type
