@@ -1,3 +1,5 @@
+@require 'settings/palette.styl'
+
 .fil-actionmenu
     hr
         margin-top 0
@@ -6,12 +8,21 @@
     padding     1.25rem 1.5rem 1.25rem 1.25rem
     font-size   1rem
     font-weight bold
+    display     flex
 
 .fil-actionmenu-file
     margin-left   1.1875rem
     padding-left  2.8125rem
     background-position 0 center
     background-repeat no-repeat
+
+.fil-actionmenu-file-name
+    overflow hidden
+    text-overflow ellipsis
+    white-space   nowrap
+
+.fil-actionmenu-file-ext
+    color coolGrey
 
 .fil-action-phone-download
     position relative

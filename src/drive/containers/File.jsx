@@ -20,8 +20,8 @@ export const splitFilename = file =>
   isDirectory(file)
     ? { filename: file.name, extension: '' }
     : {
-        extension: file.name.slice(file.name.lastIndexOf('.') + 1),
-        filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
+        extension: file.name.slice(file.name.lastIndexOf('.')),
+        filename: file.name.slice(0, file.name.lastIndexOf('.'))
       }
 
 export const getClassFromMime = attrs => {
