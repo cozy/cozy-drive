@@ -4,11 +4,7 @@ import {
   extractFileAttributes,
   shouldShowRecentsFirst
 } from './async'
-import {
-  getSort,
-  getLoadedFilesCount,
-  getLoadedFoldersCount
-} from '../reducers'
+import { getSort } from '../reducers'
 import React from 'react'
 import { isCordova } from '../mobile/lib/device'
 import {
@@ -162,6 +158,7 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
     const sort = getSort(getState())
     dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
     try {
+      console.time('fetchmore')
       const files =
         sort === null
           ? await getAdapter(getState()).getFolderContents(
@@ -174,10 +171,9 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
               sort.attribute,
               sort.order,
               skip,
-              limit,
-              getLoadedFoldersCount(getState()),
-              getLoadedFilesCount(getState())
+              limit
             )
+      console.timeEnd('fetchmore')
       return dispatch({
         type: FETCH_MORE_FILES_SUCCESS,
         files,

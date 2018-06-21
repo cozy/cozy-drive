@@ -269,11 +269,6 @@ export const getFilesWithLinks = ({ view }, folderId) =>
 
 export const getVisibleFiles = ({ view }) => view.files
 
-export const getLoadedFilesCount = ({ view }) =>
-  view.files.filter(f => f.type !== 'directory').length
-export const getLoadedFoldersCount = ({ view }) =>
-  view.files.filter(f => f.type === 'directory').length
-
 export const getSort = ({ view }) => view.sort
 
 export const getFileById = ({ view }, id) => {

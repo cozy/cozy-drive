@@ -66,50 +66,64 @@ class Stack {
     return files.map(c => extractFileAttributes(c))
   }
 
+  query = async ({ folderId, type, sortAttribute, sortOrder, skip, limit }) => {
+    const index = await cozy.client.data.defineIndex('io.cozy.files', [
+      'dir_id',
+      'type',
+      sortAttribute
+    ])
+    const response = await cozy.client.files.query(index, {
+      selector: {
+        dir_id: folderId,
+        type,
+        name: { $gt: null }
+      },
+      sort: [
+        { dir_id: sortOrder },
+        { type: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ],
+      skip,
+      limit,
+      wholeResponse: true
+    })
+
+    return response.data.map(f => extractFileAttributes(f))
+  }
+
   getSortedFolder = async (
     folderId,
     sortAttribute,
     sortOrder = 'asc',
     skip = 0,
-    limit = FILES_FETCH_LIMIT,
-    loadedFoldersCount = 0,
-    loadedFilesCount = 0
+    limit = FILES_FETCH_LIMIT
   ) => {
-    const shouldSeparateFilesAndFolders = sortAttribute === 'name'
-    const index = await cozy.client.data.defineIndex('io.cozy.files', [
-      sortAttribute
-    ])
-    const query = (selector, skipRows = skip) =>
-      cozy.client.files
-        .query(index, {
-          selector,
-          sort: [{ [sortAttribute]: sortOrder }],
-          skip: skipRows,
-          limit,
-          wholeResponse: true
-        })
-        .then(resp => resp.data.map(f => extractFileAttributes(f)))
+    const isFirstLoad = skip === 0
+    let folders = []
 
-    if (shouldSeparateFilesAndFolders) {
-      const folders = await query({ dir_id: folderId, type: 'directory' })
-      const files =
-        folders.length < limit
-          ? await query(
-              { dir_id: folderId, type: { $ne: 'directory' } },
-              loadedFilesCount
-            )
-          : []
-      return [
-        // this query returns the trash folder without an ID...
-        // and we don't want to filter that in the query function because
-        // it'll mess with the pagination...
-        ...folders.filter(f => f.name !== '.cozy_trash'),
-        ...files
-      ]
-    } else {
-      const resp = await query({ dir_id: folderId })
-      return resp.filter(f => f.name !== '.cozy_trash')
+    if (isFirstLoad) {
+      const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
+      const allFolders = await this.query({
+        folderId,
+        type: 'directory',
+        sortAttribute,
+        sortOrder: folderSortingOrder,
+        skip,
+        limit
+      })
+      folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
     }
+
+    const files = await this.query({
+      folderId,
+      type: 'file',
+      sortAttribute,
+      sortOrder,
+      skip,
+      limit
+    })
+
+    return [...folders, ...files]
   }
 
   RECENT_FILES_INDEX_FIELDS = ['updated_at', 'trashed']
@@ -211,7 +225,7 @@ class PouchDB {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
 
     console.time('query')
-    const a = await db.find({
+    const response = await db.find({
       selector: {
         dir_id: folderId,
         type: type,
@@ -228,7 +242,7 @@ class PouchDB {
     })
     console.timeEnd('query')
 
-    return a.docs.map(this.normalizeFileFromPouchDB)
+    return response.docs.map(this.normalizeFileFromPouchDB)
   }
 
   getIndex(attribute) {
@@ -252,9 +266,7 @@ class PouchDB {
     sortAttribute,
     sortOrder = 'asc',
     skip = 0,
-    limit = FILES_FETCH_LIMIT,
-    loadedFoldersCount = 0,
-    loadedFilesCount = 0
+    limit = FILES_FETCH_LIMIT
   ) => {
     const isFirstLoad = skip === 0
     let folders = []
