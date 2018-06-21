@@ -148,10 +148,13 @@ class Stack {
 }
 
 class PouchDB {
-  constructor({ folders, recent, sort }) {
-    this.folderIndex = folders
-    this.recentIndex = recent
-    this.sortIndexes = sort
+  constructor({ byName, byUpdatedAt, bySize }) {
+    this.indexes = {
+      folders: byName,
+      filesByName: byName,
+      filesByUpdate: byUpdatedAt,
+      filesBySize: bySize
+    }
   }
 
   getFolder = async folderId => {
@@ -188,6 +191,54 @@ class PouchDB {
     return files
   }
 
+  query = async ({
+    index,
+    folderId,
+    type,
+    sortAttribute,
+    sortOrder,
+    skip,
+    limit
+  }) => {
+    const db = cozy.client.offline.getDatabase('io.cozy.files')
+
+    console.time('query')
+    const a = await db.find({
+      selector: {
+        dir_id: folderId,
+        type: type,
+        [sortAttribute]: { $gt: null }
+      },
+      use_index: index,
+      sort: [
+        { dir_id: sortOrder },
+        { type: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ],
+      skip,
+      limit
+    })
+    console.timeEnd('query')
+
+    return a.docs.map(f => normalizeFileFromPouchDB(f))
+  }
+
+  getIndex(attribute) {
+    switch (attribute) {
+      case 'name':
+        return this.indexes.filesByName
+      case 'updated_at':
+        return this.indexes.filesByUpdate
+      case 'size':
+        return this.indexes.filesBySize
+      default:
+        console.warn(
+          `No suitable index for attribute ${attribute}. This might be slow.`
+        )
+        return null
+    }
+  }
+
   getSortedFolder = async (
     folderId,
     sortAttribute,
@@ -197,74 +248,34 @@ class PouchDB {
     loadedFoldersCount = 0,
     loadedFilesCount = 0
   ) => {
-    const shouldSeparateFilesAndFolders = sortAttribute === 'name'
-    let index = this.sortIndexes[sortAttribute]
-    if (!index) {
-      throw new Error(`Can't sort on ${sortAttribute}`)
-    }
-    const db = cozy.client.offline.getDatabase('io.cozy.files')
-    const query = async (selector = {}, skipRows = skip) => {
-      console.time('index')
-      const idx = await db.createIndex({
-        index: { fields: ['dir_id', 'name', 'type'] }
-      })
-      index = idx.id
-      console.timeEnd('index')
+    const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
 
-      try {
-        console.time('query')
-        const a = await db.find({
-          selector: {
-            ...selector,
-            ...{
-              dir_id: folderId,
-              _id: { $ne: TRASH_DIR_ID },
-              [sortAttribute]: { $gt: null }
-            }
-          },
-          use_index: index,
-          sort: [
-            { dir_id: sortOrder },
-            { [sortAttribute]: sortOrder },
-            { type: sortOrder }
-          ],
-          skip: skipRows,
-          limit
-        })
-        console.timeEnd('query')
+    console.time('getfolders')
+    const allFolders = await this.query({
+      index: this.indexes.folders,
+      folderId,
+      type: 'directory',
+      sortAttribute: 'name',
+      sortOrder: folderSortingOrder,
+      skip: 0,
+      limit: null
+    })
+    const folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
+    console.timeEnd('getfolders')
 
-        //      console.time('sort')
-        const b = await a.docs.map(f => normalizeFileFromPouchDB(f))
-        //      console.timeEnd('sort')
+    console.time('getfiles')
 
-        return b
-      } catch (e) {
-        console.warn(e)
-        throw e
-      }
-    }
-
-    if (shouldSeparateFilesAndFolders) {
-      console.time('getfolders')
-      const folders = await query({
-        type: 'directory'
-      })
-      console.timeEnd('getfolders')
-      console.time('getfiles')
-      const files =
-        folders.length < limit
-          ? await query(
-              {
-                type: { $ne: 'directory' }
-              },
-              loadedFilesCount
-            )
-          : []
-      console.timeEnd('getfiles')
-      return [...folders, ...files]
-    } else {
-      return query()
-    }
+    const files = await this.query({
+      index: this.getIndex(sortAttribute),
+      folderId,
+      type: 'file',
+      sortAttribute,
+      sortOrder,
+      skip,
+      limit
+    })
+    console.timeEnd('getfiles')
+    return [...folders, ...files]
   }
 
   getRecentFiles = async () => {

@@ -4,6 +4,8 @@ import pouchdbDebug from 'pouchdb-debug'
 
 PouchDB.debug.enable('pouchdb:find')
 
+import { ROOT_DIR_ID } from '../../constants/config.js'
+
 const clientRevokedMsg = 'Client has been revoked'
 
 export const startReplication = async (
@@ -25,17 +27,22 @@ export const startReplication = async (
 
     let indexes = existingIndexes || {}
 
-    if (!indexes.folders) {
-      indexes.folders = await createIndex([
-        'dir_id',
-        'type',
-        'name',
-        'updated_at'
-      ])
+    if (!indexes.byName) {
+      indexes.byName = await createIndex(['dir_id', 'type', 'name'])
       indexesCreated(indexes)
     }
 
-    if (!indexes.recent) {
+    if (!indexes.byUpdatedAt) {
+      indexes.byUpdatedAt = await createIndex(['dir_id', 'type', 'updated_at'])
+      indexesCreated(indexes)
+    }
+
+    if (!indexes.bySize) {
+      indexes.bySize = await createIndex(['dir_id', 'type', 'size'])
+      indexesCreated(indexes)
+    }
+
+    if (!indexes.recentFiles) {
       const ddoc = {
         _id: '_design/my_index',
         views: {
@@ -47,16 +54,7 @@ export const startReplication = async (
         }
       }
       await db.put(ddoc)
-      indexes.recent = 'my_index/recent_files'
-      indexesCreated(indexes)
-    }
-
-    if (!indexes.sort) {
-      indexes.sort = {
-        name: await createIndex(['name']),
-        updated_at: await createIndex(['updated_at']),
-        size: await createIndex(['size'])
-      }
+      indexes.recentFiles = 'my_index/recent_files'
       indexesCreated(indexes)
     }
 
@@ -67,18 +65,23 @@ export const startReplication = async (
       await db.query('my_index/recent_files', {
         limit: 0
       })
-      // not sure this one is really necessary...
-      if (indexes.folders) {
-        await db.find({
+
+      const warmUpIndex = (index, attribute) =>
+        db.find({
           selector: {
-            dir_id: { $gte: null },
-            name: { $gte: null },
-            type: { $gte: null }
+            dir_id: ROOT_DIR_ID,
+            type: 'directory',
+            [attribute]: { $gte: null }
           },
-          use_index: indexes.folders,
+          use_index: index,
           limit: 0
         })
-      }
+
+      if (indexes.byName) await warmUpIndex(indexes.byName, 'name')
+      if (indexes.byUpdatedAt)
+        await warmUpIndex(indexes.byUpdatedAt, 'updated_at')
+      if (indexes.bySize) await warmUpIndex(indexes.bySize, 'size')
+
       console.log('indexes ready')
       firstReplicationFinished()
     }
