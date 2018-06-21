@@ -181,20 +181,21 @@ class PouchDB {
 
   getFolderContents = async (folderId, skip = 0, limit = FILES_FETCH_LIMIT) => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
+    console.time('foldercontent')
     const resp = await db.find({
       selector: {
         dir_id: folderId,
         type: { $gt: null },
-        name: { $gt: null }
+        name: { $gt: null },
+        _id: { $ne: TRASH_DIR_ID }
       },
       use_index: this.indexes.filesByName,
       sort: ['dir_id', 'type', 'name'],
       limit,
       skip
     })
-    const files = resp.docs
-      .filter(f => f._id !== TRASH_DIR_ID)
-      .map(this.normalizeFileFromPouchDB)
+    console.timeEnd('foldercontent')
+    const files = resp.docs.map(this.normalizeFileFromPouchDB)
     return files
   }
 
@@ -255,23 +256,27 @@ class PouchDB {
     loadedFoldersCount = 0,
     loadedFilesCount = 0
   ) => {
-    const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
+    const isFirstLoad = skip === 0
+    let folders = []
 
-    console.time('getfolders')
-    const allFolders = await this.query({
-      index: this.indexes.folders,
-      folderId,
-      type: 'directory',
-      sortAttribute: 'name',
-      sortOrder: folderSortingOrder,
-      skip: 0,
-      limit: null
-    })
-    const folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
-    console.timeEnd('getfolders')
+    if (isFirstLoad) {
+      const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
+
+      console.time('getfolders')
+      const allFolders = await this.query({
+        index: this.indexes.folders,
+        folderId,
+        type: 'directory',
+        sortAttribute: 'name',
+        sortOrder: folderSortingOrder,
+        skip: 0,
+        limit: null
+      })
+      folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
+      console.timeEnd('getfolders')
+    }
 
     console.time('getfiles')
-
     const files = await this.query({
       index: this.getIndex(sortAttribute),
       folderId,

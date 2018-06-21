@@ -25,7 +25,7 @@ class FileList extends PureComponent {
 
   checkIntersectionsEntries = intersectionEntries => {
     if (intersectionEntries.filter(entry => entry.isIntersecting).length > 0) {
-      this.loadMoreRows(FILES_FETCH_LIMIT)
+      if (!this.state.isLoading) this.loadMoreRows(FILES_FETCH_LIMIT)
     }
   }
 
@@ -45,13 +45,12 @@ class FileList extends PureComponent {
   }
 
   shouldDisplayLoadMore() {
-    // We're in /recent
     if (!this.props.displayedFolder) return false
-    if (isCordova()) {
+    else if (isCordova() || true) {
+      // We're in /recent
       if (this.props.files.length < FILES_FETCH_LIMIT) return false
       return !this.state.hasNoMoreRows
-    }
-    return this.props.files.length < this.props.fileCount
+    } else return this.props.files.length < this.props.fileCount
   }
 
   render() {
