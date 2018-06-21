@@ -126,23 +126,18 @@ class Stack {
     return [...folders, ...files]
   }
 
-  RECENT_FILES_INDEX_FIELDS = ['updated_at', 'trashed']
-  RECENT_FILES_QUERY_OPTIONS = {
-    selector: {
-      updated_at: { $gt: null },
-      trashed: false
-    },
-    sort: [{ updated_at: 'desc' }],
-    limit: FILES_FETCH_LIMIT
-  }
-
   getRecentFiles = async () => {
-    const index = await cozy.client.data.defineIndex(
-      'io.cozy.files',
-      this.RECENT_FILES_INDEX_FIELDS
-    )
+    const index = await cozy.client.data.defineIndex('io.cozy.files', [
+      'updated_at',
+      'trashed'
+    ])
     const resp = await cozy.client.files.query(index, {
-      ...this.RECENT_FILES_QUERY_OPTIONS,
+      selector: {
+        updated_at: { $gt: null },
+        trashed: false
+      },
+      sort: [{ updated_at: 'desc' }, { trashed: 'desc' }],
+      limit: FILES_FETCH_LIMIT,
       wholeResponse: true
     })
     return resp.data.map(f => ({
