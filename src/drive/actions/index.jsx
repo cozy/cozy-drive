@@ -88,7 +88,8 @@ export const openFolder = folderId => {
     try {
       const specialFolders = [
         t('mobile.settings.media_backup.media_folder'),
-        `/${t('Nav.item_collect')}`
+        `/${t('Nav.item_collect')}`,
+        '/Administrative'
       ]
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList

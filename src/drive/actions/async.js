@@ -173,11 +173,18 @@ class PouchDB {
     _type: 'io.cozy.files'
   })
 
-  getFolder = async folderId => {
+  getFolder = async (folderId, specialFolders = []) => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     const folder = await db.get(folderId)
     const parent = !!folder.dir_id && (await db.get(folder.dir_id))
-    const files = await this.getFolderContents(folderId)
+    const recentsFirst =
+      !!parent &&
+      shouldShowRecentsFirst(folder.path, parent.path, specialFolders)
+
+    const files = recentsFirst
+      ? await this.getSortedFolder(folderId, 'updated_at', 'desc')
+      : await this.getFolderContents(folderId)
+
     return {
       ...this.normalizeFileFromPouchDB(folder),
       contents: {
@@ -269,7 +276,6 @@ class PouchDB {
     if (isFirstLoad) {
       const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
 
-      console.time('getfolders')
       const allFolders = await this.query({
         index: this.indexes.folders,
         folderId,
@@ -280,10 +286,8 @@ class PouchDB {
         limit: null
       })
       folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
-      console.timeEnd('getfolders')
     }
 
-    console.time('getfiles')
     const files = await this.query({
       index: this.getIndex(sortAttribute),
       folderId,
@@ -293,7 +297,6 @@ class PouchDB {
       skip,
       limit
     })
-    console.timeEnd('getfiles')
     return [...folders, ...files]
   }
 
