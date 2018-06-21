@@ -148,14 +148,21 @@ class Stack {
 }
 
 class PouchDB {
-  constructor({ byName, byUpdatedAt, bySize }) {
+  constructor({ byName, byUpdatedAt, bySize, recentFiles }) {
     this.indexes = {
       folders: byName,
       filesByName: byName,
       filesByUpdate: byUpdatedAt,
-      filesBySize: bySize
+      filesBySize: bySize,
+      recentFiles: recentFiles
     }
   }
+
+  normalizeFileFromPouchDB = f => ({
+    ...f,
+    id: f._id,
+    _type: 'io.cozy.files'
+  })
 
   getFolder = async folderId => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
@@ -163,12 +170,12 @@ class PouchDB {
     const parent = !!folder.dir_id && (await db.get(folder.dir_id))
     const files = await this.getFolderContents(folderId)
     return {
-      ...normalizeFileFromPouchDB(folder),
+      ...this.normalizeFileFromPouchDB(folder),
       contents: {
         data: files,
         meta: {}
       },
-      parent: !!parent && normalizeFileFromPouchDB(parent)
+      parent: !!parent && this.normalizeFileFromPouchDB(parent)
     }
   }
 
@@ -177,17 +184,17 @@ class PouchDB {
     const resp = await db.find({
       selector: {
         dir_id: folderId,
-        name: { $gte: null },
-        type: { $gte: null }
+        type: { $gt: null },
+        name: { $gt: null }
       },
-      use_index: this.folderIndex,
-      sort: ['dir_id', { type: 'desc' }, { name: 'desc' }],
+      use_index: this.indexes.filesByName,
+      sort: ['dir_id', 'type', 'name'],
       limit,
       skip
     })
     const files = resp.docs
       .filter(f => f._id !== TRASH_DIR_ID)
-      .map(f => normalizeFileFromPouchDB(f))
+      .map(this.normalizeFileFromPouchDB)
     return files
   }
 
@@ -220,7 +227,7 @@ class PouchDB {
     })
     console.timeEnd('query')
 
-    return a.docs.map(f => normalizeFileFromPouchDB(f))
+    return a.docs.map(this.normalizeFileFromPouchDB)
   }
 
   getIndex(attribute) {
@@ -280,7 +287,7 @@ class PouchDB {
 
   getRecentFiles = async () => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
-    const files = await db.query(this.recentIndex, {
+    const files = await db.query(this.indexes.recentFiles, {
       limit: FILES_FETCH_LIMIT,
       include_docs: true,
       descending: true
@@ -325,9 +332,3 @@ export const extractFileAttributes = f => {
     relationships: f.relationships
   }
 }
-
-const normalizeFileFromPouchDB = f => ({
-  ...f,
-  id: f._id,
-  _type: 'io.cozy.files'
-})
