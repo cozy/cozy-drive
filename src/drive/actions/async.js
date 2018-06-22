@@ -84,7 +84,7 @@ class Stack {
       selector: {
         dir_id: folderId,
         type,
-        name: { $gt: null }
+        [sortAttribute]: { $gt: null }
       },
       sort: [
         { dir_id: sortOrder },
@@ -214,7 +214,7 @@ class PouchDB {
           type: 'directory',
           name: { $gt: null }
         },
-        use_index: this.indexes.folders,
+        use_index: this.indexes.name,
         sort: ['dir_id', 'type', 'name'],
         skip: 0,
         limit: null
@@ -227,7 +227,7 @@ class PouchDB {
         type: 'file',
         name: { $gt: null }
       },
-      use_index: this.indexes.filesByName,
+      use_index: this.indexes.name,
       sort: ['dir_id', 'type', 'name'],
       skip,
       limit
