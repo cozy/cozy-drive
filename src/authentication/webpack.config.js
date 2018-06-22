@@ -1,22 +1,74 @@
 const path = require('path')
-const baseConfig = require('../../config/webpack.config.base')
-const preactConfig = require('../../config/webpack.config.preact')
-const uiConfig = require('../../config/webpack.config.cozy-ui')
 const nodeExternals = require('webpack-node-externals')
 const merge = require('webpack-merge')
 
-module.exports = ({ production } = {}) => {
-  const disableExtract = function(uiConfig) {
-    const loader = uiConfig.module.rules[0].loader
-    if (loader[0].loader.indexOf('extract-text-webpack-plugin') > -1) {
-      uiConfig.module.rules[0].loader = loader.slice(1)
-    }
-    return uiConfig
+const uiConfig = ({ production } = {}) => ({
+  resolve: {
+    extensions: ['.styl']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.styl$/,
+        loader: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: !production,
+              importLoaders: 1,
+              modules: true,
+              localIdentName: '[local]--[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: !production,
+              plugins: () => [
+                require('autoprefixer')({ browsers: ['last 2 versions'] })
+              ]
+            }
+          },
+          {
+            loader: 'stylus-loader',
+            options: {
+              sourceMap: !production,
+              use: [require('cozy-ui/stylus')()]
+            }
+          }
+        ]
+      }
+    ]
   }
+})
 
-  const uiConfigNoExtract = disableExtract(uiConfig(production))
+const preactConfig = {
+  module: {
+    rules: [
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules\/(?!(cozy-ui|cozy-client))/,
+        loader: 'babel-loader'
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.jsx'],
+    alias: {
+      react: 'preact-compat',
+      'react-dom': 'preact-compat',
+      'create-react-class': 'preact-compat/lib/create-react-class'
+    }
+  }
+}
 
-  return merge(preactConfig, uiConfigNoExtract, {
+console.log(path.resolve(__dirname, '../..'))
+module.exports = env => {
+  const { production } = env || {}
+  return merge(preactConfig, uiConfig(env), {
     entry: {
       index: './src/Standalone.jsx'
     },
@@ -25,7 +77,10 @@ module.exports = ({ production } = {}) => {
       filename: '[name].js',
       libraryTarget: 'commonjs2'
     },
-    resolve: baseConfig().resolve,
+    resolve: {
+      extensions: ['.js', '.json', '.css'],
+      modules: [path.resolve(__dirname, '..')]
+    },
     stats: { chunks: false, modules: false },
     devtool: production ? false : 'source-map',
     externals: [
