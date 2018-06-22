@@ -197,22 +197,39 @@ class PouchDB {
 
   getFolderContents = async (folderId, skip = 0, limit = FILES_FETCH_LIMIT) => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
-    console.time('foldercontent')
-    const resp = await db.find({
+    const isFirstLoad = skip === 0
+    let folders = { docs: [] }
+
+    if (isFirstLoad) {
+      folders = await db.find({
+        selector: {
+          dir_id: folderId,
+          type: 'directory',
+          name: { $gt: null }
+        },
+        use_index: this.indexes.folders,
+        sort: ['dir_id', 'type', 'name'],
+        skip: 0,
+        limit: null
+      })
+    }
+
+    const files = await db.find({
       selector: {
         dir_id: folderId,
-        type: { $gt: null },
-        name: { $gt: null },
-        _id: { $ne: TRASH_DIR_ID }
+        type: 'file',
+        name: { $gt: null }
       },
       use_index: this.indexes.filesByName,
       sort: ['dir_id', 'type', 'name'],
-      limit,
-      skip
+      skip,
+      limit
     })
-    console.timeEnd('foldercontent')
-    const files = resp.docs.map(this.normalizeFileFromPouchDB)
-    return files
+
+    return folders.docs
+      .filter(folder => folder._id !== TRASH_DIR_ID)
+      .concat(files.docs)
+      .map(this.normalizeFileFromPouchDB)
   }
 
   query = async ({
@@ -226,7 +243,6 @@ class PouchDB {
   }) => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
 
-    console.time('query')
     const response = await db.find({
       selector: {
         dir_id: folderId,
@@ -242,7 +258,6 @@ class PouchDB {
       skip,
       limit
     })
-    console.timeEnd('query')
 
     return response.docs.map(this.normalizeFileFromPouchDB)
   }
