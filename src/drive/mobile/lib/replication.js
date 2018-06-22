@@ -53,6 +53,17 @@ export const startReplication = async (
       indexesCreated(indexes)
     }
 
+    const warmUpIndex = (index, attribute) =>
+      db.find({
+        selector: {
+          dir_id: ROOT_DIR_ID,
+          type: 'directory',
+          [attribute]: { $gte: null }
+        },
+        use_index: index,
+        limit: 0
+      })
+
     if (!hasFinishedFirstReplication) {
       await startFirstReplication()
       console.log('End of first replication, warming up indexes')
@@ -60,17 +71,6 @@ export const startReplication = async (
       await db.query('my_index/recent_files', {
         limit: 0
       })
-
-      const warmUpIndex = (index, attribute) =>
-        db.find({
-          selector: {
-            dir_id: ROOT_DIR_ID,
-            type: 'directory',
-            [attribute]: { $gte: null }
-          },
-          use_index: index,
-          limit: 0
-        })
 
       if (indexes.byName) await warmUpIndex(indexes.byName, 'name')
       if (indexes.byUpdatedAt)

@@ -91,7 +91,7 @@ class Stack {
         skip: 0,
         limit: null
       })
-      //filter out the trash, faster in js than with pouch
+      // filter out the trash, faster in js than with pouch
       folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
     }
 
@@ -233,7 +233,7 @@ class PouchDB {
         skip: 0,
         limit: null
       })
-      //filter out the trash, faster in js than with pouch
+      // filter out the trash, faster in js than with pouch
       folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
     }
 
