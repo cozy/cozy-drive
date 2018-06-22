@@ -86,7 +86,16 @@ export const startReplication = async (
       firstReplicationFinished()
     }
 
-    /* const docsWritten = */ await startRepeatedReplication()
+    await startRepeatedReplication({
+      afterReplication: infos => {
+        if (infos.docs_written > 0) {
+          if (indexes.byName) warmUpIndex(indexes.byName, 'name')
+          if (indexes.byUpdatedAt)
+            warmUpIndex(indexes.byUpdatedAt, 'updated_at')
+          if (indexes.bySize) warmUpIndex(indexes.bySize, 'size')
+        }
+      }
+    })
     cozy.client.settings.updateLastSync()
     // NB: this refresh breaks the recent view if it is displayed during replication
     // if (docsWritten !== 0) refreshFolder()
@@ -105,12 +114,13 @@ export const startReplication = async (
   }
 }
 
-const startRepeatedReplication = () => {
+const startRepeatedReplication = ({ afterReplication }) => {
   return new Promise((resolve, reject) => {
     const options = {
       onError: reject,
       onComplete: result => {
-        resolve(result.docs_written)
+        resolve()
+        afterReplication(result)
       }
     }
     cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)
