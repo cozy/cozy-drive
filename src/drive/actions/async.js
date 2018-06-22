@@ -81,6 +81,7 @@ class Stack {
     let folders = []
 
     if (isFirstLoad) {
+      // on first load, fetch *all* the folders, so we can subsequently focus on files
       const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
       const allFolders = await this.query({
         folderId,
@@ -90,6 +91,7 @@ class Stack {
         skip: 0,
         limit: null
       })
+      //filter out the trash, faster in js than with pouch
       folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
     }
 
@@ -220,6 +222,7 @@ class PouchDB {
     let folders = []
 
     if (isFirstLoad) {
+      // on first load, fetch *all* the folders, so we can subsequently focus on files
       const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
 
       const allFolders = await this.query({
@@ -230,6 +233,7 @@ class PouchDB {
         skip: 0,
         limit: null
       })
+      //filter out the trash, faster in js than with pouch
       folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
     }
 
