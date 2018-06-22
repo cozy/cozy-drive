@@ -18,7 +18,7 @@ module.exports = ({ production } = {}) => {
 
   return merge(preactConfig, uiConfigNoExtract, {
     entry: {
-      index: './Standalone.jsx'
+      index: './src/Standalone.jsx'
     },
     output: {
       path: path.resolve(__dirname, './build'),
