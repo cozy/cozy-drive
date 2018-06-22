@@ -65,7 +65,6 @@ const preactConfig = {
   }
 }
 
-console.log(path.resolve(__dirname, '../..'))
 module.exports = env => {
   const { production } = env || {}
   return merge(preactConfig, uiConfig(env), {
