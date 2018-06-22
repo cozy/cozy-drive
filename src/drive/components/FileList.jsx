@@ -46,10 +46,11 @@ class FileList extends PureComponent {
 
   shouldDisplayLoadMore() {
     if (!this.props.displayedFolder) return false
-    else if (isCordova()) {
+    if (isCordova()) {
       if (this.props.files.length < FILES_FETCH_LIMIT) return false // We're in /recent
       return !this.state.hasNoMoreRows
-    } else return this.props.files.length < this.props.fileCount
+    }
+    return this.props.files.length < this.props.fileCount
   }
 
   render() {
