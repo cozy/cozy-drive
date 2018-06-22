@@ -1,4 +1,6 @@
 /* global cozy emit */
+import { ROOT_DIR_ID } from '../../constants/config.js'
+
 const clientRevokedMsg = 'Client has been revoked'
 
 export const startReplication = async (
@@ -20,12 +22,22 @@ export const startReplication = async (
 
     let indexes = existingIndexes || {}
 
-    if (!indexes.folders) {
-      indexes.folders = await createIndex(['dir_id', 'type', 'name'])
+    if (!indexes.byName) {
+      indexes.byName = await createIndex(['dir_id', 'type', 'name'])
       indexesCreated(indexes)
     }
 
-    if (!indexes.recent) {
+    if (!indexes.byUpdatedAt) {
+      indexes.byUpdatedAt = await createIndex(['dir_id', 'type', 'updated_at'])
+      indexesCreated(indexes)
+    }
+
+    if (!indexes.bySize) {
+      indexes.bySize = await createIndex(['dir_id', 'type', 'size'])
+      indexesCreated(indexes)
+    }
+
+    if (!indexes.recentFiles) {
       const ddoc = {
         _id: '_design/my_index',
         views: {
@@ -37,18 +49,20 @@ export const startReplication = async (
         }
       }
       await db.put(ddoc)
-      indexes.recent = 'my_index/recent_files'
+      indexes.recentFiles = 'my_index/recent_files'
       indexesCreated(indexes)
     }
 
-    if (!indexes.sort) {
-      indexes.sort = {
-        name: await createIndex(['name']),
-        updated_at: await createIndex(['updated_at']),
-        size: await createIndex(['size'])
-      }
-      indexesCreated(indexes)
-    }
+    const warmUpIndex = (index, attribute) =>
+      db.find({
+        selector: {
+          dir_id: ROOT_DIR_ID,
+          type: 'directory',
+          [attribute]: { $gte: null }
+        },
+        use_index: index,
+        limit: 0
+      })
 
     if (!hasFinishedFirstReplication) {
       await startFirstReplication()
@@ -57,23 +71,26 @@ export const startReplication = async (
       await db.query('my_index/recent_files', {
         limit: 0
       })
-      // not sure this one is really necessary...
-      if (indexes.folders) {
-        await db.find({
-          selector: {
-            dir_id: { $gte: null },
-            name: { $gte: null },
-            type: { $gte: null }
-          },
-          use_index: indexes.folders,
-          limit: 0
-        })
-      }
+
+      if (indexes.byName) await warmUpIndex(indexes.byName, 'name')
+      if (indexes.byUpdatedAt)
+        await warmUpIndex(indexes.byUpdatedAt, 'updated_at')
+      if (indexes.bySize) await warmUpIndex(indexes.bySize, 'size')
+
       console.log('indexes ready')
       firstReplicationFinished()
     }
 
-    /* const docsWritten = */ await startRepeatedReplication()
+    await startRepeatedReplication({
+      afterReplication: infos => {
+        if (infos.docs_written > 0) {
+          if (indexes.byName) warmUpIndex(indexes.byName, 'name')
+          if (indexes.byUpdatedAt)
+            warmUpIndex(indexes.byUpdatedAt, 'updated_at')
+          if (indexes.bySize) warmUpIndex(indexes.bySize, 'size')
+        }
+      }
+    })
     cozy.client.settings.updateLastSync()
     // NB: this refresh breaks the recent view if it is displayed during replication
     // if (docsWritten !== 0) refreshFolder()
@@ -92,12 +109,13 @@ export const startReplication = async (
   }
 }
 
-const startRepeatedReplication = () => {
+const startRepeatedReplication = ({ afterReplication }) => {
   return new Promise((resolve, reject) => {
     const options = {
       onError: reject,
       onComplete: result => {
-        resolve(result.docs_written)
+        resolve()
+        afterReplication(result)
       }
     }
     cozy.client.offline.startRepeatedReplication('io.cozy.files', 15, options)

@@ -29,9 +29,7 @@ export {
   getFolderIdFromRoute,
   getFolderPath,
   getFolderUrl,
-  getSort,
-  getLoadedFilesCount,
-  getLoadedFoldersCount
+  getSort
 } from './view'
 export { isMenuVisible as isActionMenuVisible } from '../ducks/actionmenu'
 
