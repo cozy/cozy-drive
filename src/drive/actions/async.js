@@ -295,10 +295,11 @@ class PouchDB {
   }
 }
 
+const StackAdapter = new Stack()
 export const getAdapter = state =>
   shouldWorkFromPouchDB(state)
     ? new PouchDB(state.settings.indexes)
-    : new Stack()
+    : StackAdapter
 
 const shouldWorkFromPouchDB = state => {
   const settings = state.settings
