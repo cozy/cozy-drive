@@ -303,8 +303,10 @@ export const getAdapter = state =>
 const shouldWorkFromPouchDB = state => {
   const settings = state.settings
   return (
-    //    isCordova() &&
-    settings.offline && settings.firstReplication && settings.indexes
+    isCordova() &&
+    settings.offline &&
+    settings.firstReplication &&
+    settings.indexes
   )
 }
 

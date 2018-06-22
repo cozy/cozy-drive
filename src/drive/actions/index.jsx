@@ -92,12 +92,10 @@ export const openFolder = folderId => {
       ]
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList
-      console.time('openfolder')
       const folder = await getAdapter(getState()).getFolder(
         folderId,
         specialFolders
       )
-      console.timeEnd('openfolder')
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder,
@@ -129,13 +127,11 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
       }
     })
     try {
-      console.time('sortfiles')
       const files = await getAdapter(getState()).getSortedFolder(
         folderId,
         sortAttribute,
         sortOrder
       )
-      console.timeEnd('sortfiles')
 
       return dispatch({
         type: SORT_FOLDER_SUCCESS,
@@ -152,7 +148,6 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
     const sort = getSort(getState())
     dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
     try {
-      console.time('fetchmore')
       const files =
         sort === null
           ? await getAdapter(getState()).getFolderContents(
@@ -167,7 +162,6 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
               skip,
               limit
             )
-      console.timeEnd('fetchmore')
       return dispatch({
         type: FETCH_MORE_FILES_SUCCESS,
         files,
@@ -190,7 +184,6 @@ export const fetchRecentFiles = () => {
     })
 
     try {
-      console.time('recents')
       const files = await getAdapter(getState()).getRecentFiles()
       // fetch the list of parent dirs to get the path of recent files
       const parentDirIds = files
@@ -208,7 +201,6 @@ export const fetchRecentFiles = () => {
         const path = parentFolder ? parentFolder.doc.path : ''
         return { ...file, path, id: file._id }
       })
-      console.timeEnd('recents')
       return dispatch({
         type: FETCH_RECENT_SUCCESS,
         fileCount: filesWithPath.length,

@@ -1,9 +1,4 @@
 /* global cozy emit */
-import PouchDB from 'pouchdb'
-import pouchdbDebug from 'pouchdb-debug'
-
-PouchDB.debug.enable('pouchdb:find')
-
 import { ROOT_DIR_ID } from '../../constants/config.js'
 
 const clientRevokedMsg = 'Client has been revoked'
