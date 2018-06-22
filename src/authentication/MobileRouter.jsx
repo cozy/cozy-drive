@@ -1,8 +1,8 @@
 import React from 'react'
 import { Router, withRouter } from 'react-router'
 
-import Authentication from './Authentication'
-import Revoked from './Revoked'
+import Authentication from './src/Authentication'
+import Revoked from './src/Revoked'
 import { logException } from 'drive/mobile/lib/reporter'
 
 const MobileRouter = ({
