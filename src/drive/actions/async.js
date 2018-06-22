@@ -167,10 +167,9 @@ class Stack {
 class PouchDB {
   constructor({ byName, byUpdatedAt, bySize, recentFiles }) {
     this.indexes = {
-      folders: byName,
-      filesByName: byName,
-      filesByUpdate: byUpdatedAt,
-      filesBySize: bySize,
+      name: byName,
+      updated_at: byUpdatedAt,
+      size: bySize,
       recentFiles: recentFiles
     }
   }
@@ -240,16 +239,14 @@ class PouchDB {
       .map(this.normalizeFileFromPouchDB)
   }
 
-  query = async ({
-    index,
-    folderId,
-    type,
-    sortAttribute,
-    sortOrder,
-    skip,
-    limit
-  }) => {
+  query = async ({ folderId, type, sortAttribute, sortOrder, skip, limit }) => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
+    const index = this.indexes[sortAttribute]
+
+    if (!index)
+      console.warn(
+        `No suitable index found for atribute ${sortAttribute}. This might be slow.`
+      )
 
     const response = await db.find({
       selector: {
@@ -270,22 +267,6 @@ class PouchDB {
     return response.docs.map(this.normalizeFileFromPouchDB)
   }
 
-  getIndex(attribute) {
-    switch (attribute) {
-      case 'name':
-        return this.indexes.filesByName
-      case 'updated_at':
-        return this.indexes.filesByUpdate
-      case 'size':
-        return this.indexes.filesBySize
-      default:
-        console.warn(
-          `No suitable index for attribute ${attribute}. This might be slow.`
-        )
-        return null
-    }
-  }
-
   getSortedFolder = async (
     folderId,
     sortAttribute,
@@ -300,7 +281,6 @@ class PouchDB {
       const folderSortingOrder = sortAttribute === 'name' ? sortOrder : 'asc'
 
       const allFolders = await this.query({
-        index: this.indexes.folders,
         folderId,
         type: 'directory',
         sortAttribute: 'name',
@@ -312,7 +292,6 @@ class PouchDB {
     }
 
     const files = await this.query({
-      index: this.getIndex(sortAttribute),
       folderId,
       type: 'file',
       sortAttribute,
