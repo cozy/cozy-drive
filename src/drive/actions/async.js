@@ -116,8 +116,8 @@ class Stack {
         type: 'directory',
         sortAttribute,
         sortOrder: folderSortingOrder,
-        skip,
-        limit
+        skip: 0,
+        limit: null
       })
       folders = allFolders.filter(folder => folder._id !== TRASH_DIR_ID)
     }
@@ -135,10 +135,14 @@ class Stack {
   }
 
   getRecentFiles = async () => {
-    const index = await cozy.client.data.defineIndex('io.cozy.files', [
-      'updated_at',
-      'trashed'
-    ])
+    const index = this.indexes['recent']
+      ? this.indexes['recent']
+      : await cozy.client.data.defineIndex('io.cozy.files', [
+          'updated_at',
+          'trashed'
+        ])
+    this.indexes['recent'] = index
+
     const resp = await cozy.client.files.query(index, {
       selector: {
         updated_at: { $gt: null },
