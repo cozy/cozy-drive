@@ -11,6 +11,10 @@ export const shouldShowRecentsFirst = (
   specialFolders.indexOf(parentPath) !== -1
 
 class Stack {
+  constructor() {
+    this.indexes = {}
+  }
+
   getFolder = async (folderId, specialFolders = []) => {
     const folder = await cozy.client.files.statById(folderId, false, {
       limit: FILES_FETCH_LIMIT
@@ -67,11 +71,15 @@ class Stack {
   }
 
   query = async ({ folderId, type, sortAttribute, sortOrder, skip, limit }) => {
-    const index = await cozy.client.data.defineIndex('io.cozy.files', [
-      'dir_id',
-      'type',
-      sortAttribute
-    ])
+    const index =
+      this.indexes[sortAttribute] ||
+      (await cozy.client.data.defineIndex('io.cozy.files', [
+        'dir_id',
+        'type',
+        sortAttribute
+      ]))
+    this.indexes[sortAttribute] = index
+
     const response = await cozy.client.files.query(index, {
       selector: {
         dir_id: folderId,
