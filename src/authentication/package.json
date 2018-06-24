@@ -14,7 +14,7 @@
     "build:analyze": "source-map-explorer build/index.js"
   },
   "devDependencies": {
-    "eslint-cli": "^1.1.1",
+    "eslint-cli": "1.1.1",
     "jest": "22.0.6",
     "react-styleguidist": "6.5.3",
     "webpack": "3.11.0",

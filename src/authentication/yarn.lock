@@ -1884,7 +1884,7 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-cli@^1.1.1:
+eslint-cli@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/eslint-cli/-/eslint-cli-1.1.1.tgz#ae6979edd8ee6e78c6d413b525f4052cb2a94cfd"
   dependencies:
