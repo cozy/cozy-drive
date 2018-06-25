@@ -171,12 +171,12 @@ class Stack {
 }
 
 class PouchDB {
-  constructor({ byName, byUpdatedAt, bySize, recentFiles }) {
+  constructor({ byName, byUpdatedAt, bySize, recent }) {
     this.indexes = {
       name: byName,
       updated_at: byUpdatedAt,
       size: bySize,
-      recentFiles: recentFiles
+      recent: recent
     }
   }
 
@@ -278,7 +278,7 @@ class PouchDB {
 
   getRecentFiles = async () => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
-    const files = await db.query(this.indexes.recentFiles, {
+    const files = await db.query(this.indexes.recent, {
       limit: FILES_FETCH_LIMIT,
       include_docs: true,
       descending: true

@@ -37,7 +37,7 @@ export const startReplication = async (
       indexesCreated(indexes)
     }
 
-    if (!indexes.recentFiles) {
+    if (!indexes.recent) {
       const ddoc = {
         _id: '_design/my_index',
         views: {
@@ -49,7 +49,7 @@ export const startReplication = async (
         }
       }
       await db.put(ddoc)
-      indexes.recentFiles = 'my_index/recent_files'
+      indexes.recent = 'my_index/recent_files'
       indexesCreated(indexes)
     }
 
