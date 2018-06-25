@@ -133,12 +133,12 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.1.tgz#e44e596d03c9f16ba3b127ad333a8a072bcb5a0a"
 
-"@sentry/cli@1.32.1":
-  version "1.32.1"
-  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.32.1.tgz#e33fdc9b9d8bab4db17fb97c1a0ce78fc21eea37"
+"@sentry/cli@1.33.0":
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.33.0.tgz#ad24f4b6f441a09aafa7265b9d883fc7b1fc9f52"
   dependencies:
-    https-proxy-agent "^2.1.1"
-    node-fetch "^1.7.3"
+    https-proxy-agent "^2.2.1"
+    node-fetch "^2.1.2"
     progress "2.0.0"
     proxy-from-env "^1.0.0"
 
@@ -4999,7 +4999,7 @@ https-browserify@~0.0.0:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
-https-proxy-agent@^2.1.0, https-proxy-agent@^2.1.1:
+https-proxy-agent@^2.1.0, https-proxy-agent@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-2.2.1.tgz#51552970fa04d723e04c56d04178c3f92592bbc0"
   dependencies:
@@ -7195,12 +7195,16 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-fetch@^1.0.1, node-fetch@^1.7.3:
+node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
 
 node-forge@0.7.5:
   version "0.7.5"
