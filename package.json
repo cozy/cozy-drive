@@ -145,7 +145,7 @@
     "xml2js": "0.4.19"
   },
   "dependencies": {
-    "classnames": "2.2.5",
+    "classnames": "2.2.6",
     "cozy-bar": "5.0.6",
     "cozy-client": "1.0.0-beta.14",
     "cozy-client-js": "0.10.0",
