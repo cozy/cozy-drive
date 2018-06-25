@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
+import { withHasSafariPlugin } from '../withHasSafariPlugin'
 
 import styles from '../styles'
 
@@ -11,8 +12,55 @@ const getPlatformId = () =>
   isCordova() ? window.cordova.platformId : undefined
 
 export class Welcome extends Component {
+  registerRender = () => {
+    const { t, register, allowRegistration, hasSafariPlugin } = this.props
+
+    if (allowRegistration) {
+      return (
+        <a className={styles['link']} onClick={register}>
+          {t('mobile.onboarding.welcome.sign_up')}
+        </a>
+      )
+    }
+
+    const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatformId() ||
+      'browser'}`
+
+    if (hasSafariPlugin) {
+      const openManager = () => {
+        window.SafariViewController.show(
+          {
+            url: url,
+            transition: 'curl'
+          },
+          result => {
+            if (result.event === 'closed') {
+              window.SafariViewController.hide()
+            }
+          },
+          error => {
+            console.warn(error)
+            window.SafariViewController.hide()
+          }
+        )
+      }
+
+      return (
+        <a className={styles['link']} onClick={openManager}>
+          {t('mobile.onboarding.welcome.no_account_link')}
+        </a>
+      )
+    }
+
+    return (
+      <a href={url} className={styles['link']}>
+        {t('mobile.onboarding.welcome.no_account_link')}
+      </a>
+    )
+  }
+
   render() {
-    const { t, selectServer, register, allowRegistration } = this.props
+    const { t, selectServer } = this.props
 
     return (
       <div className={classNames(styles['wizard'], styles['welcome'])}>
@@ -32,23 +80,11 @@ export class Welcome extends Component {
             onClick={selectServer}
             label={t('mobile.onboarding.welcome.button')}
           />
-          {allowRegistration ? (
-            <a className={styles['link']} onClick={register}>
-              {t('mobile.onboarding.welcome.sign_up')}
-            </a>
-          ) : (
-            <a
-              href={`https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatformId() ||
-                'browser'}`}
-              className={styles['link']}
-            >
-              {t('mobile.onboarding.welcome.no_account_link')}
-            </a>
-          )}
+          {this.registerRender()}
         </footer>
       </div>
     )
   }
 }
 
-export default connect()(translate()(Welcome))
+export default withHasSafariPlugin()(connect()(translate()(Welcome)))
