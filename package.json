@@ -166,7 +166,7 @@
     "pouchdb-find": "0.10.5",
     "preact": "8.2.9",
     "preact-compat": "3.18.0",
-    "prop-types": "15.6.0",
+    "prop-types": "15.6.2",
     "raven-js": "3.22.1",
     "react-autosuggest": "9.3.4",
     "react-copy-to-clipboard": "5.0.1",
