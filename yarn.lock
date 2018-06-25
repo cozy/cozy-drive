@@ -2629,9 +2629,9 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cozy-bar@5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-5.0.6.tgz#aea3e4b77536cddedad25b42821555c6ca0ffbbe"
+cozy-bar@5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-5.0.7.tgz#85f0445fe3fb0b82f68cb33f823009b1f6959d0b"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     core-js "^2.5.3"
@@ -8500,7 +8500,6 @@ pouchdb-abstract-mapreduce@6.4.3:
 
 "pouchdb-adapter-cordova-sqlite@https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a":
   version "2.0.2"
-  uid f3ee23009b70209c611435d57491aa77fb88802a
   resolved "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
   dependencies:
     pouchdb-adapter-websql-core "^6.1.1"
