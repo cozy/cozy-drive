@@ -3,7 +3,7 @@
     "config:base"
   ],
   "pinVersions": true,
-  "schedule": ["before 9am on Monday"],
+  "schedule": ["before 5am on Monday"],
   "timezone": "Europe/Paris",
   "packageRules": [{
     "packageNames": ["cozy-ui"],
