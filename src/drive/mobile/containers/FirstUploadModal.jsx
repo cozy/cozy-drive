@@ -9,7 +9,7 @@ import { isIos } from '../lib/device'
 const MINIMUM_LONG_UPLOAD_FILES_COUNT = 50
 
 const FirstUploadModal = translate()(({ t, onClose }) => (
-  <Modal title={t('mobile.first_sync.title')} withCross={false}>
+  <Modal title={t('mobile.first_sync.title')} withCross={false} into="body">
     <ModalContent>
       <h4>{t('mobile.first_sync.tips')}</h4>
       <ul>
