@@ -28,9 +28,9 @@ export const getClassFromMime = attrs => {
   if (isDirectory(attrs)) {
     return styles['fil-file-folder']
   }
-
   return styles[
-    'fil-file-' + (getFileMimetype(styles, 'fil-file-')(attrs) || 'files')
+    'fil-file-' +
+      (getFileMimetype(styles, 'fil-file-')(attrs.mime, attrs.name) || 'files')
   ]
 }
 
