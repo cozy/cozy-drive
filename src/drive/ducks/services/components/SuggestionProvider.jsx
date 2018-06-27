@@ -112,7 +112,7 @@ function getIconUrl(file) {
   const keyIcon =
     file.type === TYPE_DIRECTORY
       ? 'folder'
-      : getFileMimetype(icons)(file) || 'files'
+      : getFileMimetype(icons)(file.mime, file.name) || 'files'
 
   const icon = icons[keyIcon].default
 

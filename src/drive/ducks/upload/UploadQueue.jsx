@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
 import styles from './styles'
 import {
@@ -19,8 +20,14 @@ const splitFilename = filename => {
   }
 }
 
-const getFileTypeClass = mime => {
-  return styles['item-type-' + mime.split('/')[0]] || styles['item-type-files']
+const getFileTypeClass = (file, isDirectory) => {
+  if (isDirectory) {
+    return styles['item-type-folder']
+  }
+  return styles[
+    'item-type-' +
+      (getFileMimetype(styles, 'item-type-')(file.type, file.name) || 'files')
+  ]
 }
 
 const Pending = translate()(props => (
@@ -29,8 +36,8 @@ const Pending = translate()(props => (
   </span>
 ))
 
-const Item = translate()(({ t, file, status, type }) => {
-  const { filename, extension } = splitFilename(file)
+const Item = translate()(({ t, file, status, isDirectory }) => {
+  const { filename, extension } = splitFilename(file.name)
   return (
     <div
       className={classNames(styles['upload-queue-item'], {
@@ -43,7 +50,7 @@ const Item = translate()(({ t, file, status, type }) => {
         className={classNames(
           styles['item-cell'],
           styles['item-file'],
-          getFileTypeClass(type)
+          getFileTypeClass(file, isDirectory)
         )}
       >
         <div>
@@ -131,8 +138,8 @@ class UploadQueue extends Component {
           <div className={styles['upload-queue-list']}>
             {queue.map(item => (
               <Item
-                file={item.file.name}
-                type={item.isDirectory ? 'folder' : item.file.type}
+                file={item.file}
+                isDirectory={item.isDirectory}
                 status={item.status}
               />
             ))}

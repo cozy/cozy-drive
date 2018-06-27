@@ -16,11 +16,11 @@ const mappingMimetypeSubtype = {
   powerpoint: 'slide'
 }
 
-export const getFileMimetype = (collection, prefix = '') => file => {
+export const getFileMimetype = (collection, prefix = '') => (mime, name) => {
   const mimetype =
-    file.mime === 'application/octet-stream'
-      ? getMimetypeFromFilename(file.name.toLowerCase())
-      : file.mime
+    mime === 'application/octet-stream'
+      ? getMimetypeFromFilename(name.toLowerCase())
+      : mime
 
   const [type, subtype] = mimetype.split('/')
   if (collection[prefix + type]) {
