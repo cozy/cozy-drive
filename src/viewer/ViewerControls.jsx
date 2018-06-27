@@ -68,6 +68,7 @@ class ViewerControls extends Component {
       onNext,
       isMobile,
       expanded,
+      controls,
       children
     } = this.props
     const { hidden } = this.state
@@ -80,40 +81,43 @@ class ViewerControls extends Component {
           this.wrapped = wrapped
         }}
       >
-        <div
-          className={classNames(styles['pho-viewer-toolbar'], {
-            [styles['pho-viewer-toolbar--hidden']]: hidden
-          })}
-          role="viewer-toolbar"
-          onMouseEnter={this.showControls}
-          onMouseLeave={this.hideControls}
-        >
+        {controls && (
           <div
-            className={classNames(
-              styles['coz-selectionbar'],
-              styles['pho-viewer-toolbar-actions']
-            )}
+            className={classNames(styles['pho-viewer-toolbar'], {
+              [styles['pho-viewer-toolbar--hidden']]: hidden
+            })}
+            role="viewer-toolbar"
+            onMouseEnter={this.showControls}
+            onMouseLeave={this.hideControls}
           >
-            <button
-              className={styles['coz-action-download']}
-              onClick={() => {
-                downloadFile(currentFile)
-              }}
-            >
-              {t('Viewer.actions.download')}
-            </button>
-          </div>
-          {onClose && (
             <div
-              className={styles['pho-viewer-toolbar-close']}
-              onClick={onClose}
-              title={t('Viewer.close')}
+              className={classNames(
+                styles['coz-selectionbar'],
+                styles['pho-viewer-toolbar-actions']
+              )}
             >
-              <div className={styles['pho-viewer-toolbar-close-cross']} />
+              <button
+                className={styles['coz-action-download']}
+                onClick={() => {
+                  downloadFile(currentFile)
+                }}
+              >
+                {t('Viewer.actions.download')}
+              </button>
             </div>
-          )}
-        </div>
-        {!isMobile &&
+            {onClose && (
+              <div
+                className={styles['pho-viewer-toolbar-close']}
+                onClick={onClose}
+                title={t('Viewer.close')}
+              >
+                <div className={styles['pho-viewer-toolbar-close-cross']} />
+              </div>
+            )}
+          </div>
+        )}
+        {controls &&
+          !isMobile &&
           hasPrevious && (
             <div
               role="button"
@@ -132,7 +136,8 @@ class ViewerControls extends Component {
             </div>
           )}
         {this.renderChildren(children)}
-        {!isMobile &&
+        {controls &&
+          !isMobile &&
           hasNext && (
             <div
               role="button"
