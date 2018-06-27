@@ -78,18 +78,11 @@ class UploadQueue extends Component {
     this.setState(state => ({ collapsed: !state.collapsed }))
   }
 
-  componentDidMount() {
-    this.wrapper.style.transition = '0.5s'
-  }
-
   render() {
     const { t, queue, doneCount, successCount, purgeQueue } = this.props
     const { collapsed } = this.state
     return (
       <div
-        ref={div => {
-          this.wrapper = div
-        }}
         className={classNames(styles['upload-queue'], {
           [styles['upload-queue--visible']]: queue.length !== 0,
           [styles['upload-queue--collapsed']]: collapsed
