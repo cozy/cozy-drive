@@ -1,5 +1,6 @@
 @require 'settings/breakpoints.styl'
 @require 'utilities/display.styl'
+@require 'settings/z-index.styl'
 
 .u-visuallyhidden
     @extend $visuallyhidden
@@ -20,3 +21,9 @@
         padding          .5rem .75rem
         opacity          .5
         background-color transparent
+
+.bar-homelink
+    position absolute
+    top      .25rem
+    right    1rem
+    z-index  ($bar-index + 1)
