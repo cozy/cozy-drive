@@ -42,7 +42,10 @@ const item = (state, action) =>
 const queue = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
-      return [...state, ...action.files.map(f => itemInitialState(f))]
+      return [
+        ...state.filter(i => i.status !== LOADED),
+        ...action.files.map(f => itemInitialState(f))
+      ]
     case PURGE_UPLOAD_QUEUE:
       return []
     case UPLOAD_FILE:
