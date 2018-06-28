@@ -1,7 +1,7 @@
 {
   "name": "Photos",
   "slug": "photos",
-  "version": "1.5.8",
+  "version": "1.6.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
