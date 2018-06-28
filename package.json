@@ -167,7 +167,7 @@
     "preact": "8.2.9",
     "preact-compat": "3.18.0",
     "prop-types": "15.6.2",
-    "raven-js": "3.22.1",
+    "raven-js": "3.26.3",
     "react-autosuggest": "9.3.4",
     "react-copy-to-clipboard": "5.0.1",
     "react-dropzone": "4.2.9",
