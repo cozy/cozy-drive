@@ -253,7 +253,8 @@
     "folder_generic": "An error occurred, please try again.",
     "folder_abort":
       "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
-    "offline": "This feature is not available offline."
+    "offline": "This feature is not available offline.",
+    "preparing": "Preparing your files…"
   },
   "mobile": {
     "onboarding": {
@@ -462,9 +463,13 @@
   "Viewer": {
     "close": "Close",
     "noviewer": {
-      "title": "The viewer doesn't know how to read this type of file yet.",
       "download": "Download this file",
-      "openWith": "Open with..."
+      "openWith": "Open with...",
+      "cta": {
+        "saveTime": "Save some time!",
+        "installDesktop": "Install the synchronization tool for your computer",
+        "accessFiles": "Access your files directly on your computer"
+      }
     },
     "actions": {
       "download": "Download"
@@ -482,5 +487,14 @@
   },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
+  },
+  "TOS": {
+    "updated": {
+      "title": "GDPR comes into reality !",
+      "detail": "In the context of the General Data Protection Regulation, [our Terms of Service have been updated](%{link}) and will apply to all our Cozy users on May 25, 2018.",
+      "cta": "Accept TOS and continue",
+      "disconnect": "Refuse and disconnect",
+      "error": "Something went wrong, please try again later"
+    }
   }
 }

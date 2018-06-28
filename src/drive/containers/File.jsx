@@ -12,7 +12,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import { ImageLoader } from 'components/Image'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedBadge, SharedStatus } from 'sharing'
-import { getFileTypeFromMime } from 'drive/lib/getFileTypeFromMime'
+import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
 import { getFolderUrl } from '../reducers'
 
@@ -20,22 +20,17 @@ export const splitFilename = file =>
   isDirectory(file)
     ? { filename: file.name, extension: '' }
     : {
-        extension: file.name.slice(file.name.lastIndexOf('.') + 1),
-        filename: file.name.slice(0, file.name.lastIndexOf('.') + 1)
+        extension: file.name.slice(file.name.lastIndexOf('.')),
+        filename: file.name.slice(0, file.name.lastIndexOf('.'))
       }
 
 export const getClassFromMime = attrs => {
   if (isDirectory(attrs)) {
     return styles['fil-file-folder']
   }
-
   return styles[
     'fil-file-' +
-      (getFileTypeFromMime(styles, 'fil-file-')(attrs.mime) ||
-        console.warn(
-          `No icon found, you may need to add a mapping for ${attrs.mime}`
-        ) ||
-        'files')
+      (getFileMimetype(styles, 'fil-file-')(attrs.mime, attrs.name) || 'files')
   ]
 }
 

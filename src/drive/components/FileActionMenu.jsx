@@ -100,7 +100,7 @@ const MenuHeaderFile = ({ file }) => {
           getClassFromMime(file)
         )}
       >
-        {filename}
+        <span className={styles['fil-actionmenu-file-name']}>{filename}</span>
         <span className={styles['fil-actionmenu-file-ext']}>{extension}</span>
       </div>
     </div>

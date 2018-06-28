@@ -96,7 +96,7 @@ class FolderView extends Component {
           />
         </Topbar>
         <Dropzone
-          role="contentinfo"
+          role="main"
           disabled={__TARGET__ === 'mobile' || !canDrop}
           displayedFolder={displayedFolder}
           onDrop={uploadFiles}
@@ -113,9 +113,7 @@ class FolderView extends Component {
           </div>
 
           <div className={styles['fil-content-table']} role="table">
-            {__TARGET__ !== 'mobile' && ( // temporary disabling of sorting on mobile because of perf issues
-              <MobileFileListHeader canSort={canSort} />
-            )}
+            <MobileFileListHeader canSort={canSort} />
             <FileListHeader canSort={canSort} />
             <div className={styles['fil-content-body']}>
               {showAddFolder && (

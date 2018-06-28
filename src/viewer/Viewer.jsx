@@ -26,10 +26,13 @@ const isIOS = () =>
 const isMobile = () => isAndroid() || isIOS()
 const isCordova = () => window.cordova !== undefined
 
-const ViewerWrapper = ({ style, className, children }) => (
+const ViewerWrapper = ({ style, className, children, fullscreen, dark }) => (
   <div
     style={style}
-    className={cx(styles['pho-viewer-wrapper'], className)}
+    className={cx(styles['pho-viewer-wrapper'], className, {
+      [styles['pho-viewer-wrapper--notfullscreen']]: !fullscreen,
+      [styles['pho-viewer-wrapper--light']]: !dark
+    })}
     role="viewer"
   >
     {children}
@@ -84,7 +87,16 @@ export default class Viewer extends Component {
   }
 
   render() {
-    const { files, style, className, currentIndex, onClose } = this.props
+    const {
+      files,
+      style,
+      className,
+      currentIndex,
+      onClose,
+      fullscreen = true,
+      dark = true,
+      controls = true
+    } = this.props
     const currentFile = files[currentIndex]
     const fileCount = files.length
     const hasPrevious = currentIndex > 0
@@ -92,7 +104,12 @@ export default class Viewer extends Component {
     // this `expanded` property makes the next/previous controls cover the displayed image
     const expanded = currentFile && currentFile.class === 'image'
     return (
-      <ViewerWrapper style={style} className={className}>
+      <ViewerWrapper
+        style={style}
+        className={className}
+        fullscreen={fullscreen}
+        dark={dark}
+      >
         <ViewerControls
           currentFile={currentFile}
           onClose={onClose}
@@ -102,6 +119,7 @@ export default class Viewer extends Component {
           onNext={this.onNext}
           isMobile={isMobile()}
           expanded={expanded}
+          controls={controls}
         >
           {this.renderViewer(currentFile)}
         </ViewerControls>

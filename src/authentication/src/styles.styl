@@ -1,5 +1,4 @@
 @require 'settings/breakpoints.styl'
-@require 'elements/defaults.styl'
 @require 'components/button.styl'
 @require 'components/forms.styl'
 @require 'settings/palette.styl'
@@ -91,6 +90,7 @@
     .wizard-footer
         display flex
         flex-direction column
+        padding-bottom env(safe-area-inset-bottom)
         margin-bottom 1.5rem
 
         > .link

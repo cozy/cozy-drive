@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.drive.mobile" version="1.5.7" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cozy.drive.mobile" version="1.6.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -12,7 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <hook src="scripts/update-config-version.sh" type="before_build" />
-    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.5.7" />
+    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.6.0" />
     <engine name="android" spec="6.4.0" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
@@ -46,7 +46,6 @@
     </platform>
     <engine name="ios" spec="4.5.4" />
     <platform name="ios">
-        <hook src="scripts/configure-share-extension.js" type="after_plugin_install" />
         <preference name="StatusBarOverlaysWebView" value="false" />
         <preference name="StatusBarStyle" value="default" />
         <preference name="Suppresses3DTouchGesture" value="true" />
@@ -103,7 +102,5 @@
     <plugin name="cordova-android-support-gradle-release" spec="~1.4.2">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
-    <plugin name="cordova-plugin-openwith-ios" spec="~1.0.0">
-        <variable name="IOS_URL_SCHEME" value="cozydrivesharextension" />
-    </plugin>
+    <plugin name="cordova-plugin-x-socialsharing" spec="~5.4.1" />
 </widget>

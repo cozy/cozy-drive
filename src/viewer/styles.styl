@@ -17,6 +17,16 @@
     overflow        hidden
     color           white
 
+    &--notfullscreen
+        top         3rem
+        height      calc(100% - 3rem)
+        z-index     ($bar-index - 2)
+
+    &--light
+        background  white
+        color       black
+
+
 .pho-viewer-controls
     display         flex
     flex-direction  row
@@ -176,6 +186,59 @@
     &--pdf:before
         background  embedurl('./assets/icon-type-pdf.svg') center center / cover no-repeat
 
+.pho-viewer-noviewer-cta
+    position         relative
+    border-radius    .5rem
+    background-color rgba(255, 255, 255, 0.05)
+    padding          1rem
+    width            80%
+    max-width        36rem
+    margin-top       2rem
+
+    .pho-viewer-noviewer-cta-cross
+        position absolute
+        top      1rem
+        right    1rem
+        cursor   pointer
+
+    h3
+        margin 0 0 1.1rem 0
+
+    h3:before
+        content      ''
+        position     relative
+        top          .2rem
+        width        1.5rem
+        height       1.5rem
+        margin-right .75rem
+        display      inline-block
+        background   embedurl('./assets/icon-magic-trick.svg') center center / cover no-repeat
+
+    ul
+        padding 0
+
+    li
+        list-style-type none
+        margin-bottom   1rem
+
+        &:last-child
+            margin-bottom 0
+
+        &:before
+            content       ''
+            position      relative
+            top           .3rem
+            border-radius 1rem
+            width         1.5rem
+            height        1.5rem
+            margin-right  .75rem
+            display       inline-block
+            background    dodgerBlue embedurl('./assets/icon-check.svg') center center no-repeat
+
+        a, a:hover, a:focus, a:visited
+            color white
+
+
 .pho-viewer-audioviewer
     &:before
         background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
@@ -190,6 +253,7 @@
         margin-left      0
         width            100%
 
+    .pho-viewer-noviewer-cta
     .pho-viewer-nav-previous, .pho-viewer-nav-next
         display none
 

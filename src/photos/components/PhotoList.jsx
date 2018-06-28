@@ -12,6 +12,15 @@ const photoDimensionsFallback = { width: 1, height: 1 }
 // something between 190 and 240.
 const adaptRowHeight = containerWidth => 180 + (containerWidth || 1800) / 30
 
+// Some photos use EXIF orientation tags, and their width/height are thus incorrect
+// if we don't take into account this orientation
+const handlePhotoOrientation = metadata => {
+  if (metadata.orientation && metadata.orientation > 4) {
+    return { width: metadata.height, height: metadata.width }
+  }
+  return metadata
+}
+
 export class PhotoList extends Component {
   isPhotoSelected(photo, selected) {
     const selectedIds = selected.map(p => p._id)
@@ -49,7 +58,7 @@ export class PhotoList extends Component {
       photos.map(photo => {
         const metadata = photo.metadata || photo.attributes.metadata
         return metadata && metadata.width && metadata.height
-          ? metadata
+          ? handlePhotoOrientation(metadata)
           : photoDimensionsFallback
       }),
       {

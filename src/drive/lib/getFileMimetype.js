@@ -1,16 +1,27 @@
+import mime from 'mime-types'
+
+const getMimetypeFromFilename = name => {
+  return mime.lookup(name) || 'application/octet-stream'
+}
+
 const mappingMimetypeSubtype = {
   word: 'text',
+  text: 'text',
   zip: 'zip',
   pdf: 'pdf',
   spreadsheet: 'sheet',
   excel: 'sheet',
+  sheet: 'sheet',
   presentation: 'slide',
   powerpoint: 'slide'
 }
 
-export const getFileTypeFromMime = (collection, prefix = '') => (
-  mimetype = ''
-) => {
+export const getFileMimetype = (collection, prefix = '') => (mime, name) => {
+  const mimetype =
+    mime === 'application/octet-stream'
+      ? getMimetypeFromFilename(name.toLowerCase())
+      : mime
+
   const [type, subtype] = mimetype.split('/')
   if (collection[prefix + type]) {
     return type
