@@ -16,7 +16,7 @@ module.exports = function(production, app) {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, `../targets/${app}/web/index.ejs`),
-      title: `cozy-${app}`,
+      title: `Cozy ${app.charAt(0).toUpperCase()}${app.slice(1)}`,
       chunks: ['app'],
       inject: 'head',
       minify: {
