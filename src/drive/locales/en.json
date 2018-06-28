@@ -253,7 +253,8 @@
     "folder_generic": "An error occurred, please try again.",
     "folder_abort":
       "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
-    "offline": "This feature is not available offline."
+    "offline": "This feature is not available offline.",
+    "preparing": "Preparing your files…"
   },
   "mobile": {
     "onboarding": {

@@ -361,6 +361,36 @@ export const trashFiles = files => async (dispatch, _, { client }) => {
   })
 }
 
+export const exportFilesNative = files => {
+  return async dispatch => {
+    const downloadAllFiles = files.map(async file => {
+      const response = await cozy.client.files.downloadById(file.id)
+      const blob = await response.blob()
+      const filename = file.name
+      const localFile = await saveFileWithCordova(blob, filename)
+      return localFile.nativeURL
+    })
+
+    try {
+      Alerter.info('alert.preparing', {
+        duration: Math.min(downloadAllFiles.length * 2000, 6000)
+      })
+      const urls = await Promise.all(downloadAllFiles)
+      window.plugins.socialsharing.shareWithOptions(
+        {
+          files: urls
+        },
+        null,
+        error => {
+          throw error
+        }
+      )
+    } catch (error) {
+      Alerter.info(downloadFileError(error))
+    }
+  }
+}
+
 export const downloadFiles = files => {
   const meta = META_DEFAULTS
   return async dispatch => {
@@ -423,11 +453,7 @@ const downloadFile = (file, meta) => {
     const blob = await response.blob()
     const filename = file.name
 
-    if (isCordova() && window.cordova.file) {
-      saveFileWithCordova(blob, filename)
-    } else {
-      forceFileDownload(window.URL.createObjectURL(blob), filename)
-    }
+    forceFileDownload(window.URL.createObjectURL(blob), filename)
     return dispatch({ type: DOWNLOAD_FILE, file, meta })
   }
 }
