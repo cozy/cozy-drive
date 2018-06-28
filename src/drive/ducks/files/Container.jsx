@@ -18,6 +18,7 @@ import {
   createFolder,
   openFileWith,
   downloadFiles,
+  exportFilesNative,
   trashFiles,
   toggleAvailableOffline
 } from '../../actions'
@@ -58,9 +59,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1
         },
-        download: {
-          action: files => dispatch(downloadFiles(files))
-        },
+        download:
+          __TARGET__ === 'mobile'
+            ? {
+                action: files => dispatch(exportFilesNative(files)),
+                displayCondition: files =>
+                  files.reduce(
+                    (onlyFiles, file) => onlyFiles && isFile(file),
+                    true
+                  )
+              }
+            : {
+                action: files => dispatch(downloadFiles(files))
+              },
         trash: {
           action: files =>
             confirm(
