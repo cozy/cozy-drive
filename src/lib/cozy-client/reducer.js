@@ -234,7 +234,8 @@ const collection = (state = collectionInitialState, action) => {
         ids:
           action.skip || action.merge
             ? uniq([...state.ids, ...response.data.map(doc => doc.id)])
-            : response.data.map(doc => doc.id)
+            : response.data.map(doc => doc.id),
+        error: null
       }
     case ADD_REFERENCED_FILES:
       return {
@@ -252,7 +253,8 @@ const collection = (state = collectionInitialState, action) => {
     case RECEIVE_ERROR:
       return {
         ...state,
-        fetchStatus: 'failed'
+        fetchStatus: 'failed',
+        error: action.error
       }
     case RECEIVE_NEW_DOCUMENT:
       return {
