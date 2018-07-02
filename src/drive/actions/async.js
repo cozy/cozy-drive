@@ -1,5 +1,4 @@
-/* global cozy */
-import { isCordova } from '../mobile/lib/device'
+/* global cozy __TARGET__ */
 import { TRASH_DIR_ID, FILES_FETCH_LIMIT } from '../constants/config.js'
 
 export const shouldShowRecentsFirst = (
@@ -308,7 +307,7 @@ export const getAdapter = state =>
 const shouldWorkFromPouchDB = state => {
   const settings = state.settings
   return (
-    isCordova() &&
+    __TARGET__ === 'mobile' &&
     settings.offline &&
     settings.firstReplication &&
     settings.indexes
