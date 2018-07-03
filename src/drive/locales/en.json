@@ -62,6 +62,7 @@
       "two-way": "Can Change"
     },
     "recipients": {
+      "you": "You",
       "accessCount": "%{count} people have access"
     },
     "create-cozy": "Create my cozy"
@@ -85,7 +86,10 @@
       "sharedBy": "Shared by %{name}",
       "shareByLink": {
         "subtitle": "By public link",
-        "desc": "Anyone with the provided link can see and download your files."
+        "desc": "Anyone with the provided link can see and download your files.",
+        "creating": "Creating your link...",
+        "copy": "Copy link",
+        "copied": "Link has been copied to clipboard"
       },
       "shareByEmail": {
         "subtitle": "By email",
@@ -99,10 +103,12 @@
       },
       "revoke": {
         "title": "Remove from sharing",
+        "desc": "This contact will no longer have access to shared content.",
         "success": "You removed this shared file from %{email}."
       },
       "revokeSelf": {
         "title": "Remove me from sharing",
+        "desc": "You keep the content but it won't be updated between your Cozy anymore.",
         "success": "You were removed from this sharing."
       },
       "sharingLink": {
@@ -111,7 +117,7 @@
         "copied": "Copied"
       },
       "whoHasAccess": {
-        "title": "Who has access"
+        "title": "1 person has access |||| %{smart_count} people have access"
       },
       "protectedShare": {
         "title": "Coming soon!",
