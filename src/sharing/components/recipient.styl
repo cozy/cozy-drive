@@ -80,7 +80,25 @@
     &:not([disabled]):not([aria-disabled=true]):hover
         background-color transparent
 
+.pho-recipient-menu-header
+    padding .5rem 2rem .5rem 2.5rem
+
+.pho-recipient-menu-header--pending
+.pho-recipient-menu-header--mail-not-sent
+    background embedurl("../assets/icon-hourglass-16.svg") 1rem center no-repeat
+
+.pho-recipient-menu-header--one-way
+    background embedurl("../assets/icon-eye-16.svg") 1rem center no-repeat
+
+.pho-recipient-menu-header--two-way
+    background embedurl("../assets/icon-pen-write-16.svg") 1rem center no-repeat
+
 .pho-action-unshare
     color pomegranate !important
     text-decoration none !important
     background embedurl("../assets/icon-trash-red.svg") 1rem center no-repeat
+
+.pho-action-unshare-desc
+    margin    0
+    padding   0 1.5rem .5rem 2.5rem
+    font-size .8125rem

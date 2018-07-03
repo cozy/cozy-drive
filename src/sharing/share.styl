@@ -8,14 +8,46 @@
     height 1px
     margin-top 0
 
+.share-bylink-header
+    display        flex
+    flex-direction row
+    align-items    center
+    margin         1.5rem 0 .25rem 0
+
+    > :not(:last-child)
+        margin 0
+        margin-right .5rem
+
+    > :last-child
+        margin-left auto
+
+    .share-bylink-header-dot
+        height .5rem
+        width  .5rem
+        background-color black
+        border-radius    50%
+        display inline-block
+
+    .share-bylink-header-creating
+    .share-bylink-header-copybtn
+        color dodgerBlue
+        font-weight bold
+
+    .share-bylink-header-copybtn
+        background transparent
+        border  0
+        padding 0
+
+.share-bylink-desc
+    color     coolGrey
+    font-size .8125rem
+
+
 :global
     label[for='share-toggle']
         cursor pointer
 
 :local
-    .share-modal
-        max-width 33rem !important // waiting for modal size presets in cozy-ui
-
     .share-modal-content
         @extend $form
         @extend $form-text
@@ -110,7 +142,7 @@
         background-repeat    no-repeat
 
     .share-details-created
-        background-image     embedurl('./assets/icon-clock-16.svg')
+        background-image     embedurl('./assets/icon-calendar-16.svg')
 
     .share-details-perm
         background-image     embedurl('./assets/icon-pen-16.svg')

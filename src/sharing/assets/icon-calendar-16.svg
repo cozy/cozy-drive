@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="16px" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-224.000000, -192.000000)">
+        <g id="slices" transform="translate(32.000000, 32.000000)"></g>
+        <path d="M237,193 L240,193 L240,195 L224,195 L224,193 L227,193 L227,192 L229,192 L229,193 L235,193 L235,192 L237,192 L237,193 Z M224,196 L240,196 L240,206.997527 C240,207.551177 239.555369,208 238.999128,208 L225.000872,208 C224.448106,208 224,207.544239 224,206.997527 L224,196 Z M226,198 L226,206 L238,206 L238,198 L226,198 Z M232,201 L237,201 L237,205 L232,205 L232,201 Z" id="calendar" fill="#95999D"></path>
+    </g>
+</svg>

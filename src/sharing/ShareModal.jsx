@@ -118,8 +118,9 @@ export default class ShareModal extends Component {
       <Modal
         title={t(`${documentType}.share.title`)}
         dismissAction={onClose}
-        className={styles['share-modal']}
         into="body"
+        size="small"
+        mobileFullscreen
       >
         <div className={styles['share-modal-content']}>
           {withSharingCheck(document, documentType, t)(
@@ -143,6 +144,9 @@ export default class ShareModal extends Component {
           />
           <WhoHasAccess
             isOwner
+            title={t(`${documentType}.share.whoHasAccess.title`, {
+              smart_count: recipients.length
+            })}
             recipients={recipients}
             document={document}
             documentType={documentType}

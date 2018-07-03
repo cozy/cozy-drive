@@ -55,9 +55,10 @@ class Status extends Component {
 
   render() {
     const { isOwner, status, instance, type, documentType } = this.props
-    const { t } = this.context
+    const { t, client } = this.context
     const { revoking } = this.state
-    const isMe = instance !== undefined && !isOwner
+    const isMe =
+      instance !== undefined && instance === client.options.uri && !isOwner
     const shouldShowMenu = !revoking && status !== 'owner' && (isMe || isOwner)
     return (
       <div className={styles['pho-recipient-status']}>
@@ -75,14 +76,34 @@ class Status extends Component {
             disabled={status === 'pending'}
           >
             <Item>
+              <div
+                className={classNames(
+                  styles['pho-recipient-menu-header'],
+                  status === 'ready' && type
+                    ? styles[`pho-recipient-menu-header--${type}`]
+                    : styles[`pho-recipient-menu-header--${status}`]
+                )}
+              >
+                {status === 'ready' && type
+                  ? t(`Share.type.${type}`)
+                  : t(`Share.status.${status}`)}
+              </div>
+            </Item>
+            <hr />
+            <Item>
               <a
-                className={classNames(styles['pho-action-unshare'])}
+                className={styles['pho-action-unshare']}
                 onClick={this.onRevoke}
               >
                 {isOwner
                   ? t(`${documentType}.share.revoke.title`)
                   : t(`${documentType}.share.revokeSelf.title`)}
               </a>
+              <p className={styles['pho-action-unshare-desc']}>
+                {isOwner
+                  ? t(`${documentType}.share.revoke.desc`)
+                  : t(`${documentType}.share.revokeSelf.desc`)}
+              </p>
             </Item>
           </Menu>
         )}
@@ -91,13 +112,19 @@ class Status extends Component {
   }
 }
 
-const Recipient = ({ instance, ...rest }) => (
-  <div className={styles['pho-recipient']}>
-    <Avatar name={getDisplayName(rest)} />
-    <Identity name={getDisplayName(rest)} url={instance} />
-    <Status instance={instance} {...rest} />
-  </div>
-)
+const Recipient = (props, { t, client }) => {
+  const { instance, isOwner, status, ...rest } = props
+  const isMe =
+    (isOwner && status === 'owner') || instance === client.options.uri
+  const name = getDisplayName(rest)
+  return (
+    <div className={styles['pho-recipient']}>
+      <Avatar name={name} />
+      <Identity name={isMe ? t('Share.recipients.you') : name} url={instance} />
+      <Status {...props} />
+    </div>
+  )
+}
 
 export default Recipient
 
