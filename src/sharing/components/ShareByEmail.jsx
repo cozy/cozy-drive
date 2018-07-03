@@ -44,6 +44,7 @@ const ShareTypeSelect = props => (
     onChange={e => {
       props.onChange(e.target.value)
     }}
+    disabled={props.disabled}
   >
     {props.options.map(option => (
       <option value={option.value} disabled={option.disabled}>
@@ -189,7 +190,7 @@ class ShareByEmail extends Component {
 
   render() {
     const { t } = this.context
-    const { contacts, documentType } = this.props
+    const { contacts, documentType, locked } = this.props
     const { recipients } = this.state
 
     return (
@@ -208,6 +209,7 @@ class ShareByEmail extends Component {
             options={this.sharingTypes}
             value={this.state.sharingType}
             onChange={this.onChange}
+            disabled={locked}
           />
           <ShareSubmit
             label={t(`${documentType}.share.shareByEmail.send`)}
