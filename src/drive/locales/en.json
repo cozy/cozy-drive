@@ -61,6 +61,8 @@
       "one-way": "Can View",
       "two-way": "Can Change"
     },
+    "locked-type-file": "Coming soon: you will be able to change permissions you grant on the file.",
+    "locked-type-folder": "Coming soon: you will be able to change permissions you grant on the folder.",
     "recipients": {
       "you": "You",
       "accessCount": "%{count} people have access"
