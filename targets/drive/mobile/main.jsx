@@ -83,13 +83,15 @@ const startApplication = async function(store, client, polyglot) {
     shouldInitBar = true
     startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
   } catch (e) {
-    if (e.message === 'Failed to fetch') {
-      // the server is not responding, but it doesn't mean we're revoked yet
-      shouldInitBar = true
-    } else if (store.getState().mobile.settings.serverUrl) {
+    console.warn(e)
+    if (store.getState().mobile.settings.serverUrl && (e.status === 404 || e.status === 401)) {
       console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
       resetClient(client)
+    }
+    else {
+      // the server is not responding, but it doesn't mean we're revoked yet
+      shouldInitBar = true
     }
   } finally {
     if (shouldInitBar) initBar(client)
