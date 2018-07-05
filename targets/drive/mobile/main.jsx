@@ -77,9 +77,9 @@ const startApplication = async function(store, client, polyglot) {
     const oauthClient = client.getOrCreateStackClient()
     oauthClient.setOAuthOptions(clientInfos)
     oauthClient.setCredentials(token)
+    await restoreCozyClientJs(client.options.uri, clientInfos, token)
 
     await oauthClient.fetchInformation()
-    await restoreCozyClientJs(client.options.uri, clientInfos, token)
     shouldInitBar = true
     startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
   } catch (e) {
