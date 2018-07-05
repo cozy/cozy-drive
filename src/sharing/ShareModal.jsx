@@ -168,6 +168,7 @@ ShareModal.propTypes = {
   recipients: PropTypes.array.isRequired,
   link: PropTypes.string,
   documentType: PropTypes.string,
+  isShared: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onShare: PropTypes.func.isRequired,
   onRevoke: PropTypes.func.isRequired,
