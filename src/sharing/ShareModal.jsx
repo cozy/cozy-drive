@@ -108,7 +108,6 @@ export default class ShareModal extends Component {
       link,
       recipients,
       documentType = 'Document',
-      isShared,
       onClose,
       onShare,
       onRevoke,
@@ -132,7 +131,7 @@ export default class ShareModal extends Component {
               contacts={contacts}
               createContact={createContact}
               onShare={onShare}
-              locked={isShared}
+              locked={recipients.length > 0}
             />
           )}
           <hr className={styles['divider']} />
@@ -168,7 +167,6 @@ ShareModal.propTypes = {
   recipients: PropTypes.array.isRequired,
   link: PropTypes.string,
   documentType: PropTypes.string,
-  isShared: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onShare: PropTypes.func.isRequired,
   onRevoke: PropTypes.func.isRequired,

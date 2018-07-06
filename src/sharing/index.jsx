@@ -252,8 +252,7 @@ const OwnerSharingModal = ({ document, ...rest }) => (
       share,
       revoke,
       shareByLink,
-      revokeSharingLink,
-      byDocId
+      revokeSharingLink
     }) => (
       <Query query={cozy => cozy.all('io.cozy.contacts')}>
         {({ data }, { createDocument: createContact }) => (
@@ -264,7 +263,6 @@ const OwnerSharingModal = ({ document, ...rest }) => (
             createContact={createContact}
             recipients={getRecipients(document.id)}
             link={getSharingLink(document)}
-            isShared={byDocId[document.id] !== undefined}
             onShare={share}
             onRevoke={revoke}
             onShareByLink={shareByLink}
