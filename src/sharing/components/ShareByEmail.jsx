@@ -40,7 +40,7 @@ ShareRecipientsInput.defaultProps = {
 
 const ShareTypeSelect = props => (
   <div
-    data-tip={props.tipText}
+    data-tip={props.locked && props.tipText}
     className={classnames(
       styles['select-wrapper'],
       props.locked ? styles['select-wrapper--locked'] : ''
