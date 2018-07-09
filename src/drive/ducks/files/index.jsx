@@ -1,5 +1,5 @@
 import React from 'react'
-import Container from './Container'
+import Container, { TestFolderView } from './Container'
 export { default as FileOpenerExternal } from './FileOpenerExternal.jsx'
 
 export const FolderContainer = props => (
@@ -20,16 +20,6 @@ export const RecentContainer = props => (
     canUpload={false}
     canCreateFolder={false}
     withFilePath
-    {...props}
-  />
-)
-export const SharingsContainer = props => (
-  <Container
-    isTrashContext={false}
-    canSort
-    canDrop
-    canUpload
-    canCreateFolder={false}
     {...props}
   />
 )

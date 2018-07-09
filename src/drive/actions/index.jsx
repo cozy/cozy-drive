@@ -219,7 +219,7 @@ export const fetchRecentFiles = () => {
   }
 }
 
-export const fetchSharings = () => {
+export const fetchSharings = (sharedFiles = []) => {
   return async (dispatch, getState) => {
     dispatch({
       type: FETCH_SHARINGS,
@@ -229,7 +229,7 @@ export const fetchSharings = () => {
     })
 
     try {
-      const files = []
+      const files = sharedFiles
 
       return dispatch({
         type: FETCH_SHARINGS_SUCCESS,

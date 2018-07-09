@@ -11,10 +11,10 @@ import FilesViewer from './FilesViewer'
 import {
   FolderContainer as Folder,
   RecentContainer as Recent,
-  SharingsContainer as Sharings,
   FileOpenerExternal
 } from '../ducks/files'
 import { Container as Trash } from '../ducks/trash'
+import Sharings from '../ducks/sharings/Container'
 
 const AppRoute = (
   <Route>
@@ -32,6 +32,9 @@ const AppRoute = (
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
         <Route path="sharings" component={Sharings}>
+          <Route path="file/:fileId" component={FilesViewer} />
+        </Route>
+        <Route path="sharings/:folderId" component={Sharings}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
         <Route path="trash" component={Trash}>

@@ -229,6 +229,10 @@ export default class SharingProvider extends Component {
   }
 }
 
+export const SharedDocuments = ({ children }) => (
+  <SharingContext.Consumer>{props => children(props)}}</SharingContext.Consumer>
+)
+
 export const SharedDocument = ({ docId, children }) => (
   <SharingContext.Consumer>
     {({ byDocId, isOwner, getSharingType, revokeSelf } = {}) =>
