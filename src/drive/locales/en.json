@@ -101,7 +101,10 @@
         "genericSuccess": "You sent an invite to %{count} contacts.",
         "success": "You sent an invite to %{email}.",
         "comingsoon":
-          "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
+          "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!",
+        "onlyByLink": "This %{type} can only be shared by link, because",
+        "hasSharedParent": "it has a shared parent",
+        "hasSharedChild": "it contains a shared element"
       },
       "revoke": {
         "title": "Remove from sharing",

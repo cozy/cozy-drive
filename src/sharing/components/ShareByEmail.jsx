@@ -210,7 +210,32 @@ class ShareByEmail extends Component {
 
   render() {
     const { t } = this.context
-    const { contacts, documentType, document, locked } = this.props
+    const {
+      contacts,
+      documentType,
+      document,
+      locked,
+      hasSharedParent,
+      hasSharedChild
+    } = this.props
+
+    if (hasSharedParent || hasSharedChild) {
+      return (
+        <div className={styles['share-byemail-onlybylink']}>
+          {t(`${documentType}.share.shareByEmail.onlyByLink`, {
+            type: document.type === 'directory' ? 'folder' : 'file'
+          })}{' '}
+          <strong>
+            {t(
+              `${documentType}.share.shareByEmail.${
+                hasSharedParent ? 'hasSharedParent' : 'hasSharedChild'
+              }`
+            )}
+          </strong>
+        </div>
+      )
+    }
+
     const { recipients } = this.state
 
     return (
@@ -254,7 +279,9 @@ ShareByEmail.propTypes = {
   sharingDesc: PropTypes.string.isRequired,
   locked: PropTypes.bool,
   onShare: PropTypes.func.isRequired,
-  createContact: PropTypes.func.isRequired
+  createContact: PropTypes.func.isRequired,
+  hasSharedParent: PropTypes.bool,
+  hasSharedChild: PropTypes.bool
 }
 
 ShareByEmail.defaultProps = {

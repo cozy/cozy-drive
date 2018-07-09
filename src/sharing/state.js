@@ -4,6 +4,7 @@ const REVOKE_RECIPIENT = 'REVOKE_RECIPIENT'
 const REVOKE_SELF = 'REVOKE_SELF'
 const ADD_SHARING_LINK = 'ADD_SHARING_LINK'
 const REVOKE_SHARING_LINK = 'REVOKE_SHARING_LINK'
+const RECEIVE_PATHS = 'RECEIVE_PATHS'
 
 // actions
 export const receiveSharings = ({
@@ -20,8 +21,12 @@ export const receiveSharings = ({
     apps
   }
 })
-export const addSharing = data => ({ type: ADD_SHARING, data })
-export const revokeRecipient = (sharing, email) => ({
+export const addSharing = (data, path) => ({
+  type: ADD_SHARING,
+  data,
+  path
+})
+export const revokeRecipient = (sharing, email, path) => ({
   type: REVOKE_RECIPIENT,
   // we form the updated sharing here so that we can "forget" it in the byId reducer if
   // there is no not-revoked member remaining
@@ -32,7 +37,8 @@ export const revokeRecipient = (sharing, email) => ({
       members: sharing.attributes.members.filter(m => m.email !== email)
     }
   },
-  email
+  email,
+  path
 })
 export const revokeSelf = sharing => ({ type: REVOKE_SELF, sharing })
 export const addSharingLink = data => ({ type: ADD_SHARING_LINK, data })
@@ -40,6 +46,7 @@ export const revokeSharingLink = permissions => ({
   type: REVOKE_SHARING_LINK,
   permissions
 })
+export const receivePaths = paths => ({ type: RECEIVE_PATHS, paths })
 
 // reducers
 const byIdInitialState = { sharings: [], permissions: [] }
@@ -168,11 +175,28 @@ const sharings = (state = [], action) => {
   }
 }
 
+const sharedPaths = (state = [], action) => {
+  switch (action.type) {
+    case RECEIVE_PATHS:
+      return action.paths
+    case ADD_SHARING:
+      return [...state, action.path]
+    case REVOKE_RECIPIENT:
+      if (areAllRecipientsRevoked(action.sharing)) {
+        return state.filter(p => p !== action.path)
+      }
+      return state
+    default:
+      return state
+  }
+}
+
 const reducer = (state = {}, action = {}) => ({
   byDocId: byDocId(state.byDocId, action),
   sharings: sharings(state.sharings, action),
   permissions: permissions(state.permissions, action),
-  apps: apps(state.apps, action)
+  apps: apps(state.apps, action),
+  sharedPaths: sharedPaths(state.sharedPaths, action)
 })
 export default reducer
 
@@ -248,13 +272,23 @@ const getPermissionById = (state, id) =>
 
 const getApps = state => state.apps
 
+export const hasSharedParent = (state, document) =>
+  state.sharedPaths.some(path => document.path.indexOf(`${path}/`) === 0)
+
+export const hasSharedChild = (state, document) => {
+  const ret = state.sharedPaths.some(
+    path => path.indexOf(`${document.path}/`) === 0
+  )
+  return ret
+}
+
 // helpers
 const getSharedDocIds = doc =>
   doc.type === 'io.cozy.sharings'
     ? getSharingDocIds(doc)
     : getPermissionDocIds(doc)
 
-const getSharingDocIds = sharing =>
+export const getSharingDocIds = sharing =>
   sharing.attributes.rules
     .map(r => r.values)
     .reduce((acc, val) => acc.concat(val), [])
