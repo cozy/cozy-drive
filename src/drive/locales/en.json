@@ -76,8 +76,8 @@
       "details": {
         "title": "Sharing details",
         "createdAt": "On %{date}",
-        "ro": "Read only",
-        "rw": "Read/write",
+        "ro": "Can read",
+        "rw": "Can change",
         "desc": {
           "ro": "You can view, download, and add this content to your Cozy. You will get updates by the owner, but you won't be able to update this content yourself.",
           "rw": "You can view, update, delete and add this content to your Cozy. Updates you make will be seen on other Cozies."

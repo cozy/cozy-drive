@@ -22,8 +22,8 @@
         margin-left auto
 
     .share-bylink-header-dot
-        height .5rem
-        width  .5rem
+        height .2rem
+        width  .2rem
         background-color black
         border-radius    50%
         display inline-block
@@ -32,6 +32,7 @@
     .share-bylink-header-copybtn
         color dodgerBlue
         font-weight bold
+        cursor pointer
 
     .share-bylink-header-copybtn
         background transparent
@@ -40,7 +41,11 @@
 
 .share-bylink-desc
     color     coolGrey
-    font-size .8125rem
+    font-size .875rem
+
+@media (max-width 32em)
+    .share-bylink-desc
+        width 80%
 
 .share-byemail-onlybylink
     background paleGrey
@@ -178,9 +183,11 @@ input[type=text]
 
 .share-details-perm
     background-image     embedurl('./assets/icon-pen-16.svg')
+    margin-bottom .2rem
 
 .share-details-perm-desc
     font-size     .875rem
-    margin        0.5rem 0 0.5rem 3rem
+    margin        0 0 0.5rem 3rem
     padding-left  1.5rem
+    line-height   1.5
     color         coolGrey

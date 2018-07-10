@@ -120,8 +120,13 @@ const Recipient = (props, { t, client }) => {
   return (
     <div className={styles['pho-recipient']}>
       <Avatar name={name} />
-      <Identity name={isMe ? t('Share.recipients.you') : name} url={instance} />
-      <Status {...props} />
+      <div className={styles['pho-recipient-ident-status']}>
+        <Identity
+          name={isMe ? t('Share.recipients.you') : name}
+          url={instance}
+        />
+        <Status {...props} />
+      </div>
     </div>
   )
 }
