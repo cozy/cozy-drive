@@ -221,6 +221,7 @@ export const getRecipients = (state, docId) => {
       return sharing.attributes.members.map(m => ({ ...m, type }))
     })
     .reduce((acc, member) => acc.concat(member), [])
+    .filter(r => r.status !== 'revoked')
   if (recipients[0] && recipients[0].status === 'owner') {
     return [recipients[0], ...recipients.filter(r => r.status !== 'owner')]
   }

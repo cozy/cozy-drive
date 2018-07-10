@@ -1,4 +1,5 @@
 @require 'components/button.styl'
+@require 'settings/breakpoints.styl'
 @require 'settings/palette.styl'
 
 .pho-recipient
@@ -41,6 +42,12 @@
     font-size .875rem
     color coolGrey
 
+.pho-recipient-ident-status
+    flex 1 1 auto
+    display flex
+    flex-direction row
+    align-items center
+
 .pho-recipient-user
 .pho-recipient-url
     text-overflow ellipsis
@@ -72,9 +79,9 @@
     background embedurl("../assets/icon-arrow-down.svg") right center no-repeat
     border     none
     min-width  1rem
-    padding-right 1.3rem
+    padding-right 1.1rem
     background-color transparent
-    color            black
+    color    black
 
     &:focus
     &:not([disabled]):not([aria-disabled=true]):hover
@@ -85,20 +92,30 @@
 
 .pho-recipient-menu-header--pending
 .pho-recipient-menu-header--mail-not-sent
-    background embedurl("../assets/icon-hourglass-16.svg") 1rem center no-repeat
+    background embedurl("../assets/icon-hourglass-16.svg") 1rem .4rem no-repeat
 
 .pho-recipient-menu-header--one-way
-    background embedurl("../assets/icon-eye-16.svg") 1rem center no-repeat
+    background embedurl("../assets/icon-eye-16.svg") 1rem .4rem no-repeat
 
 .pho-recipient-menu-header--two-way
-    background embedurl("../assets/icon-pen-write-16.svg") 1rem center no-repeat
+    background embedurl("../assets/icon-pen-write-16.svg") 1rem .4rem no-repeat
 
 .pho-action-unshare
     color pomegranate !important
     text-decoration none !important
-    background embedurl("../assets/icon-trash-red.svg") 1rem center no-repeat
+    background embedurl("../assets/icon-trash-red.svg") 1rem .4rem no-repeat
 
 .pho-action-unshare-desc
     margin    0
     padding   0 1.5rem .5rem 2.5rem
     font-size .8125rem
+
+@media (max-width 32em)
+    .pho-recipient-ident-status
+        display block
+
+    .pho-recipient-menu-btn
+        padding 0
+        padding-right 1.1rem
+        margin 0
+        min-height 0

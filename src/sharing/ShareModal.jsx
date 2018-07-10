@@ -149,9 +149,6 @@ export default class ShareModal extends Component {
           />
           <WhoHasAccess
             isOwner
-            title={t(`${documentType}.share.whoHasAccess.title`, {
-              smart_count: recipients.length
-            })}
             recipients={recipients}
             document={document}
             documentType={documentType}
