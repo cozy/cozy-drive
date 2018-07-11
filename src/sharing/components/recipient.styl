@@ -84,6 +84,8 @@
     color    black
 
     &:focus
+    &[disabled]:hover
+    &[aria-disabled=true]:hover
     &:not([disabled]):not([aria-disabled=true]):hover
         background-color transparent
 

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import ReactTooltip from 'react-tooltip'
 
 import { Button } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
@@ -39,28 +37,13 @@ ShareRecipientsInput.defaultProps = {
 }
 
 const ShareTypeSelect = props => (
-  <div
-    data-tip={props.locked && props.tipText}
-    className={classnames(
-      styles['select-wrapper'],
-      props.locked ? styles['select-wrapper--locked'] : ''
-    )}
-  >
-    <ReactTooltip
-      place="bottom"
-      type="light"
-      effect="solid"
-      event="mouseenter click"
-      eventOff="mouseleave"
-      className={styles['tooltip']}
-    />
+  <div className={styles['select-wrapper']}>
     <select
       name="select"
       value={props.value}
       onChange={e => {
         props.onChange(e.target.value)
       }}
-      disabled={props.locked}
     >
       {props.options.map(option => (
         <option value={option.value} disabled={option.disabled}>
@@ -74,15 +57,12 @@ const ShareTypeSelect = props => (
 ShareTypeSelect.propTypes = {
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
-  value: PropTypes.string,
-  locked: PropTypes.bool,
-  tipText: PropTypes.string
+  value: PropTypes.string
 }
 
 ShareTypeSelect.defaultProps = {
   onChange: console.log,
-  value: '',
-  locked: false
+  value: ''
 }
 
 const ShareSubmit = props => (
@@ -214,7 +194,6 @@ class ShareByEmail extends Component {
       contacts,
       documentType,
       document,
-      locked,
       hasSharedParent,
       hasSharedChild
     } = this.props
@@ -254,12 +233,6 @@ class ShareByEmail extends Component {
             options={this.sharingTypes}
             value={this.state.sharingType}
             onChange={this.onChange}
-            locked={locked}
-            tipText={t(
-              document.type === 'directory'
-                ? 'Share.locked-type-folder'
-                : 'Share.locked-type-file'
-            )}
           />
           <ShareSubmit
             label={t(`${documentType}.share.shareByEmail.send`)}
@@ -277,7 +250,6 @@ ShareByEmail.propTypes = {
   document: PropTypes.object.isRequired,
   documentType: PropTypes.string.isRequired,
   sharingDesc: PropTypes.string.isRequired,
-  locked: PropTypes.bool,
   onShare: PropTypes.func.isRequired,
   createContact: PropTypes.func.isRequired,
   hasSharedParent: PropTypes.bool,
@@ -285,8 +257,7 @@ ShareByEmail.propTypes = {
 }
 
 ShareByEmail.defaultProps = {
-  contacts: [],
-  locked: false
+  contacts: []
 }
 
 export default ShareByEmail
