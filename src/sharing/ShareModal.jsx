@@ -102,6 +102,7 @@ export default class ShareModal extends Component {
     const { t } = this.context
     const {
       document,
+      isOwner,
       sharingDesc,
       contacts,
       createContact,
@@ -133,7 +134,6 @@ export default class ShareModal extends Component {
               contacts={contacts}
               createContact={createContact}
               onShare={onShare}
-              locked={recipients.length > 0}
               hasSharedParent={hasSharedParent}
               hasSharedChild={hasSharedChild}
             />
@@ -148,7 +148,7 @@ export default class ShareModal extends Component {
             onDisable={onRevokeLink}
           />
           <WhoHasAccess
-            isOwner
+            isOwner={isOwner}
             recipients={recipients}
             document={document}
             documentType={documentType}
@@ -162,6 +162,7 @@ export default class ShareModal extends Component {
 
 ShareModal.propTypes = {
   document: PropTypes.object.isRequired,
+  isOwner: PropTypes.bool,
   sharingDesc: PropTypes.string,
   contacts: PropTypes.array.isRequired,
   createContact: PropTypes.func.isRequired,

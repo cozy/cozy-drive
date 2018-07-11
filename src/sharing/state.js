@@ -1,5 +1,6 @@
 const RECEIVE_SHARINGS = 'RECEIVE_SHARINGS'
 const ADD_SHARING = 'ADD_SHARING'
+const UPDATE_SHARING = 'UPDATE_SHARING'
 const REVOKE_RECIPIENT = 'REVOKE_RECIPIENT'
 const REVOKE_SELF = 'REVOKE_SELF'
 const ADD_SHARING_LINK = 'ADD_SHARING_LINK'
@@ -25,6 +26,10 @@ export const addSharing = (data, path) => ({
   type: ADD_SHARING,
   data,
   path
+})
+export const updateSharing = sharing => ({
+  type: UPDATE_SHARING,
+  sharing
 })
 export const revokeRecipient = (sharing, email, path) => ({
   type: REVOKE_RECIPIENT,
@@ -164,6 +169,7 @@ const sharings = (state = [], action) => {
       return action.data.sharings
     case ADD_SHARING:
       return [...state, action.data]
+    case UPDATE_SHARING:
     case REVOKE_RECIPIENT:
       return state.map(s => {
         return s.id !== action.sharing.id ? s : action.sharing
@@ -211,6 +217,12 @@ export const isOwner = (state, docId) => {
   return true
 }
 
+export const canReshare = (state, docId, instanceUri) => {
+  const sharing = getDocumentSharing(state, docId)
+  const me = sharing.attributes.members.find(m => m.instance === instanceUri)
+  return sharing.attributes.open_sharing === true && !me.read_only
+}
+
 export const getOwner = (state, docId) =>
   getRecipients(state, docId).find(r => r.status === 'owner')
 
@@ -218,7 +230,10 @@ export const getRecipients = (state, docId) => {
   const recipients = getDocumentSharings(state, docId)
     .map(sharing => {
       const type = getDocumentSharingType(sharing, docId)
-      return sharing.attributes.members.map(m => ({ ...m, type }))
+      return sharing.attributes.members.map(m => ({
+        ...m,
+        type: m.read_only ? 'one-way' : type
+      }))
     })
     .reduce((acc, member) => acc.concat(member), [])
     .filter(r => r.status !== 'revoked')
@@ -251,10 +266,18 @@ export const getSharingForRecipient = (state, docId, recipientEmail) =>
   )
 
 export const getSharingForSelf = (state, docId) =>
-  getDocumentSharings(state, docId)[0]
+  getDocumentSharing(state, docId)
 
-export const getSharingType = (state, docId) =>
-  getDocumentSharingType(getSharingForSelf(state, docId), docId)
+export const getSharingType = (state, docId, instanceUri) => {
+  const sharing = getSharingForSelf(state, docId)
+  const type = getDocumentSharingType(sharing, docId)
+  if (sharing.attributes.owner) return type
+  const me = sharing.attributes.members.find(m => m.instance === instanceUri)
+  return me.read_only ? 'one-way' : type
+}
+
+export const getDocumentSharing = (state, docId) =>
+  getDocumentSharings(state, docId)[0] || null
 
 const getDocumentSharings = (state, docId) =>
   !state.byDocId[docId]
