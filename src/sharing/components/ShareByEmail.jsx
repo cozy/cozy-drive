@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Button } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
+import SelectBox from 'cozy-ui/react/SelectBox'
 import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
 
@@ -36,28 +37,22 @@ ShareRecipientsInput.defaultProps = {
   recipients: []
 }
 
-const ShareTypeSelect = props => (
+const ShareTypeSelect = ({ options, onChange }) => (
   <div className={styles['select-wrapper']}>
-    <select
+    <SelectBox
       name="select"
-      value={props.value}
-      onChange={e => {
-        props.onChange(e.target.value)
+      defaultValue={options[1]}
+      onChange={option => {
+        onChange(option.value)
       }}
-    >
-      {props.options.map(option => (
-        <option value={option.value} disabled={option.disabled}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+      options={options}
+    />
   </div>
 )
 
 ShareTypeSelect.propTypes = {
   onChange: PropTypes.func,
-  options: PropTypes.array.isRequired,
-  value: PropTypes.string
+  options: PropTypes.array.isRequired
 }
 
 ShareTypeSelect.defaultProps = {
@@ -231,7 +226,6 @@ class ShareByEmail extends Component {
         <div className={styles['share-type-control']}>
           <ShareTypeSelect
             options={this.sharingTypes}
-            value={this.state.sharingType}
             onChange={this.onChange}
           />
           <ShareSubmit
