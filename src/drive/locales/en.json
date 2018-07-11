@@ -67,7 +67,11 @@
       "you": "You",
       "accessCount": "%{count} people have access"
     },
-    "create-cozy": "Create my cozy"
+    "create-cozy": "Create my cozy",
+    "members": {
+      "count": "%{count} members",
+      "others": "and 1 other... |||| and %{smart_count} others..."
+    }
   },
   "Files": {
     "share": {
