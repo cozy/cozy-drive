@@ -203,9 +203,9 @@ describe('Sharing state', () => {
     })
 
     it('should get a sharing link', () => {
-      expect(
-        getSharingLink(state, { _id: 'folder_1', _type: 'io.cozy.files' })
-      ).toBe('http://drive.cozy.tools:8080/public?sharecode=secret&id=folder_1')
+      expect(getSharingLink(state, 'folder_1', 'Files')).toBe(
+        'http://drive.cozy.tools:8080/public?sharecode=secret&id=folder_1'
+      )
     })
   })
 })

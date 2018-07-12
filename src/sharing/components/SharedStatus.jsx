@@ -1,14 +1,22 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
+import cx from 'classnames'
+import Icon from 'cozy-ui/react/Icon'
 import { getDisplayName } from '..'
 
 import styles from './status'
+import linkIcon from '../assets/icons/icon-link-grey.svg'
 
-const SharedStatus = ({ className, docId, recipients }, { t }) => (
-  <span className={className}>
-    <a data-tip data-for={`members${docId}`}>
+const SharedStatus = ({ className, docId, recipients, link }, { t }) => (
+  <span className={cx(className, styles['shared-status'])}>
+    <a
+      data-tip
+      data-for={`members${docId}`}
+      className={styles['shared-status-label']}
+    >
       {t('Share.members.count', { count: recipients.length })}
     </a>
+    {link && <Icon icon={linkIcon} />}
     <ReactTooltip
       id={`members${docId}`}
       className={styles['shared-status-members']}
