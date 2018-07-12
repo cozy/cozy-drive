@@ -38,65 +38,6 @@ const ShareByEmailComingSoon = shunt(
   ComingSoon
 )
 
-// TODO: implements
-const isSearchParam = value => {
-  const searchParam = new URL(window.location).searchParams.get(
-    'shareSpecialCase'
-  )
-  return searchParam ? searchParam.includes(value) : false
-}
-
-const hasSharedFolder = id => isSearchParam('hasSharedFolder')
-const isInSharedFolder = id => isSearchParam('isInSharedFolder')
-const getSpecialCase = id => {
-  const specialCase1 = new URL(window.location)
-  specialCase1.search = '?shareSpecialCase=isInSharedFolder'
-  const specialCase2 = new URL(window.location)
-  specialCase2.search = '?shareSpecialCase=hasSharedFolder'
-  console.warn(
-    `Check the sharing special cases with a query parameter, for instance: ${
-      specialCase1.href
-    } or ${specialCase2.href}`
-  )
-  if (hasSharedFolder(id)) {
-    return 'hasSharedFolder'
-  }
-  if (isInSharedFolder(id)) {
-    return 'isInSharedFolder'
-  }
-}
-
-const ShareSpecialCase = ({ documentType, type, specialCase, t }) => (
-  <div style={{ margin: 0, backgroundColor: '#f5f6f7' }}>
-    <hr className={styles['divider']} />
-    <div style={{ padding: '8px 1.5em 1.5em' }}>
-      {t(`${documentType}.share.specialCase.base`, { type })}{' '}
-      <b>{t(`${documentType}.share.specialCase.${specialCase}`)}</b>
-    </div>
-  </div>
-)
-
-ShareSpecialCase.propTypes = {
-  documentType: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  specialCase: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
-}
-
-const withSharingCheck = ({ id, type }, documentType, t) => BaseComponent => {
-  const specialCase = getSpecialCase(id)
-  return specialCase ? (
-    <ShareSpecialCase
-      documentType={documentType}
-      type={type}
-      specialCase={specialCase}
-      t={t}
-    />
-  ) : (
-    BaseComponent
-  )
-}
-
 export default class ShareModal extends Component {
   render() {
     const { t } = this.context
@@ -126,18 +67,16 @@ export default class ShareModal extends Component {
         mobileFullscreen
       >
         <div className={styles['share-modal-content']}>
-          {withSharingCheck(document, documentType, t)(
-            <ShareByEmailComingSoon
-              document={document}
-              documentType={documentType}
-              sharingDesc={sharingDesc}
-              contacts={contacts}
-              createContact={createContact}
-              onShare={onShare}
-              hasSharedParent={hasSharedParent}
-              hasSharedChild={hasSharedChild}
-            />
-          )}
+          <ShareByEmailComingSoon
+            document={document}
+            documentType={documentType}
+            sharingDesc={sharingDesc}
+            contacts={contacts}
+            createContact={createContact}
+            onShare={onShare}
+            hasSharedParent={hasSharedParent}
+            hasSharedChild={hasSharedChild}
+          />
           <hr className={styles['divider']} />
           <DumbShareByLink
             document={document}
