@@ -89,45 +89,28 @@
         flex 0 0 49%
         position relative
 
-        &.select-wrapper--locked
-            &:before
-                content ""
-                display inline-block
-                position absolute
-                width 1rem
-                left 1rem
-                top 0
-                bottom 0
-                background-image embedurl('./assets/icon-information.svg')
-                background-repeat no-repeat
-                background-size 100%
-                background-position center
-                opacity .4
+        .select-option
+            padding .5rem 1.5rem .5rem 3rem
 
+        .select-option--selected
+            background embedurl('./assets/icon-check-blue.svg') 1.5rem 1rem no-repeat
 
-    select
-        @extend $select
-        @extend $select--fullwidth
+        .select-option-label
+            line-height 2
 
-        &:disabled,
-        &:hover:disabled
-            padding-left 2.8rem
-            color silver
-            border-color silver
+        .select-option-desc
+            line-height 1.5
+            font-size   .8125rem
+            color coolGrey
 
     button
         flex 0 0 49%
         margin 0
 
-    .tooltip
-        background paleGrey
-        font-size 1rem
-        line-height 1.5
-        color charcoalGrey
-        max-width 24rem
-        width 90%
-        opacity 1
-        border-radius .5rem
+:global
+    // dirty hack for react-select: its API doesn't allow to make change to active styles
+    .react-select__option:active
+        background-color paleGrey !important
 
 @media (max-width 32em)
     .share-type-control
@@ -135,9 +118,6 @@
 
         .select-wrapper
             margin-bottom .5rem
-
-        .tooltip
-            margin-left 0
 
 input[type=text]
     width 100%

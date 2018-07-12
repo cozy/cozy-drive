@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
-import { Button } from 'cozy-ui/react'
+import { Button, Icon } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
-import SelectBox from 'cozy-ui/react/SelectBox'
+import SelectBox, { components } from 'cozy-ui/react/SelectBox'
 import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
 
@@ -37,11 +38,48 @@ ShareRecipientsInput.defaultProps = {
   recipients: []
 }
 
+const DropdownIndicator = props => (
+  <components.DropdownIndicator {...props}>
+    <Icon icon="bottom" color="#95999d" />
+  </components.DropdownIndicator>
+)
+const Option = (props, { t }) => (
+  <components.Option {...props}>
+    <div
+      className={cx(styles['select-option'], {
+        [styles['select-option--selected']]: props.isSelected
+      })}
+    >
+      <div className={styles['select-option-label']}>{props.label}</div>
+      <div className={styles['select-option-desc']}>{props.data.desc}</div>
+    </div>
+  </components.Option>
+)
+const customStyles = {
+  option: (base, state) => ({
+    ...base,
+    color: 'black',
+    backgroundColor: state.isFocused ? '#f5f6f7' : null,
+    padding: 0,
+    borderBottom:
+      state.options.findIndex(o => o.value === state.value) === 0
+        ? '1px solid #c4c5c7'
+        : null
+  }),
+  menu: (base, state) => ({
+    ...base,
+    width: '204%'
+  })
+}
 const ShareTypeSelect = ({ options, onChange }) => (
   <div className={styles['select-wrapper']}>
     <SelectBox
       name="select"
+      classNamePrefix="react-select"
+      components={{ DropdownIndicator, Option }}
+      styles={customStyles}
       defaultValue={options[1]}
+      isSearchable={false}
       onChange={option => {
         onChange(option.value)
       }}
@@ -86,11 +124,13 @@ class ShareByEmail extends Component {
     {
       value: 'one-way',
       label: this.context.t('Share.type.one-way'),
+      desc: this.context.t('Share.type.desc.one-way'),
       disabled: false
     },
     {
       value: 'two-way',
       label: this.context.t('Share.type.two-way'),
+      desc: this.context.t('Share.type.desc.two-way'),
       disabled: false
     }
   ]
