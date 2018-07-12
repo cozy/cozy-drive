@@ -107,6 +107,10 @@
         "comingsoon":
           "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!",
         "onlyByLink": "This %{type} can only be shared by link, because",
+        "type": {
+          "file": "file",
+          "folder": "folder"
+        },
         "hasSharedParent": "it has a shared parent",
         "hasSharedChild": "it contains a shared element"
       },

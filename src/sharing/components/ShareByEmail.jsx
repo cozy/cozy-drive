@@ -197,7 +197,11 @@ class ShareByEmail extends Component {
       return (
         <div className={styles['share-byemail-onlybylink']}>
           {t(`${documentType}.share.shareByEmail.onlyByLink`, {
-            type: document.type === 'directory' ? 'folder' : 'file'
+            type: t(
+              `${documentType}.share.shareByEmail.type.${
+                document.type === 'directory' ? 'folder' : 'file'
+              }`
+            )
           })}{' '}
           <strong>
             {t(
