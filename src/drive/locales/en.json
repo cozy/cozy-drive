@@ -59,7 +59,11 @@
     },
     "type": {
       "one-way": "Can View",
-      "two-way": "Can Change"
+      "two-way": "Can Change",
+      "desc": {
+        "one-way": "Contacts can view, download, and add the content to their Cozy. If they add the content to their Cozy, they will get updates you make to the content, but they won't be able to update it.",
+        "two-way": "Contacts can update, delete and add the content to their Cozy. Updates on the content will be seen on other Cozies."
+      }
     },
     "locked-type-file": "Coming soon: you will be able to change permissions you grant on the file.",
     "locked-type-folder": "Coming soon: you will be able to change permissions you grant on the folder.",
