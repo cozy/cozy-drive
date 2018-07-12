@@ -2664,20 +2664,20 @@ cozy-client-js@^0.3.19:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
 
-cozy-client@1.0.0-beta.14:
-  version "1.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-1.0.0-beta.14.tgz#5eae05496fdc67af1a72e6e3dfa14dc435be9cd9"
+cozy-client@1.0.0-beta.16:
+  version "1.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-1.0.0-beta.16.tgz#8b686261af07472a7dccf1c97aef367ffaade082"
   dependencies:
-    cozy-stack-client "^1.0.0-beta.14"
+    cozy-stack-client "^1.0.0-beta.16"
     lodash "^4.17.5"
     prop-types "^15.6.0"
     react "^16.2.0"
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-cozy-stack-client@^1.0.0-beta.14:
-  version "1.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-1.0.0-beta.14.tgz#744ea59a2777dbbadc97194d046f403e3bb78ee0"
+cozy-stack-client@^1.0.0-beta.16:
+  version "1.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-1.0.0-beta.16.tgz#9731951d9dd322a673150d5c291d2c5f6af3633b"
   dependencies:
     mime-types "^2.1.18"
 
