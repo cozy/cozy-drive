@@ -2,13 +2,13 @@ import styles from './recipient.styl'
 
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import Spinner from 'cozy-ui/react/Spinner'
+import { Spinner } from 'cozy-ui/react'
 import ColorHash from './colorhash'
 import Menu, { Item } from 'components/Menu'
 
 import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
-const Avatar = ({ name }) => {
+const Avatar = ({ name = '' }) => {
   const initial = name.charAt(0)
   const bg = ColorHash().getColor(name)
   const style = {
@@ -21,8 +21,15 @@ const Avatar = ({ name }) => {
   )
 }
 
-export const RecipientsAvatars = ({ recipients }) => (
+const AvatarLink = () => (
+  <div className={styles['pho-recipient-avatar']}>
+    <span className={styles['pho-recipient-avatar-link']} />
+  </div>
+)
+
+export const RecipientsAvatars = ({ recipients, link }) => (
   <div className={styles['pho-recipients-avatars']}>
+    {link && <AvatarLink />}
     {recipients.map(recipient => <Avatar name={getDisplayName(recipient)} />)}
   </div>
 )

@@ -243,9 +243,9 @@ export const getRecipients = (state, docId) => {
   return recipients
 }
 
-export const getSharingLink = (state, document) => {
+export const getSharingLink = (state, docId, documentType) => {
   // This shouldn't have happened, but unfortunately some duplicate sharing links have been created in the past
-  const perms = getDocumentPermissions(state, document._id)
+  const perms = getDocumentPermissions(state, docId)
   if (perms.length === 0) return null
   const perm = perms[0]
   if (
@@ -254,7 +254,12 @@ export const getSharingLink = (state, document) => {
     perm.attributes.codes &&
     perm.attributes.codes.email
   ) {
-    return buildSharingLink(state, document, perm.attributes.codes.email)
+    return buildSharingLink(
+      state,
+      docId,
+      documentType,
+      perm.attributes.codes.email
+    )
   }
   return null
 }
@@ -340,21 +345,22 @@ const getDocumentSharingType = (sharing, docId) => {
     : 'one-way'
 }
 
-const buildSharingLink = (state, document, sharecode) => {
-  const appUrl = getAppUrlForDoctype(state, document._type)
-  return `${appUrl}public?sharecode=${sharecode}&id=${document._id}`
+const buildSharingLink = (state, docId, documentType, sharecode) => {
+  const appUrl = getAppUrlForDoctype(state, documentType)
+  return `${appUrl}public?sharecode=${sharecode}&id=${docId}`
 }
 
-const getAppUrlForDoctype = (state, doctype) => {
+const getAppUrlForDoctype = (state, documentType) => {
   const apps = getApps(state)
-  switch (doctype) {
-    case 'io.cozy.files':
+  switch (documentType) {
+    case 'Files':
+    case 'Document':
       return getAppUrl(apps, 'drive')
-    case 'io.cozy.photos.albums':
+    case 'Photos':
       return getAppUrl(apps, 'photos')
     default:
       throw new Error(
-        `Sharing link: don't know which app to use for doctype ${doctype}`
+        `Sharing link: don't know which app to use for doctype ${documentType}`
       )
   }
 }

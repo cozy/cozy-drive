@@ -79,18 +79,19 @@ export default class SharingProvider extends Component {
   constructor(props, context) {
     super(props, context)
     const instanceUri = this.context.client.options.uri
+    const documentType = props.documentType || 'Document'
     this.state = {
       byDocId: {},
       sharings: [],
       permissions: [],
       sharedFolderPaths: [],
-      documentType: props.documentType || 'Document',
+      documentType,
       isOwner: docId => isOwner(this.state, docId),
       canReshare: docId => canReshare(this.state, docId, instanceUri),
       getOwner: docId => getOwner(this.state, docId),
       getSharingType: docId => getSharingType(this.state, docId, instanceUri),
       getRecipients: docId => getRecipients(this.state, docId),
-      getSharingLink: document => getSharingLink(this.state, document),
+      getSharingLink: docId => getSharingLink(this.state, docId, documentType),
       hasSharedParent: document => hasSharedParent(this.state, document),
       hasSharedChild: document => hasSharedChild(this.state, document),
       share: this.share,
@@ -249,7 +250,7 @@ export const SharedDocument = ({ docId, children }) => (
 
 export const SharedStatus = ({ docId, className }, { t }) => (
   <SharingContext.Consumer>
-    {({ byDocId, isOwner, getRecipients } = {}) =>
+    {({ byDocId, isOwner, getRecipients, getSharingLink } = {}) =>
       !byDocId || !byDocId[docId] ? (
         <span className={className}>—</span>
       ) : (
@@ -257,6 +258,7 @@ export const SharedStatus = ({ docId, className }, { t }) => (
           className={className}
           recipients={getRecipients(docId)}
           docId={docId}
+          link={getSharingLink(docId) !== null}
         />
       )
     }
@@ -275,9 +277,12 @@ export const SharedBadge = ({ docId, ...rest }) => (
 
 export const SharedRecipients = ({ docId, ...rest }) => (
   <SharingContext.Consumer>
-    {({ byDocId, getRecipients } = {}) =>
+    {({ byDocId, getRecipients, getSharingLink } = {}) =>
       !byDocId || !byDocId[docId] ? null : (
-        <RecipientsAvatars recipients={getRecipients(docId).reverse()} />
+        <RecipientsAvatars
+          recipients={getRecipients(docId).reverse()}
+          link={getSharingLink(docId) !== null}
+        />
       )
     }}
   </SharingContext.Consumer>
@@ -325,7 +330,7 @@ const EditableSharingModal = ({ document, ...rest }) => (
             contacts={data}
             createContact={createContact}
             recipients={getRecipients(document.id)}
-            link={getSharingLink(document)}
+            link={getSharingLink(document.id)}
             isOwner={isOwner(document.id)}
             hasSharedParent={hasSharedParent(document)}
             hasSharedChild={hasSharedChild(document)}
