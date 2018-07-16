@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
-import { Button } from 'cozy-ui/react'
+import { Button, Icon } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
+import SelectBox, { components } from 'cozy-ui/react/SelectBox'
 import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
 
@@ -36,27 +38,59 @@ ShareRecipientsInput.defaultProps = {
   recipients: []
 }
 
-const ShareTypeSelect = props => (
-  <select
-    name="select"
-    className={styles['coz-select']}
-    value={props.value}
-    onChange={e => {
-      props.onChange(e.target.value)
-    }}
-  >
-    {props.options.map(option => (
-      <option value={option.value} disabled={option.disabled}>
-        {option.label}
-      </option>
-    ))}
-  </select>
+const DropdownIndicator = props => (
+  <components.DropdownIndicator {...props}>
+    <Icon icon="bottom" color="#95999d" />
+  </components.DropdownIndicator>
+)
+const Option = (props, { t }) => (
+  <components.Option {...props}>
+    <div
+      className={cx(styles['select-option'], {
+        [styles['select-option--selected']]: props.isSelected
+      })}
+    >
+      <div className={styles['select-option-label']}>{props.label}</div>
+      <div className={styles['select-option-desc']}>{props.data.desc}</div>
+    </div>
+  </components.Option>
+)
+const customStyles = {
+  option: (base, state) => ({
+    ...base,
+    color: 'black',
+    backgroundColor: state.isFocused ? '#f5f6f7' : null,
+    padding: 0,
+    borderBottom:
+      state.options.findIndex(o => o.value === state.value) === 0
+        ? '1px solid #c4c5c7'
+        : null
+  }),
+  menu: (base, state) => ({
+    ...base,
+    width: '204%'
+  })
+}
+const ShareTypeSelect = ({ options, onChange }) => (
+  <div className={styles['select-wrapper']}>
+    <SelectBox
+      name="select"
+      classNamePrefix="react-select"
+      components={{ DropdownIndicator, Option }}
+      styles={customStyles}
+      defaultValue={options[1]}
+      isSearchable={false}
+      onChange={option => {
+        onChange(option.value)
+      }}
+      options={options}
+    />
+  </div>
 )
 
 ShareTypeSelect.propTypes = {
   onChange: PropTypes.func,
-  options: PropTypes.array.isRequired,
-  value: PropTypes.string
+  options: PropTypes.array.isRequired
 }
 
 ShareTypeSelect.defaultProps = {
@@ -90,11 +124,13 @@ class ShareByEmail extends Component {
     {
       value: 'one-way',
       label: this.context.t('Share.type.one-way'),
+      desc: this.context.t('Share.type.desc.one-way'),
       disabled: false
     },
     {
       value: 'two-way',
       label: this.context.t('Share.type.two-way'),
+      desc: this.context.t('Share.type.desc.two-way'),
       disabled: false
     }
   ]
@@ -189,7 +225,35 @@ class ShareByEmail extends Component {
 
   render() {
     const { t } = this.context
-    const { contacts, documentType } = this.props
+    const {
+      contacts,
+      documentType,
+      document,
+      hasSharedParent,
+      hasSharedChild
+    } = this.props
+
+    if (hasSharedParent || hasSharedChild) {
+      return (
+        <div className={styles['share-byemail-onlybylink']}>
+          {t(`${documentType}.share.shareByEmail.onlyByLink`, {
+            type: t(
+              `${documentType}.share.shareByEmail.type.${
+                document.type === 'directory' ? 'folder' : 'file'
+              }`
+            )
+          })}{' '}
+          <strong>
+            {t(
+              `${documentType}.share.shareByEmail.${
+                hasSharedParent ? 'hasSharedParent' : 'hasSharedChild'
+              }`
+            )}
+          </strong>
+        </div>
+      )
+    }
+
     const { recipients } = this.state
 
     return (
@@ -206,7 +270,6 @@ class ShareByEmail extends Component {
         <div className={styles['share-type-control']}>
           <ShareTypeSelect
             options={this.sharingTypes}
-            value={this.state.sharingType}
             onChange={this.onChange}
           />
           <ShareSubmit
@@ -226,7 +289,9 @@ ShareByEmail.propTypes = {
   documentType: PropTypes.string.isRequired,
   sharingDesc: PropTypes.string.isRequired,
   onShare: PropTypes.func.isRequired,
-  createContact: PropTypes.func.isRequired
+  createContact: PropTypes.func.isRequired,
+  hasSharedParent: PropTypes.bool,
+  hasSharedChild: PropTypes.bool
 }
 
 ShareByEmail.defaultProps = {

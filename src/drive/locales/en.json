@@ -59,12 +59,23 @@
     },
     "type": {
       "one-way": "Can View",
-      "two-way": "Can Change"
+      "two-way": "Can Change",
+      "desc": {
+        "one-way": "Contacts can view, download, and add the content to their Cozy. If they add the content to their Cozy, they will get updates you make to the content, but they won't be able to update it.",
+        "two-way": "Contacts can update, delete and add the content to their Cozy. Updates on the content will be seen on other Cozies."
+      }
     },
+    "locked-type-file": "Coming soon: you will be able to change permissions you grant on the file.",
+    "locked-type-folder": "Coming soon: you will be able to change permissions you grant on the folder.",
     "recipients": {
+      "you": "You",
       "accessCount": "%{count} people have access"
     },
-    "create-cozy": "Create my cozy"
+    "create-cozy": "Create my cozy",
+    "members": {
+      "count": "%{count} members",
+      "others": "and 1 other... |||| and %{smart_count} others..."
+    }
   },
   "Files": {
     "share": {
@@ -73,8 +84,8 @@
       "details": {
         "title": "Sharing details",
         "createdAt": "On %{date}",
-        "ro": "Read only",
-        "rw": "Read/write",
+        "ro": "Can read",
+        "rw": "Can change",
         "desc": {
           "ro": "You can view, download, and add this content to your Cozy. You will get updates by the owner, but you won't be able to update this content yourself.",
           "rw": "You can view, update, delete and add this content to your Cozy. Updates you make will be seen on other Cozies."
@@ -85,7 +96,10 @@
       "sharedBy": "Shared by %{name}",
       "shareByLink": {
         "subtitle": "By public link",
-        "desc": "Anyone with the provided link can see and download your files."
+        "desc": "Anyone with the provided link can see and download your files.",
+        "creating": "Creating your link...",
+        "copy": "Copy link",
+        "copied": "Link has been copied to clipboard"
       },
       "shareByEmail": {
         "subtitle": "By email",
@@ -95,14 +109,23 @@
         "genericSuccess": "You sent an invite to %{count} contacts.",
         "success": "You sent an invite to %{email}.",
         "comingsoon":
-          "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
+          "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!",
+        "onlyByLink": "This %{type} can only be shared by link, because",
+        "type": {
+          "file": "file",
+          "folder": "folder"
+        },
+        "hasSharedParent": "it has a shared parent",
+        "hasSharedChild": "it contains a shared element"
       },
       "revoke": {
         "title": "Remove from sharing",
+        "desc": "This contact will no longer have access to shared content.",
         "success": "You removed this shared file from %{email}."
       },
       "revokeSelf": {
         "title": "Remove me from sharing",
+        "desc": "You keep the content but it won't be updated between your Cozy anymore.",
         "success": "You were removed from this sharing."
       },
       "sharingLink": {
@@ -111,7 +134,7 @@
         "copied": "Copied"
       },
       "whoHasAccess": {
-        "title": "Who has access"
+        "title": "1 person has access |||| %{smart_count} people have access"
       },
       "protectedShare": {
         "title": "Coming soon!",

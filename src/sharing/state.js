@@ -1,9 +1,11 @@
 const RECEIVE_SHARINGS = 'RECEIVE_SHARINGS'
 const ADD_SHARING = 'ADD_SHARING'
+const UPDATE_SHARING = 'UPDATE_SHARING'
 const REVOKE_RECIPIENT = 'REVOKE_RECIPIENT'
 const REVOKE_SELF = 'REVOKE_SELF'
 const ADD_SHARING_LINK = 'ADD_SHARING_LINK'
 const REVOKE_SHARING_LINK = 'REVOKE_SHARING_LINK'
+const RECEIVE_PATHS = 'RECEIVE_PATHS'
 
 // actions
 export const receiveSharings = ({
@@ -20,8 +22,16 @@ export const receiveSharings = ({
     apps
   }
 })
-export const addSharing = data => ({ type: ADD_SHARING, data })
-export const revokeRecipient = (sharing, email) => ({
+export const addSharing = (data, path) => ({
+  type: ADD_SHARING,
+  data,
+  path
+})
+export const updateSharing = sharing => ({
+  type: UPDATE_SHARING,
+  sharing
+})
+export const revokeRecipient = (sharing, email, path) => ({
   type: REVOKE_RECIPIENT,
   // we form the updated sharing here so that we can "forget" it in the byId reducer if
   // there is no not-revoked member remaining
@@ -32,7 +42,8 @@ export const revokeRecipient = (sharing, email) => ({
       members: sharing.attributes.members.filter(m => m.email !== email)
     }
   },
-  email
+  email,
+  path
 })
 export const revokeSelf = sharing => ({ type: REVOKE_SELF, sharing })
 export const addSharingLink = data => ({ type: ADD_SHARING_LINK, data })
@@ -40,6 +51,7 @@ export const revokeSharingLink = permissions => ({
   type: REVOKE_SHARING_LINK,
   permissions
 })
+export const receivePaths = paths => ({ type: RECEIVE_PATHS, paths })
 
 // reducers
 const byIdInitialState = { sharings: [], permissions: [] }
@@ -157,6 +169,7 @@ const sharings = (state = [], action) => {
       return action.data.sharings
     case ADD_SHARING:
       return [...state, action.data]
+    case UPDATE_SHARING:
     case REVOKE_RECIPIENT:
       return state.map(s => {
         return s.id !== action.sharing.id ? s : action.sharing
@@ -168,11 +181,28 @@ const sharings = (state = [], action) => {
   }
 }
 
+const sharedPaths = (state = [], action) => {
+  switch (action.type) {
+    case RECEIVE_PATHS:
+      return action.paths
+    case ADD_SHARING:
+      return [...state, action.path]
+    case REVOKE_RECIPIENT:
+      if (areAllRecipientsRevoked(action.sharing)) {
+        return state.filter(p => p !== action.path)
+      }
+      return state
+    default:
+      return state
+  }
+}
+
 const reducer = (state = {}, action = {}) => ({
   byDocId: byDocId(state.byDocId, action),
   sharings: sharings(state.sharings, action),
   permissions: permissions(state.permissions, action),
-  apps: apps(state.apps, action)
+  apps: apps(state.apps, action),
+  sharedPaths: sharedPaths(state.sharedPaths, action)
 })
 export default reducer
 
@@ -187,6 +217,12 @@ export const isOwner = (state, docId) => {
   return true
 }
 
+export const canReshare = (state, docId, instanceUri) => {
+  const sharing = getDocumentSharing(state, docId)
+  const me = sharing.attributes.members.find(m => m.instance === instanceUri)
+  return sharing.attributes.open_sharing === true && !me.read_only
+}
+
 export const getOwner = (state, docId) =>
   getRecipients(state, docId).find(r => r.status === 'owner')
 
@@ -194,18 +230,22 @@ export const getRecipients = (state, docId) => {
   const recipients = getDocumentSharings(state, docId)
     .map(sharing => {
       const type = getDocumentSharingType(sharing, docId)
-      return sharing.attributes.members.map(m => ({ ...m, type }))
+      return sharing.attributes.members.map(m => ({
+        ...m,
+        type: m.read_only ? 'one-way' : type
+      }))
     })
     .reduce((acc, member) => acc.concat(member), [])
+    .filter(r => r.status !== 'revoked')
   if (recipients[0] && recipients[0].status === 'owner') {
     return [recipients[0], ...recipients.filter(r => r.status !== 'owner')]
   }
   return recipients
 }
 
-export const getSharingLink = (state, document) => {
+export const getSharingLink = (state, docId, documentType) => {
   // This shouldn't have happened, but unfortunately some duplicate sharing links have been created in the past
-  const perms = getDocumentPermissions(state, document._id)
+  const perms = getDocumentPermissions(state, docId)
   if (perms.length === 0) return null
   const perm = perms[0]
   if (
@@ -214,7 +254,12 @@ export const getSharingLink = (state, document) => {
     perm.attributes.codes &&
     perm.attributes.codes.email
   ) {
-    return buildSharingLink(state, document, perm.attributes.codes.email)
+    return buildSharingLink(
+      state,
+      docId,
+      documentType,
+      perm.attributes.codes.email
+    )
   }
   return null
 }
@@ -226,10 +271,18 @@ export const getSharingForRecipient = (state, docId, recipientEmail) =>
   )
 
 export const getSharingForSelf = (state, docId) =>
-  getDocumentSharings(state, docId)[0]
+  getDocumentSharing(state, docId)
 
-export const getSharingType = (state, docId) =>
-  getDocumentSharingType(getSharingForSelf(state, docId), docId)
+export const getSharingType = (state, docId, instanceUri) => {
+  const sharing = getSharingForSelf(state, docId)
+  const type = getDocumentSharingType(sharing, docId)
+  if (sharing.attributes.owner) return type
+  const me = sharing.attributes.members.find(m => m.instance === instanceUri)
+  return me.read_only ? 'one-way' : type
+}
+
+export const getDocumentSharing = (state, docId) =>
+  getDocumentSharings(state, docId)[0] || null
 
 const getDocumentSharings = (state, docId) =>
   !state.byDocId[docId]
@@ -248,13 +301,23 @@ const getPermissionById = (state, id) =>
 
 const getApps = state => state.apps
 
+export const hasSharedParent = (state, document) =>
+  state.sharedPaths.some(path => document.path.indexOf(`${path}/`) === 0)
+
+export const hasSharedChild = (state, document) => {
+  const ret = state.sharedPaths.some(
+    path => path.indexOf(`${document.path}/`) === 0
+  )
+  return ret
+}
+
 // helpers
 const getSharedDocIds = doc =>
   doc.type === 'io.cozy.sharings'
     ? getSharingDocIds(doc)
     : getPermissionDocIds(doc)
 
-const getSharingDocIds = sharing =>
+export const getSharingDocIds = sharing =>
   sharing.attributes.rules
     .map(r => r.values)
     .reduce((acc, val) => acc.concat(val), [])
@@ -282,21 +345,22 @@ const getDocumentSharingType = (sharing, docId) => {
     : 'one-way'
 }
 
-const buildSharingLink = (state, document, sharecode) => {
-  const appUrl = getAppUrlForDoctype(state, document._type)
-  return `${appUrl}public?sharecode=${sharecode}&id=${document._id}`
+const buildSharingLink = (state, docId, documentType, sharecode) => {
+  const appUrl = getAppUrlForDoctype(state, documentType)
+  return `${appUrl}public?sharecode=${sharecode}&id=${docId}`
 }
 
-const getAppUrlForDoctype = (state, doctype) => {
+const getAppUrlForDoctype = (state, documentType) => {
   const apps = getApps(state)
-  switch (doctype) {
-    case 'io.cozy.files':
+  switch (documentType) {
+    case 'Files':
+    case 'Document':
       return getAppUrl(apps, 'drive')
-    case 'io.cozy.photos.albums':
+    case 'Photos':
       return getAppUrl(apps, 'photos')
     default:
       throw new Error(
-        `Sharing link: don't know which app to use for doctype ${doctype}`
+        `Sharing link: don't know which app to use for doctype ${documentType}`
       )
   }
 }

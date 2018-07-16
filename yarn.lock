@@ -635,9 +635,9 @@ babel-core@6.26.3, babel-core@^6.0.0, babel-core@^6.26.0:
     slash "^1.0.0"
     source-map "^0.5.7"
 
-babel-eslint@8.2.3:
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-8.2.3.tgz#1a2e6681cc9bc4473c32899e59915e19cd6733cf"
+babel-eslint@8.2.5:
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-8.2.5.tgz#dc2331c259d36782aa189da510c43dedd5adc7a3"
   dependencies:
     "@babel/code-frame" "7.0.0-beta.44"
     "@babel/traverse" "7.0.0-beta.44"
@@ -2629,9 +2629,9 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cozy-bar@5.0.7:
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-5.0.7.tgz#85f0445fe3fb0b82f68cb33f823009b1f6959d0b"
+cozy-bar@5.0.8:
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-5.0.8.tgz#e1c428507116f5aff752f8c22b808cb5f4b788a0"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     core-js "^2.5.3"
@@ -2664,26 +2664,26 @@ cozy-client-js@^0.3.19:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
 
-cozy-client@1.0.0-beta.14:
-  version "1.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-1.0.0-beta.14.tgz#5eae05496fdc67af1a72e6e3dfa14dc435be9cd9"
+cozy-client@1.0.0-beta.16:
+  version "1.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-1.0.0-beta.16.tgz#8b686261af07472a7dccf1c97aef367ffaade082"
   dependencies:
-    cozy-stack-client "^1.0.0-beta.14"
+    cozy-stack-client "^1.0.0-beta.16"
     lodash "^4.17.5"
     prop-types "^15.6.0"
     react "^16.2.0"
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-cozy-stack-client@^1.0.0-beta.14:
-  version "1.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-1.0.0-beta.14.tgz#744ea59a2777dbbadc97194d046f403e3bb78ee0"
+cozy-stack-client@^1.0.0-beta.16:
+  version "1.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-1.0.0-beta.16.tgz#9731951d9dd322a673150d5c291d2c5f6af3633b"
   dependencies:
     mime-types "^2.1.18"
 
-cozy-ui@10.1.0:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-10.1.0.tgz#99d346b95b8e76c6e471ed555c1c18092b3217c2"
+cozy-ui@10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-10.3.0.tgz#4f7bbb14476bef2db1426d6036eacaae1c36914d"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     classnames "^2.2.5"
@@ -6467,13 +6467,7 @@ loader-utils@^1.0.2, loader-utils@^1.1.0:
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
-localforage@1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.1.tgz#e4927e042302b864db30f3211f13b5c6f0de965d"
-  dependencies:
-    lie "3.1.1"
-
-localforage@^1.5.5:
+localforage@1.7.2, localforage@^1.5.5:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.2.tgz#fa4442602f806edd2bca6a54ab4e656f031f121c"
   dependencies:
@@ -9015,11 +9009,7 @@ range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raven-js@3.22.1:
-  version "3.22.1"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.22.1.tgz#1117f00dfefaa427ef6e1a7d50bbb1fb998a24da"
-
-raven-js@^3.1.1:
+raven-js@3.26.3, raven-js@^3.1.1:
   version "3.26.3"
   resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.26.3.tgz#0efb49969b5b11ab965f7b0d6da4ca102b763cb0"
 
@@ -9154,6 +9144,13 @@ react-themeable@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"
   dependencies:
     object-assign "^3.0.0"
+
+react-tooltip@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.6.1.tgz#2ca993baa50d7e0271b8d13c6024445a883842eb"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
 
 react-transition-group@^2.2.1:
   version "2.3.1"

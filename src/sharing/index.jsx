@@ -6,18 +6,25 @@ import { getTracker } from 'cozy-ui/react/helpers/tracker'
 import reducer, {
   receiveSharings,
   addSharing,
+  updateSharing,
   addSharingLink,
   revokeSharingLink,
   revokeRecipient,
   revokeSelf,
+  receivePaths,
   isOwner,
+  canReshare,
   getOwner,
   getRecipients,
   getSharingForRecipient,
   getSharingForSelf,
   getSharingType,
   getSharingLink,
-  getDocumentPermissions
+  getSharingDocIds,
+  getDocumentSharing,
+  getDocumentPermissions,
+  hasSharedParent,
+  hasSharedChild
 } from './state'
 
 import { default as DumbSharedBadge } from './components/SharedBadge'
@@ -29,6 +36,7 @@ import {
 import { default as DumbShareModal } from './ShareModal'
 import { SharingDetailsModal } from './SharingDetailsModal'
 import { RecipientsAvatars } from './components/Recipient'
+import { default as DumbSharedStatus } from './components/SharedStatus'
 
 const getPrimaryOrFirst = property => obj => {
   if (!obj[property] || obj[property].length === 0) return ''
@@ -70,16 +78,22 @@ const SharingContext = createReactContext()
 export default class SharingProvider extends Component {
   constructor(props, context) {
     super(props, context)
+    const instanceUri = this.context.client.options.uri
+    const documentType = props.documentType || 'Document'
     this.state = {
       byDocId: {},
       sharings: [],
       permissions: [],
-      documentType: props.documentType || 'Document',
+      sharedFolderPaths: [],
+      documentType,
       isOwner: docId => isOwner(this.state, docId),
+      canReshare: docId => canReshare(this.state, docId, instanceUri),
       getOwner: docId => getOwner(this.state, docId),
-      getSharingType: docId => getSharingType(this.state, docId),
+      getSharingType: docId => getSharingType(this.state, docId, instanceUri),
       getRecipients: docId => getRecipients(this.state, docId),
-      getSharingLink: document => getSharingLink(this.state, document),
+      getSharingLink: docId => getSharingLink(this.state, docId, documentType),
+      hasSharedParent: document => hasSharedParent(this.state, document),
+      hasSharedChild: document => hasSharedChild(this.state, document),
       share: this.share,
       revoke: this.revoke,
       revokeSelf: this.revokeSelf,
@@ -91,32 +105,71 @@ export default class SharingProvider extends Component {
   dispatch = action =>
     this.setState(state => ({ ...state, ...reducer(state, action) }))
 
-  componentDidMount() {
-    Promise.all([
-      this.context.client
-        .collection('io.cozy.sharings')
-        .findByDoctype(this.props.doctype),
-      this.context.client
-        .collection('io.cozy.permissions')
-        .findLinksByDoctype(this.props.doctype),
-      this.context.client.collection('io.cozy.permissions').findApps()
-    ]).then(([sharings, permissions, apps]) =>
-      this.dispatch(
-        receiveSharings({
-          sharings: sharings.data,
-          permissions: permissions.data,
-          apps: apps.data
-        })
-      )
+  async componentDidMount() {
+    const { client } = this.context
+    const { doctype } = this.props
+    const [sharings, permissions, apps] = await Promise.all([
+      client.collection('io.cozy.sharings').findByDoctype(doctype),
+      client.collection('io.cozy.permissions').findLinksByDoctype(doctype),
+      client.collection('io.cozy.permissions').findApps()
+    ])
+    this.dispatch(
+      receiveSharings({
+        sharings: sharings.data,
+        permissions: permissions.data,
+        apps: apps.data
+      })
     )
+    if (doctype !== 'io.cozy.files') return
+
+    const sharedDocIds = sharings.data
+      .map(s => getSharingDocIds(s))
+      .reduce((acc, val) => acc.concat(val), [])
+    const resp = await client.collection(doctype).all({ keys: sharedDocIds })
+    const folderPaths = resp.data
+      .filter(f => f.type === 'directory')
+      .map(f => f.path)
+    const filePaths = this.getFilesPaths(
+      resp.data.filter(f => f.type !== 'directory')
+    )
+
+    this.dispatch(receivePaths([...folderPaths, ...filePaths]))
+  }
+
+  getFilesPaths = async files => {
+    const parentDirIds = files
+      .map(f => f.dir_id)
+      .filter((f, idx, arr) => arr.indexOf(f) === idx)
+    const parentDirs = await this.context.client
+      .collection(this.props.doctype)
+      .all({ keys: parentDirIds })
+    const filePaths = files.map(f => {
+      const parentDirPath = parentDirs.data.find(d => d.id === f.dir_id).path
+      return parentDirPath === '/' ? `/${f.name}` : `${parentDirPath}/${f.name}`
+    })
+    return filePaths
   }
 
   share = async (document, recipients, sharingType, description) => {
+    const sharing = getDocumentSharing(this.state, document.id)
+    if (sharing) return this.addRecipients(sharing, recipients, sharingType)
     const resp = await this.context.client
       .collection('io.cozy.sharings')
       .share(document, recipients, sharingType, description)
-    this.dispatch(addSharing(resp.data))
+    this.dispatch(
+      addSharing(
+        resp.data,
+        document.path || (await this.getFilesPaths([document]))
+      )
+    )
     return resp.data
+  }
+
+  addRecipients = async (sharing, recipients, sharingType) => {
+    const resp = await this.context.client
+      .collection('io.cozy.sharings')
+      .addRecipients(sharing, recipients, sharingType)
+    this.dispatch(updateSharing(resp.data))
   }
 
   revoke = async (document, recipientEmail) => {
@@ -128,7 +181,13 @@ export default class SharingProvider extends Component {
     await this.context.client
       .collection('io.cozy.sharings')
       .revokeRecipient(sharing, recipientEmail)
-    this.dispatch(revokeRecipient(sharing, recipientEmail))
+    this.dispatch(
+      revokeRecipient(
+        sharing,
+        recipientEmail,
+        document.path || (await this.getFilesPaths([document]))
+      )
+    )
   }
 
   revokeSelf = async document => {
@@ -191,15 +250,18 @@ export const SharedDocument = ({ docId, children }) => (
 
 export const SharedStatus = ({ docId, className }, { t }) => (
   <SharingContext.Consumer>
-    {({ byDocId, isOwner } = {}) => (
-      <span className={className}>
-        {!byDocId || !byDocId[docId]
-          ? '—'
-          : isOwner(docId)
-            ? t('Files.share.sharedByMe')
-            : t('Files.share.sharedWithMe')}
-      </span>
-    )}}
+    {({ byDocId, isOwner, getRecipients, getSharingLink } = {}) =>
+      !byDocId || !byDocId[docId] ? (
+        <span className={className}>—</span>
+      ) : (
+        <DumbSharedStatus
+          className={className}
+          recipients={getRecipients(docId)}
+          docId={docId}
+          link={getSharingLink(docId) !== null}
+        />
+      )
+    }
   </SharingContext.Consumer>
 )
 
@@ -215,9 +277,12 @@ export const SharedBadge = ({ docId, ...rest }) => (
 
 export const SharedRecipients = ({ docId, ...rest }) => (
   <SharingContext.Consumer>
-    {({ byDocId, getRecipients } = {}) =>
+    {({ byDocId, getRecipients, getSharingLink } = {}) =>
       !byDocId || !byDocId[docId] ? null : (
-        <RecipientsAvatars recipients={getRecipients(docId).reverse()} />
+        <RecipientsAvatars
+          recipients={getRecipients(docId).reverse()}
+          link={getSharingLink(docId) !== null}
+        />
       )
     }}
   </SharingContext.Consumer>
@@ -243,16 +308,19 @@ export const ShareButton = ({ docId, ...rest }, { t }) => (
   </SharingContext.Consumer>
 )
 
-const OwnerSharingModal = ({ document, ...rest }) => (
+const EditableSharingModal = ({ document, ...rest }) => (
   <SharingContext.Consumer>
     {({
       documentType,
+      isOwner,
       getRecipients,
       getSharingLink,
       share,
       revoke,
       shareByLink,
-      revokeSharingLink
+      revokeSharingLink,
+      hasSharedParent,
+      hasSharedChild
     }) => (
       <Query query={cozy => cozy.all('io.cozy.contacts')}>
         {({ data }, { createDocument: createContact }) => (
@@ -262,7 +330,10 @@ const OwnerSharingModal = ({ document, ...rest }) => (
             contacts={data}
             createContact={createContact}
             recipients={getRecipients(document.id)}
-            link={getSharingLink(document)}
+            link={getSharingLink(document.id)}
+            isOwner={isOwner(document.id)}
+            hasSharedParent={hasSharedParent(document)}
+            hasSharedChild={hasSharedChild(document)}
             onShare={share}
             onRevoke={revoke}
             onShareByLink={shareByLink}
@@ -299,9 +370,11 @@ const SharingModal = ({ document, ...rest }) => (
 
 export const ShareModal = ({ document, ...rest }) => (
   <SharingContext.Consumer>
-    {({ byDocId, isOwner }) =>
-      !byDocId[document.id] || isOwner(document.id) ? (
-        <OwnerSharingModal document={document} {...rest} />
+    {({ byDocId, isOwner, canReshare }) =>
+      !byDocId[document.id] ||
+      isOwner(document.id) ||
+      canReshare(document.id) ? (
+        <EditableSharingModal document={document} {...rest} />
       ) : (
         <SharingModal document={document} {...rest} />
       )

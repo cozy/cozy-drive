@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.drive.mobile" version="1.6.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cozy.drive.mobile" ios-CFBundleVersion="1.7.0.0" version="1.7.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -11,8 +11,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <hook src="scripts/update-config-version.sh" type="before_build" />
-    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.6.0" />
+    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.7.0" />
     <engine name="android" spec="6.4.0" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
@@ -103,4 +102,5 @@
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="~5.4.1" />
+    <plugin name="cordova-plugin-safariviewcontroller" spec="~1.5.4" />
 </widget>

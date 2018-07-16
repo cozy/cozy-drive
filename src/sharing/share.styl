@@ -8,115 +8,179 @@
     height 1px
     margin-top 0
 
-:global
-    label[for='share-toggle']
+.share-bylink-header
+    display        flex
+    flex-direction row
+    align-items    center
+    margin         1.5rem 0 .25rem 0
+
+    > :not(:last-child)
+        margin 0
+        margin-right .5rem
+
+    > :last-child
+        margin-left auto
+
+    .share-bylink-header-dot
+        height .2rem
+        width  .2rem
+        background-color black
+        border-radius    50%
+        display inline-block
+
+    .share-bylink-header-creating
+    .share-bylink-header-copybtn
+        color dodgerBlue
+        font-weight bold
         cursor pointer
 
-:local
-    .share-modal
-        max-width 33rem !important // waiting for modal size presets in cozy-ui
+    .share-bylink-header-copybtn
+        background transparent
+        border  0
+        padding 0
 
+.share-bylink-desc
+    color     coolGrey
+    font-size .875rem
+
+@media (max-width 32em)
+    .share-bylink-desc
+        width 80%
+
+.share-byemail-onlybylink
+    background paleGrey
+    padding    1rem 1.5rem
+    margin 0
+    border-top 1px solid silver
+
+.share-modal-content
+    @extend $form
+    @extend $form-text
+    @extend $form-button
+
+    > div
+        margin 0 2rem 2rem
+
+    > .share-byemail-onlybylink
+        margin 0
+
+    .coz-form-label
+        padding-top 0
+        margin-top  0
+
+@media (max-width 32em)
     .share-modal-content
-        @extend $form
-        @extend $form-text
-        @extend $form-button
-        @extend $form-select
-
         > div
             margin 0 1.5rem 1.5rem
 
-    .share-modal-footer
-        padding 0
-        background-color paleGrey
-        color            charcoalGrey
-        font-weight      bold
+.coz-form-group
+    margin 0
 
-        p
-            margin 0
-            padding 1rem 1.5rem
+    h3
+        margin .3rem 0 0
 
-    .coz-form-group
+    h4
+        margin 0 0 .3rem 0
+
+    .coz-form
         margin 0
 
-        h3
-          margin .3rem 0 0
+    .coz-form-desc
+        color coolGrey
 
-        h4
-            margin 0 0 .3rem 0
+.share-type-control
+    display flex
+    flex-direction row
+    justify-content space-between
+    padding .5rem 0 0
 
-        .coz-form
-            margin 0
+    .select-wrapper
+        flex 0 0 49%
+        position relative
 
-        .coz-form-desc
-          color coolGrey
+        .select-option
+            padding .5rem 1.5rem .5rem 3rem
 
-    .share-type-control
-        display flex
-        flex-direction row
-        justify-content space-between
-        padding 1rem 0 0
+        .select-option--selected
+            background embedurl('./assets/icons/icon-check-blue.svg') 1.5rem 1rem no-repeat
 
-        select
-            flex 0 0 49%
+        .select-option-label
+            line-height 2
 
-        button
-            flex 0 0 49%
-            margin 0
+        .select-option-desc
+            line-height 1.5
+            font-size   .8125rem
+            color coolGrey
+
+    button
+        flex 0 0 49%
+        margin 0
+
+:global
+    // dirty hack for react-select: its API doesn't allow to make change to active styles
+    .react-select__option:active
+        background-color paleGrey !important
 
     @media (max-width 32em)
-        .share-type-control
-            flex-direction column
+        .react-select__menu
+            width 100% !important
 
-            select
-                margin-bottom .5rem
+@media (max-width 32em)
+    .share-type-control
+        flex-direction column
+
+        .select-wrapper
+            margin-bottom .5rem
+
+input[type=text]
+    width 100%
+
+.input-dual
+    display flex
+    align-items center
 
     input[type=text]
         width 100%
-
-    .input-dual
-        display flex
-        align-items center
-
-        input[type=text]
-            width 100%
-            height 3rem
-
-        > :first-child
-            flex 2 0 1%
-            padding-right .5rem
-
-        > :last-child
-            flex 0 0 6rem
-            text-align right
-
-        .coz-form-desc
-            margin 0
-
-        +tiny-screen()
-            > :last-child
-                flex-basis auto
-
-    .btn-copy
-        width 100%
         height 3rem
+
+    > :first-child
+        flex 2 0 1%
+        padding-right .5rem
+
+    > :last-child
+        flex 0 0 6rem
+        text-align right
+
+    .coz-form-desc
         margin 0
 
-    .share-details-created
-    .share-details-perm
-        font-size            1rem
-        margin               0.5rem 0 0.5rem 3rem
-        padding-left         1.5rem
-        background-position  0 center
-        background-repeat    no-repeat
+    +tiny-screen()
+        > :last-child
+            flex-basis auto
 
-    .share-details-created
-        background-image     embedurl('./assets/icon-clock-16.svg')
+.btn-copy
+    width 100%
+    height 3rem
+    margin 0
 
-    .share-details-perm
-        background-image     embedurl('./assets/icon-pen-16.svg')
+.share-details-created
+.share-details-perm
+    font-size            1rem
+    margin               0.5rem 0 0.5rem 3.5rem
+    padding-left         1.5rem
+    background-position  0 center
+    background-repeat    no-repeat
 
-    .share-details-perm-desc
-        font-size     .875rem
-        margin        0.5rem 0 0.5rem 3rem
-        padding-left  1.5rem
-        color         coolGrey
+.share-details-created
+    background-image     embedurl('./assets/icons/icon-calendar-16.svg')
+
+.share-details-perm
+    background-image     embedurl('./assets/icons/icon-pen-16.svg')
+    margin-bottom .2rem
+
+.share-details-perm-desc
+    font-size     .875rem
+    margin        0 0 0.5rem 3.5rem
+    padding-left  1.5rem
+    line-height   1.5
+    color         coolGrey

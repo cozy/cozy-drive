@@ -26,6 +26,8 @@ export class SharingDetailsModal extends Component {
         secondaryAction={onClose}
         className={styles['share-modal']}
         into="body"
+        size="small"
+        mobileFullscreen
       >
         <div className={styles['share-modal-content']}>
           <div className={styles['share-details']}>

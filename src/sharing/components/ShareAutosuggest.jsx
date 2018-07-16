@@ -111,7 +111,7 @@ export default class ShareAutocomplete extends Component {
               className={styles['removeRecipient']}
               onClick={() => this.onRemove(recipient)}
             >
-              <Icon icon="cross" width="16" height="16" />
+              <Icon icon="cross" width="12" height="12" />
             </button>
           </div>
         ))}

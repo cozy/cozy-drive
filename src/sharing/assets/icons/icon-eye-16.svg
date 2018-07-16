@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M0,8 C0,8 2,2 8,2 C14,2 16,8 16,8 C16,8 14,14 8,14 C2,14 0,8 0,8 Z M8,12 C10.2091391,12 12,10.2091391 12,8 C12,5.79086089 10.2091391,4 8,4 C5.79086089,4 4,5.79086089 4,8 C4,10.2091391 5.79086089,12 8,12 Z M8,10 C6.89543045,10 6,9.10456955 6,8 C6,6.89543045 6.89543045,6 8,6 C9.10456955,6 10,6.89543045 10,8 C10,9.10456955 9.10456955,10 8,10 Z" id="path-1"></path>
+    </defs>
+    <g id="icons/16/eye" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Mask" fill="#95999d" fill-opacity="0.5" xlink:href="#path-1"></use>
+    </g>
+</svg>

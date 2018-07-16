@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M9.5,3.50347728 L12.5,6.50347728 L3.03771973,16.0034773 L0,16.0034773 L0,13.0288679 L9.5,3.50347728 Z M14.9121541,0.915631358 L15.0878459,1.0913232 C15.8637772,1.86725444 15.8697383,3.14159072 15.0922712,3.92874355 L14.0307617,5.00347728 L11,2.00347728 L12.0892639,0.914213423 C12.8691444,0.13433284 14.1322429,0.135720196 14.9121541,0.915631358 Z M7,14.0034773 L12.9970707,14.0034773 C13.5509732,14.0034773 14,14.4473421 14,15.0034773 C14,15.555762 13.5536886,16.0034773 13.0024554,16.0034773 L5,16.0034773 L7,14.0034773 Z" id="path-1"></path>
+    </defs>
+    <g id="icons/16/pen-write" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Mask" fill="#95999d" fill-opacity="0.5" xlink:href="#path-1"></use>
+    </g>
+</svg>
