@@ -10,34 +10,6 @@ import WhoHasAccess from './components/WhoHasAccess'
 
 require('url-polyfill')
 
-const shunt = (cond, BaseComponent, OtherComponent) => props =>
-  cond() ? <BaseComponent {...props} /> : <OtherComponent {...props} />
-
-const ComingSoon = ({ documentType }, { t }) => (
-  <div className={styles['coz-form-group']}>
-    <h3>{t(`${documentType}.share.shareByEmail.subtitle`)}</h3>
-    <p
-      className={styles['coz-form-desc']}
-      style={
-        {
-          maxWidth: '30rem'
-        } /* no need for a class as it is temporary screen */
-      }
-    >
-      {t(`${documentType}.share.shareByEmail.comingsoon`)}
-    </p>
-  </div>
-)
-
-const displayShareEmail = () =>
-  new URL(window.location).searchParams.get('sharingiscaring') !== null
-
-const ShareByEmailComingSoon = shunt(
-  displayShareEmail,
-  DumbShareByEmail,
-  ComingSoon
-)
-
 export default class ShareModal extends Component {
   render() {
     const { t } = this.context
@@ -67,7 +39,7 @@ export default class ShareModal extends Component {
         mobileFullscreen
       >
         <div className={styles['share-modal-content']}>
-          <ShareByEmailComingSoon
+          <DumbShareByEmail
             document={document}
             documentType={documentType}
             sharingDesc={sharingDesc}
