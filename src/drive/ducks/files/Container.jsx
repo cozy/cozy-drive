@@ -47,15 +47,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       selection: {
         share: {
           action: selected =>
-            dispatch(
-              showModal(
+            dispatch({
+              ...showModal(
                 <ShareModal
                   document={selected[0]}
                   documentType="Files"
                   sharingDesc={selected[0].name}
                 />
-              )
-            ),
+              ),
+              meta: {
+                hideActionMenu: true
+              }
+            }),
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1
         },
