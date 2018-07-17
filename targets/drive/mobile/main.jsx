@@ -89,7 +89,7 @@ const startApplication = async function(store, client, polyglot) {
       store.dispatch(revokeClient())
       resetClient(client)
     }
-    else {
+    else if (store.getState().mobile.settings.serverUrl) {
       // the server is not responding, but it doesn't mean we're revoked yet
       shouldInitBar = true
     }
