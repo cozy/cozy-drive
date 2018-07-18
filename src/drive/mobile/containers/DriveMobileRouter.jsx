@@ -30,7 +30,10 @@ class DriveMobileRouter extends Component {
   render(props) {
     return (
       <MobileRouter
-        {...props}
+        isAuthenticated={props.isAuthenticated}
+        isRevoked={props.isRevoked}
+        appRoutes={props.appRoutes}
+        history={props.history}
         onAuthenticated={this.afterAuthentication}
         onLogout={this.afterLogout}
         allowRegistration={false}
