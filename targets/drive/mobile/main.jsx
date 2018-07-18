@@ -65,6 +65,12 @@ const getPreviousToken = async store => {
   }
 }
 
+const isClientRevoked = (error, state) => {
+  console.log(error.message);
+  return state.mobile.settings.serverUrl &&
+  (error.status === 404 || error.status === 401 || error.message.match(/Client has been revoked/))
+}
+
 const startApplication = async function(store, client, polyglot) {
   configureReporter()
 
@@ -84,7 +90,7 @@ const startApplication = async function(store, client, polyglot) {
     startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
   } catch (e) {
     console.warn(e)
-    if (store.getState().mobile.settings.serverUrl && (e.status === 404 || e.status === 401)) {
+    if (isClientRevoked(e, store.getState())) {
       console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
       resetClient(client)
