@@ -81,7 +81,7 @@ export const startReplication = async (
       firstReplicationFinished()
     }
 
-    await startRepeatedReplication({
+    startRepeatedReplication({
       afterReplication: infos => {
         if (infos.docs_written > 0) {
           if (indexes.byName) warmUpIndex(indexes.byName, 'name')
@@ -112,7 +112,10 @@ export const startReplication = async (
 const startRepeatedReplication = ({ afterReplication }) => {
   return new Promise((resolve, reject) => {
     const options = {
-      onError: reject,
+      onError: error => {
+        console.warn(error)
+        reject(error)
+      },
       onComplete: result => {
         resolve()
         afterReplication(result)
