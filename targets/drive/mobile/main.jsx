@@ -30,6 +30,7 @@ import {
   getLang,
   initClient,
   initBar,
+  updateBarAccessToken,
   restoreCozyClientJs,
   resetClient
 } from 'drive/mobile/lib/cozy-helper'
@@ -84,6 +85,12 @@ const startApplication = async function(store, client, polyglot) {
     oauthClient.setOAuthOptions(clientInfos)
     oauthClient.setCredentials(token)
     await restoreCozyClientJs(client.options.uri, clientInfos, token)
+
+    oauthClient.onTokenRefresh = token => {
+      updateBarAccessToken(token.accessToken)
+      restoreCozyClientJs(client.options.uri, clientInfos, token)
+      store.dispatch(setToken(token))
+    }
 
     await oauthClient.fetchInformation()
     shouldInitBar = true
