@@ -2,7 +2,7 @@ import styles from './share.styl'
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Modal from 'cozy-ui/react/Modal'
+import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 
 import { default as DumbShareByLink } from './components/ShareByLink'
 import { default as DumbShareByEmail } from './components/ShareByEmail'
@@ -38,34 +38,36 @@ export default class ShareModal extends Component {
         size="small"
         mobileFullscreen
       >
-        <div className={styles['share-modal-content']}>
-          <DumbShareByEmail
-            document={document}
-            documentType={documentType}
-            sharingDesc={sharingDesc}
-            contacts={contacts}
-            createContact={createContact}
-            onShare={onShare}
-            hasSharedParent={hasSharedParent}
-            hasSharedChild={hasSharedChild}
-          />
-          <hr className={styles['divider']} />
-          <DumbShareByLink
-            document={document}
-            documentType={documentType}
-            checked={link !== null}
-            link={link}
-            onEnable={onShareByLink}
-            onDisable={onRevokeLink}
-          />
-          <WhoHasAccess
-            isOwner={isOwner}
-            recipients={recipients}
-            document={document}
-            documentType={documentType}
-            onRevoke={onRevoke}
-          />
-        </div>
+        <ModalContent>
+          <div className={styles['share-modal-content']}>
+            <DumbShareByEmail
+              document={document}
+              documentType={documentType}
+              sharingDesc={sharingDesc}
+              contacts={contacts}
+              createContact={createContact}
+              onShare={onShare}
+              hasSharedParent={hasSharedParent}
+              hasSharedChild={hasSharedChild}
+            />
+            <hr className={styles['divider']} />
+            <DumbShareByLink
+              document={document}
+              documentType={documentType}
+              checked={link !== null}
+              link={link}
+              onEnable={onShareByLink}
+              onDisable={onRevokeLink}
+            />
+            <WhoHasAccess
+              isOwner={isOwner}
+              recipients={recipients}
+              document={document}
+              documentType={documentType}
+              onRevoke={onRevoke}
+            />
+          </div>
+        </ModalContent>
       </Modal>
     )
   }
