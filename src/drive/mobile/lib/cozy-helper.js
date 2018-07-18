@@ -17,6 +17,7 @@ export const initClient = url => {
     scope: [
       'io.cozy.files',
       'io.cozy.apps:GET',
+      'io.cozy.contacts',
       'io.cozy.jobs:POST:sendmail:worker'
     ],
     oauth: {
@@ -52,6 +53,9 @@ export const initBar = async client => {
     displayOnMobile: true
   })
 }
+
+export const updateBarAccessToken = accessToken =>
+  cozy.bar.updateAccessToken(accessToken)
 
 export const restoreCozyClientJs = (uri, clientInfos, token) => {
   cozy.client.init({
