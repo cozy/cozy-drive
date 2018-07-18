@@ -67,7 +67,6 @@ const getPreviousToken = async store => {
 }
 
 const isClientRevoked = (error, state) => {
-  console.log(error.message);
   return state.mobile.settings.serverUrl &&
   (error.status === 404 || error.status === 401 || error.message.match(/Client has been revoked/))
 }
