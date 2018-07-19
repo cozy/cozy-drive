@@ -1,7 +1,8 @@
 import React from 'react'
 import ColorHash from './colorhash'
-import styles from './recipient.styl'
 import PropTypes from 'prop-types'
+import { SharingTooltip, TooltipRecipientList } from './Tooltip'
+import styles from './recipient.styl'
 
 export const Avatar = ({ name = '' }) => {
   const initial = name.charAt(0)
@@ -10,8 +11,14 @@ export const Avatar = ({ name = '' }) => {
     'background-color': bg
   }
   return (
-    <div className={styles['recipient-avatar']} style={style}>
+    <div
+      className={styles['recipient-avatar']}
+      style={style}
+      data-tip={name}
+      data-for={`recipient-avatar-${name}`}
+    >
       <span>{initial}</span>
+      <SharingTooltip id={`recipient-avatar-${name}`} />
     </div>
   )
 }
@@ -24,18 +31,27 @@ Avatar.defaultProps = {
   name: ''
 }
 
-export const AvatarPlusX = ({ count = 1 }) => (
-  <div className={styles['recipient-avatar']}>
-    <span className={styles['recipient-avatar-plusx']}>+{count}</span>
+export const AvatarPlusX = ({ extraRecipients = [] }) => (
+  <div
+    className={styles['recipient-avatar']}
+    data-tip
+    data-for="extra-recipients-avatar"
+  >
+    <span className={styles['recipient-avatar-plusx']}>
+      +{Math.min(extraRecipients.length, 99)}
+    </span>
+    <SharingTooltip id="extra-recipients-avatar">
+      <TooltipRecipientList recipientNames={extraRecipients} />
+    </SharingTooltip>
   </div>
 )
 
 AvatarPlusX.propTypes = {
-  count: PropTypes.number
+  extraRecipients: PropTypes.arrayOf(PropTypes.string)
 }
 
 AvatarPlusX.defaultProps = {
-  count: 1
+  extraRecipients: []
 }
 
 export const AvatarLink = () => (

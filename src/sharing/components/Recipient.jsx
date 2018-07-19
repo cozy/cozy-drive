@@ -15,11 +15,13 @@ export const RecipientsAvatars = ({ recipients, link }) => (
     {link && <AvatarLink />}
     {recipients.length > MAX_DISPLAYED_RECIPIENTS && (
       <AvatarPlusX
-        count={Math.min(recipients.length - MAX_DISPLAYED_RECIPIENTS, 99)}
+        extraRecipients={recipients
+          .slice(MAX_DISPLAYED_RECIPIENTS)
+          .map(recipient => getDisplayName(recipient))}
       />
     )}
     {recipients
-      .slice(-MAX_DISPLAYED_RECIPIENTS)
+      .slice(0, MAX_DISPLAYED_RECIPIENTS)
       .map(recipient => <Avatar name={getDisplayName(recipient)} />)}
   </div>
 )
