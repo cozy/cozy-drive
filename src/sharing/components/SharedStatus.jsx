@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactTooltip from 'react-tooltip'
+import { SharingTooltip, TooltipRecipientList } from './Tooltip'
 import cx from 'classnames'
 import Icon from 'cozy-ui/react/Icon'
 import { getDisplayName } from '..'
@@ -19,21 +19,13 @@ const SharedStatus = ({ className, docId, recipients, link }, { t }) => (
       </a>
     )}
     {recipients.length > 1 && (
-      <ReactTooltip
-        id={`members${docId}`}
-        className={styles['shared-status-members']}
-      >
-        <ul>
-          {recipients.slice(0, 4).map(r => <li>{getDisplayName(r)}</li>)}
-          {recipients.length > 4 && (
-            <li>
-              {t('Share.members.others', {
-                smart_count: recipients.slice(4).length
-              })}
-            </li>
+      <SharingTooltip id={`members${docId}`}>
+        <TooltipRecipientList
+          recipientNames={recipients.map(recipient =>
+            getDisplayName(recipient)
           )}
-        </ul>
-      </ReactTooltip>
+        />
+      </SharingTooltip>
     )}
     {link && <Icon icon={linkIcon} />}
   </span>
