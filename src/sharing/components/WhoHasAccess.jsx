@@ -1,12 +1,11 @@
 import React from 'react'
-
 import Recipient from './Recipient'
 
 const WhoHasAccess = (
-  { isOwner = false, recipients, document, documentType, onRevoke },
+  { isOwner = false, recipients, document, documentType, onRevoke, className },
   { t }
 ) => (
-  <div>
+  <div className={className}>
     {recipients.length > 1 && (
       <h3>
         {t(`${documentType}.share.whoHasAccess.title`, {

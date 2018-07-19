@@ -38,35 +38,34 @@ export default class ShareModal extends Component {
         size="small"
         mobileFullscreen
       >
-        <ModalContent>
-          <div className={styles['share-modal-content']}>
-            <DumbShareByEmail
-              document={document}
-              documentType={documentType}
-              sharingDesc={sharingDesc}
-              contacts={contacts}
-              createContact={createContact}
-              onShare={onShare}
-              hasSharedParent={hasSharedParent}
-              hasSharedChild={hasSharedChild}
-            />
-            <hr className={styles['divider']} />
-            <DumbShareByLink
-              document={document}
-              documentType={documentType}
-              checked={link !== null}
-              link={link}
-              onEnable={onShareByLink}
-              onDisable={onRevokeLink}
-            />
-            <WhoHasAccess
-              isOwner={isOwner}
-              recipients={recipients}
-              document={document}
-              documentType={documentType}
-              onRevoke={onRevoke}
-            />
-          </div>
+        <ModalContent className={styles['share-modal-content']}>
+          <DumbShareByEmail
+            document={document}
+            documentType={documentType}
+            sharingDesc={sharingDesc}
+            contacts={contacts}
+            createContact={createContact}
+            onShare={onShare}
+            hasSharedParent={hasSharedParent}
+            hasSharedChild={hasSharedChild}
+          />
+          <hr className={styles['divider']} />
+          <DumbShareByLink
+            document={document}
+            documentType={documentType}
+            checked={link !== null}
+            link={link}
+            onEnable={onShareByLink}
+            onDisable={onRevokeLink}
+          />
+          <WhoHasAccess
+            isOwner={isOwner}
+            recipients={recipients}
+            document={document}
+            documentType={documentType}
+            onRevoke={onRevoke}
+            className={styles['share-modal-access']}
+          />
         </ModalContent>
       </Modal>
     )
