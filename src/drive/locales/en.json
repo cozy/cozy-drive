@@ -74,7 +74,7 @@
     "create-cozy": "Create my cozy",
     "members": {
       "count": "%{count} members",
-      "others": "and 1 other... |||| and %{smart_count} others..."
+      "others": "and 1 other… |||| and %{smart_count} others…"
     }
   },
   "Files": {
