@@ -11,7 +11,7 @@ import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 const MAX_DISPLAYED_RECIPIENTS = 3
 
 export const RecipientsAvatars = ({ recipients, link }) => (
-  <div className={styles['pho-recipients-avatars']}>
+  <div className={styles['recipients-avatars']}>
     {link && <AvatarLink />}
     {recipients.length > MAX_DISPLAYED_RECIPIENTS && (
       <AvatarPlusX
@@ -25,14 +25,14 @@ export const RecipientsAvatars = ({ recipients, link }) => (
 )
 
 const Identity = ({ name, url }) => (
-  <div className={styles['pho-recipient-idents']}>
-    <div className={styles['pho-recipient-user']}>{name}</div>
-    <div className={styles['pho-recipient-url']}>{url}</div>
+  <div className={styles['recipient-idents']}>
+    <div className={styles['recipient-user']}>{name}</div>
+    <div className={styles['recipient-url']}>{url}</div>
   </div>
 )
 
 export const UserAvatar = ({ url, ...rest }) => (
-  <div className={styles['pho-avatar']}>
+  <div className={styles['avatar']}>
     <Avatar name={getDisplayName(rest)} />
     <Identity name={getDisplayName(rest)} url={url} />
   </div>
@@ -58,7 +58,7 @@ class Status extends Component {
       instance !== undefined && instance === client.options.uri && !isOwner
     const shouldShowMenu = !revoking && status !== 'owner' && (isMe || isOwner)
     return (
-      <div className={styles['pho-recipient-status']}>
+      <div className={styles['recipient-status']}>
         {revoking && <Spinner />}
         {!shouldShowMenu && <span>{t(`Share.status.${status}`)}</span>}
         {shouldShowMenu && (
@@ -68,17 +68,17 @@ class Status extends Component {
                 ? t(`Share.type.${type}`)
                 : t(`Share.status.${status}`)
             }
-            className={styles['pho-recipient-menu']}
-            buttonClassName={styles['pho-recipient-menu-btn']}
+            className={styles['recipient-menu']}
+            buttonClassName={styles['recipient-menu-btn']}
             disabled={status === 'pending'}
           >
             <Item>
               <div
                 className={classNames(
-                  styles['pho-recipient-menu-header'],
+                  styles['recipient-menu-header'],
                   status === 'ready' && type
-                    ? styles[`pho-recipient-menu-header--${type}`]
-                    : styles[`pho-recipient-menu-header--${status}`]
+                    ? styles[`recipient-menu-header--${type}`]
+                    : styles[`recipient-menu-header--${status}`]
                 )}
               >
                 {status === 'ready' && type
@@ -88,15 +88,12 @@ class Status extends Component {
             </Item>
             <hr />
             <Item>
-              <a
-                className={styles['pho-action-unshare']}
-                onClick={this.onRevoke}
-              >
+              <a className={styles['action-unshare']} onClick={this.onRevoke}>
                 {isOwner
                   ? t(`${documentType}.share.revoke.title`)
                   : t(`${documentType}.share.revokeSelf.title`)}
               </a>
-              <p className={styles['pho-action-unshare-desc']}>
+              <p className={styles['action-unshare-desc']}>
                 {isOwner
                   ? t(`${documentType}.share.revoke.desc`)
                   : t(`${documentType}.share.revokeSelf.desc`)}
@@ -115,9 +112,9 @@ const Recipient = (props, { t, client }) => {
     (isOwner && status === 'owner') || instance === client.options.uri
   const name = getDisplayName(rest)
   return (
-    <div className={styles['pho-recipient']}>
+    <div className={styles['recipient']}>
       <Avatar name={name} />
-      <div className={styles['pho-recipient-ident-status']}>
+      <div className={styles['recipient-ident-status']}>
         <Identity
           name={isMe ? t('Share.recipients.you') : name}
           url={instance}
@@ -134,7 +131,7 @@ export const Contact = ({ contact }) => {
   const name = getPrimaryEmail(contact)
   const url = getPrimaryCozy(contact)
   return (
-    <div className={styles['pho-recipient']}>
+    <div className={styles['recipient']}>
       <Avatar name={name} />
       <Identity name={name} url={url} />
     </div>

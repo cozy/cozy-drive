@@ -10,7 +10,7 @@ export const Avatar = ({ name = '' }) => {
     'background-color': bg
   }
   return (
-    <div className={styles['pho-recipient-avatar']} style={style}>
+    <div className={styles['recipient-avatar']} style={style}>
       <span>{initial}</span>
     </div>
   )
@@ -25,8 +25,8 @@ Avatar.defaultProps = {
 }
 
 export const AvatarPlusX = ({ count = 1 }) => (
-  <div className={styles['pho-recipient-avatar']}>
-    <span className={styles['pho-recipient-avatar-plusx']}>+{count}</span>
+  <div className={styles['recipient-avatar']}>
+    <span className={styles['recipient-avatar-plusx']}>+{count}</span>
   </div>
 )
 
@@ -39,7 +39,7 @@ AvatarPlusX.defaultProps = {
 }
 
 export const AvatarLink = () => (
-  <div className={styles['pho-recipient-avatar']}>
-    <span className={styles['pho-recipient-avatar-link']} />
+  <div className={styles['recipient-avatar']}>
+    <span className={styles['recipient-avatar-link']} />
   </div>
 )
