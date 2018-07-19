@@ -2,15 +2,15 @@
 @require 'settings/breakpoints.styl'
 @require 'settings/palette.styl'
 
-.pho-recipient
+.recipient
     display flex
     flex-direction row
     align-items center
 
-    & + .pho-recipient
+    & + .recipient
         margin-top 1.5rem
 
-.pho-recipient-avatar
+.recipient-avatar
     position relative
     flex 0 0 auto
     border-radius 50%
@@ -30,67 +30,67 @@
         text-transform uppercase
         color white
 
-    .pho-recipient-avatar-link
+    .recipient-avatar-link
         background embedurl("../assets/icons/icon-link-16.svg") center center no-repeat
         height 1rem
         width  1rem
 
-    .pho-recipient-avatar-plusx
+    .recipient-avatar-plusx
       color charcoalGrey
 
-.pho-recipient-idents
+.recipient-idents
     flex 1 1 auto
     overflow hidden
     text-overflow ellipsis
 
-.pho-recipient-status
+.recipient-status
     flex 0 0 auto
     font-size .875rem
     color coolGrey
 
-.pho-recipient-ident-status
+.recipient-ident-status
     flex 1 1 auto
     display flex
     flex-direction row
     align-items center
     max-width calc(100% - 3rem)
 
-.pho-recipient-user
-.pho-recipient-url
+.recipient-user
+.recipient-url
     text-overflow ellipsis
     overflow hidden
     white-space nowrap
     line-height 1.3
 
-.pho-recipient-user
+.recipient-user
     font-size 1rem
     font-weight bold
 
-.pho-recipient-url
+.recipient-url
     font-size .875rem
     color coolGrey
 
-.pho-avatar
+.avatar
     display flex
     flex-direction row
     align-items center
 
-    .pho-recipient-avatar
+    .recipient-avatar
         width  3rem
         height 3rem
 
         span
             font-size 1.5rem
 
-    .pho-recipient-user
+    .recipient-user
         font-size 1.125rem
 
-.pho-recipients-avatars
+.recipients-avatars
     display inline-flex
     flex-direction row-reverse
     margin-right 0.5rem
 
-    .pho-recipient-avatar
+    .recipient-avatar
         margin-right -0.6rem
         border 2px solid white
         box-sizing border-box
@@ -98,7 +98,7 @@
         height 2.5rem
         font-size 1.1rem
 
-.pho-recipient-menu-btn
+.recipient-menu-btn
     @extend $button
     text-transform capitalize
     background embedurl("../assets/icons/icon-arrow-down.svg") right center no-repeat
@@ -114,34 +114,34 @@
     &:not([disabled]):not([aria-disabled=true]):hover
         background-color transparent
 
-.pho-recipient-menu-header
+.recipient-menu-header
     padding .5rem 2rem .5rem 2.5rem
 
-.pho-recipient-menu-header--pending
-.pho-recipient-menu-header--mail-not-sent
+.recipient-menu-header--pending
+.recipient-menu-header--mail-not-sent
     background embedurl("../assets/icons/icon-hourglass-16.svg") 1rem .4rem no-repeat
 
-.pho-recipient-menu-header--one-way
+.recipient-menu-header--one-way
     background embedurl("../assets/icons/icon-eye-16.svg") 1rem .4rem no-repeat
 
-.pho-recipient-menu-header--two-way
+.recipient-menu-header--two-way
     background embedurl("../assets/icons/icon-pen-write-16.svg") 1rem .4rem no-repeat
 
-.pho-action-unshare
+.action-unshare
     color pomegranate !important
     text-decoration none !important
     background embedurl("../assets/icons/icon-trash-red.svg") 1rem .4rem no-repeat
 
-.pho-action-unshare-desc
+.action-unshare-desc
     margin    0
     padding   0 1.5rem .5rem 2.5rem
     font-size .8125rem
 
 @media (max-width 32em)
-    .pho-recipient-ident-status
+    .recipient-ident-status
         display block
 
-    .pho-recipient-menu-btn
+    .recipient-menu-btn
         padding 0
         padding-right 1.1rem
         margin 0
