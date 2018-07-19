@@ -1,36 +1,26 @@
-import styles from './recipient.styl'
-
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { Spinner } from 'cozy-ui/react'
-import ColorHash from './colorhash'
 import Menu, { Item } from 'components/Menu'
+import { Avatar, AvatarPlusX, AvatarLink } from './Avatar'
+
+import styles from './recipient.styl'
 
 import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
-const Avatar = ({ name = '' }) => {
-  const initial = name.charAt(0)
-  const bg = ColorHash().getColor(name)
-  const style = {
-    'background-color': bg
-  }
-  return (
-    <div className={styles['pho-recipient-avatar']} style={style}>
-      <span>{initial}</span>
-    </div>
-  )
-}
-
-const AvatarLink = () => (
-  <div className={styles['pho-recipient-avatar']}>
-    <span className={styles['pho-recipient-avatar-link']} />
-  </div>
-)
+const MAX_DISPLAYED_RECIPIENTS = 3
 
 export const RecipientsAvatars = ({ recipients, link }) => (
   <div className={styles['pho-recipients-avatars']}>
     {link && <AvatarLink />}
-    {recipients.map(recipient => <Avatar name={getDisplayName(recipient)} />)}
+    {recipients.length > MAX_DISPLAYED_RECIPIENTS && (
+      <AvatarPlusX
+        count={Math.min(recipients.length - MAX_DISPLAYED_RECIPIENTS, 99)}
+      />
+    )}
+    {recipients
+      .slice(-MAX_DISPLAYED_RECIPIENTS)
+      .map(recipient => <Avatar name={getDisplayName(recipient)} />)}
   </div>
 )
 
