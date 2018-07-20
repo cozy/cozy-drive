@@ -21,6 +21,10 @@ const renamePathNames = (path, location, t) => {
     path.unshift({
       name: t('breadcrumb.title_recent')
     })
+  } else if (location.pathname === '/sharings') {
+    path.unshift({
+      name: t('breadcrumb.title_sharings')
+    })
   }
 
   path.forEach(folder => {

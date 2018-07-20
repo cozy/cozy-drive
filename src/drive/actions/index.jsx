@@ -35,6 +35,9 @@ export const SORT_FOLDER_FAILURE = 'SORT_FOLDER_FAILURE'
 export const FETCH_RECENT = 'FETCH_RECENT'
 export const FETCH_RECENT_SUCCESS = 'FETCH_RECENT_SUCCESS'
 export const FETCH_RECENT_FAILURE = 'FETCH_RECENT_FAILURE'
+export const FETCH_SHARINGS = 'FETCH_SHARINGS'
+export const FETCH_SHARINGS_SUCCESS = 'FETCH_SHARINGS_SUCCESS'
+export const FETCH_SHARINGS_FAILURE = 'FETCH_SHARINGS_FAILURE'
 export const FETCH_MORE_FILES = 'FETCH_MORE_FILES'
 export const FETCH_MORE_FILES_SUCCESS = 'FETCH_MORE_FILES_SUCCESS'
 export const FETCH_MORE_FILES_FAILURE = 'FETCH_MORE_FILES_FAILURE'
@@ -70,6 +73,10 @@ export const openFiles = () => {
 
 export const openRecent = () => {
   return async dispatch => dispatch(fetchRecentFiles())
+}
+
+export const openSharings = () => {
+  return async dispatch => dispatch(fetchSharings())
 }
 
 export const openTrash = () => {
@@ -208,6 +215,29 @@ export const fetchRecentFiles = () => {
       })
     } catch (e) {
       return dispatch({ type: FETCH_RECENT_FAILURE, error: e })
+    }
+  }
+}
+
+export const fetchSharings = () => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: FETCH_SHARINGS,
+      meta: {
+        cancelSelection: true
+      }
+    })
+
+    try {
+      const files = []
+
+      return dispatch({
+        type: FETCH_SHARINGS_SUCCESS,
+        fileCount: files.length,
+        files
+      })
+    } catch (e) {
+      return dispatch({ type: FETCH_SHARINGS_FAILURE, error: e })
     }
   }
 }

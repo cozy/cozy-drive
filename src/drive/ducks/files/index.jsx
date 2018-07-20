@@ -23,3 +23,13 @@ export const RecentContainer = props => (
     {...props}
   />
 )
+export const SharingsContainer = props => (
+  <Container
+    isTrashContext={false}
+    canSort
+    canDrop
+    canUpload
+    canCreateFolder={false}
+    {...props}
+  />
+)

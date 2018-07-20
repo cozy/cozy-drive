@@ -10,6 +10,9 @@ import {
   FETCH_RECENT,
   FETCH_RECENT_SUCCESS,
   FETCH_RECENT_FAILURE,
+  FETCH_SHARINGS,
+  FETCH_SHARINGS_SUCCESS,
+  FETCH_SHARINGS_FAILURE,
   FETCH_MORE_FILES_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
@@ -44,9 +47,11 @@ const isOpening = (state = false, action) => {
   switch (action.type) {
     case OPEN_FOLDER:
     case FETCH_RECENT:
+    case FETCH_SHARINGS:
       return true
     case OPEN_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
+    case FETCH_SHARINGS_SUCCESS:
       return false
     default:
       return state
@@ -62,6 +67,7 @@ const displayedFolder = (state = null, action) => {
     case OPEN_FOLDER_SUCCESS:
       return action.folder
     case FETCH_RECENT_SUCCESS:
+    case FETCH_SHARINGS_SUCCESS:
       return null
     default:
       return state
@@ -73,6 +79,7 @@ const openedFolderId = (state = null, action) => {
     case OPEN_FOLDER:
       return action.folderId
     case FETCH_RECENT:
+    case FETCH_SHARINGS:
       return null
     default:
       return state
@@ -83,6 +90,7 @@ const fileCount = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
+    case FETCH_SHARINGS_SUCCESS:
       return action.fileCount
     case UPLOAD_FILE_SUCCESS:
     case CREATE_FOLDER_SUCCESS:
@@ -112,6 +120,7 @@ const sort = (state = null, action) => {
         ? { attribute: 'updated_at', order: 'desc' }
         : null
     case FETCH_RECENT_SUCCESS:
+    case FETCH_SHARINGS_SUCCESS:
       return null
     default:
       return state
@@ -176,6 +185,7 @@ const files = (state = [], action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
+    case FETCH_SHARINGS_SUCCESS:
     case SORT_FOLDER_SUCCESS:
       return action.files
     case FETCH_MORE_FILES_SUCCESS:
@@ -223,6 +233,7 @@ const fetchStatus = (state = 'pending', action) => {
     case OPEN_FOLDER_SUCCESS:
     case SORT_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
+    case FETCH_SHARINGS_SUCCESS:
     case EMPTY_TRASH_SUCCESS:
     case EMPTY_TRASH_FAILURE:
     case DESTROY_FILES_SUCCESS:
@@ -231,6 +242,7 @@ const fetchStatus = (state = 'pending', action) => {
     case OPEN_FOLDER_FAILURE:
     case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_FAILURE:
+    case FETCH_SHARINGS_FAILURE:
       return 'failed'
     default:
       return state
@@ -245,6 +257,8 @@ const lastFetch = (state = null, action) => {
     case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_SUCCESS:
     case FETCH_RECENT_FAILURE:
+    case FETCH_SHARINGS_SUCCESS:
+    case FETCH_SHARINGS_FAILURE:
       return Date.now()
     default:
       return state

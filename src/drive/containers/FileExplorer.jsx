@@ -14,6 +14,7 @@ import {
   openFolder,
   getOpenedFolderId,
   fetchRecentFiles,
+  fetchSharings,
   fetchMoreFiles,
   openLocalFile,
   uploadedFile,
@@ -29,6 +30,8 @@ import {
 } from '../reducers'
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
+const isSharingsFilesView = props =>
+  props.location.pathname.match(/^\/sharings/)
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
@@ -41,6 +44,8 @@ class FileExplorer extends Component {
   componentWillMount() {
     if (isRecentFilesView(this.props)) {
       this.props.fetchRecentFiles()
+    } else if (isSharingsFilesView(this.props)) {
+      this.props.fetchSharings()
     } else {
       this.openFolder(
         getFolderIdFromRoute(this.props.location, this.props.params)
@@ -52,6 +57,7 @@ class FileExplorer extends Component {
     if (
       urlHasChanged(this.props, newProps) &&
       !isRecentFilesView(newProps) &&
+      !isSharingsFilesView(newProps) &&
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
     ) {
       this.openFolder(getFolderIdFromRoute(newProps.location, newProps.params))
@@ -91,6 +97,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   showActionMenu: fileId => dispatch(showActionMenu(fileId)),
   hideActionMenu: () => dispatch(hideActionMenu()),
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
+  fetchSharings: () => dispatch(fetchSharings()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId => dispatch(openFolder(folderId)),
