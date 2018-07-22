@@ -133,9 +133,9 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.1.tgz#e44e596d03c9f16ba3b127ad333a8a072bcb5a0a"
 
-"@sentry/cli@1.33.0":
-  version "1.33.0"
-  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.33.0.tgz#ad24f4b6f441a09aafa7265b9d883fc7b1fc9f52"
+"@sentry/cli@1.34.0":
+  version "1.34.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.34.0.tgz#81aa5e8239efde11148bec5474b08329c36be32a"
   dependencies:
     https-proxy-agent "^2.2.1"
     node-fetch "^2.1.2"
