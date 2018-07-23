@@ -310,12 +310,17 @@ export const getFolderIdFromRoute = (location, params) => {
   if (location.pathname.match(/^\/trash/)) return TRASH_DIR_ID
 }
 
+const getFolderUrlFromPathName = pathname => {
+  if (pathname.match(/^\/sharings/)) return '/sharings/'
+  else if (pathname.match(/^\/trash/)) return '/trash/'
+  else return '/folder/'
+}
+
 export const getFolderUrl = (folderId, location) => {
   if (folderId === undefined) return '/folder'
   if (folderId === ROOT_DIR_ID) return '/folder'
   if (folderId === TRASH_DIR_ID) return '/trash'
-  const url = location.pathname.match(/^\/folder/) ? '/folder/' : '/trash/'
-  return url + folderId
+  return getFolderUrlFromPathName(location.pathname) + folderId
 }
 
 // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
