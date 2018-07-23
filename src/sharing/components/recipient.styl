@@ -18,17 +18,22 @@
     width 2.5rem
     height 2.5rem
     background-color silver
+    font-size 1.1rem
 
     span
         position absolute
         top 50%
         left 50%
         transform translateX(-50%) translateY(-50%)
-        font-size 1.1rem
         font-weight bold
         line-height 1rem
         text-transform uppercase
         color white
+
+    &--small
+        width 2rem
+        height 2rem
+        font-size 1rem
 
     .recipient-avatar-link
         background embedurl("../assets/icons/icon-link-16.svg") center center no-repeat
@@ -94,9 +99,6 @@
         margin-right -0.6rem
         border 2px solid white
         box-sizing border-box
-        width 2.5rem
-        height 2.5rem
-        font-size 1.1rem
 
 .recipient-menu-btn
     @extend $button

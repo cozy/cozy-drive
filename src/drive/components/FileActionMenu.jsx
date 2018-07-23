@@ -11,7 +11,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import { splitFilename, getClassFromMime } from '../containers/File'
 import { isAvailableOffline } from '../ducks/files/availableOffline'
 
-class MenuItem extends Component {
+export class MenuItem extends Component {
   state = {
     working: false
   }

@@ -282,6 +282,7 @@ export const SharedRecipients = ({ docId, ...rest }) => (
         <RecipientsAvatars
           recipients={getRecipients(docId).reverse()}
           link={getSharingLink(docId) !== null}
+          {...rest}
         />
       )
     }}

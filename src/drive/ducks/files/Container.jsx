@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { showModal } from 'react-cozy-helpers'
 import confirm from '../../lib/confirm'
-import { SharedDocument, ShareModal } from 'sharing'
+import { SharedDocument, SharedRecipients, ShareModal } from 'sharing'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
@@ -12,7 +12,10 @@ import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import { isAvailableOffline } from './availableOffline'
-import { ConnectedToggleMenuItem } from '../../components/FileActionMenu'
+import {
+  MenuItem,
+  ConnectedToggleMenuItem
+} from '../../components/FileActionMenu'
 
 import {
   createFolder,
@@ -22,6 +25,17 @@ import {
   trashFiles,
   toggleAvailableOffline
 } from '../../actions'
+
+const ShareMenuItem = ({ docId, ...rest }, { t }) => (
+  <SharedDocument docId={docId}>
+    {({ isSharedWithMe }) => (
+      <MenuItem {...rest}>
+        {isSharedWithMe ? t('Files.share.sharedWithMe') : t('Files.share.cta')}
+        <SharedRecipients docId={docId} size="small" />
+      </MenuItem>
+    )}
+  </SharedDocument>
+)
 
 const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {
@@ -60,7 +74,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               }
             }),
           displayCondition: selections =>
-            hasWriteAccess && selections.length === 1
+            hasWriteAccess && selections.length === 1,
+          Component: ({ files, ...rest }) => (
+            <ShareMenuItem docId={files[0].id} {...rest} />
+          )
         },
         download:
           __TARGET__ === 'mobile'

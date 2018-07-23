@@ -1,10 +1,11 @@
 import React from 'react'
+import cx from 'classnames'
 import ColorHash from './colorhash'
 import PropTypes from 'prop-types'
 import { SharingTooltip, TooltipRecipientList } from './Tooltip'
 import styles from './recipient.styl'
 
-export const Avatar = ({ name = '' }) => {
+export const Avatar = ({ name, size }) => {
   const initial = name.charAt(0)
   const bg = ColorHash().getColor(name)
   const style = {
@@ -12,7 +13,9 @@ export const Avatar = ({ name = '' }) => {
   }
   return (
     <div
-      className={styles['recipient-avatar']}
+      className={cx(styles['recipient-avatar'], {
+        [styles['recipient-avatar--small']]: size === 'small'
+      })}
       style={style}
       data-tip={name}
       data-for={`recipient-avatar-${name}`}
@@ -24,16 +27,20 @@ export const Avatar = ({ name = '' }) => {
 }
 
 Avatar.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
+  size: PropTypes.string
 }
 
 Avatar.defaultProps = {
-  name: ''
+  name: '',
+  size: 'medium'
 }
 
-export const AvatarPlusX = ({ extraRecipients = [] }) => (
+export const AvatarPlusX = ({ size, extraRecipients = [] }) => (
   <div
-    className={styles['recipient-avatar']}
+    className={cx(styles['recipient-avatar'], {
+      [styles['recipient-avatar--small']]: size === 'small'
+    })}
     data-tip
     data-for="extra-recipients-avatar"
   >
@@ -47,15 +54,21 @@ export const AvatarPlusX = ({ extraRecipients = [] }) => (
 )
 
 AvatarPlusX.propTypes = {
-  extraRecipients: PropTypes.arrayOf(PropTypes.string)
+  extraRecipients: PropTypes.arrayOf(PropTypes.string),
+  size: PropTypes.string
 }
 
 AvatarPlusX.defaultProps = {
-  extraRecipients: []
+  extraRecipients: [],
+  size: 'medium'
 }
 
-export const AvatarLink = () => (
-  <div className={styles['recipient-avatar']}>
+export const AvatarLink = ({ size = 'medium' }) => (
+  <div
+    className={cx(styles['recipient-avatar'], {
+      [styles['recipient-avatar--small']]: size === 'small'
+    })}
+  >
     <span className={styles['recipient-avatar-link']} />
   </div>
 )

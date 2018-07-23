@@ -10,19 +10,22 @@ import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
 const MAX_DISPLAYED_RECIPIENTS = 3
 
-export const RecipientsAvatars = ({ recipients, link }) => (
+export const RecipientsAvatars = ({ recipients, link, size }) => (
   <div className={styles['recipients-avatars']}>
-    {link && <AvatarLink />}
+    {link && <AvatarLink size={size} />}
     {recipients.length > MAX_DISPLAYED_RECIPIENTS && (
       <AvatarPlusX
         extraRecipients={recipients
           .slice(MAX_DISPLAYED_RECIPIENTS)
           .map(recipient => getDisplayName(recipient))}
+        size={size}
       />
     )}
     {recipients
       .slice(0, MAX_DISPLAYED_RECIPIENTS)
-      .map(recipient => <Avatar name={getDisplayName(recipient)} />)}
+      .map(recipient => (
+        <Avatar name={getDisplayName(recipient)} size={size} />
+      ))}
   </div>
 )
 
