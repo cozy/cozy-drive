@@ -329,21 +329,24 @@ export const getFolderPath = ({ view }, location, isPublic) => {
   const path = []
   const isBrowsingTrash = /^\/trash/.test(location.pathname)
   const isBrowsingRecentFiles = /^\/recent/.test(location.pathname)
+  const isBrowsingSharings = /^\/sharings/.test(location.pathname)
   // dring the first fetch, displayedFolder is null, and we don't want to display anything
   if (displayedFolder) {
     path.push(displayedFolder)
-    // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that.
+    // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that. Sharings folder at the root level have the same problem.
     const parent = displayedFolder.parent
     if (
       parent &&
       parent.id &&
-      !(isBrowsingTrash && parent.id === ROOT_DIR_ID)
+      !(isBrowsingTrash && parent.id === ROOT_DIR_ID) &&
+      !(isBrowsingSharings && parent.id === ROOT_DIR_ID)
     ) {
       path.unshift(parent)
       // has the parent a parent too?
       if (
         parent.dir_id &&
         !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID) &&
+        !(isBrowsingSharings && parent.dir_id === ROOT_DIR_ID) &&
         !isPublic
       ) {
         // since we don't *actually* have any information about the parent's parent, we have to fake it
@@ -355,7 +358,7 @@ export const getFolderPath = ({ view }, location, isPublic) => {
     return path
   }
   // finally, we need to make sure we have the root level folder, which can be either the root, or the trash folder.
-  if (!isBrowsingRecentFiles) {
+  if (!isBrowsingRecentFiles && !isBrowsingSharings) {
     const hasRootFolder =
       path[0] && (path[0].id === ROOT_DIR_ID || path[0].id === TRASH_DIR_ID)
     if (!hasRootFolder) {
