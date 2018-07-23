@@ -34,7 +34,7 @@ const AppRoute = (
         <Route path="sharings" component={Sharings}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
-        <Route path="sharings/:folderId" component={Sharings}>
+        <Route path="sharings/:folderId" component={Folder}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
         <Route path="trash" component={Trash}>

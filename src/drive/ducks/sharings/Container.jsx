@@ -139,11 +139,11 @@ class SharingFetcher extends React.Component {
       sharing => sharing.attributes.rules[0].values[0]
     )
 
-    const hasChanged = sharingIds.find(
+    const hasNewSharings = sharingIds.find(
       id => !this.state.sharingIds.includes(id)
     )
 
-    if (hasChanged && sharingIds.length > 0) {
+    if (hasNewSharings && sharingIds.length > 0) {
       this.setState({ sharingIds })
 
       const resp = await client

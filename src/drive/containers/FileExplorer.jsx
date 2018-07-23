@@ -31,7 +31,7 @@ import {
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
 const isSharingsFilesView = props =>
-  props.location.pathname.match(/^\/sharings/)
+  props.location.pathname.match(/^\/sharings/) && !props.params.folderId
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
