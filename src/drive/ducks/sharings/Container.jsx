@@ -125,11 +125,8 @@ const ConnectedFolderView = translate()(
 )
 
 class SharingFetcher extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      sharingIds: []
-    }
+  state = {
+    sharingIds: []
   }
 
   async componentDidUpdate(prevProps) {
@@ -162,8 +159,8 @@ class SharingFetcher extends React.Component {
       <ConnectedFolderView
         isTrashContext={false}
         canSort
-        canDrop
-        canUpload
+        canDrop={false}
+        canUpload={false}
         canCreateFolder={false}
         {...otherProps}
       />
