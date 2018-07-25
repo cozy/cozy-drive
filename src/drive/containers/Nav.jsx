@@ -127,7 +127,7 @@ class Nav extends Component {
               disabled={opening}
             >
               <span className={styles['c-nav-icon']}>
-                <Icon icon="clock" />
+                <Icon icon="share" />
               </span>
               <span className={styles['c-nav-text']}>
                 {t('Nav.item_sharings')}
