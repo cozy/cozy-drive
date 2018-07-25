@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
+import { showModal } from 'react-cozy-helpers'
 
 import { ROOT_DIR_ID } from '../../constants/config'
 import { translate } from 'cozy-ui/react/I18n'
@@ -32,16 +33,7 @@ import {
 
 const { BarRight } = cozy.bar
 
-const toggleShowShareModal = state => ({
-  ...state,
-  showShareModal: !state.showShareModal
-})
-
 class Toolbar extends Component {
-  state = {
-    showShareModal: false
-  }
-
   render() {
     const cozyDev = cozy.client._url === 'http://cozy.tools:8080'
     const cozyRecette = cozy.client._url === 'https://recette.cozy.works'
@@ -56,6 +48,7 @@ class Toolbar extends Component {
       isShared,
       isSharedWithMe,
       uploadFiles,
+      share,
       downloadAll,
       trashFolder,
       onLeave,
@@ -75,7 +68,7 @@ class Toolbar extends Component {
           <Item>
             <a
               className={styles['fil-action-share']}
-              onClick={() => this.setState(toggleShowShareModal)}
+              onClick={() => share(displayedFolder)}
             >
               {t(isSharedWithMe ? 'Files.share.sharedWithMe' : 'toolbar.share')}
             </a>
@@ -178,21 +171,12 @@ class Toolbar extends Component {
           <ShareButton
             docId={displayedFolder.id}
             disabled={disabled}
-            onClick={() => this.setState(toggleShowShareModal)}
+            onClick={() => share(displayedFolder)}
             className={styles['u-hide--mob']}
           />
         )}
 
         {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
-
-        {this.state.showShareModal && (
-          <ShareModal
-            document={displayedFolder}
-            documentType="Files"
-            sharingDesc={displayedFolder.name}
-            onClose={() => this.setState(toggleShowShareModal)}
-          />
-        )}
       </div>
     )
   }
@@ -221,6 +205,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       )
     )
   },
+  share: displayedFolder =>
+    dispatch({
+      ...showModal(
+        <ShareModal
+          document={displayedFolder}
+          documentType="Files"
+          sharingDesc={displayedFolder.name}
+        />
+      ),
+      meta: {
+        hideActionMenu: true
+      }
+    }),
   downloadAll: folder => dispatch(downloadFiles(folder)),
   trashFolder: folder =>
     dispatch(trashFiles([folder])).then(() => {
