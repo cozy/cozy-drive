@@ -79,6 +79,12 @@
       "others": "and 1 other… |||| and %{smart_count} others…"
     }
   },
+  "Sharings": {
+    "unavailable": {
+      "title": "Come back on line!",
+      "message": "An internet connection is needed to display the list of sharings."
+    }
+  },
   "Files": {
     "share": {
       "cta": "Share",

@@ -2,6 +2,7 @@ import React from 'react'
 import { SharedDocuments } from 'sharing'
 import { connect } from 'react-redux'
 import Container from './Container'
+import { Empty } from 'cozy-ui/react'
 import {
   FETCH_SHARINGS,
   FETCH_SHARINGS_SUCCESS,
@@ -9,12 +10,17 @@ import {
 } from '../../actions'
 
 class SharingFetcher extends React.Component {
+  state = {
+    error: null
+  }
+
   async fetchSharedDocuments() {
     const { sharedDocuments } = this.props
     const { client } = this.context
 
     try {
       this.props.startFetch()
+      this.setState({ error: null })
 
       const resp = await client
         .collection('io.cozy.files')
@@ -23,6 +29,7 @@ class SharingFetcher extends React.Component {
 
       this.props.fetchSuccess(files)
     } catch (e) {
+      this.setState({ error: e })
       this.props.fetchFailure(e)
     }
   }
@@ -44,8 +51,16 @@ class SharingFetcher extends React.Component {
 
   render() {
     const { sharedDocuments, ...otherProps } = this.props
+    const { error } = this.state
+    const { t } = this.context
 
-    return (
+    return error ? (
+      <Empty
+        icon="cozy"
+        title={t('Sharings.unavailable.title')}
+        text={t('Sharings.unavailable.message')}
+      />
+    ) : (
       <Container
         isTrashContext={false}
         canSort={false}
