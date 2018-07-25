@@ -25,7 +25,11 @@ class SharingFetcher extends React.Component {
       const resp = await client
         .collection('io.cozy.files')
         .all({ keys: sharedDocuments })
-      const files = resp.data
+      const files = resp.data.sort((a, b) => {
+        if (a.type === 'directory' && b.type !== 'directory') return -1
+        else if (a.type !== 'directory' && b.type === 'directory') return 1
+        else return a.name.localeCompare(b.name)
+      })
 
       this.props.fetchSuccess(files)
     } catch (e) {
