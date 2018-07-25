@@ -230,7 +230,15 @@ export default class SharingProvider extends Component {
 }
 
 export const SharedDocuments = ({ children }) => (
-  <SharingContext.Consumer>{props => children(props)}}</SharingContext.Consumer>
+  <SharingContext.Consumer>
+    {({ sharings }) =>
+      children({
+        sharedDocuments: sharings.map(
+          sharing => sharing.attributes.rules[0].values[0]
+        )
+      })
+    }}
+  </SharingContext.Consumer>
 )
 
 export const SharedDocument = ({ docId, children }) => (

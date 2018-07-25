@@ -125,27 +125,18 @@ const ConnectedFolderView = translate()(
 )
 
 class SharingFetcher extends React.Component {
-  state = {
-    sharingIds: []
-  }
-
   async componentDidUpdate(prevProps) {
-    const { sharings } = this.props.sharingProps
+    const { sharedDocuments } = this.props
     const { client } = this.context
-    const sharingIds = sharings.map(
-      sharing => sharing.attributes.rules[0].values[0]
+
+    const hasNewSharings = sharedDocuments.find(
+      id => !prevProps.sharedDocuments.includes(id)
     )
 
-    const hasNewSharings = sharingIds.find(
-      id => !this.state.sharingIds.includes(id)
-    )
-
-    if (hasNewSharings && sharingIds.length > 0) {
-      this.setState({ sharingIds })
-
+    if (hasNewSharings && sharedDocuments.length > 0) {
       const resp = await client
         .collection('io.cozy.files')
-        .all({ keys: sharingIds })
+        .all({ keys: sharedDocuments })
       const files = resp.data
 
       this.props.fetchSharings(files)
@@ -153,7 +144,7 @@ class SharingFetcher extends React.Component {
   }
 
   render() {
-    const { sharingProps, ...otherProps } = this.props
+    const { sharedDocuments, ...otherProps } = this.props
 
     return (
       <ConnectedFolderView
@@ -174,8 +165,8 @@ const ConnectedSharingFetcher = connect(null, dispatch => ({
 
 const SharingsContainer = props => (
   <SharedDocuments>
-    {sharingProps => (
-      <ConnectedSharingFetcher {...props} sharingProps={sharingProps} />
+    {({ sharedDocuments }) => (
+      <ConnectedSharingFetcher {...props} sharedDocuments={sharedDocuments} />
     )}
   </SharedDocuments>
 )
