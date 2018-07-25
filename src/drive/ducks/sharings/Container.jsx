@@ -6,7 +6,11 @@ import { showModal } from 'react-cozy-helpers'
 import confirm from '../../lib/confirm'
 import { SharedDocuments } from 'sharing'
 
-import { fetchSharings } from '../../actions'
+import {
+  FETCH_SHARINGS,
+  FETCH_SHARINGS_SUCCESS,
+  FETCH_SHARINGS_FAILURE
+} from '../../actions'
 
 import FolderView from '../../components/FolderView'
 import DeleteConfirm from '../../components/DeleteConfirm'
@@ -125,22 +129,37 @@ const ConnectedFolderView = translate()(
 )
 
 class SharingFetcher extends React.Component {
-  async componentDidUpdate(prevProps) {
+  async fetchSharedDocuments() {
     const { sharedDocuments } = this.props
     const { client } = this.context
 
-    const hasNewSharings = sharedDocuments.find(
-      id => !prevProps.sharedDocuments.includes(id)
-    )
+    try {
+      this.props.startFetch()
 
-    if (hasNewSharings && sharedDocuments.length > 0) {
       const resp = await client
         .collection('io.cozy.files')
         .all({ keys: sharedDocuments })
       const files = resp.data
 
-      this.props.fetchSharings(files)
+      this.props.fetchSuccess(files)
+    } catch (e) {
+      this.props.fetchFailure(e)
     }
+  }
+
+  componentDidMount() {
+    this.fetchSharedDocuments()
+  }
+
+  async componentDidUpdate(prevProps) {
+    const { sharedDocuments } = this.props
+
+    const hasNewSharings =
+      sharedDocuments.length !== prevProps.sharedDocuments.length ||
+      sharedDocuments.find(id => !prevProps.sharedDocuments.includes(id)) !==
+        undefined
+
+    if (hasNewSharings) this.fetchSharedDocuments()
   }
 
   render() {
@@ -159,9 +178,31 @@ class SharingFetcher extends React.Component {
   }
 }
 
-const ConnectedSharingFetcher = connect(null, dispatch => ({
-  fetchSharings: f => dispatch(fetchSharings(f))
-}))(SharingFetcher)
+const ConnectedSharingFetcher = connect(
+  state => ({
+    isNavigatingAway: state.view.isOpening
+  }),
+  dispatch => ({
+    startFetch: () =>
+      dispatch({
+        type: FETCH_SHARINGS,
+        meta: {
+          cancelSelection: true
+        }
+      }),
+    fetchSuccess: files =>
+      dispatch({
+        type: FETCH_SHARINGS_SUCCESS,
+        fileCount: files.length,
+        files
+      }),
+    fetchFailure: e =>
+      dispatch({
+        type: FETCH_SHARINGS_FAILURE,
+        error: e
+      })
+  })
+)(SharingFetcher)
 
 const SharingsContainer = props => (
   <SharedDocuments>
