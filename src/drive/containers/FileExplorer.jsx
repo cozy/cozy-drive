@@ -14,7 +14,6 @@ import {
   openFolder,
   getOpenedFolderId,
   fetchRecentFiles,
-  fetchSharings,
   fetchMoreFiles,
   openLocalFile,
   uploadedFile,
@@ -45,7 +44,7 @@ class FileExplorer extends Component {
     if (isRecentFilesView(this.props)) {
       this.props.fetchRecentFiles()
     } else if (isSharingsFilesView(this.props)) {
-      this.props.fetchSharings()
+      // Do nothing — the fetching will be started by a sub-component
     } else {
       this.openFolder(
         getFolderIdFromRoute(this.props.location, this.props.params)
@@ -97,7 +96,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   showActionMenu: fileId => dispatch(showActionMenu(fileId)),
   hideActionMenu: () => dispatch(hideActionMenu()),
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
-  fetchSharings: () => dispatch(fetchSharings()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId => dispatch(openFolder(folderId)),

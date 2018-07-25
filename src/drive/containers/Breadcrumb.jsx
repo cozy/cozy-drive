@@ -40,27 +40,6 @@ const renamePathNames = (path, location, t) => {
   return path
 }
 
-const BreadcrumbFolderName = ({ name }) => (
-  <span className={styles['fil-path-link-name']}>{name}</span>
-)
-
-const BreadcrumbLink = ({ folder, onClick }) =>
-  folder.id ? (
-    <Link
-      to={getFolderUrl(folder.id, location)}
-      className={styles['fil-path-link']}
-      onClick={onClick}
-    >
-      <BreadcrumbFolderName name={folder.name} />
-      <span className={styles['fil-path-separator']}>/</span>
-    </Link>
-  ) : (
-    <Link to={folder.url} className={styles['fil-path-link']}>
-      <BreadcrumbFolderName name={folder.name} />
-      <span className={styles['fil-path-separator']}>/</span>
-    </Link>
-  )
-
 class Breadcrumb extends Component {
   state = {
     opening: false,
@@ -99,8 +78,14 @@ class Breadcrumb extends Component {
     })
   }
 
+  navigateToPath = (e, path) => {
+    const { router } = this.props
+    e.preventDefault()
+    router.push(path)
+  }
+
   handleClickOutside = e => {
-    if (!this.menu.contains(e.target)) {
+    if (this.menu && !this.menu.contains(e.target)) {
       e.stopPropagation()
       this.closeMenu()
     }
@@ -128,10 +113,22 @@ class Breadcrumb extends Component {
           {path.map((folder, index) => {
             if (index < path.length - 1) {
               return (
-                <BreadcrumbLink
-                  folder={folder}
-                  onClick={e => this.navigateToFolder(e, folder.id)}
-                />
+                <Link
+                  to={
+                    folder.id ? getFolderUrl(folder.id, location) : folder.url
+                  }
+                  className={styles['fil-path-link']}
+                  onClick={e =>
+                    folder.id
+                      ? this.navigateToFolder(e, folder.id)
+                      : this.navigateToPath(e, folder.url)
+                  }
+                >
+                  <span className={styles['fil-path-link-name']}>
+                    {folder.name}
+                  </span>
+                  <span className={styles['fil-path-separator']}>/</span>
+                </Link>
               )
             } else {
               return (
@@ -168,12 +165,21 @@ class PreviousButton extends Component {
     })
   }
 
+  navigateToPath = path => {
+    const { router } = this.props
+    router.push(path)
+  }
+
   render({ location, path }) {
-    const previousFolderId = path[path.length - 2].id
+    const previousSegment = path[path.length - 2]
     return (
       <button
         className={styles['fil-path-previous']}
-        onClick={() => this.navigateToFolder(previousFolderId)}
+        onClick={() =>
+          previousSegment.id
+            ? this.navigateToFolder(previousSegment.id)
+            : this.navigateToPath(previousSegment.url)
+        }
       />
     )
   }

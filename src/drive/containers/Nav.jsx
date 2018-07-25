@@ -11,7 +11,7 @@ import { withRouter, Link } from 'react-router'
 
 import Spinner from 'cozy-ui/react/Spinner'
 import Icon from 'cozy-ui/react/Icon'
-import { openFiles, openTrash, openRecent, openSharings } from '../actions'
+import { openFiles, openTrash, openRecent } from '../actions'
 
 class CustomLink extends Component {
   constructor(props) {
@@ -78,7 +78,7 @@ class Nav extends Component {
   toggleOpening = () => this.setState(state => ({ opening: !state.opening }))
 
   render() {
-    const { t, openFiles, openRecent, openSharings, openTrash } = this.props
+    const { t, openFiles, openRecent, openTrash } = this.props
     const { opening } = this.state
     return (
       <nav>
@@ -120,7 +120,7 @@ class Nav extends Component {
           <li className={styles['c-nav-item']}>
             <ActiveLink
               to="/sharings"
-              onClick={openSharings}
+              onClick={() => Promise.resolve()}
               onActiveChange={this.toggleOpening}
               className={styles['c-nav-link']}
               activeClassName={styles['is-active']}
@@ -177,7 +177,6 @@ class Nav extends Component {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openFiles: () => dispatch(openFiles()),
   openRecent: () => dispatch(openRecent()),
-  openSharings: () => dispatch(openSharings()),
   openTrash: () => dispatch(openTrash())
 })
 

@@ -75,10 +75,6 @@ export const openRecent = () => {
   return async dispatch => dispatch(fetchRecentFiles())
 }
 
-export const openSharings = () => {
-  return async dispatch => dispatch(fetchSharings())
-}
-
 export const openTrash = () => {
   return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
 }
@@ -215,29 +211,6 @@ export const fetchRecentFiles = () => {
       })
     } catch (e) {
       return dispatch({ type: FETCH_RECENT_FAILURE, error: e })
-    }
-  }
-}
-
-export const fetchSharings = (sharedFiles = []) => {
-  return async (dispatch, getState) => {
-    dispatch({
-      type: FETCH_SHARINGS,
-      meta: {
-        cancelSelection: true
-      }
-    })
-
-    try {
-      const files = sharedFiles
-
-      return dispatch({
-        type: FETCH_SHARINGS_SUCCESS,
-        fileCount: files.length,
-        files
-      })
-    } catch (e) {
-      return dispatch({ type: FETCH_SHARINGS_FAILURE, error: e })
     }
   }
 }
