@@ -11,10 +11,10 @@ import FilesViewer from './FilesViewer'
 import {
   FolderContainer as Folder,
   RecentContainer as Recent,
-  FileOpenerExternal
+  FileOpenerExternal,
+  SharingsContainer as Sharings
 } from '../ducks/files'
 import { Container as Trash } from '../ducks/trash'
-import Sharings from '../ducks/sharings/Container'
 
 const AppRoute = (
   <Route>
