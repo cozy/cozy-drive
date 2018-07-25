@@ -149,7 +149,7 @@ class SharingFetcher extends React.Component {
     return (
       <ConnectedFolderView
         isTrashContext={false}
-        canSort
+        canSort={false}
         canDrop={false}
         canUpload={false}
         canCreateFolder={false}
