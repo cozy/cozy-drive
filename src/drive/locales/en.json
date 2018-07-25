@@ -81,8 +81,8 @@
   },
   "Sharings": {
     "unavailable": {
-      "title": "Come back on line!",
-      "message": "An internet connection is needed to display the list of sharings."
+      "title": "Switch online!",
+      "message": "An internet connection is needed to display the list of your last sharings."
     }
   },
   "Files": {
