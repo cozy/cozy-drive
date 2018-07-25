@@ -23,7 +23,8 @@ const renamePathNames = (path, location, t) => {
     })
   } else if (location.pathname.match(/^\/sharings/)) {
     path.unshift({
-      name: t('breadcrumb.title_sharings')
+      name: t('breadcrumb.title_sharings'),
+      url: '/sharings'
     })
   }
 
@@ -38,6 +39,27 @@ const renamePathNames = (path, location, t) => {
 
   return path
 }
+
+const BreadcrumbFolderName = ({ name }) => (
+  <span className={styles['fil-path-link-name']}>{name}</span>
+)
+
+const BreadcrumbLink = ({ folder, onClick }) =>
+  folder.id ? (
+    <Link
+      to={getFolderUrl(folder.id, location)}
+      className={styles['fil-path-link']}
+      onClick={onClick}
+    >
+      <BreadcrumbFolderName name={folder.name} />
+      <span className={styles['fil-path-separator']}>/</span>
+    </Link>
+  ) : (
+    <Link to={folder.url} className={styles['fil-path-link']}>
+      <BreadcrumbFolderName name={folder.name} />
+      <span className={styles['fil-path-separator']}>/</span>
+    </Link>
+  )
 
 class Breadcrumb extends Component {
   state = {
@@ -106,16 +128,10 @@ class Breadcrumb extends Component {
           {path.map((folder, index) => {
             if (index < path.length - 1) {
               return (
-                <Link
-                  to={getFolderUrl(folder.id, location)}
-                  className={styles['fil-path-link']}
+                <BreadcrumbLink
+                  folder={folder}
                   onClick={e => this.navigateToFolder(e, folder.id)}
-                >
-                  <span className={styles['fil-path-link-name']}>
-                    {folder.name}
-                  </span>
-                  <span className={styles['fil-path-separator']}>/</span>
-                </Link>
+                />
               )
             } else {
               return (
