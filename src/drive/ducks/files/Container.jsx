@@ -134,16 +134,4 @@ const ConnectedFolderView = translate()(
   connect(mapStateToProps, mapDispatchToProps)(FolderView)
 )
 
-const FolderViewWithSharingContext = props =>
-  // props.displayedFolder is null on the recent file view for example
-  !props.displayedFolder ? (
-    <ConnectedFolderView {...props} hasWriteAccess={false} />
-  ) : (
-    <SharedDocument docId={props.displayedFolder.id}>
-      {({ hasWriteAccess }) => (
-        <ConnectedFolderView {...props} hasWriteAccess={hasWriteAccess} />
-      )}
-    </SharedDocument>
-  )
-
-export default FolderViewWithSharingContext
+export default ConnectedFolderView

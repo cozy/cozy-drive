@@ -1,5 +1,5 @@
 import React from 'react'
-import Container, { TestFolderView } from './Container'
+import Container from './Container'
 export { default as FileOpenerExternal } from './FileOpenerExternal.jsx'
 export { default as SharingsContainer } from './SharingsContainer.jsx'
 
