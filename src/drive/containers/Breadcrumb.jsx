@@ -21,6 +21,11 @@ const renamePathNames = (path, location, t) => {
     path.unshift({
       name: t('breadcrumb.title_recent')
     })
+  } else if (location.pathname.match(/^\/sharings/)) {
+    path.unshift({
+      name: t('breadcrumb.title_sharings'),
+      url: '/sharings'
+    })
   }
 
   path.forEach(folder => {
@@ -73,8 +78,14 @@ class Breadcrumb extends Component {
     })
   }
 
+  navigateToPath = (e, path) => {
+    const { router } = this.props
+    e.preventDefault()
+    router.push(path)
+  }
+
   handleClickOutside = e => {
-    if (!this.menu.contains(e.target)) {
+    if (this.menu && !this.menu.contains(e.target)) {
       e.stopPropagation()
       this.closeMenu()
     }
@@ -103,9 +114,15 @@ class Breadcrumb extends Component {
             if (index < path.length - 1) {
               return (
                 <Link
-                  to={getFolderUrl(folder.id, location)}
+                  to={
+                    folder.id ? getFolderUrl(folder.id, location) : folder.url
+                  }
                   className={styles['fil-path-link']}
-                  onClick={e => this.navigateToFolder(e, folder.id)}
+                  onClick={e =>
+                    folder.id
+                      ? this.navigateToFolder(e, folder.id)
+                      : this.navigateToPath(e, folder.url)
+                  }
                 >
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
@@ -148,12 +165,21 @@ class PreviousButton extends Component {
     })
   }
 
+  navigateToPath = path => {
+    const { router } = this.props
+    router.push(path)
+  }
+
   render({ location, path }) {
-    const previousFolderId = path[path.length - 2].id
+    const previousSegment = path[path.length - 2]
     return (
       <button
         className={styles['fil-path-previous']}
-        onClick={() => this.navigateToFolder(previousFolderId)}
+        onClick={() =>
+          previousSegment.id
+            ? this.navigateToFolder(previousSegment.id)
+            : this.navigateToPath(previousSegment.url)
+        }
       />
     )
   }

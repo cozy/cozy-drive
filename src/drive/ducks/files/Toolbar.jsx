@@ -229,7 +229,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 const ToolbarWithSharingContext = props =>
-  !props.displayedFolder ? null : (
+  !props.displayedFolder ? (
+    <Toolbar {...props} />
+  ) : (
     <SharedDocument docId={props.displayedFolder.id}>
       {({ isShared, isSharedWithMe, hasWriteAccess, onLeave }) => (
         <Toolbar

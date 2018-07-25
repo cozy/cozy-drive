@@ -11,7 +11,8 @@ import FilesViewer from './FilesViewer'
 import {
   FolderContainer as Folder,
   RecentContainer as Recent,
-  FileOpenerExternal
+  FileOpenerExternal,
+  SharingsContainer as Sharings
 } from '../ducks/files'
 import { Container as Trash } from '../ducks/trash'
 
@@ -28,6 +29,12 @@ const AppRoute = (
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
         <Route path="recent" component={Recent}>
+          <Route path="file/:fileId" component={FilesViewer} />
+        </Route>
+        <Route path="sharings" component={Sharings}>
+          <Route path="file/:fileId" component={FilesViewer} />
+        </Route>
+        <Route path="sharings/:folderId" component={Folder}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
         <Route path="trash" component={Trash}>

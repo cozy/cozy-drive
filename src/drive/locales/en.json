@@ -2,6 +2,7 @@
   "Nav": {
     "item_drive": "Drive",
     "item_recent": "Recent",
+    "item_sharings": "Sharings",
     "item_shared": "Shared by me",
     "item_activity": "Activity",
     "item_trash": "Trash",
@@ -24,6 +25,7 @@
   "breadcrumb": {
     "title_drive": "Drive",
     "title_recent": "Recent",
+    "title_sharings": "Sharings",
     "title_shared": "Shared by me",
     "title_activity": "Activity",
     "title_trash": "Trash"
@@ -75,6 +77,12 @@
     "members": {
       "count": "%{count} members",
       "others": "and 1 other… |||| and %{smart_count} others…"
+    }
+  },
+  "Sharings": {
+    "unavailable": {
+      "title": "Switch online!",
+      "message": "An internet connection is needed to display the list of your last sharings."
     }
   },
   "Files": {

@@ -119,6 +119,23 @@ class Nav extends Component {
           </li>
           <li className={styles['c-nav-item']}>
             <ActiveLink
+              to="/sharings"
+              onClick={() => Promise.resolve()}
+              onActiveChange={this.toggleOpening}
+              className={styles['c-nav-link']}
+              activeClassName={styles['is-active']}
+              disabled={opening}
+            >
+              <span className={styles['c-nav-icon']}>
+                <Icon icon="share" />
+              </span>
+              <span className={styles['c-nav-text']}>
+                {t('Nav.item_sharings')}
+              </span>
+            </ActiveLink>
+          </li>
+          <li className={styles['c-nav-item']}>
+            <ActiveLink
               to="/trash"
               onClick={openTrash}
               onActiveChange={this.toggleOpening}
