@@ -11,6 +11,7 @@ import { openFolder } from '../actions'
 import classNames from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'
 import { withBreakpoints } from 'cozy-ui/react'
+import { SharedDocuments } from 'sharing'
 
 import { getFolderPath, getFolderUrl } from '../reducers'
 
@@ -204,7 +205,12 @@ const MobileAwareBreadcrumb = props => {
 
 const mapStateToProps = (state, ownProps) => ({
   path: renamePathNames(
-    getFolderPath(state, ownProps.location, ownProps.isPublic),
+    getFolderPath(
+      state,
+      ownProps.location,
+      ownProps.isPublic,
+      ownProps.sharedDocuments
+    ),
     ownProps.location,
     ownProps.t
   ),
@@ -215,10 +221,25 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goToFolder: folderId => dispatch(openFolder(folderId))
 })
 
+const withSharedDocuments = Wrapped =>
+  class extends React.Component {
+    render() {
+      return (
+        <SharedDocuments>
+          {({ sharedDocuments }) => (
+            <Wrapped sharedDocuments={sharedDocuments} {...this.props} />
+          )}
+        </SharedDocuments>
+      )
+    }
+  }
+
 export default withBreakpoints()(
   withRouter(
     translate()(
-      connect(mapStateToProps, mapDispatchToProps)(MobileAwareBreadcrumb)
+      withSharedDocuments(
+        connect(mapStateToProps, mapDispatchToProps)(MobileAwareBreadcrumb)
+      )
     )
   )
 )

@@ -324,7 +324,12 @@ export const getFolderUrl = (folderId, location) => {
 }
 
 // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
-export const getFolderPath = ({ view }, location, isPublic) => {
+export const getFolderPath = (
+  { view },
+  location,
+  isPublic,
+  sharedDocuments
+) => {
   const { displayedFolder } = view
   const path = []
   const isBrowsingTrash = /^\/trash/.test(location.pathname)
@@ -335,18 +340,20 @@ export const getFolderPath = ({ view }, location, isPublic) => {
     path.push(displayedFolder)
     // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that. Sharings folder at the root level have the same problem.
     const parent = displayedFolder.parent
+    const isShared = sharedDocuments.includes(displayedFolder.id)
+    const isParentShared = sharedDocuments.includes(parent.id)
     if (
       parent &&
       parent.id &&
       !(isBrowsingTrash && parent.id === ROOT_DIR_ID) &&
-      !(isBrowsingSharings && parent.id === ROOT_DIR_ID)
+      !(isBrowsingSharings && isShared)
     ) {
       path.unshift(parent)
       // has the parent a parent too?
       if (
         parent.dir_id &&
         !(isBrowsingTrash && parent.dir_id === ROOT_DIR_ID) &&
-        !(isBrowsingSharings && parent.dir_id === ROOT_DIR_ID) &&
+        !(isBrowsingSharings && isParentShared) &&
         !isPublic
       ) {
         // since we don't *actually* have any information about the parent's parent, we have to fake it
