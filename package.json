@@ -12,7 +12,7 @@
     "clean:photos:browser": "rm -rf build/photos/*",
     "clean:mobile": "rm -rf targets/*/mobile/www/*",
     "deploy:drive": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/drive/' --prepublish downcloud --postpublish rundeck,mattermost",
-    "deploy:photos": "git-directory-deploy --directory=build/photos/ --username=Cozy --email=contact@cozycloud.cc  --repo=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git",
+    "deploy:photos": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/photos/' --prepublish downcloud --postpublish rundeck,mattermost",
     "internal:build": "webpack --config webpack.config.js --bail",
     "internal:watch": "webpack --config webpack.config.js --watch --progress",
     "tx": "tx pull --all || true",
