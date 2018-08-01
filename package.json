@@ -160,7 +160,7 @@
     "justified-layout": "2.1.1",
     "localforage": "1.7.2",
     "mime-types": "2.1.19",
-    "node-polyglot": "2.2.2",
+    "node-polyglot": "2.3.0",
     "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",
     "pouchdb": "6.4.2",
