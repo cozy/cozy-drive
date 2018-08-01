@@ -56,4 +56,3 @@ deploy:
     script: yarn run deploy:$COZY_APP_SLUG
     on:
       branch: master
-      tags: true
