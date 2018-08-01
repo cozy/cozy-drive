@@ -176,7 +176,7 @@
     "react-measure": "2.0.2",
     "react-redux": "5.0.7",
     "react-router": "3.2.0",
-    "react-tooltip": "^3.6.1",
+    "react-tooltip": "3.6.1",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
     "redux-mock-store": "1.5.1",
