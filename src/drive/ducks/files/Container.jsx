@@ -26,12 +26,18 @@ import {
   toggleAvailableOffline
 } from '../../actions'
 
+import styles from '../../styles/actionmenu'
+
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>
     {({ isSharedWithMe }) => (
       <MenuItem {...rest}>
         {isSharedWithMe ? t('Files.share.sharedWithMe') : t('Files.share.cta')}
-        <SharedRecipients docId={docId} size="small" />
+        <SharedRecipients
+          className={styles['fil-actionmenu-recipients']}
+          docId={docId}
+          size="small"
+        />
       </MenuItem>
     )}
   </SharedDocument>

@@ -243,7 +243,14 @@ export const SharedDocuments = ({ children }) => (
 
 export const SharedDocument = ({ docId, children }) => (
   <SharingContext.Consumer>
-    {({ byDocId, isOwner, getSharingType, revokeSelf } = {}) =>
+    {({
+      byDocId,
+      isOwner,
+      getSharingType,
+      getRecipients,
+      getSharingLink,
+      revokeSelf
+    } = {}) =>
       children({
         hasWriteAccess:
           !byDocId ||
@@ -254,6 +261,8 @@ export const SharedDocument = ({ docId, children }) => (
         isSharedByMe: byDocId !== undefined && byDocId[docId] && isOwner(docId),
         isSharedWithMe:
           byDocId !== undefined && byDocId[docId] && !isOwner(docId),
+        recipients: getRecipients(docId),
+        link: getSharingLink(docId) !== null,
         onLeave: revokeSelf
       })
     }}
@@ -292,7 +301,7 @@ export const SharedRecipients = ({ docId, ...rest }) => (
     {({ byDocId, getRecipients, getSharingLink } = {}) =>
       !byDocId || !byDocId[docId] ? null : (
         <RecipientsAvatars
-          recipients={getRecipients(docId).reverse()}
+          recipients={getRecipients(docId)}
           link={getSharingLink(docId) !== null}
           {...rest}
         />

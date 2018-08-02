@@ -30,6 +30,7 @@ import {
   SharedDocument,
   SharedRecipients
 } from 'sharing'
+import { RecipientsAvatars } from '../../../sharing/components/Recipient'
 
 const { BarRight } = cozy.bar
 
@@ -47,6 +48,8 @@ class Toolbar extends Component {
       hasWriteAccess,
       isShared,
       isSharedWithMe,
+      sharingRecipients,
+      sharingLink,
       uploadFiles,
       share,
       downloadAll,
@@ -62,6 +65,7 @@ class Toolbar extends Component {
         title={t('toolbar.item_more')}
         disabled={disabled}
         className={styles['fil-toolbar-menu']}
+        innerClassName={styles['fil-toolbar-inner-menu']}
         button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
       >
         {notRootfolder && (
@@ -71,6 +75,12 @@ class Toolbar extends Component {
               onClick={() => share(displayedFolder)}
             >
               {t(isSharedWithMe ? 'Files.share.sharedWithMe' : 'toolbar.share')}
+              <RecipientsAvatars
+                className={styles['fil-toolbar-menu-recipients']}
+                recipients={sharingRecipients}
+                link={sharingLink}
+                size="small"
+              />
             </a>
           </Item>
         )}
@@ -230,12 +240,21 @@ const ToolbarWithSharingContext = props =>
     <Toolbar {...props} />
   ) : (
     <SharedDocument docId={props.displayedFolder.id}>
-      {({ isShared, isSharedWithMe, hasWriteAccess, onLeave }) => (
+      {({
+        isShared,
+        isSharedWithMe,
+        hasWriteAccess,
+        recipients,
+        link,
+        onLeave
+      }) => (
         <Toolbar
           {...props}
           hasWriteAccess={hasWriteAccess}
           isShared={isShared}
           isSharedWithMe={isSharedWithMe}
+          sharingRecipients={recipients}
+          sharingLink={link}
           onLeave={onLeave}
         />
       )}
