@@ -10,24 +10,29 @@ import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
 const MAX_DISPLAYED_RECIPIENTS = 3
 
-export const RecipientsAvatars = ({ recipients, link, size }) => (
-  <div className={styles['recipients-avatars']}>
-    {link && <AvatarLink size={size} />}
-    {recipients.length > MAX_DISPLAYED_RECIPIENTS && (
-      <AvatarPlusX
-        extraRecipients={recipients
-          .slice(MAX_DISPLAYED_RECIPIENTS)
-          .map(recipient => getDisplayName(recipient))}
-        size={size}
-      />
-    )}
-    {recipients
-      .slice(0, MAX_DISPLAYED_RECIPIENTS)
-      .map(recipient => (
-        <Avatar name={getDisplayName(recipient)} size={size} />
-      ))}
-  </div>
-)
+export const RecipientsAvatars = ({ recipients, link, size, className }) => {
+  // we reverse the recipients array because we use `flex-direction: row-reverse` to display them correctly
+  // we slice first to clone the original array because reverse() mutates it
+  const reversedRecipients = recipients.slice().reverse()
+  return (
+    <div className={classNames(styles['recipients-avatars'], className)}>
+      {link && <AvatarLink size={size} />}
+      {recipients.length > MAX_DISPLAYED_RECIPIENTS && (
+        <AvatarPlusX
+          extraRecipients={reversedRecipients
+            .slice(MAX_DISPLAYED_RECIPIENTS)
+            .map(recipient => getDisplayName(recipient))}
+          size={size}
+        />
+      )}
+      {reversedRecipients
+        .slice(0, MAX_DISPLAYED_RECIPIENTS)
+        .map(recipient => (
+          <Avatar name={getDisplayName(recipient)} size={size} />
+        ))}
+    </div>
+  )
+}
 
 const Identity = ({ name, url }) => (
   <div className={styles['recipient-idents']}>

@@ -50,7 +50,14 @@ export default class Menu extends Component {
   }
 
   render() {
-    const { title, disabled, className, button, buttonClassName } = this.props
+    const {
+      title,
+      disabled,
+      className,
+      innerClassName,
+      button,
+      buttonClassName
+    } = this.props
     const { opened } = this.state
     return (
       <div
@@ -72,7 +79,7 @@ export default class Menu extends Component {
           </button>
         )}
         <div
-          className={classNames(styles['coz-menu-inner'], {
+          className={classNames(styles['coz-menu-inner'], innerClassName, {
             [styles['coz-menu-inner--opened']]: opened
           })}
         >
