@@ -345,7 +345,10 @@ const EditableSharingModal = ({ document, ...rest }) => (
       hasSharedChild
     }) => (
       <Query query={cozy => cozy.all('io.cozy.contacts')}>
-        {({ data }, { createDocument: createContact }) => (
+        {(
+          { data, fetchStatus, lastError },
+          { createDocument: createContact }
+        ) => (
           <DumbShareModal
             document={document}
             documentType={documentType}
@@ -354,6 +357,9 @@ const EditableSharingModal = ({ document, ...rest }) => (
             recipients={getRecipients(document.id)}
             link={getSharingLink(document.id)}
             isOwner={isOwner(document.id)}
+            needsContactsPermission={
+              fetchStatus === 'failed' && lastError.status === 403
+            }
             hasSharedParent={hasSharedParent(document)}
             hasSharedChild={hasSharedChild(document)}
             onShare={share}

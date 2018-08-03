@@ -77,6 +77,14 @@
     "members": {
       "count": "%{count} members",
       "others": "and 1 other… |||| and %{smart_count} others…"
+    },
+    "contacts": {
+      "permissionRequired": {
+        "title": "Save your contacts in your Cozy?",
+        "desc": "Authorize the application to access to your Cozy's contacts: you'll be able to select them next time.",
+        "action": "Authorize access",
+        "success": "The application has access to your contacts"
+      }
     }
   },
   "Sharings": {

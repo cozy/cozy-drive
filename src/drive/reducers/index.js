@@ -8,7 +8,7 @@ import upload from '../ducks/upload'
 import availableOffline from '../ducks/files/availableOffline'
 import uiReducer from 'react-cozy-helpers'
 
-export const reducers = {
+const reducers = {
   ui: uiReducer,
   view,
   settings,
