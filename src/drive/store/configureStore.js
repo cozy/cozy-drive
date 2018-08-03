@@ -9,8 +9,8 @@ import {
 } from 'cozy-ui/react/helpers/tracker'
 import thunkMiddleware from 'redux-thunk'
 import eventTrackerMiddleware from '../middlewares/EventTracker'
-import rootReducer from '../reducers'
-import mobileRootReducer from '../mobile/reducers'
+import baseReducers from '../reducers'
+import mobileReducer from '../mobile/reducers'
 import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from '../mobile/lib/reporter'
 
@@ -29,11 +29,20 @@ const configureStore = (client, t, initialState = {}) => {
   const composeEnhancers =
     (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
+  const reducers =
+    __TARGET__ === 'mobile'
+      ? combineReducers({
+          ...baseReducers,
+          mobile: mobileReducer,
+          cozy: client.reducer()
+        })
+      : combineReducers({
+          ...baseReducers,
+          cozy: client.reducer()
+        })
+
   const store = createStore(
-    combineReducers({
-      ...(__TARGET__ === 'mobile' ? mobileRootReducer : rootReducer),
-      cozy: client.reducer()
-    }),
+    reducers,
     initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   )

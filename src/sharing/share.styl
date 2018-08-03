@@ -1,4 +1,5 @@
 @require 'components/forms.styl'
+@require 'components/popover.styl'
 @require 'settings/breakpoints.styl'
 @require 'settings/palette.styl'
 
@@ -171,6 +172,39 @@ input[type=text]
     width 100%
     height 3rem
     margin 0
+
+.permission-required-popin
+    @extend $popover
+    display flex
+    flex-direction column
+    position relative
+    line-height 1.25rem
+    margin-top .25rem
+
+    .permission-required-popin-close
+        position absolute
+        top 0
+        right .9375rem
+        margin 0
+        padding 0
+        background-size .875rem
+        background-color transparent
+        cursor pointer
+        display block
+        width .875rem
+        height .875rem
+        z-index $modal-index
+
+    h4
+        font-size .875rem
+        margin 1.5rem 1rem 0 1rem
+    p
+        font-size .875rem
+        margin 0 1rem 1rem 1rem
+
+    .permission-required-popin-accept
+        color white
+        margin 0 1rem 1.5rem 1rem
 
 .share-details-created
 .share-details-perm

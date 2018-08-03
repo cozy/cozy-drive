@@ -75,6 +75,10 @@ export default class ShareAutocomplete extends Component {
     }
   }
 
+  onFocus = () => {
+    this.props.onFocus()
+  }
+
   onBlur = (event, { highlightedSuggestion }) => {
     if (highlightedSuggestion) {
       this.props.onPick(highlightedSuggestion)
@@ -136,6 +140,7 @@ export default class ShareAutocomplete extends Component {
         renderInputComponent={props => this.renderInput(props)}
         highlightFirstSuggestion
         inputProps={{
+          onFocus: this.onFocus,
           onChange: this.onChange,
           onBlur: this.onBlur,
           value: inputValue,

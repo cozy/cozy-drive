@@ -22,6 +22,7 @@ export default class ShareModal extends Component {
       link,
       recipients,
       documentType = 'Document',
+      needsContactsPermission,
       hasSharedParent,
       hasSharedChild,
       onClose,
@@ -46,6 +47,7 @@ export default class ShareModal extends Component {
             contacts={contacts}
             createContact={createContact}
             onShare={onShare}
+            needsContactsPermission={needsContactsPermission}
             hasSharedParent={hasSharedParent}
             hasSharedChild={hasSharedChild}
           />
@@ -81,6 +83,7 @@ ShareModal.propTypes = {
   recipients: PropTypes.array.isRequired,
   link: PropTypes.string,
   documentType: PropTypes.string,
+  needsContactsPermission: PropTypes.bool,
   hasSharedParent: PropTypes.bool,
   hasSharedChild: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
