@@ -56,9 +56,9 @@ deploy:
     script: yarn run deploy:$COZY_APP_SLUG
     on:
       branch: master
-- provider: script
-  repo: cozy/cozy-drive
-  skip-cleanup: true
-  script: yarn run deploy:$COZY_APP_SLUG
-  on:
-    tags: true
+  - provider: script
+    repo: cozy/cozy-drive
+    skip-cleanup: true
+    script: yarn run deploy:$COZY_APP_SLUG
+    on:
+      tags: true
