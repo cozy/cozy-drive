@@ -165,7 +165,7 @@
     "piwik-react-router": "0.8.2",
     "pouchdb": "6.4.2",
     "pouchdb-find": "0.10.5",
-    "preact": "8.2.9",
+    "preact": "8.3.0",
     "preact-compat": "3.18.0",
     "prop-types": "15.6.2",
     "raven-js": "3.26.3",
