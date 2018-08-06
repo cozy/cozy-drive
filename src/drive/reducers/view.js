@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import pull from 'lodash/pull'
 
 import {
   OPEN_FOLDER,
@@ -16,7 +17,10 @@ import {
   FETCH_MORE_FILES_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
-  CREATE_FOLDER_SUCCESS
+  CREATE_FOLDER_SUCCESS,
+  ADD_FILE,
+  UPDATE_FILE,
+  DELETE_FILE
 } from '../actions'
 
 import {
@@ -92,7 +96,10 @@ const fileCount = (state = null, action) => {
       return action.fileCount
     case UPLOAD_FILE_SUCCESS:
     case CREATE_FOLDER_SUCCESS:
+    case ADD_FILE:
       return state + 1
+    case DELETE_FILE:
+      return state - 1
     case TRASH_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
       return state - action.ids.length
@@ -118,6 +125,7 @@ const sort = (state = null, action) => {
         ? { attribute: 'updated_at', order: 'desc' }
         : null
     case FETCH_RECENT_SUCCESS:
+      return { attribute: 'updated_at', order: 'desc' }
     case FETCH_SHARINGS_SUCCESS:
       return null
     default:
@@ -126,8 +134,12 @@ const sort = (state = null, action) => {
 }
 
 const updateItem = (file, files) => {
-  const withoutFile = files.filter(f => f.id !== file.id)
-  return insertItem(file, withoutFile)
+  const existingFile = files.find(f => f.id === file.id)
+  const index = files.indexOf(existingFile)
+  const toRemove = index >= 0 ? 1 : 0
+  const filesCopy = files.slice()
+  filesCopy.splice(index, toRemove, file)
+  return filesCopy
 }
 
 const getCompareFn = (currentSort = null) => {
@@ -153,6 +165,8 @@ const getCompareFn = (currentSort = null) => {
 }
 
 const insertItem = (file, array, currentItemCount, currentSort = null) => {
+  if (array.find(f => f.id === file.id)) return array
+
   const index = indexFor(file, array, getCompareFn(currentSort))
   // if we only have partially fetched the file list and the new item
   // position is in the unfetched part of the list, we don't add the item
@@ -193,8 +207,10 @@ const files = (state = [], action) => {
       })
       return clone
     case RENAME_SUCCESS:
+    case UPDATE_FILE:
       return updateItem(action.file, state)
     case UPLOAD_FILE_SUCCESS:
+    case ADD_FILE:
       return insertItem(
         action.file,
         state,
@@ -212,6 +228,8 @@ const files = (state = [], action) => {
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
       return state.filter(f => action.ids.indexOf(f.id) === -1)
+    case DELETE_FILE:
+      return state.filter(f => action.file.id !== f.id)
     case EMPTY_TRASH_SUCCESS:
       return []
     default:
@@ -260,12 +278,66 @@ const lastFetch = (state = null, action) => {
   }
 }
 
+const deduplicateCreateDeleteActions = originalReducer => {
+  const created = []
+  const deleted = []
+
+  const deduplicateCreateAction = (state, action) => {
+    const doc = action.file || action.folder
+    if (created.includes(doc.id)) return state
+    else {
+      created.push(doc.id)
+      pull(deleted, doc.id)
+      return originalReducer(state, action)
+    }
+  }
+
+  const deduplicateDeleteAction = (state, action) => {
+    const actionIds = action.ids || [action.file.id]
+    const toRemove = actionIds.filter(id => !deleted.includes(id))
+
+    if (toRemove.length === 0) return state
+    else {
+      deleted.push(...toRemove)
+      pull(created, ...toRemove)
+      action.ids = toRemove
+      return originalReducer(state, action)
+    }
+  }
+
+  const clearInternalCache = (state, action) => {
+    created.length = 0
+    deleted.length = 0
+    return originalReducer(state, action)
+  }
+
+  return (state, action) => {
+    switch (action.type) {
+      case UPLOAD_FILE_SUCCESS:
+      case CREATE_FOLDER_SUCCESS:
+      case ADD_FILE:
+        return deduplicateCreateAction(state, action)
+      case DELETE_FILE:
+      case TRASH_FILES_SUCCESS:
+      case DESTROY_FILES_SUCCESS:
+      case RESTORE_FILES_SUCCESS:
+        return deduplicateDeleteAction(state, action)
+      case OPEN_FOLDER_SUCCESS:
+      case FETCH_RECENT_SUCCESS:
+      case FETCH_SHARINGS_SUCCESS:
+        return clearInternalCache(state, action)
+      default:
+        return originalReducer(state, action)
+    }
+  }
+}
+
 export default combineReducers({
   hasDisplayedSomething,
   isOpening,
   displayedFolder,
   openedFolderId,
-  fileCount,
+  fileCount: deduplicateCreateDeleteActions(fileCount),
   sort,
   files,
   fetchStatus,
