@@ -24,9 +24,7 @@ import {
   EMPTY_TRASH_SUCCESS,
   EMPTY_TRASH_FAILURE,
   RESTORE_FILES_SUCCESS,
-  DESTROY_FILES,
-  DESTROY_FILES_SUCCESS,
-  DESTROY_FILES_FAILURE
+  DESTROY_FILES_SUCCESS
 } from '../ducks/trash'
 import { RENAME_SUCCESS } from '../ducks/files/rename'
 import { isDirectory } from '../ducks/files/files'
@@ -227,7 +225,6 @@ const fetchStatus = (state = 'pending', action) => {
     // on initial state so that the loading spinner is only showed
     // when the app is launched or when the user use the back button
     case EMPTY_TRASH: // we temporarily display the spinner when working in the trashed
-    case DESTROY_FILES: // TODO: display a spinner in the confirm modal instead
     case SORT_FOLDER:
       return 'pending'
     case OPEN_FOLDER_SUCCESS:
@@ -236,8 +233,6 @@ const fetchStatus = (state = 'pending', action) => {
     case FETCH_SHARINGS_SUCCESS:
     case EMPTY_TRASH_SUCCESS:
     case EMPTY_TRASH_FAILURE:
-    case DESTROY_FILES_SUCCESS:
-    case DESTROY_FILES_FAILURE:
       return 'loaded'
     case OPEN_FOLDER_FAILURE:
     case SORT_FOLDER_FAILURE:

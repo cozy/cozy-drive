@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import React from 'react'
 import Modal from 'cozy-ui/react/Modal'
 
-const DestroyConfirm = ({ t, fileCount, confirm, abort }) => {
+const DestroyConfirm = ({ t, fileCount, confirm, onClose }) => {
   const confirmationTexts = ['forbidden', 'restore'].map(type => (
     <p
       className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
@@ -19,10 +19,14 @@ const DestroyConfirm = ({ t, fileCount, confirm, abort }) => {
       description={confirmationTexts}
       secondaryType="secondary"
       secondaryText={t('destroyconfirmation.cancel')}
-      secondaryAction={abort}
+      secondaryAction={onClose}
       primaryType="danger"
       primaryText={t('destroyconfirmation.delete')}
-      primaryAction={confirm}
+      primaryAction={() =>
+        confirm()
+          .then(onClose)
+          .catch(onClose)
+      }
     />
   )
 }
