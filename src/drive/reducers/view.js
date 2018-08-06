@@ -136,9 +136,9 @@ const getCompareFn = (currentSort = null) => {
   const sort = currentSort || { attribute: 'name', order: 'asc' }
   if (sort.attribute === 'updated_at') {
     return (a, b) => {
-      const ta = new Date(a).getTime()
-      const tb = new Date(b).getTime()
-      return sort.order === 'desc' ? (ta > tb ? 1 : -1) : ta > tb ? -1 : 1
+      const ta = new Date(a.updated_at).getTime()
+      const tb = new Date(b.updated_at).getTime()
+      return sort.order === 'desc' ? (ta > tb ? -1 : 1) : ta > tb ? 1 : -1
     }
   }
   // We always return the compare fn for name by default, so
