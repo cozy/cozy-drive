@@ -55,6 +55,9 @@ export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
 export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
+export const ADD_FILE = 'ADD_FILE'
+export const UPDATE_FILE = 'UPDATE_FILE'
+export const DELETE_FILE = 'DELETE_FILE'
 
 // selectors
 
@@ -214,6 +217,26 @@ export const fetchRecentFiles = () => {
     }
   }
 }
+
+export const addFile = doc => {
+  return (dispatch, getState) =>
+    dispatch({
+      type: ADD_FILE,
+      file: doc,
+      currentFileCount: getState().view.fileCount,
+      currentSort: getSort(getState())
+    })
+}
+
+export const updateFile = doc => ({
+  type: UPDATE_FILE,
+  file: doc
+})
+
+export const deleteFile = doc => ({
+  type: DELETE_FILE,
+  file: doc
+})
 
 export const getFileDownloadUrl = async id => {
   const link = await cozy.client.files.getDownloadLinkById(id)
