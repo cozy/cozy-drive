@@ -2684,7 +2684,7 @@ cozy-client@1.0.0-beta.29:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-cozy-realtime@^1.0.0:
+cozy-realtime@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.1.0.tgz#6370ba7e1197ca267e0793c9dd7f2d871d359698"
 
