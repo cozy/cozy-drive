@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import confirm from '../../lib/confirm'
 import { isAvailableOffline } from '../files/availableOffline'
+import { showModal } from 'react-cozy-helpers'
 
 import FolderView from '../../components/FolderView'
 import DestroyConfirm from './components/DestroyConfirm'
@@ -27,9 +27,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       destroy: {
         action: files =>
-          confirm(<DestroyConfirm t={ownProps.t} fileCount={files.length} />)
-            .then(() => dispatch(destroyFiles(files)))
-            .catch(() => {})
+          dispatch(
+            showModal(
+              <DestroyConfirm
+                t={ownProps.t}
+                fileCount={files.length}
+                confirm={() => dispatch(destroyFiles(files))}
+              />
+            )
+          )
       }
     }
   })
