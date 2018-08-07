@@ -78,7 +78,7 @@ class RealtimeFiles extends React.Component {
 
   componentWillUnmount() {
     if (this.subscription) this.subscription.unsubscribe()
-    if (this.this.pouchListener) this.this.pouchListener.cancel()
+    if (this.pouchListener) this.pouchListener.cancel()
   }
 
   render() {
