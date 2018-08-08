@@ -66,29 +66,35 @@ export const startMediaBackup = (
   }
 
   if (canBackup(isManualBackup, getState)) {
-    const photosOnDevice = await getPhotos()
-    const alreadyUploaded = getState().mobile.mediaBackup.uploaded
-    const photosToUpload = photosOnDevice.filter(
-      photo => !alreadyUploaded.includes(photo.id)
-    )
-    const totalUpload = photosToUpload.length
-    if (totalUpload > 0) {
-      const dirID = await getDirID(targetFolderName)
-      let uploadCounter = 0
-      for (const photo of photosToUpload) {
-        if (
-          getState().mobile.mediaBackup.cancelMediaBackup ||
-          getState().mobile.mediaBackup.diskQuotaReached ||
-          !canBackup(isManualBackup, getState)
-        ) {
-          break
+    try {
+      const photosOnDevice = await getPhotos()
+      const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+      const photosToUpload = photosOnDevice.filter(
+        photo => !alreadyUploaded.includes(photo.id)
+      )
+      const totalUpload = photosToUpload.length
+      if (totalUpload > 0) {
+        const dirID = await getDirID(targetFolderName)
+        let uploadCounter = 0
+        for (const photo of photosToUpload) {
+          if (
+            getState().mobile.mediaBackup.cancelMediaBackup ||
+            getState().mobile.mediaBackup.diskQuotaReached ||
+            !canBackup(isManualBackup, getState)
+          ) {
+            break
+          }
+          dispatch(currentMediaUpload(photo, uploadCounter++, totalUpload))
+          await dispatch(uploadPhoto(targetFolderName, dirID, photo))
         }
-        dispatch(currentMediaUpload(photo, uploadCounter++, totalUpload))
-        await dispatch(uploadPhoto(targetFolderName, dirID, photo))
       }
-    }
 
-    cozy.client.settings.updateLastSync()
+      cozy.client.settings.updateLastSync()
+    } catch (e) {
+      dispatch({ type: MEDIA_UPLOAD_ABORT })
+      if (!e.message.match(/Failed to fetch/))
+        logException(`Unexpected error during the files backup (${e.message})`)
+    }
   } else {
     dispatch({ type: MEDIA_UPLOAD_ABORT })
   }
