@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { Spinner } from 'cozy-ui/react'
-import { Menu, MenuItem, withBreakpoints } from 'cozy-ui/react'
+import { Menu, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
 import { Avatar, AvatarPlusX, AvatarLink } from './Avatar'
 
 import styles from './recipient.styl'
+
+import IconHourglass from '../assets/icons/icon-hourglass-16.svg'
+import IconEye from '../assets/icons/icon-eye-16.svg'
+import IconPen from '../assets/icons/icon-pen-write-16.svg'
+import IconTrash from '../assets/icons/icon-trash-red.svg'
 
 import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
@@ -60,6 +65,17 @@ class Status extends Component {
     this.setState(state => ({ revoking: false }))
   }
 
+  getStatusIcon = type => {
+    switch (type) {
+      case 'one-way':
+        return IconEye
+      case 'two-way':
+        return IconPen
+      default:
+        return IconHourglass
+    }
+  }
+
   render() {
     const {
       isOwner,
@@ -90,27 +106,18 @@ class Status extends Component {
             position={isMobile ? 'left' : 'right'}
             disabled={false}
           >
-            <MenuItem>
-              <div
-                className={classNames(
-                  styles['recipient-menu-header'],
-                  status === 'ready' && type
-                    ? styles[`recipient-menu-header--${type}`]
-                    : styles[`recipient-menu-header--${status}`]
-                )}
-              >
-                {status === 'ready' && type
-                  ? t(`Share.type.${type}`)
-                  : t(`Share.status.${status}`)}
-              </div>
+            <MenuItem icon={<Icon icon={this.getStatusIcon(status)} />}>
+              {status === 'ready' && type
+                ? t(`Share.type.${type}`)
+                : t(`Share.status.${status}`)}
             </MenuItem>
             <hr />
-            <MenuItem>
-              <a className={styles['action-unshare']} onClick={this.onRevoke}>
+            <MenuItem onSelect={this.onRevoke} icon={<Icon icon={IconTrash} />}>
+              <div className={styles['action-unshare']}>
                 {isOwner
                   ? t(`${documentType}.share.revoke.title`)
                   : t(`${documentType}.share.revokeSelf.title`)}
-              </a>
+              </div>
               <p className={styles['action-unshare-desc']}>
                 {isOwner
                   ? t(`${documentType}.share.revoke.desc`)
