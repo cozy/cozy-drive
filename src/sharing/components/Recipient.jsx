@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { Spinner } from 'cozy-ui/react'
-import Menu, { Item } from 'components/Menu'
+import { Menu, MenuItem, withBreakpoints } from 'cozy-ui/react'
 import { Avatar, AvatarPlusX, AvatarLink } from './Avatar'
 
 import styles from './recipient.styl'
@@ -61,7 +61,14 @@ class Status extends Component {
   }
 
   render() {
-    const { isOwner, status, instance, type, documentType } = this.props
+    const {
+      isOwner,
+      status,
+      instance,
+      type,
+      documentType,
+      breakpoints: { isMobile }
+    } = this.props
     const { t, client } = this.context
     const { revoking } = this.state
     const isMe =
@@ -73,16 +80,17 @@ class Status extends Component {
         {!shouldShowMenu && <span>{t(`Share.status.${status}`)}</span>}
         {shouldShowMenu && (
           <Menu
-            title={
+            text={
               status === 'ready' && type
                 ? t(`Share.type.${type}`)
                 : t(`Share.status.${status}`)
             }
             className={styles['recipient-menu']}
             buttonClassName={styles['recipient-menu-btn']}
-            disabled={status === 'pending'}
+            position={isMobile ? 'left' : 'right'}
+            disabled={false}
           >
-            <Item>
+            <MenuItem>
               <div
                 className={classNames(
                   styles['recipient-menu-header'],
@@ -95,9 +103,9 @@ class Status extends Component {
                   ? t(`Share.type.${type}`)
                   : t(`Share.status.${status}`)}
               </div>
-            </Item>
+            </MenuItem>
             <hr />
-            <Item>
+            <MenuItem>
               <a className={styles['action-unshare']} onClick={this.onRevoke}>
                 {isOwner
                   ? t(`${documentType}.share.revoke.title`)
@@ -108,13 +116,15 @@ class Status extends Component {
                   ? t(`${documentType}.share.revoke.desc`)
                   : t(`${documentType}.share.revokeSelf.desc`)}
               </p>
-            </Item>
+            </MenuItem>
           </Menu>
         )}
       </div>
     )
   }
 }
+
+const StatusWithBreakpoints = withBreakpoints()(Status)
 
 const Recipient = (props, { t, client }) => {
   const { instance, isOwner, status, ...rest } = props
@@ -129,7 +139,7 @@ const Recipient = (props, { t, client }) => {
           name={isMe ? t('Share.recipients.you') : name}
           url={instance}
         />
-        <Status {...props} />
+        <StatusWithBreakpoints {...props} />
       </div>
     </div>
   )
