@@ -196,6 +196,17 @@ class ShareByEmail extends Component {
     this.sendSharingLink()
   }
 
+  sanitizeRecipient = recipient => {
+    const matches = recipient.email.match(/\s(.+@.+)\s/g)
+    recipient.email = matches.length
+      ? matches[0]
+          .trim()
+          .replace(/\s.+/g, '')
+          .replace(/^[\W]|[\W]$/g, '')
+      : recipient.email
+    return recipient
+  }
+
   onRecipientPick = recipient => {
     const existing = this.state.recipients.find(r => r === recipient)
     if (!existing) {
