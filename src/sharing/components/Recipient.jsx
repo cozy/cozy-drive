@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { Spinner } from 'cozy-ui/react'
-import { Menu, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
+import { Spinner, Menu, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
 import { Avatar, AvatarPlusX, AvatarLink } from './Avatar'
 
 import styles from './recipient.styl'
