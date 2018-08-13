@@ -233,6 +233,7 @@ class File extends Component {
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
     this.gesturesHandler.on('onpress singletap', ev => {
       if (enableTouchEvents(ev)) {
+        ev.preventDefault() // prevent a ghost click
         if (ev.type === 'onpress' || this.props.selectionModeActive) {
           this.toggle(ev.srcEvent)
         } else {
