@@ -478,7 +478,7 @@ const downloadFile = (file, meta) => {
       })
     const filename = file.name
 
-    forceFileDownload(`${cozy.client._url}${downloadURL}`, filename)
+    forceFileDownload(`${cozy.client._url}${downloadURL}?Dl=1`, filename)
     return dispatch({ type: DOWNLOAD_FILE, file, meta })
   }
 }
