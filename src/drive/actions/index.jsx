@@ -470,16 +470,15 @@ const downloadFileError = (error, meta) => {
 
 const downloadFile = (file, meta) => {
   return async dispatch => {
-    const response = await cozy.client.files
-      .downloadById(file.id)
+    const downloadURL = await cozy.client.files
+      .getDownloadLinkById(file.id)
       .catch(error => {
         Alerter.error(downloadFileError(error, meta))
         throw error
       })
-    const blob = await response.blob()
     const filename = file.name
 
-    forceFileDownload(window.URL.createObjectURL(blob), filename)
+    forceFileDownload(`${cozy.client._url}${downloadURL}`, filename)
     return dispatch({ type: DOWNLOAD_FILE, file, meta })
   }
 }
