@@ -1,6 +1,6 @@
 /* global __TARGET__ */
 import React from 'react'
-import { Route, Redirect } from 'react-router'
+import { Route, Redirect, IndexRoute } from 'react-router'
 
 import Layout from './Layout'
 import FileExplorer from '../containers/FileExplorer'
@@ -23,24 +23,25 @@ const AppRoute = (
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
         <Route path="folder" component={Folder}>
-          <Route path="file/:fileId" component={FilesViewer} />
-        </Route>
-        <Route path="folder/:folderId" component={Folder}>
+          <Route path=":folderId">
+            <Route path="file/:fileId" component={FilesViewer} />
+          </Route>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
         <Route path="recent" component={Recent}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
-        <Route path="sharings" component={Sharings}>
-          <Route path="file/:fileId" component={FilesViewer} />
-        </Route>
-        <Route path="sharings/:folderId" component={Folder}>
+        <Route path="sharings">
+          <IndexRoute component={Sharings} />
+          <Route path=":folderId" component={Folder}>
+            <Route path="file/:fileId" component={FilesViewer} />
+          </Route>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
         <Route path="trash" component={Trash}>
-          <Route path="file/:fileId" component={FilesViewer} />
-        </Route>
-        <Route path="trash/:folderId" component={Trash}>
+          <Route path=":folderId">
+            <Route path="file/:fileId" component={FilesViewer} />
+          </Route>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
       </Route>
