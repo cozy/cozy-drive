@@ -61,28 +61,26 @@
     display flex
     flex-direction column
 
-    > div
-        margin 0 2rem 2rem
-
     > .share-byemail-onlybylink
         margin 0
 
     .coz-form-group
       flex-shrink 0
 
-    .share-modal-access
-      flex-shrink 1
-      overflow auto
-      padding-bottom 1.5rem
-
     .coz-form-label
         padding-top 0
         margin-top  0
 
+    .share-modal-secondary
+      overflow auto
+
+      > div
+          margin-bottom 2rem
+
 @media (max-width 32em)
-    .share-modal-content
+    .share-modal-secondary
         > div
-            margin 0 1.5rem 1.5rem
+            margin-bottom 1.5rem
 
 .coz-form-group
     margin 0
