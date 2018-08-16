@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { Overlay } from 'cozy-ui/react'
 
 import styles from './index.styl'
 
@@ -25,12 +26,12 @@ export default class Menu extends Component {
     this.close()
   }
 
-  open() {
+  open = () => {
     this.setState({ opened: true })
     document.addEventListener('click', this.handleClickOutside, true)
   }
 
-  close() {
+  close = () => {
     this.setState({ opened: false })
     document.removeEventListener('click', this.handleClickOutside, true)
   }
@@ -77,6 +78,13 @@ export default class Menu extends Component {
           >
             {title}
           </button>
+        )}
+        {opened && (
+          <Overlay
+            onClick={this.close}
+            onEscape={this.close}
+            className={styles['cozy-menu-overlay']}
+          />
         )}
         <div
           className={classNames(styles['coz-menu-inner'], innerClassName, {
