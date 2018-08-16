@@ -136,7 +136,7 @@
       },
       "revoke": {
         "title": "Remove from sharing",
-        "desc": "This contact will no longer have access to shared content.",
+        "desc": "This contact will no longer receive updates for the shared content.",
         "success": "You removed this shared file from %{email}."
       },
       "revokeSelf": {
