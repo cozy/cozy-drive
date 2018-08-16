@@ -61,6 +61,11 @@ class FileExplorer extends Component {
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
     ) {
       this.openFolder(getFolderIdFromRoute(newProps.location, newProps.params))
+    } else if (
+      urlHasChanged(this.props, newProps) &&
+      isRecentFilesView(newProps)
+    ) {
+      this.props.fetchRecentFiles()
     }
   }
 
