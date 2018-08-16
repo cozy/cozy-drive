@@ -103,7 +103,6 @@ class Status extends Component {
             className={styles['recipient-menu']}
             buttonClassName={styles['recipient-menu-btn']}
             position={isMobile ? 'left' : 'right'}
-            disabled={false}
           >
             <MenuItem icon={<Icon icon={this.getStatusIcon(status)} />}>
               {status === 'ready' && type
