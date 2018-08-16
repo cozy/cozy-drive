@@ -52,22 +52,23 @@ export default class ShareModal extends Component {
             hasSharedChild={hasSharedChild}
           />
           <hr className={styles['divider']} />
-          <DumbShareByLink
-            document={document}
-            documentType={documentType}
-            checked={link !== null}
-            link={link}
-            onEnable={onShareByLink}
-            onDisable={onRevokeLink}
-          />
-          <WhoHasAccess
-            isOwner={isOwner}
-            recipients={recipients}
-            document={document}
-            documentType={documentType}
-            onRevoke={onRevoke}
-            className={styles['share-modal-access']}
-          />
+          <div className={styles['share-modal-secondary']}>
+            <DumbShareByLink
+              document={document}
+              documentType={documentType}
+              checked={link !== null}
+              link={link}
+              onEnable={onShareByLink}
+              onDisable={onRevokeLink}
+            />
+            <WhoHasAccess
+              isOwner={isOwner}
+              recipients={recipients}
+              document={document}
+              documentType={documentType}
+              onRevoke={onRevoke}
+            />
+          </div>
         </ModalContent>
       </Modal>
     )
