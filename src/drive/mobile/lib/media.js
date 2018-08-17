@@ -40,7 +40,12 @@ export const requestAuthorization = async () => {
   })
 }
 
-export const uploadLibraryItem = (dirID, libraryItem) => {
+export const uploadLibraryItem = (
+  dirID,
+  libraryItem,
+  progressCallback,
+  thumbnailCallback
+) => {
   if (hasCordovaPlugin()) {
     return new Promise(async (resolve, reject) => {
       // the cordova plugin is going to do the upload and needs all the infos to make a request to the stack
@@ -69,7 +74,12 @@ export const uploadLibraryItem = (dirID, libraryItem) => {
         payload,
         result => {
           if (result.errors) reject(result.errors)
-          else resolve(result.data)
+          else if (result.progress !== undefined)
+            progressCallback(result.progress)
+          else if (result.thumbnail) thumbnailCallback(result.thumbnail)
+          else {
+            resolve(result)
+          }
         },
         reject
       )
