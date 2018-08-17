@@ -15,25 +15,16 @@ export default class Menu extends Component {
 
   toggle = () => (this.state.opened ? this.close() : this.open())
 
-  handleClickOutside = e => {
-    if (!this.container.contains(e.target)) {
-      e.stopPropagation()
-      this.close()
-    }
-  }
-
   handleSelect = (item, e) => {
     this.close()
   }
 
   open = () => {
     this.setState({ opened: true })
-    document.addEventListener('click', this.handleClickOutside, true)
   }
 
   close = () => {
     this.setState({ opened: false })
-    document.removeEventListener('click', this.handleClickOutside, true)
   }
 
   renderItems() {
@@ -61,12 +52,7 @@ export default class Menu extends Component {
     } = this.props
     const { opened } = this.state
     return (
-      <div
-        className={classNames(styles['coz-menu'], className)}
-        ref={ref => {
-          this.container = ref
-        }}
-      >
+      <div className={classNames(styles['coz-menu'], className)}>
         {button &&
           React.cloneElement(button, { disabled, onClick: this.toggle })}
         {!button && (
