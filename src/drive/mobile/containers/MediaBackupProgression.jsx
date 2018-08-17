@@ -30,7 +30,7 @@ const mapStateToProps = state => ({
 
 const UploadStatus = props => {
   const { isPreparing, isUploading, isAborted, isQuotaReached } = props
-  const { t, current, total, serverUrl } = props
+  const { t, current, total, progress, serverUrl } = props
   const storageUpgradeUrl = serverUrl
     ? serverUrl.replace(/(\w+)\./, '$1-settings.') + '/#/storage'
     : ''
@@ -38,7 +38,14 @@ const UploadStatus = props => {
   if (isPreparing) {
     return <UploadPreparing t={t} />
   } else if (isUploading) {
-    return <UploadProgression t={t} current={current} total={total} />
+    return (
+      <UploadProgression
+        t={t}
+        current={current}
+        total={total}
+        progress={progress}
+      />
+    )
   } else if (isAborted) {
     return <UploadAbortedWifi t={t} />
   } else if (isQuotaReached) {
@@ -52,6 +59,7 @@ UploadStatus.propTypes = {
   t: PropTypes.func.isRequired,
   current: PropTypes.number,
   total: PropTypes.number,
+  progress: PropTypes.number,
   isPreparing: PropTypes.bool,
   isUploading: PropTypes.bool,
   isAborted: PropTypes.bool,

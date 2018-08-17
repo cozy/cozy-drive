@@ -1,14 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import styles from './styles'
 
-const UploadProgression = ({ t, current, total }) => {
+const UploadProgression = ({ t, current, total, progress }) => {
+  console.log({ progress })
   return (
     <div className={styles['coz-upload-status-wrapper']}>
       <progress
         max={total}
         value={current}
-        className={styles['coz-upload-progress']}
+        className={classNames(
+          styles['coz-upload-progress'],
+          styles['coz-upload-progress--global']
+        )}
       />
       <div className={styles['coz-upload-status']}>
         <div className={styles['coz-progress-pic']} />
@@ -16,7 +21,18 @@ const UploadProgression = ({ t, current, total }) => {
           {t('mobile.settings.media_backup.media_upload', {
             smart_count: total - current
           })}
-          <div className={styles['infinite-progress']} />
+          {progress !== undefined ? (
+            <progress
+              max={100}
+              value={progress}
+              className={classNames(
+                styles['coz-upload-progress'],
+                styles['coz-upload-progress--individual']
+              )}
+            />
+          ) : (
+            <div className={styles['infinite-progress']} />
+          )}
         </div>
       </div>
     </div>
@@ -26,6 +42,7 @@ const UploadProgression = ({ t, current, total }) => {
 UploadProgression.propTypes = {
   current: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
+  progress: PropTypes.progress,
   t: PropTypes.func.isRequired
 }
 

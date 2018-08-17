@@ -14,9 +14,6 @@
     transition bottom 0.5s ease-out, top 0.5s ease-out, opacity 0.2s ease-out
 
 .coz-upload-progress
-    position absolute
-    top 0
-    left 0
     -webkit-appearance none
     -moz-appearance    none
     border     none
@@ -25,6 +22,16 @@
     height     .125rem
     margin     0
     background lightgray
+
+.coz-upload-progress--global
+  position absolute
+  top 0
+  left 0
+
+.coz-upload-progress--individual
+  position relative
+  width 100%
+  margin-top .5rem
 
 .coz-upload-progress::-webkit-progress-bar
     background-color silver

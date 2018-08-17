@@ -6,7 +6,8 @@ import {
   MEDIA_UPLOAD_SUCCESS,
   MEDIA_UPLOAD_CANCEL,
   MEDIA_UPLOAD_QUOTA,
-  CURRENT_UPLOAD
+  CURRENT_UPLOAD,
+  CURRENT_UPLOAD_PROGRESS
 } from './reducer'
 import { setBackupImages } from '../../actions/settings'
 import {
@@ -18,6 +19,7 @@ import {
 } from '../../lib/media'
 import { isWifi } from '../../lib/network'
 import { logException } from '../../lib/reporter'
+import throttle from 'lodash/throttle'
 
 const ERROR_CODE_TOO_LARGE = 413
 
@@ -124,7 +126,19 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
   }, maxBackupTime)
 
   try {
-    await uploadLibraryItem(dirID, photo)
+    const onProgressUpdate = progress => {
+      // console.log(percent + '%');
+      dispatch({ type: CURRENT_UPLOAD_PROGRESS, progress })
+    }
+
+    const onThumbnailGenerated = thumbnailUrl => {}
+
+    await uploadLibraryItem(
+      dirID,
+      photo,
+      throttle(onProgressUpdate, 500),
+      onThumbnailGenerated
+    )
     clearTimeout(timeout)
     dispatch(mediaUploadSucceed(photo))
   } catch (err) {

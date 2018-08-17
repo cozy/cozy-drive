@@ -9,6 +9,8 @@ export const MEDIA_UPLOAD_SUCCESS = 'MEDIA_UPLOAD_SUCCESS'
 export const MEDIA_UPLOAD_CANCEL = 'MEDIA_UPLOAD_CANCEL'
 export const MEDIA_UPLOAD_QUOTA = 'MEDIA_UPLOAD_QUOTA'
 export const CURRENT_UPLOAD = 'CURRENT_UPLOAD'
+export const CURRENT_UPLOAD_PROGRESS = 'CURRENT_UPLOAD_PROGRESS'
+export const CURRENT_UPLOAD_THUMBNAIL = 'CURRENT_UPLOAD_THUMBNAIL'
 
 const initialState = {
   running: false,
@@ -58,6 +60,17 @@ const reducer = (state = initialState, action) => {
           messageData: action.messageData
         }
       }
+    case CURRENT_UPLOAD_PROGRESS:
+      return {
+        ...state,
+        currentUpload: {
+          ...state.currentUpload,
+          messageData: {
+            ...state.currentUpload.messageData,
+            progress: action.progress
+          }
+        }
+      }
     default:
       return state
   }
@@ -78,6 +91,7 @@ export const getUploadStatus = state =>
   !state.mobile.mediaBackup.diskQuotaReached
     ? {
         current: state.mobile.mediaBackup.currentUpload.messageData.current,
-        total: state.mobile.mediaBackup.currentUpload.messageData.total
+        total: state.mobile.mediaBackup.currentUpload.messageData.total,
+        progress: state.mobile.mediaBackup.currentUpload.messageData.progress
       }
     : {}
