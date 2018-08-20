@@ -4,17 +4,23 @@ import {
   setFirstReplication,
   setPouchIndexes
 } from '../../actions/settings'
+import {
+  isFirstReplicationDone,
+  getPouchIndexes
+} from '../../reducers/settings'
 import { openFolder, getOpenedFolderId } from '../../actions'
 import { startTracker, stopTracker } from '../lib/tracker'
 import { revokeClient as reduxRevokeClient } from './authorization'
 import { resetClient } from '../lib/cozy-helper'
 
-export const SET_URL = 'SET_URL'
-export const BACKUP_IMAGES = 'BACKUP_IMAGES'
-export const WIFI_ONLY = 'WIFI_ONLY'
-export const ERROR = 'ERROR'
-export const SET_ANALYTICS = 'SET_ANALYTICS'
-export const SET_TOKEN = 'SET_TOKEN'
+import {
+  SET_URL,
+  BACKUP_IMAGES,
+  SET_ANALYTICS,
+  WIFI_ONLY,
+  SET_TOKEN,
+  getServerUrl
+} from '../reducers/settings'
 
 // url
 
@@ -27,9 +33,9 @@ export const setAnalytics = (analytics, source = 'settings') => (
   getState
 ) => {
   dispatch({ type: SET_ANALYTICS, analytics })
-  const state = getState()
-  if (analytics && state.mobile) {
-    startTracker(state.mobile.settings.serverUrl)
+  const serverUrl = getServerUrl(getState())
+  if (analytics && serverUrl) {
+    startTracker(serverUrl)
   } else if (analytics === false) {
     stopTracker()
   }
@@ -48,8 +54,8 @@ export const saveCredentials = (client, token) => (dispatch, getState) => {
 }
 
 export const startReplication = (dispatch, getState) => {
-  const firstReplication = getState().settings.firstReplication
-  const indexes = getState().settings.indexes
+  const firstReplication = isFirstReplicationDone(getState())
+  const existingIndexes = getPouchIndexes(getState())
   const refreshFolder = () => {
     dispatch(openFolder(getOpenedFolderId(getState())))
   }
@@ -65,7 +71,7 @@ export const startReplication = (dispatch, getState) => {
   }
 
   startPouchReplication(
-    indexes,
+    existingIndexes,
     firstReplication,
     firstReplicationFinished,
     refreshFolder,

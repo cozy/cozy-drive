@@ -1,3 +1,4 @@
+/* global __TARGET__ */
 import {
   SET_CLIENT,
   SET_OFFLINE,
@@ -8,7 +9,8 @@ import {
 export const initialState = {
   offline: false,
   firstReplication: false,
-  indexes: null
+  indexes: null,
+  client: null
 }
 
 export const settings = (state = initialState, action) => {
@@ -24,6 +26,20 @@ export const settings = (state = initialState, action) => {
     default:
       return state
   }
+}
+
+export const getClientSettings = state => state.settings.client
+export const isOfflineCapable = state => state.settings.offline
+export const isFirstReplicationDone = state => state.settings.firstReplication
+export const getPouchIndexes = state => state.settings.indexes
+export const shouldWorkFromPouchDB = state => {
+  const settings = state.settings
+  return (
+    __TARGET__ === 'mobile' &&
+    settings.offline &&
+    settings.firstReplication &&
+    settings.indexes
+  )
 }
 
 export default settings

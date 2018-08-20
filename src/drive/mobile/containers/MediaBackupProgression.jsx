@@ -17,15 +17,15 @@ import {
   getUploadStatus
 } from '../ducks/mediaBackup/reducer'
 
+import { getServerUrl } from '../reducers/settings'
+
 const mapStateToProps = state => ({
+  serverUrl: getServerUrl(state),
   isPreparing: isPreparingBackup(state),
   isUploading: isUploading(state),
   isAborted: isAborted(state),
   isQuotaReached: isQuotaReached(state),
-  ...getUploadStatus(state),
-  // TODO: selector for this
-  serverUrl:
-    state.mobile && state.mobile.settings && state.mobile.settings.serverUrl
+  ...getUploadStatus(state)
 })
 
 const UploadStatus = props => {

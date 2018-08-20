@@ -11,6 +11,7 @@ import {
   hideUnlinkConfirmation,
   unlink
 } from '../../actions/unlink'
+import { getClientSettings } from '../../../reducers/settings'
 
 export const Unlink = (
   {
@@ -53,7 +54,7 @@ export const Unlink = (
 
 const mapStateToProps = state => ({
   displayUnlinkConfirmation: state.mobile.ui.displayUnlinkConfirmation,
-  clientSettings: state.settings.client
+  clientSettings: getClientSettings(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
