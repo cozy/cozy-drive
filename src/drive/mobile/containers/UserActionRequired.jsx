@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 import tosIcon from '../assets/icons/icon-tos.svg'
 import { Modal, Icon, Button, translate, Alerter } from 'cozy-ui/react'
-import { unlink } from '../actions/unlink'
+import { unlink } from '../actions/authorization'
 import { getClientSettings } from '../../reducers/settings'
 import styles from '../styles/tosupdated'
 
