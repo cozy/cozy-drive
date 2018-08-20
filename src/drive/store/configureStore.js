@@ -1,5 +1,5 @@
 /* global __DEVELOPMENT__, __TARGET__ */
-import { compose, createStore, applyMiddleware, combineReducers } from 'redux'
+import { compose, createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import RavenMiddleWare from 'redux-raven-middleware'
 import {
@@ -9,8 +9,7 @@ import {
 } from 'cozy-ui/react/helpers/tracker'
 import thunkMiddleware from 'redux-thunk'
 import eventTrackerMiddleware from '../middlewares/EventTracker'
-import baseReducers from '../reducers'
-import mobileReducer from '../mobile/reducers'
+import createRootReducer from './rootReducer'
 import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from '../mobile/lib/reporter'
 
@@ -29,20 +28,10 @@ const configureStore = (client, t, initialState = {}) => {
   const composeEnhancers =
     (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
-  const reducers =
-    __TARGET__ === 'mobile'
-      ? combineReducers({
-          ...baseReducers,
-          mobile: mobileReducer,
-          cozy: client.reducer()
-        })
-      : combineReducers({
-          ...baseReducers,
-          cozy: client.reducer()
-        })
+  const rootReducer = createRootReducer(client)
 
   const store = createStore(
-    reducers,
+    rootReducer,
     initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   )

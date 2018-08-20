@@ -15,9 +15,10 @@ export const loadState = async () => {
 
 export const saveState = async state => {
   try {
-    localforage.setItem('state', state)
+    await localforage.setItem('state', state)
   } catch (err) {
     console.warn(err)
-    // Errors handling
   }
 }
+
+export const resetPersistedState = () => localforage.clear()

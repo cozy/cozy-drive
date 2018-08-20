@@ -8,7 +8,6 @@ import {
   WIFI_ONLY,
   SET_TOKEN
 } from '../actions/settings'
-import { UNLINK } from '../actions/unlink'
 
 export const initialState = {
   serverUrl: '',
@@ -36,8 +35,6 @@ export const settings = (state = initialState, action) => {
       return { ...state, wifiOnly: action.wifiOnly }
     case SET_TOKEN:
       return { ...state, token: action.token }
-    case UNLINK:
-      return initialState
     default:
       return state
   }
