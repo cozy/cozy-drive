@@ -1,5 +1,6 @@
-/* global cozy __TARGET__ */
+/* global cozy */
 import { TRASH_DIR_ID, FILES_FETCH_LIMIT } from '../constants/config.js'
+import { getPouchIndexes, shouldWorkFromPouchDB } from '../reducers/settings'
 
 export const shouldShowRecentsFirst = (
   folderPath,
@@ -301,18 +302,8 @@ class PouchDB {
 const StackAdapter = new Stack()
 export const getAdapter = state =>
   shouldWorkFromPouchDB(state)
-    ? new PouchDB(state.settings.indexes)
+    ? new PouchDB(getPouchIndexes(state))
     : StackAdapter
-
-const shouldWorkFromPouchDB = state => {
-  const settings = state.settings
-  return (
-    __TARGET__ === 'mobile' &&
-    settings.offline &&
-    settings.firstReplication &&
-    settings.indexes
-  )
-}
 
 export const extractFileAttributes = f => {
   const id = f.id || f._id

@@ -7,6 +7,7 @@ import SettingCategory, {
   ELEMENT_BUTTON
 } from '../../components/SettingCategory'
 import { setAnalytics } from '../../actions/settings'
+import { getServerUrl, isAnalyticsOn } from '../../reducers/settings'
 import { logInfo } from '../../lib/reporter'
 import { isOnline } from '../../lib/network'
 
@@ -64,8 +65,8 @@ export const Support = ({
 )
 
 const mapStateToProps = state => ({
-  analytics: state.mobile.settings.analytics,
-  serverUrl: state.mobile.settings.serverUrl
+  analytics: isAnalyticsOn(state),
+  serverUrl: getServerUrl(state)
 })
 
 const mapDispatchToProps = dispatch => ({

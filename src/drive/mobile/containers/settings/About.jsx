@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, { ELEMENT_TEXT } from '../../components/SettingCategory'
+import { getServerUrl } from '../../reducers/settings'
 import Hammer from 'hammerjs'
 
 class About extends Component {
@@ -46,7 +47,7 @@ class About extends Component {
 
 const mapStateToProps = state => ({
   version: window.navigator.appInfo ? window.navigator.appInfo.version : 'dev',
-  serverUrl: state.mobile.settings.serverUrl
+  serverUrl: getServerUrl(state)
 })
 
 export default connect(mapStateToProps)(translate()(About))

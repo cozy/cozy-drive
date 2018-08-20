@@ -1,18 +1,17 @@
 import { SET_CLIENT } from '../../actions/settings'
-import {
-  SET_URL,
-  ERROR,
-  BACKUP_IMAGES,
-  BACKUP_CONTACTS,
-  SET_ANALYTICS,
-  WIFI_ONLY,
-  SET_TOKEN
-} from '../actions/settings'
+
+export const SET_URL = 'SET_URL'
+export const BACKUP_IMAGES = 'BACKUP_IMAGES'
+export const BACKUP_CONTACTS = 'BACKUP_CONTACTS'
+export const WIFI_ONLY = 'WIFI_ONLY'
+// export const ERROR = 'ERROR'
+export const SET_ANALYTICS = 'SET_ANALYTICS'
+export const SET_TOKEN = 'SET_TOKEN'
 
 export const initialState = {
   serverUrl: '',
   backupImages: false,
-  error: null,
+  // error: null,
   analytics: false,
   wifiOnly: true
 }
@@ -27,8 +26,8 @@ export const settings = (state = initialState, action) => {
       return { ...state, backupContacts: action.backupContacts }
     case SET_ANALYTICS:
       return { ...state, analytics: action.analytics }
-    case ERROR:
-      return { ...state, error: action.error }
+    // case ERROR:
+    //   return { ...state, error: action.error }
     case SET_CLIENT:
       return { ...state, authorized: true }
     case WIFI_ONLY:
@@ -41,3 +40,14 @@ export const settings = (state = initialState, action) => {
 }
 
 export default settings
+
+export const getServerUrl = state =>
+  state.mobile && state.mobile.settings && state.mobile.settings.serverUrl
+export const isAuthorized = state =>
+  state.mobile && state.mobile.settings && state.mobile.settings.authorized
+export const isImagesBackupOn = state =>
+  state.mobile && state.mobile.settings && state.mobile.settings.backupImages
+export const isWifiOnlyOn = state =>
+  state.mobile && state.mobile.settings && state.mobile.settings.wifiOnly
+export const isAnalyticsOn = state =>
+  state.mobile && state.mobile.settings && state.mobile.settings.analytics

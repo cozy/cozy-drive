@@ -5,6 +5,7 @@ import AppRoute from 'drive/components/AppRoute'
 import MobileRouter from 'authentication/MobileRouter'
 
 import { setUrl, saveCredentials } from '../actions/settings'
+import { getServerUrl } from '../reducers/settings'
 import { unlink } from '../actions/unlink'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 
@@ -47,7 +48,7 @@ const DriveMobileRouterWithRoutes = props => (
 )
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.mobile.settings.authorized,
+  isAuthenticated: getServerUrl(state),
   isRevoked: state.mobile.authorization.revoked
 })
 

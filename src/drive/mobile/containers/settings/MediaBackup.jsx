@@ -6,6 +6,7 @@ import SettingCategory, {
   ELEMENT_BUTTON
 } from '../../components/SettingCategory'
 import { setWifiOnly } from '../../actions/settings'
+import { isImagesBackupOn, isWifiOnlyOn } from '../../reducers/settings'
 import {
   backupImages,
   startMediaBackup,
@@ -61,8 +62,8 @@ export const MediaBackup = ({
 )
 
 const mapStateToProps = state => ({
-  backupImages: state.mobile.settings.backupImages,
-  wifiOnly: state.mobile.settings.wifiOnly,
+  backupImages: isImagesBackupOn(state),
+  wifiOnly: isWifiOnlyOn(state),
   mediaUploading: state.mobile.mediaBackup.uploading
 })
 
