@@ -1,4 +1,5 @@
 import { resetClient } from '../lib/cozy-helper'
+import { resetPersistedState } from '../../store/persistedState'
 
 // constants
 export const SHOW_UNLINK_CONFIRMATION = 'SHOW_UNLINK_CONFIRMATION'
@@ -10,8 +11,9 @@ export const showUnlinkConfirmation = () => ({ type: SHOW_UNLINK_CONFIRMATION })
 export const hideUnlinkConfirmation = () => ({ type: HIDE_UNLINK_CONFIRMATION })
 
 // action creators async
-export const unlink = (client, clientInfo) => {
+export const unlink = (client, clientInfo) => async dispatch => {
   resetClient(client, clientInfo)
-
-  return { type: UNLINK }
+  await resetPersistedState()
+  // This action will be handled by the rootReducer: the store will be restored to its initial state
+  return dispatch({ type: UNLINK })
 }

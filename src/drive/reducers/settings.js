@@ -2,8 +2,7 @@ import {
   SET_CLIENT,
   SET_OFFLINE,
   SET_FIRST_REPLICATION,
-  SET_POUCH_INDEXES,
-  UNLINK
+  SET_POUCH_INDEXES
 } from '../actions/settings'
 
 export const initialState = {
@@ -22,8 +21,6 @@ export const settings = (state = initialState, action) => {
       return { ...state, firstReplication: action.firstReplication }
     case SET_POUCH_INDEXES:
       return { ...state, indexes: action.indexes }
-    case UNLINK:
-      return initialState
     default:
       return state
   }
