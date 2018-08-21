@@ -15,14 +15,19 @@ import DriveMobileRouter from 'drive/mobile/containers/DriveMobileRouter'
 
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
+
 import { startBackgroundService } from 'drive/mobile/lib/background'
+import { configureReporter } from 'drive/mobile/lib/reporter'
+import {
+  intentHandlerAndroid,
+  intentHandlerIOS
+} from 'drive/mobile/lib/intents'
 import {
   startTracker,
   useHistoryForTracker,
   startHeartBeat,
   stopHeartBeat
 } from 'drive/mobile/lib/tracker'
-import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIos } from 'drive/mobile/lib/device'
@@ -34,14 +39,17 @@ import {
   restoreCozyClientJs,
   resetClient
 } from 'drive/mobile/lib/cozy-helper'
+
+import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { revokeClient } from 'drive/mobile/actions/authorization'
+import { isClientRevoked } from 'drive/mobile/reducers/authorization'
 import { startReplication, setToken } from 'drive/mobile/actions/settings'
-import { configureReporter } from 'drive/mobile/lib/reporter'
 import {
-  intentHandlerAndroid,
-  intentHandlerIOS
-} from 'drive/mobile/lib/intents'
-import { LocalStorage as Storage } from 'cozy-client-js'
+  getServerUrl,
+  getClientSettings,
+  getToken,
+  isAnalyticsOn
+} from 'drive/mobile/reducers/settings'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -54,31 +62,14 @@ window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
   hashHistory
 )
 
-const getPreviousToken = async store => {
-  if (store.getState().mobile.settings.token)
-    return store.getState().mobile.settings.token
-  else {
-    // transition from version 1.5.3 to the next one, we recover the token stored by cozy-client-js
-    const cozyClientStorage = new Storage()
-    const { token } = await cozyClientStorage.load('creds')
-    store.dispatch(setToken(token))
-    return token
-  }
-}
-
-const isClientRevoked = (error, state) => {
-  return state.mobile.settings.serverUrl &&
-  (error.status === 404 || error.status === 401 || error.message.match(/Client has been revoked/))
-}
-
 const startApplication = async function(store, client, polyglot) {
   configureReporter()
 
   let shouldInitBar = false
 
   try {
-    const { client: clientInfos } = store.getState().settings
-    const token = await getPreviousToken(store)
+    const clientInfos = getClientSettings(store.getState())
+    const token = getToken(store.getState())
 
     const oauthClient = client.getOrCreateStackClient()
     oauthClient.setOAuthOptions(clientInfos)
@@ -100,8 +91,7 @@ const startApplication = async function(store, client, polyglot) {
       console.warn('Your device is not connected to your server anymore')
       store.dispatch(revokeClient())
       resetClient(client)
-    }
-    else if (store.getState().mobile.settings.serverUrl) {
+    } else if (getServerUrl(store.getState())) {
       // the server is not responding, but it doesn't mean we're revoked yet
       shouldInitBar = true
     }
@@ -110,8 +100,9 @@ const startApplication = async function(store, client, polyglot) {
   }
 
   useHistoryForTracker(hashHistory)
-  if (store.getState().mobile.settings.analytics)
-    startTracker(store.getState().mobile.settings.serverUrl)
+  if (isAnalyticsOn(store.getState())) {
+    startTracker(getServerUrl(store.getState()))
+  }
 
   const root = document.querySelector('[role=application]')
 
@@ -159,6 +150,7 @@ var app = {
   getCozyURL: async function() {
     if (this.cozyURL) return this.cozyURL
     const persistedState = (await this.getPersistedState()) || {}
+    // TODO: not ideal to access the server URL in the persisted state like this...
     this.cozyURL = persistedState.mobile
       ? persistedState.mobile.settings.serverUrl
       : ''
@@ -225,12 +217,13 @@ var app = {
   onResume: async function() {
     const store = await this.getStore()
     store.dispatch(backupImages())
-    if (store.getState().mobile.settings.analytics) startHeartBeat()
+    if (isAnalyticsOn(store.getState())) startHeartBeat()
   },
 
   onPause: async function() {
     const store = await this.getStore()
-    if (store.getState().mobile.settings.analytics) stopHeartBeat()
+    if (isAnalyticsOn(store.getState())) stopHeartBeat()
+    // TODO: selector
     if (store.getState().mobile.mediaBackup.currentUpload && isIos()) {
       const t = getTranslateFunction()
       scheduleNotification({

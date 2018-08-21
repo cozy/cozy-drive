@@ -1,4 +1,5 @@
-import { SET_CLIENT } from '../../actions/settings'
+import { SET_CLIENT } from '../actions/settings'
+import { getServerUrl } from '../reducers/settings'
 import { REVOKE, UNREVOKE } from '../actions/authorization'
 
 export const initialState = {}
@@ -14,4 +15,18 @@ export const authorization = (state = initialState, action) => {
     default:
       return state
   }
+}
+
+export const isRevoked = state =>
+  state.mobile &&
+  state.mobile.authorization &&
+  state.mobile.authorization.revoked
+
+export const isClientRevoked = (error, state) => {
+  return (
+    getServerUrl(state) &&
+    (error.status === 404 ||
+      error.status === 401 ||
+      error.message.match(/Client has been revoked/))
+  )
 }

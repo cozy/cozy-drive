@@ -2,11 +2,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { logException, logInfo } from '../lib/reporter'
-import { setFirstReplication, setOffline } from '../../actions/settings'
-import {
-  isFirstReplicationDone,
-  isOfflineCapable
-} from '../../reducers/settings'
+import { setFirstReplication, setOffline } from '../actions/settings'
+import { isFirstReplicationDone, isOfflineCapable } from '../reducers/settings'
 import { Button } from 'cozy-ui/react'
 
 const Checkbox = ({ onChange, value, title }) => (
