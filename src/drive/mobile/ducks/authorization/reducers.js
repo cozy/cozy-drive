@@ -1,19 +1,14 @@
-import { getServerUrl } from '../reducers/settings'
-import {
-  SET_CLIENT,
-  SET_TOKEN,
-  REVOKE,
-  UNREVOKE
-} from '../actions/authorization'
+import { getServerUrl } from '../../reducers/settings'
+import { SET_CLIENT, SET_TOKEN, REVOKE, UNREVOKE } from './actions'
 
-export const initialState = {
+const initialState = {
   authorized: false,
   revoked: false,
   client: null,
   token: null
 }
 
-export const authorization = (state = initialState, action) => {
+const authorization = (state = initialState, action) => {
   switch (action.type) {
     case SET_CLIENT:
       return {
@@ -32,8 +27,9 @@ export const authorization = (state = initialState, action) => {
       return state
   }
 }
+export default authorization
 
-export const getProp = (state, key) => {
+const getProp = (state, key) => {
   if (
     state.mobile &&
     state.mobile.authorization &&

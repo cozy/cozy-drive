@@ -6,8 +6,7 @@ import SettingCategory, {
   ELEMENT_BUTTON
 } from '../../components/SettingCategory'
 import Modal from 'cozy-ui/react/Modal'
-import { unlink } from '../../actions/authorization'
-import { getClientSettings } from '../../reducers/authorization'
+import { unlink, getClientSettings } from '../../ducks/authorization'
 
 class Unlink extends Component {
   state = {

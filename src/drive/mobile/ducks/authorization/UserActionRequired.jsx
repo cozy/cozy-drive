@@ -2,11 +2,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
-import tosIcon from '../assets/icons/icon-tos.svg'
+import tosIcon from '../../assets/icons/icon-tos.svg'
 import { Modal, Icon, Button, translate, Alerter } from 'cozy-ui/react'
-import { unlink } from '../actions/authorization'
-import { getClientSettings } from '../reducers/authorization'
-import styles from '../styles/tosupdated'
+import { unlink } from './actions'
+import { getClientSettings } from './reducers'
+import styles from '../../styles/tosupdated'
 
 const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => (
   <Modal closable={false}>

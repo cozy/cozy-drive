@@ -10,7 +10,7 @@ import Nav from '../containers/Nav'
 import ButtonClient from '../../components/pushClient/Button'
 import { UploadQueue } from '../ducks/upload'
 import Alerter from 'cozy-ui/react/Alerter'
-import UserActionRequired from '../mobile/containers/UserActionRequired'
+import { UserActionRequired } from '../mobile/ducks/authorization'
 
 const Layout = ({ t, children }) => (
   <LayoutUI>

@@ -8,7 +8,7 @@ import Alerter from 'cozy-ui/react/Alerter'
 import SelectBox, { components } from 'cozy-ui/react/SelectBox'
 import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
-import { renewAuthorization } from 'drive/mobile/actions/authorization'
+import { renewAuthorization } from 'drive/mobile/ducks/authorization'
 
 import styles from '../share.styl'
 
