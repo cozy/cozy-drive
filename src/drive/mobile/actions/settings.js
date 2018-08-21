@@ -1,7 +1,7 @@
 import { startReplication as startPouchReplication } from '../lib/replication'
 import { openFolder, getOpenedFolderId } from '../../actions'
 import { startTracker, stopTracker } from '../lib/tracker'
-import { revokeClient as reduxRevokeClient } from './authorization'
+import { revokeClient as reduxRevokeClient } from '../ducks/authorization'
 import { resetClient } from '../lib/cozy-helper'
 import {
   getServerUrl,

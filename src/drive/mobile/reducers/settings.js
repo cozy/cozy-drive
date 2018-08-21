@@ -71,4 +71,4 @@ export const shouldWorkFromPouchDB = state =>
   __TARGET__ === 'mobile' &&
   isOfflineCapable(state) &&
   isFirstReplicationDone(state) &&
-  getPouchIndexes(state)
+  getPouchIndexes(state) !== null

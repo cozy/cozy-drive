@@ -11,8 +11,6 @@ import { CozyProvider } from 'cozy-client'
 
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 
-import DriveMobileRouter from 'drive/mobile/containers/DriveMobileRouter'
-
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 
@@ -41,12 +39,13 @@ import {
 } from 'drive/mobile/lib/cozy-helper'
 
 import { backupImages } from 'drive/mobile/ducks/mediaBackup'
-import { revokeClient } from 'drive/mobile/actions/authorization'
 import {
+  DriveMobileRouter,
+  revokeClient,
   getClientSettings,
   getToken,
   isClientRevoked
-} from 'drive/mobile/reducers/authorization'
+} from 'drive/mobile/ducks/authorization'
 import { startReplication, setToken } from 'drive/mobile/actions/settings'
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/reducers/settings'
 
