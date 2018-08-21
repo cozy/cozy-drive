@@ -42,14 +42,13 @@ import {
 
 import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import { revokeClient } from 'drive/mobile/actions/authorization'
-import { isClientRevoked } from 'drive/mobile/reducers/authorization'
-import { startReplication, setToken } from 'drive/mobile/actions/settings'
 import {
-  getServerUrl,
   getClientSettings,
   getToken,
-  isAnalyticsOn
-} from 'drive/mobile/reducers/settings'
+  isClientRevoked
+} from 'drive/mobile/reducers/authorization'
+import { startReplication, setToken } from 'drive/mobile/actions/settings'
+import { getServerUrl, isAnalyticsOn } from 'drive/mobile/reducers/settings'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -84,7 +83,7 @@ const startApplication = async function(store, client, polyglot) {
 
     await oauthClient.fetchInformation()
     shouldInitBar = true
-    startReplication(store.dispatch, store.getState) // don't like to pass `store.dispatch` and `store.getState` as parameters, big coupling
+    store.dispatch(startReplication())
   } catch (e) {
     console.warn(e)
     if (isClientRevoked(e, store.getState())) {

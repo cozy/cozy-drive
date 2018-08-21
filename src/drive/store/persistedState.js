@@ -4,14 +4,41 @@ import localforage from 'localforage'
 const shouldMigrateSettings = state => state.hasOwnProperty('settings')
 
 const migrateSettings = async prevState => {
+  const { firstReplication, client, indexes, offline } = prevState.settings
+  const {
+    authorized,
+    token,
+    serverUrl,
+    backupImages,
+    analytics,
+    wifiOnly
+  } = prevState.mobile.settings
+  const { revoked } = prevState.mobile.authorization
   const newState = {
     mobile: {
-      settings: { ...prevState.mobile.settings, ...prevState.settings },
+      authorization: {
+        authorized,
+        revoked,
+        client,
+        token
+      },
+      settings: {
+        offline,
+        firstReplication,
+        indexes,
+        serverUrl,
+        backupImages,
+        analytics,
+        wifiOnly
+      },
       mediaBackup: prevState.mediaBackup
     },
     availableOffline: prevState.availableOffline
   }
   await localforage.setItem('state', newState)
+  console.info('Migrated persisted settings')
+  console.info('Previously persisted state: ', prevState)
+  console.info('New persisted state: ', newState)
   return newState
 }
 

@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import tosIcon from '../assets/icons/icon-tos.svg'
 import { Modal, Icon, Button, translate, Alerter } from 'cozy-ui/react'
 import { unlink } from '../actions/authorization'
-import { getClientSettings } from '../reducers/settings'
+import { getClientSettings } from '../reducers/authorization'
 import styles from '../styles/tosupdated'
 
 const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => (
