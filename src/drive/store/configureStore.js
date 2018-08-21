@@ -40,6 +40,7 @@ const configureStore = (client, t, initialState = {}) => {
     store.subscribe(() =>
       saveState({
         mobile: {
+          authorization: store.getState().mobile.authorization,
           settings: store.getState().mobile.settings,
           mediaBackup: {
             uploaded: store.getState().mobile.mediaBackup.uploaded
