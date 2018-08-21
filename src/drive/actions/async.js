@@ -1,6 +1,9 @@
 /* global cozy */
 import { TRASH_DIR_ID, FILES_FETCH_LIMIT } from '../constants/config.js'
-import { getPouchIndexes, shouldWorkFromPouchDB } from '../reducers/settings'
+import {
+  getPouchIndexes,
+  shouldWorkFromPouchDB
+} from '../mobile/reducers/settings'
 
 export const shouldShowRecentsFirst = (
   folderPath,

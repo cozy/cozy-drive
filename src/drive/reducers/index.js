@@ -1,5 +1,4 @@
 import view, { getFileById } from './view'
-import settings from './settings'
 
 import selectionReducer, { getSelectedIds } from '../ducks/selection'
 import actionmenuReducer, { getActionableId } from '../ducks/actionmenu'
@@ -11,7 +10,6 @@ import uiReducer from 'react-cozy-helpers'
 const reducers = {
   ui: uiReducer,
   view,
-  settings,
   upload,
   actionmenu: actionmenuReducer,
   selection: selectionReducer,

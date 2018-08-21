@@ -39,7 +39,6 @@ const configureStore = (client, t, initialState = {}) => {
   if (__TARGET__ === 'mobile') {
     store.subscribe(() =>
       saveState({
-        settings: store.getState().settings,
         mobile: {
           settings: store.getState().mobile.settings,
           mediaBackup: {
