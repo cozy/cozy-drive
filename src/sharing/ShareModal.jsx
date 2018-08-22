@@ -62,6 +62,7 @@ export default class ShareModal extends Component {
               onDisable={onRevokeLink}
             />
             <WhoHasAccess
+              className={styles['share-modal-access']}
               isOwner={isOwner}
               recipients={recipients}
               document={document}
