@@ -42,6 +42,7 @@ const configureStore = (client, t, initialState = {}) => {
         mobile: {
           authorization: store.getState().mobile.authorization,
           settings: store.getState().mobile.settings,
+          replication: store.getState().mobile.replication,
           mediaBackup: {
             uploaded: store.getState().mobile.mediaBackup.uploaded
           }

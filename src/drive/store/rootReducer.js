@@ -5,10 +5,12 @@ import baseReducers from '../reducers'
 import { default as settings } from '../mobile/ducks/settings'
 import { default as mediaBackup } from '../mobile/ducks/mediaBackup'
 import { default as authorization, UNLINK } from '../mobile/ducks/authorization'
+import { default as replication } from '../mobile/ducks/replication/duck'
 
 const mobileReducer = combineReducers({
   authorization,
   settings,
+  replication,
   mediaBackup
 })
 

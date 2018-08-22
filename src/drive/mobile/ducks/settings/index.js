@@ -1,18 +1,16 @@
-// export { default as Settings } from './Settings'
-// export { default as RatingModal } from './RatingModal'
-
 export {
   setUrl,
   setAnalytics,
   setOffline,
-  startReplication,
-  setBackupImages
+  setBackupImages,
+  setWifiOnly
 } from './actions'
 
 export {
   default,
   getServerUrl,
   isAnalyticsOn,
-  getPouchIndexes,
-  shouldWorkFromPouchDB
+  isOfflineCapable,
+  isImagesBackupOn,
+  isWifiOnlyOn
 } from './reducers'

@@ -24,12 +24,14 @@ const migrateSettings = async prevState => {
       },
       settings: {
         offline,
-        firstReplication,
-        indexes,
         serverUrl,
         backupImages,
         analytics,
         wifiOnly
+      },
+      replication: {
+        firstReplication,
+        indexes
       },
       mediaBackup: prevState.mediaBackup
     },

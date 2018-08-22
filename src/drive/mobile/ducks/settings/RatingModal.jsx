@@ -152,8 +152,8 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
   class WithBootDelay extends Component {
     state = {
       bootCount: 0,
-      promptAfter: new Date().getTime() + 5,
-        // new Date().getTime() + PROMPT_AFTER_DAYS * 24 * 60 * 60 * 1000,
+      promptAfter:
+        new Date().getTime() + PROMPT_AFTER_DAYS * 24 * 60 * 60 * 1000,
       prompted: false
     }
 
