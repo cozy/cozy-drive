@@ -40,17 +40,19 @@ export default class ShareModal extends Component {
         mobileFullscreen
       >
         <ModalContent className={styles['share-modal-content']}>
-          <DumbShareByEmail
-            document={document}
-            documentType={documentType}
-            sharingDesc={sharingDesc}
-            contacts={contacts}
-            createContact={createContact}
-            onShare={onShare}
-            needsContactsPermission={needsContactsPermission}
-            hasSharedParent={hasSharedParent}
-            hasSharedChild={hasSharedChild}
-          />
+          {documentType !== 'Albums' && (
+            <DumbShareByEmail
+              document={document}
+              documentType={documentType}
+              sharingDesc={sharingDesc}
+              contacts={contacts}
+              createContact={createContact}
+              onShare={onShare}
+              needsContactsPermission={needsContactsPermission}
+              hasSharedParent={hasSharedParent}
+              hasSharedChild={hasSharedChild}
+            />
+          )}
           <hr className={styles['divider']} />
           <div className={styles['share-modal-secondary']}>
             <DumbShareByLink
@@ -61,14 +63,16 @@ export default class ShareModal extends Component {
               onEnable={onShareByLink}
               onDisable={onRevokeLink}
             />
-            <WhoHasAccess
-              className={styles['share-modal-access']}
-              isOwner={isOwner}
-              recipients={recipients}
-              document={document}
-              documentType={documentType}
-              onRevoke={onRevoke}
-            />
+            {documentType !== 'Albums' && (
+              <WhoHasAccess
+                className={styles['share-modal-access']}
+                isOwner={isOwner}
+                recipients={recipients}
+                document={document}
+                documentType={documentType}
+                onRevoke={onRevoke}
+              />
+            )}
           </div>
         </ModalContent>
       </Modal>

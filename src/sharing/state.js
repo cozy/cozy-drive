@@ -356,7 +356,7 @@ const getAppUrlForDoctype = (state, documentType) => {
     case 'Files':
     case 'Document':
       return getAppUrl(apps, 'drive')
-    case 'Photos':
+    case 'Albums':
       return getAppUrl(apps, 'photos')
     default:
       throw new Error(
