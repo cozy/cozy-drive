@@ -152,6 +152,33 @@ const Recipient = (props, { t, client }) => {
 
 export default Recipient
 
+export const RecipientWithoutStatus = ({ instance, ...rest }) => {
+  const name = getDisplayName(rest)
+  return (
+    <div className={styles['recipient']}>
+      <Avatar name={name} />
+      <div className={styles['recipient-ident-status']}>
+        <Identity name={name} url={instance} />
+      </div>
+    </div>
+  )
+}
+
+export const RecipientPlusX = ({ extraRecipients }, { t }) => (
+  <div className={styles['recipient']}>
+    <AvatarPlusX
+      extraRecipients={extraRecipients.map(recipient =>
+        getDisplayName(recipient)
+      )}
+    />
+    <div className={styles['recipient-ident-status']}>
+      <Identity
+        name={t('Share.members.otherContacts', extraRecipients.length)}
+      />
+    </div>
+  </div>
+)
+
 export const Contact = ({ contact }) => {
   const name = getPrimaryEmail(contact)
   const url = getPrimaryCozy(contact)
