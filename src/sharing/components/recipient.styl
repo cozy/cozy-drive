@@ -116,6 +116,10 @@
     &:not([disabled]):not([aria-disabled=true]):hover
         background-color transparent
 
+// bit of a hack because the menu is inside a scrollable area
+.recipient-menu > div
+  margin-bottom .5rem
+
 .action-unshare
     color pomegranate !important
     text-decoration none !important
