@@ -4,14 +4,14 @@ import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, {
   ELEMENT_CHECKBOX,
   ELEMENT_BUTTON
-} from '../../components/SettingCategory'
-import { setWifiOnly } from '../../actions/settings'
-import { isImagesBackupOn, isWifiOnlyOn } from '../../reducers/settings'
+} from './SettingCategory'
+import { setWifiOnly } from '../actions'
+import { isImagesBackupOn, isWifiOnlyOn } from '../reducers'
 import {
   backupImages,
   startMediaBackup,
   cancelMediaBackup
-} from 'drive/mobile/ducks/mediaBackup'
+} from '../../mediaBackup'
 
 export const MediaBackup = ({
   t,

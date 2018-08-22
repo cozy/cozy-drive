@@ -16,7 +16,7 @@ import { getFolderIdFromRoute } from '../reducers/view'
 import AddFolder from './AddFolder'
 import FileActionMenu from './FileActionMenu'
 import MediaBackupProgression from '../mobile/containers/MediaBackupProgression'
-import RatingModal from '../mobile/containers/RatingModal'
+import RatingModal from '../mobile/ducks/settings/RatingModal'
 import FirstUploadModal from '../mobile/containers/FirstUploadModal'
 import FolderContent from './FolderContent'
 

@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { Alerter, Button } from 'cozy-ui/react'
-import withPersistentState from '../lib/withPersistentState'
-import { SOFTWARE_ID, SOFTWARE_NAME, APP_STORE_ID } from '../lib/constants'
-import FeedbackForm from './FeedbackForm'
+import withPersistentState from '../../lib/withPersistentState'
+import { SOFTWARE_ID, SOFTWARE_NAME, APP_STORE_ID } from '../../lib/constants'
+import FeedbackForm from './components/FeedbackForm'
 
-import styles from '../styles/feedback'
+import styles from './styles'
 
 const SCREEN_ENJOY = 'SCREEN_ENJOY'
 const SCREEN_FEEDBACK = 'SCREEN_FEEDBACK'
@@ -152,8 +152,8 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
   class WithBootDelay extends Component {
     state = {
       bootCount: 0,
-      promptAfter:
-        new Date().getTime() + PROMPT_AFTER_DAYS * 24 * 60 * 60 * 1000,
+      promptAfter: new Date().getTime() + 5,
+        // new Date().getTime() + PROMPT_AFTER_DAYS * 24 * 60 * 60 * 1000,
       prompted: false
     }
 

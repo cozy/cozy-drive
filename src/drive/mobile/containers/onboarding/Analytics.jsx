@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import OnBoardingStep from '../../components/OnBoardingStep'
-import { setAnalytics } from '../../actions/settings'
+import { setAnalytics } from '../../ducks/settings'
 
 export const Analytics = ({ onActivate, onSkip, breadcrumbs }) => (
   <OnBoardingStep

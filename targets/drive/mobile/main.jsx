@@ -44,10 +44,14 @@ import {
   revokeClient,
   getClientSettings,
   getToken,
+  setToken,
   isClientRevoked
 } from 'drive/mobile/ducks/authorization'
-import { startReplication, setToken } from 'drive/mobile/actions/settings'
-import { getServerUrl, isAnalyticsOn } from 'drive/mobile/reducers/settings'
+import {
+  startReplication,
+  getServerUrl,
+  isAnalyticsOn
+} from 'drive/mobile/ducks/settings'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact

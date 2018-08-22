@@ -1,4 +1,4 @@
-import { getServerUrl } from '../../reducers/settings'
+import { getServerUrl } from '../settings'
 import { SET_CLIENT, SET_TOKEN, REVOKE, UNREVOKE } from './actions'
 
 const initialState = {

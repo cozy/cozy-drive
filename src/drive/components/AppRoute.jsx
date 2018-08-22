@@ -4,7 +4,7 @@ import { Route, Redirect, IndexRoute } from 'react-router'
 
 import Layout from './Layout'
 import FileExplorer from '../containers/FileExplorer'
-import Settings from '../mobile/components/Settings'
+import Settings from '../mobile/ducks/settings/Settings'
 import OnBoarding from '../mobile/containers/OnBoarding'
 import FilesViewer from './FilesViewer'
 

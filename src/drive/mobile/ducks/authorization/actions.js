@@ -4,7 +4,7 @@ import {
   resetClient
 } from '../../lib/cozy-helper'
 import { resetPersistedState } from '../../../store/persistedState'
-import { setUrl, setOffline, startReplication } from '../../actions/settings'
+import { setUrl, setOffline, startReplication } from '../settings'
 
 export const SET_TOKEN = 'SET_TOKEN'
 export const SET_CLIENT = 'SET_CLIENT'

@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import AppRoute from 'drive/components/AppRoute'
 import MobileRouter from 'authentication/MobileRouter'
 
-import { setUrl } from '../../actions/settings'
 import { saveCredentials, unlink } from './actions'
 import { isAuthorized, isRevoked } from './reducers'
+import { setUrl } from '../settings'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 
 class DriveMobileRouter extends Component {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import SettingCategory, { ELEMENT_TEXT } from '../../components/SettingCategory'
-import { getServerUrl } from '../../reducers/settings'
+import SettingCategory, { ELEMENT_TEXT } from './SettingCategory'
+import { getServerUrl } from '../reducers'
 import Hammer from 'hammerjs'
 
 class About extends Component {
