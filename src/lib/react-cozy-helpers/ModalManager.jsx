@@ -19,7 +19,10 @@ export default reducer
 
 export const showModal = component => ({
   type: SHOW_MODAL,
-  component
+  component,
+  meta: {
+    hideActionMenu: true
+  }
 })
 
 const hideModal = () => ({

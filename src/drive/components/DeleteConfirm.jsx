@@ -2,31 +2,63 @@ import styles from '../styles/confirms'
 import classNames from 'classnames'
 
 import React from 'react'
-import Modal from 'cozy-ui/react/Modal'
+import Modal, { ModalDescription } from 'cozy-ui/react/Modal'
+import { translate } from 'cozy-ui/react/I18n'
 
-const DeleteConfirm = ({ t, fileCount, referenced, confirm, abort }) => {
-  let messageTypes = ['trash', 'restore', 'shared']
-  if (referenced) messageTypes.push('referenced')
-  const deleteConfirmationTexts = messageTypes.map(type => (
-    <p
-      className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
-    >
-      {t(`deleteconfirmation.${type}`, fileCount)}
-    </p>
-  ))
+import { SharedDocument, SharedRecipientsList } from 'sharing'
 
+const Message = translate()(({ t, type, fileCount }) => (
+  <p className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}>
+    {t(`deleteconfirmation.${type}`, fileCount)}
+  </p>
+))
+
+const DeleteConfirm = ({
+  t,
+  files,
+  referenced,
+  onConfirm,
+  onClose,
+  children
+}) => {
+  const fileCount = files.length
   return (
     <Modal
       title={t('deleteconfirmation.title', fileCount)}
-      description={deleteConfirmationTexts}
       secondaryText={t('deleteconfirmation.cancel')}
-      secondaryAction={abort}
+      secondaryAction={onClose}
       secondaryType="secondary"
       primaryType="danger"
       primaryText={t('deleteconfirmation.delete')}
-      primaryAction={confirm}
-    />
+      primaryAction={() => onConfirm().then(onClose)}
+    >
+      <ModalDescription>
+        <Message type="trash" fileCount={fileCount} />
+        <Message type="restore" fileCount={fileCount} />
+        {referenced && <Message type="referenced" fileCount={fileCount} />}
+        {children}
+      </ModalDescription>
+    </Modal>
   )
 }
 
-export default DeleteConfirm
+const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
+  files.length !== 1 ? (
+    <DeleteConfirm files={files} {...rest} />
+  ) : (
+    <SharedDocument docId={files[0].id}>
+      {({ isSharedByMe }) => (
+        <DeleteConfirm files={files} {...rest}>
+          {isSharedByMe && <Message type="shared" fileCount={files.length} />}
+          {isSharedByMe && (
+            <SharedRecipientsList
+              className={styles['fil-confirm-recipients']}
+              docId={files[0].id}
+            />
+          )}
+        </DeleteConfirm>
+      )}
+    </SharedDocument>
+  )
+
+export default translate()(DeleteConfirmWithSharingContext)

@@ -16,6 +16,7 @@ import Menu, { Item } from 'components/Menu'
 
 import { IntentButton } from '../../components/Intent'
 import UploadButton from '../../components/UploadButton'
+import DeleteConfirm from '../../components/DeleteConfirm'
 
 import { addToUploadQueue } from '../upload'
 import {
@@ -216,23 +217,30 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )
   },
   share: displayedFolder =>
-    dispatch({
-      ...showModal(
+    dispatch(
+      showModal(
         <ShareModal
           document={displayedFolder}
           documentType="Files"
           sharingDesc={displayedFolder.name}
         />
-      ),
-      meta: {
-        hideActionMenu: true
-      }
-    }),
+      )
+    ),
   downloadAll: folder => dispatch(downloadFiles(folder)),
   trashFolder: folder =>
-    dispatch(trashFiles([folder])).then(() => {
-      ownProps.router.push(`/folder/${folder.parent.id}`)
-    })
+    dispatch(
+      showModal(
+        <DeleteConfirm
+          t={ownProps.t}
+          files={[folder]}
+          onConfirm={() =>
+            dispatch(trashFiles([folder])).then(() => {
+              ownProps.router.push(`/folder/${folder.parent.id}`)
+            })
+          }
+        />
+      )
+    )
 })
 
 const ToolbarWithSharingContext = props =>

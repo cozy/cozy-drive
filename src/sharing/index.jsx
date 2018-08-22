@@ -35,6 +35,7 @@ import {
 } from './components/ShareButton'
 import { default as DumbShareModal } from './ShareModal'
 import { SharingDetailsModal } from './SharingDetailsModal'
+import { default as RecipientsList } from './components/WhoHasAccessLight'
 import { RecipientsAvatars } from './components/Recipient'
 import { default as DumbSharedStatus } from './components/SharedStatus'
 
@@ -303,6 +304,19 @@ export const SharedRecipients = ({ docId, ...rest }) => (
         <RecipientsAvatars
           recipients={getRecipients(docId)}
           link={getSharingLink(docId) !== null}
+          {...rest}
+        />
+      )
+    }}
+  </SharingContext.Consumer>
+)
+
+export const SharedRecipientsList = ({ docId, ...rest }) => (
+  <SharingContext.Consumer>
+    {({ byDocId, isOwner, getRecipients } = {}) =>
+      !byDocId || !byDocId[docId] || !isOwner(docId) ? null : (
+        <RecipientsList
+          recipients={getRecipients(docId).filter(r => r.status !== 'owner')}
           {...rest}
         />
       )

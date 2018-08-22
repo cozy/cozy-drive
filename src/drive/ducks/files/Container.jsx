@@ -3,7 +3,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { showModal } from 'react-cozy-helpers'
-import confirm from '../../lib/confirm'
 import { SharedDocument, SharedRecipients, ShareModal } from 'sharing'
 
 import FolderView from '../../components/FolderView'
@@ -67,18 +66,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       selection: {
         share: {
           action: selected =>
-            dispatch({
-              ...showModal(
+            dispatch(
+              showModal(
                 <ShareModal
                   document={selected[0]}
                   documentType="Files"
                   sharingDesc={selected[0].name}
                 />
-              ),
-              meta: {
-                hideActionMenu: true
-              }
-            }),
+              )
+            ),
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1,
           Component: ({ files, ...rest }) => (
@@ -100,15 +96,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               },
         trash: {
           action: files =>
-            confirm(
-              <DeleteConfirm
-                t={ownProps.t}
-                fileCount={files.length}
-                referenced={isAnyFileReferencedByAlbum(files)}
-              />
-            )
-              .then(() => dispatch(trashFiles(files)))
-              .catch(() => {}),
+            dispatch(
+              showModal(
+                <DeleteConfirm
+                  files={files}
+                  referenced={isAnyFileReferencedByAlbum(files)}
+                  onConfirm={() => dispatch(trashFiles(files))}
+                />
+              )
+            ),
           displayCondition: selections => hasWriteAccess
         },
         openWith: {
