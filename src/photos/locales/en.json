@@ -139,7 +139,10 @@
         "desc":
           "Anyone with the provided link can see and download your photos.",
         "fetchFailed":
-          "Woops! It seems your connectivity is limited, try again later when it gets better."
+          "Woops! It seems your connectivity is limited, try again later when it gets better.",
+        "creating": "Creating your link...",
+        "copy": "Copy link",
+        "copied": "Link has been copied to clipboard"
       },
       "shareByEmail": {
         "title": "By email",
