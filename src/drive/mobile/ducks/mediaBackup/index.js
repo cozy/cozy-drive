@@ -9,7 +9,7 @@ import {
   CURRENT_UPLOAD,
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
-import { setBackupImages } from '../../actions/settings'
+import { setBackupImages } from '../settings'
 import {
   getPhotos,
   uploadLibraryItem,

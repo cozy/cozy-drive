@@ -8,9 +8,9 @@ import {
   BACKUP_CONTACTS,
   SET_ANALYTICS,
   WIFI_ONLY
-} from '../actions/settings'
+} from './actions'
 
-export const initialState = {
+const initialState = {
   offline: false,
   firstReplication: false,
   indexes: null,
@@ -20,7 +20,7 @@ export const initialState = {
   wifiOnly: true
 }
 
-export const settings = (state = initialState, action) => {
+const settings = (state = initialState, action) => {
   switch (action.type) {
     case SET_URL:
       return { ...state, serverUrl: action.url }
@@ -45,7 +45,7 @@ export const settings = (state = initialState, action) => {
 
 export default settings
 
-export const getSetting = (state, key) => {
+const getSetting = (state, key) => {
   if (
     state.mobile &&
     state.mobile.settings &&

@@ -5,11 +5,11 @@ import Alerter from 'cozy-ui/react/Alerter'
 import SettingCategory, {
   ELEMENT_CHECKBOX,
   ELEMENT_BUTTON
-} from '../../components/SettingCategory'
-import { setAnalytics } from '../../actions/settings'
-import { getServerUrl, isAnalyticsOn } from '../../reducers/settings'
-import { logInfo } from '../../lib/reporter'
-import { isOnline } from '../../lib/network'
+} from './SettingCategory'
+import { setAnalytics } from '../actions'
+import { getServerUrl, isAnalyticsOn } from '../reducers'
+import { logInfo } from '../../../lib/reporter'
+import { isOnline } from '../../../lib/network'
 
 export const Support = ({
   t,

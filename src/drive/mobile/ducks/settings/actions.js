@@ -1,13 +1,15 @@
-import { startReplication as startPouchReplication } from '../lib/replication'
-import { openFolder, getOpenedFolderId } from '../../actions'
-import { startTracker, stopTracker } from '../lib/tracker'
-import { revokeClient as reduxRevokeClient } from '../ducks/authorization'
-import { resetClient } from '../lib/cozy-helper'
+import { openFolder, getOpenedFolderId } from '../../../actions'
+
+import { startReplication as startPouchReplication } from '../../lib/replication'
+import { startTracker, stopTracker } from '../../lib/tracker'
+import { resetClient } from '../../lib/cozy-helper'
+import { revokeClient as reduxRevokeClient } from '../authorization'
+
 import {
   getServerUrl,
   isFirstReplicationDone,
   getPouchIndexes
-} from '../reducers/settings'
+} from './reducers'
 
 export const SET_URL = 'SET_URL'
 export const BACKUP_IMAGES = 'BACKUP_IMAGES'

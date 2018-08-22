@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { Button } from 'cozy-ui/react/Button'
 
-import styles from '../styles/feedback'
-import { logInfo } from '../lib/reporter'
+import styles from '../styles'
+import { logInfo } from '../../../lib/reporter'
 
 const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
 

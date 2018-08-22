@@ -1,17 +1,18 @@
 /* globals __DEVELOPMENT__ cozy */
 
 import React, { Component } from 'react'
-import Main from '../../components/Main'
-import styles from '../styles/settings'
-import DebugTools from '../containers/DebugTools'
 import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
+import Main from '../../../components/Main'
 
-import About from '../containers/settings/About'
-import Support from '../containers/settings/Support'
-import MediaBackup from '../containers/settings/MediaBackup'
-import Unlink from '../containers/settings/Unlink'
-import FeedbackForm from '../containers/FeedbackForm'
+import DebugTools from './components/DebugTools'
+import About from './components/About'
+import Support from './components/Support'
+import MediaBackup from './components/MediaBackup'
+import Unlink from './components/Unlink'
+import FeedbackForm from './components/FeedbackForm'
+
+import styles from './styles'
 
 const { BarCenter } = cozy.bar
 

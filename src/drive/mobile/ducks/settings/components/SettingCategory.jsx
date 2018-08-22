@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../styles/settings'
+import styles from '../styles'
 import { Button } from 'cozy-ui/react/Button'
 import Toggle from 'cozy-ui/react/Toggle'
 

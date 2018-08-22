@@ -1,4 +1,11 @@
-export { UNLINK, revokeClient, unlink, renewAuthorization } from './actions'
+export {
+  UNLINK,
+  setClient,
+  setToken,
+  revokeClient,
+  unlink,
+  renewAuthorization
+} from './actions'
 
 export {
   default,
