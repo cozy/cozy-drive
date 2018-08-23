@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import AppRoute from 'drive/components/AppRoute'
 import MobileRouter from 'authentication/MobileRouter'
-
-import { saveCredentials, unlink } from './actions'
-import { isAuthorized, isRevoked } from './reducers'
-import { setUrl } from '../settings'
+import AppRoute from 'drive/components/AppRoute'
+import { setUrl } from 'drive/mobile/ducks/settings'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
+
+import { saveCredentials, unlink, isAuthorized, isRevoked } from './duck'
 
 class DriveMobileRouter extends Component {
   afterAuthentication = async ({ url, clientInfo, token, router }) => {

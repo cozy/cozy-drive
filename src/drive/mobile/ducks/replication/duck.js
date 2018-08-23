@@ -1,9 +1,9 @@
 /* global __TARGET__ */
-import { openFolder, getOpenedFolderId } from '../../../actions'
-import { startReplication as startPouchReplication } from '../../lib/replication'
-import { resetClient } from '../../lib/cozy-helper'
-import { revokeClient as reduxRevokeClient } from '../authorization'
-import { isOfflineCapable } from '../settings'
+import { openFolder, getOpenedFolderId } from 'drive/actions'
+import { startReplication as startPouchReplication } from 'drive/mobile/lib/replication'
+import { resetClient } from 'drive/mobile/lib/cozy-helper'
+import { revokeClient as reduxRevokeClient } from 'drive/mobile/ducks/authorization/duck'
+import { isOfflineCapable } from 'drive/mobile/ducks/settings'
 
 const SET_FIRST_REPLICATION = 'SET_FIRST_REPLICATION'
 const SET_POUCH_INDEXES = 'SET_POUCH_INDEXES'
