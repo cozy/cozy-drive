@@ -1,11 +1,14 @@
 /* global __TARGET__ */
 import { combineReducers } from 'redux'
-import baseReducers from '../reducers'
+import baseReducers from 'drive/reducers'
 
-import { default as settings } from '../mobile/ducks/settings'
-import { default as mediaBackup } from '../mobile/ducks/mediaBackup'
-import { default as authorization, UNLINK } from '../mobile/ducks/authorization'
-import { default as replication } from '../mobile/ducks/replication/duck'
+import { default as settings } from 'drive/mobile/ducks/settings'
+import { default as mediaBackup } from 'drive/mobile/ducks/mediaBackup'
+import {
+  default as authorization,
+  UNLINK
+} from 'drive/mobile/ducks/authorization/duck'
+import { default as replication } from 'drive/mobile/ducks/replication/duck'
 
 const mobileReducer = combineReducers({
   authorization,

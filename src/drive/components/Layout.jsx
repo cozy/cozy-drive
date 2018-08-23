@@ -6,11 +6,11 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import { Layout as LayoutUI } from 'cozy-ui/react/Layout'
 import Sidebar from 'cozy-ui/react/Sidebar'
-import Nav from '../containers/Nav'
-import ButtonClient from '../../components/pushClient/Button'
-import { UploadQueue } from '../ducks/upload'
+import Nav from 'drive/containers/Nav'
+import ButtonClient from 'components/pushClient/Button'
+import { UploadQueue } from 'drive/ducks/upload'
 import Alerter from 'cozy-ui/react/Alerter'
-import { UserActionRequired } from '../mobile/ducks/authorization'
+import UserActionRequired from 'drive/mobile/ducks/authorization/UserActionRequired'
 
 const Layout = ({ t, children }) => (
   <LayoutUI>

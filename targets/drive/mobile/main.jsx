@@ -37,16 +37,15 @@ import {
   restoreCozyClientJs,
   resetClient
 } from 'drive/mobile/lib/cozy-helper'
-
+import DriveMobileRouter from 'drive/mobile/ducks/authorization/DriveMobileRouter'
 import { backupImages } from 'drive/mobile/ducks/mediaBackup'
 import {
-  DriveMobileRouter,
   revokeClient,
   getClientSettings,
   getToken,
   setToken,
   isClientRevoked
-} from 'drive/mobile/ducks/authorization'
+} from 'drive/mobile/ducks/authorization/duck'
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/ducks/settings'
 import { startReplication } from 'drive/mobile/ducks/replication/duck'
 

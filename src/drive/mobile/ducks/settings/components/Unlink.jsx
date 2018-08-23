@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, { ELEMENT_BUTTON } from './SettingCategory'
 import Modal from 'cozy-ui/react/Modal'
-import { unlink, getClientSettings } from '../../authorization'
+import {
+  unlink,
+  getClientSettings
+} from 'drive/mobile/ducks/authorization/duck'
 
 class Unlink extends Component {
   state = {

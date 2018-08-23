@@ -2,10 +2,10 @@ import {
   restoreCozyClientJs,
   updateBarAccessToken,
   resetClient
-} from '../../lib/cozy-helper'
-import { resetPersistedState } from '../../../store/persistedState'
-import { setUrl, setOffline } from '../settings'
-import { startReplication } from '../replication/duck'
+} from 'drive/mobile/lib/cozy-helper'
+import { resetPersistedState } from 'drive/store/persistedState'
+import { setUrl, setOffline } from 'drive/mobile/ducks/settings'
+import { startReplication } from 'drive/mobile/ducks/replication/duck'
 
 export const SET_TOKEN = 'SET_TOKEN'
 export const SET_CLIENT = 'SET_CLIENT'
