@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 
-import Wizard from '../components/Wizard'
-
-import Files from './onboarding/Files'
-import BackupPhotosVideos from './onboarding/BackupPhotosVideos'
-import Analytics from './onboarding/Analytics'
-
 import { initBar } from 'drive/mobile/lib/cozy-helper'
+
+import Wizard from './components/Wizard'
+import Files from './components/Files'
+import BackupPhotosVideos from './components/BackupPhotosVideos'
+import Analytics from './components/Analytics'
 
 export default class OnBoarding extends Component {
   onboardingSteps = [Files, BackupPhotosVideos, Analytics]

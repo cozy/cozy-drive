@@ -64,10 +64,29 @@
 // ASSETS
 
 .illustration-photos
-    background      embedurl("../assets/illustrations/illustration-photos.svg") center no-repeat
+    background      embedurl("./assets/illustrations/illustration-photos.svg") center no-repeat
 
 .illustration-analytics
-    background      embedurl("../assets/illustrations/illustration-trophy.svg") center no-repeat
+    background      embedurl("./assets/illustrations/illustration-trophy.svg") center no-repeat
 
 .illustration-files
-    background      embedurl("../assets/illustrations/illustration-files.svg") center no-repeat
+    background      embedurl("./assets/illustrations/illustration-files.svg") center no-repeat
+
+.onboarding-breadcrumb
+    display         flex
+    width           100%
+    margin-top      1rem
+    justify-content center
+
+    .onboarding-breadcrumb-element,
+    .onboarding-breadcrumb-element-active
+        height        .5rem
+        width         .5rem
+        border-radius 50%
+        margin        0rem .5rem
+
+    .onboarding-breadcrumb-element
+        background    #d6d8da
+
+    .onboarding-breadcrumb-element-active
+        background    #297ef2
