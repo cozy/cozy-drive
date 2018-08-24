@@ -17,7 +17,7 @@ import {
   getUploadStatus
 } from '../ducks/mediaBackup/reducer'
 
-import { getServerUrl } from '../ducks/settings'
+import { getServerUrl } from '../ducks/settings/duck'
 
 const mapStateToProps = state => ({
   serverUrl: getServerUrl(state),

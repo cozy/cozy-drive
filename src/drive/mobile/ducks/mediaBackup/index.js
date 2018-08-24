@@ -1,4 +1,15 @@
 /* global cozy */
+import throttle from 'lodash/throttle'
+import {
+  getPhotos,
+  uploadLibraryItem,
+  isAuthorized,
+  getMediaFolderName,
+  requestAuthorization
+} from 'drive/mobile/lib/media'
+import { isWifi } from 'drive/mobile/lib/network'
+import { logException } from 'drive/mobile/lib/reporter'
+import { setBackupImages } from 'drive/mobile/ducks/settings/duck'
 import {
   MEDIA_UPLOAD_START,
   MEDIA_UPLOAD_END,
@@ -9,17 +20,6 @@ import {
   CURRENT_UPLOAD,
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
-import { setBackupImages } from '../settings'
-import {
-  getPhotos,
-  uploadLibraryItem,
-  isAuthorized,
-  getMediaFolderName,
-  requestAuthorization
-} from '../../lib/media'
-import { isWifi } from '../../lib/network'
-import { logException } from '../../lib/reporter'
-import throttle from 'lodash/throttle'
 
 const ERROR_CODE_TOO_LARGE = 413
 

@@ -2,14 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
+import { logInfo } from 'drive/mobile/lib/reporter'
+import { isOnline } from 'drive/mobile/lib/network'
 import SettingCategory, {
   ELEMENT_CHECKBOX,
   ELEMENT_BUTTON
 } from './SettingCategory'
-import { setAnalytics } from '../actions'
-import { getServerUrl, isAnalyticsOn } from '../reducers'
-import { logInfo } from '../../../lib/reporter'
-import { isOnline } from '../../../lib/network'
+import { setAnalytics, getServerUrl, isAnalyticsOn } from '../duck'
 
 export const Support = ({
   t,
