@@ -37,17 +37,17 @@ import {
   restoreCozyClientJs,
   resetClient
 } from 'drive/mobile/lib/cozy-helper'
-import DriveMobileRouter from 'drive/mobile/ducks/authorization/DriveMobileRouter'
-import { backupImages } from 'drive/mobile/ducks/mediaBackup/duck'
+import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
+import { backupImages } from 'drive/mobile/modules/mediaBackup/duck'
 import {
   revokeClient,
   getClientSettings,
   getToken,
   setToken,
   isClientRevoked
-} from 'drive/mobile/ducks/authorization/duck'
-import { getServerUrl, isAnalyticsOn } from 'drive/mobile/ducks/settings/duck'
-import { startReplication } from 'drive/mobile/ducks/replication/duck'
+} from 'drive/mobile/modules/authorization/duck'
+import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
+import { startReplication } from 'drive/mobile/modules/replication/duck'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact

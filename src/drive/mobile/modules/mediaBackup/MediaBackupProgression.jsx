@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import {
   getServerUrl,
   isImagesBackupOn
-} from 'drive/mobile/ducks/settings/duck'
+} from 'drive/mobile/modules/settings/duck'
 
 import UploadProgression from './components/UploadProgression'
 import UploadAbortedWifi from './components/UploadAbortedWifi'

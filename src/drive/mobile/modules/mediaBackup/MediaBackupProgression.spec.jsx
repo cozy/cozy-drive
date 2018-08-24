@@ -13,7 +13,7 @@ const render = () => {
 
 const mockSelectors = (providedSelectors = {}) => {
   const { isImagesBackupOn = () => true, ...selectors } = providedSelectors
-  jest.doMock('drive/mobile/ducks/settings/duck', () => ({
+  jest.doMock('drive/mobile/modules/settings/duck', () => ({
     isImagesBackupOn,
     getServerUrl: () => 'http://cozy.tools:8080'
   }))

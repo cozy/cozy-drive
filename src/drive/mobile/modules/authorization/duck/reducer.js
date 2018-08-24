@@ -1,4 +1,4 @@
-import { getServerUrl } from 'drive/mobile/ducks/settings/duck'
+import { getServerUrl } from 'drive/mobile/modules/settings/duck'
 import { SET_CLIENT, SET_TOKEN, REVOKE, UNREVOKE } from './actions'
 
 const initialState = {

@@ -2,13 +2,13 @@
 import { combineReducers } from 'redux'
 import baseReducers from 'drive/reducers'
 
-import { default as settings } from 'drive/mobile/ducks/settings/duck'
-import { default as mediaBackup } from 'drive/mobile/ducks/mediaBackup/duck'
+import { default as settings } from 'drive/mobile/modules/settings/duck'
+import { default as mediaBackup } from 'drive/mobile/modules/mediaBackup/duck'
 import {
   default as authorization,
   UNLINK
-} from 'drive/mobile/ducks/authorization/duck'
-import { default as replication } from 'drive/mobile/ducks/replication/duck'
+} from 'drive/mobile/modules/authorization/duck'
+import { default as replication } from 'drive/mobile/modules/replication/duck'
 
 const mobileReducer = combineReducers({
   authorization,

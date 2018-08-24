@@ -1,6 +1,6 @@
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
-import { startMediaBackup } from 'drive/mobile/ducks/mediaBackup/duck'
+import { startMediaBackup } from 'drive/mobile/modules/mediaBackup/duck'
 import { initClient } from './cozy-helper'
 import { logException, configureReporter } from './reporter'
 import { getMediaFolderName } from './media'

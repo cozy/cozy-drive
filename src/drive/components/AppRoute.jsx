@@ -2,8 +2,8 @@
 import React from 'react'
 import { Route, Redirect, IndexRoute } from 'react-router'
 
-import Settings from 'drive/mobile/ducks/settings/Settings'
-import OnBoarding from 'drive/mobile/ducks/onboarding/OnBoarding'
+import Settings from 'drive/mobile/modules/settings/Settings'
+import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
 import Layout from './Layout'
 import FileExplorer from '../containers/FileExplorer'

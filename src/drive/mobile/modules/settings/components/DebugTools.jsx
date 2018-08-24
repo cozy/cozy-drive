@@ -6,7 +6,7 @@ import { logException, logInfo } from 'drive/mobile/lib/reporter'
 import {
   isFirstReplicationDone,
   setFirstReplication
-} from 'drive/mobile/ducks/replication/duck'
+} from 'drive/mobile/modules/replication/duck'
 import { setOffline, isOfflineCapable } from '../duck'
 
 const Checkbox = ({ onChange, value, title }) => (
