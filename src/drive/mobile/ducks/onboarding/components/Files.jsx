@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import OnBoardingStep from '../../components/OnBoardingStep'
+import OnBoardingStep from './OnBoardingStep'
 
 export const Files = ({ onActivate, breadcrumbs }) => (
   <OnBoardingStep
