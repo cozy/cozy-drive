@@ -38,7 +38,7 @@ import {
   resetClient
 } from 'drive/mobile/lib/cozy-helper'
 import DriveMobileRouter from 'drive/mobile/ducks/authorization/DriveMobileRouter'
-import { backupImages } from 'drive/mobile/ducks/mediaBackup'
+import { backupImages } from 'drive/mobile/ducks/mediaBackup/duck'
 import {
   revokeClient,
   getClientSettings,

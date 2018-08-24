@@ -1,9 +1,9 @@
-import configureStore from '../../store/configureStore'
+import configureStore from 'drive/store/configureStore'
+import { loadState } from 'drive/store/persistedState'
+import { startMediaBackup } from 'drive/mobile/ducks/mediaBackup/duck'
 import { initClient } from './cozy-helper'
 import { logException, configureReporter } from './reporter'
-import { loadState } from '../../store/persistedState'
 import { getMediaFolderName } from './media'
-import { startMediaBackup } from 'drive/mobile/ducks/mediaBackup'
 import { isCordova, isIos, isAndroid, getPlatformId } from './device'
 import { getTranslateFunction } from './i18n'
 

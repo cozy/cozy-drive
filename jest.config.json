@@ -2,7 +2,8 @@
   "roots": ["<rootDir>/src"],
   "moduleFileExtensions": ["js", "jsx", "json", "styl"],
   "moduleNameMapper": {
-    "styles": "identity-obj-proxy"
+    "styles": "identity-obj-proxy",
+    "drive/(.*)": "<rootDir>/src/drive/$1"
   },
   "transformIgnorePatterns": [
     "node_modules/(?!cozy-ui)/"

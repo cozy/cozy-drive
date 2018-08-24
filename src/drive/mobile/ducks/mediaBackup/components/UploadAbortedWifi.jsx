@@ -1,23 +1,23 @@
 import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import styles from './styles'
+import styles from '../styles'
 
-const UploadUptodate = ({ t }) => (
+const UploadAbortedWifi = ({ t }) => (
   <div
     className={classnames(
       styles['coz-upload-status'],
-      styles['coz-upload-status--success']
+      styles['coz-upload-status--waiting']
     )}
   >
     <div className={styles['coz-upload-status-content']}>
-      {t('mobile.settings.media_backup.media_uptodate')}
+      {t('mobile.settings.media_backup.no_wifi')}
     </div>
   </div>
 )
 
-UploadUptodate.propTypes = {
+UploadAbortedWifi.propTypes = {
   t: PropTypes.func.isRequired
 }
 
-export default UploadUptodate
+export default UploadAbortedWifi

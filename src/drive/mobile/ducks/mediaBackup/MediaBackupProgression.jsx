@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import PropTypes from 'prop-types'
 
-import UploadProgression from '../ducks/mediaBackup/UploadProgression'
-import UploadAbortedWifi from '../ducks/mediaBackup/UploadAbortedWifi'
-import UploadQuotaError from '../ducks/mediaBackup/UploadQuotaError'
-import UploadUptodate from '../ducks/mediaBackup/UploadUptodate'
-import UploadPreparing from '../ducks/mediaBackup/UploadPreparing'
+import { getServerUrl } from 'drive/mobile/ducks/settings/duck'
+
+import UploadProgression from './components/UploadProgression'
+import UploadAbortedWifi from './components/UploadAbortedWifi'
+import UploadQuotaError from './components/UploadQuotaError'
+import UploadUptodate from './components/UploadUptodate'
+import UploadPreparing from './components/UploadPreparing'
 
 import {
   isPreparingBackup,
@@ -15,9 +17,7 @@ import {
   isAborted,
   isQuotaReached,
   getUploadStatus
-} from '../ducks/mediaBackup/reducer'
-
-import { getServerUrl } from '../ducks/settings/duck'
+} from './duck/reducer'
 
 const mapStateToProps = state => ({
   serverUrl: getServerUrl(state),

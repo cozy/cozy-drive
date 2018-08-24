@@ -3,8 +3,8 @@ import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
 import { connect } from 'react-redux'
-import withPersistentState from '../lib/withPersistentState'
-import { isIos } from '../lib/device'
+import withPersistentState from 'drive/mobile/lib/withPersistentState'
+import { isIos } from 'drive/mobile/lib/device'
 
 const MINIMUM_LONG_UPLOAD_FILES_COUNT = 50
 

@@ -1,16 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import SettingCategory, {
-  ELEMENT_CHECKBOX,
-  ELEMENT_BUTTON
-} from './SettingCategory'
-import { setWifiOnly, isImagesBackupOn, isWifiOnlyOn } from '../duck'
 import {
   backupImages,
   startMediaBackup,
   cancelMediaBackup
-} from 'drive/mobile/ducks/mediaBackup'
+} from 'drive/mobile/ducks/mediaBackup/duck'
+import { setWifiOnly, isImagesBackupOn, isWifiOnlyOn } from '../duck'
+import SettingCategory, {
+  ELEMENT_CHECKBOX,
+  ELEMENT_BUTTON
+} from './SettingCategory'
 
 export const MediaBackup = ({
   t,
