@@ -2,7 +2,7 @@
 import 'babel-polyfill'
 
 import 'drive/styles/main'
-import 'drive/mobile/styles/main'
+import 'drive/styles/mobile'
 
 import React from 'react'
 import { render } from 'react-dom'
