@@ -4,7 +4,7 @@ import {
   resetClient
 } from 'drive/mobile/lib/cozy-helper'
 import { resetPersistedState } from 'drive/store/persistedState'
-import { setUrl, setOffline } from 'drive/mobile/ducks/settings'
+import { setUrl, setOffline } from 'drive/mobile/ducks/settings/duck'
 import { startReplication } from 'drive/mobile/ducks/replication/duck'
 
 export const SET_TOKEN = 'SET_TOKEN'

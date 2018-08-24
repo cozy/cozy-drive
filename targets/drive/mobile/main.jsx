@@ -46,7 +46,7 @@ import {
   setToken,
   isClientRevoked
 } from 'drive/mobile/ducks/authorization/duck'
-import { getServerUrl, isAnalyticsOn } from 'drive/mobile/ducks/settings'
+import { getServerUrl, isAnalyticsOn } from 'drive/mobile/ducks/settings/duck'
 import { startReplication } from 'drive/mobile/ducks/replication/duck'
 
 if (__DEVELOPMENT__) {

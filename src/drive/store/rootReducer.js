@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux'
 import baseReducers from 'drive/reducers'
 
-import { default as settings } from 'drive/mobile/ducks/settings'
+import { default as settings } from 'drive/mobile/ducks/settings/duck'
 import { default as mediaBackup } from 'drive/mobile/ducks/mediaBackup'
 import {
   default as authorization,

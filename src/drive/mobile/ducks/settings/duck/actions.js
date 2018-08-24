@@ -1,4 +1,4 @@
-import { startTracker, stopTracker } from '../../lib/tracker'
+import { startTracker, stopTracker } from 'drive/mobile/lib/tracker'
 
 import { getServerUrl } from './reducers'
 

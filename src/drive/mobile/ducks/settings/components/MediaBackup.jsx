@@ -5,13 +5,12 @@ import SettingCategory, {
   ELEMENT_CHECKBOX,
   ELEMENT_BUTTON
 } from './SettingCategory'
-import { setWifiOnly } from '../actions'
-import { isImagesBackupOn, isWifiOnlyOn } from '../reducers'
+import { setWifiOnly, isImagesBackupOn, isWifiOnlyOn } from '../duck'
 import {
   backupImages,
   startMediaBackup,
   cancelMediaBackup
-} from '../../mediaBackup'
+} from 'drive/mobile/ducks/mediaBackup'
 
 export const MediaBackup = ({
   t,
