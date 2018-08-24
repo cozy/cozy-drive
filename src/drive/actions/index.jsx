@@ -6,23 +6,24 @@ import {
 } from './async'
 import { getSort } from '../reducers'
 import React from 'react'
-import { isCordova } from '../mobile/lib/device'
+import { isCordova } from 'drive/mobile/lib/device'
 import {
   saveFileWithCordova,
   saveAndOpenWithCordova,
   openOfflineFile,
   deleteOfflineFile
-} from '../mobile/lib/filesystem'
-import { openWithNoAppError } from '../mobile/actions'
+} from 'drive/mobile/lib/filesystem'
+import { openWithNoAppError } from 'drive/mobile/actions'
 import {
   isDirectory,
   isReferencedByAlbum,
   ALBUMS_DOCTYPE
-} from '../ducks/files/files'
-import * as availableOffline from '../ducks/files/availableOffline'
-import { alert } from '../lib/confirm'
+} from 'drive/ducks/files/files'
+import * as availableOffline from 'drive/ducks/files/availableOffline'
+import { addToUploadQueue } from 'drive/ducks/upload'
+import { showModal } from 'lib/react-cozy-helpers'
 import Alerter from 'cozy-ui/react/Alerter'
-import QuotaAlert from '../components/QuotaAlert'
+import QuotaAlert from 'drive/components/QuotaAlert'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '../constants/config.js'
 
@@ -260,32 +261,30 @@ export const openLocalFile = file => {
   }
 }
 
-export const uploadedFile = file => {
-  return (dispatch, getState) => {
-    return dispatch({
-      type: UPLOAD_FILE_SUCCESS,
-      file: extractFileAttributes(file),
-      currentFileCount: getState().view.fileCount,
-      currentSort: getSort(getState())
-    })
-  }
+export const uploadFiles = (files, dirId) => dispatch => {
+  dispatch(
+    addToUploadQueue(
+      files,
+      dirId,
+      file => dispatch(uploadedFile(file)),
+      (loaded, quotas, conflicts, networkErrors, errors) =>
+        dispatch(
+          uploadQueueProcessed(loaded, quotas, conflicts, networkErrors, errors)
+        )
+    )
+  )
 }
 
-export const uploadQueueProcessed = (
+const uploadQueueProcessed = (
   loaded,
   quotas,
   conflicts,
   networkErrors,
-  errors,
-  t
-) => {
+  errors
+) => dispatch => {
   if (quotas.length > 0) {
-    // quota errors have their own modal instead of a notification, if possible
-    if (t) {
-      alert(<QuotaAlert t={t} />)
-    } else {
-      Alerter.info('quotaalert.desc')
-    }
+    // quota errors have their own modal instead of a notification
+    dispatch(showModal(<QuotaAlert />))
   } else if (conflicts.length > 0) {
     Alerter.info('upload.alert.success_conflicts', {
       smart_count: loaded.length,
@@ -298,6 +297,17 @@ export const uploadQueueProcessed = (
   } else {
     Alerter.success('upload.alert.success', {
       smart_count: loaded.length
+    })
+  }
+}
+
+export const uploadedFile = file => {
+  return (dispatch, getState) => {
+    return dispatch({
+      type: UPLOAD_FILE_SUCCESS,
+      file: extractFileAttributes(file),
+      currentFileCount: getState().view.fileCount,
+      currentSort: getSort(getState())
     })
   }
 }

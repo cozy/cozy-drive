@@ -3,6 +3,7 @@ import classNames from 'classnames'
 
 import React from 'react'
 import Modal from 'cozy-ui/react/Modal'
+import { translate } from 'cozy-ui/react/I18n'
 
 const DestroyConfirm = ({ t, fileCount, confirm, onClose }) => {
   const confirmationTexts = ['forbidden', 'restore'].map(type => (
@@ -31,4 +32,4 @@ const DestroyConfirm = ({ t, fileCount, confirm, onClose }) => {
   )
 }
 
-export default DestroyConfirm
+export default translate()(DestroyConfirm)
