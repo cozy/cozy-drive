@@ -4,9 +4,9 @@ import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
 import { ModalManager } from 'react-cozy-helpers'
 
-import MediaBackupProgression from 'drive/mobile/ducks/mediaBackup/MediaBackupProgression'
-import RatingModal from 'drive/mobile/ducks/settings/RatingModal'
-import FirstUploadModal from 'drive/mobile/ducks/mediaBackup/FirstUploadModal'
+import MediaBackupProgression from 'drive/mobile/modules/mediaBackup/MediaBackupProgression'
+import RatingModal from 'drive/mobile/modules/settings/RatingModal'
+import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
 
 import Main from './Main'
 import Topbar from './Topbar'

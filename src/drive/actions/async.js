@@ -3,7 +3,7 @@ import { TRASH_DIR_ID, FILES_FETCH_LIMIT } from '../constants/config.js'
 import {
   getPouchIndexes,
   shouldWorkFromPouchDB
-} from '../mobile/ducks/replication/duck'
+} from 'drive/mobile/modules/replication/duck'
 
 export const shouldShowRecentsFirst = (
   folderPath,

@@ -7,7 +7,7 @@ import Modal from 'cozy-ui/react/Modal'
 import {
   unlink,
   getClientSettings
-} from 'drive/mobile/ducks/authorization/duck'
+} from 'drive/mobile/modules/authorization/duck'
 
 class Unlink extends Component {
   state = {

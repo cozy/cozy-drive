@@ -5,7 +5,7 @@ import {
   backupImages,
   startMediaBackup,
   cancelMediaBackup
-} from 'drive/mobile/ducks/mediaBackup/duck'
+} from 'drive/mobile/modules/mediaBackup/duck'
 import { setWifiOnly, isImagesBackupOn, isWifiOnlyOn } from '../duck'
 import SettingCategory, {
   ELEMENT_CHECKBOX,

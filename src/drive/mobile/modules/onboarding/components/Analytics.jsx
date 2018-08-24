@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setAnalytics } from 'drive/mobile/ducks/settings/duck'
+import { setAnalytics } from 'drive/mobile/modules/settings/duck'
 import OnBoardingStep from './OnBoardingStep'
 
 export const Analytics = ({ onActivate, onSkip, breadcrumbs }) => (
