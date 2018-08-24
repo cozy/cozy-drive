@@ -1,8 +1,7 @@
 import { getEntry } from './filesystem'
 import Alerter from 'cozy-ui/react/Alerter'
-import { addToUploadQueue } from '../../ducks/upload/index'
 import { ROOT_DIR_ID } from '../../constants/config'
-import { uploadedFile, uploadQueueProcessed } from '../../actions/index'
+import { uploadFiles } from '../../actions/index'
 
 const getFile = (dirEntry, type = '') =>
   new Promise((resolve, reject) => {
@@ -80,17 +79,6 @@ const base64toBlob = (dataURI, type) => {
   return new Blob([ab], { type })
 }
 
-const uploadFiles = (files, store) => {
-  store.dispatch(
-    addToUploadQueue(
-      files,
-      ROOT_DIR_ID,
-      file => store.dispatch(uploadedFile(file)),
-      uploadQueueProcessed
-    )
-  )
-}
-
 export const intentHandlerAndroid = store => async ({
   action,
   extras = 'No extras in intent',
@@ -102,7 +90,7 @@ export const intentHandlerAndroid = store => async ({
       : [extras['android.intent.extra.STREAM']]
     try {
       const files = await getFiles(contentFiles)
-      uploadFiles(files, store)
+      store.dispatch(uploadFiles(files, ROOT_DIR_ID))
     } catch (err) {
       Alerter.info('intents.alert.error')
     }
@@ -152,7 +140,7 @@ export const intentHandlerIOS = store => async intent => {
     Alerter.info('intents.alert.error')
   } else {
     try {
-      uploadFiles(validFiles, store)
+      store.dispatch(uploadFiles(validFiles, ROOT_DIR_ID))
     } catch (err) {
       Alerter.info('intents.alert.error')
     }

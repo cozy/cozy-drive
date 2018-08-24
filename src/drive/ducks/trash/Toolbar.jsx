@@ -5,7 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button, withBreakpoints } from 'cozy-ui/react'
-import confirm from '../../lib/confirm'
+import { showModal } from 'lib/react-cozy-helpers'
 import classNames from 'classnames'
 
 import { MoreButton } from 'components/Button'
@@ -62,9 +62,9 @@ const Toolbar = ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   emptyTrash: () =>
-    confirm(<EmptyTrashConfirm t={ownProps.t} />)
-      .then(() => dispatch(emptyTrash()))
-      .catch(() => {})
+    dispatch(
+      showModal(<EmptyTrashConfirm onConfirm={() => dispatch(emptyTrash())} />)
+    )
 })
 
 export default translate()(

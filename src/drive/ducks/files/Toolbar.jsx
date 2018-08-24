@@ -18,13 +18,7 @@ import { IntentButton } from '../../components/Intent'
 import UploadButton from '../../components/UploadButton'
 import DeleteConfirm from '../../components/DeleteConfirm'
 
-import { addToUploadQueue } from '../upload'
-import {
-  uploadedFile,
-  uploadQueueProcessed,
-  downloadFiles,
-  trashFiles
-} from '../../actions'
+import { downloadFiles, trashFiles, uploadFiles } from '../../actions'
 import {
   ShareButton,
   ShareModal,
@@ -199,22 +193,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   uploadFiles: (files, displayedFolder) => {
-    dispatch(
-      addToUploadQueue(
-        files,
-        displayedFolder.id,
-        file => dispatch(uploadedFile(file)),
-        (loaded, quotas, conflicts, networkErrors, errors) =>
-          uploadQueueProcessed(
-            loaded,
-            quotas,
-            conflicts,
-            networkErrors,
-            errors,
-            ownProps.t
-          )
-      )
-    )
+    dispatch(uploadFiles(files, displayedFolder.id))
   },
   share: displayedFolder =>
     dispatch(
@@ -231,7 +210,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(
       showModal(
         <DeleteConfirm
-          t={ownProps.t}
           files={[folder]}
           onConfirm={() =>
             dispatch(trashFiles([folder])).then(() => {

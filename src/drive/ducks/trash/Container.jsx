@@ -30,7 +30,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           dispatch(
             showModal(
               <DestroyConfirm
-                t={ownProps.t}
                 fileCount={files.length}
                 confirm={() => dispatch(destroyFiles(files))}
               />

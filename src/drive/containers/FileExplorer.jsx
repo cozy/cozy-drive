@@ -10,15 +10,13 @@ import {
   showSelectionBar
 } from '../ducks/selection'
 import { showActionMenu, hideActionMenu } from '../ducks/actionmenu'
-import { addToUploadQueue } from '../ducks/upload'
 import {
   openFolder,
   getOpenedFolderId,
   fetchRecentFiles,
   fetchMoreFiles,
   openLocalFile,
-  uploadedFile,
-  uploadQueueProcessed
+  uploadFiles
 } from '../actions'
 import {
   getFolderIdFromRoute,
@@ -117,22 +115,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onFileToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected)),
   uploadFiles: (files, folderId) => {
-    dispatch(
-      addToUploadQueue(
-        files,
-        folderId,
-        file => dispatch(uploadedFile(file)),
-        (loaded, quotas, conflicts, networkErrors, errors) =>
-          uploadQueueProcessed(
-            loaded,
-            quotas,
-            conflicts,
-            networkErrors,
-            errors,
-            ownProps.t
-          )
-      )
-    )
+    dispatch(uploadFiles(files, folderId))
   }
 })
 
