@@ -11,7 +11,12 @@ const render = () => {
   return wrapper.dive().dive()
 }
 
-const mockSelectors = (selectors = {}) => {
+const mockSelectors = (providedSelectors = {}) => {
+  const { isImagesBackupOn = () => true, ...selectors } = providedSelectors
+  jest.doMock('drive/mobile/ducks/settings/duck', () => ({
+    isImagesBackupOn,
+    getServerUrl: () => 'http://cozy.tools:8080'
+  }))
   jest.doMock('./duck/reducer', () => ({
     isPreparingBackup: () => false,
     isUploading: () => false,
@@ -25,6 +30,13 @@ const mockSelectors = (selectors = {}) => {
 describe('MediaBackupProgression', () => {
   beforeEach(() => {
     jest.resetModules()
+  })
+
+  it('should not render anything when the backup is disabled', () => {
+    mockSelectors({
+      isImagesBackupOn: () => false
+    })
+    expect(render().type()).toBe(null)
   })
 
   it('should render stg when the backup is in preparation', () => {

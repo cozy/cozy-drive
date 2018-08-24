@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import PropTypes from 'prop-types'
 
-import { getServerUrl } from 'drive/mobile/ducks/settings/duck'
+import {
+  getServerUrl,
+  isImagesBackupOn
+} from 'drive/mobile/ducks/settings/duck'
 
 import UploadProgression from './components/UploadProgression'
 import UploadAbortedWifi from './components/UploadAbortedWifi'
@@ -21,6 +24,7 @@ import {
 
 const mapStateToProps = state => ({
   serverUrl: getServerUrl(state),
+  isEnabled: isImagesBackupOn(state),
   isPreparing: isPreparingBackup(state),
   isUploading: isUploading(state),
   isAborted: isAborted(state),
@@ -29,15 +33,25 @@ const mapStateToProps = state => ({
 })
 
 const UploadStatus = props => {
-  const { isPreparing, isUploading, isAborted, isQuotaReached } = props
+  const {
+    isEnabled,
+    isPreparing,
+    isUploading,
+    isAborted,
+    isQuotaReached
+  } = props
   const { t, current, total, progress, serverUrl } = props
   const storageUpgradeUrl = serverUrl
     ? serverUrl.replace(/(\w+)\./, '$1-settings.') + '/#/storage'
     : ''
 
+  if (!isEnabled) {
+    return null
+  }
   if (isPreparing) {
     return <UploadPreparing t={t} />
-  } else if (isUploading) {
+  }
+  if (isUploading) {
     return (
       <UploadProgression
         t={t}
@@ -46,13 +60,14 @@ const UploadStatus = props => {
         progress={progress}
       />
     )
-  } else if (isAborted) {
-    return <UploadAbortedWifi t={t} />
-  } else if (isQuotaReached) {
-    return <UploadQuotaError t={t} url={storageUpgradeUrl} />
-  } else {
-    return <UploadUptodate t={t} />
   }
+  if (isAborted) {
+    return <UploadAbortedWifi t={t} />
+  }
+  if (isQuotaReached) {
+    return <UploadQuotaError t={t} url={storageUpgradeUrl} />
+  }
+  return <UploadUptodate t={t} />
 }
 
 UploadStatus.propTypes = {
@@ -60,6 +75,7 @@ UploadStatus.propTypes = {
   current: PropTypes.number,
   total: PropTypes.number,
   progress: PropTypes.number,
+  isEnabled: PropTypes.bool,
   isPreparing: PropTypes.bool,
   isUploading: PropTypes.bool,
   isAborted: PropTypes.bool,
