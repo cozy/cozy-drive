@@ -13,7 +13,6 @@ import {
   openOfflineFile,
   deleteOfflineFile
 } from 'drive/mobile/lib/filesystem'
-import { openWithNoAppError } from 'drive/mobile/actions'
 import {
   isDirectory,
   isReferencedByAlbum,
@@ -54,8 +53,6 @@ export const TRASH_FILES_FAILURE = 'TRASH_FILES_FAILURE'
 export const DOWNLOAD_SELECTION = 'DOWNLOAD_SELECTION'
 export const DOWNLOAD_FILE = 'DOWNLOAD_FILE'
 export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
-export const OPEN_FILE_E_OFFLINE = 'OPEN_FILE_E_OFFLINE'
-export const OPEN_FILE_E_NO_APP = 'OPEN_FILE_E_NO_APP'
 export const ADD_FILE = 'ADD_FILE'
 export const UPDATE_FILE = 'UPDATE_FILE'
 export const DELETE_FILE = 'DELETE_FILE'
@@ -185,9 +182,7 @@ export const fetchRecentFiles = () => {
   return async (dispatch, getState) => {
     dispatch({
       type: FETCH_RECENT,
-      meta: {
-        cancelSelection: true
-      }
+      meta: META_DEFAULTS
     })
 
     try {
@@ -244,23 +239,6 @@ export const getFileDownloadUrl = async id => {
   return `${cozy.client._url}${link}`
 }
 
-export const openLocalFile = file => {
-  return async dispatch => {
-    if (!file.availableOffline) {
-      console.error('openLocalFile: this file is not available offline')
-    }
-    openOfflineFile(file).catch(error => {
-      console.error('openLocalFile', error)
-      dispatch(
-        openWithNoAppError({
-          cancelSelection: true,
-          hideActionMenu: true
-        })
-      )
-    })
-  }
-}
-
 export const uploadFiles = (files, dirId) => dispatch => {
   dispatch(
     addToUploadQueue(
@@ -273,6 +251,17 @@ export const uploadFiles = (files, dirId) => dispatch => {
         )
     )
   )
+}
+
+const uploadedFile = file => {
+  return (dispatch, getState) => {
+    return dispatch({
+      type: UPLOAD_FILE_SUCCESS,
+      file: extractFileAttributes(file),
+      currentFileCount: getState().view.fileCount,
+      currentSort: getSort(getState())
+    })
+  }
 }
 
 const uploadQueueProcessed = (
@@ -297,17 +286,6 @@ const uploadQueueProcessed = (
   } else {
     Alerter.success('upload.alert.success', {
       smart_count: loaded.length
-    })
-  }
-}
-
-export const uploadedFile = file => {
-  return (dispatch, getState) => {
-    return dispatch({
-      type: UPLOAD_FILE_SUCCESS,
-      file: extractFileAttributes(file),
-      currentFileCount: getState().view.fileCount,
-      currentSort: getSort(getState())
     })
   }
 }
@@ -397,6 +375,66 @@ export const trashFiles = files => async (dispatch, _, { client }) => {
   })
 }
 
+const isAlreadyInTrash = err => {
+  const reasons = err.reason !== undefined ? err.reason.errors : undefined
+  if (reasons) {
+    for (const reason of reasons) {
+      if (reason.detail === 'File or directory is already in the trash') {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+const isMissingFile = error => error.status === 404
+
+const downloadFileError = error => {
+  return isMissingFile(error)
+    ? 'error.download_file.missing'
+    : 'error.download_file.offline'
+}
+
+export const downloadFiles = files => {
+  const meta = META_DEFAULTS
+  return async dispatch => {
+    if (files.length === 1 && !isDirectory(files[0])) {
+      return dispatch(downloadFile(files[0], meta))
+    }
+    const paths = files.map(f => f.path)
+    const href = await cozy.client.files.getArchiveLinkByPaths(paths)
+    const fullpath = await cozy.client.fullpath(href)
+    forceFileDownload(fullpath, 'files.zip')
+    return dispatch({ type: DOWNLOAD_SELECTION, files, meta })
+  }
+}
+
+const downloadFile = (file, meta) => {
+  return async dispatch => {
+    const downloadURL = await cozy.client.files
+      .getDownloadLinkById(file.id)
+      .catch(error => {
+        Alerter.error(downloadFileError(error))
+        throw error
+      })
+    const filename = file.name
+
+    forceFileDownload(`${cozy.client._url}${downloadURL}?Dl=1`, filename)
+    return dispatch({ type: DOWNLOAD_FILE, file, meta })
+  }
+}
+
+const forceFileDownload = (href, filename) => {
+  const element = document.createElement('a')
+  element.setAttribute('href', href)
+  element.setAttribute('download', filename)
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
+}
+
+// MOBILE STUFF
 export const exportFilesNative = files => {
   return async dispatch => {
     const downloadAllFiles = files.map(async file => {
@@ -422,22 +460,8 @@ export const exportFilesNative = files => {
         }
       )
     } catch (error) {
-      Alerter.info(downloadFileError(error))
+      Alerter.error(downloadFileError(error))
     }
-  }
-}
-
-export const downloadFiles = files => {
-  const meta = META_DEFAULTS
-  return async dispatch => {
-    if (files.length === 1 && !isDirectory(files[0])) {
-      return dispatch(downloadFile(files[0], meta))
-    }
-    const paths = files.map(f => f.path)
-    const href = await cozy.client.files.getArchiveLinkByPaths(paths)
-    const fullpath = await cozy.client.fullpath(href)
-    forceFileDownload(fullpath, 'files.zip')
-    return dispatch({ type: DOWNLOAD_SELECTION, files, meta })
   }
 }
 
@@ -458,7 +482,7 @@ const makeAvailableOffline = file => async dispatch => {
   const response = await cozy.client.files
     .downloadById(file.id)
     .catch(error => {
-      dispatch(downloadFileError(error, META_DEFAULTS))
+      Alerter.error(downloadFileError(error))
       throw error
     })
   const blob = await response.blob()
@@ -470,72 +494,36 @@ const makeAvailableOffline = file => async dispatch => {
   dispatch(availableOffline.makeAvailableOffline(file.id))
 }
 
-const isMissingFile = error => error.status === 404
-
-const downloadFileError = (error, meta) => {
-  return isMissingFile(error)
-    ? 'error.download_file.missing'
-    : 'error.download_file.offline'
-}
-
-const downloadFile = (file, meta) => {
+export const openLocalFile = file => {
   return async dispatch => {
-    const downloadURL = await cozy.client.files
-      .getDownloadLinkById(file.id)
-      .catch(error => {
-        Alerter.error(downloadFileError(error, meta))
-        throw error
-      })
-    const filename = file.name
-
-    forceFileDownload(`${cozy.client._url}${downloadURL}?Dl=1`, filename)
-    return dispatch({ type: DOWNLOAD_FILE, file, meta })
+    if (!file.availableOffline) {
+      console.error('openLocalFile: this file is not available offline')
+    }
+    openOfflineFile(file).catch(error => {
+      console.error('openLocalFile', error)
+      Alerter.error(openWithNoAppError())
+    })
   }
 }
 
-const forceFileDownload = (href, filename) => {
-  const element = document.createElement('a')
-  element.setAttribute('href', href)
-  element.setAttribute('download', filename)
-  element.style.display = 'none'
-  document.body.appendChild(element)
-  element.click()
-  document.body.removeChild(element)
-}
+const openWithNoAppError = () => 'mobile.error.open_with.noapp'
 
 export const openFileWith = (id, filename) => {
-  const meta = {
-    cancelSelection: true,
-    hideActionMenu: true
-  }
   return async (dispatch, getState) => {
     if (isCordova() && window.cordova.plugins.fileOpener2) {
       dispatch({ type: OPEN_FILE_WITH, id })
       const response = await cozy.client.files.downloadById(id).catch(error => {
         console.error('downloadById', error)
-        dispatch(downloadFileError(error, meta))
+        Alerter.error(downloadFileError(error))
         throw error
       })
       const blob = await response.blob()
       await saveAndOpenWithCordova(blob, filename).catch(error => {
         console.error('openFileWithCordova', error)
-        dispatch(openWithNoAppError(meta))
+        Alerter.error(openWithNoAppError())
       })
     } else {
-      dispatch(openWithNoAppError(meta))
+      Alerter.error(openWithNoAppError())
     }
   }
-}
-
-// helpers
-const isAlreadyInTrash = err => {
-  const reasons = err.reason !== undefined ? err.reason.errors : undefined
-  if (reasons) {
-    for (const reason of reasons) {
-      if (reason.detail === 'File or directory is already in the trash') {
-        return true
-      }
-    }
-  }
-  return false
 }

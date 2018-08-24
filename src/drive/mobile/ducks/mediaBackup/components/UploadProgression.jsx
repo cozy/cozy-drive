@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import styles from './styles'
+import styles from '../styles'
 
 const UploadProgression = ({ t, current, total, progress }) => {
-  console.log({ progress })
   return (
     <div className={styles['coz-upload-status-wrapper']}>
       <progress
@@ -42,7 +41,7 @@ const UploadProgression = ({ t, current, total, progress }) => {
 UploadProgression.propTypes = {
   current: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
-  progress: PropTypes.progress,
+  progress: PropTypes.number,
   t: PropTypes.func.isRequired
 }
 

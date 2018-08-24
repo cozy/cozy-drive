@@ -12,7 +12,7 @@ const render = () => {
 }
 
 const mockSelectors = (selectors = {}) => {
-  jest.doMock('../ducks/mediaBackup/reducer', () => ({
+  jest.doMock('./duck/reducer', () => ({
     isPreparingBackup: () => false,
     isUploading: () => false,
     isAborted: () => false,

@@ -4,21 +4,22 @@ import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
 import { ModalManager } from 'react-cozy-helpers'
 
+import MediaBackupProgression from 'drive/mobile/ducks/mediaBackup/MediaBackupProgression'
+import RatingModal from 'drive/mobile/ducks/settings/RatingModal'
+import FirstUploadModal from 'drive/mobile/ducks/mediaBackup/FirstUploadModal'
+
 import Main from './Main'
 import Topbar from './Topbar'
 import FileListHeader, { MobileFileListHeader } from './FileListHeader'
 import Dropzone from './Dropzone'
+import AddFolder from './AddFolder'
+import FileActionMenu from './FileActionMenu'
+import FolderContent from './FolderContent'
 
 import { ROOT_DIR_ID } from '../constants/config'
 import Breadcrumb from '../containers/Breadcrumb'
 import { SelectionBar } from '../ducks/selection'
 import { getFolderIdFromRoute } from '../reducers/view'
-import AddFolder from './AddFolder'
-import FileActionMenu from './FileActionMenu'
-import MediaBackupProgression from '../mobile/containers/MediaBackupProgression'
-import RatingModal from '../mobile/ducks/settings/RatingModal'
-import FirstUploadModal from '../mobile/containers/FirstUploadModal'
-import FolderContent from './FolderContent'
 
 import styles from '../styles/folderview'
 

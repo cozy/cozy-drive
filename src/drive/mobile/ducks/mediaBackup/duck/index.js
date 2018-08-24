@@ -173,7 +173,9 @@ export const backupImages = backupImages => async (dispatch, getState) => {
     dispatch(setBackupImages(backupImages))
   }
 
-  const { updateStatusBackgroundService } = require('../../lib/background')
+  const {
+    updateStatusBackgroundService
+  } = require('drive/mobile/lib/background')
   updateStatusBackgroundService(backupImages)
   if (backupImages) {
     dispatch(startMediaBackup(getMediaFolderName()))
