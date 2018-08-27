@@ -10,9 +10,7 @@ const CozyHomeLink = ({ from, embedInCozyBar = false }, { t }) => (
     label={t('Share.create-cozy')}
     icon="cozy-negative"
     className={embedInCozyBar ? styles['bar-homelink'] : ''}
-    href={` https://manager.cozycloud.cc/cozy/create${
-      from ? `?pk_campaign=${encodeURIComponent(from)}` : ''
-    }`}
+    href={getHomeLinkHref(from)}
   />
 )
 
@@ -24,5 +22,10 @@ CozyHomeLink.propTypes = {
 CozyHomeLink.defaultProps = {
   from: ''
 }
+
+export const getHomeLinkHref = from =>
+  `https://manager.cozycloud.cc/cozy/create${
+    from ? `?pk_campaign=${encodeURIComponent(from)}` : ''
+  }`
 
 export default translate()(CozyHomeLink)
