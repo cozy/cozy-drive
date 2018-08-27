@@ -13,7 +13,7 @@ const migrateSettings = async prevState => {
     analytics,
     wifiOnly
   } = prevState.mobile.settings
-  const { revoked } = prevState.mobile.authorization
+  const { revoked } = prevState.mobile.authorization || {}
   const newState = {
     mobile: {
       authorization: {
