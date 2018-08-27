@@ -27,6 +27,20 @@ const getQueryParameter = () =>
     .map(varval => varval.split('='))
     .reduce(arrToObj, {})
 
+const getDocumentId = async (client) => {
+  const isPreviewingSharing = window.location.toString().includes('/preview')
+
+  if (isPreviewingSharing) {
+    const response = await client.collection('io.cozy.permissions').getSelfPermissions()
+    const sharingId = Object.values(response)[0]['values'][0]
+    return sharingId
+  }
+  else {
+    const { id } = getQueryParameter()
+    return id
+  }
+}
+
 const initCozyBar = data => {
   if (
     data.cozyAppName &&
@@ -56,7 +70,7 @@ const init = async () => {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const dataset = root.dataset
-  const { id, sharecode } = getQueryParameter()
+  const { sharecode } = getQueryParameter()
 
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${dataset.cozyDomain}`
@@ -88,6 +102,8 @@ const init = async () => {
   const store = configureStore(client, polyglot.t.bind(polyglot))
 
   try {
+    const id = await getDocumentId(client)
+
     const response = await client.collection('io.cozy.files').get(id)
     const { data } = response
     const isFile = data && data.type === 'file'
