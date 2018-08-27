@@ -5,7 +5,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
-import Viewer from 'viewer'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 import { CozyHomeLink } from 'components/Button'
 
@@ -13,6 +12,7 @@ import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/components/PublicLayout'
 
 import LightFolderView from 'drive/components/LightFolderView'
+import LightFileViewer from 'drive/components/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
 
 const arrToObj = (obj = {}, [key, val = true]) => {
@@ -96,16 +96,7 @@ const init = async () => {
       <I18n lang={lang} polyglot={polyglot}>
         <CozyProvider store={store} client={client}>
           {isFile ? (
-            <div>
-              <CozyHomeLink embedInCozyBar from="sharing-drive" />
-              <Viewer
-                files={[data]}
-                currentIndex={0}
-                fullscreen={false}
-                dark={false}
-                controls={false}
-              />
-            </div>
+            <LightFileViewer files={[data]} />
           ) : (
             <Router history={hashHistory}>
               <Route component={PublicLayout}>
