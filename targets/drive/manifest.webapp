@@ -52,6 +52,11 @@
       "folder": "/public",
       "index": "index.html",
       "public": true
+    },
+    "/preview": {
+      "folder": "/public",
+      "index": "index.html",
+      "public": true
     }
   },
   "intents": [
