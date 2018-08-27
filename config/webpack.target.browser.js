@@ -36,7 +36,7 @@ module.exports = function(production, app) {
     plugins.push(
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, `../targets/${app}/web/services.ejs`),
-        title: `cozy-${app}`,
+        title: `Cozy ${app.charAt(0).toUpperCase()}${app.slice(1)}`,
         filename: 'services.html',
         chunks: ['services'],
         inject: 'head',
@@ -62,7 +62,7 @@ module.exports = function(production, app) {
           __dirname,
           `../targets/${app}/web/public/index.ejs`
         ),
-        title: `cozy-${app}`,
+        title: `Cozy ${app.charAt(0).toUpperCase()}${app.slice(1)}`,
         filename: 'public/index.html',
         chunks: ['public/app'],
         inject: 'head',
