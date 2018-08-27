@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import classnames from 'classnames'
 
 import Main from './Main'
 import { Content } from 'cozy-ui/react/Layout'
@@ -9,21 +8,12 @@ import FileListHeader from './FileListHeader'
 import Topbar from './Topbar'
 import Breadcrumb from '../containers/Breadcrumb'
 import ErrorShare from 'components/Error/ErrorShare'
+import PublicToolbar from './PublicToolbar'
 
-import DownloadButton from './DownloadButton'
-import { CozyHomeLink } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
-
-import {
-  openFolder,
-  getOpenedFolderId,
-  fetchMoreFiles,
-  downloadFiles
-} from '../actions'
+import { openFolder, getOpenedFolderId, fetchMoreFiles } from '../actions'
 import { getVisibleFiles } from '../reducers'
 
 import styles from '../styles/folderview'
-import toolbarstyles from '../styles/toolbar'
 import { getFolderIdFromRoute } from '../reducers/view'
 
 import Viewer from 'viewer'
@@ -70,7 +60,6 @@ class DumbFolderView extends React.Component {
   }
 
   render() {
-    const { t } = this.context
     if (this.state.revoked) {
       return <ErrorShare errorType={`public_unshared`} />
     }
@@ -79,36 +68,7 @@ class DumbFolderView extends React.Component {
       <Main>
         <Topbar>
           <Breadcrumb isPublic />
-          <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
-            <DownloadButton
-              label={t('toolbar.menu_download_folder')}
-              className={toolbarstyles['fil-public-download']}
-              onDownload={() =>
-                this.props.onDownload([this.props.displayedFolder])
-              }
-              theme="secondary"
-            />
-            <CozyHomeLink from="sharing-drive" />
-            <Menu
-              title={t('toolbar.item_more')}
-              className={classnames(
-                toolbarstyles['fil-toolbar-menu'],
-                toolbarstyles['fil-toolbar-menu--public']
-              )}
-              buttonClassName={toolbarstyles['fil-toolbar-more-btn']}
-            >
-              <Item>
-                <a
-                  className={toolbarstyles['fil-action-download']}
-                  onClick={() =>
-                    this.props.onDownload([this.props.displayedFolder])
-                  }
-                >
-                  {t('toolbar.menu_download_folder')}
-                </a>
-              </Item>
-            </Menu>
-          </div>
+          <PublicToolbar files={[this.props.displayedFolder]} />
         </Topbar>
         <Content>
           <div className={styles['fil-content-table']}>
@@ -149,8 +109,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
-  onFolderOpen: folderId => dispatch(openFolder(folderId)),
-  onDownload: files => dispatch(downloadFiles(files))
+  onFolderOpen: folderId => dispatch(openFolder(folderId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DumbFolderView)
