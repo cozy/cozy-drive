@@ -9,7 +9,6 @@ import MediaBackupProgression from 'drive/mobile/modules/mediaBackup/MediaBackup
 import RatingModal from 'drive/mobile/modules/settings/RatingModal'
 import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
 
-import FileActionMenu from 'drive/web/modules/actionmenu/FileActionMenu'
 import FileList from 'drive/web/modules/filelist/FileList'
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
@@ -21,17 +20,11 @@ import Topbar from './Topbar'
 
 class FolderView extends Component {
   render() {
-    const {
-      children,
-      isTrashContext,
-      actionMenuActive,
-      selectionModeActive
-    } = this.props
+    const { children, isTrashContext, selectionModeActive } = this.props
     const {
       displayedFolder,
       files,
       selected,
-      actionable,
       actions,
       Toolbar,
       canSort,
@@ -39,7 +32,7 @@ class FolderView extends Component {
       canUpload,
       canCreateFolder
     } = this.props
-    const { hideActionMenu, showSelectionBar, uploadFiles } = this.props
+    const { showSelectionBar, uploadFiles } = this.props
 
     const nothingToDo = isTrashContext && files.length === 0
     const folderId = getFolderIdFromRoute(
@@ -88,15 +81,9 @@ class FolderView extends Component {
             {...this.props}
             canSort={canSort}
             selectionModeActive={selectionModeActive}
+            fileActions={actions.selection}
           />
           {this.renderViewer(children)}
-          {actionMenuActive && (
-            <FileActionMenu
-              files={actionable}
-              actions={actions.selection}
-              onClose={hideActionMenu}
-            />
-          )}
         </Dropzone>
         <ModalManager />
       </Main>

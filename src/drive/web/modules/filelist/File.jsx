@@ -266,6 +266,7 @@ class File extends Component {
       attributes,
       selected,
       selectionModeActive,
+      actionable,
       onShowActionMenu,
       isRenaming,
       withSelectionCheckbox,
@@ -317,12 +318,14 @@ class File extends Component {
         />
         <Size filesize={formattedSize} />
         <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
-        <FileAction
-          onClick={e => {
-            onShowActionMenu(attributes.id)
-            e.stopPropagation()
-          }}
-        />
+        {actionable && (
+          <FileAction
+            onClick={e => {
+              onShowActionMenu(attributes.id)
+              e.stopPropagation()
+            }}
+          />
+        )}
       </div>
     )
   }

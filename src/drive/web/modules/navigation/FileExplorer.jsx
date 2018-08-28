@@ -10,11 +10,6 @@ import {
   showSelectionBar
 } from 'drive/web/modules/selection/duck'
 import {
-  showActionMenu,
-  hideActionMenu,
-  isMenuVisible
-} from 'drive/web/modules/actionmenu/duck'
-import {
   openFolder,
   getOpenedFolderId,
   fetchRecentFiles,
@@ -23,8 +18,7 @@ import {
   uploadFiles,
   getFolderIdFromRoute,
   getVisibleFiles,
-  getSelectedFiles,
-  getActionableFiles
+  getSelectedFiles
 } from 'drive/web/modules/navigation/duck'
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
@@ -90,15 +84,11 @@ const mapStateToProps = (state, ownProps) => ({
   requestedFiles: state.view.requestedFiles,
   files: getVisibleFiles(state),
   selected: getSelectedFiles(state),
-  actionable: getActionableFiles(state),
-  selectionModeActive: isSelectionBarVisible(state),
-  actionMenuActive: isMenuVisible(state)
+  selectionModeActive: isSelectionBarVisible(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   showSelectionBar: () => dispatch(showSelectionBar()),
-  showActionMenu: fileId => dispatch(showActionMenu(fileId)),
-  hideActionMenu: () => dispatch(hideActionMenu()),
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
