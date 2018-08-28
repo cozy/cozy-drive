@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
-import Main from '../../../components/Main'
+import Main from 'drive/web/modules/layout/Main'
 
 import DebugTools from './components/DebugTools'
 import About from './components/About'

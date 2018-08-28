@@ -8,10 +8,13 @@ import {
   createTrackerMiddleware
 } from 'cozy-ui/react/helpers/tracker'
 import thunkMiddleware from 'redux-thunk'
-import eventTrackerMiddleware from '../middlewares/EventTracker'
+import eventTrackerMiddleware from './middlewares/EventTracker'
 import createRootReducer from './rootReducer'
 import { saveState } from './persistedState'
-import { ANALYTICS_URL, getReporterConfiguration } from '../mobile/lib/reporter'
+import {
+  ANALYTICS_URL,
+  getReporterConfiguration
+} from 'drive/mobile/lib/reporter'
 
 const configureStore = (client, t, initialState = {}) => {
   const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]

@@ -6,7 +6,8 @@ import AppRoute from 'drive/components/AppRoute'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 
-import { saveCredentials, unlink, isAuthorized, isRevoked } from './duck'
+import { unlink, isAuthorized, isRevoked } from './duck'
+import { saveCredentials } from './sagas'
 
 class DriveMobileRouter extends Component {
   afterAuthentication = async ({ url, clientInfo, token, router }) => {

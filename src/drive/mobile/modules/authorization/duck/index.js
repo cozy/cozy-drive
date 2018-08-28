@@ -2,11 +2,9 @@ export {
   UNLINK,
   setClient,
   setToken,
-  saveCredentials,
   revokeClient,
   unrevokeClient,
-  unlink,
-  renewAuthorization
+  unlink
 } from './actions'
 
 export {
