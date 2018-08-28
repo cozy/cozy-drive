@@ -3,6 +3,7 @@ import styles from '../styles/topbar'
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 const KEYCODE_ENTER = 13
 const KEYCODE_ESC = 27
@@ -80,6 +81,14 @@ class Topbar extends Component {
       </div>
     )
   }
+}
+
+Topbar.propTypes = {
+  viewName: PropTypes.string.isRequired,
+  albumName: PropTypes.string,
+  t: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
+  onEdit: PropTypes.func.isRequired
 }
 
 export default translate()(withRouter(Topbar))
