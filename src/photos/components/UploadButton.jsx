@@ -23,7 +23,7 @@ const styles = {
 export const UploadButton = ({
   t,
   label,
-  type = 'button',
+  inMenu = false,
   disabled,
   onUpload,
   className = ''
@@ -31,11 +31,11 @@ export const UploadButton = ({
   <label
     role="button"
     disabled={disabled}
-    className={`${className} ${type === 'menu-item' ? '' : button['c-btn']}`}
+    className={`${className} ${inMenu ? '' : button['c-btn']}`}
     style={styles.parent}
   >
     <span>
-      <Icon icon="upload" />
+      {!inMenu && <Icon icon="upload" />}
       {label}
       <input
         type="file"
