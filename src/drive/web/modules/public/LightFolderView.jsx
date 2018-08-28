@@ -65,6 +65,7 @@ class DumbFolderView extends React.Component {
       return <ErrorShare errorType={`public_unshared`} />
     }
     const { viewerOpened, currentViewedIndex } = this.state
+
     return (
       <Main>
         <Topbar>
@@ -75,8 +76,6 @@ class DumbFolderView extends React.Component {
           <FileList
             onFileOpen={this.showInViewer}
             withSelectionCheckbox={false}
-            isLoading={this.props.fetchStatus === 'pending'}
-            isInError={this.props.fetchStatus === 'failed'}
             {...this.props}
           />
           {viewerOpened && (
@@ -98,7 +97,6 @@ const mapStateToProps = state => ({
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
   requestedFiles: state.view.requestedFiles,
-  fetchStatus: state.view.fetchStatus,
   files: getVisibleFiles(state)
 })
 

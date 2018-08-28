@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
+import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
 import FileListRowsPlaceholder from './FileListRowsPlaceholder'
 import FileListRows from './FileListRows'
 
@@ -26,27 +27,29 @@ EmptyContent.defaultProps = {
 }
 
 const AsyncFileListRows = props => {
-  const { files, isAddingFolder, isLoading, isInError } = props
+  const { files, isAddingFolder } = props
 
-  if (isLoading) return <FileListRowsPlaceholder />
-  else if (isInError) return <Oops />
-  else if (files.length === 0 && !isAddingFolder)
-    return <EmptyContent {...props} />
-  else return <FileListRows withSelectionCheckbox {...props} />
+  return (
+    <AsyncBoundary>
+      {({ isLoading, isInError }) => {
+        if (isLoading) return <FileListRowsPlaceholder />
+        else if (isInError) return <Oops />
+        else if (files.length === 0 && !isAddingFolder)
+          return <EmptyContent {...props} />
+        else return <FileListRows withSelectionCheckbox {...props} />
+      }}
+    </AsyncBoundary>
+  )
 }
 
 AsyncFileListRows.propTypes = {
   files: PropTypes.array,
-  isAddingFolder: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  isInError: PropTypes.bool
+  isAddingFolder: PropTypes.bool
 }
 
 AsyncFileListRows.defaultProps = {
   files: [],
-  isAddingFolder: false,
-  isLoading: false,
-  isInError: false
+  isAddingFolder: false
 }
 
 export default AsyncFileListRows

@@ -14,6 +14,7 @@ import FileList from 'drive/web/modules/filelist/FileList'
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
+import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
 import { getFolderIdFromRoute } from 'drive/web/modules/navigation/duck'
 import Main from './Main'
 import Topbar from './Topbar'
@@ -40,9 +41,6 @@ class FolderView extends Component {
     } = this.props
     const { hideActionMenu, showSelectionBar, uploadFiles } = this.props
 
-    const fetchFailed = this.props.fetchStatus === 'failed'
-    const fetchPending = this.props.fetchStatus === 'pending'
-    const isNavigating = this.props.isNavigating
     const nothingToDo = isTrashContext && files.length === 0
     const folderId = getFolderIdFromRoute(
       this.props.location,
@@ -53,18 +51,22 @@ class FolderView extends Component {
     const toolbarActions = {}
     if (canCreateFolder) toolbarActions.addFolder = this.toggleAddFolder
     return (
-      <Main working={isNavigating}>
+      <Main>
         <Topbar>
           <Breadcrumb />
-          <Toolbar
-            folderId={folderId}
-            actions={toolbarActions}
-            canUpload={canUpload}
-            disabled={
-              fetchFailed || fetchPending || selectionModeActive || nothingToDo
-            }
-            onSelectItemsClick={showSelectionBar}
-          />
+          <AsyncBoundary>
+            {({ isLoading, isInError }) => (
+              <Toolbar
+                folderId={folderId}
+                actions={toolbarActions}
+                canUpload={canUpload}
+                disabled={
+                  isInError || isLoading || selectionModeActive || nothingToDo
+                }
+                onSelectItemsClick={showSelectionBar}
+              />
+            )}
+          </AsyncBoundary>
         </Topbar>
         <Dropzone
           role="main"
@@ -86,8 +88,6 @@ class FolderView extends Component {
             {...this.props}
             canSort={canSort}
             selectionModeActive={selectionModeActive}
-            isLoading={fetchPending || isNavigating}
-            isInError={fetchFailed}
           />
           {this.renderViewer(children)}
           {actionMenuActive && (

@@ -7,7 +7,6 @@ import Hammer from 'hammerjs'
 import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { isDirectory } from 'drive/web/modules/drive/files'
-import Spinner from 'cozy-ui/react/Spinner'
 import { ImageLoader } from 'components/Image'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedBadge, SharedStatus } from 'sharing'
@@ -88,7 +87,6 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => (
 const FileName = ({
   attributes,
   isRenaming,
-  opening,
   withFilePath,
   withSharedBadge,
   isMobile,
@@ -134,9 +132,6 @@ const FileName = ({
                 {extension && (
                   <span className={styles['fil-content-ext']}>{extension}</span>
                 )}
-              </div>
-              <div className={styles['fil-file-filename-spinner']}>
-                {opening === true && <Spinner />}
               </div>
             </div>
           </div>
@@ -224,10 +219,6 @@ const FileAction = ({ onClick }) => (
 )
 
 class File extends Component {
-  state = {
-    opening: false
-  }
-
   componentDidMount() {
     this.gesturesHandler = new Hammer.Manager(this.filerow)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
@@ -257,9 +248,7 @@ class File extends Component {
   open(e, attributes) {
     e.stopPropagation()
     if (isDirectory(attributes)) {
-      this.setState(state => ({ ...state, opening: true }))
       this.props.onFolderOpen(attributes.id).then(() => {
-        this.setState(state => ({ ...state, opening: false }))
         this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
@@ -285,7 +274,6 @@ class File extends Component {
       isAvailableOffline,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
-    const { opening } = this.state
     const filContentRowSelected = classNames(
       styles['fil-content-row'],
       selected ? styles['fil-content-row-selected'] : '',
@@ -317,7 +305,6 @@ class File extends Component {
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
-          opening={opening}
           withFilePath={withFilePath}
           withSharedBadge={withSharedBadge}
           isMobile={isMobile}
