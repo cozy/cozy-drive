@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { Content } from 'cozy-ui/react/Layout'
-import FolderContent from 'drive/web/modules/filelist/FolderContent'
-import FileListHeader from 'drive/web/modules/filelist/FileListHeader'
+import FileList from 'drive/web/modules/filelist/FileList'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
@@ -17,8 +16,6 @@ import {
   fetchMoreFiles,
   getVisibleFiles
 } from 'drive/web/modules/navigation/duck'
-
-import styles from 'drive/styles/folderview'
 
 import Viewer from 'viewer'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
@@ -75,26 +72,21 @@ class DumbFolderView extends React.Component {
           <PublicToolbar files={[this.props.displayedFolder]} />
         </Topbar>
         <Content>
-          <div className={styles['fil-content-table']}>
-            <FileListHeader />
-            <div className={styles['fil-content-body']}>
-              <FolderContent
-                onFileOpen={this.showInViewer}
-                withSelectionCheckbox={false}
-                isLoading={this.props.fetchStatus === 'pending'}
-                isInError={this.props.fetchStatus === 'failed'}
-                {...this.props}
-              />
-              {viewerOpened && (
-                <Viewer
-                  files={this.props.files}
-                  currentIndex={currentViewedIndex}
-                  onChange={this.showInViewer}
-                  onClose={this.closeViewer}
-                />
-              )}
-            </div>
-          </div>
+          <FileList
+            onFileOpen={this.showInViewer}
+            withSelectionCheckbox={false}
+            isLoading={this.props.fetchStatus === 'pending'}
+            isInError={this.props.fetchStatus === 'failed'}
+            {...this.props}
+          />
+          {viewerOpened && (
+            <Viewer
+              files={this.props.files}
+              currentIndex={currentViewedIndex}
+              onChange={this.showInViewer}
+              onClose={this.closeViewer}
+            />
+          )}
         </Content>
       </Main>
     )
