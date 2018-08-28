@@ -1,9 +1,13 @@
 'use strict'
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
+
+const SRC_DIR = path.resolve(__dirname, '../src')
 
 module.exports = production => ({
   resolve: {
+    modules: ['node_modules', SRC_DIR],
     extensions: ['.styl']
   },
   module: {

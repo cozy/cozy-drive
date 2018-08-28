@@ -1,6 +1,15 @@
 /* global __TARGET__ */
 import { combineReducers } from 'redux'
-import baseReducers from 'drive/reducers'
+
+import { default as view } from 'drive/web/modules/navigation/duck'
+import { default as selection } from 'drive/web/modules/selection/duck'
+import { default as actionmenu } from 'drive/web/modules/actionmenu/duck'
+// TODO: Get rid of this, local state would be better
+import { default as rename } from 'drive/web/modules/drive/rename'
+import { default as upload } from 'drive/web/modules/upload'
+// TODO: Move this to his own module/duck?
+import { default as availableOffline } from 'drive/web/modules/drive/availableOffline'
+import { default as ui } from 'react-cozy-helpers'
 
 import { default as settings } from 'drive/mobile/modules/settings/duck'
 import { default as mediaBackup } from 'drive/mobile/modules/mediaBackup/duck'
@@ -9,6 +18,16 @@ import {
   UNLINK
 } from 'drive/mobile/modules/authorization/duck'
 import { default as replication } from 'drive/mobile/modules/replication/duck'
+
+const baseReducers = {
+  ui,
+  view,
+  upload,
+  actionmenu,
+  selection,
+  rename,
+  availableOffline
+}
 
 const mobileReducer = combineReducers({
   authorization,

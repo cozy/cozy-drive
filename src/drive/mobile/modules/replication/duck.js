@@ -1,8 +1,4 @@
 /* global __TARGET__ */
-import { openFolder, getOpenedFolderId } from 'drive/actions'
-import { startReplication as startPouchReplication } from 'drive/mobile/lib/replication'
-import { resetClient } from 'drive/mobile/lib/cozy-helper'
-import { revokeClient as reduxRevokeClient } from 'drive/mobile/modules/authorization/duck'
 import { isOfflineCapable } from 'drive/mobile/modules/settings/duck'
 
 const SET_FIRST_REPLICATION = 'SET_FIRST_REPLICATION'
@@ -45,36 +41,7 @@ export const setFirstReplication = firstReplication => ({
   firstReplication
 })
 
-const setPouchIndexes = indexes => ({
+export const setPouchIndexes = indexes => ({
   type: SET_POUCH_INDEXES,
   indexes
 })
-
-export const startReplication = () => (dispatch, getState) => {
-  console.info('Starting replication...')
-
-  const firstReplication = isFirstReplicationDone(getState())
-  const existingIndexes = getPouchIndexes(getState())
-  const refreshFolder = () => {
-    dispatch(openFolder(getOpenedFolderId(getState())))
-  }
-  const revokeClient = () => {
-    resetClient()
-    dispatch(reduxRevokeClient())
-  }
-  const firstReplicationFinished = () => {
-    dispatch(setFirstReplication(true))
-  }
-  const indexesCreated = indexes => {
-    dispatch(setPouchIndexes(indexes))
-  }
-
-  startPouchReplication(
-    existingIndexes,
-    firstReplication,
-    firstReplicationFinished,
-    refreshFolder,
-    revokeClient,
-    indexesCreated
-  )
-}

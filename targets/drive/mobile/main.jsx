@@ -47,7 +47,7 @@ import {
   isClientRevoked
 } from 'drive/mobile/modules/authorization/duck'
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
-import { startReplication } from 'drive/mobile/modules/replication/duck'
+import { startReplication } from 'drive/mobile/modules/replication/sagas'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact

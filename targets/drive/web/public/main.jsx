@@ -6,13 +6,11 @@ import { render } from 'react-dom'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
-import { CozyHomeLink } from 'components/Button'
 
 import configureStore from 'drive/store/configureStore'
-import PublicLayout from 'drive/components/PublicLayout'
-
-import LightFolderView from 'drive/components/LightFolderView'
-import LightFileViewer from 'drive/components/LightFileViewer'
+import PublicLayout from 'drive/web/modules/public/PublicLayout'
+import LightFolderView from 'drive/web/modules/public/LightFolderView'
+import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
 
 const arrToObj = (obj = {}, [key, val = true]) => {
@@ -27,15 +25,16 @@ const getQueryParameter = () =>
     .map(varval => varval.split('='))
     .reduce(arrToObj, {})
 
-const getDocumentId = async (client) => {
+const getDocumentId = async client => {
   const isPreviewingSharing = window.location.toString().includes('/preview')
 
   if (isPreviewingSharing) {
-    const response = await client.collection('io.cozy.permissions').getSelfPermissions()
+    const response = await client
+      .collection('io.cozy.permissions')
+      .getSelfPermissions()
     const sharingId = Object.values(response)[0]['values'][0]
     return sharingId
-  }
-  else {
+  } else {
     const { id } = getQueryParameter()
     return id
   }
