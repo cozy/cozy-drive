@@ -1,15 +1,16 @@
+/* global cozy */
 import styles from '../../../styles/toolbar'
 
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Menu, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
-const { BarRight } = cozy.bar
 
 import UploadButton from '../../../components/UploadButton'
 import { MoreButton } from 'components/Button'
 
 import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
+const { BarRight } = cozy.bar
 
 const MoreMenu = ({ t, disabled, uploadPhotos, selectItems }) => (
   <Menu
@@ -78,7 +79,8 @@ const Toolbar = (
 Toolbar.propTypes = {
   disabled: PropTypes.bool,
   uploadPhotos: PropTypes.func.isRequired,
-  selectItems: PropTypes.func.isRequired
+  selectItems: PropTypes.func.isRequired,
+  breakpoints: PropTypes.node
 }
 
 export default withBreakpoints()(Toolbar)
