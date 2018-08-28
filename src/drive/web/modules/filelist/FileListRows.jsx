@@ -99,6 +99,7 @@ class FileListRows extends PureComponent {
       onFolderOpen,
       onFileOpen,
       onFileToggle,
+      actionable,
       showActionMenu,
       withSelectionCheckbox,
       withFilePath,
@@ -123,6 +124,7 @@ class FileListRows extends PureComponent {
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
         onToggle={onFileToggle}
+        actionable={actionable}
         onShowActionMenu={showActionMenu}
         attributes={file}
         selectionModeActive={selectionModeActive}
