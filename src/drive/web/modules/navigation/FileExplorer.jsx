@@ -24,8 +24,7 @@ import {
   getFolderIdFromRoute,
   getVisibleFiles,
   getSelectedFiles,
-  getActionableFiles,
-  isNavigating
+  getActionableFiles
 } from 'drive/web/modules/navigation/duck'
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
@@ -85,12 +84,10 @@ class FileExplorer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isNavigating: isNavigating(state),
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
   requestedFiles: state.view.requestedFiles,
-  fetchStatus: state.view.fetchStatus,
   files: getVisibleFiles(state),
   selected: getSelectedFiles(state),
   actionable: getActionableFiles(state),
