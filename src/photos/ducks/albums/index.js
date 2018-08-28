@@ -114,7 +114,7 @@ const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
     {({ data }, { updateAlbum, deleteAlbum, removePhotos }) => (
       <AlbumPhotos
-        album={data ? data[0] : null}
+        album={data}
         updateAlbum={updateAlbum}
         deleteAlbum={deleteAlbum}
         removePhotos={removePhotos}
@@ -130,7 +130,7 @@ const ConnectedPhotosPicker = withRouter(({ params, ...props }) => {
   return params.albumId ? (
     <Query query={ALBUM_QUERY} mutations={ALBUMS_MUTATIONS} {...props}>
       {({ data }, { addPhotos }) => (
-        <PhotosPicker album={data ? data[0] : null} addPhotos={addPhotos} />
+        <PhotosPicker album={data} addPhotos={addPhotos} />
       )}
     </Query>
   ) : (
