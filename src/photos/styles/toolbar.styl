@@ -34,8 +34,6 @@
 
         &.pho-action-newalbum
             background embedurl("../assets/icons/icon-album-add.svg") 1rem center no-repeat
-        &.pho-action-select
-            background embedurl("../assets/icons/icon-checkbox.svg") 1rem center no-repeat
         &.pho-action-rename
             background embedurl("../assets/icons/icon-pen.svg") 1rem center no-repeat
         &.pho-action-addphotos
@@ -48,10 +46,6 @@
             color pomegranate
             background embedurl("../assets/icons/icon-trash-red.svg") 1rem center no-repeat
 
-    +medium-screen()
-        .pho-action-upload
-            display inline-flex
-            padding-left 1rem
-
-            svg
-                margin-right .5rem
+.pho-action-upload[role=button]
+    display inline-flex
+    padding .3rem 0
