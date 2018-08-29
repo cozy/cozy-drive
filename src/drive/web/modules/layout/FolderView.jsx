@@ -32,7 +32,7 @@ class FolderView extends Component {
       canUpload,
       canCreateFolder
     } = this.props
-    const { showSelectionBar, uploadFiles } = this.props
+    const { showSelectionBar } = this.props
 
     const nothingToDo = isTrashContext && files.length === 0
     const folderId = getFolderIdFromRoute(
@@ -65,7 +65,6 @@ class FolderView extends Component {
           role="main"
           disabled={__TARGET__ === 'mobile' || !canDrop}
           displayedFolder={displayedFolder}
-          onDrop={uploadFiles}
         >
           {__TARGET__ === 'mobile' && (
             <div>

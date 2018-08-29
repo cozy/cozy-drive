@@ -15,7 +15,6 @@ import {
   fetchRecentFiles,
   fetchMoreFiles,
   openLocalFile,
-  uploadFiles,
   getFolderIdFromRoute,
   getVisibleFiles,
   getSelectedFiles
@@ -101,10 +100,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.router.push(`${viewPath}/file/${file.id}`)
   },
   onFileToggle: (file, selected) =>
-    dispatch(toggleItemSelection(file, selected)),
-  uploadFiles: (files, folderId) => {
-    dispatch(uploadFiles(files, folderId))
-  }
+    dispatch(toggleItemSelection(file, selected))
 })
 
 export default translate()(
