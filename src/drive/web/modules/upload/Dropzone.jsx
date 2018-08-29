@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 import { translate } from 'cozy-ui/react'
 
+import { uploadFiles } from 'drive/web/modules/navigation/duck'
+
 import styles from 'drive/styles/dropzone'
 
-export default class StatefulDropzone extends Component {
+class StatefulDropzone extends Component {
   state = {
     dropzoneActive: false
   }
@@ -22,7 +25,7 @@ export default class StatefulDropzone extends Component {
     this.setState(state => ({ ...state, dropzoneActive: false }))
     if (!canDrop(evt)) return
     const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
-    this.props.onDrop(filesToUpload, folderId)
+    this.props.uploadFiles(filesToUpload, folderId)
   }
 
   render() {
@@ -71,3 +74,11 @@ const canDrop = evt => {
   }
   return true
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  uploadFiles: (files, folderId) => {
+    dispatch(uploadFiles(files, folderId))
+  }
+})
+
+export default connect(null, mapDispatchToProps)(StatefulDropzone)
