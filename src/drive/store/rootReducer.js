@@ -3,7 +3,6 @@ import { combineReducers } from 'redux'
 
 import { default as view } from 'drive/web/modules/navigation/duck'
 import { default as selection } from 'drive/web/modules/selection/duck'
-import { default as actionmenu } from 'drive/web/modules/actionmenu/duck'
 // TODO: Get rid of this, local state would be better
 import { default as rename } from 'drive/web/modules/drive/rename'
 import { default as upload } from 'drive/web/modules/upload'
@@ -23,7 +22,6 @@ const baseReducers = {
   ui,
   view,
   upload,
-  actionmenu,
   selection,
   rename,
   availableOffline

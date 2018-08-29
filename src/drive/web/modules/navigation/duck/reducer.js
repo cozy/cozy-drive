@@ -348,7 +348,8 @@ export default combineReducers({
 export const getFilesWithLinks = ({ view }, folderId) =>
   view.filesWithLinks[folderId]
 
-export const getVisibleFiles = ({ view }) => view.files
+export const getVisibleFiles = ({ view }) =>
+  view.files.map(f => ensureFileHavePath({ view }, f))
 
 export const getSort = ({ view }) => view.sort
 
@@ -357,10 +358,15 @@ export const getFileById = ({ view }, id) => {
   if (!file) return null
   // we need the path for some actions, like selection download
   // but the stack only provides the path for folders...
-  return Object.assign({}, file, { path: getFilePath({ view }, file) })
+  return ensureFileHavePath({ view }, file)
 }
 
 const isRootFolder = folder => folder.id === ROOT_DIR_ID
+
+const ensureFileHavePath = ({ view }, file) => ({
+  ...file,
+  path: getFilePath({ view }, file)
+})
 
 export const getFilePath = ({ view }, file) => {
   const { displayedFolder } = view

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Alerter from 'cozy-ui/react/Alerter'
 import Oops from 'components/Error/Oops'
@@ -54,11 +55,24 @@ export default class FileListBody extends Component {
     this.toggleAddFolder()
   }
 
+  disablePointerEvents = () => {
+    if (this.bodyRef)
+      this.bodyRef.classList.add(styles['fil-content-body--menu-visible'])
+  }
+
+  enablePointerEvents = () => {
+    if (this.bodyRef)
+      this.bodyRef.classList.remove(styles['fil-content-body--menu-visible'])
+  }
+
   render() {
     const { showAddFolder } = this.state
     const { files } = this.props
     return (
-      <div className={styles['fil-content-body']}>
+      <div
+        ref={el => (this.bodyRef = ReactDOM.findDOMNode(el))}
+        className={styles['fil-content-body']}
+      >
         {showAddFolder && (
           <AddFolder
             onSubmit={this.createFolder}
@@ -71,7 +85,15 @@ export default class FileListBody extends Component {
             else if (isInError) return <Oops />
             else if (files.length === 0 && !showAddFolder)
               return <EmptyContent {...this.props} />
-            else return <FileListRows withSelectionCheckbox {...this.props} />
+            else
+              return (
+                <FileListRows
+                  onActionMenuShow={this.disablePointerEvents}
+                  onActionMenuHide={this.enablePointerEvents}
+                  withSelectionCheckbox
+                  {...this.props}
+                />
+              )
           }}
         </AsyncBoundary>
       </div>

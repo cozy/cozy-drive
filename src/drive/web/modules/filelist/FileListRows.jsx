@@ -96,11 +96,12 @@ class FileListRows extends PureComponent {
       displayedFolder,
       selected = [],
       selectionModeActive,
+      fileActions,
+      onActionMenuShow,
+      onActionMenuHide,
       onFolderOpen,
       onFileOpen,
       onFileToggle,
-      actionable,
-      showActionMenu,
       withSelectionCheckbox,
       withFilePath,
       withSharedBadge = true,
@@ -118,15 +119,16 @@ class FileListRows extends PureComponent {
     return (
       <File
         key={key}
+        attributes={file}
         displayedFolder={displayedFolder}
         selected={isSelected}
+        actions={fileActions}
+        onActionMenuShow={onActionMenuShow}
+        onActionMenuHide={onActionMenuHide}
         isRenaming={isFileRenaming}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
         onToggle={onFileToggle}
-        actionable={actionable}
-        onShowActionMenu={showActionMenu}
-        attributes={file}
         selectionModeActive={selectionModeActive}
         withSelectionCheckbox={withSelectionCheckbox}
         withFilePath={withFilePath}

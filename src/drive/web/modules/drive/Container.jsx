@@ -11,10 +11,9 @@ import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import { isAvailableOffline } from './availableOffline'
-import {
-  MenuItem,
+import MenuItem, {
   ConnectedToggleMenuItem
-} from 'drive/web/modules/actionmenu/FileActionMenu'
+} from 'drive/web/modules/actionmenu/MenuItem'
 
 import {
   createFolder,

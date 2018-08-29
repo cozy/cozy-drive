@@ -10,6 +10,9 @@
 .fil-content-body
     @extend $table-body
 
+    &--menu-visible
+        pointer-events none
+
 .fil-content-cell
     @extend $table-cell
 
@@ -24,6 +27,9 @@
 
 .fil-content-row-selected
     @extend $table-row-selected
+
+.fil-content-row-actioned
+    background-color paleGrey
 
 .fil-content-ext
     color coolGrey
@@ -91,10 +97,6 @@
 .fil-content-header-sortableasc
     cursor pointer
 
-.fil-content-file-action
-    display     none
-    text-align  right
-
 .fil-content-file
     flex        0 0 40%
     user-select none
@@ -130,7 +132,7 @@
 
 .fil-content-status
 .fil-content-header-status
-    flex 0 0 25%
+    flex 0 0 20%
 
     .fil-content-offline
         display none
@@ -141,6 +143,10 @@
         height 1.25rem
         background-color malachite
         border-radius 50%
+
+.fil-content-file-action
+.fil-content-header-action
+    flex 0 0 5%
 
 .fil-content-file-select
     flex       0 0 2rem
@@ -154,17 +160,24 @@
         cursor default
         padding 0
 
+.fil-content-file-action
+    opacity     0
+    text-align  right
+    width   1.5rem
+    padding 0 0 0 .5rem
+
 .fil-content-row--selectable
     .fil-content-file-select
         opacity 1
 
 .fil-content-row:hover
     .fil-content-file-select
+    .fil-content-file-action
         opacity 1
 
-.fil-content-file-action
-    width   1.5rem
-    padding 0 0 0 .5rem
+.fil-content-row-actioned
+    .fil-content-file-action
+        opacity 1
 
 mime-types('fil-file-', '../assets/icons/')
 
@@ -283,6 +296,10 @@ mime-types('fil-file-', '../assets/icons/')
             margin-bottom 3rem
 
 +small-screen()
+    .fil-content-body
+        &--menu-visible
+            pointer-events auto
+
     .fil-content-row
         height 4rem
 
@@ -309,7 +326,7 @@ mime-types('fil-file-', '../assets/icons/')
             display none
 
     .fil-content-file-action
-        display    block
+        opacity    1
         flex       0 0 3rem
         padding    0
 
@@ -331,7 +348,7 @@ mime-types('fil-file-', '../assets/icons/')
             flex 0 0 90%
 
         .fil-content-file-action
-            display none
+            opacity 0
 
     .fil-file-preview
         left 1rem
