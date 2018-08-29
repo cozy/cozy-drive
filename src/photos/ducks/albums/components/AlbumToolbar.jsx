@@ -1,25 +1,13 @@
 import React, { Component } from 'react'
 import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
-import { ShareButton, ShareModal } from 'sharing'
+import { ShareButton } from 'sharing'
 
 import styles from 'photos/styles/toolbar'
 
 import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
 
 class AlbumToolbar extends Component {
-  state = {
-    showShareModal: false
-  }
-
-  showShareModal = () => {
-    this.setState({ showShareModal: true })
-  }
-
-  closeShareModal = () => {
-    this.setState({ showShareModal: false })
-  }
-
   render() {
     const {
       t,
@@ -34,7 +22,8 @@ class AlbumToolbar extends Component {
       // leaveAlbum,
       selectItems,
       onRename,
-      breakpoints: { isMobile }
+      breakpoints: { isMobile },
+      shareAlbum
     } = this.props
     return (
       <div className={styles['pho-toolbar']} role="toolbar">
@@ -42,7 +31,7 @@ class AlbumToolbar extends Component {
           <ShareButton
             disabled={disabled}
             label={t('Albums.share.cta')}
-            onClick={this.showShareModal}
+            onClick={() => shareAlbum(album)}
           />
         )}
         <Menu
@@ -55,7 +44,7 @@ class AlbumToolbar extends Component {
             <MenuItem
               className={styles['u-hide--desk']}
               icon={<Icon icon="share" />}
-              onSelect={this.showShareModal}
+              onSelect={() => shareAlbum(album)}
             >
               {t('Albums.share.cta')}
             </MenuItem>
@@ -93,13 +82,6 @@ class AlbumToolbar extends Component {
             </MenuItem>
           )}
         </Menu>
-        {this.state.showShareModal && (
-          <ShareModal
-            document={album}
-            sharingDesc={album.name}
-            onClose={this.closeShareModal}
-          />
-        )}
       </div>
     )
   }

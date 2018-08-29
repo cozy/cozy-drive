@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { showModal, ModalManager } from 'react-cozy-helpers'
 import { withRouter } from 'react-router'
 import { translate } from 'cozy-ui/react/I18n'
+import { ShareModal } from 'sharing'
+import flow from 'lodash/flow'
 
 import styles from '../../../styles/layout'
 
@@ -93,7 +97,7 @@ class AlbumPhotos extends Component {
     if (!this.props.album || !this.props.album.photos) {
       return null
     }
-    const { album } = this.props
+    const { t, router, album, shareAlbum } = this.props
     const { editing } = this.state
     const shared = {}
     return (
@@ -116,6 +120,8 @@ class AlbumPhotos extends Component {
                   onEdit={this.renameAlbum}
                 >
                   <AlbumToolbar
+                    t={t}
+                    router={router}
                     album={album}
                     sharedWithMe={shared.withMe}
                     sharedByMe={shared.byMe}
@@ -124,6 +130,7 @@ class AlbumPhotos extends Component {
                     downloadAlbum={this.downloadAlbum}
                     deleteAlbum={this.deleteAlbum}
                     leaveAlbum={this.leaveAlbum}
+                    shareAlbum={shareAlbum}
                   />
                 </Topbar>
               )}
@@ -149,6 +156,7 @@ class AlbumPhotos extends Component {
               />
             )}
             {this.renderViewer(this.props.children)}
+            <ModalManager />
           </div>
         )}
       </Selection>
@@ -169,4 +177,13 @@ class AlbumPhotos extends Component {
   }
 }
 
-export default withRouter(translate()(AlbumPhotos))
+const mapDispatchToProps = dispatch => ({
+  shareAlbum: album =>
+    dispatch(
+      showModal(<ShareModal document={album} sharingDesc={album.name} />)
+    )
+})
+
+export default flow(connect(null, mapDispatchToProps), withRouter, translate())(
+  AlbumPhotos
+)

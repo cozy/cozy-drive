@@ -43,13 +43,7 @@ MoreMenu.propTypes = {
   t: PropTypes.func.isRequired
 }
 
-const Toolbar = ({
-  t,
-  disabled = false,
-  uploadPhotos,
-  selectItems,
-  breakpoints: { isMobile }
-}) => (
+const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
   <div className={styles['pho-toolbar']} role="toolbar">
     <UploadButton
       className={styles['u-hide--mob']}
@@ -70,7 +64,7 @@ Toolbar.propTypes = {
   disabled: PropTypes.bool,
   uploadPhotos: PropTypes.func.isRequired,
   selectItems: PropTypes.func.isRequired,
-  breakpoints: PropTypes.node
+  t: PropTypes.func.isRequired
 }
 
 export default Toolbar

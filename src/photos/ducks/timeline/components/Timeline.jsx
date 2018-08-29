@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { translate } from 'cozy-ui/react/I18n'
 import styles from '../../../styles/layout'
 
 import { Content } from 'cozy-ui/react/Layout'
@@ -12,7 +13,7 @@ import { addToUploadQueue } from '../../upload'
 import { AddToAlbumModal, belongsToAlbums } from '../../albums'
 import Selection from '../../selection'
 
-export default class Timeline extends Component {
+class Timeline extends Component {
   state = {
     showAddAlbumModal: false
   }
@@ -57,7 +58,7 @@ export default class Timeline extends Component {
   }
 
   render() {
-    const { lists, fetchStatus, hasMore, fetchMore } = this.props
+    const { t, lists, fetchStatus, hasMore, fetchMore } = this.props
     return (
       <Selection
         actions={selection => ({
@@ -73,6 +74,7 @@ export default class Timeline extends Component {
                 disabled={active}
                 uploadPhotos={this.uploadPhotos}
                 selectItems={selection.show}
+                t={t}
               />
             </Topbar>
             <Content>
@@ -112,3 +114,5 @@ export default class Timeline extends Component {
     )
   }
 }
+
+export default translate()(Timeline)

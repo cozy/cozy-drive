@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from '../../../styles/layout'
+import { translate } from 'cozy-ui/react/I18n'
 
 import AlbumsToolbar from './AlbumsToolbar'
 import AlbumsList from './AlbumsList'
@@ -20,8 +21,9 @@ const Content = ({ list }) => {
   }
 }
 
-export default class AlbumsView extends Component {
+class AlbumsView extends Component {
   render() {
+    const { t } = this.props
     if (this.props.children) return this.props.children
     if (!this.props.albums) {
       return null
@@ -29,10 +31,12 @@ export default class AlbumsView extends Component {
     return (
       <div className={styles['pho-content-wrapper']}>
         <Topbar viewName="albums">
-          <AlbumsToolbar />
+          <AlbumsToolbar t={t} />
         </Topbar>
         <Content list={this.props.albums} />
       </div>
     )
   }
 }
+
+export default translate()(AlbumsView)
