@@ -173,6 +173,12 @@ const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => {
       >
         {t('table.head_status')}
       </div>
+      <div
+        className={classNames(
+          styles['fil-content-header'],
+          styles['fil-content-header-action']
+        )}
+      />
     </div>
   )
 }

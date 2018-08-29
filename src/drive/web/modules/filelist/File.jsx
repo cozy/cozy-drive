@@ -6,6 +6,8 @@ import Hammer from 'hammerjs'
 
 import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from 'drive/web/modules/drive/RenameInput'
+import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
+import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
 import { ImageLoader } from 'components/Image'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
@@ -15,6 +17,15 @@ import { getFileMimetype } from 'drive/lib/getFileMimetype'
 import { getFolderUrl } from 'drive/web/modules/navigation/duck'
 
 import styles from 'drive/styles/filelist'
+
+const ActionMenu = withBreakpoints()(
+  ({ breakpoints: { isMobile }, ...props }) =>
+    isMobile ? (
+      <MobileActionMenu {...props} />
+    ) : (
+      <DesktopActionMenu {...props} />
+    )
+)
 
 export const splitFilename = file =>
   isDirectory(file)
@@ -219,11 +230,26 @@ const FileAction = ({ onClick }) => (
 )
 
 class File extends Component {
+  state = {
+    actionMenuVisible: false
+  }
+
+  showActionMenu = () => {
+    this.setState(state => ({ ...state, actionMenuVisible: true }))
+    this.props.onActionMenuShow()
+  }
+
+  hideActionMenu = () => {
+    this.setState(state => ({ ...state, actionMenuVisible: false }))
+    this.props.onActionMenuHide()
+  }
+
   componentDidMount() {
     this.gesturesHandler = new Hammer.Manager(this.filerow)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
     this.gesturesHandler.on('onpress singletap', ev => {
+      if (this.state.actionMenuVisible) return
       if (enableTouchEvents(ev)) {
         ev.preventDefault() // prevent a ghost click
         if (ev.type === 'onpress' || this.props.selectionModeActive) {
@@ -266,8 +292,7 @@ class File extends Component {
       attributes,
       selected,
       selectionModeActive,
-      actionable,
-      onShowActionMenu,
+      actions,
       isRenaming,
       withSelectionCheckbox,
       withFilePath,
@@ -275,11 +300,12 @@ class File extends Component {
       isAvailableOffline,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
-    const filContentRowSelected = classNames(
-      styles['fil-content-row'],
-      selected ? styles['fil-content-row-selected'] : '',
-      { [styles['fil-content-row--selectable']]: selectionModeActive }
-    )
+    const { actionMenuVisible } = this.state
+    const filContentRowSelected = classNames(styles['fil-content-row'], {
+      [styles['fil-content-row--selectable']]: selectionModeActive,
+      [styles['fil-content-row-selected']]: selected,
+      [styles['fil-content-row-actioned']]: actionMenuVisible
+    })
     const formattedSize = isDirectory(attributes)
       ? undefined
       : filesize(attributes.size, { base: 10 })
@@ -318,12 +344,23 @@ class File extends Component {
         />
         <Size filesize={formattedSize} />
         <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
-        {actionable && (
+        {actions && (
           <FileAction
+            ref={toggle => {
+              this.filerowMenuToggle = toggle
+            }}
             onClick={e => {
-              onShowActionMenu(attributes.id)
+              this.showActionMenu()
               e.stopPropagation()
             }}
+          />
+        )}
+        {actionMenuVisible && (
+          <ActionMenu
+            file={attributes}
+            reference={this.filerowMenuToggle}
+            actions={actions}
+            onClose={this.hideActionMenu}
           />
         )}
       </div>
