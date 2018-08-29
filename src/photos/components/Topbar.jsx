@@ -7,7 +7,7 @@ import { withBreakpoints } from 'cozy-ui/react'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
-const { BarCenter } = cozy.bar
+const { BarCenter, BarRight } = cozy.bar
 
 const KEYCODE_ENTER = 13
 const KEYCODE_ESC = 27
@@ -86,10 +86,17 @@ class Topbar extends Component {
   }
 
   render() {
-    const { children, viewName, breakpoints: { isMobile } } = this.props
+    const { t, children, viewName, breakpoints: { isMobile } } = this.props
     const isAlbumContent = viewName === 'albumContent'
     const title = <TopbarTitle>{this.renderTitle()}</TopbarTitle>
     const responsiveTitle = isMobile ? <BarCenter>{title}</BarCenter> : title
+
+    const menuWithTranslation = React.cloneElement(children, { t })
+    const responsiveMenu = isMobile ? (
+      <BarRight>{menuWithTranslation}</BarRight>
+    ) : (
+      menuWithTranslation
+    )
 
     return (
       <div className={styles['pho-content-header']}>
@@ -101,7 +108,7 @@ class Topbar extends Component {
           />
         )}
         {responsiveTitle}
-        {children}
+        {responsiveMenu}
       </div>
     )
   }

@@ -1,16 +1,14 @@
-/* global cozy */
 import styles from '../../../styles/toolbar'
 
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Menu, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
+import { Menu, MenuItem, Icon } from 'cozy-ui/react'
 
 import UploadButton from '../../../components/UploadButton'
 import { MoreButton } from 'components/Button'
 
 import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
-const { BarRight } = cozy.bar
 
 const MoreMenu = ({ t, disabled, uploadPhotos, selectItems }) => (
   <Menu
@@ -45,10 +43,13 @@ MoreMenu.propTypes = {
   t: PropTypes.func.isRequired
 }
 
-const Toolbar = (
-  { disabled = false, uploadPhotos, selectItems, breakpoints: { isMobile } },
-  { t }
-) => (
+const Toolbar = ({
+  t,
+  disabled = false,
+  uploadPhotos,
+  selectItems,
+  breakpoints: { isMobile }
+}) => (
   <div className={styles['pho-toolbar']} role="toolbar">
     <UploadButton
       className={styles['u-hide--mob']}
@@ -56,23 +57,12 @@ const Toolbar = (
       disabled={disabled}
       label={t('Toolbar.photo_upload')}
     />
-    {isMobile ? (
-      <BarRight>
-        <MoreMenu
-          t={t}
-          disabled={disabled}
-          uploadPhotos={uploadPhotos}
-          selectItems={selectItems}
-        />
-      </BarRight>
-    ) : (
-      <MoreMenu
-        t={t}
-        disabled={disabled}
-        uploadPhotos={uploadPhotos}
-        selectItems={selectItems}
-      />
-    )}
+    <MoreMenu
+      t={t}
+      disabled={disabled}
+      uploadPhotos={uploadPhotos}
+      selectItems={selectItems}
+    />
   </div>
 )
 
@@ -83,4 +73,4 @@ Toolbar.propTypes = {
   breakpoints: PropTypes.node
 }
 
-export default withBreakpoints()(Toolbar)
+export default Toolbar
