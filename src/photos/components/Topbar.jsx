@@ -6,6 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import flow from 'lodash/flow'
 
 const { BarCenter, BarRight } = cozy.bar
 
@@ -86,17 +87,12 @@ class Topbar extends Component {
   }
 
   render() {
-    const { t, children, viewName, breakpoints: { isMobile } } = this.props
+    const { children, viewName, breakpoints: { isMobile } } = this.props
     const isAlbumContent = viewName === 'albumContent'
     const title = <TopbarTitle>{this.renderTitle()}</TopbarTitle>
     const responsiveTitle = isMobile ? <BarCenter>{title}</BarCenter> : title
 
-    const menuWithTranslation = React.cloneElement(children, { t })
-    const responsiveMenu = isMobile ? (
-      <BarRight>{menuWithTranslation}</BarRight>
-    ) : (
-      menuWithTranslation
-    )
+    const responsiveMenu = isMobile ? <BarRight>{children}</BarRight> : children
 
     return (
       <div className={styles['pho-content-header']}>
@@ -118,11 +114,16 @@ Topbar.propTypes = {
   viewName: PropTypes.string.isRequired,
   albumName: PropTypes.string,
   t: PropTypes.func.isRequired,
-  editing: PropTypes.bool.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired,
+  editing: PropTypes.bool,
+  onEdit: PropTypes.func,
   breakpoints: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   children: PropTypes.node
 }
 
-export default withBreakpoints()(translate()(withRouter(Topbar)))
+Topbar.defaultProps = {
+  editing: false,
+  onEdit: () => {}
+}
+
+export default flow(withRouter, withBreakpoints(), translate())(Topbar)
