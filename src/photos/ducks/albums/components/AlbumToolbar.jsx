@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
-import { withRouter, Link } from 'react-router'
-import { translate } from 'cozy-ui/react/I18n'
-
-import Menu, { Item } from 'components/Menu'
+import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
-
 import { ShareButton, ShareModal } from 'sharing'
 
-import classNames from 'classnames'
+import styles from 'photos/styles/toolbar'
 
-import styles from '../../../styles/toolbar'
+import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
 
 class AlbumToolbar extends Component {
   state = {
@@ -27,106 +23,75 @@ class AlbumToolbar extends Component {
   render() {
     const {
       t,
-      location,
+      router,
       album,
       sharedWithMe,
       // sharedByMe,
       readOnly,
-      disabled = false
-    } = this.props
-    const {
+      disabled = false,
       downloadAlbum,
       deleteAlbum,
       // leaveAlbum,
       selectItems,
-      onRename
+      onRename,
+      breakpoints: { isMobile }
     } = this.props
     return (
       <div className={styles['pho-toolbar']} role="toolbar">
-        <div className={styles['u-hide--mob']}>
+        {!isMobile && (
           <ShareButton
             disabled={disabled}
             label={t('Albums.share.cta')}
             onClick={this.showShareModal}
           />
-        </div>
+        )}
         <Menu
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
-          button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+          component={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+          position="right"
         >
           {!sharedWithMe && (
-            <Item>
-              <a
-                className={classNames(
-                  styles['pho-action-share'],
-                  styles['u-hide--desk']
-                )}
-                onClick={this.showShareModal}
-              >
-                {t('Albums.share.cta')}
-              </a>
-            </Item>
+            <MenuItem
+              className={styles['u-hide--desk']}
+              icon={<Icon icon="share" />}
+              onSelect={this.showShareModal}
+            >
+              {t('Albums.share.cta')}
+            </MenuItem>
           )}
-          <Item>
-            <a
-              className={classNames(styles['pho-action-download'])}
-              onClick={downloadAlbum}
-            >
-              {t('Toolbar.menu.download_album')}
-            </a>
-          </Item>
-          <Item>
-            <a
-              className={classNames(styles['pho-action-rename'])}
-              onClick={onRename}
-            >
-              {t('Toolbar.menu.rename_album')}
-            </a>
-          </Item>
+          <MenuItem onSelect={downloadAlbum} icon={<Icon icon="download" />}>
+            {t('Toolbar.menu.download_album')}
+          </MenuItem>
+          <MenuItem icon={<Icon icon="rename" />} onSelect={onRename}>
+            {t('Toolbar.menu.rename_album')}
+          </MenuItem>
           {!readOnly && (
-            <Item>
-              <Link
-                className={classNames(styles['pho-action-addphotos'])}
-                to={`${location.pathname}/edit`}
-              >
-                {t('Toolbar.menu.add_photos')}
-              </Link>
-            </Item>
+            <MenuItem
+              icon={<Icon icon="album-add" />}
+              onSelect={() => router.push(`${router.location.pathname}/edit`)}
+            >
+              {t('Toolbar.menu.add_photos')}
+            </MenuItem>
           )}
           <hr className={styles['u-hide--desk']} />
-          <Item>
-            <a
-              className={classNames(
-                styles['pho-action-select'],
-                styles['u-hide--desk']
-              )}
-              onClick={selectItems}
-            >
-              {t('Toolbar.menu.select_items')}
-            </a>
-          </Item>
+          <MenuItem
+            className={styles['u-hide--desk']}
+            icon={<Icon icon={CheckboxIcon} />}
+            onSelect={selectItems}
+          >
+            {t('Toolbar.menu.select_items')}
+          </MenuItem>
           <hr />
           {!sharedWithMe && (
-            <Item>
-              <a
-                className={classNames(styles['pho-action-delete'])}
-                onClick={deleteAlbum}
-              >
-                {t('Toolbar.menu.album_delete')}
-              </a>
-            </Item>
+            <MenuItem
+              className={styles['pho-action-delete']}
+              icon={<Icon icon="delete" />}
+              onClick={deleteAlbum}
+            >
+              {t('Toolbar.menu.album_delete')}
+            </MenuItem>
           )}
-          {/* sharedWithMe && (
-            <Item>
-              <a
-                className={classNames(styles['pho-action-delete'])}
-                onClick={leaveAlbum}
-              >
-                {t('Toolbar.menu.album_quit')}
-              </a>
-            </Item>
-          ) */}
         </Menu>
         {this.state.showShareModal && (
           <ShareModal
@@ -140,4 +105,4 @@ class AlbumToolbar extends Component {
   }
 }
 
-export default withRouter(translate()(AlbumToolbar))
+export default withBreakpoints()(AlbumToolbar)

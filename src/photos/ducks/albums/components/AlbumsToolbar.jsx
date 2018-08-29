@@ -1,15 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { withRouter } from 'react-router'
 import classNames from 'classnames'
-import { translate } from 'cozy-ui/react/I18n'
-import { ButtonLink } from 'cozy-ui/react'
+import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/react'
 
-import Menu, { Item } from 'components/Menu'
 import { MoreButton } from 'components/Button'
 
-import styles from '../../../styles/toolbar'
+import styles from 'photos/styles/toolbar'
 
-const AlbumsToolbar = ({ t }) => (
+const AlbumsToolbar = ({ t, router }) => (
   <div className={styles['pho-toolbar']} role="toolbar">
     <div className={styles['u-hide--mob']}>
       <ButtonLink
@@ -21,17 +19,17 @@ const AlbumsToolbar = ({ t }) => (
     </div>
     <Menu
       className={classNames(styles['pho-toolbar-menu'], styles['u-hide--desk'])}
-      button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+      component={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+      position="right"
     >
-      <Item>
-        <div>
-          <Link to="/albums/new" className={styles['pho-action-newalbum']}>
-            {t('Toolbar.album_new')}
-          </Link>
-        </div>
-      </Item>
+      <MenuItem
+        onSelect={() => router.push('/albums/new')}
+        icon={<Icon icon="album-add" />}
+      >
+        {t('Toolbar.album_new')}
+      </MenuItem>
     </Menu>
   </div>
 )
 
-export default translate()(AlbumsToolbar)
+export default withRouter(AlbumsToolbar)
