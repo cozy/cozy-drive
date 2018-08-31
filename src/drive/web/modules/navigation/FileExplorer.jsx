@@ -5,19 +5,13 @@ import { translate } from 'cozy-ui/react/I18n'
 import SharingProvider from 'sharing'
 import RealtimeFiles from './RealtimeFiles'
 import {
-  toggleItemSelection,
-  isSelectionBarVisible,
-  showSelectionBar
-} from 'drive/web/modules/selection/duck'
-import {
   openFolder,
   getOpenedFolderId,
   fetchRecentFiles,
   fetchMoreFiles,
   openLocalFile,
   getFolderIdFromRoute,
-  getVisibleFiles,
-  getSelectedFiles
+  getVisibleFiles
 } from 'drive/web/modules/navigation/duck'
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
@@ -80,14 +74,10 @@ const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
-  requestedFiles: state.view.requestedFiles,
-  files: getVisibleFiles(state),
-  selected: getSelectedFiles(state),
-  selectionModeActive: isSelectionBarVisible(state)
+  files: getVisibleFiles(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  showSelectionBar: () => dispatch(showSelectionBar()),
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
@@ -98,9 +88,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
     const viewPath = ownProps.location.pathname
     ownProps.router.push(`${viewPath}/file/${file.id}`)
-  },
-  onFileToggle: (file, selected) =>
-    dispatch(toggleItemSelection(file, selected))
+  }
 })
 
 export default translate()(

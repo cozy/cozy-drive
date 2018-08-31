@@ -96,7 +96,6 @@ const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
-  requestedFiles: state.view.requestedFiles,
   files: getVisibleFiles(state)
 })
 

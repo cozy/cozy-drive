@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { withRouter, Link } from 'react-router'
+import { connect } from 'react-redux'
 import Hammer from 'hammerjs'
 
 import { translate } from 'cozy-ui/react/I18n'
@@ -15,6 +16,10 @@ import { SharedBadge, SharedStatus } from 'sharing'
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
 import { getFolderUrl } from 'drive/web/modules/navigation/duck'
+import {
+  toggleItemSelection,
+  isSelected
+} from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist'
 
@@ -267,8 +272,8 @@ class File extends Component {
 
   toggle(e) {
     e.stopPropagation()
-    const { attributes, onToggle, selected } = this.props
-    onToggle(attributes, selected)
+    const { attributes, onCheckboxToggle, selected } = this.props
+    onCheckboxToggle(attributes.id, selected)
   }
 
   open(e, attributes) {
@@ -291,7 +296,6 @@ class File extends Component {
       f,
       attributes,
       selected,
-      selectionModeActive,
       actions,
       isRenaming,
       withSelectionCheckbox,
@@ -302,7 +306,6 @@ class File extends Component {
     } = this.props
     const { actionMenuVisible } = this.state
     const filContentRowSelected = classNames(styles['fil-content-row'], {
-      [styles['fil-content-row--selectable']]: selectionModeActive,
       [styles['fil-content-row-selected']]: selected,
       [styles['fil-content-row-actioned']]: actionMenuVisible
     })
@@ -368,47 +371,15 @@ class File extends Component {
   }
 }
 
-export default withBreakpoints()(withRouter(translate()(File)))
+const mapStateToProps = (state, ownProps) => ({
+  selected: isSelected(state, ownProps.attributes.id)
+})
 
-export const FilePlaceholder = ({ style }) => (
-  <div style={style} className={styles['fil-content-row']}>
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-content-file-select']
-      )}
-    />
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-content-file']
-      )}
-    >
-      <div className={styles['fil-content-file-placeholder']} />
-    </div>
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-content-date']
-      )}
-    />
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-content-size']
-      )}
-    />
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-content-status']
-      )}
-    />
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-content-file-action']
-      )}
-    />
-  </div>
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onCheckboxToggle: (file, selected) =>
+    dispatch(toggleItemSelection(file, selected))
+})
+
+export default withBreakpoints()(
+  withRouter(translate()(connect(mapStateToProps, mapDispatchToProps)(File)))
 )

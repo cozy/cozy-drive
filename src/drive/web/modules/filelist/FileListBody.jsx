@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import cx from 'classnames'
 import Alerter from 'cozy-ui/react/Alerter'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
@@ -8,6 +10,8 @@ import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
 import FileListRowsPlaceholder from './FileListRowsPlaceholder'
 import FileListRows from './FileListRows'
 import AddFolder from './AddFolder'
+
+import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist'
 
@@ -33,7 +37,7 @@ EmptyContent.defaultProps = {
   params: {}
 }
 
-export default class FileListBody extends Component {
+export class FileListBody extends Component {
   state = {
     showAddFolder: false
   }
@@ -67,11 +71,13 @@ export default class FileListBody extends Component {
 
   render() {
     const { showAddFolder } = this.state
-    const { files } = this.props
+    const { files, selectionModeActive } = this.props
     return (
       <div
         ref={el => (this.bodyRef = ReactDOM.findDOMNode(el))}
-        className={styles['fil-content-body']}
+        className={cx(styles['fil-content-body'], {
+          [styles['fil-content-body--selectable']]: selectionModeActive
+        })}
       >
         {showAddFolder && (
           <AddFolder
@@ -100,3 +106,9 @@ export default class FileListBody extends Component {
     )
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  selectionModeActive: isSelectionBarVisible(state)
+})
+
+export default connect(mapStateToProps)(FileListBody)

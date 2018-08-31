@@ -4,7 +4,8 @@ import { translate } from 'cozy-ui/react/I18n'
 import { isCordova } from 'drive/mobile/lib/device'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 
-import File, { FilePlaceholder } from './File'
+import File from './File'
+import FilePlaceholder from './FilePlaceholder'
 import LoadMore from './LoadMore'
 
 require('intersection-observer') // polyfill for safari
@@ -94,14 +95,11 @@ class FileListRows extends PureComponent {
   rowRenderer = ({ index, key }) => {
     const {
       displayedFolder,
-      selected = [],
-      selectionModeActive,
       fileActions,
       onActionMenuShow,
       onActionMenuHide,
       onFolderOpen,
       onFileOpen,
-      onFileToggle,
       withSelectionCheckbox,
       withFilePath,
       withSharedBadge = true,
@@ -115,21 +113,17 @@ class FileListRows extends PureComponent {
     }
     const isFileRenaming =
       isRenaming && renamingFile && renamingFile.id === file.id
-    const isSelected = selected.find(f => f && f.id === file.id) !== undefined
     return (
       <File
         key={key}
         attributes={file}
         displayedFolder={displayedFolder}
-        selected={isSelected}
         actions={fileActions}
         onActionMenuShow={onActionMenuShow}
         onActionMenuHide={onActionMenuHide}
         isRenaming={isFileRenaming}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
-        onToggle={onFileToggle}
-        selectionModeActive={selectionModeActive}
         withSelectionCheckbox={withSelectionCheckbox}
         withFilePath={withFilePath}
         withSharedBadge={withSharedBadge}
