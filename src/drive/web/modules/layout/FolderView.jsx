@@ -20,11 +20,10 @@ import Topbar from './Topbar'
 
 class FolderView extends Component {
   render() {
-    const { children, isTrashContext, selectionModeActive } = this.props
+    const { children, isTrashContext } = this.props
     const {
       displayedFolder,
       files,
-      selected,
       actions,
       Toolbar,
       canSort,
@@ -32,7 +31,6 @@ class FolderView extends Component {
       canUpload,
       canCreateFolder
     } = this.props
-    const { showSelectionBar } = this.props
 
     const nothingToDo = isTrashContext && files.length === 0
     const folderId = getFolderIdFromRoute(
@@ -41,8 +39,6 @@ class FolderView extends Component {
     )
     const isRootfolder = folderId === ROOT_DIR_ID
 
-    const toolbarActions = {}
-    if (canCreateFolder) toolbarActions.addFolder = this.toggleAddFolder
     return (
       <Main>
         <Topbar>
@@ -51,12 +47,9 @@ class FolderView extends Component {
             {({ isLoading, isInError }) => (
               <Toolbar
                 folderId={folderId}
-                actions={toolbarActions}
                 canUpload={canUpload}
-                disabled={
-                  isInError || isLoading || selectionModeActive || nothingToDo
-                }
-                onSelectItemsClick={showSelectionBar}
+                canCreateFolder={canCreateFolder}
+                disabled={isInError || isLoading || nothingToDo}
               />
             )}
           </AsyncBoundary>
@@ -73,13 +66,10 @@ class FolderView extends Component {
               <RatingModal />
             </div>
           )}
-          <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
-            <SelectionBar selected={selected} actions={actions.selection} />
-          </div>
+          <SelectionBar actions={actions.selection} />
           <FileList
             {...this.props}
             canSort={canSort}
-            selectionModeActive={selectionModeActive}
             fileActions={actions.selection}
           />
           {this.renderViewer(children)}

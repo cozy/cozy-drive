@@ -22,6 +22,10 @@ import {
   uploadFiles
 } from 'drive/web/modules/navigation/duck'
 import {
+  showSelectionBar,
+  isSelectionBarVisible
+} from 'drive/web/modules/selection/duck'
+import {
   ShareButton,
   ShareModal,
   SharedDocument,
@@ -40,15 +44,17 @@ class Toolbar extends Component {
     const {
       t,
       disabled,
+      selectionModeActive,
       displayedFolder,
-      actions,
-      onSelectItemsClick,
       canUpload,
+      canCreateFolder,
       hasWriteAccess,
       isShared,
       isSharedWithMe,
       sharingRecipients,
       sharingLink,
+      showSelectionBar,
+      addFolder,
       uploadFiles,
       share,
       downloadAll,
@@ -59,10 +65,12 @@ class Toolbar extends Component {
 
     const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
 
+    const isDisabled = disabled || selectionModeActive
+
     const MoreMenu = (
       <Menu
         title={t('toolbar.item_more')}
-        disabled={disabled}
+        disabled={isDisabled}
         className={styles['fil-toolbar-menu']}
         innerClassName={styles['fil-toolbar-inner-menu']}
         button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
@@ -93,13 +101,10 @@ class Toolbar extends Component {
               />
             </Item>
           )}
-        {actions.addFolder &&
+        {canCreateFolder &&
           hasWriteAccess && (
             <Item>
-              <a
-                className={styles['fil-action-newfolder']}
-                onClick={actions.addFolder}
-              >
+              <a className={styles['fil-action-newfolder']} onClick={addFolder}>
                 {t('toolbar.menu_new_folder')}
               </a>
             </Item>
@@ -115,10 +120,7 @@ class Toolbar extends Component {
           </Item>
         )}
         <Item>
-          <a
-            className={styles['fil-action-select']}
-            onClick={onSelectItemsClick}
-          >
+          <a className={styles['fil-action-select']} onClick={showSelectionBar}>
             {t('toolbar.menu_select')}
           </a>
         </Item>
@@ -169,7 +171,7 @@ class Toolbar extends Component {
           canUpload &&
           hasWriteAccess && (
             <UploadButton
-              disabled={disabled}
+              disabled={isDisabled}
               onUpload={files => uploadFiles(files, displayedFolder)}
               label={t('toolbar.item_upload')}
               className={classNames(styles['c-btn'], styles['u-hide--mob'])}
@@ -179,7 +181,7 @@ class Toolbar extends Component {
         {notRootfolder && (
           <ShareButton
             docId={displayedFolder.id}
-            disabled={disabled}
+            disabled={isDisabled}
             onClick={() => share(displayedFolder)}
             className={styles['u-hide--mob']}
           />
@@ -192,10 +194,14 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  displayedFolder: state.view.displayedFolder
+  displayedFolder: state.view.displayedFolder,
+  selectionModeActive: isSelectionBarVisible(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  // TODO: implement
+  addFolder: () => {},
+  showSelectionBar: () => dispatch(showSelectionBar()),
   uploadFiles: (files, displayedFolder) => {
     dispatch(uploadFiles(files, displayedFolder.id))
   },

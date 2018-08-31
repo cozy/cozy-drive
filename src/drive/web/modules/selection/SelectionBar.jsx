@@ -1,9 +1,25 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import SelectionBar from 'cozy-ui/react/SelectionBar'
-import { hideSelectionBar } from './duck'
+import {
+  getSelectedFiles,
+  hideSelectionBar,
+  isSelectionBarVisible
+} from './duck'
+
+const mapStateToProps = (state, ownProps) => ({
+  selected: getSelectedFiles(state),
+  selectionModeActive: isSelectionBarVisible(state)
+})
 
 const mapDispatchToProps = dispatch => ({
   hideSelectionBar: () => dispatch(hideSelectionBar())
 })
 
-export default connect(null, mapDispatchToProps)(SelectionBar)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ({ selectionModeActive, ...rest }) => (
+    <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
+      <SelectionBar {...rest} />
+    </div>
+  )
+)

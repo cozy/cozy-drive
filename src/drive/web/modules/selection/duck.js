@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { getFileById } from 'drive/web/modules/navigation/duck'
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
@@ -8,17 +9,21 @@ const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 
 // selectors
+export const isSelected = (state, id) =>
+  state.selection.selected.find(_id => _id === id) !== undefined
 export const getSelectedIds = state => state.selection.selected
 export const isSelectionBarVisible = state =>
   state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
+export const getSelectedFiles = state =>
+  getSelectedIds(state).map(id => getFileById(state, id))
 
 // actions
 export const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
 export const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
 export const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
-export const toggleItemSelection = (item, selected) => ({
+export const toggleItemSelection = (id, selected) => ({
   type: selected ? UNSELECT_ITEM : SELECT_ITEM,
-  id: item.id
+  id
 })
 
 // reducers

@@ -11,6 +11,10 @@ import Menu, { Item } from 'components/Menu'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import { emptyTrash } from './actions'
+import {
+  showSelectionBar,
+  isSelectionBarVisible
+} from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar'
 
@@ -19,14 +23,15 @@ const { BarRight } = cozy.bar
 const Toolbar = ({
   t,
   disabled,
+  selectionModeActive,
   emptyTrash,
-  onSelectItemsClick,
+  showSelectionBar,
   breakpoints: { isMobile }
 }) => {
   const MoreMenu = (
     <Menu
       title={t('toolbar.item_more')}
-      disabled={disabled}
+      disabled={disabled || selectionModeActive}
       className={styles['fil-toolbar-menu']}
       button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
     >
@@ -37,7 +42,7 @@ const Toolbar = ({
       </Item>
       <hr />
       <Item>
-        <a className={styles['fil-action-select']} onClick={onSelectItemsClick}>
+        <a className={styles['fil-action-select']} onClick={showSelectionBar}>
           {t('toolbar.menu_select')}
         </a>
       </Item>
@@ -50,7 +55,7 @@ const Toolbar = ({
         theme={'danger-outline'}
         className={classNames(styles['u-hide--mob'])}
         onClick={() => emptyTrash()}
-        disabled={disabled}
+        disabled={disabled || selectionModeActive}
         icon="delete"
         label={t('toolbar.empty_trash')}
       />
@@ -60,7 +65,12 @@ const Toolbar = ({
   )
 }
 
+const mapStateToProps = (state, ownProps) => ({
+  selectionModeActive: isSelectionBarVisible(state)
+})
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  showSelectionBar: () => dispatch(showSelectionBar()),
   emptyTrash: () =>
     dispatch(
       showModal(<EmptyTrashConfirm onConfirm={() => dispatch(emptyTrash())} />)
@@ -68,5 +78,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default translate()(
-  withBreakpoints()(connect(null, mapDispatchToProps)(Toolbar))
+  withBreakpoints()(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
 )
