@@ -28,7 +28,7 @@ const addPhotos = async (album, photos) => {
   }
 }
 
-const ALBUMS_MUTATIONS = (client, ownProps) => ({
+const ALBUMS_MUTATIONS = (query, ownProps) => ({
   addPhotos,
   createAlbum: async (name, photos, created_at = new Date()) => {
     try {
@@ -37,12 +37,12 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
         return
       }
       const album = { _type: DOCTYPE, name, created_at }
-      const unique = await client.validate(album)
+      const unique = await query.client.validate(album)
       if (unique !== true) {
         Alerter.error('Albums.create.error.already_exists', { name })
         return
       }
-      const resp = await client.create(
+      const resp = await query.client.create(
         DOCTYPE,
         album,
         { photos },
@@ -66,10 +66,10 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
 const ALBUM_QUERY = (client, ownProps) =>
   client.get(DOCTYPE, ownProps.router.params.albumId).include(['photos'])
 
-const ALBUM_MUTATIONS = (client, ownProps) => ({
-  updateAlbum: album => client.save(album),
+const ALBUM_MUTATIONS = (query, ownProps) => ({
+  updateAlbum: album => query.client.save(album),
   deleteAlbum: album =>
-    client.destroy(album, {
+    query.client.destroy(album, {
       updateQueries: {
         albums: (previousData, result) =>
           previousData.filter(a => a.id !== album.id)
