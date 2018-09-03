@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 
 import { default as view } from 'drive/web/modules/navigation/duck'
 import { default as selection } from 'drive/web/modules/selection/duck'
+import { default as filelist } from 'drive/web/modules/filelist/duck'
 // TODO: Get rid of this, local state would be better
 import { default as rename } from 'drive/web/modules/drive/rename'
 import { default as upload } from 'drive/web/modules/upload'
@@ -21,6 +22,7 @@ import { default as replication } from 'drive/mobile/modules/replication/duck'
 const baseReducers = {
   ui,
   view,
+  filelist,
   upload,
   selection,
   rename,

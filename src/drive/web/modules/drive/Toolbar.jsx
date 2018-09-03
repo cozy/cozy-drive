@@ -25,6 +25,7 @@ import {
   showSelectionBar,
   isSelectionBarVisible
 } from 'drive/web/modules/selection/duck'
+import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 import {
   ShareButton,
   ShareModal,
@@ -199,8 +200,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  // TODO: implement
-  addFolder: () => {},
+  addFolder: () => dispatch(showNewFolderInput()),
   showSelectionBar: () => dispatch(showSelectionBar()),
   uploadFiles: (files, displayedFolder) => {
     dispatch(uploadFiles(files, displayedFolder.id))
