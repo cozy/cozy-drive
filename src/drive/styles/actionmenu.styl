@@ -1,14 +1,14 @@
 @require 'settings/palette.styl'
+@require 'settings/z-index.styl'
 @require 'components/popover.styl'
 
-.fil-actionmenu
+.fil-actionmenu-inner
     @extend    $popover
-    pointer-events auto
+    z-index    $file-action-menu
     position   absolute
     margin     0
     margin-top rem(1)
     min-width  rem(220)
-    // cuts the hover background properly (border-radius)
     overflow   hidden
     border     0
     color      charcoalGrey
@@ -16,11 +16,15 @@
     .fil-actionmenu-recipients
         display none
 
-.fil-actionmenu
+.fil-actionmenu-inner
     .fil-action:hover
         background-color paleGrey
     .fil-action:active
         background-color silver
+
+.fil-actionmenu-overlay
+  opacity 0
+  -webkit-tap-highlight-color rgba(0,0,0,0)
 
 .fil-mobileactionmenu
     hr

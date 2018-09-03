@@ -241,12 +241,10 @@ class File extends Component {
 
   showActionMenu = () => {
     this.setState(state => ({ ...state, actionMenuVisible: true }))
-    this.props.onActionMenuShow()
   }
 
   hideActionMenu = () => {
     this.setState(state => ({ ...state, actionMenuVisible: false }))
-    this.props.onActionMenuHide()
   }
 
   componentDidMount() {

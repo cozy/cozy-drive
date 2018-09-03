@@ -96,8 +96,6 @@ class FileListRows extends PureComponent {
     const {
       displayedFolder,
       fileActions,
-      onActionMenuShow,
-      onActionMenuHide,
       onFolderOpen,
       onFileOpen,
       withSelectionCheckbox,
@@ -119,8 +117,6 @@ class FileListRows extends PureComponent {
         attributes={file}
         displayedFolder={displayedFolder}
         actions={fileActions}
-        onActionMenuShow={onActionMenuShow}
-        onActionMenuHide={onActionMenuHide}
         isRenaming={isFileRenaming}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
