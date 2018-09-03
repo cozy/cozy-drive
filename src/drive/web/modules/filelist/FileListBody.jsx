@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
-import Alerter from 'cozy-ui/react/Alerter'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
@@ -12,10 +10,9 @@ import FileListRows from './FileListRows'
 import AddFolder from './AddFolder'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
+import { isTypingNewFolderName } from './duck'
 
 import styles from 'drive/styles/filelist'
-
-const toggle = (flag, state, props) => ({ [flag]: !state[flag] })
 
 const EmptyContent = props => {
   const { isTrashContext, canUpload } = props
@@ -38,27 +35,6 @@ EmptyContent.defaultProps = {
 }
 
 export class FileListBody extends Component {
-  state = {
-    showAddFolder: false
-  }
-
-  toggleAddFolder = () => {
-    this.setState(toggle.bind(null, 'showAddFolder'))
-  }
-
-  createFolder = name => {
-    return this.props.actions.list
-      .createFolder(name)
-      .then(() => this.toggleAddFolder())
-  }
-
-  abortAddFolder = accidental => {
-    if (accidental) {
-      Alerter.info('alert.folder_abort')
-    }
-    this.toggleAddFolder()
-  }
-
   disablePointerEvents = () => {
     if (this.bodyRef)
       this.bodyRef.classList.add(styles['fil-content-body--menu-visible'])
@@ -70,8 +46,7 @@ export class FileListBody extends Component {
   }
 
   render() {
-    const { showAddFolder } = this.state
-    const { files, selectionModeActive } = this.props
+    const { files, selectionModeActive, isTypingNewFolderName } = this.props
     return (
       <div
         ref={el => (this.bodyRef = ReactDOM.findDOMNode(el))}
@@ -79,17 +54,12 @@ export class FileListBody extends Component {
           [styles['fil-content-body--selectable']]: selectionModeActive
         })}
       >
-        {showAddFolder && (
-          <AddFolder
-            onSubmit={this.createFolder}
-            onAbort={this.abortAddFolder}
-          />
-        )}
+        <AddFolder />
         <AsyncBoundary>
           {({ isLoading, isInError }) => {
             if (isLoading) return <FileListRowsPlaceholder />
             else if (isInError) return <Oops />
-            else if (files.length === 0 && !showAddFolder)
+            else if (files.length === 0 && !isTypingNewFolderName)
               return <EmptyContent {...this.props} />
             else
               return (
@@ -108,7 +78,8 @@ export class FileListBody extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selectionModeActive: isSelectionBarVisible(state)
+  selectionModeActive: isSelectionBarVisible(state),
+  isTypingNewFolderName: isTypingNewFolderName(state)
 })
 
 export default connect(mapStateToProps)(FileListBody)

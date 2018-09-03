@@ -16,7 +16,6 @@ import MenuItem, {
 } from 'drive/web/modules/actionmenu/MenuItem'
 
 import {
-  createFolder,
   openFileWith,
   downloadFiles,
   exportFilesNative,
@@ -59,9 +58,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { hasWriteAccess } = ownProps
   return {
     actions: Object.assign({}, ownProps.actions, {
-      list: {
-        createFolder: name => dispatch(createFolder(name))
-      },
       selection: {
         share: {
           action: selected =>
