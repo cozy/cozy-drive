@@ -34,48 +34,30 @@ EmptyContent.defaultProps = {
   params: {}
 }
 
-export class FileListBody extends Component {
-  disablePointerEvents = () => {
-    if (this.bodyRef)
-      this.bodyRef.classList.add(styles['fil-content-body--menu-visible'])
-  }
-
-  enablePointerEvents = () => {
-    if (this.bodyRef)
-      this.bodyRef.classList.remove(styles['fil-content-body--menu-visible'])
-  }
-
-  render() {
-    const { files, selectionModeActive, isTypingNewFolderName } = this.props
-    return (
-      <div
-        ref={el => (this.bodyRef = ReactDOM.findDOMNode(el))}
-        className={cx(styles['fil-content-body'], {
-          [styles['fil-content-body--selectable']]: selectionModeActive
-        })}
-      >
-        <AddFolder />
-        <AsyncBoundary>
-          {({ isLoading, isInError }) => {
-            if (isLoading) return <FileListRowsPlaceholder />
-            else if (isInError) return <Oops />
-            else if (files.length === 0 && !isTypingNewFolderName)
-              return <EmptyContent {...this.props} />
-            else
-              return (
-                <FileListRows
-                  onActionMenuShow={this.disablePointerEvents}
-                  onActionMenuHide={this.enablePointerEvents}
-                  withSelectionCheckbox
-                  {...this.props}
-                />
-              )
-          }}
-        </AsyncBoundary>
-      </div>
-    )
-  }
-}
+export const FileListBody = ({
+  files,
+  selectionModeActive,
+  isTypingNewFolderName,
+  ...props
+}) => (
+  <div
+    className={cx(styles['fil-content-body'], {
+      [styles['fil-content-body--selectable']]: selectionModeActive
+    })}
+  >
+    <AddFolder />
+    <AsyncBoundary>
+      {({ isLoading, isInError }) => {
+        if (isLoading) return <FileListRowsPlaceholder />
+        else if (isInError) return <Oops />
+        else if (files.length === 0 && !isTypingNewFolderName)
+          return <EmptyContent {...props} />
+        else
+          return <FileListRows files={files} withSelectionCheckbox {...props} />
+      }}
+    </AsyncBoundary>
+  </div>
+)
 
 const mapStateToProps = (state, ownProps) => ({
   selectionModeActive: isSelectionBarVisible(state),
