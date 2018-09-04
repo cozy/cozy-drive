@@ -1,7 +1,7 @@
 import { getEntry } from './filesystem'
 import Alerter from 'cozy-ui/react/Alerter'
-import { ROOT_DIR_ID } from '../../constants/config'
-import { uploadFiles } from '../../actions/index'
+import { ROOT_DIR_ID } from 'drive/constants/config'
+import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const getFile = (dirEntry, type = '') =>
   new Promise((resolve, reject) => {
