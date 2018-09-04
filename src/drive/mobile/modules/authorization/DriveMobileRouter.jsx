@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import MobileRouter from 'authentication/MobileRouter'
-import AppRoute from 'drive/components/AppRoute'
+import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 
