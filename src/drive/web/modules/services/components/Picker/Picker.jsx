@@ -56,6 +56,7 @@ class Picker extends Component {
             path={this.state.path}
             onBreadcrumbClick={this.navigateTo}
             opening={false}
+            className={styles['breadcrumb']}
           />
           <div className={styles['toolbar']} role="toolbar">
             <AddFolderButton />
