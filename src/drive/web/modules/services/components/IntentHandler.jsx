@@ -4,7 +4,7 @@ import React from 'react'
 import Embeder from './Embeder'
 import URLGetter from './URLGetter'
 import SuggestionProvider from './SuggestionProvider'
-import Picker from './Picker'
+import Picker from './Picker/'
 
 class IntentHandler extends React.Component {
   constructor(props) {

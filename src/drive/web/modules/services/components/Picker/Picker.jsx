@@ -6,8 +6,9 @@ import Topbar from 'drive/web/modules/Layout/Topbar'
 import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
 import FileList from 'drive/web/modules/filelist/FileList'
 import { Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb'
-import configureStore from 'drive/store/configureStore'
-import { Provider, connect } from 'react-redux'
+import { connect } from 'react-redux'
+import withReduxStore from './withReduxStore'
+import AddFolderButton from './AddFolderButton'
 import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 import {
   openFolder,
@@ -15,37 +16,6 @@ import {
   getVisibleFiles
 } from 'drive/web/modules/navigation/duck'
 import styles from './picker.styl'
-
-export const withReduxStore = WrappedComponent => {
-  class WithReduxStore extends Component {
-    render() {
-      const { client, t } = this.context
-      const store = configureStore(client, t)
-
-      return (
-        <Provider store={store}>
-          <WrappedComponent {...this.props} />
-        </Provider>
-      )
-    }
-  }
-  WithReduxStore.displayName = `WithReduxStore(${WrappedComponent.displayName ||
-    WrappedComponent.name ||
-    'Component'})`
-  return WithReduxStore
-}
-
-const AddFolderButton = ({ addFolder }) => (
-  <Button onClick={addFolder}>Nouveau dossier</Button>
-)
-
-const mapDispatchToPropsButton = (dispatch, ownProps) => ({
-  addFolder: () => dispatch(showNewFolderInput())
-})
-
-const ConnectedAddFolderButton = connect(null, mapDispatchToPropsButton)(
-  AddFolderButton
-)
 
 class Picker extends Component {
   state = {
@@ -88,7 +58,7 @@ class Picker extends Component {
             onBreadcrumbClick={this.navigateTo}
             opening={false}
           />
-          <ConnectedAddFolderButton />
+          <AddFolderButton />
         </Topbar>
         <FileList
           withSelectionCheckbox={false}
