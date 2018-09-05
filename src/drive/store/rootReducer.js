@@ -8,7 +8,7 @@ import { default as filelist } from 'drive/web/modules/filelist/duck'
 import { default as rename } from 'drive/web/modules/drive/rename'
 import { default as upload } from 'drive/web/modules/upload'
 // TODO: Move this to his own module/duck?
-import { default as availableOffline } from 'drive/web/modules/drive/availableOffline'
+import { default as availableOffline } from 'drive/mobile/modules/offline/duck'
 import { default as ui } from 'react-cozy-helpers'
 
 import { default as settings } from 'drive/mobile/modules/settings/duck'

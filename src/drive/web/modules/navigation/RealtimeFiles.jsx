@@ -10,6 +10,7 @@ import {
   updateFile,
   deleteFile
 } from 'drive/web/modules/navigation/duck'
+import { updateOfflineFileCopyIfNecessary } from 'drive/mobile/modules/offline/duck'
 
 class RealtimeFiles extends React.Component {
   realtimeListener = null
@@ -51,9 +52,11 @@ class RealtimeFiles extends React.Component {
 
   onDocumentChange = rawDoc => {
     const doc = this.normalizeId(rawDoc)
-    const docIsInCurrentView = this.isInCurrentView(doc)
-
     const previousDoc = this.props.files.find(f => f.id === doc.id)
+
+    this.props.updateOfflineFileCopyIfNecessary(doc, previousDoc)
+
+    const docIsInCurrentView = this.isInCurrentView(doc)
     const docWasInCurrentView = previousDoc && this.isInCurrentView(previousDoc)
 
     if (docWasInCurrentView && !docIsInCurrentView) this.props.deleteFile(doc)
@@ -82,7 +85,7 @@ class RealtimeFiles extends React.Component {
   normalizeId = doc => ({ ...doc, id: doc._id })
 
   componentWillUnmount() {
-    if (this.subscription) this.subscription.unsubscribe()
+    if (this.realtimeListener) this.realtimeListener.unsubscribe()
     if (this.pouchListener) this.pouchListener.cancel()
   }
 
@@ -99,7 +102,9 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addFile: file => dispatch(addFile(file)),
   updateFile: file => dispatch(updateFile(file)),
-  deleteFile: file => dispatch(deleteFile(file))
+  deleteFile: file => dispatch(deleteFile(file)),
+  updateOfflineFileCopyIfNecessary: (file, prevFile) =>
+    dispatch(updateOfflineFileCopyIfNecessary(file, prevFile))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import localforage from 'localforage'
 import { translate } from 'cozy-ui/react/I18n'
@@ -8,49 +9,53 @@ import Alerter from 'cozy-ui/react/Alerter'
 import { logException } from 'drive/mobile/lib/reporter'
 import { isCordova } from 'drive/mobile/lib/device'
 import {
-  openOfflineFile,
-  createTemporaryLocalFile,
-  openFileWithCordova
-} from 'drive/mobile/lib/filesystem'
-import {
   isClientAlreadyInstalled,
   isLinux,
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
+import { openLocalFileCopy } from 'drive/mobile/modules/offline/duck'
 
 import styles from './styles'
 
-class OpenWithCordovaButton extends React.Component {
+class AsyncActionButton extends React.Component {
   state = {
     loading: false
   }
 
-  openFile = async file => {
+  onClick = async () => {
+    const { onClick, onError } = this.props
     this.setState(state => ({ ...state, loading: true }))
-    const localFile = await createTemporaryLocalFile(file.id, file.name)
+    try {
+      await onClick()
+    } catch (error) {
+      onError(error)
+    }
     this.setState(state => ({ ...state, loading: false }))
-    return openFileWithCordova(localFile.nativeURL, file.mime)
-  }
-
-  onClick = () => {
-    const { file, onError } = this.props
-    file.isAvailableOffline
-      ? openOfflineFile(file).catch(onError)
-      : this.openFile(file, onError).catch(onError)
   }
 
   render() {
-    const { t } = this.props
+    const { label, className } = this.props
     return (
       <Button
         busy={this.state.loading}
-        className={styles['pho-viewer-noviewer-download']}
+        className={className}
         onClick={this.onClick}
-        label={t('Viewer.noviewer.openWith')}
+        label={label}
       />
     )
   }
 }
+
+const OpenWithCordovaButton = connect(null, (dispatch, ownProps) => ({
+  openLocalFileCopy: () => dispatch(openLocalFileCopy(ownProps.file))
+}))(({ t, openLocalFileCopy, onError }) => (
+  <AsyncActionButton
+    className={styles['pho-viewer-noviewer-download']}
+    onClick={openLocalFileCopy}
+    onError={onError}
+    label={t('Viewer.noviewer.openWith')}
+  />
+))
 
 const OpenWithWebButton = ({ t, url }) => (
   <Button

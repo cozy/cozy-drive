@@ -9,10 +9,10 @@ import {
   getOpenedFolderId,
   fetchRecentFiles,
   fetchMoreFiles,
-  openLocalFile,
   getFolderIdFromRoute,
   getVisibleFiles
 } from 'drive/web/modules/navigation/duck'
+import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
 const isSharingsFilesView = props =>
@@ -82,8 +82,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   onFolderOpen: folderId => dispatch(openFolder(folderId)),
-  onFileOpen: file => {
-    if (file.availableOffline) {
+  onFileOpen: (file, availableOffline) => {
+    if (availableOffline) {
       return dispatch(openLocalFile(file))
     }
     const viewPath = ownProps.location.pathname

@@ -1,30 +1,22 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import Toggle from 'cozy-ui/react/Toggle'
+import React, { Component } from 'react'
 
-import { isAvailableOffline } from 'drive/web/modules/drive/availableOffline'
-
-const MenuItem = ({ className, children, checkbox, onClick }) => (
-  <div>
-    <a className={className} onClick={onClick}>
-      {children}
-      {checkbox && (
-        <Toggle
-          id={children}
-          checked={checkbox.value}
-          onToggle={checkbox.onChange}
-        />
-      )}
-    </a>
-  </div>
-)
-export default MenuItem
-
-const mapStateToProps = (state, ownProps) => ({
-  checkbox: {
-    value: isAvailableOffline(state)(ownProps.files[0].id),
-    onChange: () => {}
+export default class MenuItem extends Component {
+  onClick = e => {
+    // we need to stop propagation here so that the menu doesn't close itself
+    e.stopPropagation()
+    if (this.props.onClick) {
+      this.props.onClick()
+    }
   }
-})
 
-export const ConnectedToggleMenuItem = connect(mapStateToProps)(MenuItem)
+  render() {
+    const { className, children } = this.props
+    return (
+      <div>
+        <a className={className} onClick={this.onClick}>
+          {children}
+        </a>
+      </div>
+    )
+  }
+}

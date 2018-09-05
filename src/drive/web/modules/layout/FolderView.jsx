@@ -83,8 +83,7 @@ class FolderView extends Component {
     if (!children) return null
     return React.Children.map(children, child =>
       React.cloneElement(child, {
-        files: this.props.files || [],
-        isAvailableOffline: this.props.isAvailableOffline
+        files: this.props.files || []
       })
     )
   }

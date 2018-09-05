@@ -422,6 +422,10 @@
       "open_with": {
         "offline": "You should be connected to open this file",
         "noapp": "No application can open this file"
+      },
+      "make_available_offline": {
+        "offline": "You should be connected to open this file",
+        "noapp": "No application can open this file"
       }
     },
     "revoked": {

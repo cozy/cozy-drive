@@ -20,6 +20,7 @@ import {
   toggleItemSelection,
   isSelected
 } from 'drive/web/modules/selection/duck'
+import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 
 import styles from 'drive/styles/filelist'
 
@@ -281,10 +282,7 @@ class File extends Component {
         this.props.router.push(getFolderUrl(attributes.id, this.props.location))
       })
     } else {
-      this.props.onFileOpen({
-        ...attributes,
-        availableOffline: this.props.isAvailableOffline
-      })
+      this.props.onFileOpen(attributes, this.props.isAvailableOffline)
     }
   }
 
@@ -370,7 +368,8 @@ class File extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selected: isSelected(state, ownProps.attributes.id)
+  selected: isSelected(state, ownProps.attributes.id),
+  isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

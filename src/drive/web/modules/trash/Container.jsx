@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import { isAvailableOffline } from 'drive/web/modules/drive/availableOffline'
 import { showModal } from 'react-cozy-helpers'
 
 import FolderView from 'drive/web/modules/layout/FolderView'
@@ -15,8 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
   canDrop: false,
   canUpload: false,
   withSharedBadge: false,
-  Toolbar,
-  isAvailableOffline: isAvailableOffline(state)
+  Toolbar
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

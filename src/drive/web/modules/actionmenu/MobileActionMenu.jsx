@@ -24,10 +24,18 @@ const Menu = props => {
       <hr />
       {actionNames.map(actionName => {
         const Component = actions[actionName].Component || MenuItem
+        const action = actions[actionName].action
+        const onClick = !action
+          ? undefined
+          : () => {
+              const promise = action([file])
+              onClose()
+              return promise
+            }
         return (
           <Component
             className={styles[`fil-action-${actionName}`]}
-            onClick={() => Promise.resolve(actions[actionName].action([file]))}
+            onClick={onClick}
             files={[file]}
           >
             {t(`SelectionBar.${actionName}`)}

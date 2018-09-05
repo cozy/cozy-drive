@@ -102,8 +102,7 @@ class FileListRows extends PureComponent {
       withFilePath,
       withSharedBadge = true,
       isRenaming,
-      renamingFile,
-      isAvailableOffline
+      renamingFile
     } = this.props
     const file = this.props.files[index]
     if (!file) {
@@ -123,7 +122,6 @@ class FileListRows extends PureComponent {
         withSelectionCheckbox={withSelectionCheckbox}
         withFilePath={withFilePath}
         withSharedBadge={withSharedBadge}
-        isAvailableOffline={isAvailableOffline && isAvailableOffline(file.id)}
       />
     )
   }
