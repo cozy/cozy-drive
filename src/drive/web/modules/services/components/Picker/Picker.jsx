@@ -9,7 +9,6 @@ import { Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb'
 import { connect } from 'react-redux'
 import withReduxStore from './withReduxStore'
 import AddFolderButton from './AddFolderButton'
-import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 import {
   openFolder,
   getOpenedFolderId,
@@ -52,13 +51,15 @@ class Picker extends Component {
     return (
       <div className={styles['wrapper']}>
         <IntentHeader appName="Drive" appEditor="Cozy" />
-        <Topbar>
+        <Topbar hideOnMobile={false}>
           <Breadcrumb
             path={this.state.path}
             onBreadcrumbClick={this.navigateTo}
             opening={false}
           />
-          <AddFolderButton />
+          <div className={styles['toolbar']} role="toolbar">
+            <AddFolderButton />
+          </div>
         </Topbar>
         <FileList
           withSelectionCheckbox={false}
