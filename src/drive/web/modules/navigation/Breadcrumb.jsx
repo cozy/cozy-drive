@@ -69,7 +69,7 @@ export class Breadcrumb extends Component {
   }
 
   render() {
-    const { path, onBreadcrumbClick, opening } = this.props
+    const { path, onBreadcrumbClick, opening, className = '' } = this.props
     const { deployed } = this.state
 
     if (!path) return false
@@ -79,7 +79,8 @@ export class Breadcrumb extends Component {
         className={classNames(
           styles['fil-path-backdrop'],
           { [styles['deployed']]: deployed },
-          { [styles['mobile']]: __TARGET__ === 'mobile' }
+          { [styles['mobile']]: __TARGET__ === 'mobile' },
+          className
         )}
       >
         <h2
