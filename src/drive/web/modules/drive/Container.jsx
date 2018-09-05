@@ -2,6 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
+import Toggle from 'cozy-ui/react/Toggle'
 import { showModal } from 'react-cozy-helpers'
 import { SharedDocument, SharedRecipients, ShareModal } from 'sharing'
 
@@ -10,18 +11,18 @@ import DeleteConfirm from './DeleteConfirm'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
-import { isAvailableOffline } from './availableOffline'
-import MenuItem, {
-  ConnectedToggleMenuItem
-} from 'drive/web/modules/actionmenu/MenuItem'
+import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 
 import {
   openFileWith,
   downloadFiles,
   exportFilesNative,
-  trashFiles,
-  toggleAvailableOffline
+  trashFiles
 } from 'drive/web/modules/navigation/duck'
+import {
+  isAvailableOffline,
+  toggleAvailableOffline
+} from 'drive/mobile/modules/offline/duck'
 
 import styles from 'drive/styles/actionmenu'
 
@@ -40,6 +41,20 @@ const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   </SharedDocument>
 )
 
+const MakeAvailableOfflineMenuItem = connect(
+  (state, ownProps) => ({
+    checked: isAvailableOffline(state, ownProps.file.id)
+  }),
+  (dispatch, ownProps) => ({
+    onToggle: () => dispatch(toggleAvailableOffline(ownProps.file))
+  })
+)(({ checked, onToggle, children, ...rest }) => (
+  <MenuItem {...rest}>
+    {children}
+    <Toggle id={children} checked={checked} onToggle={onToggle} />
+  </MenuItem>
+))
+
 const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {
     if (isReferencedByAlbum(files[i])) return true
@@ -50,8 +65,7 @@ const isAnyFileReferencedByAlbum = files => {
 const mapStateToProps = (state, ownProps) => ({
   isRenaming: isRenaming(state),
   renamingFile: getRenamingFile(state),
-  Toolbar,
-  isAvailableOffline: isAvailableOffline(state)
+  Toolbar
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -115,12 +129,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             hasWriteAccess && selections.length === 1
         },
         'phone-download': {
-          action: selected => dispatch(toggleAvailableOffline(selected[0])),
           displayCondition: selections =>
             __TARGET__ === 'mobile' &&
             selections.length === 1 &&
             isFile(selections[0]),
-          Component: props => <ConnectedToggleMenuItem {...props} />
+          Component: ({ files, ...rest }) => (
+            <MakeAvailableOfflineMenuItem file={files[0]} {...rest} />
+          )
         }
       }
     })

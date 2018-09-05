@@ -44,17 +44,21 @@ class Menu extends Component {
         >
           {actionNames.map(actionName => {
             const Component = actions[actionName].Component || MenuItem
+            const action = actions[actionName].action
+            const onClick = !action
+              ? undefined
+              : () => {
+                  const promise = action([file])
+                  onClose()
+                  return promise
+                }
             return (
               <Component
                 className={cx(
                   styles['fil-action'],
                   styles[`fil-action-${actionName}`]
                 )}
-                onClick={e => {
-                  const promise = actions[actionName].action([file])
-                  onClose()
-                  return promise
-                }}
+                onClick={onClick}
                 files={[file]}
               >
                 {t(`SelectionBar.${actionName}`)}

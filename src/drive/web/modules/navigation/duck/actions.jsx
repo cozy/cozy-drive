@@ -9,16 +9,13 @@ import React from 'react'
 import { isCordova } from 'drive/mobile/lib/device'
 import {
   saveFileWithCordova,
-  saveAndOpenWithCordova,
-  openOfflineFile,
-  deleteOfflineFile
+  saveAndOpenWithCordova
 } from 'drive/mobile/lib/filesystem'
 import {
   isDirectory,
   isReferencedByAlbum,
   ALBUMS_DOCTYPE
 } from 'drive/web/modules/drive/files'
-import * as availableOffline from 'drive/web/modules/drive/availableOffline'
 import { addToUploadQueue } from 'drive/web/modules/upload'
 import { showModal } from 'lib/react-cozy-helpers'
 import Alerter from 'cozy-ui/react/Alerter'
@@ -384,7 +381,7 @@ const isAlreadyInTrash = err => {
 
 const isMissingFile = error => error.status === 404
 
-const downloadFileError = error => {
+export const downloadFileError = error => {
   return isMissingFile(error)
     ? 'error.download_file.missing'
     : 'error.download_file.offline'
@@ -460,48 +457,11 @@ export const exportFilesNative = files => {
   }
 }
 
-export const toggleAvailableOffline = file => async (dispatch, getState) =>
-  availableOffline.isAvailableOffline(getState())(file.id)
-    ? dispatch(undoMakeAvailableOffline(file))
-    : dispatch(makeAvailableOffline(file))
-
-const undoMakeAvailableOffline = file => async dispatch => {
-  const filename = file.id
-  if (isCordova() && window.cordova.file) {
-    deleteOfflineFile(filename)
-  }
-  dispatch(availableOffline.undoMakeAvailableOffline(file.id))
+const openFileDownloadError = error => {
+  return isMissingFile(error)
+    ? 'mobile.error.open_with.missing'
+    : 'mobile.error.open_with.offline'
 }
-
-const makeAvailableOffline = file => async dispatch => {
-  const response = await cozy.client.files
-    .downloadById(file.id)
-    .catch(error => {
-      Alerter.error(downloadFileError(error))
-      throw error
-    })
-  const blob = await response.blob()
-  const filename = file.id
-
-  if (isCordova() && window.cordova.file) {
-    saveFileWithCordova(blob, filename)
-  }
-  dispatch(availableOffline.makeAvailableOffline(file.id))
-}
-
-export const openLocalFile = file => {
-  return async dispatch => {
-    if (!file.availableOffline) {
-      console.error('openLocalFile: this file is not available offline')
-    }
-    openOfflineFile(file).catch(error => {
-      console.error('openLocalFile', error)
-      Alerter.error(openWithNoAppError())
-    })
-  }
-}
-
-const openWithNoAppError = () => 'mobile.error.open_with.noapp'
 
 export const openFileWith = (id, filename) => {
   return async (dispatch, getState) => {
@@ -509,16 +469,16 @@ export const openFileWith = (id, filename) => {
       dispatch({ type: OPEN_FILE_WITH, id })
       const response = await cozy.client.files.downloadById(id).catch(error => {
         console.error('downloadById', error)
-        Alerter.error(downloadFileError(error))
+        Alerter.error(openFileDownloadError(error))
         throw error
       })
       const blob = await response.blob()
       await saveAndOpenWithCordova(blob, filename).catch(error => {
         console.error('openFileWithCordova', error)
-        Alerter.error(openWithNoAppError())
+        Alerter.error('mobile.error.open_with.noapp')
       })
     } else {
-      Alerter.error(openWithNoAppError())
+      Alerter.error('mobile.error.open_with.noapp')
     }
   }
 }

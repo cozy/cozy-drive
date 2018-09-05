@@ -27,7 +27,5 @@ export {
   trashFiles,
   downloadFiles,
   exportFilesNative,
-  toggleAvailableOffline,
-  openLocalFile,
   openFileWith
 } from './actions'

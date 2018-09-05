@@ -1,10 +1,8 @@
-/* global cozy cordova */
+/* global cordova */
 import React, { Component } from 'react'
-import {
-  temporarySave,
-  getNativeFile,
-  openFileWithCordova
-} from 'drive/mobile/lib/filesystem'
+import { connect } from 'react-redux'
+import { openFileWithCordova } from 'drive/mobile/lib/filesystem'
+import { getLocalFileCopyUrl } from 'drive/mobile/modules/offline/duck'
 import NoViewer from './NoViewer'
 import Spinner from 'cozy-ui/react/Spinner'
 import classNames from 'classnames'
@@ -39,8 +37,6 @@ class NativePdfViewer extends Component {
     error: null
   }
 
-  nativeFileUrl = null
-
   onOpen = () => {
     this.setState({ opening: false })
   }
@@ -56,29 +52,18 @@ class NativePdfViewer extends Component {
 
   componentWillMount = async () => {
     try {
-      if (this.props.file.isAvailableOffline) {
-        const file = await getNativeFile(this.props.file)
-        this.nativeFileUrl = file.nativeURL
-      } else {
-        const response = await cozy.client.files.downloadById(
-          this.props.file.id
-        )
-        const blob = await response.blob()
-        const file = await temporarySave(blob, this.props.file.name)
-        this.nativeFileUrl = file.nativeURL
-      }
-
-      this.openPdfInExternalViewer()
+      const localFileUrl = await this.props.getLocalFileCopyUrl(this.props.file)
+      this.openPdfInExternalViewer(localFileUrl)
     } catch (e) {
       this.onError(e)
     }
   }
 
-  openPdfInExternalViewer = () => {
+  openPdfInExternalViewer = localFileUrl => {
     const { t } = this.props
 
     cordova.plugins.SitewaertsDocumentViewer.viewDocument(
-      this.nativeFileUrl,
+      localFileUrl,
       'application/pdf',
       {
         ...VIEWER_OPTIONS,
@@ -92,15 +77,15 @@ class NativePdfViewer extends Component {
       },
       this.onOpen,
       this.onClose,
-      this.openPdfWithSystem,
+      () => this.openPdfWithSystem(localFileUrl),
       this.onError
     )
   }
 
-  openPdfWithSystem = async () => {
+  openPdfWithSystem = async localFileUrl => {
     try {
       document.addEventListener('resume', this.onSystemPdfViewerExit, false)
-      await openFileWithCordova(this.nativeFileUrl, 'application/pdf')
+      await openFileWithCordova(localFileUrl, 'application/pdf')
       this.onOpen()
     } catch (e) {
       this.onError(e)
@@ -137,4 +122,8 @@ class NativePdfViewer extends Component {
   }
 }
 
-export default translate()(NativePdfViewer)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  getLocalFileCopyUrl: file => dispatch(getLocalFileCopyUrl(file))
+})
+
+export default translate()(connect(null, mapDispatchToProps)(NativePdfViewer))
