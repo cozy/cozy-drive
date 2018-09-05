@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'
+import Icon from 'cozy-ui/react/Icon'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 import { SharedDocuments } from 'sharing'
@@ -130,7 +131,10 @@ class Breadcrumb extends Component {
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
                   </span>
-                  <span className={styles['fil-path-separator']}>/</span>
+                  <Icon
+                    icon="forward"
+                    className={styles['fil-path-separator']}
+                  />
                 </Link>
               )
             } else {
