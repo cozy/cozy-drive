@@ -53,6 +53,7 @@ class Picker extends Component {
   render() {
     const { files } = this.props
     const { headerIcon } = this.state
+    const { t } = this.context
 
     return (
       <div className={styles['wrapper']}>
@@ -78,8 +79,8 @@ class Picker extends Component {
           onFolderOpen={id => this.navigateTo(files.find(f => f.id === id))}
         />
         <div className={styles['button-area']}>
-          <Button theme="secondary">Annuler</Button>
-          <Button>Sélectionner</Button>
+          <Button theme="secondary">{t('intents.picker.cancel')}</Button>
+          <Button>{t('intents.picker.select')}</Button>
         </div>
       </div>
     )

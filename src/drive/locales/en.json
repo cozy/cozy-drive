@@ -492,6 +492,11 @@
   "intents": {
     "alert": {
       "error": "Unable to automatically upload the file, please upload it manually with the upload menu."
+    },
+    "picker": {
+      "select": "Select",
+      "cancel": "Cancel",
+      "new_folder": "New folder"
     }
   },
   "UploadQueue": {
