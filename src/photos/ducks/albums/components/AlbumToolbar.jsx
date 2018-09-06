@@ -76,7 +76,7 @@ class AlbumToolbar extends Component {
             <MenuItem
               className={styles['pho-action-delete']}
               icon={<Icon icon="delete" />}
-              onClick={deleteAlbum}
+              onSelect={deleteAlbum}
             >
               {t('Toolbar.menu.album_delete')}
             </MenuItem>
