@@ -9,6 +9,7 @@ const RECEIVE_PATHS = 'RECEIVE_PATHS'
 
 // actions
 export const receiveSharings = ({
+  instanceUri,
   sharings = [],
   permissions = [],
   apps = []
@@ -16,7 +17,7 @@ export const receiveSharings = ({
   type: RECEIVE_SHARINGS,
   data: {
     sharings: sharings.filter(
-      s => !areAllRecipientsRevoked(s) && !hasBeenSelfRevoked(s)
+      s => !areAllRecipientsRevoked(s) && !hasBeenSelfRevoked(s, instanceUri)
     ),
     permissions,
     apps
@@ -331,9 +332,10 @@ const areAllRecipientsRevoked = sharing =>
   sharing.attributes.owner &&
   sharing.attributes.members.filter(m => m.status !== 'revoked').length === 1
 
-const hasBeenSelfRevoked = sharing =>
-  !sharing.attributes.owner &&
-  sharing.attributes.members[0].status === 'revoked'
+const hasBeenSelfRevoked = (sharing, instanceUri) => {
+  const self = sharing.attributes.members.find(m => m.instance === instanceUri)
+  return !sharing.attributes.owner && self.status === 'revoked'
+}
 
 const getDocumentSharingType = (sharing, docId) => {
   if (!sharing) return null

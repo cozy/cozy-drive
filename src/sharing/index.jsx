@@ -116,6 +116,7 @@ export default class SharingProvider extends Component {
     ])
     this.dispatch(
       receiveSharings({
+        instanceUri: client.options.uri,
         sharings: sharings.data,
         permissions: permissions.data,
         apps: apps.data
