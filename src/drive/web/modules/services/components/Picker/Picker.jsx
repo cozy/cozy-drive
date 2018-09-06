@@ -18,7 +18,8 @@ import styles from './picker.styl'
 
 class Picker extends Component {
   state = {
-    path: []
+    path: [],
+    headerIcon: ''
   }
 
   updateBreadcrumb = folder => {
@@ -42,15 +43,20 @@ class Picker extends Component {
   }
 
   componentDidMount() {
+    const root = document.getElementById('main')
+    const data = root.dataset
+    this.setState({ headerIcon: data.cozyIconPath })
+
     this.navigateTo({ id: ROOT_DIR_ID, name: 'Drive' })
   }
 
   render() {
     const { files } = this.props
+    const { headerIcon } = this.state
 
     return (
       <div className={styles['wrapper']}>
-        <IntentHeader appName="Drive" appEditor="Cozy" />
+        <IntentHeader appName="Drive" appEditor="Cozy" appIcon={headerIcon} />
         <Topbar hideOnMobile={false}>
           <Breadcrumb
             path={this.state.path}
