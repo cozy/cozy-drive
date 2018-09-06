@@ -3,55 +3,16 @@ import styles from '../styles/photoList'
 import React, { Component } from 'react'
 import { withContentRect } from 'react-measure'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button } from 'cozy-ui/react'
 
 import PhotoList from './PhotoList'
 import { EmptyPhotos } from 'components/Error/Empty'
 import Loading from './Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
-
-const Spinner = () => <div className={styles['pho-list-spinner']} />
-
-class MoreButton extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      fetching: false
-    }
-  }
-
-  handleClick() {
-    this.setState({ fetching: true })
-    this.props.onClick().then(() => this.setState({ fetching: false }))
-  }
-
-  render() {
-    const { children, width } = this.props
-    if (!width) {
-      return null
-    }
-    const { fetching } = this.state
-    return (
-      <div style={{ width: width }} className={styles['pho-list-morebutton']}>
-        {fetching && (
-          <Button disabled theme="secondary" label={<Spinner nomargin />} />
-        )}
-        {!fetching && (
-          <Button
-            theme="secondary"
-            onClick={() => this.handleClick()}
-            label={children}
-          />
-        )}
-      </div>
-    )
-  }
-}
+import LoadMoreButton from './LoadMoreButton'
 
 export class PhotoBoard extends Component {
   render() {
     const {
-      t,
       f,
       lists,
       selected,
@@ -101,11 +62,7 @@ export class PhotoBoard extends Component {
             containerWidth={width}
           />
         ))}
-        {hasMore && (
-          <MoreButton width={width} onClick={fetchMore}>
-            {t('Board.load_more')}
-          </MoreButton>
-        )}
+        {hasMore && <LoadMoreButton width={width} onClick={fetchMore} />}
       </div>
     )
   }
