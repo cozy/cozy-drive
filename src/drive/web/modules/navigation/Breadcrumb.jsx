@@ -177,7 +177,11 @@ class RouterBreadCrumb extends Component {
   }
 }
 
-class PreviousButton extends Component {
+export const PreviousButton = ({ onClick }) => (
+  <button className={styles['fil-path-previous']} onClick={onClick} />
+)
+
+class RouterPreviousButton extends Component {
   navigateToFolder = folderId => {
     const { router, location, goToFolder, getFolderUrl } = this.props
     goToFolder(folderId).then(() => {
@@ -190,18 +194,14 @@ class PreviousButton extends Component {
     router.push(path)
   }
 
-  render({ location, path }) {
-    const previousSegment = path[path.length - 2]
-    return (
-      <button
-        className={styles['fil-path-previous']}
-        onClick={() =>
-          previousSegment.id
-            ? this.navigateToFolder(previousSegment.id)
-            : this.navigateToPath(previousSegment.url)
-        }
-      />
-    )
+  navigateBack = () => {
+    const previousSegment = this.props.path[this.props.path.length - 2]
+    if (previousSegment.id) this.navigateToFolder(previousSegment.id)
+    else this.navigateToPath(previousSegment.url)
+  }
+
+  render() {
+    return <PreviousButton onClick={this.navigateBack} />
   }
 }
 
@@ -212,7 +212,7 @@ const MobileAwareBreadcrumb = props => {
     <div>
       {props.path.length >= 2 && (
         <BarLeft>
-          <PreviousButton {...props} />
+          <RouterPreviousButton {...props} />
         </BarLeft>
       )}
       <BarCenter>
