@@ -28,7 +28,7 @@ const addPhotos = async (album, photos) => {
   }
 }
 
-const ALBUMS_MUTATIONS = (query, ownProps) => ({
+const ALBUMS_MUTATIONS = (client, ownProps) => ({
   addPhotos,
   createAlbum: async (name, photos, created_at = new Date()) => {
     try {
@@ -37,12 +37,12 @@ const ALBUMS_MUTATIONS = (query, ownProps) => ({
         return
       }
       const album = { _type: DOCTYPE, name, created_at }
-      const unique = await query.client.validate(album)
+      const unique = await client.validate(album)
       if (unique !== true) {
         Alerter.error('Albums.create.error.already_exists', { name })
         return
       }
-      const resp = await query.client.create(
+      const resp = await client.create(
         DOCTYPE,
         album,
         { photos },
