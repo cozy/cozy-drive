@@ -69,13 +69,25 @@ const TopbarTitle = ({ children }) => (
   <h2 className={styles['pho-content-title']}>{children}</h2>
 )
 
-class Topbar extends Component {
-  backToAlbums = () => {
-    // go to parent
-    let url = this.props.router.location.pathname
-    this.props.router.push(url.substring(0, url.lastIndexOf('/')))
-  }
+const BackToAlbumsButton = withRouter(({ router }) => {
+  const url = router.location.pathname
+  const parentUrl = url.substring(0, url.lastIndexOf('/'))
+  const onClick = () => router.push(parentUrl)
 
+  return (
+    <div
+      role="button"
+      className={styles['pho-content-album-previous']}
+      onClick={onClick}
+    />
+  )
+})
+
+BackToAlbumsButton.propTypes = {
+  router: PropTypes.object.isRequired
+}
+
+class Topbar extends Component {
   renderTitle() {
     const { t, viewName, albumName = '', onEdit, editing = false } = this.props
     const isAlbumContent = viewName === 'albumContent'
@@ -96,13 +108,7 @@ class Topbar extends Component {
 
     return (
       <div className={styles['pho-content-header']}>
-        {isAlbumContent && (
-          <div
-            role="button"
-            className={styles['pho-content-album-previous']}
-            onClick={this.backToAlbums}
-          />
-        )}
+        {isAlbumContent && <BackToAlbumsButton />}
         {responsiveTitle}
         {responsiveMenu}
       </div>
@@ -117,7 +123,6 @@ Topbar.propTypes = {
   editing: PropTypes.bool,
   onEdit: PropTypes.func,
   breakpoints: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
   children: PropTypes.node
 }
 
@@ -126,4 +131,4 @@ Topbar.defaultProps = {
   onEdit: () => {}
 }
 
-export default flow(withRouter, withBreakpoints(), translate())(Topbar)
+export default flow(withBreakpoints(), translate())(Topbar)
