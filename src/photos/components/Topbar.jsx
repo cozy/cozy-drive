@@ -82,6 +82,11 @@ BackToAlbumsButton.propTypes = {
 }
 
 class Topbar extends Component {
+  componentDidMount() {
+    const url = this.props.router.location.pathname
+    this.parentUrl = url.substring(0, url.lastIndexOf('/'))
+  }
+
   renderTitle() {
     const { t, viewName, albumName = '', onEdit, editing = false } = this.props
     const isAlbumContent = viewName === 'albumContent'
@@ -100,10 +105,8 @@ class Topbar extends Component {
 
     const responsiveMenu = isMobile ? <BarRight>{children}</BarRight> : children
 
-    const url = router.location.pathname
-    const parentUrl = url.substring(0, url.lastIndexOf('/'))
     const backButton = (
-      <BackToAlbumsButton onClick={() => router.push(parentUrl)} />
+      <BackToAlbumsButton onClick={() => router.push(this.parentUrl)} />
     )
     const responsiveBackButton = isMobile ? (
       <BarLeft>{backButton}</BarLeft>
