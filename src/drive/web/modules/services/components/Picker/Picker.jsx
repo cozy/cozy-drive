@@ -50,6 +50,14 @@ class Picker extends Component {
     this.navigateTo({ id: ROOT_DIR_ID, name: 'Drive' })
   }
 
+  cancelIntent = () => {
+    this.props.service.cancel()
+  }
+
+  terminateIntent = () => {
+    this.props.service.terminate({ id: this.props.openedFolderId })
+  }
+
   render() {
     const { files } = this.props
     const { headerIcon } = this.state
@@ -79,8 +87,12 @@ class Picker extends Component {
           onFolderOpen={id => this.navigateTo(files.find(f => f.id === id))}
         />
         <div className={styles['button-area']}>
-          <Button theme="secondary">{t('intents.picker.cancel')}</Button>
-          <Button>{t('intents.picker.select')}</Button>
+          <Button theme="secondary" onClick={this.cancelIntent}>
+            {t('intents.picker.cancel')}
+          </Button>
+          <Button onClick={this.terminateIntent}>
+            {t('intents.picker.select')}
+          </Button>
         </div>
       </div>
     )
