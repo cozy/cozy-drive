@@ -9,7 +9,7 @@ import ErrorComponent from 'components/Error/ErrorComponent'
 import Topbar from '../../../components/Topbar'
 
 const Content = ({ list }) => {
-  const { fetchStatus, data } = list
+  const { fetchStatus } = list
   switch (fetchStatus) {
     case 'pending':
     case 'loading':
@@ -17,7 +17,7 @@ const Content = ({ list }) => {
     case 'failed':
       return <ErrorComponent errorType="albums" />
     default:
-      return <AlbumsList albums={data} />
+      return <AlbumsList {...list} />
   }
 }
 

@@ -1,9 +1,9 @@
-import styles from '../../../styles/albumsList'
+import styles from 'photos/styles/albumsList'
 
 import React from 'react'
-
 import { Content } from 'cozy-ui/react/Layout'
 import { EmptyPhotos } from 'components/Error/Empty'
+import LoadMoreButton from 'photos/components/LoadMoreButton'
 import AlbumItem from './AlbumItem'
 
 const FALLBACK_CREATION_DATE = null
@@ -15,21 +15,16 @@ const sortByCreationDate = (a, b) => {
   )
 }
 
-const AlbumsList = props =>
-  props.albums.length === 0 ? (
+const AlbumsList = ({ data, hasMore, fetchMore }) =>
+  data.length === 0 ? (
     <EmptyPhotos localeKey="albums" />
   ) : (
     <Content>
       <div className={styles['pho-album-list']}>
-        {props.albums
+        {data
           .sort(sortByCreationDate)
-          .map(a => (
-            <AlbumItem
-              album={a}
-              key={a.id}
-              onServerError={props.onServerError}
-            />
-          ))}
+          .map(a => <AlbumItem album={a} key={a.id} />)}
+        {hasMore && <LoadMoreButton onClick={fetchMore} />}
       </div>
     </Content>
   )
