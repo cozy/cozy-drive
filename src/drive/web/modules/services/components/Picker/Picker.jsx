@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Spinner, IntentHeader, Button } from 'cozy-ui/react'
+import { Spinner, IntentHeader, Button, withBreakpoints } from 'cozy-ui/react'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Main from 'drive/web/modules/Layout/Main'
 import Topbar from 'drive/web/modules/Layout/Topbar'
 import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
 import FileList from 'drive/web/modules/filelist/FileList'
-import { Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb'
+import {
+  Breadcrumb,
+  PreviousButton
+} from 'drive/web/modules/navigation/Breadcrumb'
 import { connect } from 'react-redux'
 import withReduxStore from './withReduxStore'
 import AddFolderButton from './AddFolderButton'
@@ -42,6 +45,11 @@ class Picker extends Component {
     this.updateBreadcrumb(folder)
   }
 
+  goBack = () => {
+    const { path } = this.state
+    this.navigateTo(path[path.length - 2])
+  }
+
   componentDidMount() {
     const root = document.getElementById('main')
     const data = root.dataset
@@ -59,14 +67,16 @@ class Picker extends Component {
   }
 
   render() {
-    const { files } = this.props
-    const { headerIcon } = this.state
+    const { files, breakpoints: { isMobile } } = this.props
+    const { headerIcon, path } = this.state
     const { t } = this.context
+    const showBackButton = path.length > 1 && isMobile
 
     return (
       <div className={styles['wrapper']}>
         <IntentHeader appName="Drive" appEditor="Cozy" appIcon={headerIcon} />
         <Topbar hideOnMobile={false}>
+          {showBackButton && <PreviousButton onClick={this.goBack} />}
           <Breadcrumb
             path={this.state.path}
             onBreadcrumbClick={this.navigateTo}
@@ -109,5 +119,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default withReduxStore(
-  connect(mapStateToProps, mapDispatchToProps)(Picker)
+  connect(mapStateToProps, mapDispatchToProps)(withBreakpoints()(Picker))
 )
