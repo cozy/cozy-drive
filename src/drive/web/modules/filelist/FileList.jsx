@@ -7,11 +7,20 @@ import FileListBody from 'drive/web/modules/filelist/FileListBody'
 
 import styles from 'drive/styles/filelist'
 
-const FileList = ({ canSort, fileActions, ...rest }) => (
+const FileList = ({
+  canSort,
+  fileActions,
+  withSelectionCheckbox = true,
+  ...rest
+}) => (
   <div className={styles['fil-content-table']} role="table">
     <MobileFileListHeader canSort={canSort} />
     <FileListHeader canSort={canSort} />
-    <FileListBody fileActions={fileActions} {...rest} />
+    <FileListBody
+      fileActions={fileActions}
+      withSelectionCheckbox={withSelectionCheckbox}
+      {...rest}
+    />
   </div>
 )
 
