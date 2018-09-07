@@ -5,6 +5,7 @@ import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import IntentHandler from 'drive/web/modules/services'
+import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 
 if (__DEVELOPMENT__) {
@@ -37,8 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const { intent } = getQueryParameter()
 
-  // we still need cozy-client-js for intents and offline
-  // cozy-client is not used right now
+  const client = new CozyClient({
+    uri: cozyUrl,
+    token: data.cozyToken
+  })
+
   cozy.client.init({
     cozyURL: cozyUrl,
     token: data.cozyToken,
@@ -50,7 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
       lang={data.cozyLocale}
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >
-      <IntentHandler intentId={intent} />
+      <CozyProvider client={client}>
+        <IntentHandler intentId={intent} />
+      </CozyProvider>
     </I18n>,
     root
   )
