@@ -4,7 +4,6 @@ import filesize from 'filesize'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import Hammer from 'hammerjs'
-import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from 'drive/web/modules/drive/RenameInput'

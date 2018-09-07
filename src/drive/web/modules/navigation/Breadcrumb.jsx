@@ -1,6 +1,6 @@
 /* global __TARGET__ cozy */
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'

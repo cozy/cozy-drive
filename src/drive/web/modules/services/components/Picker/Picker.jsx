@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Spinner, IntentHeader, Button, withBreakpoints } from 'cozy-ui/react'
+import { IntentHeader, Button, withBreakpoints } from 'cozy-ui/react'
 import { ROOT_DIR_ID } from 'drive/constants/config'
-import Main from 'drive/web/modules/Layout/Main'
 import Topbar from 'drive/web/modules/Layout/Topbar'
-import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
 import FileList from 'drive/web/modules/filelist/FileList'
 import {
   Breadcrumb,
