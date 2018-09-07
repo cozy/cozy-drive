@@ -10,7 +10,8 @@ import {
   fetchRecentFiles,
   fetchMoreFiles,
   getFolderIdFromRoute,
-  getVisibleFiles
+  getVisibleFiles,
+  getFolderUrl
 } from 'drive/web/modules/navigation/duck'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 
@@ -32,7 +33,7 @@ class FileExplorer extends Component {
     } else if (isSharingsFilesView(this.props)) {
       // Do nothing — the fetching will be started by a sub-component
     } else {
-      this.openFolder(
+      this.props.fetchFolder(
         getFolderIdFromRoute(this.props.location, this.props.params)
       )
     }
@@ -45,7 +46,9 @@ class FileExplorer extends Component {
       !isSharingsFilesView(newProps) &&
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
     ) {
-      this.openFolder(getFolderIdFromRoute(newProps.location, newProps.params))
+      this.navigateToFolder(
+        getFolderIdFromRoute(newProps.location, newProps.params)
+      )
     } else if (
       urlHasChanged(this.props, newProps) &&
       isRecentFilesView(newProps)
@@ -54,16 +57,20 @@ class FileExplorer extends Component {
     }
   }
 
-  openFolder(folderId) {
-    this.props.onFolderOpen(folderId)
+  navigateToFolder = async folderId => {
+    await this.props.fetchFolder(folderId)
+    this.props.router.push(getFolderUrl(folderId, this.props.location))
   }
 
   render() {
-    const { children, ...props } = this.props
+    const { children, ...otherProps } = this.props
     return (
       <RealtimeFiles>
         <SharingProvider doctype="io.cozy.files" documentType="Files">
-          {React.cloneElement(React.Children.only(children), props)}
+          {React.cloneElement(React.Children.only(children), {
+            ...otherProps,
+            onFolderOpen: this.navigateToFolder
+          })}
         </SharingProvider>
       </RealtimeFiles>
     )
@@ -81,7 +88,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchRecentFiles: () => dispatch(fetchRecentFiles()),
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
-  onFolderOpen: folderId => dispatch(openFolder(folderId)),
+  fetchFolder: folderId => dispatch(openFolder(folderId)),
   onFileOpen: (file, availableOffline) => {
     if (availableOffline) {
       return dispatch(openLocalFile(file))

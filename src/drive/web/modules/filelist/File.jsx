@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
-import { withRouter, Link } from 'react-router'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import Hammer from 'hammerjs'
+import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from 'drive/web/modules/drive/RenameInput'
@@ -15,7 +16,6 @@ import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedBadge, SharedStatus } from 'sharing'
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
-import { getFolderUrl } from 'drive/web/modules/navigation/duck'
 import {
   toggleItemSelection,
   isSelected
@@ -278,9 +278,7 @@ class File extends Component {
   open(e, attributes) {
     e.stopPropagation()
     if (isDirectory(attributes)) {
-      this.props.onFolderOpen(attributes.id).then(() => {
-        this.props.router.push(getFolderUrl(attributes.id, this.props.location))
-      })
+      this.props.onFolderOpen(attributes.id)
     } else {
       this.props.onFileOpen(attributes, this.props.isAvailableOffline)
     }
@@ -378,5 +376,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default withBreakpoints()(
-  withRouter(translate()(connect(mapStateToProps, mapDispatchToProps)(File)))
+  translate()(connect(mapStateToProps, mapDispatchToProps)(File))
 )
