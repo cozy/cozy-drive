@@ -111,7 +111,7 @@ class Topbar extends Component {
     const responsiveBackButton = isMobile ? (
       <BarLeft>{backButton}</BarLeft>
     ) : (
-      { backButton }
+      backButton
     )
 
     return (
