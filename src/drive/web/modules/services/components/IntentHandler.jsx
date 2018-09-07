@@ -4,6 +4,7 @@ import React from 'react'
 import Embeder from './Embeder'
 import URLGetter from './URLGetter'
 import SuggestionProvider from './SuggestionProvider'
+import Picker from './Picker'
 
 class IntentHandler extends React.Component {
   constructor(props) {
@@ -40,6 +41,11 @@ class IntentHandler extends React.Component {
         intent.attributes.type === 'io.cozy.files'
       ) {
         component = Embeder
+      } else if (
+        intent.attributes.action === 'PICK' &&
+        intent.attributes.type === 'io.cozy.files'
+      ) {
+        component = Picker
       } else if (intent.attributes.action === 'GET_URL') {
         component = URLGetter
       }

@@ -66,6 +66,11 @@
       "href": "/services"
     },
     {
+      "action": "PICK",
+      "type": ["io.cozy.files"],
+      "href": "/services"
+    },
+    {
       "action": "GET_URL",
       "type": ["io.cozy.files"],
       "href": "/services"
