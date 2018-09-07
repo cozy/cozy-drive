@@ -39,20 +39,38 @@ export default class ShareModal extends Component {
         size="small"
         mobileFullscreen
       >
+        {(hasSharedParent || hasSharedChild) && (
+          <div className={styles['share-byemail-onlybylink']}>
+            {t(`${documentType}.share.shareByEmail.onlyByLink`, {
+              type: t(
+                `${documentType}.share.shareByEmail.type.${
+                  document.type === 'directory' ? 'folder' : 'file'
+                }`
+              )
+            })}{' '}
+            <strong>
+              {t(
+                `${documentType}.share.shareByEmail.${
+                  hasSharedParent ? 'hasSharedParent' : 'hasSharedChild'
+                }`
+              )}
+            </strong>
+          </div>
+        )}
         <ModalContent className={styles['share-modal-content']}>
-          {documentType !== 'Albums' && (
-            <DumbShareByEmail
-              document={document}
-              documentType={documentType}
-              sharingDesc={sharingDesc}
-              contacts={contacts}
-              createContact={createContact}
-              onShare={onShare}
-              needsContactsPermission={needsContactsPermission}
-              hasSharedParent={hasSharedParent}
-              hasSharedChild={hasSharedChild}
-            />
-          )}
+          {documentType !== 'Albums' &&
+            !hasSharedParent &&
+            !hasSharedChild && (
+              <DumbShareByEmail
+                document={document}
+                documentType={documentType}
+                sharingDesc={sharingDesc}
+                contacts={contacts}
+                createContact={createContact}
+                onShare={onShare}
+                needsContactsPermission={needsContactsPermission}
+              />
+            )}
           <hr className={styles['divider']} />
           <div className={styles['share-modal-secondary']}>
             <DumbShareByLink

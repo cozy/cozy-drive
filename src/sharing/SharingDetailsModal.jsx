@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { UserAvatar as Owner } from './components/Recipient'
 import WhoHasAccess from './components/WhoHasAccess'
 
-import Modal from 'cozy-ui/react/Modal'
+import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 
 import { getDisplayName } from '.'
 
@@ -29,7 +29,7 @@ export class SharingDetailsModal extends Component {
         size="small"
         mobileFullscreen
       >
-        <div className={styles['share-modal-content']}>
+        <ModalContent className={styles['share-modal-content']}>
           <div className={styles['share-details']}>
             <Owner
               name={t(`${documentType}.share.sharedBy`, {
@@ -67,7 +67,7 @@ export class SharingDetailsModal extends Component {
             documentType={documentType}
             onRevoke={onRevoke}
           />
-        </div>
+        </ModalContent>
       </Modal>
     )
   }
