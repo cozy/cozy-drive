@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import { Content } from 'cozy-ui/react/Layout'
 import FileList from 'drive/web/modules/filelist/FileList'
@@ -14,7 +15,8 @@ import {
   getOpenedFolderId,
   getFolderIdFromRoute,
   fetchMoreFiles,
-  getVisibleFiles
+  getVisibleFiles,
+  getFolderUrl
 } from 'drive/web/modules/navigation/duck'
 
 import Viewer from 'viewer'
@@ -50,14 +52,17 @@ class DumbFolderView extends React.Component {
 
   componentWillMount() {
     this.props
-      .onFolderOpen(
-        getFolderIdFromRoute(this.props.location, this.props.params)
-      )
+      .fetchFolder(getFolderIdFromRoute(this.props.location, this.props.params))
       .then(e => {
         if (e.type === 'OPEN_FOLDER_FAILURE') {
           this.setState(state => ({ ...state, revoked: true }))
         }
       })
+  }
+
+  navigateToFolder = async folderId => {
+    await this.props.fetchFolder(folderId)
+    this.props.router.push(getFolderUrl(folderId, this.props.location))
   }
 
   render() {
@@ -75,6 +80,7 @@ class DumbFolderView extends React.Component {
         <Content>
           <FileList
             onFileOpen={this.showInViewer}
+            onFolderOpen={this.navigateToFolder}
             withSelectionCheckbox={false}
             {...this.props}
           />
@@ -102,7 +108,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
-  onFolderOpen: folderId => dispatch(openFolder(folderId))
+  fetchFolder: folderId => dispatch(openFolder(folderId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(DumbFolderView)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(DumbFolderView)
+)
