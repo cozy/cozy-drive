@@ -18,8 +18,6 @@ import {
 
 import styles from 'drive/styles/breadcrumb'
 
-const { BarCenter, BarLeft } = cozy.bar
-
 const renamePathNames = (path, location, t) => {
   if (location.pathname === '/recent') {
     path.unshift({
@@ -44,14 +42,9 @@ const renamePathNames = (path, location, t) => {
   return path
 }
 
-class Breadcrumb extends Component {
+export class Breadcrumb extends Component {
   state = {
-    opening: false,
     deployed: false
-  }
-
-  toggleOpening = () => {
-    this.setState(state => ({ opening: !state.opening }))
   }
 
   toggleDeploy = () => {
@@ -68,26 +61,6 @@ class Breadcrumb extends Component {
     document.removeEventListener('click', this.handleClickOutside, true)
   }
 
-  navigateToFolder = (e, folderId) => {
-    const { router, location, goToFolder, getFolderUrl } = this.props
-    e.preventDefault()
-
-    this.toggleOpening()
-    if (this.state.deployed) this.toggleDeploy()
-
-    goToFolder(folderId).then(() => {
-      this.toggleOpening()
-      this.toggleDeploy()
-      router.push(getFolderUrl(folderId, location))
-    })
-  }
-
-  navigateToPath = (e, path) => {
-    const { router } = this.props
-    e.preventDefault()
-    router.push(path)
-  }
-
   handleClickOutside = e => {
     if (this.menu && !this.menu.contains(e.target)) {
       e.stopPropagation()
@@ -96,10 +69,12 @@ class Breadcrumb extends Component {
   }
 
   render() {
-    const { location, path } = this.props
-    const { opening, deployed } = this.state
+    const { path, onBreadcrumbClick, opening } = this.props
+    const { deployed } = this.state
 
-    return path ? (
+    if (!path) return false
+
+    return (
       <div
         className={classNames(
           styles['fil-path-backdrop'],
@@ -117,16 +92,9 @@ class Breadcrumb extends Component {
           {path.map((folder, index) => {
             if (index < path.length - 1) {
               return (
-                <Link
-                  to={
-                    folder.id ? getFolderUrl(folder.id, location) : folder.url
-                  }
+                <span
                   className={styles['fil-path-link']}
-                  onClick={e =>
-                    folder.id
-                      ? this.navigateToFolder(e, folder.id)
-                      : this.navigateToPath(e, folder.url)
-                  }
+                  onClick={e => onBreadcrumbClick(folder)}
                 >
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
@@ -135,7 +103,7 @@ class Breadcrumb extends Component {
                     icon="forward"
                     className={styles['fil-path-separator']}
                   />
-                </Link>
+                </span>
               )
             } else {
               return (
@@ -160,7 +128,51 @@ class Breadcrumb extends Component {
           })}
         </h2>
       </div>
-    ) : null
+    )
+  }
+}
+
+class RouterBreadCrumb extends Component {
+  state = {
+    opening: false
+  }
+
+  toggleOpening = () => {
+    this.setState(state => ({ opening: !state.opening }))
+  }
+
+  navigateToFolder = folderId => {
+    const { router, location, goToFolder, getFolderUrl } = this.props
+
+    this.toggleOpening()
+
+    goToFolder(folderId).then(() => {
+      this.toggleOpening()
+      router.push(getFolderUrl(folderId, location))
+    })
+  }
+
+  navigateToPath = path => {
+    const { router } = this.props
+    router.push(path)
+  }
+
+  navigateTo = folder => {
+    if (folder.id) this.navigateToFolder(folder.id)
+    else this.navigateToPath(folder.url)
+  }
+
+  render() {
+    const { path } = this.props
+    const { opening } = this.state
+
+    return (
+      <Breadcrumb
+        path={path}
+        onBreadcrumbClick={this.navigateTo}
+        opening={opening}
+      />
+    )
   }
 }
 
@@ -193,6 +205,8 @@ class PreviousButton extends Component {
 }
 
 const MobileAwareBreadcrumb = props => {
+  const { BarCenter, BarLeft } = cozy.bar
+
   return props.breakpoints.isMobile ? (
     <div>
       {props.path.length >= 2 && (
@@ -201,11 +215,11 @@ const MobileAwareBreadcrumb = props => {
         </BarLeft>
       )}
       <BarCenter>
-        <Breadcrumb {...props} />
+        <RouterBreadCrumb {...props} />
       </BarCenter>
     </div>
   ) : (
-    <Breadcrumb {...props} />
+    <RouterBreadCrumb {...props} />
   )
 }
 
