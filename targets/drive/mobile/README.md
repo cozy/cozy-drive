@@ -109,7 +109,7 @@ $ npm run publish:drive:ios
 You can generate all icons with [splashicon-generator](https://github.com/eberlitz/splashicon-generator).
 
 ```sh
-$ yarn mobile:icon
+$ yarn genicon:drive:mobile
 ```
 
 ### Icon
