@@ -6,6 +6,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import IntentHandler from 'drive/web/modules/services'
 import { I18n } from 'cozy-ui/react/I18n'
+import { getQueryParameter } from 'react-cozy-helpers'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -15,18 +16,6 @@ if (__DEVELOPMENT__) {
   // Export React to window for the devtools
   window.React = React
 }
-
-const arrToObj = (obj = {}, varval = ['var', 'val']) => {
-  obj[varval[0]] = varval[1]
-  return obj
-}
-
-const getQueryParameter = () =>
-  window.location.search
-    .substring(1)
-    .split('&')
-    .map(varval => varval.split('='))
-    .reduce(arrToObj, {})
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('main')

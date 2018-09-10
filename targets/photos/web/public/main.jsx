@@ -8,24 +8,13 @@ import { createLogger } from 'redux-logger'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
+import { getQueryParameter } from 'react-cozy-helpers'
 
 import doctypes from '../doctypes'
 import 'photos/styles/main'
 
 import App from './App'
 import PhotosViewer from 'photos/components/PhotosViewer'
-
-const arrToObj = (obj = {}, varval = ['var', 'val']) => {
-  obj[varval[0]] = varval[1]
-  return obj
-}
-
-const getQueryParameter = () =>
-  window.location.search
-    .substring(1)
-    .split('&')
-    .map(varval => varval.split('='))
-    .reduce(arrToObj, {})
 
 document.addEventListener('DOMContentLoaded', init)
 
