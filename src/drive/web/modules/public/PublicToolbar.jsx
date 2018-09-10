@@ -67,6 +67,52 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy }) => (
   </Menu>
 )
 
+const MobileToolbar = ({ t, onDownload, discoveryLink, redirectTo }) => (
+  <BarRight>
+    <MoreMenu
+      t={t}
+      onDownload={() => onDownload(files)}
+      onOpenInCozy={discoveryLink ? () => redirectTo(discoveryLink) : false}
+      onCreateCozy={
+        discoveryLink
+          ? false
+          : () => redirectTo(getHomeLinkHref('sharing-drive'))
+      }
+    />
+  </BarRight>
+)
+
+const CozybarToolbar = ({ t, onDownload, discoveryLink }) => (
+  <BarRight>
+    <div className={toolbarstyles['toolbar-inside-bar']}>
+      {discoveryLink ? (
+        <OpenInCozyButton href={discoveryLink} t={t} size="small" />
+      ) : (
+        <CozyHomeLink from="sharing-drive" />
+      )}
+      <DownloadFilesButton
+        t={t}
+        onDownload={() => onDownload(files)}
+        size="small"
+      />
+    </div>
+  </BarRight>
+)
+
+const DesktopToolbar = ({ t, onDownload, discoveryLink }) => (
+  <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
+    {discoveryLink ? (
+      <OpenInCozyButton href={discoveryLink} t={t} />
+    ) : (
+      <CozyHomeLink from="sharing-drive" />
+    )}
+    <DownloadFilesButton t={t} onDownload={() => onDownload(files)} />
+    <BarRight>
+      <div />
+    </BarRight>
+  </div>
+)
+
 class PublicToolbar extends React.Component {
   state = {
     discoveryLink: null
@@ -112,51 +158,28 @@ class PublicToolbar extends React.Component {
 
     if (isMobile) {
       return (
-        <BarRight>
-          <MoreMenu
-            t={t}
-            onDownload={() => onDownload(files)}
-            onOpenInCozy={
-              discoveryLink ? () => this.redirectTo(discoveryLink) : false
-            }
-            onCreateCozy={
-              discoveryLink
-                ? false
-                : () => this.redirectTo(getHomeLinkHref('sharing-drive'))
-            }
-          />
-        </BarRight>
+        <MobilePublicToolbar
+          t={t}
+          onDownload={onDownload}
+          discoveryLink={discoveryLink}
+          redirectTo={this.redirectTo}
+        />
       )
     } else if (renderInBar) {
       return (
-        <BarRight>
-          <div className={toolbarstyles['toolbar-inside-bar']}>
-            {discoveryLink ? (
-              <OpenInCozyButton href={discoveryLink} t={t} size="small" />
-            ) : (
-              <CozyHomeLink from="sharing-drive" />
-            )}
-            <DownloadFilesButton
-              t={t}
-              onDownload={() => onDownload(files)}
-              size="small"
-            />
-          </div>
-        </BarRight>
+        <CozybarToolbar
+          t={t}
+          onDownload={onDownload}
+          discoveryLink={discoveryLink}
+        />
       )
     } else {
       return (
-        <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
-          {discoveryLink ? (
-            <OpenInCozyButton href={discoveryLink} t={t} />
-          ) : (
-            <CozyHomeLink from="sharing-drive" />
-          )}
-          <DownloadFilesButton t={t} onDownload={() => onDownload(files)} />
-          <BarRight>
-            <div />
-          </BarRight>
-        </div>
+        <DesktopToolbar
+          t={t}
+          onDownload={onDownload}
+          discoveryLink={discoveryLink}
+        />
       )
     }
   }
