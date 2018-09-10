@@ -6,24 +6,13 @@ import { render } from 'react-dom'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
+import { getQueryParameter } from 'react-cozy-helpers'
 
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
 import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
-
-const arrToObj = (obj = {}, [key, val = true]) => {
-  obj[key] = val
-  return obj
-}
-
-const getQueryParameter = () =>
-  window.location.search
-    .substring(1)
-    .split('&')
-    .map(varval => varval.split('='))
-    .reduce(arrToObj, {})
 
 const getDocumentId = async client => {
   const isPreviewingSharing = window.location.toString().includes('/preview')
