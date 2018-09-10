@@ -20,8 +20,10 @@ const getDocumentId = async client => {
   if (isPreviewingSharing) {
     const response = await client
       .collection('io.cozy.permissions')
-      .getSelfPermissions()
-    const sharingId = Object.values(response)[0]['values'][0]
+      .getOwnPermissions()
+
+    const permissions = response.data.attributes.permissions
+    const sharingId = Object.values(permissions)[0]['values'][0]
     return sharingId
   } else {
     const { id } = getQueryParameter()
