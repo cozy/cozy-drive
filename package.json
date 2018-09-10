@@ -148,7 +148,7 @@
   "dependencies": {
     "classnames": "2.2.6",
     "cozy-bar": "5.0.8",
-    "cozy-client": "^2.10.4",
+    "cozy-client": "2.10.4",
     "cozy-client-js": "0.10.0",
     "cozy-realtime": "1.1.0",
     "cozy-ui": "10.8.1",
@@ -165,7 +165,7 @@
     "node-polyglot": "2.3.0",
     "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",
-    "popper.js": "^1.14.4",
+    "popper.js": "1.14.4",
     "pouchdb": "6.4.2",
     "pouchdb-find": "0.10.5",
     "preact": "8.3.0",
