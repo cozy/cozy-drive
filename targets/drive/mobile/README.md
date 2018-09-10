@@ -6,7 +6,7 @@
 
 ### :wrench: Requirements
 
-- Node v6 (on macOS: `brew install node@6 && brew link node@6`)
+- Node v8 (on macOS: `brew install node@8 && brew link node@8`)
 - ImageMagick (on macOS: `brew install imagemagick`)
 - Android SDK >= 25.0.0 to deploy on android
 - Xcode 8.1 >= to deploy on ios
