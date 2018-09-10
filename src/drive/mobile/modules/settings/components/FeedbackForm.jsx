@@ -44,7 +44,7 @@ class FeedbackForm extends Component {
     } catch (e) {
       // Sending the email failed; this can happen because of insuficient permissions for example. Not a big deal either in this context.
     }
-
+    this.clearInput()
     this.setState({ sending: false })
     this.props.onClose(true)
   }
@@ -52,7 +52,9 @@ class FeedbackForm extends Component {
   registerElement(element) {
     this.textarea = element
   }
-
+  clearInput() {
+    this.textarea.value = ''
+  }
   render() {
     const { onClose } = this.props
     const { sending } = this.state
@@ -60,7 +62,10 @@ class FeedbackForm extends Component {
     return (
       <Modal
         title={t('mobile.rating.feedback.title')}
-        dismissAction={() => onClose(false)}
+        dismissAction={() => {
+          this.clearInput()
+          onClose(false)
+        }}
       >
         <ModalContent className={styles['feedback-form']}>
           <form className={'coz-form'} onSubmit={this.submitForm}>
@@ -74,6 +79,7 @@ class FeedbackForm extends Component {
                 theme={'secondary'}
                 onClick={e => {
                   e.preventDefault()
+                  this.clearInput()
                   onClose(false)
                 }}
                 label={t('mobile.rating.feedback.no')}
