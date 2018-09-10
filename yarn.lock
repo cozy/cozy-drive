@@ -2673,7 +2673,7 @@ cozy-client-js@^0.3.19:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
 
-cozy-client@^2.10.4:
+cozy-client@2.10.4:
   version "2.10.4"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-2.10.4.tgz#578eb8b53837744f7759dfa5e92461ab5cb5feeb"
   dependencies:
@@ -8187,7 +8187,7 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
-popper.js@^1.14.4:
+popper.js@1.14.4:
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.4.tgz#8eec1d8ff02a5a3a152dd43414a15c7b79fd69b6"
 
