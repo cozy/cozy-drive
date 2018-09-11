@@ -70,6 +70,8 @@ class Picker extends Component {
     const { t } = this.context
     const showBackButton = path.length > 1 && isMobile
 
+    const folders = files.filter(file => file.type === 'directory')
+
     return (
       <div className={styles['wrapper']}>
         <IntentHeader appName="Drive" appEditor="Cozy" appIcon={headerIcon} />
@@ -89,7 +91,7 @@ class Picker extends Component {
           withSelectionCheckbox={false}
           canSort={false}
           fileActions={[]}
-          files={files}
+          files={folders}
           selectionModeActive={false}
           actionMenuActive={false}
           onFolderOpen={id => this.navigateTo(files.find(f => f.id === id))}
