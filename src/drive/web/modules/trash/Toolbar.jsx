@@ -31,7 +31,7 @@ const Toolbar = ({
       title={t('toolbar.item_more')}
       disabled={disabled || selectionModeActive}
       className={styles['fil-toolbar-menu']}
-      button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+      button={<MoreButton />}
     >
       <Item>
         <a className={styles['fil-action-delete']} onClick={() => emptyTrash()}>

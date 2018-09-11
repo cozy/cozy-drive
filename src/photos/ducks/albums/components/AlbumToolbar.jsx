@@ -37,7 +37,7 @@ class AlbumToolbar extends Component {
         <Menu
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
-          component={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+          component={<MoreButton />}
           position="right"
         >
           {!sharedWithMe && (

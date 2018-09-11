@@ -36,7 +36,7 @@ export const UploadButton = ({
   >
     <span>
       {!inMenu && <Icon icon="upload" />}
-      {label}
+      <span>{label}</span>
       <input
         type="file"
         accept="image/*"

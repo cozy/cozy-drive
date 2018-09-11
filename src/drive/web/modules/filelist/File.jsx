@@ -218,7 +218,7 @@ const Status = ({ isAvailableOffline, id }) => (
   </div>
 )
 
-const FileAction = ({ onClick }) => (
+const FileAction = ({ t, onClick }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -230,6 +230,8 @@ const FileAction = ({ onClick }) => (
       onClick={onClick}
       extension="narrow"
       icon={<Icon icon="dots" color="charcoalGrey" width="17" height="17" />}
+      iconOnly
+      label={t('Toolbar.more')}
     />
   </div>
 )
@@ -342,6 +344,7 @@ class File extends Component {
         <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
         {actions && (
           <FileAction
+            t={t}
             ref={toggle => {
               this.filerowMenuToggle = toggle
             }}
