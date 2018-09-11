@@ -1,5 +1,6 @@
 @require 'settings/breakpoints.styl'
 @require 'settings/z-index.styl'
+@require 'settings/palette.styl'
 
 .wrapper
   display flex
@@ -15,6 +16,33 @@
     margin-left auto
     display     flex
     height 3rem
+
+.origin-info
+  margin 1rem 2rem
+  background paleGrey
+  border 1px solid silver
+  padding 1rem
+  border-radius .3rem
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-flex-start;
+  align-items: center;
+
+.origin-info-text
+  h2
+    margin-top 0
+    margin-bottom .4rem
+    font-size: 1rem
+
+  p
+    margin 0
+    font-size: .9rem
+
+.origin-info-icon
+  max-width: 2rem;
+  max-height: 2rem;
+  margin-right: 1rem;
+
 
 +small-screen()
   .wrapper .breadcrumb
