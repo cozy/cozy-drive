@@ -15,7 +15,6 @@ import {
   FETCH_SHARINGS_SUCCESS,
   FETCH_SHARINGS_FAILURE,
   FETCH_MORE_FILES_SUCCESS,
-  UPLOAD_FILE_SUCCESS,
   TRASH_FILES_SUCCESS,
   CREATE_FOLDER_SUCCESS,
   ADD_FILE,
@@ -94,7 +93,6 @@ const fileCount = (state = null, action) => {
     case FETCH_RECENT_SUCCESS:
     case FETCH_SHARINGS_SUCCESS:
       return action.fileCount
-    case UPLOAD_FILE_SUCCESS:
     case CREATE_FOLDER_SUCCESS:
     case ADD_FILE:
       return state + 1
@@ -209,7 +207,6 @@ const files = (state = [], action) => {
     case RENAME_SUCCESS:
     case UPDATE_FILE:
       return updateItem(action.file, state)
-    case UPLOAD_FILE_SUCCESS:
     case ADD_FILE:
       return insertItem(
         action.file,
@@ -313,7 +310,6 @@ const deduplicateCreateDeleteActions = originalReducer => {
 
   return (state, action) => {
     switch (action.type) {
-      case UPLOAD_FILE_SUCCESS:
       case CREATE_FOLDER_SUCCESS:
       case ADD_FILE:
         return deduplicateCreateAction(state, action)

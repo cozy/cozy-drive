@@ -42,7 +42,6 @@ export const CREATE_FOLDER = 'CREATE_FOLDER'
 export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
 export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
-export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const TRASH_FILES = 'TRASH_FILES'
 export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
 export const TRASH_FILES_FAILURE = 'TRASH_FILES_FAILURE'
@@ -236,24 +235,13 @@ export const uploadFiles = (files, dirId) => dispatch => {
     addToUploadQueue(
       files,
       dirId,
-      file => dispatch(uploadedFile(file)),
+      file => null,
       (loaded, quotas, conflicts, networkErrors, errors) =>
         dispatch(
           uploadQueueProcessed(loaded, quotas, conflicts, networkErrors, errors)
         )
     )
   )
-}
-
-const uploadedFile = file => {
-  return (dispatch, getState) => {
-    return dispatch({
-      type: UPLOAD_FILE_SUCCESS,
-      file: extractFileAttributes(file),
-      currentFileCount: getState().view.fileCount,
-      currentSort: getSort(getState())
-    })
-  }
 }
 
 const uploadQueueProcessed = (
