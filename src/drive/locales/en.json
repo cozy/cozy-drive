@@ -497,7 +497,8 @@
     "picker": {
       "select": "Select",
       "cancel": "Cancel",
-      "new_folder": "New folder"
+      "new_folder": "New folder",
+      "instructions": "Select a target"
     }
   },
   "UploadQueue": {

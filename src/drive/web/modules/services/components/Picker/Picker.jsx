@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux'
 import withReduxStore from './withReduxStore'
 import AddFolderButton from './AddFolderButton'
+import OriginHint from './OriginHint'
 import {
   openFolder,
   getOpenedFolderId,
@@ -65,16 +66,18 @@ class Picker extends Component {
   }
 
   render() {
-    const { files, breakpoints: { isMobile } } = this.props
+    const { files, service, breakpoints: { isMobile } } = this.props
     const { headerIcon, path } = this.state
     const { t } = this.context
     const showBackButton = path.length > 1 && isMobile
 
     const folders = files.filter(file => file.type === 'directory')
+    const { hint, icon } = service.getData()
 
     return (
       <div className={styles['wrapper']}>
         <IntentHeader appName="Drive" appEditor="Cozy" appIcon={headerIcon} />
+        {hint && <OriginHint title={hint} icon={icon} />}
         <Topbar hideOnMobile={false}>
           {showBackButton && <PreviousButton onClick={this.goBack} />}
           <Breadcrumb
