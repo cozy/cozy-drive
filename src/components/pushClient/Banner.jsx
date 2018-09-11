@@ -80,6 +80,8 @@ class BannerClient extends Component {
             this.markAsSeen('close')
           }}
           icon={<Icon icon="cross" width="24" height="24" />}
+          iconOnly
+          label={t('SelectionBar.close')}
         />
       </div>
     )

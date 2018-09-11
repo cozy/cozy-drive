@@ -33,7 +33,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
       }}
     >
       <Icon icon="upload" />
-      {label}
+      <span>{label}</span>
       <input
         type="file"
         multiple

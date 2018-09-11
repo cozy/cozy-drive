@@ -4,7 +4,7 @@ import { Button } from 'cozy-ui/react'
 
 import styles from './index.styl'
 
-const MoreButton = ({ t, disabled, onClick, children }) => (
+const MoreButton = ({ t, disabled, onClick }) => (
   <Button
     className={styles['dri-btn--more']}
     theme="secondary"
@@ -12,9 +12,9 @@ const MoreButton = ({ t, disabled, onClick, children }) => (
     onClick={onClick}
     extension="narrow"
     icon="dots"
-  >
-    <span className={styles['u-visuallyhidden']}>{children}</span>
-  </Button>
+    iconOnly
+    label={t('Toolbar.more')}
+  />
 )
 
 export default translate()(MoreButton)

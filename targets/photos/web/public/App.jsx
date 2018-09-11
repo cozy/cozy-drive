@@ -79,7 +79,7 @@ class App extends Component {
                   <Menu
                     title={t('Toolbar.more')}
                     className={classNames(styles['pho-toolbar-menu'])}
-                    button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+                    button={<MoreButton />}
                   >
                     <Item>
                       <a

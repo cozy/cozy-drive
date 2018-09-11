@@ -291,21 +291,10 @@
     z-index           0
     display           flex
     align-items       center
-    justify-content   flex-end
+    justify-content   center
     width             100%
     height            auto
     background-color  transparent
-
-    // here we force the action buttons to not show the label even on desktop
-    button
-        width         5.625rem
-        overflow      hidden
-        text-indent   -312rem
-        padding-left  0
-        color         transparent
-        background-position .75rem
-        pointer-events initial
-
 
 .pho-viewer-toolbar-close
     position         fixed
@@ -320,24 +309,14 @@
     pointer-events   initial
 
 
-.pho-viewer-toolbar-close-cross
-    width  1.5rem
-    height 1.5rem
+    button
+        color white
+        background-color transparent
+        border 0
 
-    &::after, &::before
-        content     ''
-        position         absolute
-        margin-left      .75rem
-        border-radius    .1875rem
-        width            .125rem
-        height           1.5rem
-        background-color white
-
-    &::after
-        transform rotate(-45deg);
-
-    &::before
-        transform rotate(45deg);
+        &:hover
+        &:focus
+            background-color transparent
 
 
 +medium-screen()
