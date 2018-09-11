@@ -1,6 +1,7 @@
 /* global cozy */
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import classnames from 'classnames'
 import { withBreakpoints, Menu, MenuItem, Icon } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
@@ -126,7 +127,7 @@ class PublicToolbar extends React.Component {
   }
 
   redirectTo(url) {
-    window.location.href = url
+    this.props.router.push(url)
   }
 
   downloadFiles = () => {
@@ -168,5 +169,5 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(null, mapDispatchToProps)(
-  withBreakpoints()(PublicToolbar)
+  withBreakpoints()(withRouter(PublicToolbar))
 )
