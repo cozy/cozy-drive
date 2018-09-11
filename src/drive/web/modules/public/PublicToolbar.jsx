@@ -53,7 +53,7 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy }) => (
   </Menu>
 )
 
-const MobileToolbar = ({ t, onDownload, discoveryLink, redirectTo }) => (
+const MobileToolbar = ({ onDownload, discoveryLink, redirectTo }, { t }) => (
   <BarRight>
     <MoreMenu
       t={t}
@@ -68,7 +68,7 @@ const MobileToolbar = ({ t, onDownload, discoveryLink, redirectTo }) => (
   </BarRight>
 )
 
-const CozybarToolbar = ({ t, onDownload, discoveryLink }) => (
+const CozybarToolbar = ({ onDownload, discoveryLink }, { t }) => (
   <BarRight>
     <div className={toolbarstyles['toolbar-inside-bar']}>
       {discoveryLink ? (
@@ -85,7 +85,7 @@ const CozybarToolbar = ({ t, onDownload, discoveryLink }) => (
   </BarRight>
 )
 
-const DesktopToolbar = ({ t, onDownload, discoveryLink }) => (
+const DesktopToolbar = ({ onDownload, discoveryLink }, { t }) => (
   <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
     {discoveryLink ? (
       <OpenInCozyButton href={discoveryLink} t={t} />
@@ -139,13 +139,11 @@ class PublicToolbar extends React.Component {
       breakpoints: { isMobile },
       renderInBar = false
     } = this.props
-    const { t } = this.context
     const { discoveryLink } = this.state
 
     if (isMobile) {
       return (
-        <MobilePublicToolbar
-          t={t}
+        <MobileToolbar
           onDownload={onDownload}
           discoveryLink={discoveryLink}
           redirectTo={this.redirectTo}
@@ -153,19 +151,11 @@ class PublicToolbar extends React.Component {
       )
     } else if (renderInBar) {
       return (
-        <CozybarToolbar
-          t={t}
-          onDownload={onDownload}
-          discoveryLink={discoveryLink}
-        />
+        <CozybarToolbar onDownload={onDownload} discoveryLink={discoveryLink} />
       )
     } else {
       return (
-        <DesktopToolbar
-          t={t}
-          onDownload={onDownload}
-          discoveryLink={discoveryLink}
-        />
+        <DesktopToolbar onDownload={onDownload} discoveryLink={discoveryLink} />
       )
     }
   }
