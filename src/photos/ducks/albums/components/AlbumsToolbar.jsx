@@ -19,7 +19,7 @@ const AlbumsToolbar = ({ t, router }) => (
     </div>
     <Menu
       className={classNames(styles['pho-toolbar-menu'], styles['u-hide--desk'])}
-      component={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+      component={<MoreButton />}
       position="right"
     >
       <MenuItem

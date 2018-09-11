@@ -2713,9 +2713,9 @@ cozy-stack-client@^2.19.2:
   dependencies:
     mime-types "^2.1.18"
 
-cozy-ui@10.8.1:
-  version "10.8.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-10.8.1.tgz#4d7142a95621a4350f8b47e6f47a2c960ffcee79"
+cozy-ui@11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-11.0.0.tgz#73b3ac54ebb87424eae162da29796cd13f51d877"
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     classnames "^2.2.5"

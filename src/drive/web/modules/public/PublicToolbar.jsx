@@ -36,7 +36,7 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy }) => (
       toolbarstyles['fil-toolbar-menu--public']
     )}
     buttonClassName={toolbarstyles['fil-toolbar-more-btn']}
-    component={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+    component={<MoreButton />}
     position="right"
   >
     {onOpenInCozy && (

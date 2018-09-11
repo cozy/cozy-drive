@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import Hammer from 'hammerjs'
 
 import { translate } from 'cozy-ui/react/I18n'
+import { Button } from 'cozy-ui/react/Button'
 import { downloadFile } from 'cozy-client'
 
 import styles from './styles'
@@ -96,14 +97,16 @@ class ViewerControls extends Component {
                 styles['pho-viewer-toolbar-actions']
               )}
             >
-              <button
+              <Button
+                theme="secondary"
                 className={styles['coz-action-download']}
                 onClick={() => {
                   downloadFile(currentFile)
                 }}
-              >
-                {t('Viewer.actions.download')}
-              </button>
+                icon="download"
+                label={t('Viewer.actions.download')}
+                subtle
+              />
             </div>
             {onClose && (
               <div
@@ -111,7 +114,14 @@ class ViewerControls extends Component {
                 onClick={onClose}
                 title={t('Viewer.close')}
               >
-                <div className={styles['pho-viewer-toolbar-close-cross']} />
+                <Button
+                  theme="secondary"
+                  icon="cross"
+                  color="white"
+                  label={t('Viewer.close')}
+                  iconOnly
+                  extension="narrow"
+                />
               </div>
             )}
           </div>
