@@ -2,34 +2,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
-import {
-  ButtonLink,
-  withBreakpoints,
-  Menu,
-  MenuItem,
-  Icon
-} from 'cozy-ui/react'
+import { withBreakpoints, Menu, MenuItem, Icon } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import DownloadButton from './DownloadButton'
 import { downloadFiles } from 'drive/web/modules/navigation/duck'
 import toolbarstyles from 'drive/styles/toolbar'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyHomeLink, { getHomeLinkHref } from 'components/Button/CozyHomeLink'
+import OpenInCozyButton from './OpenInCozyButton'
 
 import CloudIcon from 'drive/assets/icons/icon-cloud-open.svg'
 import CloudNegative from 'drive/assets/icons/icon-cloud-negative.svg'
 import DownloadIcon from 'drive/assets/icons/icon-download-16.svg'
 
 const { BarRight } = cozy.bar
-
-const OpenInCozyButton = ({ t, size = 'normal', href = '' }) => (
-  <ButtonLink
-    href={href}
-    size={size}
-    label={t('toolbar.menu_open_cozy')}
-    icon={CloudIcon}
-  />
-)
 
 const DownloadFilesButton = ({ t, onDownload, size = 'normal' }) => (
   <DownloadButton
