@@ -26,6 +26,7 @@ const DownloadFilesButton = ({ t, onDownload, size = 'normal' }) => (
     size={size}
   />
 )
+
 const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy }) => (
   <Menu
     title={t('toolbar.item_more')}
@@ -57,7 +58,7 @@ const MobileToolbar = ({ onDownload, discoveryLink, redirectTo }, { t }) => (
   <BarRight>
     <MoreMenu
       t={t}
-      onDownload={() => onDownload(files)}
+      onDownload={onDownload}
       onOpenInCozy={discoveryLink ? () => redirectTo(discoveryLink) : false}
       onCreateCozy={
         discoveryLink
@@ -76,11 +77,7 @@ const CozybarToolbar = ({ onDownload, discoveryLink }, { t }) => (
       ) : (
         <CozyHomeLink from="sharing-drive" />
       )}
-      <DownloadFilesButton
-        t={t}
-        onDownload={() => onDownload(files)}
-        size="small"
-      />
+      <DownloadFilesButton t={t} onDownload={onDownload} size="small" />
     </div>
   </BarRight>
 )
@@ -92,7 +89,7 @@ const DesktopToolbar = ({ onDownload, discoveryLink }, { t }) => (
     ) : (
       <CozyHomeLink from="sharing-drive" />
     )}
-    <DownloadFilesButton t={t} onDownload={() => onDownload(files)} />
+    <DownloadFilesButton t={t} onDownload={onDownload} />
     <BarRight>
       <div />
     </BarRight>
@@ -132,30 +129,35 @@ class PublicToolbar extends React.Component {
     window.location.href = url
   }
 
+  downloadFiles = () => {
+    this.props.onDownload(this.props.files)
+  }
+
   render() {
-    const {
-      files,
-      onDownload,
-      breakpoints: { isMobile },
-      renderInBar = false
-    } = this.props
+    const { breakpoints: { isMobile }, renderInBar = false } = this.props
     const { discoveryLink } = this.state
 
     if (isMobile) {
       return (
         <MobileToolbar
-          onDownload={onDownload}
+          onDownload={this.downloadFiles}
           discoveryLink={discoveryLink}
           redirectTo={this.redirectTo}
         />
       )
     } else if (renderInBar) {
       return (
-        <CozybarToolbar onDownload={onDownload} discoveryLink={discoveryLink} />
+        <CozybarToolbar
+          onDownload={this.downloadFiles}
+          discoveryLink={discoveryLink}
+        />
       )
     } else {
       return (
-        <DesktopToolbar onDownload={onDownload} discoveryLink={discoveryLink} />
+        <DesktopToolbar
+          onDownload={this.downloadFiles}
+          discoveryLink={discoveryLink}
+        />
       )
     }
   }
