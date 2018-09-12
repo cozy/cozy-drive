@@ -20,8 +20,7 @@ import styles from './picker.styl'
 
 class Picker extends Component {
   state = {
-    path: [],
-    headerIcon: ''
+    path: []
   }
 
   updateBreadcrumb = folder => {
@@ -52,7 +51,7 @@ class Picker extends Component {
   componentDidMount() {
     const root = document.getElementById('main')
     const data = root.dataset
-    this.setState({ headerIcon: data.cozyIconPath })
+    this.headerIcon = data.cozyIconPath
 
     this.navigateTo({ id: ROOT_DIR_ID, name: 'Drive' })
   }
@@ -67,16 +66,20 @@ class Picker extends Component {
 
   render() {
     const { files, service, breakpoints: { isMobile } } = this.props
-    const { headerIcon, path } = this.state
+    const { path } = this.state
     const { t } = this.context
+    const { hint, icon } = service.getData()
     const showBackButton = path.length > 1 && isMobile
 
     const folders = files.filter(file => file.type === 'directory')
-    const { hint, icon } = service.getData()
 
     return (
       <div className={styles['wrapper']}>
-        <IntentHeader appName="Drive" appEditor="Cozy" appIcon={headerIcon} />
+        <IntentHeader
+          appName="Drive"
+          appEditor="Cozy"
+          appIcon={this.headerIcon}
+        />
         {hint && <OriginHint title={hint} icon={icon} />}
         <Topbar hideOnMobile={false}>
           {showBackButton && <PreviousButton onClick={this.goBack} />}
