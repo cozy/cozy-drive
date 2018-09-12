@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { IntentHeader, Button, withBreakpoints } from 'cozy-ui/react'
 import { ROOT_DIR_ID } from 'drive/constants/config'
-import Topbar from 'drive/web/modules/Layout/Topbar'
+import Topbar from 'drive/web/modules/layout/Topbar'
 import FileList from 'drive/web/modules/filelist/FileList'
 import {
   Breadcrumb,
