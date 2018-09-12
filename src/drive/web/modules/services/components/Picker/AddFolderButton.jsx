@@ -17,7 +17,7 @@ const AddFolderButton = ({ addFolder, breakpoints: { isMobile } }, { t }) => {
   else
     return (
       <Button icon={IconFolderAdd} onClick={addFolder}>
-        Nouveau dossier
+        {t('toolbar.menu_new_folder')}
       </Button>
     )
 }
