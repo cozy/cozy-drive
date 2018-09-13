@@ -7,7 +7,7 @@ import buttonContainer from '../containers/button'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const UploadButtonItem = translate()(
-  ({ t, displayedFolder, disabled, insideMoreMenu, isDisabled }) =>
+  ({ t, displayedFolder, insideMoreMenu, isDisabled }) =>
     insideMoreMenu ? (
       <UploadButton
         onUpload={files => uploadFiles(files, displayedFolder)}

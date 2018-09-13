@@ -50,7 +50,6 @@ class Toolbar extends Component {
       isSharedWithMe,
       sharingRecipients,
       sharingLink,
-      uploadFiles,
       share,
       downloadAll,
       breakpoints: { isMobile }
@@ -158,10 +157,6 @@ const mapStateToProps = (state, ownProps) => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addFolder: () => dispatch(showNewFolderInput()),
-  uploadFiles: (files, displayedFolder) => {
-    dispatch(uploadFiles(files, displayedFolder.id))
-  },
   share: displayedFolder =>
     dispatch(
       showModal(
