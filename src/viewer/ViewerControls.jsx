@@ -73,6 +73,9 @@ class ViewerControls extends Component {
       children
     } = this.props
     const { hidden } = this.state
+
+    const isPDF = currentFile.class === 'pdf'
+
     return (
       <div
         className={classNames(styles['pho-viewer-controls'], {
@@ -97,16 +100,17 @@ class ViewerControls extends Component {
                 styles['pho-viewer-toolbar-actions']
               )}
             >
-              <Button
-                theme="secondary"
-                className={styles['coz-action-download']}
-                onClick={() => {
-                  downloadFile(currentFile)
-                }}
-                icon="download"
-                label={t('Viewer.actions.download')}
-                subtle
-              />
+              {!isPDF && (
+                <Button
+                  theme="secondary"
+                  onClick={() => {
+                    downloadFile(currentFile)
+                  }}
+                  icon="download"
+                  label={t('Viewer.actions.download')}
+                  subtle
+                />
+              )}
             </div>
             {onClose && (
               <div
