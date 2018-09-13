@@ -14,7 +14,6 @@ import Menu, { Item } from 'components/Menu'
 
 import { IntentButton } from 'drive/web/modules/services/components/Intent'
 import UploadButton from 'drive/web/modules/upload/UploadButton'
-import DeleteConfirm from './DeleteConfirm'
 
 import {
   downloadFiles,
@@ -35,6 +34,9 @@ import {
 import { RecipientsAvatars } from 'sharing/components/Recipient'
 
 import styles from 'drive/styles/toolbar'
+
+import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
+import DeleteButton from './Toolbar/components/DeleteButton'
 
 const { BarRight } = cozy.bar
 
@@ -59,8 +61,6 @@ class Toolbar extends Component {
       uploadFiles,
       share,
       downloadAll,
-      trashFolder,
-      onLeave,
       breakpoints: { isMobile }
     } = this.props
 
@@ -76,7 +76,7 @@ class Toolbar extends Component {
         innerClassName={styles['fil-toolbar-inner-menu']}
         button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
       >
-        {notRootfolder && (
+        <NotRootFolder>
           <Item>
             <a
               className={styles['fil-action-share']}
@@ -91,7 +91,7 @@ class Toolbar extends Component {
               />
             </a>
           </Item>
-        )}
+        </NotRootFolder>
         {canUpload &&
           hasWriteAccess && (
             <Item>
@@ -110,7 +110,7 @@ class Toolbar extends Component {
               </a>
             </Item>
           )}
-        {notRootfolder && (
+        <NotRootFolder>
           <Item>
             <a
               className={styles['fil-action-download']}
@@ -119,37 +119,18 @@ class Toolbar extends Component {
               {t('toolbar.menu_download_folder')}
             </a>
           </Item>
-        )}
+        </NotRootFolder>
         <Item>
           <a className={styles['fil-action-select']} onClick={showSelectionBar}>
             {t('toolbar.menu_select')}
           </a>
         </Item>
-        {notRootfolder && <hr />}
-        {notRootfolder &&
-          (isSharedWithMe ? (
-            <Item>
-              <a
-                className={classNames(styles['fil-action-delete'])}
-                onClick={() =>
-                  onLeave(displayedFolder).then(() =>
-                    trashFolder(displayedFolder)
-                  )
-                }
-              >
-                {t('toolbar.leave')}
-              </a>
-            </Item>
-          ) : (
-            <Item>
-              <a
-                className={classNames(styles['fil-action-delete'])}
-                onClick={() => trashFolder(displayedFolder)}
-              >
-                {t('toolbar.trash')}
-              </a>
-            </Item>
-          ))}
+        <NotRootFolder>
+          <hr />
+        </NotRootFolder>
+        <NotRootFolder>
+          <DeleteButton />
+        </NotRootFolder>
       </Menu>
     )
 
@@ -193,12 +174,10 @@ class Toolbar extends Component {
     )
   }
 }
-
 const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
   selectionModeActive: isSelectionBarVisible(state)
 })
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addFolder: () => dispatch(showNewFolderInput()),
   showSelectionBar: () => dispatch(showSelectionBar()),
@@ -215,20 +194,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         />
       )
     ),
-  downloadAll: folder => dispatch(downloadFiles(folder)),
-  trashFolder: folder =>
-    dispatch(
-      showModal(
-        <DeleteConfirm
-          files={[folder]}
-          onConfirm={() =>
-            dispatch(trashFiles([folder])).then(() => {
-              ownProps.router.push(`/folder/${folder.parent.id}`)
-            })
-          }
-        />
-      )
-    )
+  downloadAll: folder => dispatch(downloadFiles(folder))
 })
 
 const ToolbarWithSharingContext = props =>
