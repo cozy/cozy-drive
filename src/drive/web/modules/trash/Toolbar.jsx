@@ -11,12 +11,11 @@ import Menu, { Item } from 'components/Menu'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import { emptyTrash } from './actions'
-import {
-  showSelectionBar,
-  isSelectionBarVisible
-} from 'drive/web/modules/selection/duck'
+import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar'
+
+import SelectonniableItem from '../drive/Toolbar/components/SelectionnableItem'
 
 const { BarRight } = cozy.bar
 
@@ -25,7 +24,6 @@ const Toolbar = ({
   disabled,
   selectionModeActive,
   emptyTrash,
-  showSelectionBar,
   breakpoints: { isMobile }
 }) => {
   const MoreMenu = (
@@ -41,11 +39,11 @@ const Toolbar = ({
         </a>
       </Item>
       <hr />
-      <Item>
-        <a className={styles['fil-action-select']} onClick={showSelectionBar}>
+      <SelectonniableItem>
+        <a className={styles['fil-action-select']}>
           {t('toolbar.menu_select')}
         </a>
-      </Item>
+      </SelectonniableItem>
     </Menu>
   )
 
@@ -70,7 +68,6 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  showSelectionBar: () => dispatch(showSelectionBar()),
   emptyTrash: () =>
     dispatch(
       showModal(<EmptyTrashConfirm onConfirm={() => dispatch(emptyTrash())} />)

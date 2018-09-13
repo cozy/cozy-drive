@@ -20,10 +20,7 @@ import {
   trashFiles,
   uploadFiles
 } from 'drive/web/modules/navigation/duck'
-import {
-  showSelectionBar,
-  isSelectionBarVisible
-} from 'drive/web/modules/selection/duck'
+import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 import {
   ShareButton,
@@ -37,6 +34,7 @@ import styles from 'drive/styles/toolbar'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 import DeleteButton from './Toolbar/components/DeleteButton'
+import SelectionnableItem from './Toolbar/components/SelectionnableItem'
 
 const { BarRight } = cozy.bar
 
@@ -56,7 +54,6 @@ class Toolbar extends Component {
       isSharedWithMe,
       sharingRecipients,
       sharingLink,
-      showSelectionBar,
       addFolder,
       uploadFiles,
       share,
@@ -120,11 +117,11 @@ class Toolbar extends Component {
             </a>
           </Item>
         </NotRootFolder>
-        <Item>
-          <a className={styles['fil-action-select']} onClick={showSelectionBar}>
+        <SelectionnableItem>
+          <a className={styles['fil-action-select']}>
             {t('toolbar.menu_select')}
           </a>
-        </Item>
+        </SelectionnableItem>
         <NotRootFolder>
           <hr />
         </NotRootFolder>
@@ -180,7 +177,6 @@ const mapStateToProps = (state, ownProps) => ({
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addFolder: () => dispatch(showNewFolderInput()),
-  showSelectionBar: () => dispatch(showSelectionBar()),
   uploadFiles: (files, displayedFolder) => {
     dispatch(uploadFiles(files, displayedFolder.id))
   },
