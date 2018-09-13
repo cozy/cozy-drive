@@ -13,15 +13,9 @@ import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
 import { IntentButton } from 'drive/web/modules/services/components/Intent'
-import UploadButton from 'drive/web/modules/upload/UploadButton'
 
-import {
-  downloadFiles,
-  trashFiles,
-  uploadFiles
-} from 'drive/web/modules/navigation/duck'
+import { downloadFiles } from 'drive/web/modules/navigation/duck'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 import {
   ShareButton,
   ShareModal,
@@ -35,6 +29,8 @@ import styles from 'drive/styles/toolbar'
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 import DeleteButton from './Toolbar/components/DeleteButton'
 import SelectionnableItem from './Toolbar/components/SelectionnableItem'
+import AddFolder from './Toolbar/components/AddFolder'
+import UploadButtonItem from './Toolbar/components/UploadButtonItem'
 
 const { BarRight } = cozy.bar
 
@@ -54,7 +50,6 @@ class Toolbar extends Component {
       isSharedWithMe,
       sharingRecipients,
       sharingLink,
-      addFolder,
       uploadFiles,
       share,
       downloadAll,
@@ -92,19 +87,13 @@ class Toolbar extends Component {
         {canUpload &&
           hasWriteAccess && (
             <Item>
-              <UploadButton
-                onUpload={files => uploadFiles(files, displayedFolder)}
-                label={t('toolbar.menu_upload')}
-                className={styles['fil-action-upload']}
-              />
+              <UploadButtonItem insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
         {canCreateFolder &&
           hasWriteAccess && (
             <Item>
-              <a className={styles['fil-action-newfolder']} onClick={addFolder}>
-                {t('toolbar.menu_new_folder')}
-              </a>
+              <AddFolder />
             </Item>
           )}
         <NotRootFolder>
@@ -148,14 +137,7 @@ class Toolbar extends Component {
           ) : null)}
         {!isShared &&
           canUpload &&
-          hasWriteAccess && (
-            <UploadButton
-              disabled={isDisabled}
-              onUpload={files => uploadFiles(files, displayedFolder)}
-              label={t('toolbar.item_upload')}
-              className={classNames(styles['c-btn'], styles['u-hide--mob'])}
-            />
-          )}
+          hasWriteAccess && <UploadButtonItem disabled={isDisabled} />}
         {notRootfolder && <SharedRecipients docId={displayedFolder.id} />}
         {notRootfolder && (
           <ShareButton
