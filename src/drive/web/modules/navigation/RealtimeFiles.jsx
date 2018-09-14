@@ -54,14 +54,15 @@ class RealtimeFiles extends React.Component {
     const doc = this.normalizeId(rawDoc)
     const previousDoc = this.props.files.find(f => f.id === doc.id)
 
-    this.props.updateOfflineFileCopyIfNecessary(doc, previousDoc)
-
     const docIsInCurrentView = this.isInCurrentView(doc)
     const docWasInCurrentView = previousDoc && this.isInCurrentView(previousDoc)
 
     if (docWasInCurrentView && !docIsInCurrentView) this.props.deleteFile(doc)
     else if (!previousDoc && docIsInCurrentView) this.props.addFile(doc)
-    else if (previousDoc && docIsInCurrentView) this.props.updateFile(doc)
+    else if (previousDoc && docIsInCurrentView) {
+      this.props.updateFile(doc)
+      this.props.updateOfflineFileCopyIfNecessary(doc, previousDoc)
+    }
   }
 
   onDocumentDeletion = doc => {
