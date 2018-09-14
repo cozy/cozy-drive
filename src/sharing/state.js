@@ -32,7 +32,7 @@ export const updateSharing = sharing => ({
   type: UPDATE_SHARING,
   sharing
 })
-export const revokeRecipient = (sharing, email, path) => ({
+export const revokeRecipient = (sharing, index, path) => ({
   type: REVOKE_RECIPIENT,
   // we form the updated sharing here so that we can "forget" it in the byId reducer if
   // there is no not-revoked member remaining
@@ -40,10 +40,9 @@ export const revokeRecipient = (sharing, email, path) => ({
     ...sharing,
     attributes: {
       ...sharing.attributes,
-      members: sharing.attributes.members.filter(m => m.email !== email)
+      members: sharing.attributes.members.filter((_, idx) => index !== idx)
     }
   },
-  email,
   path
 })
 export const revokeSelf = sharing => ({ type: REVOKE_SELF, sharing })
@@ -231,9 +230,11 @@ export const getRecipients = (state, docId) => {
   const recipients = getDocumentSharings(state, docId)
     .map(sharing => {
       const type = getDocumentSharingType(sharing, docId)
-      return sharing.attributes.members.map(m => ({
+      return sharing.attributes.members.map((m, idx) => ({
         ...m,
-        type: m.read_only ? 'one-way' : type
+        type: m.read_only ? 'one-way' : type,
+        sharingId: sharing.id,
+        index: idx
       }))
     })
     .reduce((acc, member) => acc.concat(member), [])
@@ -265,12 +266,6 @@ export const getSharingLink = (state, docId, documentType) => {
   return null
 }
 
-export const getSharingForRecipient = (state, docId, recipientEmail) =>
-  getDocumentSharings(state, docId).find(
-    s =>
-      s.attributes.members.find(m => m.email === recipientEmail) !== undefined
-  )
-
 export const getSharingForSelf = (state, docId) =>
   getDocumentSharing(state, docId)
 
@@ -290,7 +285,8 @@ const getDocumentSharings = (state, docId) =>
     ? []
     : state.byDocId[docId].sharings.map(id => getSharingById(state, id))
 
-const getSharingById = (state, id) => state.sharings.find(s => s.id === id)
+export const getSharingById = (state, id) =>
+  state.sharings.find(s => s.id === id)
 
 export const getDocumentPermissions = (state, docId) =>
   !state.byDocId[docId]

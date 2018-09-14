@@ -16,7 +16,7 @@ import reducer, {
   canReshare,
   getOwner,
   getRecipients,
-  getSharingForRecipient,
+  getSharingById,
   getSharingForSelf,
   getSharingType,
   getSharingLink,
@@ -174,19 +174,15 @@ export default class SharingProvider extends Component {
     this.dispatch(updateSharing(resp.data))
   }
 
-  revoke = async (document, recipientEmail) => {
-    const sharing = getSharingForRecipient(
-      this.state,
-      document.id,
-      recipientEmail
-    )
+  revoke = async (document, sharingId, recipientIndex) => {
+    const sharing = getSharingById(this.state, sharingId)
     await this.context.client
       .collection('io.cozy.sharings')
-      .revokeRecipient(sharing, recipientEmail)
+      .revokeRecipient(sharing, recipientIndex)
     this.dispatch(
       revokeRecipient(
         sharing,
-        recipientEmail,
+        recipientIndex,
         document.path || (await this.getFilesPaths([document]))
       )
     )

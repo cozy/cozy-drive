@@ -149,7 +149,7 @@
   "dependencies": {
     "classnames": "2.2.6",
     "cozy-bar": "5.0.8",
-    "cozy-client": "2.17.0",
+    "cozy-client": "2.19.2",
     "cozy-client-js": "0.10.0",
     "cozy-realtime": "1.1.0",
     "cozy-ui": "10.8.1",

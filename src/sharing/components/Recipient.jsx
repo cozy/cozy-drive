@@ -58,9 +58,9 @@ class Status extends Component {
   }
 
   onRevoke = async () => {
-    const { onRevoke, document, email } = this.props
+    const { onRevoke, document, sharingId, index } = this.props
     this.setState(state => ({ revoking: true }))
-    await onRevoke(document, email)
+    await onRevoke(document, sharingId, index)
     this.setState(state => ({ revoking: false }))
   }
 
