@@ -49,7 +49,7 @@ export const initBar = async client => {
     lang: getLang(),
     cozyURL: client.options.uri,
     token: await getTokenWithNoException(),
-    renewToken: () => client.getOrCreateStackClient().refreshToken(),
+    renewToken: () => client.getClient().refreshToken(),
     replaceTitleOnMobile: false,
     displayOnMobile: true
   })
@@ -89,7 +89,7 @@ export function resetClient(client, clientInfo = null) {
     cozy.client.offline.destroyAllDatabase()
   }
   // reset cozy-client
-  client.getOrCreateStackClient().resetClientId()
+  client.getClient().resetClientId()
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()
