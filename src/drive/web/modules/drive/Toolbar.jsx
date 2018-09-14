@@ -14,7 +14,6 @@ import Menu, { Item } from 'components/Menu'
 
 import { IntentButton } from 'drive/web/modules/services/components/Intent'
 
-import { downloadFiles } from 'drive/web/modules/navigation/duck'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import {
   ShareButton,
@@ -31,6 +30,7 @@ import DeleteButton from './Toolbar/components/DeleteButton'
 import SelectionnableItem from './Toolbar/components/SelectionnableItem'
 import AddFolder from './Toolbar/components/AddFolder'
 import UploadButtonItem from './Toolbar/components/UploadButtonItem'
+import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
 
 const { BarRight } = cozy.bar
 
@@ -51,7 +51,6 @@ class Toolbar extends Component {
       sharingRecipients,
       sharingLink,
       share,
-      downloadAll,
       breakpoints: { isMobile }
     } = this.props
 
@@ -97,12 +96,7 @@ class Toolbar extends Component {
           )}
         <NotRootFolder>
           <Item>
-            <a
-              className={styles['fil-action-download']}
-              onClick={() => downloadAll([displayedFolder])}
-            >
-              {t('toolbar.menu_download_folder')}
-            </a>
+            <DownloadButtonItem />
           </Item>
         </NotRootFolder>
         <SelectionnableItem>
@@ -166,8 +160,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           sharingDesc={displayedFolder.name}
         />
       )
-    ),
-  downloadAll: folder => dispatch(downloadFiles(folder))
+    )
 })
 
 const ToolbarWithSharingContext = props =>
