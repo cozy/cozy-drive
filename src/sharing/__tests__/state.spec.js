@@ -111,7 +111,7 @@ describe('Sharing state', () => {
           sharings: [SHARING_1, SHARING_2]
         })
       ),
-      revokeRecipient(SHARING_1, 'john@doe.com')
+      revokeRecipient(SHARING_1, 1)
     )
     expect(state.sharings[0].attributes.members).toHaveLength(1)
   })
@@ -182,6 +182,8 @@ describe('Sharing state', () => {
           email: 'jane@doe.com',
           instance: 'http://cozy.tools:8080',
           name: 'Jane Doe',
+          sharingId: 'sharing_1',
+          index: 0,
           status: 'owner',
           type: 'two-way'
         },
@@ -189,6 +191,8 @@ describe('Sharing state', () => {
           email: 'john@doe.com',
           instance: 'http://cozy.local:8080',
           name: 'John Doe',
+          sharingId: 'sharing_1',
+          index: 1,
           status: 'ready',
           type: 'two-way'
         },
@@ -196,6 +200,8 @@ describe('Sharing state', () => {
           email: 'johnny@doe.com',
           instance: 'http://cozy.foo:8080',
           name: 'Johnny Doe',
+          sharingId: 'sharing_3',
+          index: 1,
           status: 'pending',
           type: 'two-way'
         }
