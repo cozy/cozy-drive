@@ -69,7 +69,7 @@ const startApplication = async function(store, client, polyglot) {
     const clientInfos = getClientSettings(store.getState())
     const token = getToken(store.getState())
 
-    const oauthClient = client.getOrCreateStackClient()
+    const oauthClient = client.getClient()
     oauthClient.setOAuthOptions(clientInfos)
     oauthClient.setCredentials(token)
     await restoreCozyClientJs(client.options.uri, clientInfos, token)

@@ -55,7 +55,7 @@ class UserActionRequired extends Component {
   checkIfUserActionIsRequired = async () => {
     const { client, router } = this.context
     try {
-      await client.getOrCreateStackClient().fetch('GET', '/data/')
+      await client.getClient().fetch('GET', '/data/')
       const wasBlocked = this.state.warnings.length !== 0
       if (wasBlocked) {
         this.setState({ warnings: [] })
@@ -71,9 +71,7 @@ class UserActionRequired extends Component {
   acceptUpdatedTos = async () => {
     const { client, router } = this.context
     try {
-      await client
-        .getOrCreateStackClient()
-        .fetch('PUT', '/settings/instance/sign_tos')
+      await client.getClient().fetch('PUT', '/settings/instance/sign_tos')
       this.setState({
         warnings: this.state.warnings.filter(w => w.code !== 'tos-updated')
       })
