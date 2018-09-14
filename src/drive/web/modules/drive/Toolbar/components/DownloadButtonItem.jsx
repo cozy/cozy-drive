@@ -1,0 +1,26 @@
+import React from 'react'
+import { connect } from 'react-redux'
+
+import styles from 'drive/styles/toolbar'
+import { translate } from 'cozy-ui/react'
+import { downloadFiles } from 'drive/web/modules/navigation/duck'
+
+import buttonContaier from '../containers/button'
+const DownloadButtonItem = translate()(
+  ({ t, displayedFolder, downloadAll }) => {
+    return (
+      <a
+        className={styles['fil-action-download']}
+        onClick={() => downloadAll([displayedFolder])}
+      >
+        {t('toolbar.menu_download_folder')}
+      </a>
+    )
+  }
+)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  downloadAll: folder => dispatch(downloadFiles(folder))
+})
+export default connect(null, mapDispatchToProps)(
+  buttonContaier(DownloadButtonItem)
+)
