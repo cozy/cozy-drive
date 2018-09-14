@@ -33,7 +33,7 @@ const migrateSettings = async prevState => {
         firstReplication,
         indexes
       },
-      mediaBackup: prevState.mediaBackup
+      mediaBackup: prevState.mobile.mediaBackup
     },
     availableOffline: prevState.availableOffline
   }
