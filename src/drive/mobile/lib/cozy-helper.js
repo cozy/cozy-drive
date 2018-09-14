@@ -17,6 +17,7 @@ export const initClient = url => {
     scope: [
       'io.cozy.files',
       'io.cozy.apps:GET',
+      'io.cozy.settings:GET',
       'io.cozy.contacts',
       'io.cozy.jobs:POST:sendmail:worker'
     ],
