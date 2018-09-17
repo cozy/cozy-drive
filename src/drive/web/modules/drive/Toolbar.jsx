@@ -17,13 +17,14 @@ import { SharedRecipients, SharedDocument } from 'sharing'
 import styles from 'drive/styles/toolbar'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
-import DeleteButton from './Toolbar/components/DeleteButton'
+
+import DeleteItem from './Toolbar/components/DeleteItem'
 import SelectableItem from './Toolbar/components/SelectableItem'
-import AddFolder from './Toolbar/components/AddFolder'
-import UploadButtonItem from './Toolbar/components/UploadButtonItem'
+import AddFolderItem from './Toolbar/components/AddFolderItem'
+import UploadItem from './Toolbar/components/UploadItem'
 import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
-import ShareButtonItem from './Toolbar/components/ShareButtonItem'
-import ShareButtonBig from './Toolbar/components/ShareButtonBig'
+import ShareItem from './Toolbar/components/ShareItem'
+import ShareButton from './Toolbar/components/ShareButton'
 const { BarRight } = cozy.bar
 
 class Toolbar extends Component {
@@ -56,19 +57,19 @@ class Toolbar extends Component {
       >
         <NotRootFolder>
           <Item>
-            <ShareButtonItem />
+            <ShareItem />
           </Item>
         </NotRootFolder>
         {canUpload &&
           hasWriteAccess && (
             <Item>
-              <UploadButtonItem insideMoreMenu disabled={isDisabled} />
+              <UploadItem insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
         {canCreateFolder &&
           hasWriteAccess && (
             <Item>
-              <AddFolder />
+              <AddFolderItem />
             </Item>
           )}
         <NotRootFolder>
@@ -76,16 +77,20 @@ class Toolbar extends Component {
             <DownloadButtonItem />
           </Item>
         </NotRootFolder>
-        <SelectableItem>
-          <a className={styles['fil-action-select']}>
-            {t('toolbar.menu_select')}
-          </a>
-        </SelectableItem>
+        <Item>
+          <SelectableItem>
+            <a className={styles['fil-action-select']}>
+              {t('toolbar.menu_select')}
+            </a>
+          </SelectableItem>
+        </Item>
         <NotRootFolder>
           <hr />
         </NotRootFolder>
         <NotRootFolder>
-          <DeleteButton />
+          <Item>
+            <DeleteItem />
+          </Item>
         </NotRootFolder>
       </Menu>
     )
@@ -107,9 +112,9 @@ class Toolbar extends Component {
           ) : null)}
         {!isShared &&
           canUpload &&
-          hasWriteAccess && <UploadButtonItem disabled={isDisabled} />}
+          hasWriteAccess && <UploadItem disabled={isDisabled} />}
         {notRootfolder && <SharedRecipients docId={displayedFolder.id} />}
-        {notRootfolder && <ShareButtonBig isDisabled={isDisabled} />}
+        {notRootfolder && <ShareButton isDisabled={isDisabled} />}
 
         {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
       </div>

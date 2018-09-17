@@ -3,7 +3,7 @@ import { ShareButton } from 'sharing'
 import styles from 'drive/styles/toolbar'
 
 import shareContainer from '../containers/share'
-const ShareButtonBig = ({ displayedFolder, share, isDisabled }) => {
+const ShareButtonWithProps = ({ displayedFolder, share, isDisabled }) => {
   return (
     <ShareButton
       docId={displayedFolder.id}
@@ -14,4 +14,4 @@ const ShareButtonBig = ({ displayedFolder, share, isDisabled }) => {
   )
 }
 
-export default shareContainer(ShareButtonBig)
+export default shareContainer(ShareButtonWithProps)
