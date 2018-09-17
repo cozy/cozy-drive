@@ -7,7 +7,7 @@ const mapDispatchToProps = dispatch => ({
   showSelectionBar: () => dispatch(showSelectionBar())
 })
 
-const buttonContainer = component =>
+const selectableContainer = component =>
   connect(mapStateToProps, mapDispatchToProps)(component)
 
-export default buttonContainer
+export default selectableContainer

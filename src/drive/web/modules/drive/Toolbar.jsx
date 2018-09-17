@@ -19,7 +19,7 @@ import styles from 'drive/styles/toolbar'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 import DeleteButton from './Toolbar/components/DeleteButton'
-import SelectionnableItem from './Toolbar/components/SelectionnableItem'
+import SelectableItem from './Toolbar/components/SelectableItem'
 import AddFolder from './Toolbar/components/AddFolder'
 import UploadButtonItem from './Toolbar/components/UploadButtonItem'
 import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
@@ -77,11 +77,11 @@ class Toolbar extends Component {
             <DownloadButtonItem />
           </Item>
         </NotRootFolder>
-        <SelectionnableItem>
+        <SelectableItem>
           <a className={styles['fil-action-select']}>
             {t('toolbar.menu_select')}
           </a>
-        </SelectionnableItem>
+        </SelectableItem>
         <NotRootFolder>
           <hr />
         </NotRootFolder>

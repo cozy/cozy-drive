@@ -1,16 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ROOT_DIR_ID } from 'drive/constants/config'
 import { showModal } from 'react-cozy-helpers'
 import DeleteConfirm from '../../DeleteConfirm'
 
 import { trashFiles } from 'drive/web/modules/navigation/duck'
-
-const mapStateToProps = (state, ownProps) => ({
-  displayedFolder: state.view.displayedFolder,
-  notRootfolder:
-    state.view.displayedFolder && state.view.displayedFolder.id !== ROOT_DIR_ID
-})
+import toolbarContainer from './toolbar'
+const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = dispatch => ({
   trashFolder: folder =>
@@ -29,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
     )
 })
 
-const buttonContainer = component =>
-  connect(mapStateToProps, mapDispatchToProps)(component)
+const deleteContainer = component =>
+  toolbarContainer(connect(mapStateToProps, mapDispatchToProps)(component))
 
-export default buttonContainer
+export default deleteContainer

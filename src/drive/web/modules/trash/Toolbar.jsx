@@ -15,7 +15,7 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar'
 
-import SelectonniableItem from '../drive/Toolbar/components/SelectionnableItem'
+import SelectableItem from '../drive/Toolbar/components/SelectableItem'
 
 const { BarRight } = cozy.bar
 
@@ -39,11 +39,11 @@ const Toolbar = ({
         </a>
       </Item>
       <hr />
-      <SelectonniableItem>
+      <SelectableItem>
         <a className={styles['fil-action-select']}>
           {t('toolbar.menu_select')}
         </a>
-      </SelectonniableItem>
+      </SelectableItem>
     </Menu>
   )
 
