@@ -4,7 +4,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import styles from 'drive/styles/toolbar'
 import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 
-const AddFolder = translate()(({ t, addFolder }) => {
+const AddFolderItem = translate()(({ t, addFolder }) => {
   return (
     <a className={styles['fil-action-newfolder']} onClick={addFolder}>
       {t('toolbar.menu_new_folder')}
@@ -15,4 +15,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   addFolder: () => dispatch(showNewFolderInput())
 })
 
-export default connect(null, mapDispatchToProps)(AddFolder)
+export default connect(null, mapDispatchToProps)(AddFolderItem)

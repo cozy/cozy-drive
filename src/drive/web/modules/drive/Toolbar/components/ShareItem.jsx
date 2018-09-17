@@ -5,7 +5,7 @@ import styles from 'drive/styles/toolbar'
 import { SharedDocument } from 'sharing'
 import shareContainer from '../containers/share'
 
-const ShareButtonItem = translate()(
+const ShareItem = translate()(
   ({ t, share, displayedFolder, sharingRecipients, sharingLink }) => {
     return (
       <SharedDocument docId={displayedFolder.id}>
@@ -28,4 +28,4 @@ const ShareButtonItem = translate()(
   }
 )
 
-export default shareContainer(ShareButtonItem)
+export default shareContainer(ShareItem)

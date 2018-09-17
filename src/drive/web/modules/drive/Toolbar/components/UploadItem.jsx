@@ -6,7 +6,7 @@ import styles from 'drive/styles/toolbar'
 import toolbarContainer from '../containers/toolbar'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
-const UploadButtonItem = translate()(
+const UploadItem = translate()(
   ({ t, displayedFolder, insideMoreMenu, isDisabled }) =>
     insideMoreMenu ? (
       <UploadButton
@@ -24,4 +24,4 @@ const UploadButtonItem = translate()(
     )
 )
 
-export default toolbarContainer(UploadButtonItem)
+export default toolbarContainer(UploadItem)
