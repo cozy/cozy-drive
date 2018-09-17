@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ROOT_DIR_ID } from 'drive/constants/config'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 
@@ -42,8 +41,6 @@ class Toolbar extends Component {
       isShared,
       breakpoints: { isMobile }
     } = this.props
-
-    const notRootfolder = displayedFolder && displayedFolder.id !== ROOT_DIR_ID
 
     const isDisabled = disabled || selectionModeActive
 
@@ -113,8 +110,12 @@ class Toolbar extends Component {
         {!isShared &&
           canUpload &&
           hasWriteAccess && <UploadItem disabled={isDisabled} />}
-        {notRootfolder && <SharedRecipients docId={displayedFolder.id} />}
-        {notRootfolder && <ShareButton isDisabled={isDisabled} />}
+        <NotRootFolder>
+          <SharedRecipients docId={displayedFolder.id} />
+        </NotRootFolder>
+        <NotRootFolder>
+          <ShareButton isDisabled={isDisabled} />
+        </NotRootFolder>
 
         {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
       </div>
