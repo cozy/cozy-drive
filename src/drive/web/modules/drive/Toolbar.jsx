@@ -2,8 +2,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
-import { showModal } from 'react-cozy-helpers'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import { translate } from 'cozy-ui/react/I18n'
@@ -15,13 +13,7 @@ import Menu, { Item } from 'components/Menu'
 import { IntentButton } from 'drive/web/modules/services/components/Intent'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import {
-  ShareButton,
-  ShareModal,
-  SharedDocument,
-  SharedRecipients
-} from 'sharing'
-import { RecipientsAvatars } from 'sharing/components/Recipient'
+import { SharedRecipients, SharedDocument } from 'sharing'
 
 import styles from 'drive/styles/toolbar'
 
@@ -31,7 +23,8 @@ import SelectionnableItem from './Toolbar/components/SelectionnableItem'
 import AddFolder from './Toolbar/components/AddFolder'
 import UploadButtonItem from './Toolbar/components/UploadButtonItem'
 import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
-
+import ShareButtonItem from './Toolbar/components/ShareButtonItem'
+import ShareButtonBig from './Toolbar/components/ShareButtonBig'
 const { BarRight } = cozy.bar
 
 class Toolbar extends Component {
@@ -47,10 +40,6 @@ class Toolbar extends Component {
       canCreateFolder,
       hasWriteAccess,
       isShared,
-      isSharedWithMe,
-      sharingRecipients,
-      sharingLink,
-      share,
       breakpoints: { isMobile }
     } = this.props
 
@@ -68,18 +57,7 @@ class Toolbar extends Component {
       >
         <NotRootFolder>
           <Item>
-            <a
-              className={styles['fil-action-share']}
-              onClick={() => share(displayedFolder)}
-            >
-              {t(isSharedWithMe ? 'Files.share.sharedWithMe' : 'toolbar.share')}
-              <RecipientsAvatars
-                className={styles['fil-toolbar-menu-recipients']}
-                recipients={sharingRecipients}
-                link={sharingLink}
-                size="small"
-              />
-            </a>
+            <ShareButtonItem />
           </Item>
         </NotRootFolder>
         {canUpload &&
@@ -132,14 +110,7 @@ class Toolbar extends Component {
           canUpload &&
           hasWriteAccess && <UploadButtonItem disabled={isDisabled} />}
         {notRootfolder && <SharedRecipients docId={displayedFolder.id} />}
-        {notRootfolder && (
-          <ShareButton
-            docId={displayedFolder.id}
-            disabled={isDisabled}
-            onClick={() => share(displayedFolder)}
-            className={styles['u-hide--mob']}
-          />
-        )}
+        {notRootfolder && <ShareButtonBig isDisabled={isDisabled} />}
 
         {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
       </div>
@@ -150,49 +121,23 @@ const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
   selectionModeActive: isSelectionBarVisible(state)
 })
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  share: displayedFolder =>
-    dispatch(
-      showModal(
-        <ShareModal
-          document={displayedFolder}
-          documentType="Files"
-          sharingDesc={displayedFolder.name}
-        />
-      )
-    )
-})
 
 const ToolbarWithSharingContext = props =>
   !props.displayedFolder ? (
     <Toolbar {...props} />
   ) : (
     <SharedDocument docId={props.displayedFolder.id}>
-      {({
-        isShared,
-        isSharedWithMe,
-        hasWriteAccess,
-        recipients,
-        link,
-        onLeave
-      }) => (
+      {({ isShared, hasWriteAccess }) => (
         <Toolbar
           {...props}
           hasWriteAccess={hasWriteAccess}
           isShared={isShared}
-          isSharedWithMe={isSharedWithMe}
-          sharingRecipients={recipients}
-          sharingLink={link}
-          onLeave={onLeave}
         />
       )}
     </SharedDocument>
   )
-
 export default translate()(
   withRouter(
-    withBreakpoints()(
-      connect(mapStateToProps, mapDispatchToProps)(ToolbarWithSharingContext)
-    )
+    withBreakpoints()(connect(mapStateToProps, null)(ToolbarWithSharingContext))
   )
 )
