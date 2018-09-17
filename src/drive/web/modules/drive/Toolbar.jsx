@@ -11,7 +11,7 @@ import Menu, { Item } from 'components/Menu'
 import { IntentButton } from 'drive/web/modules/services/components/Intent'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { SharedRecipients, SharedDocument } from 'sharing'
+import { SharedDocument } from 'sharing'
 
 import styles from 'drive/styles/toolbar'
 
@@ -24,6 +24,7 @@ import UploadItem from './Toolbar/components/UploadItem'
 import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
 import ShareItem from './Toolbar/components/ShareItem'
 import ShareButton from './Toolbar/components/ShareButton'
+import SharedRecipients from './Toolbar/components/SharedRecipients'
 const { BarRight } = cozy.bar
 
 class Toolbar extends Component {
@@ -34,7 +35,6 @@ class Toolbar extends Component {
       t,
       disabled,
       selectionModeActive,
-      displayedFolder,
       canUpload,
       canCreateFolder,
       hasWriteAccess,
@@ -111,7 +111,7 @@ class Toolbar extends Component {
           canUpload &&
           hasWriteAccess && <UploadItem disabled={isDisabled} />}
         <NotRootFolder>
-          <SharedRecipients docId={displayedFolder.id} />
+          <SharedRecipients />
         </NotRootFolder>
         <NotRootFolder>
           <ShareButton isDisabled={isDisabled} />
