@@ -1,5 +1,3 @@
-/* global cozy */
-
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/containers/toolbar'
 const NotRootFolder = ({ notRootfolder, children }) => {
   if (notRootfolder) {
