@@ -1,6 +1,5 @@
 /* global cozy */
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
@@ -137,7 +136,5 @@ const ToolbarWithSharingContext = props =>
     </SharedDocument>
   )
 export default translate()(
-  withRouter(
-    withBreakpoints()(connect(mapStateToProps, null)(ToolbarWithSharingContext))
-  )
+  withBreakpoints()(connect(mapStateToProps, null)(ToolbarWithSharingContext))
 )
