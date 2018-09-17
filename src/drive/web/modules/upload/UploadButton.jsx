@@ -4,7 +4,8 @@ import { Icon } from 'cozy-ui/react'
 const styles = {
   parent: {
     position: 'relative',
-    overflow: 'hidden'
+    width: '100%',
+    boxSizing: 'border-box'
   },
   input: {
     position: 'absolute',
@@ -13,7 +14,8 @@ const styles = {
     opacity: 0,
     width: '100%',
     height: '100%',
-    zIndex: 1
+    zIndex: 1,
+    cursor: 'pointer'
   }
 }
 
@@ -24,7 +26,12 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     className={className}
     style={styles.parent}
   >
-    <span>
+    <span
+      style={{
+        display: 'flex',
+        alignItems: 'center'
+      }}
+    >
       <Icon icon="upload" />
       {label}
       <input
