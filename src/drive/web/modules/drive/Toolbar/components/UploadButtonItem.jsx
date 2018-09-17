@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import UploadButton from 'drive/web/modules/upload/UploadButton'
 import { translate } from 'cozy-ui/react'
 import styles from 'drive/styles/toolbar'
-import buttonContainer from '../containers/button'
+import toolbarContainer from '../containers/toolbar'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const UploadButtonItem = translate()(
@@ -24,4 +24,4 @@ const UploadButtonItem = translate()(
     )
 )
 
-export default buttonContainer(UploadButtonItem)
+export default toolbarContainer(UploadButtonItem)

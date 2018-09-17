@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({})
 
-const buttonContainer = component =>
+const toolbarContainer = component =>
   connect(mapStateToProps, mapDispatchToProps)(component)
 
-export default buttonContainer
+export default toolbarContainer

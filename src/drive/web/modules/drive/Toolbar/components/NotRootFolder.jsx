@@ -1,7 +1,6 @@
 /* global cozy */
-import React from 'react'
 
-import containerButton from 'drive/web/modules/drive/Toolbar/containers/button'
+import toolbarContainer from 'drive/web/modules/drive/Toolbar/containers/toolbar'
 const NotRootFolder = ({ notRootfolder, children }) => {
   if (notRootfolder) {
     return children
@@ -9,4 +8,4 @@ const NotRootFolder = ({ notRootfolder, children }) => {
   return null
 }
 
-export default containerButton(NotRootFolder)
+export default toolbarContainer(NotRootFolder)
