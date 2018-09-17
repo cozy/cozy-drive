@@ -1,0 +1,31 @@
+import React from 'react'
+import { RecipientsAvatars } from 'sharing/components/Recipient'
+import { translate } from 'cozy-ui/react'
+import styles from 'drive/styles/toolbar'
+import { SharedDocument } from 'sharing'
+import shareContainer from '../containers/share'
+
+const ShareButtonItem = translate()(
+  ({ t, share, displayedFolder, sharingRecipients, sharingLink }) => {
+    return (
+      <SharedDocument docId={displayedFolder.id}>
+        {({ isSharedWithMe, recipients, link }) => (
+          <a
+            className={styles['fil-action-share']}
+            onClick={() => share(displayedFolder)}
+          >
+            {t(isSharedWithMe ? 'Files.share.sharedWithMe' : 'toolbar.share')}
+            <RecipientsAvatars
+              className={styles['fil-toolbar-menu-recipients']}
+              recipients={recipients}
+              link={link}
+              size="small"
+            />
+          </a>
+        )}
+      </SharedDocument>
+    )
+  }
+)
+
+export default shareContainer(ShareButtonItem)
