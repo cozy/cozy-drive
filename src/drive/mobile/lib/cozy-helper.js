@@ -9,9 +9,6 @@ export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 
 export const initClient = url => {
-  const offline = { doctypes: ['io.cozy.files'] }
-  if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
-
   return new CozyClient({
     uri: url,
     scope: [
@@ -32,7 +29,7 @@ export const initClient = url => {
         'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
       policyURI: 'https://files.cozycloud.cc/cgu.pdf'
     },
-    offline
+    offline: { doctypes: ['io.cozy.files'] }
   })
 }
 
@@ -59,6 +56,8 @@ export const updateBarAccessToken = accessToken =>
   cozy.bar.updateAccessToken(accessToken)
 
 export const restoreCozyClientJs = (uri, clientInfos, token) => {
+  const offline = { doctypes: ['io.cozy.files'] }
+  if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
   cozy.client.init({
     cozyURL: uri,
     oauth: {
@@ -68,7 +67,7 @@ export const restoreCozyClientJs = (uri, clientInfos, token) => {
         scopes: token.scope
       }
     },
-    offline: { doctypes: ['io.cozy.files'] }
+    offline
   })
 
   cozy.client.saveCredentials(clientInfos, token)
