@@ -157,7 +157,7 @@ export default class SharingProvider extends Component {
     if (sharing) return this.addRecipients(sharing, recipients, sharingType)
     const resp = await this.context.client
       .collection('io.cozy.sharings')
-      .share(document, recipients, sharingType, description, '/preview')
+      .share(document, recipients, sharingType, description)
     this.dispatch(
       addSharing(
         resp.data,
