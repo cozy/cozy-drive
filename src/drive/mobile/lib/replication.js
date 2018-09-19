@@ -1,5 +1,6 @@
 /* global cozy emit */
 import { ROOT_DIR_ID } from '../../constants/config.js'
+import upgradePouchDatabase from 'drive/lib/upgradePouchDatabase'
 
 const clientRevokedMsg = 'Client has been revoked'
 
@@ -12,6 +13,7 @@ export const startReplication = async (
   indexesCreated
 ) => {
   try {
+    upgradePouchDatabase('io.cozy.files')
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     const createIndex = async fields => {
       const index = await db.createIndex({
