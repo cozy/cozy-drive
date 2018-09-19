@@ -3,8 +3,9 @@ import classNames from 'classnames'
 import UploadButton from 'drive/web/modules/upload/UploadButton'
 import { translate } from 'cozy-ui/react'
 import styles from 'drive/styles/toolbar'
-import toolbarContainer from '../containers/toolbar'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
+
+import toolbarContainer from '../toolbar'
 
 const UploadItem = translate()(
   ({ t, displayedFolder, insideMoreMenu, isDisabled }) =>

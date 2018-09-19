@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from 'drive/styles/toolbar'
 import { translate } from 'cozy-ui/react/I18n'
-import deleteContainer from 'drive/web/modules/drive/Toolbar/containers/delete'
+import deleteContainer from './delete'
 const DeleteItem = translate()(
   ({ t, isSharedWithMe, displayedFolder, trashFolder, onLeave }) =>
     isSharedWithMe ? (

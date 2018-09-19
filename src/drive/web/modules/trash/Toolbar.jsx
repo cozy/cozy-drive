@@ -15,7 +15,7 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar'
 
-import SelectableItem from '../drive/Toolbar/components/SelectableItem'
+import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 
 const { BarRight } = cozy.bar
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { showModal } from 'react-cozy-helpers'
-import DeleteConfirm from '../../DeleteConfirm'
 import { withRouter } from 'react-router'
 import { trashFiles } from 'drive/web/modules/navigation/duck'
-import toolbarContainer from './toolbar'
+
+import DeleteConfirm from '../../DeleteConfirm'
+import toolbarContainer from '../toolbar'
 const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

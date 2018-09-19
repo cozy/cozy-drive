@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { showModal } from 'react-cozy-helpers'
 import { ShareModal } from 'sharing'
-import toolbarContainer from '../containers/toolbar'
+import toolbarContainer from '../toolbar'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   share: displayedFolder =>

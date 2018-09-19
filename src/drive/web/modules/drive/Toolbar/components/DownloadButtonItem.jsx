@@ -5,7 +5,7 @@ import styles from 'drive/styles/toolbar'
 import { translate } from 'cozy-ui/react'
 import { downloadFiles } from 'drive/web/modules/navigation/duck'
 
-import toolbarContainer from '../containers/toolbar'
+import toolbarContainer from '../toolbar'
 const DownloadButtonItem = translate()(
   ({ t, displayedFolder, downloadAll }) => {
     return (

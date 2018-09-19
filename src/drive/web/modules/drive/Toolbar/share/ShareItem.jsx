@@ -3,7 +3,7 @@ import { RecipientsAvatars } from 'sharing/components/Recipient'
 import { translate } from 'cozy-ui/react'
 import styles from 'drive/styles/toolbar'
 import { SharedDocument } from 'sharing'
-import shareContainer from '../containers/share'
+import shareContainer from './share'
 
 const ShareItem = translate()(
   ({ t, share, displayedFolder, sharingRecipients, sharingLink }) => {
