@@ -17,14 +17,14 @@ import styles from 'drive/styles/toolbar'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 
-import DeleteItem from './Toolbar/components/DeleteItem'
-import SelectableItem from './Toolbar/components/SelectableItem'
+import DeleteItem from './Toolbar/delete/DeleteItem'
+import SelectableItem from './Toolbar/selectable/SelectableItem'
 import AddFolderItem from './Toolbar/components/AddFolderItem'
 import UploadItem from './Toolbar/components/UploadItem'
 import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
-import ShareItem from './Toolbar/components/ShareItem'
-import ShareButton from './Toolbar/components/ShareButton'
-import SharedRecipients from './Toolbar/components/SharedRecipients'
+import ShareItem from './Toolbar/share/ShareItem'
+import ShareButton from './Toolbar/share/ShareButton'
+import SharedRecipients from './Toolbar/share/SharedRecipients'
 const { BarRight } = cozy.bar
 
 class Toolbar extends Component {

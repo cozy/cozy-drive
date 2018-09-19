@@ -2,7 +2,7 @@ import React from 'react'
 import { ShareButton } from 'sharing'
 import styles from 'drive/styles/toolbar'
 
-import shareContainer from '../containers/share'
+import shareContainer from './share'
 const ShareButtonWithProps = ({ displayedFolder, share, isDisabled }) => {
   return (
     <ShareButton
