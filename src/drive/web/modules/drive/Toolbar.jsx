@@ -8,8 +8,6 @@ import { withBreakpoints } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
-import { IntentButton } from 'drive/web/modules/services/components/Intent'
-
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import { SharedDocument } from 'sharing'
 
@@ -29,8 +27,6 @@ const { BarRight } = cozy.bar
 
 class Toolbar extends Component {
   render() {
-    const cozyDev = cozy.client._url === 'http://cozy.tools:8080'
-    const cozyRecette = cozy.client._url === 'https://recette.cozy.works'
     const {
       t,
       disabled,
@@ -94,19 +90,6 @@ class Toolbar extends Component {
 
     return (
       <div className={styles['fil-toolbar-files']} role="toolbar">
-        {!isShared &&
-          (cozyDev || cozyRecette ? (
-            <IntentButton
-              className={styles['u-hide--mob']}
-              action="CREATE"
-              docType="io.cozy.accounts"
-              data={{
-                dataType: 'bill',
-                closeable: false
-              }}
-              label={t('service.bills')}
-            />
-          ) : null)}
         {!isShared &&
           canUpload &&
           hasWriteAccess && <UploadItem disabled={isDisabled} />}
