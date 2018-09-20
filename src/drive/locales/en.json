@@ -46,9 +46,6 @@
     "trash": "Remove",
     "leave": "Leave shared folder & delete it"
   },
-  "service": {
-    "bills": "Get my bills"
-  },
   "Share": {
     "status": {
       "owner": "Owner",
