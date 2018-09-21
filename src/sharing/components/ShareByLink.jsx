@@ -36,9 +36,11 @@ class ShareByLink extends React.Component {
   }
 
   deleteShareLink() {
+    this.setState(state => ({ ...state, loading: true }))
     this.props.onDisable(this.props.document).catch(e => {
       Alerter.error(`${this.props.documentType}.share.error.revoke`)
       console.log(e)
+      this.setState(state => ({ ...state, loading: false }))
     })
   }
 

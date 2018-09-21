@@ -159,7 +159,8 @@
       "gettingLink": "Getting your link...",
       "error": {
         "generic":
-          "An error occurred when creating the file share link, please try again."
+          "An error occurred when creating the file share link, please try again.",
+        "revoke": "Woops, an error occurred. Please contact us so we can fix this issue as soon as possible."
       },
       "specialCase": {
         "base": "This %{type} cannot be shared but with a link as it",
