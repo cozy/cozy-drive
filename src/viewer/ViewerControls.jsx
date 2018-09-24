@@ -73,6 +73,7 @@ class ViewerControls extends Component {
       children
     } = this.props
     const { hidden } = this.state
+    const { client } = this.context
 
     const isPDF = currentFile.class === 'pdf'
 
@@ -104,7 +105,7 @@ class ViewerControls extends Component {
                 <Button
                   theme="secondary"
                   onClick={() => {
-                    downloadFile(currentFile)
+                    client.collection('io.cozy.files').download(currentFile)
                   }}
                   icon="download"
                   label={t('Viewer.actions.download')}
