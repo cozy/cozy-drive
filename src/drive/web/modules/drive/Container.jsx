@@ -13,6 +13,8 @@ import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 
+import MoveModal from 'drive/web/modules/move/MoveModal'
+
 import {
   openFileWith,
   downloadFiles,
@@ -127,6 +129,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action: selected => dispatch(startRenamingAsync(selected[0])),
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1
+        },
+        move: {
+          action: selected => dispatch(showModal(<MoveModal />)),
+          displayCondition: selections => selections.length === 1
         },
         'phone-download': {
           displayCondition: selections =>
