@@ -48,6 +48,20 @@ import {
 } from 'drive/mobile/modules/authorization/duck'
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
 import { startReplication } from 'drive/mobile/modules/replication/sagas'
+/*We add fastclick only for iOS since Chrome removed this behavior (iOS also, but
+we still use UIWebview and not WKWebview... )*/
+if (isIos()) {
+  var FastClick = require('fastclick')
+  if ('addEventListener' in document) {
+    document.addEventListener(
+      'DOMContentLoaded',
+      function() {
+        FastClick.attach(document.body)
+      },
+      false
+    )
+  }
+}
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
