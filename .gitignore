@@ -42,6 +42,9 @@ targets/*/mobile/res/icons
 targets/*/mobile/res/screens
 targets/*/mobile/icon.png
 targets/*/mobile/store
+targets/*/mobile/package.json
+targets/*/mobile/package-lock.json
+targets/*/mobile/yarn.lock
 
 # fastlane
 targets/*/mobile/fastlane/README.md

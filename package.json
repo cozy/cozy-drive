@@ -4,20 +4,15 @@
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
-    "build:drive:browser":
-      "npm run internal:build -- --env.app=drive --env.target=browser --env.production",
-    "build:drive:mobile":
-      "npm run internal:build -- --env.app=drive --env.target=mobile --env.production",
+    "build:drive:browser": "npm run internal:build -- --env.app=drive --env.target=browser --env.production",
+    "build:drive:mobile": "npm run internal:build -- --env.app=drive --env.target=mobile --env.production",
     "build:photos": "npm run build:photos:browser",
-    "build:photos:browser":
-      "npm run internal:build -- --env.app=photos --env.target=browser --env.production",
+    "build:photos:browser": "npm run internal:build -- --env.app=photos --env.target=browser --env.production",
     "clean:drive:browser": "rm -rf build/drive/*",
     "clean:photos:browser": "rm -rf build/photos/*",
     "clean:mobile": "rm -rf targets/*/mobile/www/*",
-    "deploy:drive":
-      "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/drive/' --prepublish downcloud --postpublish rundeck,mattermost",
-    "deploy:photos":
-      "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/photos/' --prepublish downcloud --postpublish rundeck,mattermost",
+    "deploy:drive": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/drive/' --prepublish downcloud --postpublish rundeck,mattermost",
+    "deploy:photos": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/photos/' --prepublish downcloud --postpublish rundeck,mattermost",
     "internal:build": "webpack --config webpack.config.js --bail",
     "internal:watch": "webpack --config webpack.config.js --watch --progress",
     "tx": "tx pull --all || true",
@@ -30,36 +25,23 @@
     "prewatch:drive:mobile": "npm run clean:mobile",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src/drive/styles --config ./.stylintrc",
-    "lint:js":
-      "eslint --ignore-pattern node_modules \"{src,test}/**/*.{js,jsx}\"",
+    "lint:js": "eslint --ignore-pattern node_modules \"{src,test}/**/*.{js,jsx}\"",
     "precommit": "lint-staged",
     "test": "node_modules/.bin/jest --coverage --config=jest.config.json",
     "watch:drive": "npm run watch:drive:browser",
-    "watch:drive:browser":
-      "npm run internal:watch -- --env.app=drive --env.target=browser",
-    "watch:drive:mobile":
-      "npm run internal:watch -- --env.app=drive --env.target=mobile",
-    "watch:drive:standalone":
-      "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=mobile --port 8084 --inline --hot",
+    "watch:drive:browser": "npm run internal:watch -- --env.app=drive --env.target=browser",
+    "watch:drive:mobile": "npm run internal:watch -- --env.app=drive --env.target=mobile",
+    "watch:drive:standalone": "webpack-dev-server --config webpack.config.js --env.app=drive --env.target=mobile --port 8084 --inline --hot",
     "watch:photos": "npm run watch:photos:browser",
-    "watch:photos:browser":
-      "npm run internal:watch -- --env.app=photos --env.target=browser",
-    "genicon:drive:mobile":
-      "(cd targets/drive/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model' && cp res/model/splash.png res/screens/ios/Default@2x~universal~anyany.png)",
-    "prepare:drive:mobile":
-      "(cd targets/drive/mobile && rm -rf platforms && rm -rf plugins && cordova prepare)",
-    "run:drive:android":
-      "(cd targets/drive/mobile && cordova run android --device)",
-    "run:drive:android:emulator":
-      "(cd targets/drive/mobile && cordova run android --emulator)",
-    "build:drive:android":
-      "npm run build:drive:mobile && (cd targets/drive/mobile && cordova build android --release)",
-    "build:drive:android:debug":
-      "npm run build:drive:mobile && (cd targets/drive/mobile && cordova build android --debug)",
-    "sign:drive:android":
-      "(cd targets/drive/mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/release/android-release-unsigned.apk)",
-    "buildsigned:drive:android":
-      "npm run build:drive:android && npm run sign:drive:android",
+    "watch:photos:browser": "npm run internal:watch -- --env.app=photos --env.target=browser",
+    "genicon:drive:mobile": "(cd targets/drive/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model' && cp res/model/splash.png res/screens/ios/Default@2x~universal~anyany.png)",
+    "prepare:drive:mobile": "(cd targets/drive/mobile && rm -rf platforms && rm -rf plugins && cordova prepare)",
+    "run:drive:android": "(cd targets/drive/mobile && cordova run android --device)",
+    "run:drive:android:emulator": "(cd targets/drive/mobile && cordova run android --emulator)",
+    "build:drive:android": "npm run build:drive:mobile && (cd targets/drive/mobile && cordova build android --release)",
+    "build:drive:android:debug": "npm run build:drive:mobile && (cd targets/drive/mobile && cordova build android --debug)",
+    "sign:drive:android": "(cd targets/drive/mobile && apksigner sign --ks keys/android/cozy-drive-release-key.jks --out build/android/cozy-drive.apk platforms/android/build/outputs/apk/release/android-release-unsigned.apk)",
+    "buildsigned:drive:android": "npm run build:drive:android && npm run sign:drive:android",
     "publish:drive:android": "(cd targets/drive/mobile && fastlane supply)",
     "publishbeta:drive:android":
       "(cd targets/drive/mobile && fastlane android pushbeta)",
@@ -78,11 +60,9 @@
     "version:drive:iosbuild":
       "replace 'CFBundleVersion=\"\\d+\\.\\d+\\.\\d+.\\d+\"' 'CFBundleVersion=\"'$npm_package_version'.0\"' ./targets/drive/mobile/config.xml",
     "version:drive:androidbuild": "replace 'android-versionCode=\"\\d+\"' 'android-versionCode=\"'${npm_package_version//\\./}'0\"' ./targets/drive/mobile/config.xml",
-    "version:drive:useragent":
-      "replace 'value=\"(.+)\\d+\\.\\d+\\.\\d+\"' 'value=\"$1'$npm_package_version'\"' ./targets/drive/mobile/config.xml",
+    "version:drive:useragent": "replace 'value=\"(.+)\\d+\\.\\d+\\.\\d+\"' 'value=\"$1'$npm_package_version'\"' ./targets/drive/mobile/config.xml",
     "version:drive": "npm-run-all --parallel 'version:drive:*'",
-    "version:photos":
-      "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./targets/photos/manifest.webapp"
+    "version:photos": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./targets/photos/manifest.webapp"
   },
   "repository": {
     "type": "git",
@@ -125,7 +105,8 @@
     "babel-runtime": "6.26.0",
     "btoa": "1.2.1",
     "copy-webpack-plugin": "4.5.2",
-    "cordova": "6.5.0",
+    "cordova": "7.1.0",
+    "cordova-android": "7.1.0",
     "css-loader": "0.28.11",
     "css-mqpacker": "6.0.2",
     "csswring": "6.0.3",
@@ -184,8 +165,6 @@
     "cozy-ui": "10.8.1",
     "create-react-context": "0.2.2",
     "date-fns": "1.29.0",
-    "deep-diff": "^1.0.2",
-    "deep-object-diff": "^1.1.0",
     "diacritics": "1.3.0",
     "fastclick": "^1.0.6",
     "filesize": "3.6.1",
@@ -219,8 +198,7 @@
     "redux-raven-middleware": "1.2.0",
     "redux-thunk": "2.3.0",
     "url-polyfill": "1.1.0",
-    "webpack-node-externals": "1.7.2",
-    "why-did-you-update": "^0.1.1"
+    "webpack-node-externals": "1.7.2"
   },
   "eslintConfig": {
     "extends": [
@@ -230,7 +208,11 @@
       "prettier/react",
       "prettier/standard"
     ],
-    "plugins": ["react", "prettier", "standard"],
+    "plugins": [
+      "react",
+      "prettier",
+      "standard"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
       "ecmaFeatures": {
@@ -258,6 +240,9 @@
     "singleQuote": true
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,jsx}": ["prettier --write", "git add"]
+    "{src,test}/**/*.{js,jsx}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

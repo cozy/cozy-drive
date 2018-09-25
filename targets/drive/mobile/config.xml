@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cozy.drive.mobile" ios-CFBundleVersion="1.10.1.0" android-versionCode="11010" version="1.10.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="11010" id="io.cozy.drive.mobile" ios-CFBundleVersion="1.10.1.0" version="1.10.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -14,6 +14,7 @@
     <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.10.1" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
+        <preference name="AndroidPersistentFileLocation" value="Compatibility" />
         <allow-intent href="market:*" />
         <custom-config-file parent="./application/activity/[@android:name='MainActivity']" target="AndroidManifest.xml">
             <intent-filter android:label="Cozy Drive">
@@ -72,8 +73,8 @@
     </platform>
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="AutoHideSplashScreen" value="false" />
-    <engine name="android" spec="^7.0.0" />
-    <engine name="ios" spec="^4.5.5" />
+    <engine name="android" spec="7.1.0" />
+    <engine name="ios" spec="4.5.4" />
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/cozy/cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-whitelist" spec="1.3.2" />
     <plugin name="cordova-plugin-statusbar" spec="https://github.com/cozy/cordova-plugin-statusbar" />
@@ -83,10 +84,8 @@
     <plugin name="cordova-plugin-file-opener2" spec="https://github.com/pwlin/cordova-plugin-file-opener2.git" />
     <plugin name="cordova-plugin-network-information" spec="1.3.2" />
     <plugin name="cordova-plugin-background-fetch" spec="4.0.0" />
-    <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
-    <plugin name="io.cozy.jsbackgroundservice" spec="https://github.com/cozy/cordova-jsbackgroundservice#v1.2.2" />
+    <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/Crash--/cordova-ios-plugin-no-export-compliance.git" />
     <plugin name="cordova-plugin-apprate" spec="~1.3.0" />
-    <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items#v1.4.0" />
     <plugin name="cordova-plugin-device-name" spec="1.3.2" />
     <plugin name="cordova-plugin-sqlite-2" spec="~1.0.4" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="0.8.5" />
@@ -104,4 +103,8 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="~5.4.1" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="~1.5.4" />
     <plugin name="cordova-ios-plugin-no-export-compliance" spec="git+https://github.com/Cordobo/cordova-plugin-ios-no-export-compliance.git" />
+    <plugin name="io.cozy.jsbackgroundservice" spec="https://github.com/cozy/cordova-jsbackgroundservice.git#fix/addPackage.json" />
+    <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items.git#add/PackageJson">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
+    </plugin>
 </widget>
