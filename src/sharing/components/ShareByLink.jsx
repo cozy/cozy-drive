@@ -23,25 +23,28 @@ class ShareByLink extends React.Component {
     Alerter.success(`${this.props.documentType}.share.shareByLink.copied`)
   }
 
-  createShareLink() {
-    this.setState(state => ({ ...state, loading: true }))
-    this.props
-      .onEnable(this.props.document)
-      .then(() => this.setState(state => ({ ...state, loading: false })))
-      .catch(e => {
-        this.setState(state => ({ ...state, loading: false }))
-        Alerter.error(`${this.props.documentType}.share.error.generic`)
-        console.log(e)
-      })
+  async createShareLink() {
+    try {
+      this.setState(state => ({ ...state, loading: true }))
+      await this.props.onEnable(this.props.document)
+    } catch (e) {
+      Alerter.error(`${this.props.documentType}.share.error.generic`)
+      console.log(e)
+    } finally {
+      this.setState(state => ({ ...state, loading: false }))
+    }
   }
 
-  deleteShareLink() {
-    this.setState(state => ({ ...state, loading: true }))
-    this.props.onDisable(this.props.document).catch(e => {
+  async deleteShareLink() {
+    try {
+      this.setState(state => ({ ...state, loading: true }))
+      await this.props.onDisable(this.props.document)
+    } catch (e) {
       Alerter.error(`${this.props.documentType}.share.error.revoke`)
       console.log(e)
+    } finally {
       this.setState(state => ({ ...state, loading: false }))
-    })
+    }
   }
 
   render() {
