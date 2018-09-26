@@ -25,6 +25,7 @@ class MoveModal extends React.Component {
   }
 
   render() {
+    const { onClose } = this.props
     const { client } = this.context
     const { folderId } = this.state
     const query = client =>
@@ -36,7 +37,7 @@ class MoveModal extends React.Component {
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden={true}>
         <Topbar>topbar content</Topbar>
-        <Query query={query}>
+        <Query query={query} key={folderId}>
           {({ data, fetchStatus }) => {
             return (
               <FileList
@@ -55,7 +56,9 @@ class MoveModal extends React.Component {
         </Query>
         <div>
           <Button>Déplacer</Button>
-          <Button theme="secondary">Annuler</Button>
+          <Button theme="secondary" onClick={onClose}>
+            Annuler
+          </Button>
         </div>
       </Modal>
     )
