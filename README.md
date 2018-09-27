@@ -63,9 +63,7 @@ $ yarn watch:drive:browser
 
 ```sh
 # in another terminal, run the docker container
-$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app/drive cozy/cozy-app-dev
-or
-$ yarn stack:docker
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build/drive":/data/cozy-app/drive cozy/cozy-app-dev
 ```
 
 your app is available at http://drive.cozy.tools:8080.
