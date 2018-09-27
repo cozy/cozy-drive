@@ -105,7 +105,7 @@ const ShareTypeSelect = ({ options, onChange }) => (
   <div className={styles['select-wrapper']}>
     <SelectBox
       name="select"
-      classNamePrefix="react-select"
+      classNamePrefix="needsclick react-select"
       components={{ DropdownIndicator, Option }}
       styles={customStyles}
       defaultValue={options[1]}
