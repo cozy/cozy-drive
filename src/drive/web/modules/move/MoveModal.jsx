@@ -98,7 +98,7 @@ class MoveModal extends React.Component {
                         key={file.id}
                         attributes={file}
                         displayedFolder={null}
-                        actions={[]}
+                        actions={null}
                         isRenaming={false}
                         onFolderOpen={id =>
                           this.navigateTo(data.find(f => f.id === id))

@@ -354,14 +354,15 @@ class File extends Component {
             }}
           />
         )}
-        {actionMenuVisible && (
-          <ActionMenu
-            file={attributes}
-            reference={this.filerowMenuToggle}
-            actions={actions}
-            onClose={this.hideActionMenu}
-          />
-        )}
+        {actions &&
+          actionMenuVisible && (
+            <ActionMenu
+              file={attributes}
+              reference={this.filerowMenuToggle}
+              actions={actions}
+              onClose={this.hideActionMenu}
+            />
+          )}
       </div>
     )
   }
