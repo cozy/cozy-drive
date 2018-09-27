@@ -50,7 +50,7 @@ class MoveModal extends React.Component {
         .sortBy({ name: 'asc' })
 
     return (
-      <Modal size={'xlarge'} closable={false} overflowHidden={true}>
+      <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
         <Topbar>
           <Breadcrumb
             path={[]}
