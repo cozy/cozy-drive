@@ -130,8 +130,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1
         },
-        move: {
-          action: selected => dispatch(showModal(<MoveModal />)),
+        moveto: {
+          action: selected =>
+            dispatch(showModal(<MoveModal entries={selected} />)),
           displayCondition: selections => selections.length === 1
         },
         'phone-download': {

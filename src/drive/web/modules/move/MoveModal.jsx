@@ -4,6 +4,7 @@ import { Modal, Button } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import cx from 'classnames'
 
@@ -28,6 +29,29 @@ class MoveModal extends React.Component {
 
   navigateTo = folder => {
     this.setState({ folderId: folder.id })
+  }
+
+  moveEntries = async () => {
+    const { entries, onClose } = this.props
+    const { client } = this.context
+    const { folderId } = this.state
+
+    const entry = entries[0]
+
+    try {
+      await client
+        .collection('io.cozy.files')
+        .updateFileMetadata(entry._id, { dir_id: folderId })
+      Alerter.info('*Thing* has been moved to *destination*', {
+        buttonText: 'cancel',
+        buttonAction: () => console.log('cancel move plz')
+      })
+    } catch (e) {
+      console.warn(e)
+      Alerter.error('move error')
+    } finally {
+      onClose()
+    }
   }
 
   sortData = data => {
@@ -92,14 +116,18 @@ class MoveModal extends React.Component {
           }}
         </Query>
         <div>
-          <Button>Déplacer</Button>
           <Button theme="secondary" onClick={onClose}>
             Annuler
           </Button>
+          <Button onClick={this.moveEntries}>Déplacer</Button>
         </div>
       </Modal>
     )
   }
+}
+
+MoveModal.PropTypes = {
+  entries: PropTypes.array
 }
 
 export default MoveModal
