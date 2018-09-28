@@ -21,18 +21,21 @@ platform :ios do
 
   desc "Codesign, Archive and upload the app to Testflight"
   lane :pushtest do
-    # Get certificate
-    cert(output_path: "#{SECURITY[:ios]}")
-    # Get provisioning profile
-    sigh(output_path: "#{SECURITY[:ios]}/testflight")
-    # Build the
-    build('ios')
-    # Recreate schemes to ensure a smooth transition from cordova to gym
-    recreate_schemes(project: xcodeproj)
-    # Archive app into ipa
-    gym(scheme: APP_NAME, project: xcodeproj, output_directory: "#{BUILD[:ios]}", output_name: APP_FILENAME)
-    # Upload to Testflight
-    pilot(distribute_external: false, ipa: "#{BUILD[:ios]}/#{APP_FILENAME}.ipa")
+      #get certificates
+      match(
+        shallow_clone: true,
+        clone_branch_directly: true,
+        type: "appstore",
+        git_url: "git@gitlab.cozycloud.cc:labs/mobile-certificates.git"
+      )
+      # Build the
+      build('ios')
+      # Recreate schemes to ensure a smooth transition from cordova to gym
+      recreate_schemes(project: xcodeproj)
+      # Archive app into ipa
+      gym(scheme: APP_NAME, project: xcodeproj, output_directory: "#{BUILD[:ios]}", output_name: APP_FILENAME)
+       # Upload to Testflight
+      pilot(distribute_external: false, ipa: "#{BUILD[:ios]}/#{APP_FILENAME}.ipa")
   end
 end
 
