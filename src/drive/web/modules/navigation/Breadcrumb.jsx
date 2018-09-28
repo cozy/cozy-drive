@@ -15,12 +15,12 @@ import getFolderPath from './getFolderPath'
 
 import styles from 'drive/styles/breadcrumb'
 
-const renamePathNames = (path, location, t) => {
-  if (location.pathname === '/recent') {
+export const renamePathNames = (path, pathname, t) => {
+  if (pathname === '/recent') {
     path.unshift({
       name: t('breadcrumb.title_recent')
     })
-  } else if (location.pathname.match(/^\/sharings/)) {
+  } else if (pathname.match(/^\/sharings/)) {
     path.unshift({
       name: t('breadcrumb.title_sharings'),
       url: '/sharings'
@@ -229,7 +229,7 @@ const mapStateToProps = (state, ownProps) => ({
       ownProps.isPublic,
       ownProps.sharedDocuments
     ),
-    ownProps.location,
+    ownProps.location.pathname,
     ownProps.t
   ),
   getFolderUrl
