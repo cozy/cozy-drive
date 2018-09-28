@@ -4,8 +4,8 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 const getFolderPath = (
   displayedFolder,
   pathname = '',
-  isPublic,
-  sharedDocuments
+  isPublic = false,
+  sharedDocuments = []
 ) => {
   const path = []
   const isBrowsingTrash = /^\/trash/.test(pathname)
@@ -17,7 +17,7 @@ const getFolderPath = (
     // does the folder have parents to display? The trash folder has the root folder as parent, but we don't want to show that. Sharings folder at the root level have the same problem.
     const parent = displayedFolder.parent
     const isShared = sharedDocuments.includes(displayedFolder.id)
-    const isParentShared = sharedDocuments.includes(parent.id)
+    const isParentShared = parent && sharedDocuments.includes(parent.id)
     if (
       parent &&
       parent.id &&
