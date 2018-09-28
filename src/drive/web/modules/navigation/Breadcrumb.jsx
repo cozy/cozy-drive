@@ -224,8 +224,8 @@ const MobileAwareBreadcrumb = props => {
 const mapStateToProps = (state, ownProps) => ({
   path: renamePathNames(
     getFolderPath(
-      state,
-      ownProps.location,
+      state.view.displayedFolder,
+      ownProps.location.pathname,
       ownProps.isPublic,
       ownProps.sharedDocuments
     ),

@@ -3,19 +3,14 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 
 describe('Computing a folders path', () => {
   describe('in the drive view', () => {
-    const location = { pathname: '/drive' }
+    const location = '/drive'
 
     it('should handle the path for the root folder', () => {
       const curentFolder = {
         id: ROOT_DIR_ID,
         parent: false
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
     })
@@ -25,24 +20,14 @@ describe('Computing a folders path', () => {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(ROOT_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
     })
 
     it('should be ok when no displayed folder is provided', () => {
-      const path = getFolderPath(
-        { view: { displayedFolder: null } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(null, location, false, [])
 
       expect(path.length).toEqual(1)
       expect(path[0].id).toEqual(ROOT_DIR_ID)
@@ -55,12 +40,7 @@ describe('Computing a folders path', () => {
           id: '456'
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
 
       expect(path.length).toEqual(3)
       expect(path[0].id).toEqual(ROOT_DIR_ID)
@@ -76,12 +56,7 @@ describe('Computing a folders path', () => {
           dir_id: '789'
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
 
       expect(path.length).toEqual(4)
       expect(path[0].id).toEqual(ROOT_DIR_ID)
@@ -92,19 +67,14 @@ describe('Computing a folders path', () => {
   })
 
   describe('in a public view', () => {
-    const location = { pathname: '/drive' }
+    const location = '/drive'
 
     it('should not add the root folder', () => {
       const curentFolder = {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        true,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, true, [])
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
     })
@@ -117,12 +87,7 @@ describe('Computing a folders path', () => {
           dir_id: '789'
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        true,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, true, [])
 
       expect(path.length).toEqual(2)
       expect(path[0]).toEqual(curentFolder.parent)
@@ -131,19 +96,14 @@ describe('Computing a folders path', () => {
   })
 
   describe('in the trash view', () => {
-    const location = { pathname: '/trash' }
+    const location = '/trash'
 
     it('should handle the trash root folder', () => {
       const curentFolder = {
         id: TRASH_DIR_ID,
         parent: false
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
 
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
@@ -154,12 +114,7 @@ describe('Computing a folders path', () => {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
@@ -172,12 +127,7 @@ describe('Computing a folders path', () => {
           id: ROOT_DIR_ID
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
@@ -191,12 +141,7 @@ describe('Computing a folders path', () => {
           dir_id: ROOT_DIR_ID
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        false,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, false, [])
       expect(path.length).toEqual(3)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder.parent)
@@ -210,31 +155,21 @@ describe('Computing a folders path', () => {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        { pathname: '/recent' },
-        true,
-        []
-      )
+      const path = getFolderPath(curentFolder, '/recent', true, [])
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
     })
   })
 
   describe('in the sharings view', () => {
-    const location = { pathname: '/sharings' }
+    const location = '/sharings'
 
     it('should not add the root folder', () => {
       const curentFolder = {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        true,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, true, [])
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
     })
@@ -246,12 +181,7 @@ describe('Computing a folders path', () => {
           id: '456'
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        true,
-        []
-      )
+      const path = getFolderPath(curentFolder, location, true, [])
       expect(path.length).toEqual(2)
       expect(path[0]).toEqual(curentFolder.parent)
       expect(path[1]).toEqual(curentFolder)
@@ -264,12 +194,7 @@ describe('Computing a folders path', () => {
           id: '456'
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        true,
-        ['123']
-      )
+      const path = getFolderPath(curentFolder, location, true, ['123'])
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
     })
@@ -282,12 +207,7 @@ describe('Computing a folders path', () => {
           dir_id: '789'
         }
       }
-      const path = getFolderPath(
-        { view: { displayedFolder: curentFolder } },
-        location,
-        true,
-        ['456']
-      )
+      const path = getFolderPath(curentFolder, location, true, ['456'])
       expect(path.length).toEqual(2)
       expect(path[0]).toEqual(curentFolder.parent)
       expect(path[1]).toEqual(curentFolder)

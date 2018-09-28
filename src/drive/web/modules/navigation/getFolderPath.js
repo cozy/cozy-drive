@@ -1,12 +1,16 @@
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 
 // reconstruct the whole path to the current folder (first element is the root, the last is the current folder)
-const getFolderPath = ({ view }, location, isPublic, sharedDocuments) => {
-  const { displayedFolder } = view
+const getFolderPath = (
+  displayedFolder,
+  pathname = '',
+  isPublic,
+  sharedDocuments
+) => {
   const path = []
-  const isBrowsingTrash = /^\/trash/.test(location.pathname)
-  const isBrowsingRecentFiles = /^\/recent/.test(location.pathname)
-  const isBrowsingSharings = /^\/sharings/.test(location.pathname)
+  const isBrowsingTrash = /^\/trash/.test(pathname)
+  const isBrowsingRecentFiles = /^\/recent/.test(pathname)
+  const isBrowsingSharings = /^\/sharings/.test(pathname)
   // dring the first fetch, displayedFolder is null, and we don't want to display anything
   if (displayedFolder) {
     path.push(displayedFolder)
