@@ -19,8 +19,10 @@ import fileListStyles from 'drive/styles/filelist'
 
 import {
   Breadcrumb,
-  PreviousButton
+  PreviousButton,
+  renamePathNames
 } from 'drive/web/modules/navigation/Breadcrumb'
+import getFolderPath from 'drive/web/modules/navigation/getFolderPath'
 
 class MoveModal extends React.Component {
   state = {
@@ -65,34 +67,50 @@ class MoveModal extends React.Component {
 
   render() {
     const { onClose } = this.props
-    const { client } = this.context
+    const { client, t } = this.context
     const { folderId } = this.state
-    const query = client =>
+
+    const contentQuery = client =>
       client
         .find('io.cozy.files')
         .where({ dir_id: folderId })
         .sortBy({ name: 'asc' })
 
+    const breadcrumbQuery = client => client.get('io.cozy.files', folderId)
+
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
-        <Topbar>
-          <Breadcrumb
-            path={[]}
-            onBreadcrumbClick={this.navigateTo}
-            opening={false}
-          />
-          <div role="toolbar">add folder</div>
-        </Topbar>
-        <Query query={query} key={folderId}>
+        <Query query={breadcrumbQuery} key={`breadcrumb-${folderId}`}>
+          {({ data, fetchStatus }) => (
+            <Topbar hideOnMobile={false}>
+              {fetchStatus === 'loaded' && (
+                <Breadcrumb
+                  path={renamePathNames(
+                    getFolderPath({
+                      ...data,
+                      parent: data.relationships.parent.data
+                    }),
+                    '',
+                    t
+                  )}
+                  onBreadcrumbClick={this.navigateTo}
+                  opening={false}
+                />
+              )}
+              <div role="toolbar">add folder</div>
+            </Topbar>
+          )}
+        </Query>
+        <Query query={contentQuery} key={`content-${folderId}`}>
           {({ data, fetchStatus }) => {
             return (
               <div className={fileListStyles['fil-content-table']} role="table">
                 <MobileFileListHeader canSort={false} />
                 <FileListHeader canSort={false} />
                 <div className={fileListStyles['fil-content-body']}>
-                  {/*Missing FileListBody providing te loading state*/}
+                  {/*Missing FileListBody providing the loading state, the empty state and the add folder component */}
                   <div>
-                    {/*Missing FileListRows providing the load more and placeholder */}
+                    {/*Missing FileListRows providing the load more  */}
                     {this.sortData(data).map(file => (
                       <File
                         key={file.id}
