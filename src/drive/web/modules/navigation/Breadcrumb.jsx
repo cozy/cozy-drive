@@ -10,11 +10,8 @@ import { withBreakpoints } from 'cozy-ui/react'
 import { SharedDocuments } from 'sharing'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
-import {
-  openFolder,
-  getFolderPath,
-  getFolderUrl
-} from 'drive/web/modules/navigation/duck'
+import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
+import getFolderPath from './getFolderPath'
 
 import styles from 'drive/styles/breadcrumb'
 
