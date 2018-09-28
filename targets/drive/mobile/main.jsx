@@ -4,6 +4,7 @@ import 'babel-polyfill'
 import 'drive/styles/main'
 import 'drive/styles/mobile'
 
+import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
