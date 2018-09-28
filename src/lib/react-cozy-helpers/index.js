@@ -7,3 +7,4 @@ export default combineReducers({ modal: modalReducer })
 export { ModalManager, showModal } from './ModalManager'
 
 export { default as getQueryParameter } from './QueryParameter'
+export { default as BarContextProvider } from './BarContextProvider'

@@ -1,15 +1,16 @@
 /* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import SharingProvider, { SharedDocument } from 'sharing'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
+import { BarContextProvider } from 'react-cozy-helpers'
 
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { SharedDocument } from 'sharing'
 
 import styles from 'drive/styles/toolbar'
 
@@ -100,7 +101,21 @@ class Toolbar extends Component {
           <ShareButton isDisabled={isDisabled} />
         </NotRootFolder>
 
-        {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
+        {isMobile ? (
+          <BarRight>
+            <BarContextProvider
+              client={this.context.client}
+              store={this.context.store}
+              t={this.context.t}
+            >
+              <SharingProvider doctype="io.cozy.files" documentType="Files">
+                {MoreMenu}
+              </SharingProvider>
+            </BarContextProvider>
+          </BarRight>
+        ) : (
+          MoreMenu
+        )}
       </div>
     )
   }
