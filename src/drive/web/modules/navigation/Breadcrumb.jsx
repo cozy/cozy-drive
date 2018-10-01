@@ -13,7 +13,7 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
 import getFolderPath from './getFolderPath'
 
-import styles from 'drive/styles/breadcrumb'
+import styles from './breadcrumb.styl'
 
 export const renamePathNames = (path, pathname, t) => {
   if (pathname === '/recent') {
