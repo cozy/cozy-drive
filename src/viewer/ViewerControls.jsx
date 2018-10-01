@@ -4,7 +4,6 @@ import Hammer from 'hammerjs'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
-import { downloadFile } from 'cozy-client'
 
 import styles from './styles'
 
