@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
+import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const mapStateToProps = (state, ownProps) => ({
   displayedFolder: state.view.displayedFolder,
@@ -10,7 +11,11 @@ const mapStateToProps = (state, ownProps) => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  uploadFiles: (files, displayedFolder) => {
+    dispatch(uploadFiles(files, displayedFolder.id))
+  }
+})
 
 const toolbarContainer = component =>
   connect(mapStateToProps, mapDispatchToProps)(component)
