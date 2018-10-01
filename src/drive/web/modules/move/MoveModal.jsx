@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Modal, Button } from 'cozy-ui/react'
+import { Modal, Button, withBreakpoints } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
@@ -23,6 +23,19 @@ import {
   renamePathNames
 } from 'drive/web/modules/navigation/Breadcrumb'
 import getFolderPath from 'drive/web/modules/navigation/getFolderPath'
+
+const MoveTopbar = withBreakpoints()(
+  ({ navigateTo, path, breakpoints: { isMobile } }) => (
+    <Topbar hideOnMobile={false}>
+      {path.length > 1 &&
+        isMobile && (
+          <PreviousButton onClick={() => navigateTo(path[path.length - 2])} />
+        )}
+      <Breadcrumb path={path} onBreadcrumbClick={navigateTo} opening={false} />
+      <div role="toolbar">add folder</div>
+    </Topbar>
+  )
+)
 
 class MoveModal extends React.Component {
   state = {
@@ -65,6 +78,16 @@ class MoveModal extends React.Component {
     return folders.concat(files)
   }
 
+  buildBreadcrumbPath = data =>
+    renamePathNames(
+      getFolderPath({
+        ...data,
+        parent: data.relationships.parent.data
+      }),
+      '',
+      this.context.t
+    )
+
   render() {
     const { onClose } = this.props
     const { client, t } = this.context
@@ -81,25 +104,16 @@ class MoveModal extends React.Component {
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
         <Query query={breadcrumbQuery} key={`breadcrumb-${folderId}`}>
-          {({ data, fetchStatus }) => (
-            <Topbar hideOnMobile={false}>
-              {fetchStatus === 'loaded' && (
-                <Breadcrumb
-                  path={renamePathNames(
-                    getFolderPath({
-                      ...data,
-                      parent: data.relationships.parent.data
-                    }),
-                    '',
-                    t
-                  )}
-                  onBreadcrumbClick={this.navigateTo}
-                  opening={false}
-                />
-              )}
-              <div role="toolbar">add folder</div>
-            </Topbar>
-          )}
+          {({ data, fetchStatus }) => {
+            return fetchStatus === 'loaded' ? (
+              <MoveTopbar
+                navigateTo={this.navigateTo}
+                path={this.buildBreadcrumbPath(data)}
+              />
+            ) : (
+              false
+            )
+          }}
         </Query>
         <Query query={contentQuery} key={`content-${folderId}`}>
           {({ data, fetchStatus }) => {
