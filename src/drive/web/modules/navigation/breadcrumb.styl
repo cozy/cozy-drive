@@ -1,6 +1,7 @@
 @require 'components/popover.styl'
 @require 'settings/palette.styl'
 @require 'settings/breakpoints.styl'
+@require 'settings/z-index.styl'
 
 @require '../../../styles/topbar'
 
@@ -42,6 +43,7 @@
 +small-screen()
     .fil-path-backdrop
         min-width 0
+        z-index $overlay-index
 
     .fil-path-title
         display        flex
