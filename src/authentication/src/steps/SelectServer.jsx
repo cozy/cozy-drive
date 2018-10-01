@@ -27,9 +27,14 @@ export class SelectServer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const error =
+      nextProps.externalError &&
+      nextProps.externalError.message !== 'REGISTRATION_ABORT'
+        ? ERR_WRONG_ADDRESS
+        : null
     this.setState(state => ({
       ...state,
-      error: nextProps.externalError ? ERR_WRONG_ADDRESS : null,
+      error,
       fetching: nextProps.fetching
     }))
   }
@@ -64,7 +69,6 @@ export class SelectServer extends Component {
     if (url === '' || (/^http:/.test(url) && !__ALLOW_HTTP__)) {
       error = ERR_WRONG_ADDRESS
     }
-
     if (error) {
       this.setState(state => ({ ...state, error }))
       this.props.onException(new Error(error), {
