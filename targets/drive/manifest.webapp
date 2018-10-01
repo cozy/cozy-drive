@@ -1,5 +1,6 @@
 {
   "name": "Drive",
+  "name_prefix": "Cozy",
   "slug": "drive",
   "version": "1.10.1",
   "type": "webapp",
@@ -8,7 +9,6 @@
   "categories": ["cozy"],
   "source": "https://github.com/cozy/cozy-drive",
   "editor": "Cozy",
-  "name_prefix": "Cozy",
   "developer": {
     "name": "Cozy Cloud",
     "url": "https://cozy.io"
