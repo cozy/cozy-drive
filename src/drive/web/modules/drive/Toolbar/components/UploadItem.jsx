@@ -3,12 +3,11 @@ import classNames from 'classnames'
 import UploadButton from 'drive/web/modules/upload/UploadButton'
 import { translate } from 'cozy-ui/react'
 import styles from 'drive/styles/toolbar'
-import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 import toolbarContainer from '../toolbar'
 
 const UploadItem = translate()(
-  ({ t, displayedFolder, insideMoreMenu, isDisabled }) =>
+  ({ t, displayedFolder, insideMoreMenu, isDisabled, uploadFiles }) =>
     insideMoreMenu ? (
       <UploadButton
         onUpload={files => uploadFiles(files, displayedFolder)}
