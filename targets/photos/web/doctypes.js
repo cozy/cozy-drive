@@ -1,4 +1,7 @@
 export default {
+  files: {
+    doctype: 'io.cozy.files'
+  },
   albums: {
     doctype: 'io.cozy.photos.albums',
     attributes: {
