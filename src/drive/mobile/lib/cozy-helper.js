@@ -4,7 +4,7 @@ import CozyClient from 'cozy-client'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { getDeviceName, isIos } from './device'
 import { disableBackgroundService } from './background'
-
+import { schema, DOCTYPE_FILES } from '../../../../targets/drive/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 
@@ -29,7 +29,8 @@ export const initClient = url => {
         'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
       policyURI: 'https://files.cozycloud.cc/cgu.pdf'
     },
-    offline: { doctypes: ['io.cozy.files'] }
+    offline: { doctypes: [DOCTYPE_FILES] },
+    schema
   })
 }
 

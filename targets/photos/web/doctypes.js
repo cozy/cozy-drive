@@ -1,9 +1,11 @@
+import { DOCTYPE_ALBUMS, DOCTYPE_FILES } from '../../../targets/drive/doctypes'
+
 export default {
   files: {
     doctype: 'io.cozy.files'
   },
   albums: {
-    doctype: 'io.cozy.photos.albums',
+    doctype: DOCTYPE_ALBUMS,
     attributes: {
       name: {
         type: 'string',
@@ -13,7 +15,7 @@ export default {
     relationships: {
       photos: {
         type: 'has-many',
-        doctype: 'io.cozy.files'
+        doctype: DOCTYPE_FILES
       }
     }
   }

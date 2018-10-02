@@ -14,6 +14,7 @@ import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
 
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
+import { schema } from '../doctypes'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
@@ -33,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const client = new CozyClient({
     uri: cozyUrl,
-    token: data.cozyToken
+    token: data.cozyToken,
+    schema
   })
 
   cozy.client.init({
