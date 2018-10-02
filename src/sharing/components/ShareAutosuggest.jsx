@@ -132,7 +132,7 @@ export default class ShareAutocomplete extends Component {
           this.input = self ? self.input : null
         }}
         theme={styles}
-        suggestions={suggestions}
+        suggestions={suggestions.slice(0, 20)}
         getSuggestionValue={contact => contact}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
