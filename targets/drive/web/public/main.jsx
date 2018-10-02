@@ -8,7 +8,7 @@ import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
-
+import { schema } from '../../doctypes'
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
 import LightFolderView from 'drive/web/modules/public/LightFolderView'
@@ -68,7 +68,8 @@ const init = async () => {
 
   const client = new CozyClient({
     uri: cozyUrl,
-    token: sharecode
+    token: sharecode,
+    schema
   })
 
   if (__DEVELOPMENT__) {
