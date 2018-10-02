@@ -1,6 +1,10 @@
 {
-  "config_ios" : {
-    "NSContactsUsageDescription": "Save your phone's contact on your Cozy — this will facilitate sharing files with them.",
-    "NSPhotoLibraryUsageDescription": "Instantly back up and sync your photos and videos in your Cozy — so you never lose them."
+  "config_ios": {
+    "NSContactsUsageDescription":
+      "Save your phone's contact on your Cozy — this will facilitate sharing files with them.",
+    "NSPhotoLibraryUsageDescription":
+      "Instantly back up and sync your photos and videos in your Cozy — so you never lose them.",
+    "NSCameraUsageDescription":
+      "Take a photo and instantly back up it in your Cozy."
   }
 }
