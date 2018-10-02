@@ -18,5 +18,8 @@ export default {
         doctype: DOCTYPE_FILES
       }
     }
+  },
+  files: {
+    doctype: DOCTYPE_FILES
   }
 }

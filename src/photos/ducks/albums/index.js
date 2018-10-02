@@ -37,12 +37,19 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
         return
       }
       const album = { _type: DOCTYPE, name, created_at }
-      const unique = await client.validate(album)
+      /* 
+        !WHY do I need that stuff ? withMutations() and mutations='' are not 
+        sending the same props
+        */
+      const realClient =
+        client.constructor.name === 'ObservableQuery' ? client.client : client
+
+      const unique = await realClient.validate(album)
       if (unique !== true) {
         Alerter.error('Albums.create.error.already_exists', { name })
         return
       }
-      const resp = await client.create(
+      const resp = await realClient.create(
         DOCTYPE,
         album,
         { photos },
@@ -58,6 +65,7 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
       })
       return resp.data
     } catch (error) {
+      console.log({ error })
       Alerter.error('Albums.create.error.generic')
     }
   }
@@ -68,13 +76,7 @@ const ALBUM_QUERY = (client, ownProps) =>
 
 const ALBUM_MUTATIONS = (query, ownProps) => ({
   updateAlbum: album => query.client.save(album),
-  deleteAlbum: album =>
-    query.client.destroy(album, {
-      updateQueries: {
-        albums: (previousData, result) =>
-          previousData.filter(a => a.id !== album.id)
-      }
-    }),
+  deleteAlbum: album => query.client.destroy(album),
   addPhotos,
   removePhotos: async (album, photos, clearSelection) => {
     try {
