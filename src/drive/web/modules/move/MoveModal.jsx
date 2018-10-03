@@ -66,7 +66,9 @@ class MoveModal extends React.Component {
       console.warn(e)
       Alerter.error('move error')
     } finally {
-      onClose()
+      onClose({
+        cancelSelection: true
+      })
     }
   }
 
