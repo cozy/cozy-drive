@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Modal, Button, withBreakpoints } from 'cozy-ui/react'
+import { Modal, Button, ContextHeader, withBreakpoints } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
+import DriveIcon from 'drive/assets/icons/icon-drive.svg'
 
 import cx from 'classnames'
 
@@ -103,6 +104,12 @@ class MoveModal extends React.Component {
 
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
+        <ContextHeader
+          title={'yo yo'}
+          text={'gros'}
+          icon={DriveIcon}
+          onClose={onClose}
+        />
         <Query query={breadcrumbQuery} key={`breadcrumb-${folderId}`}>
           {({ data, fetchStatus }) => {
             return fetchStatus === 'loaded' ? (
