@@ -13,7 +13,13 @@ export const startReplication = async (
   indexesCreated
 ) => {
   try {
-    upgradePouchDatabase('io.cozy.files')
+    upgradePouchDatabase('io.cozy.files').then(async didUpgrade => {
+      if (didUpgrade) {
+        indexesCreated({})
+        const indexes = await createIndexes({}, indexesCreated)
+        await warmUpIndexes(indexes)
+      }
+    })
 
     const indexes = await createIndexes(existingIndexes, indexesCreated)
 
@@ -53,6 +59,8 @@ export const startReplication = async (
 const createIndexes = async (existingIndexes, indexesCreated) => {
   const db = cozy.client.offline.getDatabase('io.cozy.files')
 
+  await db.viewCleanup()
+
   const createIndex = async fields => {
     const index = await db.createIndex({
       index: { fields }
@@ -88,7 +96,13 @@ const createIndexes = async (existingIndexes, indexesCreated) => {
         }
       }
     }
-    await db.put(ddoc)
+
+    try {
+      await db.put(ddoc)
+    } catch (err) {
+      if (err.name !== 'conflict') throw err
+    }
+
     indexes.recent = 'my_index/recent_files'
     indexesCreated(indexes)
   }
