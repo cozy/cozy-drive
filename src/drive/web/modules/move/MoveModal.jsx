@@ -26,6 +26,7 @@ import fileListStyles from 'drive/styles/filelist'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
+import LoadMore from 'drive/web/modules/filelist/LoadMore'
 
 import {
   Breadcrumb,
@@ -140,7 +141,7 @@ class MoveModal extends React.Component {
           }}
         </Query>
         <Query query={contentQuery} key={`content-${folderId}`}>
-          {({ data, fetchStatus, ...rest }) => {
+          {({ data, fetchStatus, hasMore, fetchMore, ...rest }) => {
             if (fetchStatus === 'loading') return <FileListRowsPlaceholder />
             else if (fetchStatus === 'failed') return <Oops />
             else if (fetchStatus === 'loaded' && data.length === 0)
@@ -156,7 +157,6 @@ class MoveModal extends React.Component {
                   <div className={fileListStyles['fil-content-body']}>
                     {/*Missing FileListBody providing the add folder component */}
                     <div>
-                      {/*Missing FileListRows providing the load more  */}
                       {this.sortData(data).map(file => (
                         <File
                           key={file.id}
@@ -174,6 +174,9 @@ class MoveModal extends React.Component {
                           withSharedBadge={true}
                         />
                       ))}
+                      {hasMore && (
+                        <LoadMore onClick={fetchMore} isLoading={false} />
+                      )}
                     </div>
                   </div>
                 </div>
