@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Modal, Button, ContextHeader, withBreakpoints } from 'cozy-ui/react'
+import {
+  Modal,
+  ModalFooter,
+  ContextHeader,
+  withBreakpoints
+} from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
@@ -155,12 +160,13 @@ class MoveModal extends React.Component {
             )
           }}
         </Query>
-        <div>
-          <Button theme="secondary" onClick={onClose}>
-            Annuler
-          </Button>
-          <Button onClick={this.moveEntries}>Déplacer</Button>
-        </div>
+        <ModalFooter
+          primaryText="Déplacer"
+          primaryAction={this.moveEntries}
+          secondaryText="Annuler"
+          secondaryAction={onClose}
+          secondaryType="secondary"
+        />
       </Modal>
     )
   }
