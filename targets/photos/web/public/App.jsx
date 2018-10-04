@@ -34,6 +34,7 @@ class App extends Component {
 
   render() {
     const { album, fetchStatus } = this.props
+
     const { t } = this.context
     if (this.state.error) {
       return (
@@ -130,7 +131,7 @@ const ConnectedApp = props => (
     }
   >
     {({ data, fetchStatus }) => (
-      <App album={data ? data[0] : null} fetchStatus={fetchStatus} {...props} />
+      <App album={data || null} fetchStatus={fetchStatus} {...props} />
     )}
   </Query>
 )
