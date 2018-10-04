@@ -14,71 +14,13 @@ export const startReplication = async (
 ) => {
   try {
     upgradePouchDatabase('io.cozy.files')
-    const db = cozy.client.offline.getDatabase('io.cozy.files')
-    const createIndex = async fields => {
-      const index = await db.createIndex({
-        index: { fields }
-      })
-      return index.id
-    }
 
-    let indexes = existingIndexes || {}
-
-    if (!indexes.byName) {
-      indexes.byName = await createIndex(['dir_id', 'type', 'name'])
-      indexesCreated(indexes)
-    }
-
-    if (!indexes.byUpdatedAt) {
-      indexes.byUpdatedAt = await createIndex(['dir_id', 'type', 'updated_at'])
-      indexesCreated(indexes)
-    }
-
-    if (!indexes.bySize) {
-      indexes.bySize = await createIndex(['dir_id', 'type', 'size'])
-      indexesCreated(indexes)
-    }
-
-    if (!indexes.recent) {
-      const ddoc = {
-        _id: '_design/my_index',
-        views: {
-          recent_files: {
-            map: function(doc) {
-              if (!doc.trashed && doc.type !== 'directory') emit(doc.updated_at)
-            }.toString()
-          }
-        }
-      }
-      await db.put(ddoc)
-      indexes.recent = 'my_index/recent_files'
-      indexesCreated(indexes)
-    }
-
-    const warmUpIndex = (index, attribute) =>
-      db.find({
-        selector: {
-          dir_id: ROOT_DIR_ID,
-          type: 'directory',
-          [attribute]: { $gte: null }
-        },
-        use_index: index,
-        limit: 0
-      })
+    const indexes = await createIndexes(existingIndexes, indexesCreated)
 
     if (!hasFinishedFirstReplication) {
       await startFirstReplication()
       console.log('End of first replication, warming up indexes')
-      // we execute a first query so that the index is really created
-      await db.query('my_index/recent_files', {
-        limit: 0
-      })
-
-      if (indexes.byName) await warmUpIndex(indexes.byName, 'name')
-      if (indexes.byUpdatedAt)
-        await warmUpIndex(indexes.byUpdatedAt, 'updated_at')
-      if (indexes.bySize) await warmUpIndex(indexes.bySize, 'size')
-
+      await warmUpIndexes(indexes)
       console.log('indexes ready')
       firstReplicationFinished()
     }
@@ -86,10 +28,7 @@ export const startReplication = async (
     startRepeatedReplication({
       afterReplication: infos => {
         if (infos.docs_written > 0) {
-          if (indexes.byName) warmUpIndex(indexes.byName, 'name')
-          if (indexes.byUpdatedAt)
-            warmUpIndex(indexes.byUpdatedAt, 'updated_at')
-          if (indexes.bySize) warmUpIndex(indexes.bySize, 'size')
+          warmUpIndexes(indexes)
         }
       }
     })
@@ -109,6 +48,75 @@ export const startReplication = async (
       console.warn(err)
     }
   }
+}
+
+const createIndexes = async (existingIndexes, indexesCreated) => {
+  const db = cozy.client.offline.getDatabase('io.cozy.files')
+
+  const createIndex = async fields => {
+    const index = await db.createIndex({
+      index: { fields }
+    })
+    return index.id
+  }
+
+  let indexes = existingIndexes || {}
+
+  if (!indexes.byName) {
+    indexes.byName = await createIndex(['dir_id', 'type', 'name'])
+    indexesCreated(indexes)
+  }
+
+  if (!indexes.byUpdatedAt) {
+    indexes.byUpdatedAt = await createIndex(['dir_id', 'type', 'updated_at'])
+    indexesCreated(indexes)
+  }
+
+  if (!indexes.bySize) {
+    indexes.bySize = await createIndex(['dir_id', 'type', 'size'])
+    indexesCreated(indexes)
+  }
+
+  if (!indexes.recent) {
+    const ddoc = {
+      _id: '_design/my_index',
+      views: {
+        recent_files: {
+          map: function(doc) {
+            if (!doc.trashed && doc.type !== 'directory') emit(doc.updated_at)
+          }.toString()
+        }
+      }
+    }
+    await db.put(ddoc)
+    indexes.recent = 'my_index/recent_files'
+    indexesCreated(indexes)
+  }
+
+  return indexes
+}
+
+const warmUpIndexes = async indexes => {
+  const warmUpIndex = (index, attribute) =>
+    db.find({
+      selector: {
+        dir_id: ROOT_DIR_ID,
+        type: 'directory',
+        [attribute]: { $gte: null }
+      },
+      use_index: index,
+      limit: 0
+    })
+
+  // we execute a first query so that the index is really created
+  const db = cozy.client.offline.getDatabase('io.cozy.files')
+  await db.query('my_index/recent_files', {
+    limit: 0
+  })
+
+  if (indexes.byName) await warmUpIndex(indexes.byName, 'name')
+  if (indexes.byUpdatedAt) await warmUpIndex(indexes.byUpdatedAt, 'updated_at')
+  if (indexes.bySize) await warmUpIndex(indexes.bySize, 'size')
 }
 
 const startRepeatedReplication = ({ afterReplication }) => {
