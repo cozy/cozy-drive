@@ -33,7 +33,6 @@ const MoveTopbar = withBreakpoints()(
           <PreviousButton onClick={() => navigateTo(path[path.length - 2])} />
         )}
       <Breadcrumb path={path} onBreadcrumbClick={navigateTo} opening={false} />
-      <div role="toolbar">add folder</div>
     </Topbar>
   )
 )
