@@ -28,10 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // we still need cozy-client-js for intents and offline
   // cozy-client is not used right now
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+  const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+  const useWebsql = isSafari || isiOS
+  const offlineOptions = useWebsql ? { adapter: 'websql' } : {}
+
   cozy.client.init({
     cozyURL: cozyUrl,
     token: data.cozyToken,
-    offline: { doctypes: ['io.cozy.files'] }
+    offline: { doctypes: ['io.cozy.files'], options: offlineOptions }
   })
 
   render(
