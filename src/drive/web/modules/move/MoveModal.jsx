@@ -20,7 +20,7 @@ import FileListHeader, {
 } from 'drive/web/modules/filelist/FileListHeader'
 import FileListBody from 'drive/web/modules/filelist/FileListBody'
 import FileListRows from 'drive/web/modules/filelist/FileListRows'
-import File from 'drive/web/modules/filelist/File'
+import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import fileListStyles from 'drive/styles/filelist'
 
 import {
@@ -85,6 +85,13 @@ class MoveModal extends React.Component {
     return folders.concat(files)
   }
 
+  isValidMoveTarget = file => {
+    const { entries } = this.props
+    const isAnEntry = entries.find(entry => entry._id === file._id)
+
+    return file.type === 'file' || isAnEntry
+  }
+
   buildBreadcrumbPath = data =>
     renamePathNames(
       getFolderPath({
@@ -141,6 +148,7 @@ class MoveModal extends React.Component {
                     {this.sortData(data).map(file => (
                       <File
                         key={file.id}
+                        disabled={this.isValidMoveTarget(file)}
                         attributes={file}
                         displayedFolder={null}
                         actions={null}

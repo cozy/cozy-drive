@@ -103,6 +103,7 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => (
 const FileName = ({
   attributes,
   isRenaming,
+  disabled,
   withFilePath,
   withSharedBadge,
   isMobile,
@@ -113,7 +114,7 @@ const FileName = ({
     styles['fil-content-cell'],
     styles['fil-content-file'],
     getClassFromMime(attributes),
-    { [styles['fil-content-file-openable']]: !isRenaming }
+    { [styles['fil-content-file-openable']]: !isRenaming && !disabled }
   )
   const { filename, extension } = splitFilename(attributes)
   return (
@@ -254,7 +255,7 @@ class File extends Component {
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
     this.gesturesHandler.on('onpress singletap', ev => {
-      if (this.state.actionMenuVisible) return
+      if (this.state.actionMenuVisible || this.props.disabled) return
       if (enableTouchEvents(ev)) {
         ev.preventDefault() // prevent a ghost click
         if (ev.type === 'onpress' || this.props.selectionModeActive) {
@@ -297,12 +298,14 @@ class File extends Component {
       withFilePath,
       withSharedBadge,
       isAvailableOffline,
+      disabled,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { actionMenuVisible } = this.state
     const filContentRowSelected = classNames(styles['fil-content-row'], {
       [styles['fil-content-row-selected']]: selected,
-      [styles['fil-content-row-actioned']]: actionMenuVisible
+      [styles['fil-content-row-actioned']]: actionMenuVisible,
+      [styles['fil-content-row-disabled']]: disabled
     })
     const formattedSize = isDirectory(attributes)
       ? undefined
@@ -330,6 +333,7 @@ class File extends Component {
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
+          disabled={disabled}
           withFilePath={withFilePath}
           withSharedBadge={withSharedBadge}
           isMobile={isMobile}
@@ -378,6 +382,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(toggleItemSelection(file, selected))
 })
 
-export default withBreakpoints()(
-  translate()(connect(mapStateToProps, mapDispatchToProps)(File))
-)
+export const DumbFile = withBreakpoints()(translate()(File))
+
+export default connect(mapStateToProps, mapDispatchToProps)(DumbFile)
