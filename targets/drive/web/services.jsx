@@ -34,13 +34,18 @@ document.addEventListener('DOMContentLoaded', () => {
     token: data.cozyToken
   })
 
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+  const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+  const useWebsql = isSafari || isiOS
+  const offlineOptions = useWebsql ? { adapter: 'websql' } : {}
+
   cozy.client.init({
     cozyURL: cozyUrl,
     token: data.cozyToken,
-    offline: { doctypes: ['io.cozy.files'] }
+    offline: { doctypes: ['io.cozy.files'], options: offlineOptions }
   })
 
-  upgradePouchDatabase('io.cozy.files')
+  if (!useWebsql) upgradePouchDatabase('io.cozy.files')
 
   render(
     <I18n
