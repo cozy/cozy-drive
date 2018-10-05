@@ -47,7 +47,7 @@ class Toolbar extends Component {
         disabled={isDisabled}
         className={styles['fil-toolbar-menu']}
         innerClassName={styles['fil-toolbar-inner-menu']}
-        button={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+        button={<MoreButton />}
       >
         <NotRootFolder>
           <Item>

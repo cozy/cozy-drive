@@ -15,7 +15,7 @@ const MoreMenu = ({ t, disabled, uploadPhotos, selectItems }) => (
     disabled={disabled}
     position="right"
     className={styles['pho-toolbar-menu']}
-    component={<MoreButton>{t('Toolbar.more')}</MoreButton>}
+    component={<MoreButton />}
   >
     <MenuItem icon={<Icon icon="upload" />} className={styles['u-hide--desk']}>
       <UploadButton

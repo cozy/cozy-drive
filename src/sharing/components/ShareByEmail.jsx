@@ -49,6 +49,8 @@ const RequestPermissionPopin = ({ onClose, onAccept }, { t }) => (
       className={styles['permission-required-popin-close']}
       onClick={onClose}
       extension="narrow"
+      iconOnly
+      label={t('SelectionBar.close')}
     >
       <Icon icon="cross" width="14" height="14" color="coolGrey" />
     </Button>
