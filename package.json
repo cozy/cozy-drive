@@ -191,7 +191,7 @@
     "redux-thunk": "2.3.0",
     "url-polyfill": "1.1.0",
     "webpack-node-externals": "1.7.2",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "3.0.0"
   },
   "eslintConfig": {
     "extends": [
