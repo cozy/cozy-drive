@@ -13,3 +13,7 @@ div:focus
     &.--working
         // we forbid clicks when loading something to avoid concurrent data fetches and consequent flash effects
         pointer-events none
+
+[aria-hidden=true]
+   display: initial
+   visibility: initial
