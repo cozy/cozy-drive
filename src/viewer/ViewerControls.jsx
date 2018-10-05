@@ -100,18 +100,17 @@ class ViewerControls extends Component {
                 styles['pho-viewer-toolbar-actions']
               )}
             >
-              {!isPDF &&
-                false && (
-                  <Button
-                    theme="secondary"
-                    onClick={() => {
-                      client.collection('io.cozy.files').download(currentFile)
-                    }}
-                    icon="download"
-                    label={t('Viewer.actions.download')}
-                    subtle
-                  />
-                )}
+              {!isPDF && (
+                <Button
+                  theme="secondary"
+                  onClick={() => {
+                    client.collection('io.cozy.files').download(currentFile)
+                  }}
+                  icon="download"
+                  label={t('Viewer.actions.download')}
+                  subtle
+                />
+              )}
             </div>
             {onClose && (
               <div
