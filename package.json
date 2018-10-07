@@ -98,7 +98,7 @@
     "btoa": "1.2.1",
     "copy-webpack-plugin": "4.5.2",
     "cordova": "7.1.0",
-    "cordova-android": "7.1.0",
+    "cordova-android": "7.1.1",
     "css-loader": "0.28.11",
     "css-mqpacker": "6.0.2",
     "csswring": "6.0.3",
