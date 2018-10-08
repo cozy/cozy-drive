@@ -2,55 +2,51 @@ language: node_js
 matrix:
   fast_finish: true
 node_js:
-- '8'
+  - '8'
 branches:
   except:
-  - build
+    - build
 env:
   matrix:
-  - COZY_APP_SLUG=drive
-  - COZY_APP_SLUG=photos
+    - COZY_APP_SLUG=drive
+    - COZY_APP_SLUG=photos
   global:
-  - CXX=g++-4.8
-  - TARGETS_DEV=recette.cozy.works
-  - TARGETS_BETA=appvengers.cozy.rocks
-  - TARGETS_STABLE=appvengers.cozy.rocks
-  - MATTERMOST_CHANNEL=appvengers
-  - secure: OLcPuglkDbRd9Xf8WmPAlAWTmdXDb+SNVc7+WKQjIap5Ej58BBTtaAYR8kzFKSWmvWWSnvKmOYJfOHvWIOfkzlwhGLnk/xUnCCsjWmWNjOmnL5x74gCbfEgyU+rIwr2c4/hpzjcywTVBIhL4l/Bxjn+Op+NepKYMNTKko9qB7fA+nDglX/t3VObC9kEXwXElOOgLHNpbfQLEJxdEqXm8hVMmfjA/wSQnX96GqWhKWqMMPyjAxwkxYXFa04AgeTV3C8y4x7YxiuaE8cKZfi+DYX8DyV0XdBVKJTBKTGEaTbotewmXf7F+zsZ6Rg46HvQskSmckMqMKzZfGLFKsVELt6wyNVdVwptWXfu9o2FrXvvHj1krOltN5kQPKLwSmQH4RSlekQ+JYpRN4e+w4dNazILk1pAMu7+EqBTdH5khkDxeA1LAfFVuZz3QP1/fczF/PXSMsaQa779XXKf8dsEP5S8dHjpCOLSI506E+sWa/tu1mSZoaL+jGPovhiygsPUjbjqUmim3Dz+22y2E8jGrEeIdTEcoDXrvjcqwSNvs2LXlgOtgjxP47Fb3Enk18BUpVL2LMTmwF8FbglfKOTOFHHuhT/lQjtptT6NBu0tKi8fcJ/jj3patUj2kbqo85FYext/VrPN42uIXkDCxu9bEnyaGkBpl3qgD7F0J/gJSa10=
-  - secure: e7S5xeDOf5b18HEYMytTtFvy0GGtEq5KHc9eiydOXpWKhs1Lry/yOKPteJFN5fh6uHvlg02DCbANr2vvj0O8jn37eyudHowVsKJHXm4dEl9pe9Rbd1t6CwLwEb1qiI9juIlPt05nrlFKxrRzWEsC2mtk56FMfOhdKNf43O9VOJ9avxGk+6ztmo7iJjSZRRzRzqdw9NvS6yTAEZH0KHLxfIqXTppJU7vRDYRLpQLc7qJcAbiz2YuuINB0B8SzxhzuPADhxyxys8G8aurkbOYtJcFpUTBakRd8a9djP8r2+kuU5tb0OUOTnxBf3kETOD3B01kgGfd58tU6vt+zkD3sWZGpkKRjYXb7rPePDiPKrUx/OcTS8P7MO9+pwS5z3jocHIx3DNwPSUoVBj6mH7NBn8iEXHbMhWCZllNvTWmFCsTZKJsGky3smNz5nPf7/NOmJ5cdTcIY1jtSjRHzpkrBU22bd/8Jup1Z6YTsAuws/Hb5jVxV67ojjAHfFTR8JlBv8Nbb/0iux04ghcwcvbfPMFIe11PHs4OAvB/YKJGdEL58KCEMHc6XD51eFFir0M/94y8y2Cvq0loxO7TiiI+VdI9QALU5MRLiEMhMU/xdlVtUqfvCd4CcDLDr8tf+REwe8jUo7h7shgBdi9j7ioJYgB9oeJUJYv9gYVPdbXkpFd4=
-  - secure: sbON3ZjGlkJTJPTHJGQwYw14sZgOT/mjzIUy8JxDRn+NIIzdrAJpqKM4ZJsfET6U+g+ZXWzn64y4cG3corwZ+Z03g1Bwb5oRq/if+cdXs68QWYkWZYUzGM9/JgvK3QFJ/3uH9KeEaO0aPtb2u2XdrDuXxGzTsQ0tRiC6E0Y7KokDczingLEy3BGqNgg7bZyhvDh9JGlmnB4tQC1+eTIq94Km+oaxrVqrK2Ch4qHPwjtI7aZ+bsZ9YQpQNEL5nzkCK7uAOJBh29FwAuo7Z5kanzinrSur2XiBpJa6pQ4DYc8bZqm41iRCqP1BsLsME7Om+veIBdGDzgyEIw15x9lNTvdRFdv65Lc0LfFs43cfL4s/Ikul1A0b8BetmFb9s+YJ276JUReyUHTC3+z4QIsMNAnBE+b/KgLSfv5rvV2pxuUwIyumqMZCrYt1kHi1KG3/j4FRkh+7svvGQanJuTMJ/rgT+Nh7HRUCzYPaQNL7adjJIfZPT7rvIUxL1mWWBBiOS2ijGDudzTD8stf3g85kjsBmgH1cTsxhj0rQ0P1+r67yNSzsRIU8R9LTMIbVp43x+1N89xF1YUQjjT8ul1Q0D4E1UhFr3UrZyzmhZ2dk3TK8cFrFUGi+qw+oPPJjw2xoN0sBnqOzVcUTnWg+pBEFya++CiIiVT61VjqKeEIU8mY= # REGISTRY TOKEN
-  - secure: RUeeH+C5Yz3LKM/WX63NK79HnwSM3grulFbBKS4F6PZD4k1pnwV/T3pfqCcUZRvyWX7937aWqO4qD2kXRWd1T+I6wffA9H74SlsJcNFPWd6iBDGMh0uGTrJuUiimXd4hG2cFuRMF5dKmyn2P/2ncCcF3hgpntmoWVBj62YhD9CpbS/oxeUZluo4cHoQPaFvxLCYq7lLK372WCPpH2HwElkCL7lnPX1/ESJ+whgnwe+5g+XHWrsPkNIufqltBHz8Q2vIwjI7qPInS45CNutLox8fJCx4x5BAXrZjB8uNRys881HRA54KmRzdCTeq348o1DVnXo2J/poUffxELyK5TrgDJn3ZzqybnRTi5ve19I9S2HlH4MGoQ+wGys0feDPgrCkcIDm6/pNpd3EEVCxsdj69RvCTeUMoftZZRkiT4qAUKsuHGir/1of547Q/Dd6Z2KkKBrEiHbUSJIQHhYbMtdx2NIuLS7DRn9/VtW8QpySkkbPpnucCpDlhTaG65Md8to9+33yzAHjekOH5YrG1zoziZbt0ymq6JYgCMg64Gr+Gotk5j+PwIqu37T9TnqIeSim6UaznAfipXW4CmMgOvHDQj/KSfXSn0rYzW138Cw8MhoGg3bygYRBIp384UAOx9/1J3+Q0BhnYZs1TmKXPmiIul74d4DMPemVA8JhYQkB0= # MATERMOST_HOOK_URL
-  - secure: 0nsxnmSyJ6981wPVo3w7L4HLN91SwcIWXFvvGlVsnWvSkzJ3anUHlWno47Ro4HR0GUDL9DUP7Xr7Gg80GF2IrmN+Yv6nrZ+luHL+TQt3nD03j/ENpQy9JtQTgWmBWMQNoKYTzlgcZqO+k3G/5gRi+Z/M+uY8XJVDRzg8vcmXBGIHnxHRzG9ObV0yxyuJfPbiDpPD+r0x0PM/St+Y32PdOApD7BWDv/jz17MVM84fpdl7e/NdFieu8sx8bokr2n7X237Qlx+pylntAdZsHFK6QRwHAwgwK/mnEBU+ch0xTGV3+em3MFIWBBD6dWUChT+8BEoXHr7F07ZfTVZHx5HyxzLGy11O/sVGGQNR5idRq6DsOmmnPukYcxahAh1iSc77W5JS7Yc+8fn6z21S4T9LW92n0+HtUzEA9rXqnBE7vlaVp0BOyeP2lPbqEAYTamGdhhlWRLhvdBgNMTJUjwM43bTp66O/MAbtw5YJ4ccSWCwffhkZ9nEPlYrMdowKzOVdKLUYZWPZ38BMSdfHoA0sGZDUFPQhHJTBXdEb/WRj9BcnOoJY5/Or4QVDhdMkjpFxPMHk4zJSFh/QQPnRNpAZuMTSJTohoUopRg+f1kEnnlzoCfozLQ4JgDBkdZYQLE9HlEVnhxFY/vbQbggmSHuBloWvonec9zH0R0bc2ETAlt8= # RUNDECK_TOKEN
+    - CXX=g++-4.8
+    - MATTERMOST_CHANNEL=appvengers
+    - secure: OLcPuglkDbRd9Xf8WmPAlAWTmdXDb+SNVc7+WKQjIap5Ej58BBTtaAYR8kzFKSWmvWWSnvKmOYJfOHvWIOfkzlwhGLnk/xUnCCsjWmWNjOmnL5x74gCbfEgyU+rIwr2c4/hpzjcywTVBIhL4l/Bxjn+Op+NepKYMNTKko9qB7fA+nDglX/t3VObC9kEXwXElOOgLHNpbfQLEJxdEqXm8hVMmfjA/wSQnX96GqWhKWqMMPyjAxwkxYXFa04AgeTV3C8y4x7YxiuaE8cKZfi+DYX8DyV0XdBVKJTBKTGEaTbotewmXf7F+zsZ6Rg46HvQskSmckMqMKzZfGLFKsVELt6wyNVdVwptWXfu9o2FrXvvHj1krOltN5kQPKLwSmQH4RSlekQ+JYpRN4e+w4dNazILk1pAMu7+EqBTdH5khkDxeA1LAfFVuZz3QP1/fczF/PXSMsaQa779XXKf8dsEP5S8dHjpCOLSI506E+sWa/tu1mSZoaL+jGPovhiygsPUjbjqUmim3Dz+22y2E8jGrEeIdTEcoDXrvjcqwSNvs2LXlgOtgjxP47Fb3Enk18BUpVL2LMTmwF8FbglfKOTOFHHuhT/lQjtptT6NBu0tKi8fcJ/jj3patUj2kbqo85FYext/VrPN42uIXkDCxu9bEnyaGkBpl3qgD7F0J/gJSa10=
+    - secure: e7S5xeDOf5b18HEYMytTtFvy0GGtEq5KHc9eiydOXpWKhs1Lry/yOKPteJFN5fh6uHvlg02DCbANr2vvj0O8jn37eyudHowVsKJHXm4dEl9pe9Rbd1t6CwLwEb1qiI9juIlPt05nrlFKxrRzWEsC2mtk56FMfOhdKNf43O9VOJ9avxGk+6ztmo7iJjSZRRzRzqdw9NvS6yTAEZH0KHLxfIqXTppJU7vRDYRLpQLc7qJcAbiz2YuuINB0B8SzxhzuPADhxyxys8G8aurkbOYtJcFpUTBakRd8a9djP8r2+kuU5tb0OUOTnxBf3kETOD3B01kgGfd58tU6vt+zkD3sWZGpkKRjYXb7rPePDiPKrUx/OcTS8P7MO9+pwS5z3jocHIx3DNwPSUoVBj6mH7NBn8iEXHbMhWCZllNvTWmFCsTZKJsGky3smNz5nPf7/NOmJ5cdTcIY1jtSjRHzpkrBU22bd/8Jup1Z6YTsAuws/Hb5jVxV67ojjAHfFTR8JlBv8Nbb/0iux04ghcwcvbfPMFIe11PHs4OAvB/YKJGdEL58KCEMHc6XD51eFFir0M/94y8y2Cvq0loxO7TiiI+VdI9QALU5MRLiEMhMU/xdlVtUqfvCd4CcDLDr8tf+REwe8jUo7h7shgBdi9j7ioJYgB9oeJUJYv9gYVPdbXkpFd4=
+    - secure: sbON3ZjGlkJTJPTHJGQwYw14sZgOT/mjzIUy8JxDRn+NIIzdrAJpqKM4ZJsfET6U+g+ZXWzn64y4cG3corwZ+Z03g1Bwb5oRq/if+cdXs68QWYkWZYUzGM9/JgvK3QFJ/3uH9KeEaO0aPtb2u2XdrDuXxGzTsQ0tRiC6E0Y7KokDczingLEy3BGqNgg7bZyhvDh9JGlmnB4tQC1+eTIq94Km+oaxrVqrK2Ch4qHPwjtI7aZ+bsZ9YQpQNEL5nzkCK7uAOJBh29FwAuo7Z5kanzinrSur2XiBpJa6pQ4DYc8bZqm41iRCqP1BsLsME7Om+veIBdGDzgyEIw15x9lNTvdRFdv65Lc0LfFs43cfL4s/Ikul1A0b8BetmFb9s+YJ276JUReyUHTC3+z4QIsMNAnBE+b/KgLSfv5rvV2pxuUwIyumqMZCrYt1kHi1KG3/j4FRkh+7svvGQanJuTMJ/rgT+Nh7HRUCzYPaQNL7adjJIfZPT7rvIUxL1mWWBBiOS2ijGDudzTD8stf3g85kjsBmgH1cTsxhj0rQ0P1+r67yNSzsRIU8R9LTMIbVp43x+1N89xF1YUQjjT8ul1Q0D4E1UhFr3UrZyzmhZ2dk3TK8cFrFUGi+qw+oPPJjw2xoN0sBnqOzVcUTnWg+pBEFya++CiIiVT61VjqKeEIU8mY= # REGISTRY TOKEN
+    - secure: RUeeH+C5Yz3LKM/WX63NK79HnwSM3grulFbBKS4F6PZD4k1pnwV/T3pfqCcUZRvyWX7937aWqO4qD2kXRWd1T+I6wffA9H74SlsJcNFPWd6iBDGMh0uGTrJuUiimXd4hG2cFuRMF5dKmyn2P/2ncCcF3hgpntmoWVBj62YhD9CpbS/oxeUZluo4cHoQPaFvxLCYq7lLK372WCPpH2HwElkCL7lnPX1/ESJ+whgnwe+5g+XHWrsPkNIufqltBHz8Q2vIwjI7qPInS45CNutLox8fJCx4x5BAXrZjB8uNRys881HRA54KmRzdCTeq348o1DVnXo2J/poUffxELyK5TrgDJn3ZzqybnRTi5ve19I9S2HlH4MGoQ+wGys0feDPgrCkcIDm6/pNpd3EEVCxsdj69RvCTeUMoftZZRkiT4qAUKsuHGir/1of547Q/Dd6Z2KkKBrEiHbUSJIQHhYbMtdx2NIuLS7DRn9/VtW8QpySkkbPpnucCpDlhTaG65Md8to9+33yzAHjekOH5YrG1zoziZbt0ymq6JYgCMg64Gr+Gotk5j+PwIqu37T9TnqIeSim6UaznAfipXW4CmMgOvHDQj/KSfXSn0rYzW138Cw8MhoGg3bygYRBIp384UAOx9/1J3+Q0BhnYZs1TmKXPmiIul74d4DMPemVA8JhYQkB0= # MATERMOST_HOOK_URL
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
-    - deadsnakes
+      - ubuntu-toolchain-r-test
+      - deadsnakes
     packages:
-    - g++-4.8
-    - python3.5
+      - g++-4.8
+      - python3.5
 cache:
   yarn: true
   directories:
-  - node_modules
+    - node_modules
 before_install:
-- if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then openssl aes-256-cbc -K $encrypted_b1733cb50f7f_key
-  -iv $encrypted_b1733cb50f7f_iv -in id_rsa_travis_downcloud.enc -out /tmp/id_rsa_travis_downcloud
-  -d; fi
-- if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)"; fi
-- if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then chmod 600 /tmp/id_rsa_travis_downcloud;
-  fi
-- if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
-  fi
-- curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
-- travis_retry pip3.5 install --user transifex-client==0.12.5
-- install -m0644 .transifexrc.tpl ~/.transifexrc
-- echo "password = $TX_PASSWD" >> ~/.transifexrc
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then openssl aes-256-cbc -K $encrypted_b1733cb50f7f_key
+    -iv $encrypted_b1733cb50f7f_iv -in id_rsa_travis_downcloud.enc -out /tmp/id_rsa_travis_downcloud
+    -d; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)"; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then chmod 600 /tmp/id_rsa_travis_downcloud;
+    fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
+    fi
+  - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
+  - travis_retry pip3.5 install --user transifex-client==0.12.5
+  - install -m0644 .transifexrc.tpl ~/.transifexrc
+  - echo "password = $TX_PASSWD" >> ~/.transifexrc
 script:
-- yarn test
-- yarn build:$COZY_APP_SLUG:browser
+  - yarn test
+  - yarn build:$COZY_APP_SLUG:browser
 before_deploy:
-- yarn add cozy-app-publish
+  - yarn add cozy-app-publish
 deploy:
   - provider: script
     repo: cozy/cozy-drive
