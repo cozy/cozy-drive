@@ -15,10 +15,12 @@ const getParentPath = router => {
 
 class FilesViewer extends Component {
   state = {
-    currentFile: null
+    currentFile: null,
+    shoudLoadMore: true
   }
 
   componentDidMount() {
+    this.lastLengthFetched = -1
     this.fetchFileIfNecessary()
     this.fetchMoreIfNecessary()
   }
@@ -49,15 +51,24 @@ class FilesViewer extends Component {
       })
   }
 
-  // If we get close of the last file fetched, but we know there are more in the folder
-  // (it shouldn't happen in /recent), we fetch 50 more files
-  fetchMoreIfNecessary() {
-    const { files, params, location, fetchMoreFiles, fileCount } = this.props
-    if (files.length === 0) return // we get there when loading a direct URL and the folder's content is still loading
+  // If we get close of the last file fetched (-5), but we know there are more in the folder
+  // (it shouldn't happen in /recent), we fetch FILES_FETCH_LIMIT more files
+  async fetchMoreIfNecessary() {
+    const { files, params, location, fetchMoreFiles } = this.props
     const currentIndex = files.findIndex(f => f.id === params.fileId)
-    if (files.length !== fileCount && files.length - currentIndex <= 5) {
-      const folderId = getFolderIdFromRoute(location, params)
-      fetchMoreFiles(folderId, files.length, FILES_FETCH_LIMIT)
+    const folderId = getFolderIdFromRoute(location, params)
+    // As fetchMoreIfNecessary is called every time, we had to check if we need to
+    // fetch more files. To do so, we simply store the latest length of files loaded
+    if (
+      currentIndex - files.length - 5 > 0 &&
+      this.lastLengthFetched !== files.length
+    ) {
+      const result = await fetchMoreFiles(
+        folderId,
+        files.length,
+        FILES_FETCH_LIMIT
+      )
+      this.lastLengthFetched = result.files.length
     }
   }
 
@@ -119,7 +130,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchMoreFiles: (folderId, skip, limit) => {
-    dispatch(fetchMoreFiles(folderId, skip, limit))
+    return dispatch(fetchMoreFiles(folderId, skip, limit))
   }
 })
 
