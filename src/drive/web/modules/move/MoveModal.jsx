@@ -11,6 +11,7 @@ import Topbar from 'drive/web/modules/layout/Topbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
 import DriveIcon from 'drive/assets/icons/icon-drive.svg'
+import get from 'lodash/get'
 
 import cx from 'classnames'
 
@@ -22,6 +23,9 @@ import FileListBody from 'drive/web/modules/filelist/FileListBody'
 import FileListRows from 'drive/web/modules/filelist/FileListRows'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import fileListStyles from 'drive/styles/filelist'
+import Oops from 'components/Error/Oops'
+import { EmptyDrive } from 'components/Error/Empty'
+import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 
 import {
   Breadcrumb,
@@ -96,7 +100,7 @@ class MoveModal extends React.Component {
     renamePathNames(
       getFolderPath({
         ...data,
-        parent: data.relationships.parent.data
+        parent: get(data, 'relationships.parent.data')
       }),
       '',
       this.context.t
@@ -136,36 +140,44 @@ class MoveModal extends React.Component {
           }}
         </Query>
         <Query query={contentQuery} key={`content-${folderId}`}>
-          {({ data, fetchStatus }) => {
-            return (
-              <div className={fileListStyles['fil-content-table']} role="table">
-                <MobileFileListHeader canSort={false} />
-                <FileListHeader canSort={false} />
-                <div className={fileListStyles['fil-content-body']}>
-                  {/*Missing FileListBody providing the loading state, the empty state and the add folder component */}
-                  <div>
-                    {/*Missing FileListRows providing the load more  */}
-                    {this.sortData(data).map(file => (
-                      <File
-                        key={file.id}
-                        disabled={this.isValidMoveTarget(file)}
-                        attributes={file}
-                        displayedFolder={null}
-                        actions={null}
-                        isRenaming={false}
-                        onFolderOpen={id =>
-                          this.navigateTo(data.find(f => f.id === id))
-                        }
-                        onFileOpen={null}
-                        withSelectionCheckbox={false}
-                        withFilePath={false}
-                        withSharedBadge={true}
-                      />
-                    ))}
+          {({ data, fetchStatus, ...rest }) => {
+            if (fetchStatus === 'loading') return <FileListRowsPlaceholder />
+            else if (fetchStatus === 'failed') return <Oops />
+            else if (fetchStatus === 'loaded' && data.length === 0)
+              return <EmptyDrive canUpload={false} />
+            else
+              return (
+                <div
+                  className={fileListStyles['fil-content-table']}
+                  role="table"
+                >
+                  <MobileFileListHeader canSort={false} />
+                  <FileListHeader canSort={false} />
+                  <div className={fileListStyles['fil-content-body']}>
+                    {/*Missing FileListBody providing the add folder component */}
+                    <div>
+                      {/*Missing FileListRows providing the load more  */}
+                      {this.sortData(data).map(file => (
+                        <File
+                          key={file.id}
+                          disabled={this.isValidMoveTarget(file)}
+                          attributes={file}
+                          displayedFolder={null}
+                          actions={null}
+                          isRenaming={false}
+                          onFolderOpen={id =>
+                            this.navigateTo(data.find(f => f.id === id))
+                          }
+                          onFileOpen={null}
+                          withSelectionCheckbox={false}
+                          withFilePath={false}
+                          withSharedBadge={true}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
+              )
           }}
         </Query>
         <ModalFooter
