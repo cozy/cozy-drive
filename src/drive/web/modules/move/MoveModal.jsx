@@ -4,7 +4,8 @@ import {
   Modal,
   ModalFooter,
   ContextHeader,
-  withBreakpoints
+  withBreakpoints,
+  Button
 } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import Topbar from 'drive/web/modules/layout/Topbar'
@@ -116,6 +117,18 @@ class MoveModal extends React.Component {
     return file.type === 'file' || isAnEntry
   }
 
+  areEntriesInCurrentDir = () => {
+    const { entries } = this.props
+    const { folderId } = this.state
+
+    const entriesInCurrentDir = entries.filter(
+      entry => entry.dir_id === folderId
+    )
+    console.log({ folderId, entriesInCurrentDir }, entries.length)
+
+    return entriesInCurrentDir.length === entries.length
+  }
+
   buildBreadcrumbPath = data =>
     renamePathNames(
       getFolderPath({
@@ -207,13 +220,18 @@ class MoveModal extends React.Component {
               )
           }}
         </Query>
-        <ModalFooter
-          primaryText={t('Move.action')}
-          primaryAction={this.moveEntries}
-          secondaryText={t('Move.cancel')}
-          secondaryAction={onClose}
-          secondaryType="secondary"
-        />
+        <ModalFooter>
+          <Button
+            label={t('Move.cancel')}
+            theme="secondary"
+            onClick={onClose}
+          />
+          <Button
+            label={t('Move.action')}
+            onClick={this.moveEntries}
+            disabled={this.areEntriesInCurrentDir()}
+          />
+        </ModalFooter>
       </Modal>
     )
   }
