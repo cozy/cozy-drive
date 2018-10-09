@@ -1,11 +1,7 @@
 {
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["cozy-app"],
   "pinVersions": true,
   "schedule": ["before 5am on Monday"],
-  "timezone": "Europe/Paris",
-  "updateNotScheduled": false,
   "packageRules": [{
     "packageNames": ["cozy-ui"],
     "schedule": []
