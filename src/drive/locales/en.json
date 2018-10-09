@@ -535,6 +535,11 @@
       "noNetwork": "You're currently offline."
     }
   },
+  "Move": {
+    "to": "Move to:",
+    "action": "Move",
+    "cancel": "Cancel"
+  },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
   },

@@ -99,7 +99,7 @@ class MoveModal extends React.Component {
     )
 
   render() {
-    const { onClose } = this.props
+    const { onClose, entries } = this.props
     const { client, t } = this.context
     const { folderId } = this.state
 
@@ -119,8 +119,8 @@ class MoveModal extends React.Component {
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
         <ContextHeader
-          title={'yo yo'}
-          text={'gros'}
+          title={entries[0].name}
+          text={t('Move.to')}
           icon={DriveIcon}
           onClose={onClose}
         />
@@ -180,9 +180,9 @@ class MoveModal extends React.Component {
           }}
         </Query>
         <ModalFooter
-          primaryText="Déplacer"
+          primaryText={t('Move.action')}
           primaryAction={this.moveEntries}
-          secondaryText="Annuler"
+          secondaryText={t('Move.cancel')}
           secondaryAction={onClose}
           secondaryType="secondary"
         />
