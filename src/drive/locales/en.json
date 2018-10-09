@@ -538,7 +538,11 @@
   "Move": {
     "to": "Move to:",
     "action": "Move",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "success": "%{subject} has been moved to %{target}.",
+    "error": "Something went wrong while moving this item, please try again later.",
+    "cancelled": "%{subject} has been moved back to it's original location.",
+    "cancelled_error": "Sorry, there was an error while moving the item back."
   },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"

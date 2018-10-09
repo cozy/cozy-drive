@@ -58,21 +58,29 @@ class MoveModal extends React.Component {
 
   moveEntries = async () => {
     const { entries, onClose } = this.props
-    const { client } = this.context
+    const { client, t } = this.context
     const { folderId } = this.state
 
     const entry = entries[0]
     const currentDirId = entry.dir_id
 
     try {
+      const response = await client.query(client.get('io.cozy.files', folderId))
+      const targetName = response.data.name
       await this.moveEntry(entry._id, folderId)
-      Alerter.info('*Thing* has been moved to *destination*', {
-        buttonText: 'cancel',
-        buttonAction: () => this.cancelMove(entry._id, currentDirId)
-      })
+      Alerter.info(
+        t('Move.success', {
+          subject: entry.name,
+          target: targetName
+        }),
+        {
+          buttonText: t('Move.cancel'),
+          buttonAction: () => this.cancelMove(entry, currentDirId)
+        }
+      )
     } catch (e) {
       console.warn(e)
-      Alerter.error('move error')
+      Alerter.error(t('Move.error'))
     } finally {
       onClose({
         cancelSelection: true
@@ -86,13 +94,18 @@ class MoveModal extends React.Component {
       .updateFileMetadata(entryId, { dir_id: destinationId })
   }
 
-  cancelMove = async (entryId, previousDirId) => {
+  cancelMove = async (entry, previousDirId) => {
     try {
-      await this.moveEntry(entryId, previousDirId)
-      Alerter.info('canceled')
+      const { t } = this.context
+      await this.moveEntry(entry._id, previousDirId)
+      Alerter.info(
+        t('Move.cancelled', {
+          subject: entry.name
+        })
+      )
     } catch (e) {
       console.warn(e)
-      Alerter.error('cancel error')
+      Alerter.error(t('Move.cancelled_error'))
     }
   }
 
