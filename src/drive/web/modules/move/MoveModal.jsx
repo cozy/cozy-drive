@@ -81,15 +81,6 @@ class MoveModal extends React.Component {
     }
   }
 
-  sortData = data => {
-    const folders = data.filter(
-      entry => entry.type === 'directory' && entry.id !== TRASH_DIR_ID
-    )
-    const files = data.filter(entry => entry.type !== 'directory')
-
-    return folders.concat(files)
-  }
-
   isValidMoveTarget = file => {
     const { entries } = this.props
     const isAnEntry = entries.find(entry => entry._id === file._id)
@@ -115,8 +106,13 @@ class MoveModal extends React.Component {
     const contentQuery = client =>
       client
         .find('io.cozy.files')
-        .where({ dir_id: folderId })
-        .sortBy({ name: 'asc' })
+        .where({
+          dir_id: folderId,
+          _id: {
+            $ne: TRASH_DIR_ID
+          }
+        })
+        .sortBy([{ type: 'asc' }, { name: 'asc' }])
 
     const breadcrumbQuery = client => client.get('io.cozy.files', folderId)
 
@@ -157,7 +153,7 @@ class MoveModal extends React.Component {
                   <div className={fileListStyles['fil-content-body']}>
                     {/*Missing FileListBody providing the add folder component */}
                     <div>
-                      {this.sortData(data).map(file => (
+                      {data.map(file => (
                         <File
                           key={file.id}
                           disabled={this.isValidMoveTarget(file)}
