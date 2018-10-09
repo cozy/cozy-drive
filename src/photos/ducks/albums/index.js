@@ -42,7 +42,7 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
         sending the same props
         */
       const realClient =
-        client.constructor.name === 'ObservableQuery' ? client.client : client
+        typeof client.validate === 'function' ? client : client.client
 
       const unique = await realClient.validate(album)
       if (unique !== true) {
