@@ -62,14 +62,13 @@ class MoveModal extends React.Component {
     const { folderId } = this.state
 
     const entry = entries[0]
+    const currentDirId = entry.dir_id
 
     try {
-      await client
-        .collection('io.cozy.files')
-        .updateFileMetadata(entry._id, { dir_id: folderId })
+      await this.moveEntry(entry._id, folderId)
       Alerter.info('*Thing* has been moved to *destination*', {
         buttonText: 'cancel',
-        buttonAction: () => console.log('cancel move plz')
+        buttonAction: () => this.cancelMove(entry._id, currentDirId)
       })
     } catch (e) {
       console.warn(e)
@@ -78,6 +77,22 @@ class MoveModal extends React.Component {
       onClose({
         cancelSelection: true
       })
+    }
+  }
+
+  moveEntry = (entryId, destinationId) => {
+    return this.context.client
+      .collection('io.cozy.files')
+      .updateFileMetadata(entryId, { dir_id: destinationId })
+  }
+
+  cancelMove = async (entryId, previousDirId) => {
+    try {
+      await this.moveEntry(entryId, previousDirId)
+      Alerter.info('canceled')
+    } catch (e) {
+      console.warn(e)
+      Alerter.error('cancel error')
     }
   }
 
