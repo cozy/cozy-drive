@@ -7,12 +7,10 @@ import Alerter from 'cozy-ui/react/Alerter'
 
 import MoveHeader from './MoveHeader'
 import MoveExplorer from './MoveExplorer'
+import MoveFileList from './MoveFileList'
+import MoveLoader from './MoveLoader'
 import MoveFooter from './MoveFooter'
 import MoveTopbar from './MoveTopbar'
-
-import Oops from 'components/Error/Oops'
-import { EmptyDrive } from 'components/Error/Empty'
-import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 
 class MoveModal extends React.Component {
   state = {
@@ -110,20 +108,22 @@ class MoveModal extends React.Component {
         </Query>
         <Query query={this.contentQuery} key={`content-${folderId}`}>
           {({ data, fetchStatus, hasMore, fetchMore }) => {
-            if (fetchStatus === 'loading') return <FileListRowsPlaceholder />
-            else if (fetchStatus === 'failed') return <Oops />
-            else if (fetchStatus === 'loaded' && data.length === 0)
-              return <EmptyDrive canUpload={false} />
-            else
-              return (
-                <MoveExplorer
-                  files={data}
-                  hasMore={hasMore}
-                  fetchMore={fetchMore}
-                  targets={entries}
-                  navigateTo={this.navigateTo}
-                />
-              )
+            return (
+              <MoveExplorer>
+                <MoveLoader
+                  fetchStatus={fetchStatus}
+                  hasNoData={data.length === 0}
+                >
+                  <MoveFileList
+                    files={data}
+                    hasMore={hasMore}
+                    fetchMore={fetchMore}
+                    targets={entries}
+                    navigateTo={this.navigateTo}
+                  />
+                </MoveLoader>
+              </MoveExplorer>
+            )
           }}
         </Query>
         <MoveFooter
