@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Modal, ModalFooter, withBreakpoints, Button } from 'cozy-ui/react'
+import { Modal, withBreakpoints } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
@@ -8,21 +8,12 @@ import Alerter from 'cozy-ui/react/Alerter'
 import get from 'lodash/get'
 
 import MoveHeader from './MoveHeader'
+import MoveExplorer from './MoveExplorer'
+import MoveFooter from './MoveFooter'
 
-import cx from 'classnames'
-
-import FileList from 'drive/web/modules/filelist/FileList'
-import FileListHeader, {
-  MobileFileListHeader
-} from 'drive/web/modules/filelist/FileListHeader'
-import FileListBody from 'drive/web/modules/filelist/FileListBody'
-import FileListRows from 'drive/web/modules/filelist/FileListRows'
-import { DumbFile as File } from 'drive/web/modules/filelist/File'
-import fileListStyles from 'drive/styles/filelist'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
-import LoadMore from 'drive/web/modules/filelist/LoadMore'
 
 import {
   Breadcrumb,
@@ -105,25 +96,6 @@ class MoveModal extends React.Component {
     }
   }
 
-  isValidMoveTarget = file => {
-    const { entries } = this.props
-    const isAnEntry = entries.find(entry => entry._id === file._id)
-
-    return file.type === 'file' || isAnEntry
-  }
-
-  areEntriesInCurrentDir = () => {
-    const { entries } = this.props
-    const { folderId } = this.state
-
-    const entriesInCurrentDir = entries.filter(
-      entry => entry.dir_id === folderId
-    )
-    console.log({ folderId, entriesInCurrentDir }, entries.length)
-
-    return entriesInCurrentDir.length === entries.length
-  }
-
   buildBreadcrumbPath = data =>
     renamePathNames(
       getFolderPath({
@@ -136,7 +108,7 @@ class MoveModal extends React.Component {
 
   render() {
     const { onClose, entries } = this.props
-    const { client, t } = this.context
+    const { t } = this.context
     const { folderId } = this.state
 
     const contentQuery = client =>
@@ -168,60 +140,29 @@ class MoveModal extends React.Component {
           }}
         </Query>
         <Query query={contentQuery} key={`content-${folderId}`}>
-          {({ data, fetchStatus, hasMore, fetchMore, ...rest }) => {
+          {({ data, fetchStatus, hasMore, fetchMore }) => {
             if (fetchStatus === 'loading') return <FileListRowsPlaceholder />
             else if (fetchStatus === 'failed') return <Oops />
             else if (fetchStatus === 'loaded' && data.length === 0)
               return <EmptyDrive canUpload={false} />
             else
               return (
-                <div
-                  className={fileListStyles['fil-content-table']}
-                  role="table"
-                >
-                  <MobileFileListHeader canSort={false} />
-                  <FileListHeader canSort={false} />
-                  <div className={fileListStyles['fil-content-body']}>
-                    {/*Missing FileListBody providing the add folder component */}
-                    <div>
-                      {data.map(file => (
-                        <File
-                          key={file.id}
-                          disabled={this.isValidMoveTarget(file)}
-                          attributes={file}
-                          displayedFolder={null}
-                          actions={null}
-                          isRenaming={false}
-                          onFolderOpen={id =>
-                            this.navigateTo(data.find(f => f.id === id))
-                          }
-                          onFileOpen={null}
-                          withSelectionCheckbox={false}
-                          withFilePath={false}
-                          withSharedBadge={true}
-                        />
-                      ))}
-                      {hasMore && (
-                        <LoadMore onClick={fetchMore} isLoading={false} />
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <MoveExplorer
+                  files={data}
+                  hasMore={hasMore}
+                  fetchMore={fetchMore}
+                  targets={entries}
+                  navigateTo={this.navigateTo}
+                />
               )
           }}
         </Query>
-        <ModalFooter hasButtonChildren>
-          <Button
-            label={t('Move.cancel')}
-            theme="secondary"
-            onClick={onClose}
-          />
-          <Button
-            label={t('Move.action')}
-            onClick={this.moveEntries}
-            disabled={this.areEntriesInCurrentDir()}
-          />
-        </ModalFooter>
+        <MoveFooter
+          onConfirm={this.moveEntries}
+          onClose={onClose}
+          targets={entries}
+          currentDirId={folderId}
+        />
       </Modal>
     )
   }

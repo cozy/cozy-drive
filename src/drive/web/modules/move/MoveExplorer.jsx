@@ -1,0 +1,54 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
+import fileListStyles from 'drive/styles/filelist'
+import FileListHeader, {
+  MobileFileListHeader
+} from 'drive/web/modules/filelist/FileListHeader'
+import { DumbFile as File } from 'drive/web/modules/filelist/File'
+import LoadMore from 'drive/web/modules/filelist/LoadMore'
+
+const isValidMoveTarget = (subjects, target) => {
+  const isASubject = subjects.find(subject => subject._id === target._id)
+  const isAFile = target.type === 'file'
+
+  return isAFile || isASubject
+}
+
+const MoveExplorer = ({ targets, files, hasMore, fetchMore, navigateTo }) => (
+  <div className={fileListStyles['fil-content-table']} role="table">
+    <MobileFileListHeader canSort={false} />
+    <FileListHeader canSort={false} />
+    <div className={fileListStyles['fil-content-body']}>
+      {/*Missing FileListBody providing the add folder component */}
+      <div>
+        {files.map(file => (
+          <File
+            key={file.id}
+            disabled={isValidMoveTarget(targets, file)}
+            attributes={file}
+            displayedFolder={null}
+            actions={null}
+            isRenaming={false}
+            onFolderOpen={id => navigateTo(files.find(f => f.id === id))}
+            onFileOpen={null}
+            withSelectionCheckbox={false}
+            withFilePath={false}
+            withSharedBadge={true}
+          />
+        ))}
+        {hasMore && <LoadMore onClick={fetchMore} isLoading={false} />}
+      </div>
+    </div>
+  </div>
+)
+
+MoveExplorer.propTypes = {
+  targets: PropTypes.array.isRequired,
+  files: PropTypes.array.isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  fetchMore: PropTypes.func.isRequired,
+  navigateTo: PropTypes.func.isRequired
+}
+
+export default MoveExplorer
