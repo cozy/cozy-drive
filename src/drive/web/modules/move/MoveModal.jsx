@@ -9,6 +9,7 @@ import MoveHeader from './MoveHeader'
 import MoveExplorer from './MoveExplorer'
 import MoveFileList from './MoveFileList'
 import MoveLoader from './MoveLoader'
+import MoveLoadMore from './MoveLoadMore'
 import MoveFooter from './MoveFooter'
 import MoveTopbar from './MoveTopbar'
 
@@ -114,13 +115,14 @@ class MoveModal extends React.Component {
                   fetchStatus={fetchStatus}
                   hasNoData={data.length === 0}
                 >
-                  <MoveFileList
-                    files={data}
-                    hasMore={hasMore}
-                    fetchMore={fetchMore}
-                    targets={entries}
-                    navigateTo={this.navigateTo}
-                  />
+                  <div>
+                    <MoveFileList
+                      files={data}
+                      targets={entries}
+                      navigateTo={this.navigateTo}
+                    />
+                    <MoveLoadMore hasMore={hasMore} fetchMore={fetchMore} />
+                  </div>
                 </MoveLoader>
               </MoveExplorer>
             )

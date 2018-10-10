@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
-import LoadMore from 'drive/web/modules/filelist/LoadMore'
 
 const isValidMoveTarget = (subjects, target) => {
   const isASubject = subjects.find(subject => subject._id === target._id)
@@ -10,7 +9,7 @@ const isValidMoveTarget = (subjects, target) => {
   return isAFile || isASubject
 }
 
-const MoveFileList = ({ targets, files, hasMore, fetchMore, navigateTo }) => (
+const MoveFileList = ({ targets, files, navigateTo }) => (
   <div>
     {files.map(file => (
       <File
@@ -27,15 +26,12 @@ const MoveFileList = ({ targets, files, hasMore, fetchMore, navigateTo }) => (
         withSharedBadge={true}
       />
     ))}
-    {hasMore && <LoadMore onClick={fetchMore} isLoading={false} />}
   </div>
 )
 
 MoveFileList.propTypes = {
   targets: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
-  hasMore: PropTypes.bool.isRequired,
-  fetchMore: PropTypes.func.isRequired,
   navigateTo: PropTypes.func.isRequired
 }
 
