@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ModalFooter, Button } from 'cozy-ui/react'
+import { ModalFooter, ModalButtons, Button } from 'cozy-ui/react'
 
 const areTargetsInCurrentDir = (targets, currentDirId) => {
   const targetsInCurrentDir = targets.filter(
@@ -11,13 +11,15 @@ const areTargetsInCurrentDir = (targets, currentDirId) => {
 }
 
 const MoveFooter = ({ onConfirm, onClose, targets, currentDirId }, { t }) => (
-  <ModalFooter hasButtonChildren>
-    <Button label={t('Move.cancel')} theme="secondary" onClick={onClose} />
-    <Button
-      label={t('Move.action')}
-      onClick={onConfirm}
-      disabled={areTargetsInCurrentDir(targets, currentDirId)}
-    />
+  <ModalFooter>
+    <ModalButtons>
+      <Button label={t('Move.cancel')} theme="secondary" onClick={onClose} />
+      <Button
+        label={t('Move.action')}
+        onClick={onConfirm}
+        disabled={areTargetsInCurrentDir(targets, currentDirId)}
+      />
+    </ModalButtons>
   </ModalFooter>
 )
 
