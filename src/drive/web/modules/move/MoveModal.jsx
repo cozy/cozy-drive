@@ -76,27 +76,30 @@ class MoveModal extends React.Component {
     }
   }
 
+  contentQuery = client => {
+    return client
+      .find('io.cozy.files')
+      .where({
+        dir_id: this.state.folderId,
+        _id: {
+          $ne: TRASH_DIR_ID
+        }
+      })
+      .sortBy([{ type: 'asc' }, { name: 'asc' }])
+  }
+
+  breadcrumbQuery = client => {
+    return client.get('io.cozy.files', this.state.folderId)
+  }
+
   render() {
     const { onClose, entries } = this.props
     const { folderId } = this.state
 
-    const contentQuery = client =>
-      client
-        .find('io.cozy.files')
-        .where({
-          dir_id: folderId,
-          _id: {
-            $ne: TRASH_DIR_ID
-          }
-        })
-        .sortBy([{ type: 'asc' }, { name: 'asc' }])
-
-    const breadcrumbQuery = client => client.get('io.cozy.files', folderId)
-
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
         <MoveHeader entries={entries} onClose={onClose} />
-        <Query query={breadcrumbQuery} key={`breadcrumb-${folderId}`}>
+        <Query query={this.breadcrumbQuery} key={`breadcrumb-${folderId}`}>
           {({ data, fetchStatus }) => (
             <MoveTopbar
               navigateTo={this.navigateTo}
@@ -105,7 +108,7 @@ class MoveModal extends React.Component {
             />
           )}
         </Query>
-        <Query query={contentQuery} key={`content-${folderId}`}>
+        <Query query={this.contentQuery} key={`content-${folderId}`}>
           {({ data, fetchStatus, hasMore, fetchMore }) => {
             if (fetchStatus === 'loading') return <FileListRowsPlaceholder />
             else if (fetchStatus === 'failed') return <Oops />
