@@ -130,8 +130,8 @@ class FileListRows extends PureComponent {
 
 FileListRows.propTypes = {
   files: PropTypes.array,
-  displayedFolder: PropTypes.string,
-  fileActions: PropTypes.array,
+  displayedFolder: PropTypes.object,
+  fileActions: PropTypes.object,
   onFolderOpen: PropTypes.func,
   onFileOpen: PropTypes.func,
   withSelectionCheckbox: PropTypes.bool,
