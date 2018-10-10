@@ -34,5 +34,7 @@ export const ModalManager = connect((state, ownProps) => ({
   ...state.ui.modal
 }))(({ show, component, dispatch }) => {
   if (!show) return null
-  return React.cloneElement(component, { onClose: () => dispatch(hideModal()) })
+  return React.cloneElement(component, {
+    onClose: meta => dispatch(hideModal(meta))
+  })
 })
