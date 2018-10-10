@@ -12,7 +12,6 @@ import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
-
 import MoveModal from 'drive/web/modules/move/MoveModal'
 
 import {
@@ -27,6 +26,15 @@ import {
 } from 'drive/mobile/modules/offline/duck'
 
 import styles from 'drive/styles/actionmenu'
+
+const isMoveToActive = () => {
+  try {
+    const url = new URL(window.location)
+    return url.search.includes('logistics')
+  } catch (e) {
+    return false
+  }
+}
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>
@@ -133,7 +141,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         moveto: {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
-          displayCondition: selections => selections.length === 1
+          displayCondition: selections =>
+            selections.length === 1 && isMoveToActive()
         },
         'phone-download': {
           displayCondition: selections =>
