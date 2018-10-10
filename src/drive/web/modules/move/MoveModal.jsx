@@ -4,6 +4,7 @@ import { Modal } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
+import { connect } from 'react-redux'
 
 import MoveHeader from './MoveHeader'
 import MoveExplorer from './MoveExplorer'
@@ -14,8 +15,13 @@ import MoveFooter from './MoveFooter'
 import MoveTopbar from './MoveTopbar'
 
 class MoveModal extends React.Component {
-  state = {
-    folderId: ROOT_DIR_ID
+  constructor(props) {
+    super(props)
+
+    const { displayedFolder } = props
+    this.state = {
+      folderId: displayedFolder ? displayedFolder._id : ROOT_DIR_ID
+    }
   }
 
   navigateTo = folder => {
@@ -144,4 +150,8 @@ MoveModal.PropTypes = {
   entries: PropTypes.array
 }
 
-export default MoveModal
+const mapStateToProps = state => ({
+  displayedFolder: state.view.displayedFolder
+})
+
+export default connect(mapStateToProps)(MoveModal)
