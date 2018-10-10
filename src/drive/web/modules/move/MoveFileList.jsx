@@ -23,7 +23,7 @@ const MoveFileList = ({ targets, files, navigateTo }) => (
         onFileOpen={null}
         withSelectionCheckbox={false}
         withFilePath={false}
-        withSharedBadge={true}
+        withSharedBadge
       />
     ))}
   </div>

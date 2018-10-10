@@ -61,8 +61,9 @@ class MoveModal extends React.Component {
   }
 
   cancelMove = async (entry, previousDirId) => {
+    const { t } = this.context
+
     try {
-      const { t } = this.context
       await this.moveEntry(entry._id, previousDirId)
       Alerter.info(
         t('Move.cancelled', {

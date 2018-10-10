@@ -130,6 +130,8 @@ class FileListRows extends PureComponent {
 
 FileListRows.propTypes = {
   files: PropTypes.array,
+  fileCount: PropTypes.number,
+  fetchMoreFiles: PropTypes.func,
   displayedFolder: PropTypes.object,
   fileActions: PropTypes.object,
   onFolderOpen: PropTypes.func,

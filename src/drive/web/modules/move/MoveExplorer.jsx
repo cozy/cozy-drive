@@ -11,7 +11,7 @@ const MoveExplorer = ({ children }) => (
     <MobileFileListHeader canSort={false} />
     <FileListHeader canSort={false} />
     <div className={fileListStyles['fil-content-body']}>
-      {/*Missing FileListBody providing the add folder component */}
+      {/* Missing FileListBody providing the add folder component */}
       {children}
     </div>
   </div>
