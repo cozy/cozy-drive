@@ -1,38 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Modal, withBreakpoints } from 'cozy-ui/react'
+import { Modal } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
-import Topbar from 'drive/web/modules/layout/Topbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
-import get from 'lodash/get'
 
 import MoveHeader from './MoveHeader'
 import MoveExplorer from './MoveExplorer'
 import MoveFooter from './MoveFooter'
+import MoveTopbar from './MoveTopbar'
 
 import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
-
-import {
-  Breadcrumb,
-  PreviousButton,
-  renamePathNames
-} from 'drive/web/modules/navigation/Breadcrumb'
-import getFolderPath from 'drive/web/modules/navigation/getFolderPath'
-
-const MoveTopbar = withBreakpoints()(
-  ({ navigateTo, path, breakpoints: { isMobile } }) => (
-    <Topbar hideOnMobile={false}>
-      {path.length > 1 &&
-        isMobile && (
-          <PreviousButton onClick={() => navigateTo(path[path.length - 2])} />
-        )}
-      <Breadcrumb path={path} onBreadcrumbClick={navigateTo} opening={false} />
-    </Topbar>
-  )
-)
 
 class MoveModal extends React.Component {
   state = {
@@ -96,19 +76,8 @@ class MoveModal extends React.Component {
     }
   }
 
-  buildBreadcrumbPath = data =>
-    renamePathNames(
-      getFolderPath({
-        ...data,
-        parent: get(data, 'relationships.parent.data')
-      }),
-      '',
-      this.context.t
-    )
-
   render() {
     const { onClose, entries } = this.props
-    const { t } = this.context
     const { folderId } = this.state
 
     const contentQuery = client =>
@@ -130,10 +99,7 @@ class MoveModal extends React.Component {
         <Query query={breadcrumbQuery} key={`breadcrumb-${folderId}`}>
           {({ data, fetchStatus }) => {
             return fetchStatus === 'loaded' ? (
-              <MoveTopbar
-                navigateTo={this.navigateTo}
-                path={this.buildBreadcrumbPath(data)}
-              />
+              <MoveTopbar navigateTo={this.navigateTo} currentDir={data} />
             ) : (
               false
             )
