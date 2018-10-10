@@ -97,13 +97,13 @@ class MoveModal extends React.Component {
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
         <MoveHeader entries={entries} onClose={onClose} />
         <Query query={breadcrumbQuery} key={`breadcrumb-${folderId}`}>
-          {({ data, fetchStatus }) => {
-            return fetchStatus === 'loaded' ? (
-              <MoveTopbar navigateTo={this.navigateTo} currentDir={data} />
-            ) : (
-              false
-            )
-          }}
+          {({ data, fetchStatus }) => (
+            <MoveTopbar
+              navigateTo={this.navigateTo}
+              currentDir={data}
+              fetchStatus={fetchStatus}
+            />
+          )}
         </Query>
         <Query query={contentQuery} key={`content-${folderId}`}>
           {({ data, fetchStatus, hasMore, fetchMore }) => {

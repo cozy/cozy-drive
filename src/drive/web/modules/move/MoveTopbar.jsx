@@ -21,10 +21,11 @@ const buildBreadcrumbPath = (currentDir, t) =>
   )
 
 const MoveTopbar = (
-  { navigateTo, currentDir, breakpoints: { isMobile } },
+  { navigateTo, currentDir, fetchStatus, breakpoints: { isMobile } },
   { t }
 ) => {
-  const path = buildBreadcrumbPath(currentDir, t)
+  const path =
+    fetchStatus === 'loaded' ? buildBreadcrumbPath(currentDir, t) : []
   const showPreviousButton = path.length > 1 && isMobile
   return (
     <Topbar hideOnMobile={false}>
@@ -36,6 +37,13 @@ const MoveTopbar = (
   )
 }
 
-MoveTopbar.propTypes = {}
+MoveTopbar.propTypes = {
+  navigateTo: PropTypes.func.isRequired,
+  currentDir: PropTypes.string.isRequired,
+  fetchStatus: PropTypes.string.isRequired,
+  breakpoints: PropTypes.shape({
+    isMobile: PropTypes.bool
+  }).isRequired
+}
 
 export default withBreakpoints()(MoveTopbar)
