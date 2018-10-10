@@ -27,9 +27,7 @@ export const showModal = component => ({
 
 const hideModal = (meta = {}) => ({
   type: HIDE_MODAL,
-  meta: {
-    cancelSelection: true
-  }
+  meta
 })
 
 export const ModalManager = connect((state, ownProps) => ({
