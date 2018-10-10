@@ -11,7 +11,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.10.2" />
+    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.10.3" />
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
