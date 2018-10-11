@@ -39,51 +39,86 @@ export const requestAuthorization = async () => {
     )
   })
 }
+const generatePayloadForNative = async ({
+  uri,
+  file,
+  method = 'POST',
+  id = undefined
+}) => {
+  const token = await getToken()
 
-export const uploadLibraryItem = (
+  const payload = {
+    id,
+    serverUrl: uri,
+    libraryId: file['id'],
+    mimeType: file['mimeType'],
+    filePath: file['filePath'],
+    httpMethod: method,
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': file['mimeType']
+    }
+  }
+  return payload
+}
+
+const uploadNativeItem = (payload, progressCallback, thumbnailCallback) => {
+  return new Promise((resolve, reject) => {
+    window.cordova.plugins.listLibraryItems.uploadItem(
+      payload,
+      result => {
+        console.log('result upload', result)
+        if (result.errors) reject(result.errors)
+        else if (result.progress !== undefined)
+          progressCallback(result.progress)
+        else if (result.thumbnail) thumbnailCallback(result.thumbnail)
+        else {
+          resolve(result)
+        }
+      },
+      reject
+    )
+  })
+}
+export const updateLibraryItem = async (
+  previousDocument,
+  libraryItem,
+  progressCallback,
+  thumbnailCallback
+) => {
+  if (hasCordovaPlugin()) {
+    // the cordova plugin is going to do the upload and needs all the infos to make a request to the stack
+    const uri =
+      getClientUrl() + '/files/' + encodeURIComponent(previousDocument._id)
+    const payload = await generatePayloadForNative({
+      uri,
+      file: libraryItem,
+      method: 'PUT'
+    })
+    return uploadNativeItem(payload, progressCallback, thumbnailCallback)
+  }
+  return Promise.resolve()
+}
+export const uploadLibraryItem = async (
   dirID,
   libraryItem,
   progressCallback,
   thumbnailCallback
 ) => {
   if (hasCordovaPlugin()) {
-    return new Promise(async (resolve, reject) => {
-      // the cordova plugin is going to do the upload and needs all the infos to make a request to the stack
-      const token = await getToken()
-      const uri =
-        getClientUrl() +
-        '/files/' +
-        encodeURIComponent(dirID) +
-        '?Name=' +
-        encodeURIComponent(libraryItem['fileName']) +
-        '&Type=file&Tags=library&Executable=false'
-
-      const payload = {
-        id: dirID,
-        libraryId: libraryItem['id'],
-        mimeType: libraryItem['mimeType'],
-        filePath: libraryItem['filePath'],
-        serverUrl: uri,
-        headers: {
-          Authorization: 'Bearer ' + token,
-          'Content-Type': libraryItem['mimeType']
-        }
-      }
-
-      window.cordova.plugins.listLibraryItems.uploadItem(
-        payload,
-        result => {
-          if (result.errors) reject(result.errors)
-          else if (result.progress !== undefined)
-            progressCallback(result.progress)
-          else if (result.thumbnail) thumbnailCallback(result.thumbnail)
-          else {
-            resolve(result)
-          }
-        },
-        reject
-      )
+    const uri =
+      getClientUrl() +
+      '/files/' +
+      encodeURIComponent(dirID) +
+      '?Name=' +
+      encodeURIComponent(libraryItem['fileName']) +
+      '&Type=file&Tags=library&Executable=false'
+    const payload = await generatePayloadForNative({
+      id: dirID,
+      files: libraryItem,
+      uri
     })
+    return uploadNativeItem(payload, progressCallback, thumbnailCallback)
   }
 
   return Promise.resolve()

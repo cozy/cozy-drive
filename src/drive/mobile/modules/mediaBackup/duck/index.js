@@ -20,7 +20,7 @@ import {
   CURRENT_UPLOAD,
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
-
+import { checkCorruptedFiles } from './checkCorruptedFiles'
 const ERROR_CODE_TOO_LARGE = 413
 
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
@@ -51,9 +51,8 @@ const canBackup = (isManualBackup, getState) => {
 export const startMediaBackup = (
   targetFolderName,
   isManualBackup = false
-) => async (dispatch, getState) => {
+) => async (dispatch, getState, client) => {
   dispatch({ type: MEDIA_UPLOAD_START })
-
   if (!await isAuthorized()) {
     const promptForPermissions = isManualBackup
     const receivedAuthorisation = await updateValueAfterRequestAuthorization(
@@ -71,9 +70,13 @@ export const startMediaBackup = (
     try {
       const photosOnDevice = await getPhotos()
       const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+      //! TODO : RM after a while. Deal with photos here
+      await checkCorruptedFiles(photosOnDevice, dispatch)
+
       const photosToUpload = photosOnDevice.filter(
         photo => !alreadyUploaded.includes(photo.id)
       )
+
       const totalUpload = photosToUpload.length
       if (totalUpload > 0) {
         const dirID = await getDirID(targetFolderName)
@@ -124,7 +127,6 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
     console.info(JSON.stringify(photo))
     logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
   }, maxBackupTime)
-
   try {
     const onProgressUpdate = progress => {
       // console.log(percent + '%');
