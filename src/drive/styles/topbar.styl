@@ -14,8 +14,11 @@ $coz-bar-size = 3rem
 
 +small-screen()
   .fil-topbar
-    margin-right .5rem
-    margin-left .5rem
+    position relative
+    margin-right 0
+    margin-left 0
+    padding-right .5rem
+    padding-left .5rem
 
-  .fil-topbar.hidden-mobile
-        display none
+    &.hidden-mobile
+          display none

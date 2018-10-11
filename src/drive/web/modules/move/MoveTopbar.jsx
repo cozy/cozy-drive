@@ -32,7 +32,12 @@ const MoveTopbar = (
       {showPreviousButton && (
         <PreviousButton onClick={() => navigateTo(path[path.length - 2])} />
       )}
-      <Breadcrumb path={path} onBreadcrumbClick={navigateTo} opening={false} />
+      <Breadcrumb
+        path={path}
+        onBreadcrumbClick={navigateTo}
+        opening={false}
+        inlined
+      />
     </Topbar>
   )
 }
