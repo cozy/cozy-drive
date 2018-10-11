@@ -79,7 +79,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { hasWriteAccess } = ownProps
+  const { hasWriteAccess, canMove } = ownProps
   return {
     actions: Object.assign({}, ownProps.actions, {
       selection: {
@@ -142,7 +142,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
           displayCondition: selections =>
-            selections.length === 1 && isMoveToActive()
+            canMove && isMoveToActive() && selections.length === 1
         },
         'phone-download': {
           displayCondition: selections =>

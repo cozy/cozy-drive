@@ -71,6 +71,7 @@ class SharingFetcher extends React.Component {
         canDrop={false}
         canUpload={false}
         canCreateFolder={false}
+        canMove={false}
         {...otherProps}
       />
     )

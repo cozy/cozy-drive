@@ -10,6 +10,7 @@ export const FolderContainer = props => (
     canDrop
     canUpload
     canCreateFolder
+    canMove
     {...props}
   />
 )
@@ -20,6 +21,7 @@ export const RecentContainer = props => (
     canDrop={false}
     canUpload={false}
     canCreateFolder={false}
+    canMove={false}
     withFilePath
     {...props}
   />
