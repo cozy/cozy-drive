@@ -103,7 +103,7 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => (
 const FileName = ({
   attributes,
   isRenaming,
-  disabled,
+  interactive,
   withFilePath,
   withSharedBadge,
   isMobile,
@@ -114,7 +114,7 @@ const FileName = ({
     styles['fil-content-cell'],
     styles['fil-content-file'],
     getClassFromMime(attributes),
-    { [styles['fil-content-file-openable']]: !isRenaming && !disabled }
+    { [styles['fil-content-file-openable']]: !isRenaming && interactive }
   )
   const { filename, extension } = splitFilename(attributes)
   return (
@@ -333,7 +333,7 @@ class File extends Component {
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
-          disabled={disabled}
+          interactive={!disabled}
           withFilePath={withFilePath}
           withSharedBadge={withSharedBadge}
           isMobile={isMobile}
