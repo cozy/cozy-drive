@@ -71,7 +71,6 @@ FileListBody.propTypes = {
   isTypingNewFolderName: PropTypes.bool,
   withSelectionCheckbox: PropTypes.bool,
   files: PropTypes.array,
-
   displayedFolder: PropTypes.object,
   fileActions: PropTypes.array,
   onFolderOpen: PropTypes.func,
