@@ -68,9 +68,16 @@ class FolderView extends Component {
           )}
           <SelectionBar actions={actions.selection} />
           <FileList
-            {...this.props}
             canSort={canSort}
             fileActions={actions.selection}
+            files={this.props.files}
+            displayedFolder={this.props.displayedFolder}
+            onFolderOpen={this.props.onFolderOpen}
+            onFileOpen={this.props.onFileOpen}
+            withFilePath={this.props.withFilePath}
+            withSharedBadge={this.props.withSharedBadge}
+            isRenaming={this.props.isRenaming}
+            renamingFile={this.props.renamingFile}
           />
           {this.renderViewer(children)}
         </Dropzone>
