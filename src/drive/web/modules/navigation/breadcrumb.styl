@@ -1,8 +1,9 @@
 @require 'components/popover.styl'
 @require 'settings/palette.styl'
 @require 'settings/breakpoints.styl'
+@require 'settings/z-index.styl'
 
-@require './topbar'
+@require '../../../styles/topbar'
 
 .fil-path-title
     margin    0
@@ -42,6 +43,7 @@
 +small-screen()
     .fil-path-backdrop
         min-width 0
+        z-index $overlay-index
 
     .fil-path-title
         display        flex
@@ -70,6 +72,9 @@
         right    0
         bottom     0
         left       0
+
+        &.inlined
+            position absolute
 
         .fil-path-title
             z-index    $popover-index

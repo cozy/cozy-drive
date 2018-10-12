@@ -10,20 +10,17 @@ import { withBreakpoints } from 'cozy-ui/react'
 import { SharedDocuments } from 'sharing'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
-import {
-  openFolder,
-  getFolderPath,
-  getFolderUrl
-} from 'drive/web/modules/navigation/duck'
+import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
+import getFolderPath from './getFolderPath'
 
-import styles from 'drive/styles/breadcrumb'
+import styles from './breadcrumb.styl'
 
-const renamePathNames = (path, location, t) => {
-  if (location.pathname === '/recent') {
+export const renamePathNames = (path, pathname, t) => {
+  if (pathname === '/recent') {
     path.unshift({
       name: t('breadcrumb.title_recent')
     })
-  } else if (location.pathname.match(/^\/sharings/)) {
+  } else if (pathname.match(/^\/sharings/)) {
     path.unshift({
       name: t('breadcrumb.title_sharings'),
       url: '/sharings'
@@ -69,7 +66,13 @@ export class Breadcrumb extends Component {
   }
 
   render() {
-    const { path, onBreadcrumbClick, opening, className = '' } = this.props
+    const {
+      path,
+      onBreadcrumbClick,
+      opening,
+      inlined,
+      className = ''
+    } = this.props
     const { deployed } = this.state
 
     if (!path) return false
@@ -79,6 +82,7 @@ export class Breadcrumb extends Component {
         className={classNames(
           styles['fil-path-backdrop'],
           { [styles['deployed']]: deployed },
+          { [styles['inlined']]: inlined },
           { [styles['mobile']]: __TARGET__ === 'mobile' },
           className
         )}
@@ -227,12 +231,12 @@ const MobileAwareBreadcrumb = props => {
 const mapStateToProps = (state, ownProps) => ({
   path: renamePathNames(
     getFolderPath(
-      state,
-      ownProps.location,
+      state.view.displayedFolder,
+      ownProps.location.pathname,
       ownProps.isPublic,
       ownProps.sharedDocuments
     ),
-    ownProps.location,
+    ownProps.location.pathname,
     ownProps.t
   ),
   getFolderUrl

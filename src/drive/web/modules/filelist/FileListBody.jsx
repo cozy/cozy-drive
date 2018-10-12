@@ -66,6 +66,21 @@ export const FileListBody = ({
   </div>
 )
 
+FileListBody.propTypes = {
+  selectionModeActive: PropTypes.bool,
+  isTypingNewFolderName: PropTypes.bool,
+  withSelectionCheckbox: PropTypes.bool,
+  files: PropTypes.array,
+  displayedFolder: PropTypes.object,
+  fileActions: PropTypes.array,
+  onFolderOpen: PropTypes.func,
+  onFileOpen: PropTypes.func,
+  withFilePath: PropTypes.bool,
+  withSharedBadge: PropTypes.bool,
+  isRenaming: PropTypes.bool,
+  renamingFile: PropTypes.object
+}
+
 const mapStateToProps = (state, ownProps) => ({
   selectionModeActive: isSelectionBarVisible(state),
   isTypingNewFolderName: isTypingNewFolderName(state)

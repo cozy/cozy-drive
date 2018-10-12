@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 
 import { isCordova } from 'drive/mobile/lib/device'
@@ -125,6 +126,21 @@ class FileListRows extends PureComponent {
       />
     )
   }
+}
+
+FileListRows.propTypes = {
+  files: PropTypes.array,
+  fileCount: PropTypes.number,
+  fetchMoreFiles: PropTypes.func,
+  displayedFolder: PropTypes.object,
+  fileActions: PropTypes.object,
+  onFolderOpen: PropTypes.func,
+  onFileOpen: PropTypes.func,
+  withSelectionCheckbox: PropTypes.bool,
+  withFilePath: PropTypes.bool,
+  withSharedBadge: PropTypes.bool,
+  isRenaming: PropTypes.bool,
+  renamingFile: PropTypes.object
 }
 
 export default translate()(FileListRows)

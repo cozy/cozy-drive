@@ -12,6 +12,7 @@ import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
+import MoveModal from 'drive/web/modules/move/MoveModal'
 
 import {
   openFileWith,
@@ -25,6 +26,15 @@ import {
 } from 'drive/mobile/modules/offline/duck'
 
 import styles from 'drive/styles/actionmenu'
+
+const isMoveToActive = () => {
+  try {
+    const url = new URL(window.location)
+    return url.search.includes('logistics')
+  } catch (e) {
+    return false
+  }
+}
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>
@@ -69,7 +79,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { hasWriteAccess } = ownProps
+  const { hasWriteAccess, canMove } = ownProps
   return {
     actions: Object.assign({}, ownProps.actions, {
       selection: {
@@ -127,6 +137,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action: selected => dispatch(startRenamingAsync(selected[0])),
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1
+        },
+        moveto: {
+          action: selected =>
+            dispatch(showModal(<MoveModal entries={selected} />)),
+          displayCondition: selections =>
+            canMove && isMoveToActive() && selections.length === 1
         },
         'phone-download': {
           displayCondition: selections =>

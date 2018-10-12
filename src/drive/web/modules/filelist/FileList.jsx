@@ -11,16 +11,21 @@ const FileList = ({
   canSort,
   fileActions,
   withSelectionCheckbox = true,
+  children,
   ...rest
 }) => (
   <div className={styles['fil-content-table']} role="table">
     <MobileFileListHeader canSort={canSort} />
     <FileListHeader canSort={canSort} />
-    <FileListBody
-      fileActions={fileActions}
-      withSelectionCheckbox={withSelectionCheckbox}
-      {...rest}
-    />
+    {React.Children.count(children) > 0 ? (
+      children
+    ) : (
+      <FileListBody
+        fileActions={fileActions}
+        withSelectionCheckbox={withSelectionCheckbox}
+        {...rest}
+      />
+    )}
   </div>
 )
 

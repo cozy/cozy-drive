@@ -216,6 +216,7 @@
     "restore": "Restore",
     "close": "Close",
     "openWith": "Open with",
+    "moveto": "Move to…",
     "phone-download": "Make available offline"
   },
   "deleteconfirmation": {
@@ -533,6 +534,15 @@
       "generic": "An error occurred when opening this file, please try again.",
       "noNetwork": "You're currently offline."
     }
+  },
+  "Move": {
+    "to": "Move to:",
+    "action": "Move",
+    "cancel": "Cancel",
+    "success": "%{subject} has been moved to %{target}.",
+    "error": "Something went wrong while moving this item, please try again later.",
+    "cancelled": "%{subject} has been moved back to it's original location.",
+    "cancelled_error": "Sorry, there was an error while moving the item back."
   },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
