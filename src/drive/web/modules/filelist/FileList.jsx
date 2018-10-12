@@ -12,7 +12,14 @@ const FileList = ({
   fileActions,
   withSelectionCheckbox = true,
   children,
-  ...rest
+  files,
+  displayedFolder,
+  onFolderOpen,
+  onFileOpen,
+  withFilePath,
+  withSharedBadge,
+  isRenaming,
+  renamingFile
 }) => (
   <div className={styles['fil-content-table']} role="table">
     <MobileFileListHeader canSort={canSort} />
@@ -23,7 +30,14 @@ const FileList = ({
       <FileListBody
         fileActions={fileActions}
         withSelectionCheckbox={withSelectionCheckbox}
-        {...rest}
+        files={files}
+        displayedFolder={displayedFolder}
+        onFolderOpen={onFolderOpen}
+        onFileOpen={onFileOpen}
+        withFilePath={withFilePath}
+        withSharedBadge={withSharedBadge}
+        isRenaming={isRenaming}
+        renamingFile={renamingFile}
       />
     )}
   </div>
