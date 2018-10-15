@@ -5,9 +5,16 @@
 
 @require '../../../styles/topbar'
 
+.fil-path-backdrop
+  flex 1 1 auto
+  width 1%
+
 .fil-path-title
     margin    0
     font-size 1.5rem
+    overflow hidden
+    white-space nowrap
+    text-overflow ellipsis
 
 .fil-path-link
     display          inline-flex
@@ -43,6 +50,7 @@
 +small-screen()
     .fil-path-backdrop
         min-width 0
+        width auto
         z-index $overlay-index
 
     .fil-path-title
