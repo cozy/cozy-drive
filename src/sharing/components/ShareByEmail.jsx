@@ -308,9 +308,11 @@ class ShareByEmail extends Component {
         <div className={styles['coz-form']}>
           <ShareRecipientsInput
             label={t(`${documentType}.share.shareByEmail.email`)}
-            placeholder={t(
-              `${documentType}.share.shareByEmail.emailPlaceholder`
-            )}
+            placeholder={
+              recipients.length === 0
+                ? t(`${documentType}.share.shareByEmail.emailPlaceholder`)
+                : ''
+            }
             onFocus={this.onInputFocus}
             onPick={recipient => this.onRecipientPick(recipient)}
             onRemove={recipient => this.onRecipientRemove(recipient)}
