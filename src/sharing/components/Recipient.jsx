@@ -107,7 +107,11 @@ class Status extends Component {
     return (
       <div className={styles['recipient-status']}>
         {revoking && <Spinner />}
-        {!shouldShowMenu && <span>{t(`Share.status.${status}`)}</span>}
+        {!shouldShowMenu && (
+          <span className={styles['recipient-owner']}>
+            {t(`Share.status.${status}`)}
+          </span>
+        )}
         {shouldShowMenu && (
           <Menu
             text={

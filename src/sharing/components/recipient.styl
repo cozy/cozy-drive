@@ -5,7 +5,7 @@
 .recipient
     display flex
     flex-direction row
-    align-items center
+    align-items flex-start
 
     & + .recipient
         margin-top 1.5rem
@@ -110,6 +110,9 @@
         border 2px solid white
         box-sizing border-box
 
+.recipient-status .recipient-owner
+    padding .2rem 0
+
 .recipient-status .recipient-menu-btn
     @extend $button
     text-transform capitalize
@@ -138,8 +141,8 @@
     .recipient-ident-status
         display block
 
-    .recipient-menu-btn
-        padding 0
+    .recipient-status  .recipient-menu-btn
+        padding-left 0
         padding-right 1.1rem
         margin 0
         min-height 0
