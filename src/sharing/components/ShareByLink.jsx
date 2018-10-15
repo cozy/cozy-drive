@@ -61,11 +61,7 @@ class ShareByLink extends React.Component {
               {t(`${documentType}.share.shareByLink.creating`)}
             </span>
           )}
-          {checked && (
-            <span
-              className={styles['share-bylink-header-dot'] + ' u-hide--mob'}
-            />
-          )}
+          {checked && <span className={styles['share-bylink-header-dot']} />}
           {checked && (
             <CopyToClipboard text={link} onCopy={this.onCopy}>
               <button className={styles['share-bylink-header-copybtn']}>
