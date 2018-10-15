@@ -110,7 +110,7 @@ const ShareTypeSelect = ({ options, onChange }) => (
       classNamePrefix="needsclick react-select"
       components={{ DropdownIndicator, Option }}
       styles={customStyles}
-      defaultValue={options[1]}
+      defaultValue={options[0]}
       isSearchable={false}
       onChange={option => {
         onChange(option.value)
@@ -154,15 +154,15 @@ ShareSubmit.defaultProps = {
 class ShareByEmail extends Component {
   sharingTypes = [
     {
-      value: 'one-way',
-      label: this.context.t('Share.type.one-way'),
-      desc: this.context.t('Share.type.desc.one-way'),
-      disabled: false
-    },
-    {
       value: 'two-way',
       label: this.context.t('Share.type.two-way'),
       desc: this.context.t('Share.type.desc.two-way'),
+      disabled: false
+    },
+    {
+      value: 'one-way',
+      label: this.context.t('Share.type.one-way'),
+      desc: this.context.t('Share.type.desc.one-way'),
       disabled: false
     }
   ]
