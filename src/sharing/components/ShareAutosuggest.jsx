@@ -4,6 +4,7 @@ import Autosuggest from 'react-autosuggest'
 import styles from './autosuggest.styl'
 import { Contact } from './Recipient'
 import { Icon } from 'cozy-ui/react'
+import BoldCross from '../assets/icons/icon-cross-bold.svg'
 
 import { getPrimaryEmail } from '..'
 
@@ -115,7 +116,7 @@ export default class ShareAutocomplete extends Component {
               className={styles['removeRecipient']}
               onClick={() => this.onRemove(recipient)}
             >
-              <Icon icon="cross" width="12" height="12" />
+              <Icon icon={BoldCross} width="16" height="16" />
             </button>
           </div>
         ))}
