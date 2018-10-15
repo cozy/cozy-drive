@@ -126,6 +126,7 @@ export default class ShareAutocomplete extends Component {
 
   render() {
     const { inputValue, suggestions } = this.state
+    const { placeholder } = this.props
     return (
       <Autosuggest
         ref={self => {
@@ -144,7 +145,8 @@ export default class ShareAutocomplete extends Component {
           onChange: this.onChange,
           onBlur: this.onBlur,
           value: inputValue,
-          type: 'email'
+          type: 'email',
+          placeholder
         }}
       />
     )

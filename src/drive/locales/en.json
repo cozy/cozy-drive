@@ -119,7 +119,7 @@
       "shareByEmail": {
         "subtitle": "By email",
         "email": "To:",
-        "emailPlaceholder": "Enter email address or name of your recipient",
+        "emailPlaceholder": "Enter the email address or name of the recipient",
         "send": "Send",
         "genericSuccess": "You sent an invite to %{count} contacts.",
         "success": "You sent an invite to %{email}.",
