@@ -138,13 +138,15 @@ const ShareSubmit = props => (
     }}
     busy={props.loading}
     label={props.label}
+    disabled={props.disabled}
   />
 )
 
 ShareSubmit.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   label: PropTypes.string,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool
 }
 
 ShareSubmit.defaultProps = {
@@ -331,6 +333,7 @@ class ShareByEmail extends Component {
             label={t(`${documentType}.share.shareByEmail.send`)}
             onSubmit={this.share}
             loading={this.state.loading}
+            disabled={recipients.length === 0}
           />
         </div>
       </div>
