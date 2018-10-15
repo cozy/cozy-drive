@@ -37,6 +37,7 @@ export default class ShareModal extends Component {
         dismissAction={onClose}
         into="body"
         size="small"
+        spacing="small"
         mobileFullscreen
       >
         {(hasSharedParent || hasSharedChild) && (
