@@ -34,7 +34,8 @@ ShareRecipientsInput.propTypes = {
   recipients: PropTypes.array,
   onFocus: PropTypes.func.isRequired,
   onPick: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
 }
 
 ShareRecipientsInput.defaultProps = {
