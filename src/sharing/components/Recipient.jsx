@@ -14,12 +14,27 @@ import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
 
 const MAX_DISPLAYED_RECIPIENTS = 3
 
-export const RecipientsAvatars = ({ recipients, link, size, className }) => {
+export const RecipientsAvatars = ({
+  recipients,
+  link,
+  size,
+  className,
+  onClick
+}) => {
   // we reverse the recipients array because we use `flex-direction: row-reverse` to display them correctly
   // we slice first to clone the original array because reverse() mutates it
   const reversedRecipients = recipients.slice().reverse()
   return (
-    <div className={classNames(styles['recipients-avatars'], className)}>
+    <div
+      className={classNames(
+        styles['recipients-avatars'],
+        {
+          [styles['--interactive']]: onClick
+        },
+        className
+      )}
+      onClick={onClick}
+    >
       {link && <AvatarLink size={size} />}
       {recipients.length > MAX_DISPLAYED_RECIPIENTS && (
         <AvatarPlusX

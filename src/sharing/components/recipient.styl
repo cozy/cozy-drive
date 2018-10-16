@@ -102,6 +102,9 @@
     flex-direction row-reverse
     margin-right 0.5rem
 
+    &.--interactive
+        cursor pointer
+
     .recipient-avatar
         margin-right -0.6rem
         border 2px solid white
@@ -110,18 +113,12 @@
 .recipient-status .recipient-menu-btn
     @extend $button
     text-transform capitalize
-    background embedurl("../assets/icons/icon-arrow-down.svg") right center no-repeat
+    background transparent embedurl("../assets/icons/icon-arrow-down.svg") right center  no-repeat
     border     none
     min-width  1rem
     padding-right 1.1rem
-    background-color transparent
     color    black
 
-    &:focus
-    &[disabled]:hover
-    &[aria-disabled=true]:hover
-    &:not([disabled]):not([aria-disabled=true]):hover
-        background-color transparent
 
 // bit of a hack because the menu is inside a scrollable area
 .recipient-menu > div

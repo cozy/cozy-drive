@@ -294,13 +294,14 @@ export const SharedBadge = ({ docId, ...rest }) => (
   </SharingContext.Consumer>
 )
 
-export const SharedRecipients = ({ docId, ...rest }) => (
+export const SharedRecipients = ({ docId, onClick, ...rest }) => (
   <SharingContext.Consumer>
     {({ byDocId, getRecipients, getSharingLink } = {}) =>
       !byDocId || !byDocId[docId] ? null : (
         <RecipientsAvatars
           recipients={getRecipients(docId)}
           link={getSharingLink(docId) !== null}
+          onClick={onClick}
           {...rest}
         />
       )
