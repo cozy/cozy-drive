@@ -11,6 +11,7 @@ import {
   saveFileWithCordova,
   saveAndOpenWithCordova
 } from 'drive/mobile/lib/filesystem'
+import { logException } from 'drive/mobile/lib/reporter'
 import {
   isDirectory,
   isReferencedByAlbum,
@@ -105,6 +106,9 @@ export const openFolder = folderId => {
           )
       })
     } catch (err) {
+      logException(err, {
+        context: OPEN_FOLDER_FAILURE
+      })
       return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
     }
   }
@@ -133,6 +137,9 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
         files
       })
     } catch (err) {
+      logException(err, {
+        context: SORT_FOLDER_FAILURE
+      })
       return dispatch({ type: SORT_FOLDER_FAILURE, error: err })
     }
   }
@@ -164,6 +171,9 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
         limit
       })
     } catch (err) {
+      logException(err, {
+        context: FETCH_MORE_FILES_FAILURE
+      })
       return dispatch({ type: FETCH_MORE_FILES_FAILURE, error: err })
     }
   }
@@ -199,8 +209,11 @@ export const fetchRecentFiles = () => {
         fileCount: filesWithPath.length,
         files: filesWithPath
       })
-    } catch (e) {
-      return dispatch({ type: FETCH_RECENT_FAILURE, error: e })
+    } catch (err) {
+      logException(err, {
+        context: FETCH_RECENT_FAILURE
+      })
+      return dispatch({ type: FETCH_RECENT_FAILURE, error: err })
     }
   }
 }
