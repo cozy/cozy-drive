@@ -20,7 +20,7 @@ const upgradePouchDatabase = async (dbName, existingIndexes = []) => {
       existingIndex => !indexes.find(index => index.ddoc === existingIndex)
     )
 
-    return missingIndexes.length > 0 ? true : false
+    return missingIndexes.length > 0
   }
 }
 
