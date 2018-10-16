@@ -4,8 +4,6 @@ const path = require('path')
 const { DefinePlugin, ProvidePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const pkg = require(path.resolve(__dirname, '../package.json'))
-
 module.exports = function(production, app) {
   return {
     entry: {
@@ -30,9 +28,7 @@ module.exports = function(production, app) {
     plugins: [
       new DefinePlugin({
         __ALLOW_HTTP__: !production,
-        __TARGET__: JSON.stringify('mobile'),
-        __SENTRY_TOKEN__: JSON.stringify('9259817fbb44484b8b7a0a817d968ae4:171a3bcb3095448484aa3e709ea47e9b'),
-        __APP_VERSION__: JSON.stringify(pkg.version)
+        __TARGET__: JSON.stringify('mobile')
       }),
       new ProvidePlugin({
         PouchDB: 'pouchdb',
