@@ -13,7 +13,11 @@ export const startReplication = async (
   indexesCreated
 ) => {
   try {
-    upgradePouchDatabase('io.cozy.files').then(async didUpgrade => {
+    upgradePouchDatabase('io.cozy.files', [
+      existingIndexes.byName,
+      existingIndexes.bySize,
+      existingIndexes.byUpdatedAt
+    ]).then(async didUpgrade => {
       if (didUpgrade) {
         indexesCreated({})
         const indexes = await createIndexes({}, indexesCreated)
