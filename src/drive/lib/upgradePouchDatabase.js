@@ -1,10 +1,10 @@
 /* global cozy */
 
-const upgradePouchDatabase = async (dbName, existingIndexes = []) => {
+export const upgradePouchDatabase = async dbName => {
   const db = cozy.client.offline.getDatabase(dbName)
 
   const infos = await db.info()
-  const isAdapterOutdated = infos.adapter === 'websql'
+  const isAdapterOutdated = infos.adapter !== 'idb'
 
   if (isAdapterOutdated) {
     try {
@@ -15,13 +15,17 @@ const upgradePouchDatabase = async (dbName, existingIndexes = []) => {
       return false
     }
   } else {
-    const { indexes } = await db.getIndexes()
-    const missingIndexes = existingIndexes.filter(
-      existingIndex => !indexes.find(index => index.ddoc === existingIndex)
-    )
-
-    return missingIndexes.length > 0
+    return false
   }
 }
 
-export default upgradePouchDatabase
+export const checkMissingIndexes = async (dbName, existingIndexes) => {
+  const db = cozy.client.offline.getDatabase(dbName)
+  const { indexes } = await db.getIndexes()
+
+  const missingIndexes = existingIndexes.filter(
+    existingIndex => !indexes.find(index => index.ddoc === existingIndex)
+  )
+
+  return missingIndexes.length > 0
+}
