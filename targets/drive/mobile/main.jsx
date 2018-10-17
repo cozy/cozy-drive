@@ -97,7 +97,7 @@ const startApplication = async function(store, client, polyglot) {
 
     await oauthClient.fetchInformation()
     shouldInitBar = true
-    store.dispatch(startReplication())
+    await store.dispatch(startReplication())
   } catch (e) {
     console.warn(e)
     if (isClientRevoked(e, store.getState())) {
