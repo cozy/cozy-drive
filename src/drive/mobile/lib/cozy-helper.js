@@ -2,7 +2,7 @@
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient from 'cozy-client'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
-import { getDeviceName, isIos } from './device'
+import { getDeviceName } from './device'
 import { disableBackgroundService } from './background'
 import { schema, DOCTYPE_FILES } from '../../../../targets/drive/doctypes'
 export const getLang = () =>
@@ -58,7 +58,6 @@ export const updateBarAccessToken = accessToken =>
 
 export const restoreCozyClientJs = (uri, clientInfos, token) => {
   const offline = { doctypes: ['io.cozy.files'] }
-  if (isIos()) offline.options = { adapter: 'cordova-sqlite' }
   cozy.client.init({
     cozyURL: uri,
     oauth: {

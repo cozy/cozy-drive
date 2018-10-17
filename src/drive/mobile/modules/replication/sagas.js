@@ -4,8 +4,16 @@ import {
 } from 'drive/web/modules/navigation/duck'
 import { revokeClient as reduxRevokeClient } from 'drive/mobile/modules/authorization/duck'
 
-import { startReplication as startPouchReplication } from 'drive/mobile/lib/replication'
+import {
+  startReplication as startPouchReplication,
+  createIndexes,
+  warmUpIndexes
+} from 'drive/mobile/lib/replication'
 import { resetClient } from 'drive/mobile/lib/cozy-helper'
+import {
+  upgradePouchDatabase,
+  checkMissingIndexes
+} from 'drive/lib/upgradePouchDatabase'
 
 import {
   isFirstReplicationDone,
@@ -14,7 +22,7 @@ import {
   setPouchIndexes
 } from './duck'
 
-export const startReplication = () => (dispatch, getState) => {
+export const startReplication = () => async (dispatch, getState) => {
   console.info('Starting replication...')
 
   const firstReplication = isFirstReplicationDone(getState())
@@ -31,6 +39,21 @@ export const startReplication = () => (dispatch, getState) => {
   }
   const indexesCreated = indexes => {
     dispatch(setPouchIndexes(indexes))
+  }
+
+  const didUpgrade = await upgradePouchDatabase('io.cozy.files')
+  const areIndexesMissing =
+    Object.values(existingIndexes).length > 0 &&
+    (await checkMissingIndexes('io.cozy.files', [
+      existingIndexes.byName,
+      existingIndexes.bySize,
+      existingIndexes.byUpdatedAt
+    ]))
+
+  if (didUpgrade || areIndexesMissing) {
+    indexesCreated({})
+    const indexes = await createIndexes({}, indexesCreated)
+    await warmUpIndexes(indexes)
   }
 
   startPouchReplication(
