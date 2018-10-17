@@ -5,10 +5,11 @@
 .recipient
     display flex
     flex-direction row
-    align-items flex-start
+    align-items center
+    margin-top .75rem
 
-    & + .recipient
-        margin-top 1.5rem
+    +small-screen()
+        align-items flex-start
 
 .recipients-list-light
     .recipient
@@ -21,10 +22,9 @@
     position relative
     flex 0 0 auto
     border-radius 50%
-    margin-right .5rem
+    background-color silver
     width 2.5rem
     height 2.5rem
-    background-color silver
     font-size 1.1rem
 
     span
@@ -87,12 +87,6 @@
     flex-direction row
     align-items center
 
-    .recipient-avatar
-        width  3rem
-        height 3rem
-
-        span
-            font-size 1.5rem
 
     .recipient-user
         font-size 1.125rem

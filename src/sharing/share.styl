@@ -13,7 +13,6 @@
     display        flex
     flex-direction row
     align-items    center
-    margin         1.5rem 0 .25rem 0
 
     > :not(:last-child)
         margin 0
@@ -54,6 +53,9 @@
     margin 0
     border-top 1px solid silver
 
+.share-moral-override-bottom
+    padding-bottom : 0 !important
+
 .share-modal-content
     @extend $form
     @extend $form-text
@@ -61,8 +63,9 @@
     display flex
     flex-direction column
     flex-grow 1
-    overflow: visible
-    
+    overflow: auto
+    min-height: rem(400)
+
     > .share-byemail-onlybylink
         margin 0
 
@@ -76,9 +79,22 @@
     .share-modal-secondary
       overflow auto
       flex-grow 1
+      padding-top: 0.5rem
+      width: calc(100% + 3em)
+      margin-left: -1.5em
 
-    .share-modal-access
-      padding-right .5rem
+    .share-modal-margins
+        margin-left: 1.5em
+        margin-right: 1.5em
+
+
+    .share-modal-separator
+        margin-left: -1.5em
+        margin-top: rem(24)
+        width: calc(100% + 3em);
+        height: 1px
+        background-color: silver
+        
 
 @media (max-width 32em)
     .share-modal-secondary

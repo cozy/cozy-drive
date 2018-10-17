@@ -3,7 +3,7 @@ import styles from './share.styl'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
-
+import cx from 'classnames'
 import { default as DumbShareByLink } from './components/ShareByLink'
 import { default as DumbShareByEmail } from './components/ShareByEmail'
 import WhoHasAccess from './components/WhoHasAccess'
@@ -58,7 +58,12 @@ export default class ShareModal extends Component {
             </strong>
           </div>
         )}
-        <ModalContent className={styles['share-modal-content']}>
+        <ModalContent
+          className={cx(
+            styles['share-modal-content'],
+            styles['share-moral-override-bottom']
+          )}
+        >
           {documentType !== 'Albums' &&
             !hasSharedParent &&
             !hasSharedChild && (
@@ -72,26 +77,28 @@ export default class ShareModal extends Component {
                 needsContactsPermission={needsContactsPermission}
               />
             )}
-          <hr className={styles['divider']} />
+          <div className={styles['share-modal-separator']} />
           <div className={styles['share-modal-secondary']}>
-            <DumbShareByLink
-              document={document}
-              documentType={documentType}
-              checked={link !== null}
-              link={link}
-              onEnable={onShareByLink}
-              onDisable={onRevokeLink}
-            />
-            {documentType !== 'Albums' && (
-              <WhoHasAccess
-                className={styles['share-modal-access']}
-                isOwner={isOwner}
-                recipients={recipients}
+            <div className={cx(styles['share-modal-margins'], 'u-pb-1')}>
+              <DumbShareByLink
                 document={document}
                 documentType={documentType}
-                onRevoke={onRevoke}
+                checked={link !== null}
+                link={link}
+                onEnable={onShareByLink}
+                onDisable={onRevokeLink}
               />
-            )}
+              {documentType !== 'Albums' && (
+                <WhoHasAccess
+                  className={'u-mt-1'}
+                  isOwner={isOwner}
+                  recipients={recipients}
+                  document={document}
+                  documentType={documentType}
+                  onRevoke={onRevoke}
+                />
+              )}
+            </div>
           </div>
         </ModalContent>
       </Modal>

@@ -1,9 +1,9 @@
 import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import Toggle from 'cozy-ui/react/Toggle'
-import { Spinner } from 'cozy-ui/react'
+import { Spinner, SubTitle } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
-
+import cx from 'classnames'
 import styles from '../share.styl'
 
 class ShareByLink extends React.Component {
@@ -53,8 +53,8 @@ class ShareByLink extends React.Component {
     const { link, checked, documentType } = this.props
     return (
       <div>
-        <div className={styles['share-bylink-header']}>
-          <h3>{t(`${documentType}.share.shareByLink.subtitle`)}</h3>
+        <div className={cx(styles['share-bylink-header'], 'u-mt-1', 'u-mb-1')}>
+          <SubTitle>{t(`${documentType}.share.shareByLink.subtitle`)}</SubTitle>
           {loading && <Spinner />}
           {loading && (
             <span className={styles['share-bylink-header-creating']}>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Recipient from './Recipient'
+import { SubTitle } from 'cozy-ui/react'
 
 const WhoHasAccess = (
   { isOwner = false, recipients, document, documentType, onRevoke, className },
@@ -7,11 +8,11 @@ const WhoHasAccess = (
 ) => (
   <div className={className}>
     {recipients.length > 1 && (
-      <h3>
+      <SubTitle>
         {t(`${documentType}.share.whoHasAccess.title`, {
           smart_count: recipients.length
         })}
-      </h3>
+      </SubTitle>
     )}
     {recipients.map(recipient => (
       <Recipient
