@@ -1,13 +1,14 @@
 import React from 'react'
 import cx from 'classnames'
-import ColorHash from './colorhash'
 import PropTypes from 'prop-types'
 import { SharingTooltip, TooltipRecipientList } from './Tooltip'
 import styles from './recipient.styl'
+import { Avatar as CozyUIAvatar, Tooltip } from 'cozy-ui/react'
+import ColorHash from './colorhash'
 
-export const Avatar = ({ name, size }) => {
-  const initial = name.charAt(0)
-  const bg = ColorHash().getColor(name)
+export const Avatar = ({ text, size, textId }) => {
+  const initial = text.charAt(0)
+  const bg = ColorHash().getColor(textId)
   const style = {
     'background-color': bg
   }
@@ -17,23 +18,33 @@ export const Avatar = ({ name, size }) => {
         [styles['recipient-avatar--small']]: size === 'small'
       })}
       style={style}
-      data-tip={name}
-      data-for={`recipient-avatar-${name}`}
+      data-tip={textId}
+      data-for={`recipient-avatar-${text}`}
     >
       <span>{initial}</span>
-      <SharingTooltip id={`recipient-avatar-${name}`} />
+      <SharingTooltip id={`recipient-avatar-${text}`} />
     </div>
   )
 }
 
+export const AvatarToUseAfer = props => {
+  return (
+    <Tooltip title={props.textId}>
+      <CozyUIAvatar {...props} className={styles['recipient-avatar']} />
+    </Tooltip>
+  )
+}
+
 Avatar.propTypes = {
-  name: PropTypes.string,
-  size: PropTypes.string
+  text: PropTypes.string,
+  size: PropTypes.string,
+  textId: PropTypes.string
 }
 
 Avatar.defaultProps = {
-  name: '',
-  size: 'medium'
+  text: '',
+  size: 'small-plus',
+  textId: ''
 }
 
 export const AvatarPlusX = ({ size, extraRecipients = [] }) => (
