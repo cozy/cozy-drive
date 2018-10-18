@@ -76,7 +76,7 @@ const CozybarToolbar = ({ onDownload, discoveryLink }, { t }) => (
       {discoveryLink ? (
         <OpenInCozyButton href={discoveryLink} t={t} size="small" />
       ) : (
-        <CozyHomeLink from="sharing-drive" />
+        <CozyHomeLink from="sharing-drive" t={t} />
       )}
       <DownloadFilesButton t={t} onDownload={onDownload} size="small" />
     </div>
