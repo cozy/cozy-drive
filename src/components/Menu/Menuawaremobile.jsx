@@ -17,10 +17,26 @@ class MenuAwareMobile extends Component {
   toggle = () => {
     this.setState({ active: !this.state.active })
   }
+  renderItems() {
+    return React.Children.map(this.props.children, item => {
+      if (!item) return item
+      // ideally here, we should rely on React's type property and verify that
+      // type === Item, but for some reason, preact vnodes don't have this property
+      if (item.nodeName !== 'hr') {
+        return React.cloneElement(item, {
+          onClick: item.props.onSelect
+            ? item.props.onSelect.bind(this, item)
+            : undefined
+        })
+      }
+      return item
+    })
+  }
+
   render() {
     const {
       breakpoints: { isMobile },
-      children,
+      // children,
       text,
       buttonClassName,
       name
@@ -38,7 +54,7 @@ class MenuAwareMobile extends Component {
               <MenuItem className={styles['fil-mobileactionmenu']}>
                 <UserAvatar name={name} size={'small'} />
               </MenuItem>
-              {children}
+              {this.renderItems()}
             </ActionMenu>
           )}
         </div>

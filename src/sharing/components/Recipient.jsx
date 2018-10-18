@@ -140,7 +140,7 @@ class Status extends Component {
             <hr />
             <MenuItem
               onSelect={this.onRevoke}
-              onClick={this.onRevoke}
+              // onClick={this.onRevoke}
               icon={<Icon icon={IconTrash} />}
             >
               <div className={styles['action-unshare']}>
