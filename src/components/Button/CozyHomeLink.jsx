@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { translate } from 'cozy-ui/react/I18n'
 import { ButtonLink } from 'cozy-ui/react'
 import styles from './index.styl'
 
-const CozyHomeLink = ({ from, embedInCozyBar = false }, { t }) => (
+const CozyHomeLink = ({ from, embedInCozyBar = false, t }) => (
   <ButtonLink
     subtle
     label={t('Share.create-cozy')}
@@ -16,7 +15,8 @@ const CozyHomeLink = ({ from, embedInCozyBar = false }, { t }) => (
 
 CozyHomeLink.propTypes = {
   from: PropTypes.string,
-  embedInCozyBar: PropTypes.bool
+  embedInCozyBar: PropTypes.bool,
+  t: PropTypes.func.isRequired
 }
 
 CozyHomeLink.defaultProps = {
@@ -28,4 +28,4 @@ export const getHomeLinkHref = from =>
     from ? `?pk_campaign=${encodeURIComponent(from)}` : ''
   }`
 
-export default translate()(CozyHomeLink)
+export default CozyHomeLink
