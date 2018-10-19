@@ -11,7 +11,7 @@ import {
   saveFileWithCordova,
   saveAndOpenWithCordova
 } from 'drive/mobile/lib/filesystem'
-import { logException } from 'drive/mobile/lib/reporter'
+import { logException } from 'drive/lib/reporter'
 import {
   isDirectory,
   isReferencedByAlbum,

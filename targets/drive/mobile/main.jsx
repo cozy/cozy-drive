@@ -16,7 +16,7 @@ import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 
 import { startBackgroundService } from 'drive/mobile/lib/background'
-import { configureReporter } from 'drive/mobile/lib/reporter'
+import { configureReporter } from 'drive/lib/reporter'
 import {
   intentHandlerAndroid,
   intentHandlerIOS
