@@ -21,31 +21,35 @@ export const checkCorruptedFiles = async (photosOnDevice, dispatch) => {
     await localforage.setItem('CORRUPTED_FILES', requestFiles)
   }
   const files = await localforage.getItem('CORRUPTED_FILES')
-  files.reduce(async (memo, remoteFileCorrupted) => {
-    if (remoteFileCorrupted.file_doc && remoteFileCorrupted.file_doc.name) {
-      photosOnDevice.some(async photoOnDevice => {
-        if (photoOnDevice.fileName === remoteFileCorrupted.file_doc.name) {
-          try {
-            await updateLibraryItem(
-              remoteFileCorrupted.file_doc,
-              photoOnDevice,
-              throttle(onProgressUpdate, 500),
-              onThumbnailGenerated
-            )
-            const newObj = files.reduce((acc, photo) => {
-              if (photo.file_doc._id !== remoteFileCorrupted.file_doc._id) {
-                acc.push(remoteFileCorrupted)
-              }
-              return acc
-            }, [])
-            await localforage.setItem('CORRUPTED_FILES', newObj)
-            return memo.push(photoOnDevice.id)
-          } catch (error) {
-            console.log('error on CORRUPTED FILES', error)
+  try {
+    files.reduce(async (memo, remoteFileCorrupted) => {
+      if (remoteFileCorrupted.file_doc && remoteFileCorrupted.file_doc.name) {
+        photosOnDevice.map(async photoOnDevice => {
+          if (photoOnDevice.fileName === remoteFileCorrupted.file_doc.name) {
+            try {
+              await updateLibraryItem(
+                remoteFileCorrupted.file_doc,
+                photoOnDevice,
+                throttle(onProgressUpdate, 500),
+                onThumbnailGenerated
+              )
+              const newObj = files.reduce((acc, photo) => {
+                if (photo.file_doc._id !== remoteFileCorrupted.file_doc._id) {
+                  acc.push(remoteFileCorrupted)
+                }
+                return acc
+              }, [])
+              await localforage.setItem('CORRUPTED_FILES', newObj)
+              return memo.push(photoOnDevice.id)
+            } catch (error) {
+              console.log('error on CORRUPTED FILES', error)
+            }
           }
-        }
-      })
-    }
-    return memo
-  }, [])
+        })
+      }
+      return memo
+    }, [])
+  } catch (error) {
+    console.log('error globale', error)
+  }
 }
