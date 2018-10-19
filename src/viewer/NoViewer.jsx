@@ -6,7 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
 import Icon from 'cozy-ui/react/Icon'
 import Alerter from 'cozy-ui/react/Alerter'
-import { logException } from 'drive/mobile/lib/reporter'
+import { logException } from 'drive/lib/reporter'
 import { isCordova } from 'drive/mobile/lib/device'
 import {
   isClientAlreadyInstalled,

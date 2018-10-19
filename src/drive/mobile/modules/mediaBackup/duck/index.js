@@ -8,7 +8,7 @@ import {
   requestAuthorization
 } from 'drive/mobile/lib/media'
 import { isWifi } from 'drive/mobile/lib/network'
-import { logException } from 'drive/mobile/lib/reporter'
+import { logException } from 'drive/lib/reporter'
 import { setBackupImages } from 'drive/mobile/modules/settings/duck'
 import {
   MEDIA_UPLOAD_START,

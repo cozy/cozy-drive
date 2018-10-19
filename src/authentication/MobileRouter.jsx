@@ -3,7 +3,7 @@ import { Router, withRouter } from 'react-router'
 
 import Authentication from './src/Authentication'
 import Revoked from './src/Revoked'
-import { logException } from 'drive/mobile/lib/reporter'
+import { logException } from 'drive/lib/reporter'
 
 const MobileRouter = ({
   history,

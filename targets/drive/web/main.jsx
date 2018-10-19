@@ -11,6 +11,7 @@ import { Router, hashHistory } from 'react-router'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
+import { configureReporter } from 'drive/lib/reporter'
 
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
@@ -31,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${data.cozyDomain}`
+
+  configureReporter()
 
   const client = new CozyClient({
     uri: cozyUrl,

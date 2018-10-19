@@ -1,7 +1,7 @@
 import { isCordova } from './device'
 import { getTranslateFunction } from './i18n'
 import { getToken, getClientUrl } from './cozy-helper'
-import { logException } from './reporter'
+import { logException } from 'drive/lib/reporter'
 
 const hasCordovaPlugin = () => {
   return (
