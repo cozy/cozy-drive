@@ -211,12 +211,12 @@ export const RecipientPlusX = ({ extraRecipients }, { t }) => (
   </div>
 )
 
-export const Contact = ({ contact }) => {
+export const ContactSuggestion = ({ contact }) => {
   const name = getPrimaryEmail(contact)
   const url = getPrimaryCozy(contact)
   return (
     <div className={styles['recipient']}>
-      <Avatar name={getInitiales(name)} size={'small'} textId={name} />
+      <Avatar text={getInitiales(name)} size={'small'} textId={name} />
       <Identity name={name} url={url} />
     </div>
   )

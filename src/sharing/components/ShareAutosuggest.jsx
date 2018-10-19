@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
 
 import styles from './autosuggest.styl'
-import { Contact } from './Recipient'
+import { ContactSuggestion } from './Recipient'
 import { Icon } from 'cozy-ui/react'
 import BoldCross from '../assets/icons/icon-cross-bold.svg'
 
@@ -138,7 +138,7 @@ export default class ShareAutocomplete extends Component {
         getSuggestionValue={contact => contact}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        renderSuggestion={contact => <Contact contact={contact} />}
+        renderSuggestion={contact => <ContactSuggestion contact={contact} />}
         renderInputComponent={props => this.renderInput(props)}
         highlightFirstSuggestion
         inputProps={{
