@@ -46,7 +46,7 @@ const generatePayloadForNative = async ({
   id = undefined
 }) => {
   const token = await getToken()
-
+  console.log({ file })
   const payload = {
     id,
     serverUrl: uri,
@@ -86,6 +86,7 @@ export const updateLibraryItem = async (
   progressCallback,
   thumbnailCallback
 ) => {
+  console.log('update ? ')
   if (hasCordovaPlugin()) {
     // the cordova plugin is going to do the upload and needs all the infos to make a request to the stack
     const uri =
@@ -95,6 +96,7 @@ export const updateLibraryItem = async (
       file: libraryItem,
       method: 'PUT'
     })
+    console.log({ payload })
     return uploadNativeItem(payload, progressCallback, thumbnailCallback)
   }
   return Promise.resolve()
@@ -105,6 +107,8 @@ export const uploadLibraryItem = async (
   progressCallback,
   thumbnailCallback
 ) => {
+  console.log({ libraryItem })
+  console.log({ dirID })
   if (hasCordovaPlugin()) {
     const uri =
       getClientUrl() +
@@ -115,7 +119,7 @@ export const uploadLibraryItem = async (
       '&Type=file&Tags=library&Executable=false'
     const payload = await generatePayloadForNative({
       id: dirID,
-      files: libraryItem,
+      file: libraryItem,
       uri
     })
     return uploadNativeItem(payload, progressCallback, thumbnailCallback)
