@@ -88,7 +88,7 @@ const DesktopToolbar = ({ onDownload, discoveryLink }, { t }) => (
     {discoveryLink ? (
       <OpenInCozyButton href={discoveryLink} t={t} />
     ) : (
-      <CozyHomeLink from="sharing-drive" />
+      <CozyHomeLink from="sharing-drive" t={t} />
     )}
     <DownloadFilesButton t={t} onDownload={onDownload} />
     <BarRight>
