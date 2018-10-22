@@ -141,8 +141,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         moveto: {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
-          displayCondition: selections =>
-            canMove && isMoveToActive() && selections.length === 1
+          displayCondition: selections => canMove && isMoveToActive()
         },
         'phone-download': {
           displayCondition: selections =>

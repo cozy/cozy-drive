@@ -33,26 +33,26 @@ class MoveModal extends React.Component {
     const { client, t } = this.context
     const { folderId } = this.state
 
-    const entry = entries[0]
-    const currentDirId = entry.dir_id
-
     try {
+      await Promise.all(
+        entries.map(entry => this.moveEntry(entry._id, folderId))
+      )
       const response = await client.query(client.get('io.cozy.files', folderId))
       const targetName = response.data.name
-      await this.moveEntry(entry._id, folderId)
       Alerter.info(
         t('Move.success', {
-          subject: entry.name,
-          target: targetName
+          subject: entries.length === 1 ? entries[0].name : '',
+          target: targetName,
+          smart_count: entries.length
         }),
         {
           buttonText: t('Move.cancel'),
-          buttonAction: () => this.cancelMove(entry, currentDirId)
+          buttonAction: () => this.cancelMove(entries)
         }
       )
     } catch (e) {
       console.warn(e)
-      Alerter.error(t('Move.error'))
+      Alerter.error(t('Move.error', { smart_count: entries.length }))
     } finally {
       onClose({
         cancelSelection: true
@@ -60,26 +60,29 @@ class MoveModal extends React.Component {
     }
   }
 
-  moveEntry = (entryId, destinationId) => {
-    return this.context.client
-      .collection('io.cozy.files')
-      .updateFileMetadata(entryId, { dir_id: destinationId })
-  }
-
-  cancelMove = async (entry, previousDirId) => {
+  cancelMove = async entries => {
     const { t } = this.context
 
     try {
-      await this.moveEntry(entry._id, previousDirId)
+      await Promise.all(
+        entries.map(entry => this.moveEntry(entry._id, entry.dir_id))
+      )
       Alerter.info(
         t('Move.cancelled', {
-          subject: entry.name
+          subject: entries.length === 1 ? entries[0].name : '',
+          smart_count: entries.length
         })
       )
     } catch (e) {
       console.warn(e)
-      Alerter.error(t('Move.cancelled_error'))
+      Alerter.error(t('Move.cancelled_error', { smart_count: entries.length }))
     }
+  }
+
+  moveEntry = (entryId, destinationId) => {
+    return this.context.client
+      .collection('io.cozy.files')
+      .updateFileMetadata(entryId, { dir_id: destinationId })
   }
 
   contentQuery = client => {
