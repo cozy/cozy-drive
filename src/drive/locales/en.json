@@ -538,10 +538,11 @@
     "to": "Move to:",
     "action": "Move",
     "cancel": "Cancel",
-    "success": "%{subject} has been moved to %{target}.",
-    "error": "Something went wrong while moving this item, please try again later.",
-    "cancelled": "%{subject} has been moved back to it's original location.",
-    "cancelled_error": "Sorry, there was an error while moving the item back."
+    "title": "%{smart_count} element |||| %{smart_count} elements",
+    "success": "%{subject} has been moved to %{target}. |||| %{smart_count} elements have been moved to %{target}.",
+    "error": "Something went wrong while moving this element, please try again later. |||| Something went wrong while moving these elements, please try again later.",
+    "cancelled": "%{subject} has been moved back to it's original location. |||| %{smart_count} elements have been moved back to their original location.",
+    "cancelled_error": "Sorry, there was an error while moving the element back. |||| Sorry, there was an error while moving these elements back."
   },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
