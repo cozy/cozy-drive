@@ -5,6 +5,7 @@ import { Query } from 'cozy-client'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
 import { connect } from 'react-redux'
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
 
 import MoveHeader from './MoveHeader'
 import MoveExplorer from './MoveExplorer'
@@ -50,6 +51,7 @@ class MoveModal extends React.Component {
           buttonAction: () => this.cancelMove(entries)
         }
       )
+      this.trackEvent(entries.length)
     } catch (e) {
       console.warn(e)
       Alerter.error(t('Move.error', { smart_count: entries.length }))
@@ -83,6 +85,13 @@ class MoveModal extends React.Component {
     return this.context.client
       .collection('io.cozy.files')
       .updateFileMetadata(entryId, { dir_id: destinationId })
+  }
+
+  trackEvent(eventValue) {
+    const tracker = getTracker()
+    if (tracker) {
+      tracker.push(['trackEvent', 'Drive', 'move', 'moveTo', eventValue])
+    }
   }
 
   contentQuery = client => {
