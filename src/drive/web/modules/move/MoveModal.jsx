@@ -21,7 +21,8 @@ class MoveModal extends React.Component {
 
     const { displayedFolder } = props
     this.state = {
-      folderId: displayedFolder ? displayedFolder._id : ROOT_DIR_ID
+      folderId: displayedFolder ? displayedFolder._id : ROOT_DIR_ID,
+      isMoveInProgress: false
     }
   }
 
@@ -35,6 +36,7 @@ class MoveModal extends React.Component {
     const { folderId } = this.state
 
     try {
+      this.setState({ isMoveInProgress: true })
       await Promise.all(
         entries.map(entry => this.moveEntry(entry._id, folderId))
       )
@@ -56,6 +58,7 @@ class MoveModal extends React.Component {
       console.warn(e)
       Alerter.error(t('Move.error', { smart_count: entries.length }))
     } finally {
+      this.setState({ isMoveInProgress: false })
       onClose({
         cancelSelection: true
       })
@@ -112,7 +115,7 @@ class MoveModal extends React.Component {
 
   render() {
     const { onClose, entries } = this.props
-    const { folderId } = this.state
+    const { folderId, isMoveInProgress } = this.state
 
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
@@ -152,6 +155,7 @@ class MoveModal extends React.Component {
           onClose={onClose}
           targets={entries}
           currentDirId={folderId}
+          isMoving={isMoveInProgress}
         />
       </Modal>
     )
