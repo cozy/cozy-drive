@@ -4,9 +4,9 @@ import {
   getPhotos,
   uploadLibraryItem,
   isAuthorized,
-  getMediaFolderName,
   requestAuthorization
 } from 'drive/mobile/lib/media'
+import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { isWifi } from 'drive/mobile/lib/network'
 import { logException } from 'drive/lib/reporter'
 import { setBackupImages } from 'drive/mobile/modules/settings/duck'
@@ -21,7 +21,10 @@ import {
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
 import { checkCorruptedFiles } from './checkCorruptedFiles'
+
 const ERROR_CODE_TOO_LARGE = 413
+const REFERENCE_PHOTOS_DIR = 'io.cozy.apps/photos'
+const REFERENCE_UPLOAD_DIR = 'io.cozy.apps/photos/mobile'
 
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
 
@@ -34,9 +37,107 @@ const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
   }
 })
 
-const getDirID = async path => {
-  const { _id } = await cozy.client.files.createDirectoryByPath(path, false)
-  return _id
+const getFoldersWithReference = async reference => {
+  try {
+    const referencedFolders = await cozy.client.fetchJSON(
+      'POST',
+      '/files/_find',
+      {
+        selector: {
+          referenced_by: {
+            $elemMatch: {
+              type: reference
+            }
+          }
+        },
+        sort: [{ created_at: 'desc' }]
+      }
+    )
+
+    return referencedFolders.filter(
+      folder => /^\/\.cozy_trash/.test(folder.attributes.path) === false
+    )
+  } catch (err) {
+    if (err.reason.errors[0].title === 'no_usable_index') {
+      await initCreatedAtIndex()
+      return getFoldersWithReference(reference)
+    } else {
+      throw err
+    }
+  }
+}
+
+const initCreatedAtIndex = () =>
+  cozy.client.fetchJSON('POST', '/data/io.cozy.files/_index', {
+    index: {
+      fields: ['created_at']
+    }
+  })
+
+const addFolderReference = (folderId, reference) =>
+  cozy.client.fetchJSON(
+    'POST',
+    `/files/${folderId}/relationships/referenced_by`,
+    {
+      data: [
+        {
+          type: reference,
+          id: reference
+        }
+      ]
+    }
+  )
+
+const getOrCreateFolderWithReference = async (path, reference) => {
+  const referencedFolders = await getFoldersWithReference(reference)
+
+  if (referencedFolders.length) {
+    return referencedFolders[0]
+  } else {
+    const dir = await cozy.client.files.createDirectoryByPath(path, false)
+    await addFolderReference(dir._id, reference)
+    return dir
+  }
+}
+
+const getUploadDir = async () => {
+  const uploadedFolders = await getFoldersWithReference(REFERENCE_UPLOAD_DIR)
+
+  if (uploadedFolders.length >= 1) {
+    // There can be more than one referenced folder in case of consecutive delete/restores. We always want to return the most recently used.
+    return uploadedFolders[0]
+  } else {
+    const t = getTranslateFunction()
+    const mediaFolderName = t('mobile.settings.media_backup.media_folder')
+    const uploadFolderName = t('mobile.settings.media_backup.backup_folder')
+    const legacyUploadFolderName = t(
+      'mobile.settings.media_backup.legacy_backup_folder'
+    )
+
+    await getOrCreateFolderWithReference(
+      `/${mediaFolderName}`,
+      REFERENCE_PHOTOS_DIR
+    )
+
+    try {
+      const legacyFolder = await cozy.client.files.statByPath(
+        `/${mediaFolderName}/${legacyUploadFolderName}`
+      )
+      await addFolderReference(legacyFolder._id, REFERENCE_UPLOAD_DIR)
+      return legacyFolder
+    } catch (err) {
+      if (err.status === 404) {
+        // the legacy folder doesn't exist, so we create the new one
+        const uploadFolder = await getOrCreateFolderWithReference(
+          `/${mediaFolderName}/${uploadFolderName}`,
+          REFERENCE_UPLOAD_DIR
+        )
+        return uploadFolder
+      } else {
+        throw err
+      }
+    }
+  }
 }
 
 const canBackup = (isManualBackup, getState) => {
@@ -48,10 +149,11 @@ const canBackup = (isManualBackup, getState) => {
   )
 }
 
-export const startMediaBackup = (
-  targetFolderName,
-  isManualBackup = false
-) => async (dispatch, getState, client) => {
+export const startMediaBackup = (isManualBackup = false) => async (
+  dispatch,
+  getState,
+  client
+) => {
   dispatch({ type: MEDIA_UPLOAD_START })
   if (!await isAuthorized()) {
     const promptForPermissions = isManualBackup
@@ -79,7 +181,10 @@ export const startMediaBackup = (
 
       const totalUpload = photosToUpload.length
       if (totalUpload > 0) {
-        const dirID = await getDirID(targetFolderName)
+        const {
+          _id: uploadDirId,
+          attributes: { path: uploadDirPath }
+        } = await getUploadDir()
         let uploadCounter = 0
         for (const photo of photosToUpload) {
           if (
@@ -90,7 +195,7 @@ export const startMediaBackup = (
             break
           }
           dispatch(currentMediaUpload(photo, uploadCounter++, totalUpload))
-          await dispatch(uploadPhoto(targetFolderName, dirID, photo))
+          await dispatch(uploadPhoto(uploadDirPath, uploadDirId, photo))
         }
       }
 
@@ -129,7 +234,6 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
   }, maxBackupTime)
   try {
     const onProgressUpdate = progress => {
-      // console.log(percent + '%');
       dispatch({ type: CURRENT_UPLOAD_PROGRESS, progress })
     }
 
@@ -180,7 +284,7 @@ export const backupImages = backupImages => async (dispatch, getState) => {
   } = require('drive/mobile/lib/background')
   updateStatusBackgroundService(backupImages)
   if (backupImages) {
-    dispatch(startMediaBackup(getMediaFolderName()))
+    dispatch(startMediaBackup())
   }
 
   return backupImages

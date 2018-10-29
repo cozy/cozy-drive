@@ -1,5 +1,4 @@
 import { isCordova } from './device'
-import { getTranslateFunction } from './i18n'
 import { getToken, getClientUrl } from './cozy-helper'
 import { logException } from 'drive/lib/reporter'
 
@@ -141,9 +140,4 @@ export const getPhotos = async () => {
   }
 
   return Promise.resolve(defaultReturn)
-}
-
-export const getMediaFolderName = () => {
-  const t = getTranslateFunction()
-  return t('mobile.settings.media_backup.media_folder')
 }
