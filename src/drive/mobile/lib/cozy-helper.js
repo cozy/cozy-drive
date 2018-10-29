@@ -4,7 +4,7 @@ import CozyClient from 'cozy-client'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { getDeviceName } from './device'
 import { disableBackgroundService } from './background'
-import { schema, DOCTYPE_FILES } from '../../../../targets/drive/doctypes'
+import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 

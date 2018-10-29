@@ -15,7 +15,7 @@ import { configureReporter } from 'drive/lib/reporter'
 
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
-import { schema } from '../doctypes'
+import { schema } from 'drive/lib/doctypes'
 
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact

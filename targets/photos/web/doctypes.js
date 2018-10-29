@@ -2,7 +2,7 @@ import {
   DOCTYPE_ALBUMS,
   DOCTYPE_FILES,
   DOCTYPE_CONTACTS
-} from '../../../targets/drive/doctypes'
+} from 'drive/lib/doctypes'
 
 export default {
   albums: {
