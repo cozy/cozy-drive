@@ -21,10 +21,9 @@ import {
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
 import { checkCorruptedFiles } from './checkCorruptedFiles'
+import { DOCTYPE_REF_PHOTOS, DOCTYPE_REF_BACKUP } from 'drive/lib/doctypes'
 
 const ERROR_CODE_TOO_LARGE = 413
-const REFERENCE_PHOTOS_DIR = 'io.cozy.apps/photos'
-const REFERENCE_UPLOAD_DIR = 'io.cozy.apps/photos/mobile'
 
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
 
@@ -101,7 +100,7 @@ const getOrCreateFolderWithReference = async (path, reference) => {
 }
 
 const getUploadDir = async () => {
-  const uploadedFolders = await getFoldersWithReference(REFERENCE_UPLOAD_DIR)
+  const uploadedFolders = await getFoldersWithReference(DOCTYPE_REF_BACKUP)
 
   if (uploadedFolders.length >= 1) {
     // There can be more than one referenced folder in case of consecutive delete/restores. We always want to return the most recently used.
@@ -116,21 +115,21 @@ const getUploadDir = async () => {
 
     await getOrCreateFolderWithReference(
       `/${mediaFolderName}`,
-      REFERENCE_PHOTOS_DIR
+      DOCTYPE_REF_PHOTOS
     )
 
     try {
       const legacyFolder = await cozy.client.files.statByPath(
         `/${mediaFolderName}/${legacyUploadFolderName}`
       )
-      await addFolderReference(legacyFolder._id, REFERENCE_UPLOAD_DIR)
+      await addFolderReference(legacyFolder._id, DOCTYPE_REF_BACKUP)
       return legacyFolder
     } catch (err) {
       if (err.status === 404) {
         // the legacy folder doesn't exist, so we create the new one
         const uploadFolder = await getOrCreateFolderWithReference(
           `/${mediaFolderName}/${uploadFolderName}`,
-          REFERENCE_UPLOAD_DIR
+          DOCTYPE_REF_BACKUP
         )
         return uploadFolder
       } else {
