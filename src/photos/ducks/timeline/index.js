@@ -21,19 +21,9 @@ const TIMELINE_QUERY = client =>
 
 const TIMELINE_MUTATIONS = query => ({
   uploadPhoto: (file, dirPath) => {
-    return query.client.upload(file, dirPath, {
-      updateQueries: {
-        [TIMELINE]: (previousData, result) => [result.data, ...previousData]
-      }
-    })
+    return query.client.upload(file, dirPath)
   },
-  deletePhoto: photo =>
-    query.client.destroy(photo, {
-      updateQueries: {
-        [TIMELINE]: (previousData, result) =>
-          previousData.filter(p => p._id !== result.data.id)
-      }
-    })
+  deletePhoto: photo => query.client.destroy(photo)
 })
 
 const getPhotosByMonth = photos => {
