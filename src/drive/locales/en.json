@@ -364,7 +364,9 @@
         }
       },
       "media_backup": {
-        "media_folder": "/Photos/Backuped from my mobile",
+        "media_folder": "Photos",
+        "backup_folder": "Backed up from my mobile",
+        "legacy_backup_folder": "Backuped from my mobile",
         "title": "Media Backup",
         "images": {
           "title": "Backup images",

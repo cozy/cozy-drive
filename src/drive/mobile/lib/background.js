@@ -3,7 +3,6 @@ import { loadState } from 'drive/store/persistedState'
 import { startMediaBackup } from 'drive/mobile/modules/mediaBackup/duck'
 import { initClient } from './cozy-helper'
 import { logException, configureReporter } from 'drive/lib/reporter'
-import { getMediaFolderName } from './media'
 import { isCordova, isIos, isAndroid, getPlatformId } from './device'
 import { getTranslateFunction } from './i18n'
 
@@ -95,7 +94,7 @@ const backgroundService = () =>
           getTranslateFunction(),
           persistedState
         )
-        return store.dispatch(startMediaBackup(getMediaFolderName()))
+        return store.dispatch(startMediaBackup())
       })
       .then(resolve)
       .catch(resolve)

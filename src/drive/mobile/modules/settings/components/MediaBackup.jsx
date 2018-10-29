@@ -50,11 +50,7 @@ export const MediaBackup = ({
         ),
         busy: mediaUploading,
         theme: 'regular',
-        onClick: () =>
-          toggleBackup(
-            !mediaUploading,
-            t('mobile.settings.media_backup.media_folder')
-          )
+        onClick: () => toggleBackup(!mediaUploading)
       }
     ]}
   />
@@ -72,9 +68,9 @@ const mapDispatchToProps = dispatch => ({
     await dispatch(setWifiOnly(value))
     dispatch(backupImages())
   },
-  toggleBackup: (launch, dir) => {
+  toggleBackup: launch => {
     if (launch) {
-      dispatch(startMediaBackup(dir, true))
+      dispatch(startMediaBackup(true))
     } else {
       dispatch(cancelMediaBackup())
     }
