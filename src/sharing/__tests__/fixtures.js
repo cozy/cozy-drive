@@ -30,6 +30,12 @@ export const SHARING_1 = {
         name: 'John Doe',
         email: 'john@doe.com',
         instance: 'http://cozy.local:8080'
+      },
+      {
+        status: 'ready',
+        name: 'John Doe 2',
+        email: 'john2@doe.com',
+        instance: 'http://cozy.local:8080'
       }
     ]
   },
