@@ -113,7 +113,29 @@ describe('Sharing state', () => {
       ),
       revokeRecipient(SHARING_1, 1)
     )
-    expect(state.sharings[0].attributes.members).toHaveLength(1)
+    expect(state.sharings[0].attributes.members).toHaveLength(
+      SHARING_1.attributes.members.length
+    )
+    expect(state.sharings[0].attributes.members[1].status).toEqual('revoked')
+  })
+
+  it('should revoke a recipient even when removing one in the middle', () => {
+    const state = reducer(
+      reducer(
+        undefined,
+        receiveSharings({
+          sharings: [SHARING_1, SHARING_2]
+        })
+      ),
+      revokeRecipient(SHARING_1, 1)
+    )
+    expect(state.sharings[0].attributes.members).toHaveLength(
+      SHARING_1.attributes.members.length
+    )
+    expect(state.sharings[0].attributes.members[1].status).toEqual('revoked')
+    expect(state.sharings[0].attributes.members[2].id).toEqual(
+      SHARING_1.attributes.members[2].id
+    )
   })
 
   it('should revoke self', () => {
@@ -193,6 +215,15 @@ describe('Sharing state', () => {
           name: 'John Doe',
           sharingId: 'sharing_1',
           index: 1,
+          status: 'ready',
+          type: 'two-way'
+        },
+        {
+          email: 'john2@doe.com',
+          instance: 'http://cozy.local:8080',
+          name: 'John Doe 2',
+          sharingId: 'sharing_1',
+          index: 2,
           status: 'ready',
           type: 'two-way'
         },
