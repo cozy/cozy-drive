@@ -32,19 +32,31 @@ export const updateSharing = sharing => ({
   type: UPDATE_SHARING,
   sharing
 })
-export const revokeRecipient = (sharing, index, path) => ({
-  type: REVOKE_RECIPIENT,
-  // we form the updated sharing here so that we can "forget" it in the byId reducer if
-  // there is no not-revoked member remaining
-  sharing: {
-    ...sharing,
-    attributes: {
-      ...sharing.attributes,
-      members: sharing.attributes.members.filter((_, idx) => index !== idx)
-    }
-  },
-  path
-})
+export const revokeRecipient = (sharing, index, path) => {
+  return {
+    type: REVOKE_RECIPIENT,
+    /* We set revoked status to the revoked member. 
+    We can't just simply remove it, 'cauz we use the index 
+    to remove members..
+    */
+    sharing: {
+      ...sharing,
+      attributes: {
+        ...sharing.attributes,
+        members: sharing.attributes.members.map((m, idx) => {
+          if (idx === index) {
+            return {
+              ...m,
+              status: 'revoked'
+            }
+          }
+          return m
+        })
+      }
+    },
+    path
+  }
+}
 export const revokeSelf = sharing => ({ type: REVOKE_SELF, sharing })
 export const addSharingLink = data => ({ type: ADD_SHARING_LINK, data })
 export const revokeSharingLink = permissions => ({
