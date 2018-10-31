@@ -19,6 +19,9 @@
 
 .fil-content-row
     @extend $table-row
+    .fil-content-file-select
+    .fil-content-file-action
+        opacity 1
 
     &--center
         justify-content center
@@ -175,11 +178,7 @@
 .fil-content-body--selectable
     .fil-content-file-select
         opacity 1
-
-.fil-content-row:hover
-    .fil-content-file-select
-    .fil-content-file-action
-        opacity 1
+    
 
 .fil-content-row-actioned
     .fil-content-file-action
@@ -357,3 +356,12 @@ mime-types('fil-file-', '../assets/icons/')
 
     .fil-file-infos
         display block
+
+
++desktop()
+    .fil-content-row-actioned
+        .fil-content-file-action
+            opacity 1
+            button 
+                background silver
+                opacity: 1
