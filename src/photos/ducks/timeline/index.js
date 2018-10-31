@@ -20,8 +20,12 @@ const TIMELINE_QUERY = client =>
     })
 
 const TIMELINE_MUTATIONS = query => ({
-  uploadPhoto: (file, dirPath) => {
-    return query.client.upload(file, dirPath)
+  uploadPhoto: async (file, dirId) => {
+    return query.client.mutate({
+      mutationType: 'UPLOAD_PHOTO',
+      execute: () =>
+        query.client.collection('io.cozy.files').createFile(file, { dirId })
+    })
   },
   deletePhoto: photo => query.client.destroy(photo)
 })

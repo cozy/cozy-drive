@@ -13,6 +13,57 @@ import { addToUploadQueue } from '../../upload'
 import { AddToAlbumModal, belongsToAlbums } from '../../albums'
 import Selection from '../../selection'
 
+const APPS_DOCTYPE = 'io.cozy.apps'
+const REF_PHOTOS = 'io.cozy.apps/photos'
+const REF_UPLOAD = 'io.cozy.apps/photos/upload'
+
+const getUploadDir = async (client, t) => {
+  const collection = client.collection('io.cozy.files')
+  const { included } = await collection.findReferencedBy({
+    _type: APPS_DOCTYPE,
+    _id: REF_UPLOAD
+  })
+  const referencedFolders = included.filter(
+    folder => /^\/\.cozy_trash/.test(folder.attributes.path) === false
+  )
+
+  if (referencedFolders.length > 0) {
+    return referencedFolders[0]._id
+  } else {
+    const photosDirId = await collection.ensureDirectoryExists(
+      `/${t('UploadQueue.path_photos')}`
+    )
+    await collection.addReferencesTo(
+      {
+        _id: REF_PHOTOS,
+        _type: APPS_DOCTYPE
+      },
+      [
+        {
+          _id: photosDirId
+        }
+      ]
+    )
+
+    const uploadDirId = await collection.ensureDirectoryExists(
+      `/${t('UploadQueue.path_photos')}/${t('UploadQueue.path_upload')}`
+    )
+    await collection.addReferencesTo(
+      {
+        _id: REF_UPLOAD,
+        _type: APPS_DOCTYPE
+      },
+      [
+        {
+          _id: uploadDirId
+        }
+      ]
+    )
+
+    return uploadDirId
+  }
+}
+
 class Timeline extends Component {
   state = {
     showAddAlbumModal: false
@@ -25,12 +76,13 @@ class Timeline extends Component {
     this.setState(state => ({ ...state, showAddAlbumModal: false }))
   }
 
-  uploadPhotos = photos => {
+  uploadPhotos = async photos => {
     const { uploadPhoto } = this.props
+    const { client, t } = this.context
+    const uploadDir = await getUploadDir(client, t)
+
     this.dispatch(
-      addToUploadQueue(photos, photo =>
-        uploadPhoto(photo, this.context.t('UploadQueue.path'))
-      )
+      addToUploadQueue(photos, photo => uploadPhoto(photo, uploadDir))
     )
   }
 
