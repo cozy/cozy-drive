@@ -63,7 +63,14 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setBackupImages: value => dispatch(backupImages(value)),
+  setBackupImages: value => {
+    if (value === false) {
+      dispatch(cancelMediaBackup())
+      dispatch(backupImages(false, true))
+    } else {
+      dispatch(backupImages(value))
+    }
+  },
   setWifiOnly: async value => {
     await dispatch(setWifiOnly(value))
     dispatch(backupImages())
