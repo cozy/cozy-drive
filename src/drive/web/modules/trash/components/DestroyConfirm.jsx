@@ -9,6 +9,7 @@ const DestroyConfirm = ({ t, fileCount, confirm, onClose }) => {
   const confirmationTexts = ['forbidden', 'restore'].map(type => (
     <p
       className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
+      key={`key_destroy_${type}`}
     >
       {t(`destroyconfirmation.${type}`, fileCount)}
     </p>

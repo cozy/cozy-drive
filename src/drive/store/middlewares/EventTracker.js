@@ -8,7 +8,7 @@ const ACTIONS = {
   UPLOAD: 'upload'
 }
 
-const tracker = store => next => action => {
+const tracker = () => next => action => {
   switch (action.type) {
     case PRE_UPLOAD_FILE:
       action.trackEvent = {
