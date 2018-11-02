@@ -25,8 +25,7 @@
     "prewatch:drive:mobile": "npm run clean:mobile",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src/drive/styles --config ./.stylintrc",
-    "lint:js": "eslint --ignore-pattern node_modules \"{src,test}/**/*.{js,jsx}\"",
-    "precommit": "lint-staged",
+    "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
     "test": "node_modules/.bin/jest --coverage --config=jest.config.json",
     "watch:drive": "npm run watch:drive:browser",
     "watch:drive:browser": "npm run internal:watch -- --env.app=drive --env.target=browser",
@@ -105,7 +104,6 @@
     "postcss-assets-webpack-plugin": "1.1.0",
     "postcss-discard-duplicates": "2.1.0",
     "postcss-loader": "2.1.6",
-    "prettier": "1.11.1",
     "react": "15.6.2",
     "react-addons-test-utils": "15.6.2",
     "react-dom": "15.6.2",
@@ -173,50 +171,5 @@
     "url-polyfill": "1.1.0",
     "webpack-node-externals": "1.7.2",
     "whatwg-fetch": "3.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "standard-react",
-      "prettier",
-      "prettier/react",
-      "prettier/standard"
-    ],
-    "plugins": [
-      "react",
-      "prettier",
-      "standard"
-    ],
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "rules": {
-      "prettier/prettier": "error",
-      "react/prop-types": [
-        2,
-        {
-          "skipUndeclared": true
-        }
-      ],
-      "react/jsx-no-bind": 1,
-      "camelcase": "off"
-    },
-    "env": {
-      "browser": true,
-      "jest": true
-    }
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
-  "lint-staged": {
-    "{src,test}/**/*.{js,jsx}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }
