@@ -16,6 +16,7 @@ export const ErrorComponent = ({ t, errorType }) => {
 
 const TranslatedError = translate()(ErrorComponent)
 
+// eslint-disable-next-line
 export const withError = (onError, type, BaseComponent) => props =>
   onError(props) ? (
     <TranslatedError errorType={type} />

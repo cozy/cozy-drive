@@ -11,7 +11,7 @@ const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
 const withFileUrl = BaseComponent =>
-  class extends Component {
+  class withFileUrlClass extends Component {
     state = {
       status: LOADING,
       downloadUrl: null

@@ -63,7 +63,7 @@ const getPhotosByMonth = photos => {
     }
   })
 }
-
+// eslint-disable-next-line
 export default props => (
   <Query query={TIMELINE_QUERY} as={TIMELINE} mutations={TIMELINE_MUTATIONS}>
     {({ data, ...result }, mutations) => (
