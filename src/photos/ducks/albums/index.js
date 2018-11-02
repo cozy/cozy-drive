@@ -28,7 +28,7 @@ const addPhotos = async (album, photos) => {
   }
 }
 
-const ALBUMS_MUTATIONS = (client, ownProps) => ({
+const ALBUMS_MUTATIONS = client => ({
   addPhotos,
   createAlbum: async (name, photos, created_at = new Date()) => {
     try {
@@ -74,7 +74,7 @@ const ALBUMS_MUTATIONS = (client, ownProps) => ({
 const ALBUM_QUERY = (client, ownProps) =>
   client.get(DOCTYPE, ownProps.router.params.albumId).include(['photos'])
 
-const ALBUM_MUTATIONS = (query, ownProps) => ({
+const ALBUM_MUTATIONS = query => ({
   updateAlbum: album => query.client.save(album),
   deleteAlbum: album => query.client.destroy(album),
   addPhotos,

@@ -98,7 +98,12 @@ class Topbar extends Component {
   }
 
   render() {
-    const { children, viewName, breakpoints: { isMobile }, router } = this.props
+    const {
+      children,
+      viewName,
+      breakpoints: { isMobile },
+      router
+    } = this.props
     const isAlbumContent = viewName === 'albumContent'
     const title = <TopbarTitle>{this.renderTitle()}</TopbarTitle>
     const responsiveTitle = isMobile ? <BarCenter>{title}</BarCenter> : title
@@ -140,4 +145,8 @@ Topbar.defaultProps = {
   onEdit: () => {}
 }
 
-export default flow(withRouter, withBreakpoints(), translate())(Topbar)
+export default flow(
+  withRouter,
+  withBreakpoints(),
+  translate()
+)(Topbar)

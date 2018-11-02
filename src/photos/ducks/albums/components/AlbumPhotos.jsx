@@ -184,6 +184,11 @@ const mapDispatchToProps = dispatch => ({
     )
 })
 
-export default flow(connect(null, mapDispatchToProps), withRouter, translate())(
-  AlbumPhotos
-)
+export default flow(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withRouter,
+  translate()
+)(AlbumPhotos)

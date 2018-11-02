@@ -199,6 +199,7 @@ const files = (state = [], action) => {
     case SORT_FOLDER_SUCCESS:
       return action.files
     case FETCH_MORE_FILES_SUCCESS:
+      // eslint-disable-next-line no-case-declarations
       const clone = state.slice(0)
       action.files.forEach((f, i) => {
         clone[action.skip + i] = f

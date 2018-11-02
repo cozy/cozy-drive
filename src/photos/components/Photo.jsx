@@ -25,7 +25,7 @@ const getStyleFromBox = box => {
   return style
 }
 
-const Photo = (props, { client }) => {
+const Photo = props => {
   const { photo, box, selected = false, onToggle, router } = props
   const style = getStyleFromBox(box)
   return (

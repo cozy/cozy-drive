@@ -25,7 +25,7 @@ const Pending = translate()(props => (
   </span>
 ))
 
-const Item = translate()(({ t, file, status }) => {
+const Item = translate()(({ file, status }) => {
   const { filename, extension } = splitFilename(file)
   return (
     <div
@@ -118,8 +118,12 @@ class UploadQueue extends Component {
         />
         <div className={styles['upload-queue-content']}>
           <div className={styles['upload-queue-list']}>
-            {queue.map(item => (
-              <Item file={item.file.name} status={item.status} />
+            {queue.map((item, index) => (
+              <Item
+                file={item.file.name}
+                status={item.status}
+                key={`file_${index}`}
+              />
             ))}
           </div>
         </div>
@@ -128,14 +132,17 @@ class UploadQueue extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   queue: getUploadQueue(state),
   doneCount: getProcessed(state).length,
   successCount: getSuccessful(state).length
 })
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   purgeQueue: () => dispatch(purgeUploadQueue())
 })
 export default translate()(
-  connect(mapStateToProps, mapDispatchToProps)(UploadQueue)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(UploadQueue)
 )

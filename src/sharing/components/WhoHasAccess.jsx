@@ -23,9 +23,10 @@ class WhoHasAccess extends PureComponent {
             })}
           </SubTitle>
         )}
-        {recipients.map(recipient => (
+        {recipients.map((recipient, index) => (
           <Recipient
             {...recipient}
+            key={`key_r_${index}`}
             isOwner={isOwner}
             document={document}
             documentType={documentType}

@@ -11,7 +11,9 @@ import styles from 'drive/styles/actionmenu'
 class Menu extends Component {
   componentDidMount() {
     const { reference } = this.props
+    // eslint-disable-next-line react/no-find-dom-node
     const anchorEl = ReactDOM.findDOMNode(reference)
+    // eslint-disable-next-line react/no-find-dom-node
     const menuEl = ReactDOM.findDOMNode(this.menuEl)
     this.popper = new PopperJS(anchorEl, menuEl)
   }
@@ -54,6 +56,7 @@ class Menu extends Component {
                 }
             return (
               <Component
+                key={actionName}
                 className={cx(
                   styles['fil-action'],
                   styles[`fil-action-${actionName}`]

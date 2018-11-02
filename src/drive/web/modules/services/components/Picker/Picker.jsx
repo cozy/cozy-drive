@@ -65,7 +65,11 @@ class Picker extends Component {
   }
 
   render() {
-    const { files, service, breakpoints: { isMobile } } = this.props
+    const {
+      files,
+      service,
+      breakpoints: { isMobile }
+    } = this.props
     const { path } = this.state
     const { t } = this.context
     const { hint, icon } = service.getData()
@@ -115,15 +119,18 @@ class Picker extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   openedFolderId: getOpenedFolderId(state),
   files: getVisibleFiles(state)
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   fetchFolder: folderId => dispatch(openFolder(folderId))
 })
 
 export default withReduxStore(
-  connect(mapStateToProps, mapDispatchToProps)(withBreakpoints()(Picker))
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withBreakpoints()(Picker))
 )

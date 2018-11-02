@@ -235,7 +235,7 @@ export const SharedDocuments = ({ children }) => (
           sharing => sharing.attributes.rules[0].values[0]
         )
       })
-    }}
+    }
   </SharingContext.Consumer>
 )
 
@@ -263,13 +263,13 @@ export const SharedDocument = ({ docId, children }) => (
         link: getSharingLink(docId) !== null,
         onLeave: revokeSelf
       })
-    }}
+    }
   </SharingContext.Consumer>
 )
 
-export const SharedStatus = ({ docId, className }, { t }) => (
+export const SharedStatus = ({ docId, className }) => (
   <SharingContext.Consumer>
-    {({ byDocId, isOwner, getRecipients, getSharingLink } = {}) =>
+    {({ byDocId, getRecipients, getSharingLink } = {}) =>
       !byDocId || !byDocId[docId] ? (
         <span className={className}>—</span>
       ) : (
@@ -290,7 +290,7 @@ export const SharedBadge = ({ docId, ...rest }) => (
       !byDocId || !byDocId[docId] ? null : (
         <DumbSharedBadge byMe={isOwner(docId)} {...rest} />
       )
-    }}
+    }
   </SharingContext.Consumer>
 )
 
@@ -305,7 +305,7 @@ export const SharedRecipients = ({ docId, onClick, ...rest }) => (
           {...rest}
         />
       )
-    }}
+    }
   </SharingContext.Consumer>
 )
 
@@ -318,7 +318,7 @@ export const SharedRecipientsList = ({ docId, ...rest }) => (
           {...rest}
         />
       )
-    }}
+    }
   </SharingContext.Consumer>
 )
 

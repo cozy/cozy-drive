@@ -1,4 +1,4 @@
-const ColorHash = str => {
+const ColorHash = () => {
   const schemes = {
     base: [
       '304FFE',

@@ -38,12 +38,15 @@ const selected = (state = [], action) => {
     case UNSELECT_ITEM:
       return state.filter(i => i._id !== action.item.id)
     case ADD_TO_SELECTION:
+      // eslint-disable-next-line no-case-declarations
       const selectedIds = state.map(i => i._id)
+      // eslint-disable-next-line no-case-declarations
       const newItems = action.items.filter(
         i => selectedIds.indexOf(i._id) === -1
       )
       return [...state, ...newItems]
     case REMOVE_FROM_SELECTION:
+      // eslint-disable-next-line no-case-declarations
       const itemIds = action.items.map(i => i._id)
       return state.filter(i => itemIds.indexOf(i._id) === -1)
     case HIDE_SELECTION_BAR:

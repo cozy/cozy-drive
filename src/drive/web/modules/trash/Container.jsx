@@ -9,7 +9,8 @@ import Toolbar from './Toolbar'
 
 import { restoreFiles, destroyFiles } from './actions'
 
-const mapStateToProps = (state, ownProps) => ({
+//!TODO WTF? inital state ?
+const mapStateToProps = () => ({
   isTrashContext: true,
   canDrop: false,
   canUpload: false,
@@ -39,5 +40,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default translate()(
-  connect(mapStateToProps, mapDispatchToProps)(FolderView)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FolderView)
 )

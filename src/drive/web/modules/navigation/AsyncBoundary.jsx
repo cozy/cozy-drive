@@ -9,7 +9,7 @@ const AsyncBoundary = ({ fetchStatus, isNavigating = false, children }) => {
   return children({ isLoading, isNavigating, isInError: fetchFailed })
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   isNavigating: isNavigating(state),
   fetchStatus: state.view.fetchStatus
 })

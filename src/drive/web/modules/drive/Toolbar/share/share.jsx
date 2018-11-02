@@ -4,7 +4,7 @@ import { showModal } from 'react-cozy-helpers'
 import { ShareModal } from 'sharing'
 import toolbarContainer from '../toolbar'
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   share: displayedFolder =>
     dispatch(
       showModal(
@@ -18,6 +18,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 const shareContainer = component =>
-  connect(null, mapDispatchToProps)(toolbarContainer(component))
+  connect(
+    null,
+    mapDispatchToProps
+  )(toolbarContainer(component))
 
 export default shareContainer

@@ -54,7 +54,11 @@ class Settings extends Component {
             <About onTap={this.incrementTapCount} />
             <Unlink />
 
-            {__DEVELOPMENT__ && [<hr />, <h3>Debug Zone</h3>, <DebugTools />]}
+            {__DEVELOPMENT__ && [
+              <hr key={1} />,
+              <h3 key={2}>Debug Zone</h3>,
+              <DebugTools key={3} />
+            ]}
           </div>
           {this.state.displayFeedback && (
             <FeedbackForm onClose={this.hideFeedbackForm} />

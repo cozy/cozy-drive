@@ -14,7 +14,7 @@ export const checkCorruptedFiles = async (photosOnDevice, dispatch) => {
   const onProgressUpdate = progress => {
     dispatch({ type: CURRENT_UPLOAD_PROGRESS, progress })
   }
-  const onThumbnailGenerated = thumbnailUrl => {}
+  const onThumbnailGenerated = () => {}
   const seen = (await localforage.getItem('CORRUPTED_FILES')) || false
   if (seen === false) {
     const requestFiles = await cozy.client.fetchJSON('GET', '/files/fsck')

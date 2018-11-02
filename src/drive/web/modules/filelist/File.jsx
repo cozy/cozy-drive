@@ -377,11 +377,14 @@ const mapStateToProps = (state, ownProps) => ({
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id)
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   onCheckboxToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected))
 })
 
 export const DumbFile = withBreakpoints()(translate()(File))
 
-export default connect(mapStateToProps, mapDispatchToProps)(DumbFile)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DumbFile)

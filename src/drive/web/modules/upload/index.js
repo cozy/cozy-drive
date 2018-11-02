@@ -107,7 +107,7 @@ const getFileFromEntry = entry => new Promise(resolve => entry.file(resolve))
 const uploadDirectory = async (client, directory, dirID) => {
   const newDir = await createFolder(client, directory.name, dirID)
   const dirReader = directory.createReader()
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const entriesReader = async entries => {
       for (let i = 0; i < entries.length; i += 1) {
         const entry = entries[i]

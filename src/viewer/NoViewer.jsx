@@ -46,9 +46,12 @@ class AsyncActionButton extends React.Component {
   }
 }
 
-const OpenWithCordovaButton = connect(null, (dispatch, ownProps) => ({
-  openLocalFileCopy: () => dispatch(openLocalFileCopy(ownProps.file))
-}))(({ t, openLocalFileCopy, onError }) => (
+const OpenWithCordovaButton = connect(
+  null,
+  (dispatch, ownProps) => ({
+    openLocalFileCopy: () => dispatch(openLocalFileCopy(ownProps.file))
+  })
+)(({ t, openLocalFileCopy, onError }) => (
   <AsyncActionButton
     className={styles['pho-viewer-noviewer-download']}
     onClick={openLocalFileCopy}
@@ -88,14 +91,14 @@ class CallToAction extends React.Component {
   async componentWillMount() {
     const seen = (await localforage.getItem(NOVIEWER_DESKTOP_CTA)) || false
     if (!seen) {
-      const mustSee = !await isClientAlreadyInstalled()
+      const mustSee = !(await isClientAlreadyInstalled())
       if (mustSee) {
         this.setState(state => ({ ...state, mustShow: true }))
       }
     }
   }
 
-  markAsSeen = element => {
+  markAsSeen = () => {
     localforage.setItem(NOVIEWER_DESKTOP_CTA, true)
     this.setState(state => ({ ...state, mustShow: false }))
   }

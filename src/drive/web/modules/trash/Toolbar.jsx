@@ -63,11 +63,11 @@ const Toolbar = ({
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   emptyTrash: () =>
     dispatch(
       showModal(<EmptyTrashConfirm onConfirm={() => dispatch(emptyTrash())} />)
@@ -75,5 +75,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default translate()(
-  withBreakpoints()(connect(mapStateToProps, mapDispatchToProps)(Toolbar))
+  withBreakpoints()(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(Toolbar)
+  )
 )

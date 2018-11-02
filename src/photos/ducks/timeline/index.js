@@ -19,7 +19,7 @@ const TIMELINE_QUERY = client =>
       'metadata.datetime': 'desc'
     })
 
-const TIMELINE_MUTATIONS = (query, ownProps) => ({
+const TIMELINE_MUTATIONS = query => ({
   uploadPhoto: (file, dirPath) => {
     return query.client.upload(file, dirPath, {
       updateQueries: {

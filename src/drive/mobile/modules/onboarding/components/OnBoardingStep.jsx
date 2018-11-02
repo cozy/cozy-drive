@@ -10,9 +10,7 @@ export const OnBoarding = ({
   breadcrumbs,
   onActivate,
   onSkip,
-  stepName,
-  currentStep,
-  totalSteps
+  stepName
 }) => (
   <div className={classNames(styles['wizard'], styles['photos-backup'])}>
     <header className={styles['wizard-header']}>

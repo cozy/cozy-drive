@@ -34,6 +34,7 @@ const Menu = props => {
             }
         return (
           <Component
+            key={actionName}
             className={styles[`fil-action-${actionName}`]}
             onClick={onClick}
             files={[file]}

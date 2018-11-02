@@ -60,11 +60,11 @@ const AddFolder = ({ f, visible, onSubmit, onAbort }) =>
     </div>
   )
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   visible: isTypingNewFolderName(state)
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   onSubmit: name =>
     dispatch(createFolder(name)).then(() => dispatch(hideNewFolderInput())),
   onAbort: accidental => {
@@ -76,5 +76,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default translate()(
-  connect(mapStateToProps, mapDispatchToProps)(AddFolder)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AddFolder)
 )

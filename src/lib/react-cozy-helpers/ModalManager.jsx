@@ -30,7 +30,7 @@ const hideModal = (meta = {}) => ({
   meta
 })
 
-export const ModalManager = connect((state, ownProps) => ({
+export const ModalManager = connect(state => ({
   ...state.ui.modal
 }))(({ show, component, dispatch }) => {
   if (!show) return null

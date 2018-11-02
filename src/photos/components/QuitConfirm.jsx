@@ -4,9 +4,10 @@ import classNames from 'classnames'
 import React from 'react'
 import Modal from 'cozy-ui/react/Modal'
 
-const QuitConfirm = ({ t, albumName, confirm, abort }) => {
+const QuitConfirm = ({ t, confirm, abort }) => {
   const confirmationTexts = ['forbidden'].map(type => (
     <p
+      key={`key_quit_${type}`}
       className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
     >
       {t(`quitconfirmation.${type}`)}

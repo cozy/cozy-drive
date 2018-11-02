@@ -81,7 +81,7 @@ FileListBody.propTypes = {
   renamingFile: PropTypes.object
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state),
   isTypingNewFolderName: isTypingNewFolderName(state)
 })

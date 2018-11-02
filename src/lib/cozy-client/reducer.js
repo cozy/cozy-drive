@@ -35,7 +35,9 @@ const documents = (state = {}, action) => {
       if (action.response.data.length === 0) {
         return state
       }
+      // eslint-disable-next-line no-case-declarations
       const { data } = action.response
+      // eslint-disable-next-line no-case-declarations
       const dataDoctype = getArrayDoctype(data)
       return {
         ...state,
@@ -49,6 +51,7 @@ const documents = (state = {}, action) => {
       if (action.response.data.length === 0) {
         return state
       }
+      // eslint-disable-next-line no-case-declarations
       const doc = action.response.data[0]
       return {
         ...state,
@@ -86,6 +89,7 @@ const documents = (state = {}, action) => {
       if (action.response.data.length === 0) {
         return state
       }
+      // eslint-disable-next-line no-case-declarations
       const deleted = action.response.data[0]
       return {
         ...state,
@@ -95,7 +99,9 @@ const documents = (state = {}, action) => {
       if (action.response.data.length === 0) {
         return state
       }
+      // eslint-disable-next-line no-case-declarations
       const docs = action.response.data
+      // eslint-disable-next-line no-case-declarations
       const firstDeleted = docs[0]
       return {
         ...state,
@@ -218,9 +224,12 @@ const collection = (state = collectionInitialState, action) => {
           action.skip > 0
             ? 'loadingMore'
             : // we don't change the status for a refetch
-              state.fetchStatus === 'loaded' ? 'loaded' : 'loading'
+              state.fetchStatus === 'loaded'
+              ? 'loaded'
+              : 'loading'
       }
     case RECEIVE_DATA:
+      // eslint-disable-next-line no-case-declarations
       const response = action.response
       return {
         ...state,
@@ -267,7 +276,9 @@ const collection = (state = collectionInitialState, action) => {
         ids: state.ids.filter(id => id !== action.response.data[0].id)
       }
     case RECEIVE_DELETED_DOCUMENTS:
+      // eslint-disable-next-line no-case-declarations
       const deletedIds = new Set(action.response.data.map(doc => doc.id))
+      // eslint-disable-next-line no-case-declarations
       const newIds = state.ids.filter(id => !deletedIds.has(id))
       return {
         ...state,

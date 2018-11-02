@@ -21,9 +21,9 @@ const AlbumsList = ({ data, hasMore, fetchMore }) =>
   ) : (
     <Content>
       <div className={styles['pho-album-list']}>
-        {data
-          .sort(sortByCreationDate)
-          .map(a => <AlbumItem album={a} key={a.id} />)}
+        {data.sort(sortByCreationDate).map(a => (
+          <AlbumItem album={a} key={a.id} />
+        ))}
         {hasMore && <LoadMoreButton onClick={fetchMore} />}
       </div>
     </Content>

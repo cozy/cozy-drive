@@ -19,6 +19,7 @@ export default (state = [], action = {}) => {
     case MAKE_AVAILABLE_OFFLINE:
       return [...state, action.id]
     case UNDO_MAKE_AVAILABLE_OFFLINE:
+      // eslint-disable-next-line no-case-declarations
       const index = state.indexOf(action.id)
       return [...state.slice(0, index), ...state.slice(index + 1)]
     default:

@@ -35,14 +35,18 @@ const documents = (state = [], action) => {
     case RECEIVE_NEW_SHARING:
       return [...state, action.response]
     case RECEIVE_SHARING_REVOKE:
+      // eslint-disable-next-line no-case-declarations
       const idx = state.findIndex(
         s => s.attributes.sharing_id === action.sharingId
       )
       if (idx === -1) return state
+      // eslint-disable-next-line no-case-declarations
       const sharing = state[idx]
+      // eslint-disable-next-line no-case-declarations
       const loneRecipient =
         sharing.attributes.recipients === undefined || // for recipient-side revocation
         sharing.attributes.recipients.length === 1
+      // eslint-disable-next-line no-case-declarations
       const newState = loneRecipient
         ? { ...sharing, attributes: { ...sharing.attributes, revoked: true } }
         : {
@@ -101,6 +105,7 @@ const doctypePermissions = (state = doctypePermsetInitialState, action) => {
         byLink: [...state.byLink, action.response]
       }
     case REVOKE_SHARING_LINK:
+      // eslint-disable-next-line no-case-declarations
       const permIds = action.permissions.map(p => p._id)
       return {
         ...state,
@@ -144,10 +149,12 @@ export const fetchSharings = (doctype, id = null, options = {}) => ({
   dependencies: [fetchApps()]
 })
 
-export const share = (document, recipients, sharingType, sharingDesc) => async (
-  dispatch,
-  getState
-) => {
+export const share = (
+  document,
+  recipients,
+  sharingType,
+  sharingDesc
+) => async dispatch => {
   const recipientIds = await Promise.all(
     recipients.map(
       recipient =>
@@ -407,7 +414,7 @@ const getDocumentActiveSharings = (state, doctype, id) => {
     .filter(s => s && s.attributes && !s.attributes.revoked)
 }
 
-export const getSharings = (state, doctype, options = {}) => {
+export const getSharings = (state, doctype) => {
   const perms = getDoctypePermissions(state, doctype)
   const type = doctype === 'io.cozy.files' ? 'files' : 'collection'
   return {
@@ -430,7 +437,7 @@ export const getSharingStatus = (state, doctype, id) => {
   }
 }
 
-export const getSharingDetails = (state, doctype, id, options = {}) => {
+export const getSharingDetails = (state, doctype, id) => {
   const { shared, owner, sharingType, sharings } = getSharingStatus(
     state,
     doctype,

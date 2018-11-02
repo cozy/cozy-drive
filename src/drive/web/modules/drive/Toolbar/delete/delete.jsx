@@ -6,7 +6,7 @@ import { trashFiles } from 'drive/web/modules/navigation/duck'
 
 import DeleteConfirm from '../../DeleteConfirm'
 import toolbarContainer from '../toolbar'
-const mapStateToProps = (state, ownProps) => ({})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   trashFolder: folder =>
@@ -25,7 +25,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const deleteContainer = component =>
   toolbarContainer(
-    withRouter(connect(mapStateToProps, mapDispatchToProps)(component))
+    withRouter(
+      connect(
+        mapStateToProps,
+        mapDispatchToProps
+      )(component)
+    )
   )
 
 export default deleteContainer

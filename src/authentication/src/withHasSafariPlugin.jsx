@@ -21,7 +21,7 @@ export const hasSafariPlugin = () => {
   })
 }
 
-export const withHasSafariPlugin = eventHandlers => {
+export const withHasSafariPlugin = () => {
   return WrappedComponent => {
     return class withHasSafariPluginComponent extends PureComponent {
       state = {

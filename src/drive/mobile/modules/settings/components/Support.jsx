@@ -72,6 +72,7 @@ const mapDispatchToProps = dispatch => ({
   setAnalytics: value => dispatch(setAnalytics(value))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  translate()(Support)
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(Support))

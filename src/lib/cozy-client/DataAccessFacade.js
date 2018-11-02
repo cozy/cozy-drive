@@ -78,6 +78,7 @@ export class PouchFirstStrategy {
 }
 
 export class StackOnlyStrategy {
+  // eslint-disable-next-line no-unused-vars
   getAdapter(doctype, stackAdapter, pouchAdapter) {
     return stackAdapter
   }

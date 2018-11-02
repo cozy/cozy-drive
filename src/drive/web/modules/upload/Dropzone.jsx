@@ -75,10 +75,13 @@ const canDrop = evt => {
   return true
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   uploadFiles: (files, folderId) => {
     dispatch(uploadFiles(files, folderId))
   }
 })
 
-export default connect(null, mapDispatchToProps)(StatefulDropzone)
+export default connect(
+  null,
+  mapDispatchToProps
+)(StatefulDropzone)

@@ -11,6 +11,7 @@ const DeleteConfirm = ({ t, count, confirm, abort, related }) => {
   const deleteConfirmationTexts = types.map(type => (
     <p
       className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
+      key={`key_delet_${type}`}
     >
       {t(`timeline.DeleteConfirm.${type}`, count)}
     </p>

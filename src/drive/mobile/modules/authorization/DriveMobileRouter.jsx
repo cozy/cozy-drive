@@ -59,6 +59,7 @@ const mapDispatchToProps = dispatch => ({
   unlink: client => dispatch(unlink(client))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  DriveMobileRouterWithRoutes
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DriveMobileRouterWithRoutes)

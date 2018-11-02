@@ -25,7 +25,7 @@ class BannerClient extends Component {
   async componentWillMount() {
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     if (!seen) {
-      const mustSee = !await isClientAlreadyInstalled()
+      const mustSee = !(await isClientAlreadyInstalled())
       if (mustSee) {
         this.setState(state => ({ ...state, mustShow: true }))
       }
@@ -44,7 +44,9 @@ class BannerClient extends Component {
 
     const mobileLink = isIOS()
       ? 'Nav.link-client-ios'
-      : isAndroid() ? 'Nav.link-client-android' : 'Nav.link-client'
+      : isAndroid()
+        ? 'Nav.link-client-android'
+        : 'Nav.link-client'
     const desktopLink = isLinux()
       ? 'Nav.link-client'
       : 'Nav.link-client-desktop'
@@ -55,7 +57,7 @@ class BannerClient extends Component {
           href={t(mobileLink)}
           target="_blank"
           className={styles['coz-btn-clientMobile']}
-          onClick={e => {
+          onClick={() => {
             this.markAsSeen('banner')
           }}
           label={t('Nav.btn-client-mobile')}
@@ -66,7 +68,7 @@ class BannerClient extends Component {
             href={t(desktopLink)}
             target="_blank"
             theme="alpha"
-            onClick={e => {
+            onClick={() => {
               this.markAsSeen('banner')
             }}
             label={t('Nav.banner-btn-client')}
@@ -76,7 +78,7 @@ class BannerClient extends Component {
           theme="close"
           extension="narrow"
           className={styles['close-banner']}
-          onClick={e => {
+          onClick={() => {
             this.markAsSeen('close')
           }}
           icon={<Icon icon="cross" width="24" height="24" />}

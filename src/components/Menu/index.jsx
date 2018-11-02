@@ -15,7 +15,7 @@ export default class Menu extends Component {
 
   toggle = () => (this.state.opened ? this.close() : this.open())
 
-  handleSelect = (item, e) => {
+  handleSelect = () => {
     this.close()
   }
 

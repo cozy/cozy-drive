@@ -227,6 +227,7 @@ export default class ImageViewer extends Component {
             file={file}
             size="large"
             ref={photo => {
+              //eslint-disable-next-line
               this.photo = React.findDOMNode(photo)
             }}
             onError={this.onImageError}

@@ -11,8 +11,11 @@ const AddFolderItem = translate()(({ t, addFolder }) => {
     </a>
   )
 })
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   addFolder: () => dispatch(showNewFolderInput())
 })
 
-export default connect(null, mapDispatchToProps)(AddFolderItem)
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddFolderItem)

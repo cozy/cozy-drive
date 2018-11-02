@@ -15,11 +15,11 @@ class Unlink extends Component {
   }
 
   showConfirmation = () => {
-    this.setState(state => ({ showConfirmation: true }))
+    this.setState({ showConfirmation: true })
   }
 
   hideConfirmation = () => {
-    this.setState(state => ({ showConfirmation: false }))
+    this.setState({ showConfirmation: false })
   }
 
   render() {
@@ -69,5 +69,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(translate()(Unlink))
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(translate()(Unlink))
 )

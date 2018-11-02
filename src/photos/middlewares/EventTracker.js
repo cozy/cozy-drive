@@ -11,7 +11,7 @@ const ACTIONS = {
   CREATION: 'creation'
 }
 
-const tracker = store => next => action => {
+const tracker = () => next => action => {
   if (action.type === ADD_TO_UPLOAD_QUEUE) {
     action.trackEvent = {
       category: CATEGORY.INTERACTION,
