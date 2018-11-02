@@ -247,7 +247,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const withSharedDocuments = Wrapped =>
-  class extends React.Component {
+  class withSharedDocumentsClass extends React.Component {
     render() {
       return (
         <SharedDocuments>

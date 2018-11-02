@@ -96,6 +96,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             ),
           displayCondition: selections =>
             hasWriteAccess && selections.length === 1,
+          //eslint-disable-next-line
           Component: ({ files, ...rest }) => (
             <ShareMenuItem docId={files[0].id} {...rest} />
           )
@@ -148,6 +149,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             __TARGET__ === 'mobile' &&
             selections.length === 1 &&
             isFile(selections[0]),
+          //eslint-disable-next-line
           Component: ({ files, ...rest }) => (
             <MakeAvailableOfflineMenuItem file={files[0]} {...rest} />
           )

@@ -28,7 +28,7 @@ const FirstUploadModal = translate()(({ t, onClose }) => (
 ))
 
 const showOnceOnUpload = WrappedComponent => {
-  return class extends Component {
+  return class showOnceOnUploadClass extends Component {
     constructor(props) {
       super(props)
       this.restored = false
