@@ -131,10 +131,9 @@ export default class SharingProvider extends Component {
     const folderPaths = resp.data
       .filter(f => f.type === 'directory')
       .map(f => f.path)
-    const filePaths = this.getFilesPaths(
+    const filePaths = await this.getFilesPaths(
       resp.data.filter(f => f.type !== 'directory')
     )
-
     this.dispatch(receivePaths([...folderPaths, ...filePaths]))
   }
 
