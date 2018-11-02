@@ -47,6 +47,7 @@ class ViewerControls extends Component {
 
   componentDidMount() {
     this.hideAfterDelay()
+    //eslint-disable-next-line react/no-find-dom-node
     const gestures = new Hammer(React.findDOMNode(this.wrapped))
     gestures.on('swipe', this.onSwipe)
     gestures.on('tap', this.onTap)

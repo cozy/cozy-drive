@@ -72,7 +72,7 @@ const isAnyFileReferencedByAlbum = files => {
   return false
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   isRenaming: isRenaming(state),
   renamingFile: getRenamingFile(state),
   Toolbar
@@ -124,7 +124,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 />
               )
             ),
-          displayCondition: selections => hasWriteAccess
+          displayCondition: () => hasWriteAccess
         },
         openWith: {
           action: files => dispatch(openFileWith(files[0].id, files[0].name)),
@@ -141,7 +141,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         moveto: {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
-          displayCondition: selections => canMove && isMoveToActive()
+          displayCondition: () => canMove && isMoveToActive()
         },
         'phone-download': {
           displayCondition: selections =>
@@ -158,7 +158,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 const ConnectedFolderView = translate()(
-  connect(mapStateToProps, mapDispatchToProps)(FolderView)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FolderView)
 )
 
 const FolderViewWithSharingContext = props =>

@@ -12,14 +12,17 @@ const RenameInput = ({ name, updateRenaming, rename, abortRenaming }) => (
   />
 )
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   name: getUpdatedName(state)
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   updateRenaming: name => dispatch(updateFileName(name)),
   rename: () => dispatch(rename()),
-  abortRenaming: name => dispatch(abortRenaming())
+  abortRenaming: () => dispatch(abortRenaming())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RenameInput)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RenameInput)

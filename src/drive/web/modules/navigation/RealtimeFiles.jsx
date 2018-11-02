@@ -95,12 +95,12 @@ class RealtimeFiles extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   openedFolderId: getOpenedFolderId(state),
   files: getVisibleFiles(state)
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   addFile: file => dispatch(addFile(file)),
   updateFile: file => dispatch(updateFile(file)),
   deleteFile: file => dispatch(deleteFile(file)),
@@ -108,6 +108,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(updateOfflineFileCopyIfNecessary(file, prevFile))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(RealtimeFiles)
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(RealtimeFiles))

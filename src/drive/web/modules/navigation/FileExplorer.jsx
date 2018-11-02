@@ -77,7 +77,7 @@ class FileExplorer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
@@ -99,5 +99,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default translate()(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(FileExplorer))
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withRouter(FileExplorer))
 )

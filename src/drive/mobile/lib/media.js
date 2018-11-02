@@ -25,7 +25,7 @@ export const requestAuthorization = async () => {
   if (!hasCordovaPlugin()) {
     return Promise.resolve(false)
   }
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     window.cordova.plugins.listLibraryItems.requestReadAuthorization(
       () => resolve(true),
       error => {
@@ -125,7 +125,7 @@ export const getPhotos = async () => {
   const defaultReturn = []
 
   if (hasCordovaPlugin()) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       window.cordova.plugins.listLibraryItems.listItems(
         true,
         true,

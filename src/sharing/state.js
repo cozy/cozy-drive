@@ -123,6 +123,7 @@ const forgetPermission = (state = {}, permission) =>
 const byDocId = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_SHARINGS:
+      // eslint-disable-next-line no-case-declarations
       const intermediaryState = action.data.sharings.reduce(
         (byId, sharing) => indexSharing(byId, sharing),
         state
@@ -159,6 +160,7 @@ const permissions = (state = [], action) => {
     case ADD_SHARING_LINK:
       return [...state, action.data]
     case REVOKE_SHARING_LINK:
+      // eslint-disable-next-line no-case-declarations
       const permIds = action.permissions.map(p => p.id)
       return state.filter(p => permIds.indexOf(p.id) === -1)
     default:

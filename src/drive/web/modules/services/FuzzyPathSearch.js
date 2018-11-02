@@ -129,7 +129,7 @@ class FuzzyPathSearch {
             if (firstOccurence) {
               wordOccurenceValue = 52428800 // that's 2^19 * 100
               wordScore +=
-                wordOccurenceValue / 2 * (1 + word.length / dirName.length)
+                (wordOccurenceValue / 2) * (1 + word.length / dirName.length)
               firstOccurence = false
             } else {
               wordScore -=

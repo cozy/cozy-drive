@@ -73,7 +73,7 @@ export const openTrash = () => {
 }
 
 export const openFolder = folderId => {
-  return async (dispatch, getState, { client, t }) => {
+  return async (dispatch, getState, { t }) => {
     dispatch({
       type: OPEN_FOLDER,
       folderId,
@@ -248,7 +248,7 @@ export const uploadFiles = (files, dirId) => dispatch => {
     addToUploadQueue(
       files,
       dirId,
-      file => null,
+      () => null,
       (loaded, quotas, conflicts, networkErrors, errors) =>
         dispatch(
           uploadQueueProcessed(loaded, quotas, conflicts, networkErrors, errors)
@@ -429,7 +429,7 @@ const forceFileDownload = (href, filename) => {
 
 // MOBILE STUFF
 export const exportFilesNative = files => {
-  return async dispatch => {
+  return async () => {
     const downloadAllFiles = files.map(async file => {
       const response = await cozy.client.files.downloadById(file.id)
       const blob = await response.blob()
@@ -465,7 +465,7 @@ const openFileDownloadError = error => {
 }
 
 export const openFileWith = (id, filename) => {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     if (isCordova() && window.cordova.plugins.fileOpener2) {
       dispatch({ type: OPEN_FILE_WITH, id })
       const response = await cozy.client.files.downloadById(id).catch(error => {

@@ -41,7 +41,7 @@ const withFileUrl = BaseComponent =>
       this.getDownloadLink(this.props.file)
         .then(url => {
           this.clearTimeout()
-          this.setState(state => ({ downloadUrl: url, status: LOADED }))
+          this.setState({ downloadUrl: url, status: LOADED })
         })
         .catch(() => {
           this.clearTimeout()

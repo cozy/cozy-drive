@@ -22,10 +22,11 @@ const AddFolderButton = ({ addFolder, breakpoints: { isMobile } }, { t }) => {
     )
 }
 
-const mapDispatchToPropsButton = (dispatch, ownProps) => ({
+const mapDispatchToPropsButton = dispatch => ({
   addFolder: () => dispatch(showNewFolderInput())
 })
 
-export default connect(null, mapDispatchToPropsButton)(
-  withBreakpoints()(AddFolderButton)
-)
+export default connect(
+  null,
+  mapDispatchToPropsButton
+)(withBreakpoints()(AddFolderButton))

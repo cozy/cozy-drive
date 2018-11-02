@@ -122,8 +122,13 @@ class NativePdfViewer extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   getLocalFileCopyUrl: file => dispatch(getLocalFileCopyUrl(file))
 })
 
-export default translate()(connect(null, mapDispatchToProps)(NativePdfViewer))
+export default translate()(
+  connect(
+    null,
+    mapDispatchToProps
+  )(NativePdfViewer)
+)

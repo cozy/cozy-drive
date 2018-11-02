@@ -9,6 +9,7 @@ const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {
   const confirmationTexts = ['forbidden', 'restore'].map(type => (
     <p
       className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
+      key={type}
     >
       {t(`emptytrashconfirmation.${type}`)}
     </p>

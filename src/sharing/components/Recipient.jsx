@@ -46,15 +46,14 @@ export const RecipientsAvatars = ({
           size={size}
         />
       )}
-      {reversedRecipients
-        .slice(0, MAX_DISPLAYED_RECIPIENTS)
-        .map(recipient => (
-          <Avatar
-            text={getInitiales(getDisplayName(recipient))}
-            size={size}
-            textId={getDisplayName(recipient)}
-          />
-        ))}
+      {reversedRecipients.slice(0, MAX_DISPLAYED_RECIPIENTS).map(recipient => (
+        <Avatar
+          key={`key_avatar_${recipient}`}
+          text={getInitiales(getDisplayName(recipient))}
+          size={size}
+          textId={getDisplayName(recipient)}
+        />
+      ))}
     </div>
   )
 }
@@ -84,9 +83,9 @@ class Status extends Component {
 
   onRevoke = async () => {
     const { onRevoke, document, sharingId, index } = this.props
-    this.setState(state => ({ revoking: true }))
+    this.setState({ revoking: true })
     await onRevoke(document, sharingId, index)
-    this.setState(state => ({ revoking: false }))
+    this.setState({ revoking: false })
   }
 
   getStatusIcon = type => {

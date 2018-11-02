@@ -38,6 +38,7 @@ class FileListRows extends PureComponent {
     }
 
     if (element) {
+      // eslint-disable-next-line react/no-find-dom-node
       this.loadMoreElement = React.findDOMNode(element)
       this.intersectionObserver.observe(this.loadMoreElement)
     }

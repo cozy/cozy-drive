@@ -13,6 +13,7 @@ const withGestures = eventHandlers => {
   return WrappedComponent => {
     return class WithGesturesComponent extends Component {
       componentDidMount() {
+        // eslint-disable-next-line react/no-find-dom-node
         const node = ReactDOM.findDOMNode(this)
         this.hammer = new Hammer.Manager(node, {
           recognizers: [

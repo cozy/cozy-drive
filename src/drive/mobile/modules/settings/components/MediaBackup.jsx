@@ -84,6 +84,7 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  translate()(MediaBackup)
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(MediaBackup))

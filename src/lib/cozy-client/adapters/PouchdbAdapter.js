@@ -113,7 +113,7 @@ export default class PouchdbAdapter {
             cozy.client.auth
               .refreshToken(client, token)
               .then(newToken => cozy.client.saveCredentials(client, newToken))
-              .then(credentials => reject(err))
+              .then(() => reject(err))
           })
         } else if (err.status !== 404) {
           // A 404 error on some doctypes is perfectly normal when there is no data
@@ -213,27 +213,27 @@ export default class PouchdbAdapter {
   createIndex(doctype, fields) {
     return this.getDatabase(doctype).createIndex({ index: { fields } })
   }
-
+  // eslint-disable-next-line no-unused-vars
   fetchFileByPath(path) {
     throw new Error('Not implemented')
   }
-
+  // eslint-disable-next-line no-unused-vars
   createFile(file, dirID) {
     throw new Error('Not implemented')
   }
-
+  // eslint-disable-next-line no-unused-vars
   trashFile(file) {
     throw new Error('Not implemented')
   }
-
+  // eslint-disable-next-line no-unused-vars
   fetchReferencedFiles(doc, skip = 0) {
     throw new Error('Not implemented')
   }
-
+  // eslint-disable-next-line no-unused-vars
   addReferencedFiles(doc, ids) {
     throw new Error('Not implemented')
   }
-
+  // eslint-disable-next-line no-unused-vars
   removeReferencedFiles(doc, ids) {
     throw new Error('Not implemented')
   }

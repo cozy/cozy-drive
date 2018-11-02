@@ -5,7 +5,7 @@ import FilePlaceholder from './FilePlaceholder'
 const FileListPlaceholder = ({ rows }) => (
   <div>
     {[...new Array(rows)].map((value, index) => (
-      <FilePlaceholder index={index} />
+      <FilePlaceholder index={index} key={`key_file_placeholder_${index}`} />
     ))}
   </div>
 )

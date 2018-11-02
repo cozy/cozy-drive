@@ -18,9 +18,10 @@ const DownloadButtonItem = translate()(
     )
   }
 )
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   downloadAll: folder => dispatch(downloadFiles(folder))
 })
-export default connect(null, mapDispatchToProps)(
-  toolbarContainer(DownloadButtonItem)
-)
+export default connect(
+  null,
+  mapDispatchToProps
+)(toolbarContainer(DownloadButtonItem))

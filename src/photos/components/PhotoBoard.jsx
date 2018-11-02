@@ -25,7 +25,9 @@ export class PhotoBoard extends Component {
       hasMore,
       fetchMore,
       measureRef,
-      contentRect: { entry: { width } }
+      contentRect: {
+        entry: { width }
+      }
     } = this.props
 
     const isError = fetchStatus === 'failed'

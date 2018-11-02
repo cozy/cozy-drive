@@ -22,7 +22,7 @@ class FilesViewer extends Component {
     this.fetchFileIfNecessary()
     this.fetchMoreIfNecessary()
   }
-
+  // eslint-disable-next-line no-unused-vars
   componentWillReceiveProps(props, nextProps) {
     this.fetchMoreIfNecessary()
   }
@@ -43,7 +43,7 @@ class FilesViewer extends Component {
           currentFile: { ...resp, ...resp.attributes, id: resp._id }
         }))
       })
-      .catch(e => {
+      .catch(() => {
         console.warn("can't find the file")
         this.onClose()
       })
@@ -113,14 +113,17 @@ class FilesViewer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   fileCount: state.view.fileCount
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   fetchMoreFiles: (folderId, skip, limit) => {
     dispatch(fetchMoreFiles(folderId, skip, limit))
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilesViewer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FilesViewer)

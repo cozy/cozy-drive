@@ -22,7 +22,9 @@ export class TooltipRecipientList extends React.Component {
 
     return (
       <ul className={styles['shared-tooltip-list']}>
-        {recipientNames.slice(0, cutoff).map(name => <li>{name}</li>)}
+        {recipientNames.slice(0, cutoff).map(name => (
+          <li key={`key_name_${name}`}>{name}</li>
+        ))}
         {recipientNames.length > cutoff && (
           <li>
             {t('Share.members.others', {

@@ -16,7 +16,7 @@ class ButtonClient extends Component {
     // we want to show the button if the banner has been marked as seen *and*
     // the client hasn't been already installed
     if (seen) {
-      const mustSee = !await isClientAlreadyInstalled()
+      const mustSee = !(await isClientAlreadyInstalled())
       if (mustSee) {
         this.setState(state => ({ ...state, mustShow: true }))
       }
@@ -30,7 +30,7 @@ class ButtonClient extends Component {
         href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
         target="_blank"
         className={styles['coz-btn-client']}
-        onClick={e => {
+        onClick={() => {
           track('button')
         }}
       >

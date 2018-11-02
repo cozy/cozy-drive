@@ -99,7 +99,7 @@ export class Breadcrumb extends Component {
               return (
                 <span
                   className={styles['fil-path-link']}
-                  onClick={e => onBreadcrumbClick(folder)}
+                  onClick={() => onBreadcrumbClick(folder)}
                 >
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
@@ -242,7 +242,7 @@ const mapStateToProps = (state, ownProps) => ({
   getFolderUrl
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   goToFolder: folderId => dispatch(openFolder(folderId))
 })
 
@@ -263,7 +263,10 @@ export default withBreakpoints()(
   withRouter(
     translate()(
       withSharedDocuments(
-        connect(mapStateToProps, mapDispatchToProps)(MobileAwareBreadcrumb)
+        connect(
+          mapStateToProps,
+          mapDispatchToProps
+        )(MobileAwareBreadcrumb)
       )
     )
   )

@@ -7,7 +7,7 @@ import {
   isSelectionBarVisible
 } from './duck'
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   selected: getSelectedFiles(state),
   selectionModeActive: isSelectionBarVisible(state)
 })
@@ -16,10 +16,11 @@ const mapDispatchToProps = dispatch => ({
   hideSelectionBar: () => dispatch(hideSelectionBar())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  ({ selectionModeActive, ...rest }) => (
-    <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
-      <SelectionBar {...rest} />
-    </div>
-  )
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(({ selectionModeActive, ...rest }) => (
+  <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
+    <SelectionBar {...rest} />
+  </div>
+))

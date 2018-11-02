@@ -4,7 +4,7 @@ import { ROOT_DIR_ID } from 'drive/constants/config'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const getFile = (dirEntry, type = '') =>
-  new Promise((resolve, reject) => {
+  new Promise(resolve => {
     dirEntry.file(file => {
       // window.File is modified by cordova, so we need this trick
       const reader = new FileReader()
@@ -80,9 +80,7 @@ const base64toBlob = (dataURI, type) => {
 }
 
 export const intentHandlerAndroid = store => async ({
-  action,
-  extras = 'No extras in intent',
-  ...args
+  extras = 'No extras in intent'
 }) => {
   if (extras['android.intent.extra.STREAM']) {
     const contentFiles = Array.isArray(extras['android.intent.extra.STREAM'])

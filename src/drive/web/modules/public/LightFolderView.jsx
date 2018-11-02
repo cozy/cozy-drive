@@ -111,6 +111,7 @@ const mapDispatchToProps = dispatch => ({
   fetchFolder: folderId => dispatch(openFolder(folderId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(DumbFolderView)
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(DumbFolderView))

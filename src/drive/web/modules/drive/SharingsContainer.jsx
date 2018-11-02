@@ -54,7 +54,7 @@ class SharingFetcher extends React.Component {
   }
 
   render() {
-    const { sharedDocuments, ...otherProps } = this.props
+    const { ...otherProps } = this.props
     const { error } = this.state
     const { t } = this.context
 
@@ -78,26 +78,29 @@ class SharingFetcher extends React.Component {
   }
 }
 
-const ConnectedSharingFetcher = connect(null, dispatch => ({
-  startFetch: () =>
-    dispatch({
-      type: FETCH_SHARINGS,
-      meta: {
-        cancelSelection: true
-      }
-    }),
-  fetchSuccess: files =>
-    dispatch({
-      type: FETCH_SHARINGS_SUCCESS,
-      fileCount: files.length,
-      files
-    }),
-  fetchFailure: e =>
-    dispatch({
-      type: FETCH_SHARINGS_FAILURE,
-      error: e
-    })
-}))(SharingFetcher)
+const ConnectedSharingFetcher = connect(
+  null,
+  dispatch => ({
+    startFetch: () =>
+      dispatch({
+        type: FETCH_SHARINGS,
+        meta: {
+          cancelSelection: true
+        }
+      }),
+    fetchSuccess: files =>
+      dispatch({
+        type: FETCH_SHARINGS_SUCCESS,
+        fileCount: files.length,
+        files
+      }),
+    fetchFailure: e =>
+      dispatch({
+        type: FETCH_SHARINGS_FAILURE,
+        error: e
+      })
+  })
+)(SharingFetcher)
 
 const SharingsContainer = props => (
   <SharedDocuments>

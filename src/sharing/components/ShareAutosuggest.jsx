@@ -108,7 +108,10 @@ export default class ShareAutocomplete extends Component {
     return (
       <div className={styles['recipientsContainer']}>
         {this.props.recipients.map(recipient => (
-          <div className={styles['recipientChip']}>
+          <div
+            className={styles['recipientChip']}
+            key={`key_recipient_${recipient}`}
+          >
             <span>
               {recipient.id ? getPrimaryEmail(recipient) : recipient.email}
             </span>

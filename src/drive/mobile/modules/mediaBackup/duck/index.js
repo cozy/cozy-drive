@@ -150,11 +150,10 @@ const canBackup = (isManualBackup, getState) => {
 
 export const startMediaBackup = (isManualBackup = false) => async (
   dispatch,
-  getState,
-  client
+  getState
 ) => {
   dispatch({ type: MEDIA_UPLOAD_START })
-  if (!await isAuthorized()) {
+  if (!(await isAuthorized())) {
     const promptForPermissions = isManualBackup
     const receivedAuthorisation = await updateValueAfterRequestAuthorization(
       promptForPermissions
@@ -216,12 +215,14 @@ const mediaUploadSucceed = ({ id }) => ({
   id
 })
 
-const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
+const uploadPhoto = (dirName, dirID, photo) => async dispatch => {
   try {
     await cozy.client.files.statByPath(dirName + '/' + photo.fileName)
     dispatch(mediaUploadSucceed(photo))
     return
-  } catch (_) {} // if an exception is throw, the file doesn't exist yet and we can safely upload it
+  } catch (_) {
+    //console.log('_')
+  } // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
   const MILLISECOND = 1
   const SECOND = 1000 * MILLISECOND
@@ -236,7 +237,7 @@ const uploadPhoto = (dirName, dirID, photo) => async (dispatch, getState) => {
       dispatch({ type: CURRENT_UPLOAD_PROGRESS, progress })
     }
 
-    const onThumbnailGenerated = thumbnailUrl => {}
+    const onThumbnailGenerated = () => {}
 
     await uploadLibraryItem(
       dirID,

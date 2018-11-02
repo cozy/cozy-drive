@@ -77,7 +77,7 @@ const DropdownIndicator = props => (
     <Icon icon="bottom" color="#95999d" />
   </components.DropdownIndicator>
 )
-const Option = (props, { t }) => (
+const Option = props => (
   <components.Option {...props}>
     <div
       className={cx(styles['select-option'], {
@@ -100,7 +100,7 @@ const customStyles = {
         ? '1px solid #c4c5c7'
         : null
   }),
-  menu: (base, state) => ({
+  menu: base => ({
     ...base,
     width: '204%'
   })
@@ -134,7 +134,7 @@ ShareTypeSelect.defaultProps = {
 
 const ShareSubmit = props => (
   <Button
-    onClick={e => {
+    onClick={() => {
       props.onSubmit()
     }}
     busy={props.loading}
@@ -182,7 +182,7 @@ class ShareByEmail extends Component {
   state = { ...this.initialState }
 
   reset = () => {
-    this.setState(state => ({ ...this.initialState }))
+    this.setState({ ...this.initialState })
   }
 
   onInputFocus = () => {
@@ -359,6 +359,9 @@ ShareByEmail.defaultProps = {
   contacts: []
 }
 
-export default connect(null, dispatch => ({
-  renewAuthorization: client => dispatch(renewAuthorization(client))
-}))(ShareByEmail)
+export default connect(
+  null,
+  dispatch => ({
+    renewAuthorization: client => dispatch(renewAuthorization(client))
+  })
+)(ShareByEmail)

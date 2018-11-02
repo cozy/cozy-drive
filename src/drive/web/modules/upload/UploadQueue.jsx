@@ -152,5 +152,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   purgeQueue: () => dispatch(purgeUploadQueue())
 })
 export default translate()(
-  connect(mapStateToProps, mapDispatchToProps)(UploadQueue)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(UploadQueue)
 )

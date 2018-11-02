@@ -15,10 +15,7 @@ export const setOffline = offline => ({ type: SET_OFFLINE, offline })
 
 export const setWifiOnly = wifiOnly => ({ type: WIFI_ONLY, wifiOnly })
 
-export const setAnalytics = (analytics, source = 'settings') => (
-  dispatch,
-  getState
-) => {
+export const setAnalytics = analytics => (dispatch, getState) => {
   dispatch({ type: SET_ANALYTICS, analytics })
   const serverUrl = getServerUrl(getState())
   if (analytics && serverUrl) {

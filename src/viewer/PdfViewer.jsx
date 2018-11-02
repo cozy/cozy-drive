@@ -4,7 +4,7 @@ import NoViewer from './NoViewer'
 import withFileUrl from './withFileUrl'
 import styles from './styles'
 
-const PdfViewer = ({ file, t, url }) => (
+const PdfViewer = ({ file, url }) => (
   <div className={styles['pho-viewer-pdfviewer']}>
     <object
       data={url}

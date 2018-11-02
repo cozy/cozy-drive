@@ -120,7 +120,7 @@ class Toolbar extends Component {
     )
   }
 }
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   selectionModeActive: isSelectionBarVisible(state)
 })
@@ -140,5 +140,10 @@ const ToolbarWithSharingContext = props =>
     </SharedDocument>
   )
 export default translate()(
-  withBreakpoints()(connect(mapStateToProps, null)(ToolbarWithSharingContext))
+  withBreakpoints()(
+    connect(
+      mapStateToProps,
+      null
+    )(ToolbarWithSharingContext)
+  )
 )

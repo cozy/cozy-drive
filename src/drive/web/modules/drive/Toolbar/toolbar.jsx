@@ -4,7 +4,7 @@ import { ROOT_DIR_ID } from 'drive/constants/config'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   notRootfolder:
     state.view.displayedFolder && state.view.displayedFolder.id !== ROOT_DIR_ID,
@@ -18,6 +18,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const toolbarContainer = component =>
-  connect(mapStateToProps, mapDispatchToProps)(component)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(component)
 
 export default toolbarContainer

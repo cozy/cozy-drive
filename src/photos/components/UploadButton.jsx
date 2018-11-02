@@ -21,7 +21,6 @@ const styles = {
 }
 
 export const UploadButton = ({
-  t,
   label,
   inMenu = false,
   disabled,

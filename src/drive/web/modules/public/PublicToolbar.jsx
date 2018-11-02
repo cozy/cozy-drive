@@ -135,7 +135,10 @@ class PublicToolbar extends React.Component {
   }
 
   render() {
-    const { breakpoints: { isMobile }, renderInBar = false } = this.props
+    const {
+      breakpoints: { isMobile },
+      renderInBar = false
+    } = this.props
     const { discoveryLink } = this.state
 
     if (isMobile) {
@@ -168,6 +171,7 @@ const mapDispatchToProps = dispatch => ({
   onDownload: files => dispatch(downloadFiles(files))
 })
 
-export default connect(null, mapDispatchToProps)(
-  withBreakpoints()(withRouter(PublicToolbar))
-)
+export default connect(
+  null,
+  mapDispatchToProps
+)(withBreakpoints()(withRouter(PublicToolbar)))
