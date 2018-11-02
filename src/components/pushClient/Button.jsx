@@ -28,6 +28,7 @@ class ButtonClient extends Component {
     return this.state.mustShow ? (
       <a
         href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
+        //eslint-disable-next-line react/jsx-no-target-blank
         target="_blank"
         className={styles['coz-btn-client']}
         onClick={() => {
