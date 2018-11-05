@@ -27,7 +27,7 @@ module.exports = {
       __PIWIK_SITEID_MOBILE__: 12,
       __PIWIK_DIMENSION_ID_APP__: 1,
       __PIWIK_TRACKER_URL__: JSON.stringify('https://matomo.cozycloud.cc'),
-      __SENTRY_TOKEN__: JSON.stringify('9259817fbb44484b8b7a0a817d968ae4:171a3bcb3095448484aa3e709ea47e9b'),
+      __SENTRY_URL__: JSON.stringify('https://9259817fbb44484b8b7a0a817d968ae4@sentry.cozycloud.cc/6'),
       __APP_VERSION__: JSON.stringify(pkg.version)
     })
   ]
