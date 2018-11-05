@@ -1,10 +1,8 @@
-/* global __SENTRY_TOKEN__, __DEVELOPMENT__, __APP_VERSION__ */
+/* global __SENTRY_URL__, __DEVELOPMENT__, __APP_VERSION__ */
 import Raven from 'raven-js'
 
 export const ANALYTICS_URL =
-  typeof __SENTRY_TOKEN__ === 'undefined'
-    ? ''
-    : `https://${__SENTRY_TOKEN__}@sentry.cozycloud.cc/6`
+  typeof __SENTRY_URL__ === 'undefined' ? '' : __SENTRY_URL__
 
 // normalize files path on mobile, see https://github.com/getsentry/sentry-cordova/blob/17e8b3395e8ce391ecf28658d0487b97487bb509/src/js/SentryCordova.ts#L213
 const normalizeUrl = (url, pathStripRe) =>
