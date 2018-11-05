@@ -1,4 +1,4 @@
-var PouchDB = jest.genMockFunction()
-PouchDB.plugin = jest.genMockFunction()
+var PouchDB = jest.fn()
+PouchDB.plugin = jest.fn()
 
 module.exports = PouchDB

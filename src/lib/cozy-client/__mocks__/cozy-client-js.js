@@ -1,10 +1,10 @@
 const cozy = {
   client: {
-    init: jest.genMockFunction(),
-    fetchJSON: jest.genMockFunction(),
+    init: jest.fn(),
+    fetchJSON: jest.fn(),
     data: {
-      defineIndex: jest.genMockFunction(),
-      query: jest.genMockFunction()
+      defineIndex: jest.fn(),
+      query: jest.fn()
     }
   }
 }
