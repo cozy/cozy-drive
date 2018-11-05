@@ -71,6 +71,8 @@ class FolderView extends Component {
             canSort={canSort}
             fileActions={actions.selection}
             files={this.props.files}
+            fileCount={this.props.fileCount}
+            fetchMoreFiles={this.props.fetchMoreFiles}
             displayedFolder={this.props.displayedFolder}
             onFolderOpen={this.props.onFolderOpen}
             onFileOpen={this.props.onFileOpen}

@@ -13,6 +13,8 @@ const FileList = ({
   withSelectionCheckbox = true,
   children,
   files,
+  fileCount,
+  fetchMoreFiles,
   displayedFolder,
   onFolderOpen,
   onFileOpen,
@@ -31,6 +33,8 @@ const FileList = ({
         fileActions={fileActions}
         withSelectionCheckbox={withSelectionCheckbox}
         files={files}
+        fileCount={fileCount}
+        fetchMoreFiles={fetchMoreFiles}
         displayedFolder={displayedFolder}
         onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
