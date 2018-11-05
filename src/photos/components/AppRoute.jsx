@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router'
 
 import Layout from './Layout'
 import Timeline from '../ducks/timeline'
+import TimelineClusters from '../ducks/timeline-clusters'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import PhotosViewer from '../components/PhotosViewer'
 
@@ -19,6 +20,9 @@ const AppRoute = (
         <Route path="edit" component={PhotosPicker} />
         <Route path=":photoId" component={PhotosViewer} />
       </Route>
+    </Route>
+    <Route path="clusters" component={TimelineClusters}>
+      <Route path=":photoId" component={PhotosViewer} />
     </Route>
     <Redirect from="/*" to="photos" />
   </Route>
