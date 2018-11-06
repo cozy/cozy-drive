@@ -1,9 +1,3 @@
 {
-  "extends": ["cozy-app"],
-  "pinVersions": true,
-  "schedule": ["before 5am on Monday"],
-  "packageRules": [{
-    "packageNames": ["cozy-ui"],
-    "schedule": []
-  }]
+  "extends": ["cozy"]
 }
