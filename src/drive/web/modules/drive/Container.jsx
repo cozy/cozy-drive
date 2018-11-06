@@ -27,15 +27,6 @@ import {
 
 import styles from 'drive/styles/actionmenu'
 
-const isMoveToActive = () => {
-  try {
-    const url = new URL(window.location)
-    return url.search.includes('logistics')
-  } catch (e) {
-    return false
-  }
-}
-
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>
     {({ isSharedWithMe }) => (
@@ -142,7 +133,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         moveto: {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
-          displayCondition: () => canMove && isMoveToActive()
+          displayCondition: () => canMove
         },
         'phone-download': {
           displayCondition: selections =>
