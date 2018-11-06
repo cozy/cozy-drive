@@ -34,10 +34,10 @@ const selected = (state = [], action) => {
   switch (action.type) {
     case SELECT_ITEM:
       return [...state, action.id]
-    case UNSELECT_ITEM:
-      // eslint-disable-next-line no-case-declarations
+    case UNSELECT_ITEM: {
       const idx = state.indexOf(action.id)
       return [...state.slice(0, idx), ...state.slice(idx + 1)]
+    }
     case HIDE_SELECTION_BAR:
       return []
     default:
