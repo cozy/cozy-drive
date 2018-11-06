@@ -19,7 +19,7 @@ const TIMELINE_QUERY = client =>
       'metadata.datetime': 'desc'
     })
 
-const TIMELINE_MUTATIONS = (query, ownProps) => ({
+const TIMELINE_MUTATIONS = query => ({
   uploadPhoto: (file, dirPath) => {
     return query.client.upload(file, dirPath, {
       updateQueries: {
@@ -63,7 +63,7 @@ const getPhotosByMonth = photos => {
     }
   })
 }
-
+// eslint-disable-next-line
 export default props => (
   <Query query={TIMELINE_QUERY} as={TIMELINE} mutations={TIMELINE_MUTATIONS}>
     {({ data, ...result }, mutations) => (
