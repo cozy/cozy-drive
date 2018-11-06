@@ -22,8 +22,8 @@ class FilesViewer extends Component {
     this.fetchFileIfNecessary()
     this.fetchMoreIfNecessary()
   }
-  // eslint-disable-next-line no-unused-vars
-  componentWillReceiveProps(props, nextProps) {
+
+  componentWillReceiveProps() {
     this.fetchMoreIfNecessary()
   }
 

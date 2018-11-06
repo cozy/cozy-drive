@@ -198,13 +198,13 @@ const files = (state = [], action) => {
     case FETCH_SHARINGS_SUCCESS:
     case SORT_FOLDER_SUCCESS:
       return action.files
-    case FETCH_MORE_FILES_SUCCESS:
-      // eslint-disable-next-line no-case-declarations
+    case FETCH_MORE_FILES_SUCCESS: {
       const clone = state.slice(0)
       action.files.forEach((f, i) => {
         clone[action.skip + i] = f
       })
       return clone
+    }
     case RENAME_SUCCESS:
     case UPDATE_FILE:
       return updateItem(action.file, state)
