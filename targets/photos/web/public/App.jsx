@@ -64,7 +64,8 @@ class App extends Component {
               <div
                 className={classNames(
                   styles['pho-content-header'],
-                  styles['--no-icon']
+                  styles['--no-icon'],
+                  styles['--hide-bar']
                 )}
               >
                 <h2 className={styles['pho-content-title']}>{album.name}</h2>
