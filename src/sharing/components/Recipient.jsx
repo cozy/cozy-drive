@@ -48,7 +48,7 @@ export const RecipientsAvatars = ({
       )}
       {reversedRecipients.slice(0, MAX_DISPLAYED_RECIPIENTS).map(recipient => (
         <Avatar
-          key={`key_avatar_${recipient}`}
+          key={`key_avatar_${recipient.email}`}
           text={getInitiales(getDisplayName(recipient))}
           size={size}
           textId={getDisplayName(recipient)}
