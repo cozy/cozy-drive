@@ -124,14 +124,14 @@
     "xml2js": "0.4.19"
   },
   "dependencies": {
-    "babel-loader": "^8.0.4",
+    "babel-loader": "8.0.4",
     "babel-preset-cozy-app": "1.2.1",
     "classnames": "2.2.6",
     "cozy-bar": "5.0.8",
     "cozy-client": "3.0.2",
     "cozy-client-js": "0.13.0",
     "cozy-realtime": "1.1.0",
-    "cozy-scripts": "^1.1.1",
+    "cozy-scripts": "1.1.1",
     "cozy-ui": "14.3.2",
     "create-react-context": "0.2.2",
     "date-fns": "1.29.0",
