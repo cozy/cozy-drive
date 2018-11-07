@@ -18,11 +18,10 @@
     @extend $table-row-head
 
 .fil-content-row
-    @extend $table-row
-    .fil-content-file-select
-    .fil-content-file-action
-        opacity 1
-
+    @extend $table-row 
+    &:hover
+        .fil-content-file-select	
+            opacity 1
     &--center
         justify-content center
 
@@ -164,7 +163,7 @@
     text-align center
     font-size  .875rem
     cursor     default
-
+    
     [data-input="checkbox"] label
         cursor default
         padding 0
@@ -358,10 +357,10 @@ mime-types('fil-file-', '../assets/icons/')
         display block
 
 
-+desktop()
-    .fil-content-row-actioned
-        .fil-content-file-action
-            opacity 1
-            button 
-                background silver
-                opacity: 1
+.fil-content-file-action
+    opacity 1
+.fil-content-row-actioned
+    .fil-content-file-action
+        button 
+            background silver
+            opacity: 1
