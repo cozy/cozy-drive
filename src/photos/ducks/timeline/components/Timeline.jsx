@@ -8,19 +8,19 @@ import Toolbar from './Toolbar'
 import DeleteConfirm from './DeleteConfirm'
 import confirm from '../../../lib/confirm'
 import PhotoBoard from '../../../components/PhotoBoard'
+import { DOCTYPE_APPS } from 'drive/lib/doctypes'
 
 import { addToUploadQueue } from '../../upload'
 import { AddToAlbumModal, belongsToAlbums } from '../../albums'
 import Selection from '../../selection'
 
-const APPS_DOCTYPE = 'io.cozy.apps'
-const REF_PHOTOS = 'io.cozy.apps/photos'
-const REF_UPLOAD = 'io.cozy.apps/photos/upload'
+const REF_PHOTOS = `${DOCTYPE_APPS}/photos`
+const REF_UPLOAD = `${DOCTYPE_APPS}/photos/upload`
 
 const getUploadDir = async (client, t) => {
   const collection = client.collection('io.cozy.files')
   const { included } = await collection.findReferencedBy({
-    _type: APPS_DOCTYPE,
+    _type: DOCTYPE_APPS,
     _id: REF_UPLOAD
   })
   const referencedFolders = included.filter(
@@ -36,7 +36,7 @@ const getUploadDir = async (client, t) => {
     await collection.addReferencesTo(
       {
         _id: REF_PHOTOS,
-        _type: APPS_DOCTYPE
+        _type: DOCTYPE_APPS
       },
       [
         {
@@ -51,7 +51,7 @@ const getUploadDir = async (client, t) => {
     await collection.addReferencesTo(
       {
         _id: REF_UPLOAD,
-        _type: APPS_DOCTYPE
+        _type: DOCTYPE_APPS
       },
       [
         {

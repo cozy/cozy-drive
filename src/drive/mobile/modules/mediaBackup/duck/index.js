@@ -21,8 +21,10 @@ import {
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
 import { checkCorruptedFiles } from './checkCorruptedFiles'
-import { DOCTYPE_REF_PHOTOS, DOCTYPE_REF_BACKUP } from 'drive/lib/doctypes'
+import { DOCTYPE_APPS } from 'drive/lib/doctypes'
 
+const REF_PHOTOS = `${DOCTYPE_APPS}/photos`
+const REF_BACKUP = `${DOCTYPE_APPS}/photos/mobile`
 const ERROR_CODE_TOO_LARGE = 413
 
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
@@ -45,7 +47,8 @@ const getFoldersWithReference = async reference => {
         selector: {
           referenced_by: {
             $elemMatch: {
-              type: reference
+              id: reference,
+              type: DOCTYPE_APPS
             }
           }
         },
@@ -80,7 +83,7 @@ const addFolderReference = (folderId, reference) =>
     {
       data: [
         {
-          type: reference,
+          type: DOCTYPE_APPS,
           id: reference
         }
       ]
@@ -100,7 +103,7 @@ const getOrCreateFolderWithReference = async (path, reference) => {
 }
 
 const getUploadDir = async () => {
-  const uploadedFolders = await getFoldersWithReference(DOCTYPE_REF_BACKUP)
+  const uploadedFolders = await getFoldersWithReference(REF_BACKUP)
 
   if (uploadedFolders.length >= 1) {
     // There can be more than one referenced folder in case of consecutive delete/restores. We always want to return the most recently used.
@@ -113,23 +116,20 @@ const getUploadDir = async () => {
       'mobile.settings.media_backup.legacy_backup_folder'
     )
 
-    await getOrCreateFolderWithReference(
-      `/${mediaFolderName}`,
-      DOCTYPE_REF_PHOTOS
-    )
+    await getOrCreateFolderWithReference(`/${mediaFolderName}`, REF_PHOTOS)
 
     try {
       const legacyFolder = await cozy.client.files.statByPath(
         `/${mediaFolderName}/${legacyUploadFolderName}`
       )
-      await addFolderReference(legacyFolder._id, DOCTYPE_REF_BACKUP)
+      await addFolderReference(legacyFolder._id, REF_BACKUP)
       return legacyFolder
     } catch (err) {
       if (err.status === 404) {
         // the legacy folder doesn't exist, so we create the new one
         const uploadFolder = await getOrCreateFolderWithReference(
           `/${mediaFolderName}/${uploadFolderName}`,
-          DOCTYPE_REF_BACKUP
+          REF_BACKUP
         )
         return uploadFolder
       } else {
