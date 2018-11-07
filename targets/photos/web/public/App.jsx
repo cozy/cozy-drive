@@ -5,9 +5,8 @@ import Selection from 'photos/ducks/selection'
 import PhotoBoard from 'photos/components/PhotoBoard'
 import Loading from 'photos/components/Loading'
 import ErrorShare from 'components/Error/ErrorShare'
-import { Button } from 'cozy-ui/react'
+import { Button, Menu, MenuItem, Icon } from 'cozy-ui/react'
 import { MoreButton, CozyHomeLink } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
 
 import classNames from 'classnames'
 import styles from './index.styl'
@@ -80,17 +79,15 @@ class App extends Component {
                 <CozyHomeLink from="sharing-photos" t={t} />
                   <Menu
                     title={t('Toolbar.more')}
-                    className={classNames(styles['pho-toolbar-menu'])}
-                    button={<MoreButton />}
+                    component={<MoreButton />}
+                    position="right"
                   >
-                    <Item>
-                      <a
-                        className={classNames(styles['pho-public-download'])}
-                        onClick={() => this.onDownload(selected)}
-                      >
-                        {t('Toolbar.album_download')}
-                      </a>
-                    </Item>
+                    <MenuItem
+                      onSelect={() => this.onDownload(selected)}
+                      icon={<Icon icon="download" />}
+                    >
+                      {t('Toolbar.album_download')}
+                    </MenuItem>
                   </Menu>
                 </div>
               </div>
