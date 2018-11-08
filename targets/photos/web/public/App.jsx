@@ -40,7 +40,8 @@ class App extends Component {
         <div
           className={classNames(
             styles['pho-public-layout'],
-            styles['pho-public-layout--full']
+            styles['pho-public-layout--full'],
+            'u-pt-3'
           )}
         >
           <ErrorShare errorType={`public_album_unshared`} />
@@ -81,6 +82,7 @@ class App extends Component {
                     title={t('Toolbar.more')}
                     component={<MoreButton />}
                     position="right"
+                    className="u-hide--desk"
                   >
                     <MenuItem
                       onSelect={() => this.onDownload(selected)}
