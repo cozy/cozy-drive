@@ -44,7 +44,8 @@ const initCozyBar = data => {
       appEditor: data.cozyAppEditor,
       iconPath: data.cozyIconPath,
       lang: data.cozyLocale,
-      replaceTitleOnMobile: true
+      replaceTitleOnMobile: true,
+      isPublic: true
     })
   }
 }
