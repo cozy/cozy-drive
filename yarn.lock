@@ -3930,17 +3930,18 @@ cozy-client-js@^0.3.19:
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
   integrity sha1-0n0CiAd86VE5MzxB37U3uFhP8lQ=
 
-cozy-client@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-3.0.2.tgz#e32a843938f5adba45f86e5a80670c3599660aa4"
-  integrity sha512-QtOI3/f8Dz7bAYx4Vdjq9KhR0jT0q66cC23FHqnEJXqC1t6UZ3KG2Ky7uHohx3mx+NAKwTqjQBl2ks0BtvqBpw==
+cozy-client@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-4.4.0.tgz#9037caac714dba189915668bfe3463267b8cbfa0"
+  integrity sha512-t5GZbm1zh7k61v5rEsGNyKs8i2ho+r49BfrcAwzEwUxSZ0kEuhGAGtYZG6Xd0S8vyonvzvk57/S1UM3CWlis5g==
   dependencies:
-    cozy-stack-client "^3.0.1"
-    lodash "4.17.10"
+    cozy-stack-client "^4.3.0"
+    lodash "4.17.11"
     prop-types "15.6.2"
     react "16.4.2"
     react-redux "5.0.7"
     redux "3.7.2"
+    sift "7.0.1"
 
 cozy-realtime@1.1.0:
   version "1.1.0"
@@ -3997,10 +3998,10 @@ cozy-scripts@1.1.1:
     webpack-dev-server "3.1.10"
     webpack-merge "4.1.4"
 
-cozy-stack-client@^3.0.1:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-3.4.0.tgz#6500db6eba44eaded428fef5e0e0075e805eaa81"
-  integrity sha512-iKOeY/B0hWQ4xydTBBmq0oZ6pYddC2WlEKi6w8xEZoCLgp0aKwd4QTTljkpLnrPUoYw5SxK3io7xCuKcg9XeZA==
+cozy-stack-client@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-4.3.0.tgz#4a4ed9fcc3ff7e6a15e2b7d43fa54fd384ab912d"
+  integrity sha512-t61mpGbBND3+S2BLAVYFp+6v/0NfOUzqlrVTjC8biY1OMFwZYr9JXUvLGpuUZQGZRrCh5b5UDB8tCoqpy2jaWg==
   dependencies:
     mime-types "2.1.20"
 
@@ -9100,7 +9101,7 @@ lodash@4.17.10:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
   integrity sha512-UejweD1pDoXu+AD825lWwp4ZGtSwgnpZxb3JDViD7StjQz+Nb/6l093lx4OQ0foGWNRoc19mWy7BzL+UAK2iVg==
 
-lodash@4.x, lodash@^4.13.1, lodash@^4.14.2, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
+lodash@4.17.11, lodash@4.x, lodash@^4.13.1, lodash@^4.14.2, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -13436,6 +13437,11 @@ shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
+
+sift@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/sift/-/sift-7.0.1.tgz#47d62c50b159d316f1372f8b53f9c10cd21a4b08"
+  integrity sha512-oqD7PMJ+uO6jV9EQCl0LrRw1OwsiPsiFQR5AR30heR+4Dl7jBBbDLnNvWiak20tzZlSE1H7RB30SX/1j/YYT7g==
 
 sigmund@^1.0.1:
   version "1.0.1"
