@@ -1,4 +1,4 @@
-/* global cozy __DEVELOPMENT__ */
+/* global cozy */
 import 'babel-polyfill'
 
 import 'whatwg-fetch'
@@ -72,15 +72,6 @@ const init = async () => {
     token: sharecode,
     schema
   })
-
-  if (__DEVELOPMENT__) {
-    // Enables React dev tools for Preact
-    // Cannot use import as we are in a condition
-    require('preact/devtools')
-
-    // Export React to window for the devtools
-    window.React = React
-  }
 
   // we still need cozy-client-js for opening a folder
   cozy.client.init({

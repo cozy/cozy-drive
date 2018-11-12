@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = function(production, app) {
   var entry = {
-    app: path.resolve(__dirname, `../targets/${app}/web/main`)
+    app: [path.resolve(__dirname, 'expose-react.js'), path.resolve(__dirname, `../targets/${app}/web/main`)]
   }
 
   var plugins = [
@@ -32,7 +32,7 @@ module.exports = function(production, app) {
   if (
     fs.existsSync(path.resolve(__dirname, `../targets/${app}/web/services.jsx`))
   ) {
-    entry.services = path.resolve(__dirname, `../targets/${app}/web/services`)
+    entry.services = [path.resolve(__dirname, 'expose-react.js'), path.resolve(__dirname, `../targets/${app}/web/services`)]
     plugins.push(
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, `../targets/${app}/web/services.ejs`),
@@ -52,10 +52,10 @@ module.exports = function(production, app) {
       path.resolve(__dirname, `../targets/${app}/web/public/main.jsx`)
     )
   ) {
-    entry['public/app'] = path.resolve(
+    entry['public/app'] = [path.resolve(__dirname, 'expose-react.js'), path.resolve(
       __dirname,
       `../targets/${app}/web/public/main`
-    )
+    )]
     plugins.push(
       new HtmlWebpackPlugin({
         template: path.resolve(
