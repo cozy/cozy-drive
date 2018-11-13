@@ -21,10 +21,13 @@ import {
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
 import { checkCorruptedFiles } from './checkCorruptedFiles'
-import { DOCTYPE_APPS } from 'drive/lib/doctypes'
+import {
+  getReferencedFolders,
+  getOrCreateFolderWithReference,
+  REF_PHOTOS,
+  REF_BACKUP
+} from 'folder-references'
 
-const REF_PHOTOS = `${DOCTYPE_APPS}/photos`
-const REF_BACKUP = `${DOCTYPE_APPS}/photos/mobile`
 const ERROR_CODE_TOO_LARGE = 413
 
 export const cancelMediaBackup = () => ({ type: MEDIA_UPLOAD_CANCEL })
@@ -38,72 +41,8 @@ const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
   }
 })
 
-const getFoldersWithReference = async reference => {
-  try {
-    const referencedFolders = await cozy.client.fetchJSON(
-      'POST',
-      '/files/_find',
-      {
-        selector: {
-          referenced_by: {
-            $elemMatch: {
-              id: reference,
-              type: DOCTYPE_APPS
-            }
-          }
-        },
-        sort: [{ created_at: 'desc' }]
-      }
-    )
-
-    return referencedFolders.filter(
-      folder => /^\/\.cozy_trash/.test(folder.attributes.path) === false
-    )
-  } catch (err) {
-    if (err.reason.errors[0].title === 'no_usable_index') {
-      await initCreatedAtIndex()
-      return getFoldersWithReference(reference)
-    } else {
-      throw err
-    }
-  }
-}
-
-const initCreatedAtIndex = () =>
-  cozy.client.fetchJSON('POST', '/data/io.cozy.files/_index', {
-    index: {
-      fields: ['created_at']
-    }
-  })
-
-const addFolderReference = (folderId, reference) =>
-  cozy.client.fetchJSON(
-    'POST',
-    `/files/${folderId}/relationships/referenced_by`,
-    {
-      data: [
-        {
-          type: DOCTYPE_APPS,
-          id: reference
-        }
-      ]
-    }
-  )
-
-const getOrCreateFolderWithReference = async (path, reference) => {
-  const referencedFolders = await getFoldersWithReference(reference)
-
-  if (referencedFolders.length) {
-    return referencedFolders[0]
-  } else {
-    const dir = await cozy.client.files.createDirectoryByPath(path, false)
-    await addFolderReference(dir._id, reference)
-    return dir
-  }
-}
-
-const getUploadDir = async () => {
-  const uploadedFolders = await getFoldersWithReference(REF_BACKUP)
+const getUploadDir = async client => {
+  const uploadedFolders = await getReferencedFolders(client, REF_BACKUP)
 
   if (uploadedFolders.length >= 1) {
     // There can be more than one referenced folder in case of consecutive delete/restores. We always want to return the most recently used.
@@ -116,18 +55,27 @@ const getUploadDir = async () => {
       'mobile.settings.media_backup.legacy_backup_folder'
     )
 
-    await getOrCreateFolderWithReference(`/${mediaFolderName}`, REF_PHOTOS)
+    await getOrCreateFolderWithReference(
+      client,
+      `/${mediaFolderName}`,
+      REF_PHOTOS
+    )
 
     try {
-      const legacyFolder = await cozy.client.files.statByPath(
-        `/${mediaFolderName}/${legacyUploadFolderName}`
+      const { data: legacyFolder } = await client
+        .collection('io.cozy.files')
+        .statByPath(`/${mediaFolderName}/${legacyUploadFolderName}/plop`)
+      await getOrCreateFolderWithReference(
+        client,
+        `/${mediaFolderName}/${legacyUploadFolderName}`,
+        REF_BACKUP
       )
-      await addFolderReference(legacyFolder._id, REF_BACKUP)
       return legacyFolder
     } catch (err) {
       if (err.status === 404) {
         // the legacy folder doesn't exist, so we create the new one
         const uploadFolder = await getOrCreateFolderWithReference(
+          client,
           `/${mediaFolderName}/${uploadFolderName}`,
           REF_BACKUP
         )
@@ -150,7 +98,8 @@ const canBackup = (isManualBackup, getState) => {
 
 export const startMediaBackup = (isManualBackup = false) => async (
   dispatch,
-  getState
+  getState,
+  { client }
 ) => {
   dispatch({ type: MEDIA_UPLOAD_START })
   if (!(await isAuthorized())) {
@@ -182,7 +131,7 @@ export const startMediaBackup = (isManualBackup = false) => async (
         const {
           _id: uploadDirId,
           attributes: { path: uploadDirPath }
-        } = await getUploadDir()
+        } = await getUploadDir(client)
         let uploadCounter = 0
         for (const photo of photosToUpload) {
           if (
