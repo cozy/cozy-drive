@@ -18,7 +18,7 @@ module.exports = function(production, app) {
       template: path.resolve(__dirname, `../targets/${app}/web/index.ejs`),
       title: `Cozy ${app.charAt(0).toUpperCase()}${app.slice(1)}`,
       chunks: ['app'],
-      inject: 'head',
+      inject: false,
       minify: {
         collapseWhitespace: true
       }
@@ -39,7 +39,7 @@ module.exports = function(production, app) {
         title: `Cozy ${app.charAt(0).toUpperCase()}${app.slice(1)}`,
         filename: 'services.html',
         chunks: ['services'],
-        inject: 'head',
+        inject: false,
         minify: {
           collapseWhitespace: true
         }
@@ -65,7 +65,7 @@ module.exports = function(production, app) {
         title: `Cozy ${app.charAt(0).toUpperCase()}${app.slice(1)}`,
         filename: 'public/index.html',
         chunks: ['public/app'],
-        inject: 'head',
+        inject: false,
         minify: {
           collapseWhitespace: true
         }

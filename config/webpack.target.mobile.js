@@ -41,7 +41,7 @@ module.exports = function(production, app) {
         template: path.resolve(__dirname, `../targets/${app}/web/index.ejs`),
         title: `cozy-${app}`,
         chunks: ['app'],
-        inject: 'head',
+        inject: false,
         minify: {
           collapseWhitespace: true
         }
