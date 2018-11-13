@@ -17,11 +17,11 @@ module.exports = function(production, app) {
     module: {
       rules: [
         {
-            test: /\.(eot|ttf|woff|woff2)$/,
-            loader: 'file-loader',
-            options: {
-              name: `[name].[ext]`
-            }
+          test: /\.(eot|ttf|woff|woff2)$/,
+          loader: 'file-loader',
+          options: {
+            name: `[name].[ext]`
+          }
         }
       ]
     },
@@ -34,8 +34,12 @@ module.exports = function(production, app) {
         PouchDB: 'pouchdb',
         pouchdbFind: 'pouchdb-find',
         pouchdbAdapterCordovaSqlite: 'pouchdb-adapter-cordova-sqlite',
-        'cozy.client': production ? 'cozy-client-js/dist/cozy-client.min.js' : 'cozy-client-js/dist/cozy-client.js',
-        'cozy.bar': production ? 'cozy-bar/dist/cozy-bar.mobile.min.js' : 'cozy-bar/dist/cozy-bar.mobile.js'
+        'cozy.client': production
+          ? 'cozy-client-js/dist/cozy-client.min.js'
+          : 'cozy-client-js/dist/cozy-client.js',
+        'cozy.bar': production
+          ? 'cozy-bar/dist/cozy-bar.mobile.min.js'
+          : 'cozy-bar/dist/cozy-bar.mobile.js'
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, `../targets/${app}/web/index.ejs`),
