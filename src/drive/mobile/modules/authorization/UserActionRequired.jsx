@@ -55,7 +55,7 @@ class UserActionRequired extends Component {
   checkIfUserActionIsRequired = async () => {
     const { client, router } = this.context
     try {
-      await client.getClient().fetch('GET', '/data/')
+      await client.getStackClient().fetch('GET', '/data/')
       const wasBlocked = this.state.warnings.length !== 0
       if (wasBlocked) {
         this.setState({ warnings: [] })

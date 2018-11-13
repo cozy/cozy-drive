@@ -17,7 +17,7 @@ class RealtimeFiles extends React.Component {
   pouchListener = null
 
   async componentWillMount() {
-    const { client } = this.context.client
+    const { stackClient: client } = this.context.client
     const { token, uri } = client
 
     this.realtimeListener = await realtime.subscribeAll(
