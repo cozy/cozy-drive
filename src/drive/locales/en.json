@@ -298,15 +298,18 @@
   "mobile": {
     "onboarding": {
       "welcome": {
-        "title1": "Welcome to Cozy",
-        "title2": "Your own personal cloud",
-        "button": "Sign in to your Cozy",
-        "no_account_link": "Don’t have an account? Request one here."
+        "title": "Cozy Drive",
+        "desc": "Create a Cozy or sign in to access Cozy Drive",
+        "button": "Sign in",
+        "no_account_link": "Create my Cozy"
       },
       "server_selection": {
-        "description": "Example: https://**camillenimbus**.mycozy.cloud",
-        "label": "Enter your Cozy address",
-        "cozy_address_placeholder": "camillenimbus.mycozy.cloud",
+        "title": "Sign in",
+        "lostpwd": "[I forgot the address of my Cozy](https://manager.cozycloud.cc/cozy/reminder)",
+        "label": "Address of my Cozy",
+        "cozy_address_placeholder": "claude",
+        "domain_cozy": ".mycozy.cloud",
+        "domain_custom": "customize",
         "button": "Next",
         "wrong_address_with_email":
           "You typed an email address. To connect on your cozy you must type its url, something like https://camillenimbus.mycozy.cloud",
