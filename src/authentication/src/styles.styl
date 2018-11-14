@@ -1,117 +1,71 @@
 @require 'settings/breakpoints.styl'
+@require 'components/wizard.styl'
 @require 'components/button.styl'
 @require 'components/forms.styl'
-@require 'settings/palette.styl'
 
+// Layout
 .wizard
-    @extend $form
-    @extend $form-text
-    position fixed
-    top 0
-    left 0
-    height 100%
-    display flex
-    flex-direction column
-    width   85vw
-    padding 0 7.5vw
-    background-color white
-    color            black
-    text-align center
+   @extend $wizard
 
-    .wizard-header
-        display         flex
-        flex-direction  row
-        margin-top      2rem
-        justify-content flex-start
+.wizard-wrapper
+    @extend $wizard-wrapper
 
-        .button-previous
-            width      2rem
-            height     2rem
-            cursor     pointer
-            background-size contain
-            background-position center
-            background-repeat no-repeat
+.wizard-header
+    @extend $wizard-header
 
-            &.--cross
-                background-image embedurl("./assets/icons/icon-cross-grey.svg")
+.wizard-footer
+    @extend $wizard-footer
 
-    .logo-wrapper
-        max-width     3.5rem
-        height        3.5rem
-        margin        .5rem auto 3rem auto
-        padding       1.25rem
-        border-radius 50%
-        box-shadow    0 .0625rem .1875rem rgba(50, 54, 63, .19), 0 .25rem .75rem rgba(50, 54, 63, .12)
-
-        &.error
-            background pomegranate
-
-    .wizard-main
-        margin auto
-        padding 0 .5rem
-        width 100%
-        box-sizing border-box
-
-    .title
-        margin    .25rem auto
-        font-size 1.5rem
-
-    .description
-        text-align center
-        margin     .5rem 0
-        font-size  1.125rem
-        max-width  25rem
-
-        &.error
-            color pomegranate
-            font-size .75rem
-            font-style italic
-
-        &.info
-            color coolGrey
-            font-size .75rem
-            font-style italic
-
-    .coz-form-label
-        text-align left
-
-    .input
-        width 100%
-
-        &::placeholder
-            color   charcoalGrey
-            opacity .5
-
-        &.error
-            color pomegranate
-            border-color pomegranate
-
-
+.wizard--welcome
+    .wizard-wrapper
+        @extend $wizard-wrapper--welcome
     .wizard-footer
-        display flex
-        flex-direction column
-        padding-bottom env(safe-area-inset-bottom)
-        margin-bottom 1.5rem
+        @extend $wizard-footer--welcome
+    .wizard-title
+        @extend $wizard-title--welcome
 
-        > .link
-            margin          1.5rem .5rem 0rem .5rem
-            text-align      left
-            text-decoration none
-            color           dodgerBlue
+.wizard-main
+    @extend $wizard-main
 
-.select-server
-    .description
-        text-align left
+// Elements
+.wizard-logo
+    @extend $wizard-logo
 
-    .description p
-        margin 0
+.wizard-logo-img
+    @extend $wizard-logo-img
 
-.welcome .logo-wrapper, .select-server .logo-wrapper
-    background dodgerBlue
+.wizard-logo-badge
+    @extend $wizard-logo-badge
 
+.wizard-previous
+    @extend $wizard-previous
 
-// ASSETS
-.cozy-logo-white
-    height  3.5rem
-    background embedurl("./assets/icons/icon-cozy.svg") center no-repeat
-    background-size contain
+.wizard-next
+    @extend $wizard-next
+
+.wizard-title
+    @extend $wizard-title
+
+.wizard-dualfield
+    @extend $wizard-dualfield
+
+.wizard-protocol
+    @extend $wizard-protocol
+
+.wizard-select
+    @extend $wizard-select
+
+.wizard-select--medium
+    @extend $wizard-select--medium
+
+.wizard-input
+    @extend $wizard-input
+
+.wizard-notice
+    @extend $wizard-notice
+
+.wizard-notice--error
+    @extend $wizard-notice--error
+
+.wizard-notice--lost
+    @extend $wizard-notice--lost
