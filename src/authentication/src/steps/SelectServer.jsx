@@ -5,7 +5,11 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
-import { Button } from 'cozy-ui/react'
+import { Button, Label, Input, MainTitle, Icon } from 'cozy-ui/react'
+import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
+import 'cozy-ui/assets/icons/ui/previous.svg'
+import 'cozy-ui/assets/icons/ui/next.svg'
+import 'cozy-ui/assets/icons/ui/lock.svg'
 import styles from '../styles'
 
 require('url-polyfill')
@@ -150,70 +154,115 @@ export class SelectServer extends Component {
 
   render() {
     const { value, error, fetching } = this.state
-    const { t, previousStep } = this.props
+    const {
+      t,
+      previousStep,
+      breakpoints: { isMobile }
+    } = this.props
+    const inputID = 'inputID'
     return (
-      <form
-        className={classNames(styles['wizard'], styles['select-server'])}
-        onSubmit={this.onSubmit}
-      >
-        <header className={styles['wizard-header']}>
-          <a
-            className={classNames(styles['button-previous'], styles['--cross'])}
-            onClick={previousStep}
-          />
-        </header>
-        <div className={styles['wizard-main']}>
-          <div
-            className={classNames(styles['logo-wrapper'], {
-              [styles['error']]: error
-            })}
-          >
-            <div className={styles['cozy-logo-white']} />
-          </div>
-          <label className={styles['coz-form-label']}>
-            {t('mobile.onboarding.server_selection.label')}
-          </label>
-          <input
-            type="text"
-            autoCapitalize="none"
-            autoCorrect="off"
-            autoComplete="off"
-            className={classNames(styles['input'], {
-              [styles['error']]: error
-            })}
-            placeholder={t(
-              'mobile.onboarding.server_selection.cozy_address_placeholder'
+      <form className={styles['wizard']} onSubmit={this.onSubmit}>
+        <div className={styles['wizard-wrapper']}>
+          <header className={styles['wizard-header']}>
+            <Button
+              subtle
+              icon="previous"
+              iconOnly
+              extension="narrow"
+              className={classNames(styles['wizard-previous'])}
+              onClick={previousStep}
+            />
+            <MainTitle
+              tag="h1"
+              className={classNames(styles['wizard-title'], 'u-mb-1', 'u-mt-0')}
+            >
+              {t('mobile.onboarding.server_selection.title')}
+            </MainTitle>
+          </header>
+          <div className={styles['wizard-main']}>
+            <Label htmlFor={inputID}>
+              {t('mobile.onboarding.server_selection.label')}
+            </Label>
+            <div className={styles['wizard-dualfield']}>
+              {!isMobile && (
+                <div className={styles['wizard-protocol']}>
+                  <Icon icon="lock" />
+                  <span>https://</span>
+                </div>
+              )}
+              <Input
+                type="text"
+                id={inputID}
+                autoCapitalize="none"
+                autoCorrect="off"
+                autoComplete="off"
+                autofocus
+                className={classNames(styles['wizard-input'], {
+                  [styles['error']]: error
+                })}
+                placeholder={t(
+                  'mobile.onboarding.server_selection.cozy_address_placeholder'
+                )}
+                size={isMobile ? 'medium' : undefined}
+                inputRef={input => {
+                  this.input = input
+                }}
+                onChange={({ target: { value } }) => {
+                  this.onChange(value)
+                }}
+                value={value}
+              />
+              <select
+                className={classNames(styles['wizard-select'], {
+                  [styles['wizard-select--medium']]: isMobile
+                })}
+              >
+                <option value=".mycozy.cloud">
+                  {t('mobile.onboarding.server_selection.domain_cozy')}
+                </option>
+                <option value="custom">
+                  {t('mobile.onboarding.server_selection.domain_custom')}
+                </option>
+              </select>
+            </div>
+            {!error && (
+              <ReactMarkdown
+                className={classNames(
+                  styles['wizard-notice'],
+                  styles['wizard-notice--lost']
+                )}
+                source={t('mobile.onboarding.server_selection.lostpwd')}
+              />
             )}
-            ref={input => {
-              this.input = input
-            }}
-            onChange={({ target: { value } }) => {
-              this.onChange(value)
-            }}
-            value={value}
-          />
-          {!error && (
-            <ReactMarkdown
-              className={classNames(styles['description'], styles['info'])}
-              source={t('mobile.onboarding.server_selection.description')}
-              disallowedTypes={['link']}
-              unwrapDisallowed
+            {error && (
+              <ReactMarkdown
+                className={classNames(
+                  styles['wizard-notice'],
+                  styles['wizard-notice--error']
+                )}
+                source={t(error)}
+              />
+            )}
+          </div>
+          <footer className={styles['wizard-footer']}>
+            <Button
+              className={styles['wizard-next']}
+              disabled={error || !value || fetching}
+              busy={fetching}
+              label={t('mobile.onboarding.server_selection.button')}
+              size={isMobile ? 'normal' : 'large'}
+            >
+              <Icon icon="next" color="white" />
+            </Button>
+            <Button
+              type="button"
+              subtle
+              className={'u-mt-1'}
+              label={t('mobile.onboarding.welcome.no_account_link')}
+              size={isMobile ? 'normal' : 'large'}
             />
-          )}
-          {error && (
-            <ReactMarkdown
-              className={classNames(styles['description'], styles['error'])}
-              source={t(error)}
-            />
-          )}
+          </footer>
         </div>
-        <footer className={styles['wizard-footer']}>
-          <Button
-            disabled={error || !value || fetching}
-            busy={fetching}
-            label={t('mobile.onboarding.server_selection.button')}
-          />
-        </footer>
       </form>
     )
   }
@@ -237,4 +286,4 @@ SelectServer.contextTypes = {
   client: PropTypes.object
 }
 
-export default translate()(SelectServer)
+export default withBreakpoints()(translate()(SelectServer))
