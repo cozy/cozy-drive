@@ -13,6 +13,7 @@ import LoadMoreButton from './LoadMoreButton'
 export class PhotoBoard extends Component {
   render() {
     const {
+      t,
       f,
       lists,
       selected,
@@ -64,7 +65,13 @@ export class PhotoBoard extends Component {
             containerWidth={width}
           />
         ))}
-        {hasMore && <LoadMoreButton width={width} onClick={fetchMore} />}
+        {hasMore && (
+          <LoadMoreButton
+            label={t('Board.load_more')}
+            width={width}
+            onClick={fetchMore}
+          />
+        )}
       </div>
     )
   }

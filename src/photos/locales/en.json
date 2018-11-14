@@ -109,6 +109,7 @@
     "album_item_description": "%{smart_count} photo |||| %{smart_count} photos",
     "album_item_shared_ro": "Shared (read only)",
     "album_item_shared_rw": "Shared (read/write)",
+    "load_more": "Load more albums",
     "add_photos": {
       "title": "Add to album",
       "success":
