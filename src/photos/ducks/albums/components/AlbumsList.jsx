@@ -2,6 +2,7 @@ import styles from 'photos/styles/albumsList'
 
 import React from 'react'
 import { Content } from 'cozy-ui/react/Layout'
+import { translate } from 'cozy-ui/react/I18n'
 import { EmptyPhotos } from 'components/Error/Empty'
 import LoadMoreButton from 'photos/components/LoadMoreButton'
 import AlbumItem from './AlbumItem'
@@ -15,7 +16,7 @@ const sortByCreationDate = (a, b) => {
   )
 }
 
-const AlbumsList = ({ data, hasMore, fetchMore }) =>
+const AlbumsList = ({ data, hasMore, fetchMore, t }) =>
   data.length === 0 ? (
     <EmptyPhotos localeKey="albums" />
   ) : (
@@ -24,9 +25,11 @@ const AlbumsList = ({ data, hasMore, fetchMore }) =>
         {data.sort(sortByCreationDate).map(a => (
           <AlbumItem album={a} key={a.id} />
         ))}
-        {hasMore && <LoadMoreButton onClick={fetchMore} />}
+        {hasMore && (
+          <LoadMoreButton label={t('Albums.load_more')} onClick={fetchMore} />
+        )}
       </div>
     </Content>
   )
 
-export default AlbumsList
+export default translate()(AlbumsList)
