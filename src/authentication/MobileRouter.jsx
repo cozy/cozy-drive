@@ -1,8 +1,8 @@
 import React from 'react'
 import { Router, withRouter } from 'react-router'
 
-import Authentication from './src/Authentication'
-import Revoked from './src/Revoked'
+import { Authentication, Revoked } from 'cozy-authentication'
+
 import { logException } from 'drive/lib/reporter'
 
 const MobileRouter = ({
