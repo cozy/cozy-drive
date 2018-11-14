@@ -19,7 +19,7 @@ export const initClient = url => {
       'io.cozy.jobs:POST:sendmail:worker'
     ],
     oauth: {
-      redirectURI: 'http://localhost',
+      redirectURI: 'cozydrive://auth',
       softwareID: SOFTWARE_ID,
       clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
       softwareVersion: __APP_VERSION__,
