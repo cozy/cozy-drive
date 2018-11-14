@@ -19,6 +19,10 @@ class Authentication extends Component {
     this.steps = [STEP_WELCOME]
   }
 
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
+
   nextStep() {
     this.setState(prevState => ({
       currentStepIndex: ++prevState.currentStepIndex
