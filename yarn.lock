@@ -3937,18 +3937,26 @@ cozy-client-js@^0.3.19:
   resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.3.21.tgz#d27d0288077ce95139333c41dfb537b8584ff254"
   integrity sha1-0n0CiAd86VE5MzxB37U3uFhP8lQ=
 
-cozy-client@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-4.4.0.tgz#9037caac714dba189915668bfe3463267b8cbfa0"
-  integrity sha512-t5GZbm1zh7k61v5rEsGNyKs8i2ho+r49BfrcAwzEwUxSZ0kEuhGAGtYZG6Xd0S8vyonvzvk57/S1UM3CWlis5g==
+cozy-client@4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-4.6.0.tgz#59e3a0e72cf469abd8a97af6c7606e6a6dd34790"
+  integrity sha512-qesmhqjM6/PTVDJ7l1Maw+DIKcE/C4lI2N0xqvtHlvaJzsxR7zwxQSo0czqWstyfTHACZG2yIVZnClLraGcmAQ==
   dependencies:
-    cozy-stack-client "^4.3.0"
+    cozy-device-helper "1.4.14"
+    cozy-stack-client "^4.5.0"
     lodash "4.17.11"
     prop-types "15.6.2"
     react "16.4.2"
     react-redux "5.0.7"
     redux "3.7.2"
     sift "7.0.1"
+
+cozy-device-helper@1.4.14:
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.4.14.tgz#3471b344a1692579edc2456758945e455032ea6d"
+  integrity sha512-oupdeeARN5kYWoxEpbnfPfndPy0wOtcSHGC86YUkmmsHyZBBCpDFAe5sYNTF4P/HvRIUyxzqwY20nTW35eDdpg==
+  dependencies:
+    lodash "4.17.11"
 
 cozy-realtime@1.1.0:
   version "1.1.0"
@@ -4005,7 +4013,11 @@ cozy-scripts@1.1.1:
     webpack-dev-server "3.1.10"
     webpack-merge "4.1.4"
 
+<<<<<<< HEAD
 cozy-stack-client@^4.3.0:
+=======
+cozy-stack-client@^4.5.0:
+>>>>>>> fix: Upgrade cozy-client
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-4.5.0.tgz#0999ce1778b4d1577596ed6f94c14209e4f55368"
   integrity sha512-++R/bUGOJ8hf2wT1tgNxxyzEG6GUkYivM8F8OMAvYlFma9MB6N9kv/WMOlRzOOmpZn9LeWV+bLLViwTvIIEObA==
