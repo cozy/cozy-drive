@@ -1,15 +1,15 @@
 import { log, cozyClient } from 'cozy-konnector-libs'
 
-import { DOCTYPE_FILES } from '../../../src/drive/lib/doctypes'
+import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import {
   readSetting,
   defaultParameters,
   createDefaultSetting
-} from '../../../src/photos/ducks/clustering/settings'
+} from 'photos/ducks/clustering/settings'
 
 // Returns the photos metadata sorted by date
 const extractInfo = photos => {
-  let info = photos
+  const info = photos
     .map(file => {
       const photo = {
         id: file._id,
@@ -21,7 +21,7 @@ const extractInfo = photos => {
       } else {
         photo.date = file.created_at
       }
-      const hours = new Date(photo.date.slice(0, 19)).getTime() / 1000 / 3600
+      const hours = new Date(photo.date).getTime() / 1000 / 3600
       photo.timestamp = hours
       return photo
     })
@@ -54,9 +54,7 @@ const getNewPhotos = async setting => {
   )
 
   return result.results.map(res => res.doc).filter(doc => {
-    return (
-      doc.class === 'image' && doc._id.indexOf('_design') !== 0 && !doc.trashed
-    )
+    return doc.class === 'image' && doc._id.includes('_design') && !doc.trashed
   })
 }
 
