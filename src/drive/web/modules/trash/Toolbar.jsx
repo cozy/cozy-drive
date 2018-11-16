@@ -17,8 +17,6 @@ import styles from 'drive/styles/toolbar'
 
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 
-const { BarRight } = cozy.bar
-
 const Toolbar = ({
   t,
   disabled,
@@ -26,6 +24,7 @@ const Toolbar = ({
   emptyTrash,
   breakpoints: { isMobile }
 }) => {
+  const { BarRight } = cozy.bar
   const MoreMenu = (
     <Menu
       title={t('toolbar.item_more')}
