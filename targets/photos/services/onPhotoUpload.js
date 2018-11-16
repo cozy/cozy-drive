@@ -6,6 +6,7 @@ import {
   defaultParameters,
   createDefaultSetting
 } from 'photos/ducks/clustering/settings'
+import { computeEpsTemporal, computeEpsSpatial } from 'photos/ducks/clustering/services'
 
 // Returns the photos metadata sorted by date
 const extractInfo = photos => {
@@ -39,7 +40,15 @@ const clusterizePhotos = async (setting, photos) => {
     return []
   }
 
-  // TODO add metrics based on params
+  if (!params.epsTemporal) {
+    params.epsTemporal = computeEpsTemporal(dataset)
+  }
+  if (!params.epsSpatial) {
+    params.epsSpatial = computeEpsSpatial(dataset)
+  }
+
+  // TODO compute spatio temporal
+  // TODO save params
 
   return dataset
 }
