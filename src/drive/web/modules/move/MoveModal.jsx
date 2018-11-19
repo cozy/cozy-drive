@@ -7,13 +7,13 @@ import Alerter from 'cozy-ui/react/Alerter'
 import { connect } from 'react-redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
 
-import MoveHeader from './MoveHeader'
-import MoveExplorer from './MoveExplorer'
-import MoveFileList from './MoveFileList'
-import MoveLoader from './MoveLoader'
-import MoveLoadMore from './MoveLoadMore'
-import MoveFooter from './MoveFooter'
-import MoveTopbar from './MoveTopbar'
+import Header from './Header'
+import Explorer from './Explorer'
+import FileList from './FileList'
+import Loader from './Loader'
+import LoadMore from './LoadMore'
+import Footer from './Footer'
+import Topbar from './Topbar'
 
 class MoveModal extends React.Component {
   constructor(props) {
@@ -119,10 +119,10 @@ class MoveModal extends React.Component {
 
     return (
       <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
-        <MoveHeader entries={entries} onClose={onClose} />
+        <Header entries={entries} onClose={onClose} />
         <Query query={this.breadcrumbQuery} key={`breadcrumb-${folderId}`}>
           {({ data, fetchStatus }) => (
-            <MoveTopbar
+            <Topbar
               navigateTo={this.navigateTo}
               currentDir={data}
               fetchStatus={fetchStatus}
@@ -132,25 +132,22 @@ class MoveModal extends React.Component {
         <Query query={this.contentQuery} key={`content-${folderId}`}>
           {({ data, fetchStatus, hasMore, fetchMore }) => {
             return (
-              <MoveExplorer>
-                <MoveLoader
-                  fetchStatus={fetchStatus}
-                  hasNoData={data.length === 0}
-                >
+              <Explorer>
+                <Loader fetchStatus={fetchStatus} hasNoData={data.length === 0}>
                   <div>
-                    <MoveFileList
+                    <FileList
                       files={data}
                       targets={entries}
                       navigateTo={this.navigateTo}
                     />
-                    <MoveLoadMore hasMore={hasMore} fetchMore={fetchMore} />
+                    <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
                   </div>
-                </MoveLoader>
-              </MoveExplorer>
+                </Loader>
+              </Explorer>
             )
           }}
         </Query>
-        <MoveFooter
+        <Footer
           onConfirm={this.moveEntries}
           onClose={onClose}
           targets={entries}

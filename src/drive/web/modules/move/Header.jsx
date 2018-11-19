@@ -25,7 +25,7 @@ const HeaderIlustration = ({ count }) => {
   )
 }
 
-const MoveHeader = ({ entries, onClose }, { t }) => (
+const Header = ({ entries, onClose }, { t }) => (
   <Well>
     <Media>
       <Img className="u-mr-1">
@@ -46,7 +46,7 @@ const MoveHeader = ({ entries, onClose }, { t }) => (
   </Well>
 )
 
-MoveHeader.propTypes = {
+Header.propTypes = {
   entries: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string
@@ -55,4 +55,4 @@ MoveHeader.propTypes = {
   onClose: PropTypes.func.isRequired
 }
 
-export default MoveHeader
+export default Header

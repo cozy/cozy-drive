@@ -10,7 +10,7 @@ const areTargetsInCurrentDir = (targets, currentDirId) => {
   return targetsInCurrentDir.length === targets.length
 }
 
-const MoveFooter = (
+const Footer = (
   { onConfirm, onClose, targets, currentDirId, isMoving },
   { t }
 ) => (
@@ -27,7 +27,7 @@ const MoveFooter = (
   </ModalFooter>
 )
 
-MoveFooter.propTypes = {
+Footer.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   targets: PropTypes.array.isRequired,
@@ -35,8 +35,8 @@ MoveFooter.propTypes = {
   isMoving: PropTypes.bool
 }
 
-MoveFooter.defaultProps = {
+Footer.defaultProps = {
   isMoving: false
 }
 
-export default MoveFooter
+export default Footer

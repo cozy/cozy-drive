@@ -4,7 +4,7 @@ import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 
-const MoveLoader = ({ fetchStatus, hasNoData, children }) => {
+const Loader = ({ fetchStatus, hasNoData, children }) => {
   if (fetchStatus === 'loading') return <FileListRowsPlaceholder />
   else if (fetchStatus === 'failed') return <Oops />
   else if (fetchStatus === 'loaded' && hasNoData)
@@ -12,10 +12,10 @@ const MoveLoader = ({ fetchStatus, hasNoData, children }) => {
   else return children
 }
 
-MoveLoader.propTypes = {
+Loader.propTypes = {
   fetchStatus: PropTypes.string.isRequired,
   hasNoData: PropTypes.bool,
   children: PropTypes.node
 }
 
-export default MoveLoader
+export default Loader
