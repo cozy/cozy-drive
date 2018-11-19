@@ -85,15 +85,16 @@ const startApplication = async function(store, client, polyglot) {
     const clientInfos = getClientSettings(store.getState())
     /*Since we can update our OauthConfig sometimes, we need to 
     override the cached one */
-    const realOauthOptions = { ...clientInfos, ...getOauthOptions() }
+    const realOauthOptions =
+      clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
     const token = getToken(store.getState())
     const oauthClient = client.getStackClient()
     oauthClient.setOAuthOptions(realOauthOptions)
     oauthClient.setCredentials(token)
-    await restoreCozyClientJs(client.options.uri, clientInfos, token)
+    await restoreCozyClientJs(client.options.uri, realOauthOptions, token)
     oauthClient.onTokenRefresh = token => {
       updateBarAccessToken(token.accessToken)
-      restoreCozyClientJs(client.options.uri, clientInfos, token)
+      restoreCozyClientJs(client.options.uri, realOauthOptions, token)
       store.dispatch(setToken(token))
     }
     await oauthClient.fetchInformation()
