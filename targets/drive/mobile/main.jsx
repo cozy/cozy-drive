@@ -36,7 +36,8 @@ import {
   initBar,
   updateBarAccessToken,
   restoreCozyClientJs,
-  resetClient
+  resetClient,
+  getOauthOptions
 } from 'drive/mobile/lib/cozy-helper'
 import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
 import { backupImages } from 'drive/mobile/modules/mediaBackup/duck'
@@ -82,19 +83,19 @@ const startApplication = async function(store, client, polyglot) {
 
   try {
     const clientInfos = getClientSettings(store.getState())
+    /*Since we can update our OauthConfig sometimes, we need to 
+    override the cached one */
+    const realOauthOptions = { ...clientInfos, ...getOauthOptions() }
     const token = getToken(store.getState())
-
     const oauthClient = client.getStackClient()
-    oauthClient.setOAuthOptions(clientInfos)
+    oauthClient.setOAuthOptions(realOauthOptions)
     oauthClient.setCredentials(token)
     await restoreCozyClientJs(client.options.uri, clientInfos, token)
-
     oauthClient.onTokenRefresh = token => {
       updateBarAccessToken(token.accessToken)
       restoreCozyClientJs(client.options.uri, clientInfos, token)
       store.dispatch(setToken(token))
     }
-
     await oauthClient.fetchInformation()
     shouldInitBar = true
     await store.dispatch(startReplication())
