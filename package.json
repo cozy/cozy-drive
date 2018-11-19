@@ -121,7 +121,7 @@
     "svg-sprite-loader": "3.8.0",
     "tostr": "0.1.0",
     "webpack": "3.12.0",
-    "webpack-dev-server": "2.11.2",
+    "webpack-dev-server": "2.11.3",
     "webpack-merge": "1.1.2",
     "xml2js": "0.4.19"
   },
