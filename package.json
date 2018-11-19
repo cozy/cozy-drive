@@ -83,7 +83,7 @@
     "@sentry/cli": "1.35.4",
     "autoprefixer": "9.1.0",
     "btoa": "1.2.1",
-    "copy-webpack-plugin": "4.5.2",
+    "copy-webpack-plugin": "4.6.0",
     "cordova": "7.1.0",
     "cordova-android": "7.1.1",
     "css-loader": "0.28.11",
