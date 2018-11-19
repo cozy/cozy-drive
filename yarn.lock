@@ -4353,15 +4353,6 @@ csstype@^2.5.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.7.tgz#bf9235d5872141eccfb2d16d82993c6b149179ff"
   integrity sha512-Nt5VDyOTIIV4/nRFswoCKps1R5CD1hkiyjBE9/thNaNZILLEviVw9yWQw15+O+CpNjQKB/uvdcxFFOrSflY3Yw==
 
-csswring@6.0.3:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/csswring/-/csswring-6.0.3.tgz#0bff02451fae33ac70d6379ae13d1cc791b7f96f"
-  integrity sha512-Cz2/8nVqI6li/t4hfZbPTQDF7FkE4qP534j1xbBnLxA1cYl51ZRSg0PTDVWzbzlSsR+tfV2Iv/w+0cTmfKS7JA==
-  dependencies:
-    minimist "^1.2.0"
-    onecolor "^3.0.5"
-    postcss "^6.0.17"
-
 csswring@7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/csswring/-/csswring-7.0.0.tgz#a5873f727ecedbb33900a864ee5d8ea7413333e8"
@@ -11365,7 +11356,7 @@ postcss@7.0.5, postcss@^7.0.0, postcss@^7.0.2, postcss@^7.0.5:
     source-map "^0.6.1"
     supports-color "^5.5.0"
 
-postcss@^6.0.0, postcss@^6.0.1, postcss@^6.0.16, postcss@^6.0.17, postcss@^6.0.23:
+postcss@^6.0.0, postcss@^6.0.1, postcss@^6.0.16, postcss@^6.0.23:
   version "6.0.23"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.23.tgz#61c82cc328ac60e677645f979054eb98bc0e3324"
   integrity sha512-soOk1h6J3VMTZtVeVpv15/Hpdl2cBLX3CAw4TAbkpTJiNPk9YP/zWcD1ND+xEtvyuuvKzbxliTOIyvkSeSJ6ag==

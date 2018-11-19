@@ -88,7 +88,7 @@
     "cordova-android": "7.1.1",
     "css-loader": "0.28.11",
     "css-mqpacker": "6.0.2",
-    "csswring": "6.0.3",
+    "csswring": "7.0.0",
     "enzyme": "2.9.1",
     "eslint-config-cozy-app": "1.1.4",
     "eslint-config-prettier": "3.1.0",
