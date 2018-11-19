@@ -8,6 +8,20 @@ import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 
+export const getOauthOptions = () => {
+  return {
+    redirectURI: 'cozydrive://auth',
+    softwareID: SOFTWARE_ID,
+    clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
+    softwareVersion: __APP_VERSION__,
+    clientKind: 'mobile',
+    clientURI: 'https://github.com/cozy/cozy-drive/',
+    logoURI:
+      'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
+    policyURI: 'https://files.cozycloud.cc/cgu.pdf'
+  }
+}
+
 export const initClient = url => {
   return new CozyClient({
     uri: url,
@@ -18,17 +32,7 @@ export const initClient = url => {
       'io.cozy.contacts',
       'io.cozy.jobs:POST:sendmail:worker'
     ],
-    oauth: {
-      redirectURI: 'cozydrive://auth',
-      softwareID: SOFTWARE_ID,
-      clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
-      softwareVersion: __APP_VERSION__,
-      clientKind: 'mobile',
-      clientURI: 'https://github.com/cozy/cozy-drive/',
-      logoURI:
-        'https://github.com/cozy/cozy-drive/raw/master/targets/drive/vendor/assets/oauth-app-icon.png',
-      policyURI: 'https://files.cozycloud.cc/cgu.pdf'
-    },
+    oauth: getOauthOptions(),
     offline: { doctypes: [DOCTYPE_FILES] },
     schema
   })
