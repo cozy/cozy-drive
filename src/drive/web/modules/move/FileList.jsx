@@ -9,7 +9,7 @@ const isValidMoveTarget = (subjects, target) => {
   return isAFile || isASubject
 }
 
-const MoveFileList = ({ targets, files, navigateTo }) => (
+const FileList = ({ targets, files, navigateTo }) => (
   <div>
     {files.map(file => (
       <File
@@ -29,10 +29,10 @@ const MoveFileList = ({ targets, files, navigateTo }) => (
   </div>
 )
 
-MoveFileList.propTypes = {
+FileList.propTypes = {
   targets: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
   navigateTo: PropTypes.func.isRequired
 }
 
-export default MoveFileList
+export default FileList
