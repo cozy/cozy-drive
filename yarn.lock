@@ -3946,14 +3946,15 @@ cosmiconfig@^5.0.5:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cozy-bar@5.0.8:
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-5.0.8.tgz#e1c428507116f5aff752f8c22b808cb5f4b788a0"
-  integrity sha512-oMdwY5rM96BITR2zuygkNYFBhMBJk1YA8QwLJsS2MnCi7LIs6lFMRSOxb/ZTdcZsO2asPLwUk18uEMOIpG7a3A==
+cozy-bar@5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-5.4.0.tgz#9c7c1cd0079551eef1714ac638e807548e08e728"
+  integrity sha512-MvR3b0ViuL0WaAJ9VTSKf+hm9ZNS6EQx7c7LXR6TIlxbtoybsMWweBCxgI8TEri8yIyaRuX+3WyAnM8vNSOMFQ==
   dependencies:
     babel-preset-cozy-app "^0.3.1"
     core-js "^2.5.3"
     cozy-client-js "^0.3.19"
+    cozy-device-helper "^1.4.4"
     hammerjs "^2.0.8"
     lerna-changelog "^0.7.0"
     localforage "^1.5.5"
@@ -4008,7 +4009,7 @@ cozy-client@4.10.0:
     redux "3.7.2"
     sift "7.0.1"
 
-cozy-device-helper@1.4.14:
+cozy-device-helper@1.4.14, cozy-device-helper@^1.4.4:
   version "1.4.14"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.4.14.tgz#3471b344a1692579edc2456758945e455032ea6d"
   integrity sha512-oupdeeARN5kYWoxEpbnfPfndPy0wOtcSHGC86YUkmmsHyZBBCpDFAe5sYNTF4P/HvRIUyxzqwY20nTW35eDdpg==

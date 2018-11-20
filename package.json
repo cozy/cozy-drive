@@ -129,7 +129,7 @@
     "babel-loader": "8.0.4",
     "babel-preset-cozy-app": "1.2.1",
     "classnames": "2.2.6",
-    "cozy-bar": "5.0.8",
+    "cozy-bar": "5.4.0",
     "cozy-client": "4.10.0",
     "cozy-client-js": "0.13.0",
     "cozy-konnector-libs": "4.11.4",
