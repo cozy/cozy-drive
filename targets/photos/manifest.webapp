@@ -65,6 +65,15 @@
         "PUT"
       ]
     },
+    "photos_settings": {
+      "description": "Required to manage photos albums settings",
+      "type": "io.cozy.photos.settings",
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
+    },
     "contacts": {
       "description": "Required to to share photos with your contacts",
       "type": "io.cozy.contacts",
