@@ -54,5 +54,6 @@ export default class KNN {
         return distances[indexSignSlope]
       }
     }
+    return null
   }
 }
