@@ -3,9 +3,9 @@ export const toRadians = degrees => {
 }
 
 export const diffPairWise = values => {
-  const d = values.map((d, i, arr) => arr[i + 1] - arr[i])
-  d.pop()
-  return d
+  const diffs = values.map((d, i, arr) => arr[i + 1] - arr[i])
+  diffs.pop()
+  return diffs
 }
 
 export const standardDeviation = (values, avg) => {

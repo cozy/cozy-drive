@@ -9,14 +9,14 @@ export default class KNN {
    * @param {Array} dimensions  - Dimensions to consider in the dataset
    */
   constructor(dataset, metric, dimensions) {
-    this.points = dataset
+    this.points = dataset.slice()
     this.kdTree = new kdTree(this.points, metric, dimensions)
-    this.ns = 2
+    this.maxNeighbors = 2
   }
 
   kNeighbors() {
     return this.points.map(point => {
-      const nearestPoints = this.kdTree.nearest(point, this.ns)
+      const nearestPoints = this.kdTree.nearest(point, this.maxNeighbors)
       if (nearestPoints.length > 0) {
         return { point: nearestPoints[0][0], distance: nearestPoints[0][1] }
       }
@@ -24,8 +24,8 @@ export default class KNN {
   }
 
   excludeOutliers(distances, percentile) {
-    const q = quantile(distances, percentile)
-    return distances.filter(distance => distance <= q)
+    const boundValue = quantile(distances, percentile)
+    return distances.filter(distance => distance <= boundValue)
   }
 
   /**
