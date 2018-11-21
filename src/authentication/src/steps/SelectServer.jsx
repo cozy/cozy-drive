@@ -92,9 +92,10 @@ export class SelectServer extends Component {
   }
 
   isV2URL = async url => {
+    const { client } = this.context
     try {
-      if (this.context.client.isV2) {
-        return await this.context.client.isV2(url)
+      if (client.isV2) {
+        return await client.isV2(url)
       } else {
         return false
       }
@@ -230,6 +231,10 @@ SelectServer.propTypes = {
 SelectServer.defaultProps = {
   fetching: false,
   externalError: null
+}
+
+SelectServer.contextTypes = {
+  client: PropTypes.object
 }
 
 export default translate()(SelectServer)
