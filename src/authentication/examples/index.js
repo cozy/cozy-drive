@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-import Button from 'cozy-ui/transpiled/react/Button'
 import { DumbAuthentication, DumbRevoked } from '../build'
 import 'date-fns/locale/en/index'
 import 'cozy-ui/transpiled/stylesheet.css'

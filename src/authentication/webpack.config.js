@@ -56,7 +56,7 @@ const jsxConfig = {
     ]
   },
   resolve: {
-    extensions: ['.jsx'],
+    extensions: ['.jsx']
   }
 }
 
