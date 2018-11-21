@@ -30,7 +30,8 @@ class Revoked extends Component {
     }
   }
 
-  render({ t }) {
+  render() {
+    const { t } = this.props
     return (
       <Modal
         title={t('mobile.revoked.title')}
