@@ -29,7 +29,8 @@ platform :ios do
         git_url: "git@gitlab.cozycloud.cc:labs/mobile-certificates.git"
       )
       # Build the
-      build('ios')
+      #build('ios')
+      cordova(platform: 'ios', build_flag: ['-UseModernBuildSystem=0'])
       # Recreate schemes to ensure a smooth transition from cordova to gym
       recreate_schemes(project: xcodeproj)
       # Archive app into ipa
