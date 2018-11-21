@@ -1,6 +1,6 @@
 {
   "name": "cozy-authentication",
-  "version": "1.4.0",
+  "version": "1.4.0-beta1",
   "description": "Component providing login to a Cozy",
   "main": "build/index.js",
   "author": "Cozy",
