@@ -10,7 +10,11 @@ import Alerter from 'cozy-ui/react/Alerter'
 
 export const DOCTYPE = 'io.cozy.photos.albums'
 
-const ALBUMS_QUERY = client => client.all(DOCTYPE).include(['photos'])
+const ALBUMS_QUERY = client =>
+  client
+    .find(DOCTYPE, { created_at: { $gt: null } })
+    .include(['photos'])
+    .sortBy([{ created_at: 'desc' }])
 
 const addPhotos = async (album, photos) => {
   try {
@@ -37,8 +41,8 @@ const ALBUMS_MUTATIONS = client => ({
         return
       }
       const album = { _type: DOCTYPE, name, created_at }
-      /* 
-        !WHY do I need that stuff ? withMutations() and mutations='' are not 
+      /*
+        !WHY do I need that stuff ? withMutations() and mutations='' are not
         sending the same props
         */
       const realClient =
