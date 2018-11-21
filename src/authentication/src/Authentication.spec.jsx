@@ -1,6 +1,5 @@
 import Authentication from './Authentication'
 import React from 'react'
-import PropTypes from 'prop-types'
 import { shallow } from 'enzyme'
 
 describe('Authentication', () => {
