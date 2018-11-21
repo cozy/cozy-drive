@@ -5,7 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
 import { withHasSafariPlugin } from '../withHasSafariPlugin'
 
-import styles from '../styles'
+import styles from '../styles.styl'
 
 const isCordova = () => window.cordova !== undefined
 const getPlatformId = () =>
@@ -87,4 +87,4 @@ export class Welcome extends Component {
   }
 }
 
-export default withHasSafariPlugin()(connect()(translate()(Welcome)))
+export default withHasSafariPlugin()(translate()(Welcome))

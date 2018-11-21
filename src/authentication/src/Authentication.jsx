@@ -6,6 +6,15 @@ import SelectServer from './steps/SelectServer'
 const STEP_WELCOME = 'STEP_WELCOME'
 const STEP_EXISTING_SERVER = 'STEP_EXISTING_SERVER'
 
+/** Supports cozy-client-js and cozy-client */
+const register = (client, url) => {
+  if (client.register) {
+    return client.register(url)
+  } else {
+    return client.stackClient.register(url)
+  }
+}
+
 class Authentication extends Component {
   constructor(props) {
     super(props)
@@ -17,6 +26,7 @@ class Authentication extends Component {
     }
 
     this.steps = [STEP_WELCOME]
+    this.connectToServer = this.connectToServer.bind(this)
   }
 
   nextStep() {
@@ -34,12 +44,12 @@ class Authentication extends Component {
     this.nextStep()
   }
 
-  connectToServer = async url => {
+  async connectToServer(url) {
     const { onComplete, onException, router } = this.props
     try {
       this.setState({ generalError: null, fetching: true })
       const cozyClient = this.context.client
-      const { client, token } = await cozyClient.register(url)
+      const { client, token } = await register(cozyClient, url)
       onComplete({
         url,
         token,
@@ -91,6 +101,10 @@ Authentication.propTypes = {
   onComplete: PropTypes.func.isRequired,
   onException: PropTypes.func.isRequired,
   router: PropTypes.object
+}
+
+Authentication.contextTypes = {
+  client: PropTypes.object
 }
 
 export default Authentication
