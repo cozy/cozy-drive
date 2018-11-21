@@ -57,4 +57,8 @@ Revoked.propTypes = {
   url: PropTypes.string
 }
 
+Revoked.contextTypes = {
+  client: PropTypes.object
+}
+
 export default translate()(Revoked)
