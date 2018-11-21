@@ -3,6 +3,7 @@
   "moduleFileExtensions": ["js", "jsx", "json", "styl"],
   "moduleNameMapper": {
     "styles": "identity-obj-proxy",
+    "\\.svg$": "identity-obj-proxy",
     "drive/(.*)": "<rootDir>/src/drive/$1"
   },
   "transformIgnorePatterns": [
