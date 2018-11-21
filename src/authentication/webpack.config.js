@@ -45,7 +45,7 @@ const uiConfig = ({ production } = {}) => ({
   }
 })
 
-const preactConfig = {
+const jsxConfig = {
   module: {
     rules: [
       {
@@ -57,17 +57,12 @@ const preactConfig = {
   },
   resolve: {
     extensions: ['.jsx'],
-    alias: {
-      react: 'preact-compat',
-      'react-dom': 'preact-compat',
-      'create-react-class': 'preact-compat/lib/create-react-class'
-    }
   }
 }
 
 module.exports = env => {
   const { production } = env || {}
-  return merge(preactConfig, uiConfig(env), {
+  return merge(jsxConfig, uiConfig(env), {
     entry: {
       index: './src/Standalone.jsx'
     },
