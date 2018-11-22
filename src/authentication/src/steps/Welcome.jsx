@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button, ButtonLink, MainTitle } from 'cozy-ui/react'
+import { Button, ButtonLink, MainTitle, Icon } from 'cozy-ui/react'
+import '../assets/icons/icon-cozy.svg'
 import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
 
 import styles from '../styles.styl'
@@ -87,7 +88,9 @@ export class Welcome extends Component {
                 aria-hidden="true"
                 focusable="false"
               />
-              <div className={styles['wizard-logo-badge']} />
+              <div className={styles['wizard-logo-badge']}>
+                <Icon icon="icon-cozy" width="20" height="20" color="white" />
+              </div>
             </div>
             <MainTitle
               tag="h1"
