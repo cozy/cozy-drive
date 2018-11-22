@@ -171,6 +171,7 @@ export class SelectServer extends Component {
               extension="narrow"
               className={classNames(styles['wizard-previous'])}
               onClick={previousStep}
+              type="button"
             />
             <MainTitle
               tag="h1"
