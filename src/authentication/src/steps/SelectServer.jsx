@@ -27,6 +27,15 @@ export class SelectServer extends Component {
   }
 
   componentDidMount() {
+    //if the cordova plugin is here, then shrink the view on iOS
+    if (window.Keyboard && window.Keyboard.shrinkView) {
+      window.Keyboard.shrinkView(true)
+    } else {
+      console.warn(
+        'Cozy-Authentication needs a cozy/cordova-plugin-keyboard plugin to better works.'
+      )
+    }
+
     this.input.focus()
   }
 
@@ -43,8 +52,8 @@ export class SelectServer extends Component {
     }))
   }
 
-  componentDidUpdate() {
-    if (this.state.error) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.error && this.state.error !== prevState.error) {
       this.input.focus()
       this.input.select()
     }
