@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
@@ -52,7 +52,7 @@
     "version:drive:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./targets/drive/manifest.webapp",
     "version:drive:config": "replace 'version=\"\\d+\\.\\d+\\.\\d+\"' 'version=\"'$npm_package_version'\"' ./targets/drive/mobile/config.xml",
     "version:drive:iosbuild": "replace 'CFBundleVersion=\"\\d+\\.\\d+\\.\\d+.\\d+\"' 'CFBundleVersion=\"'$npm_package_version'.0\"' ./targets/drive/mobile/config.xml",
-    "version:drive:androidbuild": "replace 'android-versionCode=\"\\d+\"' 'android-versionCode=\"'${npm_package_version//\\./}'0\"' ./targets/drive/mobile/config.xml",
+    "version:drive:androidbuild": "replace 'android-versionCode=\"\\d+\"' 'android-versionCode=\"'${npm_package_version//\\./}'000\"' ./targets/drive/mobile/config.xml",
     "version:drive:useragent": "replace 'value=\"(.+)\\d+\\.\\d+\\.\\d+\"' 'value=\"$1'$npm_package_version'\"' ./targets/drive/mobile/config.xml",
     "version:drive": "npm-run-all --parallel 'version:drive:*'",
     "version:photos": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./targets/photos/manifest.webapp"
