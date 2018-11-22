@@ -1,12 +1,38 @@
 import KNN from './knn'
 import { temporal, spatial } from './metrics'
+import { MIN_EPS_TEMPORAL, MIN_EPS_SPATIAL } from './consts'
+
+/**
+* Compute the distance bewteen adjacents points in the dataset.
+* This is a very simplified version of the OPTICS [1] algorithm, taking
+* advantage of the temporal property for our context (all points are already
+* sorted by time).
+* The reachabilites are used later to determine how to clusterize the points.
+
+* [1] Ankerst, M., Breunig, M. M., Kriegel, H. P., & Sander, J. (1999, June).
+* OPTICS: ordering points to identify the clustering structure.
+* In ACM Sigmod record (Vol. 28, No. 2, pp. 49-60). ACM.
+*/
+export const reachabilities = (dataset, metric, params) => {
+  const reachabilities = [null]
+  for (let i = 1; i < dataset.length; i++) {
+    const point1 = dataset[i - 1]
+    const point2 = dataset[i]
+    const dist = metric(point1, point2, params.epsTemporal, params.epsSpatial)
+    const reach = dist < params.maxBound ? dist : null
+    reachabilities.push(reach)
+  }
+  return reachabilities
+}
 
 export const computeEpsTemporal = (dataset, percentile) => {
-  return computeEps(dataset, temporal, ['date'], percentile)
+  const epsTemporal = computeEps(dataset, temporal, ['date'], percentile)
+  return epsTemporal >= MIN_EPS_TEMPORAL ? epsTemporal : MIN_EPS_TEMPORAL
 }
 
 export const computeEpsSpatial = (dataset, percentile) => {
-  return computeEps(dataset, spatial, ['lat', 'lon'], percentile)
+  const epsSpatial = computeEps(dataset, spatial, ['lat', 'lon'], percentile)
+  return epsSpatial >= MIN_EPS_SPATIAL ? epsSpatial : MIN_EPS_SPATIAL
 }
 
 /**
