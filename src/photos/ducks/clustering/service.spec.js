@@ -5,6 +5,7 @@ import {
 } from './service'
 import { quantile, mean, standardDeviation } from './maths'
 import { temporal, spatial, spatioTemporalScaled } from './metrics'
+import { gradientClustering, gradientAngle } from './gradient'
 
 const N_DIGITS = 4
 const dataset = [
@@ -25,8 +26,8 @@ const dataset = [
   },
   {
     date: 60,
-    lat: 41.1,
-    lon: 3.2
+    lat: 44.5,
+    lon: 2.0
   },
   {
     date: 80,
@@ -79,46 +80,74 @@ describe('knn', () => {
     expect(computeEpsTemporal(dataset)).toBeCloseTo(3.0, N_DIGITS)
   })
   it('Should compute spatial eps', () => {
-    expect(computeEpsSpatial(dataset)).toBeCloseTo(386.7568, N_DIGITS)
+    expect(computeEpsSpatial(dataset)).toBeCloseTo(244.9352, N_DIGITS)
   })
 })
 
 describe('clustering', () => {
   it('Should cluster data with temporal metric', () => {
-    const expectedReach = [null, 2, 3, 45, 20, 30]
-
-    const reachs = reachabilities(dataset, temporal, { maxBound: maxBound })
+    const expectedReach = [Number.MAX_VALUE, 2, 3, 45, 20, 30]
+    const expectedClusters = [
+      [dataset[0], dataset[1], dataset[2]],
+      [dataset[3], dataset[4], dataset[5]]
+    ]
+    const cosAngle = gradientAngle(15, 1)
+    const params = { maxBound, cosAngle }
+    const reachs = reachabilities(dataset, temporal, params)
     expect(reachs).toEqual(expect.arrayContaining(expectedReach))
+    const clusters = gradientClustering(dataset, reachs, params)
+    expect(clusters).toEqual(expect.arrayContaining(expectedClusters))
   })
 
   it('Should cluster data with spatial metric', () => {
     const expectedReach = [
+      Number.MAX_VALUE,
       11.119492664456596,
       401.5003434905605,
-      386.7568104542309,
-      68.80809741870237
+      15.86196231832396,
+      452.26128149210217,
+      2792.7786730017874
+    ]
+    const expectedClusters = [
+      [dataset[0], dataset[1]],
+      [dataset[2], dataset[3]],
+      [dataset[4]],
+      [dataset[5]]
     ]
 
-    const reachs = reachabilities(dataset, spatial, { maxBound: maxBound })
+    const cosAngle = gradientAngle(15, 1)
+    const params = { maxBound, cosAngle }
+    const reachs = reachabilities(dataset, spatial, params)
     expect(reachs).toEqual(expect.arrayContaining(expectedReach))
+    const clusters = gradientClustering(dataset, reachs, params)
+    expect(clusters).toEqual(expect.arrayContaining(expectedClusters))
   })
 
   it('Should cluster data with spatio temporal scaled metric', () => {
     const expectedReach = [
-      null,
+      Number.MAX_VALUE,
       6.559746332228298,
       202.25017174528026,
-      215.87840522711545,
-      44.40404870935119,
-      null
+      30.43098115916198,
+      236.13064074605109,
+      1411.3893365008937
+    ]
+    const expectedClusters = [
+      [dataset[0], dataset[1]],
+      [dataset[2], dataset[3]],
+      [dataset[4]],
+      [dataset[5]]
     ]
 
     const params = {
       epsTemporal: maxBound / 2,
       epsSpatial: maxBound / 2,
-      maxBound: maxBound
+      maxBound: maxBound,
+      cosAngle: gradientAngle(15, 1)
     }
     const reachs = reachabilities(dataset, spatioTemporalScaled, params)
     expect(reachs).toEqual(expect.arrayContaining(expectedReach))
+    const clusters = gradientClustering(dataset, reachs, params)
+    expect(clusters).toEqual(expect.arrayContaining(expectedClusters))
   })
 })
