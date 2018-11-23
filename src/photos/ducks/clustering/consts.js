@@ -6,6 +6,7 @@ export const DEFAULT_MAX_BOUND = 48
 export const MIN_EPS_TEMPORAL = 3
 export const MIN_EPS_SPATIAL = 3
 export const PERCENTILE = 99.5
+export const COARSE_COEFFICIENT = 1
 
 export const DEFAULT_SETTING = {
   type: SETTING_TYPE,

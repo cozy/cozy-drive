@@ -11,8 +11,16 @@ import {
   computeEpsSpatial,
   reachabilities
 } from 'photos/ducks/clustering/services'
-import { PERCENTILE, DEFAULT_MAX_BOUND } from 'photos/ducks/clustering/consts'
+import {
+  PERCENTILE,
+  DEFAULT_MAX_BOUND,
+  COARSE_COEFFICIENT
+} from 'photos/ducks/clustering/consts'
 import { spatioTemporalScaled } from 'photos/ducks/clustering/metrics'
+import {
+  gradientClustering,
+  gradientAngle
+} from 'photos/ducks/clustering/gradient'
 
 // Returns the photos metadata sorted by date
 const extractInfo = photos => {
@@ -53,12 +61,17 @@ const clusterizePhotos = async (setting, photos) => {
     params.epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
   }
   const epsMax = Math.max(params.epsTemporal, params.epsSpatial)
-  params.maxBound =
-    epsMax * 2 < DEFAULT_MAX_BOUND ? epsMax * 2 : DEFAULT_MAX_BOUND
+  if (!params.maxBound) {
+    params.maxBound =
+      epsMax * 2 < DEFAULT_MAX_BOUND ? epsMax * 2 : DEFAULT_MAX_BOUND
+  }
+  if (!params.cosAngle) {
+    params.cosAngle = gradientAngle(epsMax, COARSE_COEFFICIENT)
+  }
 
-  reachabilities(dataset, spatioTemporalScaled, params)
+  const reachs = reachabilities(dataset, spatioTemporalScaled, params)
+  gradientClustering(dataset, reachs, params)
 
-  // TODO gradient clustering
   // TODO save params
   // TODO adapt percentiles for large datasets
 
