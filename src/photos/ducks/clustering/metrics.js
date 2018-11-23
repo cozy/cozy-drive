@@ -15,6 +15,21 @@ export const temporal = (point1, point2) => {
 }
 
 /**
+ * Metric giving a spatio-temporal distance by converting the spatial distance
+ * into a temporal equivalent.
+ * The conversion is done by using the caracteristic time and distance.
+ */
+export const spatioTemporalScaled = (
+  point1,
+  point2,
+  epsTemporal,
+  epsSpatial
+) => {
+  const r = epsTemporal / epsSpatial
+  return (temporal(point1, point2) + spatial(point1, point2) * r) / 2
+}
+
+/**
  *  Compute the geodesic distance between (point1, point2) coordinates
  *  See https://en.wikipedia.org/wiki/Geodesics_on_an_ellipsoid
  */

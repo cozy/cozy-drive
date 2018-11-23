@@ -1,5 +1,10 @@
-import { computeEpsTemporal, computeEpsSpatial } from './service'
+import {
+  computeEpsTemporal,
+  computeEpsSpatial,
+  reachabilities
+} from './service'
 import { quantile, mean, standardDeviation } from './maths'
+import { temporal, spatial, spatioTemporalScaled } from './metrics'
 
 const N_DIGITS = 4
 const dataset = [
@@ -34,6 +39,8 @@ const dataset = [
     lon: 20
   }
 ]
+
+const maxBound = 500
 
 describe('maths', () => {
   let random_data = [
@@ -73,5 +80,45 @@ describe('knn', () => {
   })
   it('Should compute spatial eps', () => {
     expect(computeEpsSpatial(dataset)).toBeCloseTo(386.7568, N_DIGITS)
+  })
+})
+
+describe('clustering', () => {
+  it('Should cluster data with temporal metric', () => {
+    const expectedReach = [null, 2, 3, 45, 20, 30]
+
+    const reachs = reachabilities(dataset, temporal, { maxBound: maxBound })
+    expect(reachs).toEqual(expect.arrayContaining(expectedReach))
+  })
+
+  it('Should cluster data with spatial metric', () => {
+    const expectedReach = [
+      11.119492664456596,
+      401.5003434905605,
+      386.7568104542309,
+      68.80809741870237
+    ]
+
+    const reachs = reachabilities(dataset, spatial, { maxBound: maxBound })
+    expect(reachs).toEqual(expect.arrayContaining(expectedReach))
+  })
+
+  it('Should cluster data with spatio temporal scaled metric', () => {
+    const expectedReach = [
+      null,
+      6.559746332228298,
+      202.25017174528026,
+      215.87840522711545,
+      44.40404870935119,
+      null
+    ]
+
+    const params = {
+      epsTemporal: maxBound / 2,
+      epsSpatial: maxBound / 2,
+      maxBound: maxBound
+    }
+    const reachs = reachabilities(dataset, spatioTemporalScaled, params)
+    expect(reachs).toEqual(expect.arrayContaining(expectedReach))
   })
 })
