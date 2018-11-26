@@ -25,7 +25,7 @@ export const reachabilities = (dataset, metric, params) => {
 }
 
 export const computeEpsTemporal = (dataset, percentile) => {
-  const epsTemporal = computeEps(dataset, temporal, ['date'], percentile)
+  const epsTemporal = computeEps(dataset, temporal, ['timestamp'], percentile)
   return epsTemporal >= MIN_EPS_TEMPORAL ? epsTemporal : MIN_EPS_TEMPORAL
 }
 
