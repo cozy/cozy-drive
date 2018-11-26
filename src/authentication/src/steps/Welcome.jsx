@@ -2,17 +2,14 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
-import { withHasSafariPlugin } from '../withHasSafariPlugin'
 
 import styles from '../styles.styl'
 
-const isCordova = () => window.cordova !== undefined
-const getPlatformId = () =>
-  isCordova() ? window.cordova.platformId : undefined
+import { getPlatform, hasSafariPlugin } from 'cozy-device-helper'
 
 export class Welcome extends Component {
   registerRender = () => {
-    const { t, register, allowRegistration, hasSafariPlugin } = this.props
+    const { t, register, allowRegistration } = this.props
 
     if (allowRegistration) {
       return (
@@ -22,10 +19,10 @@ export class Welcome extends Component {
       )
     }
 
-    const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatformId() ||
+    const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
       'browser'}`
 
-    if (hasSafariPlugin) {
+    if (hasSafariPlugin()) {
       const openManager = () => {
         window.SafariViewController.show(
           {
@@ -85,5 +82,4 @@ export class Welcome extends Component {
     )
   }
 }
-
-export default withHasSafariPlugin()(translate()(Welcome))
+export default translate()(Welcome)

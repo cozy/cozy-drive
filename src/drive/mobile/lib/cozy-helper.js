@@ -2,15 +2,14 @@
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient from 'cozy-client'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
-import { getDeviceName } from './device'
 import { disableBackgroundService } from './background'
 import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
-
+import { isMobileApp, getDeviceName } from 'cozy-device-helper'
 export const getOauthOptions = () => {
   return {
-    redirectURI: 'cozydrive://auth',
+    redirectURI: isMobileApp() ? 'cozydrive://auth' : 'http://localhost',
     softwareID: SOFTWARE_ID,
     clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
     softwareVersion: __APP_VERSION__,

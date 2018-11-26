@@ -4,7 +4,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
 import { connect } from 'react-redux'
 import withPersistentState from 'drive/mobile/lib/withPersistentState'
-import { isIos } from 'drive/mobile/lib/device'
+import { isIOSApp } from 'cozy-device-helper'
 
 const MINIMUM_LONG_UPLOAD_FILES_COUNT = 50
 
@@ -15,7 +15,7 @@ const FirstUploadModal = translate()(({ t, onClose }) => (
       <ul>
         <li>{t('mobile.first_sync.tip_wifi')}</li>
         <li>{t('mobile.first_sync.tip_bed')}</li>
-        {isIos() && <li>{t('mobile.first_sync.tip_lock')}</li>}
+        {isIOSApp() && <li>{t('mobile.first_sync.tip_lock')}</li>}
       </ul>
       <p>{t('mobile.first_sync.result')}</p>
       <Button

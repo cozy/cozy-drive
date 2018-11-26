@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 
-import { isCordova } from 'drive/mobile/lib/device'
+import { isMobileApp } from 'cozy-device-helper'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 
 import File from './File'
@@ -50,7 +50,7 @@ class FileListRows extends PureComponent {
 
   shouldDisplayLoadMore() {
     if (!this.props.displayedFolder) return false
-    if (isCordova()) {
+    if (isMobileApp()) {
       if (this.props.files.length < FILES_FETCH_LIMIT) return false // We're in /recent
       return !this.state.hasNoMoreRows
     }

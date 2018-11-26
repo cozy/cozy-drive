@@ -3,8 +3,14 @@ import { loadState } from 'drive/store/persistedState'
 import { startMediaBackup } from 'drive/mobile/modules/mediaBackup/duck'
 import { initClient } from './cozy-helper'
 import { logException, configureReporter } from 'drive/lib/reporter'
-import { isCordova, isIos, isAndroid, getPlatformId } from './device'
 import { getTranslateFunction } from './i18n'
+
+import {
+  getPlatform,
+  isMobileApp,
+  isIOSApp,
+  isAndroidApp
+} from 'cozy-device-helper'
 
 /*
   This files is split on 4 parts:
@@ -67,11 +73,11 @@ export const disableBackgroundService = async () => {
 const notCompatibleError = () => {
   const msg = 'Background Service is not compatible with your platform.'
   console.warn(msg)
-  if (isCordova()) {
-    console.log(getPlatformId())
-    if (isIos()) {
+  if (isMobileApp()) {
+    console.log(getPlatform())
+    if (isIOSApp()) {
       console.log(window.BackgroundFetch)
-    } else if (isAndroid()) {
+    } else if (isAndroidApp()) {
       console.log(window.JSBackgroundService)
     }
   }
@@ -103,7 +109,7 @@ const backgroundService = () =>
 // ANDROID
 
 const hasAndroidCordovaPlugin = () =>
-  isAndroid() && window.JSBackgroundService !== undefined
+  isAndroidApp() && window.JSBackgroundService !== undefined
 
 const enableAndroidBackgroundService = async () => {
   const isEnable = await isEnableAndroidBackgroundService()
@@ -155,7 +161,7 @@ const isEnableAndroidBackgroundService = () =>
 // IOS
 
 const hasIosCordovaPlugin = () =>
-  isIos() && window.BackgroundFetch !== undefined
+  isIOSApp() && window.BackgroundFetch !== undefined
 
 const enableIosBackgroundService = () => {
   // documentation: https://github.com/transistorsoft/cordova-plugin-background-fetch

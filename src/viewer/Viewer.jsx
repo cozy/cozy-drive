@@ -17,14 +17,7 @@ const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
 const KEY_CODE_ESCAPE = 27
 
-const isAndroid = () =>
-  window.navigator.userAgent &&
-  window.navigator.userAgent.indexOf('Android') >= 0
-const isIOS = () =>
-  window.navigator.userAgent &&
-  /iPad|iPhone|iPod/.test(window.navigator.userAgent)
-const isMobile = () => isAndroid() || isIOS()
-const isCordova = () => window.cordova !== undefined
+import { isMobileApp } from 'cozy-device-helper'
 
 const ViewerWrapper = ({ style, className, children, fullscreen, dark }) => (
   <div
@@ -117,7 +110,7 @@ export default class Viewer extends Component {
           hasNext={hasNext}
           onPrevious={this.onPrevious}
           onNext={this.onNext}
-          isMobile={isMobile()}
+          isMobile={isMobileApp()}
           expanded={expanded}
           controls={controls}
         >
@@ -141,9 +134,9 @@ export default class Viewer extends Component {
       case 'audio':
         return AudioViewer
       case 'video':
-        return isMobile() ? NoViewer : VideoViewer
+        return isMobileApp() ? NoViewer : VideoViewer
       case 'pdf':
-        return isCordova() ? NativePdfViewer : PdfViewer
+        return isMobileApp() ? NativePdfViewer : PdfViewer
       default:
         return NoViewer
     }
