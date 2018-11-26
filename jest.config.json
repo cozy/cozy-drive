@@ -6,10 +6,9 @@
     "\\.svg$": "identity-obj-proxy",
     "drive/(.*)": "<rootDir>/src/drive/$1"
   },
-  "transformIgnorePatterns": [
-    "node_modules/(?!cozy-ui)/"
-  ],
-  "testMatch": [
-    "**/(*.)(spec|test).js?(x)"
-  ]
+  "transform": {
+    "^.+\\.(js|jsx)?$": "<rootDir>/test/jestLib/babel-transformer.js"
+  },
+  "transformIgnorePatterns": ["node_modules/(?!cozy-ui)/"],
+  "testMatch": ["**/(*.)(spec|test).js?(x)"]
 }
