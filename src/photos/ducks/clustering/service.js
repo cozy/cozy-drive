@@ -14,13 +14,12 @@ import { MIN_EPS_TEMPORAL, MIN_EPS_SPATIAL } from './consts'
 * In ACM Sigmod record (Vol. 28, No. 2, pp. 49-60). ACM.
 */
 export const reachabilities = (dataset, metric, params) => {
-  const reachabilities = [null]
+  const reachabilities = [Number.MAX_VALUE]
   for (let i = 1; i < dataset.length; i++) {
     const point1 = dataset[i - 1]
     const point2 = dataset[i]
     const dist = metric(point1, point2, params.epsTemporal, params.epsSpatial)
-    const reach = dist < params.maxBound ? dist : null
-    reachabilities.push(reach)
+    reachabilities.push(dist)
   }
   return reachabilities
 }
