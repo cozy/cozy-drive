@@ -8,14 +8,6 @@ const pkg = require(path.resolve(__dirname, '../package.json'))
 module.exports = {
   devtool: 'cheap-module-source-map',
   externals: ['cozy'],
-  module: {
-    rules: [
-      {
-        test: require.resolve('cozy-bar/dist/cozy-bar.js'),
-        loader: 'imports-loader?css=./cozy-bar.css'
-      }
-    ]
-  },
   plugins: [
     new DefinePlugin({
       __STACK_ASSETS__: false,
