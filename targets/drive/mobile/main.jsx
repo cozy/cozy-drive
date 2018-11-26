@@ -111,7 +111,7 @@ const startApplication = async function(store, client, polyglot) {
       shouldInitBar = true
     }
   } finally {
-    if (shouldInitBar) initBar(client)
+    if (shouldInitBar) await initBar(client)
   }
 
   useHistoryForTracker(hashHistory)
