@@ -7,7 +7,8 @@ import { Button } from 'cozy-ui/react/Button'
 import Icon from 'cozy-ui/react/Icon'
 import Alerter from 'cozy-ui/react/Alerter'
 import { logException } from 'drive/lib/reporter'
-import { isCordova } from 'drive/mobile/lib/device'
+import { isMobileApp } from 'cozy-device-helper'
+
 import {
   isClientAlreadyInstalled,
   isLinux,
@@ -77,7 +78,7 @@ const DownloadButton = ({ t, file }, { client }) => (
 )
 
 const NoViewerButton = ({ file, fallbackUrl, t, onError }) => {
-  if (isCordova())
+  if (isMobileApp())
     return <OpenWithCordovaButton t={t} file={file} onError={onError} />
   else if (fallbackUrl) return <OpenWithWebButton t={t} url={fallbackUrl} />
   else return <DownloadButton t={t} file={file} />

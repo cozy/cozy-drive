@@ -8,7 +8,8 @@ import {
   createTemporaryLocalFile,
   openFileWithCordova
 } from 'drive/mobile/lib/filesystem'
-import { isCordova } from 'drive/mobile/lib/device'
+import { isMobileApp } from 'cozy-device-helper'
+
 import Alerter from 'cozy-ui/react/Alerter'
 
 const MAKE_AVAILABLE_OFFLINE = 'MAKE_AVAILABLE_OFFLINE'
@@ -45,7 +46,7 @@ export const toggleAvailableOffline = file => async (dispatch, getState) =>
 
 const forgetDownloadedFile = file => async dispatch => {
   const filename = file.id
-  if (isCordova() && window.cordova.file) {
+  if (isMobileApp() && window.cordova.file) {
     deleteOfflineFile(filename)
   }
   dispatch(markAsUnavailableOffline(file.id))
@@ -57,7 +58,7 @@ const makeAvailableOffline = file => async dispatch => {
 }
 
 const saveOfflineFileCopy = async file => {
-  if (!isCordova() || !window.cordova.file) {
+  if (!isMobileApp() || !window.cordova.file) {
     return
   }
   const response = await cozy.client.files

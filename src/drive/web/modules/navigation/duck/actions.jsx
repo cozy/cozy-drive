@@ -6,7 +6,7 @@ import {
 } from './async'
 import { getSort } from './reducer'
 import React from 'react'
-import { isCordova } from 'drive/mobile/lib/device'
+import { isMobileApp } from 'cozy-device-helper'
 import {
   saveFileWithCordova,
   saveAndOpenWithCordova
@@ -466,7 +466,7 @@ const openFileDownloadError = error => {
 
 export const openFileWith = (id, filename) => {
   return async dispatch => {
-    if (isCordova() && window.cordova.plugins.fileOpener2) {
+    if (isMobileApp() && window.cordova.plugins.fileOpener2) {
       dispatch({ type: OPEN_FILE_WITH, id })
       const response = await cozy.client.files.downloadById(id).catch(error => {
         console.error('downloadById', error)

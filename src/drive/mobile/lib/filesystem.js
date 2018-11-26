@@ -1,5 +1,5 @@
 /* global cozy */
-import { isAndroid } from './device'
+import { isAndroidApp } from 'cozy-device-helper'
 
 const ERROR_GET_DIRECTORY = 'Error to get directory'
 const ERROR_WRITE_FILE = 'Error to write file'
@@ -8,12 +8,12 @@ const COZY_PATH = 'Cozy'
 const COZY_FILES_PATH = 'Cozy Drive'
 
 export const getRootPath = () =>
-  isAndroid()
+  isAndroidApp()
     ? window.cordova.file.externalRootDirectory
     : window.cordova.file.dataDirectory
 
 export const getTemporaryRootPath = () =>
-  isAndroid()
+  isAndroidApp()
     ? window.cordova.file.externalCacheDirectory
     : window.cordova.file.cacheDirectory
 

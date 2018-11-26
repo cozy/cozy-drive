@@ -29,7 +29,8 @@ import {
 } from 'drive/mobile/lib/tracker'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
-import { isIos } from 'drive/mobile/lib/device'
+import { isIOSApp } from 'cozy-device-helper'
+
 import {
   getLang,
   initClient,
@@ -52,7 +53,7 @@ import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
 import { startReplication } from 'drive/mobile/modules/replication/sagas'
 /*We add fastclick only for iOS since Chrome removed this behavior (iOS also, but
 we still use UIWebview and not WKWebview... )*/
-if (isIos()) {
+if (isIOSApp()) {
   var FastClick = require('fastclick')
   if ('addEventListener' in document) {
     document.addEventListener(
@@ -239,7 +240,7 @@ var app = {
     const store = await this.getStore()
     if (isAnalyticsOn(store.getState())) stopHeartBeat()
     // TODO: selector
-    if (store.getState().mobile.mediaBackup.currentUpload && isIos()) {
+    if (store.getState().mobile.mediaBackup.currentUpload && isIOSApp()) {
       const t = getTranslateFunction()
       scheduleNotification({
         text: t('mobile.notifications.backup_paused')

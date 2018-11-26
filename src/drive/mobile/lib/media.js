@@ -1,10 +1,10 @@
-import { isCordova } from './device'
 import { getToken, getClientUrl } from './cozy-helper'
 import { logException } from 'drive/lib/reporter'
+import { isMobileApp } from 'cozy-device-helper'
 
 const hasCordovaPlugin = () => {
   return (
-    isCordova() &&
+    isMobileApp() &&
     window.cordova.plugins !== undefined &&
     window.cordova.plugins.listLibraryItems !== undefined
   )

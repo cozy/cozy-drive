@@ -1,7 +1,8 @@
 /* global cordova */
-import { isCordova } from './device'
+import { isMobileApp } from 'cozy-device-helper'
+
 const hasPlugin = () =>
-  isCordova() && cordova.plugins.notification.local !== undefined
+  isMobileApp() && cordova.plugins.notification.local !== undefined
 
 export const scheduleNotification = options => {
   if (hasPlugin()) cordova.plugins.notification.local.schedule(options)
