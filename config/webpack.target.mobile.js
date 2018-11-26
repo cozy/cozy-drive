@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = function(production, app) {
   return {
     entry: {
-      app: [path.resolve(__dirname, `../targets/${app}/mobile/main`)]
+      app: [path.resolve(__dirname, 'expose-react.js'), path.resolve(__dirname, `../targets/${app}/mobile/main`)]
     },
     output: {
       path: path.resolve(__dirname, `../targets/${app}/mobile/www`),
