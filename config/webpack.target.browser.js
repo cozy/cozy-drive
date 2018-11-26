@@ -73,8 +73,16 @@ module.exports = function(production, app) {
     )
   }
 
+  const devBrowserRules = [
+    {
+      test: require.resolve('cozy-bar/dist/cozy-bar.js'),
+      loader: 'imports-loader?css=./cozy-bar.css'
+    }
+  ]
+
   return {
     entry: entry,
+    module: { rules: production ? devBrowserRules : [] },
     output: {
       path: path.resolve(__dirname, `../build/${app}`),
       filename: '[name].js'
