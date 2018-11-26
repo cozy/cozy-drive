@@ -31,12 +31,12 @@ const extractInfo = photos => {
         name: file.name
       }
       if (file.metadata) {
-        photo.date = file.metadata.datetime
+        photo.datetime = file.metadata.datetime
         photo.gps = file.metadata.gps
       } else {
-        photo.date = file.created_at
+        photo.datetime = file.created_at
       }
-      const hours = new Date(photo.date).getTime() / 1000 / 3600
+      const hours = new Date(photo.datetime).getTime() / 1000 / 3600
       photo.timestamp = hours
       return photo
     })

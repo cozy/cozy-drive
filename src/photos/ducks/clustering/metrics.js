@@ -11,7 +11,7 @@ export const spatial = (point1, point2) => {
  *  Metric giving the temporal distance between 2 points
  */
 export const temporal = (point1, point2) => {
-  return Math.abs(point1.date - point2.date)
+  return Math.abs(point1.timestamp - point2.timestamp)
 }
 
 /**

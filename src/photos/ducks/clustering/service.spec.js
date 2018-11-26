@@ -10,32 +10,32 @@ import { gradientClustering, gradientAngle } from './gradient'
 const N_DIGITS = 4
 const dataset = [
   {
-    date: 10,
+    timestamp: 10,
     lat: 41.1,
     lon: 0.2
   },
   {
-    date: 12,
+    timestamp: 12,
     lat: 41.2,
     lon: 0.2
   },
   {
-    date: 15,
+    timestamp: 15,
     lat: 44.5,
     lon: 2.2
   },
   {
-    date: 60,
+    timestamp: 60,
     lat: 44.5,
     lon: 2.0
   },
   {
-    date: 80,
+    timestamp: 80,
     lat: 40.5,
     lon: 3.0
   },
   {
-    date: 110,
+    timestamp: 110,
     lat: 20,
     lon: 20
   }
