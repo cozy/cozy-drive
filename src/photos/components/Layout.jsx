@@ -13,6 +13,7 @@ import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
 import Alerter from 'cozy-ui/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
+import { IconSprite } from 'cozy-ui/transpiled/react'
 
 const NavLink = genNavLink(RRNavLink)
 
@@ -42,6 +43,7 @@ export const Layout = ({ t, children }) => (
       {__TARGET__ !== 'mobile' && <BannerClient />}
       {children}
     </Main>
+    <IconSprite />
   </LayoutUI>
 )
 
