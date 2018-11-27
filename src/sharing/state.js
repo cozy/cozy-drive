@@ -35,8 +35,8 @@ export const updateSharing = sharing => ({
 export const revokeRecipient = (sharing, index, path) => {
   return {
     type: REVOKE_RECIPIENT,
-    /* We set revoked status to the revoked member. 
-    We can't just simply remove it, 'cauz we use the index 
+    /* We set revoked status to the revoked member.
+    We can't just simply remove it, 'cauz we use the index
     to remove members..
     */
     sharing: {
@@ -64,6 +64,8 @@ export const revokeSharingLink = permissions => ({
   permissions
 })
 export const receivePaths = paths => ({ type: RECEIVE_PATHS, paths })
+export const matchingInstanceName = (instanceUri = '') => shareMember =>
+  shareMember.instance.toLowerCase() === instanceUri.toLowerCase()
 
 // reducers
 const byIdInitialState = { sharings: [], permissions: [] }
@@ -233,7 +235,7 @@ export const isOwner = (state, docId) => {
 
 export const canReshare = (state, docId, instanceUri) => {
   const sharing = getDocumentSharing(state, docId)
-  const me = sharing.attributes.members.find(m => m.instance === instanceUri)
+  const me = sharing.attributes.members.find(matchingInstanceName(instanceUri))
   return sharing.attributes.open_sharing === true && !me.read_only
 }
 
@@ -287,7 +289,7 @@ export const getSharingType = (state, docId, instanceUri) => {
   const sharing = getSharingForSelf(state, docId)
   const type = getDocumentSharingType(sharing, docId)
   if (sharing.attributes.owner) return type
-  const me = sharing.attributes.members.find(m => m.instance === instanceUri)
+  const me = sharing.attributes.members.find(matchingInstanceName(instanceUri))
   return me.read_only ? 'one-way' : type
 }
 
@@ -343,8 +345,8 @@ const areAllRecipientsRevoked = sharing =>
   sharing.attributes.members.filter(m => m.status !== 'revoked').length === 1
 
 const hasBeenSelfRevoked = (sharing, instanceUri) => {
-  const self = sharing.attributes.members.find(m => m.instance === instanceUri)
-  return !sharing.attributes.owner && self.status === 'revoked'
+  const me = sharing.attributes.members.find(matchingInstanceName(instanceUri))
+  return !sharing.attributes.owner && me.status === 'revoked'
 }
 
 const getDocumentSharingType = (sharing, docId) => {
