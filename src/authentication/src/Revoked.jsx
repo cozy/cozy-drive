@@ -6,6 +6,10 @@ import Modal from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 
 class Revoked extends Component {
+  static contextTypes = {
+    context: PropTypes.object.isRequired
+  }
+
   logout() {
     this.props.onLogout()
   }

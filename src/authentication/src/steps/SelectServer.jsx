@@ -16,6 +16,10 @@ const ERR_V2 = 'mobile.onboarding.server_selection.wrong_address_v2'
 const ERR_COSY = 'mobile.onboarding.server_selection.wrong_address_cosy'
 
 export class SelectServer extends Component {
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
+
   state = {
     value: '',
     fetching: false,
