@@ -9,6 +9,7 @@ import Nav from 'drive/web/modules/navigation/Nav'
 import ButtonClient from 'components/pushClient/Button'
 import { UploadQueue } from 'drive/web/modules/upload'
 import UserActionRequired from 'drive/mobile/modules/authorization/UserActionRequired'
+import { IconSprite } from 'cozy-ui/transpiled/react'
 
 import styles from 'drive/styles/layout'
 
@@ -22,6 +23,7 @@ const Layout = ({ t, children }) => (
     <UploadQueue />
     {__TARGET__ === 'mobile' && <UserActionRequired />}
     {children}
+    <IconSprite />
   </LayoutUI>
 )
 
