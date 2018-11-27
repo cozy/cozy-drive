@@ -108,4 +108,5 @@
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-keyboard" spec="https://github.com/cozy/cordova-plugin-keyboard.git" />
+    <plugin name="com.lampa.startapp" spec="^6.1.6" />
 </widget>
