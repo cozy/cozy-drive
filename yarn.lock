@@ -4015,10 +4015,10 @@ cozy-device-helper@1.4.14:
   dependencies:
     lodash "4.17.11"
 
-cozy-konnector-libs@4.11.4:
-  version "4.11.4"
-  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.11.4.tgz#583f76f9923afd1f2df462aae789af2da8d3169d"
-  integrity sha512-Mr0JC7wmFcH1idfh4zuMo4LXob3P0mo1OHk+XfViKP7DYxwImsTHRvb/gKSP0DjXgaX86Ot5BTZ3HrbNWNiO7w==
+cozy-konnector-libs@4.11.8:
+  version "4.11.8"
+  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.11.8.tgz#47799803af0ec8bb3e91d093a5ce5c99c6088bc6"
+  integrity sha512-lGQB/R4ysYx/zcJk8HvrG5+udidHZdDV25lF7U0h1wcXC7x3jb8VqJYzmVn5IzeSgkkGpopqKNRqTA9cDAycWQ==
   dependencies:
     bluebird "3.5.3"
     bluebird-retry "0.11.0"
@@ -4028,9 +4028,10 @@ cozy-konnector-libs@4.11.4:
     cozy-logger "^1.2.0"
     date-fns "1.29.0"
     geco "0.11.1"
+    isomorphic-fetch "^2.2.1"
     lodash "4.17.11"
     lodash-id "^0.14.0"
-    lowdb "^1.0.0"
+    lowdb "1.0.0"
     pdfjs "2.1.0"
     raven "2.6.4"
     request "2.88.0"
@@ -9408,7 +9409,7 @@ loud-rejection@^1.0.0:
     currently-unhandled "^0.4.1"
     signal-exit "^3.0.0"
 
-lowdb@^1.0.0:
+lowdb@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowdb/-/lowdb-1.0.0.tgz#5243be6b22786ccce30e50c9a33eac36b20c8064"
   integrity sha512-2+x8esE/Wb9SQ1F9IHaYWfsC9FIecLOPrK4g17FGEayjUWH172H6nwicRovGvSE2CPZouc2MCIqCI7h9d+GftQ==
