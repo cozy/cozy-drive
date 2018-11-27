@@ -10,7 +10,7 @@ import {
   computeEpsTemporal,
   computeEpsSpatial,
   reachabilities
-} from 'photos/ducks/clustering/services'
+} from 'photos/ducks/clustering/service'
 import {
   PERCENTILE,
   DEFAULT_MAX_BOUND,
@@ -21,6 +21,7 @@ import {
   gradientClustering,
   gradientAngle
 } from 'photos/ducks/clustering/gradient'
+import { saveClustering } from 'photos/ducks/clustering/albums'
 
 // Returns the photos metadata sorted by date
 const extractInfo = photos => {
@@ -70,7 +71,10 @@ const clusterizePhotos = async (setting, photos) => {
   }
 
   const reachs = reachabilities(dataset, spatioTemporalScaled, params)
-  gradientClustering(dataset, reachs, params)
+  const clusters = gradientClustering(dataset, reachs, params)
+  if (clusters.length > 0) {
+    saveClustering(clusters)
+  }
 
   // TODO save params
   // TODO adapt percentiles for large datasets
@@ -88,7 +92,7 @@ const getNewPhotos = async setting => {
   )
 
   return result.results.map(res => res.doc).filter(doc => {
-    return doc.class === 'image' && doc._id.includes('_design') && !doc.trashed
+    return doc.class === 'image' && !doc._id.includes('_design') && !doc.trashed
   })
 }
 
@@ -98,7 +102,7 @@ const onPhotoUpload = async () => {
     setting = await createDefaultSetting()
   }
   const photos = await getNewPhotos(setting)
-  if (photos) {
+  if (photos.length > 0) {
     log('info', `Start clustering on ${photos.length} photos`)
 
     clusterizePhotos(setting, photos)
