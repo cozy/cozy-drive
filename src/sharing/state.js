@@ -236,7 +236,7 @@ export const isOwner = (state, docId) => {
 export const canReshare = (state, docId, instanceUri) => {
   const sharing = getDocumentSharing(state, docId)
   const me = sharing.attributes.members.find(matchingInstanceName(instanceUri))
-  return sharing.attributes.open_sharing === true && !me.read_only
+  return sharing.attributes.open_sharing === true && me && !me.read_only
 }
 
 export const getOwner = (state, docId) =>
@@ -290,7 +290,7 @@ export const getSharingType = (state, docId, instanceUri) => {
   const type = getDocumentSharingType(sharing, docId)
   if (sharing.attributes.owner) return type
   const me = sharing.attributes.members.find(matchingInstanceName(instanceUri))
-  return me.read_only ? 'one-way' : type
+  return me && me.read_only ? 'one-way' : type
 }
 
 export const getDocumentSharing = (state, docId) =>
@@ -346,7 +346,7 @@ const areAllRecipientsRevoked = sharing =>
 
 const hasBeenSelfRevoked = (sharing, instanceUri) => {
   const me = sharing.attributes.members.find(matchingInstanceName(instanceUri))
-  return !sharing.attributes.owner && me.status === 'revoked'
+  return !sharing.attributes.owner && me && me.status === 'revoked'
 }
 
 const getDocumentSharingType = (sharing, docId) => {
