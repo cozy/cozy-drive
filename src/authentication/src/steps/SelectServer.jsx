@@ -23,7 +23,8 @@ export class SelectServer extends Component {
   state = {
     value: '',
     fetching: false,
-    error: null
+    error: null,
+    selectValue: '.mycozy.cloud'
   }
 
   componentDidMount() {
@@ -60,6 +61,22 @@ export class SelectServer extends Component {
   }
 
   onChange(value) {
+    if (value.includes('www.') && (value.match(/\./g) || []).length === 1) {
+      this.setState({
+        selectValue: '.mycozy.cloud'
+      })
+    } else {
+      if (value.includes('.')) {
+        this.setState({
+          selectValue: 'custom'
+        })
+      } else {
+        this.setState({
+          selectValue: '.mycozy.cloud'
+        })
+      }
+    }
+
     if (this.state.error) {
       this.setState(state => ({ ...state, error: null }))
     }
@@ -226,6 +243,7 @@ export class SelectServer extends Component {
                 className={classNames(styles['wizard-select'], {
                   [styles['wizard-select--medium']]: isMobile
                 })}
+                value={this.state.selectValue}
               >
                 <option value=".mycozy.cloud">
                   {t('mobile.onboarding.server_selection.domain_cozy')}
