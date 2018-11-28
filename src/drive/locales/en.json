@@ -11,15 +11,12 @@
     "btn-client": "Get Cozy for desktop",
     "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
-    "banner-txt-client":
-      "Add your documents and photos to your Cozy from your computer: they will be safe and available at any moment!",
+    "banner-txt-client": "Add your documents and photos to your Cozy from your computer: they will be safe and available at any moment!",
     "banner-btn-client": "Install now",
     "link-client": "https://cozy.io/en/download/",
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
-    "link-client-android":
-      "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
-    "link-client-ios":
-      "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
     "link-client-web": "https://cozy.io/try-it"
   },
   "breadcrumb": {
@@ -123,8 +120,7 @@
         "send": "Send",
         "genericSuccess": "You sent an invite to %{count} contacts.",
         "success": "You sent an invite to %{email}.",
-        "comingsoon":
-          "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!",
+        "comingsoon": "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!",
         "onlyByLink": "This %{type} can only be shared by link, because",
         "type": {
           "file": "file",
@@ -158,8 +154,7 @@
       "close": "Close",
       "gettingLink": "Getting your link...",
       "error": {
-        "generic":
-          "An error occurred when creating the file share link, please try again.",
+        "generic": "An error occurred when creating the file share link, please try again.",
         "revoke": "Woops, an error occurred. Please contact us so we can fix this issue as soon as possible."
       },
       "specialCase": {
@@ -168,8 +163,7 @@
         "hasSharedFolder": "contains a shared folder"
       }
     },
-    "viewer-fallback":
-      "If the file has started downloading, you can close this.",
+    "viewer-fallback": "If the file has started downloading, you can close this.",
     "dropzone": {
       "teaser": "Drop files to upload them to:",
       "noFolderSupport": "Folder drag&drop is currently not supported by your browser. Please upload your files manually."
@@ -220,38 +214,30 @@
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",
-    "trash":
-      "It will be moved to the Trash. |||| They will be moved to the Trash.",
-    "restore":
-      "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
-    "shared":
-      "The following contacts whom you shared it with will keep a copy but your changes won't be synchronized anymore. |||| The following contacts whom you shared them with will keep a copy but your changes won't be synchronized anymore",
-    "referenced":
-      "Some of the files within the selection are related to a photo album. They will be removed from it if you proceed to trash them.",
+    "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
+    "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
+    "shared": "The following contacts whom you shared it with will keep a copy but your changes won't be synchronized anymore. |||| The following contacts whom you shared them with will keep a copy but your changes won't be synchronized anymore",
+    "referenced": "Some of the files within the selection are related to a photo album. They will be removed from it if you proceed to trash them.",
     "cancel": "Cancel",
     "delete": "Remove"
   },
   "emptytrashconfirmation": {
     "title": "Permanently delete?",
     "forbidden": "You won't be able to access these files anymore.",
-    "restore":
-      "You won't be able to restore these files if you didn't make a backup.",
+    "restore": "You won't be able to restore these files if you didn't make a backup.",
     "cancel": "Cancel",
     "delete": "Delete all"
   },
   "destroyconfirmation": {
     "title": "Permanently delete?",
-    "forbidden":
-      "You won't be able to access this file anymore. |||| You won't be able to access these files anymore.",
-    "restore":
-      "You won't be able to restore this file if you didn't make a backup. |||| You won't be able to restore these files if you didn't make a backup.",
+    "forbidden": "You won't be able to access this file anymore. |||| You won't be able to access these files anymore.",
+    "restore": "You won't be able to restore this file if you didn't make a backup. |||| You won't be able to restore these files if you didn't make a backup.",
     "cancel": "Cancel",
     "delete": "Delete permanently"
   },
   "quotaalert": {
     "title": "Your disk space is full :(",
-    "desc":
-      " Please remove files and empty your trash before uploading files again.",
+    "desc": " Please remove files and empty your trash before uploading files again.",
     "confirm": "OK"
   },
   "loading": {
@@ -275,8 +261,7 @@
   },
   "Error": {
     "public_unshared_title": "Sorry, this link is no longer available.",
-    "public_unshared_text":
-      "This link has expired, or it was removed by its owner. Let him or her know that you missed it!"
+    "public_unshared_text": "This link has expired, or it was removed by its owner. Let him or her know that you missed it!"
   },
   "alert": {
     "could_not_open_file": "The file could not be opened",
@@ -284,14 +269,11 @@
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
     "destroy_file_success": "The selection has been deleted permanently.",
-    "empty_trash_progress":
-      "Your trash is being emptied. This might take a few moments.",
+    "empty_trash_progress": "Your trash is being emptied. This might take a few moments.",
     "empty_trash_success": "The trash has been emptied.",
-    "folder_name":
-      "The element %{folderName} already exists, please choose a new name.",
+    "folder_name": "The element %{folderName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
-    "folder_abort":
-      "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
+    "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
     "offline": "This feature is not available offline.",
     "preparing": "Preparing your files…"
   },
@@ -309,31 +291,24 @@
         "label": "Address of my Cozy",
         "cozy_address_placeholder": "claude",
         "domain_cozy": ".mycozy.cloud",
-        "domain_custom": "customize",
+        "domain_custom": "other",
         "button": "Next",
-        "wrong_address_with_email":
-          "You typed an email address. To connect on your cozy you must type its url, something like https://camillenimbus.mycozy.cloud",
-        "wrong_address_v2":
-          "You have just entered the address of old Cozy version. This application is only compatible with the latest version. [Please refer to our site for more information.](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
-        "wrong_address":
-          "This address doesn’t seem to be a cozy. Please check the address you provide.",
-        "wrong_address_cosy":
-          "Woops, the address is not correct. Try with \"cozy\" with a \"z\"!"
+        "wrong_address_with_email": "You typed an email address. To connect on your cozy you must type its url, something like https://camillenimbus.mycozy.cloud",
+        "wrong_address_v2": "You have just entered the address of old Cozy version. This application is only compatible with the latest version. [Please refer to our site for more information.](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
+        "wrong_address": "This address doesn’t seem to be a cozy. Please check the address you provide.",
+        "wrong_address_cosy": "Woops, the address is not correct. Try with \"cozy\" with a \"z\"!"
       },
       "files": {
         "title": "Access your drive",
-        "description":
-          "In order to save your Cozy Drive on your device, the application must access your files."
+        "description": "In order to save your Cozy Drive on your device, the application must access your files."
       },
       "photos": {
         "title": "Backup your photos and videos",
-        "description":
-          "Automatically backup the photos taken with your phone to your Cozy, so you never lose them."
+        "description": "Automatically backup the photos taken with your phone to your Cozy, so you never lose them."
       },
       "contacts": {
         "title": "Sync your contacts",
-        "description":
-          "Save your phone's contact on your Cozy — this will facilitate sharing files with them."
+        "description": "Save your phone's contact on your Cozy — this will facilitate sharing files with them."
       },
       "step": {
         "button": "Enable now",
@@ -342,8 +317,7 @@
       },
       "analytics": {
         "title": "Help us improve Cozy",
-        "description":
-          "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
+        "description": "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
       }
     },
     "settings": {
@@ -355,13 +329,11 @@
       },
       "unlink": {
         "title": "Reset this application",
-        "description":
-          "By clicking Reset, you will be able to start your application over, and will only lose the data saved on your smartphone.",
+        "description": "By clicking Reset, you will be able to start your application over, and will only lose the data saved on your smartphone.",
         "button": "Reset",
         "confirmation": {
           "title": "Reset this application?",
-          "description":
-            "By logging out of your Cozy, you will erase all data synchronized locally by your mobile application.",
+          "description": "By logging out of your Cozy, you will erase all data synchronized locally by your mobile application.",
           "cancel": "Cancel",
           "unlink": "Reset"
         }
@@ -373,18 +345,15 @@
         "title": "Media Backup",
         "images": {
           "title": "Backup images",
-          "label":
-            "Backup your images automatically to your Cozy not to ever lose them and share them easily."
+          "label": "Backup your images automatically to your Cozy not to ever lose them and share them easily."
         },
         "launch": "Launch Backup",
         "stop": "Stop Backup",
         "wifi": {
           "title": "Backup on WIFI only",
-          "label":
-            "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
+          "label": "If the option is enabled, your device will only backup photos when it's on WIFI in order to save your package."
         },
-        "media_upload":
-          "%{smart_count} remaining picture |||| %{smart_count} remaining pictures",
+        "media_upload": "%{smart_count} remaining picture |||| %{smart_count} remaining pictures",
         "media_uptodate": "Media backup is up-to-date",
         "preparing": "Searching for media to backup...",
         "no_wifi": "Please connect to a WIFI",
@@ -395,31 +364,25 @@
         "title": "Support",
         "analytics": {
           "title": "Help us improve Cozy",
-          "label":
-            "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
+          "label": "The application will automatically provide data (mainly errors) to Cozy Cloud. It will allow us to resolve problems faster."
         },
         "feedback": {
           "title": "Help improve Cozy Drive",
-          "description":
-            "Send your feedback to help us improve Cozy Drive. Click on the button below, explain the problem or make a suggestion and send it. You're done!",
+          "description": "Send your feedback to help us improve Cozy Drive. Click on the button below, explain the problem or make a suggestion and send it. You're done!",
           "button": "leave feedback"
         },
         "logs": {
           "title": "Help us to understand your problem",
-          "description":
-            "Send the application log to help us improve its quality and stability.",
+          "description": "Send the application log to help us improve its quality and stability.",
           "button": "Send my logs",
-          "success":
-            "Thanks, we will investigate your problem and contact you soon.",
-          "error":
-            "A problem happened, logs couldn't be sent, please try again."
+          "success": "Thanks, we will investigate your problem and contact you soon.",
+          "error": "A problem happened, logs couldn't be sent, please try again."
         }
       },
       "contacts": {
         "title": "Contacts",
         "subtitle": "Import contacts",
-        "text":
-          "Import the contacts from your device to your Cozy to easily share content with them."
+        "text": "Import the contacts from your device to your Cozy to easily share content with them."
       }
     },
     "error": {
@@ -434,8 +397,7 @@
     },
     "revoked": {
       "title": "Access revoked",
-      "description":
-        "It appears you revoked this device from your Cozy. If you didn't, please let us know at contact@cozycloud.cc. All your local data related to your Cozy will be removed.",
+      "description": "It appears you revoked this device from your Cozy. If you didn't, please let us know at contact@cozycloud.cc. All your local data related to your Cozy will be removed.",
       "loginagain": "Log in again",
       "logout": "Log out"
     },
@@ -470,25 +432,20 @@
     "first_sync": {
       "title": "You are about to start your first photos back up 🎉",
       "tips": "Tips",
-      "tip_bed":
-        "Open Cozy Drive before you go to bed or when you don't use your phone.",
+      "tip_bed": "Open Cozy Drive before you go to bed or when you don't use your phone.",
       "tip_wifi": "Enable Wi-Fi to preserve your data.",
       "tip_lock": "Disable your lock screen.",
-      "result":
-        "In the morning, all your photos will be stored in a safe and secure location.",
+      "result": "In the morning, all your photos will be stored in a safe and secure location.",
       "button": "Got it!"
     },
     "notifications": {
-      "backup_paused":
-        "Your photos backup is paused. Keep the application open and prevent the screen from going to sleep to complete the backup."
+      "backup_paused": "Your photos backup is paused. Keep the application open and prevent the screen from going to sleep to complete the backup."
     }
   },
   "upload": {
     "alert": {
-      "success":
-        "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
-      "success_conflicts":
-        "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
+      "success": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
+      "success_conflicts": "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
       "errors": "Errors occurred during the file upload.",
       "network": "You are currenly offline. Please try again once you're connected."
     }
@@ -505,8 +462,7 @@
     }
   },
   "UploadQueue": {
-    "header":
-      "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
+    "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
     "header_mobile": "%{done} of %{total} uploading…",
     "header_done": "Uploaded %{done} out of %{total} successfully",
     "close": "close",
@@ -529,8 +485,7 @@
       "download": "Download"
     },
     "loading": {
-      "error":
-        "This file could not be loaded. Do you have a working internet connection right now?",
+      "error": "This file could not be loaded. Do you have a working internet connection right now?",
       "retry": "Retry"
     },
     "error": {
