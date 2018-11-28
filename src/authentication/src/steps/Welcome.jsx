@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button, ButtonLink, MainTitle, Icon } from 'cozy-ui/react'
+import { Button, MainTitle, Icon } from 'cozy-ui/react'
 import '../assets/icons/icon-cozy.svg'
 import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
 
 import styles from '../styles.styl'
-
-import { getPlatform, hasSafariPlugin } from 'cozy-device-helper'
+import { ButtonLinkRegistration } from './ButtonLinkRegistration'
 
 export class Welcome extends Component {
   registerRender = () => {
@@ -28,41 +27,8 @@ export class Welcome extends Component {
         />
       )
     }
-
-    const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
-      'browser'}`
-
-    if (hasSafariPlugin()) {
-      const openManager = () => {
-        window.SafariViewController.show(
-          {
-            url: url,
-            transition: 'curl'
-          },
-          result => {
-            if (result.event === 'closed') {
-              window.SafariViewController.hide()
-            }
-          },
-          error => {
-            console.warn(error)
-            window.SafariViewController.hide()
-          }
-        )
-      }
-
-      return (
-        <Button
-          onClick={openManager}
-          label={t('mobile.onboarding.welcome.no_account_link')}
-          size={isMobile ? 'normal' : 'large'}
-        />
-      )
-    }
-
     return (
-      <ButtonLink
-        href={url}
+      <ButtonLinkRegistration
         label={t('mobile.onboarding.welcome.no_account_link')}
         size={isMobile ? 'normal' : 'large'}
       />

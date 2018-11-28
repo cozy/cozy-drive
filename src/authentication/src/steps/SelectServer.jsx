@@ -11,7 +11,7 @@ import 'cozy-ui/assets/icons/ui/previous.svg'
 import 'cozy-ui/assets/icons/ui/next.svg'
 import 'cozy-ui/assets/icons/ui/lock.svg'
 import styles from '../styles'
-
+import { ButtonLinkRegistration } from './ButtonLinkRegistration'
 require('url-polyfill')
 
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
@@ -264,12 +264,12 @@ export class SelectServer extends Component {
             >
               <Icon icon="next" color="white" />
             </Button>
-            <Button
-              type="button"
-              subtle
+            <ButtonLinkRegistration
               className={'u-mt-1'}
               label={t('mobile.onboarding.welcome.no_account_link')}
               size={isMobile ? 'normal' : 'large'}
+              subtle={true}
+              type={'button'}
             />
           </footer>
         </div>
