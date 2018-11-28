@@ -201,7 +201,7 @@ export class SelectServer extends Component {
             />
             <MainTitle
               tag="h1"
-              className={classNames(styles['wizard-title'], 'u-mb-1', 'u-mt-0')}
+              className={classNames(styles['wizard-title'], 'u-mt-half', 'u-mb-1')}
             >
               {t('mobile.onboarding.server_selection.title')}
             </MainTitle>
@@ -283,7 +283,7 @@ export class SelectServer extends Component {
               <Icon icon="next" color="white" />
             </Button>
             <ButtonLinkRegistration
-              className={'u-mt-1'}
+              className={classNames('u-mt-half', 'u-mb-1')}
               label={t('mobile.onboarding.welcome.no_account_link')}
               size={isMobile ? 'normal' : 'large'}
               subtle={true}
