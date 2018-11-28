@@ -25,19 +25,16 @@ const createReferences = async (album, photos) => {
 }
 
 const createAutoAlbum = async (albums, photos) => {
-  if (!photos || photos.length < 1) {
-    return null
-  }
   // Check if an album already exists for these photos. If not, create it
   const name = albumName(photos)
   const album = albums ? albums.find(album => album.name === name) : null
-  if (!album) {
+  if (album) return album
+  else {
     const created_at = new Date()
     const period = albumPeriod(photos)
     const album = { name, created_at, auto: true, period }
     return await cozyClient.data.create(DOCTYPE_ALBUMS, album)
   }
-  return album
 }
 
 export const findAllAutoAlbums = async () => {
@@ -49,8 +46,8 @@ export const findAllAutoAlbums = async () => {
 export const saveClustering = async clusters => {
   const albums = await findAllAutoAlbums()
   for (const photos of clusters) {
-    const album = await createAutoAlbum(albums, photos)
-    if (album) {
+    if (photos && photos.length > 0) {
+      const album = await createAutoAlbum(albums, photos)
       const refs = await createReferences(album, photos)
       if (refs) {
         log(
