@@ -83,6 +83,9 @@ export class SelectServer extends Component {
     this.setState(state => ({ ...state, value: value.trim() }))
   }
 
+  resetInput = () => {
+    this.input.value = ''
+  }
   onSubmit = async e => {
     e.preventDefault()
     const value = this.state.value
@@ -248,6 +251,7 @@ export class SelectServer extends Component {
                   [styles['wizard-select--medium']]: isMobile
                 })}
                 value={this.state.selectValue}
+                onChange={() => this.resetInput()}
               >
                 <option value=".mycozy.cloud">
                   {t('mobile.onboarding.server_selection.domain_cozy')}
