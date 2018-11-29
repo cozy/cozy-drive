@@ -33,7 +33,7 @@ export class SelectServer extends Component {
       window.Keyboard.shrinkView(true)
     } else {
       console.warn(
-        'Cozy-Authentication needs a cozy/cordova-plugin-keyboard plugin to better works.'
+        'Cozy-Authentication needs a cozy/cordova-plugin-keyboard plugin to work better.'
       )
     }
 
