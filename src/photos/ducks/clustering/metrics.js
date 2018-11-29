@@ -11,7 +11,7 @@ export const spatial = (point1, point2) => {
  *  Metric giving the temporal distance between 2 points
  */
 export const temporal = (point1, point2) => {
-  return Math.abs(point1.date - point2.date)
+  return Math.abs(point1.timestamp - point2.timestamp)
 }
 
 /**
@@ -26,7 +26,9 @@ export const spatioTemporalScaled = (
   epsSpatial
 ) => {
   const r = epsTemporal / epsSpatial
-  return (temporal(point1, point2) + spatial(point1, point2) * r) / 2
+  const temporalDistance = temporal(point1, point2)
+  const spatialDistance = spatial(point1, point2)
+  return (temporalDistance + spatialDistance * r) / 2 || temporalDistance
 }
 
 /**
@@ -34,6 +36,9 @@ export const spatioTemporalScaled = (
  *  See https://en.wikipedia.org/wiki/Geodesics_on_an_ellipsoid
  */
 const geodesicDistance = (point1, point2) => {
+  if (!point1.lon || !point1.lat || !point2.lon || !point2.lat) {
+    return null
+  }
   const lon1 = toRadians(point1.lon)
   const lat1 = toRadians(point1.lat)
 
