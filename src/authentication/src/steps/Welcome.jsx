@@ -55,7 +55,12 @@ export class Welcome extends Component {
                 focusable="false"
               />
               <div className={styles['wizard-logo-badge']}>
-                <Icon icon="cozy-negative" width="20" height="20" color="white" />
+                <Icon
+                  icon="cozy-negative"
+                  width="20"
+                  height="20"
+                  color="white"
+                />
               </div>
             </div>
             <MainTitle
