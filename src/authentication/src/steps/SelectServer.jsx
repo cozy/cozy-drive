@@ -251,7 +251,10 @@ export class SelectServer extends Component {
                   [styles['wizard-select--medium']]: isMobile
                 })}
                 value={this.state.selectValue}
-                onChange={() => this.resetInput()}
+                onChange={e => {
+                  this.setState({ selectValue: e.target.value })
+                  this.resetInput()
+                }}
               >
                 <option value=".mycozy.cloud">
                   {t('mobile.onboarding.server_selection.domain_cozy')}
