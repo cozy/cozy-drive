@@ -283,7 +283,10 @@ export class SelectServer extends Component {
               />
             )}
           </div>
-          <footer className={styles['wizard-footer']}>
+          <footer className={classNames(
+            styles['wizard-footer'],
+            isMobile ? 'u-mt-auto' : 'u-mt-1-half'
+          )}>
             <Button
               className={styles['wizard-next']}
               disabled={error || !value || fetching}
