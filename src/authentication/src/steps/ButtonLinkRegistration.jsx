@@ -1,6 +1,8 @@
 import React from 'react'
-import { getPlatform, hasSafariPlugin } from 'cozy-device-helper'
-import { Button, ButtonLink } from 'cozy-ui/react'
+import { getPlatform } from 'cozy-device-helper'
+import { Button } from 'cozy-ui/react'
+
+import { nativeLinkOpen } from '../LinkManager'
 export const ButtonLinkRegistration = ({
   className = '',
   label,
@@ -10,7 +12,7 @@ export const ButtonLinkRegistration = ({
 }) => {
   const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
     'browser'}`
-
+  /* 
   if (hasSafariPlugin()) {
     const openManager = () => {
       window.SafariViewController.show(
@@ -29,8 +31,8 @@ export const ButtonLinkRegistration = ({
         }
       )
     }
-
-    return (
+ */
+  /*  return (
       <Button
         onClick={openManager}
         label={label}
@@ -40,10 +42,14 @@ export const ButtonLinkRegistration = ({
         type={type}
       />
     )
-  }
+  } */
 
   return (
-    <ButtonLink
+    <Button
+      onClick={e => {
+        console.log('clic')
+        nativeLinkOpen({ e, url })
+      }}
       href={url}
       label={label}
       size={size}
