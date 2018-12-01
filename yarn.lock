@@ -3524,10 +3524,10 @@ cosmiconfig@^5.0.5:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cozy-bar@6.8.6:
-  version "6.8.6"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.8.6.tgz#09c1bde247f39046c4308a9a66b1ddf39a8a9876"
-  integrity sha512-pvVz5LDzZS8MRZX4YCDLmrt1NXvimNbrY4jWZSrT/hD14uzK2l9CIbuW3L/xEy2zBK8YPwwTU/FD381h4B44hA==
+cozy-bar@6.8.7:
+  version "6.8.7"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.8.7.tgz#15589675709696b11f58d13cf0ef930562c3cfd8"
+  integrity sha512-1g/UE6I1g1hb46ZQHY3jx/plKIBSSM2Cvn1RtkSc0VFh0qA/9rgL9jxSEbC2GLUFqFvK6vszUY2yYIOORkVR7Q==
   dependencies:
     "@babel/core" "7.1.6"
     babel-core "7.0.0-bridge.0"
@@ -3535,7 +3535,7 @@ cozy-bar@6.8.6:
     core-js "2.5.7"
     cozy-client-js "0.13.0"
     cozy-device-helper "1.4.14"
-    cozy-realtime "1.2.0"
+    cozy-realtime "1.2.1"
     hammerjs "2.0.8"
     lerna-changelog "0.8.2"
     localforage "1.7.3"
@@ -3625,10 +3625,10 @@ cozy-realtime@1.1.0:
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.1.0.tgz#6370ba7e1197ca267e0793c9dd7f2d871d359698"
   integrity sha512-rI5ek+8s05ycqMju4JfICZ1KRRJ8WkvLT6YHKCnMh2na5Sh5hzIOX4JLqDadYJJnxTTzcc2pPiMJvT0Yu8b9hA==
 
-cozy-realtime@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.2.0.tgz#8f0e5a2c02df94674f0a96381a51bce71d327602"
-  integrity sha512-VM03YzeWt0D3dlVeGFLFLgraDs78PS1OY9FxA7TVxt95Q17a0OaVqqUViwfYY84+DxzfFl1pzw2BSzhThAqYJw==
+cozy-realtime@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.2.1.tgz#767a6279895960f51d422be043fb001316abe290"
+  integrity sha512-ed4fYohePy/0kgfylgfIQ2wRlOCSzG8jXRpOi1gjPXWJY/NYCvGMibd2GMW7XrcGy13Wd5eFQD55RhozKy1mqw==
 
 cozy-scripts@1.1.1:
   version "1.1.1"
@@ -11614,7 +11614,7 @@ preact-compat@3.18.4:
     prop-types "^15.6.2"
     standalone-react-addons-pure-render-mixin "^0.1.1"
 
-preact-portal@1.1.3:
+preact-portal@1.1.3, preact-portal@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/preact-portal/-/preact-portal-1.1.3.tgz#22cdd3ecf6ad9aaa3f830607a9c6591de90aedb7"
   integrity sha512-rE0KG2b7ggIly4VVsSm7+WmQmG/EoUZzBOed2IbycyaFIArOvz+yab/8RBoDogA0JWZuTsbMTStR41Ghc+5m7Q==
@@ -11635,6 +11635,11 @@ preact@8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.3.0.tgz#eef16418bc351a44015b62c447722132ce5c36eb"
   integrity sha512-yhP68bOZMWaNjfKig0xeL59H9TRShxCoLEUVnvKXfSqLK67EDYev7GVgAhKHmATK/HpnGw6SjSooVvEJgeAUDQ==
+
+preact@^8.3.1:
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-8.3.1.tgz#ed34f79d09edc5efd32a378a3416ef5dc531e3ac"
+  integrity sha512-s8H1Y8O9e+mOBo3UP1jvWqArPmjCba2lrrGLlq/0kN1XuIINUbYtf97iiXKxCuG3eYwmppPKnyW2DBrNj/TuTg==
 
 prebuild-install@^2.1.0:
   version "2.5.3"
