@@ -82,7 +82,7 @@ const clusterizePhotos = async (setting, photos) => {
   const params = clusteringParameters(dataset, setting)
   if (!params) {
     log('warn', 'No default parameters for clustering found')
-    return []
+    return
   }
 
   const albums = await findAutoAlbums()
@@ -90,8 +90,6 @@ const clusterizePhotos = async (setting, photos) => {
 
   // TODO save params
   // TODO adapt percentiles for large datasets
-
-  return dataset
 }
 
 const getNewPhotos = async setting => {

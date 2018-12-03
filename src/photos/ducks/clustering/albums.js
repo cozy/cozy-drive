@@ -49,12 +49,11 @@ export const findAutoAlbums = async () => {
   ])
   const results = await cozyClient.data.query(autoAlbums, {
     selector: { auto: true },
-    sort: [{ name: 'desc' }]
+    sort: [{ name: 'asc' }]
   })
   return results
 }
 
-// TODO: deal with updates
 export const saveClustering = async (clusters, albums) => {
   for (const photos of clusters) {
     if (photos && photos.length > 0) {
@@ -67,7 +66,7 @@ export const saveClustering = async (clusters, albums) => {
 const findPhotosByAlbum = async album => {
   album._type = DOCTYPE_ALBUMS
   const files = await cozyClient.data.fetchReferencedFiles(album, {})
-  if (files && files.included.length > 0) {
+  if (files && files.included) {
     const attributes = files.included.map(file => {
       const attributes = file.attributes
       attributes.id = file.id
@@ -99,6 +98,7 @@ export const albumsToClusterize = async (photos, albums) => {
   const clusterize = {}
 
   for (const photo of photos) {
+    // Find clusters matching this photo
     const matchingAlbums = matchingClusters(photo, albums)
     if (matchingAlbums.length > 0) {
       const key = matchingAlbums[1]
@@ -107,6 +107,7 @@ export const albumsToClusterize = async (photos, albums) => {
       if (clusterize[key]) {
         clusterize[key].push(photo)
       } else {
+        // Save the photos referenced by the matchig albums
         const photosToClusterize = await findPhotosToClusterize(matchingAlbums)
         photosToClusterize.push(photo)
         clusterize[key] = photosToClusterize
