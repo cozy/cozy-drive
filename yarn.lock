@@ -3314,24 +3314,13 @@ cordova-android@7.1.4:
   resolved "https://registry.yarnpkg.com/cordova-android/-/cordova-android-7.1.4.tgz#25261ad66cc64f42a30b70be005901fa30e2430e"
   integrity sha512-Rtvu002I83uzfVyCsE6p2krFKVHt9TSAqZUATes+zH+o9cdxYGrLHY+PKCQo4SLCdSMdrkIHCDnQPTYTp/d7+g==
   dependencies:
-    abbrev "*"
     android-versions "1.4.0"
-    ansi "*"
-    balanced-match "*"
     base64-js "1.2.0"
     big-integer "1.6.32"
-    bplist-parser "*"
-    brace-expansion "*"
-    concat-map "*"
     cordova-common "2.2.5"
-    cordova-registry-mapper "*"
     elementtree "0.1.6"
     glob "5.0.15"
-    inflight "*"
-    inherits "*"
-    minimatch "*"
     nopt "3.0.1"
-    once "*"
     path-is-absolute "1.0.1"
     plist "2.1.0"
     properties-parser "0.2.3"
@@ -3339,11 +3328,7 @@ cordova-android@7.1.4:
     sax "0.3.5"
     semver "5.5.0"
     shelljs "0.5.3"
-    underscore "*"
-    unorm "*"
-    wrappy "*"
     xmlbuilder "8.2.2"
-    xmldom "*"
 
 cordova-app-hello-world@^3.11.0:
   version "3.12.0"
@@ -3570,13 +3555,13 @@ cozy-client-js@0.9.0:
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
 
-cozy-client@4.10.0:
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-4.10.0.tgz#364c071614926f87282be2cc7119de62ede9581a"
-  integrity sha512-a53mwGH8OEZjYX2V1pvmkyIvpEC2sFji1iYJmwd5gIKOyxwAvRptowCq9EBWcAVhTih9+6Cz/f6FLg/rMG9TLA==
+cozy-client@4.13.1:
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-4.13.1.tgz#0c8e278c4abe64e116f06e7377e654fd31f3fac4"
+  integrity sha512-fu7GhUkrK/0vrFyxb2HZ+VcZTaa96lm8qCBzpV4ex4YjrtFnQtvCEIjJo5mkRTsDeOswxjVJmf6UQSok4ifKyg==
   dependencies:
     cozy-device-helper "1.4.14"
-    cozy-stack-client "^4.8.0"
+    cozy-stack-client "^4.13.1"
     lodash "4.17.11"
     prop-types "15.6.2"
     react "16.4.2"
@@ -3680,10 +3665,10 @@ cozy-scripts@1.1.1:
     webpack-dev-server "3.1.10"
     webpack-merge "4.1.4"
 
-cozy-stack-client@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-4.8.0.tgz#a639650de5d0311cdf4360b1b2115b973c4d41f0"
-  integrity sha512-95Y7qTMjA9QJGy0FDGpkSDxzIAsQVbf18cuHeADxd8EQZYkP7IEV0epLnEVvt1ezXf8B6kB9f5ixfLBBblzN3A==
+cozy-stack-client@^4.13.1:
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-4.13.1.tgz#002cb02265d1db9ecfe1348d5d10b6363d3b561b"
+  integrity sha512-2ADNfohGfvXOgu/apRB39prqiVfnveolVaWGJnVmSWkvMHYVy3Xl7fQ8e9X/pCvcirg14JgvSaxDrxZ7YzCllg==
   dependencies:
     mime-types "2.1.20"
 
@@ -3698,8 +3683,6 @@ cozy-ui@17.4.1:
     hammerjs "^2.0.8"
     node-polyglot "^2.2.2"
     normalize.css "^7.0.0"
-    preact "^8.3.1"
-    preact-portal "^1.1.3"
     react-hot-loader "^4.3.11"
     react-select "2.1.1"
 
@@ -8986,7 +8969,7 @@ lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.2, lru-cache@^4.1.3:
   integrity sha512-EPstzZ23znHUVLKj+lcXO1KvZkrlw+ZirdwvOmnAnA/1PB4ggyXJ77LRkCqkff+ShQ+cqoxCxLQOh4cKITO5iA==
   dependencies:
     pseudomap "^1.0.2"
-    yallist "^2.1.2"
+    yallist "^3.0.2"
 
 lru-cache@~4.0.1:
   version "4.0.2"
