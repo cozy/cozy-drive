@@ -128,7 +128,10 @@
     .pho-viewer-filename
         max-width     90%
         text-overflow ellipsis
-
+.pho-viewer-pdfviewer-ios
+    object
+        background none
+        background-color #ffffff //needed for PDF only on Safari Mobile
 .pho-viewer-imageviewer
 .pho-viewer-nav + .pho-viewer-pdfviewer
 .pho-viewer-nav + .pho-viewer-noviewer
@@ -285,10 +288,14 @@
     height      5.625rem
     transition .4s opacity ease-out
     pointer-events none // especially important for pdf viewers, where there might be additional controls in the top area
+    
+    &--mobilebrowser
+        background-color charcoalGrey
+        opacity 0.9
 
     &--hidden
         opacity 0
-
+    
     .pho-viewer-toolbar-actions
         position          static
         z-index           0
