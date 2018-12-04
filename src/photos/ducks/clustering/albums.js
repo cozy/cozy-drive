@@ -1,6 +1,7 @@
 import { cozyClient, log } from 'cozy-konnector-libs'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import { matchingClusters } from './matching'
+import { prepareDataset } from './utils'
 import flatten from 'lodash/flatten'
 
 // An auto album name is the date of the first photo
@@ -72,12 +73,13 @@ const findPhotosByAlbum = async album => {
       attributes.id = file.id
       return attributes
     })
-    return extractPhotosInfo(attributes)
+    return prepareDataset(attributes)
   }
   return []
 }
 
-const findPhotosToClusterize = async albums => {
+// Find existing photos for each album that need to be re-clusterize
+const findPhotosToReclusterize = async albums => {
   const photos = flatten(
     await Promise.all(
       albums.map(async album => {
@@ -89,27 +91,35 @@ const findPhotosToClusterize = async albums => {
 }
 
 /**
-  Look for existing auto albums to re-clusterize.
-  There are 2 cases for this to occur:
-    - A photo's datetime is inside an album period
-    - A photo's datetime is in a gap between an album and an adjacent one.
-*/
-export const albumsToClusterize = async (photos, albums) => {
+ *  Find the existing albums and related photos that are eligible to re-cluster,
+ *  based on the new given photos.
+ *  Each new photo should match at least one (maximum 2) existing album.
+ *  We retrieve all the related photos for each matching album in order to
+ *  recompute the cluster with the old and new photos.
+
+ * @param {Object[]} newPhotos - Set of new photos to clusterize
+ * @param {Object[]} albums - Set of existing auto albums
+ * @returns {Object} dict associating albums to a set of photos.
+ *
+ */
+export const albumsToClusterize = async (newPhotos, albums) => {
   const clusterize = {}
 
-  for (const photo of photos) {
-    // Find clusters matching this photo
-    const matchingAlbums = matchingClusters(photo, albums)
+  for (const newPhoto of newPhotos) {
+    // Find clusters matching this newPhoto
+    const matchingAlbums = matchingClusters(newPhoto, albums)
     if (matchingAlbums.length > 0) {
       const key = matchingAlbums[1]
         ? matchingAlbums[0]._id + ':' + matchingAlbums[1]._id
         : matchingAlbums[0]._id
       if (clusterize[key]) {
-        clusterize[key].push(photo)
+        clusterize[key].push(newPhoto)
       } else {
         // Save the photos referenced by the matchig albums
-        const photosToClusterize = await findPhotosToClusterize(matchingAlbums)
-        photosToClusterize.push(photo)
+        const photosToClusterize = await findPhotosToReclusterize(
+          matchingAlbums
+        )
+        photosToClusterize.push(newPhoto)
         clusterize[key] = photosToClusterize
       }
     }
@@ -126,29 +136,4 @@ export const findAlbumsByIds = (albums, ids) => {
       return ids.find(id => album._id === id)
     }) || []
   )
-}
-
-/**
- * Returns the photos metadata sorted by date
- */
-export const extractPhotosInfo = photos => {
-  const info = photos
-    .map(file => {
-      const photo = {
-        id: file._id || file.id,
-        name: file.name
-      }
-      if (file.metadata) {
-        photo.datetime = file.metadata.datetime
-        photo.gps = file.metadata.gps
-      } else {
-        photo.datetime = file.created_at
-      }
-      const hours = new Date(photo.datetime).getTime() / 1000 / 3600
-      photo.timestamp = hours
-      return photo
-    })
-    .sort((pa, pb) => pa.timestamp < pb.timestamp)
-
-  return info
 }

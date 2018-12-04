@@ -25,9 +25,9 @@ import {
   saveClustering,
   findAutoAlbums,
   albumsToClusterize,
-  findAlbumsByIds,
-  extractPhotosInfo
+  findAlbumsByIds
 } from 'photos/ducks/clustering/albums'
+import { prepareDataset } from 'photos/ducks/clustering/utils'
 
 // Retrieve the parameters used to compute the clustering
 const clusteringParameters = (dataset, setting) => {
@@ -78,7 +78,7 @@ const computeClusters = async (dataset, albums, params) => {
 
 // Clusterize the given photos, i.e. organize them depending on metrics
 const clusterizePhotos = async (setting, photos) => {
-  const dataset = extractPhotosInfo(photos)
+  const dataset = prepareDataset(photos)
   const params = clusteringParameters(dataset, setting)
   if (!params) {
     log('warn', 'No default parameters for clustering found')

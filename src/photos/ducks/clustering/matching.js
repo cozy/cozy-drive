@@ -11,26 +11,34 @@ const outsideClusteringEdges = (photo, newestAlbum, oldestAlbum) => {
   return null
 }
 
-const adjacentToClusters = (photo, newerAlbum, olderAlbum) => {
+const photoInsideCluster = (photo, album) => {
+  const photoDate = new Date(photo.datetime)
+  const albumStart = new Date(album.period.start)
+  const albumEnd = new Date(album.period.end)
+
+  return photoDate <= albumEnd && photoDate >= albumStart
+}
+
+const photoBetweenClusters = (photo, newerAlbum, olderAlbum) => {
   const photoDate = new Date(photo.datetime)
   const newerStart = new Date(newerAlbum.period.start)
-  const newerEnd = new Date(newerAlbum.period.end)
   // The olderAlbum might be null if this is the last element
   const olderEnd = olderAlbum ? new Date(olderAlbum.period.end) : null
-  // Photo inside cluster
-  if (photoDate <= newerEnd && photoDate >= newerStart) {
-    return [newerAlbum]
-  }
   // Photo between clusters
-  if (olderEnd && photoDate < newerStart && photoDate > olderEnd) {
-    return [newerAlbum, olderAlbum]
-  }
-  return []
+  return olderEnd && photoDate < newerStart && photoDate > olderEnd
 }
 
 /**
- *  Find the albums in which a photo can be added.
- *  Albums are sorted by date from newest to oldest.
+ *  Find the existing clusters in which a photo temporally match for clustering.
+ *  There are 3 cases for this to occur:
+ *    - A photo's datetime is beyond the oldest or newest album.
+ *    - A photo's datetime is inside an album period.
+ *    - A photo's datetime is in a gap between an album and an adjacent one.
+
+ *  Note that albums are sorted by date from newest to oldest.
+ * @param {Object} photo - the photo to clusterize
+ * @param {Object[]} albums - the existing clusters, seen as albums
+ * @returns {Object[]} An array of matching clusters. length can be 0, 1 or 2.
  */
 export const matchingClusters = (photo, albums) => {
   const newestAlbum = albums[0]
@@ -40,9 +48,10 @@ export const matchingClusters = (photo, albums) => {
     return [edge]
   }
   for (let i = 0; i < albums.length; i++) {
-    const matches = adjacentToClusters(photo, albums[i], albums[i + 1])
-    if (matches.length > 0) {
-      return matches
+    if (photoInsideCluster(photo, albums[i])) {
+      return [albums[i]]
+    } else if (photoBetweenClusters(photo, albums[i], albums[i + 1])) {
+      return [albums[i], albums[i + 1]]
     }
   }
   return []
