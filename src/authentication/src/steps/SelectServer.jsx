@@ -24,7 +24,8 @@ export class SelectServer extends Component {
     value: '',
     fetching: false,
     error: null,
-    selectValue: '.mycozy.cloud'
+    selectValue: '.mycozy.cloud',
+    isCustomDomain: false
   }
 
   componentDidMount() {
@@ -68,11 +69,13 @@ export class SelectServer extends Component {
     } else {
       if (value.includes('.')) {
         this.setState({
-          selectValue: 'custom'
+          selectValue: 'custom',
+          isCustomDomain: true
         })
       } else {
         this.setState({
-          selectValue: '.mycozy.cloud'
+          selectValue: '.mycozy.cloud',
+          isCustomDomain: false
         })
       }
     }
@@ -182,7 +185,7 @@ export class SelectServer extends Component {
   }
 
   render() {
-    const { value, error, fetching } = this.state
+    const { value, error, fetching, isCustomDomain } = this.state
     const {
       t,
       previousStep,
@@ -217,7 +220,12 @@ export class SelectServer extends Component {
             <Label htmlFor={inputID}>
               {t('mobile.onboarding.server_selection.label')}
             </Label>
-            <div className={styles['wizard-dualfield']}>
+            <div
+              className={classNames(
+                styles['wizard-dualfield'],
+                this.state.focusClass
+              )}
+            >
               {!isMobile && (
                 <div className={styles['wizard-protocol']}>
                   <Icon icon="lock" />
@@ -244,16 +252,24 @@ export class SelectServer extends Component {
                 onChange={({ target: { value } }) => {
                   this.onChange(value)
                 }}
+                onFocus={() =>
+                  this.setState({
+                    focusClass: styles['wizard-dualfield--focus']
+                  })
+                }
+                onBlur={() => this.setState({ focusClass: undefined })}
                 value={value}
               />
               <select
                 className={classNames(styles['wizard-select'], {
+                  [styles['wizard-select--narrow']]: isCustomDomain,
                   [styles['wizard-select--medium']]: isMobile
                 })}
                 value={this.state.selectValue}
                 onChange={e => {
                   this.setState({ selectValue: e.target.value })
                   this.resetInput()
+                  this.input.focus()
                 }}
               >
                 <option value=".mycozy.cloud">
