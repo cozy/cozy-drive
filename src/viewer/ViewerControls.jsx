@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import Hammer from 'hammerjs'
+import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
@@ -70,7 +71,8 @@ class ViewerControls extends Component {
       isMobile,
       expanded,
       controls,
-      children
+      children,
+      isMobileApp
     } = this.props
     const { hidden } = this.state
     const { client } = this.context
@@ -89,7 +91,9 @@ class ViewerControls extends Component {
         {controls && (
           <div
             className={classNames(styles['pho-viewer-toolbar'], {
-              [styles['pho-viewer-toolbar--hidden']]: hidden
+              [styles['pho-viewer-toolbar--hidden']]: hidden,
+              [styles['pho-viewer-toolbar--mobilebrowser']]:
+                !isMobileApp && isMobile
             })}
             role="viewer-toolbar"
             onMouseEnter={this.showControls}
@@ -184,5 +188,16 @@ class ViewerControls extends Component {
     })
   }
 }
-
+ViewerControls.propTypes = {
+  currentFile: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  hasPrevious: PropTypes.bool.isRequired,
+  hasNext: PropTypes.bool.isRequired,
+  onPrevious: PropTypes.func.isRequired,
+  onNext: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  expanded: PropTypes.bool.isRequired,
+  controls: PropTypes.bool.isRequired,
+  isMobileApp: PropTypes.bool.isRequired
+}
 export default translate()(ViewerControls)

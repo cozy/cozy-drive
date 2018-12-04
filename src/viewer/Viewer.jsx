@@ -17,7 +17,7 @@ const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39
 const KEY_CODE_ESCAPE = 27
 
-import { isMobileApp } from 'cozy-device-helper'
+import { isMobileApp, isMobile } from 'cozy-device-helper'
 
 const ViewerWrapper = ({ style, className, children, fullscreen, dark }) => (
   <div
@@ -110,9 +110,10 @@ export default class Viewer extends Component {
           hasNext={hasNext}
           onPrevious={this.onPrevious}
           onNext={this.onNext}
-          isMobile={isMobileApp()}
+          isMobile={isMobile()}
           expanded={expanded}
           controls={controls}
+          isMobileApp={isMobileApp()}
         >
           {this.renderViewer(currentFile)}
         </ViewerControls>
@@ -134,7 +135,7 @@ export default class Viewer extends Component {
       case 'audio':
         return AudioViewer
       case 'video':
-        return isMobileApp() ? NoViewer : VideoViewer
+        return isMobile() ? NoViewer : VideoViewer
       case 'pdf':
         return isMobileApp() ? NativePdfViewer : PdfViewer
       default:
