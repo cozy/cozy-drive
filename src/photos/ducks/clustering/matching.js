@@ -22,8 +22,7 @@ const photoInsideCluster = (photo, album) => {
 const photoBetweenClusters = (photo, newerAlbum, olderAlbum) => {
   const photoDate = new Date(photo.datetime)
   const newerStart = new Date(newerAlbum.period.start)
-  // The olderAlbum might be null if this is the last element
-  const olderEnd = olderAlbum ? new Date(olderAlbum.period.end) : null
+  const olderEnd = new Date(olderAlbum.period.end)
   // Photo between clusters
   return olderEnd && photoDate < newerStart && photoDate > olderEnd
 }
@@ -50,7 +49,10 @@ export const matchingClusters = (photo, albums) => {
   for (let i = 0; i < albums.length; i++) {
     if (photoInsideCluster(photo, albums[i])) {
       return [albums[i]]
-    } else if (photoBetweenClusters(photo, albums[i], albums[i + 1])) {
+    } else if (
+      albums[i + 1] &&
+      photoBetweenClusters(photo, albums[i], albums[i + 1])
+    ) {
       return [albums[i], albums[i + 1]]
     }
   }

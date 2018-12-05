@@ -30,7 +30,7 @@ const createReferences = async (photos, album) => {
   }
 }
 
-const createAutoAlbum = async (photos, albums) => {
+const getOrCreateAutoAlbum = async (photos, albums) => {
   // Check if an album already exists for these photos. If not, create it
   const name = albumName(photos)
   const album = albums ? albums.find(album => album.name === name) : null
@@ -58,7 +58,7 @@ export const findAutoAlbums = async () => {
 export const saveClustering = async (clusters, albums) => {
   for (const photos of clusters) {
     if (photos && photos.length > 0) {
-      const album = await createAutoAlbum(photos, albums)
+      const album = await getOrCreateAutoAlbum(photos, albums)
       await createReferences(photos, album)
     }
   }
