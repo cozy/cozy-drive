@@ -184,6 +184,15 @@ export class SelectServer extends Component {
     }
   }
 
+  selectOnChange = e => {
+    this.setState({
+      selectValue: e.target.value,
+      isCustomDomain: e.target.value === 'custom' ? true : false
+    })
+    this.resetInput()
+    this.input.focus()
+  }
+
   render() {
     const { value, error, fetching, isCustomDomain } = this.state
     const {
@@ -267,9 +276,7 @@ export class SelectServer extends Component {
                 })}
                 value={this.state.selectValue}
                 onChange={e => {
-                  this.setState({ selectValue: e.target.value })
-                  this.resetInput()
-                  this.input.focus()
+                  this.selectOnChange(e)
                 }}
               >
                 <option value=".mycozy.cloud">
