@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-
+import isUrl from 'is-url'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button, Label, Input, MainTitle, Icon } from 'cozy-ui/react'
 import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
@@ -19,12 +19,14 @@ const ERR_EMAIL = 'mobile.onboarding.server_selection.wrong_address_with_email'
 const ERR_V2 = 'mobile.onboarding.server_selection.wrong_address_v2'
 const ERR_COSY = 'mobile.onboarding.server_selection.wrong_address_cosy'
 
+const customValue = 'custom'
+const cozyDomain = '.mycozy.cloud'
 export class SelectServer extends Component {
   state = {
     value: '',
     fetching: false,
     error: null,
-    selectValue: '.mycozy.cloud',
+    selectValue: cozyDomain,
     isCustomDomain: false
   }
 
@@ -62,34 +64,31 @@ export class SelectServer extends Component {
   }
 
   onChange(value) {
-    if (this.state.manuallySelected) return
-    if (value.startsWith('www.') && (value.match(/\./g) || []).length === 1) {
-      this.setState({
-        selectValue: '.mycozy.cloud'
-      })
-    } else {
-      if (value.includes('.')) {
+    if (!this.state.manuallySelected) {
+      if (value.startsWith('www.') && (value.match(/\./g) || []).length === 1) {
         this.setState({
-          selectValue: 'custom',
-          isCustomDomain: true
+          selectValue: cozyDomain
         })
       } else {
-        this.setState({
-          selectValue: '.mycozy.cloud',
-          isCustomDomain: false
-        })
+        if (value.includes('.')) {
+          this.setState({
+            selectValue: customValue,
+            isCustomDomain: true
+          })
+        } else {
+          this.setState({
+            selectValue: cozyDomain,
+            isCustomDomain: false
+          })
+        }
       }
     }
-
     if (this.state.error) {
       this.setState(state => ({ ...state, error: null }))
     }
     this.setState(state => ({ ...state, value: value.trim() }))
   }
 
-  resetInput = () => {
-    this.input.value = ''
-  }
   onSubmit = async e => {
     e.preventDefault()
     const value = this.state.value
@@ -146,6 +145,11 @@ export class SelectServer extends Component {
     }
   }
 
+  isValideCozyName = value => {
+    return (
+      /^[a-zA-Z0-9-]*$/.test(value) && value.length > 0 && value.length < 63
+    )
+  }
   hasMispelledCozy = value => /\..*cosy.*\./.test(value)
   hasAtSign = value => /.*@.*/.test(value)
 
@@ -188,10 +192,10 @@ export class SelectServer extends Component {
   selectOnChange = e => {
     this.setState({
       selectValue: e.target.value,
-      isCustomDomain: e.target.value === 'custom' ? true : false,
-      manuallySelected: e.target.value === 'custom' ? true : false
+      isCustomDomain: e.target.value === customValue ? true : false,
+      manuallySelected: e.target.value === customValue ? true : false,
+      value: ''
     })
-    this.resetInput()
     this.input.focus()
   }
 
@@ -316,7 +320,12 @@ export class SelectServer extends Component {
           >
             <Button
               className={styles['wizard-next']}
-              disabled={error || !value || fetching}
+              disabled={
+                error ||
+                fetching ||
+                (isCustomDomain && !isUrl(this.prependProtocol(value))) ||
+                (!isCustomDomain && !this.isValideCozyName(value))
+              }
               busy={fetching}
               label={t('mobile.onboarding.server_selection.button')}
               size={isMobile ? 'normal' : 'large'}
