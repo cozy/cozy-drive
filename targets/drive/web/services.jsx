@@ -9,7 +9,6 @@ import IntentHandler from 'drive/web/modules/services'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
-import { upgradePouchDatabase } from 'drive/lib/upgradePouchDatabase'
 import { schema } from 'drive/lib/doctypes'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,18 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
     schema
   })
 
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
-  const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-  const useWebsql = isSafari || isiOS
-  const offlineOptions = useWebsql ? { adapter: 'websql' } : {}
-
   cozy.client.init({
     cozyURL: cozyUrl,
-    token: data.cozyToken,
-    offline: { doctypes: ['io.cozy.files'], options: offlineOptions }
+    token: data.cozyToken
   })
-
-  if (!useWebsql) upgradePouchDatabase('io.cozy.files')
 
   render(
     <I18n
