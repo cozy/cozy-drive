@@ -2,6 +2,7 @@ import React from 'react'
 import { Query } from 'cozy-client'
 import Timeline from '../timeline/components/Timeline'
 import PhotoBoard from '../../components/PhotoBoard'
+import { format, differenceInCalendarDays } from 'date-fns'
 
 // constants
 const TIMELINE = 'timeline'
@@ -18,6 +19,7 @@ const TIMELINE_QUERY = client =>
     .sortBy({
       'metadata.datetime': 'desc'
     })
+    .include(['albums'])
 
 const TIMELINE_MUTATIONS = query => ({
   uploadPhoto: (file, dirPath) => {
@@ -36,39 +38,122 @@ const TIMELINE_MUTATIONS = query => ({
     })
 })
 
-const getPhotosByMonth = photos => {
-  let sections = {}
-  photos.forEach(p => {
-    const datetime =
-      p.metadata && p.metadata.datetime ? p.metadata.datetime : Date.now()
-    // here we want to get an object whose keys are months in a l10able format
-    // so we only keep the year and month part of the date
-    const month = datetime.slice(0, 7) + '-01T00:00'
-    /* istanbul ignore else */
-    if (!sections.hasOwnProperty(month)) {
-      sections[month] = []
-    }
-    sections[month].push(p)
-  })
-  // we need to sort the months here because when new photos are uploaded, they
-  // are inserted on top of the list, and months can become unordered
-  const sortedMonths = Object.keys(sections)
-    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
-    .reverse()
+const formatDate = date => {
+  return format(date, 'DD MMMM YYYY')
+}
 
-  return sortedMonths.map(month => {
-    return {
-      month,
-      photos: sections[month]
+const sectionTitle = album => {
+  if (album.period) {
+    const startPeriod = new Date(album.period.start)
+    const endPeriod = new Date(album.period.end)
+    if (differenceInCalendarDays(endPeriod, startPeriod) > 0) {
+      // TODO Better period display
+      return formatDate(startPeriod) + ' - ' + formatDate(endPeriod)
+    }
+  }
+  return formatDate(new Date(album.name))
+}
+
+/**
+ * A section matches if:
+ * - The datetime is inside the period.
+ * - The section has no period (not a cluster) and is the datetime's day.
+ */
+const matchingSection = (sections, datetime) => {
+  return Object.keys(sections).find(date => {
+    if (sections[date].period) {
+      const startPeriod = new Date(sections[date].period.start)
+      const endPeriod = new Date(sections[date].period.end)
+      return datetime >= startPeriod && datetime <= endPeriod
+    } else {
+      // If the section has no period, it is not a cluster but a daily section
+      return differenceInCalendarDays(datetime, new Date(date)) === 0
     }
   })
 }
+
+/**
+ * Save the photos not clustered in the sections.
+ * It simulates a clustering, waiting for the actual one to be processed.
+ */
+const handlePhotosNotClustered = (sections, photosNotClustered) => {
+  photosNotClustered.forEach(photo => {
+    const datetime =
+      photo.metadata && photo.metadata.datetime
+        ? photo.metadata.datetime
+        : photo.created_at
+
+    const sectionDate = matchingSection(sections, new Date(datetime))
+    if (sectionDate) {
+      sections[sectionDate].photos.push(photo)
+    } else {
+      // Create a new section for this day, without a period, to differentiate from clusters' sections
+      const day = datetime.slice(0, 10)
+      sections[day] = {
+        date: day,
+        title: formatDate(new Date(datetime)),
+        photos: [photo]
+      }
+    }
+  })
+}
+
+/**
+ * Retrieve photos by clusters. Each clusterized photo is referenced by an album
+ * having an 'auto' field to true.
+ * If a photo is not clusterized yet (newly updated ones), we try to insert them
+ * inside existing clusters, or group them per day otherwise.
+ */
+const getPhotosByClusters = photos => {
+  const sections = {}
+  const photosNotClustered = []
+
+  photos.forEach(p => {
+    const refAlbums = p.albums ? p.albums.data : null
+    // TODO Ensure unicity on the service side
+    const album = refAlbums ? refAlbums.find(ref => ref.auto) : null
+
+    // The photo is not referenced by an auto album yet
+    if (!album) {
+      photosNotClustered.push(p)
+    } else {
+      const date = album.name
+
+      if (!sections.hasOwnProperty(date)) {
+        const title = sectionTitle(album)
+        sections[date] = {
+          photos: [],
+          title: title,
+          period: album.period
+        }
+      }
+      sections[date].photos.push(p)
+    }
+  })
+
+  // We deal with the not-clustered photos after the loop to make sure all
+  // the sections have been processed.
+  if (photosNotClustered.length > 0) {
+    handlePhotosNotClustered(sections, photosNotClustered)
+  }
+
+  const sorted = Object.keys(sections)
+  sorted.sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+
+  return sorted.map(date => {
+    return {
+      title: sections[date].title,
+      photos: sections[date].photos
+    }
+  })
+}
+
 // eslint-disable-next-line
 export default props => (
   <Query query={TIMELINE_QUERY} as={TIMELINE} mutations={TIMELINE_MUTATIONS}>
     {({ data, ...result }, mutations) => (
       <Timeline
-        lists={data ? getPhotosByMonth(data) : []}
+        lists={data ? getPhotosByClusters(data) : []}
         data={data}
         {...mutations}
         {...result}
@@ -82,7 +167,7 @@ export const TimelineBoard = ({ selection, ...props }) => (
   <Query query={TIMELINE_QUERY}>
     {({ data, ...result }) => (
       <PhotoBoard
-        lists={data ? getPhotosByMonth(data) : []}
+        lists={data ? getPhotosByClusters(data) : []}
         photosContext="timeline"
         onPhotoToggle={selection.toggle}
         onPhotosSelect={selection.select}
