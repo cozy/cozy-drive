@@ -62,7 +62,8 @@ export class SelectServer extends Component {
   }
 
   onChange(value) {
-    if (value.includes('www.') && (value.match(/\./g) || []).length === 1) {
+    if (this.state.manuallySelected) return
+    if (value.startsWith('www.') && (value.match(/\./g) || []).length === 1) {
       this.setState({
         selectValue: '.mycozy.cloud'
       })
@@ -187,7 +188,8 @@ export class SelectServer extends Component {
   selectOnChange = e => {
     this.setState({
       selectValue: e.target.value,
-      isCustomDomain: e.target.value === 'custom' ? true : false
+      isCustomDomain: e.target.value === 'custom' ? true : false,
+      manuallySelected: e.target.value === 'custom' ? true : false
     })
     this.resetInput()
     this.input.focus()
