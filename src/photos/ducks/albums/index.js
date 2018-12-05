@@ -13,6 +13,10 @@ export const DOCTYPE = 'io.cozy.photos.albums'
 const ALBUMS_QUERY = client =>
   client
     .find(DOCTYPE, { created_at: { $gt: null } })
+    .where({
+      auto: { $exists: false }
+    })
+    .indexFields(['created_at'])
     .include(['photos'])
     .sortBy([{ created_at: 'desc' }])
 
