@@ -43,6 +43,7 @@ export const startReplication = () => async (dispatch, getState) => {
 
   const didUpgrade = await upgradePouchDatabase('io.cozy.files')
   const areIndexesMissing =
+    existingIndexes &&
     Object.values(existingIndexes).length > 0 &&
     (await checkMissingIndexes('io.cozy.files', [
       existingIndexes.byName,
