@@ -6,6 +6,8 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Loading from 'photos/components/Loading'
 import ErrorShare from 'components/Error/ErrorShare'
 import { Button, Menu, MenuItem, Icon } from 'cozy-ui/react'
+import { IconSprite } from 'cozy-ui/transpiled/react'
+
 import { MoreButton, CozyHomeLink } from 'components/Button'
 
 import classNames from 'classnames'
@@ -77,7 +79,7 @@ class App extends Component {
                     icon="download"
                     label={t('Toolbar.album_download')}
                   />
-                <CozyHomeLink from="sharing-photos" t={t} />
+                  <CozyHomeLink from="sharing-photos" t={t} />
                   <Menu
                     title={t('Toolbar.more')}
                     component={<MoreButton />}
@@ -108,6 +110,7 @@ class App extends Component {
             </div>
           )}
         </Selection>
+        <IconSprite />
       </div>
     )
   }
