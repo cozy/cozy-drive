@@ -21,40 +21,20 @@ import {
   gradientClustering,
   gradientAngle
 } from 'photos/ducks/clustering/gradient'
-import { saveClustering } from 'photos/ducks/clustering/albums'
+import {
+  saveClustering,
+  findAutoAlbums,
+  albumsToClusterize,
+  findAlbumsByIds
+} from 'photos/ducks/clustering/albums'
+import { prepareDataset } from 'photos/ducks/clustering/utils'
 
-// Returns the photos metadata sorted by date
-const extractInfo = photos => {
-  const info = photos
-    .map(file => {
-      const photo = {
-        id: file._id,
-        name: file.name
-      }
-      if (file.metadata) {
-        photo.datetime = file.metadata.datetime
-        photo.gps = file.metadata.gps
-      } else {
-        photo.datetime = file.created_at
-      }
-      const hours = new Date(photo.datetime).getTime() / 1000 / 3600
-      photo.timestamp = hours
-      return photo
-    })
-    .sort((pa, pb) => pa.timestamp - pb.timestamp)
-
-  return info
-}
-
-// Clusterize the given photos, i.e. organize them depending on metrics
-const clusterizePhotos = async (setting, photos) => {
-  const dataset = extractInfo(photos)
+// Retrieve the parameters used to compute the clustering
+const clusteringParameters = (dataset, setting) => {
   const params = defaultParameters(setting)
   if (!params) {
-    log('warn', 'No default parameters for clustering found')
-    return []
+    return null
   }
-
   if (!params.epsTemporal) {
     params.epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
   }
@@ -69,17 +49,47 @@ const clusterizePhotos = async (setting, photos) => {
   if (!params.cosAngle) {
     params.cosAngle = gradientAngle(epsMax, COARSE_COEFFICIENT)
   }
+  return params
+}
 
-  const reachs = reachabilities(dataset, spatioTemporalScaled, params)
-  const clusters = gradientClustering(dataset, reachs, params)
-  if (clusters.length > 0) {
+// Compute the actual clustering based on the new dataset and the existing albums
+const computeClusters = async (dataset, albums, params) => {
+  if (albums && albums.length > 0) {
+    const clusterize = await albumsToClusterize(dataset, albums)
+    if (clusterize) {
+      for (const [id, photos] of Object.entries(clusterize)) {
+        // TODO adapt params to the period
+        const reachs = reachabilities(photos, spatioTemporalScaled, params)
+        const clusters = gradientClustering(photos, reachs, params)
+        if (clusters.length > 0) {
+          const ids = id.split(':')
+          const albumsToSave = findAlbumsByIds(albums, ids)
+          saveClustering(clusters, albumsToSave)
+        }
+      }
+    }
+  } else {
+    // No album found: this is an initialization
+    const reachs = reachabilities(dataset, spatioTemporalScaled, params)
+    const clusters = gradientClustering(dataset, reachs, params)
     saveClustering(clusters)
   }
+}
+
+// Clusterize the given photos, i.e. organize them depending on metrics
+const clusterizePhotos = async (setting, photos) => {
+  const dataset = prepareDataset(photos)
+  const params = clusteringParameters(dataset, setting)
+  if (!params) {
+    log('warn', 'No default parameters for clustering found')
+    return
+  }
+
+  const albums = await findAutoAlbums()
+  await computeClusters(dataset, albums, params)
 
   // TODO save params
   // TODO adapt percentiles for large datasets
-
-  return dataset
 }
 
 const getNewPhotos = async setting => {
