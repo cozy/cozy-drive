@@ -4,6 +4,8 @@ import 'babel-polyfill'
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
+import { IconSprite } from 'cozy-ui/transpiled/react'
+
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
@@ -105,6 +107,7 @@ const init = async () => {
               <Redirect from="/*" to={`files/${id}`} />
             </Router>
           )}
+          <IconSprite />
         </CozyProvider>
       </I18n>,
       root
