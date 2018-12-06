@@ -2,9 +2,14 @@
   "roots": ["<rootDir>/src"],
   "moduleFileExtensions": ["js", "jsx", "json", "styl"],
   "moduleNameMapper": {
+    ".(png|gif|jpe?g|styl)$": "<rootDir>/jestHelpers/mocks/fileMock.js",
+    ".svg$": "<rootDir>/jestHelpers/mocks/iconMock.js",
     "styles": "identity-obj-proxy",
-    "\\.svg$": "identity-obj-proxy",
-    "drive/(.*)": "<rootDir>/src/drive/$1"
+    "^drive/(.*)": "<rootDir>/src/drive/$1",
+    "^sharing(.*)": "<rootDir>/src/sharing$1",
+    "^react-cozy-helpers(.*)": "<rootDir>/src/lib/react-cozy-helpers$1",
+    "^components(.*)": "<rootDir>/src/components$1",
+    "^folder-references(.*)": "<rootDir>/src/folder-references$1"
   },
   "transform": {
     "^.+\\.(js|jsx)?$": "<rootDir>/test/jestLib/babel-transformer.js"
