@@ -47,7 +47,7 @@ export const initBar = async client => {
     appName: 'Drive',
     appNamePrefix: 'Cozy',
     appSlug: 'drive',
-    iconPath: require('../../../../targets/drive/vendor/assets/app-icon.svg'),
+    iconPath: require('../../targets/vendor/assets/app-icon.svg'),
     lang: getLang(),
     cozyURL: client.options.uri,
     token: await getTokenWithNoException(),
