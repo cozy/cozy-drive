@@ -65,15 +65,25 @@ export const saveClustering = async (clusters, albums) => {
 }
 
 const findPhotosByAlbum = async album => {
-  album._type = DOCTYPE_ALBUMS
-  const files = await cozyClient.data.fetchReferencedFiles(album, {})
-  if (files && files.included) {
-    const attributes = files.included.map(file => {
-      const attributes = file.attributes
-      attributes.id = file.id
-      return attributes
-    })
-    return prepareDataset(attributes)
+  try {
+    album._type = DOCTYPE_ALBUMS
+    const files = await cozyClient.data.fetchReferencedFiles(album, {})
+    if (files && files.included) {
+      const attributes = files.included.map(file => {
+        const attributes = file.attributes
+        attributes.id = file.id
+        return attributes
+      })
+      return prepareDataset(attributes)
+    }
+  } catch (e) {
+    log(
+      'error',
+      `Could not find photos to re-clusterize for ${JSON.stringify(album)}: ${
+        e.reason
+      }`
+    )
+    return []
   }
   return []
 }
