@@ -10,14 +10,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
-import util from 'cozy-ui/stylus/utilities/text'
 import styles from './styles'
 import Viewer from 'viewer'
 
 const doNothing = () => {}
 
 const FileNotFoundError = translate()(({ t }) => (
-  <pre className={util['u-error']}>
+  <pre className='u-error'>
     {t('FileOpenerExternal.fileNotFoundError')}
   </pre>
 ))
