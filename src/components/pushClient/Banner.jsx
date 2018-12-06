@@ -1,6 +1,6 @@
 /* global localStorage */
 
-import styles from './pushClient'
+import styles from './pushClient.styl'
 
 import { translate } from 'cozy-ui/react/I18n'
 

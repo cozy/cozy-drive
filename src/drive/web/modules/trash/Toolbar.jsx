@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button, withBreakpoints } from 'cozy-ui/react'
-import { showModal } from 'lib/react-cozy-helpers'
+import { showModal } from 'react-cozy-helpers'
 import classNames from 'classnames'
 
 import { MoreButton } from 'components/Button'
