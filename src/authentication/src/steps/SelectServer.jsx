@@ -156,7 +156,7 @@ export class SelectServer extends Component {
   hasAtSign = value => /.*@.*/.test(value)
 
   appendDomain = (value, domain) =>
-    /\./.test(value) ? value : `${value}.${domain}`
+    /\./.test(value) ? value : `${value}${domain}`
   prependProtocol = value =>
     /^http(s)?:\/\//.test(value) ? value : `https://${value}`
   removeAppSlug = value => {
