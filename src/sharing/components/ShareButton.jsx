@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Button } from 'cozy-ui/react'
 
-import styles from './button'
+import styles from './button.styl'
 
 export const ShareButton = ({ label, onClick, className, ...props }) => (
   <Button

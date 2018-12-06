@@ -4,7 +4,7 @@ import cx from 'classnames'
 import Icon from 'cozy-ui/react/Icon'
 import { getDisplayName } from '..'
 
-import styles from './status'
+import styles from './status.styl'
 import linkIcon from '../assets/icons/icon-link-grey.svg'
 
 const SharedStatus = ({ className, docId, recipients, link }, { t }) => (
