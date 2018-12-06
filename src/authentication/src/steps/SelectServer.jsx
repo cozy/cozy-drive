@@ -27,7 +27,9 @@ export class SelectServer extends Component {
     fetching: false,
     error: null,
     selectValue: cozyDomain,
-    isCustomDomain: false
+    isCustomDomain: false,
+    placeholderValue:
+      'mobile.onboarding.server_selection.cozy_address_placeholder'
   }
 
   componentDidMount() {
@@ -180,7 +182,7 @@ export class SelectServer extends Component {
 
   getUrl = value => {
     try {
-      const defaultDomain = 'mycozy.cloud'
+      const defaultDomain = cozyDomain
       const normalizedURL = this.normalizeURL(value, defaultDomain)
 
       return new URL(normalizedURL).toString().replace(/\/$/, '')
@@ -189,18 +191,37 @@ export class SelectServer extends Component {
     }
   }
 
+  getSubDomain = value => {
+    if (value.includes('.')) {
+      return value.substr(0, value.indexOf('.'))
+    }
+    return ''
+  }
   selectOnChange = e => {
     this.setState({
       selectValue: e.target.value,
       isCustomDomain: e.target.value === customValue ? true : false,
       manuallySelected: e.target.value === customValue ? true : false,
-      value: ''
+      value:
+        e.target.value !== customValue
+          ? this.getSubDomain(this.state.value)
+          : this.state.value,
+      placeholderValue:
+        e.target.value === customValue
+          ? 'mobile.onboarding.server_selection.cozy_custom_address_placeholder'
+          : 'mobile.onboarding.server_selection.cozy_address_placeholder'
     })
     this.input.focus()
   }
 
   render() {
-    const { value, error, fetching, isCustomDomain } = this.state
+    const {
+      value,
+      error,
+      fetching,
+      isCustomDomain,
+      placeholderValue
+    } = this.state
     const {
       t,
       previousStep,
@@ -257,9 +278,7 @@ export class SelectServer extends Component {
                 className={classNames(styles['wizard-input'], {
                   [styles['error']]: error
                 })}
-                placeholder={t(
-                  'mobile.onboarding.server_selection.cozy_address_placeholder'
-                )}
+                placeholder={t(placeholderValue)}
                 size={isMobile ? 'medium' : undefined}
                 inputRef={input => {
                   this.input = input
