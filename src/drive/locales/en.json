@@ -290,6 +290,7 @@
         "lostpwd": "[I forgot the address of my Cozy](https://manager.cozycloud.cc/cozy/reminder)",
         "label": "Address of my Cozy",
         "cozy_address_placeholder": "claude",
+        "cozy_custom_address_placeholder": "claude.mydomain.com",
         "domain_cozy": ".mycozy.cloud",
         "domain_custom": "other",
         "button": "Next",
