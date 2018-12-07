@@ -9,7 +9,10 @@ const customConfig = {
     alias: {
       'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
     }
-  }
+  },
+  entry: {
+    public: [require.resolve('babel-polyfill'), path.resolve(SRC_DIR, './drive/targets/public/index.jsx')]
+  },
 };
 
 module.exports = [configs, customConfig]
