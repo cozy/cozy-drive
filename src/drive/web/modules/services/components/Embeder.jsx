@@ -1,5 +1,4 @@
 import React from 'react'
-import util from 'cozy-ui/stylus/utilities/text'
 import { Spinner, IntentHeader } from 'cozy-ui/react'
 import FileOpener from 'drive/web/modules/drive/FileOpenerExternal'
 
@@ -35,7 +34,7 @@ class Embeder extends React.Component {
           <Spinner size="xxlarge" loadingType="message" middle />
         )}
         {this.state.error && (
-          <pre className={util['u-error']}>{this.state.error.toString()}</pre>
+          <pre className="u-error">{this.state.error.toString()}</pre>
         )}
         {this.state.fileId && <FileOpener fileId={this.state.fileId} />}
       </div>
