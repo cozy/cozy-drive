@@ -241,14 +241,7 @@ export class SelectServer extends Component {
               onClick={previousStep}
               type="button"
             />
-            <MainTitle
-              tag="h1"
-              className={classNames(
-                styles['wizard-title'],
-                'u-mt-half',
-                'u-mb-1'
-              )}
-            >
+            <MainTitle tag="h1" className={styles['wizard-title']}>
               {t('mobile.onboarding.server_selection.title')}
             </MainTitle>
           </header>
@@ -334,7 +327,7 @@ export class SelectServer extends Component {
           <footer
             className={classNames(
               styles['wizard-footer'],
-              isMobile ? 'u-mt-auto' : 'u-mt-1-half'
+              isMobile ? 'u-mt-auto' : 'u-pb-2'
             )}
           >
             <Button

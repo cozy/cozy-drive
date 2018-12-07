@@ -65,15 +65,11 @@ export class Welcome extends Component {
             </div>
             <MainTitle
               tag="h1"
-              className={classNames(
-                styles['wizard-title'],
-                'u-mb-1-half',
-                'u-mt-0'
-              )}
+              className={classNames(styles['wizard-title'], 'u-mt-0')}
             >
               {t('mobile.onboarding.welcome.title')}
             </MainTitle>
-            <p className={classNames(styles['wizard-desc'], 'u-mb-1-half')}>
+            <p className={styles['wizard-desc']}>
               {t('mobile.onboarding.welcome.desc')}
             </p>
           </div>
