@@ -3,6 +3,8 @@
   "version": "1.14.0",
   "main": "src/main.jsx",
   "scripts": {
+    "cs:printconf": "cozy-scripts --show-config --manifest targets/drive/manifest.webapp --build-dir build/drive --src-dir src/drive",
+    "cs:build:drive": "cozy-scripts build --manifest targets/drive/manifest.webapp --build-dir build/drive --src-dir src/drive",
     "build:drive": "npm run build:drive:browser",
     "build:drive:browser": "npm run internal:build -- --env.app=drive --env.target=browser --env.production",
     "build:drive:mobile": "npm run internal:build -- --env.app=drive --env.target=mobile --env.production",
