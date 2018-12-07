@@ -1,4 +1,5 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const configs = require('cozy-scripts/config/webpack.bundle.preact.js')
 
@@ -13,6 +14,18 @@ const customConfig = {
   entry: {
     public: [require.resolve('babel-polyfill'), path.resolve(SRC_DIR, './drive/targets/public/index.jsx')]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(SRC_DIR, './drive/targets/public/index.ejs'),
+      title: `Drive public`,
+      filename: 'intents/index.html',
+      inject: false,
+      excludeChunks: ['app'],
+      minify: {
+        collapseWhitespace: true
+      }
+    })
+  ]
 };
 
 module.exports = [configs, customConfig]
