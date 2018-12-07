@@ -16,9 +16,7 @@ import Viewer from 'viewer'
 const doNothing = () => {}
 
 const FileNotFoundError = translate()(({ t }) => (
-  <pre className='u-error'>
-    {t('FileOpenerExternal.fileNotFoundError')}
-  </pre>
+  <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
 ))
 
 class FileOpener extends Component {
