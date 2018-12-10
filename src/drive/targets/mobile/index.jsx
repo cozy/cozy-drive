@@ -84,7 +84,7 @@ const startApplication = async function(store, client, polyglot) {
 
   try {
     const clientInfos = getClientSettings(store.getState())
-    /*Since we can update our OauthConfig sometimes, we need to 
+    /*Since we can update our OauthConfig sometimes, we need to
     override the cached one */
     const realOauthOptions =
       clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
