@@ -10,7 +10,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 
-import doctypes from '../doctypes'
+import doctypes from '../browser/doctypes'
 import 'photos/styles/main'
 
 import App from './App'
