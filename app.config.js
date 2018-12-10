@@ -18,9 +18,9 @@ const customConfig = {
     new HtmlWebpackPlugin({
       template: path.resolve(SRC_DIR, './drive/targets/public/index.ejs'),
       title: `Drive public`,
-      filename: 'intents/index.html',
+      filename: 'public/index.html',
       inject: false,
-      excludeChunks: ['app'],
+      chunks: ['vendors', 'public'],
       minify: {
         collapseWhitespace: true
       }
