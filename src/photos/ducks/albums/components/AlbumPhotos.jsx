@@ -94,10 +94,20 @@ class AlbumPhotos extends Component {
   }
 
   render() {
-    if (!this.props.album || !this.props.album.photos) {
+    console.log('this.props', this.props)
+    /* if (!this.props.album || !this.props.album.photos || !this.props.photos) {
       return null
-    }
-    const { t, router, album, shareAlbum } = this.props
+    } */
+    const {
+      t,
+      router,
+      album,
+      shareAlbum,
+      photos,
+      hasMore,
+      fetchMore
+    } = this.props
+    //console.log('test', album.photos)
     const { editing } = this.state
     const shared = {}
     return (
@@ -141,18 +151,18 @@ class AlbumPhotos extends Component {
                 photos={selected}
               />
             )}
-            {album.photos.data && (
+            {photos && (
               <PhotoBoard
-                lists={[{ photos: album.photos.data }]}
+                lists={[{ photos: photos }]}
                 selected={selected}
                 photosContext="timeline"
                 showSelection={active}
                 onPhotoToggle={selection.toggle}
                 onPhotosSelect={selection.select}
                 onPhotosUnselect={selection.unselect}
-                fetchStatus={album.photos.fetchStatus}
-                hasMore={album.photos.hasMore}
-                fetchMore={() => album.photos.fetchMore()}
+                fetchStatus={photos.fetchStatus}
+                hasMore={hasMore}
+                fetchMore={fetchMore}
               />
             )}
             {this.renderViewer(this.props.children)}
@@ -167,7 +177,7 @@ class AlbumPhotos extends Component {
     if (!children) return null
     return React.Children.map(children, child =>
       React.cloneElement(child, {
-        photos: this.props.album.photos.data
+        photos: this.props.photos
       })
     )
   }
@@ -183,7 +193,10 @@ const mapDispatchToProps = dispatch => ({
       showModal(<ShareModal document={album} sharingDesc={album.name} />)
     )
 })
-
+/*AlbumPhotos.propTypes = {
+  hasMore: Proptypes.bool,
+  fetchMore: func
+}*/
 export default flow(
   connect(
     null,

@@ -80,7 +80,20 @@ const ALBUMS_MUTATIONS = client => ({
 })
 
 const ALBUM_QUERY = (client, ownProps) =>
-  client.get(DOCTYPE, ownProps.router.params.albumId).include(['photos'])
+  client
+    .get('io.cozy.files')
+    .referencedBy({
+      _type: DOCTYPE,
+      _id: ownProps.router.params.albumId
+    })
+    .limitBy(1)
+
+/* 
+  client
+    .get('DOCTYPE', ownProps.router.params.albumId)
+    .limitBy(1)
+    .include(['photos'])
+ */
 
 const ALBUM_MUTATIONS = query => ({
   updateAlbum: album => query.client.save(album),
@@ -122,15 +135,23 @@ const ConnectedAddToAlbumModal = props => (
 
 const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
-    {({ data }, { updateAlbum, deleteAlbum, removePhotos }) => (
-      <AlbumPhotos
-        album={data}
-        updateAlbum={updateAlbum}
-        deleteAlbum={deleteAlbum}
-        removePhotos={removePhotos}
-        {...props}
-      />
-    )}
+    {(
+      { data, hasMore, fetchMore },
+      { updateAlbum, deleteAlbum, removePhotos }
+    ) => {
+      return (
+        <AlbumPhotos
+          album={data}
+          photos={data}
+          updateAlbum={updateAlbum}
+          deleteAlbum={deleteAlbum}
+          removePhotos={removePhotos}
+          hasMore={hasMore}
+          fetchMore={fetchMore}
+          {...props}
+        />
+      )
+    }}
   </Query>
 ))
 
