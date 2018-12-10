@@ -1,31 +1,17 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const baseConfig = require('cozy-scripts/config/webpack.bundle.preact.js')
 
-const configs = require('cozy-scripts/config/webpack.bundle.preact.js')
+const isDrive = process.env.COZY_APP_SLUG !== 'photos'
+const appConfig = isDrive ? require('./webpack/drive.config.js') : require('./webpack/photos.config.js')
 
 const SRC_DIR = path.resolve(__dirname, './src')
-const customConfig = {
+const extraConfig = {
   resolve: {
     modules: ['node_modules', SRC_DIR],
     alias: {
       'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
     }
-  },
-  entry: {
-    public: [require.resolve('babel-polyfill'), path.resolve(SRC_DIR, './drive/targets/public/index.jsx')]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(SRC_DIR, './drive/targets/public/index.ejs'),
-      title: `Drive public`,
-      filename: 'public/index.html',
-      inject: false,
-      chunks: ['vendors', 'public'],
-      minify: {
-        collapseWhitespace: true
-      }
-    })
-  ]
+  }
 };
 
-module.exports = [configs, customConfig]
+module.exports = [baseConfig, extraConfig, appConfig]
