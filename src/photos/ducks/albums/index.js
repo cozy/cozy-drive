@@ -88,6 +88,8 @@ const ALBUM_QUERY = (client, ownProps) =>
     })
     .limitBy(1)
 
+const ALBUM_GET_ONE = (client, ownProps) =>
+  client.get('io.cozy.photos.albums', ownProps.router.params.albumId)
 /* 
   client
     .get('DOCTYPE', ownProps.router.params.albumId)
@@ -140,16 +142,22 @@ const ConnectedAlbumPhotos = withRouter(props => (
       { updateAlbum, deleteAlbum, removePhotos }
     ) => {
       return (
-        <AlbumPhotos
-          album={data}
-          photos={data}
-          updateAlbum={updateAlbum}
-          deleteAlbum={deleteAlbum}
-          removePhotos={removePhotos}
-          hasMore={hasMore}
-          fetchMore={fetchMore}
-          {...props}
-        />
+        <Query query={ALBUM_GET_ONE} {...props}>
+          {({ data: album }) => {
+            return (
+              <AlbumPhotos
+                album={album}
+                photos={data}
+                updateAlbum={updateAlbum}
+                deleteAlbum={deleteAlbum}
+                removePhotos={removePhotos}
+                hasMore={hasMore}
+                fetchMore={fetchMore}
+                {...props}
+              />
+            )
+          }}
+        </Query>
       )
     }}
   </Query>
