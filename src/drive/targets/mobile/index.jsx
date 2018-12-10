@@ -1,5 +1,4 @@
 /* global __DEVELOPMENT__ */
-import 'babel-polyfill'
 
 import 'drive/styles/main'
 import 'drive/styles/mobile'

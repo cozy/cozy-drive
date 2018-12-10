@@ -1,5 +1,4 @@
 /* global cozy */
-import 'babel-polyfill'
 
 import 'whatwg-fetch'
 import React from 'react'
