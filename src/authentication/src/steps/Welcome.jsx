@@ -39,9 +39,9 @@ export class Welcome extends Component {
     const {
       t,
       selectServer,
-      breakpoints: { isMobile }
+      breakpoints: { isMobile },
+      appIcon
     } = this.props
-
     return (
       <div className={classNames(styles['wizard'], styles['wizard--welcome'])}>
         <div className={styles['wizard-wrapper']}>
@@ -49,7 +49,7 @@ export class Welcome extends Component {
             <div className={styles['wizard-logo']}>
               <img
                 className={styles['wizard-logo-img']}
-                src={this.context.client.options.oauth.logoURI}
+                src={appIcon}
                 alt=""
                 aria-hidden="true"
                 focusable="false"
@@ -65,15 +65,11 @@ export class Welcome extends Component {
             </div>
             <MainTitle
               tag="h1"
-              className={classNames(
-                styles['wizard-title'],
-                'u-mb-1-half',
-                'u-mt-0'
-              )}
+              className={classNames(styles['wizard-title'], 'u-mt-0')}
             >
               {t('mobile.onboarding.welcome.title')}
             </MainTitle>
-            <p className={classNames(styles['wizard-desc'], 'u-mb-1-half')}>
+            <p className={styles['wizard-desc']}>
               {t('mobile.onboarding.welcome.desc')}
             </p>
           </div>
