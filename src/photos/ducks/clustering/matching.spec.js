@@ -1,4 +1,4 @@
-import { matchingClusters } from './matching'
+import { matchingClusters, matchingParameters } from './matching'
 
 const photos = [
   {
@@ -101,5 +101,68 @@ describe('auto albums', () => {
     matching = matchingClusters(photos[4], existingAlbums)
     expect(matching.length).toEqual(1)
     expect(matching[0]).toEqual(existingAlbums[0])
+  })
+})
+
+describe('parameters', () => {
+  const params = [
+    {
+      period: {
+        start: '2016-01-01T00:00:00+00:00',
+        end: '2016-12-31T00:00:00+00:00'
+      }
+    },
+    {
+      period: {
+        start: '2017-01-01T00:00:00+00:00',
+        end: '2017-07-31T00:00:00+00:00'
+      }
+    },
+    {
+      period: {
+        start: '2019-01-01T00:00:00+00:00',
+        end: '2020-01-01T00:00:00+00:00'
+      }
+    }
+  ]
+  it('Should match older photo', () => {
+    const photos = [
+      {
+        datetime: '2014-03-01T15:38:41+01:00',
+        timestamp: 387134.64472222223
+      }
+    ]
+    const matching = matchingParameters(params, photos)
+    expect(matching).toEqual(params[0])
+  })
+  it('Should match newer photo', () => {
+    const photos = [
+      {
+        datetime: '2022-03-01T15:38:41+01:00',
+        timestamp: 457262.64472222223
+      }
+    ]
+    const matching = matchingParameters(params, photos)
+    expect(matching).toEqual(params[2])
+  })
+  it('Should match photo inside a period', () => {
+    const photos = [
+      {
+        datetime: '2017-03-01T15:38:41+01:00',
+        timestamp: 413438.64472222223
+      }
+    ]
+    const matching = matchingParameters(params, photos)
+    expect(matching).toEqual(params[1])
+  })
+  it('Should match photo between two periods', () => {
+    const photos = [
+      {
+        datetime: '2018-03-01T15:38:41+01:00',
+        timestamp: 426614.64472222223
+      }
+    ]
+    const matching = matchingParameters(params, photos)
+    expect(matching).toEqual(params[2])
   })
 })
