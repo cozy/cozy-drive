@@ -43,14 +43,14 @@ After that, you can deploy with one of these commands:
 On Android:
 
 ```sh
-$ cd targets/drive/mobile
+$ cd src/drive/targets/mobile
 $ cordova run android
 ```
 
-On iOS: open the mobile/platforms/ios/Cozy Drive.xcworkspace in Xcode, update the Swift syntax if needed, set your signing certificate on the target (if you're testing on a device), then:
+On iOS: open the src/drive/targets/mobile/platforms/ios/Cozy Drive.xcworkspace in Xcode, update the Swift syntax if needed, set your signing certificate on the target (if you're testing on a device), then:
 
 ```sh
-$ cd targets/drive/mobile
+$ cd src/drive/targets/mobile
 $ cordova run ios
 ```
 
@@ -70,10 +70,10 @@ $ cordova run ios
 Create these folders:
 
 ```
-$ mkdir targets/drive/mobile/keys
-$ mkdir targets/drive/mobile/keys/android
-$ mkdir targets/drive/mobile/build
-$ mkdir targets/drive/mobile/build/android
+$ mkdir src/drive/targets/mobile/keys
+$ mkdir src/drive/targets/mobile/keys/android
+$ mkdir src/drive/targets/mobile/build
+$ mkdir src/drive/targets/mobile/build/android
 ```
 
 You must have this files:
@@ -81,7 +81,7 @@ You must have this files:
 - keys/android/cozy-drive-release-key.jks (and the password)
 - keys/android/key.json
 
-To generate a signed APK on `targets/drive/mobile/build/android/` and publish on Google Play:
+To generate a signed APK on `src/drive/targets/mobile/build/android/` and publish on Google Play:
 
 ```
 $ npm run buildsigned:drive:android
@@ -117,7 +117,7 @@ $ yarn genicon:drive:mobile
 Should be a 1024x1024px.
 
 - `mobile/res/model/icon.png`. On iOS add 5% margin
-- `mobile/res/model/android/icon.png`. Override the default icon for the 'android' platform. So you can use an icon with alpha, as apple doens't allow.
+- `mobile/res/model/android/icon.png`. Override the default icon for the 'android' platform. So you can use an icon with alpha, as apple doesn't allow it.
 
 ### Splashscreen
 
