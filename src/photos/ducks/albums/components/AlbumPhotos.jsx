@@ -122,7 +122,6 @@ class AlbumPhotos extends Component {
     const { editing } = this.state
     const shared = {}
 
-    console.log({ album })
     return (
       <Selection
         actions={selection => ({
@@ -166,7 +165,7 @@ class AlbumPhotos extends Component {
             )}
             {photos && (
               <PhotoBoard
-                lists={[{ photos: photos }]}
+                lists={[{ photos }]}
                 selected={selected}
                 photosContext="timeline"
                 showSelection={active}

@@ -105,7 +105,7 @@ const ALBUMS_MUTATIONS = client => ({
 
 const ConnectedAlbumsView = props => (
   <SharingProvider doctype={DOCTYPE} documentType="Albums">
-    <Query query={ALBUMS_QUERY} as="test">
+    <Query query={ALBUMS_QUERY}>
       {result => {
         return <AlbumsView albums={result} {...props} />
       }}
@@ -134,7 +134,7 @@ const ConnectedAlbumPhotos = withRouter(props => (
     ) => {
       if (fetchStatus === 'loaded') {
         return (
-          <Query query={ALBUM_GET_ONE} {...props} as="toto">
+          <Query query={ALBUM_GET_ONE} {...props}>
             {({ data: album, fetchStatus }) => {
               if (fetchStatus === 'loaded') {
                 return (
