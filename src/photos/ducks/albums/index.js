@@ -79,23 +79,15 @@ const ALBUMS_MUTATIONS = client => ({
   }
 })
 
-const ALBUM_QUERY = (client, ownProps) =>
-  client
-    .get('io.cozy.files')
-    .referencedBy({
-      _type: DOCTYPE,
-      _id: ownProps.router.params.albumId
-    })
-    .limitBy(1)
-
+const ALBUM_QUERY = (client, ownProps) => {
+  console.log({ client })
+  return client.get('io.cozy.files').referencedBy({
+    _type: DOCTYPE,
+    _id: ownProps.router.params.albumId
+  })
+}
 const ALBUM_GET_ONE = (client, ownProps) =>
   client.get('io.cozy.photos.albums', ownProps.router.params.albumId)
-/* 
-  client
-    .get('DOCTYPE', ownProps.router.params.albumId)
-    .limitBy(1)
-    .include(['photos'])
- */
 
 const ALBUM_MUTATIONS = query => ({
   updateAlbum: album => query.client.save(album),
@@ -116,8 +108,10 @@ const ALBUM_MUTATIONS = query => ({
 
 const ConnectedAlbumsView = props => (
   <SharingProvider doctype="io.cozy.photos.albums" documentType="Albums">
-    <Query query={ALBUMS_QUERY} as="albums">
-      {result => <AlbumsView albums={result} {...props} />}
+    <Query query={ALBUMS_QUERY} as="test">
+      {result => {
+        return <AlbumsView albums={result} {...props} />
+      }}
     </Query>
   </SharingProvider>
 )
@@ -138,27 +132,30 @@ const ConnectedAddToAlbumModal = props => (
 const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
     {(
-      { data, hasMore, fetchMore },
+      { data, hasMore, fetchMore, fetchStatus },
       { updateAlbum, deleteAlbum, removePhotos }
     ) => {
-      return (
-        <Query query={ALBUM_GET_ONE} {...props}>
-          {({ data: album }) => {
-            return (
-              <AlbumPhotos
-                album={album}
-                photos={data}
-                updateAlbum={updateAlbum}
-                deleteAlbum={deleteAlbum}
-                removePhotos={removePhotos}
-                hasMore={hasMore}
-                fetchMore={fetchMore}
-                {...props}
-              />
-            )
-          }}
-        </Query>
-      )
+      if (fetchStatus === 'loaded') {
+        return (
+          <Query query={ALBUM_GET_ONE} {...props} as="toto">
+            {({ data: album, fetchStatus }) => {
+              if (fetchStatus === 'loaded')
+                return (
+                  <AlbumPhotos
+                    album={album}
+                    photos={data}
+                    updateAlbum={updateAlbum}
+                    deleteAlbum={deleteAlbum}
+                    removePhotos={removePhotos}
+                    hasMore={hasMore}
+                    fetchMore={fetchMore}
+                    {...props}
+                  />
+                )
+            }}
+          </Query>
+        )
+      }
     }}
   </Query>
 ))

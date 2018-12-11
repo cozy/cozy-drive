@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { showModal, ModalManager } from 'react-cozy-helpers'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
+
+import { showModal, ModalManager } from 'react-cozy-helpers'
 import { translate } from 'cozy-ui/react/I18n'
+import Alerter from 'cozy-ui/react/Alerter'
 import { ShareModal } from 'sharing'
 import flow from 'lodash/flow'
 
@@ -13,7 +16,7 @@ import { AddToAlbumModal } from '..'
 
 import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
-import Alerter from 'cozy-ui/react/Alerter'
+
 import DestroyConfirm from 'photos/components/DestroyConfirm'
 import QuitConfirm from 'photos/components/QuitConfirm'
 import confirm from 'photos/lib/confirm'
@@ -54,12 +57,21 @@ class AlbumPhotos extends Component {
         Alerter.error('Error.generic')
       })
   }
-
-  downloadAlbum = () => {
+  //!TODO Hack. We should not use 99999 as limit.
+  downloadAlbum = async () => {
     const { album } = this.props
+    const allPhotos = await this.context.client.stackClient
+      .collection('io.cozy.files')
+      .findReferencedBy(
+        {
+          _type: 'io.cozy.photos.albums',
+          _id: album.id
+        },
+        { limit: 99999 }
+      )
     this.context.client
       .collection('io.cozy.files')
-      .downloadArchive(album.photos.data.map(({ _id }) => _id), album.name)
+      .downloadArchive(allPhotos.data.map(({ _id }) => _id), album.name)
   }
 
   downloadPhotos = photos => {
@@ -94,10 +106,10 @@ class AlbumPhotos extends Component {
   }
 
   render() {
-    console.log('this.props', this.props)
-    /* if (!this.props.album || !this.props.album.photos || !this.props.photos) {
+    if (!this.props.album || !this.props.photos) {
       return null
-    } */
+    }
+
     const {
       t,
       router,
@@ -107,9 +119,10 @@ class AlbumPhotos extends Component {
       hasMore,
       fetchMore
     } = this.props
-    //console.log('test', album.photos)
     const { editing } = this.state
     const shared = {}
+
+    console.log({ album })
     return (
       <Selection
         actions={selection => ({
@@ -193,10 +206,15 @@ const mapDispatchToProps = dispatch => ({
       showModal(<ShareModal document={album} sharingDesc={album.name} />)
     )
 })
-/*AlbumPhotos.propTypes = {
-  hasMore: Proptypes.bool,
-  fetchMore: func
-}*/
+AlbumPhotos.propTypes = {
+  hasMore: PropTypes.bool.isRequired,
+  fetchMore: PropTypes.func.isRequired,
+  album: PropTypes.object.isRequired,
+  shareAlbum: PropTypes.func,
+  photos: PropTypes.array.isRequired,
+  t: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired
+}
 export default flow(
   connect(
     null,
