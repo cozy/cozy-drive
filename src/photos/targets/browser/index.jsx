@@ -1,7 +1,5 @@
 /* global cozy */
 
-import 'babel-polyfill'
-
 import 'photos/styles/main'
 
 import React from 'react'
