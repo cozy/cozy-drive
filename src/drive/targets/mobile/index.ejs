@@ -12,15 +12,15 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no">
   <script src="cordova.js" defer></script>
+  <%  if (__STACK_ASSETS__ || (__DEVELOPMENT__ && __TARGET__ !== 'mobile')) { %>
+  <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
+  <% } %>
   <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
       <link rel="stylesheet" href="<%- file %>">
   <% }); %>
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
       <script src="<%- file %>" defer></script>
   <% }); %>
-  <%  if (__STACK_ASSETS__ || (__DEVELOPMENT__ && __TARGET__ !== 'mobile')) { %>
-  <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
-  <% } %>
 </head>
 <div
   role="application"
