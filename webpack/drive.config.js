@@ -1,22 +1,14 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-
-const SRC_DIR = path.resolve(__dirname, '../src')
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
-  entry: {
-    public: [require.resolve('babel-polyfill'), path.resolve(SRC_DIR, './drive/targets/public/index.jsx')]
-  },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(SRC_DIR, './drive/targets/public/index.ejs'),
-      title: 'Cozy Drive',
-      filename: 'public/index.html',
-      inject: false,
-      chunks: ['vendors', 'public'],
-      minify: {
-        collapseWhitespace: true
-      }
-    })
+    new DefinePlugin({
+      __PIWIK_SITEID_MOBILE__: 12,
+      __PIWIK_DIMENSION_ID_APP__: 1,
+      __SENTRY_URL__: JSON.stringify(
+        'https://29bd1255b6d544a1b65435a634c9ff67@sentry.cozycloud.cc/2'
+      )
+    }),
   ]
 }
