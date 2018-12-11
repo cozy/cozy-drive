@@ -33,18 +33,18 @@ desktop.ini
 .brackets.json
 
 # Mobile
-targets/*/mobile/hooks
-targets/*/mobile/platforms
-targets/*/mobile/plugins
-targets/*/mobile/www
-targets/*/mobile/keys
-targets/*/mobile/res/icons
-targets/*/mobile/res/screens
-targets/*/mobile/icon.png
-targets/*/mobile/store
-targets/*/mobile/package.json
-targets/*/mobile/package-lock.json
-targets/*/mobile/yarn.lock
+src/drive/targets/mobile/hooks
+src/drive/targets/mobile/platforms
+src/drive/targets/mobile/plugins
+src/drive/targets/mobile/www
+src/drive/targets/mobile/keys
+src/drive/targets/mobile/res/icons
+src/drive/targets/mobile/res/screens
+src/drive/targets/mobile/icon.png
+src/drive/targets/mobile/store
+src/drive/targets/mobile/package.json
+src/drive/targets/mobile/package-lock.json
+src/drive/targets/mobile/yarn.lock
 
 # fastlane
 targets/*/mobile/fastlane/README.md
