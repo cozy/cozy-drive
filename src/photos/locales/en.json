@@ -7,41 +7,31 @@
     "btn-client": "Get Cozy for desktop",
     "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
-    "banner-txt-client":
-      "Add your documents and photos to your Cozy from your computer: they will be safe and available at any moment!",
+    "banner-txt-client": "Add your documents and photos to your Cozy from your computer: they will be safe and available at any moment!",
     "banner-btn-client": "Install now",
     "link-client": "https://cozy.io/en/download/",
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
-    "link-client-android":
-      "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
-    "link-client-ios":
-      "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
     "link-client-web": "https://cozy.io/fr/try-it?from=albumsharing"
   },
   "empty": {
     "timeline_photos_title": "You don't have any photos yet.",
     "timeline_photos_text": "Click the \"Upload\" button to add photos.",
     "albums_title": "You don't have any album yet.",
-    "albums_text":
-      "Start by clicking \"New album\" to create your first album.",
+    "albums_text": "Start by clicking \"New album\" to create your first album.",
     "album_photos_title": "There is no photo in this album yet.",
-    "album_photos_text":
-      "Start by clicking \"Add photos to album\" to add some.",
+    "album_photos_text": "Start by clicking \"Add photos to album\" to add some.",
     "shared_album_photos_title": "There is no photo in this album yet.",
     "shared_album_photos_text": "Come back later"
   },
   "Error": {
-    "albums_title":
-      "An error occurred while retrieving the albums list. Please try again later.",
-    "album_photos_title":
-      "An error occurred while retrieving the album's photos list. Please try again later.",
-    "timeline_photos_title":
-      "An error occurred while retrieving the photos list. Please try again later.",
-    "public_album_error_title":
-      "An error occurred while retrieving the photos list. Please try again later.",
+    "albums_title": "An error occurred while retrieving the albums list. Please try again later.",
+    "album_photos_title": "An error occurred while retrieving the album's photos list. Please try again later.",
+    "timeline_photos_title": "An error occurred while retrieving the photos list. Please try again later.",
+    "public_album_error_title": "An error occurred while retrieving the photos list. Please try again later.",
     "public_album_unshared_title": "Sorry, this link is no longer available.",
-    "public_album_unshared_text":
-      "One lost, ten found... or just check out with the owner for help. This file might not be lost.",
+    "public_album_unshared_text": "One lost, ten found... or just check out with the owner for help. This file might not be lost.",
     "refresh": "Refresh now",
     "generic": "An error occurred, please try again.",
     "album_rename_abort": "The album name can not be empty."
@@ -63,7 +53,7 @@
       "add_photos": "Add photos to album"
     }
   },
-  "Loading": {
+  "loading": {
     "photos_indexing": "Your photos are currently being indexed. Please wait.",
     "albums_indexing": "Your albums are currently being indexed. Please wait.",
     "photos_fetching": "Loading",
@@ -112,13 +102,10 @@
     "load_more": "Load more albums",
     "add_photos": {
       "title": "Add to album",
-      "success":
-        "Album %{name} has been updated with %{smart_count} photo. |||| Album %{name} has been updated with %{smart_count} photos.",
+      "success": "Album %{name} has been updated with %{smart_count} photo. |||| Album %{name} has been updated with %{smart_count} photos.",
       "error": {
-        "generic":
-          "An error occurred when updating the album, please try again.",
-        "reference":
-          "Some photos has not been added to the album. Please check and try again.",
+        "generic": "An error occurred when updating the album, please try again.",
+        "reference": "Some photos has not been added to the album. Please check and try again.",
         "response": {
           "Forbidden": "Application does not have permission to update albums."
         }
@@ -137,10 +124,8 @@
       "sharedWithMe": "Shared with me",
       "shareByLink": {
         "subtitle": "By public link",
-        "desc":
-          "Anyone with the provided link can see and download your photos.",
-        "fetchFailed":
-          "Woops! It seems your connectivity is limited, try again later when it gets better.",
+        "desc": "Anyone with the provided link can see and download your photos.",
+        "fetchFailed": "Woops! It seems your connectivity is limited, try again later when it gets better.",
         "creating": "Creating your link...",
         "copy": "Copy link",
         "copied": "Link has been copied to clipboard"
@@ -153,8 +138,7 @@
         "send": "Send",
         "genericSuccess": "You sent an invite to %{count} contacts.",
         "success": "You sent an invite to %{email}.",
-        "comingsoon":
-          "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
+        "comingsoon": "Coming soon! You will be able to share documents and photos in a single click with your family, your friends, and even your coworkers. Don't worry, we'll let you know when it's ready!"
       },
       "unshare": {
         "title": "Remove from album",
@@ -175,10 +159,8 @@
       "close": "Close",
       "gettingLink": "Getting your link...",
       "error": {
-        "generic":
-          "An error occurred when creating the album share link, please try again.",
-        "revoke":
-          "An error occurred when revoking the album share link, please try again."
+        "generic": "An error occurred when creating the album share link, please try again.",
+        "revoke": "An error occurred when revoking the album share link, please try again."
       }
     },
     "create": {
@@ -194,13 +176,10 @@
         "create_label": "Create a new album",
         "create_button": "Create"
       },
-      "success":
-        "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
+      "success": "Album %{name} has been created with %{smart_count} photo. |||| Album %{name} has been created with %{smart_count} photos.",
       "error": {
-        "generic":
-          "An error occurred when creating the album, please try again.",
-        "already_exists":
-          "The album %{name} already exists, please pick another one.",
+        "generic": "An error occurred when creating the album, please try again.",
+        "already_exists": "The album %{name} already exists, please pick another one.",
         "name_missing": "You have to give a name to your album."
       }
     },
@@ -212,15 +191,13 @@
     "remove_photos": {
       "success": "The photo has been removed from album %{album_name}",
       "error": {
-        "generic":
-          "An error occured while removing the photo, please try again."
+        "generic": "An error occured while removing the photo, please try again."
       }
     },
     "remove_album": {
       "success": "Album %{name} was deleted.",
       "error": {
-        "generic":
-          "An error occured while removing the album, please try again."
+        "generic": "An error occured while removing the album, please try again."
       }
     },
     "quit_album": {
@@ -241,8 +218,7 @@
       "download": "Download"
     },
     "loading": {
-      "error":
-        "This file could not be loaded. Do you have a working internet connection right now?",
+      "error": "This file could not be loaded. Do you have a working internet connection right now?",
       "retry": "Retry"
     }
   },
@@ -263,14 +239,10 @@
   "timeline": {
     "DeleteConfirm": {
       "title": "Delete this element? |||| Delete these elements?",
-      "trash":
-        "It will be moved to the Trash. |||| They will be moved to the Trash.",
-      "restore":
-        "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
-      "shared":
-        "If you have shared it, people won't be able to access it. |||| If you have shared them, people won't be able to access them.",
-      "related":
-        "Some of the photos within the selection are related to an album. They will be removed from it if you proceed to trash them.",
+      "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
+      "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
+      "shared": "If you have shared it, people won't be able to access it. |||| If you have shared them, people won't be able to access them.",
+      "related": "Some of the photos within the selection are related to an album. They will be removed from it if you proceed to trash them.",
       "cancel": "Cancel",
       "delete": "Remove"
     }
@@ -278,8 +250,7 @@
   "UploadQueue": {
     "path_photos": "Photos",
     "path_upload": "Uploaded from Cozy Photos",
-    "header":
-      "Uploading %{smart_count} photo to Cozy Photos |||| Uploading %{smart_count} photos to Cozy Photos",
+    "header": "Uploading %{smart_count} photo to Cozy Photos |||| Uploading %{smart_count} photos to Cozy Photos",
     "header_mobile": "%{done} of %{total} uploading…",
     "header_done": "Uploaded %{done} out of %{total} successfully",
     "close": "close",
@@ -287,10 +258,8 @@
       "pending": "Pending"
     },
     "alert": {
-      "success":
-        "%{smart_count} photo uploaded with success. |||| %{smart_count} photos uploaded with success.",
-      "success_conflicts":
-        "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
+      "success": "%{smart_count} photo uploaded with success. |||| %{smart_count} photos uploaded with success.",
+      "success_conflicts": "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
       "errors": "Errors occurred during the photos upload."
     }
   }

@@ -12,7 +12,7 @@ export const Loading = ({ t, loadingType, noMargin, color }) => {
         [styles[`pho-loading--${color}`]]: color
       })}
     >
-      {loadingType && <p>{t(`Loading.${loadingType}`)}</p>}
+      {loadingType && <p>{t(`loading.${loadingType}`)}</p>}
     </div>
   )
 }
