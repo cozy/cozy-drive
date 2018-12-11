@@ -6,8 +6,7 @@ import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
-import Alerter from 'cozy-ui/react/Alerter'
-
+import { Spinner, Alerter } from 'cozy-ui/react/'
 export const DOCTYPE = 'io.cozy.photos.albums'
 
 const ALBUMS_QUERY = client =>
@@ -20,6 +19,31 @@ const ALBUMS_QUERY = client =>
     .include(['photos'])
     .sortBy([{ created_at: 'desc' }])
 
+const ALBUM_QUERY = (client, ownProps) => {
+  return client.get('io.cozy.files').referencedBy({
+    _type: DOCTYPE,
+    _id: ownProps.router.params.albumId
+  })
+}
+const ALBUM_GET_ONE = (client, ownProps) =>
+  client.get(DOCTYPE, ownProps.router.params.albumId)
+
+const ALBUM_MUTATIONS = query => ({
+  updateAlbum: album => query.client.save(album),
+  deleteAlbum: album => query.client.destroy(album),
+  addPhotos,
+  removePhotos: async (album, photos, clearSelection) => {
+    try {
+      await album.photos.remove(photos)
+      Alerter.success('Albums.remove_photos.success', {
+        album_name: album.name
+      })
+      clearSelection()
+    } catch (e) {
+      Alerter.error('Albums.remove_photos.error.generic')
+    }
+  }
+})
 const addPhotos = async (album, photos) => {
   try {
     const addedPhotos = await album.photos.add(photos)
@@ -79,35 +103,8 @@ const ALBUMS_MUTATIONS = client => ({
   }
 })
 
-const ALBUM_QUERY = (client, ownProps) => {
-  console.log({ client })
-  return client.get('io.cozy.files').referencedBy({
-    _type: DOCTYPE,
-    _id: ownProps.router.params.albumId
-  })
-}
-const ALBUM_GET_ONE = (client, ownProps) =>
-  client.get('io.cozy.photos.albums', ownProps.router.params.albumId)
-
-const ALBUM_MUTATIONS = query => ({
-  updateAlbum: album => query.client.save(album),
-  deleteAlbum: album => query.client.destroy(album),
-  addPhotos,
-  removePhotos: async (album, photos, clearSelection) => {
-    try {
-      await album.photos.remove(photos)
-      Alerter.success('Albums.remove_photos.success', {
-        album_name: album.name
-      })
-      clearSelection()
-    } catch (e) {
-      Alerter.error('Albums.remove_photos.error.generic')
-    }
-  }
-})
-
 const ConnectedAlbumsView = props => (
-  <SharingProvider doctype="io.cozy.photos.albums" documentType="Albums">
+  <SharingProvider doctype={DOCTYPE} documentType="Albums">
     <Query query={ALBUMS_QUERY} as="test">
       {result => {
         return <AlbumsView albums={result} {...props} />
@@ -139,7 +136,7 @@ const ConnectedAlbumPhotos = withRouter(props => (
         return (
           <Query query={ALBUM_GET_ONE} {...props} as="toto">
             {({ data: album, fetchStatus }) => {
-              if (fetchStatus === 'loaded')
+              if (fetchStatus === 'loaded') {
                 return (
                   <AlbumPhotos
                     album={album}
@@ -152,8 +149,25 @@ const ConnectedAlbumPhotos = withRouter(props => (
                     {...props}
                   />
                 )
+              } else {
+                return (
+                  <Spinner
+                    size={'xxlarge'}
+                    loadingType={'photos_fetching'}
+                    middle={true}
+                  />
+                )
+              }
             }}
           </Query>
+        )
+      } else {
+        return (
+          <Spinner
+            size={'xxlarge'}
+            loadingType={'photos_fetching'}
+            middle={true}
+          />
         )
       }
     }}
