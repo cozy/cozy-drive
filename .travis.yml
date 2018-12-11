@@ -43,6 +43,8 @@ before_install:
   - install -m0644 .transifexrc.tpl ~/.transifexrc
   - echo "password = $TX_PASSWD" >> ~/.transifexrc
 script:
+  - yarn lint
+  - yarn tx
   - yarn test
   - yarn build:$COZY_APP_SLUG:browser
 before_deploy:
