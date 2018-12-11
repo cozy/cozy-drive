@@ -3679,10 +3679,10 @@ cozy-stack-client@^4.13.1:
   dependencies:
     mime-types "2.1.20"
 
-cozy-ui@17.4.9:
-  version "17.4.9"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-17.4.9.tgz#7da25916aaf094fafe52374c45259e766bee07b8"
-  integrity sha512-i6giWMrPg4JiatpUIuGWfMBn4PhQBAdlHH6wV/2Yp5i2tTXl954jGt7RDqMV2iGZX21O8zAaz9zbaMjy25+NLw==
+cozy-ui@17.5.2:
+  version "17.5.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-17.5.2.tgz#8369a4c6a81294686028a989292b8b0421a44eaf"
+  integrity sha512-zx2LpgktO2bmUxQDbXnGTifbX4b2LHMjYTNfJicPQjLjw32jiIuPD795Sbx4lLAvL7oBXgBVwksh7ags0j+/vg==
   dependencies:
     body-scroll-lock "^2.5.8"
     classnames "^2.2.5"
@@ -10001,7 +10001,7 @@ npm-registry-client@~7.2.1:
   optionalDependencies:
     npmlog "~2.0.0 || ~3.1.0"
 
-npm-run-all@4.1.5:
+npm-run-all@^4.1.5:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/npm-run-all/-/npm-run-all-4.1.5.tgz#04476202a15ee0e2e214080861bff12a51d98fba"
   integrity sha512-Oo82gJDAVcaMdi3nuoKFavkIHBRVqQ1qvMb+9LHk/cF4P6B2m8aP04hGf7oL6wZ9BuGwX1onlLhpuoofSyoQDQ==
