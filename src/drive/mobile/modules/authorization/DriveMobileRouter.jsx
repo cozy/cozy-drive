@@ -38,6 +38,7 @@ class DriveMobileRouter extends Component {
         onAuthenticated={this.afterAuthentication}
         onLogout={this.afterLogout}
         allowRegistration={false}
+        appIcon={require('../../../../../targets/drive/vendor/assets/apple-touch-icon-180x180.png')}
       />
     )
   }
