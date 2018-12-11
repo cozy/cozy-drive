@@ -10,8 +10,9 @@ configurationFiles.push(require('cozy-scripts/config/webpack.bundle.preact.js'))
 
 configurationFiles.push(require('cozy-scripts/config/webpack.config.css-modules'))
 
-const isDrive = process.env.COZY_APP_SLUG === 'drive'
+const isDrive = process.env.COZY_APP_SLUG !== 'photos'
 if (isDrive) configurationFiles.push(require('./webpack/drive.config.js'))
+else configurationFiles.push(require('cozy-scripts/config/webpack.config.services'))
 
 if (isDrive && target === 'mobile') configurationFiles.push(require('./webpack/mobile.config.js'))
 
