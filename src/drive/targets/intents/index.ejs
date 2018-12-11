@@ -9,15 +9,15 @@
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% if (__STACK_ASSETS__) { %>
+  {{.CozyClientJS}}
+  <% } %>
   <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
       <link rel="stylesheet" href="<%- file %>">
   <% }); %>
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
       <script src="<%- file %>" defer></script>
   <% }); %>
-  <% if (__STACK_ASSETS__) { %>
-  {{.CozyClientJS}}
-  <% } %>
 </head>
 <div
   id="main"

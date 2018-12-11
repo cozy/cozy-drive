@@ -9,17 +9,17 @@
   <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials">
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover">
+  <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
+  <% if (__STACK_ASSETS__) { %>
+  {{.CozyClientJS}}
+  {{.CozyBar}}
+  <% } %>
   <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
       <link rel="stylesheet" href="<%- file %>">
   <% }); %>
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
       <script src="<%- file %>" defer></script>
   <% }); %>
-  <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
-  <% if (__STACK_ASSETS__) { %>
-  {{.CozyClientJS}}
-  {{.CozyBar}}
-  <% } %>
 </head>
 <div
   role="application"
