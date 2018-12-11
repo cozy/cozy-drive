@@ -3,8 +3,10 @@ import { log, cozyClient } from 'cozy-konnector-libs'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import {
   readSetting,
-  defaultParameters,
-  createDefaultSetting
+  findLastDefaultParameters,
+  createSetting,
+  defaultSetting,
+  findPhotosDefaultParameters
 } from 'photos/ducks/clustering/settings'
 import {
   computeEpsTemporal,
@@ -13,14 +15,11 @@ import {
 } from 'photos/ducks/clustering/service'
 import {
   PERCENTILE,
-  DEFAULT_MAX_BOUND,
-  COARSE_COEFFICIENT
+  DEFAULT_MODE,
+  EVALUATION_THRESHOLD
 } from 'photos/ducks/clustering/consts'
 import { spatioTemporalScaled } from 'photos/ducks/clustering/metrics'
-import {
-  gradientClustering,
-  gradientAngle
-} from 'photos/ducks/clustering/gradient'
+import { gradientClustering } from 'photos/ducks/clustering/gradient'
 import {
   saveClustering,
   findAutoAlbums,
@@ -29,93 +28,112 @@ import {
 } from 'photos/ducks/clustering/albums'
 import { prepareDataset } from 'photos/ducks/clustering/utils'
 
-// Retrieve the parameters used to compute the clustering
-const clusteringParameters = (dataset, setting) => {
-  const params = defaultParameters(setting)
-  if (!params) {
-    return null
-  }
-  if (!params.epsTemporal) {
-    params.epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
-  }
-  if (!params.epsSpatial) {
-    params.epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
-  }
-  const epsMax = Math.max(params.epsTemporal, params.epsSpatial)
-  if (!params.maxBound) {
-    params.maxBound =
-      epsMax * 2 < DEFAULT_MAX_BOUND ? epsMax * 2 : DEFAULT_MAX_BOUND
-  }
-  if (!params.cosAngle) {
-    params.cosAngle = gradientAngle(epsMax, COARSE_COEFFICIENT)
-  }
-  return params
-}
-
 // Compute the actual clustering based on the new dataset and the existing albums
-const computeClusters = async (dataset, albums, params) => {
-  if (albums && albums.length > 0) {
-    const clusterize = await albumsToClusterize(dataset, albums)
-    if (clusterize) {
-      for (const [id, photos] of Object.entries(clusterize)) {
-        // TODO adapt params to the period
-        const reachs = reachabilities(photos, spatioTemporalScaled, params)
-        const clusters = gradientClustering(photos, reachs, params)
-        if (clusters.length > 0) {
-          const ids = id.split(':')
-          const albumsToSave = findAlbumsByIds(albums, ids)
-          saveClustering(clusters, albumsToSave)
-        }
+const createNewClusters = async (setting, dataset, albums) => {
+  const clusterize = await albumsToClusterize(dataset, albums)
+  if (clusterize) {
+    for (const [id, photos] of Object.entries(clusterize)) {
+      const params = findPhotosDefaultParameters(setting, photos)
+      if (!params) {
+        log('warn', 'No parameters for clustering found')
+        break
+      }
+      const reachs = reachabilities(photos, spatioTemporalScaled, params)
+      const clusters = gradientClustering(photos, reachs, params)
+      if (clusters.length > 0) {
+        const ids = id.split(':')
+        const albumsToSave = findAlbumsByIds(albums, ids)
+        await saveClustering(clusters, albumsToSave)
       }
     }
-  } else {
-    // No album found: this is an initialization
-    const reachs = reachabilities(dataset, spatioTemporalScaled, params)
-    const clusters = gradientClustering(dataset, reachs, params)
-    saveClustering(clusters)
   }
+}
+
+const createInitialClusters = async (setting, dataset) => {
+  const params = findLastDefaultParameters(setting)
+  if (!params) {
+    log('warn', 'No parameters for clustering found')
+    return
+  }
+  const reachs = reachabilities(dataset, spatioTemporalScaled, params)
+  const clusters = gradientClustering(dataset, reachs, params)
+  await saveClustering(clusters)
 }
 
 // Clusterize the given photos, i.e. organize them depending on metrics
-const clusterizePhotos = async (setting, photos) => {
-  const dataset = prepareDataset(photos)
-  const params = clusteringParameters(dataset, setting)
-  if (!params) {
-    log('warn', 'No default parameters for clustering found')
-    return
-  }
+const clusterizePhotos = async (setting, dataset) => {
+  log('info', `Start clustering on ${dataset.length} photos`)
 
   const albums = await findAutoAlbums()
-  await computeClusters(dataset, albums, params)
-
-  // TODO save params
+  if (albums && albums.length > 0) {
+    await createNewClusters(setting, dataset, albums)
+  } else {
+    // No album found: this is an initialization
+    await createInitialClusters(setting, dataset)
+  }
+  // TODO update params
   // TODO adapt percentiles for large datasets
+  // TODO ensure auto albums unicity
 }
 
-const getNewPhotos = async setting => {
-  const lastSeq = setting.lastSeq
-
+const getNewPhotos = async lastSeq => {
   log('info', `Get changes on files since ${lastSeq}`)
   const result = await cozyClient.fetchJSON(
     'GET',
     `/data/${DOCTYPE_FILES}/_changes?include_docs=true&since=${lastSeq}`
   )
-
   return result.results.map(res => res.doc).filter(doc => {
     return doc.class === 'image' && !doc._id.includes('_design') && !doc.trashed
   })
 }
 
+const initParameters = dataset => {
+  log('info', `Compute clustering parameters on ${dataset.length} photos`)
+  const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
+  const epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
+  const params = {
+    period: {
+      start: dataset[0].datetime,
+      end: dataset[dataset.length - 1].datetime
+    },
+    modes: [
+      {
+        name: DEFAULT_MODE,
+        epsTemporal: epsTemporal,
+        epsSpatial: epsSpatial
+      }
+    ]
+  }
+  return params
+}
+
 const onPhotoUpload = async () => {
   let setting = await readSetting()
   if (!setting) {
-    setting = await createDefaultSetting()
-  }
-  const photos = await getNewPhotos(setting)
-  if (photos.length > 0) {
-    log('info', `Start clustering on ${photos.length} photos`)
-
-    clusterizePhotos(setting, photos)
+    // No settings found: init them or use default
+    const photos = await getNewPhotos(0)
+    if (photos.length < 1) {
+      log('warn', 'Service called but no photos found to clusterize')
+      return
+    }
+    const dataset = prepareDataset(photos)
+    if (dataset.length > EVALUATION_THRESHOLD) {
+      // There are enough photos to init the parameters and save them
+      const params = initParameters(dataset)
+      setting = await createSetting(params)
+    } else {
+      // Use default
+      setting = defaultSetting(dataset)
+    }
+    await clusterizePhotos(setting, dataset)
+  } else {
+    const photos = await getNewPhotos(setting.lastSeq)
+    if (photos.length < 1) {
+      log('warn', 'Service called but no photos found to clusterize')
+      return
+    }
+    const dataset = prepareDataset(photos)
+    await clusterizePhotos(setting, dataset)
   }
 }
 

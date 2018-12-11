@@ -24,3 +24,14 @@ export const prepareDataset = photos => {
 
   return info
 }
+
+/**
+ * Compute the mean date based on the photos' timestamp
+ * @param {Object[]} photos - Set of photos
+ * @returns {Date} The average date
+ */
+export const averageDate = photos => {
+  const sumHours = photos.reduce((acc, val) => acc + val.timestamp, 0)
+  const averageHours = sumHours / photos.length
+  return new Date(averageHours * 3600 * 1000)
+}
