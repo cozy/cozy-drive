@@ -8,6 +8,7 @@
     "cs:watch:drive": "COZY_APP_SLUG=drive cozy-scripts watch --debug --manifest targets/drive/manifest.webapp --build-dir build/drive --src-dir src/drive",
     "cs:build:mobile": "COZY_APP_SLUG=drive NODE_ENV=mobile:production cozy-scripts build --manifest targets/drive/manifest.webapp --build-dir build/drive --src-dir src/drive",
     "cs:build:photos": "COZY_APP_SLUG=photos cozy-scripts build --manifest targets/photos/manifest.webapp --build-dir build/photos --src-dir src/photos",
+    "cs:watch:photos": "COZY_APP_SLUG=photos cozy-scripts watch --debug --manifest targets/photos/manifest.webapp --build-dir build/photos --src-dir src/photos",
     "build:drive": "npm run build:drive:browser",
     "build:drive:browser": "npm run internal:build -- --env.app=drive --env.target=browser --env.production",
     "build:drive:mobile": "npm run internal:build -- --env.app=drive --env.target=mobile --env.production",
