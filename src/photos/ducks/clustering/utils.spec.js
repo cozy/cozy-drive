@@ -1,4 +1,4 @@
-import { averageDate } from './utils'
+import { averageTime } from './utils'
 
 describe('date', () => {
   it('Should compute the mean date', () => {
@@ -20,7 +20,7 @@ describe('date', () => {
         timestamp: 425509.26666666666
       }
     ]
-    const expectedDate = new Date('2018-06-13T01:35:26.249Z')
-    expect(averageDate(data)).toEqual(expectedDate)
+    const expectedTime = new Date('2018-06-13T01:35:26.249Z').getTime()
+    expect(averageTime(data)).toEqual(expectedTime)
   })
 })

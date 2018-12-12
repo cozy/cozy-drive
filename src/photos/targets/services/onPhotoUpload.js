@@ -73,7 +73,6 @@ const clusterizePhotos = async (setting, dataset) => {
   }
   // TODO update params
   // TODO adapt percentiles for large datasets
-  // TODO ensure auto albums unicity
 }
 
 const getNewPhotos = async lastSeq => {
