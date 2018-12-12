@@ -6,12 +6,12 @@ import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
-import { Spinner, Alerter } from 'cozy-ui/react/'
-export const DOCTYPE = 'io.cozy.photos.albums'
+import { Alerter, Spinner } from 'cozy-ui/react/'
+import { DOCTYPE_ALBUMS, DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 const ALBUMS_QUERY = client =>
   client
-    .find(DOCTYPE, { created_at: { $gt: null } })
+    .find(DOCTYPE_ALBUMS, { created_at: { $gt: null } })
     .where({
       auto: { $exists: false }
     })
@@ -20,13 +20,13 @@ const ALBUMS_QUERY = client =>
     .sortBy([{ created_at: 'desc' }])
 
 const ALBUM_QUERY = (client, ownProps) => {
-  return client.get('io.cozy.files').referencedBy({
-    _type: DOCTYPE,
+  return client.get(DOCTYPE_FILES).referencedBy({
+    _type: DOCTYPE_ALBUMS,
     _id: ownProps.router.params.albumId
   })
 }
 const ALBUM_GET_ONE = (client, ownProps) =>
-  client.get(DOCTYPE, ownProps.router.params.albumId)
+  client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId)
 
 const ALBUM_MUTATIONS = query => ({
   updateAlbum: album => query.client.save(album),
@@ -68,7 +68,7 @@ const ALBUMS_MUTATIONS = client => ({
         Alerter.error('Albums.create.error.name_missing')
         return
       }
-      const album = { _type: DOCTYPE, name, created_at }
+      const album = { _type: DOCTYPE_ALBUMS, name, created_at }
       /*
         !WHY do I need that stuff ? withMutations() and mutations='' are not
         sending the same props
@@ -82,7 +82,7 @@ const ALBUMS_MUTATIONS = client => ({
         return
       }
       const resp = await realClient.create(
-        DOCTYPE,
+        DOCTYPE_ALBUMS,
         album,
         { photos },
         {
@@ -104,7 +104,7 @@ const ALBUMS_MUTATIONS = client => ({
 })
 
 const ConnectedAlbumsView = props => (
-  <SharingProvider doctype={DOCTYPE} documentType="Albums">
+  <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
     <Query query={ALBUMS_QUERY}>
       {result => {
         return <AlbumsView albums={result} {...props} />
@@ -208,7 +208,7 @@ export const belongsToAlbums = photos => {
     ) {
       const refs = photo.relationships.referenced_by.data
       for (const ref of refs) {
-        if (ref.type === DOCTYPE) {
+        if (ref.type === DOCTYPE_ALBUMS) {
           return true
         }
       }
