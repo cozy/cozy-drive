@@ -28,7 +28,8 @@ class App extends Component {
       allPhotos = flatten(photos)
     } else {
       const { album } = this.props
-      const photosRequested = await this.context.client.stackClient
+      const photosRequested = await this.context.client
+        .getStackClient()
         .collection('io.cozy.files')
         .findReferencedBy(
           {
