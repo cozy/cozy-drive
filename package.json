@@ -91,7 +91,8 @@
     "react-dom": "15.6.2",
     "react-test-renderer": "15.6.2",
     "replace": "1.0.0",
-    "splashicon-generator": "0.2.12"
+    "splashicon-generator": "0.2.12",
+    "stylint": "1.5.9"
   },
   "dependencies": {
     "babel-preset-cozy-app": "1.2.1",

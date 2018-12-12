@@ -1,4 +1,4 @@
-/* global cozy */
+/* global cozy __DEVELOPMENT__ */
 
 import 'photos/styles/main'
 
