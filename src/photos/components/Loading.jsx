@@ -1,18 +1,27 @@
-import styles from '../styles/loading'
-
 import React from 'react'
-import { translate } from 'cozy-ui/react/I18n'
 import classNames from 'classnames'
 
-export const Loading = ({ t, loadingType, noMargin, color }) => {
+import { translate } from 'cozy-ui/react/I18n'
+import { Spinner } from 'cozy-ui/react'
+
+import styles from '../styles/loading'
+
+export const Loading = ({
+  size = 'xxlarge',
+  loadingType,
+  color,
+  noMargin = false,
+  middle = true
+}) => {
   return (
-    <div
-      className={classNames(styles['pho-loading'], {
-        [styles['pho-loading--no-margin']]: noMargin,
-        [styles[`pho-loading--${color}`]]: color
-      })}
-    >
-      {loadingType && <p>{t(`loading.${loadingType}`)}</p>}
+    <div className={classNames(styles['pho-loading'])}>
+      <Spinner
+        size={size}
+        loadingType={loadingType}
+        color={color}
+        noMargin={noMargin}
+        middle={middle}
+      />
     </div>
   )
 }
