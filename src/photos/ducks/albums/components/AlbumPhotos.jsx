@@ -21,7 +21,6 @@ import DestroyConfirm from 'photos/components/DestroyConfirm'
 import QuitConfirm from 'photos/components/QuitConfirm'
 import confirm from 'photos/lib/confirm'
 import Selection from '../../selection'
-
 class AlbumPhotos extends Component {
   state = {
     editing: false,
@@ -60,7 +59,8 @@ class AlbumPhotos extends Component {
   //!TODO Hack. We should not use 99999 as limit.
   downloadAlbum = async () => {
     const { album } = this.props
-    const allPhotos = await this.context.client.stackClient
+    const allPhotos = await this.context.client
+      .getStackClient()
       .collection('io.cozy.files')
       .findReferencedBy(
         {
