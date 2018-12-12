@@ -19,13 +19,13 @@ const ALBUMS_QUERY = client =>
     .include(['photos'])
     .sortBy([{ created_at: 'desc' }])
 
-const ALBUM_QUERY = (client, ownProps) => {
+export const ALBUM_QUERY = (client, ownProps) => {
   return client.get(DOCTYPE_FILES).referencedBy({
     _type: DOCTYPE_ALBUMS,
     _id: ownProps.router.params.albumId
   })
 }
-const ALBUM_GET_ONE = (client, ownProps) =>
+export const ALBUM_GET_ONE = (client, ownProps) =>
   client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId)
 
 const ALBUM_MUTATIONS = query => ({
@@ -126,7 +126,7 @@ const ConnectedAddToAlbumModal = props => (
   </Query>
 )
 
-const ConnectedAlbumPhotos = withRouter(props => (
+export const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
     {(
       { data, hasMore, fetchMore, fetchStatus },

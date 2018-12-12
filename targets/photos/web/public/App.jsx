@@ -2,28 +2,47 @@ import React, { Component } from 'react'
 import { Query } from 'cozy-client'
 
 import Selection from 'photos/ducks/selection'
-import PhotoBoard from 'photos/components/PhotoBoard'
-import Loading from 'photos/components/Loading'
 import ErrorShare from 'components/Error/ErrorShare'
-import { Button, Menu, MenuItem, Icon } from 'cozy-ui/react'
+import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/react'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 
 import { MoreButton, CozyHomeLink } from 'components/Button'
-
+import PhotoBoard from 'photos/components/PhotoBoard'
 import classNames from 'classnames'
 import styles from './index.styl'
+import {
+  ALBUM_QUERY,
+  ALBUM_GET_ONE
+} from '../../../../src/photos/ducks/albums/index'
 
+import flatten from 'lodash/flatten'
 class App extends Component {
   onDownload = selected => {
-    const photos =
-      selected.length !== 0 ? selected : this.props.album.photos.data
+    const photos = selected.length !== 0 ? selected : null
     this.downloadPhotos(photos)
   }
 
-  downloadPhotos(photos) {
+  downloadPhotos = async photos => {
+    let allPhotos
+    if (photos !== null) {
+      allPhotos = flatten(photos)
+    } else {
+      const { album } = this.props
+      const photosRequested = await this.context.client.stackClient
+        .collection('io.cozy.files')
+        .findReferencedBy(
+          {
+            _type: 'io.cozy.photos.albums',
+            _id: album.id
+          },
+          { limit: 99999 }
+        )
+      allPhotos = photosRequested.data
+    }
+
     this.context.client
       .collection('io.cozy.files')
-      .downloadArchive(photos.map(({ _id }) => _id), this.props.album.name)
+      .downloadArchive(allPhotos.map(({ _id }) => _id), album.name)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,7 +53,7 @@ class App extends Component {
   }
 
   render() {
-    const { album, fetchStatus } = this.props
+    const { album, hasMore, photos, fetchMore } = this.props
 
     const { t } = this.context
     if (this.state.error) {
@@ -50,14 +69,7 @@ class App extends Component {
         </div>
       )
     }
-    if (fetchStatus === 'pending' || fetchStatus === 'loading') {
-      return (
-        <div className={styles['pho-public-layout']}>
-          <Loading loadingType="photos_fetching" />
-        </div>
-      )
-    }
-    const { data, hasMore } = album.photos
+
     return (
       <div className={styles['pho-public-layout']}>
         <Selection>
@@ -96,17 +108,17 @@ class App extends Component {
                 </div>
               </div>
               <PhotoBoard
-                photosContext="shared_album"
-                lists={[{ photos: data }]}
+                lists={[{ photos }]}
                 selected={selected}
+                photosContext="timeline"
                 showSelection={active}
                 onPhotoToggle={selection.toggle}
                 onPhotosSelect={selection.select}
                 onPhotosUnselect={selection.unselect}
+                fetchStatus={photos.fetchStatus}
                 hasMore={hasMore}
-                fetchMore={() => album.photos.fetchMore()}
+                fetchMore={fetchMore}
               />
-              {this.renderViewer(this.props.children)}
             </div>
           )}
         </Selection>
@@ -114,28 +126,48 @@ class App extends Component {
       </div>
     )
   }
-
-  renderViewer(children) {
-    if (!children) return null
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        photos: this.props.album.photos.data
-      })
-    )
-  }
 }
 
 const ConnectedApp = props => (
-  <Query
-    query={client =>
-      client
-        .get('io.cozy.photos.albums', props.router.params.albumId)
-        .include(['photos'])
-    }
-  >
-    {({ data, fetchStatus }) => (
-      <App album={data || null} fetchStatus={fetchStatus} {...props} />
-    )}
+  <Query query={ALBUM_QUERY} {...props}>
+    {({ data, hasMore, fetchMore, fetchStatus }) => {
+      if (fetchStatus === 'loaded') {
+        return (
+          <Query query={ALBUM_GET_ONE} {...props}>
+            {({ data: album, fetchStatus }) => {
+              if (fetchStatus === 'loaded') {
+                return (
+                  <App
+                    album={album || null}
+                    photos={data}
+                    fetchStatus={fetchStatus}
+                    hasMore={hasMore}
+                    fetchMore={fetchMore}
+                    {...props}
+                  />
+                )
+              } else {
+                return (
+                  <Spinner
+                    size={'xxlarge'}
+                    loadingType={'photos_fetching'}
+                    middle={true}
+                  />
+                )
+              }
+            }}
+          </Query>
+        )
+      } else {
+        return (
+          <Spinner
+            size={'xxlarge'}
+            loadingType={'photos_fetching'}
+            middle={true}
+          />
+        )
+      }
+    }}
   </Query>
 )
 
