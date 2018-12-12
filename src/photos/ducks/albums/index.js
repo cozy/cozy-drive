@@ -6,7 +6,9 @@ import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
-import { Alerter, Spinner } from 'cozy-ui/react/'
+import { Alerter } from 'cozy-ui/react/'
+import Loading from '../../components/Loading'
+
 import { DOCTYPE_ALBUMS, DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 const ALBUMS_QUERY = client =>
@@ -151,7 +153,7 @@ export const ConnectedAlbumPhotos = withRouter(props => (
                 )
               } else {
                 return (
-                  <Spinner
+                  <Loading
                     size={'xxlarge'}
                     loadingType={'photos_fetching'}
                     middle={true}
@@ -163,7 +165,7 @@ export const ConnectedAlbumPhotos = withRouter(props => (
         )
       } else {
         return (
-          <Spinner
+          <Loading
             size={'xxlarge'}
             loadingType={'photos_fetching'}
             middle={true}
