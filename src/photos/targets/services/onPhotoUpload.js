@@ -109,14 +109,17 @@ const initParameters = dataset => {
 
 const onPhotoUpload = async () => {
   let setting = await readSetting()
+  const lastSeq = setting ? setting.lastSeq : 0
+
+  const photos = await getNewPhotos(lastSeq)
+  if (photos.length < 1) {
+    log('warn', 'Service called but no photos found to clusterize')
+    return
+  }
+  const dataset = prepareDataset(photos)
+
   if (!setting) {
     // No settings found: init them or use default
-    const photos = await getNewPhotos(0)
-    if (photos.length < 1) {
-      log('warn', 'Service called but no photos found to clusterize')
-      return
-    }
-    const dataset = prepareDataset(photos)
     if (dataset.length > EVALUATION_THRESHOLD) {
       // There are enough photos to init the parameters and save them
       const params = initParameters(dataset)
@@ -125,16 +128,8 @@ const onPhotoUpload = async () => {
       // Use default
       setting = getDefaultSetting(dataset)
     }
-    await clusterizePhotos(setting, dataset)
-  } else {
-    const photos = await getNewPhotos(setting.lastSeq)
-    if (photos.length < 1) {
-      log('warn', 'Service called but no photos found to clusterize')
-      return
-    }
-    const dataset = prepareDataset(photos)
-    await clusterizePhotos(setting, dataset)
   }
+  await clusterizePhotos(setting, dataset)
 }
 
 onPhotoUpload()
