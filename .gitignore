@@ -47,8 +47,8 @@ src/drive/targets/mobile/package-lock.json
 src/drive/targets/mobile/yarn.lock
 
 # fastlane
-targets/*/mobile/fastlane/README.md
-targets/*/mobile/fastlane/report.xml
-targets/*/mobile/fastlane/Error*.png
-targets/*/mobile/fastlane/Preview.html
-targets/*/mobile/Preview.html
+src/drive/targets/mobile/fastlane/README.md
+src/drive/targets/mobile/fastlane/report.xml
+src/drive/targets/mobile/fastlane/Error*.png
+src/drive/targets/mobile/fastlane/Preview.html
+src/drive/targets/mobilePreview.html
