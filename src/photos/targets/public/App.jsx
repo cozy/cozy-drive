@@ -24,10 +24,10 @@ class App extends Component {
 
   downloadPhotos = async photos => {
     let allPhotos
+    const { album } = this.props
     if (photos !== null) {
       allPhotos = flatten(photos)
     } else {
-      const { album } = this.props
       const photosRequested = await this.context.client
         .getStackClient()
         .collection('io.cozy.files')
