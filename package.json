@@ -69,6 +69,7 @@
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
     "@sentry/cli": "1.35.4",
+    "babel-core": "7.0.0-bridge.0",
     "cordova": "7.1.0",
     "cordova-android": "7.1.4",
     "enzyme": "2.9.1",
@@ -86,7 +87,7 @@
     "stylint": "1.5.9"
   },
   "dependencies": {
-    "babel-preset-cozy-app": "1.2.1",
+    "babel-preset-cozy-app": "1.2.2",
     "classnames": "2.2.6",
     "cozy-bar": "6.8.7",
     "cozy-client": "5.0.1",
