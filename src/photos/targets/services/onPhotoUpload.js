@@ -5,7 +5,7 @@ import {
   readSetting,
   findLastDefaultParameters,
   createSetting,
-  defaultSetting,
+  getDefaultSetting,
   findPhotosDefaultParameters
 } from 'photos/ducks/clustering/settings'
 import {
@@ -36,7 +36,7 @@ const createNewClusters = async (setting, dataset, albums) => {
       const params = findPhotosDefaultParameters(setting, photos)
       if (!params) {
         log('warn', 'No parameters for clustering found')
-        break
+        continue
       }
       const reachs = reachabilities(photos, spatioTemporalScaled, params)
       const clusters = gradientClustering(photos, reachs, params)
@@ -123,7 +123,7 @@ const onPhotoUpload = async () => {
       setting = await createSetting(params)
     } else {
       // Use default
-      setting = defaultSetting(dataset)
+      setting = getDefaultSetting(dataset)
     }
     await clusterizePhotos(setting, dataset)
   } else {

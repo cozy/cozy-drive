@@ -10,7 +10,7 @@ import {
   COARSE_COEFFICIENT
 } from './consts'
 import { gradientAngle } from 'photos/ducks/clustering/gradient'
-import { matchingParameters } from './matching'
+import { getMatchingParameters } from './matching'
 
 export const createSetting = initParameters => {
   log('info', 'Create setting')
@@ -37,7 +37,7 @@ const getDefaultParameters = params => {
 }
 
 export const findPhotosDefaultParameters = (setting, photos) => {
-  const matchingParams = matchingParameters(setting.parameters, photos)
+  const matchingParams = getMatchingParameters(setting.parameters, photos)
   return matchingParams ? getDefaultParameters(matchingParams) : null
 }
 
@@ -46,7 +46,7 @@ export const findLastDefaultParameters = setting => {
   return lastParams ? getDefaultParameters(lastParams) : null
 }
 
-export const defaultSetting = photos => {
+export const getDefaultSetting = photos => {
   const setting = DEFAULT_SETTING
   const params = {
     period: {
