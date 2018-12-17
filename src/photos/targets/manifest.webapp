@@ -5,7 +5,7 @@
   "version": "1.14.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
-  "icon": "public/app-icon.svg",
+  "icon": "app-icon.svg",
   "categories": ["cozy"],
   "source": "https://github.com/cozy/cozy-drive",
   "editor": "Cozy",
