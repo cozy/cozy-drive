@@ -1,85 +1,91 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button } from 'cozy-ui/react'
+import { Button, MainTitle, Icon } from 'cozy-ui/react'
+import 'cozy-ui/assets/icons/ui/cozy-negative.svg'
+import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
 
 import styles from '../styles.styl'
-
-import { getPlatform, hasSafariPlugin } from 'cozy-device-helper'
+import { ButtonLinkRegistration } from './ButtonLinkRegistration'
 
 export class Welcome extends Component {
   registerRender = () => {
-    const { t, register, allowRegistration } = this.props
+    const {
+      t,
+      register,
+      allowRegistration,
+      breakpoints: { isMobile }
+    } = this.props
 
     if (allowRegistration) {
       return (
-        <a className={styles['link']} onClick={register}>
-          {t('mobile.onboarding.welcome.sign_up')}
-        </a>
+        <Button
+          theme="secondary"
+          onClick={register}
+          label={t('mobile.onboarding.welcome.sign_up')}
+          size={isMobile ? 'normal' : 'large'}
+        />
       )
     }
-
-    const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
-      'browser'}`
-
-    if (hasSafariPlugin()) {
-      const openManager = () => {
-        window.SafariViewController.show(
-          {
-            url: url,
-            transition: 'curl'
-          },
-          result => {
-            if (result.event === 'closed') {
-              window.SafariViewController.hide()
-            }
-          },
-          error => {
-            console.warn(error)
-            window.SafariViewController.hide()
-          }
-        )
-      }
-
-      return (
-        <a className={styles['link']} onClick={openManager}>
-          {t('mobile.onboarding.welcome.no_account_link')}
-        </a>
-      )
-    }
-
     return (
-      <a href={url} className={styles['link']}>
-        {t('mobile.onboarding.welcome.no_account_link')}
-      </a>
+      <ButtonLinkRegistration
+        label={t('mobile.onboarding.welcome.no_account_link')}
+        size={isMobile ? 'normal' : 'large'}
+      />
     )
   }
 
   render() {
-    const { t, selectServer } = this.props
-
+    const {
+      t,
+      selectServer,
+      breakpoints: { isMobile },
+      appIcon
+    } = this.props
     return (
-      <div className={classNames(styles['wizard'], styles['welcome'])}>
-        <div className={styles['wizard-main']}>
-          <div className={styles['logo-wrapper']}>
-            <div className={styles['cozy-logo-white']} />
+      <div className={classNames(styles['wizard'], styles['wizard--welcome'])}>
+        <div className={styles['wizard-wrapper']}>
+          <div className={styles['wizard-main']}>
+            <div className={styles['wizard-logo']}>
+              <img
+                className={styles['wizard-logo-img']}
+                src={appIcon}
+                alt=""
+                aria-hidden="true"
+                focusable="false"
+              />
+              <div className={styles['wizard-logo-badge']}>
+                <Icon
+                  icon="cozy-negative"
+                  width="20"
+                  height="20"
+                  color="white"
+                />
+              </div>
+            </div>
+            <MainTitle
+              tag="h1"
+              className={classNames(styles['wizard-title'], 'u-mt-0')}
+            >
+              {t('mobile.onboarding.welcome.title')}
+            </MainTitle>
+            <p className={styles['wizard-desc']}>
+              {t('mobile.onboarding.welcome.desc')}
+            </p>
           </div>
-          <h1 className={styles['title']}>
-            {t('mobile.onboarding.welcome.title1')}
-          </h1>
-          <h1 className={styles['title']}>
-            {t('mobile.onboarding.welcome.title2')}
-          </h1>
+          <footer className={styles['wizard-footer']}>
+            {this.registerRender()}
+            <Button
+              onClick={selectServer}
+              theme="secondary"
+              label={t('mobile.onboarding.welcome.button')}
+              size={isMobile ? 'normal' : 'large'}
+            />
+          </footer>
         </div>
-        <footer className={styles['wizard-footer']}>
-          <Button
-            onClick={selectServer}
-            label={t('mobile.onboarding.welcome.button')}
-          />
-          {this.registerRender()}
-        </footer>
       </div>
     )
   }
 }
-export default translate()(Welcome)
+
+export default withBreakpoints()(translate()(Welcome))
