@@ -5,7 +5,7 @@ import MobileRouter from 'authentication/MobileRouter'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
-
+import { IconSprite } from 'cozy-ui/transpiled/react/'
 import { unlink, isAuthorized, isRevoked } from './duck'
 import { saveCredentials } from './sagas'
 
@@ -30,16 +30,19 @@ class DriveMobileRouter extends Component {
 
   render(props) {
     return (
-      <MobileRouter
-        isAuthenticated={props.isAuthenticated}
-        isRevoked={props.isRevoked}
-        appRoutes={props.appRoutes}
-        history={props.history}
-        onAuthenticated={this.afterAuthentication}
-        onLogout={this.afterLogout}
-        allowRegistration={false}
-        appIcon={require('../../../../../targets/drive/vendor/assets/apple-touch-icon-180x180.png')}
-      />
+      <div>
+        <MobileRouter
+          isAuthenticated={props.isAuthenticated}
+          isRevoked={props.isRevoked}
+          appRoutes={props.appRoutes}
+          history={props.history}
+          onAuthenticated={this.afterAuthentication}
+          onLogout={this.afterLogout}
+          allowRegistration={false}
+          appIcon={require('../../../../../src/drive/targets/vendor/assets/apple-touch-icon-180x180.png')}
+        />
+        <IconSprite />
+      </div>
     )
   }
 }
