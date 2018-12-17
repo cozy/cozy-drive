@@ -68,7 +68,7 @@ class Authentication extends Component {
   }
 
   render() {
-    const { onException } = this.props
+    const { onException, appIcon } = this.props
     const { currentStepIndex, generalError, fetching } = this.state
     const currentStep = this.steps[currentStepIndex]
 
@@ -79,6 +79,7 @@ class Authentication extends Component {
             selectServer={() => this.setupSteps()}
             register={() => this.setupSteps()}
             allowRegistration={false}
+            appIcon={appIcon}
           />
         )
       case STEP_EXISTING_SERVER:
@@ -100,7 +101,8 @@ class Authentication extends Component {
 Authentication.propTypes = {
   onComplete: PropTypes.func.isRequired,
   onException: PropTypes.func.isRequired,
-  router: PropTypes.object
+  router: PropTypes.object,
+  appIcon: PropTypes.string.isRequired
 }
 
 Authentication.contextTypes = {

@@ -3,11 +3,15 @@ import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-
+import isUrl from 'is-url'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button } from 'cozy-ui/react'
+import { Button, Label, Input, MainTitle, Icon } from 'cozy-ui/react'
+import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
+import 'cozy-ui/assets/icons/ui/previous.svg'
+import 'cozy-ui/assets/icons/ui/next.svg'
+import 'cozy-ui/assets/icons/ui/lock.svg'
 import styles from '../styles'
-
+import { ButtonLinkRegistration } from './ButtonLinkRegistration'
 require('url-polyfill')
 
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
@@ -15,14 +19,29 @@ const ERR_EMAIL = 'mobile.onboarding.server_selection.wrong_address_with_email'
 const ERR_V2 = 'mobile.onboarding.server_selection.wrong_address_v2'
 const ERR_COSY = 'mobile.onboarding.server_selection.wrong_address_cosy'
 
+const customValue = 'custom'
+const cozyDomain = '.mycozy.cloud'
 export class SelectServer extends Component {
   state = {
     value: '',
     fetching: false,
-    error: null
+    error: null,
+    selectValue: cozyDomain,
+    isCustomDomain: false,
+    placeholderValue:
+      'mobile.onboarding.server_selection.cozy_address_placeholder'
   }
 
   componentDidMount() {
+    //if the cordova plugin is here, then shrink the view on iOS
+    if (window.Keyboard && window.Keyboard.shrinkView) {
+      window.Keyboard.shrinkView(true)
+    } else {
+      console.warn(
+        'Cozy-Authentication needs a cozy/cordova-plugin-keyboard plugin to work better.'
+      )
+    }
+
     this.input.focus()
   }
 
@@ -39,14 +58,33 @@ export class SelectServer extends Component {
     }))
   }
 
-  componentDidUpdate() {
-    if (this.state.error) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.error && this.state.error !== prevState.error) {
       this.input.focus()
       this.input.select()
     }
   }
 
   onChange(value) {
+    if (!this.state.manuallySelected) {
+      if (value.startsWith('www.') && (value.match(/\./g) || []).length === 1) {
+        this.setState({
+          selectValue: cozyDomain
+        })
+      } else {
+        if (value.includes('.')) {
+          this.setState({
+            selectValue: customValue,
+            isCustomDomain: true
+          })
+        } else {
+          this.setState({
+            selectValue: cozyDomain,
+            isCustomDomain: false
+          })
+        }
+      }
+    }
     if (this.state.error) {
       this.setState(state => ({ ...state, error: null }))
     }
@@ -109,11 +147,16 @@ export class SelectServer extends Component {
     }
   }
 
+  isValideCozyName = value => {
+    return (
+      /^[a-zA-Z0-9-]*$/.test(value) && value.length > 0 && value.length < 63
+    )
+  }
   hasMispelledCozy = value => /\..*cosy.*\./.test(value)
   hasAtSign = value => /.*@.*/.test(value)
 
   appendDomain = (value, domain) =>
-    /\./.test(value) ? value : `${value}.${domain}`
+    /\./.test(value) ? value : `${value}${domain}`
   prependProtocol = value =>
     /^http(s)?:\/\//.test(value) ? value : `https://${value}`
   removeAppSlug = value => {
@@ -139,7 +182,7 @@ export class SelectServer extends Component {
 
   getUrl = value => {
     try {
-      const defaultDomain = 'mycozy.cloud'
+      const defaultDomain = cozyDomain
       const normalizedURL = this.normalizeURL(value, defaultDomain)
 
       return new URL(normalizedURL).toString().replace(/\/$/, '')
@@ -148,72 +191,168 @@ export class SelectServer extends Component {
     }
   }
 
+  getSubDomain = value => {
+    if (value.includes('.')) {
+      return value.substr(0, value.indexOf('.'))
+    }
+    return value
+  }
+  selectOnChange = e => {
+    this.setState({
+      selectValue: e.target.value,
+      isCustomDomain: e.target.value === customValue ? true : false,
+      manuallySelected: e.target.value === customValue ? true : false,
+      value:
+        e.target.value !== customValue
+          ? this.getSubDomain(this.state.value)
+          : this.state.value,
+      placeholderValue:
+        e.target.value === customValue
+          ? 'mobile.onboarding.server_selection.cozy_custom_address_placeholder'
+          : 'mobile.onboarding.server_selection.cozy_address_placeholder'
+    })
+    this.input.focus()
+  }
+
   render() {
-    const { value, error, fetching } = this.state
-    const { t, previousStep } = this.props
+    const {
+      value,
+      error,
+      fetching,
+      isCustomDomain,
+      placeholderValue
+    } = this.state
+    const {
+      t,
+      previousStep,
+      breakpoints: { isMobile }
+    } = this.props
+    const inputID = 'inputID'
     return (
-      <form
-        className={classNames(styles['wizard'], styles['select-server'])}
-        onSubmit={this.onSubmit}
-      >
-        <header className={styles['wizard-header']}>
-          <a
-            className={classNames(styles['button-previous'], styles['--cross'])}
-            onClick={previousStep}
-          />
-        </header>
-        <div className={styles['wizard-main']}>
-          <div
-            className={classNames(styles['logo-wrapper'], {
-              [styles['error']]: error
-            })}
-          >
-            <div className={styles['cozy-logo-white']} />
-          </div>
-          <label className={styles['coz-form-label']}>
-            {t('mobile.onboarding.server_selection.label')}
-          </label>
-          <input
-            type="text"
-            autoCapitalize="none"
-            autoCorrect="off"
-            autoComplete="off"
-            className={classNames(styles['input'], {
-              [styles['error']]: error
-            })}
-            placeholder={t(
-              'mobile.onboarding.server_selection.cozy_address_placeholder'
+      <form className={styles['wizard']} onSubmit={this.onSubmit}>
+        <div className={styles['wizard-wrapper']}>
+          <header className={styles['wizard-header']}>
+            <Button
+              subtle
+              icon="previous"
+              iconOnly
+              extension="narrow"
+              className={classNames(styles['wizard-previous'])}
+              onClick={previousStep}
+              type="button"
+            />
+            <MainTitle tag="h1" className={styles['wizard-title']}>
+              {t('mobile.onboarding.server_selection.title')}
+            </MainTitle>
+          </header>
+          <div className={styles['wizard-main']}>
+            <Label htmlFor={inputID}>
+              {t('mobile.onboarding.server_selection.label')}
+            </Label>
+            <div
+              className={classNames(
+                styles['wizard-dualfield'],
+                this.state.focusClass
+              )}
+            >
+              {!isMobile && (
+                <div className={styles['wizard-protocol']}>
+                  <Icon icon="lock" />
+                  <span>https://</span>
+                </div>
+              )}
+              <Input
+                type="text"
+                id={inputID}
+                autoCapitalize="none"
+                autoCorrect="off"
+                autoComplete="off"
+                autofocus
+                className={classNames(styles['wizard-input'], {
+                  [styles['error']]: error
+                })}
+                placeholder={t(placeholderValue)}
+                size={isMobile ? 'medium' : undefined}
+                inputRef={input => {
+                  this.input = input
+                }}
+                onChange={({ target: { value } }) => {
+                  this.onChange(value)
+                }}
+                onFocus={() =>
+                  this.setState({
+                    focusClass: styles['wizard-dualfield--focus']
+                  })
+                }
+                onBlur={() => this.setState({ focusClass: undefined })}
+                value={value}
+              />
+              <select
+                className={classNames(styles['wizard-select'], {
+                  [styles['wizard-select--narrow']]: isCustomDomain,
+                  [styles['wizard-select--medium']]: isMobile
+                })}
+                value={this.state.selectValue}
+                onChange={e => {
+                  this.selectOnChange(e)
+                }}
+              >
+                <option value=".mycozy.cloud">
+                  {t('mobile.onboarding.server_selection.domain_cozy')}
+                </option>
+                <option value="custom">
+                  {t('mobile.onboarding.server_selection.domain_custom')}
+                </option>
+              </select>
+            </div>
+            {!error && (
+              <ReactMarkdown
+                className={classNames(
+                  styles['wizard-notice'],
+                  styles['wizard-notice--lost']
+                )}
+                source={t('mobile.onboarding.server_selection.lostpwd')}
+              />
             )}
-            ref={input => {
-              this.input = input
-            }}
-            onChange={({ target: { value } }) => {
-              this.onChange(value)
-            }}
-            value={value}
-          />
-          {!error && (
-            <ReactMarkdown
-              className={classNames(styles['description'], styles['info'])}
-              source={t('mobile.onboarding.server_selection.description')}
-              disallowedTypes={['link']}
-              unwrapDisallowed
+            {error && (
+              <ReactMarkdown
+                className={classNames(
+                  styles['wizard-notice'],
+                  styles['wizard-notice--error']
+                )}
+                source={t(error)}
+              />
+            )}
+          </div>
+          <footer
+            className={classNames(
+              styles['wizard-footer'],
+              isMobile ? 'u-mt-auto' : 'u-pb-2'
+            )}
+          >
+            <Button
+              className={styles['wizard-next']}
+              disabled={
+                error ||
+                fetching ||
+                (isCustomDomain && !isUrl(this.prependProtocol(value))) ||
+                (!isCustomDomain && !this.isValideCozyName(value))
+              }
+              busy={fetching}
+              label={t('mobile.onboarding.server_selection.button')}
+              size={isMobile ? 'normal' : 'large'}
+            >
+              <Icon icon="next" color="white" />
+            </Button>
+            <ButtonLinkRegistration
+              className={classNames('u-mt-half', 'u-mb-1')}
+              label={t('mobile.onboarding.welcome.no_account_link')}
+              size={isMobile ? 'normal' : 'large'}
+              subtle={true}
+              type={'button'}
             />
-          )}
-          {error && (
-            <ReactMarkdown
-              className={classNames(styles['description'], styles['error'])}
-              source={t(error)}
-            />
-          )}
+          </footer>
         </div>
-        <footer className={styles['wizard-footer']}>
-          <Button
-            disabled={error || !value || fetching}
-            busy={fetching}
-            label={t('mobile.onboarding.server_selection.button')}
-          />
-        </footer>
       </form>
     )
   }
@@ -237,4 +376,4 @@ SelectServer.contextTypes = {
   client: PropTypes.object
 }
 
-export default translate()(SelectServer)
+export default withBreakpoints()(translate()(SelectServer))

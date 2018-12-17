@@ -11,7 +11,8 @@ const MobileRouter = ({
   isAuthenticated,
   isRevoked,
   onAuthenticated,
-  onLogout
+  onLogout,
+  appIcon
 }) => {
   if (!isAuthenticated) {
     return (
@@ -19,6 +20,7 @@ const MobileRouter = ({
         router={history}
         onComplete={onAuthenticated}
         onException={logException}
+        appIcon={appIcon}
       />
     )
   } else if (isRevoked) {
