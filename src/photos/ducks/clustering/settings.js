@@ -24,7 +24,7 @@ export const readSetting = async () => {
   return settings.find(doc => doc.type === SETTING_TYPE)
 }
 
-const getDefaultParameters = params => {
+const getDefaultParametersMode = params => {
   const mode = params.modes.find(mode => mode.name === DEFAULT_MODE)
   if (!mode || !mode.epsTemporal || !mode.epsSpatial) {
     return null
@@ -38,12 +38,12 @@ const getDefaultParameters = params => {
 
 export const findPhotosDefaultParameters = (setting, photos) => {
   const matchingParams = getMatchingParameters(setting.parameters, photos)
-  return matchingParams ? getDefaultParameters(matchingParams) : null
+  return matchingParams ? getDefaultParametersMode(matchingParams) : null
 }
 
 export const findLastDefaultParameters = setting => {
   const lastParams = setting.parameters[setting.parameters.length - 1]
-  return lastParams ? getDefaultParameters(lastParams) : null
+  return lastParams ? getDefaultParametersMode(lastParams) : null
 }
 
 export const getDefaultSetting = photos => {
