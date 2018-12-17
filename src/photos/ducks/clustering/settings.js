@@ -64,3 +64,10 @@ export const getDefaultSetting = photos => {
   setting.parameters[0] = params
   return setting
 }
+
+export const saveChangesSettings = (setting, changes) => {
+  const count = setting.evaluationCount + changes.photos.length
+  const lastSeq = changes.newLastSeq
+  const newSetting = { ...setting, evaluationCount: count, lastSeq: lastSeq }
+  return cozyClient.data.update(DOCTYPE_PHOTOS_SETTINGS, setting, newSetting)
+}

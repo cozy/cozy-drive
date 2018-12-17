@@ -6,7 +6,8 @@ import {
   findLastDefaultParameters,
   createSetting,
   getDefaultSetting,
-  findPhotosDefaultParameters
+  findPhotosDefaultParameters,
+  saveChangesSettings
 } from 'photos/ducks/clustering/settings'
 import {
   computeEpsTemporal,
@@ -64,26 +65,34 @@ const createInitialClusters = async (setting, dataset) => {
 const clusterizePhotos = async (setting, dataset) => {
   log('info', `Start clustering on ${dataset.length} photos`)
 
-  const albums = await findAutoAlbums()
-  if (albums && albums.length > 0) {
-    await createNewClusters(setting, dataset, albums)
-  } else {
-    // No album found: this is an initialization
-    await createInitialClusters(setting, dataset)
+  try {
+    const albums = await findAutoAlbums()
+    if (albums && albums.length > 0) {
+      await createNewClusters(setting, dataset, albums)
+    } else {
+      // No album found: this is an initialization
+      await createInitialClusters(setting, dataset)
+    }
+  } catch (e) {
+    log(
+      'error',
+      `An error occured during the clustering: ${JSON.stringify(e.reason)}`
+    )
   }
-  // TODO update params
   // TODO adapt percentiles for large datasets
 }
 
-const getNewPhotos = async lastSeq => {
+const getChanges = async lastSeq => {
   log('info', `Get changes on files since ${lastSeq}`)
   const result = await cozyClient.fetchJSON(
     'GET',
     `/data/${DOCTYPE_FILES}/_changes?include_docs=true&since=${lastSeq}`
   )
-  return result.results.map(res => res.doc).filter(doc => {
+  const photos = result.results.map(res => res.doc).filter(doc => {
     return doc.class === 'image' && !doc._id.includes('_design') && !doc.trashed
   })
+  const newLastSeq = result.last_seq
+  return { photos, newLastSeq }
 }
 
 const initParameters = dataset => {
@@ -110,12 +119,12 @@ const onPhotoUpload = async () => {
   let setting = await readSetting()
   const lastSeq = setting ? setting.lastSeq : 0
 
-  const photos = await getNewPhotos(lastSeq)
-  if (photos.length < 1) {
+  const changes = await getChanges(lastSeq)
+  if (changes && changes.photos.length < 1) {
     log('warn', 'Service called but no photos found to clusterize')
     return
   }
-  const dataset = prepareDataset(photos)
+  const dataset = prepareDataset(changes.photos)
 
   if (!setting) {
     // No settings found: init them or use default
@@ -129,6 +138,7 @@ const onPhotoUpload = async () => {
     }
   }
   await clusterizePhotos(setting, dataset)
+  await saveChangesSettings(setting, changes)
 }
 
 onPhotoUpload()
