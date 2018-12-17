@@ -81,7 +81,7 @@
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
     "@sentry/cli": "1.35.4",
-    "autoprefixer": "9.1.0",
+    "autoprefixer": "9.4.3",
     "babel-core": "7.0.0-bridge.0",
     "btoa": "1.2.1",
     "copy-webpack-plugin": "4.5.2",
