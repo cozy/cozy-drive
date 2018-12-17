@@ -5,7 +5,7 @@
   "scripts": {
     "build:drive": "npm run build:drive:browser",
     "build:drive:browser": "COZY_APP_SLUG=drive cozy-scripts build --manifest src/drive/targets/manifest.webapp --build-dir build/drive --src-dir src/drive",
-    "build:drive:mobile": "COZY_APP_SLUG=drive NODE_ENV=mobile:production cozy-scripts build --manifest src/drive/targets/manifest.webapp --src-dir src/drive",
+    "build:drive:mobile": "COZY_APP_SLUG=drive cozy-scripts build --mobile --manifest src/drive/targets/manifest.webapp --src-dir src/drive",
     "watch:drive": "npm run watch:drive:browser",
     "watch:drive:browser": "COZY_APP_SLUG=drive cozy-scripts watch --manifest src/drive/targets/manifest.webapp --build-dir build/drive --src-dir src/drive",
     "watch:drive:mobile": "COZY_APP_SLUG=drive NODE_ENV=mobile:development cozy-scripts watch --manifest src/drive/targets/manifest.webapp --src-dir src/drive",
