@@ -1,3 +1,5 @@
+import { averageDate } from './utils'
+
 const outsideClusteringEdges = (photo, newestAlbum, oldestAlbum) => {
   const photoDate = new Date(photo.datetime)
   const newestEnd = new Date(newestAlbum.period.end)
@@ -39,7 +41,7 @@ const photoBetweenClusters = (photo, newerAlbum, olderAlbum) => {
  * @param {Object[]} albums - the existing clusters, seen as albums
  * @returns {Object[]} An array of matching clusters. length can be 0, 1 or 2.
  */
-export const matchingClusters = (photo, albums) => {
+export const getMatchingClusters = (photo, albums) => {
   const newestAlbum = albums[0]
   const oldestAlbum = albums[albums.length - 1]
   const edge = outsideClusteringEdges(photo, newestAlbum, oldestAlbum)
@@ -57,4 +59,29 @@ export const matchingClusters = (photo, albums) => {
     }
   }
   return []
+}
+
+/**
+ * Find the relevant parameters for the given set of photos.
+ * @param {Object[]} params - the array of parameters including their period
+ * @param {Object[]} photos - the array of photos including their timestamps
+ */
+export const getMatchingParameters = (parameters, photos) => {
+  // Take the average date in the photos to compare with parameters periods.
+  const datetime = averageDate(photos)
+
+  const lastParams = parameters[parameters.length - 1]
+  const firstParams = parameters[0]
+  if (new Date(lastParams.period.end) <= datetime) {
+    // The date is newer than the last parameters
+    return lastParams
+  } else if (new Date(firstParams.period.start) >= datetime) {
+    // The date is older than the first parameters
+    return firstParams
+  } else {
+    // The date is inside the parameters periods
+    return parameters.find(param => {
+      return new Date(param.period.end) >= datetime
+    })
+  }
 }

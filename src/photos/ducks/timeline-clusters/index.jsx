@@ -40,7 +40,7 @@ const TIMELINE_MUTATIONS = query => ({
 })
 
 const formatDate = (date, f) => {
-  return f(date, 'DD MMMM YYYYY')
+  return f(date, 'DD MMMM YYYY')
 }
 
 const getSectionTitle = (album, f) => {

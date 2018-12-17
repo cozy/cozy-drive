@@ -1,4 +1,4 @@
-import { matchingClusters } from './matching'
+import { getMatchingClusters, getMatchingParameters } from './matching'
 
 const photos = [
   {
@@ -41,15 +41,15 @@ describe('auto albums', () => {
         }
       }
     ]
-    let matching = matchingClusters(photos[0], existingAlbums)
+    let matching = getMatchingClusters(photos[0], existingAlbums)
     expect(matching.length).toEqual(1)
     expect(matching[0]).toEqual(existingAlbums[1])
 
-    matching = matchingClusters(photos[1], existingAlbums)
+    matching = getMatchingClusters(photos[1], existingAlbums)
     expect(matching.length).toEqual(1)
     expect(matching[0]).toEqual(existingAlbums[1])
 
-    matching = matchingClusters(photos[2], existingAlbums)
+    matching = getMatchingClusters(photos[2], existingAlbums)
     expect(matching.length).toEqual(1)
     expect(matching[0]).toEqual(existingAlbums[0])
   })
@@ -88,18 +88,81 @@ describe('auto albums', () => {
       }
     )
     for (let i = 0; i < 3; i++) {
-      let matching = matchingClusters(photos[i], existingAlbums)
+      let matching = getMatchingClusters(photos[i], existingAlbums)
       expect(matching.length).toEqual(2)
       expect(matching[0]).toEqual(existingAlbums[0])
       expect(matching[1]).toEqual(existingAlbums[1])
     }
 
-    let matching = matchingClusters(photos[3], existingAlbums)
+    let matching = getMatchingClusters(photos[3], existingAlbums)
     expect(matching.length).toEqual(1)
     expect(matching[0]).toEqual(existingAlbums[1])
 
-    matching = matchingClusters(photos[4], existingAlbums)
+    matching = getMatchingClusters(photos[4], existingAlbums)
     expect(matching.length).toEqual(1)
     expect(matching[0]).toEqual(existingAlbums[0])
+  })
+})
+
+describe('parameters', () => {
+  const params = [
+    {
+      period: {
+        start: '2016-01-01T00:00:00+00:00',
+        end: '2016-12-31T00:00:00+00:00'
+      }
+    },
+    {
+      period: {
+        start: '2017-01-01T00:00:00+00:00',
+        end: '2017-07-31T00:00:00+00:00'
+      }
+    },
+    {
+      period: {
+        start: '2019-01-01T00:00:00+00:00',
+        end: '2020-01-01T00:00:00+00:00'
+      }
+    }
+  ]
+  it('Should match older photo', () => {
+    const photos = [
+      {
+        datetime: '2014-03-01T15:38:41+01:00',
+        timestamp: 387134.64472222223
+      }
+    ]
+    const matching = getMatchingParameters(params, photos)
+    expect(matching).toEqual(params[0])
+  })
+  it('Should match newer photo', () => {
+    const photos = [
+      {
+        datetime: '2022-03-01T15:38:41+01:00',
+        timestamp: 457262.64472222223
+      }
+    ]
+    const matching = getMatchingParameters(params, photos)
+    expect(matching).toEqual(params[2])
+  })
+  it('Should match photo inside a period', () => {
+    const photos = [
+      {
+        datetime: '2017-03-01T15:38:41+01:00',
+        timestamp: 413438.64472222223
+      }
+    ]
+    const matching = getMatchingParameters(params, photos)
+    expect(matching).toEqual(params[1])
+  })
+  it('Should match photo between two periods', () => {
+    const photos = [
+      {
+        datetime: '2018-03-01T15:38:41+01:00',
+        timestamp: 426614.64472222223
+      }
+    ]
+    const matching = getMatchingParameters(params, photos)
+    expect(matching).toEqual(params[2])
   })
 })

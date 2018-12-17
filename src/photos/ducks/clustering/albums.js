@@ -1,6 +1,6 @@
 import { cozyClient, log } from 'cozy-konnector-libs'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
-import { matchingClusters } from './matching'
+import { getMatchingClusters } from './matching'
 import { prepareDataset } from './utils'
 import flatten from 'lodash/flatten'
 
@@ -117,7 +117,7 @@ export const albumsToClusterize = async (newPhotos, albums) => {
 
   for (const newPhoto of newPhotos) {
     // Find clusters matching this newPhoto
-    const matchingAlbums = matchingClusters(newPhoto, albums)
+    const matchingAlbums = getMatchingClusters(newPhoto, albums)
     if (matchingAlbums.length > 0) {
       const key = matchingAlbums[1]
         ? matchingAlbums[0]._id + ':' + matchingAlbums[1]._id
