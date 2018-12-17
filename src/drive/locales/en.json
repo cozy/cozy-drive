@@ -283,7 +283,8 @@
         "title": "Cozy Drive",
         "desc": "Create a Cozy or sign in to access Cozy Drive",
         "button": "Sign in",
-        "no_account_link": "I don't have a Cozy"
+        "no_account_link": "I don't have a Cozy",
+        "create_my_cozy": "Create my Cozy"
       },
       "server_selection": {
         "title": "Sign in",

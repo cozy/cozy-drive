@@ -29,7 +29,7 @@ export class Welcome extends Component {
     }
     return (
       <ButtonLinkRegistration
-        label={t('mobile.onboarding.welcome.no_account_link')}
+        label={t('mobile.onboarding.welcome.create_my_cozy')}
         size={isMobile ? 'normal' : 'large'}
       />
     )
