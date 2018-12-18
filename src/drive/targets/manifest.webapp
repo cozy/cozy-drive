@@ -43,9 +43,9 @@
       "index": "index.html",
       "public": false
     },
-    "/services": {
+    "/intents": {
       "folder": "/",
-      "index": "services.html",
+      "index": "index.html",
       "public": false
     },
     "/public": {
