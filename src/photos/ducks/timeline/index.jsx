@@ -19,15 +19,15 @@ const TIMELINE_QUERY = client =>
       'metadata.datetime': 'desc'
     })
 
-const TIMELINE_MUTATIONS = query => ({
+const TIMELINE_MUTATIONS = client => ({
   uploadPhoto: async (file, dirId) => {
-    return query.client.mutate({
+    return client.mutate({
       mutationType: 'UPLOAD_PHOTO',
       execute: () =>
-        query.client.collection('io.cozy.files').createFile(file, { dirId })
+        client.collection('io.cozy.files').createFile(file, { dirId })
     })
   },
-  deletePhoto: photo => query.client.destroy(photo)
+  deletePhoto: photo => client.destroy(photo)
 })
 
 const getPhotosByMonth = photos => {
