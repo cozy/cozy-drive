@@ -12,43 +12,10 @@ export const ButtonLinkRegistration = ({
 }) => {
   const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
     'browser'}`
-  /* 
-  if (hasSafariPlugin()) {
-    const openManager = () => {
-      window.SafariViewController.show(
-        {
-          url: url,
-          transition: 'curl'
-        },
-        result => {
-          if (result.event === 'closed') {
-            window.SafariViewController.hide()
-          }
-        },
-        error => {
-          console.warn(error)
-          window.SafariViewController.hide()
-        }
-      )
-    }
- */
-  /*  return (
-      <Button
-        onClick={openManager}
-        label={label}
-        size={size}
-        className={className}
-        subtle={subtle}
-        type={type}
-      />
-    )
-  } */
-
   return (
     <Button
-      onClick={e => {
-        console.log('clic')
-        nativeLinkOpen({ e, url })
+      onClick={() => {
+        nativeLinkOpen({ url })
       }}
       href={url}
       label={label}
