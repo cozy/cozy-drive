@@ -22,16 +22,16 @@ const TIMELINE_QUERY = client =>
     })
     .include(['albums'])
 
-const TIMELINE_MUTATIONS = query => ({
+const TIMELINE_MUTATIONS = client => ({
   uploadPhoto: (file, dirPath) => {
-    return query.client.upload(file, dirPath, {
+    return client.upload(file, dirPath, {
       updateQueries: {
         [TIMELINE]: (previousData, result) => [result.data, ...previousData]
       }
     })
   },
   deletePhoto: photo =>
-    query.client.destroy(photo, {
+    client.destroy(photo, {
       updateQueries: {
         [TIMELINE]: (previousData, result) =>
           previousData.filter(p => p._id !== result.data.id)

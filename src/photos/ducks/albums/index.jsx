@@ -30,9 +30,9 @@ export const ALBUM_QUERY = (client, ownProps) => {
 export const ALBUM_GET_ONE = (client, ownProps) =>
   client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId)
 
-const ALBUM_MUTATIONS = query => ({
-  updateAlbum: album => query.client.save(album),
-  deleteAlbum: album => query.client.destroy(album),
+const ALBUM_MUTATIONS = client => ({
+  updateAlbum: album => client.save(album),
+  deleteAlbum: album => client.destroy(album),
   addPhotos,
   removePhotos: async (album, photos, clearSelection) => {
     try {
@@ -71,19 +71,13 @@ const ALBUMS_MUTATIONS = client => ({
         return
       }
       const album = { _type: DOCTYPE_ALBUMS, name, created_at }
-      /*
-        !WHY do I need that stuff ? withMutations() and mutations='' are not
-        sending the same props
-        */
-      const realClient =
-        typeof client.validate === 'function' ? client : client.client
 
-      const unique = await realClient.validate(album)
+      const unique = await client.validate(album)
       if (unique !== true) {
         Alerter.error('Albums.create.error.already_exists', { name })
         return
       }
-      const resp = await realClient.create(
+      const resp = await client.create(
         DOCTYPE_ALBUMS,
         album,
         { photos },
