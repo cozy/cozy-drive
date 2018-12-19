@@ -12,8 +12,11 @@ configurationFiles.push(require('cozy-scripts/config/webpack.config.css-modules'
 
 const isDrive = process.env.COZY_APP_SLUG !== 'photos'
 if (isDrive) configurationFiles.push(require('./webpack/drive.config.js'))
-else configurationFiles.push(require('cozy-scripts/config/webpack.config.services'))
-
+else {
+  configurationFiles.push(require('cozy-scripts/config/webpack.config.services'))
+  const nodeExternals = require('webpack-node-externals')
+  configurationFiles.push({ externals: [nodeExternals()] })
+}
 if (isDrive && target === 'mobile') configurationFiles.push(require('./webpack/mobile.config.js'))
 
 const extraConfig = {
@@ -29,7 +32,7 @@ const extraConfig = {
       __PIWIK_SITEID__: 8,
       __PIWIK_TRACKER_URL__: JSON.stringify('https://matomo.cozycloud.cc'),
       __APP_VERSION__: JSON.stringify(pkg.version)
-    }),
+    })
   ]
 }
 configurationFiles.push(extraConfig)
