@@ -18,6 +18,7 @@ const albumPeriod = photos => {
 }
 
 const addAutoAlbumReferences = async (photos, album) => {
+  let refCount = 0
   try {
     // Create references only for not-clustered photos
     const ids = photos.filter(p => p.clusterId !== album._id).map(p => p.id)
@@ -27,12 +28,14 @@ const addAutoAlbumReferences = async (photos, album) => {
         'info',
         `${ids.length} photos clustered into: ${JSON.stringify(album)}`
       )
+      refCount = ids.length
     } else {
       log('info', `Nothing to clusterize for ${album._id}`)
     }
   } catch (e) {
     log('error', e.reason)
   }
+  return refCount
 }
 
 const createAutoAlbum = async photos => {
@@ -50,15 +53,18 @@ const removeAutoAlbums = async albums => {
 }
 
 const removeAutoAlbumsReferences = async (photos, albums) => {
+  let refsCount = 0
   for (const album of albums) {
-    const ids = photos.map(p => {
-      if (p.clusterId === album._id) {
-        p.clusterId = ''
-        return p.id
-      }
+    const ids = photos.filter(p => p.clusterId === album._id).map(p => {
+      p.clusterId = ''
+      return p.id
     })
-    await cozyClient.data.removeReferencedFiles(album, ids)
+    if (ids.length > 0) {
+      await cozyClient.data.removeReferencedFiles(album, ids)
+      refsCount += ids.length
+    }
   }
+  return refsCount
 }
 
 export const findAutoAlbums = async () => {
@@ -74,38 +80,47 @@ export const findAutoAlbums = async () => {
 }
 
 const createClusters = async clusters => {
+  let refsCount = 0
   for (const photos of clusters) {
     const album = await createAutoAlbum(photos)
-    await addAutoAlbumReferences(photos, album)
+    refsCount += await addAutoAlbumReferences(photos, album)
   }
+  return refsCount
 }
 
 const removeClusters = async (clusters, albumsToSave) => {
+  let refsCount = 0
   for (const photos of clusters) {
-    await removeAutoAlbumsReferences(photos, albumsToSave)
+    refsCount += await removeAutoAlbumsReferences(photos, albumsToSave)
   }
   await removeAutoAlbums(albumsToSave)
+  return refsCount
 }
 
 export const saveClustering = async (clusters, albumsToSave) => {
+  let refsCount = 0
   if (albumsToSave && albumsToSave.length > 0) {
     if (clusters.length === albumsToSave.length) {
       // The clustering structure has not changed: only new photos to add
-      await Promise.all(
-        clusters.map((photos, index) => {
-          return addAutoAlbumReferences(photos, albumsToSave[index])
-        })
-      )
+      refsCount = flatten(
+        await Promise.all(
+          clusters.map((photos, index) => {
+            return addAutoAlbumReferences(photos, albumsToSave[index])
+          })
+        )
+      ).reduce((acc, val) => acc + val, 0)
     } else {
       // The clustering structure has changed: remove the impacted clusters
       // and create the new ones
-      await removeClusters(clusters, albumsToSave)
-      await createClusters(clusters, albumsToSave)
+      const refsRemoved = await removeClusters(clusters, albumsToSave)
+      const refsAdded = await createClusters(clusters, albumsToSave)
+      refsCount = refsCount + refsAdded - refsRemoved
     }
   } else {
     // No cluster exist yet: create them
-    await createClusters(clusters)
+    refsCount = await createClusters(clusters)
   }
+  return refsCount
 }
 
 const findPhotosByAlbum = async album => {
