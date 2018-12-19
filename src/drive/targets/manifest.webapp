@@ -63,22 +63,22 @@
     {
       "action": "OPEN",
       "type": ["io.cozy.files"],
-      "href": "/services"
+      "href": "/intents"
     },
     {
       "action": "PICK",
       "type": ["io.cozy.files"],
-      "href": "/services"
+      "href": "/intents"
     },
     {
       "action": "GET_URL",
       "type": ["io.cozy.files"],
-      "href": "/services"
+      "href": "/intents"
     },
     {
       "action": "OPEN",
       "type": ["io.cozy.suggestions"],
-      "href": "/services"
+      "href": "/intents"
     }
   ],
   "permissions": {
