@@ -44,7 +44,7 @@
       "public": false
     },
     "/intents": {
-      "folder": "/",
+      "folder": "/intents",
       "index": "index.html",
       "public": false
     },
