@@ -40,7 +40,7 @@ const createAutoAlbum = async photos => {
   const period = albumPeriod(photos)
   const created_at = new Date()
   const album = { name, created_at, auto: true, period }
-  return await cozyClient.data.create(DOCTYPE_ALBUMS, album)
+  return cozyClient.data.create(DOCTYPE_ALBUMS, album)
 }
 
 const removeAutoAlbums = async albums => {
@@ -73,22 +73,6 @@ export const findAutoAlbums = async () => {
   return results
 }
 
-const addToClusters = async (clusters, albumsToSave) => {
-  let i = 0
-  for (const photos of clusters) {
-    await addAutoAlbumReferences(photos, albumsToSave[i++])
-  }
-}
-
-const recreateClusters = async (clusters, albumsToSave) => {
-  for (const photos of clusters) {
-    await removeAutoAlbumsReferences(photos, albumsToSave)
-    const album = await createAutoAlbum(photos)
-    await addAutoAlbumReferences(photos, album)
-  }
-  await removeAutoAlbums(albumsToSave)
-}
-
 const createClusters = async clusters => {
   for (const photos of clusters) {
     const album = await createAutoAlbum(photos)
@@ -96,15 +80,27 @@ const createClusters = async clusters => {
   }
 }
 
+const removeClusters = async (clusters, albumsToSave) => {
+  for (const photos of clusters) {
+    await removeAutoAlbumsReferences(photos, albumsToSave)
+  }
+  await removeAutoAlbums(albumsToSave)
+}
+
 export const saveClustering = async (clusters, albumsToSave) => {
   if (albumsToSave && albumsToSave.length > 0) {
     if (clusters.length === albumsToSave.length) {
       // The clustering structure has not changed: only new photos to add
-      await addToClusters(clusters, albumsToSave)
+      await Promise.all(
+        clusters.map((photos, index) => {
+          return addAutoAlbumReferences(photos, albumsToSave[index])
+        })
+      )
     } else {
       // The clustering structure has changed: remove the impacted clusters
-      // and create the new structure
-      await recreateClusters(clusters, albumsToSave)
+      // and create the new ones
+      await removeClusters(clusters, albumsToSave)
+      await createClusters(clusters, albumsToSave)
     }
   } else {
     // No cluster exist yet: create them
@@ -149,7 +145,7 @@ const findPhotosToReclusterize = async albums => {
   return photos
 }
 
-const photoExists = (photos, photo) => {
+const photoExistsInCollection = (photos, photo) => {
   return photos.find(p => p.id === photo.id)
 }
 
@@ -176,7 +172,7 @@ export const albumsToClusterize = async (newPhotos, albums) => {
         ? matchingAlbums[0]._id + ':' + matchingAlbums[1]._id
         : matchingAlbums[0]._id
       if (key in clusterize) {
-        if (!photoExists(clusterize[key], newPhoto)) {
+        if (!photoExistsInCollection(clusterize[key], newPhoto)) {
           clusterize[key].push(newPhoto)
         }
       } else {
@@ -184,7 +180,7 @@ export const albumsToClusterize = async (newPhotos, albums) => {
         const photosToClusterize = await findPhotosToReclusterize(
           matchingAlbums
         )
-        if (!photoExists(photosToClusterize, newPhoto)) {
+        if (!photoExistsInCollection(photosToClusterize, newPhoto)) {
           photosToClusterize.push(newPhoto)
         }
         clusterize[key] = photosToClusterize
