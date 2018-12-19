@@ -10,9 +10,10 @@ configurationFiles.push(require('cozy-scripts/config/webpack.bundle.preact.js'))
 
 configurationFiles.push(require('cozy-scripts/config/webpack.config.css-modules'))
 
-const isDrive = process.env.COZY_APP_SLUG !== 'photos'
+const isDrive = process.env.COZY_APP_SLUG === 'drive'
+const isPhotosServices = process.env.COZY_APP_SLUG === 'photos:services'
 if (isDrive) configurationFiles.push(require('./webpack/drive.config.js'))
-else {
+else if (isPhotosServices) {
   configurationFiles.push(require('cozy-scripts/config/webpack.config.services'))
   const nodeExternals = require('webpack-node-externals')
   configurationFiles.push({ externals: [nodeExternals()] })
