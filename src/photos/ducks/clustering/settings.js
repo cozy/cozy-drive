@@ -10,7 +10,6 @@ import {
   COARSE_COEFFICIENT
 } from './consts'
 import { gradientAngle } from 'photos/ducks/clustering/gradient'
-import { getMatchingParameters } from './matching'
 
 export const createSetting = initParameters => {
   log('info', 'Create setting')
@@ -24,31 +23,33 @@ export const readSetting = async () => {
   return settings.find(doc => doc.type === SETTING_TYPE)
 }
 
-const getDefaultParametersMode = params => {
+export const updateSetting = async (oldSetting, newSetting) => {
+  return cozyClient.data.update(DOCTYPE_PHOTOS_SETTINGS, oldSetting, newSetting)
+}
+
+export const getDefaultParametersMode = params => {
+  if (!params || !params.modes) {
+    return null
+  }
   const mode = params.modes.find(mode => mode.name === DEFAULT_MODE)
   if (!mode || !mode.epsTemporal || !mode.epsSpatial) {
     return null
   }
-  mode.epsMax = Math.max(mode.epsTemporal, mode.epsSpatial)
-  mode.maxBound =
-    mode.epsMax * 2 < DEFAULT_MAX_BOUND ? mode.epsMax * 2 : DEFAULT_MAX_BOUND
-  mode.cosAngle = gradientAngle(mode.epsMax, COARSE_COEFFICIENT)
-  return mode
+  const epsMax = Math.max(mode.epsTemporal, mode.epsSpatial)
+  const maxBound =
+    epsMax * 2 < DEFAULT_MAX_BOUND ? epsMax * 2 : DEFAULT_MAX_BOUND
+  const cosAngle = gradientAngle(epsMax, COARSE_COEFFICIENT)
+  return {
+    epsTemporal: mode.epsTemporal,
+    epsSpatial: mode.epsSpatial,
+    epsMax,
+    maxBound,
+    cosAngle
+  }
 }
 
-export const findPhotosDefaultParameters = (setting, photos) => {
-  const matchingParams = getMatchingParameters(setting.parameters, photos)
-  return matchingParams ? getDefaultParametersMode(matchingParams) : null
-}
-
-export const findLastDefaultParameters = setting => {
-  const lastParams = setting.parameters[setting.parameters.length - 1]
-  return lastParams ? getDefaultParametersMode(lastParams) : null
-}
-
-export const getDefaultSetting = photos => {
-  const setting = DEFAULT_SETTING
-  const params = {
+export const getDefaultParameters = photos => {
+  return {
     period: {
       start: photos[0].datetime,
       end: photos[photos.length - 1].datetime
@@ -61,13 +62,53 @@ export const getDefaultSetting = photos => {
       }
     ]
   }
-  setting.parameters[0] = params
-  return setting
 }
 
-export const saveChangesSettings = (setting, changes) => {
-  const count = setting.evaluationCount + changes.photos.length
+const getPhotosPeriod = (params, photos) => {
+  // Photos are sorted from oldest to newest
+  const newest = new Date(photos[photos.length - 1].datetime).getTime()
+  const endPeriod = new Date(params.period.end).getTime()
+
+  // Note: we do not extend the period backwards (an older starting period),
+  // to avoid side-effects cases where several periods would overlap.
+  if (newest > endPeriod) {
+    return {
+      start: params.period.start,
+      end: photos[photos.length - 1].datetime
+    }
+  }
+  return params.period
+}
+
+export const updateParamsPeriod = async (setting, params, photos) => {
+  const newParams = {
+    ...params,
+    period: getPhotosPeriod(params, photos)
+  }
+  const idx = setting.parameters.findIndex(p => {
+    return (
+      p.period.start === params.period.start &&
+      p.period.end === params.period.end
+    )
+  })
+  if (idx < 0) {
+    log('warn', 'Can not update setting: the period is incorrect')
+    return
+  }
+  const parameters = [...setting.parameters]
+  parameters[idx] = newParams
+
+  const newSetting = {
+    ...setting,
+    parameters: parameters
+  }
+  return updateSetting(setting, newSetting)
+}
+
+export const updateSettingStatus = async (setting, count, changes) => {
+  const evaluationCount =
+    count > 0 ? setting.evaluationCount + count : setting.evaluationCount
   const lastSeq = changes.newLastSeq
-  const newSetting = { ...setting, evaluationCount: count, lastSeq: lastSeq }
+  const newSetting = { ...setting, evaluationCount, lastSeq }
   return cozyClient.data.update(DOCTYPE_PHOTOS_SETTINGS, setting, newSetting)
 }

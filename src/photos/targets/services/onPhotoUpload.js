@@ -3,11 +3,11 @@ import { log, cozyClient } from 'cozy-konnector-libs'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import {
   readSetting,
-  findLastDefaultParameters,
   createSetting,
-  getDefaultSetting,
-  findPhotosDefaultParameters,
-  saveChangesSettings
+  getDefaultParameters,
+  updateSettingStatus,
+  getDefaultParametersMode,
+  updateParamsPeriod
 } from 'photos/ducks/clustering/settings'
 import {
   computeEpsTemporal,
@@ -28,57 +28,72 @@ import {
   findAlbumsByIds
 } from 'photos/ducks/clustering/albums'
 import { prepareDataset } from 'photos/ducks/clustering/utils'
+import { getMatchingParameters } from 'photos/ducks/clustering/matching'
 
 // Compute the actual clustering based on the new dataset and the existing albums
-const createNewClusters = async (setting, dataset, albums) => {
-  const clusterize = await albumsToClusterize(dataset, albums)
-  if (clusterize) {
-    for (const [id, photos] of Object.entries(clusterize)) {
-      const params = findPhotosDefaultParameters(setting, photos)
-      if (!params) {
-        log('warn', 'No parameters for clustering found')
-        continue
-      }
-      const reachs = reachabilities(photos, spatioTemporalScaled, params)
-      const clusters = gradientClustering(photos, reachs, params)
-      if (clusters.length > 0) {
-        const ids = id.split(':')
-        const albumsToSave = findAlbumsByIds(albums, ids)
-        await saveClustering(clusters, albumsToSave)
-      }
-    }
-  }
-}
-
-const createInitialClusters = async (setting, dataset) => {
-  const params = findLastDefaultParameters(setting)
-  if (!params) {
-    log('warn', 'No parameters for clustering found')
-    return
-  }
+const createNewClusters = async (params, key, dataset, albums) => {
   const reachs = reachabilities(dataset, spatioTemporalScaled, params)
   const clusters = gradientClustering(dataset, reachs, params)
-  await saveClustering(clusters)
+  if (clusters.length > 0) {
+    const ids = key.split(':')
+    const albumsToSave = findAlbumsByIds(albums, ids)
+    return saveClustering(clusters, albumsToSave)
+  }
+  return 0
+}
+
+// Compute the inital clustering
+const createInitialClusters = async (paramsMode, dataset) => {
+  const reachs = reachabilities(dataset, spatioTemporalScaled, paramsMode)
+  const clusters = gradientClustering(dataset, reachs, paramsMode)
+  return saveClustering(clusters)
 }
 
 // Clusterize the given photos, i.e. organize them depending on metrics
 const clusterizePhotos = async (setting, dataset) => {
   log('info', `Start clustering on ${dataset.length} photos`)
 
+  let clusteredCount = 0
   try {
     const albums = await findAutoAlbums()
+
     if (albums && albums.length > 0) {
-      await createNewClusters(setting, dataset, albums)
+      // Get photos to clusterize based on the existing clusters
+      const clusterize = await albumsToClusterize(dataset, albums)
+      if (clusterize) {
+        for (const [key, photos] of Object.entries(clusterize)) {
+          // Retrieve the relevant parameters to compute this cluster
+          const params = getMatchingParameters(setting.parameters, photos)
+          const paramsMode = getDefaultParametersMode(params)
+          if (!paramsMode) {
+            log('warn', 'No parameters for clustering found')
+            continue
+          }
+          // Actual clustering
+          clusteredCount += await createNewClusters(
+            paramsMode,
+            key,
+            photos,
+            albums
+          )
+          setting = await updateParamsPeriod(setting, params, dataset)
+        }
+      }
     } else {
       // No album found: this is an initialization
-      await createInitialClusters(setting, dataset)
+      const params = setting.parameters[setting.parameters.length - 1]
+      const paramsMode = getDefaultParametersMode(params)
+      if (!paramsMode) {
+        log('warn', 'No parameters for clustering found')
+        return
+      }
+      clusteredCount = await createInitialClusters(paramsMode, dataset)
+      setting = await updateParamsPeriod(setting, params, dataset)
     }
   } catch (e) {
-    log(
-      'error',
-      `An error occured during the clustering: ${JSON.stringify(e.reason)}`
-    )
+    log('error', `An error occured during the clustering: ${JSON.stringify(e)}`)
   }
+  return { setting, clusteredCount }
   // TODO adapt percentiles for large datasets
 }
 
@@ -120,7 +135,7 @@ const onPhotoUpload = async () => {
   const lastSeq = setting ? setting.lastSeq : 0
 
   const changes = await getChanges(lastSeq)
-  if (changes && changes.photos.length < 1) {
+  if (!changes || changes.photos.length < 1) {
     log('warn', 'Service called but no photos found to clusterize')
     return
   }
@@ -128,17 +143,28 @@ const onPhotoUpload = async () => {
 
   if (!setting) {
     // No settings found: init them or use default
-    if (dataset.length > EVALUATION_THRESHOLD) {
-      // There are enough photos to init the parameters and save them
-      const params = initParameters(dataset)
-      setting = await createSetting(params)
-    } else {
-      // Use default
-      setting = getDefaultSetting(dataset)
-    }
+    const params =
+      dataset.length > EVALUATION_THRESHOLD
+        ? initParameters(dataset)
+        : getDefaultParameters(dataset)
+    setting = await createSetting(params)
   }
-  await clusterizePhotos(setting, dataset)
-  await saveChangesSettings(setting, changes)
+
+  // TODO recompute params
+  const result = await clusterizePhotos(setting, dataset)
+  if (!result.setting) {
+    return
+  }
+  /*
+    WARNING: we save the lastSeq retrieved at the beginning of the clustering.
+    However, we might have produced new _changes on files by saving the
+    referenced-by, so they will computed again at the next clustering.
+    We cannot save the new lastSeq, as new files might have been uploaded by
+    this time and would be ignored for the next clustering.
+    This is unpleasant, but harmless, as no new writes will be produced on the
+    already clustered files.
+   */
+  await updateSettingStatus(result.setting, result.clusteredCount, changes)
 }
 
 onPhotoUpload()
