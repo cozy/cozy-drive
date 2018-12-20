@@ -17,29 +17,47 @@ const albumPeriod = photos => {
   return { start: startDate, end: endDate }
 }
 
-const createReferences = async (photos, album) => {
+const addAutoAlbumReferences = async (photos, album) => {
   try {
-    const ids = photos.map(p => p.id)
-    await cozyClient.data.addReferencedFiles(album, ids)
-    log(
-      'info',
-      `${photos.length} photos clustered into: ${JSON.stringify(album)}`
-    )
+    // Create references only for not-clustered photos
+    const ids = photos.filter(p => p.clusterId !== album._id).map(p => p.id)
+    if (ids.length > 0) {
+      await cozyClient.data.addReferencedFiles(album, ids)
+      log(
+        'info',
+        `${ids.length} photos clustered into: ${JSON.stringify(album)}`
+      )
+    } else {
+      log('info', `Nothing to clusterize for ${album._id}`)
+    }
   } catch (e) {
     log('error', e.reason)
   }
 }
 
-const getOrCreateAutoAlbum = async (photos, albums) => {
-  // Check if an album already exists for these photos. If not, create it
+const createAutoAlbum = async photos => {
   const name = albumName(photos)
-  const album = albums ? albums.find(album => album.name === name) : null
-  if (album) return album
-  else {
-    const created_at = new Date()
-    const period = albumPeriod(photos)
-    const album = { name, created_at, auto: true, period }
-    return await cozyClient.data.create(DOCTYPE_ALBUMS, album)
+  const period = albumPeriod(photos)
+  const created_at = new Date()
+  const album = { name, created_at, auto: true, period }
+  return cozyClient.data.create(DOCTYPE_ALBUMS, album)
+}
+
+const removeAutoAlbums = async albums => {
+  for (const album of albums) {
+    await cozyClient.data.delete(DOCTYPE_ALBUMS, album)
+  }
+}
+
+const removeAutoAlbumsReferences = async (photos, albums) => {
+  for (const album of albums) {
+    const ids = photos.map(p => {
+      if (p.clusterId === album._id) {
+        p.clusterId = ''
+        return p.id
+      }
+    })
+    await cozyClient.data.removeReferencedFiles(album, ids)
   }
 }
 
@@ -50,17 +68,43 @@ export const findAutoAlbums = async () => {
   ])
   const results = await cozyClient.data.query(autoAlbums, {
     selector: { auto: true },
-    sort: [{ name: 'asc' }]
+    sort: [{ name: 'desc' }]
   })
   return results
 }
 
-export const saveClustering = async (clusters, albums) => {
+const createClusters = async clusters => {
   for (const photos of clusters) {
-    if (photos && photos.length > 0) {
-      const album = await getOrCreateAutoAlbum(photos, albums)
-      await createReferences(photos, album)
+    const album = await createAutoAlbum(photos)
+    await addAutoAlbumReferences(photos, album)
+  }
+}
+
+const removeClusters = async (clusters, albumsToSave) => {
+  for (const photos of clusters) {
+    await removeAutoAlbumsReferences(photos, albumsToSave)
+  }
+  await removeAutoAlbums(albumsToSave)
+}
+
+export const saveClustering = async (clusters, albumsToSave) => {
+  if (albumsToSave && albumsToSave.length > 0) {
+    if (clusters.length === albumsToSave.length) {
+      // The clustering structure has not changed: only new photos to add
+      await Promise.all(
+        clusters.map((photos, index) => {
+          return addAutoAlbumReferences(photos, albumsToSave[index])
+        })
+      )
+    } else {
+      // The clustering structure has changed: remove the impacted clusters
+      // and create the new ones
+      await removeClusters(clusters, albumsToSave)
+      await createClusters(clusters, albumsToSave)
     }
+  } else {
+    // No cluster exist yet: create them
+    await createClusters(clusters)
   }
 }
 
@@ -72,6 +116,7 @@ const findPhotosByAlbum = async album => {
       const attributes = files.included.map(file => {
         const attributes = file.attributes
         attributes.id = file.id
+        attributes.clusterId = album._id
         return attributes
       })
       return prepareDataset(attributes)
@@ -100,6 +145,10 @@ const findPhotosToReclusterize = async albums => {
   return photos
 }
 
+const photoExistsInCollection = (photos, photo) => {
+  return photos.find(p => p.id === photo.id)
+}
+
 /**
  *  Find the existing albums and related photos that are eligible to re-cluster,
  *  based on the new given photos.
@@ -122,14 +171,18 @@ export const albumsToClusterize = async (newPhotos, albums) => {
       const key = matchingAlbums[1]
         ? matchingAlbums[0]._id + ':' + matchingAlbums[1]._id
         : matchingAlbums[0]._id
-      if (clusterize[key]) {
-        clusterize[key].push(newPhoto)
+      if (key in clusterize) {
+        if (!photoExistsInCollection(clusterize[key], newPhoto)) {
+          clusterize[key].push(newPhoto)
+        }
       } else {
-        // Save the photos referenced by the matchig albums
+        // Save the photos referenced by the matching albums
         const photosToClusterize = await findPhotosToReclusterize(
           matchingAlbums
         )
-        photosToClusterize.push(newPhoto)
+        if (!photoExistsInCollection(photosToClusterize, newPhoto)) {
+          photosToClusterize.push(newPhoto)
+        }
         clusterize[key] = photosToClusterize
       }
     }

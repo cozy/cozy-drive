@@ -8,7 +8,8 @@ export const prepareDataset = photos => {
     .map(file => {
       const photo = {
         id: file._id || file.id,
-        name: file.name
+        name: file.name,
+        clusterId: file.clusterId
       }
       if (file.metadata) {
         photo.datetime = file.metadata.datetime
@@ -30,8 +31,8 @@ export const prepareDataset = photos => {
  * @param {Object[]} photos - Set of photos
  * @returns {Date} The average date
  */
-export const averageDate = photos => {
+export const averageTime = photos => {
   const sumHours = photos.reduce((acc, val) => acc + val.timestamp, 0)
   const averageHours = sumHours / photos.length
-  return new Date(averageHours * 3600 * 1000)
+  return new Date(averageHours * 3600 * 1000).getTime()
 }

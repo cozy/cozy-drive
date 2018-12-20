@@ -76,6 +76,9 @@ export const gradientClustering = (dataset, reachabilities, params) => {
 
   const clusters = []
   let currentCluster = [dataset[0]]
+  if (dataset.length < 2) {
+    return [currentCluster]
+  }
 
   for (let i = 1; i < reachabilities.length - 1; i++) {
     const prevReach = reachabilities[i - 1]

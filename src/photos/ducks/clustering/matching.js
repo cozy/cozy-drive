@@ -1,9 +1,9 @@
-import { averageDate } from './utils'
+import { averageTime } from './utils'
 
 const outsideClusteringEdges = (photo, newestAlbum, oldestAlbum) => {
-  const photoDate = new Date(photo.datetime)
-  const newestEnd = new Date(newestAlbum.period.end)
-  const oldestStart = new Date(oldestAlbum.period.start)
+  const photoDate = new Date(photo.datetime).getTime()
+  const newestEnd = new Date(newestAlbum.period.end).getTime()
+  const oldestStart = new Date(oldestAlbum.period.start).getTime()
 
   if (photoDate > newestEnd) {
     return newestAlbum
@@ -14,17 +14,17 @@ const outsideClusteringEdges = (photo, newestAlbum, oldestAlbum) => {
 }
 
 const photoInsideCluster = (photo, album) => {
-  const photoDate = new Date(photo.datetime)
-  const albumStart = new Date(album.period.start)
-  const albumEnd = new Date(album.period.end)
+  const photoDate = new Date(photo.datetime).getTime()
+  const albumStart = new Date(album.period.start).getTime()
+  const albumEnd = new Date(album.period.end).getTime()
 
   return photoDate <= albumEnd && photoDate >= albumStart
 }
 
 const photoBetweenClusters = (photo, newerAlbum, olderAlbum) => {
-  const photoDate = new Date(photo.datetime)
-  const newerStart = new Date(newerAlbum.period.start)
-  const olderEnd = new Date(olderAlbum.period.end)
+  const photoDate = new Date(photo.datetime).getTime()
+  const newerStart = new Date(newerAlbum.period.start).getTime()
+  const olderEnd = new Date(olderAlbum.period.end).getTime()
   // Photo between clusters
   return olderEnd && photoDate < newerStart && photoDate > olderEnd
 }
@@ -68,20 +68,20 @@ export const getMatchingClusters = (photo, albums) => {
  */
 export const getMatchingParameters = (parameters, photos) => {
   // Take the average date in the photos to compare with parameters periods.
-  const datetime = averageDate(photos)
+  const datetime = averageTime(photos)
 
   const lastParams = parameters[parameters.length - 1]
   const firstParams = parameters[0]
-  if (new Date(lastParams.period.end) <= datetime) {
+  if (new Date(lastParams.period.end).getTime() <= datetime) {
     // The date is newer than the last parameters
     return lastParams
-  } else if (new Date(firstParams.period.start) >= datetime) {
+  } else if (new Date(firstParams.period.start).getTime() >= datetime) {
     // The date is older than the first parameters
     return firstParams
   } else {
     // The date is inside the parameters periods
     return parameters.find(param => {
-      return new Date(param.period.end) >= datetime
+      return new Date(param.period.end).getTime() >= datetime
     })
   }
 }
