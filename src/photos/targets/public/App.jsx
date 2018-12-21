@@ -10,10 +10,7 @@ import { MoreButton, CozyHomeLink } from 'components/Button'
 import PhotoBoard from 'photos/components/PhotoBoard'
 import classNames from 'classnames'
 import styles from './index.styl'
-import {
-  ALBUM_QUERY,
-  ALBUM_GET_ONE
-} from '../../../../src/photos/ducks/albums/index'
+import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 
 import flatten from 'lodash/flatten'
 class App extends Component {
@@ -131,33 +128,17 @@ class App extends Component {
 
 const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
-    {({ data, hasMore, fetchMore, fetchStatus }) => {
+    {({ album, hasMore, fetchMore, fetchStatus }) => {
       if (fetchStatus === 'loaded') {
         return (
-          <Query query={ALBUM_GET_ONE} {...props}>
-            {({ data: album, fetchStatus }) => {
-              if (fetchStatus === 'loaded') {
-                return (
-                  <App
-                    album={album || null}
-                    photos={data}
-                    fetchStatus={fetchStatus}
-                    hasMore={hasMore}
-                    fetchMore={fetchMore}
-                    {...props}
-                  />
-                )
-              } else {
-                return (
-                  <Spinner
-                    size={'xxlarge'}
-                    loadingType={'photos_fetching'}
-                    middle={true}
-                  />
-                )
-              }
-            }}
-          </Query>
+          <App
+            album={album || null}
+            photos={album.photos ? album.photos.data : []}
+            fetchStatus={fetchStatus}
+            hasMore={hasMore}
+            fetchMore={fetchMore}
+            {...props}
+          />
         )
       } else {
         return (

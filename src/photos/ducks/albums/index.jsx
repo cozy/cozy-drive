@@ -9,7 +9,7 @@ import AddToAlbumModal from './components/AddToAlbumModal'
 import { Alerter } from 'cozy-ui/react/'
 import Loading from '../../components/Loading'
 
-import { DOCTYPE_ALBUMS, DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 const ALBUMS_QUERY = client =>
   client
@@ -21,14 +21,8 @@ const ALBUMS_QUERY = client =>
     .include(['photos'])
     .sortBy([{ created_at: 'desc' }])
 
-export const ALBUM_QUERY = (client, ownProps) => {
-  return client.get(DOCTYPE_FILES).referencedBy({
-    _type: DOCTYPE_ALBUMS,
-    _id: ownProps.router.params.albumId
-  })
-}
-export const ALBUM_GET_ONE = (client, ownProps) =>
-  client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId)
+const ALBUM_QUERY = (client, ownProps) =>
+  client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId).include(['photos'])
 
 const ALBUM_MUTATIONS = client => ({
   updateAlbum: album => client.save(album),
@@ -125,37 +119,21 @@ const ConnectedAddToAlbumModal = props => (
 export const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
     {(
-      { data, hasMore, fetchMore, fetchStatus },
+      { data: album, fetchStatus },
       { updateAlbum, deleteAlbum, removePhotos }
     ) => {
       if (fetchStatus === 'loaded') {
         return (
-          <Query query={ALBUM_GET_ONE} {...props}>
-            {({ data: album, fetchStatus }) => {
-              if (fetchStatus === 'loaded') {
-                return (
-                  <AlbumPhotos
-                    album={album}
-                    photos={data}
-                    updateAlbum={updateAlbum}
-                    deleteAlbum={deleteAlbum}
-                    removePhotos={removePhotos}
-                    hasMore={hasMore}
-                    fetchMore={fetchMore}
-                    {...props}
-                  />
-                )
-              } else {
-                return (
-                  <Loading
-                    size={'xxlarge'}
-                    loadingType={'photos_fetching'}
-                    middle={true}
-                  />
-                )
-              }
-            }}
-          </Query>
+          <AlbumPhotos
+            album={album}
+            photos={album.photos.data}
+            updateAlbum={updateAlbum}
+            deleteAlbum={deleteAlbum}
+            removePhotos={removePhotos}
+            hasMore={album.photos.hasMore}
+            fetchMore={album.photos.fetchMore.bind(album.photos)}
+            {...props}
+          />
         )
       } else {
         return (
