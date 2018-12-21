@@ -225,22 +225,24 @@ export class SelectServer extends Component {
     const {
       t,
       previousStep,
-      breakpoints: { isMobile }
+      breakpoints: { isTiny }
     } = this.props
     const inputID = 'inputID'
     return (
       <form className={styles['wizard']} onSubmit={this.onSubmit}>
         <div className={styles['wizard-wrapper']}>
           <header className={styles['wizard-header']}>
-            <Button
-              subtle
-              icon="previous"
-              iconOnly
-              extension="narrow"
-              className={classNames(styles['wizard-previous'])}
-              onClick={previousStep}
-              type="button"
-            />
+            <div className={styles['wizard-header-fixed']}>
+              <Button
+                subtle
+                icon="previous"
+                iconOnly
+                extension="narrow"
+                className={classNames(styles['wizard-previous'])}
+                onClick={previousStep}
+                type="button"
+              />
+            </div>
             <MainTitle tag="h1" className={styles['wizard-title']}>
               {t('mobile.onboarding.server_selection.title')}
             </MainTitle>
@@ -252,10 +254,13 @@ export class SelectServer extends Component {
             <div
               className={classNames(
                 styles['wizard-dualfield'],
-                this.state.focusClass
+                this.state.focusClass,
+                {
+                  [styles['wizard-dualfield--error']]: error
+                }
               )}
             >
-              {!isMobile && (
+              {!isTiny && (
                 <div className={styles['wizard-protocol']}>
                   <Icon icon="lock" />
                   <span>https://</span>
@@ -272,7 +277,7 @@ export class SelectServer extends Component {
                   [styles['error']]: error
                 })}
                 placeholder={t(placeholderValue)}
-                size={isMobile ? 'medium' : undefined}
+                size={isTiny ? 'medium' : undefined}
                 inputRef={input => {
                   this.input = input
                 }}
@@ -290,7 +295,7 @@ export class SelectServer extends Component {
               <select
                 className={classNames(styles['wizard-select'], {
                   [styles['wizard-select--narrow']]: isCustomDomain,
-                  [styles['wizard-select--medium']]: isMobile
+                  [styles['wizard-select--medium']]: isTiny
                 })}
                 value={this.state.selectValue}
                 onChange={e => {
@@ -305,21 +310,16 @@ export class SelectServer extends Component {
                 </option>
               </select>
             </div>
-            {!error && (
-              <ReactMarkdown
-                className={classNames(
-                  styles['wizard-notice'],
-                  styles['wizard-notice--lost']
-                )}
-                source={t('mobile.onboarding.server_selection.lostpwd')}
-              />
-            )}
+            <ReactMarkdown
+              className={classNames(
+                styles['wizard-notice'],
+                styles['wizard-notice--lost']
+              )}
+              source={t('mobile.onboarding.server_selection.lostpwd')}
+            />
             {error && (
               <ReactMarkdown
-                className={classNames(
-                  styles['wizard-notice'],
-                  styles['wizard-notice--error']
-                )}
+                className={classNames(styles['wizard-errors'], 'u-error')}
                 source={t(error)}
               />
             )}
@@ -327,7 +327,7 @@ export class SelectServer extends Component {
           <footer
             className={classNames(
               styles['wizard-footer'],
-              isMobile ? 'u-mt-auto' : 'u-pb-2'
+              isTiny ? 'u-mt-auto' : 'u-pb-2'
             )}
           >
             <Button
@@ -340,14 +340,14 @@ export class SelectServer extends Component {
               }
               busy={fetching}
               label={t('mobile.onboarding.server_selection.button')}
-              size={isMobile ? 'normal' : 'large'}
+              size={isTiny ? 'normal' : 'large'}
             >
               <Icon icon="next" color="white" />
             </Button>
             <ButtonLinkRegistration
-              className={classNames('u-mt-half', 'u-mb-1')}
+              className={'u-mv-half'}
               label={t('mobile.onboarding.welcome.no_account_link')}
-              size={isMobile ? 'normal' : 'large'}
+              size={isTiny ? 'normal' : 'large'}
               subtle={true}
               type={'button'}
             />
