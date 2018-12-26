@@ -30,7 +30,7 @@ class DriveMobileRouter extends Component {
 
   render(props) {
     return (
-      <div>
+      <div style={{ flex: '1' }}>
         <MobileRouter
           isAuthenticated={props.isAuthenticated}
           isRevoked={props.isRevoked}
