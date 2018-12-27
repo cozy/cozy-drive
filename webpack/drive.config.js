@@ -1,4 +1,3 @@
-const path = require('path')
 const { DefinePlugin } = require('webpack')
 
 module.exports = {
@@ -9,6 +8,6 @@ module.exports = {
       __SENTRY_URL__: JSON.stringify(
         'https://29bd1255b6d544a1b65435a634c9ff67@sentry.cozycloud.cc/2'
       )
-    }),
+    })
   ]
 }
