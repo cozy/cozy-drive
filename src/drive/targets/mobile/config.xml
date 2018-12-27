@@ -107,7 +107,7 @@
     <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items.git#1.5.1">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-keyboard" spec="https://github.com/cozy/cordova-plugin-keyboard.git" />
     <plugin name="com.lampa.startapp" spec="^0.1.4" />
     <plugin name="cordova-plugin-queries-schemes" spec="https://github.com/cozy/cordova-plugin-queries-schemes.git" />
+    <plugin name="cordova-plugin-keyboard" spec="https://github.com/cozy/cordova-plugin-keyboard.git" />
 </widget>
