@@ -9,6 +9,7 @@ import SelectBox, { components } from 'cozy-ui/react/SelectBox'
 import ShareAutosuggest from './ShareAutosuggest'
 import { getPrimaryEmail } from '..'
 import { renewAuthorization } from 'drive/mobile/modules/authorization/sagas'
+import palette from 'cozy-ui/react/palette'
 
 import styles from '../share.styl'
 
@@ -74,7 +75,7 @@ RequestPermissionPopin.propTypes = {
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
-    <Icon icon="bottom" color="#95999d" />
+    <Icon icon="bottom" color={palette.coolGrey} />
   </components.DropdownIndicator>
 )
 const Option = props => (
@@ -93,11 +94,11 @@ const customStyles = {
   option: (base, state) => ({
     ...base,
     color: 'black',
-    backgroundColor: state.isFocused ? '#f5f6f7' : null,
+    backgroundColor: state.isFocused ? palette.paleGrey : null,
     padding: 0,
     borderBottom:
       state.options.findIndex(o => o.value === state.value) === 0
-        ? '1px solid #c4c5c7'
+        ? `1px solid ${palette.silver}`
         : null
   }),
   menu: base => ({
