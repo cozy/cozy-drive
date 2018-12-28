@@ -100,7 +100,13 @@ const removeClusters = async (clusters, albumsToSave) => {
 export const saveClustering = async (clusters, albumsToSave) => {
   let refsCount = 0
   if (albumsToSave && albumsToSave.length > 0) {
-    if (clusters.length === albumsToSave.length) {
+    if (albumsToSave.length > 1 || clusters.length > 1) {
+      // The clustering structure has changed: remove the impacted clusters
+      // and create the new ones
+      const refsRemoved = await removeClusters(clusters, albumsToSave)
+      const refsAdded = await createClusters(clusters, albumsToSave)
+      refsCount = refsCount + refsAdded - refsRemoved
+    } else {
       // The clustering structure has not changed: only new photos to add
       refsCount = flatten(
         await Promise.all(
@@ -109,12 +115,6 @@ export const saveClustering = async (clusters, albumsToSave) => {
           })
         )
       ).reduce((acc, val) => acc + val, 0)
-    } else {
-      // The clustering structure has changed: remove the impacted clusters
-      // and create the new ones
-      const refsRemoved = await removeClusters(clusters, albumsToSave)
-      const refsAdded = await createClusters(clusters, albumsToSave)
-      refsCount = refsCount + refsAdded - refsRemoved
     }
   } else {
     // No cluster exist yet: create them

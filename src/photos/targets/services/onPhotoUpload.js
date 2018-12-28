@@ -4,6 +4,7 @@ import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import {
   readSetting,
   createSetting,
+  updateSetting,
   getDefaultParameters,
   updateSettingStatus,
   getDefaultParametersMode,
@@ -110,11 +111,26 @@ const getChanges = async lastSeq => {
   return { photos, newLastSeq }
 }
 
-const initParameters = dataset => {
-  log('info', `Compute clustering parameters on ${dataset.length} photos`)
-  const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
-  const epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
-  const params = {
+const getFilesFromDate = async date => {
+  // Note a file without a metadata.datetime would not be indexed: this is not
+  // a big deal as this is only to compute parameters
+  const filesIndex = await cozyClient.data.defineIndex(DOCTYPE_FILES, [
+    'metadata.datetime',
+    'class',
+    'trashed'
+  ])
+  const selector = {
+    'metadata.datetime': { $gt: date },
+    class: 'image',
+    trashed: false
+  }
+  return cozyClient.data.query(filesIndex, {
+    selector: selector
+  })
+}
+
+const createParameter = (dataset, epsTemporal, epsSpatial) => {
+  return {
     period: {
       start: dataset[0].datetime,
       end: dataset[dataset.length - 1].datetime
@@ -127,7 +143,35 @@ const initParameters = dataset => {
       }
     ]
   }
-  return params
+}
+const initParameters = dataset => {
+  log('info', `Compute clustering parameters on ${dataset.length} photos`)
+  const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
+  const epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
+  return createParameter(dataset, epsTemporal, epsSpatial)
+}
+
+const recomputeParameters = async setting => {
+  const lastParams = setting.parameters[setting.parameters.length - 1]
+  // The defaultEvaluation field is used at init if there are not enough files
+  // for a proper parameters evaluation: we use default metrics and therefore,
+  // this end period should not be taken into consideration.
+  const lastPeriodEnd = lastParams.defaultEvaluation
+    ? lastParams.period.start
+    : lastParams.period.end
+
+  const files = await getFilesFromDate(lastPeriodEnd)
+
+  // Safety check
+  if (files.length < EVALUATION_THRESHOLD) {
+    return
+  }
+  log('info', `Compute clustering parameters on ${files.length} photos`)
+
+  const dataset = prepareDataset(files)
+  const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
+  const epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
+  return createParameter(dataset, epsTemporal, epsSpatial)
 }
 
 const onPhotoUpload = async () => {
@@ -148,9 +192,21 @@ const onPhotoUpload = async () => {
         ? initParameters(dataset)
         : getDefaultParameters(dataset)
     setting = await createSetting(params)
+  } else {
+    if (setting.evaluationCount > EVALUATION_THRESHOLD) {
+      const newParams = await recomputeParameters(setting)
+      if (newParams) {
+        const params = [...setting.parameters, newParams]
+        const newSetting = {
+          ...setting,
+          parameters: params,
+          evaluationCount: 0
+        }
+        setting = await updateSetting(setting, newSetting)
+      }
+    }
   }
 
-  // TODO recompute params
   const result = await clusterizePhotos(setting, dataset)
   if (!result.setting) {
     return
