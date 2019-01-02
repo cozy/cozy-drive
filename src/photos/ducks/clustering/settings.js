@@ -54,6 +54,7 @@ export const getDefaultParameters = photos => {
       start: photos[0].datetime,
       end: photos[photos.length - 1].datetime
     },
+    defaultEvaluation: true,
     modes: [
       {
         name: DEFAULT_MODE,

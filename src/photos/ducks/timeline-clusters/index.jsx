@@ -65,7 +65,10 @@ const getMatchingSection = (sections, datetime) => {
     if (sections[date].period) {
       const startPeriod = new Date(sections[date].period.start)
       const endPeriod = new Date(sections[date].period.end)
-      return datetime >= startPeriod && datetime <= endPeriod
+      return (
+        (datetime >= startPeriod && datetime <= endPeriod) ||
+        differenceInCalendarDays(datetime, endPeriod) === 0
+      )
     } else {
       // If the section has no period, it is not a cluster but a daily section
       return differenceInCalendarDays(datetime, new Date(date)) === 0
