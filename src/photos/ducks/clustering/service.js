@@ -51,8 +51,8 @@ const computeEps = (dataset, metric, dimensions, percentile) => {
   const neighbors = knn.kNeighbors(dataset)
 
   // Extract the sorted distances and remove outliers
-  const distances = neighbors.map(n => n.distance).sort((a, b) => a - b)
-  knn.excludeOutliers(distances, percentile)
+  let distances = neighbors.map(n => n.distance).sort((a, b) => a - b)
+  distances = knn.excludeOutliers(distances, percentile)
 
   // Compute the optimal eps for the given criterion
   return knn.epsSignificativeSlope(distances)
