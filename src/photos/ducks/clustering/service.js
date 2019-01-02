@@ -30,7 +30,8 @@ export const computeEpsTemporal = (dataset, percentile) => {
 }
 
 export const computeEpsSpatial = (dataset, percentile) => {
-  const epsSpatial = computeEps(dataset, spatial, ['lat', 'lon'], percentile)
+  const gpsDataset = dataset.filter(d => d.lat && d.lon)
+  const epsSpatial = computeEps(gpsDataset, spatial, ['lat', 'lon'], percentile)
   return epsSpatial >= MIN_EPS_SPATIAL ? epsSpatial : MIN_EPS_SPATIAL
 }
 
