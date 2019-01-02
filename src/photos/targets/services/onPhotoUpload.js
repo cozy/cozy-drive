@@ -192,6 +192,12 @@ const onPhotoUpload = async () => {
         ? initParameters(dataset)
         : getDefaultParameters(dataset)
     setting = await createSetting(params)
+    log(
+      'info',
+      `Setting saved with ${JSON.stringify(
+        params.modes
+      )} on period ${JSON.stringify(params.period)}`
+    )
   } else {
     if (setting.evaluationCount > EVALUATION_THRESHOLD) {
       const newParams = await recomputeParameters(setting)
@@ -203,6 +209,7 @@ const onPhotoUpload = async () => {
           evaluationCount: 0
         }
         setting = await updateSetting(setting, newSetting)
+        log('info', `Setting updated with ${JSON.stringify(newParams)}`)
       }
     }
   }
