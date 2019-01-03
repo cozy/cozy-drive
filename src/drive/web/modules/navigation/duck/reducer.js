@@ -360,18 +360,32 @@ export const getFileById = ({ view }, id) => {
 
 const isRootFolder = folder => folder.id === ROOT_DIR_ID
 
-const ensureFileHavePath = ({ view }, file) => ({
+export const ensureFileHavePath = ({ view }, file) => ({
   ...file,
+  displayedPath: getDisplayedFilePath({ view }, file),
   path: getFilePath({ view }, file)
 })
 
+/*
+  TODO: deprecate and remove getFilePath
+*/
 export const getFilePath = ({ view }, file) => {
   const { displayedFolder } = view
-  return isDirectory(file)
-    ? file.path
-    : displayedFolder && !isRootFolder(displayedFolder)
-      ? `${displayedFolder.path}/${file.name}`
-      : `/${file.name}`
+  if (isDirectory(file)) {
+    return file.path
+  } else {
+    const folderPath = displayedFolder
+      ? !isRootFolder(displayedFolder)
+        ? displayedFolder.path
+        : ''
+      : file.path // file.path is the parent folder path
+    return `${folderPath}/${file.name}`
+  }
+}
+
+export const getDisplayedFilePath = ({ view }, file) => {
+  const { displayedFolder } = view
+  return file.path || (displayedFolder ? displayedFolder.path : '')
 }
 
 export const getOpenedFolderId = state => state.view.openedFolderId

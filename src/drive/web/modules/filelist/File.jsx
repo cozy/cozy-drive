@@ -153,18 +153,18 @@ const FileName = ({
             </div>
           </div>
           {withFilePath &&
-            attributes.path &&
+            attributes.displayedPath &&
             (isMobile ? (
               <MidEllipsis
                 className={styles['fil-file-path']}
-                text={attributes.path}
+                text={attributes.displayedPath}
               />
             ) : (
               <Link
                 to={`/folder/${attributes.dir_id}`}
                 className={styles['fil-file-path']}
               >
-                <MidEllipsis text={attributes.path} />
+                <MidEllipsis text={attributes.displayedPath} />
               </Link>
             ))}
           {!withFilePath &&
