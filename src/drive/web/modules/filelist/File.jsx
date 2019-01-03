@@ -57,6 +57,18 @@ const getParentDiv = element => {
   return getParentDiv(element.parentNode)
 }
 
+export const getParentLink = element => {
+  if (!element) {
+    return null
+  }
+
+  if (element.nodeName.toLowerCase() === 'a') {
+    return element
+  }
+
+  return getParentLink(element.parentNode)
+}
+
 const enableTouchEvents = ev => {
   // remove event when you rename a file
   if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
@@ -73,9 +85,10 @@ const enableTouchEvents = ev => {
   }
 
   // remove events when they are on the file's path, because it's a different behavior
+  const parentLink = getParentLink(ev.target)
   if (
-    ev.target.nodeName.toLowerCase() === 'a' &&
-    ev.target.className.indexOf(styles['fil-file-path']) >= 0
+    parentLink &&
+    parentLink.className.indexOf(styles['fil-file-path']) >= 0
   ) {
     return false
   }
