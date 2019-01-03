@@ -21,7 +21,7 @@ import {
 } from 'drive/web/modules/selection/duck'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 
-import styles from 'drive/styles/filelist'
+import styles from 'drive/styles/filelist.styl'
 
 const ActionMenu = withBreakpoints()(
   ({ breakpoints: { isMobile }, ...props }) =>

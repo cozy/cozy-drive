@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import { RecipientWithoutStatus, RecipientPlusX } from './Recipient'
 
-import styles from './recipient'
+import styles from './recipient.styl'
 
 const MAX_DISPLAYED_RECIPIENTS = 2
 
