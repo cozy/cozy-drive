@@ -8,6 +8,7 @@ export const DEFAULT_EPS_SPATIAL = 3
 export const MIN_EPS_TEMPORAL = 3
 export const MIN_EPS_SPATIAL = 2.5
 export const PERCENTILE = 99.5
+export const MAX_DISTANCE = 24 * 7
 export const COARSE_COEFFICIENT = 1
 export const EVALUATION_THRESHOLD = 314
 

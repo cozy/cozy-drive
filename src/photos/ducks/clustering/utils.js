@@ -13,7 +13,8 @@ export const prepareDataset = photos => {
       }
       if (file.metadata) {
         photo.datetime = file.metadata.datetime
-        photo.gps = file.metadata.gps
+        photo.lat = file.metadata.gps ? file.metadata.gps.lat : null
+        photo.lon = file.metadata.gps ? file.metadata.gps.long : null
       } else {
         photo.datetime = file.created_at
       }

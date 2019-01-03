@@ -1,5 +1,6 @@
 import { kdTree } from 'kd-tree-javascript'
 import { diffPairWise, standardDeviation, mean, quantile } from './maths'
+import { MAX_DISTANCE } from './consts'
 
 export default class KNN {
   /**
@@ -24,8 +25,9 @@ export default class KNN {
   }
 
   excludeOutliers(distances, percentile) {
-    const boundValue = quantile(distances, percentile)
-    return distances.filter(distance => distance <= boundValue)
+    const filtered = distances.filter(d => d < MAX_DISTANCE)
+    const boundValue = quantile(filtered, percentile)
+    return filtered.filter(distance => distance <= boundValue)
   }
 
   /**

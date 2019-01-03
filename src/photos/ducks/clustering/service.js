@@ -30,7 +30,8 @@ export const computeEpsTemporal = (dataset, percentile) => {
 }
 
 export const computeEpsSpatial = (dataset, percentile) => {
-  const epsSpatial = computeEps(dataset, spatial, ['lat', 'lon'], percentile)
+  const gpsDataset = dataset.filter(d => d.lat && d.lon)
+  const epsSpatial = computeEps(gpsDataset, spatial, ['lat', 'lon'], percentile)
   return epsSpatial >= MIN_EPS_SPATIAL ? epsSpatial : MIN_EPS_SPATIAL
 }
 
@@ -50,8 +51,8 @@ const computeEps = (dataset, metric, dimensions, percentile) => {
   const neighbors = knn.kNeighbors(dataset)
 
   // Extract the sorted distances and remove outliers
-  const distances = neighbors.map(n => n.distance).sort((a, b) => a - b)
-  knn.excludeOutliers(distances, percentile)
+  let distances = neighbors.map(n => n.distance).sort((a, b) => a - b)
+  distances = knn.excludeOutliers(distances, percentile)
 
   // Compute the optimal eps for the given criterion
   return knn.epsSignificativeSlope(distances)

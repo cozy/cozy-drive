@@ -80,7 +80,7 @@ describe('knn', () => {
     expect(computeEpsTemporal(dataset)).toBeCloseTo(3.0, N_DIGITS)
   })
   it('Should compute spatial eps', () => {
-    expect(computeEpsSpatial(dataset)).toBeCloseTo(244.9352, N_DIGITS)
+    expect(computeEpsSpatial(dataset)).toBeCloseTo(11.11949, N_DIGITS)
   })
 })
 
