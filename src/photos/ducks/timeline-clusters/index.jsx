@@ -2,7 +2,12 @@ import React from 'react'
 import { Query } from 'cozy-client'
 import Timeline from '../timeline/components/Timeline'
 import PhotoBoard from '../../components/PhotoBoard'
-import { differenceInCalendarDays } from 'date-fns'
+import {
+  differenceInCalendarDays,
+  differenceInCalendarMonths,
+  differenceInHours,
+  isThisYear
+} from 'date-fns'
 import { translate } from 'cozy-ui/react/I18n'
 
 // constants
@@ -39,20 +44,70 @@ const TIMELINE_MUTATIONS = client => ({
     })
 })
 
-const formatDate = (date, f) => {
-  return f(date, 'DD MMMM YYYY')
+const formatH = (f, date) => {
+  return f(date, 'HH')
 }
 
+const formatD = (f, date) => {
+  return f(date, 'DD')
+}
+
+const formatDMY = (f, date) => {
+  return f(date, 'DD MMMM') + addYear(f, date)
+}
+
+const addYear = (f, date) => {
+  return isThisYear(date) ? '' : f(date, ' YYYY')
+}
+
+/**
+ *  Create the title for the section, following these rules:
+ *  - If the period is within same month: D - D M Y
+ *  - Else: D M Y - D M Y
+ *  - Exception: don't show the year if it is the current one.
+ */
 const getSectionTitle = (album, f) => {
   if (album.period) {
     const startPeriod = new Date(album.period.start)
     const endPeriod = new Date(album.period.end)
+
+    if (differenceInCalendarMonths(endPeriod, startPeriod) > 0) {
+      return formatDMY(f, startPeriod) + ' - ' + formatDMY(f, endPeriod)
+    }
     if (differenceInCalendarDays(endPeriod, startPeriod) > 0) {
-      // TODO Better period display
-      return formatDate(startPeriod, f) + ' - ' + formatDate(endPeriod, f)
+      return formatD(f, startPeriod) + '-' + formatDMY(f, endPeriod)
+    }
+    return formatDMY(f, startPeriod)
+  }
+  return formatDMY(f, new Date(album.name))
+}
+
+/**
+ * Add the hours to the section's title if other sections are the same day.
+ * The rules are the following:
+ *  - If the album's period is within the same hour:  HH
+ *  - Else: HH-HH
+ */
+const getSectionTitleHours = (dates, index, section, f) => {
+  if (section.album.period) {
+    if (
+      (index > 0 &&
+        differenceInCalendarDays(dates[index - 1], dates[index]) < 1) ||
+      (index < dates.length - 1 &&
+        differenceInCalendarDays(dates[index], dates[index + 1]) < 1)
+    ) {
+      // Several sections for this day: add the hours
+      const startPeriod = new Date(section.album.period.start)
+      const endPeriod = new Date(section.album.period.end)
+
+      let titleWithHours = section.title + ' ⠂' + formatH(f, startPeriod) + 'h'
+      if (differenceInHours(endPeriod, startPeriod) > 0) {
+        titleWithHours += '-' + formatH(f, endPeriod) + 'h'
+      }
+      return titleWithHours
     }
   }
-  return formatDate(new Date(album.name), f)
+  return section.title
 }
 
 /**
@@ -62,9 +117,9 @@ const getSectionTitle = (album, f) => {
  */
 const getMatchingSection = (sections, datetime) => {
   return Object.keys(sections).find(date => {
-    if (sections[date].period) {
-      const startPeriod = new Date(sections[date].period.start)
-      const endPeriod = new Date(sections[date].period.end)
+    if (sections[date].album.period) {
+      const startPeriod = new Date(sections[date].album.period.start)
+      const endPeriod = new Date(sections[date].album.period.end)
       return (
         (datetime >= startPeriod && datetime <= endPeriod) ||
         differenceInCalendarDays(datetime, endPeriod) === 0
@@ -88,7 +143,7 @@ const getPhotosByClusters = (photos, f) => {
 
   photos.forEach(p => {
     const refAlbums = p.albums ? p.albums.data : []
-    // TODO Ensure unicity on the service side
+    // A photo can be referenced by only one auto album
     const album = refAlbums.find(ref => ref.auto)
 
     // The photo is not referenced by an auto album yet
@@ -102,13 +157,12 @@ const getPhotosByClusters = (photos, f) => {
         sections[date] = {
           photos: [],
           title: title,
-          period: album.period
+          album: album
         }
       }
       sections[date].photos.push(p)
     }
   })
-
   // We deal with the not-clustered photos after the loop to make sure all
   // the sections have been processed.
   // It simulates a clustering, waiting for the actual one to be processed.
@@ -123,20 +177,20 @@ const getPhotosByClusters = (photos, f) => {
       sections[sectionDate].photos.push(photo)
     } else {
       // Create a new section for this day, without a period, to differentiate from clusters' sections
-      const day = f(new Date(datetime), 'YYYY-MM-DD')
+      const date = new Date(datetime)
+      const day = f(date, 'YYYY-MM-DD') // Match the albums's format
       sections[day] = {
-        title: formatDate(new Date(datetime), f),
+        title: formatDMY(f, date),
         photos: [photo]
       }
     }
   })
 
-  const sorted = Object.keys(sections)
-  sorted.sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
-
-  return sorted.map(date => {
+  const sortedDates = Object.keys(sections)
+  sortedDates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+  return sortedDates.map((date, i) => {
     return {
-      title: sections[date].title,
+      title: getSectionTitleHours(sortedDates, i, sections[date], f),
       photos: sections[date].photos
     }
   })
