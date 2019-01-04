@@ -11,9 +11,17 @@
     "^components(.*)": "<rootDir>/src/components$1",
     "^folder-references(.*)": "<rootDir>/src/folder-references$1"
   },
+  "snapshotSerializers": ["enzyme-to-json/serializer"],
   "transform": {
     "^.+\\.(js|jsx)?$": "<rootDir>/test/jestLib/babel-transformer.js"
   },
   "transformIgnorePatterns": ["node_modules/(?!cozy-ui)/"],
-  "testMatch": ["**/(*.)(spec|test).js?(x)"]
+  "testMatch": ["**/(*.)(spec|test).js?(x)"],
+  "globals": {
+    "cozy": {
+      "bar": {
+        "BarRight": null
+      }
+    }
+  }
 }
