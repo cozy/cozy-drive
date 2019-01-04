@@ -5,9 +5,9 @@ import PhotoBoard from '../../components/PhotoBoard'
 import {
   differenceInCalendarDays,
   differenceInCalendarMonths,
-  differenceInHours,
-  isThisYear
+  differenceInHours
 } from 'date-fns'
+import { formatDMY, formatD, formatH } from './dates'
 import { translate } from 'cozy-ui/react/I18n'
 
 // constants
@@ -43,22 +43,6 @@ const TIMELINE_MUTATIONS = client => ({
       }
     })
 })
-
-const formatH = (f, date) => {
-  return f(date, 'HH')
-}
-
-const formatD = (f, date) => {
-  return f(date, 'DD')
-}
-
-const formatDMY = (f, date) => {
-  return f(date, 'DD MMMM') + addYear(f, date)
-}
-
-const addYear = (f, date) => {
-  return isThisYear(date) ? '' : f(date, ' YYYY')
-}
 
 /**
  *  Create the title for the section, following these rules:
