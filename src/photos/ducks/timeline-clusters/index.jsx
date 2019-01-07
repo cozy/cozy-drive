@@ -73,7 +73,7 @@ const getSectionTitle = (album, f) => {
  *  - Else: HH-HH
  */
 const getSectionTitleHours = (dates, index, section, f) => {
-  if (section.album.period) {
+  if (section.album) {
     if (
       (index > 0 &&
         differenceInCalendarDays(dates[index - 1], dates[index]) < 1) ||
@@ -101,7 +101,7 @@ const getSectionTitleHours = (dates, index, section, f) => {
  */
 const getMatchingSection = (sections, datetime) => {
   return Object.keys(sections).find(date => {
-    if (sections[date].album.period) {
+    if (sections[date].album) {
       const startPeriod = new Date(sections[date].album.period.start)
       const endPeriod = new Date(sections[date].album.period.end)
       return (
@@ -109,7 +109,7 @@ const getMatchingSection = (sections, datetime) => {
         differenceInCalendarDays(datetime, endPeriod) === 0
       )
     } else {
-      // If the section has no period, it is not a cluster but a daily section
+      // If the section has no album, it is not a cluster but a daily section
       return differenceInCalendarDays(datetime, new Date(date)) === 0
     }
   })
