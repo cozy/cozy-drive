@@ -1,7 +1,6 @@
 import { Selector, Role } from "testcafe"; //import testcafe function
 import { regularUser } from "./helpers/roles"; //import roles for login
 import config from "../config"; //import url & psswd config
-//import { generateRandomInteger } from "./helpers/utils.js";
 const _ = require("lodash");
 
 import Page from "./pages/photos-model";
