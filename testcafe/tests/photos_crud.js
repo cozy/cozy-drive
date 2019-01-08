@@ -2,6 +2,7 @@ import { Selector, Role } from "testcafe"; //import testcafe function
 import { regularUser } from "./helpers/roles"; //import roles for login
 import config from "../config"; //import url & psswd config
 const _ = require("lodash");
+//cmt
 
 import Page from "./pages/photos-model";
 
