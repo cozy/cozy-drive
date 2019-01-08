@@ -38,6 +38,7 @@ before_install:
   #   fi
   # - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
   #   fi
+  #
   - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
   - travis_retry pip3.5 install --user transifex-client==0.12.5
   - install -m0644 .transifexrc.tpl ~/.transifexrc
