@@ -1,0 +1,5 @@
+{
+  "loginUrl": "http://cozy.tools:8080/",
+  "photosUrl": "http://localphotos.cozy.tools:8080/",
+  "password": "cozy"
+}

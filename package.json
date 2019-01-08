@@ -23,6 +23,7 @@
     "lint:styles": "stylint src/drive/styles --config ./.stylintrc",
     "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
     "test": "cozy-scripts test --verbose --coverage --config=jest.config.json",
+    "testcafe": "testcafe firefox testcafe/tests/photos_crud.js",
     "genicon:drive:mobile": "(cd src/drive/targets/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model' && cp res/model/splash.png res/screens/ios/Default@2x~universal~anyany.png)",
     "prepare:drive:mobile": "(cd src/drive/targets/mobile && rm -rf platforms && rm -rf plugins && cordova prepare)",
     "run:drive:android": "(cd src/drive/targets/mobile && cordova run android --device)",
@@ -84,7 +85,8 @@
     "react-test-renderer": "15.6.2",
     "replace": "1.0.0",
     "splashicon-generator": "0.2.12",
-    "stylint": "1.5.9"
+    "stylint": "1.5.9",
+    "testcafe": "^0.23.3"
   },
   "dependencies": {
     "babel-preset-cozy-app": "1.2.2",
