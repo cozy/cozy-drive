@@ -1,3 +1,4 @@
-export function generateRandomInteger(min, max) {
-  return Math.floor(min + Math.random()*(max + 1 - min));
-}
+import { ClientFunction } from "testcafe";
+
+//Returns the URL of the current web page
+export const getPageUrl = ClientFunction(() => window.location.href);
