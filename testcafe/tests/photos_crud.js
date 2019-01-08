@@ -11,25 +11,32 @@ const page = new Page();
 fixture`PHOTOS - CRUD`.page`${config.photosUrl}`.beforeEach(async t => {
   await t.useRole(regularUser);
   await t.resizeWindow(1280, 1024); // No upload button on mobile view, beware of the size!
+
   t.ctx.allPhotosStartCount = await page.allPhotos.count; //Pics count at test start
+  console.log("beforeEach > allPhotosStartCount " + t.ctx.allPhotosStartCount);
 });
 
 test("Uploading 1 pic from Photos view", async t => {
   //new pic shows up
+
   await t
     .setFilesToUpload(page.btnUpload, ["../data/IMG0.jpg"])
     .expect(page.divUpload.visible)
     .ok()
+    .expect(page.modalUpload.exists)
+    .ok({ timeout: 50000 })
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 1 out of 1 successfully");
-  await t.takeScreenshot("upload_successfull1-1.png");
+  await t.takeScreenshot();
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 1);
 });
 
 test("Uploading 3 pcis from Photos view", async t => {
   //new pics show up
+
   await t
     .setFilesToUpload(page.btnUpload, [
       "../data/IMG-JPG.jpg",
@@ -38,11 +45,15 @@ test("Uploading 3 pcis from Photos view", async t => {
     ])
     .expect(page.divUpload.visible)
     .ok()
+    .expect(page.modalUpload.exists)
+    .ok({ timeout: 50000 })
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 3 out of 3 successfully");
-  await t.takeScreenshot("upload_successfull3-3.png");
+  await t.takeScreenshot();
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
+
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 3);
 });
 
@@ -86,11 +97,12 @@ test("Select 3 pic from Photos view", async t => {
 
 test("Open 1st pic", async t => {
   //Right arrow shows up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
+
   await t
     .click(page.photoThumb(0))
     .expect(page.photoFull.visible)
     .ok()
-    .takeScreenshot("fullscreen.png");
+    .takeScreenshot();
 
   const photo1src = await page.photoFull.getAttribute("src");
 
@@ -120,6 +132,7 @@ test("Open 1st pic", async t => {
 
 test("Open Last pic", async t => {
   //Left arrow shows up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
+
   await t
     .click(page.photoThumb(t.ctx.allPhotosStartCount - 1))
     .expect(page.photoFull.visible)
@@ -156,6 +169,9 @@ test("Open a random pic (not first nor last)", async t => {
   // We need at least 3 pics in our cozy for this test to pass
 
   const photoIndex = _.random(1, t.ctx.allPhotosStartCount - 2);
+
+  console.log("Open random pic  > photoIndex " + photoIndex);
+
   //Photo cannot be the first, and cannot be the last (hence -2)
   await t
     .click(page.photoThumb(photoIndex))
@@ -208,9 +224,11 @@ test("Deleting 1st pic in Photo view : Open up a modal, and confirm", async t =>
     .expect(page.modalDelete.visible)
     .ok()
     .click(page.modalDeleteBtnDelete);
-  await t.takeScreenshot("delete_successfull1-1.png");
+  await t.takeScreenshot();
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
+
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 1);
 });
 
@@ -228,8 +246,10 @@ test("Deleting the 1st 3 pics in Photo view : Open up a modal, and confirm", asy
     .expect(page.modalDelete.visible)
     .ok()
     .click(page.modalDeleteBtnDelete);
-  await t.takeScreenshot("delete_successfull3-3.png");
+  await t.takeScreenshot();
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
+
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 3);
 });
