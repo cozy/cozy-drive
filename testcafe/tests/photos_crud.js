@@ -19,7 +19,8 @@ test("Uploading 1 pic from Photos view", async t => {
   await t
     .setFilesToUpload(page.btnUpload, ["../data/IMG0.jpg"])
     .expect(page.divUpload.visible)
-    .ok()
+    .ok();
+  await t
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 1 out of 1 successfully");
   //  await t.takeScreenshot("upload_successfull1-1.png");
@@ -37,7 +38,8 @@ test("Uploading 3 pcis from Photos view", async t => {
       "../data/IMG-GIF.gif"
     ])
     .expect(page.divUpload.visible)
-    .ok()
+    .ok();
+  await t
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 3 out of 3 successfully");
   //  await t.takeScreenshot("upload_successfull3-3.png");
