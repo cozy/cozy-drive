@@ -1,8 +1,8 @@
 import { Selector, Role } from "testcafe"; //import testcafe function
 import { regularUser } from "./helpers/roles"; //import roles for login
 import config from "../config"; //import url & psswd config
+//import { generateRandomInteger } from "./helpers/utils.js";
 const _ = require("lodash");
-//cmt
 
 import Page from "./pages/photos-model";
 
@@ -19,11 +19,10 @@ test("Uploading 1 pic from Photos view", async t => {
   await t
     .setFilesToUpload(page.btnUpload, ["../data/IMG0.jpg"])
     .expect(page.divUpload.visible)
-    .ok();
-  await t
+    .ok()
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 1 out of 1 successfully");
-  //  await t.takeScreenshot("upload_successfull1-1.png");
+  await t.takeScreenshot("upload_successfull1-1.png");
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 1);
@@ -38,11 +37,10 @@ test("Uploading 3 pcis from Photos view", async t => {
       "../data/IMG-GIF.gif"
     ])
     .expect(page.divUpload.visible)
-    .ok();
-  await t
+    .ok()
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 3 out of 3 successfully");
-  //  await t.takeScreenshot("upload_successfull3-3.png");
+  await t.takeScreenshot("upload_successfull3-3.png");
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 3);
@@ -91,8 +89,8 @@ test("Open 1st pic", async t => {
   await t
     .click(page.photoThumb(0))
     .expect(page.photoFull.visible)
-    .ok();
-  //  .takeScreenshot("fullscreen.png");
+    .ok()
+    .takeScreenshot("fullscreen.png");
 
   const photo1src = await page.photoFull.getAttribute("src");
 
@@ -210,7 +208,7 @@ test("Deleting 1st pic in Photo view : Open up a modal, and confirm", async t =>
     .expect(page.modalDelete.visible)
     .ok()
     .click(page.modalDeleteBtnDelete);
-  //  await t.takeScreenshot("delete_successfull1-1.png");
+  await t.takeScreenshot("delete_successfull1-1.png");
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 1);
@@ -230,7 +228,7 @@ test("Deleting the 1st 3 pics in Photo view : Open up a modal, and confirm", asy
     .expect(page.modalDelete.visible)
     .ok()
     .click(page.modalDeleteBtnDelete);
-  //await t.takeScreenshot("delete_successfull3-3.png");
+  await t.takeScreenshot("delete_successfull3-3.png");
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 3);

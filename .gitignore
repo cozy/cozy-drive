@@ -10,6 +10,9 @@ coverage/
 # Stack
 storage/
 
+# Reports
+reports/
+
 # Locales
 **/locales/*
 !**/locales/en.json

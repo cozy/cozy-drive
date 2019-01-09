@@ -21,33 +21,28 @@ test("Uploading 1 pic from Photos view", async t => {
     .expect(page.divUpload.visible)
     .ok();
   await t
-    .expect(Selector("[class*='item-loaded']").visible)
-    .ok()
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 1 out of 1 successfully");
-  //  await t.takeScreenshot("upload_successfull1-1.png");
+  await t.takeScreenshot("upload_successfull1-1.png");
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
   await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 1);
 });
 
-test("Uploading 3 pcis from Photos view", async t => {
-  //new pics show up
+test("Deleting 1st pic in Photo view : Open up a modal, and confirm", async t => {
+  //pic is removed
   await t
-    .setFilesToUpload(page.btnUpload, [
-      "../data/IMG-JPG.jpg",
-      "../data/IMG-PNG.png",
-      "../data/IMG-GIF.gif"
-    ])
-    .expect(page.divUpload.visible)
-    .ok();
-  await t
-    .expect(Selector("[class*='item-loaded']").visible)
+    .hover(page.photoThumb(0))
+    .click(page.photoCheckbox.nth(0)) //Index
+    .expect(page.barPhoto.visible)
     .ok()
-    .expect(page.divUpload.child("h4").innerText)
-    .contains("Uploaded 3 out of 3 successfully");
-  //  await t.takeScreenshot("upload_successfull3-3.png");
+
+    .click(page.barPhotoBtnDelete)
+    .expect(page.modalDelete.visible)
+    .ok()
+    .click(page.modalDeleteBtnDelete);
+  await t.takeScreenshot("delete_successfull1-1.png");
 
   const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
-  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 3);
+  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 1);
 });
