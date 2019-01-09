@@ -9,6 +9,10 @@ export default class Page {
       .find("input");
     this.divUpload = Selector('[class^="upload-queue"]');
 
+    this.modalUpload = Selector('[class*="c-alert-wrapper"]', {
+      visibilityCheck: true
+    });
+
     this.photoThumb = value => {
       return Selector('[class^="pho-photo-item"]').nth(value);
     };
@@ -34,6 +38,7 @@ export default class Page {
     this.photoCheckbox = Selector(
       '[class^="pho-photo-select"][data-input="checkbox"]'
     );
+    //Top Option bar & Confirmation Modal
     this.barPhoto = Selector('[class^="coz-selectionbar"]');
     this.barPhotoBtnAddtoalbum = this.barPhoto.find("button").nth(0); //ADD TO ALBUM
     this.barPhotoBtnDl = this.barPhoto.find("button").nth(1); //DOWNLOAD
