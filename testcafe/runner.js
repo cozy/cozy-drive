@@ -17,9 +17,9 @@ createTestCafe("localhost", 1337, 1338)
         .screenshots(
           "reports/screenshots/",
           true,
-          "${DATE}_${TIME}_${FILE_INDEX}.png"
+          "${DATE}_${TIME}_/test-${TEST_INDEX}-${FILE_INDEX}.png"
         )
-        .run()
+        .run({ assertionTimeout: 6000 }, { pageLoadTimeout: 6000 })
     );
   })
   .then(failedCount => {
