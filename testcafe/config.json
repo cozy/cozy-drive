@@ -1,5 +1,5 @@
 {
-  "loginUrl": "http://cozy.tools:8080/",
-  "photosUrl": "http://localphotos.cozy.tools:8080/",
-  "password": "cozy"
+  "loginUrl": "https://julietest01.mycozy.cloud/#/photos",
+  "photosUrl": "https://julietest01-photos.mycozy.cloud/",
+  "password": "cozycozycozy"
 }
