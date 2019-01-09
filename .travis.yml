@@ -51,6 +51,7 @@ script:
   # - yarn tx
   - yarn test
   - yarn build:$COZY_APP_SLUG:browser
+  - yarn testcafe #testcafe
 before_deploy:
   - yarn add cozy-app-publish
 deploy:
@@ -66,8 +67,6 @@ deploy:
     script: yarn run deploy:$COZY_APP_SLUG
     on:
       tags: true
-after_deploy:
-  - yarn testcafe #testcafe
 # dist: trusty
 sudo: required
 before_script:
