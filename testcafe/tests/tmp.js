@@ -21,6 +21,8 @@ test("Uploading 1 pic from Photos view", async t => {
     .expect(page.divUpload.visible)
     .ok();
   await t
+    .expect(Selector("[class*='item-loaded']").visible)
+    .ok()
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 1 out of 1 successfully");
   //  await t.takeScreenshot("upload_successfull1-1.png");
@@ -40,6 +42,8 @@ test("Uploading 3 pcis from Photos view", async t => {
     .expect(page.divUpload.visible)
     .ok();
   await t
+    .expect(Selector("[class*='item-loaded']").visible)
+    .ok()
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 3 out of 3 successfully");
   //  await t.takeScreenshot("upload_successfull3-3.png");
