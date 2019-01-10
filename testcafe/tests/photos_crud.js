@@ -2,6 +2,7 @@ import { Selector, Role } from 'testcafe' //import testcafe function
 import { regularUser } from './helpers/roles' //import roles for login
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { getPageUrl, PHOTOS_URL } from './helpers/utils'
 import random from 'lodash/random'
 =======
@@ -13,11 +14,16 @@ const _ = require('lodash')
 import { getPageUrl, PHOTOS_URL } from './helpers/utils'
 import random from 'lodash/random'
 >>>>>>> refactor: Some fix to code according to PR comments 
+=======
+import { getPageUrl, PHOTOS_URL } from './helpers/utils'
+import random from 'lodash/random'
+>>>>>>> test: testcafe tests update and travis configuration
 
 import Page from './pages/photos-model'
 
 const page = new Page()
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
@@ -27,6 +33,9 @@ fixture`PHOTOS - CRUD`.page`${config.photosUrl}`.beforeEach(async t => {
 =======
 fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
 >>>>>>> refactor: Some fix to code according to PR comments 
+=======
+fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
+>>>>>>> test: testcafe tests update and travis configuration
   await t.useRole(regularUser)
 
   await t.resizeWindow(1280, 1024) // No upload button on mobile view, beware of the size!
@@ -189,6 +198,7 @@ test('Open a random pic (not first nor last)', async t => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
 =======
   const photoIndex = _.random(1, t.ctx.allPhotosStartCount - 2)
@@ -196,6 +206,9 @@ test('Open a random pic (not first nor last)', async t => {
 =======
   const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
 >>>>>>> refactor: Some fix to code according to PR comments 
+=======
+  const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
+>>>>>>> test: testcafe tests update and travis configuration
 
   console.log('Open random pic  > photoIndex ' + photoIndex)
 
