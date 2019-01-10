@@ -128,12 +128,13 @@ class App extends Component {
 
 const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
-    {({ album, hasMore, fetchMore, fetchStatus }) => {
+    {({ data: album, hasMore, fetchMore, fetchStatus }) => {
       if (fetchStatus === 'loaded') {
+        console.log({ album })
         return (
           <App
-            album={album || null}
-            photos={album.photos ? album.photos.data : []}
+            album={album}
+            photos={album.photos.data}
             fetchStatus={fetchStatus}
             hasMore={hasMore}
             fetchMore={fetchMore}
