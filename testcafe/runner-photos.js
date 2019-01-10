@@ -20,7 +20,7 @@ createTestCafe("localhost", 1337, 1338)
           "${DATE}_${TIME}_/test-${TEST_INDEX}-${FILE_INDEX}.png"
         )
         .run(
-          //  { selectorTimeout: 200000 },
+          { selectorTimeout: 100000 },
           { assertionTimeout: 6000 },
           { pageLoadTimeout: 6000 }
         )
