@@ -8,8 +8,8 @@ createTestCafe("localhost", 1337, 1338)
 
     return (
       runner
-        //.src(["testcafe/tests/photos_crud.js"])
-        .src(["testcafe/tests/tmp.js"])
+        .src(["testcafe/tests/photos_crud.js"])
+        //.src(["testcafe/tests/tmp.js"])
 
         .browsers(["firefox:headless"])
         //.browsers(["firefox"])
