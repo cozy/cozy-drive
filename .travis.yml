@@ -56,7 +56,7 @@ before_install:
   - echo "password = $TX_PASSWD" >> ~/.transifexrc
 script:
   - yarn lint
-  # - yarn tx
+  - yarn tx
   - yarn test
   - yarn build:$COZY_APP_SLUG:browser
   - yarn testcafe:$COZY_APP_SLUG #testcafe
