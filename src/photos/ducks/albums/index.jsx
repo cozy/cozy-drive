@@ -22,7 +22,7 @@ const ALBUMS_QUERY = client =>
     .include(['photos'])
     .sortBy([{ created_at: 'desc' }])
 
-const ALBUM_QUERY = (client, ownProps) =>
+export const ALBUM_QUERY = (client, ownProps) =>
   client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId).include(['photos'])
 
 const ALBUM_MUTATIONS = client => ({
