@@ -22,7 +22,7 @@
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src/drive/styles --config ./.stylintrc",
     "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
-    "testcafe": "node testcafe/runner.js",
+    "testcafe": "COZY_APP_SLUG=photos:node testcafe/runner.js",
     "test": "cozy-scripts test --verbose --coverage --config=jest.config.json",
     "genicon:drive:mobile": "(cd src/drive/targets/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model' && cp res/model/splash.png res/screens/ios/Default@2x~universal~anyany.png)",
     "prepare:drive:mobile": "(cd src/drive/targets/mobile && rm -rf platforms && rm -rf plugins && cordova prepare)",
