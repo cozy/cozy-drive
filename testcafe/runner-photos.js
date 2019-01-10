@@ -9,15 +9,13 @@ createTestCafe("localhost", 1337, 1338)
     return (
       runner
         .src(["testcafe/tests/photos_crud.js"])
-        //.src(["testcafe/tests/tmp.js"])
-
         .browsers(["firefox:headless"])
         //.browsers(["firefox"])
 
         .screenshots(
           "reports/screenshots/",
           true,
-          "${DATE}_${TIME}_/test-${TEST_INDEX}-${FILE_INDEX}.png"
+          "${DATE}_${TIME}/test-${TEST_INDEX}-${FILE_INDEX}.png"
         )
         .run(
           { selectorTimeout: 100000 },
