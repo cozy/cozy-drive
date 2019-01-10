@@ -24,7 +24,7 @@ test("Uploading 1 pic from Photos view", async t => {
     .expect(page.divUpload.visible)
     .ok()
     .expect(page.modalUpload.exists)
-    .ok({ timeout: 20000 })
+    .ok({ timeout: 50000 })
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 1 out of 1 successfully");
   await t.takeScreenshot("upload_successfull1-1.png");
@@ -46,7 +46,7 @@ test("Uploading 3 pcis from Photos view", async t => {
     .expect(page.divUpload.visible)
     .ok()
     .expect(page.modalUpload.exists)
-    .ok({ timeout: 20000 })
+    .ok({ timeout: 50000 })
     .expect(page.divUpload.child("h4").innerText)
     .contains("Uploaded 3 out of 3 successfully");
   await t.takeScreenshot("upload_successfull3-3.png");

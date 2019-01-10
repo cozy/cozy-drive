@@ -19,7 +19,11 @@ createTestCafe("localhost", 1337, 1338)
           true,
           "${DATE}_${TIME}_/test-${TEST_INDEX}-${FILE_INDEX}.png"
         )
-        .run({ assertionTimeout: 6000 }, { pageLoadTimeout: 6000 })
+        .run(
+          { selectorTimeout: 200000 },
+          { assertionTimeout: 6000 },
+          { pageLoadTimeout: 6000 }
+        )
     );
   })
   .then(failedCount => {
