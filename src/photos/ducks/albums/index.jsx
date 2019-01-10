@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import { Query, withMutations } from 'cozy-client'
+import omit from 'lodash/omit'
 import SharingProvider from 'sharing'
 import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
@@ -42,7 +43,10 @@ const ALBUM_MUTATIONS = client => ({
 })
 const addPhotos = async (album, photos) => {
   try {
-    const addedPhotos = await album.photos.add(photos)
+    const addedPhotos = await album.photos.add(
+      photos.map(photo => omit(photo, ['albums']))
+    )
+    // TODO: dont use photos.add, see https://github.com/cozy/cozy-client/pull/328
     if (addedPhotos.length !== photos.length) {
       Alerter.info('Alerter.photos.already_added_photo')
     } else {
