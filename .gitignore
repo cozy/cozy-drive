@@ -7,6 +7,9 @@ yarn-error.log
 build/
 coverage/
 
+# Reports
+reports/
+
 # Stack
 storage/
 
