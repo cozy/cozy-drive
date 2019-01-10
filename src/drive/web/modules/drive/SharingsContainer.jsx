@@ -9,7 +9,7 @@ import {
   FETCH_SHARINGS_FAILURE
 } from 'drive/web/modules/navigation/duck/actions'
 
-class SharingFetcher extends React.Component {
+export class SharingFetcher extends React.Component {
   state = {
     error: null
   }
@@ -25,13 +25,23 @@ class SharingFetcher extends React.Component {
       const resp = await client
         .collection('io.cozy.files')
         .all({ keys: sharedDocuments })
+
+      const parentIds = resp.data.map(f => f.dir_id)
+      const parentsResp = await client.collection('io.cozy.files').all({
+        keys: parentIds
+      })
+      const parents = parentsResp.data
       const files = resp.data.sort((a, b) => {
         if (a.type === 'directory' && b.type !== 'directory') return -1
         else if (a.type !== 'directory' && b.type === 'directory') return 1
         else return a.name.localeCompare(b.name)
       })
 
-      this.props.fetchSuccess(files)
+      const filesWithPath = files.map(file => ({
+        ...file,
+        path: parents.find(d => d.id === file.dir_id).path
+      }))
+      this.props.fetchSuccess(filesWithPath)
     } catch (e) {
       this.setState({ error: e })
       this.props.fetchFailure(e)
@@ -72,6 +82,7 @@ class SharingFetcher extends React.Component {
         canUpload={false}
         canCreateFolder={false}
         canMove={false}
+        withFilePath
         {...otherProps}
       />
     )
