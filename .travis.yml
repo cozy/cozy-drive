@@ -33,14 +33,14 @@ cache:
   directories:
     - node_modules
 before_install:
-  # - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then openssl aes-256-cbc -K $encrypted_b1733cb50f7f_key
-  #   -iv $encrypted_b1733cb50f7f_iv -in id_rsa_travis_downcloud.enc -out /tmp/id_rsa_travis_downcloud
-  #   -d; fi
-  # - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)"; fi
-  # - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then chmod 600 /tmp/id_rsa_travis_downcloud;
-  #   fi
-  # - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
-  #   fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then openssl aes-256-cbc -K $encrypted_b1733cb50f7f_key
+    -iv $encrypted_b1733cb50f7f_iv -in id_rsa_travis_downcloud.enc -out /tmp/id_rsa_travis_downcloud
+    -d; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)"; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then chmod 600 /tmp/id_rsa_travis_downcloud;
+    fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
+    fi
   - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
   - travis_retry pip3.5 install --user transifex-client==0.12.5
   - install -m0644 .transifexrc.tpl ~/.transifexrc
@@ -48,7 +48,7 @@ before_install:
   - stty cols 80 #Testcafé
 script:
   - yarn lint
-  # - yarn tx
+  - yarn tx
   - yarn test
   - yarn build:$COZY_APP_SLUG:browser
   - yarn testcafe:$COZY_APP_SLUG #testcafe
