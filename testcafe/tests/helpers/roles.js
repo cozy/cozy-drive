@@ -1,10 +1,10 @@
-import { Selector, Role } from "testcafe";
-import config from "../../config";
-import { getPageUrl } from "./utils.js";
+import { Selector, Role } from 'testcafe'
+import config from '../../config'
+import { getPageUrl } from './utils.js'
 
-import Page from "../pages/login-model";
+import Page from '../pages/login-model'
 
-const page = new Page();
+const page = new Page()
 
 export const regularUser = Role(
   `${config.photosUrl}`,
@@ -13,7 +13,7 @@ export const regularUser = Role(
       .typeText(page.password, `${config.password}`)
       .click(page.loginButton)
       .expect(getPageUrl())
-      .contains("#/photos"); //Checks if the current page URL contains the '#/photos' string
+      .contains('#/photos') //Checks if the current page URL contains the '#/photos' string
   },
   { preserveUrl: true }
-);
+)
