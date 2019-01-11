@@ -1,9 +1,5 @@
 /* global cozy */
-import {
-  getAdapter,
-  extractFileAttributes,
-  shouldShowRecentsFirst
-} from './async'
+import { getAdapter, extractFileAttributes } from './async'
 import { getSort } from './reducer'
 import React from 'react'
 import { isMobileApp } from 'cozy-device-helper'
@@ -73,7 +69,7 @@ export const openTrash = () => {
 }
 
 export const openFolder = folderId => {
-  return async (dispatch, getState, { t }) => {
+  return async (dispatch, getState) => {
     dispatch({
       type: OPEN_FOLDER,
       folderId,
@@ -82,28 +78,14 @@ export const openFolder = folderId => {
       }
     })
     try {
-      const specialFolders = [
-        t('mobile.settings.media_backup.media_folder'),
-        `/${t('Nav.item_collect')}`
-      ]
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList
-      const folder = await getAdapter(getState()).getFolder(
-        folderId,
-        specialFolders
-      )
+      const folder = await getAdapter(getState()).getFolder(folderId)
       return dispatch({
         type: OPEN_FOLDER_SUCCESS,
         folder,
         fileCount: folder.contents.meta.count || 0,
-        files: folder.contents.data,
-        recentsFirst:
-          !!folder.parent &&
-          shouldShowRecentsFirst(
-            folder.path,
-            folder.parent.path,
-            specialFolders
-          )
+        files: folder.contents.data
       })
     } catch (err) {
       logException(err, {

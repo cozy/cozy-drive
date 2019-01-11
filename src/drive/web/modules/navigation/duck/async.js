@@ -5,20 +5,12 @@ import {
   shouldWorkFromPouchDB
 } from 'drive/mobile/modules/replication/duck'
 
-export const shouldShowRecentsFirst = (
-  folderPath,
-  parentPath,
-  specialFolders
-) =>
-  specialFolders.indexOf(folderPath) !== -1 ||
-  specialFolders.indexOf(parentPath) !== -1
-
 class Stack {
   constructor() {
     this.indexes = {}
   }
 
-  getFolder = async (folderId, specialFolders = []) => {
+  getFolder = async folderId => {
     const folder = await cozy.client.files.statById(folderId, false, {
       limit: FILES_FETCH_LIMIT
     })
@@ -34,20 +26,11 @@ class Stack {
         }
       }))
 
-    const recentsFirst =
-      !!parent &&
-      shouldShowRecentsFirst(
-        folder.attributes.path,
-        parent.attributes.path,
-        specialFolders
-      )
-
-    const files = recentsFirst
-      ? await this.getSortedFolder(folderId, 'updated_at', 'desc')
-      : folder
-          .relations('contents')
-          .filter(f => f !== undefined)
-          .map(f => extractFileAttributes(f)) || []
+    const files =
+      folder
+        .relations('contents')
+        .filter(f => f !== undefined)
+        .map(f => extractFileAttributes(f)) || []
 
     return {
       ...extractFileAttributes(folder),
@@ -189,17 +172,11 @@ class PouchDB {
     _type: 'io.cozy.files'
   })
 
-  getFolder = async (folderId, specialFolders = []) => {
+  getFolder = async folderId => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     const folder = await db.get(folderId)
     const parent = !!folder.dir_id && (await db.get(folder.dir_id))
-    const recentsFirst =
-      !!parent &&
-      shouldShowRecentsFirst(folder.path, parent.path, specialFolders)
-
-    const files = recentsFirst
-      ? await this.getSortedFolder(folderId, 'updated_at', 'desc')
-      : await this.getSortedFolder(folderId, 'name', 'asc')
+    const files = await this.getSortedFolder(folderId, 'name', 'asc')
 
     return {
       ...this.normalizeFileFromPouchDB(folder),
