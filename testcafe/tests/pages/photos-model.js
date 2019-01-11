@@ -1,3 +1,4 @@
+//!FIXME Change selector (ID or react)
 import { Selector } from 'testcafe'
 
 export default class Page {
