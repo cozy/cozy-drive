@@ -1,13 +1,23 @@
 import { Selector, Role } from 'testcafe' //import testcafe function
 import { regularUser } from './helpers/roles' //import roles for login
+<<<<<<< HEAD
 import { getPageUrl, PHOTOS_URL } from './helpers/utils'
 import random from 'lodash/random'
+=======
+import config from '../config' //import url & psswd config
+//import { generateRandomInteger } from "./helpers/utils.js";
+const _ = require('lodash')
+>>>>>>> style: Prettier with eslint
 
 import Page from './pages/photos-model'
 
 const page = new Page()
 
+<<<<<<< HEAD
 fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
+=======
+fixture`PHOTOS - CRUD`.page`${config.photosUrl}`.beforeEach(async t => {
+>>>>>>> style: Prettier with eslint
   await t.useRole(regularUser)
 
   await t.resizeWindow(1280, 1024) // No upload button on mobile view, beware of the size!
@@ -168,7 +178,11 @@ test('Open a random pic (not first nor last)', async t => {
   //Both arrows show up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
   // We need at least 3 pics in our cozy for this test to pass
 
+<<<<<<< HEAD
   const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
+=======
+  const photoIndex = _.random(1, t.ctx.allPhotosStartCount - 2)
+>>>>>>> style: Prettier with eslint
 
   console.log('Open random pic  > photoIndex ' + photoIndex)
 
