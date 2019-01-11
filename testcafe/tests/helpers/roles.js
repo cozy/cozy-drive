@@ -1,10 +1,14 @@
 import { Selector, Role } from 'testcafe'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { getPageUrl, PHOTOS_URL, USER_PASSWORD } from './utils'
 =======
 import config from '../../config'
 import { getPageUrl } from './utils.js'
 >>>>>>> style: Prettier with eslint
+=======
+import { getPageUrl, PHOTOS_URL, USER_PASSWORD } from './utils'
+>>>>>>> refactor: Some fix to code according to PR comments 
 
 import Page from '../pages/login-model'
 

@@ -1,6 +1,7 @@
 import { Selector, Role } from 'testcafe' //import testcafe function
 import { regularUser } from './helpers/roles' //import roles for login
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { getPageUrl, PHOTOS_URL } from './helpers/utils'
 import random from 'lodash/random'
 =======
@@ -8,16 +9,24 @@ import config from '../config' //import url & psswd config
 //import { generateRandomInteger } from "./helpers/utils.js";
 const _ = require('lodash')
 >>>>>>> style: Prettier with eslint
+=======
+import { getPageUrl, PHOTOS_URL } from './helpers/utils'
+import random from 'lodash/random'
+>>>>>>> refactor: Some fix to code according to PR comments 
 
 import Page from './pages/photos-model'
 
 const page = new Page()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
 =======
 fixture`PHOTOS - CRUD`.page`${config.photosUrl}`.beforeEach(async t => {
 >>>>>>> style: Prettier with eslint
+=======
+fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
+>>>>>>> refactor: Some fix to code according to PR comments 
   await t.useRole(regularUser)
 
   await t.resizeWindow(1280, 1024) // No upload button on mobile view, beware of the size!
@@ -179,10 +188,14 @@ test('Open a random pic (not first nor last)', async t => {
   // We need at least 3 pics in our cozy for this test to pass
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
 =======
   const photoIndex = _.random(1, t.ctx.allPhotosStartCount - 2)
 >>>>>>> style: Prettier with eslint
+=======
+  const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
+>>>>>>> refactor: Some fix to code according to PR comments 
 
   console.log('Open random pic  > photoIndex ' + photoIndex)
 
