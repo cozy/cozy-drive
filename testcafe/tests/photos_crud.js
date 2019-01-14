@@ -1,99 +1,63 @@
-import { Selector, Role } from 'testcafe' //import testcafe function
-import { regularUser } from './helpers/roles' //import roles for login
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { getPageUrl, PHOTOS_URL } from './helpers/utils'
-=======
-import { getPageUrl, TESTCAFE_PHOTOS_URL } from './helpers/utils'
->>>>>>> chore: Travis encrypted envirronement vars
-import random from 'lodash/random'
-=======
-import config from '../config' //import url & psswd config
-//import { generateRandomInteger } from "./helpers/utils.js";
-const _ = require('lodash')
->>>>>>> style: Prettier with eslint
-=======
-import { getPageUrl, PHOTOS_URL } from './helpers/utils'
-import random from 'lodash/random'
->>>>>>> refactor: Some fix to code according to PR comments 
-=======
-import { getPageUrl, PHOTOS_URL } from './helpers/utils'
-import random from 'lodash/random'
->>>>>>> test: testcafe tests update and travis configuration
+import { Selector, Role } from "testcafe"; //import testcafe function
+import { regularUser } from "./helpers/roles"; //import roles for login
+import { getPageUrl, TESTCAFE_PHOTOS_URL } from "./helpers/utils";
+import random from "lodash/random";
 
-import Page from './pages/photos-model'
+import Page from "./pages/photos-model";
 
-const page = new Page()
+const page = new Page();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
-=======
-fixture`PHOTOS - CRUD`.page`${config.photosUrl}`.beforeEach(async t => {
->>>>>>> style: Prettier with eslint
-=======
-fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
->>>>>>> refactor: Some fix to code according to PR comments 
-=======
-fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
->>>>>>> test: testcafe tests update and travis configuration
-=======
 fixture`PHOTOS - CRUD`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
->>>>>>> chore: Travis encrypted envirronement vars
-  await t.useRole(regularUser)
+  await t.useRole(regularUser);
 
-  await t.resizeWindow(1280, 1024) // No upload button on mobile view, beware of the size!
+  await t.resizeWindow(1280, 1024); // No upload button on mobile view, beware of the size!
 
-  t.ctx.allPhotosStartCount = await page.allPhotos.count //Pics count at test start
-  console.log('beforeEach > allPhotosStartCount ' + t.ctx.allPhotosStartCount)
-})
+  t.ctx.allPhotosStartCount = await page.allPhotos.count; //Pics count at test start
+  console.log("beforeEach > allPhotosStartCount " + t.ctx.allPhotosStartCount);
+});
 
-test('Uploading 1 pic from Photos view', async t => {
+test("Uploading 1 pic from Photos view", async t => {
   //new pic shows up
 
   await t
-    .setFilesToUpload(page.btnUpload, ['../data/IMG0.jpg'])
+    .setFilesToUpload(page.btnUpload, ["../data/IMG0.jpg"])
     .expect(page.divUpload.visible)
     .ok()
     .expect(page.modalUpload.exists)
     .ok({ timeout: 50000 })
-    .expect(page.divUpload.child('h4').innerText)
-    .contains('Uploaded 1 out of 1 successfully')
-  await t.takeScreenshot()
+    .expect(page.divUpload.child("h4").innerText)
+    .contains("Uploaded 1 out of 1 successfully");
+  await t.takeScreenshot();
 
-  const allPhotosEndCount = await page.allPhotos.count //Pics count at the end
-  console.log('allPhotosEndCount ' + allPhotosEndCount)
-  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 1)
-})
+  const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
+  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 1);
+});
 
-test('Uploading 3 pcis from Photos view', async t => {
+test("Uploading 3 pcis from Photos view", async t => {
   //new pics show up
 
   await t
     .setFilesToUpload(page.btnUpload, [
-      '../data/IMG-JPG.jpg',
-      '../data/IMG-PNG.png',
-      '../data/IMG-GIF.gif'
+      "../data/IMG-JPG.jpg",
+      "../data/IMG-PNG.png",
+      "../data/IMG-GIF.gif"
     ])
     .expect(page.divUpload.visible)
     .ok()
     .expect(page.modalUpload.exists)
     .ok({ timeout: 50000 })
-    .expect(page.divUpload.child('h4').innerText)
-    .contains('Uploaded 3 out of 3 successfully')
-  await t.takeScreenshot()
+    .expect(page.divUpload.child("h4").innerText)
+    .contains("Uploaded 3 out of 3 successfully");
+  await t.takeScreenshot();
 
-  const allPhotosEndCount = await page.allPhotos.count //Pics count at the end
-  console.log('allPhotosEndCount ' + allPhotosEndCount)
+  const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
 
-  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 3)
-})
+  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount + 3);
+});
 
-test('Select 1 pic from Photos view', async t => {
+test("Select 1 pic from Photos view", async t => {
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await t
     .hover(page.photoThumb(0))
@@ -106,12 +70,12 @@ test('Select 1 pic from Photos view', async t => {
     .expect(page.barPhotoBtnDl.visible)
     .ok()
     .expect(page.barPhotoBtnDelete.visible)
-    .ok()
+    .ok();
 
   // TODO - Add check on label text ??
-})
+});
 
-test('Select 3 pic from Photos view', async t => {
+test("Select 3 pic from Photos view", async t => {
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await t
     .hover(page.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
@@ -126,21 +90,21 @@ test('Select 3 pic from Photos view', async t => {
     .expect(page.barPhotoBtnDl.visible)
     .ok()
     .expect(page.barPhotoBtnDelete.visible)
-    .ok()
+    .ok();
 
   // TODO - Add check on label text ??
-})
+});
 
-test('Open 1st pic', async t => {
+test("Open 1st pic", async t => {
   //Right arrow shows up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
 
   await t
     .click(page.photoThumb(0))
     .expect(page.photoFull.visible)
     .ok()
-    .takeScreenshot()
+    .takeScreenshot();
 
-  const photo1src = await page.photoFull.getAttribute('src')
+  const photo1src = await page.photoFull.getAttribute("src");
 
   await t
     .expect(page.photoNavPrevious.exists)
@@ -148,9 +112,9 @@ test('Open 1st pic', async t => {
     .hover(page.photoNavNext) //1st photo, so next button should exists
     .expect(page.photoNavNextBtn.visible)
     .ok() //Next arrow is shown
-    .click(page.photoNavNextBtn)
+    .click(page.photoNavNextBtn);
 
-  const photo2src = await page.photoFull.getAttribute('src')
+  const photo2src = await page.photoFull.getAttribute("src");
   await t
     .expect(photo1src)
     .notEql(photo2src) //Photo has change, so src is different
@@ -161,20 +125,20 @@ test('Open 1st pic', async t => {
     .click(page.photoThumb(0)) //re-open for closing using 'esc'
     .expect(page.photoFull.visible)
     .ok()
-    .pressKey('esc') //Pic closed using 'esc'
+    .pressKey("esc") //Pic closed using 'esc'
     .expect(page.photoFull.exists)
-    .notOk()
-})
+    .notOk();
+});
 
-test('Open Last pic', async t => {
+test("Open Last pic", async t => {
   //Left arrow shows up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
 
   await t
     .click(page.photoThumb(t.ctx.allPhotosStartCount - 1))
     .expect(page.photoFull.visible)
-    .ok()
+    .ok();
 
-  const photo1src = await page.photoFull.getAttribute('src')
+  const photo1src = await page.photoFull.getAttribute("src");
 
   await t
     .expect(page.photoNavNext.exists)
@@ -182,9 +146,9 @@ test('Open Last pic', async t => {
     .hover(page.photoNavPrevious) //1st photo, so prev button should exists
     .expect(page.photoNavPreviousBtn.visible)
     .ok() //prev arrow is shown
-    .click(page.photoNavPreviousBtn)
+    .click(page.photoNavPreviousBtn);
 
-  const photo2src = await page.photoFull.getAttribute('src')
+  const photo2src = await page.photoFull.getAttribute("src");
   await t
     .expect(photo1src)
     .notEql(photo2src) //Photo has change, so src is different
@@ -195,38 +159,26 @@ test('Open Last pic', async t => {
     .click(page.photoThumb(t.ctx.allPhotosStartCount - 1)) //re-open for closing using 'esc'
     .expect(page.photoFull.visible)
     .ok()
-    .pressKey('esc') //Pic closed using 'esc'
+    .pressKey("esc") //Pic closed using 'esc'
     .expect(page.photoFull.exists)
-    .notOk()
-})
+    .notOk();
+});
 
-test('Open a random pic (not first nor last)', async t => {
+test("Open a random pic (not first nor last)", async t => {
   //Both arrows show up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
   // We need at least 3 pics in our cozy for this test to pass
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
-=======
-  const photoIndex = _.random(1, t.ctx.allPhotosStartCount - 2)
->>>>>>> style: Prettier with eslint
-=======
-  const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
->>>>>>> refactor: Some fix to code according to PR comments 
-=======
-  const photoIndex = random(1, t.ctx.allPhotosStartCount - 2)
->>>>>>> test: testcafe tests update and travis configuration
+  const photoIndex = random(1, t.ctx.allPhotosStartCount - 2);
 
-  console.log('Open random pic  > photoIndex ' + photoIndex)
+  console.log("Open random pic  > photoIndex " + photoIndex);
 
   //Photo cannot be the first, and cannot be the last (hence -2)
   await t
     .click(page.photoThumb(photoIndex))
     .expect(page.photoFull.visible)
-    .ok()
+    .ok();
 
-  const photo1src = await page.photoFull.getAttribute('src')
+  const photo1src = await page.photoFull.getAttribute("src");
 
   await t
     .hover(page.photoNavNext) //photo in between, so next button should exists
@@ -242,9 +194,9 @@ test('Open a random pic (not first nor last)', async t => {
     .hover(page.photoNavNext)
     .click(page.photoNavNextBtn) //Got to photo+1
     .hover(page.photoNavPrevious) //photo+1 has a previous button to go back to photo
-    .click(page.photoNavPreviousBtn) //Go Back to photo
+    .click(page.photoNavPreviousBtn); //Go Back to photo
 
-  const photo2src = await page.photoFull.getAttribute('src')
+  const photo2src = await page.photoFull.getAttribute("src");
   await t
     .expect(photo1src)
     .eql(photo2src) //In the end we are back to photo, so both src are the same
@@ -255,12 +207,12 @@ test('Open a random pic (not first nor last)', async t => {
     .click(page.photoThumb(photoIndex)) //re-open for closing using 'esc'
     .expect(page.photoFull.visible)
     .ok()
-    .pressKey('esc') //Pic closed using 'esc'
+    .pressKey("esc") //Pic closed using 'esc'
     .expect(page.photoFull.exists)
-    .notOk()
-})
+    .notOk();
+});
 
-test('Deleting 1st pic in Photo view : Open up a modal, and confirm', async t => {
+test("Deleting 1st pic in Photo view : Open up a modal, and confirm", async t => {
   //pic is removed
   await t
     .hover(page.photoThumb(0))
@@ -271,16 +223,16 @@ test('Deleting 1st pic in Photo view : Open up a modal, and confirm', async t =>
     .click(page.barPhotoBtnDelete)
     .expect(page.modalDelete.visible)
     .ok()
-    .click(page.modalDeleteBtnDelete)
-  await t.takeScreenshot()
+    .click(page.modalDeleteBtnDelete);
+  await t.takeScreenshot();
 
-  const allPhotosEndCount = await page.allPhotos.count //Pics count at the end
-  console.log('allPhotosEndCount ' + allPhotosEndCount)
+  const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
 
-  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 1)
-})
+  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 1);
+});
 
-test('Deleting the 1st 3 pics in Photo view : Open up a modal, and confirm', async t => {
+test("Deleting the 1st 3 pics in Photo view : Open up a modal, and confirm", async t => {
   //pics are removed
   await t
     .hover(page.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
@@ -293,11 +245,11 @@ test('Deleting the 1st 3 pics in Photo view : Open up a modal, and confirm', asy
     .click(page.barPhotoBtnDelete)
     .expect(page.modalDelete.visible)
     .ok()
-    .click(page.modalDeleteBtnDelete)
-  await t.takeScreenshot()
+    .click(page.modalDeleteBtnDelete);
+  await t.takeScreenshot();
 
-  const allPhotosEndCount = await page.allPhotos.count //Pics count at the end
-  console.log('allPhotosEndCount ' + allPhotosEndCount)
+  const allPhotosEndCount = await page.allPhotos.count; //Pics count at the end
+  console.log("allPhotosEndCount " + allPhotosEndCount);
 
-  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 3)
-})
+  await t.expect(allPhotosEndCount).eql(t.ctx.allPhotosStartCount - 3);
+});
