@@ -1,5 +1,4 @@
 const createTestCafe = require('testcafe')
-let testcafe = null
 
 createTestCafe('localhost', 1337, 1338)
   .then(tc => {
@@ -9,8 +8,9 @@ createTestCafe('localhost', 1337, 1338)
     return (
       runner
         .src(['testcafe/tests/photos_crud.js'])
-        //  .browsers(["firefox:headless"])
-        .browsers(['firefox'])
+        .browsers(['firefox:headless'])
+        //  .browsers(['firefox'])
+        //  .browsers(['chrome --start-maximized'])
 
         .screenshots(
           'reports/screenshots/',

@@ -3,7 +3,11 @@ import { regularUser } from './helpers/roles' //import roles for login
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { getPageUrl, PHOTOS_URL } from './helpers/utils'
+=======
+import { getPageUrl, TESTCAFE_PHOTOS_URL } from './helpers/utils'
+>>>>>>> chore: Travis encrypted envirronement vars
 import random from 'lodash/random'
 =======
 import config from '../config' //import url & psswd config
@@ -26,6 +30,7 @@ const page = new Page()
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
 =======
 fixture`PHOTOS - CRUD`.page`${config.photosUrl}`.beforeEach(async t => {
@@ -36,6 +41,9 @@ fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
 =======
 fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
 >>>>>>> test: testcafe tests update and travis configuration
+=======
+fixture`PHOTOS - CRUD`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
+>>>>>>> chore: Travis encrypted envirronement vars
   await t.useRole(regularUser)
 
   await t.resizeWindow(1280, 1024) // No upload button on mobile view, beware of the size!
