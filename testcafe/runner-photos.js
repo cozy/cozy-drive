@@ -6,10 +6,8 @@ createTestCafe("localhost", 1337, 1338)
     testcafe = tc;
     const runner = testcafe.createRunner();
 
-    console.log("TESTCAFE_PHOTOS_URL :" + process.env.TESTCAFE_PHOTOS_URL);
-    console.log(
-      "TESTCAFE_USER_PASSWORD :" + process.env.TESTCAFE_USER_PASSWORD
-    );
+    console.log("TESTCAFE_PHOTOS_URL :" + "TESTCAFE_PHOTOS_URL.key");
+    console.log("TESTCAFE_USER_PASSWORD :" + "TESTCAFE_USER_PASSWORD.key");
 
     return (
       runner
