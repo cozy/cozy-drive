@@ -1,13 +1,13 @@
 import { Selector, Role } from 'testcafe' //import testcafe function
 import { regularUser } from './helpers/roles' //import roles for login
-import { getPageUrl, PHOTOS_URL } from './helpers/utils'
+import { getPageUrl, TESTCAFE_PHOTOS_URL } from './helpers/utils'
 import random from 'lodash/random'
 
 import Page from './pages/photos-model'
 
 const page = new Page()
 
-fixture`PHOTOS - CRUD`.page`${PHOTOS_URL}/`.beforeEach(async t => {
+fixture`PHOTOS - CRUD`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
   await t.useRole(regularUser)
 
   await t.resizeWindow(1280, 1024) // No upload button on mobile view, beware of the size!

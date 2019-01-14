@@ -46,8 +46,8 @@ export default class Page {
     this.barPhotoBtnDelete = this.barPhoto.find('button').nth(2) //DELETE
     this.modalDelete = Selector('[class*="c-modal"]').find('div')
     this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
-    this.allPhotos = Selector('[class^="pho-photo"]').find(
-      '[class^="pho-photo-item"]'
+    this.allPhotos = Selector('[class*="pho-photo"]').find(
+      '[class*="pho-photo-item"]'
     )
   }
 }
