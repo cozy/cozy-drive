@@ -2,7 +2,7 @@ language: node_js
 matrix:
   fast_finish: true
 node_js:
-  - '8'
+  - "8"
 branches:
   except:
     - build
@@ -47,7 +47,7 @@ before_install:
   - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)"; fi
   - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then chmod 600 /tmp/id_rsa_travis_downcloud;
     fi
-    - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
+  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
     fi
 >>>>>>> test: testcafe tests update and travis configuration
   - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
@@ -77,7 +77,7 @@ deploy:
       tags: true
 sudo: required
 before_script:
-  - 'export DISPLAY=:99.0'
-  - 'sh -e /etc/init.d/xvfb start'
-  - sleep 3
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - while [ ! -e xdpyinfo -display ${DISPLAY}; ]; do sleep 0.1; done
   - fluxbox >/dev/null 2>&1 &
