@@ -13,16 +13,10 @@ configurationFiles.push(
 )
 
 const isDrive = process.env.COZY_APP_SLUG === 'drive'
-const isPhotosServices = process.env.COZY_APP_SLUG === 'photos:services'
+const isPhotos = process.env.COZY_APP_SLUG === 'photos'
 
 if (isDrive) configurationFiles.push(require('./webpack/drive.config.js'))
-else if (isPhotosServices) {
-  configurationFiles.push(
-    require('cozy-scripts/config/webpack.config.services')
-  )
-  const nodeExternals = require('webpack-node-externals')
-  configurationFiles.push({ externals: [nodeExternals()] })
-}
+
 if (isDrive && target === 'mobile')
   configurationFiles.push(require('./webpack/mobile.config.js'))
 if (target !== 'mobile')
@@ -47,5 +41,21 @@ const extraConfig = {
   ]
 }
 configurationFiles.push(extraConfig)
+
+if (
+  isPhotos &&
+  configurationFiles[0].multiple &&
+  configurationFiles[0].multiple.services
+) {
+  // FIXME: Will be handled correctly by next major version of cozy-scripts
+  configurationFiles[0].multiple.services.__mergeStrategy.strategy[
+    'resolve.modules'
+  ] = 'replace'
+  configurationFiles[0].multiple.services.resolve = {
+    ...configurationFiles[0].multiple.services.resolve,
+    modules: [SRC_DIR, 'node_modules']
+  }
+  // DO NOT REUSE THIS HACK CODE ABOVE
+}
 
 module.exports = configurationFiles
