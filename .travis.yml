@@ -68,7 +68,9 @@ deploy:
     on:
       tags: true
 sudo: required
-# before_script:
+before_script:
+  - echo "TESTCAFE_PHOTOS_URL=" $TESTCAFE_PHOTOS_URL
+  - echo "TESTCAFE_USER_PASSWORD=" $TESTCAFE_USER_PASSWORD
 #   - "export DISPLAY=:99.0"
 #   - "sh -e /etc/init.d/xvfb start"
 #   - while [ ! -e xdpyinfo -display ${DISPLAY}; ]; do sleep 0.1; done
