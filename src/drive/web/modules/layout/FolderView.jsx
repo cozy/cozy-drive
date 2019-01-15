@@ -46,7 +46,6 @@ class FolderView extends Component {
           <AsyncBoundary>
             {({ isLoading, isInError }) => (
               <Toolbar
-                folderId={folderId}
                 canUpload={canUpload}
                 canCreateFolder={canCreateFolder}
                 disabled={isInError || isLoading || nothingToDo}
