@@ -26,7 +26,16 @@ import ShareButton from './Toolbar/share/ShareButton'
 import SharedRecipients from './Toolbar/share/SharedRecipients'
 const { BarRight } = cozy.bar
 
+import { diff } from 'deep-object-diff'
+
 class Toolbar extends Component {
+  shouldComponentUpdate(nextProps) {
+    const diffObject = diff(this.props, nextProps)
+    if (Object.keys(diffObject).length === 0) {
+      return false
+    }
+    return true
+  }
   render() {
     const {
       t,
