@@ -1,10 +1,12 @@
 import React from 'react'
 import Viewer from 'viewer'
+import PropTypes from 'prop-types'
+
 import PublicToolbar from './PublicToolbar'
 
-const LightFileViewer = ({ files }) => (
+const LightFileViewer = ({ files, isFile }) => (
   <div>
-    <PublicToolbar files={files} renderInBar />
+    <PublicToolbar files={files} renderInBar isFile={isFile} />
     <Viewer
       files={files}
       currentIndex={0}
@@ -15,4 +17,8 @@ const LightFileViewer = ({ files }) => (
   </div>
 )
 
+LightFileViewer.propTypes = {
+  files: PropTypes.array.isRequired,
+  isFile: PropTypes.bool.isRequired
+}
 export default LightFileViewer
