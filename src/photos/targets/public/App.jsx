@@ -5,6 +5,7 @@ import Selection from 'photos/ducks/selection'
 import ErrorShare from 'components/Error/ErrorShare'
 import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/react'
 import { IconSprite } from 'cozy-ui/transpiled/react'
+import { Main } from 'cozy-ui/react/Layout'
 
 import { MoreButton, CozyHomeLink } from 'components/Button'
 import PhotoBoard from 'photos/components/PhotoBoard'
@@ -63,64 +64,68 @@ class App extends Component {
             'u-pt-3'
           )}
         >
-          <ErrorShare errorType={`public_album_unshared`} />
+          <Main className="u-pt-1-half">
+            <ErrorShare errorType={`public_album_unshared`} />
+          </Main>
         </div>
       )
     }
-
     return (
       <div className={styles['pho-public-layout']}>
-        <Selection>
-          {(selected, active, selection) => (
-            <div>
-              <div
-                className={classNames(
-                  styles['pho-content-header'],
-                  styles['--no-icon'],
-                  styles['--hide-bar']
-                )}
-              >
-                <h2 className={styles['pho-content-title']}>{album.name}</h2>
-                <div className={styles['pho-toolbar']} role="toolbar">
-                  <Button
-                    theme="secondary"
-                    className={styles['pho-public-download']}
-                    onClick={() => this.onDownload(selected)}
-                    icon="download"
-                    label={t('Toolbar.album_download')}
-                  />
-                  <CozyHomeLink from="sharing-photos" t={t} />
-                  <Menu
-                    title={t('Toolbar.more')}
-                    component={<MoreButton />}
-                    position="right"
-                    className="u-hide--desk"
-                  >
-                    <MenuItem
-                      onSelect={() => this.onDownload(selected)}
-                      icon={<Icon icon="download" />}
+        <Main className="u-pt-1-half">
+          <Selection>
+            {(selected, active, selection) => (
+              <div>
+                <div
+                  className={classNames(
+                    styles['pho-content-header'],
+                    styles['--no-icon'],
+                    styles['--hide-bar']
+                  )}
+                >
+                  <h2 className={styles['pho-content-title']}>{album.name}</h2>
+                  <div className={styles['pho-toolbar']} role="toolbar">
+                    <CozyHomeLink from="sharing-photos" t={t} />
+                    <Button
+                      theme="secondary"
+                      className={styles['pho-public-download']}
+                      onClick={() => this.onDownload(selected)}
+                      icon="download"
+                      label={t('Toolbar.album_download')}
+                    />
+
+                    <Menu
+                      title={t('Toolbar.more')}
+                      component={<MoreButton />}
+                      position="right"
+                      className="u-hide--desk"
                     >
-                      {t('Toolbar.album_download')}
-                    </MenuItem>
-                  </Menu>
+                      <MenuItem
+                        onSelect={() => this.onDownload(selected)}
+                        icon={<Icon icon="download" />}
+                      >
+                        {t('Toolbar.album_download')}
+                      </MenuItem>
+                    </Menu>
+                  </div>
                 </div>
+                <PhotoBoard
+                  lists={[{ photos }]}
+                  selected={selected}
+                  photosContext="timeline"
+                  showSelection={active}
+                  onPhotoToggle={selection.toggle}
+                  onPhotosSelect={selection.select}
+                  onPhotosUnselect={selection.unselect}
+                  fetchStatus={photos.fetchStatus}
+                  hasMore={hasMore}
+                  fetchMore={fetchMore}
+                />
               </div>
-              <PhotoBoard
-                lists={[{ photos }]}
-                selected={selected}
-                photosContext="timeline"
-                showSelection={active}
-                onPhotoToggle={selection.toggle}
-                onPhotosSelect={selection.select}
-                onPhotosUnselect={selection.unselect}
-                fetchStatus={photos.fetchStatus}
-                hasMore={hasMore}
-                fetchMore={fetchMore}
-              />
-            </div>
-          )}
-        </Selection>
-        <IconSprite />
+            )}
+          </Selection>
+          <IconSprite />
+        </Main>
       </div>
     )
   }
@@ -130,7 +135,6 @@ const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
     {({ data: album, hasMore, fetchMore, fetchStatus }) => {
       if (fetchStatus === 'loaded') {
-        console.log({ album })
         return (
           <App
             album={album}
