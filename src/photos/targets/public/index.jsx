@@ -10,7 +10,7 @@ import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 
 import doctypes from '../browser/doctypes'
-import 'photos/styles/main'
+import 'photos/styles/main.styl'
 
 import App from './App'
 import PhotosViewer from 'photos/components/PhotosViewer'
