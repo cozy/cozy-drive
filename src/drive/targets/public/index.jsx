@@ -14,6 +14,7 @@ import PublicLayout from 'drive/web/modules/public/PublicLayout'
 import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
+import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 const getDocumentId = async client => {
   const isPreviewingSharing = window.location.toString().includes('/preview')
@@ -72,7 +73,8 @@ const init = async () => {
     token: sharecode,
     schema
   })
-
+  configureReporter()
+  setCozyUrl(cozyUrl)
   // we still need cozy-client-js for opening a folder
   cozy.client.init({
     cozyURL: cozyUrl,

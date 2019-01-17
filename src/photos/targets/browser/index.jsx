@@ -20,6 +20,8 @@ import {
 } from 'cozy-ui/react/helpers/tracker'
 import eventTrackerMiddleware from 'photos/middlewares/EventTracker'
 
+import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
+
 import doctypes from './doctypes'
 
 const loggerMiddleware = createLogger()
@@ -29,16 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = root.dataset
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const protocol = window.location ? window.location.protocol : 'https:'
-
+  const cozyUrl = `${protocol}//${data.cozyDomain}`
   const client = new CozyClient({
-    uri: `${protocol}//${data.cozyDomain}`,
+    uri: cozyUrl,
     token: data.cozyToken,
     schema: doctypes
   })
 
   // We still need to init cozy-client-js for the Uploader
   cozy.client.init({
-    cozyURL: `${protocol}//${data.cozyDomain}`,
+    cozyURL: cozyUrl,
     token: data.cozyToken
   })
 
@@ -49,7 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
     lang: data.cozyLocale,
     replaceTitleOnMobile: true
   })
-
+  configureReporter()
+  setCozyUrl(cozyUrl)
   let history = hashHistory
   let middlewares = [thunkMiddleware, loggerMiddleware]
 
