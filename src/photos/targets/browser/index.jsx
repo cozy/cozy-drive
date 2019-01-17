@@ -21,7 +21,7 @@ import {
 import eventTrackerMiddleware from 'photos/middlewares/EventTracker'
 
 import doctypes from './doctypes'
-
+require('../../../lib/initHelper')
 const loggerMiddleware = createLogger()
 
 document.addEventListener('DOMContentLoaded', () => {
