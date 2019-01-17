@@ -14,6 +14,7 @@ import 'photos/styles/main.styl'
 
 import App from './App'
 import PhotosViewer from 'photos/components/PhotosViewer'
+import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 document.addEventListener('DOMContentLoaded', init)
 
@@ -22,9 +23,10 @@ function init() {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
   const { id, sharecode } = getQueryParameter()
-
+  const protocol = window.location ? window.location.protocol : 'https:'
+  const cozyUrl = `${protocol}//${data.cozyDomain}`
   const client = new CozyClient({
-    uri: `//${data.cozyDomain}`,
+    uri: cozyUrl,
     token: sharecode,
     schema: doctypes
   })
@@ -43,7 +45,8 @@ function init() {
       replaceTitleOnMobile: true
     })
   }
-
+  configureReporter()
+  setCozyUrl(cozyUrl)
   const store = createStore(
     combineReducers({
       cozy: client.reducer()

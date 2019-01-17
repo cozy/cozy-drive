@@ -8,13 +8,14 @@ import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
 import { unlink, isAuthorized, isRevoked } from './duck'
 import { saveCredentials } from './sagas'
-
+import { setCozyUrl } from 'drive/lib/reporter'
 class DriveMobileRouter extends Component {
   afterAuthentication = async ({ url, clientInfo, token, router }) => {
     const wasRevoked = this.props.isRevoked
     this.context.client.options.uri = url
     await restoreCozyClientJs(url, clientInfo, token)
     this.props.saveServerUrl(url)
+    setCozyUrl(url)
     this.props.saveCredentials(clientInfo, token)
     if (wasRevoked) {
       initBar(this.context.client)

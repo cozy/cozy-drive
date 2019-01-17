@@ -53,6 +53,10 @@ export const logException = (err, extraContext = null, fingerprint = null) => {
   })
 }
 
+export const setCozyUrl = instance => {
+  Raven.setTagsContext({ instance })
+}
+
 const logMessage = (message, serverUrl, level = 'info') => {
   return new Promise(resolve => {
     Raven.setUserContext = {
