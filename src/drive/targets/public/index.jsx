@@ -3,7 +3,6 @@
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
-import { IconSprite } from 'cozy-ui/transpiled/react'
 
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
@@ -97,7 +96,9 @@ const init = async () => {
       <I18n lang={lang} polyglot={polyglot}>
         <CozyProvider store={store} client={client}>
           {isFile ? (
-            <LightFileViewer files={[data]} />
+            <PublicLayout>
+              <LightFileViewer files={[data]} isFile={true} />
+            </PublicLayout>
           ) : (
             <Router history={hashHistory}>
               <Route component={PublicLayout}>
@@ -106,7 +107,6 @@ const init = async () => {
               <Redirect from="/*" to={`files/${id}`} />
             </Router>
           )}
-          <IconSprite />
         </CozyProvider>
       </I18n>,
       root
