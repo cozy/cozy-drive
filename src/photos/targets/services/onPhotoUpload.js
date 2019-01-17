@@ -175,6 +175,8 @@ const recomputeParameters = async setting => {
 }
 
 const onPhotoUpload = async () => {
+  log('info', `Service called with COZY_URL: ${process.env.COZY_URL}`)
+
   let setting = await readSetting()
   const lastSeq = setting ? setting.lastSeq : 0
 

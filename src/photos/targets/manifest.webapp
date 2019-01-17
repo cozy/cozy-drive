@@ -39,6 +39,14 @@
       "public": true
     }
   },
+  "services": {
+    "onPhotoUpload": {
+      "type": "node",
+      "file": "services/onPhotoUpload/photos.js",
+      "trigger": "@event io.cozy.clusters.dummy",
+      "debounce": "1s"
+    }
+  },
   "permissions": {
     "files": {
       "description": "Required for photo access",
