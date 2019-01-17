@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
+
 import { withBreakpoints, Menu, MenuItem, Icon } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import DownloadButton from './DownloadButton'
@@ -18,9 +20,13 @@ import DownloadIcon from 'drive/assets/icons/icon-download-16.svg'
 
 const { BarRight } = cozy.bar
 
-const DownloadFilesButton = ({ t, onDownload, size = 'normal' }) => (
+const DownloadFilesButton = ({ t, onDownload, size = 'normal', isFile }) => (
   <DownloadButton
-    label={t('toolbar.menu_download_folder')}
+    label={
+      isFile
+        ? t('toolbar.menu_download_file')
+        : t('toolbar.menu_download_folder')
+    }
     className={toolbarstyles['fil-public-download']}
     onDownload={onDownload}
     theme="secondary"
@@ -28,7 +34,7 @@ const DownloadFilesButton = ({ t, onDownload, size = 'normal' }) => (
   />
 )
 
-const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy }) => (
+const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy, isFile }) => (
   <Menu
     title={t('toolbar.item_more')}
     className={classnames(
@@ -50,14 +56,20 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy }) => (
       </MenuItem>
     )}
     <MenuItem onSelect={onDownload} icon={<Icon icon={DownloadIcon} />}>
-      {t('toolbar.menu_download_folder')}
+      {isFile
+        ? t('toolbar.menu_download_file')
+        : t('toolbar.menu_download_folder')}
     </MenuItem>
   </Menu>
 )
 
-const MobileToolbar = ({ onDownload, discoveryLink, redirectTo }, { t }) => (
+const MobileToolbar = (
+  { onDownload, discoveryLink, redirectTo, isFile },
+  { t }
+) => (
   <BarRight>
     <MoreMenu
+      isFile={isFile}
       t={t}
       onDownload={onDownload}
       onOpenInCozy={discoveryLink ? () => redirectTo(discoveryLink) : false}
@@ -70,7 +82,7 @@ const MobileToolbar = ({ onDownload, discoveryLink, redirectTo }, { t }) => (
   </BarRight>
 )
 
-const CozybarToolbar = ({ onDownload, discoveryLink }, { t }) => (
+const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <BarRight>
     <div className={toolbarstyles['toolbar-inside-bar']}>
       {discoveryLink ? (
@@ -78,19 +90,24 @@ const CozybarToolbar = ({ onDownload, discoveryLink }, { t }) => (
       ) : (
         <CozyHomeLink from="sharing-drive" t={t} />
       )}
-      <DownloadFilesButton t={t} onDownload={onDownload} size="small" />
+      <DownloadFilesButton
+        t={t}
+        onDownload={onDownload}
+        size="small"
+        isFile={isFile}
+      />
     </div>
   </BarRight>
 )
 
-const DesktopToolbar = ({ onDownload, discoveryLink }, { t }) => (
+const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
     {discoveryLink ? (
       <OpenInCozyButton href={discoveryLink} t={t} />
     ) : (
       <CozyHomeLink from="sharing-drive" t={t} />
     )}
-    <DownloadFilesButton t={t} onDownload={onDownload} />
+    <DownloadFilesButton t={t} onDownload={onDownload} isFile={isFile} />
     <BarRight>
       <div />
     </BarRight>
@@ -137,7 +154,8 @@ class PublicToolbar extends React.Component {
   render() {
     const {
       breakpoints: { isMobile },
-      renderInBar = false
+      renderInBar = false,
+      isFile
     } = this.props
     const { discoveryLink } = this.state
 
@@ -147,6 +165,7 @@ class PublicToolbar extends React.Component {
           onDownload={this.downloadFiles}
           discoveryLink={discoveryLink}
           redirectTo={this.redirectTo}
+          isFile={isFile}
         />
       )
     } else if (renderInBar) {
@@ -154,6 +173,7 @@ class PublicToolbar extends React.Component {
         <CozybarToolbar
           onDownload={this.downloadFiles}
           discoveryLink={discoveryLink}
+          isFile={isFile}
         />
       )
     } else {
@@ -161,12 +181,18 @@ class PublicToolbar extends React.Component {
         <DesktopToolbar
           onDownload={this.downloadFiles}
           discoveryLink={discoveryLink}
+          isFile={isFile}
         />
       )
     }
   }
 }
-
+PublicToolbar.propTypes = {
+  isFile: PropTypes.bool.isRequired,
+  renderInBar: PropTypes.bool,
+  breakpoints: PropTypes.object.isRequired,
+  files: PropTypes.array.isRequired
+}
 const mapDispatchToProps = dispatch => ({
   onDownload: files => dispatch(downloadFiles(files))
 })
