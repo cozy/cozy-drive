@@ -16,7 +16,7 @@ export const regularUser = Role(
       .typeText(page.password, `${TESTCAFE_USER_PASSWORD}`)
       .click(page.loginButton)
       .expect(getPageUrl())
-      .contains('#/photos') //Checks if the current page URL contains the '#/photos' string
+      .contains('#/photos') //!FIXME don't use #/photos
   },
   { preserveUrl: true }
 )

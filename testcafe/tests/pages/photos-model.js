@@ -1,5 +1,6 @@
 //!FIXME Change selector (ID or react)
 import { Selector, t } from 'testcafe'
+import { getPageUrl, wait } from '../helpers/utils'
 
 export default class Page {
   constructor() {
@@ -34,7 +35,7 @@ export default class Page {
     )
     this.photoToolbar = Selector(
       '[class*="coz-selectionbar pho-viewer-toolbar-actions"]'
-    ) //.find('button') -> DL button
+    )
 
     this.photoCheckbox = Selector(
       '[class*="pho-photo-select"][data-input="checkbox"]'
@@ -46,21 +47,35 @@ export default class Page {
     this.barPhotoBtnDelete = this.barPhoto.find('button').nth(2) //DELETE
     this.modalDelete = Selector('[class*="c-modal"]').find('div')
     this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
+
     this.allPhotos = Selector('[class*="pho-photo"]').find(
       '[class*="pho-photo-item"]'
     )
   }
 
+  async getPhotosCount(when) {
+    //@param {string} when : text for console.log
+    // wait until the 'exists' property of a selector is stable to count it
+    await wait(1000)
+      .until(this.allPhotos)
+      .exists.isStable()
+    const allPhotosCount = await this.allPhotos.count
+    console.log(
+      'Number of pictures on page (' + when + ' test):  ' + allPhotosCount
+    )
+    return allPhotosCount
+  }
+
   async uploadPhotos(files) {
     const numOfFiles = files.length
-    console.log('Uploading  ' + numOfFiles + ' picture(s)')
+    console.log('Uploading ' + numOfFiles + ' picture(s)')
 
     await t
       .setFilesToUpload(this.btnUpload, files)
       .expect(this.divUpload.visible)
       .ok('Upload pop-in does not show up')
       .expect(this.modalUpload.exists)
-      .ok({ timeout: 50000 })
+      .ok('Photo(s) not uploaded')
       .expect(this.divUpload.child('h4').innerText)
       .match(
         new RegExp('([' + numOfFiles + '].*){2}'),
@@ -68,37 +83,122 @@ export default class Page {
       )
     await t.takeScreenshot()
 
-    const allPhotosEndCount = await this.allPhotos.count //Pics count at the end
-    console.log(
-      'Number of pictures on page (After test):  ' + allPhotosEndCount
-    )
+    const allPhotosEndCount = await this.getPhotosCount('After')
     await t
       .expect(allPhotosEndCount)
       .eql(t.ctx.allPhotosStartCount + numOfFiles)
   }
 
-  async deletePhotos(numOfFiles) {
-    console.log('Deleting  ' + numOfFiles + ' picture(s)')
+  async selectPhotos(numOfFiles) {
+    console.log('Selecting ' + numOfFiles + ' picture(s)')
 
-    await t.hover(page.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
-    for (i = 0; i < numOfFiles - 1; i++) {
-      await t.click(page.photoCheckbox.nth(i)) //Index
+    await t.hover(this.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
+
+    for (let i = 0; i < numOfFiles - 1; i++) {
+      await t.click(this.photoCheckbox.nth(i))
     }
-    await t
-      .expect(page.barPhoto.visible)
-      .ok()
+    await t.expect(this.barPhoto.visible).ok('Selection bar does not show up')
 
-      .click(page.barPhotoBtnDelete)
-      .expect(page.modalDelete.visible)
-      .ok()
-      .click(page.modalDeleteBtnDelete)
+    // TODO - Add check on label text ??
+  }
+
+  async checkPhotobar() {
+    await t
+      .expect(this.barPhotoBtnAddtoalbum.visible)
+      .ok('Button "Add to Album" does not show up')
+      .expect(this.barPhotoBtnDl.visible)
+      .ok('Button "Download" does not show up')
+      .expect(this.barPhotoBtnDelete.visible)
+      .ok('Button "Delete" does not show up')
+    //!FIXME Add check on label text
+  }
+
+  async openPhotoFullscreen(index) {
+    await t
+      .click(this.photoThumb(index))
+      .expect(this.photoFull.visible)
+      .ok('Photo is not in fullscreen view')
+  }
+
+  async closePhotoFullscreenX() {
+    //Pic closed using Button
+    await t
+      .click(this.photoBtnClose)
+      .expect(this.photoFull.exists)
+      .notOk('Photo is still in fullscreen view')
+  }
+
+  async closePhotoFullscreenEsc() {
+    //Pic closed using 'esc'
+    await t
+      .pressKey('esc')
+      .expect(this.photoFull.exists)
+      .notOk('Photo is still in fullscreen view')
+  }
+
+  async navigateToNextPhoto(index) {
+    if (index == t.ctx.allPhotosStartCount - 1) {
+      //this is the last picture, so next button does not exist
+      await t
+        .expect(this.photoNavNext.exists)
+        .notOk('Next button on last picture')
+    } else {
+      const photo1src = await this.photoFull.getAttribute('src')
+      const photo1url = await getPageUrl()
+      await t
+        .hover(this.photoNavNext) //not last photo, so next button should exists
+        .expect(this.photoNavNextBtn.visible)
+        .ok('Next arrow does not show up')
+        .click(this.photoNavNextBtn)
+
+      const photo2src = await this.photoFull.getAttribute('src')
+      const photo2url = await getPageUrl()
+      //Photo has change, so src & url are different
+
+      await t.expect(photo1src).notEql(photo2src)
+      await t.expect(photo1url).notEql(photo2url)
+      //!FIXME add data-photo-id=xxx in photo and check url=#/photos/xxx
+    }
+  }
+
+  async navigateToPrevPhoto(index) {
+    if (index == 0) {
+      //this is the 1st picture, so previous button does not exist
+      await t
+        .expect(this.photoNavPrevious.exists)
+        .notOk('Previous button on first picture')
+    } else {
+      const photo1src = await this.photoFull.getAttribute('src')
+      const photo1url = await getPageUrl()
+
+      await t
+        .hover(this.photoNavPrevious) //not 1st photo, so previous button should exists
+        .expect(this.photoNavPreviousBtn.visible)
+        .ok('Previous arrow does not show up')
+        .click(this.photoNavPrevious)
+
+      const photo2src = await this.photoFull.getAttribute('src')
+      const photo2url = await getPageUrl()
+      //Photo has change, so src & url are different
+      await t.expect(photo1src).notEql(photo2src)
+      await t.expect(photo1url).notEql(photo2url)
+      //!FIXME add data-photo-id=xxx in photo and check url=#/photos/xxx
+    }
+  }
+
+  async deletePhotos(numOfFiles) {
+    await this.selectPhotos(numOfFiles)
+
+    console.log('Deleting ' + numOfFiles + ' picture(s)')
+
+    await t
+      .click(this.barPhotoBtnDelete)
+      .expect(this.modalDelete.visible)
+      .ok('Delete button does not show up')
+      .click(this.modalDeleteBtnDelete)
     await t.takeScreenshot()
 
-    const allPhotosEndCount = await page.allPhotos.count //Pics count at the end
-    console.log(
-      'Number of pictures on page (After test):  ' + allPhotosEndCount
-    )
-
+    const allPhotosEndCount = await this.getPhotosCount('After')
     await t
       .expect(allPhotosEndCount)
       .eql(t.ctx.allPhotosStartCount - numOfFiles)
