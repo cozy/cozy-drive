@@ -4198,13 +4198,13 @@ cozy-client-js@0.9.0:
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
 
-cozy-client@5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-5.4.1.tgz#0485ec6c41f521cc3ac2d32e737d7679ddd48934"
-  integrity sha512-3zU02Acj/Nl2I/x9FgCKUv3HLIyPKBs2ggK3hZuvi0hKe6L4gY5F8zaJtbQKtuRTqTcgb9h1VaLFYPkZBMqU0w==
+cozy-client@5.6.3:
+  version "5.6.3"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-5.6.3.tgz#cd3a07922b4082fa08af2bf66c4ece4827aaab38"
+  integrity sha512-5ae0wtwl0Y/6UIPEnf6GvscZDXWXtvsbYVe/se9+MuuGuuundkY912FQm4UJcgGqbPI9Uq4RK+q0BUw3jw93mA==
   dependencies:
     cozy-device-helper "1.4.14"
-    cozy-stack-client "^5.2.1"
+    cozy-stack-client "^5.6.1"
     lodash "4.17.11"
     prop-types "15.6.2"
     react "16.7.0"
@@ -4266,7 +4266,7 @@ cozy-realtime@1.2.1:
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.2.1.tgz#767a6279895960f51d422be043fb001316abe290"
   integrity sha512-ed4fYohePy/0kgfylgfIQ2wRlOCSzG8jXRpOi1gjPXWJY/NYCvGMibd2GMW7XrcGy13Wd5eFQD55RhozKy1mqw==
 
-cozy-scripts@^1.11.0:
+cozy-scripts@1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-1.11.0.tgz#643716b50ae7a4b2587a495626db74dd2d793e64"
   integrity sha512-/24NL2vqL/fXbuevf5hUHXAmXpg8g6Rljx0I0grjqAmogX+d3TugKVKm18LJB7VzMMjmA601Cqj39EAu4VUJmg==
@@ -4319,11 +4319,12 @@ cozy-scripts@^1.11.0:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-stack-client@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-5.2.1.tgz#6d66ebb26b0c3b1d9b40a27dd0f5db4f72d402ab"
-  integrity sha512-lYtLMUT/zkrCW6Z8Qa95KKPtBrZQmuzkwH4/zn1/AvhnhjkSW4nkWxIjeVgTfdrND4b7Ssy1/FDLzUTSVlqFBw==
+cozy-stack-client@^5.6.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-5.6.1.tgz#f7ea391d5a635605a16b7bdaea0a36b2d9cd1023"
+  integrity sha512-8Z1fMepAm5bu4eup4DviUux8j/bwbvuFNPVaVuk4We+k3/ly07nvp2q3sUh9YMSXGKZOsb3O9ybIZ5XzCOKnWA==
   dependencies:
+    detect-node "2.0.4"
     mime-types "2.1.20"
 
 cozy-ui@17.9.0:
@@ -4934,7 +4935,7 @@ detect-newline@^2.1.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-2.1.0.tgz#f41f1c10be4b00e87b5f13da680759f2c5bfd3e2"
   integrity sha1-9B8cEL5LAOh7XxPaaAdZ8sW/0+I=
 
-detect-node@^2.0.3:
+detect-node@2.0.4, detect-node@^2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==

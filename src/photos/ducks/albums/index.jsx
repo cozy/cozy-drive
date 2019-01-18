@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import { Query, withMutations } from 'cozy-client'
-import omit from 'lodash/omit'
 import SharingProvider from 'sharing'
 import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
@@ -25,29 +24,12 @@ const ALBUMS_QUERY = client =>
 export const ALBUM_QUERY = (client, ownProps) =>
   client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId).include(['photos'])
 
-const ALBUM_MUTATIONS = client => ({
-  updateAlbum: album => client.save(album),
-  deleteAlbum: album => client.destroy(album),
-  addPhotos,
-  removePhotos: async (album, photos, clearSelection) => {
-    try {
-      await album.photos.remove(photos)
-      Alerter.success('Albums.remove_photos.success', {
-        album_name: album.name
-      })
-      clearSelection()
-    } catch (e) {
-      Alerter.error('Albums.remove_photos.error.generic')
-    }
-  }
-})
 const addPhotos = async (album, photos) => {
   try {
-    const addedPhotos = await album.photos.add(
-      photos.map(photo => omit(photo, ['albums']))
-    )
-    // TODO: dont use photos.add, see https://github.com/cozy/cozy-client/pull/328
-    if (addedPhotos.length !== photos.length) {
+    const photoCountBefore = album.photos.data.length
+    await album.photos.addById(photos.map(({ _id }) => _id))
+    const photoCountAfter = album.photos.data.length
+    if (photoCountBefore + photos.length !== photoCountAfter) {
       Alerter.info('Alerter.photos.already_added_photo')
     } else {
       Alerter.success('Albums.add_photos.success', {
@@ -60,6 +42,22 @@ const addPhotos = async (album, photos) => {
   }
 }
 
+const ALBUM_MUTATIONS = client => ({
+  updateAlbum: album => client.save(album),
+  deleteAlbum: album => client.destroy(album),
+  addPhotos,
+  removePhotos: async (album, photos, clearSelection) => {
+    try {
+      await album.photos.removeById(photos.map(({ _id }) => _id))
+      Alerter.success('Albums.remove_photos.success', {
+        album_name: album.name
+      })
+      clearSelection()
+    } catch (e) {
+      Alerter.error('Albums.remove_photos.error.generic')
+    }
+  }
+})
 const ALBUMS_MUTATIONS = client => ({
   addPhotos,
   createAlbum: async (name, photos, created_at = new Date()) => {
