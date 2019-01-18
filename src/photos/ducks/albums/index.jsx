@@ -43,7 +43,17 @@ const addPhotos = async (album, photos) => {
 }
 
 const ALBUM_MUTATIONS = client => ({
-  updateAlbum: album => client.save(album),
+  updateAlbum: async album => {
+    const unique = await client
+      .collection(DOCTYPE_ALBUMS)
+      .checkUniquenessOf('name', album.name)
+    if (unique !== true) {
+      Alerter.error('Albums.create.error.already_exists', { name })
+      return
+    } else {
+      return client.save(album)
+    }
+  },
   deleteAlbum: album => client.destroy(album),
   addPhotos,
   removePhotos: async (album, photos, clearSelection) => {
@@ -68,7 +78,9 @@ const ALBUMS_MUTATIONS = client => ({
       }
       const album = { _type: DOCTYPE_ALBUMS, name, created_at }
 
-      const unique = await client.validate(album)
+      const unique = await client
+        .collection(DOCTYPE_ALBUMS)
+        .checkUniquenessOf('name', album.name)
       if (unique !== true) {
         Alerter.error('Albums.create.error.already_exists', { name })
         return
