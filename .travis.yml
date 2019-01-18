@@ -50,7 +50,7 @@ script:
   - yarn tx
   - yarn test
   - yarn build:$COZY_APP_SLUG:browser
-  - yarn testcafe:$COZY_APP_SLUG
+  - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG || echo "skipping testcafe outside of pull requests"
 before_deploy:
   - yarn add cozy-app-publish
 deploy:
