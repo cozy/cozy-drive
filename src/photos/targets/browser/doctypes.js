@@ -36,8 +36,7 @@ export default {
     doctype: DOCTYPE_ALBUMS,
     attributes: {
       name: {
-        type: 'string',
-        unique: true
+        type: 'string'
       }
     },
     relationships: {
