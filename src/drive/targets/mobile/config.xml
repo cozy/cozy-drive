@@ -15,6 +15,7 @@
     <platform name="android">
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+        <preference name="AndroidLaunchMode" value="singleInstance" />
         <allow-intent href="market:*" />
         <custom-config-file parent="./application/activity/[@android:name='MainActivity']" target="AndroidManifest.xml">
             <intent-filter android:label="Cozy Drive">
