@@ -1,15 +1,15 @@
 //!FIXME Change selector (ID or react)
 import { Selector, t } from 'testcafe'
+import { ReactSelector } from 'testcafe-react-selectors'
 import { getPageUrl, wait } from '../helpers/utils'
 
 export default class Page {
   constructor() {
-    this.nameInput = Selector('#developer-name')
-
     this.btnUpload = Selector('[class*="pho-toolbar"]')
       .find('span')
       .find('input')
     this.divUpload = Selector('[class*="upload-queue"]')
+    //  this.divUpload = ReactSelector('UploadQueue')
 
     this.modalUpload = Selector('[class*="c-alert-wrapper"]', {
       visibilityCheck: true

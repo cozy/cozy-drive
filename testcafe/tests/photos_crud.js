@@ -1,6 +1,6 @@
 import { Selector, Role } from 'testcafe' //import testcafe function
-import { regularUser } from './helpers/roles' //import roles for login
-import { getPageUrl, TESTCAFE_PHOTOS_URL, wait } from './helpers/utils'
+import { photosUser } from './helpers/roles' //import roles for login
+import { getPageUrl, TESTCAFE_PHOTOS_URL } from './helpers/utils'
 import random from 'lodash/random'
 
 import Page from './pages/photos-model'
@@ -8,8 +8,12 @@ import Page from './pages/photos-model'
 const page = new Page()
 
 fixture`PHOTOS - CRUD`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
-  await t.useRole(regularUser)
-  t.ctx.allPhotosStartCount = await page.getPhotosCount('Before') //Pics count at test start
+  await t.useRole(photosUser)
+
+  t.ctx.allPhotosStartCount = await page.allPhotos.count //Pics count at test start
+  console.log(
+    'Number of pictures on page (Before test): ' + t.ctx.allPhotosStartCount
+  )
 })
 
 test('Uploading 1 pic from Photos view', async t => {

@@ -135,6 +135,7 @@
     "redux-mock-store": "1.5.1",
     "redux-raven-middleware": "1.2.0",
     "redux-thunk": "2.3.0",
+    "testcafe-react-selectors": "^3.0.3",
     "url-polyfill": "1.1.0",
     "webpack-node-externals": "1.7.2",
     "whatwg-fetch": "3.0.0"

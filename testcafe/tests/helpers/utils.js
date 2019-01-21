@@ -1,6 +1,7 @@
 import { ClientFunction, t } from 'testcafe'
 
 export const TESTCAFE_PHOTOS_URL = process.env.TESTCAFE_PHOTOS_URL
+export const TESTCAFE_DRIVE_URL = process.env.TESTCAFE_DRIVE_URL
 export const TESTCAFE_USER_PASSWORD = process.env.TESTCAFE_USER_PASSWORD
 
 //Returns the URL of the current web page
