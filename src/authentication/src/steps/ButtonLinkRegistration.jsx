@@ -8,7 +8,8 @@ export const ButtonLinkRegistration = ({
   label,
   size,
   subtle = false,
-  type = 'submit'
+  type = 'submit',
+  theme = 'primary'
 }) => {
   const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
     'browser'}`
@@ -21,8 +22,8 @@ export const ButtonLinkRegistration = ({
       label={label}
       size={size}
       className={className}
-      subtle={subtle}
       type={type}
+      theme={theme}
     />
   )
 }
