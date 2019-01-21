@@ -1,6 +1,6 @@
-import { log, cozyClient } from 'cozy-konnector-libs'
+import { log } from 'cozy-konnector-libs'
 
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { getChanges, getFilesFromDate } from 'photos/ducks/clustering/files'
 import {
   readSetting,
   createSetting,
@@ -98,37 +98,6 @@ const clusterizePhotos = async (setting, dataset) => {
   // TODO adapt percentiles for large datasets
 }
 
-const getChanges = async lastSeq => {
-  log('info', `Get changes on files since ${lastSeq}`)
-  const result = await cozyClient.fetchJSON(
-    'GET',
-    `/data/${DOCTYPE_FILES}/_changes?include_docs=true&since=${lastSeq}`
-  )
-  const photos = result.results.map(res => res.doc).filter(doc => {
-    return doc.class === 'image' && !doc._id.includes('_design') && !doc.trashed
-  })
-  const newLastSeq = result.last_seq
-  return { photos, newLastSeq }
-}
-
-const getFilesFromDate = async date => {
-  // Note a file without a metadata.datetime would not be indexed: this is not
-  // a big deal as this is only to compute parameters
-  const filesIndex = await cozyClient.data.defineIndex(DOCTYPE_FILES, [
-    'metadata.datetime',
-    'class',
-    'trashed'
-  ])
-  const selector = {
-    'metadata.datetime': { $gt: date },
-    class: 'image',
-    trashed: false
-  }
-  return cozyClient.data.query(filesIndex, {
-    selector: selector
-  })
-}
-
 const createParameter = (dataset, epsTemporal, epsSpatial) => {
   return {
     period: {
@@ -215,15 +184,15 @@ const onPhotoUpload = async () => {
       }
     }
   }
-
   const result = await clusterizePhotos(setting, dataset)
+
   if (!result.setting) {
     return
   }
   /*
     WARNING: we save the lastSeq retrieved at the beginning of the clustering.
     However, we might have produced new _changes on files by saving the
-    referenced-by, so they will computed again at the next clustering.
+    referenced-by, so they will be computed again at the next clustering.
     We cannot save the new lastSeq, as new files might have been uploaded by
     this time and would be ignored for the next clustering.
     This is unpleasant, but harmless, as no new writes will be produced on the
