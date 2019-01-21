@@ -2,6 +2,7 @@ import { Selector, Role } from 'testcafe' //import testcafe function
 import { photosUser } from './helpers/roles' //import roles for login
 import { getPageUrl, TESTCAFE_PHOTOS_URL } from './helpers/utils'
 import random from 'lodash/random'
+import { waitForReact } from 'testcafe-react-selectors'
 
 import Page from './pages/photos-model'
 
@@ -9,6 +10,7 @@ const page = new Page()
 
 fixture`PHOTOS - CRUD`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
   await t.useRole(photosUser)
+  await waitForReact() //No react on login page, so waitForReact after login
 
   t.ctx.allPhotosStartCount = await page.allPhotos.count //Pics count at test start
   console.log(
