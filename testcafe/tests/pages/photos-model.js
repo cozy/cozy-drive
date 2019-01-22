@@ -1,38 +1,26 @@
 //!FIXME Change selector (ID or react)
 import { Selector, t } from 'testcafe'
-import { getPageUrl, wait } from '../helpers/utils'
+import { getPageUrl, elWithDataTest } from '../helpers/utils'
 
 export default class Page {
   constructor() {
-    this.nameInput = Selector('#developer-name')
+    this.loading = elWithDataTest('loading')
+    //page
+    this.photoSection = elWithDataTest('photoSection')
+    this.photoEmpty = Selector('[class*="c-empty"]')
 
-    this.btnUpload = Selector('[class*="pho-toolbar"]')
-      .find('span')
-      .find('input')
-    this.divUpload = Selector('[class*="upload-queue"]')
-
+    // Upload
+    this.btnUpload = elWithDataTest('uploadButton')
+    this.divUpload = elWithDataTest('uploadQueue')
+    this.divUploadSuccess = elWithDataTest('uploadQueue-success')
     this.modalUpload = Selector('[class*="c-alert-wrapper"]', {
       visibilityCheck: true
     })
 
+    //thunbnail
     this.photoThumb = value => {
       return Selector('[class*="pho-photo-item"]').nth(value)
     }
-
-    // Photo fullscreen
-    this.photoFull = Selector('[class*="pho-viewer-imageviewer"]').find('img')
-    this.photoNavNext = Selector('[class*="pho-viewer-nav--next"]')
-    this.photoNavNextBtn = this.photoNavNext.find(
-      '[class*="pho-viewer-nav-arrow"]'
-    )
-    this.photoNavPrevious = Selector('[class*="pho-viewer-nav--previous"]')
-    this.photoNavPreviousBtn = this.photoNavPrevious.find(
-      '[class*="pho-viewer-nav-arrow"]'
-    )
-
-    this.photoBtnClose = Selector('[class*="pho-viewer-toolbar-close"]').find(
-      '[class*="c-btn"]'
-    )
     this.photoToolbar = Selector(
       '[class*="coz-selectionbar pho-viewer-toolbar-actions"]'
     )
@@ -51,19 +39,47 @@ export default class Page {
     this.allPhotos = Selector('[class*="pho-photo"]').find(
       '[class*="pho-photo-item"]'
     )
+
+    // Photo fullscreen
+    this.photoFull = Selector('[class*="pho-viewer-imageviewer"]').find('img')
+    this.photoNavNext = Selector('[class*="pho-viewer-nav--next"]')
+    this.photoNavNextBtn = this.photoNavNext.find(
+      '[class*="pho-viewer-nav-arrow"]'
+    )
+    this.photoNavPrevious = Selector('[class*="pho-viewer-nav--previous"]')
+    this.photoNavPreviousBtn = this.photoNavPrevious.find(
+      '[class*="pho-viewer-nav-arrow"]'
+    )
+    this.photoBtnClose = Selector('[class*="pho-viewer-toolbar-close"]').find(
+      '[class*="c-btn"]'
+    )
+  }
+
+  async waitForLoading() {
+    const startTime = Date.now()
+    const timeout = 5000
+    while (await this.loading.exists) {
+      console.log('Waiting for page load...')
+      const timeoutExpired = Date.now() - startTime >= timeout
+      if (timeoutExpired) {
+        throw Error('timeoutExpired : ' + timeoutExpired)
+      }
+      await t.wait(500)
+    }
   }
 
   async getPhotosCount(when) {
     //@param {string} when : text for console.log
-    // wait until the 'exists' property of a selector is stable to count it
-    await wait(1000)
-      .until(this.allPhotos)
-      .exists.isStable()
-    const allPhotosCount = await this.allPhotos.count
-    console.log(
-      'Number of pictures on page (' + when + ' test):  ' + allPhotosCount
-    )
-    return allPhotosCount
+    if ((await this.photoSection.exists) || (await this.photoEmpty.exists)) {
+      const allPhotosCount = await this.allPhotos.count
+      console.log(
+        'Number of pictures on page (' + when + ' test):  ' + allPhotosCount
+      )
+      return allPhotosCount
+    } else {
+      this.waitForLoading()
+      this.getPhotosCount(when)
+    }
   }
 
   async uploadPhotos(files) {
@@ -74,6 +90,9 @@ export default class Page {
       .setFilesToUpload(this.btnUpload, files)
       .expect(this.divUpload.visible)
       .ok('Upload pop-in does not show up')
+      .expect(this.divUploadSuccess.visible)
+      .ok('Upload pop-in not successfull')
+
       .expect(this.modalUpload.exists)
       .ok('Photo(s) not uploaded')
       .expect(this.divUpload.child('h4').innerText)
@@ -94,7 +113,7 @@ export default class Page {
 
     await t.hover(this.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
 
-    for (let i = 0; i < numOfFiles - 1; i++) {
+    for (let i = 0; i < numOfFiles; i++) {
       await t.click(this.photoCheckbox.nth(i))
     }
     await t.expect(this.barPhoto.visible).ok('Selection bar does not show up')
