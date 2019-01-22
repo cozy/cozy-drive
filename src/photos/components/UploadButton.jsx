@@ -37,6 +37,7 @@ export const UploadButton = ({
       {!inMenu && <Icon icon="upload" />}
       <span>{label}</span>
       <input
+        data-test-id="uploadButton"
         type="file"
         accept="image/*"
         multiple

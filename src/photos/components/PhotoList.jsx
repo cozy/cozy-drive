@@ -98,6 +98,7 @@ export class PhotoList extends Component {
 
     return (
       <div
+        data-test-id="photoSection"
         className={classNames(
           styles['pho-section'],
           showSelection && styles['pho-section--has-selection']

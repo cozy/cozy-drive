@@ -9,7 +9,7 @@ import Page from '../pages/login-model'
 
 const page = new Page()
 
-export const regularUser = Role(
+export const photosUser = Role(
   `${TESTCAFE_PHOTOS_URL}/`,
   async t => {
     await t
