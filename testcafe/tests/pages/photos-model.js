@@ -17,7 +17,7 @@ export default class Page {
       visibilityCheck: true
     })
 
-    //thunbnail
+    //thumbnails
     this.photoThumb = value => {
       return Selector('[class*="pho-photo-item"]').nth(value)
     }
@@ -54,14 +54,17 @@ export default class Page {
     )
   }
 
+  async initPhotoPage() {
+    await this.waitForLoading()
+    t.ctx.allPhotosStartCount = await this.getPhotosCount('Before')
+  }
+
   async waitForLoading() {
     await t.expect(this.loading.exists).notOk('Page still loading')
   }
 
+  //@param {string} when : text for console.log
   async getPhotosCount(when) {
-    //@param {string} when : text for console.log
-
-    await this.waitForLoading()
     let allPhotosCount
 
     if (await this.photoEmpty.exists) {
@@ -73,9 +76,6 @@ export default class Page {
         .expect(this.allPhotos.exists)
         .ok('No Picture')
       allPhotosCount = await this.allPhotos.count
-    } else {
-      await this.waitForLoading()
-      return this.getPhotosCount(when)
     }
     console.log(`Number of pictures on page (${when} test):  ${allPhotosCount}`)
     return allPhotosCount
