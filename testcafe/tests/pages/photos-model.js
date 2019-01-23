@@ -1,18 +1,18 @@
 //!FIXME Change selector (ID or react)
 import { Selector, t } from 'testcafe'
-import { getPageUrl, elWithDataTest } from '../helpers/utils'
+import { getPageUrl, getElementWithTestId } from '../helpers/utils'
 
 export default class Page {
   constructor() {
-    this.loading = elWithDataTest('loading')
+    this.loading = getElementWithTestId('loading')
     //page
-    this.photoSection = elWithDataTest('photoSection')
+    this.photoSection = getElementWithTestId('photoSection')
     this.photoEmpty = Selector('[class*="c-empty"]')
 
     // Upload
-    this.btnUpload = elWithDataTest('uploadButton')
-    this.divUpload = elWithDataTest('uploadQueue')
-    this.divUploadSuccess = elWithDataTest('uploadQueue-success')
+    this.btnUpload = getElementWithTestId('uploadButton')
+    this.divUpload = getElementWithTestId('uploadQueue')
+    this.divUploadSuccess = getElementWithTestId('uploadQueue-success')
     this.modalUpload = Selector('[class*="c-alert-wrapper"]', {
       visibilityCheck: true
     })
@@ -36,9 +36,8 @@ export default class Page {
     this.modalDelete = Selector('[class*="c-modal"]').find('div')
     this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
 
-    this.allPhotos = Selector('[class*="pho-photo"]').find(
-      '[class*="pho-photo-item"]'
-    )
+    this.allPhotosWrapper = this.photoSection.find('[class^="pho-photo"]')
+    this.allPhotos = Selector('img[class*="pho-photo-item"]')
 
     // Photo fullscreen
     this.photoFull = Selector('[class*="pho-viewer-imageviewer"]').find('img')
@@ -56,30 +55,30 @@ export default class Page {
   }
 
   async waitForLoading() {
-    const startTime = Date.now()
-    const timeout = 5000
-    while (await this.loading.exists) {
-      console.log('Waiting for page load...')
-      const timeoutExpired = Date.now() - startTime >= timeout
-      if (timeoutExpired) {
-        throw Error('timeoutExpired : ' + timeoutExpired)
-      }
-      await t.wait(500)
-    }
+    await t.expect(this.loading.exists).notOk('Page still loading')
   }
 
   async getPhotosCount(when) {
     //@param {string} when : text for console.log
-    if ((await this.photoSection.exists) || (await this.photoEmpty.exists)) {
-      const allPhotosCount = await this.allPhotos.count
-      console.log(
-        'Number of pictures on page (' + when + ' test):  ' + allPhotosCount
-      )
-      return allPhotosCount
+
+    await this.waitForLoading()
+    let allPhotosCount
+
+    if (await this.photoEmpty.exists) {
+      allPhotosCount = 0
+    } else if (await this.photoSection.exists) {
+      await t
+        .expect(this.allPhotosWrapper.exists)
+        .ok('No Picture wrapper')
+        .expect(this.allPhotos.exists)
+        .ok('No Picture')
+      allPhotosCount = await this.allPhotos.count
     } else {
-      this.waitForLoading()
-      this.getPhotosCount(when)
+      await this.waitForLoading()
+      return this.getPhotosCount(when)
     }
+    console.log(`Number of pictures on page (${when} test):  ${allPhotosCount}`)
+    return allPhotosCount
   }
 
   async uploadPhotos(files) {
@@ -111,10 +110,16 @@ export default class Page {
   async selectPhotos(numOfFiles) {
     console.log('Selecting ' + numOfFiles + ' picture(s)')
 
-    await t.hover(this.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
+    await t
+      .expect(this.photoThumb(0).exists)
+      .ok("1st picture thumb doesn't exist")
+      .hover(this.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
 
     for (let i = 0; i < numOfFiles; i++) {
-      await t.click(this.photoCheckbox.nth(i))
+      await t
+        .expect(this.photoCheckbox.nth(i).exists)
+        .ok(`${i}th picture checkbox doesn't exist`)
+        .click(this.photoCheckbox.nth(i))
     }
     await t.expect(this.barPhoto.visible).ok('Selection bar does not show up')
 
