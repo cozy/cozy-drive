@@ -7,7 +7,6 @@ export const ButtonLinkRegistration = ({
   className = '',
   label,
   size,
-  subtle = false,
   type = 'submit',
   theme = 'primary'
 }) => {
