@@ -1,5 +1,5 @@
 import React from 'react'
-import CopyToClipboard from 'react-copy-to-clipboard'
+import copy from 'clipboard-copy'
 import Toggle from 'cozy-ui/react/Toggle'
 import { Spinner, SubTitle } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
@@ -19,7 +19,8 @@ class ShareByLink extends React.Component {
     }
   }
 
-  onCopy = () => {
+  copyLinkToClipboard = async () => {
+    await copy(this.props.link)
     Alerter.success(`${this.props.documentType}.share.shareByLink.copied`)
   }
 
@@ -50,7 +51,7 @@ class ShareByLink extends React.Component {
   render() {
     const t = this.context.t
     const { loading } = this.state
-    const { link, checked, documentType } = this.props
+    const { checked, documentType } = this.props
     return (
       <div>
         <div className={cx(styles['share-bylink-header'], 'u-mt-1', 'u-mb-1')}>
@@ -63,11 +64,12 @@ class ShareByLink extends React.Component {
           )}
           {checked && <span className={styles['share-bylink-header-dot']} />}
           {checked && (
-            <CopyToClipboard text={link} onCopy={this.onCopy}>
-              <button className={styles['share-bylink-header-copybtn']}>
-                {t(`${documentType}.share.shareByLink.copy`)}
-              </button>
-            </CopyToClipboard>
+            <button
+              className={styles['share-bylink-header-copybtn']}
+              onClick={this.copyLinkToClipboard}
+            >
+              {t(`${documentType}.share.shareByLink.copy`)}
+            </button>
           )}
           <Toggle
             id="share-toggle"
