@@ -107,22 +107,25 @@ export default class ShareAutocomplete extends Component {
   renderInput(props) {
     return (
       <div className={styles['recipientsContainer']}>
-        {this.props.recipients.map(recipient => (
-          <div
-            className={styles['recipientChip']}
-            key={`key_recipient_${recipient}`}
-          >
-            <span>
-              {recipient.id ? getPrimaryEmail(recipient) : recipient.email}
-            </span>
-            <button
-              className={styles['removeRecipient']}
-              onClick={() => this.onRemove(recipient)}
+        {this.props.recipients.map((recipient, i) => {
+          const recipientEmail = recipient.id
+            ? getPrimaryEmail(recipient)
+            : recipient.email
+          return (
+            <div
+              className={styles['recipientChip']}
+              key={`key_recipient_${recipientEmail + i}`}
             >
-              <Icon icon={BoldCross} width="16" height="16" />
-            </button>
-          </div>
-        ))}
+              <span>{recipientEmail}</span>
+              <button
+                className={styles['removeRecipient']}
+                onClick={() => this.onRemove(recipient)}
+              >
+                <Icon icon={BoldCross} width="16" height="16" />
+              </button>
+            </div>
+          )
+        })}
         <input {...props} onKeyPress={this.onKeyPress} />
       </div>
     )
