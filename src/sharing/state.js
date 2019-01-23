@@ -1,3 +1,5 @@
+import get from 'lodash/get'
+
 const RECEIVE_SHARINGS = 'RECEIVE_SHARINGS'
 const ADD_SHARING = 'ADD_SHARING'
 const UPDATE_SHARING = 'UPDATE_SHARING'
@@ -267,20 +269,14 @@ export const getSharingLink = (state, docId, documentType) => {
   const perms = getDocumentPermissions(state, docId)
   if (perms.length === 0) return null
   const perm = perms[0]
-  if (
-    perm &&
-    perm.attributes &&
-    perm.attributes.codes &&
-    perm.attributes.codes.email
-  ) {
-    return buildSharingLink(
-      state,
-      docId,
-      documentType,
-      perm.attributes.codes.email
-    )
+  const code =
+    get(perm, 'attributes.shortcodes.email') ||
+    get(perm, 'attributes.codes.email')
+  if (code) {
+    return buildSharingLink(state, documentType, code)
+  } else {
+    return null
   }
-  return null
 }
 
 export const getSharingForSelf = (state, docId) =>
@@ -360,9 +356,9 @@ const getDocumentSharingType = (sharing, docId) => {
     : 'one-way'
 }
 
-const buildSharingLink = (state, docId, documentType, sharecode) => {
+const buildSharingLink = (state, documentType, sharecode) => {
   const appUrl = getAppUrlForDoctype(state, documentType)
-  return `${appUrl}public?sharecode=${sharecode}&id=${docId}`
+  return `${appUrl}public?sharecode=${sharecode}`
 }
 
 const getAppUrlForDoctype = (state, documentType) => {
