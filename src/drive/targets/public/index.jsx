@@ -8,6 +8,7 @@ import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
+import get from 'lodash/get'
 import { schema } from 'drive/lib/doctypes'
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
@@ -15,23 +16,6 @@ import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
-
-const getDocumentId = async client => {
-  const isPreviewingSharing = window.location.toString().includes('/preview')
-
-  if (isPreviewingSharing) {
-    const response = await client
-      .collection('io.cozy.permissions')
-      .getOwnPermissions()
-
-    const permissions = response.data.attributes.permissions
-    const sharingId = Object.values(permissions)[0]['values'][0]
-    return sharingId
-  } else {
-    const { id } = getQueryParameter()
-    return id
-  }
-}
 
 const initCozyBar = data => {
   if (
@@ -88,10 +72,16 @@ const init = async () => {
   const store = configureStore(client, polyglot.t.bind(polyglot))
 
   try {
-    const id = await getDocumentId(client)
+    const { data: permissionsData } = await client
+      .collection('io.cozy.permissions')
+      .getOwnPermissions()
 
-    const response = await client.collection('io.cozy.files').get(id)
-    const { data } = response
+    const permissions = permissionsData.attributes.permissions
+    const sharedDocumentId = get(Object.values(permissions), '0.values.0')
+
+    const { data } = await client
+      .collection('io.cozy.files')
+      .get(sharedDocumentId)
     const isFile = data && data.type === 'file'
     initCozyBar(dataset)
     render(
@@ -106,7 +96,7 @@ const init = async () => {
               <Route component={PublicLayout}>
                 <Route path="files(/:folderId)" component={LightFolderView} />
               </Route>
-              <Redirect from="/*" to={`files/${id}`} />
+              <Redirect from="/*" to={`files/${sharedDocumentId}`} />
             </Router>
           )}
         </CozyProvider>
