@@ -151,7 +151,7 @@ export const PERM_1 = {
         values: ['folder_1']
       }
     },
-    codes: { email: 'secret' }
+    codes: { email: 'longcode' }
   }
 }
 
@@ -167,7 +167,8 @@ export const PERM_2 = {
         values: ['folder_2']
       }
     },
-    codes: { email: 'secret' }
+    codes: { email: 'longcode' },
+    shortcodes: { email: 'shortcode' }
   }
 }
 
@@ -185,8 +186,25 @@ export const APPS = [
     },
     links: {
       self: '/apps/drive',
-      related: 'http://drive.cozy.tools:8080/',
+      related: 'https://drive.cozy.tools/',
       icon: '/apps/drive/icon'
+    }
+  },
+  {
+    type: 'io.cozy.apps',
+    id: 'io.cozy.apps/photos',
+    attributes: {
+      name: 'Photos',
+      name_prefix: 'Cozy',
+      editor: 'Cozy',
+      type: 'webapp',
+      slug: 'photos',
+      state: 'ready'
+    },
+    links: {
+      self: '/apps/photos',
+      related: 'https://photos.cozy.tools/',
+      icon: '/apps/photos/icon'
     }
   }
 ]
