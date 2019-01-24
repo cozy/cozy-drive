@@ -12,10 +12,11 @@ class Nav extends Component {
     const { t } = this.props
 
     return (
-      <nav>
+      <nav data-test-id="driveSidebar">
         <ul className={styles['c-nav']}>
           <li className={styles['c-nav-item']}>
             <Link
+              data-test-id="navToFolder"
               to={{ pathname: '/folder' }}
               className={styles['c-nav-link']}
               activeClassName={styles['is-active']}
@@ -30,6 +31,7 @@ class Nav extends Component {
           </li>
           <li className={styles['c-nav-item']}>
             <Link
+              data-test-id="navToRecent"
               to="/recent"
               className={styles['c-nav-link']}
               activeClassName={styles['is-active']}
@@ -44,6 +46,7 @@ class Nav extends Component {
           </li>
           <li className={styles['c-nav-item']}>
             <Link
+              data-test-id="navToSharing"
               to="/sharings"
               className={styles['c-nav-link']}
               activeClassName={styles['is-active']}
@@ -58,6 +61,7 @@ class Nav extends Component {
           </li>
           <li className={styles['c-nav-item']}>
             <Link
+              data-test-id="navToTrash"
               to="/trash"
               className={styles['c-nav-link']}
               activeClassName={styles['is-active']}

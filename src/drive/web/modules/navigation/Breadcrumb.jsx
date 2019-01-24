@@ -88,6 +88,7 @@ export class Breadcrumb extends Component {
         )}
       >
         <h2
+          data-test-id="path-title"
           className={styles['fil-path-title']}
           onClick={this.toggleDeploy}
           ref={ref => {
