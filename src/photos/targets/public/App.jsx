@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import { Query } from 'cozy-client'
+import flatten from 'lodash/flatten'
+import classNames from 'classnames'
 
-import Selection from 'photos/ducks/selection'
-import ErrorShare from 'components/Error/ErrorShare'
+import { Query } from 'cozy-client'
 import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/react'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 import { Main } from 'cozy-ui/react/Layout'
 
+import Selection from 'photos/ducks/selection'
 import { MoreButton, CozyHomeLink } from 'components/Button'
 import PhotoBoard from 'photos/components/PhotoBoard'
-import classNames from 'classnames'
 import styles from './index.styl'
 import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
+import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
-import flatten from 'lodash/flatten'
 class App extends Component {
   onDownload = selected => {
     const photos = selected.length !== 0 ? selected : null
@@ -56,19 +56,7 @@ class App extends Component {
 
     const { t } = this.context
     if (this.state.error) {
-      return (
-        <div
-          className={classNames(
-            styles['pho-public-layout'],
-            styles['pho-public-layout--full'],
-            'u-pt-3'
-          )}
-        >
-          <Main className="u-pt-1-half">
-            <ErrorShare errorType={`public_album_unshared`} />
-          </Main>
-        </div>
-      )
+      return <ErrorUnsharedComponent />
     }
     return (
       <div className={styles['pho-public-layout']}>
@@ -134,6 +122,9 @@ class App extends Component {
 const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
     {({ data: album, fetchStatus }) => {
+      if (fetchStatus === 'failed') {
+        return <ErrorUnsharedComponent />
+      }
       if (fetchStatus === 'loaded') {
         return (
           <App
