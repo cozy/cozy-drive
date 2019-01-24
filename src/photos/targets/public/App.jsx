@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import flatten from 'lodash/flatten'
 import classNames from 'classnames'
-
+import PropTypes from 'prop-types'
 import { Query } from 'cozy-client'
 import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/react'
 import { IconSprite } from 'cozy-ui/transpiled/react'
@@ -44,20 +44,10 @@ class App extends Component {
       .downloadArchive(allPhotos.map(({ _id }) => _id), album.name)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { fetchStatus } = nextProps
-    if (fetchStatus === 'failed') {
-      this.setState({ error: 'Fetch error' })
-    }
-  }
-
   render() {
     const { album, hasMore, photos, fetchMore } = this.props
 
     const { t } = this.context
-    if (this.state.error) {
-      return <ErrorUnsharedComponent />
-    }
     return (
       <div className={styles['pho-public-layout']}>
         <Main className="u-pt-1-half">
@@ -118,7 +108,12 @@ class App extends Component {
     )
   }
 }
-
+App.propTypes = {
+  album: PropTypes.object.isRequired,
+  hasMore: PropTypes.bool, //see https://github.com/cozy/cozy-client/issues/345
+  photos: PropTypes.array.isRequired,
+  fetchMore: PropTypes.func.isRequired
+}
 const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
     {({ data: album, fetchStatus }) => {
@@ -130,10 +125,8 @@ const ConnectedApp = props => (
           <App
             album={album}
             photos={album.photos.data}
-            fetchStatus={fetchStatus}
             hasMore={album.photos.hasMore}
             fetchMore={album.photos.fetchMore.bind(album.photos)}
-            {...props}
           />
         )
       } else {
