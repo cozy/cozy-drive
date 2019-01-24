@@ -6,18 +6,13 @@ async function runRunner() {
   const response = await runner
     .src(['testcafe/tests/photos_crud.js'])
     .browsers(['firefox:headless'])
-    //.browsers(['firefox'])
 
     .screenshots(
       'reports/screenshots/',
       true,
       '${DATE}_${TIME}/test-${TEST_INDEX}-${FILE_INDEX}.png'
     )
-    .run(
-      //{ selectorTimeout: 200000 },
-      { assertionTimeout: 6000 },
-      { pageLoadTimeout: 6000 }
-    )
+    .run({ assertionTimeout: 6000 }, { pageLoadTimeout: 6000 })
   tc.close()
 
   if (response > 0) throw Error(response)
