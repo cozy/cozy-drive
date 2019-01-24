@@ -4234,6 +4234,13 @@ cozy-device-helper@1.6.3:
   dependencies:
     lodash "4.17.11"
 
+cozy-flags@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.5.1.tgz#e80f6e06bbcb787823beb141975106c3a6d5c3a2"
+  integrity sha512-tTl60N1WkrlEikcmoJLLznbiJ8PrdeJINg91CVPZjY2PTlJHEFqigunrgnvKRFE8w+RshEzQcsR3PTVHcwdgSg==
+  dependencies:
+    detect-node "2.0.4"
+
 cozy-konnector-libs@4.11.4:
   version "4.11.4"
   resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.11.4.tgz#583f76f9923afd1f2df462aae789af2da8d3169d"
