@@ -42,6 +42,7 @@ export const FileListBody = ({
   ...props
 }) => (
   <div
+    data-test-id="fil-content-body"
     className={cx(styles['fil-content-body'], {
       [styles['fil-content-body--selectable']]: selectionModeActive
     })}
