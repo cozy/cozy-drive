@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorUnshared should match the snapshot 1`] = `
+<div
+  className="u-pt-3"
+>
+  <Main
+    className="u-pt-1-half"
+  >
+    <Wrapper
+      errorType="public_album_unshared"
+    />
+  </Main>
+</div>
+`;
