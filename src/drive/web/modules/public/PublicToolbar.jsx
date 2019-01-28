@@ -1,7 +1,6 @@
 /* global cozy */
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -63,20 +62,21 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy, isFile }) => (
   </Menu>
 )
 
-const MobileToolbar = (
-  { onDownload, discoveryLink, redirectTo, isFile },
-  { t }
-) => (
+const openExternalLink = url => (window.location = url)
+
+const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <BarRight>
     <MoreMenu
       isFile={isFile}
       t={t}
       onDownload={onDownload}
-      onOpenInCozy={discoveryLink ? () => redirectTo(discoveryLink) : false}
+      onOpenInCozy={
+        discoveryLink ? () => openExternalLink(discoveryLink) : false
+      }
       onCreateCozy={
         discoveryLink
           ? false
-          : () => redirectTo(getHomeLinkHref('sharing-drive'))
+          : () => openExternalLink(getHomeLinkHref('sharing-drive'))
       }
     />
   </BarRight>
@@ -143,10 +143,6 @@ class PublicToolbar extends React.Component {
     }
   }
 
-  redirectTo(url) {
-    this.props.router.push(url)
-  }
-
   downloadFiles = () => {
     this.props.onDownload(this.props.files)
   }
@@ -164,7 +160,6 @@ class PublicToolbar extends React.Component {
         <MobileToolbar
           onDownload={this.downloadFiles}
           discoveryLink={discoveryLink}
-          redirectTo={this.redirectTo}
           isFile={isFile}
         />
       )
@@ -200,4 +195,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(withBreakpoints()(withRouter(PublicToolbar)))
+)(withBreakpoints()(PublicToolbar))
