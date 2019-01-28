@@ -19,7 +19,7 @@ import DownloadIcon from 'drive/assets/icons/icon-download-16.svg'
 
 const { BarRight } = cozy.bar
 
-const DownloadFilesButton = ({ t, onDownload, size = 'normal', isFile }) => (
+const DownloadFilesButton = ({ t, onDownload, size, isFile }) => (
   <DownloadButton
     label={
       isFile
@@ -32,6 +32,12 @@ const DownloadFilesButton = ({ t, onDownload, size = 'normal', isFile }) => (
     size={size}
   />
 )
+DownloadFilesButton.propTypes = {
+  t: PropTypes.func.isRequired,
+  onDownload: PropTypes.func.isRequired,
+  isFile: PropTypes.bool.isRequired,
+  size: PropTypes.oneOf(['tiny', 'small', 'large'])
+}
 
 const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy, isFile }) => (
   <Menu
@@ -61,7 +67,19 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy, isFile }) => (
     </MenuItem>
   </Menu>
 )
+MoreMenu.propTypes = {
+  t: PropTypes.func.isRequired,
+  onDownload: PropTypes.func.isRequired,
+  onOpenInCozy: PropTypes.func,
+  onCreateCozy: PropTypes.func,
+  isFile: PropTypes.bool.isRequired
+}
 
+const toolbarProptypes = {
+  onDownload: PropTypes.func.isRequired,
+  discoveryLink: PropTypes.string,
+  isFile: PropTypes.bool.isRequired
+}
 const openExternalLink = url => (window.location = url)
 
 const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
@@ -81,6 +99,7 @@ const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     />
   </BarRight>
 )
+MobileToolbar.propTypes = toolbarProptypes
 
 const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <BarRight>
@@ -99,6 +118,7 @@ const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     </div>
   </BarRight>
 )
+CozybarToolbar.propTypes = toolbarProptypes
 
 const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
@@ -113,6 +133,7 @@ const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     </BarRight>
   </div>
 )
+DesktopToolbar.propTypes = toolbarProptypes
 
 class PublicToolbar extends React.Component {
   state = {
