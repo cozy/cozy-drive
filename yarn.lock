@@ -4268,15 +4268,15 @@ cozy-logger@^1.2.0:
   dependencies:
     json-stringify-safe "5.0.1"
 
-cozy-realtime@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.1.0.tgz#6370ba7e1197ca267e0793c9dd7f2d871d359698"
-  integrity sha512-rI5ek+8s05ycqMju4JfICZ1KRRJ8WkvLT6YHKCnMh2na5Sh5hzIOX4JLqDadYJJnxTTzcc2pPiMJvT0Yu8b9hA==
-
 cozy-realtime@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.2.1.tgz#767a6279895960f51d422be043fb001316abe290"
   integrity sha512-ed4fYohePy/0kgfylgfIQ2wRlOCSzG8jXRpOi1gjPXWJY/NYCvGMibd2GMW7XrcGy13Wd5eFQD55RhozKy1mqw==
+
+cozy-realtime@1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-1.2.8.tgz#c94c4bd8eb36009a381739062bd41947ddd516fc"
+  integrity sha512-G4seWPh7Ys+XApe1p165xKWq2jNKfmR/icUx45YplVZZm5wJk5pPGVrc70Rccr0DYuA8oHh1i/wpG/a5cHhpYQ==
 
 cozy-scripts@1.11.0:
   version "1.11.0"

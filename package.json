@@ -98,7 +98,7 @@
     "cozy-device-helper": "1.5.0",
     "cozy-flags": "^1.5.1",
     "cozy-konnector-libs": "4.11.4",
-    "cozy-realtime": "1.1.0",
+    "cozy-realtime": "1.2.8",
     "cozy-scripts": "1.11.0",
     "cozy-ui": "17.9.0",
     "create-react-context": "0.2.2",
