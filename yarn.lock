@@ -2653,6 +2653,17 @@ bfj@^6.1.1:
     hoopy "^0.1.2"
     tryer "^1.0.0"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+big-integer@*, big-integer@^1.6.7:
+  version "1.6.41"
+  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.41.tgz#6fb0e51bc8661129ef3832d46c939170b81ca794"
+  integrity sha512-d5AT9lMTYJ/ZE/4gzxb+5ttPcRWljVsvv7lF1w9KzkPhVUhBtHrjDo1J8swfZKepfLsliDhYa31zRYwcD0Yg9w==
+
+=======
+>>>>>>> le squash sera mon ami
+>>>>>>> 9f54c2fa... le squash sera mon ami
 big-integer@1.6.32:
   version "1.6.32"
   resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.32.tgz#5867458b25ecd5bcb36b627c30bb501a13c07e89"
@@ -2799,6 +2810,22 @@ bowser@1.6.0:
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.6.0.tgz#37fc387b616cb6aef370dab4d6bd402b74c5c54d"
   integrity sha1-N/w4e2Fstq7zcNq01r1AK3TFxU0=
 
+<<<<<<< HEAD
+=======
+boxen@^1.2.1:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/boxen/-/boxen-1.3.0.tgz#55c6c39a8ba58d9c61ad22cd877532deb665a20b"
+  integrity sha512-TNPjfTr432qx7yOjQyaXm3dSR0MH9vXp7eT1BFSl/C51g+EFnOR9hTg1IreahGBmDNCehscshe45f+C1TBZbLw==
+  dependencies:
+    ansi-align "^2.0.0"
+    camelcase "^4.0.0"
+    chalk "^2.0.1"
+    cli-boxes "^1.0.0"
+    string-width "^2.0.0"
+    term-size "^1.2.0"
+    widest-line "^2.0.0"
+
+>>>>>>> 9f54c2fa... le squash sera mon ami
 bplist-creator@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/bplist-creator/-/bplist-creator-0.0.7.tgz#37df1536092824b87c42f957b01344117372ae45"
@@ -2813,6 +2840,14 @@ bplist-parser@0.1.1, bplist-parser@^0.1.0:
   dependencies:
     big-integer "^1.6.7"
 
+<<<<<<< HEAD
+=======
+bplist-parser@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/bplist-parser/-/bplist-parser-0.0.6.tgz#38da3471817df9d44ab3892e27707bbbd75a11b9"
+  integrity sha1-ONo0cYF9+dRKs4kuJ3B7u9daEbk=
+
+>>>>>>> 9f54c2fa... le squash sera mon ami
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -7417,7 +7452,11 @@ infinity-x@^1.0.1:
   resolved "https://registry.yarnpkg.com/infinity-x/-/infinity-x-1.0.2.tgz#374a4d5c8a9b98d2f61b782fc63892598de2f14c"
   integrity sha512-2Ioz+exrAwlHxFBaDHQIbvUyjKFt0YjIal34/agfzx738aT1zBQwSU5A8Zgb1IQ2r24BtXrkeZZusxE40MyZaQ==
 
+<<<<<<< HEAD
 inflight@^1.0.4, inflight@~1.0.4:
+=======
+inflight@^1.0.4:
+>>>>>>> 9f54c2fa... le squash sera mon ami
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/inflight/-/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"
   integrity sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk=
@@ -9722,7 +9761,11 @@ minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
 
+<<<<<<< HEAD
 "minimatch@2 || 3", minimatch@3, minimatch@3.0.4, minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4, minimatch@~3.0.3:
+=======
+"minimatch@2 || 3", minimatch@3, minimatch@3.0.4, minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
+>>>>>>> 9f54c2fa... le squash sera mon ami
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
@@ -10677,7 +10720,11 @@ on-headers@~1.0.1:
   resolved "https://registry.yarnpkg.com/on-headers/-/on-headers-1.0.1.tgz#928f5d0f470d49342651ea6794b0857c100693f7"
   integrity sha1-ko9dD0cNSTQmUepnlLCFfBAGk/c=
 
+<<<<<<< HEAD
 once@^1.3.0, once@^1.3.1, once@^1.3.3, once@^1.4.0, once@~1.4.0:
+=======
+once@^1.3.0, once@^1.3.1, once@^1.4.0:
+>>>>>>> 9f54c2fa... le squash sera mon ami
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
   integrity sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
@@ -13643,6 +13690,17 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
+<<<<<<< HEAD
+=======
+simctl@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/simctl/-/simctl-1.1.1.tgz#e26cc3c04e662250b4457b5b4c48cc12484f3814"
+  integrity sha512-yY1WQMq/pneY5jQb2+lFp45qEtcz4yKBu1NOPo2OFDVCkwSkQhpkoaAaO1fWhq4IU0+8TQ2r1PMGSTedP0A/Og==
+  dependencies:
+    shelljs "^0.2.6"
+    tail "^0.4.0"
+
+>>>>>>> 9f54c2fa... le squash sera mon ami
 simple-concat@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/simple-concat/-/simple-concat-1.0.0.tgz#7344cbb8b6e26fb27d66b2fc86f9f6d5997521c6"
@@ -15244,12 +15302,16 @@ underscore@1.2.1:
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.2.1.tgz#fc5c6b0765673d92a2d4ac8b4dc0aa88702e2bd4"
   integrity sha1-/FxrB2VnPZKi1KyLTcCqiHAuK9Q=
 
+<<<<<<< HEAD
 underscore@1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
   integrity sha1-Tz+1OxBuYJf8+ctBCfKl6b36UCI=
 
 underscore@^1.6.0, underscore@^1.8.3:
+=======
+underscore@^1.6.0, underscore@^1.8.3, underscore@^1.9.0:
+>>>>>>> 9f54c2fa... le squash sera mon ami
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
   integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
@@ -15380,10 +15442,24 @@ universalify@^0.1.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
+<<<<<<< HEAD
 unorm@1.4.1, unorm@^1.3.3, unorm@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/unorm/-/unorm-1.4.1.tgz#364200d5f13646ca8bcd44490271335614792300"
   integrity sha1-NkIA1fE2RsqLzURJAnEzVhR5IwA=
+=======
+<<<<<<< HEAD
+unorm@*, unorm@^1.3.3, unorm@^1.4.1:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/unorm/-/unorm-1.5.0.tgz#01fa9b76f1c60f7916834605c032aa8962c3f00a"
+  integrity sha512-sMfSWoiRaXXeDZSXC+YRZ23H4xchQpwxjpw1tmfR+kgbBCaOgln4NI0LXejJIhnBuKINrB3WRn+ZI8IWssirVw==
+=======
+unorm@^1.3.3, unorm@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/unorm/-/unorm-1.4.1.tgz#364200d5f13646ca8bcd44490271335614792300"
+  integrity sha1-NkIA1fE2RsqLzURJAnEzVhR5IwA=
+>>>>>>> le squash sera mon ami
+>>>>>>> 9f54c2fa... le squash sera mon ami
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
@@ -16056,7 +16132,11 @@ wrap-ansi@^2.0.0, wrap-ansi@^2.1.0:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
 
+<<<<<<< HEAD
 wrappy@1, wrappy@~1.0.2:
+=======
+wrappy@1:
+>>>>>>> 9f54c2fa... le squash sera mon ami
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
