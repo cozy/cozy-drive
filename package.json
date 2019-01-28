@@ -93,7 +93,7 @@
     "classnames": "2.2.6",
     "clipboard-copy": "^2.0.1",
     "cozy-bar": "6.8.7",
-    "cozy-client": "5.7.1",
+    "cozy-client": "5.7.3",
     "cozy-client-js": "0.13.0",
     "cozy-device-helper": "1.5.0",
     "cozy-flags": "^1.5.1",
