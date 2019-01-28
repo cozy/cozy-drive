@@ -10,16 +10,15 @@ import { Alerter } from 'cozy-ui/react/'
 import Loading from '../../components/Loading'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
-
 const ALBUMS_QUERY = client =>
   client
-    .find(DOCTYPE_ALBUMS, { created_at: { $gt: null } })
+    .find(DOCTYPE_ALBUMS)
     .where({
       auto: { $exists: false }
     })
-    .indexFields(['created_at'])
+    .indexFields(['name'])
     .include(['photos'])
-    .sortBy([{ created_at: 'desc' }])
+    .sortBy([{ name: 'desc' }])
 
 export const ALBUM_QUERY = (client, ownProps) =>
   client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId).include(['photos'])
