@@ -14,7 +14,8 @@ export class Welcome extends Component {
       t,
       register,
       allowRegistration,
-      breakpoints: { isMobile }
+      breakpoints: { isMobile },
+      onboarding
     } = this.props
 
     if (allowRegistration) {
@@ -31,6 +32,7 @@ export class Welcome extends Component {
       <ButtonLinkRegistration
         label={t('mobile.onboarding.welcome.create_my_cozy')}
         size={isMobile ? 'normal' : 'large'}
+        onboarding={onboarding}
       />
     )
   }

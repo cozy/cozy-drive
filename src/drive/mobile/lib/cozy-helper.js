@@ -21,16 +21,18 @@ export const getOauthOptions = () => {
   }
 }
 
+export const permissions = [
+  'io.cozy.files',
+  'io.cozy.apps:GET',
+  'io.cozy.settings:GET',
+  'io.cozy.contacts',
+  'io.cozy.jobs:POST:sendmail:worker'
+]
+
 export const initClient = url => {
   return new CozyClient({
     uri: url,
-    scope: [
-      'io.cozy.files',
-      'io.cozy.apps:GET',
-      'io.cozy.settings:GET',
-      'io.cozy.contacts',
-      'io.cozy.jobs:POST:sendmail:worker'
-    ],
+    scope: permissions,
     oauth: getOauthOptions(),
     offline: { doctypes: [DOCTYPE_FILES] },
     schema
@@ -73,10 +75,13 @@ export const restoreCozyClientJs = (uri, clientInfos, token) => {
     },
     offline
   })
-
-  cozy.client.saveCredentials(clientInfos, token)
-
-  return cozy.client.auth.getClient(clientInfos)
+  const realToken = new cozy.client.auth.AccessToken(token)
+  cozy.client.saveCredentials(clientInfos, realToken)
+  return realToken
+  //return cozy.client.auth.getClient(clientInfos)
+  /* return new Promise((resolve, reject) => {
+    resolve(clientInfos)
+  }) */
 }
 
 export function resetClient(client, clientInfo = null) {

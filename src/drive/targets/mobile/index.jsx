@@ -37,7 +37,8 @@ import {
   updateBarAccessToken,
   restoreCozyClientJs,
   resetClient,
-  getOauthOptions
+  getOauthOptions,
+  permissions
 } from 'drive/mobile/lib/cozy-helper'
 import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
 import { backupImages } from 'drive/mobile/modules/mediaBackup/duck'
@@ -80,24 +81,26 @@ const startApplication = async function(store, client, polyglot) {
   configureReporter()
 
   let shouldInitBar = false
-
+  let realOauthOptions
   try {
     const clientInfos = getClientSettings(store.getState())
+    console.log('clientInfo index.js', clientInfos)
     /*Since we can update our OauthConfig sometimes, we need to
     override the cached one */
-    const realOauthOptions =
+    realOauthOptions =
       clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
     const token = getToken(store.getState())
-    const oauthClient = client.getStackClient()
-    oauthClient.setOAuthOptions(realOauthOptions)
-    oauthClient.setCredentials(token)
+    const stackClient = client.getStackClient()
+    stackClient.setOAuthOptions(realOauthOptions)
+    stackClient.setCredentials(token)
     await restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-    oauthClient.onTokenRefresh = token => {
+    stackClient.onTokenRefresh = token => {
       updateBarAccessToken(token.accessToken)
       restoreCozyClientJs(client.options.uri, realOauthOptions, token)
       store.dispatch(setToken(token))
     }
-    await oauthClient.fetchInformation()
+    //In order to check if the token is good
+    await stackClient.fetchJSON('GET', '/settings/disk-usage')
     shouldInitBar = true
     await store.dispatch(startReplication())
   } catch (e) {
@@ -120,11 +123,16 @@ const startApplication = async function(store, client, polyglot) {
   }
 
   const root = document.querySelector('[role=application]')
-
+  const onboarding = {
+    oauth: {
+      ...getOauthOptions(),
+      scope: permissions
+    }
+  }
   render(
     <I18n lang={getLang()} polyglot={polyglot}>
       <CozyProvider store={store} client={client}>
-        <DriveMobileRouter history={hashHistory} />
+        <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
       </CozyProvider>
     </I18n>,
     root

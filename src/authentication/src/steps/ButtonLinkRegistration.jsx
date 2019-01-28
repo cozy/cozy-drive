@@ -1,32 +1,89 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { getPlatform } from 'cozy-device-helper'
 import { Button } from 'cozy-ui/react'
-import flag from 'cozy-flags'
+//import flag from 'cozy-flags'
 
 import { nativeLinkOpen } from '../LinkManager'
-export const ButtonLinkRegistration = ({
-  className = '',
-  label,
-  size,
-  subtle = false,
-  type = 'submit'
-}) => {
-  const url = flag('beta-onboarding')
-    ? `https://staging-manager.cozycloud.cc/cozy/create?domain=cozy.works&pk_campaign=drive-${getPlatform() ||
-        'browser'}`
-    : `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
-        'browser'}`
-  return (
-    <Button
-      onClick={() => {
-        nativeLinkOpen({ url })
-      }}
-      href={url}
-      label={label}
-      size={size}
-      className={className}
-      subtle={subtle}
-      type={type}
-    />
-  )
+
+import { generateObjectForUrl } from '../utils/onboarding'
+
+export class ButtonLinkRegistration extends Component {
+  state = {
+    onboardingObject: null
+  }
+  constructor(props) {
+    super(props)
+
+    if (this.props.onboarding && this.props.onboarding.oauth) {
+      const {
+        clientName,
+        redirectURI,
+        softwareID,
+        softwareVersion,
+        clientURI,
+        logoURI,
+        policyURI,
+        scope
+      } = this.props.onboarding.oauth
+
+      generateObjectForUrl({
+        clientName,
+        redirectURI,
+        softwareID,
+        softwareVersion,
+        clientURI,
+        logoURI,
+        policyURI,
+        scope
+      }).then(object => {
+        this.setState({
+          onboardingObject: object
+        })
+      })
+    } else {
+      this.setState({
+        noOnboarding: {
+          test: 'toto'
+        }
+      })
+    }
+  }
+  render() {
+    const {
+      className = '',
+      label,
+      size,
+      subtle = false,
+      type = 'submit'
+    } = this.props
+
+    if (!this.state.onboardingObject) {
+      return
+    }
+    const { onboardingObject } = this.state
+
+    const url = `https://staging-manager.cozycloud.cc/cozy/create?domain=cozy.works&pk_campaign=drive-${getPlatform() ||
+      'browser'}&onboarding=${onboardingObject}`
+
+    return (
+      <Button
+        onClick={() => {
+          console.log('test', onboardingObject)
+
+          return nativeLinkOpen({ url: `${url} ` })
+        }}
+        href={url}
+        label={label}
+        size={size}
+        className={className}
+        subtle={subtle}
+        type={type}
+      />
+    )
+  }
+}
+
+ButtonLinkRegistration.propTypes = {
+  beforeClick: PropTypes.func
 }
