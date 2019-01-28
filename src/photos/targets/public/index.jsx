@@ -8,6 +8,7 @@ import { Router, Redirect, hashHistory, Route } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
+import getSharedDocument from 'sharing/getSharedDocument'
 
 import doctypes from '../browser/doctypes'
 import 'photos/styles/main.styl'
@@ -18,11 +19,11 @@ import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 document.addEventListener('DOMContentLoaded', init)
 
-function init() {
+async function init() {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const data = root.dataset
-  const { id, sharecode } = getQueryParameter()
+  const { sharecode } = getQueryParameter()
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${data.cozyDomain}`
   const client = new CozyClient({
@@ -53,6 +54,7 @@ function init() {
     }),
     applyMiddleware(thunkMiddleware, createLogger())
   )
+  const id = await getSharedDocument(client)
 
   render(
     <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>

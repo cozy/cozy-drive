@@ -8,7 +8,6 @@ import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
-import get from 'lodash/get'
 import { schema } from 'drive/lib/doctypes'
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
@@ -16,6 +15,7 @@ import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
+import getSharedDocument from 'sharing/getSharedDocument'
 
 const initCozyBar = data => {
   if (
@@ -72,12 +72,7 @@ const init = async () => {
   const store = configureStore(client, polyglot.t.bind(polyglot))
 
   try {
-    const { data: permissionsData } = await client
-      .collection('io.cozy.permissions')
-      .getOwnPermissions()
-
-    const permissions = permissionsData.attributes.permissions
-    const sharedDocumentId = get(Object.values(permissions), '0.values.0')
+    const sharedDocumentId = await getSharedDocument(client)
 
     const { data } = await client
       .collection('io.cozy.files')
