@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import Proptypes from 'prop-types'
 import MobileRouter from 'authentication/MobileRouter'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
@@ -9,15 +9,32 @@ import { IconSprite } from 'cozy-ui/transpiled/react/'
 import { unlink, isAuthorized, isRevoked } from './duck'
 import { saveCredentials } from './sagas'
 import { setCozyUrl } from 'drive/lib/reporter'
+
 class DriveMobileRouter extends Component {
   afterAuthentication = async ({ url, clientInfo, token, router }) => {
     const wasRevoked = this.props.isRevoked
+    console.log('url ici ', url)
+    console.log('context cozy client', this.context.client)
     this.context.client.options.uri = url
-    await restoreCozyClientJs(url, clientInfo, token)
+    console.log('context cozy client après', this.context.client)
+    const accesstoken = await restoreCozyClientJs(url, clientInfo, token)
     this.props.saveServerUrl(url)
     setCozyUrl(url)
-    this.props.saveCredentials(clientInfo, token)
-    if (wasRevoked) {
+    console.log('{clientInfo}', clientInfo)
+    this.props.saveCredentials(clientInfo, accesstoken)
+    const oauthClient = this.context.client.getStackClient()
+    oauthClient.setCredentials(token)
+    oauthClient.setUri(url)
+    oauthClient.onTokenRefresh = () => {
+      //updateBarAccessToken(token.accessToken)
+      //restoreCozyClientJs(client.options.uri, realOauthOptions, token)
+      //store.dispatch(setToken(token))
+    }
+    await initBar(this.context.client)
+    if (
+      wasRevoked ||
+      (clientInfo.onboarding_secret && clientInfo.onboarding_state)
+    ) {
       initBar(this.context.client)
       router.replace('/')
     } else {
@@ -29,25 +46,41 @@ class DriveMobileRouter extends Component {
     this.props.unlink(this.context.client)
   }
 
-  render(props) {
+  render() {
+    const {
+      isAuthenticated,
+      isRevoked,
+      appRoutes,
+      history,
+      onboarding
+    } = this.props
+    //alert('DriveMobileRouter')
     return (
       <div style={{ flex: '1' }}>
         <MobileRouter
-          isAuthenticated={props.isAuthenticated}
-          isRevoked={props.isRevoked}
-          appRoutes={props.appRoutes}
-          history={props.history}
+          isAuthenticated={isAuthenticated}
+          isRevoked={isRevoked}
+          appRoutes={appRoutes}
+          history={history}
           onAuthenticated={this.afterAuthentication}
           onLogout={this.afterLogout}
           allowRegistration={false}
           appIcon={require('../../../../../src/drive/targets/vendor/assets/apple-touch-icon-180x180.png')}
+          onboarding={onboarding}
+          client={this.context.client}
         />
         <IconSprite />
       </div>
     )
   }
 }
-
+DriveMobileRouter.propTypes = {
+  onboarding: Proptypes.object,
+  isAuthenticated: Proptypes.bool.isRequired,
+  isRevoked: Proptypes.bool.isRequired,
+  appRoutes: Proptypes.object.isRequired,
+  history: Proptypes.object.isRequired
+}
 const DriveMobileRouterWithRoutes = props => (
   <DriveMobileRouter {...props} appRoutes={AppRoute} />
 )

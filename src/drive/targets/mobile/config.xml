@@ -103,7 +103,7 @@
     <plugin name="cordova-ios-plugin-no-export-compliance" spec="git+https://github.com/mikaoelitiana/cordova-ios-plugin-no-export-compliance.git#915556bf7713e9733005977af4fa4bfba40f203f" />
     <plugin name="io.cozy.jsbackgroundservice" spec="https://github.com/cozy/cordova-jsbackgroundservice.git#1.3.0" />
     <plugin name="com-darryncampbell-cordova-plugin-intent" spec="^1.1.1" />
-    <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items.git#1.5.1">
+    <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/Crash--/cordova-plugin-list-library-items.git#Crash---patch-1">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="com.lampa.startapp" spec="^0.1.4" />
