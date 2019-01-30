@@ -1,12 +1,12 @@
 language: node_js
-matrix:
-  fast_finish: true
 node_js:
   - '8'
+matrix:
+  fast_finish: true
+  include:
+    - env: COZY_APP_SLUG=drive
+    - env: COZY_APP_SLUG=photos
 env:
-  matrix:
-    - COZY_APP_SLUG=drive
-    - COZY_APP_SLUG=photos
   global:
     - CXX=g++-4.8
     - MATTERMOST_CHANNEL=appvengers
