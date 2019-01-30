@@ -42,25 +42,36 @@ before_install:
   - travis_retry pip3.5 install --user transifex-client==0.12.5
   - install -m0644 .transifexrc.tpl ~/.transifexrc
   - echo "password = $TX_PASSWD" >> ~/.transifexrc
-script:
-  - yarn lint
-  - yarn tx
-  - yarn test
-  - yarn build:$COZY_APP_SLUG:browser
-  - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG || echo "skipping testcafe outside of pull requests"
-before_deploy:
-  - yarn add cozy-app-publish
-deploy:
-  - provider: script
-    repo: cozy/cozy-drive
-    skip-cleanup: true
-    script: yarn run deploy:$COZY_APP_SLUG
-    on:
-      branch: master
-  - provider: script
-    repo: cozy/cozy-drive
-    skip-cleanup: true
-    script: yarn run deploy:$COZY_APP_SLUG
-    on:
-      tags: true
+stages:
+  - prebuild
+  - build
+jobs:
+  include:
+    - name: "Lint"
+      stage: "prebuild"
+      script: yarn lint
+    - name: "Unit tests"
+      stage: "prebuild"
+      script: yarn test
+    - name: "Web build"
+      stage: "build"
+      script:
+        - yarn tx
+        - yarn build:$COZY_APP_SLUG:browser
+        - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG || echo "skipping testcafe outside of pull requests"
+      before_deploy:
+        - yarn add cozy-app-publish
+      deploy:
+        - provider: script
+          repo: cozy/cozy-drive
+          skip-cleanup: true
+          script: yarn run deploy:$COZY_APP_SLUG
+          on:
+            branch: master
+        - provider: script
+          repo: cozy/cozy-drive
+          skip-cleanup: true
+          script: yarn run deploy:$COZY_APP_SLUG
+          on:
+            tags: true
 sudo: required
