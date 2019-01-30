@@ -3,9 +3,6 @@ matrix:
   fast_finish: true
 node_js:
   - '8'
-branches:
-  except:
-    - build
 env:
   matrix:
     - COZY_APP_SLUG=drive
