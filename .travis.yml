@@ -1,12 +1,7 @@
 language: node_js
 node_js:
   - '8'
-matrix:
-  fast_finish: true
 env:
-  matrix:
-    - COZY_APP_SLUG=drive
-    - COZY_APP_SLUG=photos
   global:
     - CXX=g++-4.8
     - MATTERMOST_CHANNEL=appvengers
@@ -53,8 +48,11 @@ jobs:
     - name: "Unit tests"
       stage: "prebuild"
       script: yarn test
-    - name: "Web build"
+    - &build-web
+      name: "Drive web"
       stage: "build"
+      env:
+        - COZY_APP_SLUG=drive
       script:
         - yarn tx
         - yarn build:$COZY_APP_SLUG:browser
@@ -74,4 +72,8 @@ jobs:
           script: yarn run deploy:$COZY_APP_SLUG
           on:
             tags: true
+    - <<: *build-web
+      name: "Photos web"
+      env:
+        - COZY_APP_SLUG=photos
 sudo: required
