@@ -76,4 +76,3 @@ jobs:
       name: "Photos web"
       env:
         - COZY_APP_SLUG=photos
-sudo: required
