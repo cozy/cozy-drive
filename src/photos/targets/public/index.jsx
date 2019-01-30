@@ -9,6 +9,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import getSharedDocument from 'sharing/getSharedDocument'
+import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
 import doctypes from '../browser/doctypes'
 import 'photos/styles/main.styl'
@@ -54,10 +55,11 @@ async function init() {
     }),
     applyMiddleware(thunkMiddleware, createLogger())
   )
-  const id = await getSharedDocument(client)
 
-  render(
-    <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
+  let app = null
+  try {
+    const id = await getSharedDocument(client)
+    app = (
       <CozyProvider store={store} client={client}>
         <Router history={hashHistory}>
           <Route path="shared/:albumId" component={App}>
@@ -66,7 +68,15 @@ async function init() {
           <Redirect from="/*" to={`shared/${id}`} />
         </Router>
       </CozyProvider>
-    </I18n>,
-    root
-  )
+    )
+  } catch (e) {
+    app = <ErrorUnsharedComponent />
+  } finally {
+    render(
+      <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
+        {app}
+      </I18n>,
+      root
+    )
+  }
 }
