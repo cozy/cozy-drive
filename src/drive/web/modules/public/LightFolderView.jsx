@@ -72,7 +72,7 @@ class DumbFolderView extends React.Component {
     const { viewerOpened, currentViewedIndex } = this.state
 
     return (
-      <Main>
+      <Main isPublic>
         <Topbar>
           <Breadcrumb isPublic />
           <PublicToolbar files={[this.props.displayedFolder]} isFile={false} />
