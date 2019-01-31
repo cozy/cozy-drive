@@ -121,7 +121,11 @@ const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
 CozybarToolbar.propTypes = toolbarProptypes
 
 const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
-  <div className={toolbarstyles['fil-toolbar-files']} role="toolbar">
+  <div
+    data-test-id="fil-toolbar-files-public"
+    className={toolbarstyles['fil-toolbar-files']}
+    role="toolbar"
+  >
     {discoveryLink ? (
       <OpenInCozyButton href={discoveryLink} t={t} />
     ) : (

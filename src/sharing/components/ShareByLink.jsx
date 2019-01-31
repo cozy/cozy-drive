@@ -55,7 +55,10 @@ class ShareByLink extends React.Component {
     const { checked, documentType } = this.props
     return (
       <div>
-        <div className={cx(styles['share-bylink-header'], 'u-mt-1', 'u-mb-1')}>
+        <div
+          data-test-id="share-by-link"
+          className={cx(styles['share-bylink-header'], 'u-mt-1', 'u-mb-1')}
+        >
           <SubTitle>{t(`${documentType}.share.shareByLink.subtitle`)}</SubTitle>
           {loading && <Spinner />}
           {loading && (
@@ -66,6 +69,7 @@ class ShareByLink extends React.Component {
           {checked && <span className={styles['share-bylink-header-dot']} />}
           {checked && (
             <button
+              data-test-id="share-bylink-header-copybtn"
               className={styles['share-bylink-header-copybtn']}
               onClick={this.copyLinkToClipboard}
             >

@@ -68,7 +68,7 @@ export default class FilenameInput extends Component {
 
   render(props, { value, working, error }) {
     return (
-      <div className={styles['fil-file-name-input']}>
+      <div data-test-id="name-input" className={styles['fil-file-name-input']}>
         <input
           type="text"
           value={value}

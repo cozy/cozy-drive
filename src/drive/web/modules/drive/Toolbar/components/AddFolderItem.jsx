@@ -6,7 +6,11 @@ import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 
 const AddFolderItem = translate()(({ t, addFolder }) => {
   return (
-    <a className={styles['fil-action-newfolder']} onClick={addFolder}>
+    <a
+      data-test-id="add-folder-link"
+      className={styles['fil-action-newfolder']}
+      onClick={addFolder}
+    >
       {t('toolbar.menu_new_folder')}
     </a>
   )

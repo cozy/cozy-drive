@@ -7,6 +7,7 @@ const DeleteItem = translate()(
   ({ t, isSharedWithMe, displayedFolder, trashFolder, onLeave }) =>
     isSharedWithMe ? (
       <a
+        data-test-id="fil-action-delete"
         className={classNames(styles['fil-action-delete'])}
         onClick={() =>
           onLeave(displayedFolder).then(() => trashFolder(displayedFolder))
@@ -16,6 +17,7 @@ const DeleteItem = translate()(
       </a>
     ) : (
       <a
+        data-test-id="fil-action-delete"
         className={classNames(styles['fil-action-delete'])}
         onClick={() => trashFolder(displayedFolder)}
       >
