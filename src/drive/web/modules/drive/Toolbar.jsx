@@ -90,7 +90,11 @@ class Toolbar extends Component {
     )
 
     return (
-      <div className={styles['fil-toolbar-files']} role="toolbar">
+      <div
+        data-test-id="fil-toolbar-files"
+        className={styles['fil-toolbar-files']}
+        role="toolbar"
+      >
         {!isShared &&
           canUpload &&
           hasWriteAccess && <UploadItem disabled={isDisabled} />}

@@ -6,6 +6,7 @@ import styles from './button.styl'
 
 export const ShareButton = ({ label, onClick, className, ...props }) => (
   <Button
+    data-test-id="share-button"
     theme="secondary"
     className={className}
     onClick={() => onClick()}
@@ -17,6 +18,7 @@ export const ShareButton = ({ label, onClick, className, ...props }) => (
 
 export const SharedByMeButton = ({ label, onClick, className, ...props }) => (
   <Button
+    data-test-id="share-by-me-button"
     className={classNames(styles['coz-btn-shared'], className)}
     onClick={() => onClick()}
     icon="share"

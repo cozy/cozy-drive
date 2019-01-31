@@ -157,7 +157,10 @@ const FileName = ({
         <div className={styles['fil-file']}>
           <div className={styles['fil-file-filename']}>
             <div className={styles['fil-file-filename-wrapper']}>
-              <div className={styles['fil-file-filename-and-ext']}>
+              <div
+                data-test-id="fil-file-filename-and-ext"
+                className={styles['fil-file-filename-and-ext']}
+              >
                 {filename}
                 {extension && (
                   <span className={styles['fil-content-ext']}>{extension}</span>

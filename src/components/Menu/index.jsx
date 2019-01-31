@@ -73,6 +73,7 @@ export default class Menu extends Component {
           />
         )}
         <div
+          data-test-id="coz-menu-inner"
           className={classNames(styles['coz-menu-inner'], innerClassName, {
             [styles['coz-menu-inner--opened']]: opened
           })}
