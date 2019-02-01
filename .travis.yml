@@ -88,9 +88,8 @@ jobs:
         - yarn build:drive:mobile
         - yarn genicon:drive:mobile
         - yarn prepare:drive:mobile
-        - yarn build:drive:android
         - mkdir -p src/drive/targets/mobile/build/android/
-        - yarn sign:drive:android
+        - yarn buildsigned:drive:android
       after_success:
         - scripts/downcloud-cert.sh
         - yarn upload:drive:android
