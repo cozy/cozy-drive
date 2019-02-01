@@ -1,9 +1,11 @@
-import { Selector, t } from 'testcafe'
+import { Selector, t, ClientFunction } from 'testcafe'
 import {
   getElementWithTestId,
   getPageUrl,
   isExistingAndVisibile,
-  getClipboardData
+  getClipboardData,
+  overwriteCopyCommand,
+  getLastExecutedCommand
 } from '../helpers/utils'
 
 export default class DrivePage {
@@ -39,6 +41,7 @@ export default class DrivePage {
     this.content_placeholder = Selector(
       '[class*="fil-content-file-placeholder"]'
     )
+    this.alertWrapper = Selector('[class*="c-alert-wrapper"]')
 
     //Toolbar - Action Menu
     this.toolbar_files = getElementWithTestId('fil-toolbar-files')
@@ -66,7 +69,6 @@ export default class DrivePage {
     this.btnUpload = getElementWithTestId('uploadButton')
     this.divUpload = getElementWithTestId('uploadQueue')
     this.divUploadSuccess = getElementWithTestId('uploadQueue-success')
-    this.alertWrapper = Selector('[class*="c-alert-wrapper"]')
 
     // Sharing
     this.btnShare = this.toolbar_files
@@ -75,9 +77,8 @@ export default class DrivePage {
     this.modalShare = Selector('[class*="share-modal-content"]')
     this.divShareByLink = getElementWithTestId('share-by-link')
     this.toggleShareLink = this.divShareByLink.child('[class*="toggle"]')
-    this.copyBtnShareByLink = getElementWithTestId(
-      'share-bylink-header-copybtn'
-    )
+    this.spanLinkCreating = Selector('[class*="share-bylink-header-creating"]')
+    this.copyBtnShareByLink = Selector('button').withAttribute('data-test-data')
     this.btnShareByMe = this.toolbar_files
       .child('button')
       .withAttribute('data-test-id', 'share-by-me-button')
@@ -248,10 +249,18 @@ export default class DrivePage {
       .click(this.toggleShareLink)
       .expect(this.toggleShareLink.find('input').checked)
       .ok('toggle Link is unchecked')
-      .click(this.copyBtnShareByLink)
+      .expect(this.spanLinkCreating.exist)
+      .notOk('Still creating Link')
+    isExistingAndVisibile(this.copyBtnShareByLink, 'Copy Link')
 
-    //    const tests = await getClipboardData()
-    //  console.log(tests)
+    await overwriteCopyCommand()
+
+    await t
+      .click(this.copyBtnShareByLink)
+      .expect(getLastExecutedCommand())
+      .eql('copy') //check link copy actually happens
+
+    isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
   }
 
   async unshareFolderPublicLink() {
