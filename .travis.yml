@@ -9,7 +9,7 @@ env:
     - secure: AK93m/xqCa7ihrxIMOspXXh4GZQeiCToB1VVhXHT/8EQfe0veFUqw6ZEOXsVXpgXjgzVIKVH6GnL0Y0BGp81ayuerJ9U8MR3ZJcq+mcrhX1pXb0IhYbdUf3VnGKBCNyTiv69ABvew5td6FJCGIawbKUFZ3LGwkcr+aadWOtAi1y8KJBleyjMfN90IDSAd33mX5UoVwyFr9RCVp2QzLJKqjwkHzOmOPU4mp6UPzwRNyqBVUig/bUdwgxyjChuf3mpkrWtIIpjJZPglFvakHM70qOiDDaDXwSAbUA91Kbd1KOK2niWZfPulyV0NW1O4zStIsY8vZ7176GdMlt/87XSNoGyMiLWDnq4l+gHWeoklZ3dEs3ibNBd11d29j2VLzP365p+fEi1M1HKemSZOqE2z8whrrJTu4KlLvK7Yi4YzexNEgXVtwWUEmDSYjeJZ9TqAToATKawtH7wywpswftO1uETPmAqtarKC5p4eC1RXJyfAy7DCHGVz5cKYGTMzuMMkUQeP3gv5VXobGqoadwWJIbGmkinkAjh3RSWpsLpZEqqXSnEQDpY7flFchmTNo7PNdZmdA3GLeTg8cN2MMLDeZSmhppvDWHoAjHoOix8q+W4crKH/Azzp8lITdXa1gizIDktKVOlYTg/zLfHTcsmwViMlL2kdoHELS7i+tkcfYU= #TESTCAFE_DRIVE_URL
     - secure: nx+r6bl0Rz+MmlLAR7ZM3ECIQXNhZCLVbz/PlTcbkZZ97P6xiqMpvdlOhLOK1DG3WiYGaWddiHXNL6DVaVBfZ/+ehH7Na5a1AF5NKncEhRyqGfq3JP/MOe0s0fcYDfV7ZsXNm4Y/9Smrx1QzPfHG0BKKYqmt0AMIXiGn8yx0MMSTyf5nagopPrSh2kpJ2D9vv9h3sp8486OffzF87ys7NJWcem6SXZK9tuENUKvxmX/zusdZ+sKKTGxdAmI3ANHTkbQ4A1QQRjDZ1WEl9yfiSrP4ceTgbeU6De0BVxtJYuIOpgaJrFj7ayMcH7VSM72PjOw8MieR63BOK05btiVSVWBXw+c9k0PAruhqGgkPfIU9UtJBRQwyA1o0s25+5W5tR7MSQ7v31yeCw8mDFuXp5cS9pJmMJjK1IRUIOcyUP3frpuwxKzHeXl/tCtA5xQr/cMgZpymDCme0NHUi8/hxTgsUsi9hjrHozk2L7/gQ5YjutD8M11duVpvFXMjwGAFYC/rs12ltkBa/dWff0ROtEa7zl6axGh0O1d6HblPow4jJhyKNP1llIhy2Fmfui5CKCV7i/pioMyJIFi54eKRqLRdryeElI+Go3Fp2Nklyubpg2cK4fYcLcfgsJ1eoZoyLES9Vg2Za4Cc5yXrI7RLzTfUDuU/8FLeqf7z9tk79FZw= #TESTCAFE_USER_PASSWORD
     - secure: lggtB/s2BGWm0f/6aqWq9KoH4PgFdrWv5fR2QUKrWjeUjPus8uTG4WDfxgRRPF4GgUIkYcboODB43A01UzgbRi2KWZjysj0W8/oKj2bt1VqMtA+G6qQMXIIZ0d1W5+x38MsEmUnDamCMQEv38xrFK9xlStIfA/dCvJg+dYBhaGDxYcdSkA3IWVHRfrFXVLol/O+V+CvpSv5vP8AkTHgiILRUEb0nJxx2Dpoeecb79Qg/lAAhUOGz51VPbhms+t+W9DmAH+El9wrbYkxCTe/tyCQXzzXwV4jspz9/QO7nODaHOERrW8ZB6zFe8R+7nvDOtflunaPaa3trt7n93bbthoDIDgOPjD1Gud2Hh7Vsp6P0yYCC3nAj1El5ueK0FIeE7TbltVZFxNqh67ULruZWC1zt1kA3WmBohZthw6f0XGiOnLD1J7O4rn9SPR6t6WFO3LSkl8/jJ250NdcWG+jl7qsF5Brk+9SSZRdFodHPx6EzggqzlKCVfduOYJnYAVf8vAeEvPaXvSdX34iHLzeG80vaanDOCWWlviLGmxojf4a9MteAJTRKwfcozQYF8yf13gtUlRPDw7eq7Fj4oRCoV0aDF5qy0V8w1zpTtPZXJ4BpNMWMMR9Hs+UlVBFwAGw+01Xdk4S1cSEgVbkl5idlUSbiDYQtiZARPQW+Z3Z/s5s= #ANDROID_KEYSTORE_PASS
-node-preset: &node
+node-preset: &node # Used internally to share configuration, ignored by travis.
   language: node_js
   node_js:
     - '8'
@@ -24,18 +24,18 @@ jobs:
   include:
     - name: "Lint"
       stage: "prebuild"
-      script: yarn lint
       <<: *node
+      script: yarn lint
     - name: "Unit tests"
       stage: "prebuild"
-      script: yarn test
       <<: *node
+      script: yarn test
     - &build-web
       name: "Drive web"
       stage: "build"
+      <<: *node
       env:
         - COZY_APP_SLUG=drive
-      <<: *node
       addons:
         firefox: latest
       before_install:
@@ -44,21 +44,19 @@ jobs:
       script:
         - yarn tx
         - yarn build:$COZY_APP_SLUG:browser
-        - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG || echo "skipping testcafe outside of pull requests"
+        - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG
       before_deploy:
-        - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi
+        - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi # Needs to be inlined and not in a script to work.
         - yarn add cozy-app-publish
       deploy:
-        - provider: script
+        - &deploy
+          provider: script
           repo: cozy/cozy-drive
           skip-cleanup: true
           script: yarn run deploy:$COZY_APP_SLUG
           on:
             branch: master
-        - provider: script
-          repo: cozy/cozy-drive
-          skip-cleanup: true
-          script: yarn run deploy:$COZY_APP_SLUG
+        - <<: *deploy
           on:
             tags: true
     - <<: *build-web
@@ -84,7 +82,7 @@ jobs:
       env:
         - COZY_APP_SLUG=drive
       before_install:
-        - yes | sdkmanager "platforms;android-27"
+        - yes | sdkmanager "platforms;android-27" # see https://github.com/travis-ci/travis-ci/issues/8874#issuecomment-350350607
         - scripts/transifex.sh
         - scripts/decrypt.sh
         - scripts/signing.sh
@@ -92,7 +90,7 @@ jobs:
         - sudo apt-get install nodejs
         - sudo apt-get install build-essential
         - yarn
-        - export PATH=/usr/local/android-sdk/build-tools/26.0.2:$PATH
+        - export PATH=/usr/local/android-sdk/build-tools/26.0.2:$PATH # Required to expose apksigner command.
       script:
         - yarn tx
         - yarn build:drive:mobile
