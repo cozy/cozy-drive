@@ -46,7 +46,7 @@ jobs:
         - yarn build:$COZY_APP_SLUG:browser
         - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG || echo "skipping testcafe outside of pull requests"
       before_deploy:
-        - scripts/downcloud-cert.sh
+        - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi
         - yarn add cozy-app-publish
       deploy:
         - provider: script
@@ -99,5 +99,5 @@ jobs:
         - mkdir -p src/drive/targets/mobile/build/android/
         - yarn buildsigned:drive:android
       after_success:
-        - scripts/downcloud-cert.sh
+        - *downcloud-cert
         - yarn upload:drive:android
