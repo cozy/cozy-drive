@@ -77,9 +77,7 @@ jobs:
         - yes | sdkmanager "platforms;android-27"
         - scripts/transifex.sh
         - scripts/decrypt.sh
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then mkdir -p src/drive/targets/mobile/keys/android/; fi
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then cp /tmp/cozy-drive-release-key.jks src/drive/targets/mobile/keys/android/cozy-drive-release-key.jks; fi
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then cp /tmp/key.json src/drive/targets/mobile/keys/android/key.json; fi
+        - scripts/signing.sh
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install nodejs
         - sudo apt-get install build-essential
