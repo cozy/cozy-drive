@@ -33,7 +33,7 @@
     "buildsigned:drive:android": "npm run build:drive:android && npm run sign:drive:android",
     "publish:drive:android": "npm run build:drive:mobile && npm run buildsigned:drive:android && (cd src/drive/targets/mobile && fastlane android pushbeta)",
     "publishbeta:drive:android": "(cd src/drive/targets/mobile && fastlane android pushbeta)",
-    "upload:drive:android": "node downcloud.js src/drive/targets/mobile/build/android/cozy-drive.apk ",
+    "upload:drive:android": "node scripts/downcloud.js src/drive/targets/mobile/build/android/cozy-drive.apk ",
     "run:drive:ios": "(cd src/drive/targets/mobile && cordova run ios --buildFlag='-UseModernBuildSystem=0' --device)",
     "run:drive:ios:emulator": "(cd src/drive/targets/mobile && cordova run ios --buildFlag='-UseModernBuildSystem=0' --emulator)",
     "publish:drive:ios": "npm run build:drive:mobile && (cd src/drive/targets/mobile && fastlane ios pushtest)",
