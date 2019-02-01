@@ -1,5 +1,5 @@
 import React from 'react'
-import copy from 'clipboard-copy'
+import copy from 'copy-text-to-clipboard'
 import Toggle from 'cozy-ui/react/Toggle'
 import { Spinner, SubTitle } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
@@ -19,8 +19,8 @@ class ShareByLink extends React.Component {
     }
   }
 
-  copyLinkToClipboard = async () => {
-    await copy(this.props.link)
+  copyLinkToClipboard = () => {
+    copy(this.props.link)
     Alerter.success(`${this.props.documentType}.share.shareByLink.copied`)
   }
 
