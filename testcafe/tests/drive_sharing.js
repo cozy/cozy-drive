@@ -2,10 +2,12 @@ import { Selector, Role } from 'testcafe'
 import { driveUser } from './helpers/roles'
 import {
   TESTCAFE_DRIVE_URL,
-  FOLDER_DATE_TIME,
   isExistingAndVisibile,
-  getCurrentDateTime
+  getCurrentDateTime,
+  FOLDER_DATE_TIME
 } from './helpers/utils'
+import Data from './helpers/data'
+const data = new Data()
 
 import DrivePage from './pages/drive-model'
 const drivePage = new DrivePage()
@@ -36,7 +38,12 @@ test('Drive : from Drive, go in a folder, upload a file, and share it', async t 
   await t.pressKey('esc') //close action Menu
 
   await drivePage.uploadFiles([`../data/${file}`])
-  await drivePage.shareFolderPublicLink() //-> Not finish
+  await drivePage.shareFolderPublicLink()
+
+  data.sharingLink = await drivePage.copyBtnShareByLink.getAttribute(
+    'data-test-data'
+  )
+  console.log(`SHARING_LINK : ` + data.sharingLink)
 })
 
 //************************
@@ -47,9 +54,7 @@ fixture`Drive : Access a folder public link`
   await t.useRole(Role.anonymous())
 })
 test('Drive : Access a folder public link', async t => {
-  await t.navigateTo(
-    'http://drive.cozy.tools:8080/public?sharecode=t2dqusHt2GFf'
-  ) //!// FIXME: :use URL from copy-paste
+  await t.navigateTo(data.sharingLink)
   await publicDrivePage.waitForLoading()
 
   await publicDrivePage.checkActionMenuPublicDesktop()
@@ -101,9 +106,8 @@ fixture`Drive : No Access to an old folder public link`
   await t.useRole(Role.anonymous())
 })
 test('`Drive : No Access to an old folder public link', async t => {
-  await t.navigateTo(
-    'http://drive.cozy.tools:8080/public?sharecode=Ueoxcqmt9Ve7'
-  ) //!// FIXME: :use URL from copy-paste
+  await t.navigateTo(data.sharingLink)
+
   await publicDrivePage.waitForLoading()
   await publicDrivePage.checkNotAvailable()
 })

@@ -50,6 +50,10 @@ export function getCurrentDateTime() {
 
 export const FOLDER_DATE_TIME = `Folder_${getCurrentDateTime()}`
 
-export const getClipboardData = ClientFunction(() => {
-  navigator.clipboard.readText() //chrome only
+export const overwriteCopyCommand = ClientFunction(() => {
+  document.execCommand = command => (window.lastExecutedCommand = command)
 })
+
+export const getLastExecutedCommand = ClientFunction(
+  () => window.lastExecutedCommand
+)
