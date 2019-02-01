@@ -128,7 +128,8 @@
         "fetchFailed": "Woops! It seems your connectivity is limited, try again later when it gets better.",
         "creating": "Creating your link...",
         "copy": "Copy link",
-        "copied": "Link has been copied to clipboard"
+        "copied": "Link has been copied to clipboard",
+        "failed": "Unable to copy to clipboard"
       },
       "shareByEmail": {
         "title": "By email",

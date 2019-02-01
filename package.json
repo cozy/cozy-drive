@@ -91,7 +91,7 @@
   "dependencies": {
     "babel-preset-cozy-app": "1.2.2",
     "classnames": "2.2.6",
-    "clipboard-copy": "^2.0.1",
+    "copy-text-to-clipboard": "^1.0.4",
     "cozy-bar": "6.8.7",
     "cozy-client": "5.7.3",
     "cozy-client-js": "0.13.0",
