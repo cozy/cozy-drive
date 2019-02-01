@@ -16,18 +16,6 @@ cache:
   yarn: true
   directories:
     - node_modules
-before_install:
-  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then openssl aes-256-cbc -K $encrypted_b1733cb50f7f_key -iv $encrypted_b1733cb50f7f_iv -in ci-files.tar.enc -out /tmp/ci-files.tar -d; fi
-  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then tar xvf /tmp/ci-files.tar -C /tmp; fi
-  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)"; fi
-  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then chmod 600 /tmp/id_rsa_travis_downcloud;
-    fi
-  - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
-    fi
-  - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python - --user
-  - travis_retry pip install --user transifex-client==0.12.5
-  - install -m0644 .transifexrc.tpl ~/.transifexrc
-  - echo "password = $TX_PASSWD" >> ~/.transifexrc
 stages:
   - prebuild
   - build
@@ -46,11 +34,15 @@ jobs:
         - COZY_APP_SLUG=drive
       addons:
         firefox: latest
+      before_install:
+        - scripts/transifex.sh
+        - scripts/decrypt.sh
       script:
         - yarn tx
         - yarn build:$COZY_APP_SLUG:browser
         - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG || echo "skipping testcafe outside of pull requests"
       before_deploy:
+        - scripts/downcloud-cert.sh
         - yarn add cozy-app-publish
       deploy:
         - provider: script
@@ -79,17 +71,11 @@ jobs:
         - COZY_APP_SLUG=drive
       before_install:
         - yes | sdkmanager "platforms;android-27"
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then openssl aes-256-cbc -K $encrypted_b1733cb50f7f_key -iv $encrypted_b1733cb50f7f_iv -in ci-files.tar.enc -out /tmp/ci-files.tar -d; fi
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then tar xvf /tmp/ci-files.tar -C /tmp; fi
+        - scripts/transifex.sh
+        - scripts/decrypt.sh
         - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then mkdir -p src/drive/targets/mobile/keys/android/; fi
         - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then cp /tmp/cozy-drive-release-key.jks src/drive/targets/mobile/keys/android/cozy-drive-release-key.jks; fi
         - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then cp /tmp/key.json src/drive/targets/mobile/keys/android/key.json; fi
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)"; fi
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then chmod 600 /tmp/id_rsa_travis_downcloud;
-          fi
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
-          fi
-      before_script:
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install nodejs
         - sudo apt-get install build-essential
@@ -104,4 +90,5 @@ jobs:
         - mkdir -p src/drive/targets/mobile/build/android/
         - yarn sign:drive:android
       after_success:
+        - scripts/downcloud-cert.sh
         - yarn upload:drive:android
