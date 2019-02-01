@@ -3,7 +3,6 @@ node_js:
   - '8'
 env:
   global:
-    - CXX=g++-4.8
     - MATTERMOST_CHANNEL=appvengers
     - secure: OLcPuglkDbRd9Xf8WmPAlAWTmdXDb+SNVc7+WKQjIap5Ej58BBTtaAYR8kzFKSWmvWWSnvKmOYJfOHvWIOfkzlwhGLnk/xUnCCsjWmWNjOmnL5x74gCbfEgyU+rIwr2c4/hpzjcywTVBIhL4l/Bxjn+Op+NepKYMNTKko9qB7fA+nDglX/t3VObC9kEXwXElOOgLHNpbfQLEJxdEqXm8hVMmfjA/wSQnX96GqWhKWqMMPyjAxwkxYXFa04AgeTV3C8y4x7YxiuaE8cKZfi+DYX8DyV0XdBVKJTBKTGEaTbotewmXf7F+zsZ6Rg46HvQskSmckMqMKzZfGLFKsVELt6wyNVdVwptWXfu9o2FrXvvHj1krOltN5kQPKLwSmQH4RSlekQ+JYpRN4e+w4dNazILk1pAMu7+EqBTdH5khkDxeA1LAfFVuZz3QP1/fczF/PXSMsaQa779XXKf8dsEP5S8dHjpCOLSI506E+sWa/tu1mSZoaL+jGPovhiygsPUjbjqUmim3Dz+22y2E8jGrEeIdTEcoDXrvjcqwSNvs2LXlgOtgjxP47Fb3Enk18BUpVL2LMTmwF8FbglfKOTOFHHuhT/lQjtptT6NBu0tKi8fcJ/jj3patUj2kbqo85FYext/VrPN42uIXkDCxu9bEnyaGkBpl3qgD7F0J/gJSa10=
     - secure: e7S5xeDOf5b18HEYMytTtFvy0GGtEq5KHc9eiydOXpWKhs1Lry/yOKPteJFN5fh6uHvlg02DCbANr2vvj0O8jn37eyudHowVsKJHXm4dEl9pe9Rbd1t6CwLwEb1qiI9juIlPt05nrlFKxrRzWEsC2mtk56FMfOhdKNf43O9VOJ9avxGk+6ztmo7iJjSZRRzRzqdw9NvS6yTAEZH0KHLxfIqXTppJU7vRDYRLpQLc7qJcAbiz2YuuINB0B8SzxhzuPADhxyxys8G8aurkbOYtJcFpUTBakRd8a9djP8r2+kuU5tb0OUOTnxBf3kETOD3B01kgGfd58tU6vt+zkD3sWZGpkKRjYXb7rPePDiPKrUx/OcTS8P7MO9+pwS5z3jocHIx3DNwPSUoVBj6mH7NBn8iEXHbMhWCZllNvTWmFCsTZKJsGky3smNz5nPf7/NOmJ5cdTcIY1jtSjRHzpkrBU22bd/8Jup1Z6YTsAuws/Hb5jVxV67ojjAHfFTR8JlBv8Nbb/0iux04ghcwcvbfPMFIe11PHs4OAvB/YKJGdEL58KCEMHc6XD51eFFir0M/94y8y2Cvq0loxO7TiiI+VdI9QALU5MRLiEMhMU/xdlVtUqfvCd4CcDLDr8tf+REwe8jUo7h7shgBdi9j7ioJYgB9oeJUJYv9gYVPdbXkpFd4=
@@ -15,13 +14,6 @@ env:
     - secure: lggtB/s2BGWm0f/6aqWq9KoH4PgFdrWv5fR2QUKrWjeUjPus8uTG4WDfxgRRPF4GgUIkYcboODB43A01UzgbRi2KWZjysj0W8/oKj2bt1VqMtA+G6qQMXIIZ0d1W5+x38MsEmUnDamCMQEv38xrFK9xlStIfA/dCvJg+dYBhaGDxYcdSkA3IWVHRfrFXVLol/O+V+CvpSv5vP8AkTHgiILRUEb0nJxx2Dpoeecb79Qg/lAAhUOGz51VPbhms+t+W9DmAH+El9wrbYkxCTe/tyCQXzzXwV4jspz9/QO7nODaHOERrW8ZB6zFe8R+7nvDOtflunaPaa3trt7n93bbthoDIDgOPjD1Gud2Hh7Vsp6P0yYCC3nAj1El5ueK0FIeE7TbltVZFxNqh67ULruZWC1zt1kA3WmBohZthw6f0XGiOnLD1J7O4rn9SPR6t6WFO3LSkl8/jJ250NdcWG+jl7qsF5Brk+9SSZRdFodHPx6EzggqzlKCVfduOYJnYAVf8vAeEvPaXvSdX34iHLzeG80vaanDOCWWlviLGmxojf4a9MteAJTRKwfcozQYF8yf13gtUlRPDw7eq7Fj4oRCoV0aDF5qy0V8w1zpTtPZXJ4BpNMWMMR9Hs+UlVBFwAGw+01Xdk4S1cSEgVbkl5idlUSbiDYQtiZARPQW+Z3Z/s5s= #ANDROID_KEYSTORE_PASS
 addons:
   firefox: latest
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - deadsnakes
-    packages:
-      - g++-4.8
-      - python3.5
 cache:
   yarn: true
   directories:
@@ -34,8 +26,8 @@ before_install:
     fi
   - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then ssh-add /tmp/id_rsa_travis_downcloud;
     fi
-  - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3.5 - --user
-  - travis_retry pip3.5 install --user transifex-client==0.12.5
+  - curl -fsSL https://bootstrap.pypa.io/get-pip.py | python - --user
+  - travis_retry pip install --user transifex-client==0.12.5
   - install -m0644 .transifexrc.tpl ~/.transifexrc
   - echo "password = $TX_PASSWD" >> ~/.transifexrc
 stages:
