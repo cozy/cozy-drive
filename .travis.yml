@@ -22,17 +22,17 @@ stages:
   - build
 jobs:
   include:
-    - name: "Lint"
-      stage: "prebuild"
+    - name: 'Lint'
+      stage: 'prebuild'
       <<: *node
       script: yarn lint
-    - name: "Unit tests"
-      stage: "prebuild"
+    - name: 'Unit tests'
+      stage: 'prebuild'
       <<: *node
       script: yarn test
     - &build-web
-      name: "Drive web"
-      stage: "build"
+      name: 'Drive web'
+      stage: 'build'
       <<: *node
       env:
         - COZY_APP_SLUG=drive
@@ -44,6 +44,7 @@ jobs:
       script:
         - yarn tx
         - yarn build:$COZY_APP_SLUG:browser
+        - ./scripts/deploy-tests.sh
         - test TRAVIS_PULL_REQUEST && yarn testcafe:$COZY_APP_SLUG
       before_deploy:
         - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi # Needs to be inlined and not in a script to work.
@@ -60,11 +61,11 @@ jobs:
           on:
             tags: true
     - <<: *build-web
-      name: "Photos web"
+      name: 'Photos web'
       env:
         - COZY_APP_SLUG=photos
-    - name: "Drive android"
-      stage: "build"
+    - name: 'Drive android'
+      stage: 'build'
       language: android
       android:
         components:
