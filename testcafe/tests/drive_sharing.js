@@ -2,7 +2,6 @@ import { Selector, Role } from 'testcafe'
 import { driveUser } from './helpers/roles'
 import {
   TESTCAFE_DRIVE_URL,
-  isExistingAndVisibile,
   getCurrentDateTime,
   FOLDER_DATE_TIME
 } from './helpers/utils'
@@ -40,20 +39,25 @@ test('Drive : from Drive, go in a folder, upload a file, and share it', async t 
   await drivePage.uploadFiles([`../data/${file}`])
   await drivePage.shareFolderPublicLink()
 
-  data.sharingLink = await drivePage.copyBtnShareByLink.getAttribute(
-    'data-test-data'
-  )
-  console.log(`SHARING_LINK : ` + data.sharingLink)
+  const link = await drivePage.copyBtnShareByLink.getAttribute('data-test-url')
+  if (link) {
+    data.sharingLink = link
+    console.log(`SHARING_LINK : ` + data.sharingLink)
+  }
 })
 
 //************************
 // Public (no authentification)
 //************************
-fixture`Drive : Access a folder public link`
-  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  await t.useRole(Role.anonymous())
-})
-test('Drive : Access a folder public link', async t => {
+fixture`Drive : Access a folder public link`.page`${TESTCAFE_DRIVE_URL}/`
+  .beforeEach(async t => {
+    await t.useRole(Role.anonymous())
+  })
+  .afterEach(async t => {
+    await publicDrivePage.checkLocalFile('files.zip')
+    await publicDrivePage.deleteLocalFile('files.zip')
+  })
+test('Drive : Access a folder public link (desktop)', async t => {
   await t.navigateTo(data.sharingLink)
   await publicDrivePage.waitForLoading()
 
@@ -63,14 +67,14 @@ test('Drive : Access a folder public link', async t => {
     .click(publicDrivePage.btnPublicDownload)
     .click(publicDrivePage.btnPublicCreateCozy)
   await publicDrivePage.checkCreateCozy()
+})
 
-  //there is some errors if I check for file just after cliking the download button, but not if we do it at the end.
-  await publicDrivePage.checkDownload('files.zip')
-
-  //Mobiles Checks
+test('Drive : Access a folder public link (mobile)', async t => {
   await t.resizeWindowToFitDevice('iPhone 6', {
     portraitOrientation: true
   })
+  await t.navigateTo(data.sharingLink)
+  await publicDrivePage.waitForLoading()
   await publicDrivePage.checkActionMenuPublicMobile()
   await t
     .setNativeDialogHandler(() => true)
@@ -78,8 +82,6 @@ test('Drive : Access a folder public link', async t => {
     .click(publicDrivePage.btnPublicMoreMenu) //need to re-open the more menu
     .click(publicDrivePage.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
-
-  await publicDrivePage.checkDownload('files (1).zip')
 
   await t.resizeWindow(1280, 1024) //Back to desktop
 })

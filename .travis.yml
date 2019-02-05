@@ -36,7 +36,11 @@ jobs:
       env:
         - COZY_APP_SLUG=drive
       addons:
-        firefox: latest
+        apt:
+          sources:
+            - google-chrome
+          packages:
+            - google-chrome-stable fluxbox
       before_install:
         - scripts/transifex.sh
         - scripts/decrypt.sh

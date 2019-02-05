@@ -38,15 +38,15 @@ export default class DrivePage {
       .child('h2')
       .withText('Switch online!') // !FIXME: do not use text
     //loading
-    this.content_placeholder = Selector(
+    this.contentPlaceHolder = Selector(
       '[class*="fil-content-file-placeholder"]'
     )
     this.alertWrapper = Selector('[class*="c-alert-wrapper"]')
 
     //Toolbar - Action Menu
-    this.toolbar_files = getElementWithTestId('fil-toolbar-files')
-    this.btnMoreMenu = this.toolbar_files.find('[class*="dri-btn--more"]')
-    this.coz_menu_inner = getElementWithTestId('coz-menu-inner')
+    this.toolbarFiles = getElementWithTestId('fil-toolbar-files')
+    this.btnMoreMenu = this.toolbarFiles.find('[class*="dri-btn--more"]')
+    this.cozyMenuInner = getElementWithTestId('coz-menu-inner')
     this.btnAddFolder = getElementWithTestId('add-folder-link').parent(
       '[class*="coz-menu-item"]'
     )()
@@ -67,19 +67,18 @@ export default class DrivePage {
 
     // Upload
     this.btnUpload = getElementWithTestId('uploadButton')
-    this.divUpload = getElementWithTestId('uploadQueue')
-    this.divUploadSuccess = getElementWithTestId('uploadQueue-success')
+    this.divUpload = getElementWithTestId('upload-queue')
+    this.divUploadSuccess = getElementWithTestId('upload-queue-success')
 
     // Sharing
-    this.btnShare = this.toolbar_files
+    this.btnShare = this.toolbarFiles
       .child('button')
       .withAttribute('data-test-id', 'share-button')
-    this.modalShare = Selector('[class*="share-modal-content"]')
     this.divShareByLink = getElementWithTestId('share-by-link')
     this.toggleShareLink = this.divShareByLink.child('[class*="toggle"]')
     this.spanLinkCreating = Selector('[class*="share-bylink-header-creating"]')
-    this.copyBtnShareByLink = Selector('button').withAttribute('data-test-data')
-    this.btnShareByMe = this.toolbar_files
+    this.copyBtnShareByLink = Selector('button').withAttribute('data-test-url')
+    this.btnShareByMe = this.toolbarFiles
       .child('button')
       .withAttribute('data-test-id', 'share-by-me-button')
 
@@ -94,7 +93,7 @@ export default class DrivePage {
 
   async waitForLoading() {
     await t
-      .expect(this.content_placeholder.exists)
+      .expect(this.contentPlaceHolder.exists)
       .notOk('Content placeholder still displayed')
   }
 
@@ -113,7 +112,7 @@ export default class DrivePage {
   //@param {text} path : redirection path
   //@param {text} title : text for console.log
   async isSidebarButton(btn, path, title) {
-    isExistingAndVisibile(btn, `Button ${title}`)
+    await isExistingAndVisibile(btn, `Button ${title}`)
     await t.expect(btn.getAttribute('href')).eql(path)
   }
 
@@ -134,7 +133,7 @@ export default class DrivePage {
   }
 
   async getbreadcrumb() {
-    isExistingAndVisibile(this.breadcrumb, 'breadcrumb')
+    await isExistingAndVisibile(this.breadcrumb, 'breadcrumb')
     const childElCount = await this.breadcrumb.childElementCount
     let breadcrumbTitle = await this.breadcrumb.child(0).innerText
     if (childElCount > 0) {
@@ -147,15 +146,15 @@ export default class DrivePage {
   }
 
   async openCozyBarMenu() {
-    isExistingAndVisibile(this.btnMainApp, 'Cozy bar - Main app button')
+    await isExistingAndVisibile(this.btnMainApp, 'Cozy bar - Main app button')
     await t.click(this.btnMainApp)
-    isExistingAndVisibile(this.cozNavPopContent, 'Cozy bar - App popup')
+    await isExistingAndVisibile(this.cozNavPopContent, 'Cozy bar - App popup')
   }
 
   async checkMainMenu() {
-    isExistingAndVisibile(this.cozBar, 'Cozy bar')
+    await isExistingAndVisibile(this.cozBar, 'Cozy bar')
     await this.openCozyBarMenu()
-    isExistingAndVisibile(this.btnCozBarDrive, 'Cozy bar - Drive button')
+    await isExistingAndVisibile(this.btnCozBarDrive, 'Cozy bar - Drive button')
 
     await t
       .expect(this.btnCozBarDrive.withAttribute('href').exists)
@@ -167,10 +166,10 @@ export default class DrivePage {
   }
 
   async openActionMenu() {
-    isExistingAndVisibile(this.toolbar_files, 'toolbar_files')
-    isExistingAndVisibile(this.btnMoreMenu, `[...] button`)
+    await isExistingAndVisibile(this.toolbarFiles, 'toolbarFiles')
+    await isExistingAndVisibile(this.btnMoreMenu, `[...] button`)
     await t.click(this.btnMoreMenu)
-    isExistingAndVisibile(this.coz_menu_inner, 'Cozy inner menu')
+    await isExistingAndVisibile(this.cozyMenuInner, 'Cozy inner menu')
   }
   //@param {String} newFolderName
   async addNewFolder(newFolderName) {
@@ -178,13 +177,13 @@ export default class DrivePage {
     const rowCountStart = await this.getContentRowCount('Before')
 
     await this.openActionMenu()
-    isExistingAndVisibile(this.btnAddFolder, 'Add Folder button')
+    await isExistingAndVisibile(this.btnAddFolder, 'Add Folder button')
     await t.click(this.btnAddFolder)
 
     const rowCountEnd = await this.getContentRowCount('After')
     await t.expect(rowCountEnd).eql(rowCountStart + 1) //New content line appears
 
-    isExistingAndVisibile(this.foldersNamesInputs, 'Folder Name input')
+    await isExistingAndVisibile(this.foldersNamesInputs, 'Folder Name input')
     await t
       .typeText(this.foldersNamesInputs, newFolderName)
       .pressKey('enter')
@@ -220,12 +219,15 @@ export default class DrivePage {
 
     console.log('Uploading ' + numOfFiles + ' file(s)')
 
-    isExistingAndVisibile(this.btnUpload)
+    await isExistingAndVisibile(this.btnUpload)
     await t.setFilesToUpload(this.btnUpload, files)
 
-    isExistingAndVisibile(this.divUpload, 'Upload pop-in')
-    isExistingAndVisibile(this.divUploadSuccess, 'successfull Upload pop-in')
-    isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
+    await isExistingAndVisibile(this.divUpload, 'Upload pop-in')
+    await isExistingAndVisibile(
+      this.divUploadSuccess,
+      'successfull Upload pop-in'
+    )
+    await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
     await t
       .expect(this.divUpload.child('h4').innerText)
       .match(
@@ -237,21 +239,19 @@ export default class DrivePage {
     await t.expect(rowCountEnd).eql(rowCountStart + 1) //New content line appears
   }
 
-  //NOT FINISH !!!
   async shareFolderPublicLink() {
-    isExistingAndVisibile(this.toolbar_files, 'toolbar_files')
-    isExistingAndVisibile(this.btnShare, `Share button`)
+    await isExistingAndVisibile(this.toolbarFiles, 'toolbarFiles')
+    await isExistingAndVisibile(this.btnShare, `Share button`)
     await t.click(this.btnShare)
-    isExistingAndVisibile(this.ShareModal, 'Share modal')
-    isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
-    isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
+    await isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
     await t
       .click(this.toggleShareLink)
       .expect(this.toggleShareLink.find('input').checked)
       .ok('toggle Link is unchecked')
       .expect(this.spanLinkCreating.exist)
       .notOk('Still creating Link')
-    isExistingAndVisibile(this.copyBtnShareByLink, 'Copy Link')
+    await isExistingAndVisibile(this.copyBtnShareByLink, 'Copy Link')
 
     await overwriteCopyCommand()
 
@@ -260,16 +260,15 @@ export default class DrivePage {
       .expect(getLastExecutedCommand())
       .eql('copy') //check link copy actually happens
 
-    isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
+    await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
   }
 
   async unshareFolderPublicLink() {
-    isExistingAndVisibile(this.toolbar_files, 'toolbar_files')
-    isExistingAndVisibile(this.btnShareByMe, `Share by Me button`)
+    await isExistingAndVisibile(this.toolbarFiles, 'toolbarFiles')
+    await isExistingAndVisibile(this.btnShareByMe, `Share by Me button`)
     await t.click(this.btnShareByMe)
-    isExistingAndVisibile(this.ShareModal, 'Share modal')
-    isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
-    isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
+    await isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
     await t
       .click(this.toggleShareLink)
       .expect(this.toggleShareLink.find('input').checked)
@@ -280,30 +279,30 @@ export default class DrivePage {
       .expect(this.btnShareByMe.exists)
       .notOk('Share by Me still exists')
 
-    isExistingAndVisibile(this.btnShare, `Share button`)
+    await isExistingAndVisibile(this.btnShare, `Share button`)
   }
 
   //@param { Array } filesIndexArray : Array of files index
   async selectElements(filesIndexArray) {
     console.log(`Selecting ${filesIndexArray.length} elements`)
 
-    isExistingAndVisibile(
+    await isExistingAndVisibile(
       this.content_rows.nth(filesIndexArray[0]),
       `element with index ${filesIndexArray[0]}`
     )
     await t.hover(this.content_rows.nth(filesIndexArray[0])) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
     for (let i = 0; i < filesIndexArray.length; i++) {
-      isExistingAndVisibile(
+      await isExistingAndVisibile(
         this.content_rows.nth(filesIndexArray[i]),
         `element with index ${filesIndexArray[i]}`
       )
-      isExistingAndVisibile(
+      await isExistingAndVisibile(
         this.checboxFolderByRowIndex(filesIndexArray[i]),
         `checkbox for element with index ${filesIndexArray[i]}`
       )
       await t.click(this.checboxFolderByRowIndex(filesIndexArray[i]))
     }
-    isExistingAndVisibile(this.cozySelectionbar, 'Cozy Selection Bar')
+    await isExistingAndVisibile(this.cozySelectionbar, 'Cozy Selection Bar')
   }
 
   //@param { Array } filesIndexArray : Array of files index
@@ -348,7 +347,7 @@ export default class DrivePage {
       .expect(this.modalDelete.visible)
       .ok('Delete button does not show up')
       .click(this.modalDeleteBtnDelete)
-    isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
+    await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
     await t.takeScreenshot()
 
     await this.waitForLoading()
