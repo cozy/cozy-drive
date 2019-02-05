@@ -11,8 +11,8 @@ export default class Page {
 
     // Upload
     this.btnUpload = getElementWithTestId('uploadButton')
-    this.divUpload = getElementWithTestId('uploadQueue')
-    this.divUploadSuccess = getElementWithTestId('uploadQueue-success')
+    this.divUpload = getElementWithTestId('upload-queue')
+    this.divUploadSuccess = getElementWithTestId('upload-queue-success')
     this.modalUpload = Selector('[class*="c-alert-wrapper"]', {
       visibilityCheck: true
     })

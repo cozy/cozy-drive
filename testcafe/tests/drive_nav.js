@@ -12,7 +12,7 @@ fixture`DRIVE - NAV`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
 
 test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async t => {
   //Check Menu and links. Go to page. Check main menu on each page
-  isExistingAndVisibile(page.sidebar, 'Sidebar')
+  await isExistingAndVisibile(page.sidebar, 'Sidebar')
 
   //!FIXME change params to use key/keyword
   await page.isSidebarButton(page.btnNavToRecent, '#/recent', 'Recent')
