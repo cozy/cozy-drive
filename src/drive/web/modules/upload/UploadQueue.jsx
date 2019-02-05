@@ -83,7 +83,7 @@ class UploadQueue extends Component {
     const { collapsed } = this.state
     return (
       <div
-        data-test-id="uploadQueue"
+        data-test-id="upload-queue"
         className={classNames(styles['upload-queue'], {
           [styles['upload-queue--visible']]: queue.length !== 0,
           [styles['upload-queue--collapsed']]: collapsed
@@ -108,7 +108,7 @@ class UploadQueue extends Component {
           )}
           {doneCount >= queue.length && (
             <div
-              data-test-id="uploadQueue-success"
+              data-test-id="upload-queue-success"
               className={styles['upload-queue-header-inner']}
             >
               <span>
