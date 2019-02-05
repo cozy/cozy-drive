@@ -84,7 +84,7 @@ const run = (async () => {
       const uploadDir = path.dirname(uploadTarget)
       const uploadFile = path.basename(uploadTarget)
 
-      const { version } = require('./package.json')
+      const { version } = require('../package.json')
 
       const { appBuildUrl } = await pushArchive(uploadFile, uploadDir, {
         appSlug: process.env.COZY_APP_SLUG,
