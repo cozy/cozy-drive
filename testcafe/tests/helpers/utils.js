@@ -1,7 +1,21 @@
 import { ClientFunction, Selector, t } from 'testcafe'
 
-export const TESTCAFE_PHOTOS_URL = process.env.TESTCAFE_PHOTOS_URL
-export const TESTCAFE_DRIVE_URL = process.env.TESTCAFE_DRIVE_URL
+const INSTANCE_TESTCAFE = process.env.INSTANCE_TESTCAFE
+export let TESTCAFE_PHOTOS_URL = ''
+export let TESTCAFE_DRIVE_URL = ''
+
+if (INSTANCE_TESTCAFE.includes('tools')) {
+  //Local server
+  const [cozy, env] = INSTANCE_TESTCAFE.split('.')
+  TESTCAFE_PHOTOS_URL = `http://photos.${cozy}.${env}`
+  TESTCAFE_DRIVE_URL = `http://drive.${cozy}.${env}`
+} else {
+  //not local server!
+  const [instance, cozy, env] = INSTANCE_TESTCAFE.split('.')
+  TESTCAFE_PHOTOS_URL = `https://${instance}-photos.${cozy}.${env}`
+  TESTCAFE_DRIVE_URL = `https://${instance}-drive.${cozy}.${env}`
+}
+
 export const TESTCAFE_USER_PASSWORD = process.env.TESTCAFE_USER_PASSWORD
 
 //Returns the URL of the current web page
