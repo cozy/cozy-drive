@@ -60,6 +60,9 @@ jobs:
         - <<: *deploy
           on:
             tags: true
+      after_success:
+        - *downcloud-cert
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then node scripts/downcloud.js build/$COZY_APP_SLUG; fi
     - <<: *build-web
       name: 'Photos web'
       env:
