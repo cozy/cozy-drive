@@ -88,6 +88,7 @@
     "replace": "1.0.0",
     "splashicon-generator": "0.2.12",
     "stylint": "1.5.9",
+    "tar": "^4.4.8",
     "testcafe": "^0.23.3"
   },
   "dependencies": {
