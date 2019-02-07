@@ -26,6 +26,7 @@ const DownloadFilesButton = ({ t, onDownload, size, isFile }) => (
         ? t('toolbar.menu_download_file')
         : t('toolbar.menu_download_folder')
     }
+    data-test-id="fil-public-download"
     className={toolbarstyles['fil-public-download']}
     onDownload={onDownload}
     theme="secondary"
