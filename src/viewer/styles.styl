@@ -97,6 +97,7 @@
 .pho-viewer-audioviewer
 .pho-viewer-videoviewer
 .pho-viewer-pdfviewer
+.pho-viewer-textviewer
 .pho-viewer-canceled
     position         relative
     display          flex
@@ -122,6 +123,11 @@
         background    embedurl('./assets/spinner.svg') center center no-repeat
         background-size 7rem
 
+    pre
+      white-space pre-line
+      max-height 70%
+      overflow auto
+
     h2
         max-width   90%
 
@@ -137,8 +143,14 @@
 .pho-viewer-nav + .pho-viewer-noviewer
 .pho-viewer-nav + .pho-viewer-audioviewer
 .pho-viewer-nav + .pho-viewer-videoviewer
+.pho-viewer-nav + .pho-viewer-textviewer
 .pho-viewer-nav + .pho-viewer-canceled
     margin-left 0
+
++medium-screen()
+  .pho-viewer-textviewer
+    width 90%
+    margin-left 5%
 
 .pho-viewer-imageviewer
     flex             1 1 100%
@@ -154,6 +166,7 @@
 .pho-viewer-canceled
 .pho-viewer-noviewer
 .pho-viewer-audioviewer
+.pho-viewer-textviewer
     display flex
     justify-content  center
     align-items      center
@@ -165,6 +178,9 @@
         margin      0 auto
         width       10rem
         height      8.75rem
+
+.pho-viewer-textviewer:before
+  height 2rem
 
 .pho-viewer-pdfviewer .pho-viewer-noviewer
     background charcoalGrey
@@ -288,14 +304,14 @@
     height      5.625rem
     transition .4s opacity ease-out
     pointer-events none // especially important for pdf viewers, where there might be additional controls in the top area
-    
+
     &--mobilebrowser
         background-color charcoalGrey
         opacity 0.9
 
     &--hidden
         opacity 0
-    
+
     .pho-viewer-toolbar-actions
         position          static
         z-index           0
