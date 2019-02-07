@@ -20,17 +20,17 @@ class RealtimeFiles extends React.Component {
     const { stackClient: client } = this.context.client
     const { token, uri } = client
 
-    this.realtimeListener = await realtime.subscribeAll(
-      {
-        token: token.token || token.accessToken,
-        url: uri
-      },
-      'io.cozy.files'
-    )
-
-    this.realtimeListener.onCreate(this.onDocumentChange)
-    this.realtimeListener.onUpdate(this.onDocumentChange)
-    this.realtimeListener.onDelete(this.onDocumentDeletion)
+    this.realtimeListener = realtime
+      .subscribe(
+        {
+          token: token.token || token.accessToken,
+          url: uri
+        },
+        'io.cozy.files'
+      )
+      .onCreate(this.onDocumentChange)
+      .onUpdate(this.onDocumentChange)
+      .onDelete(this.onDocumentDeletion)
 
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     if (db) {
