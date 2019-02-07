@@ -1,7 +1,7 @@
 import { ClientFunction, Selector, t } from 'testcafe'
 import fs from 'fs'
-const path = require('path')
-const CDP = require('chrome-remote-interface')
+import path from 'path'
+import CDP from 'chrome-remote-interface'
 const INSTANCE_TESTCAFE = process.env.INSTANCE_TESTCAFE
 
 export let TESTCAFE_PHOTOS_URL = ''
@@ -42,7 +42,7 @@ export async function isExistingAndVisibile(selector, selectorName) {
   console.log(`'${selectorName}' exists and is visible!`)
 }
 
-function getCurrentDateTime() {
+export function getCurrentDateTime() {
   let prettyCurrentDate = new Date()
     .toISOString()
     .substr(0, 19)
@@ -50,8 +50,6 @@ function getCurrentDateTime() {
     .replace(/[-:]+/g, '')
   return prettyCurrentDate
 }
-
-export const FOLDER_DATE_TIME = `Folder_${getCurrentDateTime()}`
 
 export const overwriteCopyCommand = ClientFunction(() => {
   document.execCommand = command => (window.lastExecutedCommand = command)

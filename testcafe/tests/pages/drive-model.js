@@ -82,11 +82,18 @@ export default class DrivePage {
       .child('button')
       .withAttribute('data-test-id', 'share-by-me-button')
 
+    this.shareBadgeForRowindex = value => {
+      return this.content_rows.nth(value).find('[class*="shared-badge"]')
+    }
+
     //Top Option bar & Confirmation Modal
     this.cozySelectionbar = Selector('[class*="coz-selectionbar"]')
     this.cozySelectionbarBtnDelete = this.cozySelectionbar
       .find('button')
       .withText('REMOVE') //!FIX ME : do not use text! Do not use .nth(x) because the buttons count changes if one or several files/folders are selected
+    this.cozySelectionbarBtnShare = this.cozySelectionbar
+      .find('button')
+      .withText('SHARE') //!FIX ME : do not use text! Do not use .nth(x) because the buttons count changes if one or several files/folders are selected
     this.modalDelete = Selector('[class*="c-modal"]').find('div')
     this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
   }
@@ -225,7 +232,7 @@ export default class DrivePage {
 
     console.log('Uploading ' + numOfFiles + ' file(s)')
 
-    await isExistingAndVisibile(this.btnUpload)
+    await isExistingAndVisibile(this.btnUpload, 'Upload Button')
     await t.setFilesToUpload(this.btnUpload, files)
 
     await isExistingAndVisibile(this.divUpload, 'Upload pop-in')
@@ -286,6 +293,50 @@ export default class DrivePage {
       .notOk('Share by Me still exists')
 
     await isExistingAndVisibile(this.btnShare, `Share button`)
+  }
+
+  async shareFirstFilePublicLink() {
+    await this.selectElements([0])
+
+    await t.click(this.cozySelectionbarBtnShare)
+    await isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
+    await t
+      .click(this.toggleShareLink)
+      .expect(this.toggleShareLink.find('input').checked)
+      .ok('toggle Link is unchecked')
+      .expect(this.spanLinkCreating.exist)
+      .notOk('Still creating Link')
+    await isExistingAndVisibile(this.copyBtnShareByLink, 'Copy Link')
+
+    await overwriteCopyCommand()
+
+    await t
+      .click(this.copyBtnShareByLink)
+      .expect(getLastExecutedCommand())
+      .eql('copy') //check link copy actually happens
+
+    await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
+    await isExistingAndVisibile(this.shareBadgeForRowindex(0), 'Share badge')
+  }
+
+  async unshareFirstFilePublicLink() {
+    await this.selectElements([0])
+    await isExistingAndVisibile(this.shareBadgeForRowindex(0), 'Share badge')
+    //check the bagge after selecting the 1st row, as `selectElements` already check await isExistingAndVisibile(1st row)
+
+    await t.click(this.cozySelectionbarBtnShare)
+    await isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
+    await t
+      .click(this.toggleShareLink)
+      .expect(this.toggleShareLink.find('input').checked)
+      .notOk('Toggle Link is checked')
+      .expect(this.copyBtnShareByLink.exists)
+      .notOk('Copy Link button still exists')
+      .pressKey('esc')
+      .expect(this.shareBadgeForRowindex(0).exists)
+      .notOk('Share badge still exists')
   }
 
   //@param { Array } filesIndexArray : Array of files index

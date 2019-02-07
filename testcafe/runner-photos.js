@@ -4,7 +4,7 @@ async function runRunner() {
   const tc = await createTestCafe()
   const runner = await tc.createRunner()
   const response = await runner
-    .src(['testcafe/tests/photos_crud.js'])
+    .src(['testcafe/tests/photos/photos_crud.js'])
     .browsers(['firefox:headless'])
 
     .screenshots(

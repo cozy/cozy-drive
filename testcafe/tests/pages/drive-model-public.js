@@ -39,7 +39,12 @@ export default class PublicDrivePage {
     this.errorAvailable = Selector('[class*="c-empty"]')
       .child('h2')
       .withText('Sorry, this link is no longer available.') // !FIXME: do not use text
-    //loading
+
+    //viewer
+    this.viewerWrapper = getElementWithTestId('pho-viewer-wrapper')
+    this.viewerControls = getElementWithTestId('pho-viewer-controls"')
+
+    //fil-public-download
   }
 
   async waitForLoading() {
@@ -47,6 +52,12 @@ export default class PublicDrivePage {
       .expect(this.contentPlaceHolder.exists)
       .notOk('Content placeholder still displayed')
     console.log('Loading Ok')
+  }
+
+  async waitForViewer() {
+    await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
+    await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
+    console.log('Viewer Ok')
   }
 
   async checkActionMenuPublicDesktop() {
