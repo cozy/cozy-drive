@@ -1,7 +1,7 @@
-import { driveUser } from './helpers/roles'
-import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from './helpers/utils'
+import { driveUser } from '../helpers/roles'
+import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from '../helpers/utils'
 
-import Page from './pages/drive-model'
+import Page from '../pages/drive-model'
 
 const page = new Page()
 
