@@ -7,9 +7,8 @@ import AudioViewer from './AudioViewer'
 import VideoViewer from './VideoViewer'
 import PdfViewer from './PdfViewer'
 import NativePdfViewer from './NativePdfViewer'
-import TextViewer from './TextViewer'
 import NoViewer from './NoViewer'
-
+import PdfJsViewer from './PdfJsViewer'
 import Spinner from 'cozy-ui/react/Spinner'
 
 import styles from './styles'
@@ -143,7 +142,8 @@ export default class Viewer extends Component {
       case 'video':
         return isMobile() ? NoViewer : VideoViewer
       case 'pdf':
-        return isMobileApp() ? NativePdfViewer : PdfViewer
+        return PdfJsViewer
+        // return isMobileApp() ? NativePdfViewer : PdfViewer
       case 'text':
         return isPlainText(file.mime, file.name) ? TextViewer : NoViewer
       default:
