@@ -1,4 +1,3 @@
-import { Selector, Role } from 'testcafe'
 import { driveUser } from './helpers/roles'
 import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from './helpers/utils'
 
@@ -10,7 +9,7 @@ fixture`DRIVE - NAV`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   await t.useRole(driveUser)
 })
 
-test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async t => {
+test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async () => {
   //Check Menu and links. Go to page. Check main menu on each page
   await isExistingAndVisibile(page.sidebar, 'Sidebar')
 

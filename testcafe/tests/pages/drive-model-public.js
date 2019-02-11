@@ -3,12 +3,8 @@ import {
   getElementWithTestId,
   isExistingAndVisibile,
   getPageUrl,
-  goBack,
-  getResponseStatusCode
+  goBack
 } from '../helpers/utils'
-
-import fs from 'fs'
-import homedir from 'homedir'
 
 export default class PublicDrivePage {
   constructor() {
@@ -107,23 +103,6 @@ export default class PublicDrivePage {
     await this.waitForLoading()
   }
 
-  //@param{string} filename : Expected filename
-  async checkLocalFile(filename) {
-    const filepath = `${homedir()}/Downloads/${filename}`
-    await t
-      .expect(fs.existsSync(filepath))
-      .ok(`Downloaded ${filename} doesn't exist`)
-    console.log(`${filename} is downloaded`)
-  }
-
-  async deleteLocalFile(filename) {
-    const filePath = `${homedir()}/Downloads/${filename}`
-    fs.unlink(filePath, function(err) {
-      if (err) throw err
-      // if no error, file has been deleted successfully
-      console.log(`${filename} deleted`)
-    })
-  }
   async checkNotAvailable() {
     await isExistingAndVisibile(this.errorAvailable)
   }

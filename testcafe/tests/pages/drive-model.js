@@ -1,9 +1,8 @@
-import { Selector, t, ClientFunction } from 'testcafe'
+import { Selector, t } from 'testcafe'
 import {
   getElementWithTestId,
   getPageUrl,
   isExistingAndVisibile,
-  getClipboardData,
   overwriteCopyCommand,
   getLastExecutedCommand
 } from '../helpers/utils'
@@ -66,7 +65,7 @@ export default class DrivePage {
     }
 
     // Upload
-    this.btnUpload = getElementWithTestId('uploadButton')
+    this.btnUpload = getElementWithTestId('upload-btn')
     this.divUpload = getElementWithTestId('upload-queue')
     this.divUploadSuccess = getElementWithTestId('upload-queue-success')
 
@@ -91,6 +90,7 @@ export default class DrivePage {
     this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
   }
 
+  //wait for content placeholder to disapered
   async waitForLoading() {
     await t
       .expect(this.contentPlaceHolder.exists)

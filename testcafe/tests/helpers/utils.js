@@ -1,6 +1,9 @@
 import { ClientFunction, Selector, t } from 'testcafe'
-
+import fs from 'fs'
+const path = require('path')
+const CDP = require('chrome-remote-interface')
 const INSTANCE_TESTCAFE = process.env.INSTANCE_TESTCAFE
+
 export let TESTCAFE_PHOTOS_URL = ''
 export let TESTCAFE_DRIVE_URL = ''
 
@@ -39,7 +42,7 @@ export async function isExistingAndVisibile(selector, selectorName) {
   console.log(`'${selectorName}' exists and is visible!`)
 }
 
-export function getCurrentDateTime() {
+function getCurrentDateTime() {
   let prettyCurrentDate = new Date()
     .toISOString()
     .substr(0, 19)
@@ -57,3 +60,31 @@ export const overwriteCopyCommand = ClientFunction(() => {
 export const getLastExecutedCommand = ClientFunction(
   () => window.lastExecutedCommand
 )
+
+//@param{string} filepath : Expected full path to file
+export async function checkLocalFile(filepath) {
+  await t.expect(fs.existsSync(filepath)).ok(`${filepath} doesn't exist`)
+  console.log(`${filepath} exists on local drive`)
+}
+//@param{string} filepath : Expected full path to file
+export async function deleteLocalFile(filepath) {
+  fs.unlink(filepath, function(err) {
+    if (err) throw err
+    // if no error, file has been deleted successfully
+    console.log(`${filepath} deleted`)
+  })
+}
+
+//Chrome:headless does not download file in the download Folder by default
+//This function set the path for the download folder
+export async function setDownloadPath(downloadFolderPath) {
+  const client = await CDP()
+  const { Network, Page } = client
+
+  await Promise.all([Network.enable(), Page.enable()])
+
+  await Page.setDownloadBehavior({
+    behavior: 'allow',
+    downloadPath: path.resolve(__dirname, downloadFolderPath)
+  })
+}
