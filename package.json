@@ -87,18 +87,18 @@
     "replace": "1.0.0",
     "splashicon-generator": "0.2.12",
     "stylint": "1.5.9",
-    "tar": "^4.4.8",
-    "testcafe": "^0.23.3"
+    "tar": "4.4.8",
+    "testcafe": "0.23.3"
   },
   "dependencies": {
     "babel-preset-cozy-app": "1.2.2",
     "classnames": "2.2.6",
-    "copy-text-to-clipboard": "^1.0.4",
+    "copy-text-to-clipboard": "1.0.4",
     "cozy-bar": "6.8.7",
     "cozy-client": "5.7.3",
     "cozy-client-js": "0.13.0",
     "cozy-device-helper": "1.5.0",
-    "cozy-flags": "^1.5.1",
+    "cozy-flags": "1.5.1",
     "cozy-konnector-libs": "4.11.4",
     "cozy-realtime": "1.1.0",
     "cozy-scripts": "1.11.0",
