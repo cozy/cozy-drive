@@ -27,7 +27,7 @@ const launchCmd = (cmd, params, options) => {
 }
 
 const createArchive = async (folderName, archiveFileName) => {
-  console.log(`↳ ℹ️  Creating archive ${folderName}/${archiveFileName}`)
+  console.warn(`↳ ℹ️  Creating archive ${folderName}/${archiveFileName}`)
   const fileList = await fs.readdir(folderName)
   const options = {
     gzip: true,
@@ -48,7 +48,7 @@ const createArchive = async (folderName, archiveFileName) => {
 
 const pushArtifact = async (fileName, parentFolder, options) => {
   const { appSlug, appVersion, buildCommit } = options
-  console.log(`↳ ℹ️  Sending artifact to downcloud`)
+  console.warn(`↳ ℹ️  Sending artifact to downcloud`)
   const folder = `${appSlug}/mobile/${appVersion}${
     buildCommit ? `-${buildCommit}` : ''
   }/`
@@ -80,8 +80,7 @@ const pushArtifact = async (fileName, parentFolder, options) => {
     { cwd: parentFolder }
   )
 
-  console.log(`↳ ℹ️  Upload to downcloud complete.`)
-
+  console.warn(`↳ ℹ️  Upload to downcloud complete.`)
   return {
     ...options,
     appBuildUrl: `https://${DOWNCLOUD_URL}/upload/${folder}${fileName}`
@@ -119,7 +118,8 @@ const run = (async () => {
       appVersion: version,
       buildCommit: process.env.TRAVIS_COMMIT
     })
-    console.log(`↳ ✅ Upload complete, artifact available at ${appBuildUrl}`)
+    console.warn(`↳ ✅ Upload complete, artifact available at ${appBuildUrl}`)
+    console.log(appBuildUrl)
   }
   catch (error) {
     console.error(`↳ ❌  Error while uploading: ${error.message}`)
