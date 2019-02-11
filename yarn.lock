@@ -3926,7 +3926,7 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-text-to-clipboard@^1.0.4:
+copy-text-to-clipboard@1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/copy-text-to-clipboard/-/copy-text-to-clipboard-1.0.4.tgz#2286ff6c53495962c5318d34746d256939069c49"
   integrity sha512-4hDE+0bgqm4G/nXnt91CP3rc0vOptaePPU5WfVZuhv2AYNJogdLHR4pF1XPgXDAGY4QCzj9pD7zKATa+50sQPg==
@@ -4232,7 +4232,7 @@ cozy-device-helper@1.6.3:
   dependencies:
     lodash "4.17.11"
 
-cozy-flags@^1.5.1:
+cozy-flags@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.5.1.tgz#e80f6e06bbcb787823beb141975106c3a6d5c3a2"
   integrity sha512-tTl60N1WkrlEikcmoJLLznbiJ8PrdeJINg91CVPZjY2PTlJHEFqigunrgnvKRFE8w+RshEzQcsR3PTVHcwdgSg==
@@ -14601,7 +14601,7 @@ tar@2.2.1, tar@^2.0.0, tar@~2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
-tar@^4, tar@^4.4.8:
+tar@4.4.8, tar@^4:
   version "4.4.8"
   resolved "https://registry.yarnpkg.com/tar/-/tar-4.4.8.tgz#b19eec3fde2a96e64666df9fdb40c5ca1bc3747d"
   integrity sha512-LzHF64s5chPQQS0IYBn9IN5h3i98c12bo4NCO7e0sGM2llXQ3p2FGC5sdENN4cTW48O915Sh+x+EXx7XW96xYQ==
@@ -14737,7 +14737,7 @@ testcafe-reporter-xunit@^2.1.0:
   resolved "https://registry.yarnpkg.com/testcafe-reporter-xunit/-/testcafe-reporter-xunit-2.1.0.tgz#e6d66c572ce15af266706af0fd610b2a841dd443"
   integrity sha1-5tZsVyzhWvJmcGrw/WELKoQd1EM=
 
-testcafe@^0.23.3:
+testcafe@0.23.3:
   version "0.23.3"
   resolved "https://registry.yarnpkg.com/testcafe/-/testcafe-0.23.3.tgz#8f9c6511b43ac99593d532bb08ae06c55ff72b5c"
   integrity sha512-/ykDZ/Pvbb9oCK5kI/47DNm9nKYr8d7eY6U4nm7or5ETREkL9yEQwEzzyb2pC3Nt7iYzK+ZyPAcPWN4QFGiOXA==
