@@ -1,10 +1,13 @@
-import { Selector, Role } from 'testcafe'
+import { Role } from 'testcafe'
 import { driveUser } from './helpers/roles'
 import {
-  TESTCAFE_DRIVE_URL,
-  getCurrentDateTime,
-  FOLDER_DATE_TIME
+  deleteLocalFile,
+  checkLocalFile,
+  setDownloadPath
 } from './helpers/utils'
+import { TESTCAFE_DRIVE_URL, FOLDER_DATE_TIME } from './helpers/utils'
+const homedir = require('os').homedir
+
 import Data from './helpers/data'
 const data = new Data()
 
@@ -26,7 +29,7 @@ fixture`Folder link Sharing Scenario`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   }
 )
 
-test('Drive : Create a $test_date_time folder in Drive', async t => {
+test('Drive : Create a $test_date_time folder in Drive', async () => {
   await drivePage.addNewFolder(FOLDER_DATE_TIME)
   //We need to pass FOLDER_DATE_TIME through multiple fixture, so we cannot use ctx here.
 })
@@ -52,10 +55,12 @@ test('Drive : from Drive, go in a folder, upload a file, and share it', async t 
 fixture`Drive : Access a folder public link`.page`${TESTCAFE_DRIVE_URL}/`
   .beforeEach(async t => {
     await t.useRole(Role.anonymous())
+    await setDownloadPath(`${homedir()}/Downloads`)
   })
-  .afterEach(async t => {
-    await publicDrivePage.checkLocalFile('files.zip')
-    await publicDrivePage.deleteLocalFile('files.zip')
+  .afterEach(async () => {
+    const filepath = `${homedir()}/Downloads/files.zip`
+    await checkLocalFile(filepath)
+    await deleteLocalFile(filepath)
   })
 test('Drive : Access a folder public link (desktop)', async t => {
   await t.navigateTo(data.sharingLink)
@@ -83,7 +88,7 @@ test('Drive : Access a folder public link (mobile)', async t => {
     .click(publicDrivePage.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
 
-  await t.resizeWindow(1280, 1024) //Back to desktop
+  await t.maximizeWindow() //Back to desktop
 })
 
 //************************
@@ -95,7 +100,7 @@ fixture`Drive : Unshare public link`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
     await drivePage.waitForLoading()
   }
 )
-test('Unshare foler', async t => {
+test('Unshare foler', async () => {
   await drivePage.goToFolder(FOLDER_DATE_TIME)
   await drivePage.unshareFolderPublicLink()
 })
@@ -122,7 +127,7 @@ fixture`Test clean up : remove files and folders`
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
 })
-test('Delete File, and foler', async t => {
+test('Delete File, and foler', async () => {
   await drivePage.goToFolder(FOLDER_DATE_TIME)
   await drivePage.deleteElementByName(file)
   await drivePage.deleteCurrentFolder()

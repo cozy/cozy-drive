@@ -10,7 +10,7 @@ export default class Page {
     this.photoEmpty = Selector('[class*="c-empty"]')
 
     // Upload
-    this.btnUpload = getElementWithTestId('uploadButton')
+    this.btnUpload = getElementWithTestId('upload-btn')
     this.divUpload = getElementWithTestId('upload-queue')
     this.divUploadSuccess = getElementWithTestId('upload-queue-success')
     this.modalUpload = Selector('[class*="c-alert-wrapper"]', {

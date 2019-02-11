@@ -2,5 +2,8 @@
   "extends": ["cozy-app/react"],
   "rules": {
     "no-console": 1
+  },
+  "globals": {
+    "fixture": false
   }
 }

@@ -28,7 +28,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
       <Icon icon="upload" />
       <span>{label}</span>
       <input
-        data-test-id="uploadButton"
+        data-test-id="upload-btn"
         type="file"
         multiple
         style={styles.input}
