@@ -5,7 +5,7 @@ async function runRunner() {
   const runner = await tc.createRunner()
   const response = await runner
     .src(['testcafe/tests/photos_crud.js'])
-    .browsers(['firefox:headless'])
+    .browsers(['chrome:headless:emulation:cdpPort=9222 --start-maximized'])
 
     .screenshots(
       'reports/screenshots/',
