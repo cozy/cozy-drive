@@ -1,19 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import localforage from 'localforage'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
-import Icon from 'cozy-ui/react/Icon'
 import Alerter from 'cozy-ui/react/Alerter'
 import { logException } from 'drive/lib/reporter'
 import { isMobileApp } from 'cozy-device-helper'
+import CallToAction from './CallToAction'
 
-import {
-  isClientAlreadyInstalled,
-  isLinux,
-  NOVIEWER_DESKTOP_CTA
-} from 'components/pushClient'
 import { openLocalFileCopy } from 'drive/mobile/modules/offline/duck'
 
 import styles from './styles'
@@ -82,57 +76,6 @@ const NoViewerButton = ({ file, fallbackUrl, t, onError }) => {
     return <OpenWithCordovaButton t={t} file={file} onError={onError} />
   else if (fallbackUrl) return <OpenWithWebButton t={t} url={fallbackUrl} />
   else return <DownloadButton t={t} file={file} />
-}
-
-class CallToAction extends React.Component {
-  state = {
-    mustShow: false
-  }
-
-  async componentWillMount() {
-    const seen = (await localforage.getItem(NOVIEWER_DESKTOP_CTA)) || false
-    if (!seen) {
-      const mustSee = !(await isClientAlreadyInstalled())
-      if (mustSee) {
-        this.setState(state => ({ ...state, mustShow: true }))
-      }
-    }
-  }
-
-  markAsSeen = () => {
-    localforage.setItem(NOVIEWER_DESKTOP_CTA, true)
-    this.setState(state => ({ ...state, mustShow: false }))
-  }
-
-  render() {
-    if (!this.state.mustShow) return null
-    const { t } = this.props
-    return (
-      <div className={styles['pho-viewer-noviewer-cta']}>
-        <Icon
-          className={styles['pho-viewer-noviewer-cta-cross']}
-          color="white"
-          icon="cross"
-          onClick={this.markAsSeen}
-        />
-        <h3>{t('Viewer.noviewer.cta.saveTime')}</h3>
-        <ul>
-          <li>
-            <a
-              //eslint-disable-next-line react/jsx-no-target-blank
-              target="_blank"
-              href={t(
-                isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop'
-              )}
-            >
-              {t('Viewer.noviewer.cta.installDesktop')}
-            </a>
-          </li>
-          <li>{t('Viewer.noviewer.cta.accessFiles')}</li>
-        </ul>
-      </div>
-    )
-  }
 }
 
 class NoViewer extends React.Component {
