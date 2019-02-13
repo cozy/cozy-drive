@@ -46,25 +46,25 @@ test('Drive : from Drive, go in a folder, upload a file, and share the file', as
 //************************
 // Public (no authentification)
 //************************
-fixture.skip`Drive : Access a file public link, download the file, and check the 'create Cozy' link`
+fixture`Drive : Access a file public link, download the file, and check the 'create Cozy' link`
   .page`${TESTCAFE_DRIVE_URL}/`
   .beforeEach(async t => {
     await t.useRole(Role.anonymous())
     await setDownloadPath(data.DOWNLOAD_PATH)
   })
   .afterEach(async () => {
-    await checkLocalFile(data.DOWNLOAD_FILE_PATH)
-    await deleteLocalFile(data.DOWNLOAD_FILE_PATH)
+    await checkLocalFile(`${data.DOWNLOAD_PATH}${data.FILE_XLSX}`) //The file is downloaded directly, no zip!
+    await deleteLocalFile(`${data.DOWNLOAD_PATH}${data.FILE_XLSX}`)
   })
 test(`[Desktop] Drive : Access a file public link, download the file, and check the 'create Cozy' link`, async t => {
   await t.navigateTo(data.sharingLink)
   await publicDrivePage.waitForViewer()
 
-  await publicDrivePage.checkActionMenuPublicDesktop()
+  await publicDrivePage.checkActionMenuPublicDesktop('file')
   await t
     .setNativeDialogHandler(() => true)
     .click(publicDrivePage.btnPublicDownload)
-    .click(publicDrivePage.btnPublicCreateCozy)
+    .click(publicDrivePage.btnPublicCreateCozyFile)
   await publicDrivePage.checkCreateCozy()
 })
 
@@ -75,11 +75,11 @@ test(`[Mobile] Drive : Access a file public link, download the file, and check t
   await t.navigateTo(data.sharingLink)
   await publicDrivePage.waitForViewer()
 
-  await publicDrivePage.checkActionMenuPublicMobile()
+  await publicDrivePage.checkActionMenuPublicMobile('file')
   await t
     .setNativeDialogHandler(() => true)
     .click(publicDrivePage.btnPublicMobileDownload)
-    .click(publicDrivePage.btnPublicMoreMenu) //need to re-open the more menu
+    .click(publicDrivePage.btnPublicMoreMenuFile) //need to re-open the more menu
     .click(publicDrivePage.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
 
@@ -103,7 +103,7 @@ test('Unshare foler', async () => {
 //************************
 // Public (no authentification)
 //************************
-fixture.skip`Drive : No Access to an old folder public link`
+fixture`Drive : No Access to an old folder public link`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   await t.useRole(Role.anonymous())
 })

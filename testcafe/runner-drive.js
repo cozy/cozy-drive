@@ -9,7 +9,8 @@ async function runRunner() {
       'testcafe/tests/drive/folder_sharing_scenario.js',
       'testcafe/tests/drive/file_sharing_scenario.js'
     ])
-    .browsers(['chrome:headless:emulation:cdpPort=9222 --start-maximized']) //emulation:cdpPort=9222 is used to set the download folder in headless mode
+    //emulation:cdpPort=9222 is used to set the download folder in headless mode
+    .browsers(['chrome:headless:emulation:cdpPort=9222 --start-maximized'])
 
     .screenshots(
       'reports/screenshots/',

@@ -1,4 +1,4 @@
-import { Selector, Role } from 'testcafe'
+import { Role } from 'testcafe'
 import {
   getPageUrl,
   TESTCAFE_PHOTOS_URL,
