@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Router, withRouter } from 'react-router'
+import { Router, withRouter, Route } from 'react-router'
 import Proptypes from 'prop-types'
 import Authentication from './src/Authentication'
 import Revoked from './src/Revoked'
@@ -15,8 +15,8 @@ const checkIfOnboardingLogin = currentLocation => {
     currentLocation.pathname === '/auth' &&
     currentLocation.query.access_code &&
     currentLocation.query.code &&
-    currentLocation.query.state /* &&
-    currentLocation.query.cozy_url  */
+    currentLocation.query.state &&
+    currentLocation.query.cozy_url
   ) {
     return true
   } else {
@@ -24,20 +24,8 @@ const checkIfOnboardingLogin = currentLocation => {
   }
 }
 class MobileRouter extends Component {
-  componentWillMount() {
-    console.log('will mount')
-    console.log('this props mobile router', this.props)
-  }
-  componentWillReceiveProps(nextProps) {
-    console.log({ nextProps })
-  }
-  async fetchAccessToken() {
-    //const request = ;
-  }
-
   async checkState(receivedState, code, cozy_url, history) {
     const stateInDB = await readState()
-    console.log({ stateInDB })
 
     const storedSecret = await readSecret()
     const clientInfo = await secretExchange(
@@ -45,7 +33,6 @@ class MobileRouter extends Component {
       cozy_url,
       this.props.client
     )
-    console.log({ clientInfo })
     try {
       const getToken = await getAccessToken(
         clientInfo,
@@ -53,17 +40,13 @@ class MobileRouter extends Component {
         code,
         this.props.client
       )
-      console.log('getToken', getToken)
       const token = await getToken.json()
-      console.log({ token })
       return this.props.onAuthenticated({
         url: `https://${cozy_url}`,
         token,
         clientInfo,
         router: history
       })
-
-      //  history.push('auth?token=""&access_code')
     } catch (e) {
       console.log('errror', e)
     }
@@ -85,21 +68,12 @@ class MobileRouter extends Component {
       onboarding
       /* client */
     } = this.props
-    console.log('history', history)
 
-    console.log('isAuthenticated', isAuthenticated)
-    // alert('history')
     if (!isAuthenticated) {
       const currentLocation = history.getCurrentLocation()
-      //dispatch
       if (checkIfOnboardingLogin(currentLocation)) {
-        const {
-          /* access_code, */ code,
-          state,
-          cozy_url
-        } = currentLocation.query
+        const { code, state, cozy_url } = currentLocation.query
         this.checkState(state, code, cozy_url, history)
-        //test,
       } else {
         return (
           <Authentication
@@ -124,6 +98,7 @@ class MobileRouter extends Component {
     }
   }
 }
+
 MobileRouter.propTypes = {
   onboarding: Proptypes.object
 }

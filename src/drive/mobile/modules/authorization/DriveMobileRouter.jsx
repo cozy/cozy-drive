@@ -54,7 +54,6 @@ class DriveMobileRouter extends Component {
       history,
       onboarding
     } = this.props
-    //alert('DriveMobileRouter')
     return (
       <div style={{ flex: '1' }}>
         <MobileRouter

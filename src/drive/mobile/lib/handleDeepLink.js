@@ -1,6 +1,5 @@
 const PROTOCOL = 'cozydrive://'
 const RX = new RegExp('^' + PROTOCOL)
-
 export default history => url => {
   console.log('new URL', url)
   const stripped = url.replace(RX, '')
@@ -8,7 +7,9 @@ export default history => url => {
   //index.html#auth?token=XXX
   console.log('stripped', stripped)
   if (stripped.includes('auth?')) {
-    window.location.reload()
+    // window.location.reload()
   }
-  history.push(stripped)
+  console.log('history', history)
+  console.log('histoir', history.getCurrentLocation())
+  history.push('/' + stripped)
 }
