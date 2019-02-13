@@ -52,19 +52,19 @@ fixture`Drive : Access a folder public link, download the file(s), and check the
     await setDownloadPath(data.DOWNLOAD_PATH)
   })
   .afterEach(async () => {
-    await checkLocalFile(data.DOWNLOAD_FILE_PATH)
-    await deleteLocalFile(data.DOWNLOAD_FILE_PATH)
+    await checkLocalFile(data.DOWNLOAD_ZIP_PATH)
+    await deleteLocalFile(data.DOWNLOAD_ZIP_PATH)
   })
 test(`[Desktop] Drive : Access a folder public link, download the file(s), and check the 'create Cozy' link`, async t => {
   await t.navigateTo(data.sharingLink)
   await publicDrivePage.waitForLoading()
 
-  await publicDrivePage.checkActionMenuPublicDesktop()
+  await publicDrivePage.checkActionMenuPublicDesktop('folder')
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
     .click(publicDrivePage.btnPublicDownload)
-    .click(publicDrivePage.btnPublicCreateCozy)
+    .click(publicDrivePage.btnPublicCreateCozyFolder)
   await publicDrivePage.checkCreateCozy()
 })
 
@@ -74,12 +74,12 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
   })
   await t.navigateTo(data.sharingLink)
   await publicDrivePage.waitForLoading()
-  await publicDrivePage.checkActionMenuPublicMobile()
+  await publicDrivePage.checkActionMenuPublicMobile('folder')
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
     .click(publicDrivePage.btnPublicMobileDownload)
-    .click(publicDrivePage.btnPublicMoreMenu) //need to re-open the more menu
+    .click(publicDrivePage.btnPublicMoreMenuFolder) //need to re-open the more menu
     .click(publicDrivePage.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
 

@@ -16,17 +16,27 @@ export default class PublicDrivePage {
     //Logo
     this.logo = Selector('.coz-nav-apps-btns-home')
 
-    //Toolbar - Action Menu
-    this.toolbarFilesPublic = getElementWithTestId('fil-toolbar-files-public')
-    this.btnPublicCreateCozy = this.toolbarFilesPublic
+    //Toolbar - Action menu
+    // Folder view Only
+    this.toolbarFolderPublic = getElementWithTestId('fil-toolbar-files-public')
+    this.btnPublicCreateCozyFolder = this.toolbarFolderPublic
       .find('[class*="c-btn"]')
       .nth(0)
-    this.btnPublicDownload = this.toolbarFilesPublic.find(
-      '[class*="fil-public-download"]'
-    )
-    this.btnPublicMoreMenu = Selector('[class*="fil-toolbar-menu"]').find(
+    this.btnPublicMoreMenuFolder = Selector('[class*="fil-toolbar-menu"]').find(
       '[class*="dri-btn--more"]'
     )
+
+    // File view Only
+    this.toolbarFilesPublic = Selector('[class*="toolbar-inside-bar"]')
+    this.btnPublicCreateCozyFile = this.toolbarFilesPublic
+      .find('[class*="c-btn"]')
+      .nth(0)
+    this.btnPublicMoreMenuFile = Selector(
+      '[class*="fil-toolbar-menu--public"]'
+    ).find('[class*="dri-btn--more"]')
+
+    // Both File and Folder view
+    this.btnPublicDownload = getElementWithTestId('fil-public-download')
     this.innerPublicMoreMenu = Selector('[class*="c-menu__inner--opened"]')
     this.btnPublicMobileCreateCozy = this.innerPublicMoreMenu
       .find('[class*="c-menu__item"]')
@@ -42,7 +52,7 @@ export default class PublicDrivePage {
 
     //viewer
     this.viewerWrapper = getElementWithTestId('pho-viewer-wrapper')
-    this.viewerControls = getElementWithTestId('pho-viewer-controls"')
+    this.viewerControls = getElementWithTestId('pho-viewer-controls')
 
     //fil-public-download
   }
@@ -60,9 +70,13 @@ export default class PublicDrivePage {
     console.log('Viewer Ok')
   }
 
-  async checkActionMenuPublicDesktop() {
+  // @param {string} type : 'file' or 'folder' : the toolbar is different depending on share type
+  async checkActionMenuPublicDesktop(type) {
+    const isFile = type === 'file' ? true : false
     await t //Mobile elements don't exist
-      .expect(this.btnPublicMoreMenu.exists)
+      .expect(this.btnPublicMoreMenuFile.exists)
+      .notOk('[...] Menu exists')
+      .expect(this.btnPublicMoreMenuFolder.exists)
       .notOk('[...] Menu exists')
       .expect(this.innerPublicMoreMenu.exists)
       .notOk('Inner More Menu exists')
@@ -73,27 +87,40 @@ export default class PublicDrivePage {
       .expect(this.btnPublicMobileDownload.exists)
       .notOk('Create my Cozy Button (mobile) exists')
     await isExistingAndVisibile(this.logo, 'Logo')
-    await isExistingAndVisibile(this.toolbarFilesPublic, 'toolbarFiles')
-    await isExistingAndVisibile(this.btnPublicDownload, 'Download FolderButton')
     await isExistingAndVisibile(
-      this.btnPublicCreateCozy,
+      isFile ? this.toolbarFilesPublic : this.toolbarFolderPublic,
+      'toolbarFiles'
+    )
+    await isExistingAndVisibile(
+      isFile ? this.btnPublicCreateCozyFile : this.btnPublicCreateCozyFolder,
       'Create my Cozy Button'
     )
+    await isExistingAndVisibile(this.btnPublicDownload, 'Download FolderButton')
   }
 
-  async checkActionMenuPublicMobile() {
-    await t //Desktop element don't exists
-      .expect(this.logo.exists)
-      .notOk('Logo exists')
-      .expect(this.toolbarFilesPublic.exists)
-      .notOk('toolbar_file exists')
+  // @param {string} type : 'file' or 'folder' : the toolbar is different depending on share type
+  async checkActionMenuPublicMobile(type) {
+    const isFile = type === 'file' ? true : false
+    await t
       .expect(this.btnPublicDownload.exists)
       .notOk('Download Button (desktop) exists')
-      .expect(this.btnPublicCreateCozy.exists)
+      //On File Sharing, logo still exist on mobile, but is not visible (no problem on folder)
+      .expect(isFile ? this.logo.visible : this.logo.exists)
+      .notOk('Logo exists/visible')
+      .expect(
+        (isFile ? this.toolbarFilesPublic : this.toolbarFolderPublic).exists
+      )
+      .notOk('toolbar_file exists')
+      .expect(this.btnPublicCreateCozyFile.exists)
       .notOk('Create Cozy button (desktop) exists')
 
-    await isExistingAndVisibile(this.btnPublicMoreMenu, '[...] Button')
-    await t.click(this.btnPublicMoreMenu)
+    await isExistingAndVisibile(
+      isFile ? this.btnPublicMoreMenuFile : this.btnPublicMoreMenuFolder,
+      '[...] Button'
+    )
+    await t.click(
+      isFile ? this.btnPublicMoreMenuFile : this.btnPublicMoreMenuFolder
+    )
     await isExistingAndVisibile(this.innerPublicMoreMenu, 'Innner More Menu')
     await isExistingAndVisibile(
       this.btnPublicMobileDownload,
@@ -115,6 +142,6 @@ export default class PublicDrivePage {
   }
 
   async checkNotAvailable() {
-    await isExistingAndVisibile(this.errorAvailable)
+    await isExistingAndVisibile(this.errorAvailable, 'Not available message')
   }
 }
