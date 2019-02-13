@@ -70,9 +70,8 @@ export class ButtonLinkRegistration extends Component {
     return (
       <Button
         onClick={() => {
-          console.log('test', onboardingObject)
-
-          return nativeLinkOpen({ url: `${url} ` })
+          console.log('url to open : ', url)
+          return nativeLinkOpen({ url })
         }}
         theme={theme}
         href={url}
