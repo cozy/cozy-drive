@@ -238,7 +238,10 @@ var app = {
   },
 
   onResume: async function() {
+    const client = await this.getClient()
+    const polyglot = await this.getPolyglot()
     const store = await this.getStore()
+    startApplication(store, client, polyglot)
     store.dispatch(backupImages())
     if (isAnalyticsOn(store.getState())) startHeartBeat()
   },
