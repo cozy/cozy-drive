@@ -71,7 +71,7 @@
   "devDependencies": {
     "@sentry/cli": "1.35.4",
     "babel-core": "7.0.0-bridge.0",
-    "chrome-remote-interface": "^0.27.1",
+    "chrome-remote-interface": "0.27.1",
     "cordova": "7.1.0",
     "cordova-android": "7.1.4",
     "enzyme": "2.9.1",
