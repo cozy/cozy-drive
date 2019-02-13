@@ -345,11 +345,12 @@ export class SelectServer extends Component {
               <Icon icon="next" color="white" />
             </Button>
             <ButtonLinkRegistration
-              className={'u-mv-half'}
+              className={classNames('wizard-buttonlink')}
               label={t('mobile.onboarding.welcome.no_account_link')}
               size={isTiny ? 'normal' : 'large'}
               subtle={true}
               type={'button'}
+              theme="text"
             />
           </footer>
         </div>
