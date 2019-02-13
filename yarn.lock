@@ -3501,6 +3501,14 @@ chrome-emulated-devices-list@^0.1.0:
   resolved "https://registry.yarnpkg.com/chrome-emulated-devices-list/-/chrome-emulated-devices-list-0.1.1.tgz#9ee030c21aa6d065fbe562f3ce41ee257585fd60"
   integrity sha512-wQu6YKNTNGaUXovpkvXLnfeumVK47r2TKpOuCTwOKv/5SmRzfHual+E+oDIwS3KFWAcJPAhoNRAOLvXwzC6/pw==
 
+chrome-remote-interface@0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/chrome-remote-interface/-/chrome-remote-interface-0.27.1.tgz#d1f876b5433b87c00a6ce459b4c6ed60d8a36fb8"
+  integrity sha512-aX3Q7QQyZ66JFuwYbL2UdumfR6m1rfBFkUBEK2/Xcg74JlrG0n1x0/4DL5VOtnK4Vd3ZScOh6S5T9lnck2T2Yw==
+  dependencies:
+    commander "2.11.x"
+    ws "^6.1.0"
+
 chrome-remote-interface@^0.25.3:
   version "0.25.7"
   resolved "https://registry.yarnpkg.com/chrome-remote-interface/-/chrome-remote-interface-0.25.7.tgz#827e85fbef3cc561a9ef2404eb7eee355968c5bc"
@@ -3508,14 +3516,6 @@ chrome-remote-interface@^0.25.3:
   dependencies:
     commander "2.11.x"
     ws "3.3.x"
-
-chrome-remote-interface@^0.27.1:
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/chrome-remote-interface/-/chrome-remote-interface-0.27.1.tgz#d1f876b5433b87c00a6ce459b4c6ed60d8a36fb8"
-  integrity sha512-aX3Q7QQyZ66JFuwYbL2UdumfR6m1rfBFkUBEK2/Xcg74JlrG0n1x0/4DL5VOtnK4Vd3ZScOh6S5T9lnck2T2Yw==
-  dependencies:
-    commander "2.11.x"
-    ws "^6.1.0"
 
 chrome-trace-event@^1.0.0:
   version "1.0.0"
