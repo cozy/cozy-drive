@@ -52,6 +52,7 @@ export default class DrivePage {
     this.btnRemoveFolder = getElementWithTestId('fil-action-delete')
 
     //Files list
+    this.contentTable = Selector('[class*="fil-content-table"]')
     this.content_rows = Selector(
       `[class*="fil-content-row"]:not([class*="fil-content-row-head"])`
     )
@@ -90,11 +91,12 @@ export default class DrivePage {
     this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
   }
 
-  //wait for content placeholder to disapered
+  //wait for content placeholder to disapered and contenttable to appear
   async waitForLoading() {
     await t
       .expect(this.contentPlaceHolder.exists)
       .notOk('Content placeholder still displayed')
+    isExistingAndVisibile(this.contentTable, 'content Table')
   }
 
   //@param {string} when : text for console.log
@@ -136,12 +138,16 @@ export default class DrivePage {
     await isExistingAndVisibile(this.breadcrumb, 'breadcrumb')
     const childElCount = await this.breadcrumb.childElementCount
     let breadcrumbTitle = await this.breadcrumb.child(0).innerText
-    if (childElCount > 0) {
+    if (childElCount > 1) {
       for (let i = 1; i < childElCount; i++) {
-        breadcrumbTitle = `${breadcrumbTitle} > ${await this.breadcrumb.child(i)
-          .innerText}`
+        if (await this.breadcrumb.child(i).exists) {
+          breadcrumbTitle = `${breadcrumbTitle} > ${await this.breadcrumb.child(
+            i
+          ).innerText}`
+        }
       }
     }
+    breadcrumbTitle = breadcrumbTitle.replace(/(\r\n|\n|\r)/gm, '') //avoid line break problem
     return breadcrumbTitle
   }
 
