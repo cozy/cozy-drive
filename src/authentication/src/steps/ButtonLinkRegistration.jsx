@@ -55,7 +55,8 @@ export class ButtonLinkRegistration extends Component {
       label,
       size,
       subtle = false,
-      type = 'submit'
+      type = 'submit',
+      theme = 'primary'
     } = this.props
 
     if (!this.state.onboardingObject) {
@@ -73,6 +74,7 @@ export class ButtonLinkRegistration extends Component {
 
           return nativeLinkOpen({ url: `${url} ` })
         }}
+        theme={theme}
         href={url}
         label={label}
         size={size}
