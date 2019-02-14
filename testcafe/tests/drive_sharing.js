@@ -68,6 +68,7 @@ test('Drive : Access a folder public link (desktop)', async t => {
 
   await publicDrivePage.checkActionMenuPublicDesktop()
   await t
+    .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
     .click(publicDrivePage.btnPublicDownload)
     .click(publicDrivePage.btnPublicCreateCozy)
@@ -82,6 +83,7 @@ test('Drive : Access a folder public link (mobile)', async t => {
   await publicDrivePage.waitForLoading()
   await publicDrivePage.checkActionMenuPublicMobile()
   await t
+    .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
     .click(publicDrivePage.btnPublicMobileDownload)
     .click(publicDrivePage.btnPublicMoreMenu) //need to re-open the more menu
