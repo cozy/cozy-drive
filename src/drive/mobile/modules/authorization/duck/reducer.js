@@ -1,11 +1,21 @@
-import { getServerUrl } from 'drive/mobile/modules/settings/duck'
-import { SET_CLIENT, SET_TOKEN, REVOKE, UNREVOKE } from './actions'
+import {
+  SET_CLIENT,
+  SET_TOKEN,
+  REVOKE,
+  UNREVOKE,
+  SET_ONBOARDING
+} from './actions'
 
 const initialState = {
   authorized: false,
   revoked: false,
   client: null,
-  token: null
+  token: null,
+  onboarding: {
+    code: null,
+    state: null,
+    cozy_url: null
+  }
 }
 
 const authorization = (state = initialState, action) => {
@@ -23,34 +33,17 @@ const authorization = (state = initialState, action) => {
       return { ...state, revoked: true }
     case UNREVOKE:
       return { ...state, revoked: false }
+    case SET_ONBOARDING:
+      return {
+        ...state,
+        onboarding: {
+          code: action.code,
+          state: action.state,
+          cozy_url: action.cozy_url
+        }
+      }
     default:
       return state
   }
 }
 export default authorization
-
-const getProp = (state, key) => {
-  if (
-    state.mobile &&
-    state.mobile.authorization &&
-    state.mobile.authorization[key] !== undefined
-  ) {
-    return state.mobile.authorization[key]
-  }
-  console.warn(`Authorization prop not found: ${key}`)
-  return undefined
-}
-
-export const isAuthorized = state => getProp(state, 'authorized')
-export const isRevoked = state => getProp(state, 'revoked')
-export const getToken = state => getProp(state, 'token')
-export const getClientSettings = state => getProp(state, 'client')
-
-export const isClientRevoked = (error, state) => {
-  return (
-    getServerUrl(state) &&
-    (error.status === 404 ||
-      error.status === 401 ||
-      error.message.match(/Client has been revoked/))
-  )
-}

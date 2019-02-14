@@ -1,15 +1,20 @@
 const PROTOCOL = 'cozydrive://'
 const RX = new RegExp('^' + PROTOCOL)
-export default history => url => {
-  console.log('new URL', url)
+import { setOnboarding } from '../modules/authorization/duck'
+
+export const handleDeeplink = (history, store, url) => {
   const stripped = url.replace(RX, '')
-  //stripped = auth?token=""&access_code
-  //index.html#auth?token=XXX
-  console.log('stripped', stripped)
-  if (stripped.includes('auth?')) {
-    // window.location.reload()
-  }
-  console.log('history', history)
-  console.log('histoir', history.getCurrentLocation())
+
   history.push('/' + stripped)
+  if (stripped.includes('auth?')) {
+    const currentLocation = history.getCurrentLocation()
+    const { code, state, cozy_url } = currentLocation.query
+    store.dispatch(
+      setOnboarding({
+        code,
+        state,
+        cozy_url
+      })
+    )
+  }
 }

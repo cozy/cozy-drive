@@ -32,6 +32,20 @@ const generateState = () => {
 const generateSecret = () => {
   return 'azertyuiop'
 }
+export const checkIfOnboardingLogin = onboardingInformations => {
+  if (onboardingInformations.code !== null) return true
+  return false
+}
+
+export const checkExchangedInformations = (
+  localSecret,
+  remoteSecret,
+  localState,
+  remoteState
+) => {
+  if (localSecret === remoteSecret && localState === remoteState) return true
+  return false
+}
 export const generateObjectForUrl = async ({
   clientName,
   redirectURI,
@@ -75,18 +89,13 @@ export const generateObjectForUrl = async ({
   return encodeURIComponent(JSON.stringify(oauthStuff))
 }
 
+const getCozyUrl = cozy_url => {
+  return `https://${cozy_url}`
+}
 export const secretExchange = (secret, cozy_url, client) => {
-  /*
- cozy.client.fetchJSON(
-      'POST',
-      '/data/io.cozy.files/_all_docs?include_docs=true',
-      { keys: ids }
-    )
-  */
-  const url = cozy_url ? `https://${cozy_url}` : 'https://crash5.cozy.works'
   const response = client.stackClient.fetchJSON(
     'POST',
-    url + '/auth/secret_exchange',
+    getCozyUrl(cozy_url) + '/auth/secret_exchange',
     {
       secret
     }
@@ -95,19 +104,11 @@ export const secretExchange = (secret, cozy_url, client) => {
 }
 
 export const getAccessToken = (info, cozy_url, code, client) => {
-  /*
-grant_type, with authorization_code or refresh_token as value
-code or refresh_token, depending on which grant type is used
-client_id
-client_secret
-
-  */
-  const url = cozy_url ? `https://${cozy_url}` : 'https://crash5.cozy.works'
-  const { /* grant_types, */ client_id, client_secret } = info
+  const { client_id, client_secret } = info
   const body = `grant_type=authorization_code&code=${code}&client_id=${client_id}&client_secret=${client_secret}`
-  const response = client.stackClient.fetch(
+  return client.stackClient.fetch(
     'POST',
-    url + '/auth/access_token',
+    getCozyUrl(cozy_url) + '/auth/access_token',
     body,
     {
       headers: {
@@ -115,7 +116,6 @@ client_secret
       }
     }
   )
-  return response
 }
 
 //export const onboard = ({ state, code, client }) => {}

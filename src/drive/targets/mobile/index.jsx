@@ -65,21 +65,18 @@ if (isIOSApp()) {
     )
   }
 }
-
+import { handleDeeplink } from 'drive/mobile/lib/handleDeepLink'
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
   // Cannot use import as we are in a condition
   require('preact/devtools')
 }
-
-// Register callback for when the app is launched through cozydrive:// link
-window.handleOpenURL = require('drive/mobile/lib/handleDeepLink').default(
-  hashHistory
-)
-
+window.handleOpenURL = async url => {
+  const store = await app.getStore()
+  handleDeeplink(hashHistory, store, url)
+}
 const startApplication = async function(store, client, polyglot) {
   configureReporter()
-
   let shouldInitBar = false
   let realOauthOptions
   try {
@@ -238,10 +235,7 @@ var app = {
   },
 
   onResume: async function() {
-    const client = await this.getClient()
-    const polyglot = await this.getPolyglot()
     const store = await this.getStore()
-    startApplication(store, client, polyglot)
     store.dispatch(backupImages())
     if (isAnalyticsOn(store.getState())) startHeartBeat()
   },
