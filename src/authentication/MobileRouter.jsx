@@ -1,60 +1,68 @@
 import React, { Component } from 'react'
-import { Router, withRouter, Route } from 'react-router'
+import { Router, withRouter } from 'react-router'
 import Proptypes from 'prop-types'
 import Authentication from './src/Authentication'
 import Revoked from './src/Revoked'
 import { logException } from 'drive/lib/reporter'
-import { readSecret } from './src/utils/onboarding'
 import {
   readState,
   secretExchange,
-  getAccessToken
+  getAccessToken,
+  readSecret,
+  clearSecret,
+  clearState,
+  checkExchangedInformations,
+  checkIfOnboardingLogin
 } from './src/utils/onboarding'
-const checkIfOnboardingLogin = currentLocation => {
-  if (
-    currentLocation.pathname === '/auth' &&
-    currentLocation.query.access_code &&
-    currentLocation.query.code &&
-    currentLocation.query.state &&
-    currentLocation.query.cozy_url
-  ) {
-    return true
-  } else {
-    return false
-  }
-}
+
 class MobileRouter extends Component {
   async checkState(receivedState, code, cozy_url, history) {
-    const stateInDB = await readState()
-
-    const storedSecret = await readSecret()
-    const clientInfo = await secretExchange(
-      storedSecret,
-      cozy_url,
-      this.props.client
-    )
+    const localState = await readState()
+    const localSecret = await readSecret()
     try {
-      const getToken = await getAccessToken(
+      const clientInfo = await secretExchange(
+        localSecret,
+        cozy_url,
+        this.props.client
+      )
+
+      const { onboarding_secret, onboarding_state } = clientInfo
+
+      if (
+        !checkExchangedInformations(
+          localSecret,
+          onboarding_secret,
+          localState,
+          onboarding_state
+        )
+      )
+        throw new Error('ERROR', 'exchanged informations are not good')
+
+      const getTokenRequest = await getAccessToken(
         clientInfo,
         cozy_url,
         code,
         this.props.client
       )
-      const token = await getToken.json()
-      return this.props.onAuthenticated({
+      const token = await getTokenRequest.json()
+      if (getTokenRequest.status !== 200) {
+        throw new Error('ERROR', token.error)
+      }
+
+      const afterAuth = await this.props.onAuthenticated({
         url: `https://${cozy_url}`,
         token,
         clientInfo,
         router: history
       })
-    } catch (e) {
-      console.log('errror', e)
+      console.log('afterAuth', afterAuth)
+      clearState()
+      clearSecret()
+    } catch (error) {
+      console.log('error', error)
+      this.props.onLogout()
+      return false
     }
-
-    if (stateInDB === receivedState) {
-      return true
-    }
-    return false
   }
   render() {
     const {
@@ -65,14 +73,14 @@ class MobileRouter extends Component {
       onAuthenticated,
       onLogout,
       appIcon,
-      onboarding
-      /* client */
+      onboarding,
+      onboardingInformations
     } = this.props
 
     if (!isAuthenticated) {
-      const currentLocation = history.getCurrentLocation()
-      if (checkIfOnboardingLogin(currentLocation)) {
-        const { code, state, cozy_url } = currentLocation.query
+      if (checkIfOnboardingLogin(onboardingInformations)) {
+        window.SafariViewController.hide()
+        const { code, state, cozy_url } = onboardingInformations
         this.checkState(state, code, cozy_url, history)
       } else {
         return (
@@ -100,6 +108,7 @@ class MobileRouter extends Component {
 }
 
 MobileRouter.propTypes = {
-  onboarding: Proptypes.object
+  onboarding: Proptypes.object,
+  onboardingInformations: Proptypes.object
 }
 export default withRouter(MobileRouter)

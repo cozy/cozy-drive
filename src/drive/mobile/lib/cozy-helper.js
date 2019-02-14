@@ -97,7 +97,7 @@ export function resetClient(client, clientInfo = null) {
     cozy.client.offline.destroyAllDatabase()
   }
   // reset cozy-client
-  client.getClient().resetClientId()
+  client.getStackClient().resetClientId()
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()

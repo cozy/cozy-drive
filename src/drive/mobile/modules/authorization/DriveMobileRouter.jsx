@@ -6,21 +6,23 @@ import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
-import { unlink, isAuthorized, isRevoked } from './duck'
+import {
+  unlink,
+  isAuthorized,
+  isRevoked,
+  getOnboardingInformations
+} from './duck/index'
 import { saveCredentials } from './sagas'
 import { setCozyUrl } from 'drive/lib/reporter'
 
 class DriveMobileRouter extends Component {
   afterAuthentication = async ({ url, clientInfo, token, router }) => {
+    console.log('afterAuthentication')
     const wasRevoked = this.props.isRevoked
-    console.log('url ici ', url)
-    console.log('context cozy client', this.context.client)
     this.context.client.options.uri = url
-    console.log('context cozy client après', this.context.client)
     const accesstoken = await restoreCozyClientJs(url, clientInfo, token)
     this.props.saveServerUrl(url)
     setCozyUrl(url)
-    console.log('{clientInfo}', clientInfo)
     this.props.saveCredentials(clientInfo, accesstoken)
     const oauthClient = this.context.client.getStackClient()
     oauthClient.setCredentials(token)
@@ -31,15 +33,13 @@ class DriveMobileRouter extends Component {
       //store.dispatch(setToken(token))
     }
     await initBar(this.context.client)
-    if (
-      wasRevoked ||
-      (clientInfo.onboarding_secret && clientInfo.onboarding_state)
-    ) {
+    if (wasRevoked) {
       initBar(this.context.client)
       router.replace('/')
     } else {
       router.replace('/onboarding')
     }
+    return true
   }
 
   afterLogout = () => {
@@ -52,8 +52,10 @@ class DriveMobileRouter extends Component {
       isRevoked,
       appRoutes,
       history,
-      onboarding
+      onboarding,
+      onboardingInformations
     } = this.props
+    console.log('render DriveMobileRouter')
     return (
       <div style={{ flex: '1' }}>
         <MobileRouter
@@ -66,6 +68,7 @@ class DriveMobileRouter extends Component {
           allowRegistration={false}
           appIcon={require('../../../../../src/drive/targets/vendor/assets/apple-touch-icon-180x180.png')}
           onboarding={onboarding}
+          onboardingInformations={onboardingInformations}
           client={this.context.client}
         />
         <IconSprite />
@@ -86,7 +89,8 @@ const DriveMobileRouterWithRoutes = props => (
 
 const mapStateToProps = state => ({
   isAuthenticated: isAuthorized(state),
-  isRevoked: isRevoked(state)
+  isRevoked: isRevoked(state),
+  onboardingInformations: getOnboardingInformations(state)
 })
 
 const mapDispatchToProps = dispatch => ({
