@@ -96,7 +96,7 @@ export default class DrivePage {
     await t
       .expect(this.contentPlaceHolder.exists)
       .notOk('Content placeholder still displayed')
-    isExistingAndVisibile(this.contentTable, 'content Table')
+    await isExistingAndVisibile(this.contentTable, 'content Table')
   }
 
   //@param {string} when : text for console.log
