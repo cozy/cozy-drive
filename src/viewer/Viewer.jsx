@@ -33,6 +33,10 @@ const ViewerWrapper = ({ style, className, children, fullscreen, dark }) => (
   </div>
 )
 
+export const isPlainText = (mimeType = '', fileName = '') => {
+  return mimeType ? /^text\//.test(mimeType) : /\.(txt|md)$/.test(fileName)
+}
+
 export default class Viewer extends Component {
   componentDidMount() {
     document.addEventListener('keyup', this.onKeyUp, false)
@@ -140,7 +144,7 @@ export default class Viewer extends Component {
       case 'pdf':
         return isMobileApp() ? NativePdfViewer : PdfViewer
       case 'text':
-        return TextViewer
+        return isPlainText(file.mime, file.name) ? TextViewer : NoViewer
       default:
         return NoViewer
     }
