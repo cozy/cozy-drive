@@ -147,7 +147,7 @@ export default class DrivePage {
         }
       }
     }
-    breadcrumbTitle = breadcrumbTitle.replace(/(\r\n|\n|\r)/gm, '') //avoid line break problem
+    breadcrumbTitle = breadcrumbTitle.replace(/(\r\n|\n|\r)/gm, '') //!FIXME remove EOL  https://trello.com/c/lYUkc8jV/1667-drive-breadcrumb-n-sur-mac-chrome-only
     return breadcrumbTitle
   }
 
@@ -346,7 +346,8 @@ export default class DrivePage {
   }
 
   async deleteCurrentFolder() {
-    const partialBreacrumbStart = await this.breadcrumb.child(0).innerText //We want only the 1st part of the breadcrumb to get the parent folder, so we cannot use getbreadcrumb()
+    let partialBreacrumbStart = await this.breadcrumb.child(0).innerText //We want only the 1st part of the breadcrumb to get the parent folder, so we cannot use getbreadcrumb()
+    partialBreacrumbStart = partialBreacrumbStart.replace(/(\r\n|\n|\r)/gm, '') //!FIXME  https://trello.com/c/lYUkc8jV/1667-drive-breadcrumb-n-sur-mac-chrome-only
     await this.openActionMenu()
     await t
       .click(this.btnRemoveFolder)
