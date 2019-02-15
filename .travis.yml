@@ -8,6 +8,7 @@ env:
     - secure: nx+r6bl0Rz+MmlLAR7ZM3ECIQXNhZCLVbz/PlTcbkZZ97P6xiqMpvdlOhLOK1DG3WiYGaWddiHXNL6DVaVBfZ/+ehH7Na5a1AF5NKncEhRyqGfq3JP/MOe0s0fcYDfV7ZsXNm4Y/9Smrx1QzPfHG0BKKYqmt0AMIXiGn8yx0MMSTyf5nagopPrSh2kpJ2D9vv9h3sp8486OffzF87ys7NJWcem6SXZK9tuENUKvxmX/zusdZ+sKKTGxdAmI3ANHTkbQ4A1QQRjDZ1WEl9yfiSrP4ceTgbeU6De0BVxtJYuIOpgaJrFj7ayMcH7VSM72PjOw8MieR63BOK05btiVSVWBXw+c9k0PAruhqGgkPfIU9UtJBRQwyA1o0s25+5W5tR7MSQ7v31yeCw8mDFuXp5cS9pJmMJjK1IRUIOcyUP3frpuwxKzHeXl/tCtA5xQr/cMgZpymDCme0NHUi8/hxTgsUsi9hjrHozk2L7/gQ5YjutD8M11duVpvFXMjwGAFYC/rs12ltkBa/dWff0ROtEa7zl6axGh0O1d6HblPow4jJhyKNP1llIhy2Fmfui5CKCV7i/pioMyJIFi54eKRqLRdryeElI+Go3Fp2Nklyubpg2cK4fYcLcfgsJ1eoZoyLES9Vg2Za4Cc5yXrI7RLzTfUDuU/8FLeqf7z9tk79FZw= #TESTCAFE_USER_PASSWORD
     - secure: lggtB/s2BGWm0f/6aqWq9KoH4PgFdrWv5fR2QUKrWjeUjPus8uTG4WDfxgRRPF4GgUIkYcboODB43A01UzgbRi2KWZjysj0W8/oKj2bt1VqMtA+G6qQMXIIZ0d1W5+x38MsEmUnDamCMQEv38xrFK9xlStIfA/dCvJg+dYBhaGDxYcdSkA3IWVHRfrFXVLol/O+V+CvpSv5vP8AkTHgiILRUEb0nJxx2Dpoeecb79Qg/lAAhUOGz51VPbhms+t+W9DmAH+El9wrbYkxCTe/tyCQXzzXwV4jspz9/QO7nODaHOERrW8ZB6zFe8R+7nvDOtflunaPaa3trt7n93bbthoDIDgOPjD1Gud2Hh7Vsp6P0yYCC3nAj1El5ueK0FIeE7TbltVZFxNqh67ULruZWC1zt1kA3WmBohZthw6f0XGiOnLD1J7O4rn9SPR6t6WFO3LSkl8/jJ250NdcWG+jl7qsF5Brk+9SSZRdFodHPx6EzggqzlKCVfduOYJnYAVf8vAeEvPaXvSdX34iHLzeG80vaanDOCWWlviLGmxojf4a9MteAJTRKwfcozQYF8yf13gtUlRPDw7eq7Fj4oRCoV0aDF5qy0V8w1zpTtPZXJ4BpNMWMMR9Hs+UlVBFwAGw+01Xdk4S1cSEgVbkl5idlUSbiDYQtiZARPQW+Z3Z/s5s= #ANDROID_KEYSTORE_PASS
     - secure: Vbt+BQwvTjB2BNEE86uMxTLgLdEmEG8DzydJgzHUaewkYTHIXrJHTfWZsr/aHVwAPCCmhoIESNLbZFiaOdUQxrbBkiNFbB9ax3OrBwC/6H4ZwvS7WWE/Fq2P/R3YfmtVcf6Q/YfINX1a/ieIRcFyKUfO/u+tKpH9BMtjxgA5/S9f4bW8w9w8hbf8nlYKFJGM6+M1cRLKiaPv8y7D5ljYm2HFzYCuZhSVAwdXI7ctO/gzMhAZdpetbZyq6BiJ5SekKiXzs36Bc9iXXJj3EPiPhgXRAiOB8ZWxteJqAq3lfe77ZVdANk5BBNIPslL+9qfvwDy0T0KwTLq8rOzrBNF32aIYckGXjqC0tslOGycC4HOkULXKCrb4srUVQMhgjbjwgarHO+bdm+V0k1KFFX7uFa5rPBiFMGFaFObKWAqbm6yGJdwGcetdf/D0Zm4+p9+6TYlSBslyzxBYcxdZ6pBtZkwRXGQJUIg786VMhrBXSCUlrKz2nAjUBKBCRztT4fdn05d3iCWtTOSJBSyFjEein6f6cSw4hN+2vMIYyTA0Lvhh2TpmUmCRlrA98G5ZN5Zun5l/6HNrChFO9U62rrD4Je1616YHCYsbK+/ZcIOauOf9pZ9DWTqnmCBRoZseYnSrY1oB/NEEirhE6oKHdB1DqIX8wJl/nfJnZ2OK9ZyMgLE= #GH_TOKEN
+    - secure: 0nsxnmSyJ6981wPVo3w7L4HLN91SwcIWXFvvGlVsnWvSkzJ3anUHlWno47Ro4HR0GUDL9DUP7Xr7Gg80GF2IrmN+Yv6nrZ+luHL+TQt3nD03j/ENpQy9JtQTgWmBWMQNoKYTzlgcZqO+k3G/5gRi+Z/M+uY8XJVDRzg8vcmXBGIHnxHRzG9ObV0yxyuJfPbiDpPD+r0x0PM/St+Y32PdOApD7BWDv/jz17MVM84fpdl7e/NdFieu8sx8bokr2n7X237Qlx+pylntAdZsHFK6QRwHAwgwK/mnEBU+ch0xTGV3+em3MFIWBBD6dWUChT+8BEoXHr7F07ZfTVZHx5HyxzLGy11O/sVGGQNR5idRq6DsOmmnPukYcxahAh1iSc77W5JS7Yc+8fn6z21S4T9LW92n0+HtUzEA9rXqnBE7vlaVp0BOyeP2lPbqEAYTamGdhhlWRLhvdBgNMTJUjwM43bTp66O/MAbtw5YJ4ccSWCwffhkZ9nEPlYrMdowKzOVdKLUYZWPZ38BMSdfHoA0sGZDUFPQhHJTBXdEb/WRj9BcnOoJY5/Or4QVDhdMkjpFxPMHk4zJSFh/QQPnRNpAZuMTSJTohoUopRg+f1kEnnlzoCfozLQ4JgDBkdZYQLE9HlEVnhxFY/vbQbggmSHuBloWvonec9zH0R0bc2ETAlt8= # RUNDECK_TOKEN
 node-preset: &node # Used internally to share configuration, ignored by travis.
   language: node_js
   node_js:
@@ -50,7 +51,6 @@ jobs:
         - yarn build:$COZY_APP_SLUG:browser
         - ./scripts/choose-test-instance.sh
         - source setinstance.sh
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then yarn testcafe:$COZY_APP_SLUG; fi
       before_deploy:
         - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi # Needs to be inlined and not in a script to work.
         - yarn add cozy-app-publish
@@ -67,7 +67,9 @@ jobs:
             tags: true
       after_success:
         - *downcloud-cert
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then node scripts/downcloud.js build/$COZY_APP_SLUG; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then APP_URL=$(node scripts/downcloud.js build/$COZY_APP_SLUG); fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./scripts/deploy-on-instance.sh $APP_URL; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then yarn testcafe:$COZY_APP_SLUG; fi
     - <<: *build-web
       name: 'Photos web'
       env:
