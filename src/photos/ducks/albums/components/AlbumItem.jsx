@@ -110,7 +110,11 @@ export default class AlbumItem extends Component {
     const title = <h2 className={styles['pho-album-title']}>{album.name}</h2>
 
     return (
-      <div className={styles['pho-album']}>
+      <div
+        data-test-id="pho-album"
+        data-test-name={album.name}
+        className={styles['pho-album']}
+      >
         {onClick ? (
           <ClickableAlbumItem
             album={album}

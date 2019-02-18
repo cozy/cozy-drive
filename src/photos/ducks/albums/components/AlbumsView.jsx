@@ -29,7 +29,10 @@ class AlbumsView extends Component {
       return null
     }
     return (
-      <div className={styles['pho-content-wrapper']}>
+      <div
+        data-test-id="album-pho-content-wrapper"
+        className={styles['pho-content-wrapper']}
+      >
         <Topbar viewName="albums">
           <AlbumsToolbar t={t} />
         </Topbar>
