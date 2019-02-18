@@ -3,6 +3,11 @@ import localforage from 'localforage'
 const ONBOARDING_SECRET_KEY = 'onboarding_secret'
 const ONBOARDING_STATE = 'onboarding_state'
 
+const generateRandomString = () => {
+  return Math.random()
+    .toString(36)
+    .substr(2, 11)
+}
 export const writeSecret = secret => {
   return localforage.setItem(ONBOARDING_SECRET_KEY, secret)
 }
@@ -27,10 +32,10 @@ export const clearState = () => {
   return localforage.removeItem(ONBOARDING_STATE)
 }
 const generateState = () => {
-  return 'ezezaeeaz'
+  return generateRandomString()
 }
 const generateSecret = () => {
-  return 'azertyuiop'
+  return generateRandomString()
 }
 export const checkIfOnboardingLogin = onboardingInformations => {
   if (onboardingInformations.code !== null) return true
