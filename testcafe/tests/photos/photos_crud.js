@@ -2,25 +2,13 @@ import { photosUser } from '../helpers/roles' //import roles for login
 import { TESTCAFE_PHOTOS_URL } from '../helpers/utils'
 import random from 'lodash/random'
 import Page from '../pages/photos-model'
-import { DATA_PATH, IMG0, IMG1, IMG2, IMG3 } from '../helpers/data'
 
 const page = new Page()
 
 fixture`PHOTOS - CRUD`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
   await t.useRole(photosUser)
-  await page.initPhotoPage()
-})
-
-test('Uploading 1 pic from Photos view', async () => {
-  await page.uploadPhotos([`${DATA_PATH}${IMG0}`])
-})
-
-test('Uploading 3 pcis from Photos view', async () => {
-  await page.uploadPhotos([
-    `${DATA_PATH}${IMG1}`,
-    `${DATA_PATH}${IMG2}`,
-    `${DATA_PATH}${IMG3}`
-  ])
+  await page.waitForLoading()
+  await page.initPhotosCount()
 })
 
 test('Select 1 pic from Photos view', async () => {
@@ -71,14 +59,4 @@ test('Open a random pic (not first nor last)', async t => {
 
   await page.openPhotoFullscreen(photoIndex)
   await page.navigateToPrevPhoto(photoIndex)
-})
-
-test('Deleting 1st pic in Photo view : Open up a modal, and confirm', async () => {
-  //pic is removed
-  await page.deletePhotos(1)
-})
-
-test('Deleting the 1st 3 pics in Photo view : Open up a modal, and confirm', async () => {
-  //pics are removed
-  await page.deletePhotos(3)
 })

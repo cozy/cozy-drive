@@ -31,7 +31,6 @@ jobs:
       env:
         - COZY_APP_SLUG=drive
       addons:
-        firefox: latest
         apt:
           sources:
             - google-chrome
