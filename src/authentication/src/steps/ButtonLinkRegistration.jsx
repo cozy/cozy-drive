@@ -6,7 +6,7 @@ import { Button } from 'cozy-ui/react'
 
 import { nativeLinkOpen } from '../LinkManager'
 
-import { generateObjectForUrl } from '../utils/onboarding'
+import { generateObjectForUrl, clearState } from '../utils/onboarding'
 
 export class ButtonLinkRegistration extends Component {
   state = {
@@ -69,7 +69,8 @@ export class ButtonLinkRegistration extends Component {
 
     return (
       <Button
-        onClick={() => {
+        onClick={async () => {
+          await clearState()
           return nativeLinkOpen({ url })
         }}
         theme={theme}
