@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
 import MobileRouter from 'authentication/MobileRouter'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
+import { setToken } from 'drive/mobile/modules/authorization/duck'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
-import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
+import {
+  restoreCozyClientJs,
+  initBar,
+  updateBarAccessToken
+} from 'drive/mobile/lib/cozy-helper'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
 import {
   unlink,
@@ -28,9 +33,9 @@ class DriveMobileRouter extends Component {
     oauthClient.setCredentials(token)
     oauthClient.setUri(url)
     oauthClient.onTokenRefresh = () => {
-      //updateBarAccessToken(token.accessToken)
-      //restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-      //store.dispatch(setToken(token))
+      updateBarAccessToken(token.accessToken)
+      restoreCozyClientJs(url, clientInfo, token)
+      this.props.dispatch(setToken(token))
     }
     await initBar(this.context.client)
     if (wasRevoked) {
