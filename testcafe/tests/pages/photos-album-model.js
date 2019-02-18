@@ -71,13 +71,16 @@ export default class Page {
   //@param {string} when : text for console.log
   async getPhotosToAddCount(when) {
     await checkAllImagesExists()
-    await isExistingAndVisibile(this.photoSectionAddToAlbum, 'Photo section')
-
-    // await isExistingAndVisibile(this.photoAddToAlbumWrapper, 'Picture wrapper')
+    await isExistingAndVisibile(
+      this.photoSectionAddToAlbum,
+      'Photo section (add to album)'
+    )
     await isExistingAndVisibile(this.allPhotosAddToAlbum, 'Photo item(s)')
     const allPhotosCount = await this.allPhotosAddToAlbum.count
 
-    console.log(`Number of pictures on page (${when} test):  ${allPhotosCount}`)
+    console.log(
+      `Number of pictures ready to be added (${when} test):  ${allPhotosCount}`
+    )
     return allPhotosCount
   }
 
@@ -140,8 +143,14 @@ export default class Page {
       .expect(this.albumTitle.innerText)
       .eql(albumName)
 
-    const allPhotosAlbumCount = await photoPage.getPhotosCount('On Album page')
-    await t.expect(allPhotosAlbumCount).eql(photoNumber) //all expected photos are displayed
+    if (photoNumber == 0) {
+      await isExistingAndVisibile(photoPage.folderEmpty, 'Folder Empty')
+    } else {
+      const allPhotosAlbumCount = await photoPage.getPhotosCount(
+        'On Album page'
+      )
+      await t.expect(allPhotosAlbumCount).eql(photoNumber) //all expected photos are displayed
+    }
   }
 
   // @param {String} AlbumName : Name of the album
@@ -213,7 +222,7 @@ export default class Page {
   }
 
   async backToAlbumsList() {
-    await isExistingAndVisibile(this.btnBackToAlbum)
+    await isExistingAndVisibile(this.btnBackToAlbum, 'Back to albums List btn')
     await t.click(this.btnBackToAlbum)
     await this.waitForLoading()
   }
@@ -222,10 +231,6 @@ export default class Page {
   // @param { number } photoNumber : Number of photos expected in the album (
   async isAlbumExistsAndVisible(albumName, photoNumber) {
     await isExistingAndVisibile(this.album(albumName), albumName)
-    // await isExistingAndVisibile(
-    //   this.albumDescription(albumName),
-    //   `${albumName} description (${this.albumDescription(albumName).innerText})`
-    // )
     await t
       .expect(this.album(albumName).innerText)
       .contains(`${photoNumber} photo`)
