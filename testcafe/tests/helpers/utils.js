@@ -30,16 +30,19 @@ export const getElementWithTestId = Selector(
   id => document.querySelectorAll(`[data-test-id='${id}']`)
   //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
 )
+export const getElementWithTestItem = Selector(
+  id => document.querySelectorAll(`[data-test-item='${id}']`)
+  //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
+)
 
 //It's best practice to check both exist and visible for an element
-//!FIXME : add isExistingAndVisibile in photos_crud tests
 export async function isExistingAndVisibile(selector, selectorName) {
   await t
     .expect(selector.exists)
     .ok(`'${selectorName}' doesnt exist`)
     .expect(selector.visible)
     .ok(`'${selectorName}' is not visible`)
-  console.log(`'${selectorName}' exists and is visible!`)
+  console.log(` - '${selectorName}' exists and is visible!`)
 }
 
 export function getCurrentDateTime() {
@@ -85,4 +88,31 @@ export async function setDownloadPath(downloadFolderPath) {
     behavior: 'allow',
     downloadPath: path.resolve(__dirname, downloadFolderPath)
   })
+}
+//Check http status for all img, to be sure everything is loaded before counting images
+export async function checkAllImagesExists() {
+  const images = Selector('img')
+  let count = await images.count
+  let requestsCount = 0
+  let statuses = []
+
+  const getRequestResult = ClientFunction(url => {
+    return new Promise(resolve => {
+      let xhr = new XMLHttpRequest()
+      xhr.open('GET', url)
+      xhr.onload = function() {
+        resolve(xhr.status)
+      }
+      xhr.send(null)
+    })
+  })
+
+  for (let i = 0; i < count; i++) {
+    let url = await images.nth(i).getAttribute('src')
+    requestsCount++
+    statuses.push(await getRequestResult(url))
+  }
+
+  await t.expect(requestsCount).eql(statuses.length)
+  for (const status of statuses) await t.expect(status).eql(200)
 }

@@ -2,8 +2,9 @@ import { getCurrentDateTime } from './utils'
 
 // data filled during tests
 export let sharingLink = ''
-export const FOLDER_DATE_TIME = `Folder_${getCurrentDateTime()}`
 
+export const FOLDER_DATE_TIME = `Folder_${getCurrentDateTime()}`
+export const ALBUM_DATE_TIME = `Album_${getCurrentDateTime()}`
 // data files & path
 const homedir = require('os').homedir
 export const DOWNLOAD_PATH = `${homedir()}/Downloads/`
@@ -19,3 +20,4 @@ export const IMG0 = 'IMG0.jpg'
 export const IMG1 = 'IMG-JPG.jpg'
 export const IMG2 = 'IMG-PNG.png'
 export const IMG3 = 'IMG-GIF.gif'
+export const IMG4 = 'IMG1.jpg'

@@ -2,6 +2,7 @@ import { t, Selector } from 'testcafe'
 import {
   getPageUrl,
   getElementWithTestId,
+  getElementWithTestItem,
   isExistingAndVisibile,
   checkAllImagesExists
 } from '../helpers/utils'
@@ -32,7 +33,9 @@ export default class Page {
     this.pickerAlbumName = getElementWithTestId('pho-picker-album-name')
     this.btnValidateAlbum = getElementWithTestId('validate-album') //Seme button for create album and Add to album
     this.photoThumb = value => {
-      return Selector('[class*="pho-photo-item"]').nth(value)
+      return getElementWithTestItem('pho-photo-item').nth(value)
+
+      //  return Selector('[class*="pho-photo-item"]').nth(value)
     }
     this.photoSectionAddToAlbum = getElementWithTestId('picker-panel')
       .find('div')
@@ -41,7 +44,7 @@ export default class Page {
     this.allPhotosAddToAlbum = this.photoSectionAddToAlbum
       .find('img')
       .parent('div')
-      .withAttribute('data-test-id', 'pho-photo-item')
+      .withAttribute('data-test-item', 'pho-photo-item')
     this.photoCheckbox = this.photoSectionAddToAlbum.find(
       '[class*="pho-photo-select"][data-input="checkbox"]'
     )
@@ -92,7 +95,6 @@ export default class Page {
   // @param { number } photoNumber : Number of photos to add to the new album (it will add the first X photos from the timeline)
   // click on new album button, check the new album page, give a name to album and select photos
   async addNewAlbum(albumName, photoNumber) {
-    await this.waitForLoading()
     await isExistingAndVisibile(this.toolbarAlbumsList, 'toolbar (album list)')
     await isExistingAndVisibile(this.btnNewAlbum, 'New album button')
     await t.click(this.btnNewAlbum)
@@ -146,11 +148,13 @@ export default class Page {
   async goToAlbum(albumName) {
     await isExistingAndVisibile(this.album(albumName), albumName)
     await t.click(this.album(albumName))
+    await this.waitForLoading()
   }
 
   // @param {String} OldAlbumName : Name of the album (before renamming)
   // @param {String} NewAlbumName : New Name of the album (after renamming)
-  async renameAlbum(OldAlbumName, NewAlbumName) {
+  // @param {string} exit : enter or click : Choose the exit method
+  async renameAlbum(OldAlbumName, NewAlbumName, exitWithEnter) {
     await isExistingAndVisibile(this.albumTitle, 'Album Name')
     await t
       .expect(this.albumTitle.find('input').exists)
@@ -170,6 +174,8 @@ export default class Page {
       .expect(this.albumTitle.find('input').focused)
       .ok('Input Name is not focus')
       .typeText(this.albumTitle.find('input'), NewAlbumName)
+    //exit input
+    exitWithEnter ? await t.pressKey('enter') : await t.click(this.mainContent)
   }
 
   // @param { number } count : Number of photos already in the album (needed to know which photo to add)
