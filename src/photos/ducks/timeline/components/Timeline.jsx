@@ -97,7 +97,10 @@ class Timeline extends Component {
         })}
       >
         {(selected, active, selection) => (
-          <div className={styles['pho-content-wrapper']}>
+          <div
+            data-test-id="timeline-pho-content-wrapper"
+            className={styles['pho-content-wrapper']}
+          >
             <Topbar viewName="photos">
               <Toolbar
                 disabled={active}

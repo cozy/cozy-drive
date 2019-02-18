@@ -27,7 +27,7 @@ export const Layout = ({ t, children }) => (
             <NavText>{t('Nav.photos')}</NavText>
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem data-test-id="nav-to-albums">
           <NavLink to="/albums">
             <NavIcon icon="album" />
             <NavText>{t('Nav.albums')}</NavText>

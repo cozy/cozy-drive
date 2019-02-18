@@ -15,6 +15,7 @@ const EmptyIcon = {
 const EmptyCanvas = translate()(({ t, type, canUpload, localeKey }) => {
   return (
     <Empty
+      data-test-id="empty-folder"
       icon={EmptyIcon[type]}
       title={localeKey ? t(`empty.${localeKey}_title`) : t('empty.title')}
       text={

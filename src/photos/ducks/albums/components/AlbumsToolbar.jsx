@@ -8,9 +8,14 @@ import { MoreButton } from 'components/Button'
 import styles from 'photos/styles/toolbar'
 
 const AlbumsToolbar = ({ t, router }) => (
-  <div className={styles['pho-toolbar']} role="toolbar">
+  <div
+    data-test-id="pho-toolbar-albums"
+    className={styles['pho-toolbar']}
+    role="toolbar"
+  >
     <div className={styles['u-hide--mob']}>
       <ButtonLink
+        data-test-id="album-add"
         theme="secondary"
         href="#/albums/new"
         icon="album-add"
