@@ -71,10 +71,7 @@ if (__DEVELOPMENT__) {
   // Cannot use import as we are in a condition
   require('preact/devtools')
 }
-window.handleOpenURL = async url => {
-  const store = await app.getStore()
-  handleDeeplink(hashHistory, store, url)
-}
+
 const startApplication = async function(store, client, polyglot) {
   configureReporter()
   let shouldInitBar = false
@@ -150,14 +147,14 @@ const isBackgroundServiceParameter = () => {
   return queryDict.backgroundservice
 }
 
-var app = {
-  initialize: function() {
+class InitAppMobile {
+  initialize = () => {
     this.bindEvents()
 
     if (__DEVELOPMENT__ && typeof cordova === 'undefined') this.onDeviceReady()
-  },
+  }
 
-  bindEvents: function() {
+  bindEvents = () => {
     document.addEventListener(
       'deviceready',
       this.onDeviceReady.bind(this),
@@ -165,9 +162,9 @@ var app = {
     )
     document.addEventListener('resume', this.onResume.bind(this), false)
     document.addEventListener('pause', this.onPause.bind(this), false)
-  },
+  }
 
-  getCozyURL: async function() {
+  getCozyURL = async () => {
     if (this.cozyURL) return this.cozyURL
     const persistedState = (await this.getPersistedState()) || {}
     // TODO: not ideal to access the server URL in the persisted state like this...
@@ -175,31 +172,31 @@ var app = {
       ? persistedState.mobile.settings.serverUrl
       : ''
     return this.cozyURL
-  },
+  }
 
-  getPersistedState: async function() {
+  getPersistedState = async () => {
     if (this.persistedState) return this.persistedState
     this.persistedState = await loadState()
     return this.persistedState
-  },
+  }
 
-  getClient: async function() {
+  getClient = async () => {
     if (this.client) return this.client
     const cozyURL = await this.getCozyURL()
     this.client = initClient(cozyURL)
     return this.client
-  },
+  }
 
-  getPolyglot: function() {
+  getPolyglot = () => {
     if (!this.polyglot) {
       this.polyglot = initTranslation(getLang(), lang =>
         require(`drive/locales/${lang}`)
       )
     }
     return this.polyglot
-  },
+  }
 
-  getStore: async function() {
+  getStore = async () => {
     if (this.store) return this.store
     const client = await this.getClient()
     const polyglot = this.getPolyglot()
@@ -210,9 +207,9 @@ var app = {
       persistedState
     )
     return this.store
-  },
+  }
 
-  onDeviceReady: async function() {
+  onDeviceReady = async () => {
     const store = await this.getStore()
     const client = await this.getClient()
     const polyglot = await this.getPolyglot()
@@ -223,7 +220,6 @@ var app = {
         console.error('Error getting launch intent', err)
       })
     }
-
     if (!isBackgroundServiceParameter()) {
       startApplication(store, client, polyglot)
     } else {
@@ -232,15 +228,15 @@ var app = {
 
     if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
     store.dispatch(backupImages())
-  },
+  }
 
-  onResume: async function() {
+  onResume = async () => {
     const store = await this.getStore()
     store.dispatch(backupImages())
     if (isAnalyticsOn(store.getState())) startHeartBeat()
-  },
+  }
 
-  onPause: async function() {
+  onPause = async () => {
     const store = await this.getStore()
     if (isAnalyticsOn(store.getState())) stopHeartBeat()
     // TODO: selector
@@ -252,5 +248,10 @@ var app = {
     }
   }
 }
-
+const app = new InitAppMobile()
 app.initialize()
+
+window.handleOpenURL = async url => {
+  const store = await app.getStore()
+  handleDeeplink(hashHistory, store, url)
+}
