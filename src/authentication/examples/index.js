@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { DumbAuthentication, DumbRevoked } from '../build'
 import 'date-fns/locale/en/index'
-import 'cozy-ui/transpiled/stylesheet.css'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 
 const styles = {
   Container: {
