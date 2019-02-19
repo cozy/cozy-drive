@@ -43,7 +43,13 @@ export class Welcome extends Component {
       appIcon
     } = this.props
     return (
-      <div className={classNames(styles['wizard'], styles['wizard--welcome'])}>
+      <div
+        className={classNames(
+          styles['wizard'],
+          styles['wizard--welcome'],
+          styles['wizard-wrapper--center']
+        )}
+      >
         <div className={styles['wizard-wrapper']}>
           <div className={styles['wizard-main']}>
             <div className={styles['wizard-logo']}>
