@@ -2439,10 +2439,10 @@ cosmiconfig@^5.0.0, cosmiconfig@^5.0.5:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cozy-ui@17.0.1:
-  version "17.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-17.0.1.tgz#f83f724832f8e52801943c307e4fc0437e053aac"
-  integrity sha512-t0UFUUJ+rP6nP7PIp4qoqvlykbWKihC7yHl2wJwiSbd2Qlx+wY5HN2ZG6IK+nvCdAhPSQODL8Mbs1JnuWQCtfQ==
+cozy-ui@17.17.2:
+  version "17.17.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-17.17.2.tgz#f57a7fd4ce3d413a71fd77654488156ba9a9daab"
+  integrity sha512-oyrKYb5vMKboFYHgtHpBF3DLu0lb3jooY3LGyWicsotv7oed5ayWPbO7zxHq2meeC397emctz6Y2rHanY9bJXQ==
   dependencies:
     body-scroll-lock "^2.5.8"
     classnames "^2.2.5"
@@ -2450,7 +2450,6 @@ cozy-ui@17.0.1:
     hammerjs "^2.0.8"
     node-polyglot "^2.2.2"
     normalize.css "^7.0.0"
-    react-dom "^16.5.2"
     react-hot-loader "^4.3.11"
     react-select "2.1.1"
 
@@ -8224,7 +8223,7 @@ react-docgen@^3.0.0-beta9:
     node-dir "^0.1.10"
     recast "^0.12.6"
 
-react-dom@16.6.3, react-dom@^16.5.2:
+react-dom@16.6.3:
   version "16.6.3"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.6.3.tgz#8fa7ba6883c85211b8da2d0efeffc9d3825cccc0"
   integrity sha512-8ugJWRCWLGXy+7PmNh8WJz3g1TaTUt1XyoIcFN+x0Zbkoz+KKdUyx1AQLYJdbFXjuF41Nmjn5+j//rxvhFjgSQ==

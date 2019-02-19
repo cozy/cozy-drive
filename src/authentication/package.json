@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "babel-core": "6.26.3",
-    "cozy-ui": "17.0.1",
+    "cozy-ui": "17.17.2",
     "date-fns": "1.29.0",
     "eslint-cli": "1.1.1",
     "jest": "22.0.6",
