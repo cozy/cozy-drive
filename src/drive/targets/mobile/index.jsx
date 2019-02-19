@@ -51,86 +51,12 @@ import {
 } from 'drive/mobile/modules/authorization/duck'
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
 import { startReplication } from 'drive/mobile/modules/replication/sagas'
-/*We add fastclick only for iOS since Chrome removed this behavior (iOS also, but
-we still use UIWebview and not WKWebview... )*/
-if (isIOSApp()) {
-  var FastClick = require('fastclick')
-  if ('addEventListener' in document) {
-    document.addEventListener(
-      'DOMContentLoaded',
-      function() {
-        FastClick.attach(document.body)
-      },
-      false
-    )
-  }
-}
+
 import { handleDeeplink } from 'drive/mobile/lib/handleDeepLink'
 if (__DEVELOPMENT__) {
   // Enables React dev tools for Preact
   // Cannot use import as we are in a condition
   require('preact/devtools')
-}
-
-const startApplication = async function(store, client, polyglot) {
-  configureReporter()
-  let shouldInitBar = false
-  let realOauthOptions
-  try {
-    const clientInfos = getClientSettings(store.getState())
-    console.log('clientInfo index.js', clientInfos)
-    /*Since we can update our OauthConfig sometimes, we need to
-    override the cached one */
-    realOauthOptions =
-      clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
-    const token = getToken(store.getState())
-    const stackClient = client.getStackClient()
-    stackClient.setOAuthOptions(realOauthOptions)
-    stackClient.setCredentials(token)
-    await restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-    stackClient.onTokenRefresh = token => {
-      updateBarAccessToken(token.accessToken)
-      restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-      store.dispatch(setToken(token))
-    }
-    //In order to check if the token is good
-    await stackClient.fetchJSON('GET', '/settings/disk-usage')
-    shouldInitBar = true
-    await store.dispatch(startReplication())
-  } catch (e) {
-    console.warn(e)
-    if (isClientRevoked(e, store.getState())) {
-      console.warn('Your device is not connected to your server anymore')
-      store.dispatch(revokeClient())
-      resetClient(client)
-    } else if (getServerUrl(store.getState())) {
-      // the server is not responding, but it doesn't mean we're revoked yet
-      shouldInitBar = true
-    }
-  } finally {
-    if (shouldInitBar) await initBar(client)
-  }
-
-  useHistoryForTracker(hashHistory)
-  if (isAnalyticsOn(store.getState())) {
-    startTracker(getServerUrl(store.getState()))
-  }
-
-  const root = document.querySelector('[role=application]')
-  const onboarding = {
-    oauth: {
-      ...getOauthOptions(),
-      scope: permissions
-    }
-  }
-  render(
-    <I18n lang={getLang()} polyglot={polyglot}>
-      <CozyProvider store={store} client={client}>
-        <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
-      </CozyProvider>
-    </I18n>,
-    root
-  )
 }
 
 // Allows to know if the launch of the application has been done by the service background
@@ -150,8 +76,9 @@ const isBackgroundServiceParameter = () => {
 class InitAppMobile {
   initialize = () => {
     this.bindEvents()
-
+    this.stardedApp = false
     if (__DEVELOPMENT__ && typeof cordova === 'undefined') this.onDeviceReady()
+    return this.startApplication()
   }
 
   bindEvents = () => {
@@ -162,6 +89,18 @@ class InitAppMobile {
     )
     document.addEventListener('resume', this.onResume.bind(this), false)
     document.addEventListener('pause', this.onPause.bind(this), false)
+    /*We add fastclick only for iOS since Chrome removed this behavior (iOS also, but
+      we still use UIWebview and not WKWebview... )*/
+    if (isIOSApp()) {
+      var FastClick = require('fastclick')
+      document.addEventListener(
+        'DOMContentLoaded',
+        function() {
+          FastClick.attach(document.body)
+        },
+        false
+      )
+    }
   }
 
   getCozyURL = async () => {
@@ -220,14 +159,11 @@ class InitAppMobile {
         console.error('Error getting launch intent', err)
       })
     }
-    if (!isBackgroundServiceParameter()) {
-      startApplication(store, client, polyglot)
-    } else {
+    if (isBackgroundServiceParameter()) {
       startBackgroundService()
     }
-
-    if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
     store.dispatch(backupImages())
+    if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
   }
 
   onResume = async () => {
@@ -247,11 +183,90 @@ class InitAppMobile {
       })
     }
   }
+
+  startApplication = async () => {
+    if (this.stardedApp) return this.afterStart()
+
+    const store = await this.getStore()
+    const client = await this.getClient()
+    const polyglot = await this.getPolyglot()
+
+    configureReporter()
+    let shouldInitBar = false
+    let realOauthOptions
+
+    try {
+      const clientInfos = getClientSettings(store.getState())
+      /*Since we can update our OauthConfig sometimes, we need to
+        override the cached one */
+      realOauthOptions =
+        clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
+      const token = getToken(store.getState())
+      const stackClient = client.getStackClient()
+
+      stackClient.setOAuthOptions(realOauthOptions ? realOauthOptions : {})
+      stackClient.setCredentials(token)
+      await restoreCozyClientJs(
+        client.options.uri,
+        realOauthOptions,
+        token ? token : {}
+      )
+      stackClient.onTokenRefresh = token => {
+        updateBarAccessToken(token.accessToken)
+        restoreCozyClientJs(client.options.uri, realOauthOptions, token)
+        store.dispatch(setToken(token))
+      }
+      //In order to check if the token is good
+      await stackClient.fetchJSON('GET', '/settings/disk-usage')
+      shouldInitBar = true
+      await store.dispatch(startReplication())
+    } catch (e) {
+      console.warn(e)
+      if (isClientRevoked(e, store.getState())) {
+        console.warn('Your device is not connected to your server anymore')
+        store.dispatch(revokeClient())
+        resetClient(client)
+      } else if (getServerUrl(store.getState())) {
+        // the server is not responding, but it doesn't mean we're revoked yet
+        shouldInitBar = true
+      }
+    } finally {
+      if (shouldInitBar) await initBar(client)
+    }
+
+    useHistoryForTracker(hashHistory)
+    if (isAnalyticsOn(store.getState())) {
+      startTracker(getServerUrl(store.getState()))
+    }
+
+    const root = document.querySelector('[role=application]')
+    const onboarding = {
+      oauth: {
+        ...getOauthOptions(),
+        scope: permissions
+      }
+    }
+    return new Promise((resolve, reject) => {
+      render(
+        <I18n lang={getLang()} polyglot={polyglot}>
+          <CozyProvider store={store} client={client}>
+            <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
+          </CozyProvider>
+        </I18n>,
+        root,
+        () => {
+          this.stardedApp = true
+          resolve()
+        }
+      )
+    })
+  }
 }
 const app = new InitAppMobile()
-app.initialize()
+const appBooted = app.initialize()
 
 window.handleOpenURL = async url => {
+  await appBooted
   const store = await app.getStore()
   handleDeeplink(hashHistory, store, url)
 }
