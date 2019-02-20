@@ -3,6 +3,7 @@ const RX = new RegExp('^' + PROTOCOL)
 import { setOnboarding } from '../modules/authorization/duck'
 
 export const handleDeeplink = (history, store, url) => {
+  console.log({ url })
   const stripped = url.replace(RX, '')
 
   history.push('/' + stripped)
