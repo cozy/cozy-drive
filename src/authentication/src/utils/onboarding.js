@@ -38,6 +38,7 @@ const generateSecret = () => {
   return generateRandomString()
 }
 export const checkIfOnboardingLogin = onboardingInformations => {
+  console.log('checkfif', onboardingInformations)
   if (onboardingInformations.code !== null) return true
   return false
 }

@@ -23,3 +23,31 @@ export const renewAuthorization = client => async dispatch => {
   dispatch(setUrl(url))
   dispatch(saveCredentials(infos, token))
 }
+/*
+export const setOauthClient = (client) => dispatch => {
+  oauthClient.setOAuthOptions(realOauthOptions)
+    oauthClient.setCredentials(token)
+    await restoreCozyClientJs(client.options.uri, realOauthOptions, token)
+    oauthClient.onTokenRefresh = token => {
+      updateBarAccessToken(token.accessToken)
+      restoreCozyClientJs(client.options.uri, realOauthOptions, token)
+      store.dispatch(setToken(token))
+    }
+    await oauthClient.fetchInformation()
+}
+
+const clientInfos = getClientSettings(store.getState())
+    console.log('clientInfo index.js', clientInfos)
+    
+    realOauthOptions =
+      clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
+    const token = getToken(store.getState())
+    const stackClient = client.getStackClient()
+    stackClient.setOAuthOptions(realOauthOptions)
+    stackClient.setCredentials(token)
+    await restoreCozyClientJs(client.options.uri, realOauthOptions, token)
+    stackClient.onTokenRefresh = token => {
+      updateBarAccessToken(token.accessToken)
+      restoreCozyClientJs(client.options.uri, realOauthOptions, token)
+      store.dispatch(setToken(token))
+    }*/
