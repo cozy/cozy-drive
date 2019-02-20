@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{.Locale}}">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Public Cozy Photos</title>
+  {{.Favicon}}
   {{.ThemeCSS}}
+  <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
+    <link rel="stylesheet" href="<%- file %>">
+  <% }); %>
   <% if (__STACK_ASSETS__) { %>
     {{.CozyClientJS}}
     {{.CozyBar}}
   <% } %>
-  <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
-      <link rel="stylesheet" href="<%- file %>">
-  <% }); %>
-  <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
-      <script src="<%- file %>" defer></script>
-  <% }); %>
 </head>
-
 <body>
-
   <div
     role="application"
     data-cozy-domain="{{.Domain}}"
@@ -31,7 +26,8 @@
     data-cozy-app-slug="{{.AppSlug}}"
     data-cozy-icon-path="{{.IconPath}}"
   >
-
+  <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
+    <script src="<%- file %>"></script>
+  <% }); %>
 </body>
-
 </html>
