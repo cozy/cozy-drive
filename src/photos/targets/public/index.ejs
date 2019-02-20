@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Public Cozy Photos</title>
+  {{.Favicon}}
   {{.ThemeCSS}}
   <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
     <link rel="stylesheet" href="<%- file %>">
