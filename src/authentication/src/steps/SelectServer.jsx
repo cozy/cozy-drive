@@ -266,32 +266,32 @@ export class SelectServer extends Component {
                   <span>https://</span>
                 </div>
               )}
-              <Input
-                type="text"
-                id={inputID}
-                autoCapitalize="none"
-                autoCorrect="off"
-                autoComplete="off"
-                autofocus
-                className={classNames(styles['wizard-input'], {
-                  [styles['error']]: error
-                })}
-                placeholder={t(placeholderValue)}
-                size={isTiny ? 'medium' : undefined}
-                inputRef={input => {
-                  this.input = input
-                }}
-                onChange={({ target: { value } }) => {
-                  this.onChange(value)
-                }}
-                onFocus={() =>
-                  this.setState({
-                    focusClass: styles['wizard-dualfield--focus']
-                  })
-                }
-                onBlur={() => this.setState({ focusClass: undefined })}
-                value={value}
-              />
+              <div className={styles['wizard-dualfield-wrapper']}>
+                <Input
+                  type="text"
+                  id={inputID}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  autoComplete="off"
+                  autofocus
+                  className={classNames(styles['wizard-dualfield-input'])}
+                  placeholder={t(placeholderValue)}
+                  size={isTiny ? 'medium' : undefined}
+                  inputRef={input => {
+                    this.input = input
+                  }}
+                  onChange={({ target: { value } }) => {
+                    this.onChange(value)
+                  }}
+                  onFocus={() =>
+                    this.setState({
+                      focusClass: styles['wizard-dualfield--focus']
+                    })
+                  }
+                  onBlur={() => this.setState({ focusClass: undefined })}
+                  value={value}
+                />
+              </div>
               <select
                 className={classNames(styles['wizard-select'], {
                   [styles['wizard-select--narrow']]: isCustomDomain,
