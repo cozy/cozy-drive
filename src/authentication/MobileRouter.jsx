@@ -19,6 +19,8 @@ class MobileRouter extends Component {
   async checkState(receivedState, code, cozy_url, history) {
     const localState = await readState()
     const localSecret = await readSecret()
+    console.log({ localSecret })
+    console.log({ localState })
     try {
       const clientInfo = await secretExchange(
         localSecret,
@@ -27,7 +29,8 @@ class MobileRouter extends Component {
       )
 
       const { onboarding_secret, onboarding_state } = clientInfo
-
+      console.log({ onboarding_secret })
+      console.log({ onboarding_state })
       if (
         !checkExchangedInformations(
           localSecret,
@@ -60,6 +63,8 @@ class MobileRouter extends Component {
       clearSecret()
     } catch (error) {
       console.log('error', error)
+      clearState()
+      clearSecret()
       this.props.onLogout()
       return false
     }
