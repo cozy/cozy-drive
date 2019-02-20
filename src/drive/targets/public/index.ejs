@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{.Locale}}">
-
 <head>
   <meta charset="utf-8">
   <title><%= htmlWebpackPlugin.options.title %></title>
@@ -18,19 +17,11 @@
   {{.CozyClientJS}}
   {{.CozyBar}}
   <% } %>
-  <%  if (__STACK_ASSETS__ || (__DEVELOPMENT__ && __TARGET__ !== 'mobile')) { %>
-  <script src="//{{.Domain}}/assets/js/piwik.js" defer></script>
-  <% } %>
   <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
-      <link rel="stylesheet" href="<%- file %>">
-  <% }); %>
-  <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
-      <script src="<%- file %>" defer></script>
+    <link rel="stylesheet" href="<%- file %>">
   <% }); %>
 </head>
-
 <body>
-
   <div
     role="application"
     data-cozy-domain="{{.Domain}}"
@@ -40,8 +31,12 @@
     data-cozy-app-editor="{{.AppEditor}}"
     data-cozy-app-slug="{{.AppSlug}}"
     data-cozy-icon-path="{{.IconPath}}"
-  >
-
+  ></div>
+  <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
+    <script src="<%- file %>"></script>
+  <% }); %>
+  <%  if (__STACK_ASSETS__ || (__DEVELOPMENT__ && __TARGET__ !== 'mobile')) { %>
+    <script src="//{{.Domain}}/assets/js/piwik.js" async></script>
+  <% } %>
 </body>
-
 </html>
