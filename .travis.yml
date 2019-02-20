@@ -17,6 +17,9 @@ node-preset: &node # Used internally to share configuration, ignored by travis.
     yarn: true
     directories:
       - node_modules
+branches:
+  only:
+    - master
 stages:
   - prebuild
   - build
