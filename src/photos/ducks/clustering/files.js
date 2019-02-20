@@ -22,7 +22,6 @@ export const getChanges = async (lastSeq, limit, filteredIds) => {
       )
     })
     .slice(0, limit)
-  //const ids = photosChanges.map(file => file.doc._id)
 
   const newLastSeq =
     photosChanges.length > 0
@@ -34,7 +33,7 @@ export const getChanges = async (lastSeq, limit, filteredIds) => {
 
 export const getFilesFromDate = async date => {
   // Note a file without a metadata.datetime would not be indexed: this is not
-  // a big deal as this is only to compute parameters
+  // a big deal as this is only used to compute parameters
   const filesIndex = await cozyClient.data.defineIndex(DOCTYPE_FILES, [
     'metadata.datetime',
     'class',
@@ -45,7 +44,27 @@ export const getFilesFromDate = async date => {
     class: 'image',
     trashed: false
   }
-  return cozyClient.data.query(filesIndex, {
-    selector: selector
-  })
+  // The results are paginated
+  let next = true
+  let skip = 0
+  let files = []
+  while (next) {
+    const result = await cozyClient.files.query(filesIndex, {
+      selector: selector,
+      wholeResponse: true,
+      skip: skip
+    })
+    files = files.concat(result.data)
+    skip = files.length
+    // NOTE: this is because of https://github.com/cozy/cozy-stack/pull/598
+    if (result.meta.count < Math.pow(2, 31) - 2) {
+      next = false
+    }
+  }
+  return files
+}
+
+export const getAllPhotos = async () => {
+  const files = await cozyClient.data.findAll(DOCTYPE_FILES)
+  return files.filter(file => file.class === 'image' && !file.trashed)
 }
