@@ -25,9 +25,26 @@ const launchCmd = (cmd, params, options) => {
     })
   })
 }
+const updateVersion = async folderName => {
+  const buildCommit = process.env.TRAVIS_COMMIT
+  const TRAVIS_BUILD_DIR = process.env.TRAVIS_BUILD_DIR
+
+  const pathToManifest = path.join(
+    TRAVIS_BUILD_DIR,
+    folderName,
+    'manifest.webapp'
+  )
+  const appManifestObj = fs.readJSONSync(pathToManifest)
+  const appVersion = `${appManifestObj.version}-dev.${buildCommit}`
+  appManifestObj.version = appVersion
+  console.warn(`↳ ℹ️  Updating manifest version to ${appVersion}`)
+
+  fs.writeFileSync(pathToManifest, JSON.stringify(appManifestObj))
+}
 
 const createArchive = async (folderName, archiveFileName) => {
   console.warn(`↳ ℹ️  Creating archive ${folderName}/${archiveFileName}`)
+  await updateVersion(folderName)
   const fileList = await fs.readdir(folderName)
   const options = {
     gzip: true,
@@ -92,15 +109,13 @@ const getUploadTarget = async () => {
 
   if (!fs.existsSync(uploadTarget)) {
     throw new Error(`❌ ${uploadTarget} does not exist.`)
-  }
-  else if (fs.lstatSync(uploadTarget).isDirectory()) {
+  } else if (fs.lstatSync(uploadTarget).isDirectory()) {
     const appName = process.env.COZY_APP_SLUG || 'app'
     const archiveFileName = `${appName.toLowerCase()}.tar.gz`
     await createArchive(uploadTarget, archiveFileName)
 
     return [uploadTarget, archiveFileName]
-  }
-  else {
+  } else {
     const uploadDir = path.dirname(uploadTarget)
     const uploadFile = path.basename(uploadTarget)
 
@@ -120,8 +135,7 @@ const run = (async () => {
     })
     console.warn(`↳ ✅ Upload complete, artifact available at ${appBuildUrl}`)
     console.log(appBuildUrl)
-  }
-  catch (error) {
+  } catch (error) {
     console.error(`↳ ❌  Error while uploading: ${error.message}`)
     process.exit(1)
   }
