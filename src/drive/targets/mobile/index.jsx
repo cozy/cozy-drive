@@ -204,13 +204,9 @@ class InitAppMobile {
       const token = getToken(store.getState())
       const stackClient = client.getStackClient()
 
-      stackClient.setOAuthOptions(realOauthOptions ? realOauthOptions : {})
+      stackClient.setOAuthOptions(realOauthOptions)
       stackClient.setCredentials(token)
-      await restoreCozyClientJs(
-        client.options.uri,
-        realOauthOptions,
-        token ? token : {}
-      )
+      await restoreCozyClientJs(client.options.uri, realOauthOptions, token)
       stackClient.onTokenRefresh = token => {
         updateBarAccessToken(token.accessToken)
         restoreCozyClientJs(client.options.uri, realOauthOptions, token)
