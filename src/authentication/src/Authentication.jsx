@@ -11,7 +11,7 @@ const register = (client, url) => {
   if (client.register) {
     return client.register(url)
   } else {
-    return client.stackClient.register(url)
+    return client.getStackClient().register(url)
   }
 }
 
