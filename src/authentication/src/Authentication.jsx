@@ -52,7 +52,7 @@ class Authentication extends Component {
       const { client, token } = await register(cozyClient, url)
       onComplete({
         url,
-        token,
+        token /*tokenWithoutObject , // {access_token: xxx, refresh_token : xxxx}*/,
         clientInfo: client,
         router: router
       })
