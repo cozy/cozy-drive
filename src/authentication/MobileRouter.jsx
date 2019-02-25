@@ -21,7 +21,13 @@ class MobileRouter extends Component {
     const localSecret = await readSecret()
     console.log({ localSecret })
     console.log({ localState })
+
     try {
+      if (localState !== receivedState) {
+        console.warn('States are not equals')
+        throw new Error('ERROR', 'States are not equals')
+      }
+
       const clientInfo = await secretExchange(
         localSecret,
         cozy_url,
@@ -84,6 +90,9 @@ class MobileRouter extends Component {
 
     if (!isAuthenticated) {
       if (checkIfOnboardingLogin(onboardingInformations)) {
+        /* We need to hide() the ViewController since the ViewController is still active 
+        when the application cames from background (specialy on iOS)
+        */
         window.SafariViewController.hide()
         const { code, state, cozy_url } = onboardingInformations
         this.checkState(state, code, cozy_url, history)
