@@ -100,7 +100,10 @@ export class Breadcrumb extends Component {
               return (
                 <span
                   className={styles['fil-path-link']}
-                  onClick={() => onBreadcrumbClick(folder)}
+                  onClick={e => {
+                    e.stopPropagation()
+                    onBreadcrumbClick(folder)
+                  }}
                 >
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
