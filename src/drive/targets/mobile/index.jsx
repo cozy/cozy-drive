@@ -75,10 +75,14 @@ const isBackgroundServiceParameter = () => {
 
 class InitAppMobile {
   initialize = () => {
+    this.appReady = new Promise((resolve, reject) => {
+      this.resolvePromise = resolve
+      this.rejectPromise = reject
+    })
     this.bindEvents()
     this.stardedApp = false
     if (__DEVELOPMENT__ && typeof cordova === 'undefined') this.onDeviceReady()
-    return this.startApplication()
+    return this.appReady
   }
 
   bindEvents = () => {
@@ -150,8 +154,6 @@ class InitAppMobile {
 
   onDeviceReady = async () => {
     const store = await this.getStore()
-    const client = await this.getClient()
-    const polyglot = await this.getPolyglot()
 
     if (window.plugins && window.plugins.intentShim) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
@@ -159,6 +161,8 @@ class InitAppMobile {
         console.error('Error getting launch intent', err)
       })
     }
+    this.startApplication()
+
     if (isBackgroundServiceParameter()) {
       startBackgroundService()
     }
@@ -242,27 +246,28 @@ class InitAppMobile {
         scope: permissions
       }
     }
-    return new Promise((resolve, reject) => {
-      render(
-        <I18n lang={getLang()} polyglot={polyglot}>
-          <CozyProvider store={store} client={client}>
-            <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
-          </CozyProvider>
-        </I18n>,
-        root,
-        () => {
-          this.stardedApp = true
-          resolve()
-        }
-      )
-    })
+
+    render(
+      <I18n lang={getLang()} polyglot={polyglot}>
+        <CozyProvider store={store} client={client}>
+          <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
+        </CozyProvider>
+      </I18n>,
+      root,
+      () => {
+        console.log('should Resolve')
+        this.stardedApp = true
+        this.resolvePromise()
+      }
+    )
   }
 }
 const app = new InitAppMobile()
 const appBooted = app.initialize()
-
+console.log({ appBooted })
 window.handleOpenURL = async url => {
   await appBooted
+  console.log('appbooted')
   const store = await app.getStore()
   handleDeeplink(hashHistory, store, url)
 }
