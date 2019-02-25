@@ -12,6 +12,33 @@ export class ButtonLinkRegistration extends Component {
   state = {
     url: ''
   }
+  async generateUrl() {
+    await clearState()
+    const {
+      clientName,
+      redirectURI,
+      softwareID,
+      softwareVersion,
+      clientURI,
+      logoURI,
+      policyURI,
+      scope
+    } = this.props.onboarding.oauth
+    const onboardingObject = await generateObjectForUrl({
+      clientName,
+      redirectURI,
+      softwareID,
+      softwareVersion,
+      clientURI,
+      logoURI,
+      policyURI,
+      scope
+    })
+    const url = `https://staging-manager.cozycloud.cc/cozy/create?domain=cozy.works&pk_campaign=drive-${getPlatform() ||
+      'browser'}&onboarding=${onboardingObject}`
+    this.setState({ url })
+    return url
+  }
   render() {
     const {
       className = '',
@@ -21,38 +48,15 @@ export class ButtonLinkRegistration extends Component {
       type = 'submit',
       theme = 'primary'
     } = this.props
-
+    const { url } = this.state
     return (
       <Button
         onClick={async () => {
-          await clearState()
-          const {
-            clientName,
-            redirectURI,
-            softwareID,
-            softwareVersion,
-            clientURI,
-            logoURI,
-            policyURI,
-            scope
-          } = this.props.onboarding.oauth
-          const onboardingObject = await generateObjectForUrl({
-            clientName,
-            redirectURI,
-            softwareID,
-            softwareVersion,
-            clientURI,
-            logoURI,
-            policyURI,
-            scope
-          })
-          const url = `https://staging-manager.cozycloud.cc/cozy/create?domain=cozy.works&pk_campaign=drive-${getPlatform() ||
-            'browser'}&onboarding=${onboardingObject}`
-          this.setState({ url })
-          return nativeLinkOpen({ url })
+          const generatedUrl = await this.generateUrl()
+          return nativeLinkOpen({ url: generatedUrl })
         }}
         theme={theme}
-        href={this.state.url}
+        href={url}
         label={label}
         size={size}
         className={className}
