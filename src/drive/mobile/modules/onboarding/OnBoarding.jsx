@@ -10,8 +10,8 @@ import Analytics from './components/Analytics'
 export default class OnBoarding extends Component {
   onboardingSteps = [Files, BackupPhotosVideos, Analytics]
 
-  redirectToApp() {
-    initBar(this.context.client)
+  async redirectToApp() {
+    await initBar(this.context.client)
     this.props.router.replace('/')
   }
 
