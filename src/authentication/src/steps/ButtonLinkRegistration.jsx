@@ -64,5 +64,5 @@ export class ButtonLinkRegistration extends Component {
 }
 
 ButtonLinkRegistration.propTypes = {
-  onboarding: PropTypes.object
+  onboarding: PropTypes.object.isRequired
 }

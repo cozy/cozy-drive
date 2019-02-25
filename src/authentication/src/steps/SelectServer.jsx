@@ -225,7 +225,8 @@ export class SelectServer extends Component {
     const {
       t,
       previousStep,
-      breakpoints: { isTiny }
+      breakpoints: { isTiny },
+      onboarding
     } = this.props
     const inputID = 'inputID'
     return (
@@ -351,6 +352,7 @@ export class SelectServer extends Component {
               subtle={true}
               type={'button'}
               theme="text"
+              onboarding={onboarding}
             />
           </footer>
         </div>
@@ -365,7 +367,8 @@ SelectServer.propTypes = {
   nextStep: PropTypes.func.isRequired,
   fetching: PropTypes.bool,
   externalError: PropTypes.object,
-  onException: PropTypes.func.isRequired
+  onException: PropTypes.func.isRequired,
+  onboarding: PropTypes.object.isRequired
 }
 
 SelectServer.defaultProps = {
