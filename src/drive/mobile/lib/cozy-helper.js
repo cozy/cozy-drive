@@ -44,8 +44,7 @@ export const initBar = async client => {
   if (document.getElementById('coz-bar')) {
     return
   }
-
-  cozy.bar.init({
+  await cozy.bar.init({
     appName: 'Drive',
     appNamePrefix: 'Cozy',
     appSlug: 'drive',
