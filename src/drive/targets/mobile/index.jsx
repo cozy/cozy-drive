@@ -75,12 +75,15 @@ const isBackgroundServiceParameter = () => {
 
 class InitAppMobile {
   initialize = () => {
+    console.log('initialize')
     this.appReady = new Promise((resolve, reject) => {
       this.resolvePromise = resolve
       this.rejectPromise = reject
     })
     this.bindEvents()
     this.stardedApp = false
+    this.isStarting = false
+    console.log('typeof cordova', typeof cordova)
     if (__DEVELOPMENT__ && typeof cordova === 'undefined') this.onDeviceReady()
     return this.appReady
   }
@@ -153,15 +156,21 @@ class InitAppMobile {
   }
 
   onDeviceReady = async () => {
+    console.log('onDeviceReady')
+    if (this.isStarting === true) {
+      return
+    }
+    this.isStarting = true
+    console.log('afeter isStarting')
     const store = await this.getStore()
-
+    this.startApplication()
+    await this.appReady
     if (window.plugins && window.plugins.intentShim) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
       window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
         console.error('Error getting launch intent', err)
       })
     }
-    this.startApplication()
 
     if (isBackgroundServiceParameter()) {
       startBackgroundService()
@@ -189,7 +198,8 @@ class InitAppMobile {
   }
 
   startApplication = async () => {
-    if (this.stardedApp) return this.afterStart()
+    console.log('StartApplication', console.trace())
+    if (this.stardedApp) return
 
     const store = await this.getStore()
     const client = await this.getClient()
@@ -231,6 +241,7 @@ class InitAppMobile {
         shouldInitBar = true
       }
     } finally {
+      console.log('shouldInitBar', shouldInitBar)
       if (shouldInitBar) await initBar(client)
     }
 
@@ -246,7 +257,6 @@ class InitAppMobile {
         scope: permissions
       }
     }
-
     render(
       <I18n lang={getLang()} polyglot={polyglot}>
         <CozyProvider store={store} client={client}>
@@ -257,6 +267,7 @@ class InitAppMobile {
       () => {
         console.log('should Resolve')
         this.stardedApp = true
+        this.isStarting = false
         this.resolvePromise()
       }
     )
