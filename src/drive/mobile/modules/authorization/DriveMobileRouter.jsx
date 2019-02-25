@@ -25,7 +25,10 @@ class DriveMobileRouter extends Component {
     console.log('afterAuthentication')
     const wasRevoked = this.props.isRevoked
     this.context.client.options.uri = url
+    //const accesstoken = new AccessToken(token)
     const accesstoken = await restoreCozyClientJs(url, clientInfo, token)
+    await initBar(this.context.client)
+
     this.props.saveServerUrl(url)
     setCozyUrl(url)
     this.props.saveCredentials(clientInfo, accesstoken)
@@ -37,9 +40,9 @@ class DriveMobileRouter extends Component {
       restoreCozyClientJs(url, clientInfo, token)
       this.props.dispatch(setToken(token))
     }
-    await initBar(this.context.client)
+
     if (wasRevoked) {
-      initBar(this.context.client)
+      await initBar(this.context.client)
       router.replace('/')
     } else {
       router.replace('/onboarding')
