@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Album view should show a loader 1`] = `
+<Wrapper
+  loadingType="photos_fetching"
+  middle={true}
+  size="xxlarge"
+/>
+`;
+
+exports[`Album view should show a spinner when no album can be loaded 1`] = `
+<Wrapper
+  loadingType="photos_fetching"
+  middle={true}
+  size="xxlarge"
+/>
+`;
+
+exports[`Album view should show an album when loaded 1`] = `
+<Wrapper
+  album={
+    Object {
+      "photos": Object {
+        "data": Array [],
+        "fetchMore": [MockFunction],
+        "hasMore": false,
+      },
+    }
+  }
+  fetchMore={[Function]}
+  hasMore={false}
+  photos={Array []}
+/>
+`;

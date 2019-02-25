@@ -130,34 +130,32 @@ const ConnectedAddToAlbumModal = props => (
   </Query>
 )
 
+export const AlbumPhotosWithLoader = (
+  { data: album, fetchStatus },
+  { updateAlbum, deleteAlbum, removePhotos }
+) => {
+  if (album && fetchStatus === 'loaded') {
+    return (
+      <AlbumPhotos
+        album={album}
+        photos={album.photos.data}
+        updateAlbum={updateAlbum}
+        deleteAlbum={deleteAlbum}
+        removePhotos={removePhotos}
+        hasMore={album.photos.hasMore}
+        fetchMore={album.photos.fetchMore.bind(album.photos)}
+      />
+    )
+  } else {
+    return (
+      <Loading size={'xxlarge'} loadingType={'photos_fetching'} middle={true} />
+    )
+  }
+}
+
 export const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
-    {(
-      { data: album, fetchStatus },
-      { updateAlbum, deleteAlbum, removePhotos }
-    ) => {
-      if (fetchStatus === 'loaded') {
-        return (
-          <AlbumPhotos
-            album={album}
-            photos={album.photos.data}
-            updateAlbum={updateAlbum}
-            deleteAlbum={deleteAlbum}
-            removePhotos={removePhotos}
-            hasMore={album.photos.hasMore}
-            fetchMore={album.photos.fetchMore.bind(album.photos)}
-          />
-        )
-      } else {
-        return (
-          <Loading
-            size={'xxlarge'}
-            loadingType={'photos_fetching'}
-            middle={true}
-          />
-        )
-      }
-    }}
+    {AlbumPhotosWithLoader}
   </Query>
 ))
 
