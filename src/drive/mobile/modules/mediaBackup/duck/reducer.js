@@ -18,7 +18,8 @@ const initialState = {
   cancelMediaBackup: false,
   abortedMediaBackup: false,
   diskQuotaReached: false,
-  uploaded: []
+  uploaded: [],
+  currentUpload: undefined
 }
 
 const reducer = (state = initialState, action) => {
@@ -66,7 +67,7 @@ const reducer = (state = initialState, action) => {
         currentUpload: {
           ...state.currentUpload,
           messageData: {
-            ...state.currentUpload.messageData,
+            ...(state.currentUpload ? state.currentUpload.messageData : {}),
             progress: action.progress
           }
         }
