@@ -32,6 +32,7 @@ class DriveMobileRouter extends Component {
 
     //const accesstoken = new AccessToken(token)
     await restoreCozyClientJs(url, clientInfo, token)
+    console.log('va init la bar', this.context.client)
     await initBar(this.context.client)
 
     this.props.saveServerUrl(url)
