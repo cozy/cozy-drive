@@ -1,3 +1,5 @@
+/* global cozy */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
@@ -25,8 +27,11 @@ class DriveMobileRouter extends Component {
     console.log('afterAuthentication')
     const wasRevoked = this.props.isRevoked
     this.context.client.options.uri = url
+
+    const accesstoken = new cozy.client.auth.AccessToken(token)
+
     //const accesstoken = new AccessToken(token)
-    const accesstoken = await restoreCozyClientJs(url, clientInfo, token)
+    await restoreCozyClientJs(url, clientInfo, token)
     await initBar(this.context.client)
 
     this.props.saveServerUrl(url)
