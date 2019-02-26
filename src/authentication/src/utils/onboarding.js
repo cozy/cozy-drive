@@ -62,18 +62,16 @@ export const generateObjectForUrl = async ({
   policyURI,
   scope
 }) => {
-  const storedSecret = await readSecret()
-  let secretToUse = storedSecret
-
-  if (!storedSecret) {
-    secretToUse = generateSecret()
-    await writeSecret(secretToUse)
+  let secret = await readSecret()
+  if (!secret) {
+    secret = generateSecret()
+    await writeSecret(secret)
   }
-  const storedState = await readState()
-  let stateToUse = storedState
-  if (!storedState) {
-    stateToUse = generateState()
-    await writeState(stateToUse)
+  let state = await readState()
+
+  if (!state) {
+    state = generateState()
+    await writeState(state)
   }
   const oauthStuff = {
     redirect_uri: redirectURI,
@@ -87,8 +85,8 @@ export const generateObjectForUrl = async ({
     onboarding: {
       app: softwareID,
       permissions: scope,
-      secret: secretToUse,
-      state: stateToUse
+      secret: secret,
+      state: state
     }
   }
 
