@@ -146,7 +146,6 @@ export const ConnectedAlbumPhotos = withRouter(props => (
             removePhotos={removePhotos}
             hasMore={album.photos.hasMore}
             fetchMore={album.photos.fetchMore.bind(album.photos)}
-            {...props}
           />
         )
       } else {
