@@ -30,9 +30,7 @@ class DriveMobileRouter extends Component {
 
     const accesstoken = new cozy.client.auth.AccessToken(token)
 
-    //const accesstoken = new AccessToken(token)
-    await restoreCozyClientJs(url, clientInfo, token)
-    console.log('va init la bar', this.context.client)
+    restoreCozyClientJs(url, clientInfo, token)
     await initBar(this.context.client)
 
     this.props.saveServerUrl(url)
@@ -53,7 +51,6 @@ class DriveMobileRouter extends Component {
     } else {
       router.replace('/onboarding')
     }
-    return true
   }
 
   afterLogout = () => {

@@ -40,7 +40,6 @@ class UserActionRequired extends Component {
   }
 
   componentDidMount() {
-    console.log('UserActionRequired didMount')
     if (__TARGET__ === 'mobile') {
       this.checkIfUserActionIsRequired()
       document.addEventListener('resume', this.checkIfUserActionIsRequired)

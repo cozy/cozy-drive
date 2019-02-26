@@ -45,15 +45,12 @@ class Authentication extends Component {
   }
 
   async connectToServer(url) {
-    console.log('connectToServer', url)
     const { onComplete, onException, router } = this.props
     try {
       this.setState({ generalError: null, fetching: true })
       const cozyClient = this.context.client
-      console.log('cozyClient', cozyClient)
       const { client, token } = await register(cozyClient, url)
-      console.log({ token })
-      console.log({ client })
+
       const destructuredToken = {
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
@@ -62,7 +59,7 @@ class Authentication extends Component {
       }
       await onComplete({
         url,
-        token: destructuredToken /*tokenWithoutObject , // {access_token: xxx, refresh_token : xxxx}*/,
+        token: destructuredToken,
         clientInfo: client,
         router: router
       })
