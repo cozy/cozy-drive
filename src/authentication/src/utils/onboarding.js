@@ -123,5 +123,3 @@ export const getAccessToken = (info, cozy_url, code, client) => {
     }
   )
 }
-
-//export const onboard = ({ state, code, client }) => {}

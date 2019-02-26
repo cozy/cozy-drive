@@ -42,10 +42,8 @@ export const initClient = url => {
 export const initBar = async client => {
   // Prevents the bar to be initialized 2 times in a row after the onboarding
   if (document.getElementById('coz-bar')) {
-    console.log('déjà init ?')
     return
   }
-  console.log('init bar 2', client)
   await cozy.bar.init({
     appName: 'Drive',
     appNamePrefix: 'Cozy',
@@ -78,22 +76,14 @@ export const restoreCozyClientJs = (uri, clientInfos, token) => {
   })
   const realToken = new cozy.client.auth.AccessToken(token)
   cozy.client.saveCredentials(clientInfos, realToken)
-  return realToken
-  //return cozy.client.auth.getClient(clientInfos)
-  /* return new Promise((resolve, reject) => {
-    resolve(clientInfos)
-  }) */
 }
 
 export function resetClient(client, clientInfo = null) {
-  console.log({ clientInfo })
-  console.log('cozy.client.auth', cozy.client.auth)
   if (clientInfo && cozy.client.auth.unregisterClient) {
     cozy.client.auth.unregisterClient(clientInfo)
   }
   // reset cozy-bar
   if (document.getElementById('coz-bar')) {
-    console.log('y a la bar, on remove')
     document.getElementById('coz-bar').remove()
   }
   // reset pouchDB
