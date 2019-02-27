@@ -8,6 +8,7 @@ const STEP_EXISTING_SERVER = 'STEP_EXISTING_SERVER'
 
 /** Supports cozy-client-js and cozy-client */
 const register = (client, url) => {
+  console.log('register ?', client)
   if (client.register) {
     return client.register(url)
   } else {
@@ -81,6 +82,7 @@ class Authentication extends Component {
 
     switch (currentStep) {
       case STEP_WELCOME:
+        console.log('welcome')
         return (
           <Welcome
             selectServer={() => this.setupSteps()}
@@ -91,6 +93,7 @@ class Authentication extends Component {
           />
         )
       case STEP_EXISTING_SERVER:
+        console.log('selectServer')
         return (
           <SelectServer
             nextStep={this.connectToServer}

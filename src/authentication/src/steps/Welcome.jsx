@@ -24,14 +24,14 @@ export class Welcome extends Component {
           theme="secondary"
           onClick={register}
           label={t('mobile.onboarding.welcome.sign_up')}
-          size={isMobile ? 'normal' : 'large'}
+          size={isMobile ? 'small' : 'large'}
         />
       )
     }
     return (
       <ButtonLinkRegistration
         label={t('mobile.onboarding.welcome.create_my_cozy')}
-        size={isMobile ? 'normal' : 'large'}
+        size={isMobile ? 'small' : 'large'}
         onboarding={onboarding}
       />
     )
@@ -86,7 +86,7 @@ export class Welcome extends Component {
               onClick={selectServer}
               theme="secondary"
               label={t('mobile.onboarding.welcome.button')}
-              size={isMobile ? 'normal' : 'large'}
+              size={isMobile ? 'small' : 'large'}
             />
           </footer>
         </div>
