@@ -1,4 +1,4 @@
-import { log } from 'cozy-konnector-libs'
+import { cozyClient, log } from 'cozy-konnector-libs'
 
 import {
   getChanges,
@@ -142,30 +142,40 @@ const recomputeParameters = async setting => {
   }
   log('info', `Compute clustering parameters on ${files.length} photos`)
 
-  const dataset = await prepareDataset(files)
+  const dataset = prepareDataset(files)
   const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
   const epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
   return createParameter(dataset, epsTemporal, epsSpatial)
 }
 
-const runClustering = async (setting, since, filteredIds) => {
-  const changes = await getChanges(since, CHANGES_RUN_LIMIT, filteredIds)
-  if (!changes || changes.photos.length < 1) {
+const runClustering = async setting => {
+  const since = setting.lastSeq ? setting.lastSeq : 0
+  const changes = await getChanges(since, CHANGES_RUN_LIMIT)
+  if (changes.photos.length < 1) {
     log('info', 'No photo found to clusterize')
     return
   }
-  const dataset = await prepareDataset(changes.photos)
+  const dataset = prepareDataset(changes.photos)
   const result = await clusterizePhotos(setting, dataset)
   if (!result) {
     return
   }
+  /*
+  WARNING: we save the lastSeq retrieved at the beginning of the clustering.
+  However, we might have produced new _changes on files by saving the
+  referenced-by, so they will be computed again at the next run.
+  We cannot save the new lastSeq, as new files might have been uploaded by
+  this time and would be ignored for the next run.
+  This is unpleasant, but harmless, as no new write will be produced on the
+  already clustered files.
+ */
   log('info', `${result.clusteredCount} photos clustered since ${since}`)
   setting = await updateSettingStatus(
     result.setting,
     result.clusteredCount,
     changes
   )
-  return { setting, changes, dataset }
+  return changes.photos
 }
 
 const onPhotoUpload = async () => {
@@ -175,7 +185,7 @@ const onPhotoUpload = async () => {
   if (!setting) {
     // Create setting
     const files = await getAllPhotos()
-    const dataset = await prepareDataset(files)
+    const dataset = prepareDataset(files)
     const params =
       dataset.length > EVALUATION_THRESHOLD
         ? initParameters(dataset)
@@ -209,32 +219,17 @@ const onPhotoUpload = async () => {
     we force a CHANGES_RUN_LIMIT to serialize the execution and be able to
     restart the clustering from the last run.
   */
-  let hasChanges = true
-  let since = setting.lastSeq ? setting.lastSeq : 0
-  let filteredIds = []
-  while (hasChanges) {
-    const results = await runClustering(setting, since, filteredIds)
-    if (!results) {
-      return
+  const processedPhotos = await runClustering(setting)
+  if (processedPhotos.length >= CHANGES_RUN_LIMIT) {
+    // There are still changes to process: re-launch the service
+    const args = {
+      message: {
+        name: 'onPhotoUpload',
+        slug: 'photos'
+      }
     }
-    if (results.changes.photos.length < CHANGES_RUN_LIMIT) {
-      // All the changes have been processed
-      hasChanges = false
-    }
-    setting = results.setting
-    since = results.changes.newLastSeq
-    // Process a photo only once, even if it has several changes
-    filteredIds = results.dataset.map(photo => photo.id)
+    await cozyClient.jobs.create('service', args)
   }
-  /*
-  WARNING: we save the lastSeq retrieved at the beginning of the clustering.
-  However, we might have produced new _changes on files by saving the
-  referenced-by, so they will be computed again at the next run.
-  We cannot save the new lastSeq, as new files might have been uploaded by
-  this time and would be ignored for the next run.
-  This is unpleasant, but harmless, as no new write will be produced on the
-  already clustered files.
- */
 }
 
 onPhotoUpload()

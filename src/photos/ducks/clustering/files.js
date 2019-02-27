@@ -1,14 +1,13 @@
 import { cozyClient, log } from 'cozy-konnector-libs'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
-export const getChanges = async (lastSeq, limit, filteredIds) => {
+export const getChanges = async (lastSeq, limit) => {
   log('info', `Get changes on files since ${lastSeq}`)
   const result = await cozyClient.fetchJSON(
     'GET',
     `/data/${DOCTYPE_FILES}/_changes?include_docs=true&since=${lastSeq}`
   )
   // Filter the changes to only get non-trashed images.
-  // The filteredIds array is used to skip already clustered files
   const photosChanges = result.results
     .map(res => {
       return { doc: res.doc, seq: res.seq }
@@ -17,8 +16,7 @@ export const getChanges = async (lastSeq, limit, filteredIds) => {
       return (
         res.doc.class === 'image' &&
         !res.doc._id.includes('_design') &&
-        !res.doc.trashed &&
-        !filteredIds.includes(res.doc._id)
+        !res.doc.trashed
       )
     })
     .slice(0, limit)
