@@ -3,16 +3,16 @@ import { shallow } from 'enzyme'
 import { AlbumPhotosWithLoader } from './index'
 
 describe('Album view', () => {
+  const AlbumPhotos = AlbumPhotosWithLoader({ children: null })
+
   it('should show a loader', () => {
-    const component = shallow(
-      <AlbumPhotosWithLoader data={[]} fetchStatus="loading" />
-    )
+    const component = shallow(<AlbumPhotos data={[]} fetchStatus="loading" />)
     expect(component).toMatchSnapshot()
   })
 
   it('should show an album when loaded', () => {
     const component = shallow(
-      <AlbumPhotosWithLoader
+      <AlbumPhotos
         data={{
           photos: {
             data: [],
@@ -27,9 +27,7 @@ describe('Album view', () => {
   })
 
   it('should show a spinner when no album can be loaded', () => {
-    const component = shallow(
-      <AlbumPhotosWithLoader data={null} fetchStatus="loaded" />
-    )
+    const component = shallow(<AlbumPhotos data={null} fetchStatus="loaded" />)
     expect(component).toMatchSnapshot()
   })
 })
