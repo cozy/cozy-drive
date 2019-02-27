@@ -90,6 +90,8 @@ export const generateObjectForUrl = async ({
     }
   }
 
+  console.log({ oauthStuff })
+
   return encodeURIComponent(JSON.stringify(oauthStuff))
 }
 
