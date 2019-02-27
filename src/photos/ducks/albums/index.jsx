@@ -130,7 +130,7 @@ const ConnectedAddToAlbumModal = props => (
   </Query>
 )
 
-export const AlbumPhotosWithLoader = (
+export const AlbumPhotosWithLoader = ({ children }) => (
   { data: album, fetchStatus },
   { updateAlbum, deleteAlbum, removePhotos }
 ) => {
@@ -144,7 +144,9 @@ export const AlbumPhotosWithLoader = (
         removePhotos={removePhotos}
         hasMore={album.photos.hasMore}
         fetchMore={album.photos.fetchMore.bind(album.photos)}
-      />
+      >
+        {children}
+      </AlbumPhotos>
     )
   } else {
     return (
@@ -155,7 +157,9 @@ export const AlbumPhotosWithLoader = (
 
 export const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
-    {AlbumPhotosWithLoader}
+    {AlbumPhotosWithLoader({
+      children: props.children
+    })}
   </Query>
 ))
 
