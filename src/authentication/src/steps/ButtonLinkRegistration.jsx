@@ -6,7 +6,11 @@ import { Button } from 'cozy-ui/react'
 
 import { nativeLinkOpen } from '../LinkManager'
 
-import { generateObjectForUrl, clearState } from '../utils/onboarding'
+import {
+  generateObjectForUrl,
+  clearState,
+  clearSecret
+} from '../utils/onboarding'
 
 export class ButtonLinkRegistration extends Component {
   state = {
@@ -14,6 +18,7 @@ export class ButtonLinkRegistration extends Component {
   }
   async generateUrl() {
     await clearState()
+    await clearSecret()
     const {
       clientName,
       redirectURI,
