@@ -24,14 +24,10 @@ import { setCozyUrl } from 'drive/lib/reporter'
 
 class DriveMobileRouter extends Component {
   afterAuthentication = async ({ url, clientInfo, token, router }) => {
-    console.log('afterAuthentication')
     const wasRevoked = this.props.isRevoked
     this.context.client.options.uri = url
-    console.log('before accessToken')
     const accesstoken = new cozy.client.auth.AccessToken(token)
-    console.log('before restore')
     restoreCozyClientJs(url, clientInfo, token)
-    console.log('before init')
     await initBar(this.context.client)
 
     this.props.saveServerUrl(url)
@@ -67,7 +63,6 @@ class DriveMobileRouter extends Component {
       onboarding,
       onboardingInformations
     } = this.props
-    console.log('render DriveMobileRouter')
     return (
       <div style={{ flex: '1' }}>
         <MobileRouter

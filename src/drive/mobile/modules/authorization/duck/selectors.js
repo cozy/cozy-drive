@@ -8,7 +8,6 @@ const getProp = (state, key) => {
   ) {
     return state.mobile.authorization[key]
   }
-  console.warn(`Authorization prop not found: ${key}`)
   return undefined
 }
 

@@ -68,7 +68,6 @@ const isBackgroundServiceParameter = () => {
 
 class InitAppMobile {
   initialize = () => {
-    console.log('initialize')
     this.appReady = new Promise((resolve, reject) => {
       this.resolvePromise = resolve
       this.rejectPromise = reject
@@ -76,7 +75,6 @@ class InitAppMobile {
     this.bindEvents()
     this.stardedApp = false
     this.isStarting = false
-    console.log('typeof cordova', typeof cordova)
     if (__DEVELOPMENT__ && typeof cordova === 'undefined') this.onDeviceReady()
     return this.appReady
   }
@@ -149,7 +147,6 @@ class InitAppMobile {
   }
 
   onDeviceReady = async () => {
-    console.log('onDeviceReady')
     if (this.isStarting === true) {
       return
     }
@@ -191,7 +188,6 @@ class InitAppMobile {
   }
 
   startApplication = async () => {
-    console.log('StartApplication', console.trace())
     if (this.stardedApp) return
 
     const store = await this.getStore()
@@ -224,8 +220,10 @@ class InitAppMobile {
       shouldInitBar = true
       await store.dispatch(startReplication())
     } catch (e) {
+      // eslint-disable no-console
       console.warn(e)
       if (isClientRevoked(e, store.getState())) {
+        // eslint-disable no-console
         console.warn('Your device is not connected to your server anymore')
         store.dispatch(revokeClient())
         resetClient(client)
@@ -234,7 +232,6 @@ class InitAppMobile {
         shouldInitBar = true
       }
     } finally {
-      console.log('shouldInitBar', shouldInitBar)
       if (shouldInitBar) await initBar(client)
     }
 
@@ -258,7 +255,6 @@ class InitAppMobile {
       </I18n>,
       root,
       () => {
-        console.log('should Resolve')
         this.stardedApp = true
         this.isStarting = false
         this.resolvePromise(true)
