@@ -187,7 +187,7 @@ class InitAppMobile {
   }
 
   startApplication = async () => {
-    if (this.stardedApp || this.isStarting) return
+    if (this.stardedApp) return
 
     const store = await this.getStore()
     const client = await this.getClient()
