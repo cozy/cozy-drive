@@ -22,6 +22,10 @@ import {
 import { saveCredentials } from './sagas'
 import { setCozyUrl } from 'drive/lib/reporter'
 
+import {
+  onboardingInformationsPropTypes,
+  onboardingPropTypes
+} from '../../../../authentication/OnboardingPropTypes'
 class DriveMobileRouter extends Component {
   afterAuthentication = async ({ url, clientInfo, token, router }) => {
     const wasRevoked = this.props.isRevoked
@@ -84,11 +88,12 @@ class DriveMobileRouter extends Component {
   }
 }
 DriveMobileRouter.propTypes = {
-  onboarding: Proptypes.object,
+  onboarding: onboardingPropTypes.isRequired,
   isAuthenticated: Proptypes.bool.isRequired,
   isRevoked: Proptypes.bool.isRequired,
   appRoutes: Proptypes.object.isRequired,
-  history: Proptypes.object.isRequired
+  history: Proptypes.object.isRequired,
+  onboardingInformations: onboardingInformationsPropTypes.isRequired
 }
 const DriveMobileRouterWithRoutes = props => (
   <DriveMobileRouter {...props} appRoutes={AppRoute} />

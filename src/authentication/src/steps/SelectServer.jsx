@@ -12,6 +12,8 @@ import 'cozy-ui/assets/icons/ui/next.svg'
 import 'cozy-ui/assets/icons/ui/lock.svg'
 import styles from '../styles'
 import { ButtonLinkRegistration } from './ButtonLinkRegistration'
+import { onboardingPropTypes } from '../../OnboardingPropTypes'
+
 require('url-polyfill')
 
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
@@ -368,7 +370,7 @@ SelectServer.propTypes = {
   fetching: PropTypes.bool,
   externalError: PropTypes.object,
   onException: PropTypes.func.isRequired,
-  onboarding: PropTypes.object.isRequired
+  onboarding: onboardingPropTypes.isRequired
 }
 
 SelectServer.defaultProps = {

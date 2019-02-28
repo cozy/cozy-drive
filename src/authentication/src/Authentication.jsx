@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Welcome from './steps/Welcome'
 import SelectServer from './steps/SelectServer'
-
+import { onboardingPropTypes } from '../OnboardingPropTypes'
 const STEP_WELCOME = 'STEP_WELCOME'
 const STEP_EXISTING_SERVER = 'STEP_EXISTING_SERVER'
 
@@ -111,7 +111,8 @@ Authentication.propTypes = {
   onComplete: PropTypes.func.isRequired,
   onException: PropTypes.func.isRequired,
   router: PropTypes.object,
-  appIcon: PropTypes.string.isRequired
+  appIcon: PropTypes.string.isRequired,
+  onboarding: onboardingPropTypes.isRequired
 }
 
 Authentication.contextTypes = {
