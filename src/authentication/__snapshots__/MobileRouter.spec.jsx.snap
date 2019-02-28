@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileRouter should render nothing when onboarding 1`] = `null`;
+
+exports[`MobileRouter should render the appRoutes when all is well 1`] = `
+<Router
+  history={Object {}}
+  render={[Function]}
+>
+  <div />
+</Router>
+`;
+
+exports[`MobileRouter should render the auth screen when the onboarding has not started 1`] = `
+<Authentication
+  appIcon=""
+  onComplete={[MockFunction]}
+  onException={[Function]}
+  onboarding={Object {}}
+  router={Object {}}
+/>
+`;
+
+exports[`MobileRouter should render the revoked view 1`] = `
+<Wrapper
+  onLogBackIn={[MockFunction]}
+  onLogout={[MockFunction]}
+  router={Object {}}
+/>
+`;
