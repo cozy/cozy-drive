@@ -18,7 +18,7 @@ import {
   onboardingInformationsPropTypes,
   onboardingPropTypes
 } from './OnboardingPropTypes'
-class MobileRouter extends Component {
+export class MobileRouter extends Component {
   async doOnboardingLogin(receivedState, code, instanceDomain, history) {
     const localState = await readState()
     const localSecret = await readSecret()
@@ -85,7 +85,7 @@ class MobileRouter extends Component {
 
     if (!isAuthenticated) {
       if (checkIfOnboardingLogin(onboardingInformations)) {
-        /* We need to hide() the ViewController since the ViewController is still active 
+        /* We need to hide() the ViewController since the ViewController is still active
         when the application cames from background (specialy on iOS)
         */
         if (window.SafariViewController) window.SafariViewController.hide()
