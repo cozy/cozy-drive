@@ -14,7 +14,10 @@ import {
   checkExchangedInformations,
   checkIfOnboardingLogin
 } from './src/utils/onboarding'
-
+import {
+  onboardingInformationsPropTypes,
+  onboardingPropTypes
+} from './OnboardingPropTypes'
 class MobileRouter extends Component {
   async doOnboardingLogin(receivedState, code, cozy_url, history) {
     const localState = await readState()
@@ -113,7 +116,14 @@ class MobileRouter extends Component {
 }
 
 MobileRouter.propTypes = {
-  onboarding: Proptypes.object,
-  onboardingInformations: Proptypes.object
+  onboarding: onboardingPropTypes.isRequired,
+  onboardingInformations: onboardingInformationsPropTypes.isRequired,
+  history: Proptypes.object.isRequired,
+  appRoutes: Proptypes.object.isRequired,
+  isAuthenticated: Proptypes.bool.isRequired,
+  isRevoked: Proptypes.bool.isRequired,
+  onAuthenticated: Proptypes.func.isRequired,
+  onLogout: Proptypes.func.isRequired,
+  appIcon: Proptypes.string.isRequired
 }
 export default withRouter(MobileRouter)

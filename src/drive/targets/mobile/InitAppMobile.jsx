@@ -151,7 +151,6 @@ class InitAppMobile {
       return
     }
     this.isStarting = true
-    console.log('afeter isStarting')
     const store = await this.getStore()
     this.startApplication()
     await this.appReady

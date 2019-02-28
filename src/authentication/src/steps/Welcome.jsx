@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button, MainTitle, Icon } from 'cozy-ui/react'
 import 'cozy-ui/assets/icons/ui/cozy-negative.svg'
@@ -7,7 +8,7 @@ import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
 
 import styles from '../styles.styl'
 import { ButtonLinkRegistration } from './ButtonLinkRegistration'
-
+import { onboardingPropTypes } from '../../OnboardingPropTypes'
 export class Welcome extends Component {
   registerRender = () => {
     const {
@@ -95,4 +96,9 @@ export class Welcome extends Component {
   }
 }
 
+Welcome.propTypes = {
+  selectServer: PropTypes.func.isRequired,
+  appIcon: PropTypes.string.isRequired,
+  onboarding: onboardingPropTypes.isRequired
+}
 export default withBreakpoints()(translate()(Welcome))
