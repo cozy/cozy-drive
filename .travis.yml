@@ -10,7 +10,7 @@ branches:
   only:
     - master
     # tags
-    - /^\d+\.\d+\.\d+(\-beta.\d+)?$/
+    - /^v\d+\.\d+\.\d+(\-beta.\d+)?$/
 stages:
   - prebuild
   - build
