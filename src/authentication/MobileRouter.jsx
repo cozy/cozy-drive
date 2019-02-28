@@ -87,9 +87,11 @@ class MobileRouter extends Component {
         /* We need to hide() the ViewController since the ViewController is still active 
         when the application cames from background (specialy on iOS)
         */
-        window.SafariViewController.hide()
+        if (window.SafariViewController) window.SafariViewController.hide()
         const { code, state, cozy_url } = onboardingInformations
         this.doOnboardingLogin(state, code, cozy_url, history)
+        //we return null since the previous method is async
+        return null
       } else {
         return (
           <Authentication

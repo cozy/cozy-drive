@@ -104,8 +104,12 @@ export const secretExchange = (secret, cozy_url, client) => {
   return response
 }
 
-export const getAccessToken = (info, cozy_url, code, client) => {
-  const { client_id, client_secret } = info
+export const getAccessToken = (
+  { client_id, client_secret },
+  cozy_url,
+  code,
+  client
+) => {
   const body = `grant_type=authorization_code&code=${code}&client_id=${client_id}&client_secret=${client_secret}`
   return client.stackClient.fetch(
     'POST',
