@@ -14,7 +14,7 @@ import styles from './index.styl'
 import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
-class App extends Component {
+export class App extends Component {
   onDownload = selected => {
     const photos = selected.length !== 0 ? selected : null
     this.downloadPhotos(photos)
@@ -44,8 +44,18 @@ class App extends Component {
       .downloadArchive(allPhotos.map(({ _id }) => _id), album.name)
   }
 
+  renderViewer(children) {
+    // children are injected by react-router when navigating a photo of the album
+    if (!children) return null
+    return React.Children.map(children, child =>
+      React.cloneElement(child, {
+        photos: this.props.photos
+      })
+    )
+  }
+
   render() {
-    const { album, hasMore, photos, fetchMore } = this.props
+    const { album, hasMore, photos, fetchMore, children } = this.props
 
     const { t } = this.context
     return (
@@ -69,6 +79,7 @@ class App extends Component {
                       className={styles['pho-public-download']}
                       onClick={() => this.onDownload(selected)}
                       icon="download"
+                      size="normal"
                       label={t('Toolbar.album_download')}
                     />
 
@@ -99,6 +110,7 @@ class App extends Component {
                   hasMore={hasMore}
                   fetchMore={fetchMore}
                 />
+                {this.renderViewer(children)}
               </div>
             )}
           </Selection>
@@ -114,6 +126,9 @@ App.propTypes = {
   photos: PropTypes.array.isRequired,
   fetchMore: PropTypes.func.isRequired
 }
+App.contextTypes = {
+  t: PropTypes.func
+}
 const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
     {({ data: album, fetchStatus }) => {
@@ -127,7 +142,9 @@ const ConnectedApp = props => (
             photos={album.photos.data}
             hasMore={album.photos.hasMore}
             fetchMore={album.photos.fetchMore.bind(album.photos)}
-          />
+          >
+            {props.children}
+          </App>
         )
       } else {
         return (
