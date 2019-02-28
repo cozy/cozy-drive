@@ -38,9 +38,7 @@ const generateSecret = () => {
   return generateRandomString()
 }
 export const checkIfOnboardingLogin = onboardingInformations => {
-  console.log('checkfif', onboardingInformations)
-  if (onboardingInformations.code !== null) return true
-  return false
+  return onboardingInformations.code !== null
 }
 
 export const checkExchangedInformations = (
@@ -49,10 +47,9 @@ export const checkExchangedInformations = (
   localState,
   remoteState
 ) => {
-  if (localSecret === remoteSecret && localState === remoteState) return true
-  return false
+  return localSecret === remoteSecret && localState === remoteState
 }
-export const generateObjectForUrl = async ({
+export const generateOAuthForUrl = async ({
   clientName,
   redirectURI,
   softwareID,
@@ -90,18 +87,16 @@ export const generateObjectForUrl = async ({
     }
   }
 
-  console.log({ oauthStuff })
-
   return encodeURIComponent(JSON.stringify(oauthStuff))
 }
 
-const getCozyUrl = cozy_url => {
+const addProtocolToURL = cozy_url => {
   return `https://${cozy_url}`
 }
 export const secretExchange = (secret, cozy_url, client) => {
   const response = client.stackClient.fetchJSON(
     'POST',
-    getCozyUrl(cozy_url) + '/auth/secret_exchange',
+    addProtocolToURL(cozy_url) + '/auth/secret_exchange',
     {
       secret
     }
@@ -114,7 +109,7 @@ export const getAccessToken = (info, cozy_url, code, client) => {
   const body = `grant_type=authorization_code&code=${code}&client_id=${client_id}&client_secret=${client_secret}`
   return client.stackClient.fetch(
     'POST',
-    getCozyUrl(cozy_url) + '/auth/access_token',
+    addProtocolToURL(cozy_url) + '/auth/access_token',
     body,
     {
       headers: {

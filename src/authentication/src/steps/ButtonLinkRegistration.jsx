@@ -7,7 +7,7 @@ import { Button } from 'cozy-ui/react'
 import { nativeLinkOpen } from '../LinkManager'
 
 import {
-  generateObjectForUrl,
+  generateOAuthForUrl,
   clearState,
   clearSecret
 } from '../utils/onboarding'
@@ -29,7 +29,7 @@ export class ButtonLinkRegistration extends Component {
       policyURI,
       scope
     } = this.props.onboarding.oauth
-    const onboardingObject = await generateObjectForUrl({
+    const onboardingObject = await generateOAuthForUrl({
       clientName,
       redirectURI,
       softwareID,

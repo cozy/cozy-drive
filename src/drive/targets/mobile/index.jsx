@@ -18,10 +18,8 @@ if (__DEVELOPMENT__) {
 
 const app = new InitAppMobile()
 const appBooted = app.initialize()
-console.log({ appBooted })
 window.handleOpenURL = async url => {
   await appBooted
-  console.log('appbooted')
   const store = await app.getStore()
   handleDeeplink(hashHistory, store, url)
 }

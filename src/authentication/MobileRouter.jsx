@@ -16,16 +16,13 @@ import {
 } from './src/utils/onboarding'
 
 class MobileRouter extends Component {
-  async checkState(receivedState, code, cozy_url, history) {
+  async doOnboardingLogin(receivedState, code, cozy_url, history) {
     const localState = await readState()
     const localSecret = await readSecret()
-    console.log({ localSecret })
-    console.log({ localState })
 
     try {
       if (localState !== receivedState) {
-        console.warn('States are not equals')
-        throw new Error('ERROR', 'States are not equals')
+        throw new Error('States are not equals')
       }
 
       const clientInfo = await secretExchange(
@@ -35,8 +32,6 @@ class MobileRouter extends Component {
       )
 
       const { onboarding_secret, onboarding_state } = clientInfo
-      console.log({ onboarding_secret })
-      console.log({ onboarding_state })
       if (
         !checkExchangedInformations(
           localSecret,
@@ -45,7 +40,7 @@ class MobileRouter extends Component {
           onboarding_state
         )
       )
-        throw new Error('ERROR', 'exchanged informations are not good')
+        throw new Error('exchanged informations are not good')
 
       const getTokenRequest = await getAccessToken(
         clientInfo,
@@ -55,24 +50,20 @@ class MobileRouter extends Component {
       )
       const token = await getTokenRequest.json()
       if (getTokenRequest.status !== 200) {
-        throw new Error('ERROR', token.error)
+        throw new Error('token.error')
       }
 
-      const afterAuth = await this.props.onAuthenticated({
+      await this.props.onAuthenticated({
         url: `https://${cozy_url}`,
         token,
         clientInfo,
         router: history
       })
-      console.log('afterAuth', afterAuth)
-      clearState()
-      clearSecret()
     } catch (error) {
-      console.log('error', error)
+      this.props.onLogout()
+    } finally {
       clearState()
       clearSecret()
-      this.props.onLogout()
-      return false
     }
   }
   render() {
@@ -95,7 +86,7 @@ class MobileRouter extends Component {
         */
         window.SafariViewController.hide()
         const { code, state, cozy_url } = onboardingInformations
-        this.checkState(state, code, cozy_url, history)
+        this.doOnboardingLogin(state, code, cozy_url, history)
       } else {
         return (
           <Authentication
