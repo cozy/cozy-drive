@@ -261,7 +261,7 @@ class InitAppMobile {
         console.log('should Resolve')
         this.stardedApp = true
         this.isStarting = false
-        this.resolvePromise()
+        this.resolvePromise(true)
       }
     )
   }
