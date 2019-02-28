@@ -1,0 +1,230 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Public view should render children when they are present 1`] = `
+<Provider
+  value={Array []}
+>
+  <div>
+    <div>
+      <div
+        className=""
+      >
+        <h2 />
+        <div
+          role="toolbar"
+        >
+          <CozyHomeLink
+            from="sharing-photos"
+            t={
+              [MockFunction] {
+                "calls": Array [
+                  Array [
+                    "Toolbar.album_download",
+                  ],
+                  Array [
+                    "Toolbar.more",
+                  ],
+                  Array [
+                    "Toolbar.album_download",
+                  ],
+                  Array [
+                    "Toolbar.album_download",
+                  ],
+                  Array [
+                    "Toolbar.more",
+                  ],
+                  Array [
+                    "Toolbar.album_download",
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                ],
+              }
+            }
+          />
+          <Button
+            icon="download"
+            onClick={[Function]}
+            size="normal"
+            tag="button"
+            theme="secondary"
+            type="submit"
+          />
+          <Menu
+            className="u-hide--desk"
+            component={<Wrapper />}
+            disabled={false}
+            itemsStyle={Object {}}
+            onSelect={null}
+            onSelectDisabled={null}
+            popover={false}
+            position="right"
+          >
+            <MenuItem
+              icon={
+                <Icon
+                  icon="download"
+                  spin={false}
+                />
+              }
+              onSelect={[Function]}
+            />
+          </Menu>
+        </div>
+      </div>
+      <Wrapper
+        fetchMore={[MockFunction]}
+        hasMore={false}
+        lists={
+          Array [
+            Object {
+              "photos": Array [
+                1,
+                2,
+                3,
+              ],
+            },
+          ]
+        }
+        onPhotoToggle={[Function]}
+        onPhotosSelect={[Function]}
+        onPhotosUnselect={[Function]}
+        photosContext="timeline"
+        selected={Array []}
+        showSelection={false}
+      />
+      <div
+        key=".0"
+        photos={
+          Array [
+            1,
+            2,
+            3,
+          ]
+        }
+      />
+    </div>
+  </div>
+</Provider>
+`;
+
+exports[`Public view should render the album 1`] = `
+<Provider
+  value={Array []}
+>
+  <div>
+    <div>
+      <div
+        className=""
+      >
+        <h2 />
+        <div
+          role="toolbar"
+        >
+          <CozyHomeLink
+            from="sharing-photos"
+            t={
+              [MockFunction] {
+                "calls": Array [
+                  Array [
+                    "Toolbar.album_download",
+                  ],
+                  Array [
+                    "Toolbar.more",
+                  ],
+                  Array [
+                    "Toolbar.album_download",
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                ],
+              }
+            }
+          />
+          <Button
+            icon="download"
+            onClick={[Function]}
+            size="normal"
+            tag="button"
+            theme="secondary"
+            type="submit"
+          />
+          <Menu
+            className="u-hide--desk"
+            component={<Wrapper />}
+            disabled={false}
+            itemsStyle={Object {}}
+            onSelect={null}
+            onSelectDisabled={null}
+            popover={false}
+            position="right"
+          >
+            <MenuItem
+              icon={
+                <Icon
+                  icon="download"
+                  spin={false}
+                />
+              }
+              onSelect={[Function]}
+            />
+          </Menu>
+        </div>
+      </div>
+      <Wrapper
+        fetchMore={[MockFunction]}
+        hasMore={false}
+        lists={
+          Array [
+            Object {
+              "photos": Array [],
+            },
+          ]
+        }
+        onPhotoToggle={[Function]}
+        onPhotosSelect={[Function]}
+        onPhotosUnselect={[Function]}
+        photosContext="timeline"
+        selected={Array []}
+        showSelection={false}
+      />
+    </div>
+  </div>
+</Provider>
+`;
