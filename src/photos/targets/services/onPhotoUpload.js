@@ -56,13 +56,11 @@ const createInitialClusters = async (paramsMode, dataset) => {
 }
 
 // Clusterize the given photos, i.e. organize them depending on metrics
-const clusterizePhotos = async (setting, dataset) => {
+const clusterizePhotos = async (setting, dataset, albums) => {
   log('info', `Start clustering on ${dataset.length} photos`)
 
   let clusteredCount = 0
   try {
-    const albums = await findAutoAlbums()
-
     if (albums && albums.length > 0) {
       // Build the clusterize object, based on the dataset and existing photos
       const clusterize = await albumsToClusterize(dataset, albums)
@@ -155,8 +153,9 @@ const runClustering = async setting => {
     log('info', 'No photo found to clusterize')
     return
   }
-  const dataset = prepareDataset(changes.photos)
-  const result = await clusterizePhotos(setting, dataset)
+  const albums = await findAutoAlbums()
+  const dataset = prepareDataset(changes.photos, albums)
+  const result = await clusterizePhotos(setting, dataset, albums)
   if (!result) {
     return
   }
