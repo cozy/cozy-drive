@@ -39,7 +39,7 @@ export class ButtonLinkRegistration extends Component {
       policyURI,
       scope
     })
-    const url = `https://staging-manager.cozycloud.cc/cozy/create?domain=cozy.works&pk_campaign=drive-${getPlatform() ||
+    const url = `https://manager.cozycloud.cc/cozy/create?pk_campaign=drive-${getPlatform() ||
       'browser'}&onboarding=${onboardingObject}`
     this.setState({ url })
     return url
