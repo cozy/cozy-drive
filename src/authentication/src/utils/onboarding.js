@@ -96,14 +96,14 @@ export const secretExchange = (secret, instanceDomain, client) => {
   return response
 }
 
-export const getAccessToken = (
+export const getAccessToken = async (
   { client_id, client_secret },
   instanceDomain,
   code,
   client
 ) => {
   const body = `grant_type=authorization_code&code=${code}&client_id=${client_id}&client_secret=${client_secret}`
-  return client.stackClient.fetch(
+  const getTokenRequest = await client.stackClient.fetch(
     'POST',
     addProtocolToURL(instanceDomain) + '/auth/access_token',
     body,
@@ -113,4 +113,9 @@ export const getAccessToken = (
       }
     }
   )
+  const token = await getTokenRequest.json()
+  if (getTokenRequest.status !== 200) {
+    throw new Error('token.error')
+  }
+  return token
 }
