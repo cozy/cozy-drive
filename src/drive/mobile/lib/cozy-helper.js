@@ -21,16 +21,18 @@ export const getOauthOptions = () => {
   }
 }
 
+export const permissions = [
+  'io.cozy.files',
+  'io.cozy.apps:GET',
+  'io.cozy.settings:GET',
+  'io.cozy.contacts',
+  'io.cozy.jobs:POST:sendmail:worker'
+]
+
 export const initClient = url => {
   return new CozyClient({
     uri: url,
-    scope: [
-      'io.cozy.files',
-      'io.cozy.apps:GET',
-      'io.cozy.settings:GET',
-      'io.cozy.contacts',
-      'io.cozy.jobs:POST:sendmail:worker'
-    ],
+    scope: permissions,
     oauth: getOauthOptions(),
     offline: { doctypes: [DOCTYPE_FILES] },
     schema
@@ -42,8 +44,7 @@ export const initBar = async client => {
   if (document.getElementById('coz-bar')) {
     return
   }
-
-  cozy.bar.init({
+  await cozy.bar.init({
     appName: 'Drive',
     appNamePrefix: 'Cozy',
     appSlug: 'drive',
@@ -73,10 +74,8 @@ export const restoreCozyClientJs = (uri, clientInfos, token) => {
     },
     offline
   })
-
-  cozy.client.saveCredentials(clientInfos, token)
-
-  return cozy.client.auth.getClient(clientInfos)
+  const realToken = new cozy.client.auth.AccessToken(token)
+  cozy.client.saveCredentials(clientInfos, realToken)
 }
 
 export function resetClient(client, clientInfo = null) {
@@ -92,7 +91,7 @@ export function resetClient(client, clientInfo = null) {
     cozy.client.offline.destroyAllDatabase()
   }
   // reset cozy-client
-  client.getClient().resetClientId()
+  client.getStackClient().resetClient()
   // reset cozy-client-js
   if (cozy.client._storage) {
     cozy.client._storage.clear()

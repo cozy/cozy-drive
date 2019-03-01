@@ -18,7 +18,7 @@ export const saveCredentials = (client, token) => dispatch => {
 export const renewAuthorization = client => async dispatch => {
   const url = client.options.uri
   const { infos, token } = await client.renewAuthorization(url)
-  await restoreCozyClientJs(url, infos, token)
+  restoreCozyClientJs(url, infos, token)
   updateBarAccessToken(token)
   dispatch(setUrl(url))
   dispatch(saveCredentials(infos, token))

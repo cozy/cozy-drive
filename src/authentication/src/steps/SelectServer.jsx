@@ -12,6 +12,8 @@ import 'cozy-ui/assets/icons/ui/next.svg'
 import 'cozy-ui/assets/icons/ui/lock.svg'
 import styles from '../styles'
 import { ButtonLinkRegistration } from './ButtonLinkRegistration'
+import { onboardingPropTypes } from '../../OnboardingPropTypes'
+
 require('url-polyfill')
 
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
@@ -225,7 +227,8 @@ export class SelectServer extends Component {
     const {
       t,
       previousStep,
-      breakpoints: { isTiny }
+      breakpoints: { isTiny },
+      onboarding
     } = this.props
     const inputID = 'inputID'
     return (
@@ -345,11 +348,13 @@ export class SelectServer extends Component {
               <Icon icon="next" color="white" />
             </Button>
             <ButtonLinkRegistration
-              className={'u-mv-half'}
+              className={classNames('wizard-buttonlink')}
               label={t('mobile.onboarding.welcome.no_account_link')}
               size={isTiny ? 'normal' : 'large'}
               subtle={true}
               type={'button'}
+              theme="text"
+              onboarding={onboarding}
             />
           </footer>
         </div>
@@ -364,7 +369,8 @@ SelectServer.propTypes = {
   nextStep: PropTypes.func.isRequired,
   fetching: PropTypes.bool,
   externalError: PropTypes.object,
-  onException: PropTypes.func.isRequired
+  onException: PropTypes.func.isRequired,
+  onboarding: onboardingPropTypes.isRequired
 }
 
 SelectServer.defaultProps = {

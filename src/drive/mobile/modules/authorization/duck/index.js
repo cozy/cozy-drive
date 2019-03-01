@@ -4,14 +4,17 @@ export {
   setToken,
   revokeClient,
   unrevokeClient,
-  unlink
+  unlink,
+  setOnboarding
 } from './actions'
 
+export { default } from './reducer'
+
 export {
-  default,
   getClientSettings,
   getToken,
   isAuthorized,
   isRevoked,
-  isClientRevoked
-} from './reducer'
+  isClientRevoked,
+  getOnboardingInformations
+} from './selectors'

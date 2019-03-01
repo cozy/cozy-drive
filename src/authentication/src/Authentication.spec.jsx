@@ -28,7 +28,8 @@ describe('Authentication', () => {
     client = {
       stackClient: {
         register: jest.fn()
-      }
+      },
+      getStackClient: () => client.stackClient
     }
     setup(client)
     instance.connectToServer('pbrowne.mycozy.cloud')
