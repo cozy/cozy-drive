@@ -5,7 +5,9 @@ const distanceVectors = (xReach, yReach) => {
 const inflectionIndex = (xReach, yReach, zReach) => {
   const vectorXY = distanceVectors(xReach, yReach)
   const vectorYZ = distanceVectors(yReach, zReach)
-
+  if (vectorYZ === Infinity) {
+    return 1
+  }
   return (-1 + (xReach - yReach) * (zReach - yReach)) / (vectorXY * vectorYZ)
 }
 
@@ -73,18 +75,18 @@ const decreasingSlope = (xReach, yReach, zReach, cosAngle) => {
  */
 export const gradientClustering = (dataset, reachabilities, params) => {
   // TODO lonely point
-
   const clusters = []
   let currentCluster = [dataset[0]]
   if (dataset.length < 2) {
     return [currentCluster]
   }
 
-  for (let i = 1; i < reachabilities.length - 1; i++) {
+  for (let i = 1; i < reachabilities.length; i++) {
     const prevReach = reachabilities[i - 1]
     const currReach = reachabilities[i]
-    const nextReach = reachabilities[i + 1]
-
+    const isLastPoint = i === reachabilities.length - 1
+    // When we reach the last reachability, use a fake next one
+    const nextReach = isLastPoint ? 0.1 : reachabilities[i + 1]
     // Noise detection: if the current point is higher than the maxBound, save
     // the current cluster and start a new one
     if (currReach > params.maxBound) {
@@ -144,17 +146,8 @@ export const gradientClustering = (dataset, reachabilities, params) => {
     }
   }
 
-  const lastPoint = reachabilities[reachabilities.length - 1]
-  // The last point is not noise: add it to the current cluster if not empty
-  if (currentCluster.length > 0 && lastPoint < params.maxBound) {
-    currentCluster.push(dataset[dataset.length - 1])
+  if (currentCluster.length > 0) {
     clusters.push(currentCluster)
-  } else {
-    // The last point is a single cluster
-    if (currentCluster.length > 0) {
-      clusters.push(currentCluster)
-    }
-    clusters.push([dataset[dataset.length - 1]])
   }
   return clusters
 }

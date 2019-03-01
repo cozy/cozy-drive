@@ -83,11 +83,14 @@ const getSectionTitleHours = (dates, index, section, f) => {
       // Several sections for this day: add the hours
       const startPeriod = new Date(section.album.period.start)
       const endPeriod = new Date(section.album.period.end)
+      console.log('title : ', section.title)
+      console.log('start period : ', startPeriod)
 
       let titleWithHours = section.title + ' ⠂' + formatH(f, startPeriod) + 'h'
       if (differenceInHours(endPeriod, startPeriod) > 0) {
         titleWithHours += '-' + formatH(f, endPeriod) + 'h'
       }
+      console.log('title hours : ', titleWithHours)
       return titleWithHours
     }
   }
@@ -164,6 +167,7 @@ const getPhotosByClusters = (photos, f) => {
       const date = new Date(datetime)
       const day = f(date, 'YYYY-MM-DD') // Match the albums's format
       sections[day] = {
+        key: date,
         title: formatDMY(f, date),
         photos: [photo]
       }
@@ -171,6 +175,7 @@ const getPhotosByClusters = (photos, f) => {
   })
 
   const sortedDates = Object.keys(sections)
+  console.log('sections : ', Object.keys(sections).length)
   sortedDates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
   return sortedDates.map((date, i) => {
     return {

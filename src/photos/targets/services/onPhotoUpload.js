@@ -30,20 +30,17 @@ import { gradientClustering } from 'photos/ducks/clustering/gradient'
 import {
   saveClustering,
   findAutoAlbums,
-  albumsToClusterize,
-  findAlbumsByIds
+  albumsToClusterize
 } from 'photos/ducks/clustering/albums'
 import { prepareDataset } from 'photos/ducks/clustering/utils'
 import { getMatchingParameters } from 'photos/ducks/clustering/matching'
 
 // Compute the actual clustering based on the new dataset and the existing albums
-const createNewClusters = async (params, key, dataset, albums) => {
+const createNewClusters = async (params, key, dataset) => {
   const reachs = reachabilities(dataset, spatioTemporalScaled, params)
   const clusters = gradientClustering(dataset, reachs, params)
   if (clusters.length > 0) {
-    const ids = key.split(':')
-    const albumsToSave = findAlbumsByIds(albums, ids)
-    return saveClustering(clusters, albumsToSave)
+    return saveClustering(clusters, key)
   }
   return 0
 }
@@ -57,15 +54,15 @@ const createInitialClusters = async (paramsMode, dataset) => {
 
 // Clusterize the given photos, i.e. organize them depending on metrics
 const clusterizePhotos = async (setting, dataset, albums) => {
-  log('info', `Start clustering on ${dataset.length} photos`)
+  log('debug', `Start clustering on ${dataset.length} photos`)
 
   let clusteredCount = 0
   try {
     if (albums && albums.length > 0) {
-      // Build the clusterize object, based on the dataset and existing photos
+      // Build the clusterize Map, based on the dataset and existing photos
       const clusterize = await albumsToClusterize(dataset, albums)
       if (clusterize) {
-        for (const [key, photos] of Object.entries(clusterize)) {
+        for (const [key, photos] of clusterize.entries()) {
           // Retrieve the relevant parameters to compute this cluster
           const params = getMatchingParameters(setting.parameters, photos)
           const paramsMode = getDefaultParametersMode(params)
@@ -74,12 +71,7 @@ const clusterizePhotos = async (setting, dataset, albums) => {
             continue
           }
           // Actual clustering
-          clusteredCount += await createNewClusters(
-            paramsMode,
-            key,
-            photos,
-            albums
-          )
+          clusteredCount += await createNewClusters(paramsMode, key, photos)
           setting = await updateParamsPeriod(setting, params, dataset)
         }
       }
@@ -117,7 +109,7 @@ const createParameter = (dataset, epsTemporal, epsSpatial) => {
   }
 }
 const initParameters = dataset => {
-  log('info', `Compute clustering parameters on ${dataset.length} photos`)
+  log('debug', `Compute clustering parameters on ${dataset.length} photos`)
   const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
   const epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
   return createParameter(dataset, epsTemporal, epsSpatial)
@@ -138,7 +130,7 @@ const recomputeParameters = async setting => {
   if (files.length < EVALUATION_THRESHOLD) {
     return
   }
-  log('info', `Compute clustering parameters on ${files.length} photos`)
+  log('debug', `Compute clustering parameters on ${files.length} photos`)
 
   const dataset = prepareDataset(files)
   const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
@@ -150,7 +142,7 @@ const runClustering = async setting => {
   const since = setting.lastSeq ? setting.lastSeq : 0
   const changes = await getChanges(since, CHANGES_RUN_LIMIT)
   if (changes.photos.length < 1) {
-    log('info', 'No photo found to clusterize')
+    log('warn', 'No photo found to clusterize')
     return
   }
   const albums = await findAutoAlbums()
@@ -168,7 +160,7 @@ const runClustering = async setting => {
   This is unpleasant, but harmless, as no new write will be produced on the
   already clustered files.
  */
-  log('info', `${result.clusteredCount} photos clustered since ${since}`)
+  log('debug', `${result.clusteredCount} photos clustered since ${since}`)
   setting = await updateSettingStatus(
     result.setting,
     result.clusteredCount,
