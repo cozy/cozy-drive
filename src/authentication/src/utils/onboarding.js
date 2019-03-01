@@ -41,14 +41,6 @@ export const checkIfOnboardingLogin = onboardingInformations => {
   return onboardingInformations.code !== null
 }
 
-export const checkExchangedInformations = (
-  localSecret,
-  remoteSecret,
-  localState,
-  remoteState
-) => {
-  return localSecret === remoteSecret && localState === remoteState
-}
 export const generateOAuthForUrl = async ({
   clientName,
   redirectURI,
@@ -70,7 +62,7 @@ export const generateOAuthForUrl = async ({
     state = generateState()
     await writeState(state)
   }
-  const oauthStuff = {
+  const oauthData = {
     redirect_uri: redirectURI,
     software_id: softwareID,
     client_name: clientName,
@@ -87,16 +79,16 @@ export const generateOAuthForUrl = async ({
     }
   }
 
-  return encodeURIComponent(JSON.stringify(oauthStuff))
+  return encodeURIComponent(JSON.stringify(oauthData))
 }
 
-const addProtocolToURL = cozy_url => {
-  return `https://${cozy_url}`
+export const addProtocolToURL = instanceDomain => {
+  return `https://${instanceDomain}`
 }
-export const secretExchange = (secret, cozy_url, client) => {
+export const secretExchange = (secret, instanceDomain, client) => {
   const response = client.stackClient.fetchJSON(
     'POST',
-    addProtocolToURL(cozy_url) + '/auth/secret_exchange',
+    addProtocolToURL(instanceDomain) + '/auth/secret_exchange',
     {
       secret
     }
@@ -106,14 +98,14 @@ export const secretExchange = (secret, cozy_url, client) => {
 
 export const getAccessToken = (
   { client_id, client_secret },
-  cozy_url,
+  instanceDomain,
   code,
   client
 ) => {
   const body = `grant_type=authorization_code&code=${code}&client_id=${client_id}&client_secret=${client_secret}`
   return client.stackClient.fetch(
     'POST',
-    addProtocolToURL(cozy_url) + '/auth/access_token',
+    addProtocolToURL(instanceDomain) + '/auth/access_token',
     body,
     {
       headers: {

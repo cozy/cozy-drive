@@ -11,15 +11,15 @@ import {
   readSecret,
   clearSecret,
   clearState,
-  checkExchangedInformations,
-  checkIfOnboardingLogin
+  checkIfOnboardingLogin,
+  addProtocolToURL
 } from './src/utils/onboarding'
 import {
   onboardingInformationsPropTypes,
   onboardingPropTypes
 } from './OnboardingPropTypes'
 class MobileRouter extends Component {
-  async doOnboardingLogin(receivedState, code, cozy_url, history) {
+  async doOnboardingLogin(receivedState, code, instanceDomain, history) {
     const localState = await readState()
     const localSecret = await readSecret()
 
@@ -30,24 +30,25 @@ class MobileRouter extends Component {
 
       const clientInfo = await secretExchange(
         localSecret,
-        cozy_url,
+        instanceDomain,
         this.props.client
       )
 
-      const { onboarding_secret, onboarding_state } = clientInfo
+      const {
+        onboarding_secret,
+        onboarding_state,
+        client_id,
+        client_secret
+      } = clientInfo
+
       if (
-        !checkExchangedInformations(
-          localSecret,
-          onboarding_secret,
-          localState,
-          onboarding_state
-        )
+        !(localSecret === onboarding_secret && localState === onboarding_state)
       )
         throw new Error('exchanged informations are not good')
 
       const getTokenRequest = await getAccessToken(
-        clientInfo,
-        cozy_url,
+        { client_id, client_secret },
+        instanceDomain,
         code,
         this.props.client
       )
@@ -57,7 +58,7 @@ class MobileRouter extends Component {
       }
 
       await this.props.onAuthenticated({
-        url: `https://${cozy_url}`,
+        url: addProtocolToURL(instanceDomain),
         token,
         clientInfo,
         router: history
