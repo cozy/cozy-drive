@@ -2,7 +2,7 @@ import { cozyClient, log } from 'cozy-konnector-libs'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import { getMatchingClusters } from './matching'
 import { prepareDataset } from './utils'
-import flatten from 'lodash/flatten'
+import { flatten, union, intersection, difference } from 'lodash'
 
 // An auto album name is the date of the first photo
 const albumName = photos => {
@@ -156,12 +156,19 @@ const findPhotosToReclusterize = async albums => {
         return await findPhotosByAlbum(album)
       })
     )
-  )
+  ).sort((a, b) => a.timestamp - b.timestamp)
   return photos
 }
 
-const photoExistsInCollection = (photos, photo) => {
-  return photos.find(p => p.id === photo.id)
+// Insert the new photo into the sorted photos set
+const insertNewPhoto = (photos, newPhoto) => {
+  const photoAlreadyExists = photos.find(p => p.id === newPhoto.id)
+  if (photoAlreadyExists) {
+    return photos
+  } else {
+    photos.push(newPhoto)
+    return photos.sort((a, b) => a.timestamp - b.timestamp)
+  }
 }
 
 /**
@@ -173,34 +180,73 @@ const photoExistsInCollection = (photos, photo) => {
 
  * @param {Object[]} newPhotos - Set of new photos to clusterize
  * @param {Object[]} albums - Set of existing auto albums
- * @returns {Object} dict associating albums to a set of photos.
+ * @returns {Map} Map associating a set of albums to a set of photos.
  *
  */
 export const albumsToClusterize = async (newPhotos, albums) => {
-  const clusterize = {}
+  const clusterize = new Map()
+  try {
+    for (const newPhoto of newPhotos) {
+      // Find clusters matching the photo
+      const matchingAlbums = getMatchingClusters(newPhoto, albums)
+      if (matchingAlbums.length > 0) {
+        let keyExists = false
 
-  for (const newPhoto of newPhotos) {
-    // Find clusters matching this newPhoto
-    const matchingAlbums = getMatchingClusters(newPhoto, albums)
-    if (matchingAlbums.length > 0) {
-      const key = matchingAlbums[1]
-        ? matchingAlbums[0]._id + ':' + matchingAlbums[1]._id
-        : matchingAlbums[0]._id
-      if (key in clusterize) {
-        if (!photoExistsInCollection(clusterize[key], newPhoto)) {
-          clusterize[key].push(newPhoto)
+        for (const key of clusterize.keys()) {
+          if (difference(matchingAlbums, key).length < 1) {
+            // The matchingAlbums are included in the key: add the photo
+            clusterize.set(key, insertNewPhoto(clusterize.get(key), newPhoto))
+            keyExists = true
+            break
+          } else if (intersection(matchingAlbums, key).length > 1) {
+            // The matchingAlbums partially exist into the key: merge it
+            const mergedKey = union(key, matchingAlbums)
+            let mergedValues = clusterize.get(key)
+            const missingAlbums = difference(matchingAlbums, key)
+
+            for (const album of missingAlbums) {
+              if (clusterize.has(album)) {
+                // Album exists as a key in the Map: remove it from the Map and
+                // save its photos
+                mergedValues = mergedValues.concat(clusterize.get(album))
+                clusterize.delete(album)
+              } else {
+                // Album does not exist in the Map: add it with its photos
+                const photosToClusterize = await findPhotosToReclusterize([
+                  album
+                ])
+                mergedValues = mergedValues.concat(photosToClusterize)
+              }
+            }
+            mergedValues.push(newPhoto)
+            // resort values
+            const sortedMergedValues = mergedValues.sort(
+              (a, b) => a.timestamp - b.timestamp
+            )
+            // Add the new entry and delete the previous one
+            clusterize.set(mergedKey, sortedMergedValues)
+            clusterize.delete(key)
+            keyExists = true
+            break
+          }
         }
-      } else {
-        // Save the photos referenced by the matching albums
-        const photosToClusterize = await findPhotosToReclusterize(
-          matchingAlbums
-        )
-        if (!photoExistsInCollection(photosToClusterize, newPhoto)) {
-          photosToClusterize.push(newPhoto)
+        if (!keyExists) {
+          // The matching albums don't exist in the Map: add them with their photos
+          const photosToClusterize = await findPhotosToReclusterize(
+            matchingAlbums
+          )
+          clusterize.set(
+            matchingAlbums,
+            insertNewPhoto(photosToClusterize, newPhoto)
+          )
         }
-        clusterize[key] = photosToClusterize
       }
     }
+  } catch (e) {
+    log(
+      'error',
+      `An error occured during the build of clusterize: ${JSON.stringify(e)}`
+    )
   }
   return clusterize
 }
