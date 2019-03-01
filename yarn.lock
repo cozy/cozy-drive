@@ -4244,20 +4244,20 @@ cozy-client-js@0.9.0:
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
 
-cozy-client@5.7.3:
-  version "5.7.3"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-5.7.3.tgz#d5ca81d9d26098efd56f83629f8d68ec981c6811"
-  integrity sha512-bm7DNsOaSnHf8Js3wKHET0eDYfqz+xW6rNzfgqnVpATiWxEtULP7t/yQqokX2PmATkHk/2U+6mx6WFboPGUwXA==
+cozy-client@6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.5.0.tgz#d38687e5499d5137057120d4eb59cef09c7a42a7"
+  integrity sha512-sVnfF7gyW7sQBmORmE3/IYIUgyGvxj933+mYWwr4a/vGEFIhGn1nvDAjjYvzP1SCOV2P0jW1cMMOPPwUUjTSMw==
   dependencies:
     cozy-device-helper "1.6.3"
-    cozy-stack-client "^5.6.1"
+    cozy-stack-client "^6.5.0"
     lodash "4.17.11"
     prop-types "15.6.2"
     react "16.7.0"
     react-redux "5.0.7"
     redux "3.7.2"
     redux-thunk "2.3.0"
-    sift "7.0.1"
+    sift "6.0.0"
 
 cozy-device-helper@1.4.14:
   version "1.4.14"
@@ -4379,10 +4379,10 @@ cozy-scripts@1.11.0:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-stack-client@^5.6.1:
-  version "5.6.1"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-5.6.1.tgz#f7ea391d5a635605a16b7bdaea0a36b2d9cd1023"
-  integrity sha512-8Z1fMepAm5bu4eup4DviUux8j/bwbvuFNPVaVuk4We+k3/ly07nvp2q3sUh9YMSXGKZOsb3O9ybIZ5XzCOKnWA==
+cozy-stack-client@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.5.0.tgz#18b247f5c548be726782dc4b5811744e31025a97"
+  integrity sha512-n68szEKn/3gNYqpgC8GosxaO57nvg1Zf9eHqhwnBJaOR56qBNOJq3rnGddvK73t5Ol15dfQmxQzJtw+ud5SsaA==
   dependencies:
     detect-node "2.0.4"
     mime-types "2.1.20"
@@ -14074,10 +14074,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-sift@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/sift/-/sift-7.0.1.tgz#47d62c50b159d316f1372f8b53f9c10cd21a4b08"
-  integrity sha512-oqD7PMJ+uO6jV9EQCl0LrRw1OwsiPsiFQR5AR30heR+4Dl7jBBbDLnNvWiak20tzZlSE1H7RB30SX/1j/YYT7g==
+sift@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/sift/-/sift-6.0.0.tgz#f93a778e5cbf05a5024ebc391e6b32511a6d1f82"
+  integrity sha1-+Tp3jly/BaUCTrw5HmsyURptH4I=
 
 sigmund@^1.0.1, sigmund@~1.0.0:
   version "1.0.1"

@@ -46,16 +46,12 @@ export class MobileRouter extends Component {
       )
         throw new Error('exchanged informations are not good')
 
-      const getTokenRequest = await getAccessToken(
+      const token = await getAccessToken(
         { client_id, client_secret },
         instanceDomain,
         code,
         this.props.client
       )
-      const token = await getTokenRequest.json()
-      if (getTokenRequest.status !== 200) {
-        throw new Error('token.error')
-      }
 
       await this.props.onAuthenticated({
         url: addProtocolToURL(instanceDomain),
