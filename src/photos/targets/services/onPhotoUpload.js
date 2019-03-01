@@ -1,6 +1,10 @@
-import { log, cozyClient } from 'cozy-konnector-libs'
+import { cozyClient, log } from 'cozy-konnector-libs'
 
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import {
+  getChanges,
+  getAllPhotos,
+  getFilesFromDate
+} from 'photos/ducks/clustering/files'
 import {
   readSetting,
   createSetting,
@@ -18,7 +22,8 @@ import {
 import {
   PERCENTILE,
   DEFAULT_MODE,
-  EVALUATION_THRESHOLD
+  EVALUATION_THRESHOLD,
+  CHANGES_RUN_LIMIT
 } from 'photos/ducks/clustering/consts'
 import { spatioTemporalScaled } from 'photos/ducks/clustering/metrics'
 import { gradientClustering } from 'photos/ducks/clustering/gradient'
@@ -59,7 +64,7 @@ const clusterizePhotos = async (setting, dataset) => {
     const albums = await findAutoAlbums()
 
     if (albums && albums.length > 0) {
-      // Get photos to clusterize based on the existing clusters
+      // Build the clusterize object, based on the dataset and existing photos
       const clusterize = await albumsToClusterize(dataset, albums)
       if (clusterize) {
         for (const [key, photos] of Object.entries(clusterize)) {
@@ -93,40 +98,9 @@ const clusterizePhotos = async (setting, dataset) => {
     }
   } catch (e) {
     log('error', `An error occured during the clustering: ${JSON.stringify(e)}`)
+    return
   }
   return { setting, clusteredCount }
-  // TODO adapt percentiles for large datasets
-}
-
-const getChanges = async lastSeq => {
-  log('info', `Get changes on files since ${lastSeq}`)
-  const result = await cozyClient.fetchJSON(
-    'GET',
-    `/data/${DOCTYPE_FILES}/_changes?include_docs=true&since=${lastSeq}`
-  )
-  const photos = result.results.map(res => res.doc).filter(doc => {
-    return doc.class === 'image' && !doc._id.includes('_design') && !doc.trashed
-  })
-  const newLastSeq = result.last_seq
-  return { photos, newLastSeq }
-}
-
-const getFilesFromDate = async date => {
-  // Note a file without a metadata.datetime would not be indexed: this is not
-  // a big deal as this is only to compute parameters
-  const filesIndex = await cozyClient.data.defineIndex(DOCTYPE_FILES, [
-    'metadata.datetime',
-    'class',
-    'trashed'
-  ])
-  const selector = {
-    'metadata.datetime': { $gt: date },
-    class: 'image',
-    trashed: false
-  }
-  return cozyClient.data.query(filesIndex, {
-    selector: selector
-  })
 }
 
 const createParameter = (dataset, epsTemporal, epsSpatial) => {
@@ -174,21 +148,44 @@ const recomputeParameters = async setting => {
   return createParameter(dataset, epsTemporal, epsSpatial)
 }
 
+const runClustering = async setting => {
+  const since = setting.lastSeq ? setting.lastSeq : 0
+  const changes = await getChanges(since, CHANGES_RUN_LIMIT)
+  if (changes.photos.length < 1) {
+    log('info', 'No photo found to clusterize')
+    return
+  }
+  const dataset = prepareDataset(changes.photos)
+  const result = await clusterizePhotos(setting, dataset)
+  if (!result) {
+    return
+  }
+  /*
+  WARNING: we save the lastSeq retrieved at the beginning of the clustering.
+  However, we might have produced new _changes on files by saving the
+  referenced-by, so they will be computed again at the next run.
+  We cannot save the new lastSeq, as new files might have been uploaded by
+  this time and would be ignored for the next run.
+  This is unpleasant, but harmless, as no new write will be produced on the
+  already clustered files.
+ */
+  log('info', `${result.clusteredCount} photos clustered since ${since}`)
+  setting = await updateSettingStatus(
+    result.setting,
+    result.clusteredCount,
+    changes
+  )
+  return changes.photos
+}
+
 const onPhotoUpload = async () => {
   log('info', `Service called with COZY_URL: ${process.env.COZY_URL}`)
 
   let setting = await readSetting()
-  const lastSeq = setting ? setting.lastSeq : 0
-
-  const changes = await getChanges(lastSeq)
-  if (!changes || changes.photos.length < 1) {
-    log('warn', 'Service called but no photos found to clusterize')
-    return
-  }
-  const dataset = prepareDataset(changes.photos)
-
   if (!setting) {
-    // No settings found: init them or use default
+    // Create setting
+    const files = await getAllPhotos()
+    const dataset = prepareDataset(files)
     const params =
       dataset.length > EVALUATION_THRESHOLD
         ? initParameters(dataset)
@@ -200,36 +197,39 @@ const onPhotoUpload = async () => {
         params.modes
       )} on period ${JSON.stringify(params.period)}`
     )
-  } else {
-    if (setting.evaluationCount > EVALUATION_THRESHOLD) {
-      const newParams = await recomputeParameters(setting)
-      if (newParams) {
-        const params = [...setting.parameters, newParams]
-        const newSetting = {
-          ...setting,
-          parameters: params,
-          evaluationCount: 0
-        }
-        setting = await updateSetting(setting, newSetting)
-        log('info', `Setting updated with ${JSON.stringify(newParams)}`)
-      }
-    }
   }
 
-  const result = await clusterizePhotos(setting, dataset)
-  if (!result.setting) {
-    return
+  if (setting.evaluationCount > EVALUATION_THRESHOLD) {
+    // Recompute parameters when enough photos had been processed
+    const newParams = await recomputeParameters(setting)
+    if (newParams) {
+      const params = [...setting.parameters, newParams]
+      const newSetting = {
+        ...setting,
+        parameters: params,
+        evaluationCount: 0
+      }
+      setting = await updateSetting(setting, newSetting)
+      log('info', `Setting updated with ${JSON.stringify(newParams)}`)
+    }
   }
   /*
-    WARNING: we save the lastSeq retrieved at the beginning of the clustering.
-    However, we might have produced new _changes on files by saving the
-    referenced-by, so they will computed again at the next clustering.
-    We cannot save the new lastSeq, as new files might have been uploaded by
-    this time and would be ignored for the next clustering.
-    This is unpleasant, but harmless, as no new writes will be produced on the
-    already clustered files.
-   */
-  await updateSettingStatus(result.setting, result.clusteredCount, changes)
+    NOTE: A service has a limited execution window, defined in the stack config,
+    e.g. 200s. As the clustering of thousands of photos can be time-consuming,
+    we force a CHANGES_RUN_LIMIT to serialize the execution and be able to
+    restart the clustering from the last run.
+  */
+  const processedPhotos = await runClustering(setting)
+  if (processedPhotos.length >= CHANGES_RUN_LIMIT) {
+    // There are still changes to process: re-launch the service
+    const args = {
+      message: {
+        name: 'onPhotoUpload',
+        slug: 'photos'
+      }
+    }
+    await cozyClient.jobs.create('service', args)
+  }
 }
 
 onPhotoUpload()
