@@ -90,7 +90,8 @@
     "splashicon-generator": "0.2.12",
     "stylint": "1.5.9",
     "tar": "4.4.8",
-    "testcafe": "0.23.3"
+    "testcafe": "0.23.3",
+    "unzipper": "0.9.11"
   },
   "dependencies": {
     "babel-preset-cozy-app": "1.2.2",
