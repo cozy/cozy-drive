@@ -1,7 +1,10 @@
 import { ClientFunction, Selector, t } from 'testcafe'
-import fs from 'fs'
+import fs from 'fs-extra'
 import path from 'path'
+import unzipper from 'unzipper'
 import CDP from 'chrome-remote-interface'
+let data = require('../helpers/data')
+
 const INSTANCE_TESTCAFE = process.env.INSTANCE_TESTCAFE
 
 export let TESTCAFE_PHOTOS_URL = ''
@@ -115,4 +118,28 @@ export async function checkAllImagesExists() {
 
   await t.expect(requestsCount).eql(statuses.length)
   for (const status of statuses) await t.expect(status).eql(200)
+}
+
+//Put all files path in an array for uploads
+//@param { path } pathToFiles
+export async function prepareFilesforViewerTest(pathToFiles) {
+  fs.readdirSync(pathToFiles).forEach(file => {
+    data.filesList.push(`${pathToFiles}/${file}`)
+  })
+}
+
+export async function extractZip(pathToZip, extractPath) {
+  console.warn(`↳ ℹ️  Extracting archive ${pathToZip} into ${extractPath}`)
+  try {
+    await fs
+      .createReadStream(pathToZip)
+      .pipe(unzipper.Extract({ path: extractPath }))
+  } catch (error) {
+    console.error(
+      `↳ ❌ Unable to extract app archive. Is unzipper installed as a dependency ? Error : ${
+        error.message
+      }`
+    )
+    throw new Error('Unable to extract archive')
+  }
 }
