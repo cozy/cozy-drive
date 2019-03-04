@@ -22,6 +22,7 @@ export const getCozyPath = () => COZY_PATH + '/' + COZY_FILES_PATH + '/'
 export const getEntry = path =>
   new Promise((resolve, reject) => {
     window.resolveLocalFileSystemURL(path, resolve, err => {
+      // eslint-disable-next-line
       console.error(`${path} could not be resolved: ${err.message}`)
       reject(err)
     })
@@ -40,7 +41,9 @@ export const createCozyPath = () =>
 export const getDirectory = (rootDirEntry, folderName) =>
   new Promise((resolve, reject) => {
     rootDirEntry.getDirectory(folderName, { create: true }, resolve, error => {
+      // eslint-disable-next-line
       console.warn(ERROR_GET_DIRECTORY, folderName)
+      // eslint-disable-next-line
       console.warn(error)
       reject(ERROR_GET_DIRECTORY)
     })
@@ -53,7 +56,9 @@ export const writeFile = (fileEntry, dataObj) =>
         resolve(fileEntry)
       }
       fileWriter.onerror = error => {
+        // eslint-disable-next-line
         console.warn(ERROR_WRITE_FILE)
+        // eslint-disable-next-line
         console.warn(error)
         reject(ERROR_WRITE_FILE)
       }
@@ -74,7 +79,9 @@ const saveFile = (dirEntry, fileData, fileName) =>
           .catch(reject)
       },
       error => {
+        // eslint-disable-next-line
         console.warn(ERROR_GET_FILE)
+        // eslint-disable-next-line
         console.warn(error)
         reject(ERROR_GET_FILE)
       }
@@ -83,12 +90,11 @@ const saveFile = (dirEntry, fileData, fileName) =>
 
 export const openFileWithCordova = (URI, mimetype) =>
   new Promise((resolve, reject) => {
-    const decodedURI = decodeURIComponent(URI)
     const callbacks = {
       error: reject,
       success: resolve
     }
-    window.cordova.plugins.fileOpener2.open(decodedURI, mimetype, callbacks)
+    window.cordova.plugins.fileOpener2.open(URI, mimetype, callbacks)
   })
 
 export const deleteOfflineFile = async filename => {
