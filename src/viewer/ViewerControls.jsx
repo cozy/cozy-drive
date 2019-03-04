@@ -91,6 +91,7 @@ class ViewerControls extends Component {
       >
         {controls && (
           <div
+            data-test-id="viewer-toolbar"
             className={classNames(styles['pho-viewer-toolbar'], {
               [styles['pho-viewer-toolbar--hidden']]: hidden,
               [styles['pho-viewer-toolbar--mobilebrowser']]:
@@ -109,6 +110,7 @@ class ViewerControls extends Component {
               {!isPDF &&
                 !isMobile && (
                   <Button
+                    data-test-id="viewer-toolbar-download"
                     theme="secondary"
                     onClick={() => {
                       client.collection('io.cozy.files').download(currentFile)
@@ -126,6 +128,7 @@ class ViewerControls extends Component {
                 title={t('Viewer.close')}
               >
                 <Button
+                  data-test-id="btn-viewer-toolbar-close"
                   theme="secondary"
                   icon="cross"
                   color="white"
@@ -141,6 +144,7 @@ class ViewerControls extends Component {
           !isMobile &&
           hasPrevious && (
             <div
+              data-test-id="viewer-nav--previous"
               role="button"
               className={classNames(
                 styles['pho-viewer-nav'],
@@ -161,6 +165,7 @@ class ViewerControls extends Component {
           !isMobile &&
           hasNext && (
             <div
+              data-test-id="viewer-nav--next"
               role="button"
               className={classNames(
                 styles['pho-viewer-nav'],

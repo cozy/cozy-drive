@@ -7,6 +7,7 @@ import { isIOS } from 'cozy-device-helper'
 
 const PdfViewer = ({ file, url }) => (
   <div
+    data-test-id="viewer-pdf"
     className={cx(styles['pho-viewer-pdfviewer'], {
       [styles['pho-viewer-pdfviewer-ios']]: isIOS()
     })}

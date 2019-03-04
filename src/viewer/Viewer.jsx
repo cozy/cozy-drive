@@ -23,7 +23,7 @@ import { isMobileApp, isMobile } from 'cozy-device-helper'
 const ViewerWrapper = ({ style, className, children, fullscreen, dark }) => (
   <div
     style={style}
-    data-test-id="pho-viewer-wrapper"
+    data-test-id="viewer-wrapper"
     className={cx(styles['pho-viewer-wrapper'], className, {
       [styles['pho-viewer-wrapper--notfullscreen']]: !fullscreen,
       [styles['pho-viewer-wrapper--light']]: !dark
