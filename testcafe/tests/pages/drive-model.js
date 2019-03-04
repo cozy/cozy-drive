@@ -57,7 +57,7 @@ export default class DrivePage {
       `[class*="fil-content-row"]:not([class*="fil-content-row-head"])`
     )
     this.foldersNamesInputs = getElementWithTestId('name-input')
-    this.foldersNames = getElementWithTestId('fil-file-filename-and-ext')
+    this.folderOrFileName = getElementWithTestId('fil-file-filename-and-ext')
     this.checboxFolderByRowIndex = value => {
       return this.content_rows
         .nth(value)
@@ -68,7 +68,17 @@ export default class DrivePage {
     // Upload
     this.btnUpload = getElementWithTestId('upload-btn')
     this.divUpload = getElementWithTestId('upload-queue')
+    this.queue = Selector('[class*="upload-queue-list"]')
+
     this.divUploadSuccess = getElementWithTestId('upload-queue-success')
+    this.uploadedItemName = value => {
+      return getElementWithTestId('upload-queue-item-name').withText(value)
+    }
+    this.uploadedItem = value => {
+      return this.uploadedItemName(value)
+        .parent('div')
+        .withAttribute('data-test-id', 'upload-queue-item')
+    }
 
     // Sharing
     this.btnShare = this.toolbarFiles
@@ -184,6 +194,7 @@ export default class DrivePage {
     await t.click(this.btnMoreMenu)
     await isExistingAndVisibile(this.cozyMenuInner, 'Cozy inner menu')
   }
+
   //@param {String} newFolderName
   async addNewFolder(newFolderName) {
     const breadcrumbStart = await this.getbreadcrumb()
@@ -202,7 +213,7 @@ export default class DrivePage {
       .pressKey('enter')
       .expect(this.foldersNamesInputs.exists)
       .notOk('Edition mode still on') //No folder in edition mode -> No input on page
-      .expect(this.foldersNames.withText(newFolderName).exists)
+      .expect(this.folderOrFileName.withText(newFolderName).exists)
       .ok(`No folder named ${newFolderName}`)
 
     const breadcrumbEnd = await this.getbreadcrumb()
@@ -213,9 +224,9 @@ export default class DrivePage {
   async goToFolder(folderName) {
     const breadcrumbStart = await this.getbreadcrumb()
     await t
-      .expect(this.foldersNames.withText(folderName).exists)
+      .expect(this.folderOrFileName.withText(folderName).exists)
       .ok(`No folder named ${folderName}`)
-      .click(this.foldersNames.withText(folderName))
+      .click(this.folderOrFileName.withText(folderName))
 
     await this.waitForLoading()
 
@@ -228,28 +239,50 @@ export default class DrivePage {
   //@param {String Array} files: path to files to upload.
   async uploadFiles(files) {
     const numOfFiles = files.length
-    const rowCountStart = await this.getContentRowCount('Before')
+    const rowCountStart = await this.getContentRowCount('Before Upload')
 
-    console.log('Uploading ' + numOfFiles + ' file(s)')
+    console.log(`Uploading ${numOfFiles} file(s)`)
 
     await isExistingAndVisibile(this.btnUpload, 'Upload Button')
     await t.setFilesToUpload(this.btnUpload, files)
-
     await isExistingAndVisibile(this.divUpload, 'Upload pop-in')
+
+    console.group('Files uploaded : ')
+    for (let i = 0; i < numOfFiles; i++) {
+      const fileNameChunks = files[i].split('/')
+      const fileName = fileNameChunks[fileNameChunks.length - 1]
+      await isExistingAndVisibile(
+        this.uploadedItem(fileName),
+        `Item : ${fileName}`
+      )
+      await t
+        //hasClass doesn't support [class*='upload-queue-item--done'], only full class name, so we cannot use it
+        .expect(this.uploadedItem(fileName).getAttribute('class'))
+        .contains('upload-queue-item--done')
+    }
+    console.groupEnd()
+
+    // When uploading one file, check for the alert wrapper. When there are lots of files to upload, it already disappear once we finish checking each line
+    if (numOfFiles == 1) {
+      await isExistingAndVisibile(
+        this.alertWrapper,
+        '"successfull" modal alert'
+      )
+    }
+
     await isExistingAndVisibile(
       this.divUploadSuccess,
       'successfull Upload pop-in'
     )
-    await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
     await t
       .expect(this.divUpload.child('h4').innerText)
       .match(
         new RegExp('([' + numOfFiles + '].*){2}'),
-        'Numbers of pictures uploaded does not match'
+        'Numbers of files uploaded does not match'
       )
     await t.takeScreenshot()
     const rowCountEnd = await this.getContentRowCount('After')
-    await t.expect(rowCountEnd).eql(rowCountStart + 1) //New content line appears
+    await t.expect(rowCountEnd).eql(rowCountStart + numOfFiles) //New content line appears
   }
 
   async shareFolderPublicLink() {
@@ -362,6 +395,20 @@ export default class DrivePage {
     await isExistingAndVisibile(this.cozySelectionbar, 'Cozy Selection Bar')
   }
 
+  //@param {string} fileName : file name
+  async getElementIndex(fileName) {
+    const paragraph = this.folderOrFileName
+      .parent(`[class*="fil-content-row"]:not([class*="fil-content-row-head"])`)
+      .addCustomDOMProperties({
+        indexInRow: el => {
+          const nodes = Array.prototype.slice.call(el.parentElement.children)
+
+          return nodes.indexOf(el)
+        }
+      })
+    return await paragraph.withText(fileName).indexInRow
+  }
+
   //@param { Array } filesIndexArray : Array of files index
   async deleteElementsByIndex(filesIndexArray) {
     const rowCountStart = await this.getContentRowCount('Before')
@@ -380,17 +427,7 @@ export default class DrivePage {
   //@param {string} fileName : file name to delete
   //this function could be improve to use an Array of filename, if needed
   async deleteElementByName(fileName) {
-    const paragraph = this.foldersNames
-      .parent(`[class*="fil-content-row"]:not([class*="fil-content-row-head"])`)
-      .addCustomDOMProperties({
-        indexInRow: el => {
-          const nodes = Array.prototype.slice.call(el.parentElement.children)
-
-          return nodes.indexOf(el)
-        }
-      })
-
-    const index = await paragraph.withText(fileName).indexInRow
+    const index = await this.getElementIndex(fileName)
 
     console.log(`index : ${index}`)
     await this.deleteElementsByIndex([index])
