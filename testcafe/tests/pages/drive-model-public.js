@@ -51,7 +51,7 @@ export default class PublicDrivePage {
       .withText('Sorry, this link is no longer available.') // !FIXME: do not use text
 
     //viewer
-    this.viewerWrapper = getElementWithTestId('pho-viewer-wrapper')
+    this.viewerWrapper = getElementWithTestId('viewer-wrapper')
     this.viewerControls = getElementWithTestId('pho-viewer-controls')
 
     //fil-public-download

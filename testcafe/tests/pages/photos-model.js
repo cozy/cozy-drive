@@ -46,17 +46,15 @@ export default class Page {
 
     // Photo fullscreen
     this.photoFull = Selector('[class*="pho-viewer-imageviewer"]').find('img')
-    this.photoNavNext = Selector('[class*="pho-viewer-nav--next"]')
+    this.photoNavNext = getElementWithTestId('viewer-nav--next')
     this.photoNavNextBtn = this.photoNavNext.find(
       '[class*="pho-viewer-nav-arrow"]'
     )
-    this.photoNavPrevious = Selector('[class*="pho-viewer-nav--previous"]')
+    this.photoNavPrevious = getElementWithTestId('viewer-nav--previous')
     this.photoNavPreviousBtn = this.photoNavPrevious.find(
       '[class*="pho-viewer-nav-arrow"]'
     )
-    this.photoBtnClose = Selector('[class*="pho-viewer-toolbar-close"]').find(
-      '[class*="c-btn"]'
-    )
+    this.photoBtnClose = getElementWithTestId('btn-viewer-toolbar-close')
 
     //Sidebar
     this.sidebar = Selector('[class*="pho-sidebar"]')

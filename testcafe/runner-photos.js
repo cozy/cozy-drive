@@ -20,7 +20,7 @@ async function runRunner() {
     .screenshots(
       'reports/screenshots/',
       true,
-      '${DATE}_${TIME}/test-${TEST_INDEX}-${FILE_INDEX}.png'
+      '${DATE}_${TIME}/test-${TEST}-${FILE_INDEX}.png'
     )
     .run({ assertionTimeout: 6000 }, { pageLoadTimeout: 6000 })
   tc.close()

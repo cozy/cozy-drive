@@ -128,6 +128,25 @@ export async function prepareFilesforViewerTest(pathToFiles) {
   })
 }
 
+//Put all files with (or without) ext in an array for testing viewer
+//@param { path } filesPath : path to Files
+//@param { array } ExtArray : array of extensions
+//@param { bool } isReverse : if true -> add files without this ext, if false add files with ext
+export async function getFilesWithExt(filesPath, ExtArray, isReverse) {
+  let fileNameList = []
+  fs.readdirSync(filesPath).forEach(file => {
+    const fileNameChunks = file.split('.')
+    const fileExt = fileNameChunks[fileNameChunks.length - 1]
+    if (
+      (isReverse && !ExtArray.includes(fileExt.toLowerCase())) ||
+      (!isReverse && ExtArray.includes(fileExt.toLowerCase()))
+    ) {
+      fileNameList.push(`${file}`)
+    }
+  })
+  return fileNameList
+}
+
 export async function extractZip(pathToZip, extractPath) {
   console.warn(`↳ ℹ️  Extracting archive ${pathToZip} into ${extractPath}`)
   try {
