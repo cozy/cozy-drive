@@ -2,7 +2,10 @@ import { cozyClient, log } from 'cozy-konnector-libs'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import { getMatchingClusters } from './matching'
 import { prepareDataset } from './utils'
-import { flatten, union, intersection, difference } from 'lodash'
+import { flatten } from 'lodash/flatten'
+import { union } from 'lodash/union'
+import { intersection } from 'lodash/intersection'
+import { difference } from 'lodash/difference'
 
 // An auto album name is the date of the first photo
 const albumName = photos => {
@@ -190,19 +193,22 @@ export const albumsToClusterize = async (newPhotos, albums) => {
       // Find clusters matching the photo
       const matchingAlbums = getMatchingClusters(newPhoto, albums)
       if (matchingAlbums.length > 0) {
-        let keyExists = false
+        let clusterAlbumsExist = false
 
-        for (const key of clusterize.keys()) {
-          if (difference(matchingAlbums, key).length < 1) {
+        for (const clusterAlbums of clusterize.keys()) {
+          if (difference(matchingAlbums, clusterAlbums).length < 1) {
             // The matchingAlbums are included in the key: add the photo
-            clusterize.set(key, insertNewPhoto(clusterize.get(key), newPhoto))
-            keyExists = true
+            clusterize.set(
+              clusterAlbums,
+              insertNewPhoto(clusterize.get(clusterAlbums), newPhoto)
+            )
+            clusterAlbumsExist = true
             break
-          } else if (intersection(matchingAlbums, key).length > 1) {
+          } else if (intersection(matchingAlbums, clusterAlbums).length > 1) {
             // The matchingAlbums partially exist into the key: merge it
-            const mergedKey = union(key, matchingAlbums)
-            let mergedValues = clusterize.get(key)
-            const missingAlbums = difference(matchingAlbums, key)
+            const mergedKey = union(clusterAlbums, matchingAlbums)
+            let mergedValues = clusterize.get(clusterAlbums)
+            const missingAlbums = difference(matchingAlbums, clusterAlbums)
 
             for (const album of missingAlbums) {
               if (clusterize.has(album)) {
@@ -225,12 +231,12 @@ export const albumsToClusterize = async (newPhotos, albums) => {
             )
             // Add the new entry and delete the previous one
             clusterize.set(mergedKey, sortedMergedValues)
-            clusterize.delete(key)
-            keyExists = true
+            clusterize.delete(clusterAlbums)
+            clusterAlbumsExist = true
             break
           }
         }
-        if (!keyExists) {
+        if (!clusterAlbumsExist) {
           // The matching albums don't exist in the Map: add them with their photos
           const photosToClusterize = await findPhotosToReclusterize(
             matchingAlbums

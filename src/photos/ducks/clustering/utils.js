@@ -5,8 +5,8 @@ import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
  * @param {Object[]} photos - Set of photos
  * @returns {Object[]} The metadata's photos sorted by date
  */
-export const prepareDataset = (photos, albums) => {
-  const albumIds = albums ? albums.map(album => album._id) : []
+export const prepareDataset = (photos, albums = []) => {
+  const albumIds = albums.map(album => album._id)
 
   const info = photos
     .map(file => {
