@@ -218,7 +218,10 @@ export default class ImageViewer extends Component {
       transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`
     }
     return (
-      <div className={styles['pho-viewer-imageviewer']}>
+      <div
+        data-test-id="viewer-image"
+        className={styles['pho-viewer-imageviewer']}
+      >
         {this.state.loading && (
           <Spinner size="xxlarge" middle noMargin color="white" />
         )}

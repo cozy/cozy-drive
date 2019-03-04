@@ -40,6 +40,7 @@ const Item = translate()(({ file, status, isDirectory }) => {
   const { filename, extension } = splitFilename(file.name)
   return (
     <div
+      data-test-id="upload-queue-item"
       className={classNames(styles['upload-queue-item'], {
         [styles['upload-queue-item--done']]: status === 'loaded',
         [styles['upload-queue-item--error']]:
@@ -53,7 +54,7 @@ const Item = translate()(({ file, status, isDirectory }) => {
           getFileTypeClass(file, isDirectory)
         )}
       >
-        <div>
+        <div data-test-id="upload-queue-item-name">
           {filename}
           {extension && <span className={styles['item-ext']}>{extension}</span>}
         </div>

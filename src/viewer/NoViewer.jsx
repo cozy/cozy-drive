@@ -86,6 +86,7 @@ class NoViewer extends React.Component {
     const { t, file, fallbackUrl = false } = this.props
     return (
       <div
+        data-test-id="viewer-noviewer"
         className={classNames(
           styles['pho-viewer-noviewer'],
           styles[`pho-viewer-noviewer--${file.class}`]
