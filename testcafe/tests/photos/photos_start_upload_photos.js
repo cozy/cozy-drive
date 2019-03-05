@@ -13,15 +13,15 @@ fixture`Upload 4 photos`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
 test('Uploading 1 pic from Photos view', async () => {
   ///there is no photos on page
   await page.initPhotoCountZero()
-  await page.uploadPhotos([`${DATA_PATH}${IMG0}`])
+  await page.uploadPhotos([`${DATA_PATH}/${IMG0}`])
 })
 
 test('Uploading 4 pics from Photos view', async () => {
   await page.initPhotosCount()
   await page.uploadPhotos([
-    `${DATA_PATH}${IMG1}`,
-    `${DATA_PATH}${IMG2}`,
-    `${DATA_PATH}${IMG3}`,
-    `${DATA_PATH}${IMG4}`
+    `${DATA_PATH}/${IMG1}`,
+    `${DATA_PATH}/${IMG2}`,
+    `${DATA_PATH}/${IMG3}`,
+    `${DATA_PATH}/${IMG4}`
   ])
 })

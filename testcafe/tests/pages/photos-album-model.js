@@ -2,7 +2,6 @@ import { t, Selector } from 'testcafe'
 import {
   getPageUrl,
   getElementWithTestId,
-  getElementWithTestItem,
   isExistingAndVisibile,
   checkAllImagesExists
 } from '../helpers/utils'
@@ -33,9 +32,9 @@ export default class Page {
     this.pickerAlbumName = getElementWithTestId('pho-picker-album-name')
     this.btnValidateAlbum = getElementWithTestId('validate-album') //Seme button for create album and Add to album
     this.photoThumb = value => {
-      return getElementWithTestItem('pho-photo-item').nth(value)
-
-      //  return Selector('[class*="pho-photo-item"]').nth(value)
+      return Selector('div')
+        .withAttribute('data-test-item')
+        .nth(value)
     }
     this.photoSectionAddToAlbum = getElementWithTestId('picker-panel')
       .find('div')
@@ -44,7 +43,7 @@ export default class Page {
     this.allPhotosAddToAlbum = this.photoSectionAddToAlbum
       .find('img')
       .parent('div')
-      .withAttribute('data-test-item', 'pho-photo-item')
+      .withAttribute('data-test-item')
     this.photoCheckbox = this.photoSectionAddToAlbum.find(
       '[class*="pho-photo-select"][data-input="checkbox"]'
     )
