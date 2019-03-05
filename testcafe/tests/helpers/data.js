@@ -25,11 +25,11 @@ export const FILE_PDF = 'Cozy Drive for Desktop.pdf'
 export const FILE_XLSX = 'tests.xlsx'
 
 //Photos
-export const IMG0 = '/IMG0.jpg'
-export const IMG1 = '/IMG-JPG.jpg'
-export const IMG2 = '/IMG-PNG.png'
-export const IMG3 = '/IMG-GIF.gif'
-export const IMG4 = '/IMG1.jpg'
+export const IMG0 = 'IMG0.jpg'
+export const IMG1 = 'IMG-JPG.jpg'
+export const IMG2 = 'IMG-PNG.png'
+export const IMG3 = 'IMG-GIF.gif'
+export const IMG4 = 'IMG1.jpg'
 
 //Files types (For viewer testing)
 export const pdfFilesExt = ['pdf']

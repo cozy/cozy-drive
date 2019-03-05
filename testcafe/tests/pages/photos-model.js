@@ -23,15 +23,24 @@ export default class Page {
 
     //thumbnails
     this.photoThumb = value => {
-      return getElementWithTestItem('pho-photo-item').nth(value)
+      return this.allPhotos.nth(value)
+    }
+
+    this.photoCheckbox = Selector(
+      '[class*="pho-photo-select"][data-input="checkbox"]'
+    )
+    this.photoThumbByName = value => {
+      return getElementWithTestItem(value)
+    }
+    this.photoThumbByNameCheckbox = value => {
+      return this.photoThumbByName(value).find(
+        '[class*="pho-photo-select"][data-input="checkbox"]'
+      )
     }
     this.photoToolbar = Selector(
       '[class*="coz-selectionbar pho-viewer-toolbar-actions"]'
     )
 
-    this.photoCheckbox = Selector(
-      '[class*="pho-photo-select"][data-input="checkbox"]'
-    )
     //Top Option bar & Confirmation Modal
     this.barPhoto = Selector('[class*="coz-selectionbar"]')
     //those buttons are defined in cozy-ui (SelectionBar), so we cannot add data-test-id on them
@@ -42,7 +51,7 @@ export default class Page {
     this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
 
     this.allPhotosWrapper = this.photoSection.find('[class^="pho-photo"]')
-    this.allPhotos = getElementWithTestItem('pho-photo-item')
+    this.allPhotos = Selector('div').withAttribute('data-test-item')
 
     // Photo fullscreen
     this.photoFull = Selector('[class*="pho-viewer-imageviewer"]').find('img')
@@ -66,10 +75,14 @@ export default class Page {
     await isExistingAndVisibile(this.contentWrapper, 'Content Wrapper')
   }
 
+  //We cannot be sure there is no photos on start because of drive testing.
   async initPhotoCountZero() {
-    await isExistingAndVisibile(this.folderEmpty, 'Folder Empty')
-    console.log(`Number of pictures on page (Before test): 0`)
-    t.ctx.allPhotosStartCount = 0
+    //Add wait to be sure everything is loaded
+    await t.wait(3000)
+    if ((await this.folderEmpty.exists) && (await this.folderEmpty.visible)) {
+      console.log(`Number of pictures on page (Before test): 0`)
+      t.ctx.allPhotosStartCount = 0
+    } else this.initPhotosCount()
   }
 
   async initPhotosCount() {
@@ -125,6 +138,23 @@ export default class Page {
     for (let i = 0; i < numOfFiles; i++) {
       await isExistingAndVisibile(this.photoThumb(i), `${i + 1}th Photo thumb`)
       await t.click(this.photoCheckbox.nth(i))
+    }
+  }
+
+  async selectPhotosByName(NameArray) {
+    console.log('Selecting ' + NameArray.length + ' picture(s)')
+    await isExistingAndVisibile(
+      this.photoThumbByName(NameArray[0]),
+      `Photo thumb for ${NameArray[0]}`
+    )
+    await t.hover(this.photoThumbByName(NameArray[0])) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
+
+    for (let i = 0; i < NameArray.length; i++) {
+      await isExistingAndVisibile(
+        this.photoThumbByName(NameArray[i]),
+        `Photo thumb for ${NameArray[i]}`
+      )
+      await t.click(this.photoThumbByNameCheckbox(NameArray[i]))
     }
   }
 

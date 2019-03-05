@@ -31,7 +31,7 @@ const Photo = props => {
   return (
     <div
       style={style}
-      data-test-item="pho-photo-item"
+      data-test-item={photo.name}
       className={classNames(styles['pho-photo'], {
         [styles['pho-photo--selected']]: selected
       })}
