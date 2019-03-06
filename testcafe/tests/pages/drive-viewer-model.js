@@ -120,13 +120,12 @@ export default class Page {
       'Download button in toolbar'
     )
     await t
-      .wait(3000)
       .setNativeDialogHandler(() => true)
       .click(this.btnDownloadViewerToolbar)
   }
 
   // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer
-  async checkCommonsViewerControlsAndDownload(folderName, fileName) {
+  async checkCommonViewerControlsAndDownload(folderName, fileName) {
     const index = await drivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
@@ -220,10 +219,7 @@ export default class Page {
       this.btnNoViewerDownload,
       'no Viewer Download butoon'
     )
-    await t
-      .wait(3000)
-      .setNativeDialogHandler(() => true)
-      .click(this.btnNoViewerDownload)
+    await t.setNativeDialogHandler(() => true).click(this.btnNoViewerDownload)
 
     await this.closeViewer({
       exitWithEsc: true

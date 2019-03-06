@@ -12,13 +12,13 @@ fixture`Delete all photos`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
 })
 
 test('Deleting 1st pic on Timeline : Open up a modal, and confirm', async () => {
-  await page.selectPhotosByName([`${IMG0}`])
+  await page.selectPhotosByName([IMG0])
   //pic is removed
   await page.deletePhotos(1)
 })
 
 test('Deleting 4 pics on Timeline : Open up a modal, and confirm', async () => {
-  await page.selectPhotosByName([`${IMG1}`, `${IMG2}`, `${IMG3}`, `${IMG4}`])
+  await page.selectPhotosByName([IMG1, IMG2, IMG3, IMG4])
   //pics are removed, there are no more pictures on  page
   await page.deletePhotos(4, true)
 })

@@ -1,13 +1,13 @@
 import { extractZip, prepareFilesforViewerTest } from './utils'
-let data = require('../helpers/data')
+import { DATA_ZIP_PATH, DATA_PATH, FILE_FROM_ZIP_PATH } from './data'
 
-fixture`Init Data`
+fixture`Init files used in tests`
 
-test('Unzip Data', async () => {
-  await extractZip(data.DATA_ZIP_PATH, data.DATA_PATH)
+test('Unzip archive containing files used for testing', async () => {
+  await extractZip(DATA_ZIP_PATH, DATA_PATH)
 })
 
-test('Prepare Data', async () => {
+test('Prepare the unzipped files for testing', async () => {
   //set path needed to use data in tests
-  await prepareFilesforViewerTest(data.FILE_FROM_ZIP_PATH)
+  await prepareFilesforViewerTest(FILE_FROM_ZIP_PATH)
 })

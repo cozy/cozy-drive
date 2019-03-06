@@ -3,6 +3,7 @@ import {
   TESTCAFE_DRIVE_URL,
   setDownloadPath,
   getFilesWithExt,
+  getFilesWithoutExt,
   checkLocalFile,
   deleteLocalFile
 } from '../helpers/utils'
@@ -16,20 +17,18 @@ const viewerPage = new ViewerPage()
 //************************
 //Tests when authentified
 //************************
-fixture`Drive : Viewer features : prepare data`.page`${TESTCAFE_DRIVE_URL}/`
-  .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
-    await t.useRole(driveUser)
-    await drivePage.waitForLoading()
-    console.groupEnd()
-  })
-  .afterEach(async () => {
-    console.groupEnd()
-  })
+fixture`Drive : Viewer features : prepare data`
+  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
+  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  await t.useRole(driveUser)
+  await drivePage.waitForLoading()
+  console.groupEnd()
+})
 
-test('Drive : Create a $test_date_time folder in Drive', async () => {
+test('Dri ve : Create a $test_date_time folder in Drive', async () => {
   console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
   await drivePage.addNewFolder(data.FOLDER_DATE_TIME)
+  console.groupEnd()
 })
 
 test('Drive : Go to $test_date_time and upload 26 files', async () => {
@@ -38,10 +37,11 @@ test('Drive : Go to $test_date_time and upload 26 files', async () => {
   )
   await drivePage.goToFolder(data.FOLDER_DATE_TIME)
   await drivePage.uploadFiles(data.filesList)
+  console.groupEnd()
 })
 
 //************************
-//Tests when authentified : wiht downloads
+//Tests when authentified : with downloads
 //************************
 fixture`Drive : Viewer features (and Download)`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
@@ -51,20 +51,19 @@ fixture`Drive : Viewer features (and Download)`
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
   await drivePage.goToFolder(data.FOLDER_DATE_TIME)
-  //Files count needed for navigation tests
-  t.ctx.totalFilesCount = await drivePage.getContentRowCount(
-    `${data.FOLDER_DATE_TIME} - Before`
-  )
   await setDownloadPath(data.DOWNLOAD_PATH)
   console.groupEnd()
 })
 
-test('Viewer : checking commons features for all files (expect PDF)', async t => {
+test('Viewer : checking common features for all files (expect PDF)', async t => {
+  //Files count needed for navigation tests
+  t.ctx.totalFilesCount = await drivePage.getContentRowCount(
+    `${data.FOLDER_DATE_TIME} - Before`
+  )
   // put all files names , execpt pdf in an array for testing commons features in viewer
-  t.ctx.fileNameListNoPDF = await getFilesWithExt(
+  t.ctx.fileNameListNoPDF = await getFilesWithoutExt(
     data.FILE_FROM_ZIP_PATH,
-    data.pdfFilesExt,
-    true
+    data.pdfFilesExt
   )
   for (let i = 0; i < t.ctx.fileNameListNoPDF.length; i++) {
     console.group(
@@ -72,7 +71,7 @@ test('Viewer : checking commons features for all files (expect PDF)', async t =>
         t.ctx.fileNameListNoPDF[i]
       }`
     )
-    await viewerPage.checkCommonsViewerControlsAndDownload(
+    await viewerPage.checkCommonViewerControlsAndDownload(
       data.FOLDER_DATE_TIME,
       t.ctx.fileNameListNoPDF[i]
     )
@@ -91,10 +90,9 @@ test('Viewer : checking commons features for all files (expect PDF)', async t =>
 })
 
 test('Viewer : no Viewer : other Download', async t => {
-  t.ctx.fileNameListNoViewer = await getFilesWithExt(
+  t.ctx.fileNameListNoViewer = await getFilesWithoutExt(
     data.FILE_FROM_ZIP_PATH,
-    data.allSpecialFilesExt,
-    true
+    data.allSpecialFilesExt
   )
   for (let i = 0; i < t.ctx.fileNameListNoViewer.length; i++) {
     console.group(
@@ -122,7 +120,7 @@ test('Viewer : no Viewer : other Download', async t => {
 })
 
 //************************
-//Tests when authentified
+//Tests when authentified - goes to folder in beforeEach
 //************************
 fixture`Drive : Viewer features`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   async t => {
@@ -137,8 +135,7 @@ fixture`Drive : Viewer features`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
 test('Viewer : Image Viewer', async () => {
   const fileNameListImage = await getFilesWithExt(
     data.FILE_FROM_ZIP_PATH,
-    data.imageFilesExt,
-    false
+    data.imageFilesExt
   )
   for (let i = 0; i < fileNameListImage.length; i++) {
     console.group(
@@ -152,8 +149,7 @@ test('Viewer : Image Viewer', async () => {
 test('Viewer : PDF Viewer : Download', async () => {
   const fileNameListPdf = await getFilesWithExt(
     data.FILE_FROM_ZIP_PATH,
-    data.pdfFilesExt,
-    false
+    data.pdfFilesExt
   )
   for (let i = 0; i < fileNameListPdf.length; i++) {
     console.group(
@@ -169,8 +165,7 @@ test('Viewer : PDF Viewer : Download', async () => {
 test('Viewer : audio Viewer', async () => {
   const fileNameListAudio = await getFilesWithExt(
     data.FILE_FROM_ZIP_PATH,
-    data.audioFilesExt,
-    false
+    data.audioFilesExt
   )
   for (let i = 0; i < fileNameListAudio.length; i++) {
     console.group(
@@ -184,8 +179,7 @@ test('Viewer : audio Viewer', async () => {
 test('Viewer : video Viewer', async () => {
   const fileNameListVideo = await getFilesWithExt(
     data.FILE_FROM_ZIP_PATH,
-    data.videoFilesExt,
-    false
+    data.videoFilesExt
   )
   for (let i = 0; i < fileNameListVideo.length; i++) {
     console.group(
@@ -199,8 +193,7 @@ test('Viewer : video Viewer', async () => {
 test('Viewer : text Viewer', async () => {
   const fileNameListText = await getFilesWithExt(
     data.FILE_FROM_ZIP_PATH,
-    data.textFilesExt,
-    false
+    data.textFilesExt
   )
   for (let i = 0; i < fileNameListText.length; i++) {
     console.group(
@@ -212,21 +205,19 @@ test('Viewer : text Viewer', async () => {
 })
 
 //************************
-//Tests when authentified
+//Tests when authentified - Clean up
 //************************
-fixture`Test clean up : remove files and folders`.page`${TESTCAFE_DRIVE_URL}/`
-  .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
-    await t.useRole(driveUser)
-    await drivePage.waitForLoading()
-    console.groupEnd()
-  })
-  .afterEach(async () => {
-    console.groupEnd()
-  })
+fixture`Test clean up : remove files and folders`
+  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
+  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  await t.useRole(driveUser)
+  await drivePage.waitForLoading()
+  console.groupEnd()
+})
 
 test('Delete foler', async () => {
   console.group('↳ ℹ️  Drive : Delete and foler')
   await drivePage.goToFolder(data.FOLDER_DATE_TIME)
   await drivePage.deleteCurrentFolder()
+  console.groupEnd()
 })
