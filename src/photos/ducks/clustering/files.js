@@ -1,5 +1,5 @@
 import { cozyClient, log } from 'cozy-konnector-libs'
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES, DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 export const getChanges = async (lastSeq, limit) => {
   log('info', `Get changes on files since ${lastSeq}`)
@@ -65,4 +65,33 @@ export const getFilesFromDate = async date => {
 export const getAllPhotos = async () => {
   const files = await cozyClient.data.findAll(DOCTYPE_FILES)
   return files.filter(file => file.class === 'image' && !file.trashed)
+}
+
+export const getFilesByAutoAlbum = async album => {
+  album._type = DOCTYPE_ALBUMS
+  let files = []
+  let next = true
+  let skip = 0
+  while (next) {
+    const result = await cozyClient.data.fetchReferencedFiles(album, {
+      skip: skip,
+      wholeResponse: true
+    })
+    if (result && result.included) {
+      const includedFiles = result.included.map(included => {
+        const attributes = included.attributes
+        attributes.id = included.id
+        attributes.clusterId = album._id
+        return attributes
+      })
+      files = files.concat(includedFiles)
+      skip = files.length
+      if (result.meta.count < includedFiles.length) {
+        next = false
+      }
+    } else {
+      next = false
+    }
+  }
+  return files
 }
