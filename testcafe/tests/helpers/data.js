@@ -13,14 +13,12 @@ export const DOWNLOAD_FOLDER_PATH = `${DOWNLOAD_PATH}/files.zip`
 export const filesList = []
 
 //Path to Zip file
-export const DATA_ZIP_PATH = path.resolve(
-  './testcafe/data/26fichiers-extensions.zip'
-)
+export const DATA_ZIP_PATH = path.resolve('./testcafe/data/files-to-test.zip')
 //Path where the zip is extract & other data
 export const DATA_PATH = path.resolve('./testcafe/data')
-export const FILE_FROM_ZIP_PATH = path.join(DATA_PATH, 'TYPES DE FICHIERS')
+export const FILE_FROM_ZIP_PATH = path.join(DATA_PATH, 'FILES TO TEST')
 
-//Drive (All files from zip)
+//Drive : Those const are files from DATA_ZIP_PATH. If changing files in zip, dont forget to modify those const too!
 export const FILE_PDF = 'Cozy Drive for Desktop.pdf'
 export const FILE_XLSX = 'tests.xlsx'
 

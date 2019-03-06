@@ -141,10 +141,10 @@ export async function getFilesWithExt(filesPath, ExtArray) {
     }
   })
   return fileNameList
-} //Put all files without ext in an array for testing viewer
+}
+//Put all files without ext in an array for testing viewer
 //@param { path } filesPath : path to Files
 //@param { array } ExtArray : array of extensions
-//@param { bool } isReverse : if true -> add files without this ext, if false add files with ext
 export async function getFilesWithoutExt(filesPath, ExtArray) {
   let fileNameList = []
   fs.readdirSync(filesPath).forEach(file => {

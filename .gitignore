@@ -57,5 +57,4 @@ src/drive/targets/mobile/fastlane/Preview.html
 src/drive/targets/mobilePreview.html
 
 # testcafe data
-testcafe/data/TYPES DE FICHIERS
-testcafe/data/__MACOSX
+testcafe/data/FILES TO TEST
