@@ -36,8 +36,8 @@ jobs:
             - google-chrome
           packages:
             - google-chrome-stable fluxbox
-      before_install:
-        - scripts/transifex.sh
+      before_script:
+        - yarn run cozy-ci-transifex
         - scripts/decrypt.sh
       script:
         - yarn tx
@@ -83,13 +83,13 @@ jobs:
         - COZY_APP_SLUG=drive
       before_install:
         - yes | sdkmanager "platforms;android-27" # see https://github.com/travis-ci/travis-ci/issues/8874#issuecomment-350350607
-        - scripts/transifex.sh
         - scripts/decrypt.sh
         - scripts/signing.sh
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install nodejs
         - sudo apt-get install build-essential
         - yarn
+        - yarn run cozy-ci-transifex
         - export PATH=/usr/local/android-sdk/build-tools/26.0.2:$PATH # Required to expose apksigner command.
       script:
         - yarn tx
@@ -101,7 +101,7 @@ jobs:
         - yarn autosign:drive:android
       after_success:
         - *downcloud-cert
-        - if [[ "$(git log -2)" =~ [\[APK\]] ]]; then APK_URL=$(node scripts/downcloud.js src/drive/targets/mobile/build/android/cozy-drive.apk) && scripts/github.sh "🎁 [Click here]($APK_URL) to download the latest Android APK"; fi
+        - if [[ "$(git log -2)" =~ [\[APK\]] ]]; then APK_URL=$(node scripts/downcloud.js src/drive/targets/mobile/build/android/cozy-drive.apk) && yarn run cozy-ci-github "🎁 [Click here]($APK_URL) to download the latest Android APK"; fi
 env:
   global:
     - MATTERMOST_CHANNEL=appvengers
