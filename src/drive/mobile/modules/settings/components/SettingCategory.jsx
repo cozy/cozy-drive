@@ -11,11 +11,11 @@ const SettingCategory = ({ title, elements }) => (
   <div className={styles['settings__category']}>
     <h3 className={styles['settings__category-title']}>{title}</h3>
     {elements.map(
-      element =>
+      (element, index) =>
         element.display === false ? (
           ''
         ) : (
-          <div>
+          <div key={index}>
             {element.title && (
               <h4 className={styles['settings__subcategory-title']}>
                 {element.title}
