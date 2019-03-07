@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
@@ -8,7 +9,7 @@ import {
   getClientSettings
 } from 'drive/mobile/modules/authorization/duck'
 
-class Unlink extends Component {
+export class Unlink extends Component {
   render() {
     const { t, unlink, clientSettings } = this.props
     const { client } = this.context
@@ -29,6 +30,15 @@ class Unlink extends Component {
       </div>
     )
   }
+}
+Unlink.PropTypes = {
+  t: PropTypes.func,
+  unlink: PropTypes.func,
+  clientSettings: PropTypes.object,
+  router: PropTypes.object
+}
+Unlink.contextTypes = {
+  client: PropTypes.func
 }
 
 const mapStateToProps = state => ({
