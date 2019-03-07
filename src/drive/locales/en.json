@@ -332,15 +332,9 @@
         "account": "Account"
       },
       "unlink": {
-        "title": "Reset this application",
-        "description": "By clicking Reset, you will be able to start your application over, and will only lose the data saved on your smartphone.",
-        "button": "Reset",
-        "confirmation": {
-          "title": "Reset this application?",
-          "description": "By logging out of your Cozy, you will erase all data synchronized locally by your mobile application.",
-          "cancel": "Cancel",
-          "unlink": "Reset"
-        }
+        "title": "Sign out of your Cozy",
+        "description": "By signing out of your Cozy from this device, you will not lose any data in your Cozy. This will remove your offline files from this device related to your Cozy.",
+        "button": "Sign out"
       },
       "media_backup": {
         "media_folder": "Photos",
