@@ -1,12 +1,5 @@
 import { cozyClient, log } from 'cozy-konnector-libs'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
-import { getMatchingClusters } from './matching'
-import { getFilesByAutoAlbum } from './files'
-import { prepareDataset } from './utils'
-import flatten from 'lodash/flatten'
-import union from 'lodash/union'
-import intersection from 'lodash/intersection'
-import difference from 'lodash/difference'
 import uniq from 'lodash/uniq'
 
 // An auto album name is the date of the first photo
@@ -134,9 +127,9 @@ const createClusters = async clusters => {
  * @returns {number} Number of references updated in database
  *
  */
-export const saveClustering = async (clusters, clusterAlbums) => {
+export const saveClustering = async (clusters, clusterAlbums = []) => {
   let refsCount = 0
-  if (clusterAlbums && clusterAlbums.length > 0) {
+  if (clusterAlbums.length > 0) {
     const processedAlbumsIds = []
     for (const photos of clusters) {
       // Find the clusterIds for this set of photos
@@ -191,125 +184,4 @@ export const saveClustering = async (clusters, clusterAlbums) => {
     refsCount = await createClusters(clusters)
   }
   return refsCount
-}
-
-const findPhotosByAlbum = async album => {
-  try {
-    const files = await getFilesByAutoAlbum(album)
-    return prepareDataset(files)
-  } catch (e) {
-    log(
-      'error',
-      `Could not find photos to re-clusterize for ${JSON.stringify(album)}: ${
-        e.reason
-      }`
-    )
-    return []
-  }
-}
-
-// Find existing photos for each album that need to be re-clusterize
-const findPhotosToReclusterize = async albums => {
-  const photos = flatten(
-    await Promise.all(
-      albums.map(async album => {
-        return await findPhotosByAlbum(album)
-      })
-    )
-  ).sort((a, b) => a.timestamp - b.timestamp)
-  return photos
-}
-
-// Insert the new photo into the sorted photos set
-const insertNewPhoto = (photos, newPhoto) => {
-  const photoAlreadyExists = photos.find(p => p.id === newPhoto.id)
-  if (photoAlreadyExists) {
-    return photos
-  } else {
-    photos.push(newPhoto)
-    return photos.sort((a, b) => a.timestamp - b.timestamp)
-  }
-}
-
-/**
- *  Find the existing albums and related photos that are eligible to re-cluster,
- *  based on the new given photos.
- *  Each new photo should match at least one (maximum 2) existing album.
- *  We retrieve all the related photos for each matching album in order to
- *  recompute the cluster with the old and new photos.
-
- * @param {Object[]} newPhotos - Set of new photos to clusterize
- * @param {Object[]} albums - Set of existing auto albums
- * @returns {Map} Map associating a set of albums to a set of photos.
- *
- */
-export const albumsToClusterize = async (newPhotos, albums) => {
-  const clusterize = new Map()
-  try {
-    for (const newPhoto of newPhotos) {
-      // Find clusters matching the photo
-      const matchingAlbums = getMatchingClusters(newPhoto, albums)
-      if (matchingAlbums.length > 0) {
-        let clusterAlbumsExist = false
-
-        for (const clusterAlbums of clusterize.keys()) {
-          if (difference(matchingAlbums, clusterAlbums).length < 1) {
-            // The matchingAlbums are included in the key: add the photo
-            clusterize.set(
-              clusterAlbums,
-              insertNewPhoto(clusterize.get(clusterAlbums), newPhoto)
-            )
-            clusterAlbumsExist = true
-            break
-          } else if (intersection(matchingAlbums, clusterAlbums).length > 0) {
-            // The matchingAlbums partially exist into the key: merge it
-            const mergedKey = union(clusterAlbums, matchingAlbums)
-            let mergedValues = clusterize.get(clusterAlbums)
-            const missingAlbums = difference(matchingAlbums, clusterAlbums)
-
-            for (const album of missingAlbums) {
-              if (clusterize.has(album)) {
-                // Album exists as a key in the Map: remove it from the Map and
-                // save its photos
-                mergedValues = mergedValues.concat(clusterize.get(album))
-                clusterize.delete(album)
-              } else {
-                // Album does not exist in the Map: add it with its photos
-                const photosToClusterize = await findPhotosToReclusterize([
-                  album
-                ])
-                mergedValues = mergedValues.concat(photosToClusterize)
-              }
-            }
-            mergedValues.push(newPhoto)
-            // resort values
-            const sortedMergedValues = mergedValues.sort(
-              (a, b) => a.timestamp - b.timestamp
-            )
-            // Add the new entry and delete the previous one
-            clusterize.set(mergedKey, sortedMergedValues)
-            clusterize.delete(clusterAlbums)
-            clusterAlbumsExist = true
-            break
-          }
-        }
-        if (!clusterAlbumsExist) {
-          // The matching albums don't exist in the Map: add them with their photos
-          const photosToClusterize = await findPhotosToReclusterize(
-            matchingAlbums
-          )
-          clusterize.set(
-            matchingAlbums,
-            insertNewPhoto(photosToClusterize, newPhoto)
-          )
-        }
-      }
-    }
-  } catch (e) {
-    log(
-      'error',
-      `An error occured during the build of clusterize: ${JSON.stringify(e)}`
-    )
-  }
-  return clusterize
 }

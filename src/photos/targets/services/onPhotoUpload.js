@@ -27,11 +27,8 @@ import {
 } from 'photos/ducks/clustering/consts'
 import { spatioTemporalScaled } from 'photos/ducks/clustering/metrics'
 import { gradientClustering } from 'photos/ducks/clustering/gradient'
-import {
-  saveClustering,
-  findAutoAlbums,
-  albumsToClusterize
-} from 'photos/ducks/clustering/albums'
+import { saveClustering, findAutoAlbums } from 'photos/ducks/clustering/albums'
+import { albumsToClusterize } from 'photos/ducks/clustering/reclusterize'
 import { prepareDataset } from 'photos/ducks/clustering/utils'
 import { getMatchingParameters } from 'photos/ducks/clustering/matching'
 
