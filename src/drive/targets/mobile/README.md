@@ -112,6 +112,10 @@ You can generate all icons with [splashicon-generator](https://github.com/eberli
 $ yarn genicon:drive:mobile
 ```
 
+## :repeat: CI
+
+Travis CI can automatically build a signed APK for Pull Requests. To trigger a build, simply add the text `[APK]` somewhere in the commit message.
+
 ### Icon
 
 Should be a 1024x1024px.
