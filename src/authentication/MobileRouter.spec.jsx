@@ -21,6 +21,23 @@ describe('MobileRouter', () => {
     expect(app).toMatchSnapshot()
   })
 
+  it('should render the appRoutes when no onboarding informations are present', () => {
+    const app = shallow(
+      <MobileRouter
+        appRoutes={<div />}
+        isAuthenticated={true}
+        isRevoked={false}
+        onboarding={{}}
+        onboardingInformations={undefined}
+        history={{}}
+        onAuthenticated={jest.fn()}
+        onLogout={jest.fn()}
+        appIcon={''}
+      />
+    )
+    expect(app).toMatchSnapshot()
+  })
+
   it('should render the revoked view', () => {
     const app = shallow(
       <MobileRouter

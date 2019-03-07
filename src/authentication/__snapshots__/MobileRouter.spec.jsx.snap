@@ -11,6 +11,15 @@ exports[`MobileRouter should render the appRoutes when all is well 1`] = `
 </Router>
 `;
 
+exports[`MobileRouter should render the appRoutes when no onboarding informations are present 1`] = `
+<Router
+  history={Object {}}
+  render={[Function]}
+>
+  <div />
+</Router>
+`;
+
 exports[`MobileRouter should render the auth screen when the onboarding has not started 1`] = `
 <Authentication
   appIcon=""

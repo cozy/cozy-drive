@@ -1,4 +1,5 @@
 import localforage from 'localforage'
+import get from 'lodash/get'
 
 const ONBOARDING_SECRET_KEY = 'onboarding_secret'
 const ONBOARDING_STATE = 'onboarding_state'
@@ -38,7 +39,7 @@ const generateSecret = () => {
   return generateRandomString()
 }
 export const checkIfOnboardingLogin = onboardingInformations => {
-  return onboardingInformations.code !== null
+  return get(onboardingInformations, 'code')
 }
 
 export const generateOAuthForUrl = async ({
