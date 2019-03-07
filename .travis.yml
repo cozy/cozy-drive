@@ -101,8 +101,7 @@ jobs:
         - yarn autosign:drive:android
       after_success:
         - *downcloud-cert
-        - APK_URL=$(node scripts/downcloud.js src/drive/targets/mobile/build/android/cozy-drive.apk)
-        - scripts/github.sh "🎁 [Click here]($APK_URL) to download the latest Android APK"
+        - if [[ "$(git log -2)" =~ [\[APK\]] ]]; then APK_URL=$(node scripts/downcloud.js src/drive/targets/mobile/build/android/cozy-drive.apk) && scripts/github.sh "🎁 [Click here]($APK_URL) to download the latest Android APK"; fi
 env:
   global:
     - MATTERMOST_CHANNEL=appvengers
