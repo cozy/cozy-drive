@@ -89,7 +89,8 @@ describe('clustering', () => {
     const expectedReach = [Number.MAX_VALUE, 2, 3, 45, 20, 30]
     const expectedClusters = [
       [dataset[0], dataset[1], dataset[2]],
-      [dataset[3], dataset[4], dataset[5]]
+      [dataset[3], dataset[4]],
+      [dataset[5]]
     ]
     const cosAngle = gradientAngle(15, 1)
     const params = { maxBound, cosAngle }
@@ -148,6 +149,68 @@ describe('clustering', () => {
     const reachs = reachabilities(dataset, spatioTemporalScaled, params)
     expect(reachs).toEqual(expect.arrayContaining(expectedReach))
     const clusters = gradientClustering(dataset, reachs, params)
+    expect(clusters).toEqual(expect.arrayContaining(expectedClusters))
+  })
+
+  it('Should cluster real data with spatio temporal scaled metric', () => {
+    const realDataset = [
+      {
+        timestamp:
+          new Date('2018-08-08T18:43:09+02:00').getTime() / 1000 / 3600,
+        lat: 44.849386305555555,
+        lon: -0.5606861944444445
+      },
+      {
+        timestamp:
+          new Date('2018-08-08T18:43:19+02:00').getTime() / 1000 / 3600,
+        lat: 44.849365694444444,
+        lon: -0.5606654166666667
+      },
+      {
+        timestamp:
+          new Date('2018-08-08T18:48:26+02:00').getTime() / 1000 / 3600,
+        lat: 44.84903605555556,
+        lon: -0.55948175
+      },
+      {
+        timestamp:
+          new Date('2018-08-08T19:38:51+02:00').getTime() / 1000 / 3600,
+        lat: 44.849544388888894,
+        lon: -0.5605915
+      },
+      {
+        timestamp:
+          new Date('2018-08-08T22:15:32+02:00').getTime() / 1000 / 3600,
+        lat: 44.84038105555556,
+        lon: -0.56100925
+      },
+      {
+        timestamp:
+          new Date('2018-08-09T05:05:08+02:00').getTime() / 1000 / 3600,
+        lat: 44.83123536111111,
+        lon: -0.5740531388888889
+      }
+    ]
+    const params = {
+      epsTemporal: 3,
+      epsSpatial: 2.5,
+      maxBound: 6,
+      cosAngle: gradientAngle(3, 1)
+    }
+
+    const expectedClusters = [
+      [
+        realDataset[0],
+        realDataset[1],
+        realDataset[2],
+        realDataset[3],
+        realDataset[4]
+      ],
+      [realDataset[5]]
+    ]
+
+    const reachs = reachabilities(realDataset, spatioTemporalScaled, params)
+    const clusters = gradientClustering(realDataset, reachs, params)
     expect(clusters).toEqual(expect.arrayContaining(expectedClusters))
   })
 })
