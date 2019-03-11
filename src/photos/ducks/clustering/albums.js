@@ -21,7 +21,11 @@ const updateAlbumPeriod = async (photos, album) => {
     newPeriod.start !== album.period.start ||
     newPeriod.end !== album.period.end
   ) {
-    const newAlbum = { ...album, period: newPeriod }
+    const newAlbum = {
+      ...album,
+      period: newPeriod,
+      name: photos[0].datetime
+    }
     return cozyClient.data.update(DOCTYPE_ALBUMS, album, newAlbum)
   }
   return album
