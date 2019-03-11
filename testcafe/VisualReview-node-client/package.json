@@ -1,0 +1,28 @@
+{
+  "name": "visualreview-client",
+  "version": "0.0.1",
+  "description": "Node.js client for VisualReview",
+  "homepage": "https://github.com/klaasvaak/VisualReview-node-client",
+  "main": "index.js",
+  "keywords": [
+    "VisualReview"
+  ],
+  "author": "Joep van der Heijden",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klaasvaak/VisualReview-node-client"
+  },
+  "bugs": {
+    "url": "https://github.com/klaasvaak/VisualReview-node-client/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/klaasvaak/VisualReview-node-client/LICENSE"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.60.0"
+  }
+}
