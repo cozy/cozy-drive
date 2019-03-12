@@ -10,7 +10,8 @@ import DownloadButton from './DownloadButton'
 import { downloadFiles } from 'drive/web/modules/navigation/duck'
 import toolbarstyles from 'drive/styles/toolbar'
 import { getQueryParameter } from 'react-cozy-helpers'
-import CozyHomeLink, { getHomeLinkHref } from 'components/Button/CozyHomeLink'
+import CozyHomeLink from 'components/Button/CozyHomeLink'
+import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import OpenInCozyButton from './OpenInCozyButton'
 
 import CloudIcon from 'drive/assets/icons/icon-cloud-open.svg'
@@ -108,7 +109,7 @@ const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
       {discoveryLink ? (
         <OpenInCozyButton href={discoveryLink} t={t} size="small" />
       ) : (
-        <CozyHomeLink from="sharing-drive" t={t} />
+        <CozyHomeLink from="sharing-drive" t={t} size="small" />
       )}
       <DownloadFilesButton
         t={t}

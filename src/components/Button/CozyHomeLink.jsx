@@ -2,29 +2,28 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { ButtonLink } from 'cozy-ui/react'
 import styles from './index.styl'
+import getHomeLinkHref from './getHomeLinkHref'
 
-const CozyHomeLink = ({ from, embedInCozyBar = false, t }) => (
+const CozyHomeLink = ({ from, embedInCozyBar = false, t, size, className }) => (
   <ButtonLink
     label={t('Share.create-cozy')}
     icon="cozy-negative"
-    className={embedInCozyBar ? styles['bar-homelink'] : ''}
+    className={embedInCozyBar ? styles['bar-homelink'] : className}
     href={getHomeLinkHref(from)}
+    size={size}
   />
 )
 
 CozyHomeLink.propTypes = {
   from: PropTypes.string,
   embedInCozyBar: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['tiny', 'small', 'large', 'normal'])
 }
 
 CozyHomeLink.defaultProps = {
-  from: ''
+  from: '',
+  size: 'normal'
 }
-
-export const getHomeLinkHref = from =>
-  `https://manager.cozycloud.cc/cozy/create${
-    from ? `?pk_campaign=${encodeURIComponent(from)}` : ''
-  }`
 
 export default CozyHomeLink
