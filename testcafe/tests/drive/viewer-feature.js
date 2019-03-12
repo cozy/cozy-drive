@@ -71,7 +71,11 @@ test('Viewer : checking common features for all files (expect PDF)', async t => 
         t.ctx.fileNameListNoPDF[i]
       }`
     )
-    await viewerPage.checkCommonViewerControlsAndDownload(
+    await viewerPage.checkCommonViewerControls(
+      data.FOLDER_DATE_TIME,
+      t.ctx.fileNameListNoPDF[i]
+    )
+    await viewerPage.checkCommonViewerDownload(
       data.FOLDER_DATE_TIME,
       t.ctx.fileNameListNoPDF[i]
     )

@@ -399,14 +399,10 @@ export default class DrivePage {
   async getElementIndex(fileName) {
     const paragraph = this.folderOrFileName
       .parent(`[class*="fil-content-row"]:not([class*="fil-content-row-head"])`)
-      .addCustomDOMProperties({
-        indexInRow: el => {
-          const nodes = Array.prototype.slice.call(el.parentElement.children)
+      .withText(fileName)
 
-          return nodes.indexOf(el)
-        }
-      })
-    return await paragraph.withText(fileName).indexInRow
+    const index = await paragraph.prevSibling().count
+    return index
   }
 
   //@param { Array } filesIndexArray : Array of files index

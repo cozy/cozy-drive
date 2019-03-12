@@ -125,7 +125,7 @@ export default class Page {
   }
 
   // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer
-  async checkCommonViewerControlsAndDownload(folderName, fileName) {
+  async checkCommonViewerControls(folderName, fileName) {
     const index = await drivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
@@ -141,15 +141,16 @@ export default class Page {
     await this.closeViewer({
       exitWithEsc: false
     })
+    const breadcrumbEnd = await drivePage.getbreadcrumb()
+    await t.expect(breadcrumbEnd).contains(`${folderName}`)
+  }
 
+  async checkCommonViewerDownload(folderName, fileName) {
     await this.openViewerForFile(fileName)
     await this.downloadWithToolbar()
     await this.closeViewer({
       exitWithEsc: true
     })
-
-    const breadcrumbEnd = await drivePage.getbreadcrumb()
-    await t.expect(breadcrumbEnd).contains(`${folderName}`)
   }
 
   //Specific check for audioViewer
