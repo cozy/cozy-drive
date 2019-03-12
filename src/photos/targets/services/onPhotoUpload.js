@@ -51,7 +51,7 @@ const createInitialClusters = async (paramsMode, dataset) => {
 
 // Clusterize the given photos, i.e. organize them depending on metrics
 const clusterizePhotos = async (setting, dataset, albums) => {
-  log('debug', `Start clustering on ${dataset.length} photos`)
+  log('info', `Start clustering on ${dataset.length} photos`)
 
   let clusteredCount = 0
   try {
@@ -112,7 +112,7 @@ const createParameter = (dataset, epsTemporal, epsSpatial) => {
   }
 }
 const initParameters = dataset => {
-  log('debug', `Compute clustering parameters on ${dataset.length} photos`)
+  log('info', `Compute clustering parameters on ${dataset.length} photos`)
   const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
   const epsSpatial = computeEpsSpatial(dataset, PERCENTILE)
   return createParameter(dataset, epsTemporal, epsSpatial)
@@ -133,7 +133,7 @@ const recomputeParameters = async setting => {
   if (files.length < EVALUATION_THRESHOLD) {
     return
   }
-  log('debug', `Compute clustering parameters on ${files.length} photos`)
+  log('info', `Compute clustering parameters on ${files.length} photos`)
 
   const dataset = prepareDataset(files)
   const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
@@ -163,7 +163,7 @@ const runClustering = async setting => {
   This is unpleasant, but harmless, as no new write will be produced on the
   already clustered files.
  */
-  log('debug', `${result.clusteredCount} photos clustered since ${since}`)
+  log('info', `${result.clusteredCount} photos clustered since ${since}`)
   setting = await updateSettingStatus(
     result.setting,
     result.clusteredCount,

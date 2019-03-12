@@ -12,7 +12,7 @@ import {
 import { gradientAngle } from 'photos/ducks/clustering/gradient'
 
 export const createSetting = initParameters => {
-  log('debug', 'Create setting')
+  log('info', 'Create setting')
   const defaultSetting = DEFAULT_SETTING
   defaultSetting.parameters[0] = initParameters
   return cozyClient.data.create(DOCTYPE_PHOTOS_SETTINGS, defaultSetting)
@@ -107,7 +107,7 @@ export const updateParamsPeriod = async (setting, params, photos) => {
 }
 
 export const updateSettingStatus = async (setting, count, changes) => {
-  log('debug', 'Update setting for last seq', changes.newLastSeq)
+  log('info', 'Update setting for last seq', changes.newLastSeq)
   const evaluationCount =
     count > 0 ? setting.evaluationCount + count : setting.evaluationCount
   const lastSeq = changes.newLastSeq
