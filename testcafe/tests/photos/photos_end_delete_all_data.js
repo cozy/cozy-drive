@@ -19,6 +19,9 @@ fixture`Delete all photos`.page`${TESTCAFE_PHOTOS_URL}/`
     await page.waitForLoading()
     await page.initPhotosCount()
   })
+  .after(async ctx => {
+    await ctx.vr.checkVr()
+  })
 
 test('Deleting 1st pic on Timeline : Open up a modal, and confirm', async () => {
   await page.selectPhotosByName([IMG0])
