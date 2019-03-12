@@ -15,6 +15,7 @@ exports[`Public view should render children when they are present 1`] = `
         >
           <CozyHomeLink
             from="sharing-photos"
+            size="normal"
             t={
               [MockFunction] {
                 "calls": Array [
@@ -25,6 +26,9 @@ exports[`Public view should render children when they are present 1`] = `
                     "Toolbar.more",
                   ],
                   Array [
+                    "Share.create-cozy",
+                  ],
+                  Array [
                     "Toolbar.album_download",
                   ],
                   Array [
@@ -34,10 +38,21 @@ exports[`Public view should render children when they are present 1`] = `
                     "Toolbar.more",
                   ],
                   Array [
+                    "Share.create-cozy",
+                  ],
+                  Array [
                     "Toolbar.album_download",
                   ],
                 ],
                 "results": Array [
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
                   Object {
                     "isThrow": false,
                     "value": undefined,
@@ -84,6 +99,15 @@ exports[`Public view should render children when they are present 1`] = `
             popover={false}
             position="right"
           >
+            <MenuItem
+              icon={
+                <Icon
+                  icon="cozy-negative"
+                  spin={false}
+                />
+              }
+              onSelect={[Function]}
+            />
             <MenuItem
               icon={
                 <Icon
@@ -147,6 +171,7 @@ exports[`Public view should render the album 1`] = `
         >
           <CozyHomeLink
             from="sharing-photos"
+            size="normal"
             t={
               [MockFunction] {
                 "calls": Array [
@@ -157,10 +182,17 @@ exports[`Public view should render the album 1`] = `
                     "Toolbar.more",
                   ],
                   Array [
+                    "Share.create-cozy",
+                  ],
+                  Array [
                     "Toolbar.album_download",
                   ],
                 ],
                 "results": Array [
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
                   Object {
                     "isThrow": false,
                     "value": undefined,
@@ -195,6 +227,15 @@ exports[`Public view should render the album 1`] = `
             popover={false}
             position="right"
           >
+            <MenuItem
+              icon={
+                <Icon
+                  icon="cozy-negative"
+                  spin={false}
+                />
+              }
+              onSelect={[Function]}
+            />
             <MenuItem
               icon={
                 <Icon
