@@ -21,7 +21,11 @@ const updateAlbumPeriod = async (photos, album) => {
     newPeriod.start !== album.period.start ||
     newPeriod.end !== album.period.end
   ) {
-    const newAlbum = { ...album, period: newPeriod }
+    const newAlbum = {
+      ...album,
+      period: newPeriod,
+      name: photos[0].datetime
+    }
     return cozyClient.data.update(DOCTYPE_ALBUMS, album, newAlbum)
   }
   return album
@@ -46,12 +50,12 @@ const addAutoAlbumReferences = async (photos, album) => {
     if (refsIds.length > 0) {
       await cozyClient.data.addReferencedFiles(album, refsIds)
       log(
-        'debug',
+        'info',
         `${refsIds.length} photos clustered into: ${JSON.stringify(album._id)}`
       )
       refCount = refsIds.length
     } else {
-      log('debug', `Nothing to clusterize for ${album._id}`)
+      log('info', `Nothing to clusterize for ${album._id}`)
     }
   } catch (e) {
     log('error', e.reason)

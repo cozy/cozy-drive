@@ -107,6 +107,7 @@ export const updateParamsPeriod = async (setting, params, photos) => {
 }
 
 export const updateSettingStatus = async (setting, count, changes) => {
+  log('info', 'Update setting for last seq', changes.newLastSeq)
   const evaluationCount =
     count > 0 ? setting.evaluationCount + count : setting.evaluationCount
   const lastSeq = changes.newLastSeq
