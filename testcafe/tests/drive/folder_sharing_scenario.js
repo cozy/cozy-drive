@@ -149,16 +149,13 @@ test('`Drive : No Access to an old folder public link', async t => {
 //************************
 //Tests when authentified
 //************************
-fixture`Test clean up : remove files and folders`.page`${TESTCAFE_DRIVE_URL}/`
-  .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
-    await t.useRole(driveUser)
-    await drivePage.waitForLoading()
-    console.groupEnd()
-  })
-  .afterEach(async () => {
-    console.groupEnd()
-  })
+fixture`Test clean up : remove files and folders`
+  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
+  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  await t.useRole(driveUser)
+  await drivePage.waitForLoading()
+  console.groupEnd()
+})
 
 test('(foldersharing) Delete File, and foler', async () => {
   console.group('↳ ℹ️  Drive : Delete File, and foler')
@@ -166,4 +163,5 @@ test('(foldersharing) Delete File, and foler', async () => {
   await drivePage.goToFolder(data.FOLDER_DATE_TIME)
   await drivePage.deleteElementByName(data.FILE_PDF)
   await drivePage.deleteCurrentFolder()
+  console.groupEnd()
 })
