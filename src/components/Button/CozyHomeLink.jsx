@@ -5,7 +5,6 @@ import styles from './index.styl'
 
 const CozyHomeLink = ({ from, embedInCozyBar = false, t }) => (
   <ButtonLink
-    subtle
     label={t('Share.create-cozy')}
     icon="cozy-negative"
     className={embedInCozyBar ? styles['bar-homelink'] : ''}
