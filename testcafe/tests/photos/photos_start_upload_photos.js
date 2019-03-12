@@ -18,6 +18,9 @@ fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
     await t.useRole(photosUser)
     await page.waitForLoading()
   })
+  .after(async ctx => {
+    await ctx.vr.checkVr()
+  })
 
 test('Uploading 1 pic from Photos view', async t => {
   ///there is no photos on page

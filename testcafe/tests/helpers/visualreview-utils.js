@@ -17,4 +17,25 @@ export class VisualReviewTestcafe extends VisualReview {
     //the path needs to be in const but i need to define the screenshots tree 1st
     this.uploadScreenshot('./reports/screenshots/' + imageName)
   }
+
+  async checkVr() {
+    let runAnalysis = await this.getJsonStatusForCurrentRun()
+    let runStatus = 'accepted'
+
+    for (let imgDiff in runAnalysis.diffs) {
+      if (runAnalysis.diffs[imgDiff].status != 'accepted') {
+        runStatus = runAnalysis.diffs[imgDiff].status
+        throw new Error(
+          `❌ Screenshots changes  in image ID ${
+            runAnalysis.diffs[imgDiff].id
+          } (${runAnalysis.diffs[imgDiff].status}), please Review :  ${
+            this.options.protocol
+          }://${this.options.hostname}/#/${runAnalysis.analysis.projectId}/${
+            runAnalysis.analysis.suiteId
+          }/${runAnalysis.analysis.runId}`
+        )
+      }
+    }
+    console.log(`Screenshots status : ${runStatus}`)
+  }
 }
