@@ -5,16 +5,12 @@ import DrivePage from '../pages/drive-model'
 
 const drivePage = new DrivePage()
 
-fixture`DRIVE - NAV`.page`${TESTCAFE_DRIVE_URL}/`
-  .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
-    await t.useRole(driveUser)
-    await drivePage.waitForLoading()
-    console.groupEnd()
-  })
-  .afterEach(async () => {
-    console.groupEnd()
-  })
+fixture`DRIVE - NAV`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
+  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  await t.useRole(driveUser)
+  await drivePage.waitForLoading()
+  console.groupEnd()
+})
 
 test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async () => {
   console.group(
@@ -63,4 +59,5 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
     'Trash'
   )
   await drivePage.checkMainMenu()
+  console.groupEnd()
 })
