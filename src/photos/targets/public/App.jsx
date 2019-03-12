@@ -9,6 +9,7 @@ import { Main } from 'cozy-ui/react/Layout'
 
 import Selection from 'photos/ducks/selection'
 import { MoreButton, CozyHomeLink } from 'components/Button'
+import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import PhotoBoard from 'photos/components/PhotoBoard'
 import styles from './index.styl'
 import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
@@ -73,7 +74,11 @@ export class App extends Component {
                 >
                   <h2 className={styles['pho-content-title']}>{album.name}</h2>
                   <div className={styles['pho-toolbar']} role="toolbar">
-                    <CozyHomeLink from="sharing-photos" t={t} />
+                    <CozyHomeLink
+                      from="sharing-photos"
+                      t={t}
+                      className={styles['pho-public-mycozy']}
+                    />
                     <Button
                       theme="secondary"
                       className={styles['pho-public-download']}
@@ -89,6 +94,14 @@ export class App extends Component {
                       position="right"
                       className="u-hide--desk"
                     >
+                      <MenuItem
+                        onSelect={() =>
+                          (window.location = getHomeLinkHref('sharing-photos'))
+                        }
+                        icon={<Icon icon="cozy-negative" />}
+                      >
+                        {t('Share.create-cozy')}
+                      </MenuItem>
                       <MenuItem
                         onSelect={() => this.onDownload(selected)}
                         icon={<Icon icon="download" />}
