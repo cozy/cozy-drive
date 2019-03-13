@@ -33,13 +33,15 @@ export const getNavigatorOs = ClientFunction(() => navigator.platform)
 
 //User Agent is needed for VisualReview, but we don't need the all string
 export const getNavigatorName = ClientFunction(() => {
-  var aKeys = ['MSIE', 'Firefox', 'Safari', 'Chrome', 'Opera'],
-    sUsrAg = navigator.userAgent,
-    nIdx = aKeys.length - 1
-
-  for (nIdx; nIdx > -1 && sUsrAg.indexOf(aKeys[nIdx]) === -1; nIdx--);
-
-  return aKeys[nIdx]
+  let navigatorKey = ['MSIE', 'Firefox', 'Safari', 'Chrome', 'Opera'],
+    userAgent = navigator.userAgent,
+    index = navigatorKey.length - 1
+  for (
+    index;
+    index > -1 && userAgent.indexOf(navigatorKey[index]) === -1;
+    index--
+  );
+  return navigatorKey[index]
 })
 
 export const getResolution = ClientFunction(

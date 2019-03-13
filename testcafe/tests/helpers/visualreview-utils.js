@@ -12,7 +12,7 @@ export class VisualReviewTestcafe extends VisualReview {
     this.options.hostname = VISUALREVIEW_INSTANCE
   }
 
-  async takeScreenshotAndReview(imageName) {
+  async takeScreenshotAndUpload(imageName) {
     await t.takeScreenshot(imageName)
 
     this.options.properties.os = await getNavigatorOs()
@@ -23,7 +23,7 @@ export class VisualReviewTestcafe extends VisualReview {
     this.uploadScreenshot('./reports/screenshots/' + imageName)
   }
 
-  async checkVr() {
+  async checkRunStatus() {
     let runAnalysis = await this.getJsonStatusForCurrentRun()
     let runStatus = 'accepted'
 

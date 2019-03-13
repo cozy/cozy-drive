@@ -92,7 +92,7 @@
     "tar": "4.4.8",
     "testcafe": "0.23.3",
     "unzipper": "0.9.11",
-    "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git"
+    "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.2"
   },
   "dependencies": {
     "babel-preset-cozy-app": "1.2.2",

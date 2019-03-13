@@ -20,7 +20,7 @@ fixture`Delete all photos`.page`${TESTCAFE_PHOTOS_URL}/`
     await page.initPhotosCount()
   })
   .after(async ctx => {
-    await ctx.vr.checkVr()
+    await ctx.vr.checkRunStatus()
   })
 
 test('Deleting 1st pic on Timeline : Open up a modal, and confirm', async t => {
@@ -28,7 +28,7 @@ test('Deleting 1st pic on Timeline : Open up a modal, and confirm', async t => {
   //pic is removed
   await page.deletePhotos(1)
 
-  await t.fixtureCtx.vr.takeScreenshotAndReview('delete-1-pic.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('delete-1-pic.png')
 })
 
 test('Deleting 4 pics on Timeline : Open up a modal, and confirm', async t => {
@@ -36,5 +36,5 @@ test('Deleting 4 pics on Timeline : Open up a modal, and confirm', async t => {
   //pics are removed, there are no more pictures on  page
   await page.deletePhotos(4, true)
 
-  await t.fixtureCtx.vr.takeScreenshotAndReview('delete-4-pics.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('delete-4-pics.png')
 })

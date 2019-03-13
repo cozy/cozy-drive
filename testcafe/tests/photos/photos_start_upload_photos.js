@@ -1,4 +1,4 @@
-import { photosUser } from '../helpers/roles' 
+import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL } from '../helpers/utils'
 import Page from '../pages/photos-model'
 import { DATA_PATH, IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
@@ -19,7 +19,7 @@ fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
     await page.waitForLoading()
   })
   .after(async ctx => {
-    await ctx.vr.checkVr()
+    await ctx.vr.checkRunStatus()
   })
 
 test('Uploading 1 pic from Photos view', async t => {
@@ -27,7 +27,7 @@ test('Uploading 1 pic from Photos view', async t => {
   await page.initPhotoCountZero()
   await page.uploadPhotos([`${DATA_PATH}/${IMG0}`])
 
-  await t.fixtureCtx.vr.takeScreenshotAndReview('Upload-1-pic.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('Upload-1-pic.png')
 })
 
 test('Uploadingt 4 pics from Photos view', async t => {
@@ -39,5 +39,5 @@ test('Uploadingt 4 pics from Photos view', async t => {
     `${DATA_PATH}/${IMG4}`
   ])
 
-  await t.fixtureCtx.vr.takeScreenshotAndReview('Upload-4-pic.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('Upload-4-pic.png')
 })
