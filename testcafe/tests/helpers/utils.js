@@ -29,6 +29,21 @@ export const getPageUrl = ClientFunction(() => window.location.href)
 
 export const goBack = ClientFunction(() => window.history.back())
 
+export const getNavigatorOs = ClientFunction(() => navigator.platform)
+
+//User Agent is needed for VisualReview, but we don't need the all string
+export const getNavigatorName = ClientFunction(() => {
+  const navigatorKey = ['MSIE', 'Firefox', 'Safari', 'Chrome', 'Opera'],
+    userAgent = navigator.userAgent
+  return navigatorKey.find(
+    navigatorName => userAgent.indexOf(navigatorName) !== -1
+  )
+})
+
+export const getResolution = ClientFunction(
+  () => `${window.screen.width} x ${window.screen.height}`
+)
+
 export const getElementWithTestId = Selector(
   id => document.querySelectorAll(`[data-test-id='${id}']`)
   //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
