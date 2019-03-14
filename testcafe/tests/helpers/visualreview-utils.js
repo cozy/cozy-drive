@@ -24,23 +24,25 @@ export class VisualReviewTestcafe extends VisualReview {
   }
 
   async checkRunStatus() {
-    let runAnalysis = await this.getJsonStatusForCurrentRun()
-    let runStatus = 'accepted'
+    //this function is called in .after, so we cannot use t.wait(5000)
+    //Needs modifications on server side to avoid delay
+    const delay = ms => new Promise(res => setTimeout(res, ms))
+    await delay(3000)
 
-    for (let imgDiff in runAnalysis.diffs) {
-      if (runAnalysis.diffs[imgDiff].status != 'accepted') {
-        runStatus = runAnalysis.diffs[imgDiff].status
-        throw new Error(
-          `❌ Screenshots changes  in image ID ${
-            runAnalysis.diffs[imgDiff].id
-          } (${runAnalysis.diffs[imgDiff].status}), please Review :  ${
-            this.options.protocol
-          }://${this.options.hostname}/#/${runAnalysis.analysis.projectId}/${
-            runAnalysis.analysis.suiteId
-          }/${runAnalysis.analysis.runId}`
-        )
-      }
+    let runAnalysis = await this.getJsonStatusForCurrentRun()
+    if (
+      runAnalysis.diffs.filter(element => element.status != 'accepted').length >
+      0
+    ) {
+      throw new Error(
+        `❌ Screenshots changes, please Review :  ${this.options.protocol}://${
+          this.options.hostname
+        }/#/${runAnalysis.analysis.projectId}/${runAnalysis.analysis.suiteId}/${
+          runAnalysis.analysis.runId
+        }`
+      )
+    } else {
+      console.log(`Screenshots status : accepted`)
     }
-    console.log(`Screenshots status : ${runStatus}`)
   }
 }
