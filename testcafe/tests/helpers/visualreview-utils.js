@@ -34,13 +34,17 @@ export class VisualReviewTestcafe extends VisualReview {
       runAnalysis.diffs.filter(element => element.status != 'accepted').length >
       0
     ) {
-      throw new Error(
-        `❌ Screenshots changes, please Review :  ${this.options.protocol}://${
-          this.options.hostname
-        }/#/${runAnalysis.analysis.projectId}/${runAnalysis.analysis.suiteId}/${
-          runAnalysis.analysis.runId
-        }`
-      )
+      const vrMessageUrl = `❌ ${runAnalysis.analysis.projectName} : ${
+        runAnalysis.analysis.suiteName
+      } :  ${this.options.protocol}://${this.options.hostname}/#/${
+        runAnalysis.analysis.projectId
+      }/${runAnalysis.analysis.suiteId}/${runAnalysis.analysis.runId}`
+
+      process.env.vrErrorMsg = `${
+        process.env.vrErrorMsg
+      } <li>${vrMessageUrl}</li>`
+
+      throw new Error(vrMessageUrl)
     } else {
       console.log(`Screenshots status : accepted`)
     }
