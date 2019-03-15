@@ -1,9 +1,6 @@
-const exec = require('child_process').exec
+const util = require('util')
+const exec = util.promisify(require('child_process').exec)
 
-module.exports = function(message) {
-  exec(`"./scripts/github.sh" "${message}"`, function(error) {
-    if (error !== null) {
-      console.log('exec error: ' + error)
-    }
-  })
+module.exports = async function(message) {
+  await exec(`yarn run cozy-ci-github "${message}"`)
 }

@@ -1,5 +1,6 @@
 const createTestCafe = require('testcafe')
-let postCommentToGithub = require('./tests/helpers/post-comments-to-github')
+const util = require('util')
+const exec = util.promisify(require('child_process').exec)
 
 async function runRunner() {
   //init vrErrorMsg
@@ -29,13 +30,17 @@ async function runRunner() {
     .run({ assertionTimeout: 6000 }, { pageLoadTimeout: 6000 })
   tc.close()
 
-  if (process.env.vrErrorMsg != '') {
+  //do not try to post to git when using locally
+  if (
+    typeof process.env.TRAVIS_PULL_REQUEST !== 'undefined' &&
+    process.env.TRAVIS_PULL_REQUEST &&
+    process.env.vrErrorMsg != ''
+  ) {
     const message = `Visual Review - Please review screenshots, then restart build. ${
       process.env.vrErrorMsg
     }`
-    postCommentToGithub(message)
+    await exec(`yarn run cozy-ci-github "${message}"`)
   }
-
   if (response > 0) throw Error(response)
 }
 
