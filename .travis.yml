@@ -43,7 +43,7 @@ jobs:
         - yarn tx
         - yarn build:$COZY_APP_SLUG:browser
         - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi # Needs to be inlined and not in a script to work.
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./scripts/create-instance-and-test.sh; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./scripts/create-deploy-test.sh; fi
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./scripts/delete-instance.sh; fi
       before_deploy:
         - yarn add cozy-app-publish
