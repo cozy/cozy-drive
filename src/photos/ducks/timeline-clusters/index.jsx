@@ -3,11 +3,16 @@ import { Query } from 'cozy-client'
 import Timeline from '../timeline/components/Timeline'
 import PhotoBoard from '../../components/PhotoBoard'
 import {
-  differenceInCalendarDays,
-  differenceInCalendarMonths,
-  differenceInHours
-} from 'date-fns'
-import { formatDMY, formatD, formatH } from './dates'
+  formatDMY,
+  formatD,
+  formatH,
+  formatYMD,
+  isSameDay,
+  isSameMonth,
+  isSameHour,
+  isEqualOrOlder,
+  isEqualOrNewer
+} from './dates'
 import { translate } from 'cozy-ui/react/I18n'
 
 // constants
@@ -52,18 +57,18 @@ const TIMELINE_MUTATIONS = client => ({
  */
 const getSectionTitle = (album, f) => {
   if (album.period) {
-    const startPeriod = new Date(album.period.start)
-    const endPeriod = new Date(album.period.end)
+    const startPeriod = album.period.start
+    const endPeriod = album.period.end
 
-    if (differenceInCalendarMonths(endPeriod, startPeriod) > 0) {
+    if (!isSameMonth(f, endPeriod, startPeriod)) {
       return formatDMY(f, startPeriod) + ' - ' + formatDMY(f, endPeriod)
     }
-    if (differenceInCalendarDays(endPeriod, startPeriod) > 0) {
+    if (!isSameDay(f, endPeriod, startPeriod)) {
       return formatD(f, startPeriod) + '-' + formatDMY(f, endPeriod)
     }
     return formatDMY(f, startPeriod)
   }
-  return formatDMY(f, new Date(album.name))
+  return formatDMY(f, album.name)
 }
 
 /**
@@ -75,17 +80,15 @@ const getSectionTitle = (album, f) => {
 const getSectionTitleHours = (dates, index, section, f) => {
   if (section.album) {
     if (
-      (index > 0 &&
-        differenceInCalendarDays(dates[index - 1], dates[index]) < 1) ||
-      (index < dates.length - 1 &&
-        differenceInCalendarDays(dates[index], dates[index + 1]) < 1)
+      (index > 0 && isSameDay(f, dates[index - 1], dates[index])) ||
+      (index < dates.length - 1 && isSameDay(f, dates[index], dates[index + 1]))
     ) {
       // Several sections for this day: add the hours
-      const startPeriod = new Date(section.album.period.start)
-      const endPeriod = new Date(section.album.period.end)
+      const startPeriod = section.album.period.start
+      const endPeriod = section.album.period.end
 
       let titleWithHours = section.title + ' ⠂' + formatH(f, startPeriod) + 'h'
-      if (differenceInHours(endPeriod, startPeriod) > 0) {
+      if (!isSameHour(f, endPeriod, startPeriod)) {
         titleWithHours += '-' + formatH(f, endPeriod) + 'h'
       }
       return titleWithHours
@@ -95,22 +98,21 @@ const getSectionTitleHours = (dates, index, section, f) => {
 }
 
 /**
- * A section matches if:
- * - The datetime is inside the period.
- * - The section has no period (not a cluster) and is the datetime's day.
+ * A section matches if a not-clustered photo's datetime:
+ * - Is inside its period, or the same day
  */
-const getMatchingSection = (sections, datetime) => {
+const getMatchingSection = (sections, datetime, f) => {
   return Object.keys(sections).find(date => {
     if (sections[date].album) {
-      const startPeriod = new Date(sections[date].album.period.start)
-      const endPeriod = new Date(sections[date].album.period.end)
-      return (
-        (datetime >= startPeriod && datetime <= endPeriod) ||
-        differenceInCalendarDays(datetime, endPeriod) === 0
-      )
+      const startPeriod = sections[date].album.period.start
+      const endPeriod = sections[date].album.period.end
+      const isInsidePeriod =
+        isEqualOrNewer(datetime, startPeriod) &&
+        isEqualOrOlder(datetime, endPeriod)
+      return isInsidePeriod || isSameDay(f, datetime, endPeriod)
     } else {
       // If the section has no album, it is not a cluster but a daily section
-      return differenceInCalendarDays(datetime, new Date(date)) === 0
+      return isSameDay(f, datetime, date)
     }
   })
 }
@@ -156,15 +158,14 @@ const getPhotosByClusters = (photos, f) => {
         ? photo.metadata.datetime
         : photo.created_at
 
-    const sectionDate = getMatchingSection(sections, new Date(datetime))
+    const sectionDate = getMatchingSection(sections, datetime, f)
     if (sectionDate) {
       sections[sectionDate].photos.push(photo)
     } else {
       // Create a new section for this day, without a period, to differentiate from clusters' sections
-      const date = new Date(datetime)
-      const day = f(date, 'YYYY-MM-DD') // Match the albums's format
+      const day = formatYMD(f, datetime) // Match the albums's format
       sections[day] = {
-        title: formatDMY(f, date),
+        title: formatDMY(f, datetime),
         photos: [photo]
       }
     }
