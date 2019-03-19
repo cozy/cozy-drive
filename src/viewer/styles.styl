@@ -3,6 +3,19 @@
 @require 'settings/palette.styl'
 @require 'settings/z-index.styl'
 
+.pho-viewer-pdfviewer
+  position:  relative;
+  height: 100%;
+.pho-viewer-pdfviewer-pdf
+  overflow-y: auto;
+
+.pho-viewer-pdfviewer-toolbar
+  position: absolute;
+  bottom: 2rem;
+  background: charcoalGrey;
+  color: white;
+  z-index: $modal-index + 2
+
 // TODO: this is an overlay, we should use cozy-ui/react/Overlay
 .pho-viewer-wrapper
     position        fixed
@@ -138,10 +151,6 @@
     .pho-viewer-filename
         max-width     90%
         text-overflow ellipsis
-.pho-viewer-pdfviewer-ios
-    object
-        background none
-        background-color #ffffff //needed for PDF only on Safari Mobile
 .pho-viewer-imageviewer
 .pho-viewer-nav + .pho-viewer-pdfviewer
 .pho-viewer-nav + .pho-viewer-noviewer
@@ -185,10 +194,6 @@
 
 .pho-viewer-textviewer:before
   height 2rem
-
-.pho-viewer-pdfviewer .pho-viewer-noviewer
-    background charcoalGrey
-    height 100%
 
 .pho-viewer-canceled
     &:before

@@ -77,8 +77,6 @@ class ViewerControls extends Component {
     const { hidden } = this.state
     const { client } = this.context
 
-    const isPDF = currentFile.class === 'pdf'
-
     return (
       <div
         data-test-id="pho-viewer-controls"
@@ -107,7 +105,7 @@ class ViewerControls extends Component {
                 styles['pho-viewer-toolbar-actions']
               )}
             >
-              {!isPDF &&
+              {
                 !isMobile && (
                   <Button
                     data-test-id="viewer-toolbar-download"

@@ -7,6 +7,7 @@ import AudioViewer from './AudioViewer'
 import VideoViewer from './VideoViewer'
 import PdfViewer from './PdfViewer'
 import NativePdfViewer from './NativePdfViewer'
+import TextViewer from './TextViewer'
 import NoViewer from './NoViewer'
 import PdfJsViewer from './PdfJsViewer'
 import Spinner from 'cozy-ui/react/Spinner'
@@ -100,7 +101,8 @@ export default class Viewer extends Component {
     const hasPrevious = currentIndex > 0
     const hasNext = currentIndex < fileCount - 1
     // this `expanded` property makes the next/previous controls cover the displayed image
-    const expanded = currentFile && currentFile.class === 'image'
+    // const expanded = currentFile && currentFile.class === 'image'
+    const expanded = true
     return (
       <ViewerWrapper
         style={style}
