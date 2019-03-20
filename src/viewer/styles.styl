@@ -138,10 +138,6 @@
     .pho-viewer-filename
         max-width     90%
         text-overflow ellipsis
-.pho-viewer-pdfviewer-ios
-    object
-        background none
-        background-color #ffffff //needed for PDF only on Safari Mobile
 .pho-viewer-imageviewer
 .pho-viewer-nav + .pho-viewer-pdfviewer
 .pho-viewer-nav + .pho-viewer-noviewer
@@ -150,6 +146,15 @@
 .pho-viewer-nav + .pho-viewer-textviewer
 .pho-viewer-nav + .pho-viewer-canceled
     margin-left 0
+
+.pho-viewer-pdfviewer-pdf
+  overflow auto
+
+.pho-viewer-pdfviewer-toolbar
+  position absolute
+  bottom 2rem
+  background charcoalGrey
+  color white
 
 +medium-screen()
   .pho-viewer-textviewer
@@ -185,10 +190,6 @@
 
 .pho-viewer-textviewer:before
   height 2rem
-
-.pho-viewer-pdfviewer .pho-viewer-noviewer
-    background charcoalGrey
-    height 100%
 
 .pho-viewer-canceled
     &:before

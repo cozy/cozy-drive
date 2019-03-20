@@ -134,6 +134,7 @@
     "react-dropzone": "4.3.0",
     "react-markdown": "3.4.1",
     "react-measure": "2.2.4",
+    "react-pdf": "3.0.6",
     "react-redux": "5.0.7",
     "react-router": "3.2.0",
     "react-tooltip": "3.6.1",
