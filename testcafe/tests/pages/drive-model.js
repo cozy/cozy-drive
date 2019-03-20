@@ -25,8 +25,6 @@ export default class DrivePage {
       .withText('Cozy Drive') // !FIXME: do not use text
 
     //Error and empty folders
-    // !FIXME better selector for error
-
     //c-empty is use for empty drive, or error..
     this.driveEmpty = Selector('[class*="c-empty"]')
       .parent(0)
@@ -64,7 +62,6 @@ export default class DrivePage {
         .child('[class*="fil-content-cell"]')
         .child('[data-input="checkbox"]')
     }
-
     // Upload
     this.btnUpload = getElementWithTestId('upload-btn')
     this.divUpload = getElementWithTestId('upload-queue')
@@ -196,16 +193,24 @@ export default class DrivePage {
   }
 
   //@param {String} newFolderName
-  async addNewFolder(newFolderName) {
-    const breadcrumbStart = await this.getbreadcrumb()
-    const rowCountStart = await this.getContentRowCount('Before')
-
+  async addNewFolder(newFolderName, screenshotPath) {
+    let breadcrumbStart, rowCountStart
+    if (!t.fixtureCtx.isVR) {
+      breadcrumbStart = await this.getbreadcrumb()
+      rowCountStart = await this.getContentRowCount('Before')
+    }
     await this.openActionMenu()
+
+    if (t.fixtureCtx.isVR)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath)
+
     await isExistingAndVisibile(this.btnAddFolder, 'Add Folder button')
     await t.click(this.btnAddFolder)
 
-    const rowCountEnd = await this.getContentRowCount('After')
-    await t.expect(rowCountEnd).eql(rowCountStart + 1) //New content line appears
+    if (!t.fixtureCtx.isVR) {
+      const rowCountEnd = await this.getContentRowCount('After')
+      await t.expect(rowCountEnd).eql(rowCountStart + 1) //New content line appears
+    }
 
     await isExistingAndVisibile(this.foldersNamesInputs, 'Folder Name input')
     await t
@@ -216,13 +221,17 @@ export default class DrivePage {
       .expect(this.folderOrFileName.withText(newFolderName).exists)
       .ok(`No folder named ${newFolderName}`)
 
-    const breadcrumbEnd = await this.getbreadcrumb()
-    await t.expect(breadcrumbEnd).eql(breadcrumbStart)
+    if (!t.fixtureCtx.isVR) {
+      const breadcrumbEnd = await this.getbreadcrumb()
+      await t.expect(breadcrumbEnd).eql(breadcrumbStart)
+    }
   }
 
   //@param {String} folderName
   async goToFolder(folderName) {
-    const breadcrumbStart = await this.getbreadcrumb()
+    let breadcrumbStart
+    if (!t.fixtureCtx.isVR) breadcrumbStart = await this.getbreadcrumb()
+
     await t
       .expect(this.folderOrFileName.withText(folderName).exists)
       .ok(`No folder named ${folderName}`)
@@ -230,16 +239,19 @@ export default class DrivePage {
 
     await this.waitForLoading()
 
-    const breadcrumbEnd = await this.getbreadcrumb()
-    await t.expect(breadcrumbEnd).eql(`${breadcrumbStart} > ${folderName}`)
-
-    console.log(`Navigation into ${breadcrumbEnd} OK!`)
+    if (!t.fixtureCtx.isVR) {
+      const breadcrumbEnd = await this.getbreadcrumb()
+      await t.expect(breadcrumbEnd).eql(`${breadcrumbStart} > ${folderName}`)
+    }
+    console.log(`Navigation into ${folderName} OK!`)
   }
 
   //@param {String Array} files: path to files to upload.
   async uploadFiles(files) {
     const numOfFiles = files.length
-    const rowCountStart = await this.getContentRowCount('Before Upload')
+    let rowCountStart
+    if (!t.fixtureCtx.isVR)
+      rowCountStart = await this.getContentRowCount('Before Upload')
 
     console.log(`Uploading ${numOfFiles} file(s)`)
 
@@ -262,27 +274,28 @@ export default class DrivePage {
     }
     console.groupEnd()
 
-    // When uploading one file, check for the alert wrapper. When there are lots of files to upload, it already disappear once we finish checking each line
-    if (numOfFiles == 1) {
+    if (!t.fixtureCtx.isVR) {
+      // When uploading one file, check for the alert wrapper. When there are lots of files to upload, it already disappear once we finish checking each line
+      if (numOfFiles == 1) {
+        await isExistingAndVisibile(
+          this.alertWrapper,
+          '"successfull" modal alert'
+        )
+      }
       await isExistingAndVisibile(
-        this.alertWrapper,
-        '"successfull" modal alert'
+        this.divUploadSuccess,
+        'successfull Upload pop-in'
       )
-    }
+      await t
+        .expect(this.divUpload.child('h4').innerText)
+        .match(
+          new RegExp('([' + numOfFiles + '].*){2}'),
+          'Numbers of files uploaded does not match'
+        )
 
-    await isExistingAndVisibile(
-      this.divUploadSuccess,
-      'successfull Upload pop-in'
-    )
-    await t
-      .expect(this.divUpload.child('h4').innerText)
-      .match(
-        new RegExp('([' + numOfFiles + '].*){2}'),
-        'Numbers of files uploaded does not match'
-      )
-    await t.takeScreenshot()
-    const rowCountEnd = await this.getContentRowCount('After')
-    await t.expect(rowCountEnd).eql(rowCountStart + numOfFiles) //New content line appears
+      const rowCountEnd = await this.getContentRowCount('After')
+      await t.expect(rowCountEnd).eql(rowCountStart + numOfFiles) //New content line appears
+    }
   }
 
   async shareFolderPublicLink() {
@@ -429,21 +442,30 @@ export default class DrivePage {
     await this.deleteElementsByIndex([index])
   }
 
-  async deleteCurrentFolder() {
-    let partialBreacrumbStart = await this.breadcrumb.child(0).innerText //We want only the 1st part of the breadcrumb to get the parent folder, so we cannot use getbreadcrumb()
-    partialBreacrumbStart = partialBreacrumbStart.replace(/(\r\n|\n|\r)/gm, '') //!FIXME  https://trello.com/c/lYUkc8jV/1667-drive-breadcrumb-n-sur-mac-chrome-only
+  async deleteCurrentFolder(screenshotPath) {
+    let partialBreacrumbStart
+    if (!t.fixtureCtx.isVR) {
+      partialBreacrumbStart = await this.breadcrumb.child(0).innerText //We want only the 1st part of the breadcrumb to get the parent folder, so we cannot use getbreadcrumb()
+      partialBreacrumbStart = partialBreacrumbStart.replace(
+        /(\r\n|\n|\r)/gm,
+        ''
+      ) //!FIXME  https://trello.com/c/lYUkc8jV/1667-drive-breadcrumb-n-sur-mac-chrome-only
+    }
     await this.openActionMenu()
     await t
       .click(this.btnRemoveFolder)
       .expect(this.modalDelete.visible)
       .ok('Delete button does not show up')
-      .click(this.modalDeleteBtnDelete)
+    if (t.fixtureCtx.isVR)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath)
+    await t.click(this.modalDeleteBtnDelete)
     await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
     await t.takeScreenshot()
 
     await this.waitForLoading()
-
-    const breadcrumbEnd = await this.getbreadcrumb()
-    await t.expect(breadcrumbEnd).eql(partialBreacrumbStart)
+    if (!t.fixtureCtx.isVR) {
+      const breadcrumbEnd = await this.getbreadcrumb()
+      await t.expect(breadcrumbEnd).eql(partialBreacrumbStart)
+    }
   }
 }

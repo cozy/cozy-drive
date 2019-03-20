@@ -1,18 +1,14 @@
 import { photosUser } from '../helpers/roles'
-import { TESTCAFE_PHOTOS_URL } from '../helpers/utils'
+import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
 import Page from '../pages/photos-model'
 import { DATA_PATH, IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
-import { VisualReviewTestcafe } from '../helpers/visualreview-utils'
+import { initVR } from '../helpers/visualreview-utils'
 
 const page = new Page()
 
 fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
   .before(async ctx => {
-    ctx.vr = new VisualReviewTestcafe({
-      projectName: 'PHOTOS',
-      suiteName: `fixture : upload photos`
-    })
-    await ctx.vr.start()
+    await initVR(ctx, SLUG, `fixture : upload photos`)
   })
   .beforeEach(async t => {
     await t.useRole(photosUser)
@@ -23,11 +19,12 @@ fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
   })
 
 test('Uploading 1 pic from Photos view', async t => {
+  await t.maximizeWindow() //Real fullscren for VR
   ///there is no photos on page
   await page.initPhotoCountZero()
   await page.uploadPhotos([`${DATA_PATH}/${IMG0}`])
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload('Upload-1-pic.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-1-pic.png')
 })
 
 test('Uploadingt 4 pics from Photos view', async t => {
@@ -39,5 +36,5 @@ test('Uploadingt 4 pics from Photos view', async t => {
     `${DATA_PATH}/${IMG4}`
   ])
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload('Upload-4-pic.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-4-pic.png')
 })

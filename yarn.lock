@@ -16486,10 +16486,9 @@ vfile@^2.0.0:
     unist-util-stringify-position "^1.0.0"
     vfile-message "^1.0.0"
 
-"visualreview-client@git+https://github.com/cozy/VisualReview-node-client.git#v0.0.2":
-  version "0.0.2"
-  uid c8b0b4c033f6382fd78890c0ce90266f4899ad7d
-  resolved "git+https://github.com/cozy/VisualReview-node-client.git#c8b0b4c033f6382fd78890c0ce90266f4899ad7d"
+"visualreview-client@git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4":
+  version "0.0.4"
+  resolved "git+https://github.com/cozy/VisualReview-node-client.git#18ece79f929372fa2bf3a4277fa259f179110aa4"
   dependencies:
     request "^2.60.0"
 

@@ -24,6 +24,14 @@ if (INSTANCE_TESTCAFE.includes('tools')) {
 
 export const TESTCAFE_USER_PASSWORD = process.env.TESTCAFE_USER_PASSWORD
 
+//SLUG is use for naming VR project. We want a different name when not using travis, to avoid removing usefull screenshots
+export let SLUG = 'Local Testing'
+if (
+  typeof process.env.COZY_APP_SLUG !== 'undefined' &&
+  process.env.COZY_APP_SLUG
+) {
+  SLUG = process.env.COZY_APP_SLUG
+}
 //Returns the URL of the current web page
 export const getPageUrl = ClientFunction(() => window.location.href)
 
@@ -41,7 +49,7 @@ export const getNavigatorName = ClientFunction(() => {
 })
 
 export const getResolution = ClientFunction(
-  () => `${window.screen.width} x ${window.screen.height}`
+  () => `${window.innerWidth} x ${window.innerHeight}`
 )
 
 export const getElementWithTestId = Selector(
