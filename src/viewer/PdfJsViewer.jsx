@@ -5,6 +5,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import NoViewer from './NoViewer'
 import styles from './styles'
 import cx from 'classnames'
+import throttle from 'lodash/throttle'
 import { Button } from 'cozy-ui/react'
 
 const MIN_SCALE = 0.25
@@ -28,11 +29,15 @@ class PdfJsViewer extends Component {
     scale: 1,
     currentPage: 1,
     loaded: false,
-    errored: false
+    errored: false,
+    width: null
   }
 
   constructor(props) {
     super(props)
+
+    this.wrapper = null
+    this.resizeListener = null
 
     this.onLoadSuccess = this.onLoadSuccess.bind(this)
     this.onLoadError = this.onLoadError.bind(this)
@@ -40,6 +45,21 @@ class PdfJsViewer extends Component {
     this.previousPage = this.previousPage.bind(this)
     this.scaleUp = this.scaleUp.bind(this)
     this.scaleDown = this.scaleDown.bind(this)
+    this.setWrapperSize = this.setWrapperSize.bind(this)
+  }
+
+  componentDidMount() {
+    this.setWrapperSize()
+    this.resizeListener = throttle(this.setWrapperSize, 500)
+    window.addEventListener('resize', this.resizeListener)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeListener)
+  }
+
+  setWrapperSize = () => {
+    this.setState({ width: this.wrapper.getBoundingClientRect().width })
   }
 
   async onLoadSuccess({ numPages }) {
@@ -82,12 +102,24 @@ class PdfJsViewer extends Component {
 
   render() {
     const { url } = this.props
-    const { loaded, errored, totalPages, currentPage, scale } = this.state
+    const {
+      loaded,
+      errored,
+      totalPages,
+      currentPage,
+      scale,
+      width
+    } = this.state
 
     if (errored) return <NoViewer file={url} />
+    const pageWidth = width ? width * scale : null // newer versions of react-pdf do that automatically
 
     return (
-      <div data-test-id="viewer-pdf" className={styles['pho-viewer-pdfviewer']}>
+      <div
+        data-test-id="viewer-pdf"
+        className={styles['pho-viewer-pdfviewer']}
+        ref={ref => (this.wrapper = ref)}
+      >
         <Document
           file={url}
           onLoadSuccess={this.onLoadSuccess}
@@ -95,7 +127,7 @@ class PdfJsViewer extends Component {
           className={styles['pho-viewer-pdfviewer-pdf']}
           loading={<Spinner size="xxlarge" middle noMargin color="white" />}
         >
-          <Page pageNumber={currentPage} scale={scale} />
+          <Page pageNumber={currentPage} width={pageWidth} />
         </Document>
         {loaded && (
           <div
