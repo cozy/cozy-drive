@@ -12,7 +12,8 @@
     "^viewer(.*)": "<rootDir>/src/viewer$1",
     "^react-cozy-helpers(.*)": "<rootDir>/src/lib/react-cozy-helpers$1",
     "^components(.*)": "<rootDir>/src/components$1",
-    "^folder-references(.*)": "<rootDir>/src/folder-references$1"
+    "^folder-references(.*)": "<rootDir>/src/folder-references$1",
+    "react-pdf/dist/entry.webpack": "react-pdf"
   },
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "transform": {

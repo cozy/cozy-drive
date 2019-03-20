@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PDFViewer with a pdf that does not load should show a fallback 1`] = `
+<Wrapper
+  file="test"
+/>
+`;

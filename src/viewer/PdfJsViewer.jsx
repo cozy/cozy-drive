@@ -7,8 +7,8 @@ import withFileUrl from './withFileUrl'
 import NoViewer from './NoViewer'
 import styles from './styles'
 
-const MIN_SCALE = 0.25
-const MAX_SCALE = 3
+export const MIN_SCALE = 0.25
+export const MAX_SCALE = 3
 
 const ToolbarButton = ({ icon, onClick, disabled }) => (
   <Button
@@ -22,7 +22,7 @@ const ToolbarButton = ({ icon, onClick, disabled }) => (
   />
 )
 
-class PdfJsViewer extends Component {
+export class PdfJsViewer extends Component {
   state = {
     totalPages: 1,
     scale: 1,
