@@ -32,6 +32,7 @@
     flex-direction  row
     width           100%
     height          100%
+
     &--expanded
         flex-direction column
 
@@ -41,9 +42,6 @@
             top        5.625rem
             bottom     0
             width      40%
-
-        .pho-viewer-toolbar
-            background linear-gradient(to bottom, rgba(50, 54, 63, .5), rgba(50, 54, 63, .33), rgba(50, 54, 63, 0))
 
         .pho-viewer-canceled
             height      100%
@@ -308,6 +306,7 @@
     width       100%
     height      5.625rem
     transition .4s opacity ease-out
+    background linear-gradient(to bottom, rgba(50, 54, 63, .5), rgba(50, 54, 63, .33), rgba(50, 54, 63, 0))
     pointer-events none // especially important for pdf viewers, where there might be additional controls in the top area
 
     &--mobilebrowser
