@@ -32,21 +32,6 @@ export class PdfJsViewer extends Component {
     width: null
   }
 
-  constructor(props) {
-    super(props)
-
-    this.wrapper = null
-    this.resizeListener = null
-
-    this.onLoadSuccess = this.onLoadSuccess.bind(this)
-    this.onLoadError = this.onLoadError.bind(this)
-    this.nextPage = this.nextPage.bind(this)
-    this.previousPage = this.previousPage.bind(this)
-    this.scaleUp = this.scaleUp.bind(this)
-    this.scaleDown = this.scaleDown.bind(this)
-    this.setWrapperSize = this.setWrapperSize.bind(this)
-  }
-
   componentDidMount() {
     this.setWrapperSize()
     this.resizeListener = throttle(this.setWrapperSize, 500)
@@ -58,42 +43,44 @@ export class PdfJsViewer extends Component {
   }
 
   setWrapperSize = () => {
-    this.setState({ width: this.wrapper.getBoundingClientRect().width })
+    const width = this.wrapper ? this.wrapper.getBoundingClientRect().width : null
+    this.setState({ width })
   }
 
-  async onLoadSuccess({ numPages }) {
+  onLoadSuccess = ({ numPages }) => {
     this.setState({
       totalPages: numPages,
       loaded: true
     })
   }
 
-  async onLoadError(error) {
+  onLoadError = (error) => {
+    // eslint-disable-next-line no-console
     console.warn(error)
     this.setState({
       errored: true
     })
   }
 
-  nextPage() {
+  nextPage = () => {
     this.setState(state => ({
       currentPage: Math.min(state.currentPage + 1, state.totalPages)
     }))
   }
 
-  previousPage() {
+  previousPage = () => {
     this.setState(state => ({
       currentPage: Math.max(state.currentPage - 1, 1)
     }))
   }
 
-  scaleUp() {
+  scaleUp = () => {
     this.setState(state => ({
       scale: Math.min(state.scale + 0.25, MAX_SCALE)
     }))
   }
 
-  scaleDown() {
+  scaleDown = () => {
     this.setState(state => ({
       scale: Math.max(state.scale - 0.25, MIN_SCALE)
     }))
