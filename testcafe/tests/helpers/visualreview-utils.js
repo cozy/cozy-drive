@@ -5,25 +5,59 @@ import { getNavigatorOs, getNavigatorName, getResolution } from './utils'
 //Put this const in travis after POC
 const VISUALREVIEW_INSTANCE = 'visualreview.cozycloud.cc'
 
+export const PRECISION = 40
+export async function initVR(ctx, projectName, suiteName) {
+  ctx.vr = new VisualReviewTestcafe({
+    //    debug: true,
+    projectName: `${projectName}`,
+    suiteName: `${suiteName}`
+  })
+  await ctx.vr.start()
+  ctx.isVR = true
+}
+
 export class VisualReviewTestcafe extends VisualReview {
   constructor(options) {
     super(options)
     this.options.protocol = 'https'
     this.options.hostname = VISUALREVIEW_INSTANCE
     this.options.compareSettings = {
-      precision: 4
+      precision: PRECISION //precision goes from 0 to 255
     }
+    this.options.mask = {}
   }
 
-  async takeScreenshotAndUpload(imageName) {
-    await t.takeScreenshot(imageName)
+  //@param { jsonObject } masK { x, y, width, height } : coordonate for mask. order is the same in gimp rectangle selection
+  async takeScreenshotWithMaskAndUpload(screenshotsPath, maskCoordonates) {
+    this.options.mask = {
+      excludeZones: [
+        {
+          height: maskCoordonates.height,
+          x: maskCoordonates.x,
+          width: maskCoordonates.width,
+          y: maskCoordonates.y
+        }
+      ]
+    }
+    screenshotsPath = `${screenshotsPath}-withMask`
+
+    await this.takeScreenshotAndUpload(screenshotsPath, true)
+  }
+
+  async takeScreenshotAndUpload(screenshotsPath, hasMask = false) {
+    if (!hasMask) {
+      //re-init mask
+      this.options.mask = {}
+      console.log(`${screenshotsPath} : ${JSON.stringify(this.options.mask)} `)
+    }
+    await t.takeScreenshot(`${screenshotsPath}.png`)
 
     this.options.properties.os = await getNavigatorOs()
     this.options.properties.browser = await getNavigatorName()
     this.options.properties.resolution = await getResolution()
 
     //the path needs to be in const but i need to define the screenshots tree 1st
-    this.uploadScreenshot('./reports/screenshots/' + imageName)
+    this.uploadScreenshot(`./reports/${screenshotsPath}.png`)
   }
 
   async checkRunStatus() {

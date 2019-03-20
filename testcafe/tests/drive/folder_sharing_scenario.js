@@ -83,6 +83,8 @@ test(`[Desktop] Drive : Access a folder public link, download the file(s), and c
     .click(publicDrivePage.btnPublicDownload)
     .click(publicDrivePage.btnPublicCreateCozyFolder)
   await publicDrivePage.checkCreateCozy()
+  await publicDrivePage.waitForLoading()
+
   console.groupEnd()
 })
 
@@ -103,6 +105,7 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
     .click(publicDrivePage.btnPublicMoreMenuFolder) //need to re-open the more menu
     .click(publicDrivePage.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
+  await publicDrivePage.waitForLoading()
 
   await t.maximizeWindow() //Back to desktop
   console.groupEnd()
@@ -141,7 +144,7 @@ test('`Drive : No Access to an old folder public link', async t => {
   console.group('↳ ℹ️  Drive : No Access to an old folder public link')
   await t.navigateTo(data.sharingLink)
 
-  await publicDrivePage.waitForLoading()
+  await publicDrivePage.waitForLoadingNotAvailable()
   await publicDrivePage.checkNotAvailable()
   console.groupEnd()
 })
