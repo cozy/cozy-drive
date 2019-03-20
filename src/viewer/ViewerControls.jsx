@@ -77,8 +77,6 @@ class ViewerControls extends Component {
     const { hidden } = this.state
     const { client } = this.context
 
-    const isPDF = currentFile.class === 'pdf'
-
     return (
       <div
         data-test-id="pho-viewer-controls"
@@ -107,19 +105,18 @@ class ViewerControls extends Component {
                 styles['pho-viewer-toolbar-actions']
               )}
             >
-              {!isPDF &&
-                !isMobile && (
-                  <Button
-                    data-test-id="viewer-toolbar-download"
-                    theme="secondary"
-                    onClick={() => {
-                      client.collection('io.cozy.files').download(currentFile)
-                    }}
-                    icon="download"
-                    label={t('Viewer.actions.download')}
-                    subtle
-                  />
-                )}
+              {!isMobile && (
+                <Button
+                  data-test-id="viewer-toolbar-download"
+                  theme="secondary"
+                  onClick={() => {
+                    client.collection('io.cozy.files').download(currentFile)
+                  }}
+                  icon="download"
+                  label={t('Viewer.actions.download')}
+                  subtle
+                />
+              )}
             </div>
             {onClose && (
               <div
