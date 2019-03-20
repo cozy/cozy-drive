@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Document, Page } from 'react-pdf'
+import { Document, Page } from 'react-pdf/dist/entry.webpack'
 import withFileUrl from './withFileUrl'
 import Spinner from 'cozy-ui/react/Spinner'
 import NoViewer from './NoViewer'
@@ -8,20 +8,10 @@ import cx from 'classnames'
 import throttle from 'lodash/throttle'
 import { Button } from 'cozy-ui/react'
 
-const MIN_SCALE = 0.25
+const MIN_SCALE = .25
 const MAX_SCALE = 3
 
-const ToolbarButton = ({ icon, onClick, disabled }) => (
-  <Button
-    iconOnly
-    subtle
-    theme="secondary"
-    className="u-p-half u-m-half"
-    icon={icon}
-    onClick={onClick}
-    disabled={disabled}
-  />
-)
+const ToolbarButton = ({ icon, onClick, disabled }) => <Button iconOnly subtle theme="secondary" className="u-p-half u-m-half" icon={icon} onClick={onClick} disabled={disabled} />
 
 class PdfJsViewer extends Component {
   state = {
@@ -48,68 +38,61 @@ class PdfJsViewer extends Component {
     this.setWrapperSize = this.setWrapperSize.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.setWrapperSize()
     this.resizeListener = throttle(this.setWrapperSize, 500)
     window.addEventListener('resize', this.resizeListener)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.resizeListener)
   }
 
   setWrapperSize = () => {
-    this.setState({ width: this.wrapper.getBoundingClientRect().width })
+    this.setState({width: this.wrapper.getBoundingClientRect().width})
   }
 
-  async onLoadSuccess({ numPages }) {
+  async onLoadSuccess ({ numPages }) {
     this.setState({
       totalPages: numPages,
       loaded: true
     })
   }
 
-  async onLoadError(error) {
-    console.warn(error)
+  async onLoadError (error) {
+    console.warn(error);
     this.setState({
       errored: true
     })
   }
 
-  nextPage() {
+  nextPage () {
     this.setState(state => ({
       currentPage: Math.min(state.currentPage + 1, state.totalPages)
     }))
   }
 
-  previousPage() {
+  previousPage () {
     this.setState(state => ({
       currentPage: Math.max(state.currentPage - 1, 1)
     }))
   }
 
-  scaleUp() {
+  scaleUp () {
     this.setState(state => ({
-      scale: Math.min(state.scale + 0.25, MAX_SCALE)
+      scale: Math.min(state.scale + .25, MAX_SCALE)
     }))
   }
 
-  scaleDown() {
+  scaleDown () {
     this.setState(state => ({
-      scale: Math.max(state.scale - 0.25, MIN_SCALE)
+      scale: Math.max(state.scale - .25, MIN_SCALE)
     }))
   }
 
   render() {
     const { url } = this.props
-    const {
-      loaded,
-      errored,
-      totalPages,
-      currentPage,
-      scale,
-      width
-    } = this.state
+    const { loaded, errored, totalPages, currentPage, scale, width } = this.state
 
     if (errored) return <NoViewer file={url} />
     const pageWidth = width ? width * scale : null // newer versions of react-pdf do that automatically
@@ -118,7 +101,7 @@ class PdfJsViewer extends Component {
       <div
         data-test-id="viewer-pdf"
         className={styles['pho-viewer-pdfviewer']}
-        ref={ref => (this.wrapper = ref)}
+        ref={(ref) => this.wrapper = ref}
       >
         <Document
           file={url}
@@ -129,37 +112,19 @@ class PdfJsViewer extends Component {
         >
           <Page pageNumber={currentPage} width={pageWidth} />
         </Document>
-        {loaded && (
-          <div
-            className={cx(styles['pho-viewer-pdfviewer-toolbar'], 'u-p-half')}
-          >
+        { loaded &&
+          <div className={cx(styles['pho-viewer-pdfviewer-toolbar'], 'u-p-half')}>
             <span className="u-mh-half">
-              <ToolbarButton
-                icon="top"
-                onClick={this.previousPage}
-                disabled={currentPage === 1}
-              />
+              <ToolbarButton icon="top" onClick={this.previousPage} disabled={currentPage === 1} />
               {currentPage}/{totalPages}
-              <ToolbarButton
-                icon="bottom"
-                onClick={this.nextPage}
-                disabled={currentPage === totalPages}
-              />
+              <ToolbarButton icon="bottom" onClick={this.nextPage} disabled={currentPage === totalPages} />
             </span>
             <span className="u-mh-half">
-              <ToolbarButton
-                icon="dash"
-                onClick={this.scaleDown}
-                disabled={scale === MIN_SCALE}
-              />
-              <ToolbarButton
-                icon="plus"
-                onClick={this.scaleUp}
-                disabled={scale === MAX_SCALE}
-              />
+              <ToolbarButton icon="dash" onClick={this.scaleDown} disabled={scale === MIN_SCALE} />
+              <ToolbarButton icon="plus" onClick={this.scaleUp} disabled={scale === MAX_SCALE} />
             </span>
           </div>
-        )}
+        }
       </div>
     )
   }
