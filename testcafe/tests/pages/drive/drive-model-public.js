@@ -4,19 +4,15 @@ import {
   isExistingAndVisibile,
   getPageUrl,
   goBack
-} from '../helpers/utils'
+} from '../../helpers/utils'
+import DrivePage from './drive-model'
 
-export default class PublicDrivePage {
+export default class PublicDrivePage extends DrivePage {
   constructor() {
-    //loading
-    this.contentPlaceHolder = Selector(
-      '[class*="fil-content-file-placeholder"]'
-    )
-
+    super()
     //Logo
     this.logo = Selector('.coz-nav-apps-btns-home')
 
-    //Toolbar - Action menu
     // Folder view Only
     this.toolbarFolderPublic = getElementWithTestId('fil-toolbar-files-public')
     this.btnPublicCreateCozyFolder = this.toolbarFolderPublic
@@ -49,27 +45,7 @@ export default class PublicDrivePage {
     this.errorAvailable = Selector('[class*="c-empty"]')
       .child('h2')
       .withText('Sorry, this link is no longer available.') // !FIXME: do not use text
-
-    //viewer
-    this.viewerWrapper = getElementWithTestId('viewer-wrapper')
-    this.viewerControls = getElementWithTestId('pho-viewer-controls')
-
-    //fil-public-download
   }
-
-  async waitForLoading() {
-    await t
-      .expect(this.contentPlaceHolder.exists)
-      .notOk('Content placeholder still displayed')
-    console.log('Loading Ok')
-  }
-
-  async waitForViewer() {
-    await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
-    await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
-    console.log('Viewer Ok')
-  }
-
   // @param {string} type : 'file' or 'folder' : the toolbar is different depending on share type
   async checkActionMenuPublicDesktop(type) {
     const isFile = type === 'file' ? true : false
@@ -138,7 +114,6 @@ export default class PublicDrivePage {
       .eql('https://manager.cozycloud.cc/cozy/create?pk_campaign=sharing-drive')
 
     await goBack()
-    await this.waitForLoading()
   }
 
   async checkNotAvailable() {

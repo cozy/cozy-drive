@@ -1,10 +1,9 @@
 import { t, Selector } from 'testcafe'
 import {
-  getPageUrl,
   getElementWithTestId,
   isExistingAndVisibile
-} from '../helpers/utils'
-import DrivePage from '../pages/drive-model'
+} from '../../helpers/utils'
+import DrivePage from '../drive/drive-model'
 
 const drivePage = new DrivePage()
 
@@ -47,11 +46,13 @@ export default class Page {
     this.btnPdfViewerDownload = this.pdfViewer.find('#download')
   }
 
-  async waitForLoading() {
+  //@param { bool } isSingleShaereFile : set to true only when checking viewer on a single shared file
+  async waitForLoading({ isSingleShareFile } = {}) {
     await t.expect(this.spinner.exists).notOk('Spinner still spinning')
     await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
     await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
-    await isExistingAndVisibile(this.viewerToolbar, 'Viewer Toolbar')
+    if (!isSingleShareFile)
+      await isExistingAndVisibile(this.viewerToolbar, 'Viewer Toolbar')
     console.log('Viewer Ok')
   }
 
@@ -81,15 +82,11 @@ export default class Page {
         .expect(this.viewerNavNext.exists)
         .notOk('Next button on last picture')
     } else {
-      const fileurl = await getPageUrl()
       await t
         .hover(this.viewerNavNext) //not last photo, so next button should exists
         .expect(this.viewerNavNextBtn.visible)
         .ok('Next arrow does not show up')
         .click(this.viewerNavNextBtn)
-
-      const file2url = await getPageUrl()
-      await t.expect(fileurl).notEql(file2url)
     }
   }
 
@@ -101,30 +98,47 @@ export default class Page {
         .expect(this.viewerNavPrevious.exists)
         .notOk('Previous button on first picture')
     } else {
-      const fileurl = await getPageUrl()
       await t
         .hover(this.viewerNavPrevious) //not 1st photo, so previous button should exists
         .expect(this.viewerNavPreviousBtn.visible)
         .ok('Previous arrow does not show up')
         .click(this.viewerNavPrevious)
-
-      const file2url = await getPageUrl()
-      await t.expect(fileurl).notEql(file2url)
     }
   }
 
-  async downloadWithToolbar() {
-    await t.hover(this.viewerWrapper)
-    await isExistingAndVisibile(
-      this.btnDownloadViewerToolbar,
-      'Download button in toolbar'
-    )
-    await t
-      .setNativeDialogHandler(() => true)
-      .click(this.btnDownloadViewerToolbar)
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  //@param {string} fileStartName : file to open to start the navigation testing
+  //@param {number} numberOfNavigation : the number of file we want to go through during the test.
+  async checkViewerNavigation_vr(
+    screenshotPath,
+    fileStartName,
+    numberOfNavigation
+  ) {
+    const startIndex = await drivePage.getElementIndex(fileStartName)
+    console.log(`↳ 📁 ${fileStartName} with index : ${startIndex}`)
+    await this.openViewerForFile(fileStartName)
+
+    for (let i = startIndex; i < startIndex + numberOfNavigation; i++) {
+      await this.navigateToNextFile(i)
+      if (t.fixtureCtx.isVR)
+        await t.fixtureCtx.vr.takeScreenshotAndUpload(
+          `${screenshotPath}-${i}-next`
+        )
+    }
+
+    for (let i = startIndex + numberOfNavigation; i > startIndex; i--) {
+      await this.navigateToPrevFile(i)
+      if (t.fixtureCtx.isVR)
+        await t.fixtureCtx.vr.takeScreenshotAndUpload(
+          `${screenshotPath}-${i}-prev`
+        )
+    }
+    await this.closeViewer({
+      exitWithEsc: false
+    })
   }
 
-  // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer
+  // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer, for one file
   async checkCommonViewerControls(folderName, fileName) {
     const index = await drivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
@@ -145,95 +159,80 @@ export default class Page {
     await t.expect(breadcrumbEnd).contains(`${folderName}`)
   }
 
-  async checkCommonViewerDownload(folderName, fileName) {
+  //download using the common download button
+  async checkCommonViewerDownload(fileName) {
     await this.openViewerForFile(fileName)
-    await this.downloadWithToolbar()
+    await t.hover(this.viewerWrapper)
+    await isExistingAndVisibile(
+      this.btnDownloadViewerToolbar,
+      'Download button in toolbar'
+    )
+    await t
+      .setNativeDialogHandler(() => true)
+      .click(this.btnDownloadViewerToolbar)
     await this.closeViewer({
       exitWithEsc: true
     })
   }
 
   //Specific check for audioViewer
-  async checkAudioViewer(fileName) {
-    await this.openViewerForFile(fileName)
-    await t.takeScreenshot()
-
+  async checkAudioViewer() {
     await isExistingAndVisibile(this.audioViewer, 'Audio viewer')
     await isExistingAndVisibile(
       this.audioViewerControls,
       'Audio viewer controls'
     )
-    await this.closeViewer({
-      exitWithEsc: false
-    })
+    if (t.fixtureCtx.isVR) {
+      //wait for file to load to get a good screenshots
+      await t.wait(5000)
+    }
   }
 
   //Specific check for videoViewer
-  async checkVideoViewer(fileName) {
-    await this.openViewerForFile(fileName)
-    await t.takeScreenshot()
-
+  async checkVideoViewer() {
     await isExistingAndVisibile(this.videoViewer, 'Video viewer')
     await isExistingAndVisibile(
       this.videoViewerControls,
       'Video viewer controls'
     )
-    await this.closeViewer({
-      exitWithEsc: false
-    })
+    if (t.fixtureCtx.isVR) {
+      //wait for file to load to get a good screenshots
+      await t.wait(5000)
+    }
   }
 
   //Specific check for textViewer
-  async checkTextViewer(fileName) {
-    await this.openViewerForFile(fileName)
-    await t.takeScreenshot()
-
+  async checkTextViewer() {
     await isExistingAndVisibile(this.txtViewer, 'text viewer')
     await isExistingAndVisibile(this.txtViewerContent, 'text viewer controls')
-    await this.closeViewer({
-      exitWithEsc: false
-    })
   }
 
   //Specific check for imageViewer
-  async checkImageViewer(fileName) {
-    await this.openViewerForFile(fileName)
-    await t.takeScreenshot()
-
+  async checkImageViewer() {
     await isExistingAndVisibile(this.imageViewer, 'image viewer')
     await isExistingAndVisibile(
       this.imageViewerContent,
       'image viewer controls'
     )
-    await this.closeViewer({
-      exitWithEsc: false
-    })
   }
 
   //Specific check for no viewer : other download btn
-  async checkNoViewer(fileName) {
-    await this.openViewerForFile(fileName)
-    await t.takeScreenshot()
-
+  async checkNoViewer() {
     await isExistingAndVisibile(this.noViewer, 'no-viewer Viewer')
+  }
+
+  //Specific check for no viewer : other download btn
+  async checkNoViewerDownload() {
     await isExistingAndVisibile(
       this.btnNoViewerDownload,
-      'no Viewer Download butoon'
+      'no Viewer Download button'
     )
     await t.setNativeDialogHandler(() => true).click(this.btnNoViewerDownload)
-
-    await this.closeViewer({
-      exitWithEsc: true
-    })
   }
 
   //Specific check for pdf viewer : download btn
-  async checkPdfViewer(fileName) {
-    await this.openViewerForFile(fileName)
+  async checkPdfViewer() {
     await t.takeScreenshot()
     await isExistingAndVisibile(this.pdfViewer, 'Pdf Viewer')
-    await this.closeViewer({
-      exitWithEsc: true
-    })
   }
 }

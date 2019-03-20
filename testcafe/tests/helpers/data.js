@@ -21,6 +21,12 @@ export const FILE_FROM_ZIP_PATH = path.join(DATA_PATH, 'FILES TO TEST')
 //Drive : Those const are files from DATA_ZIP_PATH. If changing files in zip, dont forget to modify those const too!
 export const FILE_PDF = 'Cozy Drive for Desktop.pdf'
 export const FILE_XLSX = 'tests.xlsx'
+export const FILE_ZIP = 'archive.zip'
+export const FILE_PPTX = 'presentation.pptx'
+export const FILE_IMG = 'IMG_1647.JPG'
+export const FILE_AUDIO = 'Z.mp3'
+export const FILE_VIDEO = 'Nextcloud.mp4'
+export const FILE_TXT = 'notes.md'
 
 //Photos
 export const IMG0 = 'IMG0.jpg'
