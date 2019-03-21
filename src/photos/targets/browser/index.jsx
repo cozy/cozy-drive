@@ -1,4 +1,5 @@
 /* global cozy __DEVELOPMENT__ */
+import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import 'photos/styles/main'
 

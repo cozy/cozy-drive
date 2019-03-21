@@ -4,11 +4,6 @@ const path = require('path')
 const production = environment === 'production'
 
 module.exports = {
-  resolve: {
-    alias: {
-      'cozy-ui/react': 'cozy-ui/transpiled/react'
-    }
-  },
   module: {
     rules: [
       {

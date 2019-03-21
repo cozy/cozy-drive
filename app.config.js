@@ -29,7 +29,8 @@ const extraConfig = {
       'create-react-class': path.resolve(
         'node_modules',
         'preact-compat/lib/create-react-class'
-      )
+      ),
+      'cozy-ui/react': 'cozy-ui/transpiled/react'
     }
   },
   plugins: [
