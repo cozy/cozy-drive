@@ -2,25 +2,14 @@ import React, { Component } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack'
 import cx from 'classnames'
 import throttle from 'lodash/throttle'
-import { Button, Spinner } from 'cozy-ui/react'
+import { Spinner } from 'cozy-ui/react'
 import withFileUrl from './withFileUrl'
+import ToolbarButton from './PdfToolbarButton'
 import NoViewer from './NoViewer'
 import styles from './styles'
 
 export const MIN_SCALE = 0.25
 export const MAX_SCALE = 3
-
-const ToolbarButton = ({ icon, onClick, disabled }) => (
-  <Button
-    iconOnly
-    subtle
-    theme="secondary"
-    className="u-p-half u-m-half"
-    icon={icon}
-    onClick={onClick}
-    disabled={disabled}
-  />
-)
 
 export class PdfJsViewer extends Component {
   state = {
@@ -43,7 +32,9 @@ export class PdfJsViewer extends Component {
   }
 
   setWrapperSize = () => {
-    const width = this.wrapper ? this.wrapper.getBoundingClientRect().width : null
+    const width = this.wrapper
+      ? this.wrapper.getBoundingClientRect().width
+      : null
     this.setState({ width })
   }
 
@@ -54,7 +45,7 @@ export class PdfJsViewer extends Component {
     })
   }
 
-  onLoadError = (error) => {
+  onLoadError = error => {
     // eslint-disable-next-line no-console
     console.warn(error)
     this.setState({
