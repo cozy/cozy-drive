@@ -4239,7 +4239,7 @@ cozy-bar@6.15.1:
     redux-persist "5.10.0"
     redux-thunk "2.3.0"
 
-cozy-ci@^0.2.0:
+cozy-ci@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/cozy-ci/-/cozy-ci-0.2.0.tgz#441259c2c7b81a1497204fb4329b4bcc0e010ac0"
   integrity sha512-nBM0y/0eytUJx7noY7t2JeqPVUj58LdVyQUET3+jctkdNTNeoh+gUN5pSHiUGAx86ZXL72EM5xqHciyZeCBOHA==
@@ -13497,7 +13497,7 @@ request-promise@4.2.2:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@2, request@2.88.0, request@^2.40.0, request@^2.55.0, request@^2.74.0, request@^2.87.0:
+request@2, request@2.88.0, request@^2.40.0, request@^2.55.0, request@^2.60.0, request@^2.74.0, request@^2.87.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
@@ -16268,8 +16268,9 @@ vfile@^2.0.0:
     unist-util-stringify-position "^1.0.0"
     vfile-message "^1.0.0"
 
-"visualreview-client@git+https://github.com/cozy/VisualReview-node-client.git":
+"visualreview-client@git+https://github.com/cozy/VisualReview-node-client.git#v0.0.2":
   version "0.0.2"
+  uid c8b0b4c033f6382fd78890c0ce90266f4899ad7d
   resolved "git+https://github.com/cozy/VisualReview-node-client.git#c8b0b4c033f6382fd78890c0ce90266f4899ad7d"
   dependencies:
     request "^2.60.0"
