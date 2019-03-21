@@ -5,8 +5,7 @@ import ViewerControls from './ViewerControls'
 import ImageViewer from './ImageViewer'
 import AudioViewer from './AudioViewer'
 import VideoViewer from './VideoViewer'
-import PdfViewer from './PdfViewer'
-import NativePdfViewer from './NativePdfViewer'
+import PdfJsViewer from './PdfJsViewer'
 import TextViewer from './TextViewer'
 import NoViewer from './NoViewer'
 
@@ -143,7 +142,7 @@ export default class Viewer extends Component {
       case 'video':
         return isMobile() ? NoViewer : VideoViewer
       case 'pdf':
-        return isMobileApp() ? NativePdfViewer : PdfViewer
+        return PdfJsViewer
       case 'text':
         return isPlainText(file.mime, file.name) ? TextViewer : NoViewer
       default:
