@@ -63,7 +63,9 @@ describe('PDFViewer', () => {
     it('should show a fallback', () => {
       component.instance().onLoadError('pdfviewer test error')
       expect(component.state('errored')).toBe(true)
-      expect(component).toMatchSnapshot()
+      const wrapper = component.find('Wrapper')
+      const noViewer = wrapper.dive().find('NoViewer')
+      expect(noViewer.length).toBe(1)
     })
   })
 })
