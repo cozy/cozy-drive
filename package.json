@@ -96,7 +96,7 @@
   },
   "dependencies": {
     "babel-loader": "^8.0.5",
-    "babel-preset-cozy-app": "1.2.2",
+    "babel-preset-cozy-app": "1.5.1",
     "classnames": "2.2.6",
     "copy-text-to-clipboard": "1.0.4",
     "cozy-bar": "6.16.3",
