@@ -4312,10 +4312,10 @@ cozy-device-helper@1.6.5:
   dependencies:
     lodash "4.17.11"
 
-cozy-flags@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.5.1.tgz#e80f6e06bbcb787823beb141975106c3a6d5c3a2"
-  integrity sha512-tTl60N1WkrlEikcmoJLLznbiJ8PrdeJINg91CVPZjY2PTlJHEFqigunrgnvKRFE8w+RshEzQcsR3PTVHcwdgSg==
+cozy-flags@1.5.9:
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.5.9.tgz#5a1726a329e86e6498bf629cf7508d4632a36e3b"
+  integrity sha512-so2PDfBTT4770jG8cXDXs9wUd1kTp6Wnf/IfnONaJKZmjqFf3THJ8cK6jN6zkgLZeDGJbdAutd66g8/XnoOhhw==
   dependencies:
     detect-node "2.0.4"
 
