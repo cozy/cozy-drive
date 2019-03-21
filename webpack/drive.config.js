@@ -1,9 +1,14 @@
 const { DefinePlugin } = require('webpack')
 const { environment } = require('cozy-scripts/config/webpack.vars.js')
-
 const production = environment === 'production'
 
 module.exports = {
+  resolve: {
+    alias: {
+      'cozy-ui/react': 'cozy-ui/transpiled/react'
+    }
+  },
+
   plugins: [
     new DefinePlugin({
       __PIWIK_SITEID_MOBILE__: 12,
