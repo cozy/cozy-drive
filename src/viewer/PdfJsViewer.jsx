@@ -104,7 +104,7 @@ export class PdfJsViewer extends Component {
           className={styles['pho-viewer-pdfviewer-pdf']}
           loading={<Spinner size="xxlarge" middle noMargin color="white" />}
         >
-          <Page pageNumber={currentPage} width={pageWidth} />
+          <Page pageNumber={currentPage} width={pageWidth} renderAnnotations={false} />
         </Document>
         {loaded && (
           <div
