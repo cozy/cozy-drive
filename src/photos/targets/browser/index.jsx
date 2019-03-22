@@ -18,7 +18,6 @@ import {
   getTracker,
   createTrackerMiddleware
 } from 'cozy-ui/react/helpers/tracker'
-import eventTrackerMiddleware from 'photos/middlewares/EventTracker'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let trackerInstance = getTracker()
     history = trackerInstance.connectToHistory(hashHistory)
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
-    middlewares.push(eventTrackerMiddleware)
     middlewares.push(createTrackerMiddleware())
   }
 
