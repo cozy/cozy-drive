@@ -45,6 +45,7 @@ class RealtimeFiles extends React.Component {
           else this.onDocumentChange(change.doc)
         })
         .on('error', err => {
+          // eslint-disable-next-line no-console
           console.warn('Pouch changefeed error', err)
         })
     }

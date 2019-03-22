@@ -58,6 +58,7 @@ class TextViewer extends React.Component {
         loading: false
       })
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.warn(error)
       this.setState({
         loading: false,

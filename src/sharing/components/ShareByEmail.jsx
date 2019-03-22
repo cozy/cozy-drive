@@ -129,6 +129,7 @@ ShareTypeSelect.propTypes = {
 }
 
 ShareTypeSelect.defaultProps = {
+  // eslint-disable-next-line no-console
   onChange: console.log,
   value: ''
 }

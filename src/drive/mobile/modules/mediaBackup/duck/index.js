@@ -178,6 +178,7 @@ const uploadPhoto = (dirName, dirID, photo) => async dispatch => {
   const MINUTE = 60 * SECOND
   const maxBackupTime = 5 * MINUTE
   const timeout = setTimeout(() => {
+    // eslint-disable-next-line no-console
     console.info(JSON.stringify(photo))
     logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
   }, maxBackupTime)
@@ -201,6 +202,7 @@ const uploadPhoto = (dirName, dirID, photo) => async dispatch => {
       clearTimeout(timeout)
       dispatch({ type: MEDIA_UPLOAD_QUOTA })
     } else {
+      /* eslint-disable no-console */
       console.warn('startMediaBackup upload item error')
       console.warn(JSON.stringify(err))
       console.info(JSON.stringify(photo))

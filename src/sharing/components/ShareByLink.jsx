@@ -31,6 +31,7 @@ class ShareByLink extends React.Component {
       await this.props.onEnable(this.props.document)
     } catch (e) {
       Alerter.error(`${this.props.documentType}.share.error.generic`)
+      // eslint-disable-next-line no-console
       console.log(e)
     } finally {
       this.setState(state => ({ ...state, loading: false }))
@@ -43,6 +44,7 @@ class ShareByLink extends React.Component {
       await this.props.onDisable(this.props.document)
     } catch (e) {
       Alerter.error(`${this.props.documentType}.share.error.revoke`)
+      // eslint-disable-next-line no-console
       console.log(e)
     } finally {
       this.setState(state => ({ ...state, loading: false }))

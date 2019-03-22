@@ -74,9 +74,11 @@ const saveOfflineFileCopy = async file => {
 
 export const openLocalFile = file => async (dispatch, getState) => {
   if (!isAvailableOffline(getState(), file.id)) {
+    // eslint-disable-next-line no-console
     console.error('openLocalFile: this file is not available offline')
   }
   openOfflineFile(file).catch(error => {
+    // eslint-disable-next-line no-console
     console.error('openLocalFile', error)
     Alerter.error('mobile.error.make_available_offline.noapp')
   })

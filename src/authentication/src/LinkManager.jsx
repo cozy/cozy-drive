@@ -13,6 +13,7 @@ export const nativeLinkOpen = async ({ url }) => {
         }
       },
       error => {
+        // eslint-disable-next-line no-console
         console.warn(error)
         window.SafariViewController.hide()
       }
