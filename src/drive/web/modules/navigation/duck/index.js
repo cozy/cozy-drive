@@ -5,7 +5,6 @@ export {
   getFileById,
   getOpenedFolderId,
   getFolderIdFromRoute,
-  getFolderPath,
   getFolderUrl,
   getSort
 } from './reducer'
