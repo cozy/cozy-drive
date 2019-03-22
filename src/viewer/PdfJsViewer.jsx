@@ -10,6 +10,7 @@ import styles from './styles'
 
 export const MIN_SCALE = 0.25
 export const MAX_SCALE = 3
+export const MAX_PAGES = 3
 
 export class PdfJsViewer extends Component {
   state = {
@@ -18,7 +19,8 @@ export class PdfJsViewer extends Component {
     currentPage: 1,
     loaded: false,
     errored: false,
-    width: null
+    width: null,
+    renderAllPages: false
   }
 
   componentDidMount() {
@@ -41,6 +43,7 @@ export class PdfJsViewer extends Component {
   onLoadSuccess = ({ numPages }) => {
     this.setState({
       totalPages: numPages,
+      renderAllPages: numPages <= MAX_PAGES,
       loaded: true
     })
   }
@@ -85,7 +88,8 @@ export class PdfJsViewer extends Component {
       totalPages,
       currentPage,
       scale,
-      width
+      width,
+      renderAllPages
     } = this.state
 
     if (errored) return <NoViewer file={url} />
@@ -104,25 +108,44 @@ export class PdfJsViewer extends Component {
           className={styles['pho-viewer-pdfviewer-pdf']}
           loading={<Spinner size="xxlarge" middle noMargin color="white" />}
         >
-          <Page pageNumber={currentPage} width={pageWidth} renderAnnotations={false} />
+          {renderAllPages ? (
+            [...Array(totalPages)].map((_, page) => (
+              <Page
+                key={page}
+                pageNumber={page + 1}
+                width={pageWidth}
+                renderAnnotations={false}
+                className="u-mv-1"
+              />
+            ))
+          ) : (
+            <Page
+              pageNumber={currentPage}
+              width={pageWidth}
+              renderAnnotations={false}
+            />
+          )}
         </Document>
         {loaded && (
           <div
             className={cx(styles['pho-viewer-pdfviewer-toolbar'], 'u-p-half')}
           >
-            <span className="u-mh-half">
-              <ToolbarButton
-                icon="top"
-                onClick={this.previousPage}
-                disabled={currentPage === 1}
-              />
-              {currentPage}/{totalPages}
-              <ToolbarButton
-                icon="bottom"
-                onClick={this.nextPage}
-                disabled={currentPage === totalPages}
-              />
-            </span>
+            {!renderAllPages && (
+              <span className="u-mh-half">
+                <ToolbarButton
+                  icon="top"
+                  onClick={this.previousPage}
+                  disabled={currentPage === 1}
+                />
+                {currentPage}/{totalPages}
+                <ToolbarButton
+                  icon="bottom"
+                  onClick={this.nextPage}
+                  disabled={currentPage === totalPages}
+                />
+              </span>
+            )}
+
             <span className="u-mh-half">
               <ToolbarButton
                 icon="dash"
