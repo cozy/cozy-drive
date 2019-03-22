@@ -173,3 +173,4 @@ const ConnectedApp = props => (
 )
 
 export default ConnectedApp
+
