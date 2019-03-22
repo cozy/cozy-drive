@@ -44,6 +44,7 @@ class FilesViewer extends Component {
         }))
       })
       .catch(() => {
+        // eslint-disable-next-line no-console
         console.warn("can't find the file")
         this.onClose()
       })

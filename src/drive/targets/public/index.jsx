@@ -99,6 +99,7 @@ const init = async () => {
       root
     )
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.warn(e)
     initCozyBar(dataset)
     renderError(lang, root)

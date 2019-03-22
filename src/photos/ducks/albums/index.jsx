@@ -101,7 +101,6 @@ const ALBUMS_MUTATIONS = client => ({
       })
       return resp.data
     } catch (error) {
-      console.log({ error })
       Alerter.error('Albums.create.error.generic')
     }
   }

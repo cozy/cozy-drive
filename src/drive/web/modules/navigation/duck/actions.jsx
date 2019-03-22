@@ -451,13 +451,11 @@ export const openFileWith = (id, filename) => {
     if (isMobileApp() && window.cordova.plugins.fileOpener2) {
       dispatch({ type: OPEN_FILE_WITH, id })
       const response = await cozy.client.files.downloadById(id).catch(error => {
-        console.error('downloadById', error)
         Alerter.error(openFileDownloadError(error))
         throw error
       })
       const blob = await response.blob()
-      await saveAndOpenWithCordova(blob, filename).catch(error => {
-        console.error('openFileWithCordova', error)
+      await saveAndOpenWithCordova(blob, filename).catch(() => {
         Alerter.error('mobile.error.open_with.noapp')
       })
     } else {

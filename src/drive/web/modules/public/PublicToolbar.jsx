@@ -166,6 +166,7 @@ class PublicToolbar extends React.Component {
         .getDiscoveryLink(sharingId, sharecode)
       this.setState({ discoveryLink: link })
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.warn('Failed to load sharing discovery link', err)
     }
   }

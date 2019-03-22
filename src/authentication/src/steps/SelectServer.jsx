@@ -39,6 +39,7 @@ export class SelectServer extends Component {
     if (window.Keyboard && window.Keyboard.shrinkView) {
       window.Keyboard.shrinkView(true)
     } else {
+      // eslint-disable-next-line no-console
       console.warn(
         'Cozy-Authentication needs a cozy/cordova-plugin-keyboard plugin to work better.'
       )
