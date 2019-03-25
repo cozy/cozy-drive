@@ -1,115 +1,14 @@
-import { t, Selector } from 'testcafe'
-import { getElementWithTestId, isExistingAndVisibile } from '../helpers/utils'
-import DriveVRPage from '../pages/drive-model'
+import { t } from 'testcafe'
+import { isExistingAndVisibile } from '../helpers/utils'
 import PRECISION from '../helpers/visualreview-utils'
-const drivePage = new DriveVRPage()
+import PublicDriveVRPage from '../pages/drive-model-public'
+import ViewerPage from '../pages/drive-viewer-model'
 
-export default class PublicViewerPage {
+const publicDrivePage = new PublicDriveVRPage()
+
+export default class PublicViewerPage extends ViewerPage {
   constructor() {
-    this.spinner = Selector('[class*="c-spinner"]')
-    this.viewerWrapper = getElementWithTestId('viewer-wrapper')
-    this.viewerControls = getElementWithTestId('pho-viewer-controls')
-    this.viewerToolbar = getElementWithTestId('viewer-toolbar')
-    this.btnDownloadViewerToolbar = getElementWithTestId(
-      'viewer-toolbar-download'
-    )
-
-    // Navigation in viewer
-    this.viewerNavNext = getElementWithTestId('viewer-nav--next')
-    this.viewerNavNextBtn = this.viewerNavNext.find(
-      '[class*="pho-viewer-nav-arrow"]'
-    )
-    this.viewerNavPrevious = getElementWithTestId('viewer-nav--previous')
-    this.viewerNavPreviousBtn = this.viewerNavPrevious.find(
-      '[class*="pho-viewer-nav-arrow"]'
-    )
-    this.viewerBtnClose = getElementWithTestId('btn-viewer-toolbar-close')
-
-    //Viewer type
-    this.audioViewer = getElementWithTestId('viewer-audio')
-    this.audioViewerControls = this.audioViewer.find('audio')
-    this.imageViewer = getElementWithTestId('viewer-image')
-    this.imageViewerContent = this.imageViewer.find('img')
-    this.txtViewer = getElementWithTestId('viewer-text')
-    this.txtViewerContent = this.txtViewer.find(
-      '[class*="pho-viewer-textviewer-content"]'
-    )
-    this.videoViewer = getElementWithTestId('viewer-video')
-    this.videoViewerControls = this.videoViewer.find('video')
-    this.noViewer = getElementWithTestId('viewer-noviewer')
-    this.btnNoViewerDownload = this.noViewer.find('button')
-
-    this.pdfViewer = getElementWithTestId('viewer-pdf')
-    this.btnPdfViewerDownload = this.pdfViewer.find('#download')
-  }
-
-  async waitForLoading() {
-    await t.expect(this.spinner.exists).notOk('Spinner still spinning')
-    await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
-    await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
-    await isExistingAndVisibile(this.viewerToolbar, 'Viewer Toolbar')
-    console.log('Viewer Ok')
-  }
-
-  //@param {String} fileName
-  async openViewerForFile(fileName) {
-    await t
-      .expect(drivePage.folderOrFileName.withText(fileName).exists)
-      .ok(`No folder named ${fileName}`)
-      .click(drivePage.folderOrFileName.withText(fileName))
-
-    await this.waitForLoading()
-    console.log(`Navigation to ${fileName} OK!`)
-  }
-
-  //@param { bool } exitWithEsc : true to exit by pressing esc, false to click on the button
-  async closeViewer(exitWithEsc) {
-    await t.hover(this.viewerWrapper)
-    await isExistingAndVisibile(this.viewerBtnClose, 'Close button')
-    exitWithEsc ? await t.pressKey('esc') : await t.click(this.viewerBtnClose)
-  }
-
-  //@param {number} index: index of open file (need to know if it's first or last file)
-  async navigateToNextFile(index) {
-    if (index == t.ctx.totalFilesCount - 1) {
-      //this is the last picture, so next button does not exist
-      await t
-        .expect(this.viewerNavNext.exists)
-        .notOk('Next button on last picture')
-    } else {
-      await t
-        .hover(this.viewerNavNext) //not last photo, so next button should exists
-        .expect(this.viewerNavNextBtn.visible)
-        .ok('Next arrow does not show up')
-        .click(this.viewerNavNextBtn)
-    }
-  }
-
-  //@param {number} index: index of open file (need to know if it's first or last file)
-  async navigateToPrevFile(index) {
-    if (index == 0) {
-      //this is the 1st picture, so previous button does not exist
-      await t
-        .expect(this.viewerNavPrevious.exists)
-        .notOk('Previous button on first picture')
-    } else {
-      await t
-        .hover(this.viewerNavPrevious) //not 1st photo, so previous button should exists
-        .expect(this.viewerNavPreviousBtn.visible)
-        .ok('Previous arrow does not show up')
-        .click(this.viewerNavPrevious)
-    }
-  }
-
-  async downloadWithToolbar() {
-    await t.hover(this.viewerWrapper)
-    await isExistingAndVisibile(
-      this.btnDownloadViewerToolbar,
-      'Download button in toolbar'
-    )
-    await t
-      .setNativeDialogHandler(() => true)
-      .click(this.btnDownloadViewerToolbar)
+    super()
   }
 
   //@param {String} screenshotPath : path for screenshots taken in this test
@@ -120,7 +19,7 @@ export default class PublicViewerPage {
     fileStartName,
     numberOfNavigation
   ) {
-    const startIndex = await drivePage.getElementIndex(fileStartName)
+    const startIndex = await publicDrivePage.getElementIndex(fileStartName)
     console.log(`↳ 📁 ${fileStartName} with index : ${startIndex}`)
     await this.openViewerForFile(fileStartName)
 
@@ -147,7 +46,7 @@ export default class PublicViewerPage {
   //@param {string} filename : file to check
   //@param {string} type : file type to check for Specific viewer
   async checkPublicViewer_vr(screenshotPath, fileName, type) {
-    const index = await drivePage.getElementIndex(fileName)
+    const index = await publicDrivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
 
@@ -180,13 +79,6 @@ export default class PublicViewerPage {
     }
   }
 
-  async checkCommonViewerDownload(fileName) {
-    await this.openViewerForFile(fileName)
-    await this.downloadWithToolbar()
-    await this.closeViewer({
-      exitWithEsc: true
-    })
-  }
   //
   //Specific check for audioViewer
   async checkAudioViewer() {

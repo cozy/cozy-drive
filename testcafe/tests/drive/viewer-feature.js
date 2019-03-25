@@ -8,7 +8,7 @@ import {
   deleteLocalFile
 } from '../helpers/utils'
 let data = require('../helpers/data')
-import DrivePage from '../pages/drive-model'
+import DrivePage from '../pages/drive-model-private'
 import ViewerPage from '../pages/drive-viewer-model'
 
 const drivePage = new DrivePage()
