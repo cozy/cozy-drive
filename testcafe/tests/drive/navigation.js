@@ -1,7 +1,7 @@
 import { driveUser } from '../helpers/roles'
 import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from '../helpers/utils'
 
-import PrivateprivateDrivePage from '../pages/drive-model-private'
+import PrivateprivateDrivePage from '../pages/drive/drive-model-private'
 
 const privateDrivePage = new PrivateprivateDrivePage()
 

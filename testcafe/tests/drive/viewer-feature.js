@@ -8,8 +8,8 @@ import {
   deleteLocalFile
 } from '../helpers/utils'
 let data = require('../helpers/data')
-import DrivePage from '../pages/drive-model-private'
-import ViewerPage from '../pages/drive-viewer-model'
+import DrivePage from '../pages/drive/drive-model-private'
+import ViewerPage from '../pages/drive-viewer/drive-viewer-model'
 
 const drivePage = new DrivePage()
 const viewerPage = new ViewerPage()
@@ -104,7 +104,13 @@ test('Viewer : no Viewer : other Download', async t => {
         t.ctx.fileNameListNoViewer[i]
       }`
     )
-    await viewerPage.checkNoViewer(t.ctx.fileNameListNoViewer[i])
+    await viewerPage.openViewerForFile(t.ctx.fileNameListNoViewer[i])
+    await viewerPage.checkNoViewer()
+    await viewerPage.checkNoViewerDownload()
+
+    await viewerPage.closeViewer({
+      exitWithEsc: true
+    })
     console.groupEnd()
   }
 }).after(async t => {
@@ -145,7 +151,11 @@ test('Viewer : Image Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking text features for 📁 ${fileNameListImage[i]}`
     )
-    await viewerPage.checkImageViewer(fileNameListImage[i])
+    await viewerPage.openViewerForFile(fileNameListImage[i])
+    await viewerPage.checkImageViewer()
+    await this.closeViewer({
+      exitWithEsc: false
+    })
     console.groupEnd()
   }
 })
@@ -161,7 +171,11 @@ test('Viewer : PDF Viewer : Download', async () => {
         fileNameListPdf[i]
       }`
     )
-    await viewerPage.checkPdfViewer(fileNameListPdf[i])
+    await viewerPage.openViewerForFile(fileNameListPdf[i])
+    await viewerPage.checkPdfViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: true
+    })
     console.groupEnd()
   }
 })
@@ -175,7 +189,11 @@ test('Viewer : audio Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking Audio features for 📁 ${fileNameListAudio[i]}`
     )
-    await viewerPage.checkAudioViewer(fileNameListAudio[i])
+    await viewerPage.openViewerForFile(fileNameListAudio[i])
+    await viewerPage.checkAudioViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: false
+    })
     console.groupEnd()
   }
 })
@@ -189,7 +207,11 @@ test('Viewer : video Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking video features for 📁 ${fileNameListVideo[i]}`
     )
-    await viewerPage.checkVideoViewer(fileNameListVideo[i])
+    await viewerPage.openViewerForFile(fileNameListVideo[i])
+    await viewerPage.checkVideoViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: false
+    })
     console.groupEnd()
   }
 })
@@ -203,7 +225,11 @@ test('Viewer : text Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking text features for 📁 ${fileNameListText[i]}`
     )
-    await viewerPage.checkTextViewer(fileNameListText[i])
+    await viewerPage.openViewerForFile(fileNameListText[i])
+    await viewerPage.checkTextViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: true
+    })
     console.groupEnd()
   }
 })

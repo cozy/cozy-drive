@@ -4,8 +4,8 @@ import {
   isExistingAndVisibile,
   overwriteCopyCommand,
   getLastExecutedCommand
-} from '../helpers/utils'
-import DrivePage from '../pages/drive-model'
+} from '../../helpers/utils'
+import DrivePage from './drive-model'
 
 export default class PrivateDrivePage extends DrivePage {
   constructor() {
