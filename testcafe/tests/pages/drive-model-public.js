@@ -5,24 +5,14 @@ import {
   getPageUrl,
   goBack
 } from '../helpers/utils'
+import DrivePage from '../pages/drive-model'
 
-export default class PublicDrivePage {
+export default class PublicDrivePage extends DrivePage {
   constructor() {
-    //loading
-    this.contentPlaceHolder = Selector(
-      '[class*="fil-content-file-placeholder"]'
-    )
-    //Files list
-    this.contentTable = Selector('[class*="fil-content-table"]')
-    this.content_rows = Selector(
-      `[class*="fil-content-row"]:not([class*="fil-content-row-head"])`
-    )
-    this.folderOrFileName = getElementWithTestId('fil-file-filename-and-ext')
-
+    super()
     //Logo
     this.logo = Selector('.coz-nav-apps-btns-home')
 
-    //Toolbar - Action menu
     // Folder view Only
     this.toolbarFolderPublic = getElementWithTestId('fil-toolbar-files-public')
     this.btnPublicCreateCozyFolder = this.toolbarFolderPublic
@@ -55,44 +45,7 @@ export default class PublicDrivePage {
     this.errorAvailable = Selector('[class*="c-empty"]')
       .child('h2')
       .withText('Sorry, this link is no longer available.') // !FIXME: do not use text
-
-    //viewer
-    this.viewerWrapper = getElementWithTestId('viewer-wrapper')
-    this.viewerControls = getElementWithTestId('pho-viewer-controls')
-
-    //fil-public-download
   }
-
-  async waitForLoading() {
-    this.waitForLoadingNotAvailable()
-    await isExistingAndVisibile(this.contentTable, 'content Table')
-    //We don't share empty folder, so check for files/folders in list
-    await isExistingAndVisibile(this.folderOrFileName, 'folder list')
-    console.log('Loading Ok')
-  }
-
-  async waitForLoadingNotAvailable() {
-    await t
-      .expect(this.contentPlaceHolder.exists)
-      .notOk('Content placeholder still displayed')
-  }
-
-  async waitForViewer() {
-    await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
-    await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
-    console.log('Viewer Ok')
-  }
-
-  async getContentRowCount(when) {
-    //Count only 'real' content row, not the headers
-    const content_rows_count = await this.content_rows.count
-
-    console.log(
-      `Number of Content row(s) on page (${when} test):  ${content_rows_count}`
-    )
-    return content_rows_count
-  }
-
   // @param {string} type : 'file' or 'folder' : the toolbar is different depending on share type
   async checkActionMenuPublicDesktop(type) {
     const isFile = type === 'file' ? true : false

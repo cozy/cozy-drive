@@ -9,11 +9,11 @@ import {
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 let data = require('../helpers/data')
-import DriveVRPage from '../pages/drive-model'
+import PrivateDriveVRPage from '../pages/drive-model-private'
 import PublicDrivePage from '../pages/drive-model-public'
 import PublicViewerPage from '../pages/drive-viewer-model-public'
 
-const drivePage = new DriveVRPage()
+const privateDrivePage = new PrivateDriveVRPage()
 const publicDrivePage = new PublicDrivePage()
 const publicViewerPage = new PublicViewerPage()
 
@@ -45,7 +45,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
   .beforeEach(async t => {
     console.group(`\n↳ ℹ️  Loggin & Initialization`)
     await t.useRole(driveUser)
-    await drivePage.waitForLoading()
+    await privateDrivePage.waitForLoading()
     console.groupEnd()
   })
   .after(async ctx => {
@@ -55,7 +55,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_CREATE_FOLDER}`, async t => {
   await t.maximizeWindow() //Real fullscren for VR
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_FOLDER}`)
-  await drivePage.addNewFolder(
+  await privateDrivePage.addNewFolder(
     `${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}`,
     `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-1`
   )
@@ -69,33 +69,37 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD_AND_SHARE} (in "${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}" folder)`
   )
-  await drivePage.goToFolder(TEST_CREATE_FOLDER)
+  await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-1`
   )
-  await drivePage.uploadFiles(data.filesList)
-  await t.fixtureCtx.vr.takeScreenshotWithMaskAndUpload(
+  await privateDrivePage.uploadFiles(data.filesList)
+  await t.fixtureCtx.vr.setMaksCoordonnates({
+    height: 935,
+    x: 916,
+    width: 140,
+    y: 248
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
-    {
-      height: 935,
-      x: 916,
-      width: 140,
-      y: 248
-    }
+    true
   )
-  await drivePage.shareFolderPublicLink()
+  await privateDrivePage.shareFolderPublicLink()
 
+  await t.fixtureCtx.vr.setMaksCoordonnates({
+    height: 918,
+    x: 916,
+    width: 140,
+    y: 520
+  })
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-3`,
-    {
-      height: 918,
-      x: 916,
-      width: 140,
-      y: 520
-    }
+    true
   )
 
-  const link = await drivePage.copyBtnShareByLink.getAttribute('data-test-url')
+  const link = await privateDrivePage.copyBtnShareByLink.getAttribute(
+    'data-test-url'
+  )
   if (link) {
     data.sharingLink = link
     console.log(`data.sharingLink : ` + data.sharingLink)
@@ -116,7 +120,7 @@ fixture.skip`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
     )
     await t.useRole(Role.anonymous())
     await t.navigateTo(data.sharingLink)
-    await publicDrivePage.waitForLoading()
+    await publicDrivePage.waitForLoading({ isFull: true })
 
     await setDownloadPath(data.DOWNLOAD_PATH)
     //Init count for navigation
@@ -141,14 +145,16 @@ fixture.skip`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_ZIP}`)
   //take a general screen for the shared folder :
-  await t.fixtureCtx.vr.takeScreenshotWithMaskAndUpload(
+  await t.fixtureCtx.vr.setMaksCoordonnates({
+    height: 935,
+    x: 916,
+    width: 140,
+    y: 248
+  })
+
+  await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-wholeFolder`,
-    {
-      height: 935,
-      x: 916,
-      width: 140,
-      y: 248
-    }
+    true
   )
   await publicViewerPage.checkViewerNavigation_vr(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-nav`,
@@ -264,7 +270,7 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
   .beforeEach(async t => {
     console.group(`\n↳ ℹ️  Loggin & Initialization`)
     await t.useRole(driveUser)
-    await drivePage.waitForLoading()
+    await privateDrivePage.waitForLoading()
     console.groupEnd()
   })
   .after(async ctx => {
@@ -273,24 +279,26 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
 
 test(`${TEST_DELETE_FOLDER}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER}`)
-  await drivePage.goToFolder(TEST_CREATE_FOLDER)
-  await t.fixtureCtx.vr.takeScreenshotWithMaskAndUpload(
+  await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
+  await t.fixtureCtx.vr.setMaksCoordonnates({
+    height: 935,
+    x: 916,
+    width: 140,
+    y: 248
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
-    {
-      height: 935,
-      x: 916,
-      width: 140,
-      y: 248
-    }
+    true
   )
-  await t.fixtureCtx.vr.takeScreenshotWithMaskAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`,
-    {
-      height: 918,
-      x: 916,
-      width: 140,
-      y: 520
-    }
+
+  await t.fixtureCtx.vr.setMaksCoordonnates({
+    height: 918,
+    x: 916,
+    width: 140,
+    y: 520
+  })
+  await privateDrivePage.deleteCurrentFolder(
+    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
   )
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`

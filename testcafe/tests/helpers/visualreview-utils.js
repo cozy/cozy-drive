@@ -28,7 +28,7 @@ export class VisualReviewTestcafe extends VisualReview {
   }
 
   //@param { jsonObject } masK { x, y, width, height } : coordonate for mask. order is the same in gimp rectangle selection
-  async takeScreenshotWithMaskAndUpload(screenshotsPath, maskCoordonates) {
+  async setMaksCoordonnates(maskCoordonates) {
     this.options.mask = {
       excludeZones: [
         {
@@ -39,9 +39,6 @@ export class VisualReviewTestcafe extends VisualReview {
         }
       ]
     }
-    screenshotsPath = `${screenshotsPath}-withMask`
-
-    await this.takeScreenshotAndUpload(screenshotsPath, true)
   }
 
   async takeScreenshotAndUpload(screenshotsPath, hasMask = false) {

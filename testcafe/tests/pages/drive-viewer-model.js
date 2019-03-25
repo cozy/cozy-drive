@@ -1,9 +1,5 @@
 import { t, Selector } from 'testcafe'
-import {
-  getPageUrl,
-  getElementWithTestId,
-  isExistingAndVisibile
-} from '../helpers/utils'
+import { getElementWithTestId, isExistingAndVisibile } from '../helpers/utils'
 import DrivePage from '../pages/drive-model'
 
 const drivePage = new DrivePage()
@@ -47,11 +43,13 @@ export default class Page {
     this.btnPdfViewerDownload = this.pdfViewer.find('#download')
   }
 
-  async waitForLoading() {
+  //@param { bool } isSingleShaereFile : set to true only when checking viewer on a single shared file
+  async waitForLoading({ isSingleShareFile } = {}) {
     await t.expect(this.spinner.exists).notOk('Spinner still spinning')
     await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
     await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
-    await isExistingAndVisibile(this.viewerToolbar, 'Viewer Toolbar')
+    if (!isSingleShareFile)
+      await isExistingAndVisibile(this.viewerToolbar, 'Viewer Toolbar')
     console.log('Viewer Ok')
   }
 
@@ -81,15 +79,11 @@ export default class Page {
         .expect(this.viewerNavNext.exists)
         .notOk('Next button on last picture')
     } else {
-      const fileurl = await getPageUrl()
       await t
         .hover(this.viewerNavNext) //not last photo, so next button should exists
         .expect(this.viewerNavNextBtn.visible)
         .ok('Next arrow does not show up')
         .click(this.viewerNavNextBtn)
-
-      const file2url = await getPageUrl()
-      await t.expect(fileurl).notEql(file2url)
     }
   }
 
@@ -101,15 +95,11 @@ export default class Page {
         .expect(this.viewerNavPrevious.exists)
         .notOk('Previous button on first picture')
     } else {
-      const fileurl = await getPageUrl()
       await t
         .hover(this.viewerNavPrevious) //not 1st photo, so previous button should exists
         .expect(this.viewerNavPreviousBtn.visible)
         .ok('Previous arrow does not show up')
         .click(this.viewerNavPrevious)
-
-      const file2url = await getPageUrl()
-      await t.expect(fileurl).notEql(file2url)
     }
   }
 
@@ -122,6 +112,36 @@ export default class Page {
     await t
       .setNativeDialogHandler(() => true)
       .click(this.btnDownloadViewerToolbar)
+  }
+
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  //@param {string} fileStartName : file to open to start the navigation testing
+  //@param {number} numberOfNavigation : the number of file we want to go through during the test.
+  async checkViewerNavigation_vr(
+    screenshotPath,
+    fileStartName,
+    numberOfNavigation
+  ) {
+    const startIndex = await drivePage.getElementIndex(fileStartName)
+    console.log(`↳ 📁 ${fileStartName} with index : ${startIndex}`)
+    await this.openViewerForFile(fileStartName)
+
+    for (let i = startIndex; i < startIndex + numberOfNavigation; i++) {
+      await this.navigateToNextFile(i)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(
+        `${screenshotPath}-${i}-next`
+      )
+    }
+
+    for (let i = startIndex + numberOfNavigation; i > startIndex; i--) {
+      await this.navigateToPrevFile(i)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(
+        `${screenshotPath}-${i}-prev`
+      )
+    }
+    await this.closeViewer({
+      exitWithEsc: false
+    })
   }
 
   // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer
