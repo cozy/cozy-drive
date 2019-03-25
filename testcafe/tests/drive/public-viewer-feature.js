@@ -9,9 +9,9 @@ import {
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 let data = require('../helpers/data')
-import PrivateDriveVRPage from '../pages/drive-model-private'
-import PublicDrivePage from '../pages/drive-model-public'
-import PublicViewerPage from '../pages/drive-viewer-model-public'
+import PrivateDriveVRPage from '../pages/drive/drive-model-private'
+import PublicDrivePage from '../pages/drive/drive-model-public'
+import PublicViewerPage from '../pages/drive-viewer/drive-viewer-model-public'
 
 const privateDrivePage = new PrivateDriveVRPage()
 const publicDrivePage = new PublicDrivePage()
@@ -110,7 +110,7 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
 //************************
 // Public (no authentification) - with Download
 //************************
-fixture.skip`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
+fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
   .before(async ctx => {
     await initVR(ctx, SLUG, FIXTURE_PUBLIC_WITH_DL)
   })

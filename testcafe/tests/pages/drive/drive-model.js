@@ -1,5 +1,8 @@
 import { Selector, t } from 'testcafe'
-import { getElementWithTestId, isExistingAndVisibile } from '../helpers/utils'
+import {
+  getElementWithTestId,
+  isExistingAndVisibile
+} from '../../helpers/utils'
 
 export default class DrivePage {
   constructor() {

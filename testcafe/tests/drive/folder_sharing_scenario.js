@@ -6,8 +6,8 @@ import {
   setDownloadPath,
   TESTCAFE_DRIVE_URL
 } from '../helpers/utils'
-import PrivateDrivePage from '../pages/drive-model-private'
-import PublicDrivePage from '../pages/drive-model-public'
+import PrivateDrivePage from '../pages/drive/drive-model-private'
+import PublicDrivePage from '../pages/drive/drive-model-public'
 
 let data = require('../helpers/data')
 const privateDrivePage = new PrivateDrivePage()
