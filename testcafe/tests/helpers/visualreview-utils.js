@@ -41,11 +41,14 @@ export class VisualReviewTestcafe extends VisualReview {
     }
   }
 
+  async resetMask() {
+    this.options.mask = {}
+  }
+
   async takeScreenshotAndUpload(screenshotsPath, hasMask = false) {
     if (!hasMask) {
       //re-init mask
-      this.options.mask = {}
-      console.log(`${screenshotsPath} : ${JSON.stringify(this.options.mask)} `)
+      this.resetMask()
     }
     await t.takeScreenshot(`${screenshotsPath}.png`)
 

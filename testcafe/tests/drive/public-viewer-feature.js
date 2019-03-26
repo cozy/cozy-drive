@@ -146,10 +146,10 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_ZIP}`)
   //take a general screen for the shared folder :
   await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 935,
-    x: 916,
+    height: 960,
+    x: 800,
     width: 140,
-    y: 248
+    y: 180
   })
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
@@ -178,7 +178,11 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
 
 test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_PPTX}`)
+  await publicViewerPage.openViewerForFile(data.FILE_PPTX)
   await publicViewerPage.checkNoViewerDownload(data.FILE_PPTX)
+  await publicViewerPage.closeViewer({
+    exitWithEsc: false
+  })
   t.ctx.fileDownloaded = data.FILE_PPTX
 
   await publicViewerPage.checkPublicViewer_vr(
@@ -214,14 +218,30 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_AUDIO)
   t.ctx.fileDownloaded = data.FILE_AUDIO
 
+  //mask on loading bar
+  await t.fixtureCtx.vr.setMaksCoordonnates({
+    height: 25,
+    x: 932,
+    width: 100,
+    y: 623
+  })
   await publicViewerPage.checkPublicViewer_vr(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-1`,
     data.FILE_AUDIO,
-    'audio'
+    'audio',
+    true
   )
+  //mask on loading bar for mobile
+  await t.fixtureCtx.vr.setMaksCoordonnates({
+    height: 25,
+    x: 199,
+    width: 90,
+    y: 409
+  })
   await publicViewerPage.checkMobilePublicViewer_vr(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-mob1`,
-    data.FILE_AUDIO
+    data.FILE_AUDIO,
+    true
   )
   console.groupEnd()
 })
@@ -295,7 +315,7 @@ test(`${TEST_DELETE_FOLDER}`, async t => {
     height: 918,
     x: 916,
     width: 140,
-    y: 520
+    y: 350
   })
   await privateDrivePage.deleteCurrentFolder(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`

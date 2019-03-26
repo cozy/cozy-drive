@@ -75,10 +75,7 @@ test('Viewer : checking common features for all files (expect PDF)', async t => 
       data.FOLDER_DATE_TIME,
       t.ctx.fileNameListNoPDF[i]
     )
-    await viewerPage.checkCommonViewerDownload(
-      data.FOLDER_DATE_TIME,
-      t.ctx.fileNameListNoPDF[i]
-    )
+    await viewerPage.checkCommonViewerDownload(t.ctx.fileNameListNoPDF[i])
     console.groupEnd()
   }
 }).after(async t => {
@@ -153,7 +150,7 @@ test('Viewer : Image Viewer', async () => {
     )
     await viewerPage.openViewerForFile(fileNameListImage[i])
     await viewerPage.checkImageViewer()
-    await this.closeViewer({
+    await viewerPage.closeViewer({
       exitWithEsc: false
     })
     console.groupEnd()
