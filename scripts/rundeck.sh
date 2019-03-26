@@ -11,7 +11,7 @@ function runRundeckJob {
        -H "X-Rundeck-Auth-Token: $RUNDECK_TOKEN" \
        -H "Content-Type: application/json" \
        -d "{\"argString\":\" ${2} \"}"  \
-       https://rundeck.cozycloud.cc/api/27/job/$1/run)
+       https://rundeck.cozycloud.cc/api/27/job/$1/run) 2>&1
 
   if [ "$?" == "0" ] ; then
     EXEC_ID_COUNT=$(echo $CURL | grep  -oP "(?s)execution id='\K.*?(?=\' href)"  | wc -l)
@@ -20,7 +20,7 @@ function runRundeckJob {
       if [[ "${CURL,,}" == *"api.error.execution.conflict"* ]] && [ "$IS_RETRY" == "false" ]; then
         #wait 10s before retrying
         sleep 10
-        EXEC_ID=$(runRundeckJob "${1}" "${2}" true)
+        EXEC_ID=$(runRundeckJob "${1}" "${2}" true) 2>&1
         echo $EXEC_ID
       else
       echo $CURL && exit 1;
@@ -43,7 +43,7 @@ function getRundeckStatus {
     sleep 5
     LOG_OUTPUT=$(curl -s -X GET \
          -H "X-Rundeck-Auth-Token: $RUNDECK_TOKEN" \
-         -H "Content-Type: application/json" https://rundeck.cozycloud.cc/api/27/execution/$1/output)
+         -H "Content-Type: application/json" https://rundeck.cozycloud.cc/api/27/execution/$1/output) 2>&1
 
     if [ "$?" == "0" ] ; then
       JOB_STATUS=$(echo $LOG_OUTPUT | grep -o -P "(?<=<execState>).*(?=</execState> )")
