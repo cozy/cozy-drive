@@ -14,6 +14,8 @@ INSTANCE_ID=$COZY_APP_SLUG$TRAVIS_PULL_REQUEST
 echo "↳ ℹ️  Creating instance..."
 
 INSTANCE_CREATE_EXECUTION_ID=$(runRundeckJob $JOB_CREATE_TEST_INSTANCE "-commitid $INSTANCE_ID -environment $INSTANCE_ENV -locale $INSTANCE_LOCALE")
+echo "EXECUTION_ID (or Error Output) : ${INSTANCE_CREATE_EXECUTION_ID}"
+
 getRundeckStatus $INSTANCE_CREATE_EXECUTION_ID
 INSTANCE_CREATE_STATUS=$?
 
@@ -34,6 +36,7 @@ if [ $INSTANCE_CREATE_STATUS == 0 ] ; then
   echo "↳ ℹ️  Deploying $COZY_APP_SLUG ($APP_URL) on $INSTANCE_TESTCAFE:"
 
   INSTANCE_DEPLOY_EXECUTION_ID=$(runRundeckJob $JOB_UPDATE_STAGING "-instance $INSTANCE_TESTCAFE -slug $COZY_APP_SLUG -source  $APP_URL")
+  echo "EXECUTION_ID (or Error Output) :" $INSTANCE_DEPLOY_EXECUTION_ID
   # cannot use getRundeckStatus with the deploy job as all execution return log with level='ERROR' whether they are successful or not...
 
   #init JOB_STATUS
@@ -45,7 +48,7 @@ if [ $INSTANCE_CREATE_STATUS == 0 ] ; then
     JOB_STATUS=$(curl -s -X GET \
          -H "X-Rundeck-Auth-Token: $RUNDECK_TOKEN" \
          -H "Content-Type: application/json" https://rundeck.cozycloud.cc/api/27/execution/$INSTANCE_DEPLOY_EXECUTION_ID | grep -o -P "(?<=status=').*(?=' )")
-    echo "↳ ℹ️  Job $JOB_STATUS"
+    echo "↳ Job $JOB_STATUS"
   done
   if [  $JOB_STATUS == 'succeeded' ] ; then
      echo "↳ ✅ Execution $INSTANCE_DEPLOY_EXECUTION_ID succeeded"
