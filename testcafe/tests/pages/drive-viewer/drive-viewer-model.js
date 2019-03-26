@@ -138,7 +138,7 @@ export default class Page {
     })
   }
 
-  // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer
+  // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer, for one file
   async checkCommonViewerControls(folderName, fileName) {
     const index = await drivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
@@ -160,7 +160,7 @@ export default class Page {
   }
 
   //download using the common download button
-  async checkCommonViewerDownload(folderName, fileName) {
+  async checkCommonViewerDownload(fileName) {
     await this.openViewerForFile(fileName)
     await t.hover(this.viewerWrapper)
     await isExistingAndVisibile(
@@ -185,10 +185,6 @@ export default class Page {
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
       await t.wait(5000)
-      //modify precision to avoid false positive due to loading state
-      t.fixtureCtx.vr.options.compareSettings = {
-        precision: 100 //precision goes from 0 to 255
-      }
     }
   }
 
@@ -202,10 +198,6 @@ export default class Page {
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
       await t.wait(5000)
-      //modify precision to avoid false positive due to loading state
-      t.fixtureCtx.vr.options.compareSettings = {
-        precision: 100 //precision goes from 0 to 255
-      }
     }
   }
 
@@ -233,7 +225,7 @@ export default class Page {
   async checkNoViewerDownload() {
     await isExistingAndVisibile(
       this.btnNoViewerDownload,
-      'no Viewer Download butoon'
+      'no Viewer Download button'
     )
     await t.setNativeDialogHandler(() => true).click(this.btnNoViewerDownload)
   }

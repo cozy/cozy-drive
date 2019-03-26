@@ -14,7 +14,7 @@ export default class PublicViewerPage extends ViewerPage {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} filename : file to check
   //@param {string} type : file type to check for Specific viewer
-  async checkPublicViewer_vr(screenshotPath, fileName, type) {
+  async checkPublicViewer_vr(screenshotPath, fileName, type, hasMask = false) {
     const index = await publicDrivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
@@ -37,11 +37,11 @@ export default class PublicViewerPage extends ViewerPage {
         break
     }
     //avoid unwanted hover for screenshots
-    await t.hover(this.viewerWrapper, {
+    await t.hover(this.viewerControls, {
       offsetX: 0,
       offsetY: 0
     })
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath)
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath, hasMask)
     //precision back to default
     t.fixtureCtx.vr.options.compareSettings = {
       precision: PRECISION //precision goes from 0 to 255
@@ -50,14 +50,14 @@ export default class PublicViewerPage extends ViewerPage {
 
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} filename : file to check
-  async checkMobilePublicViewer_vr(screenshotsPath, fileName) {
+  async checkMobilePublicViewer_vr(screenshotsPath, fileName, hasMask = false) {
     await t.resizeWindowToFitDevice('iPhone 6', {
       portraitOrientation: true
     })
 
     await this.openViewerForFile(fileName)
 
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath)
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
     await t.maximizeWindow() //Back to desktop
   }
 }
