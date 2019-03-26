@@ -41,11 +41,25 @@
     align-items      center
     flex-direction   column
 
+    h2
+        max-width   90%
+
+.pho-viewer-imageviewer
+.pho-viewer-nav + .pho-viewer-pdfviewer
+.pho-viewer-nav + .pho-viewer-noviewer
+.pho-viewer-nav + .pho-viewer-audioviewer
+.pho-viewer-nav + .pho-viewer-videoviewer
+.pho-viewer-nav + .pho-viewer-textviewer
+.pho-viewer-nav + .pho-viewer-canceled
+    margin-left 0
+
+.pho-viewer-videoviewer
     video
         width       100%
         max-width   31.25rem
         height      auto
 
+.pho-viewer-textviewer
     .pho-viewer-textviewer-content
       white-space pre-line
       width 100%
@@ -55,20 +69,12 @@
       a
         color azure
 
-    h2
-        max-width   90%
+    &:before
+      height 2rem
 
-    .pho-viewer-filename
-        max-width     90%
-        text-overflow ellipsis
-.pho-viewer-imageviewer
-.pho-viewer-nav + .pho-viewer-pdfviewer
-.pho-viewer-nav + .pho-viewer-noviewer
-.pho-viewer-nav + .pho-viewer-audioviewer
-.pho-viewer-nav + .pho-viewer-videoviewer
-.pho-viewer-nav + .pho-viewer-textviewer
-.pho-viewer-nav + .pho-viewer-canceled
-    margin-left 0
+.pho-viewer-filename
+    max-width     90%
+    text-overflow ellipsis
 
 .pho-viewer-pdfviewer-pdf
   overflow auto
@@ -111,9 +117,6 @@
         margin      0 auto
         width       10rem
         height      8.75rem
-
-.pho-viewer-textviewer:before
-  height 2rem
 
 .pho-viewer-canceled
     &:before
