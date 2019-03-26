@@ -101,7 +101,6 @@ class ViewerControls extends Component {
           >
             <div
               className={classNames(
-                styles['coz-selectionbar'],
                 styles['pho-viewer-toolbar-actions']
               )}
             >

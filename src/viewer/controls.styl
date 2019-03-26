@@ -22,10 +22,6 @@
             height      100%
         .pho-viewer-nav + .pho-viewer-canceled
             margin-left 20%
-    //!TODO Remove this code after upgrading to cozy-bar@6
-    svg
-        display: initial
-        visibility: initial
 
 .pho-viewer-nav
     margin-top           5.625rem
@@ -68,20 +64,6 @@
             margin-right        2.5rem
             background-image    embedurl('./assets/icon-arrow-right.svg')
 
-
-// TODO: we shouldn't do that
-:local
-    @extend $selectionbar
-
-// here we force the action buttons to stay on the right
-.coz-selection-bar
-    justify-content flex-end
-
-+medium-screen()
-    .coz-selectionbar
-        justify-content flex-end
-        padding-right   0
-
 .pho-viewer-toolbar
     position    fixed
     z-index     $modal-index + 1
@@ -91,7 +73,6 @@
     height      5.625rem
     transition .4s opacity ease-out
     background linear-gradient(to bottom, rgba(50, 54, 63, .5), rgba(50, 54, 63, .33), rgba(50, 54, 63, 0))
-    pointer-events none // especially important for pdf viewers, where there might be additional controls in the top area
 
     &--mobilebrowser
         background-color charcoalGrey
@@ -111,7 +92,6 @@
         background-color  transparent
 
         button
-            pointer-events   initial
             color white
 
             &:hover
@@ -129,8 +109,6 @@
     width            5.625rem
     height           5.625rem
     cursor           pointer
-    pointer-events   initial
-
 
     button
         color white
