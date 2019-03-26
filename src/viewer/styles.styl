@@ -48,6 +48,22 @@
       margin-left      0
       width            100%
 
+.pho-viewer-canceled
+.pho-viewer-noviewer
+.pho-viewer-audioviewer
+.pho-viewer-textviewer
+    display flex
+    justify-content  center
+    align-items      center
+    flex-direction   column
+
+    &:before
+        content     ''
+        display     block
+        margin      0 auto
+        width       10rem
+        height      8.75rem
+
 .pho-viewer-imageviewer
 .pho-viewer-nav + .pho-viewer-pdfviewer
 .pho-viewer-nav + .pho-viewer-noviewer
@@ -56,6 +72,8 @@
 .pho-viewer-nav + .pho-viewer-textviewer
 .pho-viewer-nav + .pho-viewer-canceled
     margin-left 0
+
+// rules for specific viewers below
 
 .pho-viewer-videoviewer
     video
@@ -104,22 +122,6 @@
         max-width   100%
         max-height  100%
         box-shadow  0 .375rem 1.5rem 0 rgba(0, 0, 0, 0.5)
-
-.pho-viewer-canceled
-.pho-viewer-noviewer
-.pho-viewer-audioviewer
-.pho-viewer-textviewer
-    display flex
-    justify-content  center
-    align-items      center
-    flex-direction   column
-
-    &:before
-        content     ''
-        display     block
-        margin      0 auto
-        width       10rem
-        height      8.75rem
 
 .pho-viewer-canceled
     &:before
