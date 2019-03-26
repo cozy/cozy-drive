@@ -44,6 +44,10 @@
     h2
         max-width   90%
 
+    +medium-screen()
+      margin-left      0
+      width            100%
+
 .pho-viewer-imageviewer
 .pho-viewer-nav + .pho-viewer-pdfviewer
 .pho-viewer-nav + .pho-viewer-noviewer
@@ -72,6 +76,10 @@
     &:before
       height 2rem
 
+    +medium-screen()
+      width 90%
+      margin-left 5%
+
 .pho-viewer-filename
     max-width     90%
     text-overflow ellipsis
@@ -85,11 +93,6 @@
   background charcoalGrey
   color white
   border-radius .5rem
-
-+medium-screen()
-  .pho-viewer-textviewer
-    width 90%
-    margin-left 5%
 
 .pho-viewer-imageviewer
     flex             1 1 100%
@@ -149,6 +152,9 @@
     max-width        36rem
     margin-top       2rem
 
+    +medium-screen()
+      display none
+
     .pho-viewer-noviewer-cta-cross
         position absolute
         top      1rem
@@ -198,18 +204,5 @@
         background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
 
 +medium-screen()
-    .pho-viewer-imageviewer
-    .pho-viewer-noviewer
-    .pho-viewer-audioviewer
-    .pho-viewer-videoviewer
-    .pho-viewer-pdfviewer
-    .pho-viewer-canceled
-        margin-left      0
-        width            100%
-
-    .pho-viewer-noviewer-cta
-    .pho-viewer-nav-previous, .pho-viewer-nav-next
-        display none
-
     .pho-viewer-photo img
         box-shadow none
