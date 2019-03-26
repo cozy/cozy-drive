@@ -56,6 +56,11 @@ export default class PublicViewerPage extends ViewerPage {
     })
 
     await this.openViewerForFile(fileName)
+    //avoid unwanted hover for screenshots
+    await t.hover(this.viewerControls, {
+      offsetX: 0,
+      offsetY: 0
+    })
 
     await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
     await t.maximizeWindow() //Back to desktop
