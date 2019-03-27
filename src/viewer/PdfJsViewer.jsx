@@ -115,7 +115,7 @@ export class PdfJsViewer extends Component {
                 pageNumber={page + 1}
                 width={pageWidth}
                 renderAnnotations={false}
-                className="u-mv-1"
+                className={cx("u-mv-1", styles['pho-viewer-pdfviewer-page'])}
               />
             ))
           ) : (
@@ -123,6 +123,7 @@ export class PdfJsViewer extends Component {
               pageNumber={currentPage}
               width={pageWidth}
               renderAnnotations={false}
+              className={styles['pho-viewer-pdfviewer-page']}
             />
           )}
         </Document>
