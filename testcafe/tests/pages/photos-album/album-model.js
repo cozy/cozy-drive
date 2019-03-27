@@ -3,30 +3,17 @@ import {
   getPageUrl,
   getElementWithTestId,
   isExistingAndVisibile,
-  checkAllImagesExists
-} from '../helpers/utils'
-import PhotoPage from '../pages/photos/photos-model'
+  checkAllImagesExists,
+  overwriteCopyCommand,
+  getLastExecutedCommand
+} from '../../helpers/utils'
+import PhotoPage from '../photos/photos-model'
 
 export default class Page extends PhotoPage {
   constructor() {
     super()
-    this.albumEmptyText = this.folderEmpty.withText(
-      "You don't have any album yet"
-    ) //!FIXME : text !
-
     this.albumContentWrapper = getElementWithTestId('album-pho-content-wrapper')
     this.albumTitle = getElementWithTestId('pho-content-title')
-
-    // Album list
-    this.toolbarAlbumsList = getElementWithTestId('pho-toolbar-albums')
-    this.btnNewAlbum = getElementWithTestId('album-add')
-    this.barPhotoBtnDeleteOrRemove = this.barPhoto.find('button').nth(2) //DELETE OR REMOVE FROM ALBUM
-    this.album = albumName => {
-      return getElementWithTestId('pho-album').withAttribute(
-        'data-test-name',
-        albumName
-      )
-    }
 
     //New albums & edit album
     this.inputAlbumName = getElementWithTestId('input-album-name')
@@ -49,7 +36,6 @@ export default class Page extends PhotoPage {
       '[class*="pho-photo-select"][data-input="checkbox"]'
     )
 
-    //Inside an album
     this.mainContent = Selector('[class*="pho-content"]')
     this.toolbarAlbum = getElementWithTestId('pho-toolbar-album')
     this.moreMenuAlbum = getElementWithTestId('more-btn-album')
@@ -61,6 +47,21 @@ export default class Page extends PhotoPage {
     this.moreMenuDeleteAlbum = getElementWithTestId('menu-delete-album')
     this.modalAlert = Selector('[class*="c-alert-wrapper"]')
     this.btnBackToAlbum = getElementWithTestId('pho-content-album-previous')
+
+    //those buttons are defined in cozy-ui (SelectionBar), so we cannot add data-test-id on them
+    this.barPhotoBtnDeleteOrRemove = this.barPhoto.find('button').nth(2) //DELETE OR REMOVE FROM ALBUM
+
+    //Sharing
+    this.btnShare = this.toolbarAlbum
+      .child('button')
+      .withAttribute('data-test-id', 'share-button')
+    this.divShareByLink = getElementWithTestId('share-by-link')
+    this.toggleShareLink = this.divShareByLink.child('[class*="toggle"]')
+    this.spanLinkCreating = Selector('[class*="share-bylink-header-creating"]')
+    this.copyBtnShareByLink = Selector('button').withAttribute('data-test-url')
+    this.btnShareByMe = this.toolbarAlbum
+      .child('button')
+      .withAttribute('data-test-id', 'share-by-me-button')
   }
 
   async waitForLoading() {
@@ -82,43 +83,6 @@ export default class Page extends PhotoPage {
       `Number of pictures ready to be added (${when} test):  ${allPhotosCount}`
     )
     return allPhotosCount
-  }
-
-  // check that the album is empty
-  async checkEmptyAlbum() {
-    await this.waitForLoading()
-    await isExistingAndVisibile(this.folderEmpty, 'Empty Album')
-    await isExistingAndVisibile(
-      this.albumEmptyText,
-      "Text: You don't have any album yet"
-    )
-  }
-
-  // @param {String} albumName : Name for the new album
-  // @param { number } photoNumber : Number of photos to add to the new album (it will add the first X photos from the timeline)
-  // click on new album button, check the new album page, give a name to album and select photos
-  async addNewAlbum(albumName, photoNumber) {
-    await isExistingAndVisibile(this.toolbarAlbumsList, 'toolbar (album list)')
-    await isExistingAndVisibile(this.btnNewAlbum, 'New album button')
-    await t.click(this.btnNewAlbum)
-    //Check new album page :
-    await t.expect(getPageUrl()).contains('albums/new')
-    await isExistingAndVisibile(this.inputAlbumName, 'Input album Name')
-    await t
-      .expect(this.inputAlbumName.value)
-      .eql('Untitled album')
-      .expect(this.inputAlbumName.focused)
-      .ok('Input album Name is not focus')
-
-    const allPhotosAlbumCount = await this.getPhotosToAddCount(
-      'On create Album page'
-    )
-    await t.expect(allPhotosAlbumCount).eql(t.ctx.allPhotosStartCount) //all photos are displayed
-    await isExistingAndVisibile(this.btnValidateAlbum, 'Create Album Button')
-
-    await t.typeText(this.inputAlbumName, albumName)
-    await this.selectPhotostoAdd(0, photoNumber)
-    await t.click(this.btnValidateAlbum)
   }
 
   // @param {Number} indexStart : which photo is the 1st selected
@@ -149,13 +113,6 @@ export default class Page extends PhotoPage {
       const allPhotosAlbumCount = await this.getPhotosCount('On Album page')
       await t.expect(allPhotosAlbumCount).eql(photoNumber) //all expected photos are displayed
     }
-  }
-
-  // @param {String} AlbumName : Name of the album
-  async goToAlbum(albumName) {
-    await isExistingAndVisibile(this.album(albumName), albumName)
-    await t.click(this.album(albumName))
-    await this.waitForLoading()
   }
 
   // @param {String} OldAlbumName : Name of the album (before renamming)
@@ -225,14 +182,6 @@ export default class Page extends PhotoPage {
     await this.waitForLoading()
   }
 
-  // @param {String} AlbumName : Name of the album
-  // @param { number } photoNumber : Number of photos expected in the album (
-  async isAlbumExistsAndVisible(albumName, photoNumber) {
-    await isExistingAndVisibile(this.album(albumName), albumName)
-    await t
-      .expect(this.album(albumName).innerText)
-      .contains(`${photoNumber} photo`)
-  }
   // @param { number } photoNumber : Number of photos to remove from the album (
   async removePhoto(photoNumber) {
     const photoAlbumStart = await this.getPhotosCount('In album, before')
@@ -265,5 +214,29 @@ export default class Page extends PhotoPage {
       'Modal delete button Delete'
     )
     await t.click(this.modalDeleteBtnDelete)
+  }
+
+  async shareAlbumPublicLink() {
+    await isExistingAndVisibile(this.toolbarAlbum, 'toolbarAlbum')
+    await isExistingAndVisibile(this.btnShare, `Share button`)
+    await t.click(this.btnShare)
+    await isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
+    await t
+      .click(this.toggleShareLink)
+      .expect(this.toggleShareLink.find('input').checked)
+      .ok('toggle Link is unchecked')
+      .expect(this.spanLinkCreating.exist)
+      .notOk('Still creating Link')
+    await isExistingAndVisibile(this.copyBtnShareByLink, 'Copy Link')
+
+    await overwriteCopyCommand()
+
+    await t
+      .click(this.copyBtnShareByLink)
+      .expect(getLastExecutedCommand())
+      .eql('copy') //check link copy actually happens
+
+    await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
   }
 }
