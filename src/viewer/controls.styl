@@ -5,6 +5,8 @@
 .pho-viewer-controls
     display         flex
     flex-direction  row
+    justify-content center
+    align-items center
     width           100%
     height          100%
 
@@ -24,6 +26,9 @@
             margin-left 20%
 
 .pho-viewer-nav
+    position   fixed
+    top        5.625rem // because of the toolbar
+    bottom     0
     margin-top           5.625rem
     z-index              $modal-index + 1
     width                20%
@@ -66,6 +71,7 @@
 
 .pho-viewer-toolbar
     position    fixed
+    top 0
     z-index     $modal-index + 1
     display     flex
     flex-shrink 0
