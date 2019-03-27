@@ -1,10 +1,10 @@
 import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
-import Page from '../pages/photos-model'
 import { DATA_PATH, IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
 import { initVR } from '../helpers/visualreview-utils'
+import TimelinePage from '../pages/photos/photos-timeline-model'
 
-const page = new Page()
+const timelinePage = new TimelinePage()
 
 fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
   .before(async ctx => {
@@ -12,7 +12,7 @@ fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
   })
   .beforeEach(async t => {
     await t.useRole(photosUser)
-    await page.waitForLoading()
+    await timelinePage.waitForLoading()
   })
   .after(async ctx => {
     await ctx.vr.checkRunStatus()
@@ -21,15 +21,15 @@ fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
 test('Uploading 1 pic from Photos view', async t => {
   await t.maximizeWindow() //Real fullscren for VR
   ///there is no photos on page
-  await page.initPhotoCountZero()
-  await page.uploadPhotos([`${DATA_PATH}/${IMG0}`])
+  await timelinePage.initPhotoCountZero()
+  await timelinePage.uploadPhotos([`${DATA_PATH}/${IMG0}`])
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-1-pic.png')
 })
 
 test('Uploadingt 4 pics from Photos view', async t => {
-  await page.initPhotosCount()
-  await page.uploadPhotos([
+  await timelinePage.initPhotosCount()
+  await timelinePage.uploadPhotos([
     `${DATA_PATH}/${IMG1}`,
     `${DATA_PATH}/${IMG2}`,
     `${DATA_PATH}/${IMG3}`,

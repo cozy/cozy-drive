@@ -164,7 +164,7 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
     3
   )
 
-  await publicViewerPage.checkCommonViewerDownload(data.FILE_ZIP)
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(data.FILE_ZIP)
   t.ctx.fileDownloaded = data.FILE_ZIP
 
   await publicViewerPage.checkPublicViewer_vr(
@@ -200,7 +200,7 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
 
 test(`${TEST_PUBLIC_VIEWER_IMG}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_IMG}`)
-  await publicViewerPage.checkCommonViewerDownload(data.FILE_IMG)
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(data.FILE_IMG)
   t.ctx.fileDownloaded = data.FILE_IMG
 
   await publicViewerPage.checkPublicViewer_vr(
@@ -217,7 +217,7 @@ test(`${TEST_PUBLIC_VIEWER_IMG}`, async t => {
 
 test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_AUDIO}`)
-  await publicViewerPage.checkCommonViewerDownload(data.FILE_AUDIO)
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(data.FILE_AUDIO)
   t.ctx.fileDownloaded = data.FILE_AUDIO
 
   //mask on loading bar
@@ -250,7 +250,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
 
 test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_VIDEO}`)
-  await publicViewerPage.checkCommonViewerDownload(data.FILE_VIDEO)
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(data.FILE_VIDEO)
   t.ctx.fileDownloaded = data.FILE_VIDEO
 
   await publicViewerPage.checkPublicViewer_vr(
@@ -267,7 +267,7 @@ test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
 
 test(`${TEST_PUBLIC_VIEWER_TXT}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_TXT}`)
-  await publicViewerPage.checkCommonViewerDownload(data.FILE_TXT)
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(data.FILE_TXT)
   t.ctx.fileDownloaded = data.FILE_TXT
 
   await publicViewerPage.checkPublicViewer_vr(
