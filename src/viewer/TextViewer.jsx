@@ -78,7 +78,7 @@ class TextViewer extends React.Component {
           data-test-id="viewer-text"
           className={styles['pho-viewer-textviewer']}
         >
-          <h2 className={cx(styles['pho-viewer-filename'], 'u-mt-2', 'u-mb-1')}>
+          <h2 className={cx(styles['pho-viewer-filename'], 'u-mt-3', 'u-pt-3', 'u-mb-1')}>
             {file.name}
           </h2>
           {isMarkdown ? (
