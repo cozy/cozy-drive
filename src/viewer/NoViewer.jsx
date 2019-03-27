@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 import { Icon, Button, Alerter } from 'cozy-ui/transpiled/react'
 import { logException } from 'drive/lib/reporter'
