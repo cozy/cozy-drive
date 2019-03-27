@@ -1,6 +1,7 @@
 /* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Overlay } from 'cozy-ui/transpiled/react'
 import Viewer, { LoadingViewer } from 'viewer'
 import {
   getFolderIdFromRoute,
@@ -95,21 +96,25 @@ class FilesViewer extends Component {
         return <LoadingViewer />
       }
       return (
-        <Viewer
-          files={[this.state.currentFile]}
-          currentIndex={0}
-          onChange={this.onChange}
-          onClose={this.onClose}
-        />
+        <Overlay>
+          <Viewer
+            files={[this.state.currentFile]}
+            currentIndex={0}
+            onChange={this.onChange}
+            onClose={this.onClose}
+          />
+        </Overlay>
       )
     }
     return (
-      <Viewer
-        files={files}
-        currentIndex={currentIndex}
-        onChange={this.onChange}
-        onClose={this.onClose}
-      />
+      <Overlay>
+        <Viewer
+          files={files}
+          currentIndex={currentIndex}
+          onChange={this.onChange}
+          onClose={this.onClose}
+        />
+      </Overlay>
     )
   }
 }
