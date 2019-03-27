@@ -43,11 +43,15 @@ export const splitFilename = file =>
 export const getClassFromMime = attrs => {
   if (isDirectory(attrs)) {
     return styles['fil-file-folder']
+  } else if (/\.cozynote$/.test(attrs.name)) {
+    return styles['fil-file-note']
+  } else {
+    return styles[
+      'fil-file-' +
+        (getFileMimetype(styles, 'fil-file-')(attrs.mime, attrs.name) ||
+          'files')
+    ]
   }
-  return styles[
-    'fil-file-' +
-      (getFileMimetype(styles, 'fil-file-')(attrs.mime, attrs.name) || 'files')
-  ]
 }
 
 const getParentDiv = element => {
