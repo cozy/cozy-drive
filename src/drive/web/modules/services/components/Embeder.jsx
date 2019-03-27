@@ -37,7 +37,9 @@ class Embeder extends React.Component {
         {this.state.error && (
           <pre className="u-error">{this.state.error.toString()}</pre>
         )}
-        {this.state.fileId && <FileOpener fileId={this.state.fileId} />}
+        {this.state.fileId && (
+          <FileOpener fileId={this.state.fileId} withCloseButtton={false} />
+        )}
         <IconSprite />
       </div>
     )
