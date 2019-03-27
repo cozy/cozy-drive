@@ -11,23 +11,28 @@ fixture`Upload photos`.page`${TESTCAFE_PHOTOS_URL}/`
     await initVR(ctx, SLUG, `fixture : upload photos`)
   })
   .beforeEach(async t => {
+    console.group(`\n↳ ℹ️  Loggin & Initialization`)
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
+    console.groupEnd()
   })
   .after(async ctx => {
     await ctx.vr.checkRunStatus()
   })
 
 test('Uploading 1 pic from Photos view', async t => {
+  console.group('↳ ℹ️  Uploading 1 pic from Photos view')
   await t.maximizeWindow() //Real fullscren for VR
   ///there is no photos on page
   await timelinePage.initPhotoCountZero()
   await timelinePage.uploadPhotos([`${DATA_PATH}/${IMG0}`])
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-1-pic.png')
+  console.groupEnd()
 })
 
-test('Uploadingt 4 pics from Photos view', async t => {
+test('Uploading 4 pics from Photos view', async t => {
+  console.group('↳ ℹ️  Uploading 4 pics from Photos view')
   await timelinePage.initPhotosCount()
   await timelinePage.uploadPhotos([
     `${DATA_PATH}/${IMG1}`,
@@ -37,4 +42,5 @@ test('Uploadingt 4 pics from Photos view', async t => {
   ])
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-4-pic.png')
+  console.groupEnd()
 })
