@@ -8,6 +8,8 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
+import get from 'lodash/get'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
 import styles from './styles'
@@ -43,8 +45,14 @@ class FileOpener extends Component {
     }
   }
 
+  navigateToDrive = () => {
+    const parentDir = get(this.state, 'file.dir_id', '')
+    this.props.router.push(`/folder/${parentDir}`)
+  }
+
   render() {
     const { file, loading, fileNotFound } = this.state
+    const { withCloseButtton = true } = this.props
 
     return (
       <div className={styles.fileOpener}>
@@ -57,6 +65,7 @@ class FileOpener extends Component {
               files={[file]}
               currentIndex={0}
               onChange={doNothing}
+              onClose={withCloseButtton ? this.navigateToDrive : null}
             />
           )}
       </div>
@@ -70,11 +79,13 @@ const getFileId = ownProps => {
 
 FileOpener.PropTypes = {
   router: PropTypes.shape({
+    push: PropTypes.func.isRequired,
     params: PropTypes.shape({
       fileId: PropTypes.string.isRequired
     }).isRequired
   }).isRequired,
-  fileId: PropTypes.number
+  fileId: PropTypes.number,
+  withCloseButtton: PropTypes.bool
 }
 
-export default translate()(FileOpener)
+export default translate()(withRouter(FileOpener))
