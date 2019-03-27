@@ -1,8 +1,8 @@
 /* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Overlay } from 'cozy-ui/transpiled/react'
-import Viewer, { LoadingViewer } from 'viewer'
+import { Overlay, Spinner } from 'cozy-ui/transpiled/react'
+import Viewer from 'viewer'
 import {
   getFolderIdFromRoute,
   fetchMoreFiles
@@ -93,7 +93,11 @@ class FilesViewer extends Component {
     // direct stat made by the viewer
     if (currentIndex === -1) {
       if (!this.state.currentFile) {
-        return <LoadingViewer />
+        return (
+          <Overlay>
+            <Spinner size="xxlarge" middle noMargin color="white" />
+          </Overlay>
+        )
       }
       return (
         <Overlay>
