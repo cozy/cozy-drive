@@ -47,16 +47,6 @@
       margin-left      0
       width            100%
 
-.pho-viewer-canceled
-.pho-viewer-noviewer
-.pho-viewer-audioviewer
-    &:before
-        content     ''
-        display     block
-        margin      0 auto
-        width       10rem
-        height      8.75rem
-
 // rules for specific viewers below
 
 .pho-viewer-videoviewer
@@ -103,28 +93,6 @@
         max-width   100%
         max-height  100%
         box-shadow  0 .375rem 1.5rem 0 rgba(0, 0, 0, 0.5)
-
-.pho-viewer-canceled
-    &:before
-        background  embedurl('./assets/icon-cloud-wrong.svg') center center / contain no-repeat
-
-.pho-viewer-noviewer
-    &:before
-        background  embedurl('./assets/icon-type-files.svg') center center / cover no-repeat
-    &--bin:before
-        background  embedurl('./assets/icon-type-bin.svg') center center / cover no-repeat
-    &--code:before
-        background  embedurl('./assets/icon-type-code.svg') center center / cover no-repeat
-    &--spreadsheet:before
-        background  embedurl('./assets/icon-type-sheet.svg') center center / cover no-repeat
-    &--slide:before
-        background  embedurl('./assets/icon-type-slide.svg') center center / cover no-repeat
-    &--text:before
-        background  embedurl('./assets/icon-type-text.svg') center center / cover no-repeat
-    &--zip:before
-        background  embedurl('./assets/icon-type-zip.svg') center center / cover no-repeat
-    &--pdf:before
-        background  embedurl('./assets/icon-type-pdf.svg') center center / cover no-repeat
 
 .pho-viewer-noviewer-cta
     position         relative
@@ -180,8 +148,3 @@
 
         a, a:hover, a:focus, a:visited
             color white
-
-
-.pho-viewer-audioviewer
-    &:before
-        background  embedurl('./assets/icon-type-audio.svg') center center / cover no-repeat
