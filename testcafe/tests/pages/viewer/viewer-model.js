@@ -77,8 +77,7 @@ export default class Viewer {
   }
 
   //download using the common download button
-  async checkCommonViewerDownload(fileName) {
-    await this.openViewerForFile(fileName)
+  async checkCommonViewerDownload() {
     await t.hover(this.viewerWrapper)
     await isExistingAndVisibile(
       this.btnDownloadViewerToolbar,
@@ -87,8 +86,14 @@ export default class Viewer {
     await t
       .setNativeDialogHandler(() => true)
       .click(this.btnDownloadViewerToolbar)
-    await this.closeViewer({
-      exitWithEsc: true
-    })
+  }
+
+  //Specific check for imageViewer (Common to drive/photos)
+  async checkImageViewer() {
+    await isExistingAndVisibile(this.imageViewer, 'image viewer')
+    await isExistingAndVisibile(
+      this.imageViewerContent,
+      'image viewer controls'
+    )
   }
 }
