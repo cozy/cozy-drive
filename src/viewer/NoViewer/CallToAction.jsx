@@ -7,7 +7,7 @@ import {
   isLinux,
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
-import styles from './styles'
+import styles from '../styles'
 
 export default class CallToAction extends Component {
   state = {
