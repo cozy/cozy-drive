@@ -1,16 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
-import { Button } from 'cozy-ui/react/Button'
-import Alerter from 'cozy-ui/react/Alerter'
+import { Button, Alerter } from 'cozy-ui/transpiled/react'
 import { logException } from 'drive/lib/reporter'
 import { isMobileApp } from 'cozy-device-helper'
 import CallToAction from './CallToAction'
+import FileIcon from './FileIcon'
 
 import { openLocalFileCopy } from 'drive/mobile/modules/offline/duck'
 
-import styles from './styles'
+import styles from '../styles.styl'
 
 class AsyncActionButton extends React.Component {
   state = {
@@ -87,11 +86,9 @@ class NoViewer extends React.Component {
     return (
       <div
         data-test-id="viewer-noviewer"
-        className={classNames(
-          styles['pho-viewer-noviewer'],
-          styles[`pho-viewer-noviewer--${file.class}`]
-        )}
+        className={styles['pho-viewer-noviewer']}
       >
+        <FileIcon type={file.class} />
         <p className={styles['pho-viewer-filename']}>{file.name}</p>
         <NoViewerButton
           file={file}

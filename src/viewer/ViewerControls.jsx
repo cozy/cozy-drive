@@ -99,12 +99,7 @@ class ViewerControls extends Component {
             onMouseEnter={this.showControls}
             onMouseLeave={this.hideControls}
           >
-            <div
-              className={classNames(
-                styles['coz-selectionbar'],
-                styles['pho-viewer-toolbar-actions']
-              )}
-            >
+            <div className={classNames(styles['pho-viewer-toolbar-actions'])}>
               {!isMobile && (
                 <Button
                   data-test-id="viewer-toolbar-download"
