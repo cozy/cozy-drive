@@ -17,7 +17,7 @@ import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'sharing/getSharedDocument'
 
-const initCozyBar = data => {
+const initCozyBar = (data, client) => {
   if (
     data.cozyAppName &&
     data.cozyAppEditor &&
@@ -27,6 +27,7 @@ const initCozyBar = data => {
     cozy.bar.init({
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
+      cozyClient: client,
       iconPath: data.cozyIconPath,
       lang: data.cozyLocale,
       replaceTitleOnMobile: true,
@@ -78,7 +79,7 @@ const init = async () => {
       .collection('io.cozy.files')
       .get(sharedDocumentId)
     const isFile = data && data.type === 'file'
-    initCozyBar(dataset)
+    initCozyBar(dataset, client)
     render(
       <I18n lang={lang} polyglot={polyglot}>
         <CozyProvider store={store} client={client}>
@@ -101,7 +102,7 @@ const init = async () => {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.warn(e)
-    initCozyBar(dataset)
+    initCozyBar(dataset, client)
     renderError(lang, root)
   }
 }

@@ -42,6 +42,7 @@ async function init() {
     cozy.bar.init({
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
+      cozyClient: client,
       iconPath: data.cozyIconPath,
       lang: data.cozyLocale,
       replaceTitleOnMobile: true
