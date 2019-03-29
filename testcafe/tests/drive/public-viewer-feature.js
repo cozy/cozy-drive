@@ -165,11 +165,11 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_ZIP)
   t.ctx.fileDownloaded = data.FILE_ZIP
 
-  await publicViewerPage.checkPublicViewer(
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-1`,
     data.FILE_ZIP
   )
-  await publicViewerPage.checkMobilePublicViewer(
+  await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-mob1`,
     data.FILE_ZIP
   )
@@ -185,11 +185,11 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   })
   t.ctx.fileDownloaded = data.FILE_PPTX
 
-  await publicViewerPage.checkPublicViewer(
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-1`,
     data.FILE_PPTX
   )
-  await publicViewerPage.checkMobilePublicViewer(
+  await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-mob1`,
     data.FILE_PPTX
   )
@@ -201,12 +201,12 @@ test(`${TEST_PUBLIC_VIEWER_IMG}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_IMG)
   t.ctx.fileDownloaded = data.FILE_IMG
 
-  await publicViewerPage.checkPublicViewer(
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-1`,
     data.FILE_IMG,
     'img'
   )
-  await publicViewerPage.checkMobilePublicViewer(
+  await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-mob1`,
     data.FILE_IMG
   )
@@ -225,7 +225,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
     width: 100,
     y: 623
   })
-  await publicViewerPage.checkPublicViewer(
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-1`,
     data.FILE_AUDIO,
     'audio',
@@ -238,7 +238,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
     width: 90,
     y: 409
   })
-  await publicViewerPage.checkMobilePublicViewer(
+  await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-mob1`,
     data.FILE_AUDIO,
     true
@@ -251,12 +251,12 @@ test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_VIDEO)
   t.ctx.fileDownloaded = data.FILE_VIDEO
 
-  await publicViewerPage.checkPublicViewer(
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-1`,
     data.FILE_VIDEO,
     'video'
   )
-  await publicViewerPage.checkMobilePublicViewer(
+  await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-mob1`,
     data.FILE_VIDEO
   )
@@ -268,12 +268,12 @@ test(`${TEST_PUBLIC_VIEWER_TXT}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_TXT)
   t.ctx.fileDownloaded = data.FILE_TXT
 
-  await publicViewerPage.checkPublicViewer(
+  await publicViewerPage.openFileAndcheckCommonViewerDownload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-1`,
     data.FILE_TXT,
     'txt'
   )
-  await publicViewerPage.checkMobilePublicViewer(
+  await publicViewerPage.openFileAndCheckMobilePublicViewerBiggerResolution(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-mob1`,
     data.FILE_TXT
   )
