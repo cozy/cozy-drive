@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { Icon, withBreakpoints } from 'cozy-ui/react'
+import { withBreakpoints } from 'cozy-ui/react'
 import { ImageLoader } from 'components/Image'
 import { SharedBadge } from 'sharing'
-
-import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
-import { isDirectory } from 'drive/web/modules/drive/files'
+import FileIcon from './FileIcon'
 import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({
@@ -33,16 +31,10 @@ const FileThumbnail = ({
               className={styles['fil-file-thumbnail-image']}
             />
           )}
+          renderFallback={() => <FileIcon file={attributes} />}
         />
       ) : (
-        <Icon
-          icon={getMimeTypeIcon(
-            isDirectory(attributes),
-            attributes.name,
-            attributes.mime
-          )}
-          size={32}
-        />
+        <FileIcon file={attributes} />
       )}
       {withSharedBadge && (
         <SharedBadge

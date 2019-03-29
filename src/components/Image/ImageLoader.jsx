@@ -131,6 +131,7 @@ class ImageLoader extends React.Component {
 
     if (src) return render(src)
     else if (renderFallback) return renderFallback()
+    else return null
   }
 }
 
