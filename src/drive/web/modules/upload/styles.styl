@@ -4,7 +4,6 @@
 @require 'settings/breakpoints.styl'
 @require 'settings/z-index.styl'
 
-@import '~drive/styles/mimetypes'
 
 .upload-queue
     @extend $popover
@@ -97,27 +96,12 @@ progress.upload-queue-progress::-moz-progress-bar
     max-width       'calc(100vw - %s)' % 13.75rem
     border-bottom   .0625rem solid silver
 
-    .item-cell
-        box-sizing  border-box
-        padding     .9375rem 2rem
-        font-size   .875rem
-
-    .item-cell.item-file
-        padding-left   3.75rem
-        font-size      1rem
-        line-height    1.3
-        white-space    nowrap
-        overflow       hidden
-        text-overflow  ellipsis
-        color          charcoalGrey
-
     .item-file
         flex        0 0 85%
         user-select none
-        background-position .9375rem center
-        background-repeat no-repeat
-
-    mime-types('item-type-', '../../../assets/icons/')
+        box-sizing  border-box
+        color          charcoalGrey
+        overflow hidden
 
     .item-ext
         color coolGrey
