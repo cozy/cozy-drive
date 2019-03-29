@@ -8,11 +8,11 @@ import FileIcon from './FileIcon'
 import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({
-  attributes,
+  file,
   withSharedBadge,
   breakpoints: { isMobile }
 }) => {
-  const isImage = attributes.class === 'image'
+  const isImage = file.class === 'image'
   return (
     <div
       className={cx(styles['fil-content-cell'], styles['fil-file-thumbnail'], {
@@ -21,7 +21,7 @@ const FileThumbnail = ({
     >
       {isImage ? (
         <ImageLoader
-          file={attributes}
+          file={file}
           size="small"
           render={src => (
             <img
@@ -31,14 +31,14 @@ const FileThumbnail = ({
               className={styles['fil-file-thumbnail-image']}
             />
           )}
-          renderFallback={() => <FileIcon file={attributes} />}
+          renderFallback={() => <FileIcon file={file} />}
         />
       ) : (
-        <FileIcon file={attributes} />
+        <FileIcon file={file} />
       )}
       {withSharedBadge && (
         <SharedBadge
-          docId={attributes.id}
+          docId={file.id}
           className={styles['fil-content-shared']}
           xsmall
         />
@@ -48,7 +48,7 @@ const FileThumbnail = ({
 }
 
 FileThumbnail.propTypes = {
-  attributes: PropTypes.shape({
+  file: PropTypes.shape({
     class: PropTypes.string,
     mime: PropTypes.string,
     name: PropTypes.string

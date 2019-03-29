@@ -314,10 +314,7 @@ class File extends Component {
           selected={selected}
           onClick={e => this.toggle(e)}
         />
-        <FileThumbnail
-          attributes={attributes}
-          withSharedBadge={withSharedBadge}
-        />
+        <FileThumbnail file={attributes} withSharedBadge={withSharedBadge} />
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
