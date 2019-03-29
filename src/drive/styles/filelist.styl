@@ -115,11 +115,10 @@
     padding-left 0
 
 .fil-content-cell.fil-content-file
-    position       relative
+    flex 0 0 35%
     display flex
     align-items center
-    height 100%
-    padding   0 2rem 0 2.8125rem
+    padding   0 2rem 0 0
     font-size      1rem
     line-height    1.3
     white-space    nowrap
@@ -129,10 +128,17 @@
 .fil-content-file-openable
     cursor pointer
 
+.fil-file-thumbnail
+  position relative
+  flex 0 0 5%
+
+.fil-file-thumbnail-image
+  object-fit cover
+
 .fil-content-shared
     position    absolute
-    margin-left -1.25rem
-    margin-top  1rem
+    bottom .8rem
+    right .8rem
 
 .fil-content-date
 .fil-content-size
@@ -190,18 +196,6 @@ mime-types('fil-file-', '../assets/icons/')
     flex-direction column
     justify-content center
     width 100%
-
-.fil-file-preview
-    content ''
-    position absolute
-    left 0
-    top 0
-    bottom 0
-    margin auto 0
-    width 2rem
-    height 2rem
-    background-size cover
-    background-position center center
 
 .fil-file-filename
     flex 0 0 1.3rem
@@ -311,7 +305,7 @@ mime-types('fil-file-', '../assets/icons/')
     .fil-content-mobile-head
         display block
 
-    .fil-content-file
+    .fil-content-cell.fil-content-file
         flex 1 1 auto
 
     .fil-content-status
@@ -331,8 +325,6 @@ mime-types('fil-file-', '../assets/icons/')
         padding    0
 
     .fil-content-cell.fil-content-file
-        padding-left 3.8125rem
-        background-position 1rem center
         padding-right 0
 
     .fil-content-cell.fil-content-file-select
@@ -346,9 +338,6 @@ mime-types('fil-file-', '../assets/icons/')
 
         .fil-content-file-action
             opacity 0
-
-    .fil-file-preview
-        left 1rem
 
     .fil-file-infos
         display block
