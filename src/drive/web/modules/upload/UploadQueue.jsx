@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import { getFileMimetype } from 'drive/lib/getFileMimetype'
+import { Icon } from 'cozy-ui/transpiled/react'
+import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
 import styles from './styles'
 import {
@@ -18,16 +19,6 @@ const splitFilename = filename => {
     extension: filename.slice(dotIdx + 1),
     filename: filename.slice(0, dotIdx + 1)
   }
-}
-
-const getFileTypeClass = (file, isDirectory) => {
-  if (isDirectory) {
-    return styles['item-type-folder']
-  }
-  return styles[
-    'item-type-' +
-      (getFileMimetype(styles, 'item-type-')(file.type, file.name) || 'files')
-  ]
 }
 
 const Pending = translate()(props => (
@@ -49,12 +40,18 @@ const Item = translate()(({ file, status, isDirectory }) => {
     >
       <div
         className={classNames(
-          styles['item-cell'],
           styles['item-file'],
-          getFileTypeClass(file, isDirectory)
+          'u-flex',
+          'u-flex-items-center',
+          'u-p-1'
         )}
       >
-        <div data-test-id="upload-queue-item-name">
+        <Icon
+          icon={getMimeTypeIcon(isDirectory, file.name, file.type)}
+          size={32}
+          className="u-flex-shrink-0 u-mr-1"
+        />
+        <div data-test-id="upload-queue-item-name" className="u-ellipsis">
           {filename}
           {extension && <span className={styles['item-ext']}>{extension}</span>}
         </div>
