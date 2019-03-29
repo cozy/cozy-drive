@@ -13,7 +13,6 @@ import { isDirectory } from 'drive/web/modules/drive/files'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedStatus } from 'sharing'
 import FileThumbnail from './FileThumbnail'
-import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
 import {
   toggleItemSelection,
@@ -39,20 +38,6 @@ export const splitFilename = file =>
         extension: file.name.slice(file.name.lastIndexOf('.')),
         filename: file.name.slice(0, file.name.lastIndexOf('.'))
       }
-
-export const getClassFromMime = attrs => {
-  if (isDirectory(attrs)) {
-    return styles['fil-file-folder']
-  } else if (/\.cozynote$/.test(attrs.name)) {
-    return styles['fil-file-note']
-  } else {
-    return styles[
-      'fil-file-' +
-        (getFileMimetype(styles, 'fil-file-')(attrs.mime, attrs.name) ||
-          'files')
-    ]
-  }
-}
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
