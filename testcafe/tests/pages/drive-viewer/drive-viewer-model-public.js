@@ -10,7 +10,12 @@ export default class PublicViewerPage extends ViewerPage {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} filename : file to check
   //@param {string} type : file type to check for Specific viewer
-  async checkPublicViewer(screenshotPath, fileName, type, hasMask = false) {
+  async openFileAndcheckCommonViewerDownload(
+    screenshotPath,
+    fileName,
+    type,
+    hasMask = false
+  ) {
     const index = await publicDrivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
@@ -32,6 +37,7 @@ export default class PublicViewerPage extends ViewerPage {
         await this.checkNoViewer()
         break
     }
+    await t.wait(1000)
     //avoid unwanted hover for screenshots
     await t.hover(this.viewerControls, {
       offsetX: 0,
@@ -42,16 +48,23 @@ export default class PublicViewerPage extends ViewerPage {
     t.fixtureCtx.vr.options.compareSettings = {
       precision: PRECISION //precision goes from 0 to 255
     }
+    await this.closeViewer({
+      exitWithEsc: true
+    })
   }
 
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} filename : file to check
-  async checkMobilePublicViewer(screenshotsPath, fileName, hasMask = false) {
+  async openFileAndCheckMobilePublicViewer(
+    screenshotsPath,
+    fileName,
+    hasMask = false
+  ) {
     await t.resizeWindowToFitDevice('iPhone 6', {
       portraitOrientation: true
     })
-
     await this.openViewerForFile(fileName)
+    await t.wait(1000)
     //avoid unwanted hover for screenshots
     await t.hover(this.viewerControls, {
       offsetX: 0,
@@ -59,6 +72,35 @@ export default class PublicViewerPage extends ViewerPage {
     })
 
     await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
+    await this.closeViewer({
+      exitWithEsc: true
+    })
+    await t.maximizeWindow() //Back to desktop
+  }
+
+  //Temp method to avoid problem with chrome 73
+  //https://trello.com/c/fAu0VmuW/1827-probl%C3%A8me-daffichage-viewer-texte-lors-du-redimensionnement-%C3%A0-la-vol%C3%A9e-chrome-73
+  async openFileAndCheckMobilePublicViewerBiggerResolution(
+    screenshotsPath,
+    fileName,
+    hasMask = false
+  ) {
+    await t.resizeWindowToFitDevice('iPad', {
+      portraitOrientation: true
+    })
+    await t.eval(() => location.reload(true))
+    await this.openViewerForFile(fileName)
+
+    //avoid unwanted hover for screenshots
+    await t.hover(this.viewerControls, {
+      offsetX: 0,
+      offsetY: 0
+    })
+
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
+    await this.closeViewer({
+      exitWithEsc: true
+    })
     await t.maximizeWindow() //Back to desktop
   }
 }
