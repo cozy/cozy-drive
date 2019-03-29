@@ -4412,12 +4412,13 @@ cozy-device-helper@1.7.0:
   dependencies:
     lodash "4.17.11"
 
-cozy-flags@1.5.9:
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.5.9.tgz#5a1726a329e86e6498bf629cf7508d4632a36e3b"
-  integrity sha512-so2PDfBTT4770jG8cXDXs9wUd1kTp6Wnf/IfnONaJKZmjqFf3THJ8cK6jN6zkgLZeDGJbdAutd66g8/XnoOhhw==
+cozy-flags@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.6.0.tgz#dcbadf075279e9db2f24df99dc541392d9994b5b"
+  integrity sha512-fFg6H0NmZyom6kJvBGRdIPBwT3qKzCR8UzeLcpIoLcx8uqlcbMqpA+uphcVyJNbSUiPyR1I9qUqOEuGx7s9MFg==
   dependencies:
     detect-node "2.0.4"
+    microee "^0.0.6"
 
 cozy-harvest-lib@^0.38.0:
   version "0.38.2"
@@ -10108,7 +10109,7 @@ methods@~1.1.2:
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
 
-microee@0.0.6:
+microee@0.0.6, microee@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/microee/-/microee-0.0.6.tgz#a12bdb0103681e8b126a9b071eba4c467c78fffe"
   integrity sha1-oSvbAQNoHosSapsHHrpMRnx4//4=
