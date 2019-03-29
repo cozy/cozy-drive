@@ -79,7 +79,7 @@ const init = async () => {
       .collection('io.cozy.files')
       .get(sharedDocumentId)
     const isFile = data && data.type === 'file'
-    initCozyBar(dataset, client)
+    initCozyBar(dataset)
     render(
       <I18n lang={lang} polyglot={polyglot}>
         <CozyProvider store={store} client={client}>
