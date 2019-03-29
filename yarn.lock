@@ -4307,17 +4307,17 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cozy-bar@6.18.2:
-  version "6.18.2"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.18.2.tgz#5e073dc664ad5f0f00b0da04fca097c0f31a0da4"
-  integrity sha512-vFAWzSRP22dzcpTu8+oLgx+Q30aNiqugLI7+X2Qv66x784wsQvT/vOQsBUv0xvU8AcRuhPCafQ16skt7IeAZug==
+cozy-bar@6.19.1:
+  version "6.19.1"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.19.1.tgz#89d2b20106abff21e57a3de1fdb1a47e64c0965f"
+  integrity sha512-EcuV5rXa1TNfkspqZJfFTF3x02z1taB6Qyv8zHtGzMw6eVcqSyReejkFOD6Cxp+AnTTvLJ9WPuprAumOytJknQ==
   dependencies:
     "@babel/core" "7.3.4"
     babel-core "7.0.0-bridge.0"
     babel-preset-cozy-app "1.5.1"
     cozy-client "6.20.0"
     cozy-device-helper "1.7.0"
-    cozy-harvest-lib "^0.38.0"
+    cozy-harvest-lib "0.38.3"
     cozy-interapp "0.4.4"
     cozy-realtime "2.0.7"
     enzyme-to-json "3.3.5"
@@ -4419,10 +4419,10 @@ cozy-flags@1.5.9:
   dependencies:
     detect-node "2.0.4"
 
-cozy-harvest-lib@^0.38.0:
-  version "0.38.2"
-  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-0.38.2.tgz#6af01f01048a24fafdd20d4ab59f3736aee03165"
-  integrity sha512-zTq8EL2yVP9x4OtNtPVMNs09kpGEd776y06sYuv1qw2+eWoK5os/UxkCiBOAT0Rdj6O624wFpFb+mFfg6rBVDg==
+cozy-harvest-lib@0.38.3:
+  version "0.38.3"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-0.38.3.tgz#ecf2a188ea6f647332fd3a7d2478a3cba7d91c09"
+  integrity sha512-JTFM3bm8JBqNtRY0QqH9JmFekdsG2EpTIEKrQmCStsCTNuOLv7q/Hp7uxZeBORWkdkZu0RLDIKPvO2LcFBFrGg==
   dependencies:
     cozy-client "6.19.0"
     cozy-realtime "1.2.8"
