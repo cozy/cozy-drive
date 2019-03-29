@@ -10,9 +10,9 @@ import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
 import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
-import { ImageLoader } from 'components/Image'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
-import { SharedBadge, SharedStatus } from 'sharing'
+import { SharedStatus } from 'sharing'
+import FileThumbnail from './FileThumbnail'
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
 import {
@@ -122,7 +122,6 @@ const FileName = ({
   isRenaming,
   interactive,
   withFilePath,
-  withSharedBadge,
   isMobile,
   formattedSize,
   formattedUpdatedAt
@@ -130,31 +129,11 @@ const FileName = ({
   const classes = classNames(
     styles['fil-content-cell'],
     styles['fil-content-file'],
-    getClassFromMime(attributes),
     { [styles['fil-content-file-openable']]: !isRenaming && interactive }
   )
   const { filename, extension } = splitFilename(attributes)
   return (
     <div className={classes}>
-      {attributes.class === 'image' && (
-        <ImageLoader
-          file={attributes}
-          size="small"
-          render={src => (
-            <div
-              className={styles['fil-file-preview']}
-              style={`background-image: url(${src});`}
-            />
-          )}
-        />
-      )}
-      {withSharedBadge && (
-        <SharedBadge
-          docId={attributes.id}
-          className={styles['fil-content-shared']}
-          xsmall
-        />
-      )}
       {isRenaming ? (
         <RenameInput />
       ) : (
@@ -350,12 +329,15 @@ class File extends Component {
           selected={selected}
           onClick={e => this.toggle(e)}
         />
+        <FileThumbnail
+          attributes={attributes}
+          withSharedBadge={withSharedBadge}
+        />
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
           interactive={!disabled}
           withFilePath={withFilePath}
-          withSharedBadge={withSharedBadge}
           isMobile={isMobile}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
