@@ -61,7 +61,7 @@ class FileOpener extends Component {
         {!loading &&
           !fileNotFound && (
             <Viewer
-              style={{ top: '3rem' }}
+              fullscreen={false}
               files={[file]}
               currentIndex={0}
               onChange={doNothing}
