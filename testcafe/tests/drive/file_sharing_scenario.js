@@ -54,7 +54,6 @@ test('Drive : from Drive, go in a folder, upload a file, and share the file', as
   )
   if (link) {
     data.sharingLink = link
-    console.log(`SHARING_LINK : ` + data.sharingLink)
   }
   console.groupEnd()
 })
@@ -81,7 +80,7 @@ test(`[Desktop] Drive : Access a file public link, download the file, and check 
     `↳ ℹ️ [Desktop] Drive : Access a file public link, download the file, and check the 'create Cozy' link`
   )
   await t.navigateTo(data.sharingLink)
-  await publicViewerPage.waitForLoading({ isSingleShareFile: true })
+  await publicViewerPage.waitForLoading()
 
   await publicDrivePage.checkActionMenuPublicDesktop('file')
   await t
@@ -89,7 +88,7 @@ test(`[Desktop] Drive : Access a file public link, download the file, and check 
     .click(publicDrivePage.btnPublicDownload)
     .click(publicDrivePage.btnPublicCreateCozyFile)
   await publicDrivePage.checkCreateCozy()
-  await publicViewerPage.waitForLoading({ isSingleShareFile: true })
+  await publicViewerPage.waitForLoading()
 
   console.groupEnd()
 })
@@ -102,7 +101,7 @@ test(`[Mobile] Drive : Access a file public link, download the file, and check t
     portraitOrientation: true
   })
   await t.navigateTo(data.sharingLink)
-  await publicViewerPage.waitForLoading({ isSingleShareFile: true })
+  await publicViewerPage.waitForLoading()
 
   await publicDrivePage.checkActionMenuPublicMobile('file')
   await t
@@ -111,7 +110,7 @@ test(`[Mobile] Drive : Access a file public link, download the file, and check t
     .click(publicDrivePage.btnPublicMoreMenuFile) //need to re-open the more menu
     .click(publicDrivePage.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
-  await publicViewerPage.waitForLoading({ isSingleShareFile: true })
+  await publicViewerPage.waitForLoading()
 
   await t.maximizeWindow() //Back to desktop
   console.groupEnd()

@@ -1,20 +1,16 @@
 import { t } from 'testcafe'
-import PRECISION from '../../helpers/visualreview-utils'
+import { PRECISION } from '../../helpers/visualreview-utils'
 import PublicDriveVRPage from '../drive/drive-model-public'
 import ViewerPage from './drive-viewer-model'
 
 const publicDrivePage = new PublicDriveVRPage()
 
 export default class PublicViewerPage extends ViewerPage {
-  constructor() {
-    super()
-  }
-
   // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} filename : file to check
   //@param {string} type : file type to check for Specific viewer
-  async checkPublicViewer_vr(screenshotPath, fileName, type, hasMask = false) {
+  async checkPublicViewer(screenshotPath, fileName, type, hasMask = false) {
     const index = await publicDrivePage.getElementIndex(fileName)
     console.log(`↳ 📁 ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
@@ -50,7 +46,7 @@ export default class PublicViewerPage extends ViewerPage {
 
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} filename : file to check
-  async checkMobilePublicViewer_vr(screenshotsPath, fileName, hasMask = false) {
+  async checkMobilePublicViewer(screenshotsPath, fileName, hasMask = false) {
     await t.resizeWindowToFitDevice('iPhone 6', {
       portraitOrientation: true
     })

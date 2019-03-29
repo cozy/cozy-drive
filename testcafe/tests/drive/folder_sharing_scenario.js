@@ -51,7 +51,7 @@ test('Drive : from Drive, go in a folder, upload a file, and share the folder', 
   )
   if (link) {
     data.sharingLink = link
-    console.log(`data.sharingLink : ` + data.sharingLink)
+    
   }
   console.groupEnd()
 })

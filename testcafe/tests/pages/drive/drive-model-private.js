@@ -8,10 +8,6 @@ import {
 import DrivePage from './drive-model'
 
 export default class PrivateDrivePage extends DrivePage {
-  constructor() {
-    super()
-  }
-
   //@param {Selector}  btn : button to tests
   //@param {text} path : redirection path
   //@param {text} title : text for console.log

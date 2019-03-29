@@ -1,9 +1,9 @@
 import { driveUser } from '../helpers/roles'
 import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from '../helpers/utils'
 
-import PrivateprivateDrivePage from '../pages/drive/drive-model-private'
+import PrivateDrivePage from '../pages/drive/drive-model-private'
 
-const privateDrivePage = new PrivateprivateDrivePage()
+const privateDrivePage = new PrivateDrivePage()
 
 fixture`DRIVE - NAV`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   console.group(`\n↳ ℹ️  Loggin & Initialization`)

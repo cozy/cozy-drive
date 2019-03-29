@@ -46,13 +46,11 @@ export default class Page {
     this.btnPdfViewerDownload = this.pdfViewer.find('#download')
   }
 
-  //@param { bool } isSingleShaereFile : set to true only when checking viewer on a single shared file
-  async waitForLoading({ isSingleShareFile } = {}) {
+  //@param { bool } isSingleShareFile : set to true only when checking viewer on a single shared file
+  async waitForLoading() {
     await t.expect(this.spinner.exists).notOk('Spinner still spinning')
     await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
     await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
-    if (!isSingleShareFile)
-      await isExistingAndVisibile(this.viewerToolbar, 'Viewer Toolbar')
     console.log('Viewer Ok')
   }
 
@@ -109,7 +107,7 @@ export default class Page {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} fileStartName : file to open to start the navigation testing
   //@param {number} numberOfNavigation : the number of file we want to go through during the test.
-  async checkViewerNavigation_vr(
+  async checkViewerNavigation(
     screenshotPath,
     fileStartName,
     numberOfNavigation

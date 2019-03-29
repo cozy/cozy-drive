@@ -40,7 +40,6 @@ const TEST_DELETE_FOLDER = `3-1 Delete Folder`
 fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
   .before(async ctx => {
     await initVR(ctx, SLUG, FIXTURE_INIT)
-    console.log(`ctx.isVR ${ctx.isVR}`)
   })
   .beforeEach(async t => {
     console.group(`\n↳ ℹ️  Loggin & Initialization`)
@@ -104,7 +103,6 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
   )
   if (link) {
     data.sharingLink = link
-    console.log(`data.sharingLink : ` + data.sharingLink)
   }
   console.groupEnd()
 })
@@ -158,7 +156,7 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-wholeFolder`,
     true
   )
-  await publicViewerPage.checkViewerNavigation_vr(
+  await publicViewerPage.checkViewerNavigation(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-nav`,
     data.FILE_ZIP,
     3
@@ -167,11 +165,11 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_ZIP)
   t.ctx.fileDownloaded = data.FILE_ZIP
 
-  await publicViewerPage.checkPublicViewer_vr(
+  await publicViewerPage.checkPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-1`,
     data.FILE_ZIP
   )
-  await publicViewerPage.checkMobilePublicViewer_vr(
+  await publicViewerPage.checkMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-mob1`,
     data.FILE_ZIP
   )
@@ -187,11 +185,11 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   })
   t.ctx.fileDownloaded = data.FILE_PPTX
 
-  await publicViewerPage.checkPublicViewer_vr(
+  await publicViewerPage.checkPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-1`,
     data.FILE_PPTX
   )
-  await publicViewerPage.checkMobilePublicViewer_vr(
+  await publicViewerPage.checkMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-mob1`,
     data.FILE_PPTX
   )
@@ -203,12 +201,12 @@ test(`${TEST_PUBLIC_VIEWER_IMG}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_IMG)
   t.ctx.fileDownloaded = data.FILE_IMG
 
-  await publicViewerPage.checkPublicViewer_vr(
+  await publicViewerPage.checkPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-1`,
     data.FILE_IMG,
     'img'
   )
-  await publicViewerPage.checkMobilePublicViewer_vr(
+  await publicViewerPage.checkMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-mob1`,
     data.FILE_IMG
   )
@@ -227,7 +225,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
     width: 100,
     y: 623
   })
-  await publicViewerPage.checkPublicViewer_vr(
+  await publicViewerPage.checkPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-1`,
     data.FILE_AUDIO,
     'audio',
@@ -240,7 +238,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
     width: 90,
     y: 409
   })
-  await publicViewerPage.checkMobilePublicViewer_vr(
+  await publicViewerPage.checkMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-mob1`,
     data.FILE_AUDIO,
     true
@@ -253,12 +251,12 @@ test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_VIDEO)
   t.ctx.fileDownloaded = data.FILE_VIDEO
 
-  await publicViewerPage.checkPublicViewer_vr(
+  await publicViewerPage.checkPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-1`,
     data.FILE_VIDEO,
     'video'
   )
-  await publicViewerPage.checkMobilePublicViewer_vr(
+  await publicViewerPage.checkMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-mob1`,
     data.FILE_VIDEO
   )
@@ -270,12 +268,12 @@ test(`${TEST_PUBLIC_VIEWER_TXT}`, async t => {
   await publicViewerPage.checkCommonViewerDownload(data.FILE_TXT)
   t.ctx.fileDownloaded = data.FILE_TXT
 
-  await publicViewerPage.checkPublicViewer_vr(
+  await publicViewerPage.checkPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-1`,
     data.FILE_TXT,
     'txt'
   )
-  await publicViewerPage.checkMobilePublicViewer_vr(
+  await publicViewerPage.checkMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-mob1`,
     data.FILE_TXT
   )
