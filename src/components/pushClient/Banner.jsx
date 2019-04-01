@@ -29,21 +29,21 @@ class BannerClient extends Component {
     if (!seen) {
       const mustSee = !(await isClientAlreadyInstalled())
       if (mustSee) {
-        this.setState(state => ({ ...state, mustShow: true }))
+        this.setState({ mustShow: true })
       }
     }
   }
 
   markAsSeen(element) {
     localforage.setItem(DESKTOP_BANNER, true)
-    this.setState(state => ({ ...state, mustShow: false }))
+    this.setState({ mustShow: false })
     track(element)
   }
 
   render() {
-    if (Config.promoteDesktop.isActivated !== true) return null
+    if (Config.promoteDesktop.isActivated !== true || !this.state.mustShow)
+      return null
     const { t } = this.props
-    if (!this.state.mustShow) return null
 
     const mobileLink = isIOS()
       ? 'Nav.link-client-ios'
