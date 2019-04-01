@@ -10,7 +10,7 @@ export default class PublicViewerPage extends ViewerPage {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} filename : file to check
   //@param {string} type : file type to check for Specific viewer
-  async openFileAndcheckCommonViewerDownload(
+  async openFileAndCheckPublicViewer(
     screenshotPath,
     fileName,
     type,
