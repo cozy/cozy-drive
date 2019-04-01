@@ -5,6 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import React, { Component } from 'react'
 import localforage from 'localforage'
 import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
+import Config from '../../drive/config/config.json'
 
 class ButtonClient extends Component {
   state = {
@@ -12,6 +13,7 @@ class ButtonClient extends Component {
   }
 
   async componentWillMount() {
+    if (Config.promoteDesktop.isActivated !== true) return
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     // we want to show the button if the banner has been marked as seen *and*
     // the client hasn't been already installed
@@ -24,8 +26,10 @@ class ButtonClient extends Component {
   }
 
   render() {
+    if (Config.promoteDesktop.isActivated !== true || !this.state.mustShow)
+      return null
     const { t } = this.props
-    return this.state.mustShow ? (
+    return (
       <a
         href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
         //eslint-disable-next-line react/jsx-no-target-blank
@@ -37,7 +41,7 @@ class ButtonClient extends Component {
       >
         <span>{t('Nav.btn-client')}</span>
       </a>
-    ) : null
+    )
   }
 }
 

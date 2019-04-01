@@ -15,6 +15,7 @@ import {
 } from '.'
 import { Button, ButtonLink, Icon } from 'cozy-ui/react'
 
+import Config from '../../drive/config/config.json'
 import localforage from 'localforage'
 
 class BannerClient extends Component {
@@ -23,6 +24,7 @@ class BannerClient extends Component {
   }
 
   async componentWillMount() {
+    if (Config.promoteDesktop.isActivated !== true) return
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     if (!seen) {
       const mustSee = !(await isClientAlreadyInstalled())
@@ -39,6 +41,7 @@ class BannerClient extends Component {
   }
 
   render() {
+    if (Config.promoteDesktop.isActivated !== true) return null
     const { t } = this.props
     if (!this.state.mustShow) return null
 

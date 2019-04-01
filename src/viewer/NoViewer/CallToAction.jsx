@@ -8,6 +8,7 @@ import {
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
 import styles from '../styles'
+import Config from '../../drive/config/config.json'
 
 export default class CallToAction extends Component {
   state = {
@@ -15,6 +16,7 @@ export default class CallToAction extends Component {
   }
 
   async componentDidMount() {
+    if (Config.promoteDesktop.isActivated !== true) return
     const seen = (await localforage.getItem(NOVIEWER_DESKTOP_CTA)) || false
     if (!seen) {
       try {
@@ -34,7 +36,8 @@ export default class CallToAction extends Component {
   }
 
   render() {
-    if (!this.state.mustShow) return null
+    if (!this.state.mustShow || Config.promoteDesktop.isActivated !== true)
+      return null
     const { t } = this.props
     return (
       <div className={styles['pho-viewer-noviewer-cta']}>
