@@ -5,7 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import React, { Component } from 'react'
 import localforage from 'localforage'
 import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
-import Config from '../../drive/config/config.json'
+import Config from 'drive/config/config.json'
 
 class ButtonClient extends Component {
   state = {

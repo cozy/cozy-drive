@@ -8,7 +8,7 @@ import {
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
 import styles from '../styles'
-import Config from '../../drive/config/config.json'
+import Config from 'drive/config/config.json'
 
 export default class CallToAction extends Component {
   state = {
