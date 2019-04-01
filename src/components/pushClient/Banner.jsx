@@ -15,7 +15,7 @@ import {
 } from '.'
 import { Button, ButtonLink, Icon } from 'cozy-ui/react'
 
-import Config from '../../drive/config/config.json'
+import Config from 'drive/config/config.json'
 import localforage from 'localforage'
 
 class BannerClient extends Component {
