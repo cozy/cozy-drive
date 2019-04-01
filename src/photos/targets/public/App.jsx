@@ -16,6 +16,10 @@ import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
 export class App extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.func.isRequired
+  }
   onDownload = selected => {
     const photos = selected.length !== 0 ? selected : null
     this.downloadPhotos(photos)

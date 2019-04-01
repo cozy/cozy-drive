@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import PropTypes from 'prop-types'
 import styles from '../../../styles/layout'
 
 import { Content } from 'cozy-ui/react/Layout'
@@ -45,7 +46,10 @@ class Timeline extends Component {
   state = {
     showAddAlbumModal: false
   }
-
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.func.isRequired
+  }
   showAddAlbumModal = () => {
     this.setState(state => ({ ...state, showAddAlbumModal: true }))
   }

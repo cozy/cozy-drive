@@ -104,6 +104,7 @@ export class Breadcrumb extends Component {
                     e.stopPropagation()
                     onBreadcrumbClick(folder)
                   }}
+                  key={index}
                 >
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
@@ -122,6 +123,7 @@ export class Breadcrumb extends Component {
                     e.stopPropagation()
                     if (path.length >= 2) this.toggleDeploy()
                   }}
+                  key={index}
                 >
                   <span className={styles['fil-path-current-name']}>
                     {folder.name}

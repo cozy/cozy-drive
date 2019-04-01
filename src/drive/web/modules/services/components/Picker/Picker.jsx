@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { IntentHeader, Button, withBreakpoints } from 'cozy-ui/react'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Topbar from 'drive/web/modules/layout/Topbar'
@@ -22,7 +23,9 @@ class Picker extends Component {
   state = {
     path: []
   }
-
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
   updateBreadcrumb = folder => {
     this.setState(state => {
       const indexInPath = state.path.indexOf(folder)

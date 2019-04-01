@@ -15,7 +15,9 @@ class ViewerControls extends Component {
     hidden: false,
     gestures: null
   }
-
+  static contextTypes = {
+    client: PropTypes.func.isRequired
+  }
   showControls = () => {
     this.setState({ hidden: false })
     this.hideAfterDelay()

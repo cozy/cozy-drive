@@ -10,6 +10,9 @@ import {
 } from 'drive/mobile/modules/authorization/duck'
 
 export class Unlink extends Component {
+  static contextTypes = {
+    client: PropTypes.func.isRequired
+  }
   render() {
     const { t, unlink, clientSettings } = this.props
     const { client } = this.context

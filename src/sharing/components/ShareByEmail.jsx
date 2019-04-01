@@ -158,6 +158,10 @@ ShareSubmit.defaultProps = {
 }
 
 class ShareByEmail extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.func.isRequired
+  }
   sharingTypes = [
     {
       value: 'two-way',
@@ -348,7 +352,7 @@ class ShareByEmail extends Component {
 
 ShareByEmail.propTypes = {
   contacts: PropTypes.array,
-  document: PropTypes.object.isRequired,
+  document: PropTypes.func.isRequired,
   documentType: PropTypes.string.isRequired,
   sharingDesc: PropTypes.string.isRequired,
   onShare: PropTypes.func.isRequired,

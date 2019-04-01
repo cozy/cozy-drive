@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import { Spinner, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
 
 import MenuAwareMobile from '../../components/Menu/Menuawaremobile'
@@ -80,7 +81,10 @@ class Status extends Component {
   state = {
     revoking: false
   }
-
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.func.isRequired
+  }
   onRevoke = async () => {
     const { onRevoke, document, sharingId, index } = this.props
     this.setState({ revoking: true })

@@ -11,6 +11,9 @@ import WhoHasAccess from './components/WhoHasAccess'
 require('url-polyfill')
 
 export default class ShareModal extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
   render() {
     const { t } = this.context
     const {
@@ -107,7 +110,7 @@ export default class ShareModal extends Component {
 }
 
 ShareModal.propTypes = {
-  document: PropTypes.object.isRequired,
+  document: PropTypes.func.isRequired,
   isOwner: PropTypes.bool,
   sharingDesc: PropTypes.string,
   contacts: PropTypes.array.isRequired,

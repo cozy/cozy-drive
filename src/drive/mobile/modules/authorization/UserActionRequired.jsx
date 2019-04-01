@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
+import PropTypes from 'prop-types'
 import { Modal, Icon, Button, translate, Alerter } from 'cozy-ui/react'
 import tosIcon from 'drive/mobile/assets/icons/icon-tos.svg'
 import { unlink, getClientSettings } from './duck'
@@ -35,6 +36,11 @@ const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => (
 ))
 
 class UserActionRequired extends Component {
+  static contextTypes = {
+    client: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired
+  }
+
   state = {
     warnings: []
   }

@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
+import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'
 import withFileUrl from './withFileUrl'
@@ -38,7 +39,9 @@ class TextViewer extends React.Component {
     loading: true,
     error: null
   }
-
+  static contextTypes = {
+    client: PropTypes.func.isRequired
+  }
   componentDidMount() {
     this.loadFile()
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import createReactContext from 'create-react-context'
 import { Query } from 'cozy-client'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
@@ -77,6 +78,9 @@ const isFile = ({ _type }) => _type === 'io.cozy.files'
 const SharingContext = createReactContext()
 
 export default class SharingProvider extends Component {
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
   constructor(props, context) {
     super(props, context)
     const instanceUri = this.context.client.options.uri

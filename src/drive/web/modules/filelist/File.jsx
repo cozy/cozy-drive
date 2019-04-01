@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, forwardRef } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
@@ -203,7 +203,7 @@ const Status = ({ isAvailableOffline, id }) => (
   </div>
 )
 
-const FileAction = ({ t, onClick }) => (
+const FileAction = forwardRef(({ t, onClick }, ref) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -219,7 +219,7 @@ const FileAction = ({ t, onClick }) => (
       label={t('Toolbar.more')}
     />
   </div>
-)
+))
 
 class File extends Component {
   state = {

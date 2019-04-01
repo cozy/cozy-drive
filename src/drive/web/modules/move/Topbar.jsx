@@ -50,5 +50,7 @@ MoveTopbar.propTypes = {
     isMobile: PropTypes.bool
   }).isRequired
 }
-
+MoveTopbar.contextTypes = {
+  t: PropTypes.func.isRequired
+}
 export default withBreakpoints()(MoveTopbar)

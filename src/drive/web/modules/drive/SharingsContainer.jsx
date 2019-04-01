@@ -1,6 +1,7 @@
 import React from 'react'
 import { SharedDocuments } from 'sharing'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import Container from './Container'
 import { Empty } from 'cozy-ui/react'
 import {
@@ -13,7 +14,10 @@ export class SharingFetcher extends React.Component {
   state = {
     error: null
   }
-
+  static contextTypes = {
+    client: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired
+  }
   async fetchSharedDocuments() {
     const { sharedDocuments } = this.props
     const { client } = this.context
