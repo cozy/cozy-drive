@@ -11,6 +11,7 @@ exports[`Public view should render children when they are present 1`] = `
       >
         <h2 />
         <div
+          data-test-id="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
@@ -82,6 +83,7 @@ exports[`Public view should render children when they are present 1`] = `
             }
           />
           <Button
+            data-test-id="album-public-download"
             icon="download"
             onClick={[Function]}
             size="normal"
@@ -92,6 +94,7 @@ exports[`Public view should render children when they are present 1`] = `
           <Menu
             className="u-hide--desk"
             component={<Wrapper />}
+            data-test-id="more-button"
             disabled={false}
             itemsStyle={Object {}}
             onSelect={null}
@@ -100,6 +103,7 @@ exports[`Public view should render children when they are present 1`] = `
             position="right"
           >
             <MenuItem
+              data-test-id="album-public-create-cozy-mobile"
               icon={
                 <Icon
                   icon="cozy-negative"
@@ -109,6 +113,7 @@ exports[`Public view should render children when they are present 1`] = `
               onSelect={[Function]}
             />
             <MenuItem
+              data-test-id="album-public-download-mobile"
               icon={
                 <Icon
                   icon="download"
@@ -167,6 +172,7 @@ exports[`Public view should render the album 1`] = `
       >
         <h2 />
         <div
+          data-test-id="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
@@ -210,6 +216,7 @@ exports[`Public view should render the album 1`] = `
             }
           />
           <Button
+            data-test-id="album-public-download"
             icon="download"
             onClick={[Function]}
             size="normal"
@@ -220,6 +227,7 @@ exports[`Public view should render the album 1`] = `
           <Menu
             className="u-hide--desk"
             component={<Wrapper />}
+            data-test-id="more-button"
             disabled={false}
             itemsStyle={Object {}}
             onSelect={null}
@@ -228,6 +236,7 @@ exports[`Public view should render the album 1`] = `
             position="right"
           >
             <MenuItem
+              data-test-id="album-public-create-cozy-mobile"
               icon={
                 <Icon
                   icon="cozy-negative"
@@ -237,6 +246,7 @@ exports[`Public view should render the album 1`] = `
               onSelect={[Function]}
             />
             <MenuItem
+              data-test-id="album-public-download-mobile"
               icon={
                 <Icon
                   icon="download"
