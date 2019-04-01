@@ -146,7 +146,7 @@ const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => {
       />
       {SORTABLE_ATTRIBUTES.map((props, index) => {
         if (!canSort) {
-          return <HeaderCell {...props} t={t} />
+          return <HeaderCell {...props} t={t} key={index} />
         }
         const isActive = actualSort && actualSort.attribute === props.attr
         return (
