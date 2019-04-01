@@ -60,7 +60,10 @@ export class App extends Component {
 
     const { t } = this.context
     return (
-      <div className={styles['pho-public-layout']}>
+      <div
+        data-test-id="pho-public-layout"
+        className={styles['pho-public-layout']}
+      >
         <Main className="u-pt-1-half">
           <Selection>
             {(selected, active, selection) => (
@@ -73,7 +76,11 @@ export class App extends Component {
                   )}
                 >
                   <h2 className={styles['pho-content-title']}>{album.name}</h2>
-                  <div className={styles['pho-toolbar']} role="toolbar">
+                  <div
+                    data-test-id="pho-toolbar-album-public"
+                    className={styles['pho-toolbar']}
+                    role="toolbar"
+                  >
                     <CozyHomeLink
                       from="sharing-photos"
                       t={t}
@@ -81,6 +88,7 @@ export class App extends Component {
                     />
                     <Button
                       theme="secondary"
+                      data-test-id="album-public-download"
                       className={styles['pho-public-download']}
                       onClick={() => this.onDownload(selected)}
                       icon="download"
@@ -90,11 +98,13 @@ export class App extends Component {
 
                     <Menu
                       title={t('Toolbar.more')}
+                      data-test-id="more-button"
                       component={<MoreButton />}
                       position="right"
                       className="u-hide--desk"
                     >
                       <MenuItem
+                        data-test-id="album-public-create-cozy-mobile"
                         onSelect={() =>
                           (window.location = getHomeLinkHref('sharing-photos'))
                         }
@@ -103,6 +113,7 @@ export class App extends Component {
                         {t('Share.create-cozy')}
                       </MenuItem>
                       <MenuItem
+                        data-test-id="album-public-download-mobile"
                         onSelect={() => this.onDownload(selected)}
                         icon={<Icon icon="download" />}
                       >

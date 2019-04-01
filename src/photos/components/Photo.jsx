@@ -59,6 +59,7 @@ const Photo = props => {
             size="small"
             render={src => (
               <img
+                data-test-id="pho-photo-item"
                 src={src}
                 className={styles['pho-photo-item']}
                 style={style}
