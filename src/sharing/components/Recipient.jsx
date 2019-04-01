@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import { Spinner, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
 
 import MenuAwareMobile from '../../components/Menu/Menuawaremobile'
@@ -79,6 +80,11 @@ export const UserAvatar = ({ url, size, ...rest }) => (
 class Status extends Component {
   state = {
     revoking: false
+  }
+
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.object.isRequired
   }
 
   onRevoke = async () => {
@@ -162,7 +168,7 @@ class Status extends Component {
 
 const StatusWithBreakpoints = withBreakpoints()(Status)
 
-const Recipient = (props, { t, client }) => {
+const Recipient = (props, { client, t }) => {
   const { instance, isOwner, status, ...rest } = props
   const isMe =
     (isOwner && status === 'owner') || instance === client.options.uri
@@ -179,6 +185,11 @@ const Recipient = (props, { t, client }) => {
       </div>
     </div>
   )
+}
+
+Recipient.contextTypes = {
+  client: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired
 }
 
 export default Recipient
@@ -209,6 +220,10 @@ export const RecipientPlusX = ({ extraRecipients }, { t }) => (
     </div>
   </div>
 )
+
+RecipientPlusX.contextTypes = {
+  t: PropTypes.func.isRequired
+}
 
 export const ContactSuggestion = ({ contact }) => {
   const name = getPrimaryEmail(contact)

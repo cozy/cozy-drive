@@ -19,7 +19,9 @@ class Menu extends Component {
   }
 
   componentWillUnmount() {
-    this.popper.destroy()
+    if (this.popper !== undefined) {
+      this.popper.destroy()
+    }
   }
 
   render() {

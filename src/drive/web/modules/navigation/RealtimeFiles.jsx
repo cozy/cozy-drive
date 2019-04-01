@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import realtime from 'cozy-realtime'
+import PropTypes from 'prop-types'
+
 import {
   getOpenedFolderId,
   getVisibleFiles,
@@ -15,7 +17,9 @@ import { updateOfflineFileCopyIfNecessary } from 'drive/mobile/modules/offline/d
 class RealtimeFiles extends React.Component {
   realtimeListener = null
   pouchListener = null
-
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
   async componentWillMount() {
     const { stackClient: client } = this.context.client
     const { token, uri } = client

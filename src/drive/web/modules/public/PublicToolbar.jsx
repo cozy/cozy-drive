@@ -101,6 +101,11 @@ const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     />
   </BarRight>
 )
+
+MobileToolbar.contextTypes = {
+  t: PropTypes.func.isRequired
+}
+
 MobileToolbar.propTypes = toolbarProptypes
 
 const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
@@ -120,6 +125,11 @@ const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     </div>
   </BarRight>
 )
+
+CozybarToolbar.contextTypes = {
+  t: PropTypes.func.isRequired
+}
+
 CozybarToolbar.propTypes = toolbarProptypes
 
 const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
@@ -139,13 +149,20 @@ const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     </BarRight>
   </div>
 )
+
+DesktopToolbar.contextTypes = {
+  t: PropTypes.func.isRequired
+}
+
 DesktopToolbar.propTypes = toolbarProptypes
 
 class PublicToolbar extends React.Component {
   state = {
     discoveryLink: null
   }
-
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
   componentDidMount() {
     if (window.location.pathname === '/preview') this.loadSharingDiscoveryLink()
   }

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Public view should render children when they are present 1`] = `
-<Provider
+<ContextProvider
   value={Array []}
 >
   <div>
@@ -158,11 +158,11 @@ exports[`Public view should render children when they are present 1`] = `
       />
     </div>
   </div>
-</Provider>
+</ContextProvider>
 `;
 
 exports[`Public view should render the album 1`] = `
-<Provider
+<ContextProvider
   value={Array []}
 >
   <div>
@@ -277,5 +277,5 @@ exports[`Public view should render the album 1`] = `
       />
     </div>
   </div>
-</Provider>
+</ContextProvider>
 `;

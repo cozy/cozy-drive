@@ -27,6 +27,10 @@ import {
   onboardingPropTypes
 } from '../../../../authentication/OnboardingPropTypes'
 class DriveMobileRouter extends Component {
+  static contextTypes = {
+    client: Proptypes.object.isRequired
+  }
+
   afterAuthentication = async ({ url, clientInfo, token, router }) => {
     const wasRevoked = this.props.isRevoked
     this.context.client.options.uri = url

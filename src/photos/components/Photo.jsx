@@ -41,11 +41,11 @@ const Photo = props => {
           className={styles['pho-photo-select']}
           data-input="checkbox"
           onClick={e => {
-            e.stopImmediatePropagation()
+            e.stopPropagation()
             onToggle(photo, selected)
           }}
         >
-          <input type="checkbox" checked={selected} />
+          <input type="checkbox" checked={selected} onChange={() => {}} />
           <label />
         </span>
         <Link

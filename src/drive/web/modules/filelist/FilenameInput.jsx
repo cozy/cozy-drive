@@ -66,7 +66,8 @@ export default class FilenameInput extends Component {
     this.props.onAbort && this.props.onAbort(accidental)
   }
 
-  render(props, { value, working, error }) {
+  render() {
+    const { value, working, error } = this.state
     return (
       <div data-test-id="name-input" className={styles['fil-file-name-input']}>
         <input

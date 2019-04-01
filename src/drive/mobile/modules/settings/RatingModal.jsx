@@ -22,7 +22,9 @@ class RatingModal extends Component {
   state = {
     screen: SCREEN_ENJOY
   }
-
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
   onUserReply = async enjoyed => {
     if (enjoyed) {
       try {
