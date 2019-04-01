@@ -28,7 +28,7 @@ import {
 } from '../../../../authentication/OnboardingPropTypes'
 class DriveMobileRouter extends Component {
   static contextTypes = {
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
 
   afterAuthentication = async ({ url, clientInfo, token, router }) => {

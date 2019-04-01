@@ -37,7 +37,7 @@ const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => (
 
 class UserActionRequired extends Component {
   static contextTypes = {
-    client: PropTypes.func.isRequired,
+        client: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
   }
 

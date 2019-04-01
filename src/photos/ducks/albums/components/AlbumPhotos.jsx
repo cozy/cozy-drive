@@ -27,7 +27,7 @@ class AlbumPhotos extends Component {
     showAddAlbumModal: false
   }
   static contextTypes = {
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
   showAddAlbumModal = () => {
     this.setState(state => ({ ...state, showAddAlbumModal: true }))

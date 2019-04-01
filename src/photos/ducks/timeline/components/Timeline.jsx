@@ -48,7 +48,7 @@ class Timeline extends Component {
   }
   static contextTypes = {
     t: PropTypes.func.isRequired,
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
   showAddAlbumModal = () => {
     this.setState(state => ({ ...state, showAddAlbumModal: true }))

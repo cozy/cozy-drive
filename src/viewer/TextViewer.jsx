@@ -40,7 +40,7 @@ class TextViewer extends React.Component {
     error: null
   }
   static contextTypes = {
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
   componentDidMount() {
     this.loadFile()

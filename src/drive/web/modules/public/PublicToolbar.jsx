@@ -146,7 +146,7 @@ class PublicToolbar extends React.Component {
     discoveryLink: null
   }
   static contextTypes = {
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
   componentDidMount() {
     if (window.location.pathname === '/preview') this.loadSharingDiscoveryLink()

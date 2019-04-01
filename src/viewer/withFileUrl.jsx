@@ -18,7 +18,7 @@ const withFileUrl = BaseComponent =>
       downloadUrl: null
     }
     static contextTypes = {
-      client: PropTypes.func.isRequired
+          client: PropTypes.object.isRequired
     }
     componentWillMount() {
       this.loadDownloadUrl()

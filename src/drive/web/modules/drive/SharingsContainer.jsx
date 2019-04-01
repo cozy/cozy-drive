@@ -15,7 +15,7 @@ export class SharingFetcher extends React.Component {
     error: null
   }
   static contextTypes = {
-    client: PropTypes.func.isRequired,
+        client: PropTypes.object.isRequired,
     t: PropTypes.func.isRequired
   }
   async fetchSharedDocuments() {

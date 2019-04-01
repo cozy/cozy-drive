@@ -7,7 +7,7 @@ const withReduxStore = WrappedComponent => {
   class WithReduxStore extends Component {
     static contextTypes = {
       t: PropTypes.func.isRequired,
-      client: PropTypes.func.isRequired
+          client: PropTypes.object.isRequired
     }
     render() {
       const { client, t } = this.context

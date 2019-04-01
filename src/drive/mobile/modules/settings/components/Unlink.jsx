@@ -11,7 +11,7 @@ import {
 
 export class Unlink extends Component {
   static contextTypes = {
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
   render() {
     const { t, unlink, clientSettings } = this.props

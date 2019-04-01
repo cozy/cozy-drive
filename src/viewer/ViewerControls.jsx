@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import Hammer from 'hammerjs'
 import PropTypes from 'prop-types'
-
+import ReactDOM from 'react-dom'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
 
@@ -16,7 +16,7 @@ class ViewerControls extends Component {
     gestures: null
   }
   static contextTypes = {
-    client: PropTypes.func.isRequired
+    client: PropTypes.object.isRequired
   }
   showControls = () => {
     this.setState({ hidden: false })
@@ -51,7 +51,7 @@ class ViewerControls extends Component {
   componentDidMount() {
     this.hideAfterDelay()
     //eslint-disable-next-line react/no-find-dom-node
-    const gestures = new Hammer(React.findDOMNode(this.wrapped))
+    const gestures = new Hammer(ReactDOM.findDOMNode(this.wrapped))
     gestures.on('swipe', this.onSwipe)
     gestures.on('tap', this.onTap)
     this.setState({ gestures })
@@ -180,7 +180,7 @@ class ViewerControls extends Component {
 
   renderChildren(children) {
     if (!children) return null
-    return React.cloneElement(children[0], {
+    return React.cloneElement(children, {
       gestures: this.state.gestures,
       gesturesRef: this.wrapped,
       onSwipe: this.onSwipe

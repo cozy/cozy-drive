@@ -83,7 +83,7 @@ class Status extends Component {
   }
   static contextTypes = {
     t: PropTypes.func.isRequired,
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
   onRevoke = async () => {
     const { onRevoke, document, sharingId, index } = this.props

@@ -12,7 +12,7 @@ const FAILED = 'FAILED'
 
 class ImageLoader extends React.Component {
   static contextTypes = {
-    client: PropTypes.func.isRequired
+        client: PropTypes.object.isRequired
   }
   state = {
     status: PENDING,
