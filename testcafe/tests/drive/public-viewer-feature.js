@@ -233,10 +233,10 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
   )
   //mask on loading bar for mobile
   await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 25,
-    x: 199,
-    width: 90,
-    y: 409
+    height: 27,
+    x: 160,
+    width: 108,
+    y: 415
   })
   await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-mob1`,
@@ -301,8 +301,8 @@ test(`${TEST_DELETE_FOLDER}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER}`)
   await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
   await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 935,
-    x: 916,
+    height: 916,
+    x: 935,
     width: 140,
     y: 248
   })
