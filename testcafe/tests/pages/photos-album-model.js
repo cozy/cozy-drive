@@ -5,12 +5,12 @@ import {
   isExistingAndVisibile,
   checkAllImagesExists
 } from '../helpers/utils'
-import PhotoPage from '../pages/photos-model'
-const photoPage = new PhotoPage()
+import PhotoPage from '../pages/photos/photos-model'
 
-export default class Page {
+export default class Page extends PhotoPage {
   constructor() {
-    this.albumEmptyText = photoPage.folderEmpty.withText(
+    super()
+    this.albumEmptyText = this.folderEmpty.withText(
       "You don't have any album yet"
     ) //!FIXME : text !
 
@@ -20,6 +20,7 @@ export default class Page {
     // Album list
     this.toolbarAlbumsList = getElementWithTestId('pho-toolbar-albums')
     this.btnNewAlbum = getElementWithTestId('album-add')
+    this.barPhotoBtnDeleteOrRemove = this.barPhoto.find('button').nth(2) //DELETE OR REMOVE FROM ALBUM
     this.album = albumName => {
       return getElementWithTestId('pho-album').withAttribute(
         'data-test-name',
@@ -44,7 +45,7 @@ export default class Page {
       .find('img')
       .parent('div')
       .withAttribute('data-test-item')
-    this.photoCheckbox = this.photoSectionAddToAlbum.find(
+    this.photoToAddCheckbox = this.photoSectionAddToAlbum.find(
       '[class*="pho-photo-select"][data-input="checkbox"]'
     )
 
@@ -63,7 +64,7 @@ export default class Page {
   }
 
   async waitForLoading() {
-    await t.expect(photoPage.loading.exists).notOk('Page still loading')
+    await t.expect(this.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(this.albumContentWrapper, 'Content Wrapper')
   }
 
@@ -86,7 +87,7 @@ export default class Page {
   // check that the album is empty
   async checkEmptyAlbum() {
     await this.waitForLoading()
-    await isExistingAndVisibile(photoPage.folderEmpty, 'Empty Album')
+    await isExistingAndVisibile(this.folderEmpty, 'Empty Album')
     await isExistingAndVisibile(
       this.albumEmptyText,
       "Text: You don't have any album yet"
@@ -126,7 +127,7 @@ export default class Page {
     console.log(`Selecting ${numOfFiles} picture(s) from index ${indexStart}`)
     for (let i = indexStart; i < indexStart + numOfFiles; i++) {
       await isExistingAndVisibile(this.photoThumb(i), `${i + 1}th Photo thumb`)
-      await t.click(this.photoCheckbox.nth(i))
+      await t.click(this.photoToAddCheckbox.nth(i))
     }
   }
 
@@ -143,11 +144,9 @@ export default class Page {
       .eql(albumName)
 
     if (photoNumber == 0) {
-      await isExistingAndVisibile(photoPage.folderEmpty, 'Folder Empty')
+      await isExistingAndVisibile(this.folderEmpty, 'Folder Empty')
     } else {
-      const allPhotosAlbumCount = await photoPage.getPhotosCount(
-        'On Album page'
-      )
+      const allPhotosAlbumCount = await this.getPhotosCount('On Album page')
       await t.expect(allPhotosAlbumCount).eql(photoNumber) //all expected photos are displayed
     }
   }
@@ -236,23 +235,20 @@ export default class Page {
   }
   // @param { number } photoNumber : Number of photos to remove from the album (
   async removePhoto(photoNumber) {
-    const photoAlbumStart = await photoPage.getPhotosCount('In album, before')
-    await photoPage.selectPhotos(photoNumber)
-    await isExistingAndVisibile(photoPage.barPhoto, 'Selection bar')
+    const photoAlbumStart = await this.getPhotosCount('In album, before')
+    await this.selectPhotos(photoNumber)
+    await isExistingAndVisibile(this.barPhoto, 'Selection bar')
 
     console.log('Removing ' + photoNumber + ' picture(s)')
-    await isExistingAndVisibile(
-      photoPage.barPhotoBtnDeleteOrRemove,
-      'Delete Button'
-    )
-    await t.click(photoPage.barPhotoBtnDeleteOrRemove)
+    await isExistingAndVisibile(this.barPhotoBtnDeleteOrRemove, 'Delete Button')
+    await t.click(this.barPhotoBtnDeleteOrRemove)
 
     await isExistingAndVisibile(this.modalAlert, 'modal Alert')
     await t
       .expect(this.modalAlert.innerText)
       .contains('The photo has been removed from album') //!FIXME
 
-    const photoAlbumEnd = await photoPage.getPhotosCount('In album, before')
+    const photoAlbumEnd = await this.getPhotosCount('In album, before')
     await t.expect(photoAlbumEnd).eql(photoAlbumStart - photoNumber)
   }
 
@@ -263,11 +259,11 @@ export default class Page {
     await isExistingAndVisibile(this.moreMenuDeleteAlbum, 'Delete Button')
     await t.click(this.moreMenuDeleteAlbum)
 
-    await isExistingAndVisibile(photoPage.modalDelete, 'Modal delete')
+    await isExistingAndVisibile(this.modalDelete, 'Modal delete')
     await isExistingAndVisibile(
-      photoPage.modalDeleteBtnDelete,
+      this.modalDeleteBtnDelete,
       'Modal delete button Delete'
     )
-    await t.click(photoPage.modalDeleteBtnDelete)
+    await t.click(this.modalDeleteBtnDelete)
   }
 }
