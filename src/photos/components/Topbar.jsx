@@ -49,7 +49,7 @@ class EditableAlbumName extends Component {
     return (
       <input
         type="text"
-        value={albumName}
+        defaultValue={albumName}
         onKeyDown={this.handleKeyDown}
         onBlur={this.handleBlur}
         ref={elem => {

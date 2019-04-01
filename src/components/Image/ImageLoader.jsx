@@ -11,20 +11,28 @@ const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
 class ImageLoader extends React.Component {
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
+
   state = {
     status: PENDING,
     src: null
   }
 
+  _mounted = false
+
   componentDidMount() {
+    this._mounted = true
     this.loadNextSrc()
   }
 
   componentWillUnmount() {
+    this._mounted = false
+    clearTimeout(this.timeout)
     if (this.img) {
       this.img.onload = this.img.onerror = null
       this.img.src = ''
-      clearTimeout(this.timeout)
     }
   }
 
@@ -90,10 +98,12 @@ class ImageLoader extends React.Component {
 
       const src = client.options.uri + link
       await this.checkImageSource(src)
-      this.setState({
-        status: LOADED,
-        src
-      })
+      if (this._mounted) {
+        this.setState({
+          status: LOADED,
+          src
+        })
+      }
     } catch (e) {
       this.loadNextSrc(e)
     }
@@ -106,10 +116,12 @@ class ImageLoader extends React.Component {
     try {
       const src = await this.getDownloadLink(this.getFileId(file))
       await this.checkImageSource(src)
-      this.setState({
-        status: LOADED,
-        src
-      })
+      if (this._mounted) {
+        this.setState({
+          status: LOADED,
+          src
+        })
+      }
     } catch (e) {
       this.loadNextSrc(e)
     }

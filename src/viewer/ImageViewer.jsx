@@ -1,6 +1,8 @@
 import styles from './styles'
 
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
 import Hammer from 'hammerjs'
 
 import Spinner from 'cozy-ui/react/Spinner'
@@ -231,7 +233,7 @@ export default class ImageViewer extends Component {
             size="large"
             ref={photo => {
               //eslint-disable-next-line
-              this.photo = React.findDOMNode(photo)
+              this.photo = ReactDOM.findDOMNode(photo)
             }}
             onError={this.onImageError}
             key={file.id}

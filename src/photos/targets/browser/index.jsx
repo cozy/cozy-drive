@@ -22,7 +22,6 @@ import {
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 import doctypes from './doctypes'
-require('../../../lib/initHelper')
 const loggerMiddleware = createLogger()
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
+import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'
 import withFileUrl from './withFileUrl'
@@ -39,8 +40,19 @@ class TextViewer extends React.Component {
     error: null
   }
 
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
+
+  _mounted = false
+
   componentDidMount() {
+    this._mounted = true
     this.loadFile()
+  }
+
+  componentWillUnmount() {
+    this._mounted = false
   }
 
   async loadFile() {
@@ -51,19 +63,22 @@ class TextViewer extends React.Component {
       const response = await client.fetch('GET', parsedURL.pathname)
       const text = await response.text()
       const isMarkdown = file.mime === 'text/markdown' || /.md$/.test(file.name)
-
-      this.setState({
-        text,
-        isMarkdown,
-        loading: false
-      })
+      if (this._mounted) {
+        this.setState({
+          text,
+          isMarkdown,
+          loading: false
+        })
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn(error)
-      this.setState({
-        loading: false,
-        error
-      })
+      if (this._mounted) {
+        this.setState({
+          loading: false,
+          error
+        })
+      }
     }
   }
 

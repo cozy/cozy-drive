@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MobileRouter should render nothing when onboarding 1`] = `null`;
+exports[`MobileRouter should render nothing when onboarding 1`] = `""`;
 
 exports[`MobileRouter should render the appRoutes when all is well 1`] = `
 <Router

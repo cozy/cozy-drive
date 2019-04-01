@@ -9,7 +9,7 @@ export const Avatar = ({ text, size, textId }) => {
   const initial = text.charAt(0)
   const bg = ColorHash().getColor(textId)
   const style = {
-    'background-color': bg
+    backgroundColor: bg
   }
   return (
     <div

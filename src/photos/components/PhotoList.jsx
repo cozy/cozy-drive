@@ -104,7 +104,9 @@ export class PhotoList extends Component {
           showSelection && styles['pho-section--has-selection']
         )}
         key={key}
-        style={`width:${containerWidth}px;`}
+        style={{
+          width: `${containerWidth}px`
+        }}
       >
         <div className={styles['pho-section-header']}>
           <h3>{title}</h3>
@@ -132,9 +134,10 @@ export class PhotoList extends Component {
         <div
           className={styles['pho-photo-wrapper']}
           // Specify the width & height for making justified layout work.
-          style={`width:${containerWidth}px; height:${
-            layout.containerHeight
-          }px;`}
+          style={{
+            width: `${containerWidth}px`,
+            height: `${layout.containerHeight}px`
+          }}
         >
           {photos.map((photo, index) => (
             <Photo

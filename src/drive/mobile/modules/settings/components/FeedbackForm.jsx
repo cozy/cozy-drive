@@ -14,6 +14,9 @@ class FeedbackForm extends Component {
   state = {
     sending: false
   }
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
 
   submitForm = async e => {
     e.preventDefault()

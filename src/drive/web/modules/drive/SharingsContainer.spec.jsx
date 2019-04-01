@@ -89,12 +89,12 @@ describe('SharingFetcher component', () => {
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true
+        disableLifecycleMethod: true,
+        context: {
+          client,
+          t: translateSpy
+        }
       })
-      wrapper.instance().context = {
-        client,
-        t: translateSpy
-      }
       wrapper.setState({ error: new Error('Houston, we have a problem') })
       await wrapper.instance().fetchSharedDocuments()
 
@@ -122,12 +122,12 @@ describe('SharingFetcher component', () => {
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true
+        disableLifecycleMethod: true,
+        context: {
+          client,
+          t: translateSpy
+        }
       })
-      wrapper.instance().context = {
-        client,
-        t: translateSpy
-      }
       await wrapper.instance().fetchSharedDocuments()
 
       expect(fetchSuccessSpy).not.toHaveBeenCalled()

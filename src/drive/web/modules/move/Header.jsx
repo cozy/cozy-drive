@@ -55,4 +55,8 @@ Header.propTypes = {
   onClose: PropTypes.func.isRequired
 }
 
+Header.contextTypes = {
+  t: PropTypes.func.isRequired
+}
+
 export default Header

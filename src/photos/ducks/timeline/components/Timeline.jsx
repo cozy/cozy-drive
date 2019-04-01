@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
+import PropTypes from 'prop-types'
 import styles from '../../../styles/layout'
 
 import { Content } from 'cozy-ui/react/Layout'
@@ -44,6 +45,11 @@ const getUploadDir = async (client, t) => {
 class Timeline extends Component {
   state = {
     showAddAlbumModal: false
+  }
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   }
 
   showAddAlbumModal = () => {

@@ -16,6 +16,11 @@ import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
 export class App extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.object.isRequired
+  }
+
   onDownload = selected => {
     const photos = selected.length !== 0 ? selected : null
     this.downloadPhotos(photos)
@@ -143,15 +148,14 @@ export class App extends Component {
     )
   }
 }
+
 App.propTypes = {
   album: PropTypes.object.isRequired,
   hasMore: PropTypes.bool, //see https://github.com/cozy/cozy-client/issues/345
   photos: PropTypes.array.isRequired,
   fetchMore: PropTypes.func.isRequired
 }
-App.contextTypes = {
-  t: PropTypes.func
-}
+
 const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
     {({ data: album, fetchStatus }) => {

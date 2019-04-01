@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react'
+import ReactDOM from 'react-dom'
+
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -39,7 +41,7 @@ class FileListRows extends PureComponent {
 
     if (element) {
       // eslint-disable-next-line react/no-find-dom-node
-      this.loadMoreElement = React.findDOMNode(element)
+      this.loadMoreElement = ReactDOM.findDOMNode(element)
       this.intersectionObserver.observe(this.loadMoreElement)
     }
   }
