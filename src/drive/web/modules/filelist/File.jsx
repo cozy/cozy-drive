@@ -12,7 +12,7 @@ import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedStatus } from 'sharing'
-import FileThumbnail from './FileThumbnail'
+import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 
 import {
   toggleItemSelection,
