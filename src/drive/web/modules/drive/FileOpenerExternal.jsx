@@ -27,16 +27,25 @@ class FileOpener extends Component {
     file: null
   }
   componentWillMount() {
-    this.loadFileInfo()
+    if (this.props.fileId) {
+      this.loadFileInfo(this.props.fileId)
+    } else if (this.props.routeParams.fileId) {
+      this.loadFileInfo(this.props.routeParams.fileId)
+    }
   }
 
-  async loadFileInfo() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.fileId !== this.props.fileId) {
+      return this.loadFileInfo(this.props.fileId)
+    }
+    if (prevProps.routeParams.fileId !== this.props.routeParams.fileId) {
+      return this.loadFileInfo(this.props.routeParams.fileId)
+    }
+  }
+  async loadFileInfo(id) {
     try {
       this.setState({ fileNotFound: false })
-      const resp = await cozy.client.files.statById(
-        getFileId(this.props),
-        false
-      )
+      const resp = await cozy.client.files.statById(id, false)
       const file = { ...resp, ...resp.attributes, id: resp._id }
       this.setState({ file, loading: false })
     } catch (e) {
@@ -71,10 +80,6 @@ class FileOpener extends Component {
       </div>
     )
   }
-}
-
-const getFileId = ownProps => {
-  return ownProps.fileId || ownProps.router.params.fileId
 }
 
 FileOpener.PropTypes = {
