@@ -27,7 +27,7 @@ test('Uploading 1 pic from Photos view', async t => {
   await timelinePage.initPhotoCountZero()
   await timelinePage.uploadPhotos([`${DATA_PATH}/${IMG0}`])
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-1-pic.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-1-pic')
   console.groupEnd()
 })
 
@@ -41,6 +41,6 @@ test('Uploading 4 pics from Photos view', async t => {
     `${DATA_PATH}/${IMG4}`
   ])
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-4-pic.png')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload('UploadImage/Upload-4-pic')
   console.groupEnd()
 })

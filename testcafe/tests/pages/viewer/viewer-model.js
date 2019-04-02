@@ -57,6 +57,7 @@ export default class Viewer {
         .expect(this.viewerNavNextBtn.visible)
         .ok('Next arrow does not show up')
         .click(this.viewerNavNextBtn)
+      await this.waitForLoading()
     }
   }
 
@@ -73,6 +74,33 @@ export default class Viewer {
         .expect(this.viewerNavPreviousBtn.visible)
         .ok('Previous arrow does not show up')
         .click(this.viewerNavPrevious)
+      await this.waitForLoading()
+    }
+  }
+
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  //@param {number} startIndex : index of the 1st file to open
+  //@param {number} numberOfNavigation : the number of file we want to go through during the test.
+  async navigateInViewer(screenshotPath, startIndex, numberOfNavigation) {
+    console.log(
+      `startIndex : ${startIndex} / numberOfNavigation : ${numberOfNavigation}`
+    )
+    for (let i = startIndex; i < startIndex + numberOfNavigation; i++) {
+      await this.navigateToNextFile(i)
+      if (t.fixtureCtx.isVR)
+        await t.fixtureCtx.vr.takeScreenshotAndUpload(
+          `${screenshotPath}-${i}-next`
+        )
+    }
+
+    for (let i = startIndex + numberOfNavigation - 1; i > startIndex; i--) {
+      console.log(` i : ${i} `)
+
+      await this.navigateToPrevFile(i)
+      if (t.fixtureCtx.isVR)
+        await t.fixtureCtx.vr.takeScreenshotAndUpload(
+          `${screenshotPath}-${i}-prev`
+        )
     }
   }
 

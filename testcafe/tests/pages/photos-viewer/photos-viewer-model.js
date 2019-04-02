@@ -22,6 +22,7 @@ export default class PhotoViewer extends Viewer {
     await isExistingAndVisibile(this.photoFull, 'fullscreen photos')
   }
 
+  //Used in Older test (without VisualReview)
   async navigateToNextPhoto(index) {
     if (index == t.ctx.allPhotosStartCount - 1) {
       //this is the last picture, so next button does not exist
@@ -45,7 +46,7 @@ export default class PhotoViewer extends Viewer {
       //!FIXME add data-photo-id=xxx in photo and check url=#/photos/xxx
     }
   }
-
+  //Used in Older test (without VisualReview)
   async navigateToPrevPhoto(index) {
     if (index == 0) {
       //this is the 1st picture, so previous button does not exist
@@ -69,5 +70,40 @@ export default class PhotoViewer extends Viewer {
       await t.expect(photo1url).notEql(photo2url)
       //!FIXME add data-photo-id=xxx in photo and check url=#/photos/xxx
     }
+  }
+
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  //@param {number} startIndex : index of the 1st photos to open
+  //@param {number} numberOfNavigation : the number of file we want to go through during the test.
+  async openPhotoAndCheckViewerNavigation(
+    startIndex,
+    numberOfNavigation,
+    screenshotPath
+  ) {
+    console.log(`↳ 📁 photo with index : ${startIndex}`)
+    await this.openPhotoFullscreen(startIndex)
+    await this.navigateInViewer(screenshotPath, startIndex, numberOfNavigation)
+    await this.closeViewer({
+      exitWithEsc: false
+    })
+  }
+
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  //@param {string} index : file to check
+  async openPhotoAndCheckViewer(index, screenshotPath, hasMask = false) {
+    console.log(`↳ 📁 photo with index : ${index}`)
+    await this.openPhotoFullscreen(index)
+    await this.checkImageViewer()
+
+    await t.wait(1000)
+    //avoid unwanted hover for screenshots
+    await t.hover(this.viewerControls, {
+      offsetX: 0,
+      offsetY: 0
+    })
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath, hasMask)
+    await this.closeViewer({
+      exitWithEsc: true
+    })
   }
 }

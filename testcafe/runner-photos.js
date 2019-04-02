@@ -15,11 +15,13 @@ async function runRunner() {
       'testcafe/tests/photos/photos_crud.js',
       'testcafe/tests/photos/create_full_album_scenario.js',
       'testcafe/tests/photos/create_empty_album_scenario.js',
+      'testcafe/tests/photos/album_sharing_scenario.js',
 
       //Scenario that just delete photos, so we don't need to do it in every test.
       'testcafe/tests/photos/photos_end_delete_all_data.js'
     ])
-    .browsers(['chrome:headless --start-maximized']) //no need for emulation:cdp for now in photos
+    //emulation:cdpPort=9222 is used to set the download folder in headless mode
+    .browsers(['chrome:headless:emulation:cdpPort=9222 --start-maximized'])
 
     .screenshots(
       'reports/',

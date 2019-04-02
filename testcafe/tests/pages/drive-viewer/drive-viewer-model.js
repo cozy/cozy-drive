@@ -49,22 +49,7 @@ export default class ViewerDrive extends Viewer {
     const startIndex = await drivePage.getElementIndex(fileStartName)
     console.log(`↳ 📁 ${fileStartName} with index : ${startIndex}`)
     await this.openViewerForFile(fileStartName)
-
-    for (let i = startIndex; i < startIndex + numberOfNavigation; i++) {
-      await this.navigateToNextFile(i)
-      if (t.fixtureCtx.isVR)
-        await t.fixtureCtx.vr.takeScreenshotAndUpload(
-          `${screenshotPath}-${i}-next`
-        )
-    }
-
-    for (let i = startIndex + numberOfNavigation; i > startIndex; i--) {
-      await this.navigateToPrevFile(i)
-      if (t.fixtureCtx.isVR)
-        await t.fixtureCtx.vr.takeScreenshotAndUpload(
-          `${screenshotPath}-${i}-prev`
-        )
-    }
+    await this.navigateInViewer(screenshotPath, startIndex, numberOfNavigation)
     await this.closeViewer({
       exitWithEsc: false
     })
