@@ -186,6 +186,8 @@ export async function extractZip(pathToZip, extractPath) {
     await fs
       .createReadStream(pathToZip)
       .pipe(unzipper.Extract({ path: extractPath }))
+      .promise()
+      .then(() => console.log('data unzipped'), e => console.log('error', e))
   } catch (error) {
     console.error(
       `↳ ❌ Unable to extract app archive. Is unzipper installed as a dependency ? Error : ${
