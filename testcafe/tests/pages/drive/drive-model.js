@@ -16,7 +16,7 @@ export default class DrivePage {
     //Main menu
     this.cozBar = Selector('#coz-bar')
     this.btnMainApp = this.cozBar.find('div.coz-nav-apps-btns > button')
-    this.cozNavPopContent = Selector('[class*=coz-nav-pop]')
+    this.cozNavPopContent = Selector('[class*=coz-nav-pop-content]')
     this.btnCozBarDrive = this.cozNavPopContent
       .find('li.coz-nav-apps-item > a')
       .withText('Cozy Drive') // !FIXME: do not use text

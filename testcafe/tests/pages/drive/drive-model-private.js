@@ -44,8 +44,6 @@ export default class PrivateDrivePage extends DrivePage {
     await isExistingAndVisibile(this.btnCozBarDrive, 'Cozy bar - Drive button')
 
     await t
-      .expect(this.btnCozBarDrive.withAttribute('href').exists)
-      .notOk('There is a link on the button')
       .expect(
         this.btnCozBarDrive.parent('li').filter('[class*=current]').exists
       )
