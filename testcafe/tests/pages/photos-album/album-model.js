@@ -59,9 +59,6 @@ export default class Page extends PhotoPage {
     this.toggleShareLink = this.divShareByLink.child('[class*="toggle"]')
     this.spanLinkCreating = Selector('[class*="share-bylink-header-creating"]')
     this.copyBtnShareByLink = Selector('button').withAttribute('data-test-url')
-    this.btnShareByMe = this.toolbarAlbum
-      .child('button')
-      .withAttribute('data-test-id', 'share-by-me-button')
   }
 
   async waitForLoading() {
@@ -238,5 +235,22 @@ export default class Page extends PhotoPage {
       .eql('copy') //check link copy actually happens
 
     await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
+  }
+
+  async unshareAlbumPublicLink() {
+    await isExistingAndVisibile(this.toolbarAlbum, 'toolbarAlbum')
+    await isExistingAndVisibile(this.btnShare, `Share button`)
+    await t.click(this.btnShare)
+    await isExistingAndVisibile(this.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(this.toggleShareLink, 'Toggle Share by Link')
+    await t
+      .click(this.toggleShareLink)
+      .expect(this.toggleShareLink.find('input').checked)
+      .notOk('Toggle Link is checked')
+      .expect(this.copyBtnShareByLink.exists)
+      .notOk('Copy Link button still exists')
+      .pressKey('esc')
+
+    await isExistingAndVisibile(this.btnShare, `Share button`)
   }
 }
