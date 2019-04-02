@@ -129,7 +129,7 @@
     "react": "16.8.5",
     "react-autosuggest": "9.3.4",
     "react-dom": "16.8.5",
-    "react-dropzone": "4.3.0",
+    "react-dropzone": "5.1.1",
     "react-markdown": "3.4.1",
     "react-measure": "2.2.4",
     "react-pdf": "3.0.6",

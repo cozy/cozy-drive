@@ -12559,7 +12559,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@*, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -12903,13 +12903,13 @@ react-dom@16.8.5:
     prop-types "^15.6.2"
     scheduler "^0.13.5"
 
-react-dropzone@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-4.3.0.tgz#facdd7db16509772633c9f5200621ac01aa6706f"
-  integrity sha512-ULfrLaTSsd8BDa9KVAGCueuq1AN3L14dtMsGGqtP0UwYyjG4Vhf158f/ITSHuSPYkZXbvfcIiOlZsH+e3QWm+Q==
+react-dropzone@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-5.1.1.tgz#b05613ea22f1ab71aa1f7cf5367df7b19468a2f3"
+  integrity sha512-C9kXI3D95rVXbLLg9DvzCnmjplKwpfj/2F/MwvGVM05kDwWMzKVKZnmgZHZUebmiVj4mFOmBs2ObLiKvAxunGw==
   dependencies:
     attr-accept "^1.1.3"
-    prop-types "^15.5.7"
+    prop-types "^15.6.2"
 
 react-final-form@3.7.0:
   version "3.7.0"
