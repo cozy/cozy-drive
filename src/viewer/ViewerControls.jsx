@@ -103,7 +103,6 @@ class ViewerControls extends Component {
               {!isMobile && (
                 <Button
                   data-test-id="viewer-toolbar-download"
-                  theme="secondary"
                   onClick={() => {
                     client.collection('io.cozy.files').download(currentFile)
                   }}
