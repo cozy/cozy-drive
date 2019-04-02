@@ -103,8 +103,13 @@
 .fil-content-header-sortableasc
     cursor pointer
 
+column-width-large = 40%
+column-width-medium = 20%
+column-width-small = 15%
+column-width-thumbnail = 3rem
+
 .fil-content-file
-    flex        0 0 40%
+    flex        0 0 column-width-large
     user-select none
     background-position 0 center
     background-repeat no-repeat
@@ -114,7 +119,7 @@
     padding-left 0
 
 .fil-content-cell.fil-content-file
-    flex 0 0 calc(40% - 2rem)
+    flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail)
     display flex
     align-items center
     padding   0 2rem 0 0
@@ -129,7 +134,7 @@
 
 .fil-file-thumbnail
   position relative
-  flex 0 0 2rem
+  flex 0 0 column-width-thumbnail - 1rem //width without padding
 
 .fil-file-thumbnail-image
   object-fit cover
@@ -141,11 +146,11 @@
 
 .fil-content-date
 .fil-content-size
-    flex 0 0 15%
+    flex 0 0 column-width-small
 
 .fil-content-status
 .fil-content-header-status
-    flex 0 0 20%
+    flex 0 0 column-width-medium
 
     .fil-content-offline
         display none
