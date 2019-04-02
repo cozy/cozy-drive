@@ -26,7 +26,12 @@ async function runRunner() {
       true,
       '${DATE}_${TIME}/test-${TEST}-${FILE_INDEX}.png'
     )
-    .run({ assertionTimeout: 6000 }, { pageLoadTimeout: 6000 })
+    .run({
+      assertionTimeout: 6000,
+      pageLoadTimeout: 6000,
+      skipJsErrors: true,
+      skipUncaughtErrors: true
+    })
   tc.close()
 
   await postCommentToGithub()
