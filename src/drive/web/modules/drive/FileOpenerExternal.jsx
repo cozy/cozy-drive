@@ -21,7 +21,7 @@ const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
 ))
 
-class FileOpener extends Component {
+export class FileOpener extends Component {
   state = {
     loading: true,
     file: null
