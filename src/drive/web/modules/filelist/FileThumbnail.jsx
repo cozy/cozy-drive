@@ -4,7 +4,7 @@ import cx from 'classnames'
 import { withBreakpoints } from 'cozy-ui/react'
 import { ImageLoader } from 'components/Image'
 import { SharedBadge } from 'sharing'
-import FileIcon from './FileIcon'
+import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({

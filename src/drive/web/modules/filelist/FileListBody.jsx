@@ -5,12 +5,12 @@ import cx from 'classnames'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
-import FileListRowsPlaceholder from './FileListRowsPlaceholder'
-import FileListRows from './FileListRows'
-import AddFolder from './AddFolder'
+import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
+import FileListRows from 'drive/web/modules/filelist/FileListRows'
+import AddFolder from 'drive/web/modules/filelist/AddFolder'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { isTypingNewFolderName } from './duck'
+import { isTypingNewFolderName } from 'drive/web/modules/filelist/duck'
 
 import styles from 'drive/styles/filelist'
 

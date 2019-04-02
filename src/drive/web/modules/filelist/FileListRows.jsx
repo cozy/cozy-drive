@@ -6,8 +6,8 @@ import { isMobileApp } from 'cozy-device-helper'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 
 import File from './File'
-import FilePlaceholder from './FilePlaceholder'
-import LoadMore from './LoadMore'
+import FilePlaceholder from 'drive/web/modules/filelist/FilePlaceholder'
+import LoadMore from 'drive/web/modules/filelist/LoadMore'
 
 require('intersection-observer') // polyfill for safari
 
