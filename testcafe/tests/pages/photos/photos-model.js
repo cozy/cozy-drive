@@ -23,10 +23,9 @@ export default class Page {
 
     //Modal
     this.modal = Selector('[class*="c-modal"]')
-    this.modalSecondButton = this.modal
-      .find('div')
-      .find('button')
-      .nth(2) //REMOVE
+    this.modalFooter = this.modal.find('[class*="c-modal-footer"]')
+    this.modalSecondButton = this.modalFooter.find('button').nth(1) //REMOVE
+
     this.alertWrapper = Selector('[class*="c-alert-wrapper"]')
 
     //thumbnails & photos
