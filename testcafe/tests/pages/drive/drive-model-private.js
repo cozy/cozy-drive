@@ -402,7 +402,7 @@ export default class privateDrivePage extends DrivePage {
   async showMoveModalForElement(elementToMove) {
     await this.clickOnActionMenuforElementName(elementToMove)
     await t.click(this.moveToButtonActionMenu)
-    await isExistingAndVisibile(moveMoadal.modaleContent, 'Modal Content')
+    await isExistingAndVisibile(moveMoadal.modalContent, 'Modal Content')
     await moveMoadal.waitForLoading()
   }
 

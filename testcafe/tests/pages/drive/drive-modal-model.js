@@ -10,12 +10,12 @@ export default class MoveModal extends DrivePage {
     super()
 
     //Overwrite some selector to use our regular drive method in modal context
-    this.modaleContent = getElementWithTestId('fil-content-modal')
+    this.modalContent = getElementWithTestId('fil-content-modal')
 
     this.breadcrumb = this.modal
       .find('h2')
       .withAttribute('data-test-id', 'path-title')
-    this.folderOrFileName = this.modaleContent
+    this.folderOrFileName = this.modalContent
       .find('div')
       .withAttribute('data-test-id', 'fil-file-filename-and-ext')
   }
