@@ -1,7 +1,8 @@
 import { t, Selector } from 'testcafe'
 import {
   getElementWithTestId,
-  isExistingAndVisibile
+  isExistingAndVisibile,
+  checkAllImagesExists
 } from '../../helpers/utils'
 
 export default class Viewer {
@@ -34,6 +35,7 @@ export default class Viewer {
     await t.expect(this.spinner.exists).notOk('Spinner still spinning')
     await isExistingAndVisibile(this.viewerWrapper, 'Viewer Wrapper')
     await isExistingAndVisibile(this.viewerControls, 'Viewer Controls')
+    await checkAllImagesExists()
     console.log('Viewer Ok')
   }
 

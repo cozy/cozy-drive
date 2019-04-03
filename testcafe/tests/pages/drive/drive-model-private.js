@@ -143,6 +143,20 @@ export default class PrivateDrivePage extends DrivePage {
     }
   }
 
+  async takeScreenshotsForUpload(screenshotsPath, hasMask = false) {
+    await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
+      this.divUpload,
+      `${screenshotsPath}-Divupload`
+    )
+    //add wait to avoid thumbnail error on screenshots
+    await t.wait(5000)
+    //relaod page to load thumbnails
+    await t.eval(() => location.reload(true))
+    await this.waitForLoading()
+
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
+  }
+
   async shareFolderPublicLink() {
     await isExistingAndVisibile(this.toolbarFiles, 'toolbarFiles')
     await isExistingAndVisibile(this.btnShare, `Share button`)

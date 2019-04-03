@@ -29,6 +29,7 @@ export class VisualReviewTestcafe extends VisualReview {
 
   //@param { jsonObject } masK { x, y, width, height } : coordonate for mask. order is the same in gimp rectangle selection
   async setMaksCoordonnates(maskCoordonates) {
+    this.resetMask()
     this.options.mask = {
       excludeZones: [
         {
@@ -50,6 +51,7 @@ export class VisualReviewTestcafe extends VisualReview {
       //re-init mask
       this.resetMask()
     }
+    //always wait for 1s before taking screenshots
     await t.takeScreenshot(`${screenshotsPath}.png`)
 
     this.options.properties.os = await getNavigatorOs()
@@ -57,7 +59,26 @@ export class VisualReviewTestcafe extends VisualReview {
     this.options.properties.resolution = await getResolution()
 
     //the path needs to be in const but i need to define the screenshots tree 1st
-    this.uploadScreenshot(`./reports/${screenshotsPath}.png`)
+    await this.uploadScreenshot(`./reports/${screenshotsPath}.png`)
+  }
+  async takeElementScreenshotAndUpload(
+    selector,
+    screenshotsPath,
+    hasMask = false
+  ) {
+    if (!hasMask) {
+      //re-init mask
+      this.resetMask()
+    }
+    //always wait for 1s before taking screenshots
+    await t.takeElementScreenshot(selector, `${screenshotsPath}.png`)
+
+    this.options.properties.os = await getNavigatorOs()
+    this.options.properties.browser = await getNavigatorName()
+    this.options.properties.resolution = await getResolution()
+
+    //the path needs to be in const but i need to define the screenshots tree 1st
+    await this.uploadScreenshot(`./reports/${screenshotsPath}.png`)
   }
 
   async checkRunStatus() {

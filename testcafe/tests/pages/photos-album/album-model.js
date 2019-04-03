@@ -64,6 +64,7 @@ export default class Page extends PhotoPage {
   async waitForLoading() {
     await t.expect(this.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(this.albumContentWrapper, 'Content Wrapper')
+    await checkAllImagesExists()
   }
 
   //@param {string} when : text for console.log

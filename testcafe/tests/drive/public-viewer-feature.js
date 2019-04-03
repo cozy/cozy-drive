@@ -74,14 +74,13 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
   )
   await privateDrivePage.uploadFiles(data.filesList)
   //add wait to avoid thumbnail error on screenshots
-  await t.wait(5000)
   await t.fixtureCtx.vr.setMaksCoordonnates({
     height: 935,
     x: 916,
     width: 140,
     y: 248
   })
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
+  await privateDrivePage.takeScreenshotsForUpload(
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
     true
   )
