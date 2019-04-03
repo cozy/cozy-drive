@@ -47,7 +47,11 @@ const Toolbar = ({
   )
 
   return (
-    <div className={styles['fil-toolbar-trash']} role="toolbar">
+    <div
+      data-test-id="empty-trash"
+      className={styles['fil-toolbar-trash']}
+      role="toolbar"
+    >
       <Button
         theme={'danger-outline'}
         className={classNames(styles['u-hide--mob'])}

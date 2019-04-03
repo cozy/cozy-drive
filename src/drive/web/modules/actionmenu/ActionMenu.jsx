@@ -39,6 +39,7 @@ class Menu extends Component {
           className={styles['fil-actionmenu-overlay']}
         />
         <div
+          data-test-id="fil-actionmenu-inner"
           className={styles['fil-actionmenu-inner']}
           ref={el => {
             this.menuEl = el
