@@ -91,12 +91,12 @@ export default class Timeline extends Commons {
     await isExistingAndVisibile(this.barPhotoBtnDeleteOrRemove, 'Delete Button')
     await t.click(this.barPhotoBtnDeleteOrRemove)
 
-    await isExistingAndVisibile(this.modalDelete, 'Modal delete')
+    await isExistingAndVisibile(this.modalFooter, 'Modal delete')
     await isExistingAndVisibile(
-      this.modalDeleteBtnDelete,
+      this.modalSecondButton,
       'Modal delete button Delete'
     )
-    await t.click(this.modalDeleteBtnDelete)
+    await t.click(this.modalSecondButton)
     await t.takeScreenshot()
 
     let allPhotosEndCount

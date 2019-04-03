@@ -22,8 +22,11 @@ export default class Page {
     this.barPhoto = Selector('[class*="coz-selectionbar"]')
 
     //Modal
-    this.modalDelete = Selector('[class*="c-modal"]').find('div')
-    this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
+    this.modal = Selector('[class*="c-modal"]')
+    this.modalSecondButton = this.modal
+      .find('div')
+      .find('button')
+      .nth(2) //REMOVE
     this.alertWrapper = Selector('[class*="c-alert-wrapper"]')
 
     //thumbnails & photos

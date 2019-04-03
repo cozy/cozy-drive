@@ -206,12 +206,12 @@ export default class Page extends PhotoPage {
     await isExistingAndVisibile(this.moreMenuDeleteAlbum, 'Delete Button')
     await t.click(this.moreMenuDeleteAlbum)
 
-    await isExistingAndVisibile(this.modalDelete, 'Modal delete')
+    await isExistingAndVisibile(this.modal, 'Modal delete')
     await isExistingAndVisibile(
-      this.modalDeleteBtnDelete,
+      this.modalSecondButton,
       'Modal delete button Delete'
     )
-    await t.click(this.modalDeleteBtnDelete)
+    await t.click(this.modalSecondButton)
   }
 
   async shareAlbumPublicLink() {
