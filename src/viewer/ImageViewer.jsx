@@ -96,7 +96,7 @@ export default class ImageViewer extends Component {
   }
 
   onSwipe = e => {
-    // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
+    // when a swipe happens while zoomed into an image, it's most likely a pan gesture and not a swipe
     if (this.state.scale > 1) return
     // a pan event is triggered after the swipe and may trigger a getBoundingClientRect error
     this.gestures.off('pan')
