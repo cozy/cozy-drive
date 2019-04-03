@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Document, Page } from 'react-pdf/dist/entry.webpack'
 import cx from 'classnames'
 import throttle from 'lodash/throttle'
@@ -31,6 +32,12 @@ export class PdfJsViewer extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener)
+  }
+
+  toggleGestures(enable) {
+    if (!this.props.gestures) return
+    this.props.gestures.get('swipe').set({ enable })
+    this.props.gestures.get('pan').set({ enable })
   }
 
   setWrapperSize = () => {
@@ -69,15 +76,25 @@ export class PdfJsViewer extends Component {
   }
 
   scaleUp = () => {
-    this.setState(state => ({
-      scale: Math.min(state.scale + 0.25, MAX_SCALE)
-    }))
+    this.setState(state => {
+      const previousScale = state.scale
+      const scale = Math.min(previousScale + 0.25, MAX_SCALE)
+      if (scale > 1 && previousScale <= 1) this.toggleGestures(false)
+      return {
+        scale
+      }
+    })
   }
 
   scaleDown = () => {
-    this.setState(state => ({
-      scale: Math.max(state.scale - 0.25, MIN_SCALE)
-    }))
+    this.setState(state => {
+      const previousScale = state.scale
+      const scale = Math.max(previousScale - 0.25, MIN_SCALE)
+      if (scale <= 1 && previousScale > 1) this.toggleGestures(true)
+      return {
+        scale
+      }
+    })
   }
 
   render() {
@@ -164,6 +181,11 @@ export class PdfJsViewer extends Component {
       </div>
     )
   }
+}
+
+PdfJsViewer.propTypes = {
+  url: PropTypes.string.isRequired,
+  gestures: PropTypes.object
 }
 
 export default withFileUrl(PdfJsViewer)

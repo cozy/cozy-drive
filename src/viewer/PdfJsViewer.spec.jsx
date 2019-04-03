@@ -4,8 +4,53 @@ import { shallow } from 'enzyme'
 
 describe('PDFViewer', () => {
   let component
+  const panGestureMock = jest.fn()
+  const swipeGestureMock = jest.fn()
+  const gesturesMock = {
+    get: jest.fn(type => ({
+      set: type === 'pan' ? panGestureMock : swipeGestureMock
+    }))
+  }
   beforeEach(() => {
-    component = shallow(<PdfJsViewer url={'test'} />)
+    component = shallow(<PdfJsViewer url={'test'} gestures={gesturesMock} />)
+  })
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe('desture integration', () => {
+    let instance
+    beforeEach(() => {
+      instance = component.instance()
+    })
+
+    it('should disable gestures when zooming in', () => {
+      instance.scaleUp()
+      expect(component.state('scale')).toBeGreaterThan(1)
+      expect(panGestureMock).toHaveBeenCalledWith({ enable: false })
+      expect(swipeGestureMock).toHaveBeenCalledWith({ enable: false })
+      instance.scaleUp()
+      expect(panGestureMock).toHaveBeenCalledTimes(1)
+      expect(swipeGestureMock).toHaveBeenCalledTimes(1)
+    })
+
+    it('should leave gestures alone when zooming out', () => {
+      instance.scaleDown()
+      expect(component.state('scale')).toBeLessThan(1)
+      expect(panGestureMock).not.toHaveBeenCalled()
+      expect(swipeGestureMock).not.toHaveBeenCalled()
+    })
+
+    it('should re-enable gestures when zooming back out', () => {
+      instance.scaleUp()
+      expect(component.state('scale')).toBeGreaterThan(1)
+      expect(panGestureMock).toHaveBeenCalledWith({ enable: false })
+      expect(swipeGestureMock).toHaveBeenCalledWith({ enable: false })
+      instance.scaleDown()
+      expect(component.state('scale')).toBe(1)
+      expect(panGestureMock).toHaveBeenCalledWith({ enable: true })
+      expect(swipeGestureMock).toHaveBeenCalledWith({ enable: true })
+    })
   })
 
   describe('with a valid PDF', () => {
