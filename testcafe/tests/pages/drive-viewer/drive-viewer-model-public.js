@@ -2,6 +2,7 @@ import { t } from 'testcafe'
 import { PRECISION } from '../../helpers/visualreview-utils'
 import PublicDriveVRPage from '../drive/drive-model-public'
 import ViewerPage from './drive-viewer-model'
+import { THUMBNAIL_DELAY } from '../../helpers/data'
 
 const publicDrivePage = new PublicDriveVRPage()
 
@@ -37,7 +38,7 @@ export default class PublicViewerPage extends ViewerPage {
         await this.checkNoViewer()
         break
     }
-    await t.wait(1000)
+    await t.wait(THUMBNAIL_DELAY)
     //avoid unwanted hover for screenshots
     await t.hover(this.viewerControls, {
       offsetX: 0,
@@ -64,7 +65,7 @@ export default class PublicViewerPage extends ViewerPage {
       portraitOrientation: true
     })
     await this.openViewerForFile(fileName)
-    await t.wait(1000)
+    await t.wait(THUMBNAIL_DELAY)
     //avoid unwanted hover for screenshots
     await t.hover(this.viewerControls, {
       offsetX: 0,

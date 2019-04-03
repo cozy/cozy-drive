@@ -5,6 +5,7 @@ import {
 } from '../../helpers/utils'
 import DrivePage from '../drive/drive-model'
 import Viewer from '../viewer/viewer-model'
+import { THUMBNAIL_DELAY } from '../../helpers/data'
 
 const drivePage = new DrivePage()
 
@@ -94,7 +95,7 @@ export default class ViewerDrive extends Viewer {
     )
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
-      await t.wait(5000)
+      await t.wait(THUMBNAIL_DELAY)
     }
   }
 
@@ -107,7 +108,7 @@ export default class ViewerDrive extends Viewer {
     )
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
-      await t.wait(5000)
+      await t.wait(THUMBNAIL_DELAY)
     }
   }
 

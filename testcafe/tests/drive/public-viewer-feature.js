@@ -76,7 +76,7 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
   //add wait to avoid thumbnail error on screenshots
 
   await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
+  await privateDrivePage.takeScreenshotsForUpload(
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
     true
   )

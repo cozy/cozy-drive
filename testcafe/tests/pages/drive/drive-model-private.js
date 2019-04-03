@@ -1,13 +1,41 @@
 import { t } from 'testcafe'
 import {
+  getElementWithTestId,
   getPageUrl,
   isExistingAndVisibile,
   overwriteCopyCommand,
   getLastExecutedCommand
 } from '../../helpers/utils'
+import { THUMBNAIL_DELAY } from '../../helpers/data'
 import DrivePage from './drive-model'
+import Modal from './drive-modal-model'
+const moveMoadal = new Modal()
 
-export default class PrivateDrivePage extends DrivePage {
+export default class privateDrivePage extends DrivePage {
+  constructor() {
+    super()
+
+    this.elementActionMenuByRowIndex = value => {
+      return this.content_rows
+        .nth(value)
+        .child('[class*="fil-content-file-action"]')
+        .child('button')
+    }
+    this.actionMenuInner = getElementWithTestId('fil-actionmenu-inner')
+    this.moveToButtonActionMenu = this.actionMenuInner.find(
+      '[class*="fil-action-moveto"]'
+    )
+    this.restoreButtonActionMenu = this.actionMenuInner.find(
+      '[class*="fil-action-restore"]'
+    )
+    this.removeButtonActionMenu = this.actionMenuInner.find(
+      '[class*="fil-action-tras"]'
+    )
+
+    this.toolbarTrash = getElementWithTestId('empty-trash')
+    this.buttonEmptyTrash = this.toolbarTrash.find('button')
+  }
+
   //@param {Selector}  btn : button to tests
   //@param {text} path : redirection path
   //@param {text} title : text for console.log
@@ -24,8 +52,10 @@ export default class PrivateDrivePage extends DrivePage {
       .click(btn)
       .expect(getPageUrl())
       .contains(path)
+    await this.waitForLoading()
 
-    await t.expect(await this.getbreadcrumb()).contains(title)
+    if (!t.fixtureCtx.isVR)
+      await t.expect(await this.getbreadcrumb()).contains(title)
 
     await t.expect(this.errorEmpty.exists).notOk('Error shows up')
     await t.expect(this.errorOops.exists).notOk('Error shows up')
@@ -91,6 +121,7 @@ export default class PrivateDrivePage extends DrivePage {
       await t.expect(breadcrumbEnd).eql(breadcrumbStart)
     }
   }
+
   //@param {String Array} files: path to files to upload.
   async uploadFiles(files) {
     const numOfFiles = files.length
@@ -102,6 +133,7 @@ export default class PrivateDrivePage extends DrivePage {
 
     await isExistingAndVisibile(this.btnUpload, 'Upload Button')
     await t.setFilesToUpload(this.btnUpload, files)
+
     await isExistingAndVisibile(this.divUpload, 'Upload pop-in')
 
     console.group('Files uploaded : ')
@@ -149,7 +181,7 @@ export default class PrivateDrivePage extends DrivePage {
       `${screenshotsPath}-Divupload`
     )
     //add wait to avoid thumbnail error on screenshots
-    await t.wait(5000)
+    await t.wait(THUMBNAIL_DELAY)
     //relaod page to load thumbnails
     await t.eval(() => location.reload(true))
     await this.waitForLoading()
@@ -246,17 +278,21 @@ export default class PrivateDrivePage extends DrivePage {
 
   //@param { Array } filesIndexArray : Array of files index
   async deleteElementsByIndex(filesIndexArray) {
-    const rowCountStart = await this.getContentRowCount('Before')
+    let rowCountStart
+    if (!t.fixtureCtx.isVR) {
+      rowCountStart = await this.getContentRowCount('Before')
+    }
     await this.selectElements(filesIndexArray)
 
     await t
       .click(this.cozySelectionbarBtnDelete)
-      .expect(this.modalDelete.visible)
+      .expect(this.modalFooter.visible)
       .ok('Delete button does not show up')
-      .click(this.modalDeleteBtnDelete)
-    await t.takeScreenshot()
-    const rowCountEnd = await this.getContentRowCount('After')
-    await t.expect(rowCountEnd).eql(rowCountStart - filesIndexArray.length)
+      .click(this.modalSecondButton)
+    if (!t.fixtureCtx.isVR) {
+      const rowCountEnd = await this.getContentRowCount('After')
+      await t.expect(rowCountEnd).eql(rowCountStart - filesIndexArray.length)
+    }
   }
 
   //@param {string} fileName : file name to delete
@@ -278,21 +314,110 @@ export default class PrivateDrivePage extends DrivePage {
       ) //!FIXME  https://trello.com/c/lYUkc8jV/1667-drive-breadcrumb-n-sur-mac-chrome-only
     }
     await this.openActionMenu()
-    await t
-      .click(this.btnRemoveFolder)
-      .expect(this.modalDelete.visible)
-      .ok('Delete button does not show up')
+    await t.click(this.btnRemoveFolder)
+    await isExistingAndVisibile(this.modalFooter, 'Modal delete')
+
     if (t.fixtureCtx.isVR)
       //dates show up here, so there is a mask for screenshots
       await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath, true)
-    await t.click(this.modalDeleteBtnDelete)
+    await t.click(this.modalSecondButton)
     await isExistingAndVisibile(this.alertWrapper, '"successfull" modal alert')
-    await t.takeScreenshot()
 
     await this.waitForLoading()
     if (!t.fixtureCtx.isVR) {
       const breadcrumbEnd = await this.getbreadcrumb()
       await t.expect(breadcrumbEnd).eql(partialBreacrumbStart)
     }
+  }
+
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  //@param { integer } index : file/folder index
+  //@param {String} newName : new name for file/folder
+  //@param {bool} : exitWithEnter
+  async renameElementsByIndex(index, newName, screenshotPath, exitWithEnter) {
+    await this.selectElements([index])
+
+    await t.click(this.cozySelectionbarBtnRename)
+    await isExistingAndVisibile(this.foldersNamesInputs, 'Folder Name input')
+    //dates shows up here, so there is a mask for screenshots
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(
+      `${screenshotPath}-rename1`,
+      true
+    )
+
+    await t.typeText(this.foldersNamesInputs, `${newName}`, { replace: true })
+    exitWithEnter ? await t.pressKey('enter') : await t.click(this.contentTable)
+    await t
+      .expect(this.foldersNamesInputs.exists)
+      .notOk('Edition mode still on') //No folder in edition mode -> No input on page
+      .expect(this.folderOrFileName.withText(`${newName}`).exists)
+      .ok(`No folder/file named ${newName}`)
+  }
+
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  //@param {string} elementName : file/folder name to rename
+  //@param {string} newName : file/folder new name
+  //@param {bool} : exitWithEnter
+  async renameElementByName(
+    elementName,
+    newName,
+    screenshotPath,
+    exitWithEnter
+  ) {
+    const index = await this.getElementIndex(elementName)
+    await this.renameElementsByIndex(
+      index,
+      newName,
+      screenshotPath,
+      exitWithEnter
+    )
+  }
+
+  //@param { integer } index :  file index
+  async clickOnActionMenuforFile(index) {
+    await isExistingAndVisibile(
+      this.content_rows.nth(index),
+      `element with index ${index}`
+    )
+
+    await isExistingAndVisibile(
+      this.elementActionMenuByRowIndex(index),
+      `Menu [...] for element with index ${index}`
+    )
+    await t.click(this.elementActionMenuByRowIndex(index))
+
+    await isExistingAndVisibile(
+      this.actionMenuInner,
+      'Element [...] Menu inner'
+    )
+  }
+
+  //@param {string} fileName : file/folder on which to click on action menu
+  async clickOnActionMenuforElementName(fileName) {
+    const index = await this.getElementIndex(fileName)
+    await this.clickOnActionMenuforFile(index)
+  }
+
+  //@param {string} fileName : file/folder to move
+  async showMoveModalForElement(elementToMove) {
+    await this.clickOnActionMenuforElementName(elementToMove)
+    await t.click(this.moveToButtonActionMenu)
+    await isExistingAndVisibile(moveMoadal.modaleContent, 'Modal Content')
+    await moveMoadal.waitForLoading()
+  }
+
+  //@param {String} screenshotPath : path for screenshots taken in this test
+  async emptyTrash(screenshotPath) {
+    await isExistingAndVisibile(this.toolbarTrash, 'toolbar Trash')
+    await isExistingAndVisibile(this.buttonEmptyTrash, 'Empty trash button')
+    await t.click(this.buttonEmptyTrash)
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(
+      `${screenshotPath}-emptyTrash`,
+      true
+    )
+    await t
+      .expect(this.modalFooter.visible)
+      .ok('Delete button does not show up')
+      .click(this.modalSecondButton)
   }
 }

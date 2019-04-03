@@ -4,6 +4,7 @@ import {
   isExistingAndVisibile,
   checkAllImagesExists
 } from '../../helpers/utils'
+import { THUMBNAIL_DELAY } from '../../helpers/data'
 import Commons from './photos-model'
 
 export default class Timeline extends Commons {
@@ -54,10 +55,11 @@ export default class Timeline extends Commons {
       `${screenshotsPath}-Divupload`
     )
     //add wait to avoid thumbnail error on screenshots
-    await t.wait(5000)
+    await t.wait(THUMBNAIL_DELAY)
     //relaod page to load thumbnails
     await t.eval(() => location.reload(true))
     await this.waitForLoading()
+    await checkAllImagesExists()
 
     await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
   }
@@ -79,7 +81,6 @@ export default class Timeline extends Commons {
   async waitForLoading() {
     await t.expect(this.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(this.contentWrapper, 'Content Wrapper')
-    await checkAllImagesExists()
   }
 
   //@param { number } numOfFiles : number of file to delete

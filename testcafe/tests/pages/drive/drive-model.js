@@ -60,8 +60,10 @@ export default class DrivePage {
         .child('[class*="fil-content-cell"]')
         .child('[data-input="checkbox"]')
     }
+
     // Upload
     this.btnUpload = getElementWithTestId('upload-btn')
+    this.divDragnDrop = this.contentTable.sibling('input[type="file"]')
     this.divUpload = getElementWithTestId('upload-queue')
     this.queue = Selector('[class*="upload-queue-list"]')
 
@@ -99,8 +101,14 @@ export default class DrivePage {
     this.cozySelectionbarBtnShare = this.cozySelectionbar
       .find('button')
       .withText('SHARE') //!FIX ME : do not use text! Do not use .nth(x) because the buttons count changes if one or several files/folders are selected
-    this.modalDelete = Selector('[class*="c-modal"]').find('div')
-    this.modalDeleteBtnDelete = this.modalDelete.find('button').nth(2) //REMOVE
+    this.cozySelectionbarBtnRename = this.cozySelectionbar
+      .find('button')
+      .withText('RENAME') //!FIX ME : do not use text! Do not use .nth(x) because the buttons count changes if one or several files/folders are selected
+    this.modal = Selector('[class*="c-modal"]')
+    this.modalClose = this.modal.find('[class*="c-btn--close"]')
+    this.modalFooter = this.modal.find('[class*="c-modal-footer"]')
+    this.modalFirstButton = this.modalFooter.find('button').nth(0) //CANCEL
+    this.modalSecondButton = this.modalFooter.find('button').nth(1) //REMOVE
   }
 
   //wait for content placeholder to disapered and contenttable to appear
@@ -146,6 +154,17 @@ export default class DrivePage {
     }
     breadcrumbTitle = breadcrumbTitle.replace(/(\r\n|\n|\r)/gm, '') //!FIXME remove EOL  https://trello.com/c/lYUkc8jV/1667-drive-breadcrumb-n-sur-mac-chrome-only
     return breadcrumbTitle
+  }
+
+  //Go back to base folder by clicking on 1s span in breadcrumb
+  async goToBaseFolder() {
+    await isExistingAndVisibile(
+      this.breadcrumb.child(0),
+      'breadcrumb (base folder)'
+    )
+    await t.click(this.breadcrumb.child(0))
+    await this.waitForLoading()
+    console.log(`Navigation to base folder OK!`)
   }
 
   //@param {String} folderName
