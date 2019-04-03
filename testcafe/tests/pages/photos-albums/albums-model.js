@@ -2,7 +2,8 @@ import { t } from 'testcafe'
 import {
   getPageUrl,
   getElementWithTestId,
-  isExistingAndVisibile
+  isExistingAndVisibile,
+  checkAllImagesExists
 } from '../../helpers/utils'
 import AlbumPage from '../photos-album/album-model'
 import PhotoPage from '../photos/photos-model'
@@ -33,6 +34,7 @@ export default class AlbumsPage extends PhotoPage {
   async waitForLoading() {
     await t.expect(this.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(this.albumContentWrapper, 'Content Wrapper')
+    await checkAllImagesExists()
   }
 
   // check that the albums view is empty

@@ -1,7 +1,8 @@
 import { t } from 'testcafe'
 import {
   getElementWithTestId,
-  isExistingAndVisibile
+  isExistingAndVisibile,
+  checkAllImagesExists
 } from '../../helpers/utils'
 import Commons from './photos-model'
 
@@ -47,6 +48,20 @@ export default class Timeline extends Commons {
       .eql(t.ctx.allPhotosStartCount + numOfFiles)
   }
 
+  async takeScreenshotsForUpload(screenshotsPath, hasMask = false) {
+    await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
+      this.divUpload,
+      `${screenshotsPath}-Divupload`
+    )
+    //add wait to avoid thumbnail error on screenshots
+    await t.wait(5000)
+    //relaod page to load thumbnails
+    await t.eval(() => location.reload(true))
+    await this.waitForLoading()
+
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
+  }
+
   async checkPhotobar() {
     await isExistingAndVisibile(this.barPhoto, 'Selection bar')
     await isExistingAndVisibile(
@@ -64,6 +79,7 @@ export default class Timeline extends Commons {
   async waitForLoading() {
     await t.expect(this.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(this.contentWrapper, 'Content Wrapper')
+    await checkAllImagesExists()
   }
 
   //@param { number } numOfFiles : number of file to delete
