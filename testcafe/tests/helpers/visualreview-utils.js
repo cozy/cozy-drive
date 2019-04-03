@@ -51,7 +51,7 @@ export class VisualReviewTestcafe extends VisualReview {
       //re-init mask
       this.resetMask()
     }
-    //always wait for 1s before taking screenshots
+
     await t.takeScreenshot(`${screenshotsPath}.png`)
 
     this.options.properties.os = await getNavigatorOs()

@@ -206,7 +206,7 @@ export default class Page extends PhotoPage {
     await isExistingAndVisibile(this.moreMenuDeleteAlbum, 'Delete Button')
     await t.click(this.moreMenuDeleteAlbum)
 
-    await isExistingAndVisibile(this.modal, 'Modal delete')
+    await isExistingAndVisibile(this.modalFooter, 'Modal delete')
     await isExistingAndVisibile(
       this.modalSecondButton,
       'Modal delete button Delete'

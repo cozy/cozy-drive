@@ -46,3 +46,22 @@ export const allSpecialFilesExt = pdfFilesExt
   .concat(videoFilesExt)
   .concat(textFilesExt)
   .concat(imageFilesExt)
+
+//Mask Coordonnates
+export const maskDriveFolderWithDate = {
+  height: 935,
+  x: 916,
+  width: 140,
+  y: 248
+}
+export const maskShareFolder = { height: 918, x: 916, width: 140, y: 520 }
+export const maskSharedWholePublicFolder = {
+  height: 960,
+  x: 800,
+  width: 140,
+  y: 180
+}
+export const maskAudioViewerDesktop = { height: 27, x: 160, width: 108, y: 415 }
+export const maskAudioViewerMobile = { height: 25, x: 199, width: 90, y: 409 }
+export const maskDeleteFolder = { height: 918, x: 916, width: 140, y: 300 }
+export const maskMoveModale = { height: 115, x: 905, width: 140, y: 237 }

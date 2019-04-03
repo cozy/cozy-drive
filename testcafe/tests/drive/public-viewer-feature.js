@@ -74,24 +74,15 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
   )
   await privateDrivePage.uploadFiles(data.filesList)
   //add wait to avoid thumbnail error on screenshots
-  await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 935,
-    x: 916,
-    width: 140,
-    y: 248
-  })
-  await privateDrivePage.takeScreenshotsForUpload(
+
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDriveFolderWithDate)
+  await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
     true
   )
   await privateDrivePage.shareFolderPublicLink()
 
-  await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 918,
-    x: 916,
-    width: 140,
-    y: 520
-  })
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskShareFolder)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-3`,
     true
@@ -144,12 +135,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_ZIP}`)
   //take a general screen for the shared folder :
-  await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 960,
-    x: 800,
-    width: 140,
-    y: 180
-  })
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskSharedWholePublicFolder)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-wholeFolder`,
     true
@@ -218,12 +204,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
   t.ctx.fileDownloaded = data.FILE_AUDIO
 
   //mask on loading bar
-  await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 25,
-    x: 932,
-    width: 100,
-    y: 623
-  })
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskAudioViewerDesktop)
   await publicViewerPage.openFileAndCheckPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-1`,
     data.FILE_AUDIO,
@@ -231,12 +212,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
     true
   )
   //mask on loading bar for mobile
-  await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 27,
-    x: 160,
-    width: 108,
-    y: 415
-  })
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskAudioViewerMobile)
   await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-mob1`,
     data.FILE_AUDIO,
@@ -299,23 +275,13 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_DELETE_FOLDER}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER}`)
   await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
-  await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 916,
-    x: 935,
-    width: 140,
-    y: 248
-  })
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskSharedWholePublicFolder)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
     true
   )
 
-  await t.fixtureCtx.vr.setMaksCoordonnates({
-    height: 918,
-    x: 916,
-    width: 140,
-    y: 350
-  })
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDeleteFolder)
   await privateDrivePage.deleteCurrentFolder(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
   )
