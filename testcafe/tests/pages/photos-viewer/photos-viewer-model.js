@@ -2,6 +2,7 @@ import { Selector, t } from 'testcafe'
 import { getPageUrl, isExistingAndVisibile } from '../../helpers/utils'
 import Viewer from '../viewer/viewer-model'
 import Photos from '../photos/photos-model'
+import { THUMBNAIL_DELAY } from '../../helpers/data'
 
 const photoPage = new Photos()
 
@@ -95,7 +96,7 @@ export default class PhotoViewer extends Viewer {
     await this.openPhotoFullscreen(index)
     await this.checkImageViewer()
 
-    await t.wait(1000)
+    await t.wait(THUMBNAIL_DELAY)
     //avoid unwanted hover for screenshots
     await t.hover(this.viewerControls, {
       offsetX: 0,

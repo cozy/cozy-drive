@@ -1,6 +1,7 @@
 import VisualReview from 'visualreview-client'
 import { t } from 'testcafe'
 import { getNavigatorOs, getNavigatorName, getResolution } from './utils'
+import { VR_STATUS_DELAY } from './data'
 
 //Put this const in travis after POC
 const VISUALREVIEW_INSTANCE = 'visualreview.cozycloud.cc'
@@ -61,6 +62,7 @@ export class VisualReviewTestcafe extends VisualReview {
     //the path needs to be in const but i need to define the screenshots tree 1st
     await this.uploadScreenshot(`./reports/${screenshotsPath}.png`)
   }
+
   async takeElementScreenshotAndUpload(
     selector,
     screenshotsPath,
@@ -82,10 +84,10 @@ export class VisualReviewTestcafe extends VisualReview {
   }
 
   async checkRunStatus() {
-    //this function is called in .after, so we cannot use t.wait(5000)
+    //this function is called in .after, so we cannot use t.wait(VR_STATUS_DELAY)
     //Needs modifications on server side to avoid delay
     const delay = ms => new Promise(res => setTimeout(res, ms))
-    await delay(3000)
+    await delay(VR_STATUS_DELAY)
 
     let runAnalysis = await this.getJsonStatusForCurrentRun()
     if (
