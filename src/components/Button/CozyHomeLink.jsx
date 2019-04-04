@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ButtonLink } from 'cozy-ui/react'
-import styles from './index.styl'
-import getHomeLinkHref from './getHomeLinkHref'
+import styles from 'components/Button/index.styl'
+import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 
 const CozyHomeLink = ({ from, embedInCozyBar = false, t, size, className }) => (
   <ButtonLink
