@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
-import { translate } from 'cozy-ui/react'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 import styles from 'drive/styles/dropzone'
-
+import DropzoneTeaser from 'drive/web/modules/upload/DropzoneTeaser'
 class StatefulDropzone extends Component {
   state = {
     dropzoneActive: false
@@ -47,18 +46,6 @@ class StatefulDropzone extends Component {
     )
   }
 }
-
-const DropzoneTeaser = translate()(({ t, currentFolder }) => (
-  <div className={styles['fil-dropzone-teaser']}>
-    <div className={styles['fil-dropzone-teaser-claudy']} />
-    <div className={styles['fil-dropzone-teaser-content']}>
-      <p>{t('Files.dropzone.teaser')}</p>
-      <span className={styles['fil-dropzone-teaser-folder']}>
-        {(currentFolder && currentFolder.name) || 'Drive'}
-      </span>
-    </div>
-  </div>
-))
 
 // DnD helpers for folder upload
 const canHandleFolders = evt => {
