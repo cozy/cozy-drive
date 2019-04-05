@@ -4317,17 +4317,17 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cozy-bar@6.19.1:
-  version "6.19.1"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.19.1.tgz#89d2b20106abff21e57a3de1fdb1a47e64c0965f"
-  integrity sha512-EcuV5rXa1TNfkspqZJfFTF3x02z1taB6Qyv8zHtGzMw6eVcqSyReejkFOD6Cxp+AnTTvLJ9WPuprAumOytJknQ==
+cozy-bar@6.21.5:
+  version "6.21.5"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.21.5.tgz#bb693bba9d8f45e0acf1f6e7695ffd36a0e1f94d"
+  integrity sha512-AdFWVChzheUrJqU8p16K1sf12v2s9O5INfaMuAip6TxzWpuWXySiIy6b6HAVWag1bi4kimjVlA5o1nz+k+zTMQ==
   dependencies:
     "@babel/core" "7.3.4"
     babel-core "7.0.0-bridge.0"
     babel-preset-cozy-app "1.5.1"
     cozy-client "6.20.0"
     cozy-device-helper "1.7.0"
-    cozy-harvest-lib "0.38.3"
+    cozy-harvest-lib "0.39.2"
     cozy-interapp "0.4.4"
     cozy-realtime "2.0.7"
     enzyme-to-json "3.3.5"
@@ -4430,14 +4430,14 @@ cozy-flags@1.6.0:
     detect-node "2.0.4"
     microee "^0.0.6"
 
-cozy-harvest-lib@0.38.3:
-  version "0.38.3"
-  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-0.38.3.tgz#ecf2a188ea6f647332fd3a7d2478a3cba7d91c09"
-  integrity sha512-JTFM3bm8JBqNtRY0QqH9JmFekdsG2EpTIEKrQmCStsCTNuOLv7q/Hp7uxZeBORWkdkZu0RLDIKPvO2LcFBFrGg==
+cozy-harvest-lib@0.39.2:
+  version "0.39.2"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-0.39.2.tgz#a354502d30aa12505860694bf074b8e7e317b93a"
+  integrity sha512-uJlyncLp5Sn73RGFca/c11+enGzKmriJ2MwMrInt2YClswaD5gVuUwJVQ6vklimDQTcnF4CogSQ0pMdt6uwfQg==
   dependencies:
     cozy-client "6.19.0"
     cozy-realtime "1.2.8"
-    cozy-ui "19.8.0"
+    cozy-ui "19.21.2"
     final-form "4.11.1"
     lodash "4.17.11"
     react-final-form "3.7.0"
@@ -4574,11 +4574,12 @@ cozy-ui@19.22.0:
     react-hot-loader "^4.3.11"
     react-select "2.2.0"
 
-cozy-ui@19.8.0:
-  version "19.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.8.0.tgz#2568fc1ccfc03c6490266c2fc8855db117cb5aca"
-  integrity sha512-o8mQ6fniXXOyyU67yE+nvLxjwR0Ww6AQMbV3H+zoUHrqXtWU1yXiiXDf77qz/GqvYof8imqYvDX7tnZQnQvFTg==
+cozy-ui@19.21.2:
+  version "19.21.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.21.2.tgz#acb9813b6c569bd3670c2fd6be90cae330babdc6"
+  integrity sha512-7rHZJiWJPBxWONYZYakBHObp757HBJqm9Rt37B5e2PTUY+SxIc2xtj7u28+K7Jd3V6GU/81+DiLJvcaiyWCPxQ==
   dependencies:
+    "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
     classnames "^2.2.5"
     date-fns "^1.28.5"
