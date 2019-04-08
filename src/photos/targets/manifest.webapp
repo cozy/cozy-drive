@@ -61,7 +61,8 @@
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",
       "verbs": [
-        "GET"
+        "GET",
+        "PUT"
       ]
     },
     "albums": {
