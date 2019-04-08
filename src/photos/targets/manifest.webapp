@@ -71,7 +71,8 @@
       "verbs": [
         "GET",
         "POST",
-        "PUT"
+        "PUT",
+        "DELETE",
       ]
     },
     "photos_settings": {
