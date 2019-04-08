@@ -72,7 +72,7 @@
         "GET",
         "POST",
         "PUT",
-        "DELETE",
+        "DELETE"
       ]
     },
     "photos_settings": {
