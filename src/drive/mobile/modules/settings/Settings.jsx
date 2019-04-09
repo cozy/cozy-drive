@@ -51,7 +51,7 @@ class Settings extends Component {
               isDebug={isDebug}
               sendFeedback={this.displayFeedbackForm}
             />
-            <About onTap={this.incrementTapCount} />
+            <About onTap={this.incrementTapCount} t={t} />
             <Unlink />
 
             {__DEVELOPMENT__ && [

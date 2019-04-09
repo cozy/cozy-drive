@@ -11,7 +11,7 @@ import {
 
 export class Unlink extends Component {
   static contextTypes = {
-        client: PropTypes.object.isRequired
+    client: PropTypes.object.isRequired
   }
   render() {
     const { t, unlink, clientSettings } = this.props
@@ -34,14 +34,11 @@ export class Unlink extends Component {
     )
   }
 }
-Unlink.PropTypes = {
+Unlink.propTypes = {
   t: PropTypes.func,
   unlink: PropTypes.func,
   clientSettings: PropTypes.object,
   router: PropTypes.object
-}
-Unlink.contextTypes = {
-  client: PropTypes.func
 }
 
 const mapStateToProps = state => ({
