@@ -31,9 +31,21 @@ export default class Timeline extends Commons {
       )
     await t.takeScreenshot()
     const allPhotosEndCount = await this.getPhotosCount('After')
-    await t
-      .expect(allPhotosEndCount)
-      .eql(t.ctx.totalFilesCount + numOfFiles)
+    await t.expect(allPhotosEndCount).eql(t.ctx.totalFilesCount + numOfFiles)
+  }
+
+  async takeScreenshotsForUpload(screenshotsPath, hasMask = false) {
+    await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
+      selectors.divUpload,
+      `${screenshotsPath}-Divupload`
+    )
+    //add wait to avoid thumbnail error on screenshots
+    await t.wait(THUMBNAIL_DELAY)
+    //relaod page to load thumbnails
+    await t.eval(() => location.reload(true))
+    await this.waitForLoading()
+
+    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
   }
 
   async checkCozyBarOnTimeline() {
@@ -81,8 +93,6 @@ export default class Timeline extends Commons {
       allPhotosEndCount = await this.getPhotosCount('After')
     }
 
-    await t
-      .expect(allPhotosEndCount)
-      .eql(t.ctx.totalFilesCount - numOfFiles)
+    await t.expect(allPhotosEndCount).eql(t.ctx.totalFilesCount - numOfFiles)
   }
 }
