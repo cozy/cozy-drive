@@ -110,7 +110,6 @@ export class PdfJsViewer extends Component {
     } = this.state
 
     if (errored) return <NoViewer file={url} />
-    const pageWidth = width ? width * scale : null // newer versions of react-pdf do that automatically
 
     return (
       <div
@@ -130,7 +129,8 @@ export class PdfJsViewer extends Component {
               <Page
                 key={page}
                 pageNumber={page + 1}
-                width={pageWidth}
+                width={width}
+                scale={scale}
                 renderAnnotations={false}
                 className={cx('u-mv-1', styles['pho-viewer-pdfviewer-page'])}
               />
@@ -138,7 +138,8 @@ export class PdfJsViewer extends Component {
           ) : (
             <Page
               pageNumber={currentPage}
-              width={pageWidth}
+              width={width}
+              scale={scale}
               renderAnnotations={false}
               className={styles['pho-viewer-pdfviewer-page']}
             />
