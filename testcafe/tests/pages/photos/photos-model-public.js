@@ -45,7 +45,7 @@ export default class PublicPhotos extends Photos {
     await t
       .expect(getPageUrl())
       .eql(
-        'https://manager.cozycloud.cc/cozy/create?pk_campaign=sharing-photos'
+        'https://manager.cozycloud.cc/cozy/create?pk_campaign=sharing-photos&pk_kwd=cozy'
       )
     await goBack()
     await this.waitForLoading()

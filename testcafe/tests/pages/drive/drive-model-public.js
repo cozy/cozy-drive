@@ -111,7 +111,9 @@ export default class PublicDrivePage extends DrivePage {
   async checkCreateCozy() {
     await t
       .expect(getPageUrl())
-      .eql('https://manager.cozycloud.cc/cozy/create?pk_campaign=sharing-drive')
+      .eql(
+        'https://manager.cozycloud.cc/cozy/create?pk_campaign=sharing-drive&pk_kwd=cozy'
+      )
 
     await goBack()
   }
