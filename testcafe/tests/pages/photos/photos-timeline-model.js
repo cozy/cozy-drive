@@ -1,8 +1,7 @@
 import { t } from 'testcafe'
 import {
   getElementWithTestId,
-  isExistingAndVisibile,
-  checkAllImagesExists
+  isExistingAndVisibile
 } from '../../helpers/utils'
 import { THUMBNAIL_DELAY } from '../../helpers/data'
 import Commons from './photos-model'
