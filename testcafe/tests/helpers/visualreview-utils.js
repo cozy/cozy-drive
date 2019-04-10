@@ -101,10 +101,13 @@ export class VisualReviewTestcafe extends VisualReview {
       process.env.vrErrorMsg = `${
         process.env.vrErrorMsg
       } <li>${vrMessageUrl}</li>`
-
-      throw new Error(vrMessageUrl)
+      console.log(`${vrMessageUrl}`)
     } else {
-      console.log(`Screenshots status : accepted`)
+      console.log(
+        `✅ ${runAnalysis.analysis.projectName} : ${
+          runAnalysis.analysis.suiteName
+        } : Screenshots accepted`
+      )
     }
   }
 }
