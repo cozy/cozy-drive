@@ -1,8 +1,7 @@
 import { t } from 'testcafe'
 import {
   getElementWithTestId,
-  isExistingAndVisibile,
-  checkAllImagesExists
+  isExistingAndVisibile
 } from '../../helpers/utils'
 import Commons from './photos-model'
 
@@ -79,7 +78,6 @@ export default class Timeline extends Commons {
   async waitForLoading() {
     await t.expect(this.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(this.contentWrapper, 'Content Wrapper')
-    await checkAllImagesExists()
   }
 
   //@param { number } numOfFiles : number of file to delete
