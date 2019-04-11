@@ -1,8 +1,7 @@
 import { Selector, t } from 'testcafe'
 import {
   getElementWithTestId,
-  isExistingAndVisibile,
-  checkAllImagesExists
+  isExistingAndVisibile
 } from '../../helpers/utils'
 
 export default class DrivePage {
@@ -124,7 +123,6 @@ export default class DrivePage {
         await isExistingAndVisibile(this.folderOrFileName, 'folder list')
       }
     }
-    await checkAllImagesExists()
     console.log('Loading Ok')
   }
 

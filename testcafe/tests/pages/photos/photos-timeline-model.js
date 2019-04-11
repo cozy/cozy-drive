@@ -1,6 +1,7 @@
 import { t } from 'testcafe'
 import {
   getElementWithTestId,
+  checkAllImagesExists,
   isExistingAndVisibile
 } from '../../helpers/utils'
 import { THUMBNAIL_DELAY } from '../../helpers/data'
@@ -57,8 +58,8 @@ export default class Timeline extends Commons {
     await t.wait(THUMBNAIL_DELAY)
     //relaod page to load thumbnails
     await t.eval(() => location.reload(true))
-    await this.waitForLoading()
     await checkAllImagesExists()
+    await this.waitForLoading()
 
     await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
   }
