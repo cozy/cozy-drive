@@ -1,39 +1,19 @@
 import { t } from 'testcafe'
-import {
-  getElementWithTestId,
-  isExistingAndVisibile
-} from '../../helpers/utils'
+import { isExistingAndVisibile } from '../../helpers/utils'
 import DrivePage from '../drive/drive-model'
 import Viewer from '../viewer/viewer-model'
 import { THUMBNAIL_DELAY } from '../../helpers/data'
+import * as selectors from '../selectors'
 
 const drivePage = new DrivePage()
 
 export default class ViewerDrive extends Viewer {
-  constructor() {
-    super()
-    //Viewer type
-    this.audioViewer = getElementWithTestId('viewer-audio')
-    this.audioViewerControls = this.audioViewer.find('audio')
-    this.txtViewer = getElementWithTestId('viewer-text')
-    this.txtViewerContent = this.txtViewer.find(
-      '[class*="pho-viewer-textviewer-content"]'
-    )
-    this.videoViewer = getElementWithTestId('viewer-video')
-    this.videoViewerControls = this.videoViewer.find('video')
-    this.noViewer = getElementWithTestId('viewer-noviewer')
-    this.btnNoViewerDownload = this.noViewer.find('button')
-
-    this.pdfViewer = getElementWithTestId('viewer-pdf')
-    this.btnPdfViewerDownload = this.pdfViewer.find('#download')
-  }
-
   //@param {String} fileName
   async openViewerForFile(fileName) {
     await t
-      .expect(drivePage.folderOrFileName.withText(fileName).exists)
+      .expect(selectors.folderOrFileName.withText(fileName).exists)
       .ok(`No folder named ${fileName}`)
-      .click(drivePage.folderOrFileName.withText(fileName))
+      .click(selectors.folderOrFileName.withText(fileName))
 
     await this.waitForLoading()
     console.log(`Navigation to ${fileName} OK!`)
@@ -88,9 +68,9 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for audioViewer
   async checkAudioViewer() {
-    await isExistingAndVisibile(this.audioViewer, 'Audio viewer')
+    await isExistingAndVisibile(selectors.audioViewer, 'Audio viewer')
     await isExistingAndVisibile(
-      this.audioViewerControls,
+      selectors.audioViewerControls,
       'Audio viewer controls'
     )
     if (t.fixtureCtx.isVR) {
@@ -101,9 +81,9 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for videoViewer
   async checkVideoViewer() {
-    await isExistingAndVisibile(this.videoViewer, 'Video viewer')
+    await isExistingAndVisibile(selectors.videoViewer, 'Video viewer')
     await isExistingAndVisibile(
-      this.videoViewerControls,
+      selectors.videoViewerControls,
       'Video viewer controls'
     )
     if (t.fixtureCtx.isVR) {
@@ -114,27 +94,32 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for textViewer
   async checkTextViewer() {
-    await isExistingAndVisibile(this.txtViewer, 'text viewer')
-    await isExistingAndVisibile(this.txtViewerContent, 'text viewer controls')
+    await isExistingAndVisibile(selectors.txtViewer, 'text viewer')
+    await isExistingAndVisibile(
+      selectors.txtViewerContent,
+      'text viewer controls'
+    )
   }
 
   //Specific check for no viewer : other download btn
   async checkNoViewer() {
-    await isExistingAndVisibile(this.noViewer, 'no-viewer Viewer')
+    await isExistingAndVisibile(selectors.noViewer, 'no-viewer Viewer')
   }
 
   //Specific check for no viewer : other download btn
   async checkNoViewerDownload() {
     await isExistingAndVisibile(
-      this.btnNoViewerDownload,
+      selectors.btnNoViewerDownload,
       'no Viewer Download button'
     )
-    await t.setNativeDialogHandler(() => true).click(this.btnNoViewerDownload)
+    await t
+      .setNativeDialogHandler(() => true)
+      .click(selectors.btnNoViewerDownload)
   }
 
   //Specific check for pdf viewer : download btn
   async checkPdfViewer() {
     await t.takeScreenshot()
-    await isExistingAndVisibile(this.pdfViewer, 'Pdf Viewer')
+    await isExistingAndVisibile(selectors.pdfViewer, 'Pdf Viewer')
   }
 }

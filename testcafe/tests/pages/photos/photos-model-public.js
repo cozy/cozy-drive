@@ -1,44 +1,15 @@
-import { t, Selector } from 'testcafe'
-import {
-  getPageUrl,
-  getElementWithTestId,
-  isExistingAndVisibile,
-  goBack
-} from '../../helpers/utils'
+import { t } from 'testcafe'
+import { getPageUrl, isExistingAndVisibile, goBack } from '../../helpers/utils'
+import * as selectors from '../selectors'
 import Photos from './photos-model'
 
 export default class PublicPhotos extends Photos {
-  constructor() {
-    super()
-    this.logo = Selector('.coz-nav-apps-btns-home')
-
-    this.albumPublicLayout = getElementWithTestId('pho-public-layout')
-    this.toolbarPublicAlbum = getElementWithTestId('pho-toolbar-album-public')
-    this.btnPublicCreateCozy = this.toolbarPublicAlbum.find(
-      '[class*="pho-public-mycozy"]'
-    )
-
-    this.btnPublicDownload = getElementWithTestId('album-public-download')
-    this.btnPublicDownloadMobile = getElementWithTestId(
-      'album-public-download-mobile'
-    )
-    this.btnPublicCreacteCozyMobile = getElementWithTestId(
-      'album-public-create-cozy-mobile'
-    )
-
-    this.btnMoreButton = getElementWithTestId('more-button').find('button')
-    this.innerPublicMoreMenu = Selector('[class*="c-menu__inner--opened"]')
-    this.btnPublicDownloadMobile = getElementWithTestId(
-      'album-public-download-mobile'
-    )
-
-    //not available
-    this.errorAvailable = getElementWithTestId('empty-share')
-  }
-
   async waitForLoading() {
-    await t.expect(this.loading.exists).notOk('Page still loading')
-    await isExistingAndVisibile(this.albumPublicLayout, 'Album Public Layout')
+    await t.expect(selectors.loading.exists).notOk('Page still loading')
+    await isExistingAndVisibile(
+      selectors.albumPublicLayout,
+      'Album Public Layout'
+    )
   }
 
   async checkCreateCozy() {
@@ -52,35 +23,44 @@ export default class PublicPhotos extends Photos {
   }
 
   async checkActionMenuAlbumPublicDesktop() {
-    await isExistingAndVisibile(this.logo, 'Logo')
-    await isExistingAndVisibile(this.toolbarPublicAlbum, 'toolbarPublicAlbum')
+    await isExistingAndVisibile(selectors.logo, 'Logo')
     await isExistingAndVisibile(
-      this.btnPublicCreateCozy,
+      selectors.toolbarAlbumPublic,
+      'toolbarAlbumPublic'
+    )
+    await isExistingAndVisibile(
+      selectors.btnAlbumPublicCreateCozyMobileDesktop,
       'Create my Cozy Button'
     )
-    await isExistingAndVisibile(this.btnPublicDownload, 'Download FolderButton')
+    await isExistingAndVisibile(
+      selectors.btnPublicDownloadPhotosDesktop,
+      'Download FolderButton'
+    )
   }
 
   async checkActionMenuAlbumPublicMobile() {
-    await isExistingAndVisibile(this.btnMoreButton, '[...] Menu')
-    await t.click(this.btnMoreButton)
-    await isExistingAndVisibile(this.innerPublicMoreMenu, 'inner [...] Menu')
+    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Menu')
+    await t.click(selectors.btnMoreMenu)
     await isExistingAndVisibile(
-      this.btnPublicCreacteCozyMobile,
+      selectors.innerPublicMoreMenu,
+      'inner [...] Menu'
+    )
+    await isExistingAndVisibile(
+      selectors.btnAlbumPublicCreateCozyMobile,
       'Create my Cozy Button (Mobile)'
     )
     await isExistingAndVisibile(
-      this.btnPublicDownloadMobile,
+      selectors.btnPublicDownloadPhotosMobile,
       'Mobile download button'
     )
     // Close [...] menu after check
-    await t.click(this.btnMoreButton)
+    await t.click(selectors.btnMoreMenu)
   }
 
   async checkNotAvailable() {
-    await isExistingAndVisibile(this.errorAvailable, 'Not available div')
+    await isExistingAndVisibile(selectors.errorAvailable, 'Not available div')
     await t
-      .expect(this.errorAvailable.innerText)
+      .expect(selectors.errorAvailable.innerText)
       .contains('Sorry, this link is no longer available.') //!FIXME
   }
 }

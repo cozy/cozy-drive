@@ -1,6 +1,6 @@
 import { driveUser } from '../helpers/roles'
 import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from '../helpers/utils'
-
+import * as selectors from '../pages/selectors'
 import PrivateDrivePage from '../pages/drive/drive-model-private'
 
 const privateDrivePage = new PrivateDrivePage()
@@ -17,52 +17,52 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
     '↳ ℹ️  Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash'
   )
   //Check Menu and links. Go to page. Check main menu on each page
-  await isExistingAndVisibile(privateDrivePage.sidebar, 'Sidebar')
+  await isExistingAndVisibile(selectors.sidebar, 'Sidebar')
 
   //!FIXME change params to use key/keyword
   await privateDrivePage.isSidebarButton(
-    privateDrivePage.btnNavToRecent,
+    selectors.btnNavToRecent,
     '#/recent',
     'Recent'
   )
   await privateDrivePage.clickOnSidebarButton(
-    privateDrivePage.btnNavToRecent,
+    selectors.btnNavToRecent,
     '#/recent',
     'Recent'
   )
   await privateDrivePage.checkMainMenu()
 
   await privateDrivePage.isSidebarButton(
-    privateDrivePage.btnNavToFolder,
+    selectors.btnNavToFolder,
     '#/folder',
     'Drive'
   )
   await privateDrivePage.clickOnSidebarButton(
-    privateDrivePage.btnNavToFolder,
+    selectors.btnNavToFolder,
     '#/folder',
     'Drive'
   )
   await privateDrivePage.checkMainMenu()
 
   await privateDrivePage.isSidebarButton(
-    privateDrivePage.btnNavToSharing,
+    selectors.btnNavToSharing,
     '#/sharings',
     'Sharing'
   )
   await privateDrivePage.clickOnSidebarButton(
-    privateDrivePage.btnNavToSharing,
+    selectors.btnNavToSharing,
     '#/sharings',
     'Sharing'
   )
   await privateDrivePage.checkMainMenu()
 
   await privateDrivePage.isSidebarButton(
-    privateDrivePage.btnNavToTrash,
+    selectors.btnNavToTrash,
     '#/trash',
     'Trash'
   )
   await privateDrivePage.clickOnSidebarButton(
-    privateDrivePage.btnNavToTrash,
+    selectors.btnNavToTrash,
     '#/trash',
     'Trash'
   )

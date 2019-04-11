@@ -6,6 +6,7 @@ import {
   setDownloadPath,
   TESTCAFE_DRIVE_URL
 } from '../helpers/utils'
+import * as selectors from '../pages/selectors'
 import PrivateDrivePage from '../pages/drive/drive-model-private'
 import PublicDrivePage from '../pages/drive/drive-model-public'
 
@@ -46,12 +47,9 @@ test('Drive : from Drive, go in a folder, upload a file, and share the folder', 
   ])
   await privateDrivePage.shareFolderPublicLink()
 
-  const link = await privateDrivePage.copyBtnShareByLink.getAttribute(
-    'data-test-url'
-  )
+  const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
-    
   }
   console.groupEnd()
 })
@@ -84,8 +82,8 @@ test(`[Desktop] Drive : Access a folder public link, download the file(s), and c
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
-    .click(publicDrivePage.btnPublicDownload)
-    .click(publicDrivePage.btnPublicCreateCozyFolder)
+    .click(selectors.btnPublicDownloadDrive)
+    .click(selectors.btnDrivePublicCreateCozy)
   await publicDrivePage.checkCreateCozy()
   await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
 
@@ -106,9 +104,9 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
-    .click(publicDrivePage.btnPublicMobileDownload)
-    .click(publicDrivePage.btnPublicMoreMenuFolder) //need to re-open the more menu
-    .click(publicDrivePage.btnPublicMobileCreateCozy)
+    .click(selectors.btnPublicMobileDownload)
+    .click(selectors.btnMoreMenu) //need to re-open the more menu
+    .click(selectors.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
   await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
 

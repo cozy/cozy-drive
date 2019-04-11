@@ -8,6 +8,7 @@ import {
   setDownloadPath
 } from '../helpers/utils'
 import { VisualReviewTestcafe } from '../helpers/visualreview-utils'
+import * as selectors from '../pages/selectors'
 
 import TimelinePage from '../pages/photos/photos-timeline-model'
 import AlbumPage from '../pages/photos-album/album-model'
@@ -69,9 +70,7 @@ test(`${TEST_SHARE_ALBUM}`, async () => {
   await photoAlbumsPage.goToAlbum(FEATURE_PREFIX)
   await photoAlbumPage.shareAlbumPublicLink()
 
-  const link = await photoAlbumPage.copyBtnShareByLink.getAttribute(
-    'data-test-url'
-  )
+  const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
     console.log(`data.sharingLink : ` + data.sharingLink)
@@ -137,8 +136,8 @@ test(`${TEST_PUBLIC_ALBUM_DESKTOP}`, async t => {
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
-    .click(publicPhotoPage.btnPublicDownload)
-    .click(publicPhotoPage.btnPublicCreateCozy)
+    .click(selectors.btnPublicDownloadPhotosDesktop)
+    .click(selectors.btnAlbumPublicCreateCozyMobileDesktop)
   await publicPhotoPage.checkCreateCozy()
   console.groupEnd()
 })
@@ -162,10 +161,10 @@ test(`${TEST_PUBLIC_ALBUM_MOBILE}`, async t => {
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
-    .click(publicPhotoPage.btnMoreButton)
-    .click(publicPhotoPage.btnPublicDownloadMobile)
-    .click(publicPhotoPage.btnMoreButton)
-    .click(publicPhotoPage.btnPublicCreacteCozyMobile)
+    .click(selectors.btnMoreMenu)
+    .click(selectors.btnPublicDownloadPhotosMobile)
+    .click(selectors.btnMoreMenu)
+    .click(selectors.btnAlbumPublicCreateCozyMobile)
   await publicPhotoPage.checkCreateCozy()
 
   await t.maximizeWindow() //Back to desktop

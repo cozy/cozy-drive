@@ -13,10 +13,9 @@ import {
   maskDeleteFolder,
   maskMoveMoadal
 } from '../helpers/data'
+import * as selectors from '../pages/selectors'
 import PrivateDrivePage from '../pages/drive/drive-model-private'
-import Modal from '../pages/drive/drive-modal-model'
 
-const moveMoadal = new Modal()
 const privateDrivePage = new PrivateDrivePage()
 
 //Scenario const
@@ -172,8 +171,8 @@ test(`${TEST_MOVE_FILE_CANCEL}`, async t => {
     `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-2`,
     true
   )
-  await isExistingAndVisibile(moveMoadal.modalClose, 'Modal button close')
-  await t.click(moveMoadal.modalClose)
+  await isExistingAndVisibile(selectors.modalClose, 'Modal button close')
+  await t.click(selectors.modalClose)
   await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-3`,
@@ -192,8 +191,8 @@ test(`${TEST_MOVE_FILE_CANCEL}`, async t => {
   console.log('Show Move Moadal, and Cancel (Cancel button)')
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // no need to screenshot again the modal
-  await isExistingAndVisibile(moveMoadal.modalFirstButton)
-  await t.click(moveMoadal.modalFirstButton)
+  await isExistingAndVisibile(selectors.btnModalFirstButton)
+  await t.click(selectors.btnModalFirstButton)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-5`,
     true
@@ -213,7 +212,7 @@ test(`${TEST_MOVE_FILE}`, async t => {
     `${FEATURE_PREFIX}/${TEST_MOVE_FILE}-1`,
     true
   )
-  await moveMoadal.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
+  await privateDrivePage.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
   await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_MOVE_FILE}-2`,
@@ -232,7 +231,7 @@ test(`${TEST_MOVE_FOLDER}`, async t => {
     `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-1`,
     true
   )
-  await moveMoadal.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
+  await privateDrivePage.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
   await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-2`,
@@ -284,7 +283,7 @@ test(`${TEST_RESTORE_FOLDER}`, async t => {
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_RESTORE_FOLDER} "${FEATURE_PREFIX}-Folder1"`
   )
   await privateDrivePage.clickOnSidebarButton(
-    privateDrivePage.btnNavToTrash,
+    selectors.btnNavToTrash,
     '#/trash',
     'Trash'
   )
@@ -296,7 +295,7 @@ test(`${TEST_RESTORE_FOLDER}`, async t => {
     `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-1`,
     true
   )
-  await t.click(privateDrivePage.restoreButtonActionMenu).wait(1000)
+  await t.click(selectors.btnRestoreActionMenu).wait(1000)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-2`,
     true
@@ -314,15 +313,15 @@ test(`${TEST_DELETE_FOLDER_FROM_DRIVE}`, async t => {
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-1`
   )
-  await t.click(privateDrivePage.removeButtonActionMenu)
-  await isExistingAndVisibile(privateDrivePage.modalFooter, 'Modal delete')
+  await t.click(selectors.btnRemoveActionMenu)
+  await isExistingAndVisibile(selectors.modalFooter, 'Modal delete')
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-2`
   )
-  await t.click(privateDrivePage.modalSecondButton)
+  await t.click(selectors.btnModalSecondButton)
   await isExistingAndVisibile(
-    privateDrivePage.alertWrapper,
+    selectors.alertWrapper,
     '"successfull" modal alert'
   )
 
@@ -335,7 +334,7 @@ test(`${TEST_DELETE_FOLDER_FROM_DRIVE}`, async t => {
 test(`${TEST_NAVIGATE_IN_TRASH}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_NAVIGATE_IN_TRASH}`)
   await privateDrivePage.clickOnSidebarButton(
-    privateDrivePage.btnNavToTrash,
+    selectors.btnNavToTrash,
     '#/trash',
     'Trash'
   )
@@ -360,7 +359,7 @@ test(`${TEST_NAVIGATE_IN_TRASH}`, async t => {
 test(`${TEST_EMPTY_TRASH}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_EMPTY_TRASH}`)
   await privateDrivePage.clickOnSidebarButton(
-    privateDrivePage.btnNavToTrash,
+    selectors.btnNavToTrash,
     '#/trash',
     'Trash'
   )
