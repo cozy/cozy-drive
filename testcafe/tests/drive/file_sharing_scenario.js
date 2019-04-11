@@ -9,6 +9,7 @@ import {
 import PrivateDrivePage from '../pages/drive/drive-model-private'
 import PublicDrivePage from '../pages/drive/drive-model-public'
 import PublicViewerPage from '../pages/drive-viewer/drive-viewer-model-public'
+import * as selectors from '../pages/selectors'
 
 let data = require('../helpers/data')
 const privateDrivePage = new PrivateDrivePage()
@@ -49,9 +50,7 @@ test('Drive : from Drive, go in a folder, upload a file, and share the file', as
   ])
   await privateDrivePage.shareFirstFilePublicLink()
 
-  const link = await privateDrivePage.copyBtnShareByLink.getAttribute(
-    'data-test-url'
-  )
+  const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
   }
@@ -85,8 +84,8 @@ test(`[Desktop] Drive : Access a file public link, download the file, and check 
   await publicDrivePage.checkActionMenuPublicDesktop('file')
   await t
     .setNativeDialogHandler(() => true)
-    .click(publicDrivePage.btnPublicDownload)
-    .click(publicDrivePage.btnPublicCreateCozyFile)
+    .click(selectors.btnPublicDownloadDrive)
+    .click(selectors.btnViewerPublicCreateCozy)
   await publicDrivePage.checkCreateCozy()
   await publicViewerPage.waitForLoading()
 
@@ -106,9 +105,9 @@ test(`[Mobile] Drive : Access a file public link, download the file, and check t
   await publicDrivePage.checkActionMenuPublicMobile('file')
   await t
     .setNativeDialogHandler(() => true)
-    .click(publicDrivePage.btnPublicMobileDownload)
-    .click(publicDrivePage.btnPublicMoreMenuFile) //need to re-open the more menu
-    .click(publicDrivePage.btnPublicMobileCreateCozy)
+    .click(selectors.btnPublicMobileDownload)
+    .click(selectors.btnMoreMenu) //need to re-open the more menu
+    .click(selectors.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
   await publicViewerPage.waitForLoading()
 

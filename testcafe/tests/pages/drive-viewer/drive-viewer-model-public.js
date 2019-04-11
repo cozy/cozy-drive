@@ -3,6 +3,7 @@ import { PRECISION } from '../../helpers/visualreview-utils'
 import PublicDriveVRPage from '../drive/drive-model-public'
 import ViewerPage from './drive-viewer-model'
 import { THUMBNAIL_DELAY } from '../../helpers/data'
+import * as selectors from '../selectors'
 
 const publicDrivePage = new PublicDriveVRPage()
 
@@ -40,7 +41,7 @@ export default class PublicViewerPage extends ViewerPage {
     }
     await t.wait(THUMBNAIL_DELAY)
     //avoid unwanted hover for screenshots
-    await t.hover(this.viewerControls, {
+    await t.hover(selectors.viewerControls, {
       offsetX: 0,
       offsetY: 0
     })
@@ -67,7 +68,7 @@ export default class PublicViewerPage extends ViewerPage {
     await this.openViewerForFile(fileName)
     await t.wait(THUMBNAIL_DELAY)
     //avoid unwanted hover for screenshots
-    await t.hover(this.viewerControls, {
+    await t.hover(selectors.viewerControls, {
       offsetX: 0,
       offsetY: 0
     })
@@ -93,7 +94,7 @@ export default class PublicViewerPage extends ViewerPage {
     await this.openViewerForFile(fileName)
 
     //avoid unwanted hover for screenshots
-    await t.hover(this.viewerControls, {
+    await t.hover(selectors.viewerControls, {
       offsetX: 0,
       offsetY: 0
     })

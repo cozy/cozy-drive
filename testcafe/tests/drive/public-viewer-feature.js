@@ -12,6 +12,7 @@ let data = require('../helpers/data')
 import PrivateDriveVRPage from '../pages/drive/drive-model-private'
 import PublicDrivePage from '../pages/drive/drive-model-public'
 import PublicViewerPage from '../pages/drive-viewer/drive-viewer-model-public'
+import * as selectors from '../pages/selectors'
 
 const privateDrivePage = new PrivateDriveVRPage()
 const publicDrivePage = new PublicDrivePage()
@@ -88,9 +89,7 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
     true
   )
 
-  const link = await privateDrivePage.copyBtnShareByLink.getAttribute(
-    'data-test-url'
-  )
+  const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
   }

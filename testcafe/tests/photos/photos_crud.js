@@ -19,7 +19,7 @@ test('Select 1 pic from Photos view', async () => {
   console.group('↳ ℹ️  Select 1 pic from Photos view')
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await timelinePage.selectPhotos(1)
-  await timelinePage.checkPhotobar()
+  await timelinePage.checkCozyBarOnTimeline()
   console.groupEnd()
 })
 
@@ -27,7 +27,7 @@ test('Select 3 pic from Photos view', async () => {
   console.group('↳ ℹ️  Select 3 pic from Photos view')
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await timelinePage.selectPhotos(3)
-  await timelinePage.checkPhotobar()
+  await timelinePage.checkCozyBarOnTimeline()
   console.groupEnd()
 })
 
