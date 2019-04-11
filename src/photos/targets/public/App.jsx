@@ -98,7 +98,6 @@ export class App extends Component {
 
                     <Menu
                       title={t('Toolbar.more')}
-                      data-test-id="more-button"
                       component={<MoreButton />}
                       position="right"
                       className="u-hide--desk"

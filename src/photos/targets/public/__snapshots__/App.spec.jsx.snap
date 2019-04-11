@@ -94,7 +94,6 @@ exports[`Public view should render children when they are present 1`] = `
           <Menu
             className="u-hide--desk"
             component={<Wrapper />}
-            data-test-id="more-button"
             disabled={false}
             itemsStyle={Object {}}
             onSelect={null}
@@ -227,7 +226,6 @@ exports[`Public view should render the album 1`] = `
           <Menu
             className="u-hide--desk"
             component={<Wrapper />}
-            data-test-id="more-button"
             disabled={false}
             itemsStyle={Object {}}
             onSelect={null}

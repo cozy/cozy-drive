@@ -105,7 +105,10 @@ MobileToolbar.propTypes = toolbarProptypes
 
 const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <BarRight>
-    <div className={toolbarstyles['toolbar-inside-bar']}>
+    <div
+      data-test-id="toolbar-viewer-public"
+      className={toolbarstyles['toolbar-inside-bar']}
+    >
       {discoveryLink ? (
         <OpenInCozyButton href={discoveryLink} t={t} size="small" />
       ) : (
@@ -124,7 +127,7 @@ CozybarToolbar.propTypes = toolbarProptypes
 
 const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <div
-    data-test-id="fil-toolbar-files-public"
+    data-test-id="toolbar-files-public"
     className={toolbarstyles['fil-toolbar-files']}
     role="toolbar"
   >
