@@ -39,7 +39,7 @@ class AlbumToolbar extends Component {
           />
         )}
         <Menu
-          data-test-id="more-btn-album"
+          data-test-id="more-button"
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
           component={<MoreButton />}
