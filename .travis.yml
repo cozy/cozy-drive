@@ -14,7 +14,6 @@ branches:
 stages:
   - prebuild
   - build
-dist: xenial
 jobs:
   include:
     - name: 'Lint'
@@ -36,7 +35,7 @@ jobs:
           sources:
             - google-chrome
           packages:
-            - google-chrome-stable fluxbox
+            - google-chrome-beta fluxbox
       before_script:
         - yarn run cozy-ci-transifex
         - scripts/decrypt.sh
