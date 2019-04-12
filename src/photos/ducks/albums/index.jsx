@@ -141,7 +141,7 @@ export const AlbumPhotosWithLoader = ({ children }) => (
         updateAlbum={updateAlbum}
         deleteAlbum={deleteAlbum}
         removePhotos={removePhotos}
-        hasMore={album.photos.hasMore}
+        hasMore={album.photos.next}
         fetchMore={album.photos.fetchMore.bind(album.photos)}
       >
         {children}
