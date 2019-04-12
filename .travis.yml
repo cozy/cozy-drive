@@ -35,7 +35,9 @@ jobs:
           sources:
             - google-chrome
           packages:
-            - google-chrome-beta fluxbox
+            - google-chrome-stable fluxbox
+      before_install:
+        - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
       before_script:
         - yarn run cozy-ci-transifex
         - scripts/decrypt.sh
