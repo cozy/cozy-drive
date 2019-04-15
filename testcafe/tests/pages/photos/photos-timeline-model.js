@@ -40,7 +40,10 @@ export default class Timeline extends Commons {
       .eql(t.ctx.totalFilesCount + numOfFiles)
   }
 
-  async takeScreenshotsForUpload(screenshotsPath, hasMask = false) {
+  async takeScreenshotsForUpload({
+    screenshotsPath: screenshotsPath,
+    withMask = false
+  }) {
     await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
       selectors.divUpload,
       `${screenshotsPath}-Divupload`
@@ -52,7 +55,12 @@ export default class Timeline extends Commons {
     await checkAllImagesExists()
     await this.waitForLoading()
 
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
+    if (withMask) {
+      await t.fixtureCtx.vr.setMaksCoordonnates(withMask)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, true)
+    } else {
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, false)
+    }
   }
 
   async checkCozyBarOnTimeline() {

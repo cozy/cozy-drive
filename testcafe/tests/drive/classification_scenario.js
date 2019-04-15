@@ -87,16 +87,16 @@ test(`${TEST_UPLOAD}`, async t => {
     `${FEATURE_PREFIX}/${TEST_UPLOAD}-1`
   )
   await privateDrivePage.uploadFiles([`${FILE_FROM_ZIP_PATH}/${FILE_PDF}`])
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await privateDrivePage.takeScreenshotsForUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD}-2`,
-    true
-  )
+
+  await privateDrivePage.takeScreenshotsForUpload({
+    screenshotsPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-2`,
+    withMask: maskDriveFolderWithDate
+  })
   await privateDrivePage.uploadFiles([`${FILE_FROM_ZIP_PATH}/${FILE_TXT}`])
-  await privateDrivePage.takeScreenshotsForUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD}-3`,
-    true
-  )
+  await privateDrivePage.takeScreenshotsForUpload({
+    screenshotsPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-3`,
+    withMask: maskDriveFolderWithDate
+  })
   console.groupEnd()
 })
 
@@ -225,11 +225,9 @@ test(`${TEST_MOVE_FOLDER}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_MOVE_FOLDER}`)
 
   await privateDrivePage.showMoveModalForElement(`${FEATURE_PREFIX}-Folder2`)
-  // move modale show up : we need a specific mask for it
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskMoveMoadal)
+  //No mask here, as screenshot show only folders, not files (So no date on screen)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-1`,
-    true
+    `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-1`
   )
   await privateDrivePage.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
   await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
@@ -363,9 +361,9 @@ test(`${TEST_EMPTY_TRASH}`, async t => {
     '#/trash',
     'Trash'
   )
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-
+  await t.fixtureCtx.vr.setMaksCoordonnates(maskDeleteFolder)
   await privateDrivePage.emptyTrash(`${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-1`)
+
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-2`
   )

@@ -27,7 +27,9 @@ test('Uploading 1 pic from Photos view', async t => {
   await timelinePage.initPhotoCountZero()
   await timelinePage.uploadPhotos([`${DATA_PATH}/${IMG0}`])
 
-  await timelinePage.takeScreenshotsForUpload('UploadImage/Upload-1-pic')
+  await timelinePage.takeScreenshotsForUpload({
+    screenshotsPath: 'UploadImage/Upload-1-pic'
+  })
   console.groupEnd()
 })
 
@@ -41,6 +43,8 @@ test('Uploading 4 pics from Photos view', async () => {
     `${DATA_PATH}/${IMG4}`
   ])
 
-  await timelinePage.takeScreenshotsForUpload('UploadImage/Upload-4-pic')
+  await timelinePage.takeScreenshotsForUpload({
+    screenshotsPath: 'UploadImage/Upload-4-pic'
+  })
   console.groupEnd()
 })
