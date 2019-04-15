@@ -161,7 +161,10 @@ export default class privateDrivePage extends DrivePage {
     }
   }
 
-  async takeScreenshotsForUpload(screenshotsPath, hasMask = false) {
+  async takeScreenshotsForUpload({
+    screenshotsPath: screenshotsPath,
+    withMask = false
+  }) {
     await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
       selectors.divUpload,
       `${screenshotsPath}-Divupload`
@@ -172,7 +175,12 @@ export default class privateDrivePage extends DrivePage {
     await t.eval(() => location.reload(true))
     await this.waitForLoading()
 
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
+    if (withMask) {
+      await t.fixtureCtx.vr.setMaksCoordonnates(withMask)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, true)
+    } else {
+      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, false)
+    }
   }
 
   async shareFolderPublicLink() {

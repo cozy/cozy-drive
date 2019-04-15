@@ -65,7 +65,11 @@ export const maskSharedWholePublicFolder = {
   width: 140,
   y: 180
 }
-export const maskAudioViewerDesktop = { height: 27, x: 160, width: 108, y: 415 }
-export const maskAudioViewerMobile = { height: 25, x: 199, width: 90, y: 409 }
+export const maskAudioViewerDesktop = { height: 30, x: 929, width: 100, y: 620 }
+export const maskAudioViewerMobile = { height: 30, x: 155, width: 99, y: 413 }
+
+export const maskVideoViewerDesktop = { height: 40, x: 720, width: 484, y: 617 }
+export const maskVideoViewerMobile = { height: 25, x: 12, width: 353, y: 381 }
+
 export const maskDeleteFolder = { height: 918, x: 916, width: 140, y: 300 }
 export const maskMoveMoadal = { height: 115, x: 905, width: 140, y: 237 }

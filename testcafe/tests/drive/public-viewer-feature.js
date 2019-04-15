@@ -74,13 +74,11 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
     `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-1`
   )
   await privateDrivePage.uploadFiles(data.filesList)
-  //add wait to avoid thumbnail error on screenshots
 
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDriveFolderWithDate)
-  await privateDrivePage.takeScreenshotsForUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
-    true
-  )
+  await privateDrivePage.takeScreenshotsForUpload({
+    screenshotsPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
+    withMask: data.maskDriveFolderWithDate
+  })
   await privateDrivePage.shareFolderPublicLink()
 
   await t.fixtureCtx.vr.setMaksCoordonnates(data.maskShareFolder)
@@ -225,14 +223,19 @@ test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_VIDEO)
   t.ctx.fileDownloaded = data.FILE_VIDEO
 
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskVideoViewerDesktop)
   await publicViewerPage.openFileAndCheckPublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-1`,
     data.FILE_VIDEO,
-    'video'
+    'video',
+    true
   )
+
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskVideoViewerMobile)
   await publicViewerPage.openFileAndCheckMobilePublicViewer(
     `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-mob1`,
-    data.FILE_VIDEO
+    data.FILE_VIDEO,
+    true
   )
   console.groupEnd()
 })
@@ -274,7 +277,7 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_DELETE_FOLDER}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER}`)
   await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskSharedWholePublicFolder)
+  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDriveFolderWithDate)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
     true
