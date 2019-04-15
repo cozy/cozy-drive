@@ -20,6 +20,14 @@ getRundeckStatus $INSTANCE_CREATE_EXECUTION_ID
 INSTANCE_CREATE_STATUS=$?
 
 if [ $INSTANCE_CREATE_STATUS == 0 ] ; then
+  if [[ "${LOG_OUTPUT,,}" == *"instance already exists"* ]]; then
+    source ./scripts/delete-instance.sh
+    source ./scripts/create-deploy-test.sh
+  elif [[ "${LOG_OUTPUT,,}" != *"instance already exists"* ]] && [[ "${LOG_OUTPUT,,}" == *"error"* ]]; then
+  # error other than instance already exists
+    exit 1;
+  fi
+
   INSTANCE_TESTCAFE=$(echo $LOG_OUTPUT  | grep -o -P "(?<=instance_fqdn: ).*?(?=' level)")
   echo "↳ ℹ️  Instance $INSTANCE_TESTCAFE"
   echo "export INSTANCE_TESTCAFE=$INSTANCE_TESTCAFE" > setinstance.sh
