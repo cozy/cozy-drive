@@ -59,9 +59,6 @@ export const initBar = async client => {
   })
 }
 
-export const updateBarAccessToken = accessToken =>
-  cozy.bar.updateAccessToken(accessToken)
-
 export const restoreCozyClientJs = (uri, clientInfos, token) => {
   const offline = { doctypes: ['io.cozy.files'] }
   cozy.client.init({
