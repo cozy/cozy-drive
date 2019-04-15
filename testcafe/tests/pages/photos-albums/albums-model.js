@@ -48,7 +48,7 @@ export default class AlbumsPage extends PhotoPage {
     const allPhotosAlbumCount = await albumPage.getPhotosToAddCount(
       'On create Album page'
     )
-    await t.expect(allPhotosAlbumCount).eql(t.ctx.allPhotosStartCount) //all photos are displayed
+    await t.expect(allPhotosAlbumCount).eql(t.ctx.totalFilesCount) //all photos are displayed
     await isExistingAndVisibile(
       selectors.btnValidateAlbum,
       'Create Album Button'

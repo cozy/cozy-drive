@@ -37,7 +37,7 @@ export default class Timeline extends Commons {
     const allPhotosEndCount = await this.getPhotosCount('After')
     await t
       .expect(allPhotosEndCount)
-      .eql(t.ctx.allPhotosStartCount + numOfFiles)
+      .eql(t.ctx.totalFilesCount + numOfFiles)
   }
 
   async takeScreenshotsForUpload(screenshotsPath, hasMask = false) {
@@ -102,6 +102,6 @@ export default class Timeline extends Commons {
 
     await t
       .expect(allPhotosEndCount)
-      .eql(t.ctx.allPhotosStartCount - numOfFiles)
+      .eql(t.ctx.totalFilesCount - numOfFiles)
   }
 }

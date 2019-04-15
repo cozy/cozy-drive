@@ -10,11 +10,11 @@ import * as selectors from '../selectors'
 export default class Page {
   async initPhotoCountZero() {
     console.log(`Number of pictures on page (Before test): 0`)
-    t.ctx.allPhotosStartCount = 0
+    t.ctx.totalFilesCount = 0
   }
 
   async initPhotosCount() {
-    t.ctx.allPhotosStartCount = await this.getPhotosCount('Before')
+    t.ctx.totalFilesCount = await this.getPhotosCount('Before')
   }
 
   async goToAlbums() {
