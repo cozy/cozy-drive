@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 source ./scripts/rundeck.sh
-source ./setinstance.sh
+INSTANCE_ID=$COZY_APP_SLUG$TRAVIS_PULL_REQUEST
 
 JOB_DELETE_TEST_INSTANCE="c11109ae-6690-4b9f-9471-e8d74e0e0b3c"
 
@@ -19,5 +19,5 @@ getRundeckStatus $INSTANCE_DELETE_EXECUTION_ID
 INSTANCE_DELETE_EXECUTION_STATUS=$?
 echo $INSTANCE_DELETE_EXECUTION_STATUS
 if [ $INSTANCE_DELETE_EXECUTION_STATUS == 0 ] ; then
-  echo "↳ ✅ Instance $INSTANCE_TESTCAFE deleted"
+  echo "↳ ✅ Instance testauto${INSTANCE_ID}.cozy.rocks deleted"
 fi
