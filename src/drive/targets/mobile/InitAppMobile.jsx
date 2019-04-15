@@ -204,6 +204,7 @@ class InitAppMobile {
       realOauthOptions =
         clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
       const token = getToken(store.getState())
+
       const stackClient = client.getStackClient()
 
       stackClient.setOAuthOptions(realOauthOptions)
@@ -215,7 +216,7 @@ class InitAppMobile {
         store.dispatch(setToken(token))
       }
       //In order to check if the token is good
-      await stackClient.fetchJSON('GET', '/settings/disk-usage')
+      await stackClient.fetchJSON('GET', '/apps/settings')
       shouldInitBar = true
       await store.dispatch(startReplication())
     } catch (e) {

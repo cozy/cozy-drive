@@ -1,7 +1,4 @@
-import {
-  restoreCozyClientJs,
-  updateBarAccessToken
-} from 'drive/mobile/lib/cozy-helper'
+import { restoreCozyClientJs } from 'drive/mobile/lib/cozy-helper'
 import { setUrl, setOffline } from 'drive/mobile/modules/settings/duck'
 import { startReplication } from 'drive/mobile/modules/replication/sagas'
 import { setClient, setToken } from './duck'
@@ -19,7 +16,6 @@ export const renewAuthorization = client => async dispatch => {
   const url = client.options.uri
   const { infos, token } = await client.renewAuthorization(url)
   restoreCozyClientJs(url, infos, token)
-  updateBarAccessToken(token)
   dispatch(setUrl(url))
   dispatch(saveCredentials(infos, token))
 }
