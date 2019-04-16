@@ -1,8 +1,17 @@
 import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
-import { DATA_PATH, IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
+import {
+  THUMBNAIL_DELAY,
+  DATA_PATH,
+  IMG0,
+  IMG1,
+  IMG2,
+  IMG3,
+  IMG4
+} from '../helpers/data'
 import { initVR } from '../helpers/visualreview-utils'
 import TimelinePage from '../pages/photos/photos-timeline-model'
+import * as selectors from '../pages/selectors'
 
 const timelinePage = new TimelinePage()
 
@@ -26,14 +35,20 @@ test('Uploading 1 pic from Photos view', async t => {
   ///there is no photos on page
   await timelinePage.initPhotoCountZero()
   await timelinePage.uploadPhotos([`${DATA_PATH}/${IMG0}`])
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `UploadImage/Upload-1-pic-Divupload`,
+    selector: selectors.divUpload
+  })
 
-  await timelinePage.takeScreenshotsForUpload({
-    screenshotsPath: 'UploadImage/Upload-1-pic'
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: 'UploadImage/Upload-1-pic',
+    delay: THUMBNAIL_DELAY,
+    pageToWait: timelinePage
   })
   console.groupEnd()
 })
 
-test('Uploading 4 pics from Photos view', async () => {
+test('Uploading 4 pics from Photos view', async t => {
   console.group('↳ ℹ️  Uploading 4 pics from Photos view')
   await timelinePage.initPhotosCount()
   await timelinePage.uploadPhotos([
@@ -42,9 +57,15 @@ test('Uploading 4 pics from Photos view', async () => {
     `${DATA_PATH}/${IMG3}`,
     `${DATA_PATH}/${IMG4}`
   ])
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `UploadImage/Upload-4-pic-Divupload`,
+    selector: selectors.divUpload
+  })
 
-  await timelinePage.takeScreenshotsForUpload({
-    screenshotsPath: 'UploadImage/Upload-4-pic'
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: 'UploadImage/Upload-4-pic',
+    delay: THUMBNAIL_DELAY,
+    pageToWait: timelinePage
   })
   console.groupEnd()
 })

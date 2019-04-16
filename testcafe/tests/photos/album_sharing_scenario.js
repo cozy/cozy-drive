@@ -123,15 +123,15 @@ test(`${TEST_PUBLIC_ALBUM_DESKTOP}`, async t => {
   await publicPhotoPage.checkActionMenuAlbumPublicDesktop()
 
   //Viewer
-  await photosViewer.openPhotoAndCheckViewer(
-    0,
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_ALBUM_DESKTOP}-1`
-  )
-  await photosViewer.openPhotoAndCheckViewerNavigation(
-    0,
-    3,
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_ALBUM_DESKTOP}-2`
-  )
+  await photosViewer.openPhotoAndCheckViewer({
+    index: 0,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_ALBUM_DESKTOP}-1`
+  })
+  await photosViewer.openPhotoAndCheckViewerNavigation({
+    startIndex: 0,
+    numberOfNavigation: 3,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_ALBUM_DESKTOP}-2`
+  })
 
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
@@ -153,10 +153,10 @@ test(`${TEST_PUBLIC_ALBUM_MOBILE}`, async t => {
   await publicPhotoPage.checkActionMenuAlbumPublicMobile()
 
   //Viewer
-  await photosViewer.openPhotoAndCheckViewer(
-    0,
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_ALBUM_MOBILE}-1`
-  )
+  await photosViewer.openPhotoAndCheckViewer({
+    index: 0,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_ALBUM_MOBILE}-1`
+  })
 
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed

@@ -1,9 +1,5 @@
 import { t } from 'testcafe'
-import {
-  isExistingAndVisibile,
-  checkAllImagesExists
-} from '../../helpers/utils'
-import { THUMBNAIL_DELAY } from '../../helpers/data'
+import { isExistingAndVisibile } from '../../helpers/utils'
 import * as selectors from '../selectors'
 import Commons from './photos-model'
 
@@ -38,29 +34,6 @@ export default class Timeline extends Commons {
     await t
       .expect(allPhotosEndCount)
       .eql(t.ctx.totalFilesCount + numOfFiles)
-  }
-
-  async takeScreenshotsForUpload({
-    screenshotsPath: screenshotsPath,
-    withMask = false
-  }) {
-    await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
-      selectors.divUpload,
-      `${screenshotsPath}-Divupload`
-    )
-    //add wait to avoid thumbnail error on screenshots
-    await t.wait(THUMBNAIL_DELAY)
-    //relaod page to load thumbnails
-    await t.eval(() => location.reload(true))
-    await checkAllImagesExists()
-    await this.waitForLoading()
-
-    if (withMask) {
-      await t.fixtureCtx.vr.setMaksCoordonnates(withMask)
-      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, true)
-    } else {
-      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, false)
-    }
   }
 
   async checkCozyBarOnTimeline() {

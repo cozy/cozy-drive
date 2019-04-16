@@ -56,7 +56,11 @@ export default class Viewer {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {number} startIndex : index of the 1st file to open
   //@param {number} numberOfNavigation : the number of file we want to go through during the test.
-  async navigateInViewer(screenshotPath, startIndex, numberOfNavigation) {
+  async navigateInViewer({
+    screenshotPath: screenshotPath,
+    startIndex: startIndex,
+    numberOfNavigation: numberOfNavigation
+  }) {
     console.log(
       `startIndex : ${startIndex} / numberOfNavigation : ${numberOfNavigation}`
     )
@@ -68,9 +72,9 @@ export default class Viewer {
         offsetY: 0
       })
       if (t.fixtureCtx.isVR)
-        await t.fixtureCtx.vr.takeScreenshotAndUpload(
-          `${screenshotPath}-${i}-next`
-        )
+        await t.fixtureCtx.vr.takeScreenshotAndUpload({
+          screenshotPath: `${screenshotPath}-${i}-next`
+        })
     }
 
     for (let i = startIndex + numberOfNavigation - 1; i > startIndex; i--) {
@@ -82,9 +86,9 @@ export default class Viewer {
         offsetY: 0
       })
       if (t.fixtureCtx.isVR)
-        await t.fixtureCtx.vr.takeScreenshotAndUpload(
-          `${screenshotPath}-${i}-prev`
-        )
+        await t.fixtureCtx.vr.takeScreenshotAndUpload({
+          screenshotPath: `${screenshotPath}-${i}-prev`
+        })
     }
   }
 

@@ -27,7 +27,7 @@ fixture`Drive : Viewer features : prepare data`
 
 test('Dri ve : Create a $test_date_time folder in Drive', async () => {
   console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
-  await drivePage.addNewFolder(data.FOLDER_DATE_TIME)
+  await drivePage.addNewFolder({ newFolderName: data.FOLDER_DATE_TIME })
   console.groupEnd()
 })
 
@@ -247,6 +247,6 @@ fixture`Test clean up : remove files and folders`
 test('Delete foler', async () => {
   console.group('↳ ℹ️  Drive : Delete and foler')
   await drivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await drivePage.deleteCurrentFolder()
+  await drivePage.deleteCurrentFolder({})
   console.groupEnd()
 })

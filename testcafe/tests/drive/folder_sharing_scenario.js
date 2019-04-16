@@ -28,7 +28,7 @@ fixture`Folder link Sharing Scenario`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
 
 test('Drive : Create a $test_date_time folder in Drive', async () => {
   console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
-  await privateDrivePage.addNewFolder(data.FOLDER_DATE_TIME)
+  await privateDrivePage.addNewFolder({ newFolderName: data.FOLDER_DATE_TIME })
   //We need to pass data.FOLDER_DATE_TIME through multiple fixture, so we cannot use ctx here.
   console.groupEnd()
 })
@@ -168,6 +168,6 @@ test('(foldersharing) Delete File, and foler', async () => {
 
   await privateDrivePage.goToFolder(data.FOLDER_DATE_TIME)
   await privateDrivePage.deleteElementByName(data.FILE_PDF)
-  await privateDrivePage.deleteCurrentFolder()
+  await privateDrivePage.deleteCurrentFolder({})
   console.groupEnd()
 })

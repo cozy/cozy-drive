@@ -55,13 +55,13 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_CREATE_FOLDER}`, async t => {
   await t.maximizeWindow() //Real fullscren for VR
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_FOLDER}`)
-  await privateDrivePage.addNewFolder(
-    `${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}`,
-    `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-1`
-  )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-2`
-  )
+  await privateDrivePage.addNewFolder({
+    newFolderName: `${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}`,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-1`
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-2`
+  })
   console.groupEnd()
 })
 
@@ -70,22 +70,28 @@ test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD_AND_SHARE} (in "${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}" folder)`
   )
   await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-1`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-1`
+  })
   await privateDrivePage.uploadFiles(data.filesList)
 
-  await privateDrivePage.takeScreenshotsForUpload({
-    screenshotsPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
-    withMask: data.maskDriveFolderWithDate
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2-Divupload`,
+    selector: selectors.divUpload
   })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
+    delay: data.THUMBNAIL_DELAY,
+    withMask: data.maskDriveFolderWithDate,
+    pageToWait: privateDrivePage
+  })
+
   await privateDrivePage.shareFolderPublicLink()
 
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskShareFolder)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-3`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-3`,
+    withMask: data.maskShareFolder
+  })
 
   const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
@@ -132,29 +138,28 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_ZIP}`)
   //take a general screen for the shared folder :
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskSharedWholePublicFolder)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-wholeFolder`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-wholeFolder`,
+    withMask: data.maskSharedWholePublicFolder
+  })
 
-  await publicViewerPage.checkViewerNavigation(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-nav`,
-    data.FILE_ZIP,
-    3
-  )
+  await publicViewerPage.checkViewerNavigation({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-nav`,
+    fileStartName: data.FILE_ZIP,
+    numberOfNavigation: 3
+  })
 
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_ZIP)
   t.ctx.fileDownloaded = data.FILE_ZIP
 
-  await publicViewerPage.openFileAndCheckPublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-1`,
-    data.FILE_ZIP
-  )
-  await publicViewerPage.openFileAndCheckMobilePublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-mob1`,
-    data.FILE_ZIP
-  )
+  await publicViewerPage.openFileAndCheckPublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-1`,
+    fileName: data.FILE_ZIP
+  })
+  await publicViewerPage.openFileAndCheckMobilePublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_ZIP}-mob1`,
+    fileName: data.FILE_ZIP
+  })
   console.groupEnd()
 })
 
@@ -167,14 +172,14 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   })
   t.ctx.fileDownloaded = data.FILE_PPTX
 
-  await publicViewerPage.openFileAndCheckPublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-1`,
-    data.FILE_PPTX
-  )
-  await publicViewerPage.openFileAndCheckMobilePublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-mob1`,
-    data.FILE_PPTX
-  )
+  await publicViewerPage.openFileAndCheckPublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-1`,
+    fileName: data.FILE_PPTX
+  })
+  await publicViewerPage.openFileAndCheckMobilePublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_PPTX}-mob1`,
+    fileName: data.FILE_PPTX
+  })
   console.groupEnd()
 })
 
@@ -183,15 +188,15 @@ test(`${TEST_PUBLIC_VIEWER_IMG}`, async t => {
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_IMG)
   t.ctx.fileDownloaded = data.FILE_IMG
 
-  await publicViewerPage.openFileAndCheckPublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-1`,
-    data.FILE_IMG,
-    'img'
-  )
-  await publicViewerPage.openFileAndCheckMobilePublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-mob1`,
-    data.FILE_IMG
-  )
+  await publicViewerPage.openFileAndCheckPublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-1`,
+    fileName: data.FILE_IMG,
+    type: 'img'
+  })
+  await publicViewerPage.openFileAndCheckMobilePublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_IMG}-mob1`,
+    fileName: data.FILE_IMG
+  })
   console.groupEnd()
 })
 
@@ -201,20 +206,19 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
   t.ctx.fileDownloaded = data.FILE_AUDIO
 
   //mask on loading bar
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskAudioViewerDesktop)
-  await publicViewerPage.openFileAndCheckPublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-1`,
-    data.FILE_AUDIO,
-    'audio',
-    true
-  )
+  await publicViewerPage.openFileAndCheckPublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-1`,
+    fileName: data.FILE_AUDIO,
+    type: 'audio',
+    withMask: data.maskAudioViewerDesktop
+  })
   //mask on loading bar for mobile
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskAudioViewerMobile)
-  await publicViewerPage.openFileAndCheckMobilePublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-mob1`,
-    data.FILE_AUDIO,
-    true
-  )
+  await publicViewerPage.openFileAndCheckMobilePublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_AUDIO}-mob1`,
+    fileName: data.FILE_AUDIO,
+    type: 'audio',
+    withMask: data.maskAudioViewerMobile
+  })
   console.groupEnd()
 })
 
@@ -223,20 +227,20 @@ test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_VIDEO)
   t.ctx.fileDownloaded = data.FILE_VIDEO
 
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskVideoViewerDesktop)
-  await publicViewerPage.openFileAndCheckPublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-1`,
-    data.FILE_VIDEO,
-    'video',
-    true
-  )
+  await publicViewerPage.openFileAndCheckPublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-1`,
+    fileName: data.FILE_VIDEO,
+    type: 'video',
+    withMask: data.maskVideoViewerDesktop
+  })
 
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskVideoViewerMobile)
-  await publicViewerPage.openFileAndCheckMobilePublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-mob1`,
-    data.FILE_VIDEO,
-    true
-  )
+  await publicViewerPage.openFileAndCheckMobilePublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_VIDEO}-mob1`,
+    fileName: data.FILE_VIDEO,
+    type: 'video',
+    withMask: data.maskVideoViewerMobile
+  })
+
   console.groupEnd()
 })
 
@@ -245,15 +249,15 @@ test(`${TEST_PUBLIC_VIEWER_TXT}`, async t => {
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_TXT)
   t.ctx.fileDownloaded = data.FILE_TXT
 
-  await publicViewerPage.openFileAndCheckPublicViewer(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-1`,
-    data.FILE_TXT,
-    'txt'
-  )
-  await publicViewerPage.openFileAndCheckMobilePublicViewerBiggerResolution(
-    `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-mob1`,
-    data.FILE_TXT
-  )
+  await publicViewerPage.openFileAndCheckPublicViewer({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-1`,
+    fileName: data.FILE_TXT,
+    type: 'txt'
+  })
+  await publicViewerPage.openFileAndCheckMobilePublicViewerBiggerResolution({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-mob1`,
+    fileName: data.FILE_TXT
+  })
   console.groupEnd()
 })
 
@@ -277,18 +281,17 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_DELETE_FOLDER}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER}`)
   await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
+    withMask: data.maskDriveFolderWithDate
+  })
 
   await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDeleteFolder)
-  await privateDrivePage.deleteCurrentFolder(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
-  )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`
-  )
+  await privateDrivePage.deleteCurrentFolder({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`
+  })
   console.groupEnd()
 })

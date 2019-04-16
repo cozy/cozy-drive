@@ -71,7 +71,11 @@ export default class privateDrivePage extends DrivePage {
   }
 
   //@param {String} newFolderName
-  async addNewFolder(newFolderName, screenshotPath) {
+  async addNewFolder({
+    newFolderName: newFolderName,
+    screenshotPath: screenshotPath,
+    withMask = false
+  }) {
     let breadcrumbStart, rowCountStart
     if (!t.fixtureCtx.isVR) {
       breadcrumbStart = await this.getbreadcrumb()
@@ -80,7 +84,10 @@ export default class privateDrivePage extends DrivePage {
     await this.openActionMenu()
 
     if (t.fixtureCtx.isVR)
-      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload({
+        screenshotPath: screenshotPath,
+        withMask: withMask
+      })
 
     await isExistingAndVisibile(selectors.btnAddFolder, 'Add Folder button')
     await t.click(selectors.btnAddFolder)
@@ -158,28 +165,6 @@ export default class privateDrivePage extends DrivePage {
 
       const rowCountEnd = await this.getContentRowCount('After')
       await t.expect(rowCountEnd).eql(rowCountStart + numOfFiles) //New content line appears
-    }
-  }
-
-  async takeScreenshotsForUpload({
-    screenshotsPath: screenshotsPath,
-    withMask = false
-  }) {
-    await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
-      selectors.divUpload,
-      `${screenshotsPath}-Divupload`
-    )
-    //add wait to avoid thumbnail error on screenshots
-    await t.wait(THUMBNAIL_DELAY)
-    //relaod page to load thumbnails
-    await t.eval(() => location.reload(true))
-    await this.waitForLoading()
-
-    if (withMask) {
-      await t.fixtureCtx.vr.setMaksCoordonnates(withMask)
-      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, true)
-    } else {
-      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, false)
     }
   }
 
@@ -322,7 +307,12 @@ export default class privateDrivePage extends DrivePage {
     await this.deleteElementsByIndex([index])
   }
 
-  async deleteCurrentFolder(screenshotPath) {
+  //@param { path } screenshotPath
+  //@param { mask } withMask
+  async deleteCurrentFolder({
+    screenshotPath: screenshotPath,
+    withMask = false
+  }) {
     let partialBreacrumbStart
     if (!t.fixtureCtx.isVR) {
       partialBreacrumbStart = await selectors.breadcrumb.child(0).innerText //We want only the 1st part of the breadcrumb to get the parent folder, so we cannot use getbreadcrumb()
@@ -337,7 +327,11 @@ export default class privateDrivePage extends DrivePage {
 
     if (t.fixtureCtx.isVR)
       //dates show up here, so there is a mask for screenshots
-      await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath, true)
+      await t.fixtureCtx.vr.takeScreenshotAndUpload({
+        screenshotPath: screenshotPath,
+        withMask: withMask
+      })
+
     await t.click(selectors.btnModalSecondButton)
     await isExistingAndVisibile(
       selectors.alertWrapper,
@@ -355,7 +349,13 @@ export default class privateDrivePage extends DrivePage {
   //@param { integer } index : file/folder index
   //@param {String} newName : new name for file/folder
   //@param {bool} : exitWithEnter
-  async renameElementsByIndex(index, newName, screenshotPath, exitWithEnter) {
+  async renameElementsByIndex({
+    index: index,
+    newName: newName,
+    exitWithEnter: exitWithEnter,
+    screenshotPath: screenshotPath,
+    withMask = false
+  }) {
     await this.selectElements([index])
 
     await t.click(selectors.btnRenameCozySelectionBar)
@@ -364,10 +364,10 @@ export default class privateDrivePage extends DrivePage {
       'Folder Name input'
     )
     //dates shows up here, so there is a mask for screenshots
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(
-      `${screenshotPath}-rename1`,
-      true
-    )
+    await t.fixtureCtx.vr.takeScreenshotAndUpload({
+      screenshotPath: `${screenshotPath}-rename1`,
+      withMask: withMask
+    })
 
     await t.typeText(selectors.foldersNamesInputs, `${newName}`, {
       replace: true
@@ -386,19 +386,21 @@ export default class privateDrivePage extends DrivePage {
   //@param {string} elementName : file/folder name to rename
   //@param {string} newName : file/folder new name
   //@param {bool} : exitWithEnter
-  async renameElementByName(
-    elementName,
-    newName,
-    screenshotPath,
-    exitWithEnter
-  ) {
+  async renameElementByName({
+    elementName: elementName,
+    newName: newName,
+    exitWithEnter: exitWithEnter,
+    screenshotPath: screenshotPath,
+    withMask = false
+  }) {
     const index = await this.getElementIndex(elementName)
-    await this.renameElementsByIndex(
-      index,
-      newName,
-      screenshotPath,
-      exitWithEnter
-    )
+    await this.renameElementsByIndex({
+      index: index,
+      newName: newName,
+      exitWithEnter: exitWithEnter,
+      screenshotPath: screenshotPath,
+      withMask: withMask
+    })
   }
 
   //@param { integer } index :  file index
@@ -445,14 +447,16 @@ export default class privateDrivePage extends DrivePage {
   }
 
   //@param {String} screenshotPath : path for screenshots taken in this test
-  async emptyTrash(screenshotPath) {
+  //@param { mask } withmask for screenshot
+  async emptyTrash({ screenshotPath: screenshotPath, withMask = false }) {
     await isExistingAndVisibile(selectors.toolbarTrash, 'toolbar Trash')
     await isExistingAndVisibile(selectors.btnEmptyTrash, 'Empty trash button')
     await t.click(selectors.btnEmptyTrash)
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(
-      `${screenshotPath}-emptyTrash`,
-      true
-    )
+    await t.fixtureCtx.vr.takeScreenshotAndUpload({
+      screenshotPath: `${screenshotPath}-emptyTrash`,
+      withMask: withMask
+    })
+
     await t
       .expect(selectors.modalFooter.visible)
       .ok('Delete button does not show up')
