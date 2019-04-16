@@ -1,7 +1,7 @@
 import VisualReview from 'visualreview-client'
 import { t } from 'testcafe'
 import { getNavigatorOs, getNavigatorName, getResolution } from './utils'
-import { VR_STATUS_DELAY } from './data'
+import { VR_STATUS_DELAY, VR_UPLOAD_DELAY } from './data'
 
 //Put this const in travis after POC
 const VISUALREVIEW_INSTANCE = 'visualreview.cozycloud.cc'
@@ -59,8 +59,27 @@ export class VisualReviewTestcafe extends VisualReview {
     this.options.properties.browser = await getNavigatorName()
     this.options.properties.resolution = await getResolution()
 
-    //the path needs to be in const but i need to define the screenshots tree 1st
-    await this.uploadScreenshot(`./reports/${screenshotsPath}.png`)
+    //VisualReview doesn't handle timeout, so lets add a timeout here to avoid breaking the CI
+    Promise.race([
+      this.uploadScreenshot(`./reports/${screenshotsPath}.png`),
+      new Promise(function(resolve, reject) {
+        setTimeout(
+          () =>
+            reject(
+              new Error(`❌ VisualReview - "${screenshotsPath}.png" timeout`)
+            ),
+          VR_UPLOAD_DELAY
+        )
+      })
+    ]).then(
+      function() {
+        console.log(`➡️ "${screenshotsPath}.png" uploaded`)
+      },
+      function(error) {
+        //log error instead of throwing error so tests don't crash if VR server is taking too long
+        console.log(error.message)
+      }
+    )
   }
 
   async takeElementScreenshotAndUpload(
@@ -78,9 +97,26 @@ export class VisualReviewTestcafe extends VisualReview {
     this.options.properties.os = await getNavigatorOs()
     this.options.properties.browser = await getNavigatorName()
     this.options.properties.resolution = await getResolution()
-
-    //the path needs to be in const but i need to define the screenshots tree 1st
-    await this.uploadScreenshot(`./reports/${screenshotsPath}.png`)
+    //VisualReview doesn't handle timeout, so lets add a timeout here to avoid breaking the CI
+    Promise.race([
+      this.uploadScreenshot(`./reports/${screenshotsPath}.png`),
+      new Promise(function(resolve, reject) {
+        setTimeout(
+          () =>
+            reject(
+              new Error(`❌ VisualReview - "${screenshotsPath}.png" timeout`)
+            ),
+          VR_UPLOAD_DELAY
+        )
+      })
+    ]).then(
+      function() {
+        console.log(`➡️ "${screenshotsPath}.png" uploaded`)
+      },
+      function(error) {
+        console.log(error.message)
+      }
+    )
   }
 
   async checkRunStatus() {
