@@ -29,7 +29,9 @@ test('Deleting 1st pic on Timeline : Open up a modal, and confirm', async t => {
   //pic is removed
   await timelinePage.deletePhotosFromTimeline(1)
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload('DeleteImage/delete-1-pic')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: 'DeleteImage/delete-1-pic'
+  })
   console.groupEnd()
 })
 
@@ -41,6 +43,8 @@ test('Deleting the 1st 4 pics on Timeline : Open up a modal, and confirm', async
   //pics are removed, there are no more pictures on  page
   await timelinePage.deletePhotosFromTimeline(4, true)
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload('DeleteImage/delete-4-pics')
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: 'DeleteImage/delete-4-pics'
+  })
   console.groupEnd()
 })

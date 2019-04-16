@@ -22,15 +22,19 @@ export default class ViewerDrive extends Viewer {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} fileStartName : file to open to start the navigation testing
   //@param {number} numberOfNavigation : the number of file we want to go through during the test.
-  async checkViewerNavigation(
-    screenshotPath,
-    fileStartName,
-    numberOfNavigation
-  ) {
+  async checkViewerNavigation({
+    screenshotPath: screenshotPath,
+    fileStartName: fileStartName,
+    numberOfNavigation: numberOfNavigation
+  }) {
     const startIndex = await drivePage.getElementIndex(fileStartName)
     console.log(`↳ 📁 ${fileStartName} with index : ${startIndex}`)
     await this.openViewerForFile(fileStartName)
-    await this.navigateInViewer(screenshotPath, startIndex, numberOfNavigation)
+    await this.navigateInViewer({
+      screenshotPath: screenshotPath,
+      startIndex: startIndex,
+      numberOfNavigation: numberOfNavigation
+    })
     await this.closeViewer({
       exitWithEsc: false
     })

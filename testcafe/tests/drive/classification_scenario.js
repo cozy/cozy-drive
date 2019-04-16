@@ -6,6 +6,7 @@ import {
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 import {
+  THUMBNAIL_DELAY,
   FILE_FROM_ZIP_PATH,
   FILE_PDF,
   FILE_TXT,
@@ -59,22 +60,22 @@ test(`${TEST_CREATE_FOLDER}`, async t => {
   await t.maximizeWindow() //Real fullscren for VR
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_FOLDER}`)
 
-  await privateDrivePage.addNewFolder(
-    `${FEATURE_PREFIX}-Folder1`,
-    `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder1-1`
-  )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder1-2`
-  )
+  await privateDrivePage.addNewFolder({
+    newFolderName: `${FEATURE_PREFIX}-Folder1`,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder1-1`
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder1-2`
+  })
 
   //Create 2nd Folder
-  await privateDrivePage.addNewFolder(
-    `${FEATURE_PREFIX}-Folder2`,
-    `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder2-1`
-  )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder2-2`
-  )
+  await privateDrivePage.addNewFolder({
+    newFolderName: `${FEATURE_PREFIX}-Folder2`,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder2-1`
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-Folder2-2`
+  })
   console.groupEnd()
 })
 
@@ -83,19 +84,32 @@ test(`${TEST_UPLOAD}`, async t => {
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD} (in "${FEATURE_PREFIX}-Folder2" folder)`
   )
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder2`)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD}-1`
-  )
-  await privateDrivePage.uploadFiles([`${FILE_FROM_ZIP_PATH}/${FILE_PDF}`])
-
-  await privateDrivePage.takeScreenshotsForUpload({
-    screenshotsPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-2`,
-    withMask: maskDriveFolderWithDate
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-1`
   })
+
+  await privateDrivePage.uploadFiles([`${FILE_FROM_ZIP_PATH}/${FILE_PDF}`])
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-2-Divupload`,
+    selector: selectors.divUpload
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-2`,
+    delay: THUMBNAIL_DELAY,
+    withMask: maskDriveFolderWithDate,
+    pageToWait: privateDrivePage
+  })
+
   await privateDrivePage.uploadFiles([`${FILE_FROM_ZIP_PATH}/${FILE_TXT}`])
-  await privateDrivePage.takeScreenshotsForUpload({
-    screenshotsPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-3`,
-    withMask: maskDriveFolderWithDate
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-3-Divupload`,
+    selector: selectors.divUpload
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD}-3`,
+    delay: THUMBNAIL_DELAY,
+    withMask: maskDriveFolderWithDate,
+    pageToWait: privateDrivePage
   })
   console.groupEnd()
 })
@@ -120,32 +134,31 @@ fixture`${FIXTURE_CLASSIFICATION}`.page`${TESTCAFE_DRIVE_URL}/`
 test(`${TEST_RENAME_FILE}`, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_RENAME_FILE}`)
   const [fileName, ext] = FILE_PDF.split('.')
-  //set mask only once, all screen in this test use the same mask
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
 
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder2`)
-  await privateDrivePage.renameElementByName(
-    FILE_PDF,
-    `${fileName}2.${ext}`,
-    `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-1`,
-    { exitWithEnter: true }
-  )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-1-rename2`,
-    true
-  )
+  await privateDrivePage.renameElementByName({
+    elementName: FILE_PDF,
+    newName: `${fileName}2.${ext}`,
+    exitWithEnter: true,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-1`
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-1-rename2`,
+    withMask: maskDriveFolderWithDate
+  })
 
-  await privateDrivePage.renameElementByName(
-    `${fileName}2.${ext}`,
-    FILE_PDF,
-    `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-2`,
-    { exitWithEnter: false }
-  )
+  await privateDrivePage.renameElementByName({
+    elementName: `${fileName}2.${ext}`,
+    newName: FILE_PDF,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-2`,
+    exitWithEnter: false
+  })
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-2-rename2`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-2-rename2`,
+    withMask: maskDriveFolderWithDate
+  })
+
   console.groupEnd()
 })
 
@@ -156,47 +169,44 @@ test(`${TEST_MOVE_FILE_CANCEL}`, async t => {
 
   console.log('Show Action Menu & Cancel')
   await privateDrivePage.clickOnActionMenuforElementName(FILE_PDF)
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-1`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-1`,
+    withMask: maskDriveFolderWithDate
+  })
   await t.pressKey('esc')
 
   console.log('Show Move Moadal, and Cancel (X button)')
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // move modale show up : we need a specific mask for it
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskMoveMoadal)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-2`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-2`,
+    withMask: maskMoveMoadal
+  })
   await isExistingAndVisibile(selectors.modalClose, 'Modal button close')
   await t.click(selectors.modalClose)
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-3`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-3`,
+    withMask: maskDriveFolderWithDate
+  })
   //Remove comment below when https://trello.com/c/RoNPTPZV/1692-modale-d%C3%A9placement-touch-echap-ne-ferme-pas-la-modale is fixed
   // console.log('Show Move Moadal, and Cancel (esc)')
   // await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // // no need to screenshot again the modal
   // await t.pressKey('esc')
-  // await t.fixtureCtx.vr.takeScreenshotAndUpload(
-  //   `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-4`,
-  //   true
-  // )
+  //  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+  //   screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-4`,
+  //   withMask: maskDriveFolderWithDate
+  // })
 
   console.log('Show Move Moadal, and Cancel (Cancel button)')
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // no need to screenshot again the modal
   await isExistingAndVisibile(selectors.btnModalFirstButton)
   await t.click(selectors.btnModalFirstButton)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-5`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-5`,
+    withMask: maskDriveFolderWithDate
+  })
 
   console.groupEnd()
 })
@@ -206,18 +216,15 @@ test(`${TEST_MOVE_FILE}`, async t => {
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder2`)
 
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
-  // move modale show up : we need a specific mask for it
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskMoveMoadal)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FILE}-1`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE}-1`,
+    withMask: maskMoveMoadal
+  })
   await privateDrivePage.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FILE}-2`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE}-2`,
+    withMask: maskDriveFolderWithDate
+  })
   console.groupEnd()
 })
 
@@ -226,15 +233,14 @@ test(`${TEST_MOVE_FOLDER}`, async t => {
 
   await privateDrivePage.showMoveModalForElement(`${FEATURE_PREFIX}-Folder2`)
   //No mask here, as screenshot show only folders, not files (So no date on screen)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-1`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-1`
+  })
   await privateDrivePage.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-2`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-2`,
+    withMask: maskDriveFolderWithDate
+  })
   console.groupEnd()
 })
 
@@ -260,19 +266,18 @@ test(`${TEST_DELETE_FOLDER}`, async t => {
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER} "${FEATURE_PREFIX}-Folder1"`
   )
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder1`)
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
+    withMask: maskDriveFolderWithDate
+  })
 
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDeleteFolder)
-  await privateDrivePage.deleteCurrentFolder(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
-  )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`
-  )
+  await privateDrivePage.deleteCurrentFolder({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`,
+    withMask: maskDeleteFolder
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`
+  })
   console.groupEnd()
 })
 
@@ -288,16 +293,15 @@ test(`${TEST_RESTORE_FOLDER}`, async t => {
   await privateDrivePage.clickOnActionMenuforElementName(
     `${FEATURE_PREFIX}-Folder1`
   )
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-1`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-1`,
+    withMask: maskDriveFolderWithDate
+  })
   await t.click(selectors.btnRestoreActionMenu).wait(1000)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-2`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-2`,
+    withMask: maskDriveFolderWithDate
+  })
   console.groupEnd()
 })
 
@@ -308,24 +312,24 @@ test(`${TEST_DELETE_FOLDER_FROM_DRIVE}`, async t => {
   await privateDrivePage.clickOnActionMenuforElementName(
     `${FEATURE_PREFIX}-Folder1`
   )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-1`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-1`
+  })
   await t.click(selectors.btnRemoveActionMenu)
   await isExistingAndVisibile(selectors.modalFooter, 'Modal delete')
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-2`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-2`
+  })
   await t.click(selectors.btnModalSecondButton)
   await isExistingAndVisibile(
     selectors.alertWrapper,
     '"successfull" modal alert'
   )
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-3`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-3`
+  })
   console.groupEnd()
 })
 
@@ -336,21 +340,22 @@ test(`${TEST_NAVIGATE_IN_TRASH}`, async t => {
     '#/trash',
     'Trash'
   )
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDriveFolderWithDate)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_NAVIGATE_IN_TRASH}-1`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_NAVIGATE_IN_TRASH}-1`,
+    withMask: maskDriveFolderWithDate
+  })
+
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder1`)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_NAVIGATE_IN_TRASH}-2`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_NAVIGATE_IN_TRASH}-2`,
+    withMask: maskDriveFolderWithDate
+  })
+
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder2`)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_NAVIGATE_IN_TRASH}-3`,
-    true
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_NAVIGATE_IN_TRASH}-3`,
+    withMask: maskDriveFolderWithDate
+  })
   console.groupEnd()
 })
 
@@ -361,16 +366,18 @@ test(`${TEST_EMPTY_TRASH}`, async t => {
     '#/trash',
     'Trash'
   )
-  await t.fixtureCtx.vr.setMaksCoordonnates(maskDeleteFolder)
-  await privateDrivePage.emptyTrash(`${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-1`)
+  await privateDrivePage.emptyTrash({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-1`,
+    withMask: maskDeleteFolder
+  })
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-2`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-2`
+  })
   //wait for trash to be empty
   await t.wait(2000)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-3`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-3`
+  })
   console.groupEnd()
 })

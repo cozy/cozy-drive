@@ -17,14 +17,18 @@ export default class PhotoViewer extends Viewer {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {number} startIndex : index of the 1st photos to open
   //@param {number} numberOfNavigation : the number of file we want to go through during the test.
-  async openPhotoAndCheckViewerNavigation(
-    startIndex,
-    numberOfNavigation,
-    screenshotPath
-  ) {
+  async openPhotoAndCheckViewerNavigation({
+    screenshotPath: screenshotPath,
+    startIndex: startIndex,
+    numberOfNavigation: numberOfNavigation
+  }) {
     console.log(`↳ 📁 photo with index : ${startIndex}`)
     await this.openPhotoFullscreen(startIndex)
-    await this.navigateInViewer(screenshotPath, startIndex, numberOfNavigation)
+    await this.navigateInViewer({
+      screenshotPath: screenshotPath,
+      startIndex: startIndex,
+      numberOfNavigation: numberOfNavigation
+    })
     await this.closeViewer({
       exitWithEsc: false
     })
@@ -32,7 +36,11 @@ export default class PhotoViewer extends Viewer {
 
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} index : file to check
-  async openPhotoAndCheckViewer(index, screenshotPath, hasMask = false) {
+  async openPhotoAndCheckViewer({
+    index: index,
+    screenshotPath: screenshotPath,
+    withMask = false
+  }) {
     console.log(`↳ 📁 photo with index : ${index}`)
     await this.openPhotoFullscreen(index)
     await this.checkImageViewer()
@@ -43,7 +51,10 @@ export default class PhotoViewer extends Viewer {
       offsetX: 0,
       offsetY: 0
     })
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotPath, hasMask)
+    await t.fixtureCtx.vr.takeScreenshotAndUpload({
+      screenshotPath: screenshotPath,
+      withMask: withMask
+    })
     await this.closeViewer({
       exitWithEsc: true
     })

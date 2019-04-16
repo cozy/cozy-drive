@@ -1,7 +1,12 @@
 import VisualReview from 'visualreview-client'
 import { t } from 'testcafe'
-import { getNavigatorOs, getNavigatorName, getResolution } from './utils'
 import { VR_STATUS_DELAY, VR_UPLOAD_DELAY } from './data'
+import {
+  getNavigatorOs,
+  getNavigatorName,
+  getResolution,
+  checkAllImagesExists
+} from './utils'
 
 //Put this const in travis after POC
 const VISUALREVIEW_INSTANCE = 'visualreview.cozycloud.cc'
@@ -47,73 +52,62 @@ export class VisualReviewTestcafe extends VisualReview {
     this.options.mask = {}
   }
 
-  async takeScreenshotAndUpload(screenshotsPath, hasMask = false) {
-    if (!hasMask) {
-      //re-init mask
-      this.resetMask()
+  //@param { path } screenshotPath - mandatory
+  //@param { mask (or false) } withMask : set a mask for screenshot
+  //@param { selector } selector : set if we want a screenshot on an element rather than the whole page
+  //@param { interger (ms) } delay
+  //@param { page } pageToWait : when using delay, the current page is reload so we need a page object for `waitForLoading`
+  async takeScreenshotAndUpload({
+    screenshotPath: screenshotPath,
+    withMask = false,
+    selector = false,
+    delay = false,
+    pageToWait = false
+  }) {
+    //Delay (need to have a page to wait)
+    if (delay && pageToWait) {
+      //add wait to avoid thumbnail error on screenshots
+      await t.wait(delay)
+      //relaod page to load thumbnails
+      await t.eval(() => location.reload(true))
+      await checkAllImagesExists()
+      await pageToWait.waitForLoading()
     }
-
-    await t.takeScreenshot(`${screenshotsPath}.png`)
+    //set Mask
+    if (withMask) {
+      await this.setMaksCoordonnates(withMask)
+    } else {
+      await this.resetMask()
+    }
 
     this.options.properties.os = await getNavigatorOs()
     this.options.properties.browser = await getNavigatorName()
     this.options.properties.resolution = await getResolution()
 
+    if (selector) {
+      await t.takeElementScreenshot(selector, `${screenshotPath}.png`)
+    } else {
+      await t.takeScreenshot(`${screenshotPath}.png`)
+    }
+
     //VisualReview doesn't handle timeout, so lets add a timeout here to avoid breaking the CI
     Promise.race([
-      this.uploadScreenshot(`./reports/${screenshotsPath}.png`),
+      this.uploadScreenshot(`./reports/${screenshotPath}.png`),
       new Promise(function(resolve, reject) {
         setTimeout(
           () =>
             reject(
-              new Error(`❌ VisualReview - "${screenshotsPath}.png" timeout`)
+              new Error(`❌ VisualReview - "${screenshotPath}.png" timeout`)
             ),
           VR_UPLOAD_DELAY
         )
       })
     ]).then(
       function() {
-        console.log(`➡️ "${screenshotsPath}.png" uploaded`)
+        console.log(`➡️ "${screenshotPath}.png" uploaded`)
       },
       function(error) {
         //log error instead of throwing error so tests don't crash if VR server is taking too long
-        console.log(error.message)
-      }
-    )
-  }
-
-  async takeElementScreenshotAndUpload(
-    selector,
-    screenshotsPath,
-    hasMask = false
-  ) {
-    if (!hasMask) {
-      //re-init mask
-      this.resetMask()
-    }
-    //always wait for 1s before taking screenshots
-    await t.takeElementScreenshot(selector, `${screenshotsPath}.png`)
-
-    this.options.properties.os = await getNavigatorOs()
-    this.options.properties.browser = await getNavigatorName()
-    this.options.properties.resolution = await getResolution()
-    //VisualReview doesn't handle timeout, so lets add a timeout here to avoid breaking the CI
-    Promise.race([
-      this.uploadScreenshot(`./reports/${screenshotsPath}.png`),
-      new Promise(function(resolve, reject) {
-        setTimeout(
-          () =>
-            reject(
-              new Error(`❌ VisualReview - "${screenshotsPath}.png" timeout`)
-            ),
-          VR_UPLOAD_DELAY
-        )
-      })
-    ]).then(
-      function() {
-        console.log(`➡️ "${screenshotsPath}.png" uploaded`)
-      },
-      function(error) {
         console.log(error.message)
       }
     )
