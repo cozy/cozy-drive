@@ -12,6 +12,7 @@ import getSharedDocument from 'sharing/getSharedDocument'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
 import doctypes from '../browser/doctypes'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main.styl'
 
 import App from './App'
