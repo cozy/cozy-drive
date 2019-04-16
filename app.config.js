@@ -27,7 +27,8 @@ const extraConfig = {
   resolve: {
     modules: ['node_modules', SRC_DIR],
     alias: {
-      'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers')
+      'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers'),
+      'cozy-ui/react': 'cozy-ui/transpiled/react'
     }
   },
   plugins: [
