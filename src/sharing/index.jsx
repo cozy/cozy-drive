@@ -363,7 +363,13 @@ const EditableSharingModal = ({ document, ...rest }) => (
       hasSharedParent,
       hasSharedChild
     }) => (
-      <Query query={cozy => cozy.all('io.cozy.contacts')}>
+      <Query
+        query={client =>
+          client.find('io.cozy.contacts').where({
+            trashed: false
+          })
+        }
+      >
         {(
           { data, fetchStatus, lastError },
           { createDocument: createContact }
