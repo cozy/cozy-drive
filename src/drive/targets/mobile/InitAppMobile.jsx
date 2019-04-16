@@ -34,7 +34,6 @@ import {
   getLang,
   initClient,
   initBar,
-  updateBarAccessToken,
   restoreCozyClientJs,
   resetClient,
   getOauthOptions,
@@ -211,7 +210,6 @@ class InitAppMobile {
       stackClient.setCredentials(token)
       restoreCozyClientJs(client.options.uri, realOauthOptions, token)
       stackClient.onTokenRefresh = token => {
-        updateBarAccessToken(token.accessToken)
         restoreCozyClientJs(client.options.uri, realOauthOptions, token)
         store.dispatch(setToken(token))
       }
