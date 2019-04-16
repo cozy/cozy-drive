@@ -12,7 +12,7 @@ import MediaBackup from './components/MediaBackup'
 import Unlink from './components/Unlink'
 import FeedbackForm from './components/FeedbackForm'
 import ScrollToTop from 'drive/web/modules/navigation/ScrollToTop'
-import styles from './styles'
+import styles from './styles.styl'
 
 const { BarCenter } = cozy.bar
 

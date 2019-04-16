@@ -6,7 +6,7 @@ import withPersistentState from '../../lib/withPersistentState'
 import { SOFTWARE_NAME, APP_STORE_ID, APP_MARKET_ID } from '../../lib/constants'
 import FeedbackForm from './components/FeedbackForm'
 
-import styles from './styles'
+import styles from './styles.styl'
 
 const SCREEN_ENJOY = 'SCREEN_ENJOY'
 const SCREEN_FEEDBACK = 'SCREEN_FEEDBACK'

@@ -11,7 +11,7 @@ import NoViewer from './NoViewer'
 
 import Spinner from 'cozy-ui/react/Spinner'
 
-import styles from './styles'
+import styles from './styles.styl'
 
 const KEY_CODE_LEFT = 37
 const KEY_CODE_RIGHT = 39

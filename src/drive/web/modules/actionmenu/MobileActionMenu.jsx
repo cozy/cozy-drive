@@ -7,7 +7,7 @@ import { isDirectory } from 'drive/web/modules/drive/files'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 import MenuItem from './MenuItem'
 
-import styles from 'drive/styles/actionmenu'
+import styles from 'drive/styles/actionmenu.styl'
 
 const Menu = props => {
   const { t, file, actions, onClose } = props

@@ -7,7 +7,7 @@ import {
   withBreakpoints
 } from 'cozy-ui/react/'
 import { UserAvatar } from '../../sharing/components/Recipient'
-import styles from 'drive/styles/actionmenu'
+import styles from 'drive/styles/actionmenu.styl'
 
 class MenuAwareMobile extends Component {
   state = {

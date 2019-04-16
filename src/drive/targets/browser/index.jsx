@@ -1,6 +1,6 @@
 /* global cozy */
-
-import 'drive/styles/main'
+// eslint-disable-next-line no-unused-vars
+import mainStyles from 'drive/styles/main.styl'
 
 import 'whatwg-fetch'
 import React from 'react'

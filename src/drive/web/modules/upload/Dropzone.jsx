@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
-import styles from 'drive/styles/dropzone'
+import styles from 'drive/styles/dropzone.styl'
 import DropzoneTeaser from 'drive/web/modules/upload/DropzoneTeaser'
 class StatefulDropzone extends Component {
   state = {

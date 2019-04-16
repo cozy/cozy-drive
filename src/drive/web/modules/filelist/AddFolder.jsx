@@ -10,7 +10,7 @@ import {
   hideNewFolderInput
 } from 'drive/web/modules/filelist/duck'
 import { createFolder } from 'drive/web/modules/navigation/duck'
-import styles from 'drive/styles/filelist'
+import styles from 'drive/styles/filelist.styl'
 
 const AddFolder = ({ f, visible, onSubmit, onAbort }) =>
   !visible ? null : (

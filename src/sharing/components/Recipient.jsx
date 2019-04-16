@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Spinner, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
+import { Contact } from 'cozy-doctypes'
 
 import MenuAwareMobile from '../../components/Menu/Menuawaremobile'
 import { AvatarPlusX, AvatarLink, Avatar } from './Avatar'
@@ -13,7 +14,8 @@ import IconEye from '../assets/icons/icon-eye-16.svg'
 import IconPen from '../assets/icons/icon-pen-write-16.svg'
 import IconTrash from '../assets/icons/icon-trash-red.svg'
 
-import { getDisplayName, getPrimaryEmail, getPrimaryCozy } from '..'
+import { getDisplayName } from 'sharing'
+import Identity from 'sharing/components/Identity'
 
 const MAX_DISPLAYED_RECIPIENTS = 3
 
@@ -50,7 +52,7 @@ export const RecipientsAvatars = ({
       {reversedRecipients.slice(0, MAX_DISPLAYED_RECIPIENTS).map(recipient => (
         <Avatar
           key={`key_avatar_${recipient.email}`}
-          text={getInitiales(getDisplayName(recipient))}
+          text={Contact.getInitials(getDisplayName(recipient))}
           size={size}
           textId={getDisplayName(recipient)}
         />
@@ -59,17 +61,10 @@ export const RecipientsAvatars = ({
   )
 }
 
-const Identity = ({ name, url = '-' }) => (
-  <div className={classNames(styles['recipient-idents'], 'u-ml-1')}>
-    <div className={styles['recipient-user']}>{name}</div>
-    <div className={styles['recipient-url']}>{url}</div>
-  </div>
-)
-
 export const UserAvatar = ({ url, size, ...rest }) => (
   <div className={styles['avatar']}>
     <Avatar
-      text={getInitiales(getDisplayName(rest))}
+      text={Contact.getInitials(getDisplayName(rest))}
       size={size}
       textId={getDisplayName(rest)}
     />
@@ -175,7 +170,11 @@ const Recipient = (props, { client, t }) => {
   const name = getDisplayName(rest)
   return (
     <div className={classNames(styles['recipient'], 'u-mt-1')}>
-      <Avatar text={getInitiales(name)} size={'small-plus'} textId={name} />
+      <Avatar
+        text={Contact.getInitials(name)}
+        size={'small-plus'}
+        textId={name}
+      />
       <div className={styles['recipient-ident-status']}>
         <Identity
           name={isMe ? t('Share.recipients.you') : name}
@@ -198,7 +197,11 @@ export const RecipientWithoutStatus = ({ instance, ...rest }) => {
   const name = getDisplayName(rest)
   return (
     <div className={styles['recipient']}>
-      <Avatar text={getInitiales(name)} size={'small-plus'} textId={name} />
+      <Avatar
+        text={Contact.getInitials(name)}
+        size={'small-plus'}
+        textId={name}
+      />
       <div className={styles['recipient-ident-status']}>
         <Identity name={name} url={instance} />
       </div>
@@ -223,19 +226,4 @@ export const RecipientPlusX = ({ extraRecipients }, { t }) => (
 
 RecipientPlusX.contextTypes = {
   t: PropTypes.func.isRequired
-}
-
-export const ContactSuggestion = ({ contact }) => {
-  const name = getPrimaryEmail(contact)
-  const url = getPrimaryCozy(contact)
-  return (
-    <div className={styles['recipient']}>
-      <Avatar text={getInitiales(name)} size={'small'} textId={name} />
-      <Identity name={name} url={url} />
-    </div>
-  )
-}
-
-const getInitiales = name => {
-  return name.charAt(0).toUpperCase()
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import PropTypes from 'prop-types'
-import styles from '../../../styles/layout'
+import styles from '../../../styles/layout.styl'
 
 import { Content } from 'cozy-ui/react/Layout'
 import Topbar from '../../../components/Topbar'

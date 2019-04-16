@@ -16,7 +16,7 @@ const SharedStatus = ({ className, docId, recipients, link, t }) => (
         data-for={`members${docId}`}
         className={styles['shared-status-label']}
       >
-        {t('Share.members.count', { count: recipients.length })}
+        {t('Share.members.count', { smart_count: recipients.length })}
       </a>
     )}
     {recipients.length > 1 && (

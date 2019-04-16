@@ -3,7 +3,7 @@ import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import { ShareButton } from 'sharing'
 
-import styles from 'photos/styles/toolbar'
+import styles from 'photos/styles/toolbar.styl'
 
 import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
 

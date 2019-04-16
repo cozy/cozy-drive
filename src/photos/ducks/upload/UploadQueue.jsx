@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 
-import styles from './styles'
+import styles from './styles.styl'
 import {
   getUploadQueue,
   getProcessed,

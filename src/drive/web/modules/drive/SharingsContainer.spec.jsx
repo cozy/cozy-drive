@@ -5,7 +5,14 @@ import { shallow } from 'enzyme'
 import { SharingFetcher } from './SharingsContainer'
 import { ROOT_DIR_ID } from 'drive/constants/config.js'
 
-jest.mock('cozy-client')
+jest.mock('cozy-client', () => {
+  const automaticMock = jest.genMockFromModule('cozy-client')
+  return {
+    ...automaticMock,
+    // we need queryConnect to return a function
+    queryConnect: jest.fn().mockImplementation(() => () => {})
+  }
+})
 
 describe('SharingFetcher component', () => {
   describe('componentDidMount', () => {

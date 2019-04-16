@@ -6,7 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Overlay } from 'cozy-ui/react'
 import MenuItem from './MenuItem'
 
-import styles from 'drive/styles/actionmenu'
+import styles from 'drive/styles/actionmenu.styl'
 
 class Menu extends Component {
   componentDidMount() {

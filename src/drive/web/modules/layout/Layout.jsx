@@ -11,7 +11,7 @@ import { UploadQueue } from 'drive/web/modules/upload'
 import UserActionRequired from 'drive/mobile/modules/authorization/UserActionRequired'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 
-import styles from 'drive/styles/layout'
+import styles from 'drive/styles/layout.styl'
 
 const Layout = ({ t, children }) => (
   <LayoutUI>

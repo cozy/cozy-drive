@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import styles from 'drive/styles/toolbar'
+import styles from 'drive/styles/toolbar.styl'
 import { translate } from 'cozy-ui/react'
 import { downloadFiles } from 'drive/web/modules/navigation/duck'
 

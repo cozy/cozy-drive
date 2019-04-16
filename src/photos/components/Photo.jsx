@@ -1,4 +1,4 @@
-import styles from '../styles/photoList'
+import styles from '../styles/photoList.styl'
 
 import React from 'react'
 import classNames from 'classnames'
