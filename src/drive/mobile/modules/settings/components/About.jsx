@@ -18,7 +18,7 @@ class About extends Component {
   }
 
   componentWillUnmount() {
-    this.gesturesHandler.destroy()
+    this.gesturesHandler && this.gesturesHandler.destroy()
   }
 
   render() {

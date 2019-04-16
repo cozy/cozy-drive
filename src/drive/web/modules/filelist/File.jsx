@@ -264,7 +264,7 @@ class File extends Component {
   }
 
   componentWillUnmount() {
-    this.gesturesHandler.destroy()
+    this.gesturesHandler && this.gesturesHandler.destroy()
   }
 
   toggle(e) {
