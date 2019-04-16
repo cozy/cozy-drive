@@ -62,6 +62,11 @@ export default class Viewer {
     )
     for (let i = startIndex; i < startIndex + numberOfNavigation; i++) {
       await this.navigateToNextFile(i)
+      //navigateToNextFile brings you on the next file, so we are sure there is a Previous Button on this image
+      await t.hover(selectors.btnViewerNavPrevious, {
+        offsetX: 0,
+        offsetY: 0
+      })
       if (t.fixtureCtx.isVR)
         await t.fixtureCtx.vr.takeScreenshotAndUpload(
           `${screenshotPath}-${i}-next`
@@ -72,6 +77,10 @@ export default class Viewer {
       console.log(` i : ${i} `)
 
       await this.navigateToPrevFile(i)
+      await t.hover(selectors.btnViewerNavNext, {
+        offsetX: 0,
+        offsetY: 0
+      })
       if (t.fixtureCtx.isVR)
         await t.fixtureCtx.vr.takeScreenshotAndUpload(
           `${screenshotPath}-${i}-prev`
