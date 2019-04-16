@@ -2,17 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
+import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
+
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import AsyncBoundary from 'drive/web/modules/navigation/AsyncBoundary'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 import FileListRows from 'drive/web/modules/filelist/FileListRows'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
-
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import { isTypingNewFolderName } from 'drive/web/modules/filelist/duck'
 
-import styles from 'drive/styles/filelist'
+import styles from 'drive/styles/filelist.styl'
 
 const EmptyContent = props => {
   const { isTrashContext, canUpload } = props
@@ -39,12 +40,14 @@ export const FileListBody = ({
   selectionModeActive,
   isTypingNewFolderName,
   withSelectionCheckbox,
+  breakpoints: { isMobile },
   ...props
 }) => (
   <div
     data-test-id="fil-content-body"
     className={cx(styles['fil-content-body'], {
-      [styles['fil-content-body--selectable']]: selectionModeActive
+      [styles['fil-content-body--selectable']]: selectionModeActive,
+      [styles['fil-content-body--mobile']]: isMobile
     })}
   >
     <AddFolder />
@@ -89,4 +92,4 @@ const mapStateToProps = state => ({
   isTypingNewFolderName: isTypingNewFolderName(state)
 })
 
-export default connect(mapStateToProps)(FileListBody)
+export default connect(mapStateToProps)(withBreakpoints()(FileListBody))
