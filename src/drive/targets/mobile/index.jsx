@@ -1,5 +1,5 @@
 /* global __DEVELOPMENT__ */
-
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'drive/styles/main'
 import 'drive/styles/mobile'
 
