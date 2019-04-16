@@ -12,7 +12,7 @@ import { withRouter } from 'react-router'
 import get from 'lodash/get'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
-import styles from './styles'
+import styles from './styles.styl'
 import Viewer from 'viewer'
 
 const doNothing = () => {}

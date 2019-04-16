@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import UploadButton from 'drive/web/modules/upload/UploadButton'
 import { translate } from 'cozy-ui/react'
-import styles from 'drive/styles/toolbar'
+import styles from 'drive/styles/toolbar.styl'
 
 import toolbarContainer from '../toolbar'
 

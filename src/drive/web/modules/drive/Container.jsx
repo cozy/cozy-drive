@@ -26,7 +26,7 @@ import {
   toggleAvailableOffline
 } from 'drive/mobile/modules/offline/duck'
 
-import styles from 'drive/styles/actionmenu'
+import styles from 'drive/styles/actionmenu.styl'
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>

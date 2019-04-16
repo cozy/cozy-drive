@@ -1,4 +1,4 @@
-import styles from './styles'
+import styles from './styles.styl'
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'

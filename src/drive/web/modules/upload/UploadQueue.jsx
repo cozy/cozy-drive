@@ -5,7 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Icon } from 'cozy-ui/transpiled/react'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
-import styles from './styles'
+import styles from './styles.styl'
 import {
   getUploadQueue,
   getProcessed,

@@ -1,4 +1,4 @@
-import styles from '../styles/photoList'
+import styles from '../styles/photoList.styl'
 
 import React, { Component } from 'react'
 import { withContentRect } from 'react-measure'

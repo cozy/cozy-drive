@@ -12,7 +12,7 @@ import Menu, { Item } from 'components/Menu'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
-import styles from 'drive/styles/toolbar'
+import styles from 'drive/styles/toolbar.styl'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 

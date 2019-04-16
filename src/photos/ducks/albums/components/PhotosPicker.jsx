@@ -6,7 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { TimelineBoard } from '../../timeline'
 import Selection from '../../selection'
 
-import styles from '../../../styles/newAlbum'
+import styles from '../../../styles/newAlbum.styl'
 
 class PhotosPicker extends Component {
   constructor(props) {

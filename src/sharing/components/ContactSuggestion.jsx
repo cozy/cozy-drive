@@ -1,0 +1,56 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import get from 'lodash/get'
+import { Avatar } from 'cozy-ui/react'
+import { translate } from 'cozy-ui/react/I18n'
+import { Contact, Group } from 'cozy-doctypes'
+
+import styles from 'sharing/components/recipient.styl'
+
+import { getDisplayName } from 'sharing'
+import Identity from 'sharing/components/Identity'
+
+export const ContactSuggestion = ({ contactOrGroup, contacts, t }) => {
+  let avatarText, name, details
+  if (contactOrGroup._type === Group.doctype) {
+    name = contactOrGroup.name
+    const membersCount = contacts
+      .reduce((total, contact) => {
+        if (
+          get(contact, 'relationships.groups.data', [])
+            .map(group => group._id)
+            .includes(contactOrGroup._id)
+        ) {
+          return total + 1
+        }
+
+        return total
+      }, 0)
+      .toString()
+    details = t('Share.members.count', {
+      smart_count: membersCount
+    })
+    avatarText = 'G'
+  } else {
+    const email = Contact.getPrimaryEmail(contactOrGroup)
+    name = email || getDisplayName(contactOrGroup)
+    avatarText =
+      Contact.getInitials(email) || Contact.getInitials(contactOrGroup)
+    details = Contact.getPrimaryCozy(contactOrGroup)
+  }
+  return (
+    <div className={styles['recipient']}>
+      <Avatar text={avatarText} size="small" />
+      <Identity name={name} details={details} />
+    </div>
+  )
+}
+
+ContactSuggestion.propTypes = {
+  contactOrGroup: PropTypes.oneOfType([Contact.propType, Group.propType])
+    .isRequired,
+  contacts: PropTypes.arrayOf(Contact.propType),
+  t: PropTypes.func.isRequired
+}
+
+export default translate()(ContactSuggestion)

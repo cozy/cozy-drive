@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react'
-import styles from '../styles'
+import styles from '../styles.styl'
 
 export const OnBoarding = ({
   t,

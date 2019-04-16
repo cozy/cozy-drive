@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactSuggestion component should match display contact suggestion for a contact 1`] = `
+<div
+  className="recipient"
+>
+  <Avatar
+    className=""
+    image=""
+    size="small"
+    text="J"
+  />
+  <Identity
+    details="https://jonsnow.mycozy.cloud"
+    name="jon.snow@email.com"
+  />
+</div>
+`;
+
+exports[`ContactSuggestion component should match display contact suggestion for a group 1`] = `
+<div
+  className="recipient"
+>
+  <Avatar
+    className=""
+    image=""
+    size="small"
+    text="G"
+  />
+  <Identity
+    details="2 members"
+    name="The Night's Watch"
+  />
+</div>
+`;

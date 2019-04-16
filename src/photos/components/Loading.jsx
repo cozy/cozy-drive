@@ -5,7 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Spinner } from 'cozy-ui/react'
 import palette from 'cozy-ui/react/palette'
 
-import styles from '../styles/loading'
+import styles from '../styles/loading.styl'
 
 export const Loading = ({
   size = 'xxlarge',

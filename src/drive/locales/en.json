@@ -71,7 +71,7 @@
     },
     "create-cozy": "Create my cozy",
     "members": {
-      "count": "%{count} members",
+      "count": "1 member |||| %{smart_count} members",
       "others": "and 1 other… |||| and %{smart_count} others…",
       "otherContacts": "other contact |||| other contacts"
     },
@@ -512,6 +512,16 @@
       "cta": "Accept TOS and continue",
       "disconnect": "Refuse and disconnect",
       "error": "Something went wrong, please try again later"
+    }
+  },
+  "manifest": {
+    "permissions": {
+      "contacts": {
+        "description": "Required to share files with your contacts"
+      },
+      "groups": {
+        "description": "Required to share files with your groups"
+      }
     }
   }
 }

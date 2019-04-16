@@ -1,6 +1,6 @@
 import 'react-cozy-helpers/importTranspiledCozyUi'
-import 'drive/styles/main'
-import 'drive/styles/mobile'
+import mainStyles from 'drive/styles/main.styl'
+import mobileStyles from 'drive/styles/mobile.styl'
 
 import 'whatwg-fetch'
 import React from 'react'

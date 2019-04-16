@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { withBreakpoints } from 'cozy-ui/react'
 
-import styles from 'drive/styles/filelist'
+import styles from 'drive/styles/filelist.styl'
 
 // using a seeded PRNG to prevent re-renders from changing the results
 const seededRandom = seed => {

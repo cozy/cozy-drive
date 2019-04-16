@@ -7,7 +7,7 @@ import { Spinner } from 'cozy-ui/react'
 import withFileUrl from './withFileUrl'
 import ToolbarButton from './PdfToolbarButton'
 import NoViewer from './NoViewer'
-import styles from './styles'
+import styles from './styles.styl'
 
 export const MIN_SCALE = 0.25
 export const MAX_SCALE = 3

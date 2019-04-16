@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import createReactContext from 'create-react-context'
-import { Query } from 'cozy-client'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
 
 import reducer, {
@@ -28,37 +26,21 @@ import reducer, {
   hasSharedChild
 } from './state'
 
+import SharingContext from 'sharing/context'
 import { default as DumbSharedBadge } from './components/SharedBadge'
 import {
   default as DumbShareButton,
   SharedByMeButton,
   SharedWithMeButton
 } from './components/ShareButton'
-import { default as DumbShareModal } from './ShareModal'
+import EditableSharingModal from 'sharing/components/EditableSharingModal'
 import { SharingDetailsModal } from './SharingDetailsModal'
 import { default as RecipientsList } from './components/WhoHasAccessLight'
 import { RecipientsAvatars } from './components/Recipient'
 import { default as DumbSharedStatus } from './components/SharedStatus'
 
-const getPrimaryOrFirst = property => obj => {
-  if (!obj[property] || obj[property].length === 0) return ''
-  return obj[property].find(property => property.primary) || obj[property][0]
-}
-
 export const getDisplayName = ({ name, public_name, email }) =>
   name || public_name || email
-
-// TODO: sadly we have different versions of contacts' doctype to handle...
-// A migration tool on the stack side is needed here
-export const getPrimaryEmail = contact =>
-  Array.isArray(contact.email)
-    ? getPrimaryOrFirst('email')(contact).address
-    : contact.email
-
-export const getPrimaryCozy = contact =>
-  Array.isArray(contact.cozy)
-    ? getPrimaryOrFirst('cozy')(contact).url
-    : contact.url
 
 const track = (document, action) => {
   const tracker = getTracker()
@@ -74,8 +56,6 @@ const track = (document, action) => {
 }
 const trackSharingByLink = document => track(document, 'shareByLink')
 const isFile = ({ _type }) => _type === 'io.cozy.files'
-
-const SharingContext = createReactContext()
 
 export default class SharingProvider extends Component {
   static contextTypes = {
@@ -230,18 +210,6 @@ export default class SharingProvider extends Component {
   }
 }
 
-export const SharedDocuments = ({ children }) => (
-  <SharingContext.Consumer>
-    {({ sharings } = { sharings: [] }) =>
-      children({
-        sharedDocuments: sharings.map(
-          sharing => sharing.attributes.rules[0].values[0]
-        )
-      })
-    }
-  </SharingContext.Consumer>
-)
-
 export const SharedDocument = ({ docId, children }) => (
   <SharingContext.Consumer>
     {({
@@ -348,50 +316,6 @@ export const ShareButton = ({ docId, ...rest }, { t }) => (
 ShareButton.contextTypes = {
   t: PropTypes.func.isRequired
 }
-
-const EditableSharingModal = ({ document, ...rest }) => (
-  <SharingContext.Consumer>
-    {({
-      documentType,
-      isOwner,
-      getRecipients,
-      getSharingLink,
-      share,
-      revoke,
-      shareByLink,
-      revokeSharingLink,
-      hasSharedParent,
-      hasSharedChild
-    }) => (
-      <Query query={cozy => cozy.all('io.cozy.contacts')}>
-        {(
-          { data, fetchStatus, lastError },
-          { createDocument: createContact }
-        ) => (
-          <DumbShareModal
-            document={document}
-            documentType={documentType}
-            contacts={data}
-            createContact={createContact}
-            recipients={getRecipients(document.id)}
-            link={getSharingLink(document.id)}
-            isOwner={isOwner(document.id)}
-            needsContactsPermission={
-              fetchStatus === 'failed' && lastError.status === 403
-            }
-            hasSharedParent={hasSharedParent(document)}
-            hasSharedChild={hasSharedChild(document)}
-            onShare={share}
-            onRevoke={revoke}
-            onShareByLink={shareByLink}
-            onRevokeLink={revokeSharingLink}
-            {...rest}
-          />
-        )}
-      </Query>
-    )}
-  </SharingContext.Consumer>
-)
 
 const SharingModal = ({ document, ...rest }) => (
   <SharingContext.Consumer>

@@ -7,14 +7,18 @@ exports[`Public view should render children when they are present 1`] = `
   <div>
     <div>
       <div
-        className=""
+        className="pho-content-header --no-icon --hide-bar"
       >
-        <h2 />
+        <h2
+          className="pho-content-title"
+        />
         <div
+          className="pho-toolbar"
           data-test-id="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
+            className="pho-public-mycozy"
             from="sharing-photos"
             size="normal"
             t={
@@ -83,6 +87,7 @@ exports[`Public view should render children when they are present 1`] = `
             }
           />
           <Button
+            className="pho-public-download"
             data-test-id="album-public-download"
             icon="download"
             onClick={[Function]}
@@ -167,14 +172,18 @@ exports[`Public view should render the album 1`] = `
   <div>
     <div>
       <div
-        className=""
+        className="pho-content-header --no-icon --hide-bar"
       >
-        <h2 />
+        <h2
+          className="pho-content-title"
+        />
         <div
+          className="pho-toolbar"
           data-test-id="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
+            className="pho-public-mycozy"
             from="sharing-photos"
             size="normal"
             t={
@@ -215,6 +224,7 @@ exports[`Public view should render the album 1`] = `
             }
           />
           <Button
+            className="pho-public-download"
             data-test-id="album-public-download"
             icon="download"
             onClick={[Function]}

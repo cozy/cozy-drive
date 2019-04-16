@@ -10,7 +10,7 @@ import {
   getOpenedFolderId
 } from 'drive/web/modules/navigation/duck'
 
-import styles from 'drive/styles/filelist'
+import styles from 'drive/styles/filelist.styl'
 
 const SORTABLE_ATTRIBUTES = [
   { label: 'name', attr: 'name', css: 'file', defaultOrder: 'asc' },

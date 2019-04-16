@@ -3,7 +3,7 @@ import justifiedLayout from 'justified-layout'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
 
-import styles from '../styles/photoList'
+import styles from '../styles/photoList.styl'
 import Photo from './Photo'
 
 const photoDimensionsFallback = { width: 1, height: 1 }

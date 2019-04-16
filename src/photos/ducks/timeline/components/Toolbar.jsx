@@ -1,4 +1,4 @@
-import styles from '../../../styles/toolbar'
+import styles from '../../../styles/toolbar.styl'
 
 import React from 'react'
 import PropTypes from 'prop-types'

@@ -26,6 +26,7 @@ export const permissions = [
   'io.cozy.apps:GET',
   'io.cozy.settings:GET',
   'io.cozy.contacts',
+  'io.cozy.contacts.groups',
   'io.cozy.jobs:POST:sendmail:worker'
 ]
 

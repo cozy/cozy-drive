@@ -9,7 +9,7 @@ import Alerter from 'cozy-ui/react/Alerter'
 import { ShareModal } from 'sharing'
 import flow from 'lodash/flow'
 
-import styles from '../../../styles/layout'
+import styles from '../../../styles/layout.styl'
 
 import AlbumToolbar from './AlbumToolbar'
 import { AddToAlbumModal } from '..'

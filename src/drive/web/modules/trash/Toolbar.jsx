@@ -13,7 +13,7 @@ import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import { emptyTrash } from './actions'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
-import styles from 'drive/styles/toolbar'
+import styles from 'drive/styles/toolbar.styl'
 
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 
