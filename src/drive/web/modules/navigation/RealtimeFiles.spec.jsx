@@ -100,7 +100,7 @@ describe('RealTimeFiles', () => {
         }
       }
     }
-    const component = mount(<RealtimeFiles />, { context })
+    mount(<RealtimeFiles />, { context })
     // jest.spyOn(realtime, 'subscribe')
     expect(realtime.subscribe).toHaveBeenCalledWith(
       {
