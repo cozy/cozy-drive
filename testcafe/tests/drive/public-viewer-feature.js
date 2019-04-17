@@ -1,5 +1,5 @@
 import { driveUser } from '../helpers/roles'
-import { Role } from 'testcafe'
+//import { Role } from 'testcafe'
 import {
   TESTCAFE_DRIVE_URL,
   SLUG,
@@ -107,7 +107,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
     console.group(
       `\n↳ ℹ️  no Loggin (anonymous), DOWNLOAD_PATH initialization and Navigate to link`
     )
-    await t.useRole(Role.anonymous())
+    //await t.useRole(Role.anonymous())
     await t.navigateTo(data.sharingLink)
     await publicDrivePage.waitForLoading({ isFull: true })
 
