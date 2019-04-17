@@ -6,7 +6,7 @@ import PrivateDrivePage from '../pages/drive/drive-model-private'
 const privateDrivePage = new PrivateDrivePage()
 
 fixture`DRIVE - NAV`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  console.group(`\n↳ ℹ️  Login & Initialization`)
   await t.useRole(driveUser)
   await privateDrivePage.waitForLoading()
   console.groupEnd()

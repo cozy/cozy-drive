@@ -1,14 +1,6 @@
 import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
-import {
-  THUMBNAIL_DELAY,
-  DATA_PATH,
-  IMG0,
-  IMG1,
-  IMG2,
-  IMG3,
-  IMG4
-} from '../helpers/data'
+import { DATA_PATH, IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
 import { initVR } from '../helpers/visualreview-utils'
 import TimelinePage from '../pages/photos/photos-timeline-model'
 import * as selectors from '../pages/selectors'
@@ -23,14 +15,10 @@ const TEST_UPLOAD2 = `1-2 Upload 4 photos`
 
 fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
   .before(async ctx => {
-    ctx.vr = new VisualReviewTestcafe({
-      projectName: `${SLUG}`,
-      suiteName: `${FIXTURE_INIT}`
-    })
-    await ctx.vr.start()
+    await initVR(ctx, SLUG, FIXTURE_INIT)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     console.groupEnd()
@@ -39,7 +27,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_UPLOAD1}`, async t => {
+test(TEST_UPLOAD1, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD1}`)
   await t.maximizeWindow() //Real fullscren for VR
   ///there is no photos on page
@@ -61,9 +49,7 @@ test(`${TEST_UPLOAD1}`, async t => {
   console.groupEnd()
 })
 
-test('Uploading 4 pics from Photos view', async t => {
-  console.group('↳ ℹ️  Uploading 4 pics from Photos view')
-test(`${TEST_UPLOAD2}`, async () => {
+test(TEST_UPLOAD2, async () => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD2}`)
   await timelinePage.initPhotosCount()
   await timelinePage.uploadPhotos([

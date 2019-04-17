@@ -47,7 +47,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
     await initVR(ctx, SLUG, FIXTURE_INIT)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -56,7 +56,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_CREATE_FOLDER}`, async t => {
+test(TEST_CREATE_FOLDER, async t => {
   await t.maximizeWindow() //Real fullscren for VR
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_FOLDER}`)
 
@@ -79,7 +79,7 @@ test(`${TEST_CREATE_FOLDER}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_UPLOAD}`, async t => {
+test(TEST_UPLOAD, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD} (in "${FEATURE_PREFIX}-Folder2" folder)`
   )
@@ -122,7 +122,7 @@ fixture`${FIXTURE_CLASSIFICATION}`.page`${TESTCAFE_DRIVE_URL}/`
     await initVR(ctx, SLUG, FIXTURE_CLASSIFICATION)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -131,7 +131,7 @@ fixture`${FIXTURE_CLASSIFICATION}`.page`${TESTCAFE_DRIVE_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_RENAME_FILE}`, async t => {
+test(TEST_RENAME_FILE, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_RENAME_FILE}`)
   const [fileName, ext] = FILE_PDF.split('.')
 
@@ -162,7 +162,7 @@ test(`${TEST_RENAME_FILE}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_MOVE_FILE_CANCEL}`, async t => {
+test(TEST_MOVE_FILE_CANCEL, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_MOVE_FILE_CANCEL}`)
   //set mask only once, all screen in this test use the same mask
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder2`)
@@ -211,7 +211,7 @@ test(`${TEST_MOVE_FILE_CANCEL}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_MOVE_FILE}`, async t => {
+test(TEST_MOVE_FILE, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_MOVE_FILE}`)
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder2`)
 
@@ -228,7 +228,7 @@ test(`${TEST_MOVE_FILE}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_MOVE_FOLDER}`, async t => {
+test(TEST_MOVE_FOLDER, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_MOVE_FOLDER}`)
 
   await privateDrivePage.showMoveModalForElement(`${FEATURE_PREFIX}-Folder2`)
@@ -252,7 +252,7 @@ fixture`${FIXTURE_TRASH}`.page`${TESTCAFE_DRIVE_URL}/`
     await initVR(ctx, SLUG, FIXTURE_TRASH)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -261,7 +261,7 @@ fixture`${FIXTURE_TRASH}`.page`${TESTCAFE_DRIVE_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_DELETE_FOLDER}`, async t => {
+test(TEST_DELETE_FOLDER, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER} "${FEATURE_PREFIX}-Folder1"`
   )
@@ -281,7 +281,7 @@ test(`${TEST_DELETE_FOLDER}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_RESTORE_FOLDER}`, async t => {
+test(TEST_RESTORE_FOLDER, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_RESTORE_FOLDER} "${FEATURE_PREFIX}-Folder1"`
   )
@@ -305,7 +305,7 @@ test(`${TEST_RESTORE_FOLDER}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_DELETE_FOLDER_FROM_DRIVE}`, async t => {
+test(TEST_DELETE_FOLDER_FROM_DRIVE, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER_FROM_DRIVE} "${FEATURE_PREFIX}-Folder1"`
   )
@@ -333,7 +333,7 @@ test(`${TEST_DELETE_FOLDER_FROM_DRIVE}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_NAVIGATE_IN_TRASH}`, async t => {
+test(TEST_NAVIGATE_IN_TRASH, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_NAVIGATE_IN_TRASH}`)
   await privateDrivePage.clickOnSidebarButton(
     selectors.btnNavToTrash,
@@ -359,7 +359,7 @@ test(`${TEST_NAVIGATE_IN_TRASH}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_EMPTY_TRASH}`, async t => {
+test(TEST_EMPTY_TRASH, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_EMPTY_TRASH}`)
   await privateDrivePage.clickOnSidebarButton(
     selectors.btnNavToTrash,

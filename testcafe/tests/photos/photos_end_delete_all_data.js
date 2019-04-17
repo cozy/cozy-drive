@@ -1,7 +1,7 @@
 import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
 import { IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
-import { VisualReviewTestcafe } from '../helpers/visualreview-utils'
+import { initVR } from '../helpers/visualreview-utils'
 import TimelinePage from '../pages/photos/photos-timeline-model'
 
 const timelinePage = new TimelinePage()
@@ -14,14 +14,10 @@ const TEST_DELETE2 = `1-2 Delete 4 photos`
 
 fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
   .before(async ctx => {
-    ctx.vr = new VisualReviewTestcafe({
-      projectName: `${SLUG}`,
-      suiteName: `${FIXTURE_INIT}`
-    })
-    await ctx.vr.start()
+    await initVR(ctx, SLUG, FIXTURE_INIT)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     await timelinePage.initPhotosCount()
@@ -31,7 +27,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_DELETE1}`, async t => {
+test(TEST_DELETE1, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE1}`)
   await timelinePage.selectPhotosByName([IMG0])
   //pic is removed
@@ -43,7 +39,7 @@ test(`${TEST_DELETE1}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_DELETE2}`, async t => {
+test(TEST_DELETE2, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE2}`)
   await timelinePage.selectPhotosByName([IMG1, IMG2, IMG3, IMG4])
   //pics are removed, there are no more pictures on  page

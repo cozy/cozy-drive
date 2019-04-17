@@ -1,7 +1,7 @@
 import { photosUser } from '../helpers/roles' //import roles for login
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
 import random from 'lodash/random'
-import { VisualReviewTestcafe } from '../helpers/visualreview-utils'
+import { initVR } from '../helpers/visualreview-utils'
 import Viewer from '../pages/photos-viewer/photos-viewer-model'
 import Timeline from '../pages/photos/photos-timeline-model'
 
@@ -10,7 +10,7 @@ const photoViewer = new Viewer()
 
 //Scenario const
 const FEATURE_PREFIX = 'PhotosCrud'
-const FIXTURE_INIT = `${FEATURE_PREFIX} 1- Photos Navigation`
+const FIXTURE_INIT = `${FEATURE_PREFIX} 1- Photos Navigationn`
 const TEST_SELECT1 = `1-1 Select 1 photo`
 const TEST_SELECT2 = `1-2 Select 3 photos`
 const TEST_VIEWER_FIRST = `1-1 Open viewer for 1st photo`
@@ -19,14 +19,10 @@ const TEST_VIEWER_OTHER = `1-1 Open viewer for 2nd photo`
 
 fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
   .before(async ctx => {
-    ctx.vr = new VisualReviewTestcafe({
-      projectName: `${SLUG}`,
-      suiteName: `${FIXTURE_INIT}`
-    })
-    await ctx.vr.start()
+    await initVR(ctx, SLUG, FIXTURE_INIT)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     await timelinePage.initPhotosCount()
@@ -36,7 +32,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_SELECT1}`, async t => {
+test(TEST_SELECT1, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SELECT1}`)
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await timelinePage.selectPhotos(1)
@@ -47,7 +43,7 @@ test(`${TEST_SELECT1}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_SELECT2}`, async t => {
+test(TEST_SELECT2, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SELECT2}`)
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await timelinePage.selectPhotos(3)
@@ -58,9 +54,9 @@ test(`${TEST_SELECT2}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_VIEWER_FIRST}`, async t => {
+test(TEST_VIEWER_FIRST, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_VIEWER_FIRST}`)
-  //Right arrow shows up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
+  //Right arrow shows up. Navigation to other pics is OK, Closing pic (X or 'esc') is Ok
   await photoViewer.openPhotoFullscreen(0)
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
@@ -78,9 +74,9 @@ test(`${TEST_VIEWER_FIRST}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_VIEWER_LAST}`, async t => {
+test(TEST_VIEWER_LAST, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_VIEWER_LAST}`)
-  //Left arrow shows up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
+  //Left arrow shows up. Navigation to other pics is OK, Closing pic (X or 'esc') is Ok
   await photoViewer.openPhotoFullscreen(t.ctx.totalFilesCount - 1)
   await t.fixtureCtx.vr.takeScreenshotAndUpload(
     `${FEATURE_PREFIX}/${TEST_VIEWER_LAST}-1`
@@ -97,9 +93,9 @@ test(`${TEST_VIEWER_LAST}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_VIEWER_OTHER}`, async t => {
+test(TEST_VIEWER_OTHER, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_VIEWER_OTHER}`)
-  //Both arrows show up. Navigatio to other pics is OK, Closing pic (X or 'esc') is Ok
+  //Both arrows show up. Navigation to other pics is OK, Closing pic (X or 'esc') is Ok
   // We need at least 3 pics in our cozy for this test to pass
   const photoIndex = random(1, t.ctx.totalFilesCount - 2)
 
