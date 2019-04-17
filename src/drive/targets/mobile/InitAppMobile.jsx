@@ -4,10 +4,11 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
-import { CozyProvider } from 'cozy-client'
 
+import RootApp from './AppContainer'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
-
+import { CozyProvider } from 'cozy-client'
+import { hot } from 'react-hot-loader'
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 
@@ -242,12 +243,16 @@ class InitAppMobile {
         scope: permissions
       }
     }
+    const lang = getLang()
     render(
-      <I18n lang={getLang()} polyglot={polyglot}>
-        <CozyProvider store={store} client={client}>
-          <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
-        </CozyProvider>
-      </I18n>,
+      <RootApp
+        lang={lang}
+        polyglot={polyglot}
+        store={store}
+        client={client}
+        history={hashHistory}
+        onboarding={onboarding}
+      />,
       root,
       () => {
         this.stardedApp = true
@@ -258,4 +263,19 @@ class InitAppMobile {
   }
 }
 
+if (module.hot) {
+  module.hot.accept('./AppContainer', () =>
+    render(
+      <RootApp
+        lang={lang}
+        polyglot={polyglot}
+        store={store}
+        client={client}
+        history={hashHistory}
+        onboarding={onboarding}
+      />,
+      root
+    )
+  )
+}
 export default InitAppMobile

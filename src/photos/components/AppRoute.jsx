@@ -6,6 +6,7 @@ import Timeline from '../ducks/timeline'
 import TimelineClusters from '../ducks/timeline-clusters'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import PhotosViewer from '../components/PhotosViewer'
+import { hot } from 'react-hot-loader'
 
 const AppRoute = (
   <Route component={Layout}>
@@ -26,4 +27,5 @@ const AppRoute = (
   </Route>
 )
 
-export default AppRoute
+const HotedApp = hot(module)(AppRoute)
+export default HotedApp
