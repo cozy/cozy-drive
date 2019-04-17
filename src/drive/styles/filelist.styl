@@ -136,7 +136,8 @@ column-width-thumbnail = 3rem
 .fil-file-thumbnail
   position relative
   flex 0 0 column-width-thumbnail - 1rem //width without padding
-
+  svg  
+    display block
 .fil-file-thumbnail-image
   object-fit cover
 
@@ -188,9 +189,6 @@ column-width-thumbnail = 3rem
 .fil-content-body--selectable
     .fil-content-file-select
         opacity 1
-
-.fil-content-body--mobile
-    overflow hidden
 
 .fil-content-row-actioned
     .fil-content-file-action

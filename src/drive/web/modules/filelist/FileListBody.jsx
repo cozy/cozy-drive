@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
-import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
 
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
@@ -40,14 +39,12 @@ export const FileListBody = ({
   selectionModeActive,
   isTypingNewFolderName,
   withSelectionCheckbox,
-  breakpoints: { isMobile },
   ...props
 }) => (
   <div
     data-test-id="fil-content-body"
     className={cx(styles['fil-content-body'], {
-      [styles['fil-content-body--selectable']]: selectionModeActive,
-      [styles['fil-content-body--mobile']]: isMobile
+      [styles['fil-content-body--selectable']]: selectionModeActive
     })}
   >
     <AddFolder />
@@ -92,4 +89,4 @@ const mapStateToProps = state => ({
   isTypingNewFolderName: isTypingNewFolderName(state)
 })
 
-export default connect(mapStateToProps)(withBreakpoints()(FileListBody))
+export default connect(mapStateToProps)(FileListBody)
