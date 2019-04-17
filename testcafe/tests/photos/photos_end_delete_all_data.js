@@ -33,9 +33,9 @@ test(TEST_DELETE1, async t => {
   //pic is removed
   await timelinePage.deletePhotosFromTimeline(1)
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE1}-1`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE1}-1`
+  })
   console.groupEnd()
 })
 
@@ -45,8 +45,8 @@ test(TEST_DELETE2, async t => {
   //pics are removed, there are no more pictures on  page
   await timelinePage.deletePhotosFromTimeline(4, true)
 
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_DELETE2}-1`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE2}-1`
+  })
   console.groupEnd()
 })

@@ -4,13 +4,13 @@ import random from 'lodash/random'
 import { initVR } from '../helpers/visualreview-utils'
 import Viewer from '../pages/photos-viewer/photos-viewer-model'
 import Timeline from '../pages/photos/photos-timeline-model'
-
+import * as selectors from '../pages/selectors'
 const timelinePage = new Timeline()
 const photoViewer = new Viewer()
 
 //Scenario const
 const FEATURE_PREFIX = 'PhotosCrud'
-const FIXTURE_INIT = `${FEATURE_PREFIX} 1- Photos Navigationn`
+const FIXTURE_INIT = `${FEATURE_PREFIX} 1- Photos Navigation`
 const TEST_SELECT1 = `1-1 Select 1 photo`
 const TEST_SELECT2 = `1-2 Select 3 photos`
 const TEST_VIEWER_FIRST = `1-1 Open viewer for 1st photo`
@@ -37,9 +37,9 @@ test(TEST_SELECT1, async t => {
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await timelinePage.selectPhotos(1)
   await timelinePage.checkCozyBarOnTimeline()
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_SELECT1}-1`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_SELECT1}-1`
+  })
   console.groupEnd()
 })
 
@@ -48,9 +48,9 @@ test(TEST_SELECT2, async t => {
   //Selection bar shows up. It includes AddtoAlbun, Download and Delete buttons
   await timelinePage.selectPhotos(3)
   await timelinePage.checkCozyBarOnTimeline()
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_SELECT2}-1`
-  )
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_SELECT2}-1`
+  })
   console.groupEnd()
 })
 
@@ -58,10 +58,13 @@ test(TEST_VIEWER_FIRST, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_VIEWER_FIRST}`)
   //Right arrow shows up. Navigation to other pics is OK, Closing pic (X or 'esc') is Ok
   await photoViewer.openPhotoFullscreen(0)
-
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_VIEWER_FIRST}-1`
-  )
+  await t.hover(selectors.viewerControls, {
+    offsetX: 0,
+    offsetY: 0
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_VIEWER_FIRST}-1`
+  })
   await photoViewer.navigateToNextFile(0)
   await photoViewer.closeViewer({
     exitWithEsc: true
@@ -78,9 +81,13 @@ test(TEST_VIEWER_LAST, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_VIEWER_LAST}`)
   //Left arrow shows up. Navigation to other pics is OK, Closing pic (X or 'esc') is Ok
   await photoViewer.openPhotoFullscreen(t.ctx.totalFilesCount - 1)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_VIEWER_LAST}-1`
-  )
+  await t.hover(selectors.viewerControls, {
+    offsetX: 0,
+    offsetY: 0
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_VIEWER_LAST}-1`
+  })
   await photoViewer.navigateToNextFile(t.ctx.totalFilesCount - 1)
   await photoViewer.closeViewer({
     exitWithEsc: true
@@ -101,9 +108,13 @@ test(TEST_VIEWER_OTHER, async t => {
 
   console.log('Open random pic  > photoIndex ' + photoIndex)
   await photoViewer.openPhotoFullscreen(photoIndex)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload(
-    `${FEATURE_PREFIX}/${TEST_VIEWER_OTHER}-1`
-  )
+  await t.hover(selectors.viewerControls, {
+    offsetX: 0,
+    offsetY: 0
+  })
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_VIEWER_OTHER}-1`
+  })
   await photoViewer.navigateToNextFile(photoIndex)
   await photoViewer.closeViewer({
     exitWithEsc: true
