@@ -28,9 +28,7 @@ async function runRunner() {
       'testcafe/tests/photos/photos_end_delete_all_data.js'
     ])
     //emulation:cdpPort=9222 is used to set the download folder in headless mode
-    .browsers([
-      'chrome:headless:emulation:cdpPort=9222 --start-maximized --disable-dev-shm-usage'
-    ])
+    .browsers(['chrome:headless:emulation:cdpPort=9222 --start-maximized'])
 
     .screenshots(
       'reports/',
