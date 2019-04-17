@@ -34,20 +34,6 @@ export default class Timeline extends Commons {
     await t.expect(allPhotosEndCount).eql(t.ctx.totalFilesCount + numOfFiles)
   }
 
-  async takeScreenshotsForUpload(screenshotsPath, hasMask = false) {
-    await t.fixtureCtx.vr.takeElementScreenshotAndUpload(
-      selectors.divUpload,
-      `${screenshotsPath}-Divupload`
-    )
-    //add wait to avoid thumbnail error on screenshots
-    await t.wait(THUMBNAIL_DELAY)
-    //relaod page to load thumbnails
-    await t.eval(() => location.reload(true))
-    await this.waitForLoading()
-
-    await t.fixtureCtx.vr.takeScreenshotAndUpload(screenshotsPath, hasMask)
-  }
-
   async checkCozyBarOnTimeline() {
     await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
     await isExistingAndVisibile(

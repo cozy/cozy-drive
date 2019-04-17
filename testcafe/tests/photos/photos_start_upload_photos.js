@@ -1,6 +1,14 @@
 import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
-import { DATA_PATH, IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
+import {
+  DATA_PATH,
+  IMG0,
+  IMG1,
+  IMG2,
+  IMG3,
+  IMG4,
+  THUMBNAIL_DELAY
+} from '../helpers/data'
 import { initVR } from '../helpers/visualreview-utils'
 import TimelinePage from '../pages/photos/photos-timeline-model'
 import * as selectors from '../pages/selectors'
@@ -34,22 +42,20 @@ test(TEST_UPLOAD1, async t => {
   await timelinePage.initPhotoCountZero()
   await timelinePage.uploadPhotos([`${DATA_PATH}/${IMG0}`])
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `UploadImage/Upload-1-pic-Divupload`,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD1}-1-Divupload`,
     selector: selectors.divUpload
   })
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: 'UploadImage/Upload-1-pic',
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD1}-1`,
     delay: THUMBNAIL_DELAY,
     pageToWait: timelinePage
   })
-  await timelinePage.takeScreenshotsForUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD1}-1`
-  )
+
   console.groupEnd()
 })
 
-test(TEST_UPLOAD2, async () => {
+test(TEST_UPLOAD2, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD2}`)
   await timelinePage.initPhotosCount()
   await timelinePage.uploadPhotos([
@@ -59,15 +65,12 @@ test(TEST_UPLOAD2, async () => {
     `${DATA_PATH}/${IMG4}`
   ])
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `UploadImage/Upload-4-pic-Divupload`,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD1}-2-Divupload`,
     selector: selectors.divUpload
   })
 
-  await timelinePage.takeScreenshotsForUpload(
-    `${FEATURE_PREFIX}/${TEST_UPLOAD2}-1`
-  )
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: 'UploadImage/Upload-4-pic',
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD1}-2`,
     delay: THUMBNAIL_DELAY,
     pageToWait: timelinePage
   })
