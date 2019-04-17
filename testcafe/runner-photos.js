@@ -32,9 +32,7 @@ async function runRunner() {
     )
     .run({
       assertionTimeout: 6000,
-      pageLoadTimeout: 6000,
-      skipJsErrors: true,
-      skipUncaughtErrors: true
+      pageLoadTimeout: 6000
     })
   tc.close()
 
