@@ -32,7 +32,7 @@ async function runRunner() {
     .screenshots(
       'reports/',
       true,
-      '${DATE}_${TIME}/test-${TEST}-${FILE_INDEX}.png'
+      '${DATE}_${TIME}/${FIXTURE}/${TEST_ID}-${TEST}/${FILE_INDEX}.png'
     )
     .run({
       assertionTimeout: 6000,
