@@ -1,8 +1,5 @@
 /* global __DEVELOPMENT__ */
 
-import 'drive/styles/main'
-import 'drive/styles/mobile'
-
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
