@@ -3,6 +3,7 @@ import styles from '../styles/photoList'
 import React, { Component } from 'react'
 import { withContentRect } from 'react-measure'
 import { translate } from 'cozy-ui/react/I18n'
+import palette from 'cozy-ui/react/palette'
 
 import PhotoList from './PhotoList'
 import { EmptyPhotos } from 'components/Error/Empty'
@@ -38,7 +39,7 @@ export class PhotoBoard extends Component {
       return <ErrorComponent errorType={`${photosContext}_photos`} />
     }
     if (isFetching) {
-      return <Loading loadingType="photos_fetching" />
+      return <Loading loadingType="photos_fetching" color={palette.dodgerBlue} />
     }
     if (!isFetching && (lists.length === 0 || lists[0].photos.length === 0)) {
       return <EmptyPhotos localeKey={`${photosContext}_photos`} />
