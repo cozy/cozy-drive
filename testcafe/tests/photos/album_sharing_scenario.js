@@ -1,4 +1,4 @@
-import { Role } from 'testcafe'
+//import { Role } from 'testcafe'
 import { photosUser } from '../helpers/roles'
 import {
   TESTCAFE_PHOTOS_URL,
@@ -93,7 +93,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_PHOTOS_URL}/`
     console.group(
       `\n↳ ℹ️  no Loggin (anonymous) & DOWNLOAD_PATH initialization`
     )
-    await t.useRole(Role.anonymous())
+    //await t.useRole(Role.anonymous())
     await setDownloadPath(data.DOWNLOAD_PATH)
     await t.navigateTo(data.sharingLink)
     //Init count for navigation
@@ -196,9 +196,9 @@ test(`${TEST_UNSHARE_ALBUM}`, async () => {
 // Public (no authentification)
 //************************
 fixture`${FIXTURE_PUBLIC_NO_ACCESS}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
-  async t => {
+  async () => {
     console.group(`\n↳ ℹ️  no Loggin (anonymous)`)
-    await t.useRole(Role.anonymous())
+    //await t.useRole(Role.anonymous())
     console.groupEnd()
   }
 )
