@@ -4,7 +4,14 @@ const postCommentToGithub = require('./tests/helpers/comment-on-github.js')
 async function runRunner() {
   //init vrErrorMsg
   process.env.vrErrorMsg = ''
-
+  if (!process.env.INSTANCE_TESTCAFE || !process.env.TESTCAFE_USER_PASSWORD) {
+    throw Error(
+      `You have to provide INSTANCE_TESTCAFE & TESTCAFE_USER_PASSWORD 
+      Ex: \n 
+      export INSTANCE_TESTCAFE="cozy.tools:8080"
+      export TESTCAFE_USER_PASSWORD="foo" `
+    )
+  }
   const tc = await createTestCafe()
   const runner = await tc.createRunner()
   const response = await runner
@@ -43,4 +50,6 @@ async function runRunner() {
   if (response > 0) throw Error(response)
 }
 
-runRunner()
+runRunner().catch(e => {
+  console.warn('eror', e)
+})
