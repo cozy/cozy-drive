@@ -7,7 +7,7 @@ import {
   checkLocalFile,
   setDownloadPath
 } from '../helpers/utils'
-import { VisualReviewTestcafe } from '../helpers/visualreview-utils'
+import { initVR } from '../helpers/visualreview-utils'
 import * as selectors from '../pages/selectors'
 
 import TimelinePage from '../pages/photos/photos-timeline-model'
@@ -48,14 +48,14 @@ const TEST_DELETE_ALBUM = `5-1 Delete Album`
 //Tests when authentified
 //************************
 fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  console.group(`\n↳ ℹ️  Login & Initialization`)
   await t.useRole(photosUser)
   await timelinePage.waitForLoading()
   await timelinePage.initPhotosCount()
   console.groupEnd()
 })
 
-test(`${TEST_CREATE_ALBUM}`, async () => {
+test(TEST_CREATE_ALBUM, async () => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_ALBUM}`)
   await timelinePage.goToAlbums()
   await photoAlbumsPage.addNewAlbum(FEATURE_PREFIX, 3)
@@ -64,7 +64,7 @@ test(`${TEST_CREATE_ALBUM}`, async () => {
   console.groupEnd()
 })
 
-test(`${TEST_SHARE_ALBUM}`, async () => {
+test(TEST_SHARE_ALBUM, async () => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SHARE_ALBUM}`)
   await timelinePage.goToAlbums()
   await photoAlbumsPage.goToAlbum(FEATURE_PREFIX)
@@ -83,11 +83,7 @@ test(`${TEST_SHARE_ALBUM}`, async () => {
 //************************
 fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_PHOTOS_URL}/`
   .before(async ctx => {
-    ctx.vr = new VisualReviewTestcafe({
-      projectName: `${SLUG}`,
-      suiteName: `${FIXTURE_PUBLIC_WITH_DL}`
-    })
-    await ctx.vr.start()
+    await initVR(ctx, SLUG, FIXTURE_PUBLIC_WITH_DL)
   })
   .beforeEach(async t => {
     console.group(
@@ -115,7 +111,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_PHOTOS_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_PUBLIC_ALBUM_DESKTOP}`, async t => {
+test(TEST_PUBLIC_ALBUM_DESKTOP, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_ALBUM_DESKTOP} > Access an album public link, check the viewer, download the file(s), and check the 'create Cozy' link`
   )
@@ -142,7 +138,7 @@ test(`${TEST_PUBLIC_ALBUM_DESKTOP}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_PUBLIC_ALBUM_MOBILE}`, async t => {
+test(TEST_PUBLIC_ALBUM_MOBILE, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_ALBUM_MOBILE} > Access an album public link, check the viewer, download the file(s), and check the 'create Cozy' link`
   )
@@ -176,7 +172,7 @@ test(`${TEST_PUBLIC_ALBUM_MOBILE}`, async t => {
 //************************
 fixture`${FIXTURE_UNSHARE}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
   async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     await timelinePage.initPhotosCount()
@@ -184,7 +180,7 @@ fixture`${FIXTURE_UNSHARE}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
   }
 )
 
-test(`${TEST_UNSHARE_ALBUM}`, async () => {
+test(TEST_UNSHARE_ALBUM, async () => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UNSHARE_ALBUM}`)
   await timelinePage.goToAlbums()
   await photoAlbumsPage.goToAlbum(FEATURE_PREFIX)
@@ -203,7 +199,7 @@ fixture`${FIXTURE_PUBLIC_NO_ACCESS}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
   }
 )
 
-test(`${TEST_PUBLIC_NO_ACCESS}`, async t => {
+test(TEST_PUBLIC_NO_ACCESS, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_NO_ACCESS}`)
   await t.navigateTo(data.sharingLink)
   await publicPhotoPage.waitForLoading()
@@ -216,7 +212,7 @@ test(`${TEST_PUBLIC_NO_ACCESS}`, async t => {
 //************************
 fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
   async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     await timelinePage.initPhotosCount()
@@ -224,7 +220,7 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
   }
 )
 
-test(`${TEST_DELETE_ALBUM}`, async () => {
+test(TEST_DELETE_ALBUM, async () => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_ALBUM}`)
   await timelinePage.goToAlbums()
   await photoAlbumsPage.goToAlbum(`${FEATURE_PREFIX}`)

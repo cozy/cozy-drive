@@ -44,7 +44,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
     await initVR(ctx, SLUG, FIXTURE_INIT)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -53,7 +53,7 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_CREATE_FOLDER}`, async t => {
+test(TEST_CREATE_FOLDER, async t => {
   await t.maximizeWindow() //Real fullscren for VR
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_FOLDER}`)
   await privateDrivePage.addNewFolder({
@@ -66,7 +66,7 @@ test(`${TEST_CREATE_FOLDER}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_UPLOAD_AND_SHARE}`, async t => {
+test(TEST_UPLOAD_AND_SHARE, async t => {
   console.group(
     `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD_AND_SHARE} (in "${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}" folder)`
   )
@@ -110,7 +110,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
   })
   .beforeEach(async t => {
     console.group(
-      `\n↳ ℹ️  no Loggin (anonymous), DOWNLOAD_PATH initialization and Navigate to link`
+      `\n↳ ℹ️  no Login (anonymous), DOWNLOAD_PATH initialization and Navigate to link`
     )
     //await t.useRole(Role.anonymous())
     await t.navigateTo(data.sharingLink)
@@ -136,7 +136,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
+test(TEST_PUBLIC_VIEWER_ZIP, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_ZIP}`)
   //take a general screen for the shared folder :
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
@@ -164,7 +164,7 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
+test(TEST_PUBLIC_VIEWER_ZIP, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_PPTX}`)
   await publicViewerPage.openViewerForFile(data.FILE_PPTX)
   await publicViewerPage.checkNoViewerDownload(data.FILE_PPTX)
@@ -184,7 +184,7 @@ test(`${TEST_PUBLIC_VIEWER_ZIP}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_PUBLIC_VIEWER_IMG}`, async t => {
+test(TEST_PUBLIC_VIEWER_IMG, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_IMG}`)
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_IMG)
   t.ctx.fileDownloaded = data.FILE_IMG
@@ -201,7 +201,7 @@ test(`${TEST_PUBLIC_VIEWER_IMG}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
+test(TEST_PUBLIC_VIEWER_AUDIO, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_AUDIO}`)
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_AUDIO)
   t.ctx.fileDownloaded = data.FILE_AUDIO
@@ -223,7 +223,7 @@ test(`${TEST_PUBLIC_VIEWER_AUDIO}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
+test(TEST_PUBLIC_VIEWER_VIDEO, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_VIDEO}`)
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_VIDEO)
   t.ctx.fileDownloaded = data.FILE_VIDEO
@@ -245,7 +245,7 @@ test(`${TEST_PUBLIC_VIEWER_VIDEO}`, async t => {
   console.groupEnd()
 })
 
-test(`${TEST_PUBLIC_VIEWER_TXT}`, async t => {
+test(TEST_PUBLIC_VIEWER_TXT, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PUBLIC_VIEWER_TXT}`)
   await publicViewerPage.openFileAndCheckCommonViewerDownload(data.FILE_TXT)
   t.ctx.fileDownloaded = data.FILE_TXT
@@ -270,7 +270,7 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
     await initVR(ctx, SLUG, FIXTURE_CLEANUP)
   })
   .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Loggin & Initialization`)
+    console.group(`\n↳ ℹ️  Login & Initialization`)
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -279,7 +279,7 @@ fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(`${TEST_DELETE_FOLDER}`, async t => {
+test(TEST_DELETE_FOLDER, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER}`)
   await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
