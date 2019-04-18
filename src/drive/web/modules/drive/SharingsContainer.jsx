@@ -11,6 +11,7 @@ import {
 } from 'drive/web/modules/navigation/duck/actions'
 import SharedDocuments from 'sharing/components/SharedDocuments'
 
+import { makeCancelable } from 'lib/promise'
 export class SharingFetcher extends React.Component {
   state = {
     error: null
@@ -20,7 +21,11 @@ export class SharingFetcher extends React.Component {
     client: PropTypes.object.isRequired,
     t: PropTypes.func.isRequired
   }
-
+  constructor(props) {
+    super(props)
+    this.fetchSharedFiles = null
+    this.fetSharedParents = null
+  }
   async fetchSharedDocuments() {
     const { sharedDocuments } = this.props
     const { client } = this.context
@@ -29,14 +34,18 @@ export class SharingFetcher extends React.Component {
       this.props.startFetch()
       this.setState({ error: null })
 
-      const resp = await client
-        .collection('io.cozy.files')
-        .all({ keys: sharedDocuments })
+      this.fetchSharedFiles = makeCancelable(
+        client.collection('io.cozy.files').all({ keys: sharedDocuments })
+      )
 
+      const resp = await this.fetchSharedFiles.promise
       const parentIds = resp.data.map(f => f.dir_id)
-      const parentsResp = await client.collection('io.cozy.files').all({
-        keys: parentIds
-      })
+      this.fetSharedParents = makeCancelable(
+        client.collection('io.cozy.files').all({
+          keys: parentIds
+        })
+      )
+      const parentsResp = await this.fetSharedParents.promise
       const parents = parentsResp.data
       const files = resp.data.sort((a, b) => {
         if (a.type === 'directory' && b.type !== 'directory') return -1
@@ -50,15 +59,25 @@ export class SharingFetcher extends React.Component {
       }))
       this.props.fetchSuccess(filesWithPath)
     } catch (e) {
-      this.setState({ error: e })
-      this.props.fetchFailure(e)
+      /* 
+      If the error is a cancelable promise, don't use setState sinnce the 
+      component is not mounted anymore
+      */
+      if (e.isCanceled !== true) {
+        this.setState({ error: e })
+        this.props.fetchFailure(e)
+      }
     }
   }
 
   componentDidMount() {
     this.fetchSharedDocuments()
   }
-
+  componentWillUnmount() {
+    //In order to not dispatch fetch sucess, we cancel the promises
+    if (this.fetchSharedFiles) this.fetchSharedFiles.cancel()
+    if (this.fetSharedParents) this.fetSharedParents.cancel()
+  }
   async componentDidUpdate(prevProps) {
     const { sharedDocuments } = this.props
 
