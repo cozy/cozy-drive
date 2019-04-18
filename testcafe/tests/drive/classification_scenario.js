@@ -14,6 +14,7 @@ import {
   maskDeleteFolder,
   maskMoveMoadal
 } from '../helpers/data'
+import { checkToastAppearsAndDisappears } from '../pages/commons'
 import * as selectors from '../pages/selectors'
 import PrivateDrivePage from '../pages/drive/drive-model-private'
 
@@ -201,7 +202,10 @@ test(`${TEST_MOVE_FILE_CANCEL}`, async t => {
   console.log('Show Move Moadal, and Cancel (Cancel button)')
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // no need to screenshot again the modal
-  await isExistingAndVisibile(selectors.btnModalFirstButton)
+  await isExistingAndVisibile(
+    selectors.btnModalFirstButton,
+    'Modal button cancel'
+  )
   await t.click(selectors.btnModalFirstButton)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-5`,
@@ -221,6 +225,10 @@ test(`${TEST_MOVE_FILE}`, async t => {
     withMask: maskMoveMoadal
   })
   await privateDrivePage.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
+
+  //Wait for toast alert to disapear before taking screenshot
+  await checkToastAppearsAndDisappears('has been moved to')
+
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE}-2`,
     withMask: maskDriveFolderWithDate
@@ -237,6 +245,10 @@ test(`${TEST_MOVE_FOLDER}`, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-1`
   })
   await privateDrivePage.moveElementTo(`${FEATURE_PREFIX}-Folder1`)
+
+  //Wait for toast alert to disapear before taking screenshot
+  await checkToastAppearsAndDisappears('has been moved to')
+
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FOLDER}-2`,
     withMask: maskDriveFolderWithDate
@@ -275,6 +287,10 @@ test(`${TEST_DELETE_FOLDER}`, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`,
     withMask: maskDeleteFolder
   })
+  //Wait for toast alert to disapear before taking screenshot
+  await checkToastAppearsAndDisappears(
+    'The selection has been moved to the Trash.'
+  )
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`
   })
@@ -297,7 +313,11 @@ test(`${TEST_RESTORE_FOLDER}`, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-1`,
     withMask: maskDriveFolderWithDate
   })
-  await t.click(selectors.btnRestoreActionMenu).wait(1000)
+  await t.click(selectors.btnRestoreActionMenu)
+  //Wait for toast alert to disapear before taking screenshot
+  await checkToastAppearsAndDisappears(
+    'The selection has been successfully restored.'
+  )
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_RESTORE_FOLDER}-2`,
     withMask: maskDriveFolderWithDate
@@ -322,11 +342,11 @@ test(`${TEST_DELETE_FOLDER_FROM_DRIVE}`, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-2`
   })
   await t.click(selectors.btnModalSecondButton)
-  await isExistingAndVisibile(
-    selectors.alertWrapper,
-    '"successfull" modal alert'
-  )
 
+  //Wait for toast alert to disapear before taking screenshot
+  await checkToastAppearsAndDisappears(
+    'The selection has been moved to the Trash.'
+  )
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-3`
   })
@@ -371,13 +391,21 @@ test(`${TEST_EMPTY_TRASH}`, async t => {
     withMask: maskDeleteFolder
   })
 
+  //We cannot use checkToastAppearsAndDisappears here, as both toast might appears at the same time, or the 1st one may disappear before the second one shows up.
+  isExistingAndVisibile(
+    selectors.alertWrapper.withText(
+      'Your trash is being emptied. This might take a few moments.'
+    ),
+    'Toast : Your trash is being emptied. This might take a few moments. '
+  )
+  isExistingAndVisibile(
+    selectors.alertWrapper.withText('The trash has been emptied.'),
+    'Toast : The trash has been emptied.'
+  )
+  //Wait for toast alert to disapear before taking screenshot
+  await t.wait(5000)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-2`
-  })
-  //wait for trash to be empty
-  await t.wait(2000)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_EMPTY_TRASH}-3`
   })
   console.groupEnd()
 })

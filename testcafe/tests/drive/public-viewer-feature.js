@@ -8,6 +8,7 @@ import {
   deleteLocalFile
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
+import { checkToastAppearsAndDisappears } from '../pages/commons'
 let data = require('../helpers/data')
 import PrivateDriveVRPage from '../pages/drive/drive-model-private'
 import PublicDrivePage from '../pages/drive/drive-model-public'
@@ -290,6 +291,10 @@ test(`${TEST_DELETE_FOLDER}`, async t => {
   await privateDrivePage.deleteCurrentFolder({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
   })
+  //Wait for toast alert to disapear before taking screenshot
+  await checkToastAppearsAndDisappears(
+    'The selection has been moved to the Trash.'
+  )
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`
   })
