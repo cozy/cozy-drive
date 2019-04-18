@@ -8,6 +8,7 @@ import {
   getLastExecutedCommand
 } from '../../helpers/utils'
 import * as selectors from '../selectors'
+import { checkToastAppearsAndDisappears } from '../commons'
 import PhotoPage from '../photos/photos-model'
 
 export default class Page extends PhotoPage {
@@ -147,8 +148,11 @@ export default class Page extends PhotoPage {
   }
 
   // @param { number } photoNumber : Number of photos to remove from the album (
-  async removePhoto(photoNumber) {
-    const photoAlbumStart = await this.getPhotosCount('In album, before')
+  async removePhotoFromAlbum(photoNumber) {
+    let photoAlbumStart
+    if (!t.fixtureCtx.isVR) {
+      photoAlbumStart = await this.getPhotosCount('In album, before')
+    }
     await this.selectPhotos(photoNumber)
     await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
 
@@ -160,12 +164,13 @@ export default class Page extends PhotoPage {
     await t.click(selectors.btnRemoveFromAlbumCozySelectionBar)
 
     await isExistingAndVisibile(selectors.alertWrapper, 'modal Alert')
-    await t
-      .expect(selectors.alertWrapper.innerText)
-      .contains('The photo has been removed from album') //!FIXME
-
-    const photoAlbumEnd = await this.getPhotosCount('In album, before')
-    await t.expect(photoAlbumEnd).eql(photoAlbumStart - photoNumber)
+    await checkToastAppearsAndDisappears(
+      'The photo has been removed from album'
+    )
+    if (!t.fixtureCtx.isVR) {
+      const photoAlbumEnd = await this.getPhotosCount('In album, after')
+      await t.expect(photoAlbumEnd).eql(photoAlbumStart - photoNumber)
+    }
   }
 
   async deleteAlbum() {

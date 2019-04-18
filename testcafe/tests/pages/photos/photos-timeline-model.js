@@ -53,7 +53,11 @@ export default class Timeline extends Commons {
 
   //@param { number } numOfFiles : number of file to delete
   //@param { bool } isRemoveAll: true if all photos are supposed to be remove at the end
-  async deletePhotosFromTimeline(numOfFiles, isRemoveAll) {
+  async deletePhotosFromTimeline({
+    numOfFiles: numOfFiles,
+    screenshotPath: screenshotPath,
+    withMask = false
+  }) {
     await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
 
     logger.debug('Deleting ' + numOfFiles + ' picture(s)')
@@ -68,18 +72,18 @@ export default class Timeline extends Commons {
       selectors.btnModalSecondButton,
       'Modal delete button Delete'
     )
+    if (t.fixtureCtx.isVR)
+      //dates show up here, so there is a mask for screenshots
+      await t.fixtureCtx.vr.takeScreenshotAndUpload({
+        screenshotPath: screenshotPath,
+        withMask: withMask
+      })
+
     await t.click(selectors.btnModalSecondButton)
-    await t.takeScreenshot()
 
-    let allPhotosEndCount
-    if (isRemoveAll) {
-      await isExistingAndVisibile(selectors.folderEmpty, 'Folder Empty')
-      logger.debug(`Number of pictures on page (Before test): 0`)
-      allPhotosEndCount = 0
-    } else {
-      allPhotosEndCount = await this.getPhotosCount('After')
+    if (!t.fixtureCtx.isVR) {
+      let allPhotosEndCount = await this.getPhotosCount('After')
+      await t.expect(allPhotosEndCount).eql(t.ctx.totalFilesCount - numOfFiles)
     }
-
-    await t.expect(allPhotosEndCount).eql(t.ctx.totalFilesCount - numOfFiles)
   }
 }
