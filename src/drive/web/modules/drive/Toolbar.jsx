@@ -83,7 +83,7 @@ class Toolbar extends Component {
             </a>
           </SelectableItem>
         </Item>
-        <NotRootFolder>
+        <NotRootFolder type="hr">
           <hr />
         </NotRootFolder>
         <NotRootFolder>
