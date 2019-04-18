@@ -70,6 +70,9 @@ class BannerClient extends Component {
           label={t('Nav.btn-client-mobile')}
         />
         <p className={styles['coz-banner-text']}>
+          <figure>
+            <Icon icon="cozy" width="44" height="44" />
+          </figure>
           <span>{t('Nav.banner-txt-client')}</span>
           <ButtonLink
             href={t(desktopLink)}
