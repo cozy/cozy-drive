@@ -59,7 +59,10 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
 test(TEST_CREATE_ALBUM, async () => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_ALBUM}`)
   await timelinePage.goToAlbums()
-  await photoAlbumsPage.addNewAlbum(FEATURE_PREFIX, 3)
+  await photoAlbumsPage.addNewAlbum({
+    albumName: FEATURE_PREFIX,
+    photoNumber: 3
+  })
   //we need to check the album page, just after the redirection from album creation, hence this step being in this test
   await photoAlbumPage.checkAlbumPage(FEATURE_PREFIX, 3)
   console.groupEnd()

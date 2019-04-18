@@ -29,7 +29,10 @@ test('Go into Album view, and check that there is no album', async () => {
 test('Go into Album view, and create new empty album', async () => {
   console.group('↳ ℹ️  Go into Album view, and create new empty album')
   await timelinePage.goToAlbums()
-  await photoAlbumsPage.addNewAlbum(ALBUM_DATE_TIME, 0)
+  await photoAlbumsPage.addNewAlbum({
+    albumName: ALBUM_DATE_TIME,
+    photoNumber: 0
+  })
   await photoAlbumPage.checkAlbumPage(ALBUM_DATE_TIME, 0)
   //we need to check the album page, just after the redirection from album creation, hence this step being in this test
   console.groupEnd()
@@ -81,7 +84,7 @@ test('Go to New2_ALBUM_DATE_TIME, and remove the 1st photos', async () => {
   )
   await timelinePage.goToAlbums()
   await photoAlbumsPage.goToAlbum(`New2_${ALBUM_DATE_TIME}`)
-  await photoAlbumPage.removePhoto(1)
+  await photoAlbumPage.removePhotoFromAlbum(1)
   console.groupEnd()
 })
 

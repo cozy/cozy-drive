@@ -28,7 +28,12 @@ export default class AlbumsPage extends PhotoPage {
   // @param {String} albumName : Name for the new album
   // @param { number } photoNumber : Number of photos to add to the new album (it will add the first X photos from the timeline)
   // click on new album button, check the new album page, give a name to album and select photos
-  async addNewAlbum(albumName, photoNumber) {
+  async addNewAlbum({
+    albumName: albumName,
+    photoNumber: photoNumber,
+    screenshotPath: screenshotPath,
+    withMask = false
+  }) {
     await this.waitForLoading()
     await isExistingAndVisibile(
       selectors.toolbarAlbumsList,
@@ -56,6 +61,14 @@ export default class AlbumsPage extends PhotoPage {
 
     await t.typeText(selectors.inputAlbumName, albumName)
     await albumPage.selectPhotostoAdd(0, photoNumber)
+
+    if (t.fixtureCtx.isVR && screenshotPath)
+      //dates show up here, so there is a mask for screenshots
+      await t.fixtureCtx.vr.takeScreenshotAndUpload({
+        screenshotPath: screenshotPath,
+        withMask: withMask
+      })
+
     await t.click(selectors.btnValidateAlbum)
   }
 
