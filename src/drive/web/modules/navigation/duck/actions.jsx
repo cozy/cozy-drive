@@ -1,6 +1,6 @@
 /* global cozy */
 import { getAdapter, extractFileAttributes } from './async'
-import { getSort } from './reducer'
+import { getSort, lastestActionSelector } from './reducer'
 import React from 'react'
 import { isMobileApp } from 'cozy-device-helper'
 import {
@@ -70,8 +70,9 @@ export const openTrash = () => {
 
 export const openFolder = folderId => {
   return async (dispatch, getState) => {
+    const action = OPEN_FOLDER
     dispatch({
-      type: OPEN_FOLDER,
+      type: action,
       folderId,
       meta: {
         cancelSelection: true
@@ -81,12 +82,17 @@ export const openFolder = folderId => {
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList
       const folder = await getAdapter(getState()).getFolder(folderId)
-      return dispatch({
-        type: OPEN_FOLDER_SUCCESS,
-        folder,
-        fileCount: folder.contents.meta.count || 0,
-        files: folder.contents.data
-      })
+      /* 
+      Before dispatching the result, we check if the latest action is the excepted one
+      */
+      if (lastestActionSelector(getState()) === action) {
+        return dispatch({
+          type: OPEN_FOLDER_SUCCESS,
+          folder,
+          fileCount: folder.contents.meta.count || 0,
+          files: folder.contents.data
+        })
+      }
     } catch (err) {
       logException(err, {
         context: OPEN_FOLDER_FAILURE
@@ -98,8 +104,9 @@ export const openFolder = folderId => {
 
 export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
   return async (dispatch, getState) => {
+    const action = SORT_FOLDER
     dispatch({
-      type: SORT_FOLDER,
+      type: action,
       folderId,
       sortAttribute,
       sortOrder,
@@ -113,11 +120,12 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
         sortAttribute,
         sortOrder
       )
-
-      return dispatch({
-        type: SORT_FOLDER_SUCCESS,
-        files
-      })
+      if (lastestActionSelector(getState()) === action) {
+        return dispatch({
+          type: SORT_FOLDER_SUCCESS,
+          files
+        })
+      }
     } catch (err) {
       logException(err, {
         context: SORT_FOLDER_FAILURE
@@ -130,7 +138,8 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
 export const fetchMoreFiles = (folderId, skip, limit) => {
   return async (dispatch, getState) => {
     const sort = getSort(getState())
-    dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
+    const action = FETCH_MORE_FILES
+    dispatch({ type: action, folderId, skip, limit })
     try {
       const files =
         sort === null
@@ -146,12 +155,14 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
               skip,
               limit
             )
-      return dispatch({
-        type: FETCH_MORE_FILES_SUCCESS,
-        files,
-        skip,
-        limit
-      })
+      if (lastestActionSelector(getState()) === action) {
+        return dispatch({
+          type: FETCH_MORE_FILES_SUCCESS,
+          files,
+          skip,
+          limit
+        })
+      }
     } catch (err) {
       logException(err, {
         context: FETCH_MORE_FILES_FAILURE
@@ -163,8 +174,10 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
 
 export const fetchRecentFiles = () => {
   return async (dispatch, getState) => {
+    const action = FETCH_RECENT
+
     dispatch({
-      type: FETCH_RECENT,
+      type: action,
       meta: META_DEFAULTS
     })
 
@@ -186,11 +199,13 @@ export const fetchRecentFiles = () => {
         const path = parentFolder ? parentFolder.doc.path : ''
         return { ...file, path, id: file._id }
       })
-      return dispatch({
-        type: FETCH_RECENT_SUCCESS,
-        fileCount: filesWithPath.length,
-        files: filesWithPath
-      })
+      if (lastestActionSelector(getState()) === action) {
+        return dispatch({
+          type: FETCH_RECENT_SUCCESS,
+          fileCount: filesWithPath.length,
+          files: filesWithPath
+        })
+      }
     } catch (err) {
       logException(err, {
         context: FETCH_RECENT_FAILURE
