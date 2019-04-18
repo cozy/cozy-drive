@@ -6,8 +6,8 @@ async function runRunner() {
   process.env.vrErrorMsg = ''
   if (!process.env.INSTANCE_TESTCAFE || !process.env.TESTCAFE_USER_PASSWORD) {
     throw Error(
-      `You have to provide INSTANCE_TESTCAFE & TESTCAFE_USER_PASSWORD 
-      Exemple: 
+      `You have to provide INSTANCE_TESTCAFE & TESTCAFE_USER_PASSWORD
+      Exemple:
       export INSTANCE_TESTCAFE="cozy.tools:8080"
       export TESTCAFE_USER_PASSWORD="foo" `
     )
@@ -47,6 +47,4 @@ async function runRunner() {
   if (response > 0) throw Error(response)
 }
 
-runRunner().catch(e => {
-  console.warn('eror', e)
-})
+runRunner()
