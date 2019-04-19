@@ -1,3 +1,4 @@
+/* global StatusBar */
 import React, { Component } from 'react'
 import cx from 'classnames'
 
@@ -44,6 +45,10 @@ export default class Viewer extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keyup', this.onKeyUp, false)
+    if (isMobileApp) {
+      StatusBar.styleDefault()
+      StatusBar.backgroundColorByName('white')
+    }
   }
 
   onKeyUp = e => {
@@ -101,6 +106,10 @@ export default class Viewer extends Component {
     const hasNext = currentIndex < fileCount - 1
     // this `expanded` property makes the next/previous controls cover the displayed image
     const expanded = currentFile && currentFile.class === 'image'
+    if (isMobileApp) {
+      StatusBar.styleBlackOpaque()
+      StatusBar.backgroundColorByName('black')
+    }
     return (
       <ViewerWrapper
         style={style}
