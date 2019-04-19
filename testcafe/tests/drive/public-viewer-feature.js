@@ -291,7 +291,7 @@ test(`${TEST_DELETE_FOLDER}`, async t => {
   await privateDrivePage.deleteCurrentFolder({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
   })
-  //Wait for toast alert to disapear before taking screenshot
+
   await checkToastAppearsAndDisappears(
     'The selection has been moved to the Trash.'
   )
