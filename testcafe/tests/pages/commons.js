@@ -4,7 +4,7 @@ import { isExistingAndVisibile } from '../helpers/utils'
 
 //this files contains function that can be use both in photos and drive
 
-//Check that the alerte toast exist, and wait for it to disappear
+//Check that the alert toast exist, and wait for it to disappear
 export async function checkToastAppearsAndDisappears(toastText) {
   await t
   isExistingAndVisibile(
