@@ -75,6 +75,21 @@ const displayedFolder = (state = null, action) => {
   }
 }
 
+const currentView = (state = '', action) => {
+  switch (action.type) {
+    case OPEN_FOLDER:
+      if (action.folderId === 'io.cozy.files.trash-dir') {
+        return 'trash'
+      }
+      return 'folder'
+    case FETCH_RECENT:
+      return 'recent'
+    case FETCH_SHARINGS:
+      return 'sharings'
+    default:
+      return state
+  }
+}
 const latestAction = (state, action) => {
   return action.type
 }
@@ -193,45 +208,97 @@ const indexFor = (file, array, compareFn, start = 0, end = array.length) => {
 }
 
 // reducer for the full file list of the currently displayed folder
-const files = (state = [], action) => {
+const files = (
+  state = { shared: [], recent: [], trashed: [], folder: [] },
+  action
+) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
+      if (action.folder.id === 'io.cozy.files.trash-dir') {
+        return {
+          ...state,
+          trashed: action.files
+        }
+      }
+      return {
+        ...state,
+        folder: action.files
+      }
     case FETCH_RECENT_SUCCESS:
+      return {
+        ...state,
+        recent: action.files
+      }
     case FETCH_SHARINGS_SUCCESS:
+      return {
+        ...state,
+        shared: action.files
+      }
     case SORT_FOLDER_SUCCESS:
-      return action.files
+      return {
+        ...state,
+        folder: action.files
+      }
     case FETCH_MORE_FILES_SUCCESS: {
-      const clone = state.slice(0)
+      const clone = state.folder.slice(0)
       action.files.forEach((f, i) => {
         clone[action.skip + i] = f
       })
-      return clone
+
+      return {
+        ...state,
+        folder: clone
+      }
     }
     case RENAME_SUCCESS:
-    case UPDATE_FILE:
-      return updateItem(action.file, state)
-    case ADD_FILE:
-      return insertItem(
+    case UPDATE_FILE: {
+      const newStateFile = updateItem(action.file, state.folder)
+      return {
+        ...state,
+        folder: newStateFile
+      }
+    }
+    case ADD_FILE: {
+      const newFolderState = insertItem(
         action.file,
-        state,
+        state.folder,
         action.currentFileCount,
         action.currentSort
       )
-    case CREATE_FOLDER_SUCCESS:
-      return insertItem(
+      return {
+        ...state,
+        folder: newFolderState
+      }
+    }
+    case CREATE_FOLDER_SUCCESS: {
+      const newFolderState = insertItem(
         action.folder,
-        state,
+        state.folder,
         action.currentFileCount,
         action.currentSort
       )
+      return {
+        ...state,
+        folder: newFolderState
+      }
+    }
     case TRASH_FILES_SUCCESS:
     case RESTORE_FILES_SUCCESS:
     case DESTROY_FILES_SUCCESS:
-      return state.filter(f => action.ids.indexOf(f.id) === -1)
+      return {
+        ...state,
+        trashed: state.trashed.filter(f => action.ids.indexOf(f.id) === -1)
+      }
     case DELETE_FILE:
-      return state.filter(f => action.file.id !== f.id)
+      return {
+        ...state,
+        folder: state.folder.filter(f => action.file.id !== f.id)
+      }
     case EMPTY_TRASH_SUCCESS:
-      return []
+      return {
+        ...state,
+        trashed: []
+      }
     default:
       return state
   }
@@ -341,20 +408,36 @@ export default combineReducers({
   sort,
   files,
   fetchStatus,
-  lastFetch
+  lastFetch,
+  currentView
 })
 
 // TODO: temp
 export const getFilesWithLinks = ({ view }, folderId) =>
   view.filesWithLinks[folderId]
 
-export const getVisibleFiles = ({ view }) =>
-  view.files.map(f => ensureFileHavePath({ view }, f))
+export const getVisibleFiles = ({ view }) => {
+  return getCurrentFilesIndex(view).map(f => ensureFileHavePath({ view }, f))
+}
 
 export const getSort = ({ view }) => view.sort
 
+export const getCurrentFilesIndex = view => {
+  switch (view.currentView) {
+    case 'folder':
+      return view.files.folder
+    case 'recent':
+      return view.files.recent
+    case 'sharings':
+      return view.files.shared
+    case 'trash':
+      return view.files.trashed
+    default:
+      return view.files.folder
+  }
+}
 export const getFileById = ({ view }, id) => {
-  const file = view.files.find(f => f && f.id && f.id === id)
+  const file = getCurrentFilesIndex(view).find(f => f && f.id && f.id === id)
   if (!file) return null
   // we need the path for some actions, like selection download
   // but the stack only provides the path for folders...

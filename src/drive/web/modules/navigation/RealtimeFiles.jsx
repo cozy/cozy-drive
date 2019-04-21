@@ -93,7 +93,9 @@ export class RealtimeFiles extends React.Component {
   }
 
   onDocumentDeletion = doc => {
-    if (this.isInCurrentView(doc)) this.props.deleteFile(this.normalizeId(doc))
+    //Ne pas faire un deleteFile quand on vide la corbeille car on a déjà une action pour cela
+    if (this.isInCurrentView(doc) && doc.dir_id !== 'io.cozy.files.trash-dir')
+      this.props.deleteFile(this.normalizeId(doc))
   }
 
   isInCurrentView(doc) {

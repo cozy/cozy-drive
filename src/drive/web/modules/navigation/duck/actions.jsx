@@ -199,13 +199,13 @@ export const fetchRecentFiles = () => {
         const path = parentFolder ? parentFolder.doc.path : ''
         return { ...file, path, id: file._id }
       })
-      if (lastestActionSelector(getState()) === action) {
-        return dispatch({
-          type: FETCH_RECENT_SUCCESS,
-          fileCount: filesWithPath.length,
-          files: filesWithPath
-        })
-      }
+      // if (lastestActionSelector(getState()) === action) {
+      return dispatch({
+        type: FETCH_RECENT_SUCCESS,
+        fileCount: filesWithPath.length,
+        files: filesWithPath
+      })
+      //}
     } catch (err) {
       logException(err, {
         context: FETCH_RECENT_FAILURE
