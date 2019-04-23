@@ -84,7 +84,8 @@ export const generateOAuthForUrl = async ({
 }
 
 export const addProtocolToURL = instanceDomain => {
-  return `https://${instanceDomain}`
+  //return `https://${instanceDomain}`
+  return 'http://cozy.tools:8080'
 }
 export const secretExchange = (secret, instanceDomain, client) => {
   const response = client.stackClient.fetchJSON(
