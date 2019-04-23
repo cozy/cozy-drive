@@ -9,7 +9,9 @@ export const getLang = () =>
 import { isMobileApp, getDeviceName } from 'cozy-device-helper'
 export const getOauthOptions = () => {
   return {
-    redirectURI: isMobileApp() ? 'cozydrive://auth' : 'http://localhost',
+    redirectURI: isMobileApp()
+      ? 'https://universal-link.cozycloud.cc/drive/auth'
+      : 'http://localhost',
     softwareID: SOFTWARE_ID,
     clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
     softwareVersion: __APP_VERSION__,

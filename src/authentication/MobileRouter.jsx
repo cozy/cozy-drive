@@ -20,8 +20,8 @@ import {
 } from './OnboardingPropTypes'
 export class MobileRouter extends Component {
   async doOnboardingLogin(receivedState, code, instanceDomain, history) {
-    const localState = await readState()
-    const localSecret = await readSecret()
+    const localState = 'toto2' //await readState()
+    const localSecret = 'toto2' //await readSecret()
 
     try {
       if (localState !== receivedState) {
