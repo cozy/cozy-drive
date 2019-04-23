@@ -75,6 +75,14 @@ class InitAppMobile {
     return this.appReady
   }
 
+  /* 
+   openUniversalLink seems to be called only on iOS.
+   android uses handleOpenURL by default ?!
+   */
+  openUniversalLink = eventData => {
+    window.handleOpenURL(eventData.url)
+  }
+
   bindEvents = () => {
     document.addEventListener(
       'deviceready',
@@ -156,6 +164,13 @@ class InitAppMobile {
         console.error('Error getting launch intent', err)
       })
     }
+    //Subscribe to universalLinks event
+    if (window.universalLinks) {
+      window.universalLinks.subscribe(
+        'openUniversalLink',
+        this.openUniversalLink
+      )
+    }
 
     if (isBackgroundServiceParameter()) {
       startBackgroundService()
@@ -168,6 +183,12 @@ class InitAppMobile {
     const store = await this.getStore()
     store.dispatch(backupImages())
     if (isAnalyticsOn(store.getState())) startHeartBeat()
+    if (window.universalLinks) {
+      window.universalLinks.subscribe(
+        'openUniversalLink',
+        this.openUniversalLink
+      )
+    }
   }
 
   onPause = async () => {
@@ -179,6 +200,9 @@ class InitAppMobile {
       scheduleNotification({
         text: t('mobile.notifications.backup_paused')
       })
+    }
+    if (window.universalLinks) {
+      window.universalLinks.unsubscribe('eventName')
     }
   }
 
