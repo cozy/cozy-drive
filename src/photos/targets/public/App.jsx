@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Query } from 'cozy-client'
 import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/react'
-import { IconSprite } from 'cozy-ui/transpiled/react'
+import palette from 'cozy-ui/react/palette'
 import { Main } from 'cozy-ui/react/Layout'
 
 import Selection from 'photos/ducks/selection'
@@ -142,7 +142,6 @@ export class App extends Component {
               </div>
             )}
           </Selection>
-          <IconSprite />
         </Main>
       </div>
     )
@@ -179,6 +178,7 @@ const ConnectedApp = props => (
             size={'xxlarge'}
             loadingType={'photos_fetching'}
             middle={true}
+            color={palette.dodgerBlue}
           />
         )
       }
