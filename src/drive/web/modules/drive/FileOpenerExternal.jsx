@@ -82,14 +82,17 @@ export class FileOpener extends Component {
   }
 }
 
-FileOpener.PropTypes = {
+FileOpener.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
     params: PropTypes.shape({
       fileId: PropTypes.string.isRequired
     }).isRequired
-  }).isRequired,
-  fileId: PropTypes.number,
+  }),
+  routeParams: PropTypes.shape({
+    fileId: PropTypes.string
+  }),
+  fileId: PropTypes.string,
   withCloseButtton: PropTypes.bool
 }
 
