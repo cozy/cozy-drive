@@ -27,10 +27,11 @@ export class FileOpener extends Component {
     file: null
   }
   componentWillMount() {
+    const routerFileId = get(this.props, 'routeParams.fileId')
     if (this.props.fileId) {
       this.loadFileInfo(this.props.fileId)
-    } else if (this.props.routeParams.fileId) {
-      this.loadFileInfo(this.props.routeParams.fileId)
+    } else if (routerFileId) {
+      this.loadFileInfo(routerFileId)
     }
   }
 
@@ -38,8 +39,10 @@ export class FileOpener extends Component {
     if (prevProps.fileId !== this.props.fileId) {
       return this.loadFileInfo(this.props.fileId)
     }
-    if (prevProps.routeParams.fileId !== this.props.routeParams.fileId) {
-      return this.loadFileInfo(this.props.routeParams.fileId)
+    const previousRouterFileId = get(prevProps, 'routeParams.fileId')
+    const routerFileId = get(this.props, 'routeParams.fileId')
+    if (previousRouterFileId !== routerFileId) {
+      return this.loadFileInfo(routerFileId)
     }
   }
   async loadFileInfo(id) {
