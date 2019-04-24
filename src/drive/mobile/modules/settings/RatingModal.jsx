@@ -100,7 +100,9 @@ const EnjoyCozy = (props, context) => {
     </Modal>
   )
 }
-
+EnjoyCozy.contextTypes = {
+    t: PropTypes.func.isRequired
+  }
 EnjoyCozy.propTypes = {
   onReply: PropTypes.func.isRequired
 }
