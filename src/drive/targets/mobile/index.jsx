@@ -1,4 +1,4 @@
-import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'react-cozy-helpers/importTranspiledCozyUi'
 import 'drive/styles/main'
 import 'drive/styles/mobile'
 
