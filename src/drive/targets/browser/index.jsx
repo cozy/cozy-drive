@@ -14,7 +14,7 @@ import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
-import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'react-cozy-helpers/importTranspiledCozyUi'
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')

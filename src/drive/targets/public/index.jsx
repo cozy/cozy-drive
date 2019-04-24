@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 
-import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'react-cozy-helpers/importTranspiledCozyUi'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
