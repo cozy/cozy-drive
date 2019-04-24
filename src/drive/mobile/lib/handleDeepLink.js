@@ -1,6 +1,7 @@
 const PROTOCOL = 'cozydrive://'
-const RX = new RegExp('^' + PROTOCOL)
-const RX2 = new RegExp('^' + 'http://universal-link.cozycloud.cc/drive/')
+const UNIVERSALLINK_URL = 'https://universal-link.cozycloud.cc/'
+const CustomSchemeRegex = new RegExp('^' + PROTOCOL)
+const UniversalLinkRegex = new RegExp(`^${UNIVERSALLINK_URL}drive/`)
 import { setOnboarding } from '../modules/authorization/duck'
 
 export const handleDeeplink = (history, store, url) => {
@@ -14,6 +15,12 @@ export const handleDeeplink = (history, store, url) => {
     route.searchParams.delete('redirect')
   }
   const stripped = route.toString().replace(RX, '')
+  let stripped = ''
+  if (url.startsWith('http')) {
+    stripped = url.replace(UniversalLinkRegex, '')
+  } else {
+    stripped = url.replace(CustomSchemeRegex, '')
+  }
 
   history.replace('/' + stripped)
   if (stripped.includes('auth?')) {
