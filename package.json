@@ -105,7 +105,7 @@
     "cozy-flags": "1.6.0",
     "cozy-konnector-libs": "4.11.4",
     "cozy-realtime": "2.0.8",
-    "cozy-scripts": "1.11.0",
+    "cozy-scripts": "1.13.0",
     "cozy-ui": "19.24.1",
     "create-react-context": "0.2.2",
     "date-fns": "1.29.0",
