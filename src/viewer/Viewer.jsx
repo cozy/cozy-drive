@@ -19,11 +19,10 @@ const KEY_CODE_ESCAPE = 27
 
 import { isMobileApp, isMobile } from 'cozy-device-helper'
 
-const ViewerWrapper = ({ className, children, fullscreen, dark }) => (
+const ViewerWrapper = ({ className, children, dark }) => (
   <div
     data-test-id="viewer-wrapper"
     className={cx(styles['pho-viewer-wrapper'], className, {
-      [styles['pho-viewer-wrapper--notfullscreen']]: !fullscreen,
       [styles['pho-viewer-wrapper--light']]: !dark
     })}
     role="viewer"
@@ -89,7 +88,6 @@ export default class Viewer extends Component {
       className,
       currentIndex,
       onClose,
-      fullscreen = true,
       dark = true,
       controls = true
     } = this.props
@@ -100,11 +98,7 @@ export default class Viewer extends Component {
     // this `expanded` property makes the next/previous controls cover the displayed image
     const expanded = currentFile && currentFile.class === 'image'
     return (
-      <ViewerWrapper
-        className={className}
-        fullscreen={fullscreen}
-        dark={dark}
-      >
+      <ViewerWrapper className={className} dark={dark}>
         <ViewerControls
           currentFile={currentFile}
           onClose={onClose}

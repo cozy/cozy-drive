@@ -3,17 +3,12 @@ import Viewer from 'viewer'
 import PropTypes from 'prop-types'
 
 import PublicToolbar from './PublicToolbar'
+import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const LightFileViewer = ({ files, isFile }) => (
-  <div>
+  <div className={styles['viewer-wrapper-with-bar']}>
     <PublicToolbar files={files} renderInBar isFile={isFile} />
-    <Viewer
-      files={files}
-      currentIndex={0}
-      fullscreen={false}
-      dark={false}
-      controls={false}
-    />
+    <Viewer files={files} currentIndex={0} dark={false} controls={false} />
   </div>
 )
 

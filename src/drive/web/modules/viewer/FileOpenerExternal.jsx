@@ -13,6 +13,7 @@ import get from 'lodash/get'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
 import Viewer from 'viewer'
+import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const doNothing = () => {}
 
@@ -66,13 +67,12 @@ export class FileOpener extends Component {
     const { withCloseButtton = true } = this.props
 
     return (
-      <div>
+      <div className={styles['viewer-wrapper-with-bar']}>
         {loading && <Spinner size="xxlarge" loadingType="message" middle />}
         {fileNotFound && <FileNotFoundError />}
         {!loading &&
           !fileNotFound && (
             <Viewer
-              fullscreen={false}
               files={[file]}
               currentIndex={0}
               onChange={doNothing}
