@@ -1,6 +1,6 @@
 import React from 'react'
 import { Spinner, IntentHeader } from 'cozy-ui/react'
-import FileOpener from 'drive/web/modules/drive/FileOpenerExternal'
+import FileOpener from 'drive/web/modules/viewer/FileOpenerExternal'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
 
 class Embeder extends React.Component {
