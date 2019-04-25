@@ -1,0 +1,8 @@
+@require 'settings/z-index.styl'
+bar-height = 3rem
+
+.viewer-wrapper-with-bar
+  position absolute
+  width 100%
+  height "calc(100% - %s)" % bar-height
+  z-index ($bar-index - 2)
