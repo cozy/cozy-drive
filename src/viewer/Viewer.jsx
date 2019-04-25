@@ -19,9 +19,8 @@ const KEY_CODE_ESCAPE = 27
 
 import { isMobileApp, isMobile } from 'cozy-device-helper'
 
-const ViewerWrapper = ({ style, className, children, fullscreen, dark }) => (
+const ViewerWrapper = ({ className, children, fullscreen, dark }) => (
   <div
-    style={style}
     data-test-id="viewer-wrapper"
     className={cx(styles['pho-viewer-wrapper'], className, {
       [styles['pho-viewer-wrapper--notfullscreen']]: !fullscreen,
@@ -87,7 +86,6 @@ export default class Viewer extends Component {
   render() {
     const {
       files,
-      style,
       className,
       currentIndex,
       onClose,
@@ -103,7 +101,6 @@ export default class Viewer extends Component {
     const expanded = currentFile && currentFile.class === 'image'
     return (
       <ViewerWrapper
-        style={style}
         className={className}
         fullscreen={fullscreen}
         dark={dark}
