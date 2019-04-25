@@ -29,4 +29,9 @@ describe('Handling deep links', () => {
     history.goBack()
     expect(history.getCurrentLocation().pathname).toBe(PREVIOUS_APP_ROUTE)
   })
+
+  it('should remove redirect attribute', () => {
+    handleDeeplink(history, store, 'cozydrive://folder/auth?token=t&fallback=a')
+    expect(history.getCurrentLocation().pathname).toBe('/folder/auth')
+  })
 })
