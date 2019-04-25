@@ -12,7 +12,6 @@ import { withRouter } from 'react-router'
 import get from 'lodash/get'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
-import styles from './styles.styl'
 import Viewer from 'viewer'
 
 const doNothing = () => {}
@@ -67,7 +66,7 @@ export class FileOpener extends Component {
     const { withCloseButtton = true } = this.props
 
     return (
-      <div className={styles.fileOpener}>
+      <div>
         {loading && <Spinner size="xxlarge" loadingType="message" middle />}
         {fileNotFound && <FileNotFoundError />}
         {!loading &&
