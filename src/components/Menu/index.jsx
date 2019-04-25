@@ -64,20 +64,20 @@ export default class Menu extends Component {
           </button>
         )}
         {opened && (
-          <>
-            <Overlay
-              onClick={this.close}
-              onEscape={this.close}
-              className={styles['cozy-menu-overlay']}
-            />
-            <div
-              data-test-id="coz-menu-inner"
-              className={classNames(styles['coz-menu-inner'], innerClassName)}
-            >
-              {this.renderItems()}
-            </div>
-          </>
+          <Overlay
+            onClick={this.close}
+            onEscape={this.close}
+            className={styles['cozy-menu-overlay']}
+          />
         )}
+        <div
+          data-test-id="coz-menu-inner"
+          className={classNames(styles['coz-menu-inner'], innerClassName, {
+            [styles['coz-menu-inner--opened']]: opened
+          })}
+        >
+          {this.renderItems()}
+        </div>
       </div>
     )
   }
