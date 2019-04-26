@@ -1,8 +1,7 @@
 const PROTOCOL = 'cozydrive://'
-const UNIVERSALLINK_URL = 'https://universal-link.cozycloud.cc/'
+import { getUniversalLinkDomain } from 'cozy-ui/react/AppLinker'
 const CustomSchemeRegex = new RegExp('^' + PROTOCOL)
-const UniversalLinkRegex = new RegExp(`^${UNIVERSALLINK_URL}drive/`)
-require('url-polyfill')
+const UniversalLinkRegex = new RegExp(`^${getUniversalLinkDomain()}/drive/`)
 import { setOnboarding } from '../modules/authorization/duck'
 
 export const handleDeeplink = (history, store, url) => {
@@ -23,7 +22,7 @@ export const handleDeeplink = (history, store, url) => {
 
 const generateRoute = url => {
   const urlObj = new URL(url)
-  //remove fallback params
+  //remove fallback params not needed anymore at this stage
   if (urlObj.searchParams.has('fallback')) {
     urlObj.searchParams.delete('fallback')
   }

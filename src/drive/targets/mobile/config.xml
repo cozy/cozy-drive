@@ -76,7 +76,7 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="AutoHideSplashScreen" value="false" />
     <universal-links>
-        <host name="universal-link.cozycloud.cc">
+        <host name="links.mycozy.cloud">
             <path event="openUniversalLink" scheme="https" url="/drive/*" />
         </host>
         <ios-team-id value="3AKXFMV43J" />

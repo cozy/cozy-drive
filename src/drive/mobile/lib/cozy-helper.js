@@ -7,10 +7,11 @@ import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 import { isMobileApp, getDeviceName } from 'cozy-device-helper'
+import { getUniversalLinkDomain } from 'cozy-ui/react/AppLinker'
 export const getOauthOptions = () => {
   return {
     redirectURI: isMobileApp()
-      ? 'https://universal-link.cozycloud.cc/drive/auth'
+      ? getUniversalLinkDomain() + '/drive/auth'
       : 'http://localhost',
     softwareID: SOFTWARE_ID,
     clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
