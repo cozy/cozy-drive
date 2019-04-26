@@ -14,7 +14,7 @@ import ContactSuggestion from 'sharing/components/ContactSuggestion'
 // A migration tool on the stack side is needed here
 const emailMatch = (input, contact) => {
   if (!contact.email) return false
-  const emailInput = new RegExp(input)
+  const emailInput = new RegExp(input, 'i')
   if (Array.isArray(contact.email)) {
     return contact.email.some(email => emailInput.test(email.address))
   }
@@ -23,7 +23,7 @@ const emailMatch = (input, contact) => {
 
 const cozyUrlMatch = (input, contact) => {
   if (!contact.cozy || !contact.url) return false
-  const urlInput = new RegExp(input)
+  const urlInput = new RegExp(input, 'i')
   if (contact.cozy && Array.isArray(contact.cozy)) {
     return contact.cozy.some(cozy => urlInput.test(cozy.url))
   }
