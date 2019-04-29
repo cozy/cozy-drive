@@ -287,9 +287,9 @@ test(TEST_DELETE_FOLDER, async t => {
     withMask: data.maskDriveFolderWithDate
   })
 
-  await t.fixtureCtx.vr.setMaksCoordonnates(data.maskDeleteFolder)
   await privateDrivePage.deleteCurrentFolder({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`,
+    withMask: data.maskDeleteFolder
   })
 
   await checkToastAppearsAndDisappears(
