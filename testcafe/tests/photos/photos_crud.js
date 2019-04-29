@@ -103,11 +103,7 @@ test(TEST_VIEWER_LAST, async t => {
 test(TEST_VIEWER_OTHER, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_VIEWER_OTHER}`)
   //Both arrows show up. Navigation to other pics is OK, Closing pic (X or 'esc') is Ok
-  // We need at least 3 pics in our cozy for this test to pass
-  const photoIndex = random(1, t.ctx.totalFilesCount - 2)
-
-  console.log('Open random pic  > photoIndex ' + photoIndex)
-  await photoViewer.openPhotoFullscreen(photoIndex)
+  await photoViewer.openPhotoFullscreen(1)
   await t.hover(selectors.viewerControls, {
     offsetX: 0,
     offsetY: 0
@@ -115,12 +111,12 @@ test(TEST_VIEWER_OTHER, async t => {
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_VIEWER_OTHER}-1`
   })
-  await photoViewer.navigateToNextFile(photoIndex)
+  await photoViewer.navigateToNextFile(1)
   await photoViewer.closeViewer({
     exitWithEsc: true
   })
-  await photoViewer.openPhotoFullscreen(photoIndex)
-  await photoViewer.navigateToPrevFile(photoIndex)
+  await photoViewer.openPhotoFullscreen(1)
+  await photoViewer.navigateToPrevFile(1)
   await photoViewer.closeViewer({
     exitWithEsc: false
   })
