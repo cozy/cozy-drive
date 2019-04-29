@@ -60,6 +60,9 @@ const contactsQuery = client =>
       _id: {
         $gt: null
       },
+      trashed: {
+        $or: [{ $eq: false }, { $exists: false }]
+      },
       $or: [
         {
           cozy: {
