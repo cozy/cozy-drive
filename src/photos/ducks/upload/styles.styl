@@ -130,30 +130,6 @@ progress.upload-queue-progress::-moz-progress-bar
         font-weight    bold
         line-height    2rem
 
-    .item-loading
-        @extend $icon-16
-        @extend $icon-spinner-blue
-
-    .item-canceled
-        @extend $icon-16
-        @extend $icon
-        background-image embedurl('./assets/icons/icon-cross.svg')
-
-    .item-failed
-        @extend $icon-16
-        @extend $icon
-        background-image embedurl('./assets/icons/icon-warning.svg')
-
-    .item-conflict
-        @extend $icon-16
-        @extend $icon
-        background-image embedurl('./assets/icons/icon-warning.svg')
-
-    .item-loaded
-        @extend $icon-16
-        @extend $icon
-        background-image embedurl('./assets/icons/icon-checked.svg')
-
 +medium-screen()
     // we need to cover the border-bottom of the cozy-bar
     $coz-bar-size = 3rem
