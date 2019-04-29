@@ -1,9 +1,8 @@
 import styles from '../styles/photoList.styl'
 
 import React, { Component } from 'react'
-import { Button } from 'cozy-ui/react'
-
-const Spinner = () => <div className={styles['pho-list-spinner']} />
+import { Button, Spinner } from 'cozy-ui/react'
+import palette from 'cozy-ui/stylus/settings/palette.json'
 
 class LoadMoreButton extends Component {
   constructor(props) {
@@ -24,7 +23,11 @@ class LoadMoreButton extends Component {
     return (
       <div style={{ width: width }} className={styles['pho-list-morebutton']}>
         {fetching && (
-          <Button disabled theme="secondary" label={<Spinner nomargin />} />
+          <Button
+            disabled
+            theme="secondary"
+            label={<Spinner color={palette['dodgerBlue']} nomargin />}
+          />
         )}
         {!fetching && (
           <Button

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import { Icon } from 'cozy-ui/transpiled/react'
+import { Icon, Spinner } from 'cozy-ui/transpiled/react'
+import palette from 'cozy-ui/stylus/settings/palette.json'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
 import styles from './styles.styl'
@@ -29,6 +30,37 @@ const Pending = translate()(props => (
 
 const Item = translate()(({ file, status, isDirectory }) => {
   const { filename, extension } = splitFilename(file.name)
+  let statusIcon
+  switch (status) {
+    case 'loading':
+      statusIcon = <Spinner class="u-ml-half" color={palette['dodgerBlue']} />
+      break
+    case 'cancel':
+      statusIcon = (
+        <Icon class="u-ml-half" icon="cross" color={palette['monza']} />
+      )
+      break
+    case 'failed':
+    case 'conflict':
+    case 'network':
+      statusIcon = (
+        <Icon class="u-ml-half" icon="warning" color={palette['monza']} />
+      )
+      break
+    case 'loaded':
+      statusIcon = (
+        <Icon
+          class="u-ml-half"
+          icon="check-circleless"
+          color={palette['emerald']}
+        />
+      )
+      break
+    case 'pending':
+    default:
+      statusIcon = <Pending />
+      break
+  }
   return (
     <div
       data-test-id="upload-queue-item"
@@ -56,13 +88,7 @@ const Item = translate()(({ file, status, isDirectory }) => {
           {extension && <span className={styles['item-ext']}>{extension}</span>}
         </div>
       </div>
-      <div className={styles['item-status']}>
-        {status === 'pending' ? (
-          <Pending />
-        ) : (
-          <div className={styles[`item-${status}`]} />
-        )}
-      </div>
+      <div className={styles['item-status']}>{statusIcon}</div>
     </div>
   )
 })
