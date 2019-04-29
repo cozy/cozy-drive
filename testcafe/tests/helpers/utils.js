@@ -91,6 +91,7 @@ export const getLastExecutedCommand = ClientFunction(
 
 //@param{string} filepath : Expected full path to file
 export async function checkLocalFile(filepath) {
+  await t.wait(data.DOWNLOAD_DELAY)
   await t.expect(fs.existsSync(filepath)).ok(`${filepath} doesn't exist`)
   console.log(`${filepath} exists on local drive`)
 }
