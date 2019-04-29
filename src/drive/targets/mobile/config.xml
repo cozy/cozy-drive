@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="1183000" id="io.cozy.drive.mobile" ios-CFBundleVersion="1.18.3.0" version="1.18.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="1184000" id="io.cozy.drive.mobile" ios-CFBundleVersion="1.18.4.0" version="1.18.4" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -83,9 +83,9 @@
     </universal-links>
     <engine name="android" spec="^7.1.4" />
     <engine name="ios" spec="^4.5.5" />
-    <plugin name="cordova-plugin-splashscreen" spec="https://github.com/cozy/cordova-plugin-splashscreen#e10cadcd07b613f745370ba023ac0c52cf415648" />
+    <plugin name="cordova-plugin-splashscreen" spec="git+https://github.com/cozy/cordova-plugin-splashscreen.git#e10cadcd07b613f745370ba023ac0c52cf415648" />
     <plugin name="cordova-plugin-whitelist" spec="1.3.2" />
-    <plugin name="cordova-plugin-statusbar" spec="https://github.com/cozy/cordova-plugin-statusbar#c7c7011608c9b8a1d3b0d788879198c5ad46e199" />
+    <plugin name="cordova-plugin-statusbar" spec="git+https://github.com/cozy/cordova-plugin-statusbar.git#c7c7011608c9b8a1d3b0d788879198c5ad46e199" />
     <plugin name="cordova-plugin-inappbrowser" spec="1.7.0" />
     <plugin name="cordova-plugin-file" spec="4.3.1" />
     <plugin name="cordova-plugin-appinfo" spec="2.1.1" />
