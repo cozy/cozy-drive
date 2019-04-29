@@ -4500,10 +4500,10 @@ cozy-device-helper@1.7.1:
   dependencies:
     lodash "4.17.11"
 
-cozy-doctypes@1.40.0:
-  version "1.40.0"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.40.0.tgz#04939696f8122c61308c1497a90b46b2ad318374"
-  integrity sha512-PSfmhTRBKUMNfltDRagoQ/jdQBGOqhA4ZOxjlbdt8egiGcGrlo9pMNNPm2GKGCGH9A5QKp6WAER8pomc2ZZ/Tg==
+cozy-doctypes@1.43.0:
+  version "1.43.0"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.43.0.tgz#8ea622c86c7e16cf9aa2e2110daa51fe6b257d19"
+  integrity sha512-ue/fJAEuDvAWIF99Upp9UlbcL1Od9EX+9uGHgAQRtu+xKXJsdBUnJbwgUqYTAh9uLcubKM+nFTXHmQeoyB1jhQ==
   dependencies:
     "@babel/runtime" "7.3.1"
     cozy-logger "1.3.1"
@@ -5864,13 +5864,6 @@ eslint-config-prettier@3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.6.0.tgz#8ca3ffac4bd6eeef623a0651f9d754900e3ec217"
   integrity sha512-ixJ4U3uTLXwJts4rmSVW/lMXjlGwCijhBJHk8iVqKKSifeI0qgFEfWl8L63isfc8Od7EiBALF6BX3jKLluf/jQ==
-  dependencies:
-    get-stdin "^6.0.0"
-
-eslint-config-prettier@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-4.1.0.tgz#181364895899fff9fd3605fecb5c4f20e7d5f395"
-  integrity sha512-zILwX9/Ocz4SV2vX7ox85AsrAgXV3f2o2gpIicdMIOra48WYqgUnWNH/cR/iHtmD2Vb3dLSC3LiEJnS05Gkw7w==
   dependencies:
     get-stdin "^6.0.0"
 

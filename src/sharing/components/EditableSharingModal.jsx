@@ -2,7 +2,7 @@ import React from 'react'
 import flow from 'lodash/flow'
 import { queryConnect, withClient } from 'cozy-client'
 
-import { Contact, Group } from 'cozy-doctypes'
+import { Contact, Group } from 'models'
 
 import SharingContext from 'sharing/context'
 import ContactsAndGroupsDataLoader from 'sharing/components/ContactsAndGroupsDataLoader'

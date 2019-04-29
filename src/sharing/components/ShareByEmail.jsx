@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import get from 'lodash/get'
 
-import { Contact, Group } from 'cozy-doctypes'
+import { Contact, Group } from 'models'
 import { Button, Icon } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
 import SelectBox, { components } from 'cozy-ui/react/SelectBox'

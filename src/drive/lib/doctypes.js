@@ -1,4 +1,4 @@
-import { Contact, Group } from 'cozy-doctypes'
+import { Contact, Group } from 'models'
 
 export const DOCTYPE_FILES = 'io.cozy.files'
 export const DOCTYPE_ALBUMS = 'io.cozy.photos.albums'
