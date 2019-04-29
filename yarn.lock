@@ -4662,10 +4662,10 @@ cozy-ui@19.21.2:
     react-hot-loader "^4.3.11"
     react-select "2.2.0"
 
-cozy-ui@19.24.1:
-  version "19.24.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.24.1.tgz#f543eca7e3ac1a589f4e9d13e28772e90d2c8d0d"
-  integrity sha512-xe9byiA1eOu4T4Rr53dvTXTrycS5bD3hM3VbK6orxcHD7zVm+e3A9AfjX8zpXYT5T3quFFpa72h4bmxlsnJ6SA==
+cozy-ui@19.25.1:
+  version "19.25.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.25.1.tgz#5c755fa0e31d899ed8511e36f33095b8a01c7e31"
+  integrity sha512-XHghvkLOhzlZnTj1IHRvfkKxnQVwD40sPWnV9mzcJSDDl1Q5FhfnJH3dIhwFIVpe3PcXr4DliRAOeAuVoTkzsw==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -5864,13 +5864,6 @@ eslint-config-prettier@3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.6.0.tgz#8ca3ffac4bd6eeef623a0651f9d754900e3ec217"
   integrity sha512-ixJ4U3uTLXwJts4rmSVW/lMXjlGwCijhBJHk8iVqKKSifeI0qgFEfWl8L63isfc8Od7EiBALF6BX3jKLluf/jQ==
-  dependencies:
-    get-stdin "^6.0.0"
-
-eslint-config-prettier@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-4.1.0.tgz#181364895899fff9fd3605fecb5c4f20e7d5f395"
-  integrity sha512-zILwX9/Ocz4SV2vX7ox85AsrAgXV3f2o2gpIicdMIOra48WYqgUnWNH/cR/iHtmD2Vb3dLSC3LiEJnS05Gkw7w==
   dependencies:
     get-stdin "^6.0.0"
 
