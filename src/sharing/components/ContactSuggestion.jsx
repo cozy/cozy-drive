@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import get from 'lodash/get'
 import { Avatar } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
-import { Contact, Group } from 'cozy-doctypes'
 
 import styles from 'sharing/components/recipient.styl'
 
-import { getDisplayName } from 'sharing'
+import { Contact, Group } from 'models'
 import Identity from 'sharing/components/Identity'
 
 export const ContactSuggestion = ({ contactOrGroup, contacts, t }) => {
@@ -32,12 +31,11 @@ export const ContactSuggestion = ({ contactOrGroup, contacts, t }) => {
     })
     avatarText = 'G'
   } else {
-    const email = Contact.getPrimaryEmail(contactOrGroup)
-    name = email || getDisplayName(contactOrGroup)
-    avatarText =
-      Contact.getInitials(email) || Contact.getInitials(contactOrGroup)
+    name = Contact.getDisplayName(contactOrGroup)
+    avatarText = Contact.getInitials(contactOrGroup)
     details = Contact.getPrimaryCozy(contactOrGroup)
   }
+
   return (
     <div className={styles['recipient']}>
       <Avatar text={avatarText} size="small" />

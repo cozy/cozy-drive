@@ -11,9 +11,10 @@ describe('ContactSuggestion component', () => {
 
     return s
   })
-  it('should match display contact suggestion for a contact', () => {
+  it('should display contact suggestion for a contact', () => {
     const jonSnow = {
       _id: 'f3a4e501-abbd',
+      fullname: 'Jon Snow',
       name: {
         givenName: 'Jon',
         familyName: 'Snow'
@@ -43,9 +44,34 @@ describe('ContactSuggestion component', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('should match display contact suggestion for a group', () => {
+  it('should display contact suggestion for a contact without fullname (for example created by a share modal)', () => {
+    const jonSnow = {
+      _id: 'f3a4e501-abbd',
+      cozy: [],
+      email: [
+        {
+          address: 'jon.snow@email.com',
+          type: 'primary'
+        }
+      ],
+      name: undefined,
+      _type: 'io.cozy.contacts'
+    }
+    const contacts = [jonSnow]
+    const props = {
+      contactOrGroup: jonSnow,
+      contacts,
+      t: fakeT
+    }
+    const jsx = <ContactSuggestion {...props} />
+    const wrapper = shallow(jsx)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('should display contact suggestion for a group', () => {
     const jon = {
       _id: 'f3a4e501-abbd',
+      fullname: 'Jon Snow',
       name: {
         givenName: 'Jon',
         familyName: 'Snow'
@@ -65,6 +91,7 @@ describe('ContactSuggestion component', () => {
     }
     const cersei = {
       _id: '42dc490a-7878',
+      fullname: 'Cersei Lannister',
       name: {
         givenName: 'Cersei',
         familyName: 'Lannister'
@@ -80,6 +107,7 @@ describe('ContactSuggestion component', () => {
     }
     const sam = {
       _id: 'b5bed853-93da',
+      fullname: 'Samwell Tarly',
       name: {
         givenName: 'Samwell',
         familyName: 'Tarly'

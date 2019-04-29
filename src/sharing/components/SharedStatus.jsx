@@ -3,8 +3,8 @@ import { translate } from 'cozy-ui/react/I18n'
 import { SharingTooltip, TooltipRecipientList } from './Tooltip'
 import cx from 'classnames'
 import Icon from 'cozy-ui/react/Icon'
-import { getDisplayName } from '..'
 
+import { Contact } from 'models'
 import styles from './status.styl'
 import linkIcon from '../assets/icons/icon-link.svg'
 
@@ -23,7 +23,7 @@ const SharedStatus = ({ className, docId, recipients, link, t }) => (
       <SharingTooltip id={`members${docId}`}>
         <TooltipRecipientList
           recipientNames={recipients.map(recipient =>
-            getDisplayName(recipient)
+            Contact.getDisplayName(recipient)
           )}
         />
       </SharingTooltip>

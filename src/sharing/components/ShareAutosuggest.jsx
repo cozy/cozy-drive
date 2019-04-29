@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
 
-import { Contact, Group } from 'cozy-doctypes'
 import { Icon, Spinner } from 'cozy-ui/react'
 import palette from 'cozy-ui/react/palette'
 
 import styles from 'sharing/components/autosuggest.styl'
 import BoldCross from 'sharing/assets/icons/icon-cross-bold.svg'
 
+import { Contact, Group } from 'models'
 import ContactSuggestion from 'sharing/components/ContactSuggestion'
 
 // TODO: sadly we have different versions of contacts' doctype to handle...
@@ -129,11 +129,7 @@ export default class ShareAutocomplete extends Component {
     return (
       <div className={styles['recipientsContainer']}>
         {recipients.map((recipient, idx) => {
-          const recipientEmail = recipient.id
-            ? Contact.getPrimaryEmail(recipient)
-            : recipient.email
-
-          const value = recipientEmail || recipient.fullname
+          const value = Contact.getDisplayName(recipient)
           return (
             <div
               className={styles['recipientChip']}

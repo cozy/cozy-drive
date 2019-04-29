@@ -39,9 +39,6 @@ import { default as RecipientsList } from './components/WhoHasAccessLight'
 import { RecipientsAvatars } from './components/Recipient'
 import { default as DumbSharedStatus } from './components/SharedStatus'
 
-export const getDisplayName = ({ name, public_name, email }) =>
-  name || public_name || email
-
 const track = (document, action) => {
   const tracker = getTracker()
   if (!tracker) {
