@@ -13,7 +13,7 @@ import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 
 import doctypes from '../browser/doctypes'
-import 'react-cozy-helpers/importTranspiledCozyUi'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main.styl'
 
 import App from './App'

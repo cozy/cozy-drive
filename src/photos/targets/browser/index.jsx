@@ -1,5 +1,5 @@
 /* global cozy __DEVELOPMENT__ */
-import 'react-cozy-helpers/importTranspiledCozyUi'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main'
 
 import React from 'react'
