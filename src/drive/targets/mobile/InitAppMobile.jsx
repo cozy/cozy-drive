@@ -183,12 +183,6 @@ class InitAppMobile {
     const store = await this.getStore()
     store.dispatch(backupImages())
     if (isAnalyticsOn(store.getState())) startHeartBeat()
-    if (window.universalLinks) {
-      window.universalLinks.subscribe(
-        'openUniversalLink',
-        this.openUniversalLink
-      )
-    }
   }
 
   onPause = async () => {
@@ -200,9 +194,6 @@ class InitAppMobile {
       scheduleNotification({
         text: t('mobile.notifications.backup_paused')
       })
-    }
-    if (window.universalLinks) {
-      window.universalLinks.unsubscribe('eventName')
     }
   }
 
