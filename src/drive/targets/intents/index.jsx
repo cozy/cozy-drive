@@ -1,7 +1,7 @@
 /* global cozy */
 
 import 'whatwg-fetch'
-import 'react-cozy-helpers/importTranspiledCozyUi'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import React from 'react'
 import { render } from 'react-dom'
