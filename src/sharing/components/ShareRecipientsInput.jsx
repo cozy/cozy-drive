@@ -42,18 +42,19 @@ class ShareRecipientsInput extends Component {
     }
   }
 
+  getContactsAndGroups = () => {
+    // we need contacts to be loaded to be able to add all group members to recipients
+    const { contacts, groups } = this.props
+    if (contacts.hasMore || contacts.fetchStatus === 'loading') {
+      return contacts.data
+    } else {
+      return [...contacts.data, ...groups.data]
+    }
+  }
+
   render() {
-    const {
-      contacts,
-      groups,
-      label,
-      onPick,
-      onRemove,
-      placeholder,
-      recipients
-    } = this.props
+    const { label, onPick, onRemove, placeholder, recipients } = this.props
     const { loading } = this.state
-    const contactsAndGroups = [...contacts.data, ...groups.data]
     return (
       <div>
         <label className={styles['coz-form-label']} htmlFor="email">
@@ -61,7 +62,7 @@ class ShareRecipientsInput extends Component {
         </label>
         <ShareAutosuggest
           loading={loading}
-          contactsAndGroups={contactsAndGroups}
+          contactsAndGroups={this.getContactsAndGroups()}
           recipients={recipients}
           onFocus={this.onFocus}
           onPick={onPick}
