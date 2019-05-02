@@ -4,10 +4,13 @@ import * as selectors from '../selectors'
 
 export default class Viewer {
   async waitForLoading() {
+    console.time('⏲ waitForLoading - viewer')
+
     await t.expect(selectors.spinner.exists).notOk('Spinner still spinning')
     await isExistingAndVisibile(selectors.viewerWrapper, 'Viewer Wrapper')
     await isExistingAndVisibile(selectors.viewerControls, 'Viewer Controls')
     console.log('Viewer Ok')
+    console.timeEnd('⏲ waitForLoading - viewer')
   }
 
   //@param { bool } exitWithEsc : true to exit by pressing esc, false to click on the button

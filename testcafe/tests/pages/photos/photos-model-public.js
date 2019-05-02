@@ -5,11 +5,14 @@ import Photos from './photos-model'
 
 export default class PublicPhotos extends Photos {
   async waitForLoading() {
+    console.time('⏲ waitForLoading - photos model public')
+
     await t.expect(selectors.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(
       selectors.albumPublicLayout,
       'Album Public Layout'
     )
+    console.timeEnd('⏲ waitForLoading - photos model public')
   }
 
   async checkCreateCozy() {

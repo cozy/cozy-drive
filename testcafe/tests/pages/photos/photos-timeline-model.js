@@ -6,8 +6,11 @@ import Commons from './photos-model'
 export default class Timeline extends Commons {
   //timeline specific as selectors.contentWrapper is only on timeline
   async waitForLoading() {
+    console.time('⏲ waitForLoading - photos timeline')
+
     await t.expect(selectors.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(selectors.contentWrapper, 'Content Wrapper')
+    console.timeEnd('⏲ waitForLoading - photos timeline')
   }
 
   //@param {array of fileName} files

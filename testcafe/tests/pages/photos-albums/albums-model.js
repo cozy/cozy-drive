@@ -8,11 +8,14 @@ const albumPage = new AlbumPage()
 
 export default class AlbumsPage extends PhotoPage {
   async waitForLoading() {
+    console.time('⏲ waitForLoading - albumSModel')
+
     await t.expect(selectors.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(
       selectors.albumContentWrapper,
       'Content Wrapper'
     )
+    console.timeEnd('⏲ waitForLoading - albumSModel')
   }
 
   // check that the albums view is empty

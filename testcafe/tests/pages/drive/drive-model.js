@@ -7,6 +7,7 @@ export default class DrivePage {
   //@param {bool} isfull : set to true only if folder is known to have files
   //@param {bool} isNotAvailable set to true when checking removed public link
   async waitForLoading({ isNotAvailable, isFull } = {}) {
+    console.time('⏲ waitForLoading - driveModel')
     await t
       .expect(selectors.contentPlaceHolder.exists)
       .notOk('Content placeholder still displayed')
@@ -17,6 +18,7 @@ export default class DrivePage {
       }
     }
     console.log('Loading Ok')
+    console.timeEnd('⏲ waitForLoading - driveModel')
   }
 
   //@param {string} when : text for console.log

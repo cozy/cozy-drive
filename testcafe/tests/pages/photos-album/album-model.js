@@ -11,11 +11,14 @@ import PhotoPage from '../photos/photos-model'
 
 export default class Page extends PhotoPage {
   async waitForLoading() {
+    console.time('⏲ waitForLoading - albumModel')
+
     await t.expect(selectors.loading.exists).notOk('Page still loading')
     await isExistingAndVisibile(
       selectors.albumContentWrapper,
       'Content Wrapper'
     )
+    console.timeEnd('⏲ waitForLoading - albumModel')
   }
 
   //@param {string} when : text for console.log
