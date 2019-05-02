@@ -12,7 +12,7 @@ const emailMatch = (input, contact) => {
 }
 
 const cozyUrlMatch = (input, contact) => {
-  if (!contact.cozy || !contact.url) return false
+  if (!contact.cozy && !contact.url) return false
   const urlInput = new RegExp(input, 'i')
   if (contact.cozy && Array.isArray(contact.cozy)) {
     return contact.cozy.some(cozy => urlInput.test(cozy.url))
