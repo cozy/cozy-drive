@@ -67,7 +67,7 @@ export const UserAvatar = ({ url, size, ...rest }) => (
       size={size}
       textId={Contact.getDisplayName(rest)}
     />
-    <Identity name={Contact.getDisplayName(rest)} url={url} />
+    <Identity name={Contact.getDisplayName(rest)} details={url} />
   </div>
 )
 
@@ -177,7 +177,7 @@ const Recipient = (props, { client, t }) => {
       <div className={styles['recipient-ident-status']}>
         <Identity
           name={isMe ? t('Share.recipients.you') : name}
-          url={instance}
+          details={instance}
         />
         <StatusWithBreakpoints {...props} name={name} />
       </div>
@@ -202,7 +202,7 @@ export const RecipientWithoutStatus = ({ instance, ...rest }) => {
         textId={name}
       />
       <div className={styles['recipient-ident-status']}>
-        <Identity name={name} url={instance} />
+        <Identity name={name} details={instance} />
       </div>
     </div>
   )
