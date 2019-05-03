@@ -46,3 +46,31 @@ export const allSpecialFilesExt = pdfFilesExt
   .concat(videoFilesExt)
   .concat(textFilesExt)
   .concat(imageFilesExt)
+
+export const THUMBNAIL_DELAY = 3000
+export const VR_STATUS_DELAY = 3000
+export const VR_UPLOAD_DELAY = 5000
+
+//Mask Coordonnates
+export const maskDriveFolderWithDate = {
+  height: 935,
+  x: 916,
+  width: 140,
+  y: 248
+}
+export const maskShareFolder = { height: 918, x: 916, width: 140, y: 520 }
+export const maskSharedWholePublicFolder = {
+  height: 960,
+  x: 800,
+  width: 140,
+  y: 180
+}
+export const maskAudioViewerDesktop = { height: 30, x: 929, width: 100, y: 620 }
+export const maskAudioViewerMobile = { height: 30, x: 155, width: 99, y: 413 }
+
+export const maskVideoViewerDesktop = { height: 40, x: 720, width: 484, y: 617 }
+export const maskVideoViewerMobile = { height: 25, x: 12, width: 353, y: 381 }
+
+export const maskDeleteFolder = { height: 918, x: 916, width: 140, y: 300 }
+export const maskMoveMoadal = { height: 115, x: 905, width: 140, y: 237 }
+export const maskPhotosCluster = { height: 43, x: 242, width: 424, y: 203 }

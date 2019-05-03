@@ -4,7 +4,14 @@ const postCommentToGithub = require('./tests/helpers/comment-on-github.js')
 async function runRunner() {
   //init vrErrorMsg
   process.env.vrErrorMsg = ''
-
+  if (!process.env.INSTANCE_TESTCAFE || !process.env.TESTCAFE_USER_PASSWORD) {
+    throw Error(
+      `You have to provide INSTANCE_TESTCAFE & TESTCAFE_USER_PASSWORD
+      Exemple:
+      export INSTANCE_TESTCAFE="cozy.tools:8080"
+      export TESTCAFE_USER_PASSWORD="foo" `
+    )
+  }
   const tc = await createTestCafe()
   const runner = await tc.createRunner()
   const response = await runner
@@ -12,6 +19,7 @@ async function runRunner() {
       //Init data : Unzip archive with files to upload
       'testcafe/tests/helpers/init-data.js',
       //Tests !
+      'testcafe/tests/drive/classification_scenario.js',
       'testcafe/tests/drive/navigation.js',
       'testcafe/tests/drive/folder_sharing_scenario.js',
       'testcafe/tests/drive/file_sharing_scenario.js',
@@ -24,7 +32,7 @@ async function runRunner() {
     .screenshots(
       'reports/',
       true,
-      '${DATE}_${TIME}/test-${TEST}-${FILE_INDEX}.png'
+      '${DATE}_${TIME}/${FIXTURE}/${TEST_ID}-${TEST}/${FILE_INDEX}.png'
     )
     .run({
       assertionTimeout: 6000,

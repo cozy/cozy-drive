@@ -2,6 +2,7 @@ import { ClientFunction, Selector, t } from 'testcafe'
 import fs from 'fs-extra'
 import path from 'path'
 import unzipper from 'unzipper'
+import request from 'request'
 import CDP from 'chrome-remote-interface'
 let data = require('../helpers/data')
 
@@ -119,28 +120,23 @@ export async function setDownloadPath(downloadFolderPath) {
 export async function checkAllImagesExists() {
   const images = Selector('img')
   let count = await images.count
-  let requestsCount = 0
-  let statuses = []
-
-  const getRequestResult = ClientFunction(url => {
-    return new Promise(resolve => {
-      let xhr = new XMLHttpRequest()
-      xhr.open('GET', url)
-      xhr.onload = function() {
-        resolve(xhr.status)
-      }
-      xhr.send(null)
-    })
-  })
+  let location = await getPageUrl()
+  let requestPromises = []
 
   for (let i = 0; i < count; i++) {
     let url = await images.nth(i).getAttribute('src')
-    requestsCount++
-    statuses.push(await getRequestResult(url))
+    if (!url.startsWith('http')) url = location + url
+    requestPromises.push(
+      new Promise(resolve => {
+        return request(location + url, function(error, response) {
+          resolve(response ? response.statusCode : 0)
+        })
+      })
+    )
   }
-
-  await t.expect(requestsCount).eql(statuses.length)
-  for (const status of statuses) await t.expect(status).eql(200)
+  let statuses = await Promise.all(requestPromises)
+  console.log(statuses)
+  //for (const status of statuses) await t.expect(status).eql(200)
 }
 
 //Put all files path in an array for uploads

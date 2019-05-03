@@ -19,7 +19,7 @@ const viewerPage = new ViewerPage()
 //************************
 fixture`Drive : Viewer features : prepare data`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  console.group(`\n↳ ℹ️  Login & Initialization`)
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
   console.groupEnd()
@@ -27,7 +27,7 @@ fixture`Drive : Viewer features : prepare data`
 
 test('Dri ve : Create a $test_date_time folder in Drive', async () => {
   console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
-  await drivePage.addNewFolder(data.FOLDER_DATE_TIME)
+  await drivePage.addNewFolder({ newFolderName: data.FOLDER_DATE_TIME })
   console.groupEnd()
 })
 
@@ -46,7 +46,7 @@ test('Drive : Go to $test_date_time and upload 26 files', async () => {
 fixture`Drive : Viewer features (and Download)`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   console.group(
-    `\n↳ ℹ️  Loggin, Page Initialization & data.DOWNLOAD_PATH initialization`
+    `\n↳ ℹ️  Login, Page Initialization & data.DOWNLOAD_PATH initialization`
   )
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
@@ -133,7 +133,7 @@ test('Viewer : no Viewer : other Download', async t => {
 //************************
 fixture`Drive : Viewer features`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   async t => {
-    console.group(`\n↳ ℹ️  Loggin, Page Initialization`)
+    console.group(`\n↳ ℹ️  Login, Page Initialization`)
     await t.useRole(driveUser)
     await drivePage.waitForLoading()
     await drivePage.goToFolder(data.FOLDER_DATE_TIME)
@@ -238,7 +238,7 @@ test('Viewer : text Viewer', async () => {
 //************************
 fixture`Test clean up : remove files and folders`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  console.group(`\n↳ ℹ️  Login & Initialization`)
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
   console.groupEnd()
@@ -247,6 +247,6 @@ fixture`Test clean up : remove files and folders`
 test('Delete foler', async () => {
   console.group('↳ ℹ️  Drive : Delete and foler')
   await drivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await drivePage.deleteCurrentFolder()
+  await drivePage.deleteCurrentFolder({})
   console.groupEnd()
 })
