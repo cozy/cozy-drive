@@ -14,7 +14,7 @@ class Contact extends DoctypeContact {
     if (Contact.isContact(contact)) {
       return DoctypeContact.getDisplayName(contact)
     } else {
-      return contact.name || ''
+      return contact.name || contact.email || ''
     }
   }
 }
