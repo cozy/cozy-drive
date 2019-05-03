@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { contactsResponseType, groupsResponseType } from 'sharing/propTypes'
 import ShareAutosuggest from 'sharing/components/ShareAutosuggest'
 import styles from 'sharing/share.styl'
 
@@ -76,8 +77,8 @@ class ShareRecipientsInput extends Component {
 
 ShareRecipientsInput.propTypes = {
   label: PropTypes.string,
-  contacts: PropTypes.object.isRequired,
-  groups: PropTypes.object.isRequired,
+  contacts: contactsResponseType.isRequired,
+  groups: groupsResponseType.isRequired,
   recipients: PropTypes.array,
   onPick: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
@@ -86,7 +87,6 @@ ShareRecipientsInput.propTypes = {
 
 ShareRecipientsInput.defaultProps = {
   label: 'To:',
-  contacts: [],
   recipients: []
 }
 
