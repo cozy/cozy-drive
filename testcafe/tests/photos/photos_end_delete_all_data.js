@@ -1,6 +1,13 @@
 import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
-import { IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
+import {
+  IMG0,
+  IMG1,
+  IMG2,
+  IMG3,
+  IMG4,
+  maskPhotosCluster
+} from '../helpers/data'
 import { initVR } from '../helpers/visualreview-utils'
 import TimelinePage from '../pages/photos/photos-timeline-model'
 
@@ -34,7 +41,8 @@ test(TEST_DELETE1, async t => {
   await timelinePage.deletePhotosFromTimeline(1)
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE1}-1`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE1}-1`,
+    withMask: maskPhotosCluster
   })
   console.groupEnd()
 })

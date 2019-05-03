@@ -1,6 +1,7 @@
 import { photosUser } from '../helpers/roles'
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
 import {
+  maskPhotosCluster,
   DATA_PATH,
   IMG0,
   IMG1,
@@ -71,6 +72,7 @@ test(TEST_UPLOAD2, async t => {
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD1}-2`,
+    withMask: maskPhotosCluster,
     delay: THUMBNAIL_DELAY,
     pageToWait: timelinePage
   })

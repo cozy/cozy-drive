@@ -73,3 +73,4 @@ export const maskVideoViewerMobile = { height: 25, x: 12, width: 353, y: 381 }
 
 export const maskDeleteFolder = { height: 918, x: 916, width: 140, y: 300 }
 export const maskMoveMoadal = { height: 115, x: 905, width: 140, y: 237 }
+export const maskPhotosCluster = { height: 43, x: 242, width: 424, y: 203 }

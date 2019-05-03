@@ -1,10 +1,10 @@
 import { photosUser } from '../helpers/roles' //import roles for login
 import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
-import random from 'lodash/random'
 import { initVR } from '../helpers/visualreview-utils'
 import Viewer from '../pages/photos-viewer/photos-viewer-model'
 import Timeline from '../pages/photos/photos-timeline-model'
 import * as selectors from '../pages/selectors'
+import { maskPhotosCluster } from '../helpers/data'
 const timelinePage = new Timeline()
 const photoViewer = new Viewer()
 
@@ -38,7 +38,8 @@ test(TEST_SELECT1, async t => {
   await timelinePage.selectPhotos(1)
   await timelinePage.checkCozyBarOnTimeline()
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_SELECT1}-1`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_SELECT1}-1`,
+    withMask: maskPhotosCluster
   })
   console.groupEnd()
 })
@@ -49,7 +50,8 @@ test(TEST_SELECT2, async t => {
   await timelinePage.selectPhotos(3)
   await timelinePage.checkCozyBarOnTimeline()
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_SELECT2}-1`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_SELECT2}-1`,
+    withMask: maskPhotosCluster
   })
   console.groupEnd()
 })
