@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon } from 'cozy-ui/transpiled/react'
 
 import withFileUrl from './withFileUrl'
-import styles from './styles'
+import styles from './styles.styl'
 import AudioIcon from './icons/icon-type-audio.svg'
 
 const AudioViewer = ({ file, url }) => (

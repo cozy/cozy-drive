@@ -10,8 +10,10 @@ import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import getSharedDocument from 'sharing/getSharedDocument'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
+import { IconSprite } from 'cozy-ui/transpiled/react'
 
 import doctypes from '../browser/doctypes'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main.styl'
 
 import App from './App'
@@ -75,7 +77,10 @@ async function init() {
   } finally {
     render(
       <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
-        {app}
+        <>
+          {app}
+          <IconSprite />
+        </>
       </I18n>,
       root
     )

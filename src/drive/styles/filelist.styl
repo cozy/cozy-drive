@@ -1,4 +1,5 @@
 @require 'components/table.styl'
+@require 'settings/palette.styl'
 
 .fil-content-table
     @extend $table
@@ -135,7 +136,8 @@ column-width-thumbnail = 3rem
 .fil-file-thumbnail
   position relative
   flex 0 0 column-width-thumbnail - 1rem //width without padding
-
+  svg  
+    display block
 .fil-file-thumbnail-image
   object-fit cover
 
@@ -187,7 +189,6 @@ column-width-thumbnail = 3rem
 .fil-content-body--selectable
     .fil-content-file-select
         opacity 1
-
 
 .fil-content-row-actioned
     .fil-content-file-action

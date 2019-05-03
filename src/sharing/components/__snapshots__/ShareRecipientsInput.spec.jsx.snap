@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShareRecipientsInput component should include groups only if all contacts are loaded 1`] = `
+<div>
+  <label
+    className="coz-form-label"
+    htmlFor="email"
+  >
+    Recipients
+  </label>
+  <ShareAutocomplete
+    contactsAndGroups={
+      Array [
+        Object {
+          "id": "df563cc4-6440",
+          "name": Object {
+            "familyName": "Russel",
+            "givenName": "Michale",
+          },
+        },
+        Object {
+          "id": "5a3b4ccf-c257",
+          "name": Object {
+            "familyName": "Wolf",
+            "givenName": "Teagan",
+          },
+        },
+      ]
+    }
+    loading={false}
+    onFocus={[Function]}
+    onPick={[MockFunction onPick]}
+    onRemove={[MockFunction onRemove]}
+    placeholder="Enter recipients here"
+    recipients={
+      Array [
+        Object {
+          "id": "5a3b4ccf-c257",
+          "name": Object {
+            "familyName": "Wolf",
+            "givenName": "Teagan",
+          },
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`ShareRecipientsInput component should match snapshot 1`] = `
+<div>
+  <label
+    className="coz-form-label"
+    htmlFor="email"
+  >
+    Recipients
+  </label>
+  <ShareAutocomplete
+    contactsAndGroups={
+      Array [
+        Object {
+          "id": "df563cc4-6440",
+          "name": Object {
+            "familyName": "Russel",
+            "givenName": "Michale",
+          },
+        },
+        Object {
+          "id": "5a3b4ccf-c257",
+          "name": Object {
+            "familyName": "Wolf",
+            "givenName": "Teagan",
+          },
+        },
+        Object {
+          "id": "fe86af20-c6c5",
+          "name": "The Night's Watch",
+        },
+        Object {
+          "id": "3d8193ab-2ce4",
+          "name": "The North",
+        },
+      ]
+    }
+    loading={false}
+    onFocus={[Function]}
+    onPick={[MockFunction onPick]}
+    onRemove={[MockFunction onRemove]}
+    placeholder="Enter recipients here"
+    recipients={
+      Array [
+        Object {
+          "id": "5a3b4ccf-c257",
+          "name": Object {
+            "familyName": "Wolf",
+            "givenName": "Teagan",
+          },
+        },
+      ]
+    }
+  />
+</div>
+`;

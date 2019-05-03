@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import styles from 'drive/styles/topbar'
+import styles from 'drive/styles/topbar.styl'
 
 const Topbar = ({ children, hideOnMobile = true }) => (
   <div

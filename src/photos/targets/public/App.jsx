@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Query } from 'cozy-client'
 import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/react'
-import { IconSprite } from 'cozy-ui/transpiled/react'
+import palette from 'cozy-ui/react/palette'
 import { Main } from 'cozy-ui/react/Layout'
 
 import Selection from 'photos/ducks/selection'
@@ -16,6 +16,11 @@ import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
 export class App extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    client: PropTypes.object.isRequired
+  }
+
   onDownload = selected => {
     const photos = selected.length !== 0 ? selected : null
     this.downloadPhotos(photos)
@@ -60,7 +65,10 @@ export class App extends Component {
 
     const { t } = this.context
     return (
-      <div className={styles['pho-public-layout']}>
+      <div
+        data-test-id="pho-public-layout"
+        className={styles['pho-public-layout']}
+      >
         <Main className="u-pt-1-half">
           <Selection>
             {(selected, active, selection) => (
@@ -73,7 +81,11 @@ export class App extends Component {
                   )}
                 >
                   <h2 className={styles['pho-content-title']}>{album.name}</h2>
-                  <div className={styles['pho-toolbar']} role="toolbar">
+                  <div
+                    data-test-id="pho-toolbar-album-public"
+                    className={styles['pho-toolbar']}
+                    role="toolbar"
+                  >
                     <CozyHomeLink
                       from="sharing-photos"
                       t={t}
@@ -81,6 +93,7 @@ export class App extends Component {
                     />
                     <Button
                       theme="secondary"
+                      data-test-id="album-public-download"
                       className={styles['pho-public-download']}
                       onClick={() => this.onDownload(selected)}
                       icon="download"
@@ -95,6 +108,7 @@ export class App extends Component {
                       className="u-hide--desk"
                     >
                       <MenuItem
+                        data-test-id="album-public-create-cozy-mobile"
                         onSelect={() =>
                           (window.location = getHomeLinkHref('sharing-photos'))
                         }
@@ -103,6 +117,7 @@ export class App extends Component {
                         {t('Share.create-cozy')}
                       </MenuItem>
                       <MenuItem
+                        data-test-id="album-public-download-mobile"
                         onSelect={() => this.onDownload(selected)}
                         icon={<Icon icon="download" />}
                       >
@@ -127,21 +142,19 @@ export class App extends Component {
               </div>
             )}
           </Selection>
-          <IconSprite />
         </Main>
       </div>
     )
   }
 }
+
 App.propTypes = {
   album: PropTypes.object.isRequired,
   hasMore: PropTypes.bool, //see https://github.com/cozy/cozy-client/issues/345
   photos: PropTypes.array.isRequired,
   fetchMore: PropTypes.func.isRequired
 }
-App.contextTypes = {
-  t: PropTypes.func
-}
+
 const ConnectedApp = props => (
   <Query query={ALBUM_QUERY} {...props}>
     {({ data: album, fetchStatus }) => {
@@ -165,6 +178,7 @@ const ConnectedApp = props => (
             size={'xxlarge'}
             loadingType={'photos_fetching'}
             middle={true}
+            color={palette.dodgerBlue}
           />
         )
       }

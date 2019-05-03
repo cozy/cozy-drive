@@ -1,16 +1,21 @@
-import styles from './share.styl'
-
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import cx from 'classnames'
-import { default as DumbShareByLink } from './components/ShareByLink'
-import { default as DumbShareByEmail } from './components/ShareByEmail'
-import WhoHasAccess from './components/WhoHasAccess'
+import { Contact, Group } from 'models'
+import Modal, { ModalContent } from 'cozy-ui/react/Modal'
+
+import styles from 'sharing/share.styl'
+
+import { default as DumbShareByLink } from 'sharing/components/ShareByLink'
+import { default as DumbShareByEmail } from 'sharing/components/ShareByEmail'
+import WhoHasAccess from 'sharing/components/WhoHasAccess'
 
 require('url-polyfill')
 
 export default class ShareModal extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
   render() {
     const { t } = this.context
     const {
@@ -18,6 +23,7 @@ export default class ShareModal extends Component {
       isOwner,
       sharingDesc,
       contacts,
+      groups,
       createContact,
       link,
       recipients,
@@ -72,6 +78,7 @@ export default class ShareModal extends Component {
                 documentType={documentType}
                 sharingDesc={sharingDesc}
                 contacts={contacts}
+                groups={groups}
                 createContact={createContact}
                 onShare={onShare}
                 needsContactsPermission={needsContactsPermission}
@@ -110,7 +117,8 @@ ShareModal.propTypes = {
   document: PropTypes.object.isRequired,
   isOwner: PropTypes.bool,
   sharingDesc: PropTypes.string,
-  contacts: PropTypes.array.isRequired,
+  contacts: PropTypes.arrayOf(Contact.propType).isRequired,
+  groups: PropTypes.arrayOf(Group.propType).isRequired,
   createContact: PropTypes.func.isRequired,
   recipients: PropTypes.array.isRequired,
   link: PropTypes.string,

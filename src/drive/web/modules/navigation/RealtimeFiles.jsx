@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import realtime from 'cozy-realtime'
+import PropTypes from 'prop-types'
+
 import {
   getOpenedFolderId,
   getVisibleFiles,
@@ -12,14 +14,15 @@ import {
 } from 'drive/web/modules/navigation/duck'
 import { updateOfflineFileCopyIfNecessary } from 'drive/mobile/modules/offline/duck'
 
-class RealtimeFiles extends React.Component {
+export class RealtimeFiles extends React.Component {
   realtimeListener = null
   pouchListener = null
-
-  async componentWillMount() {
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
+  componentWillMount() {
     const { stackClient: client } = this.context.client
     const { token, uri } = client
-
     this.realtimeListener = realtime
       .subscribe(
         {
@@ -31,7 +34,6 @@ class RealtimeFiles extends React.Component {
       .onCreate(this.onDocumentChange)
       .onUpdate(this.onDocumentChange)
       .onDelete(this.onDocumentDeletion)
-
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     if (db) {
       this.pouchListener = db.changes({
@@ -50,7 +52,32 @@ class RealtimeFiles extends React.Component {
         })
     }
   }
-
+  /* 
+  I know, willReceiveProps is deprecated but we use the old API context
+  */
+  componentWillReceiveProps(nextProps, nextContext) {
+    const { stackClient: client } = nextContext.client
+    const { token, uri } = client
+    if (token !== this.context.client.stackClient.token) {
+      // eslint-disable-next-line no-console
+      console.log('Update realtime token')
+      if (this.realtimeListener) {
+        this.realtimeListener.unsubscribe()
+        this.realtimeListener = null
+      }
+      this.realtimeListener = realtime
+        .subscribe(
+          {
+            token: token.token || token.accessToken,
+            url: uri
+          },
+          'io.cozy.files'
+        )
+        .onCreate(this.onDocumentChange)
+        .onUpdate(this.onDocumentChange)
+        .onDelete(this.onDocumentDeletion)
+    }
+  }
   onDocumentChange = rawDoc => {
     const doc = this.normalizeId(rawDoc)
     const previousDoc = this.props.files.find(f => f.id === doc.id)
@@ -92,7 +119,7 @@ class RealtimeFiles extends React.Component {
   }
 
   render() {
-    return this.props.children
+    return this.props.children ? this.props.children : null
   }
 }
 
@@ -109,7 +136,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateOfflineFileCopyIfNecessary(file, prevFile))
 })
 
-export default connect(
+const RealtimeFilesConnected = connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(RealtimeFiles))
+
+export default RealtimeFilesConnected

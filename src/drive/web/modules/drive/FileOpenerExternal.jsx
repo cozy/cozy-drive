@@ -12,7 +12,7 @@ import { withRouter } from 'react-router'
 import get from 'lodash/get'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
-import styles from './styles'
+import styles from './styles.styl'
 import Viewer from 'viewer'
 
 const doNothing = () => {}
@@ -27,10 +27,11 @@ export class FileOpener extends Component {
     file: null
   }
   componentWillMount() {
+    const routerFileId = get(this.props, 'routeParams.fileId')
     if (this.props.fileId) {
       this.loadFileInfo(this.props.fileId)
-    } else if (this.props.routeParams.fileId) {
-      this.loadFileInfo(this.props.routeParams.fileId)
+    } else if (routerFileId) {
+      this.loadFileInfo(routerFileId)
     }
   }
 
@@ -38,8 +39,10 @@ export class FileOpener extends Component {
     if (prevProps.fileId !== this.props.fileId) {
       return this.loadFileInfo(this.props.fileId)
     }
-    if (prevProps.routeParams.fileId !== this.props.routeParams.fileId) {
-      return this.loadFileInfo(this.props.routeParams.fileId)
+    const previousRouterFileId = get(prevProps, 'routeParams.fileId')
+    const routerFileId = get(this.props, 'routeParams.fileId')
+    if (previousRouterFileId !== routerFileId) {
+      return this.loadFileInfo(routerFileId)
     }
   }
   async loadFileInfo(id) {
@@ -82,14 +85,17 @@ export class FileOpener extends Component {
   }
 }
 
-FileOpener.PropTypes = {
+FileOpener.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
     params: PropTypes.shape({
       fileId: PropTypes.string.isRequired
     }).isRequired
-  }).isRequired,
-  fileId: PropTypes.number,
+  }),
+  routeParams: PropTypes.shape({
+    fileId: PropTypes.string
+  }),
+  fileId: PropTypes.string,
   withCloseButtton: PropTypes.bool
 }
 

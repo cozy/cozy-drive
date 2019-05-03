@@ -1,5 +1,5 @@
 /* global cozy __DEVELOPMENT__ */
-
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main'
 
 import React from 'react'
@@ -22,7 +22,6 @@ import {
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 import doctypes from './doctypes'
-require('../../../lib/initHelper')
 const loggerMiddleware = createLogger()
 
 document.addEventListener('DOMContentLoaded', () => {

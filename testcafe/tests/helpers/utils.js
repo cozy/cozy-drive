@@ -136,7 +136,7 @@ export async function checkAllImagesExists() {
   }
   let statuses = await Promise.all(requestPromises)
   console.log(statuses)
-  //for (const status of statuses) await t.expect(status).eql(200)
+  for (const status of statuses) await t.expect(status).eql(200)
 }
 
 //Put all files path in an array for uploads

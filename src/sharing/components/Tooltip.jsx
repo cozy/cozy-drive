@@ -16,6 +16,9 @@ export const SharingTooltip = props => (
 // accepts all the props from https://github.com/wwayne/react-tooltip#options
 
 export class TooltipRecipientList extends React.Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
   render() {
     const { t } = this.context
     const { recipientNames, cutoff = 4 } = this.props

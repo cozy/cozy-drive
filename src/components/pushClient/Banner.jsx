@@ -34,6 +34,10 @@ class BannerClient extends Component {
     }
   }
 
+  componentWillUnmount() {
+    // TODO: cancel all async tasks
+  }
+
   markAsSeen(element) {
     localforage.setItem(DESKTOP_BANNER, true)
     this.setState({ mustShow: false })

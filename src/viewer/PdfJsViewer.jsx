@@ -7,7 +7,7 @@ import { Spinner } from 'cozy-ui/react'
 import withFileUrl from './withFileUrl'
 import ToolbarButton from './PdfToolbarButton'
 import NoViewer from './NoViewer'
-import styles from './styles'
+import styles from './styles.styl'
 
 export const MIN_SCALE = 0.25
 export const MAX_SCALE = 3
@@ -98,7 +98,7 @@ export class PdfJsViewer extends Component {
   }
 
   render() {
-    const { url } = this.props
+    const { url, file } = this.props
     const {
       loaded,
       errored,
@@ -109,7 +109,7 @@ export class PdfJsViewer extends Component {
       renderAllPages
     } = this.state
 
-    if (errored) return <NoViewer file={url} />
+    if (errored) return <NoViewer file={file} />
     const pageWidth = width ? width * scale : null // newer versions of react-pdf do that automatically
 
     return (
@@ -185,6 +185,7 @@ export class PdfJsViewer extends Component {
 
 PdfJsViewer.propTypes = {
   url: PropTypes.string.isRequired,
+  file: PropTypes.object.isRequired,
   gestures: PropTypes.object
 }
 

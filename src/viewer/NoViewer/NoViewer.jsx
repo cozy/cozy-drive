@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button, Alerter } from 'cozy-ui/transpiled/react'
@@ -69,6 +70,10 @@ const DownloadButton = ({ t, file }, { client }) => (
     label={t('Viewer.noviewer.download')}
   />
 )
+
+DownloadButton.contextTypes = {
+  client: PropTypes.object.isRequired
+}
 
 const NoViewerButton = ({ file, fallbackUrl, t, onError }) => {
   if (isMobileApp())

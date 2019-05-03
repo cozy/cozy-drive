@@ -2,7 +2,7 @@ import React from 'react'
 import { translate } from 'cozy-ui/react/I18n'
 import { Icon } from 'cozy-ui/react'
 
-import button from '../styles/toolbar'
+import button from '../styles/toolbar.styl'
 
 const styles = {
   parent: {

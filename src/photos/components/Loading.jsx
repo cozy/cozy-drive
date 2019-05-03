@@ -3,13 +3,13 @@ import classNames from 'classnames'
 
 import { translate } from 'cozy-ui/react/I18n'
 import { Spinner } from 'cozy-ui/react'
+import palette from 'cozy-ui/react/palette'
 
-import styles from '../styles/loading'
+import styles from '../styles/loading.styl'
 
 export const Loading = ({
   size = 'xxlarge',
   loadingType,
-  color,
   noMargin = false,
   middle = true
 }) => {
@@ -18,7 +18,7 @@ export const Loading = ({
       <Spinner
         size={size}
         loadingType={loadingType}
-        color={color}
+        color={palette.dodgerBlue}
         noMargin={noMargin}
         middle={middle}
       />

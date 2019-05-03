@@ -6,7 +6,9 @@ const pkg = require(path.resolve(__dirname, './package.json'))
 const SRC_DIR = path.resolve(__dirname, './src')
 const configurationFiles = []
 
-configurationFiles.push(require('cozy-scripts/config/webpack.bundle.preact.js'))
+configurationFiles.push(
+  require('cozy-scripts/config/webpack.bundle.default.js')
+)
 
 configurationFiles.push(
   require('cozy-scripts/config/webpack.config.css-modules')
@@ -26,10 +28,7 @@ const extraConfig = {
     modules: ['node_modules', SRC_DIR],
     alias: {
       'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers'),
-      'create-react-class': path.resolve(
-        'node_modules',
-        'preact-compat/lib/create-react-class'
-      )
+      'cozy-ui/react': 'cozy-ui/transpiled/react'
     }
   },
   plugins: [

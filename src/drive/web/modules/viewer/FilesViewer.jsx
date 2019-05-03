@@ -19,7 +19,10 @@ class FilesViewer extends Component {
     currentFile: null
   }
 
+  _mounted = false
+
   componentDidMount() {
+    this._mounted = true
     this.fetchFileIfNecessary()
     this.fetchMoreIfNecessary()
   }
@@ -28,21 +31,27 @@ class FilesViewer extends Component {
     this.fetchMoreIfNecessary()
   }
 
+  componentWillUnmount() {
+    this._mounted = false
+  }
+
   // If we can't find the file in the loaded files, that's probably because the user is trying to open
   // a direct link to a file that wasn't in the first 50 files of the containing folder
   // (it comes from a fetchMore...) ; we load the file attributes directly as a contingency measure
   fetchFileIfNecessary() {
     if (this.getCurrentIndex() !== -1) return
-    if (this.state.currentFile)
+    if (this.state.currentFile && this._mounted)
       this.setState(state => ({ ...state, currentFile: null }))
 
     cozy.client.files
       .statById(this.props.params.fileId)
       .then(resp => {
-        this.setState(state => ({
-          ...state,
-          currentFile: { ...resp, ...resp.attributes, id: resp._id }
-        }))
+        if (this._mounted) {
+          this.setState(state => ({
+            ...state,
+            currentFile: { ...resp, ...resp.attributes, id: resp._id }
+          }))
+        }
       })
       .catch(() => {
         // eslint-disable-next-line no-console

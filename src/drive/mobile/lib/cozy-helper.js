@@ -26,6 +26,7 @@ export const permissions = [
   'io.cozy.apps:GET',
   'io.cozy.settings:GET',
   'io.cozy.contacts',
+  'io.cozy.contacts.groups',
   'io.cozy.jobs:POST:sendmail:worker'
 ]
 
@@ -58,9 +59,6 @@ export const initBar = async client => {
     displayOnMobile: true
   })
 }
-
-export const updateBarAccessToken = accessToken =>
-  cozy.bar.updateAccessToken(accessToken)
 
 export const restoreCozyClientJs = (uri, clientInfos, token) => {
   const offline = { doctypes: ['io.cozy.files'] }

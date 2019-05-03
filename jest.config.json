@@ -1,11 +1,15 @@
 {
   "roots": ["<rootDir>/src"],
+  "setupFiles": ["<rootDir>/jestHelpers/setup.js"],
   "moduleFileExtensions": ["js", "jsx", "json", "styl"],
   "moduleNameMapper": {
-    ".(png|gif|jpe?g|styl)$": "<rootDir>/jestHelpers/mocks/fileMock.js",
+    ".(png|gif|jpe?g)$": "<rootDir>/jestHelpers/mocks/fileMock.js",
     ".svg$": "<rootDir>/jestHelpers/mocks/iconMock.js",
-    "styles": "identity-obj-proxy",
+    ".styl$": "identity-obj-proxy",
+    "^drive/locales/.*": "<rootDir>/src/drive/locales/en.json",
+    "^photos/locales/.*": "<rootDir>/src/photos/locales/en.json",
     "^drive/(.*)": "<rootDir>/src/drive/$1",
+    "^models(.*)": "<rootDir>/src/models$1",
     "^photos/(.*)": "<rootDir>/src/photos/$1",
     "^sharing(.*)": "<rootDir>/src/sharing$1",
     "^authentication(.*)": "<rootDir>/src/authentication$1",

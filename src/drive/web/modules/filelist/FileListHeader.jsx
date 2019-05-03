@@ -10,7 +10,7 @@ import {
   getOpenedFolderId
 } from 'drive/web/modules/navigation/duck'
 
-import styles from 'drive/styles/filelist'
+import styles from 'drive/styles/filelist.styl'
 
 const SORTABLE_ATTRIBUTES = [
   { label: 'name', attr: 'name', css: 'file', defaultOrder: 'asc' },
@@ -146,7 +146,7 @@ const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => {
       />
       {SORTABLE_ATTRIBUTES.map((props, index) => {
         if (!canSort) {
-          return <HeaderCell {...props} t={t} />
+          return <HeaderCell {...props} t={t} key={index} />
         }
         const isActive = actualSort && actualSort.attribute === props.attr
         return (

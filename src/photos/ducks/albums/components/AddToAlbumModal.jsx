@@ -1,4 +1,4 @@
-import styles from '../../../styles/addToAlbum'
+import styles from '../../../styles/addToAlbum.styl'
 
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'

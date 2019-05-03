@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { Overlay } from 'cozy-ui/react'
 
-import styles from './index.styl'
+import styles from 'components/Menu/index.styl'
 
 export const Item = ({ children, onClick }) => (
   <div onClick={onClick} className={styles['coz-menu-item']}>
@@ -30,14 +30,12 @@ export default class Menu extends Component {
   renderItems() {
     return React.Children.map(this.props.children, item => {
       if (!item) return item
-      // ideally here, we should rely on React's type property and verify that
-      // type === Item, but for some reason, preact vnodes don't have this property
-      if (item.nodeName !== 'hr') {
-        return React.cloneElement(item, {
-          onClick: this.handleSelect.bind(this, item)
-        })
+      //if the Item is wrapped in an HOC we should provide a type props
+      if ((item.props && item.props.type === 'hr') || item.type === 'hr') {
+        return item
       }
-      return React.cloneElement(item)
+
+      return <div onClick={this.handleSelect}>{item}</div>
     })
   }
 

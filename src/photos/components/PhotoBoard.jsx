@@ -1,4 +1,4 @@
-import styles from '../styles/photoList'
+import styles from '../styles/photoList.styl'
 
 import React, { Component } from 'react'
 import { withContentRect } from 'react-measure'
@@ -49,9 +49,9 @@ export class PhotoBoard extends Component {
         className={showSelection ? styles['pho-list-selection'] : ''}
         ref={measureRef}
       >
-        {lists.map(photoList => (
+        {lists.map((photoList, idx) => (
           <PhotoList
-            key={photoList.title || photoList.month}
+            key={idx}
             title={
               photoList.title ||
               (photoList.month ? f(photoList.month, 'MMMM YYYY') : '')

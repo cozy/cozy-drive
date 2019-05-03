@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
 
-import styles from './autosuggest.styl'
-import { ContactSuggestion } from './Recipient'
-import { Icon } from 'cozy-ui/react'
-import BoldCross from '../assets/icons/icon-cross-bold.svg'
+import { Icon, Spinner } from 'cozy-ui/react'
+import palette from 'cozy-ui/react/palette'
 
-import { getPrimaryEmail } from '..'
+import styles from 'sharing/components/autosuggest.styl'
+import BoldCross from 'sharing/assets/icons/icon-cross-bold.svg'
+
+import { Contact, Group } from 'models'
+import ContactSuggestion from 'sharing/components/ContactSuggestion'
 
 // TODO: sadly we have different versions of contacts' doctype to handle...
 // A migration tool on the stack side is needed here
 const emailMatch = (input, contact) => {
   if (!contact.email) return false
-  const emailInput = new RegExp(input)
+  const emailInput = new RegExp(input, 'i')
   if (Array.isArray(contact.email)) {
     return contact.email.some(email => emailInput.test(email.address))
   }
@@ -21,11 +23,17 @@ const emailMatch = (input, contact) => {
 
 const cozyUrlMatch = (input, contact) => {
   if (!contact.cozy || !contact.url) return false
-  const urlInput = new RegExp(input)
+  const urlInput = new RegExp(input, 'i')
   if (contact.cozy && Array.isArray(contact.cozy)) {
     return contact.cozy.some(cozy => urlInput.test(cozy.url))
   }
   return urlInput.test(contact.url)
+}
+
+const groupNameMatch = (input, contactOrGroup) => {
+  if (contactOrGroup._type !== Group.doctype) return false
+  const nameInput = new RegExp(input, 'i')
+  return nameInput.test(contactOrGroup.name)
 }
 
 export default class ShareAutocomplete extends Component {
@@ -34,13 +42,25 @@ export default class ShareAutocomplete extends Component {
     suggestions: []
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.contactsAndGroups.length !== prevProps.contactsAndGroups.length
+    ) {
+      this.onSuggestionsFetchRequested({
+        value: this.state.inputValue
+      })
+    }
+  }
+
   computeSuggestions(value) {
     const inputValue = value.trim().toLowerCase()
     return inputValue.length === 0
       ? []
-      : this.props.contacts.filter(
-          contact =>
-            emailMatch(inputValue, contact) || cozyUrlMatch(inputValue, contact)
+      : this.props.contactsAndGroups.filter(
+          contactOrGroup =>
+            groupNameMatch(inputValue, contactOrGroup) ||
+            emailMatch(inputValue, contactOrGroup) ||
+            cozyUrlMatch(inputValue, contactOrGroup)
         )
   }
 
@@ -104,19 +124,18 @@ export default class ShareAutocomplete extends Component {
     setTimeout(() => this.input.focus(), 1)
   }
 
-  renderInput(props) {
+  renderInput(inputProps) {
+    const { loading, recipients } = this.props
     return (
       <div className={styles['recipientsContainer']}>
-        {this.props.recipients.map((recipient, i) => {
-          const recipientEmail = recipient.id
-            ? getPrimaryEmail(recipient)
-            : recipient.email
+        {recipients.map((recipient, idx) => {
+          const value = Contact.getDisplayName(recipient)
           return (
             <div
               className={styles['recipientChip']}
-              key={`key_recipient_${recipientEmail + i}`}
+              key={`key_recipient_${idx}`}
             >
-              <span>{recipientEmail}</span>
+              <span>{value}</span>
               <button
                 className={styles['removeRecipient']}
                 onClick={() => this.onRemove(recipient)}
@@ -126,14 +145,20 @@ export default class ShareAutocomplete extends Component {
             </div>
           )
         })}
-        <input {...props} onKeyPress={this.onKeyPress} />
+        <input {...inputProps} onKeyPress={this.onKeyPress} />
+        {loading && (
+          <Spinner
+            color={palette.dodgerBlue}
+            className="u-flex u-flex-items-center"
+          />
+        )}
       </div>
     )
   }
 
   render() {
     const { inputValue, suggestions } = this.state
-    const { placeholder } = this.props
+    const { contactsAndGroups, placeholder } = this.props
     return (
       <Autosuggest
         ref={self => {
@@ -144,7 +169,14 @@ export default class ShareAutocomplete extends Component {
         getSuggestionValue={contact => contact}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        renderSuggestion={contact => <ContactSuggestion contact={contact} />}
+        renderSuggestion={contactOrGroup => (
+          <ContactSuggestion
+            contacts={contactsAndGroups.filter(
+              item => item._type === Contact.doctype
+            )}
+            contactOrGroup={contactOrGroup}
+          />
+        )}
         renderInputComponent={props => this.renderInput(props)}
         highlightFirstSuggestion
         inputProps={{

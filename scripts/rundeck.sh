@@ -58,7 +58,7 @@ function getRundeckStatus {
 
     #The job can be succesfull. but return an error, so we need to check!
     if [[ "${LOG_OUTPUT,,}" == *"error"* ]]; then
-      echo "❌ Execution ${1} returned an error :" && echo $LOG_OUTPUT && exit 1;
+      echo "❌ Execution ${1} returned an error :" && echo $LOG_OUTPUT 
       else
         return 0
     fi

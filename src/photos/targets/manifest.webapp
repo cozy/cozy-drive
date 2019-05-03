@@ -2,7 +2,7 @@
   "name": "Photos",
   "name_prefix": "Cozy",
   "slug": "photos",
-  "version": "1.16.0",
+  "version": "1.18.3",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -61,7 +61,8 @@
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",
       "verbs": [
-        "GET"
+        "GET",
+        "PUT"
       ]
     },
     "albums": {
@@ -70,7 +71,8 @@
       "verbs": [
         "GET",
         "POST",
-        "PUT"
+        "PUT",
+        "DELETE"
       ]
     },
     "photos_settings": {

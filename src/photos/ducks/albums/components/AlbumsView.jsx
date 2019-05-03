@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from '../../../styles/layout'
+import styles from '../../../styles/layout.styl'
 import { translate } from 'cozy-ui/react/I18n'
 
 import AlbumsToolbar from './AlbumsToolbar'

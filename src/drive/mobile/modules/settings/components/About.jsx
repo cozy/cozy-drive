@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Hammer from 'hammerjs'
 import { translate } from 'cozy-ui/react/I18n'
@@ -6,6 +7,10 @@ import SettingCategory, { ELEMENT_TEXT } from './SettingCategory'
 import { getServerUrl } from '../duck'
 
 class About extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
+
   componentDidMount() {
     this.gesturesHandler = new Hammer.Manager(this.versionNumber)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
@@ -13,10 +18,12 @@ class About extends Component {
   }
 
   componentWillUnmount() {
-    this.gesturesHandler.destroy()
+    this.gesturesHandler && this.gesturesHandler.destroy()
   }
 
-  render({ t, version, serverUrl }) {
+  render() {
+    const { t, version, serverUrl } = this.props
+
     return (
       <SettingCategory
         title={t('mobile.settings.about.title')}
@@ -43,6 +50,12 @@ class About extends Component {
       />
     )
   }
+}
+
+About.propTypes = {
+  t: PropTypes.func.isRequired,
+  version: PropTypes.string.isRequired,
+  serverUrl: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
