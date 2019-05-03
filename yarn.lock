@@ -4395,19 +4395,20 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cozy-bar@6.21.8:
-  version "6.21.8"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.21.8.tgz#bd1995b1fd98952aeaf7b436910836b0f8b235ef"
-  integrity sha512-BE5p7f1UuGQ366u1ASXlI6VNnqPFBET6zmRsaTRLfrDMeuCp/Aavs4xThT0YaJavxVS1BpN6wgM3MFOSt0rC/w==
+cozy-bar@6.23.3:
+  version "6.23.3"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.23.3.tgz#fe3af088cc9cf29ca002d8d24a2d56fd6530ba4a"
+  integrity sha512-0aJdii8HWR4yxvWGP6UpPPmPhChQyjQza/10+4Z5IWnEfTA4Jp+o2iIpqkyEQ4MDtPlxIu04DtfxTZnzBjw+Pw==
   dependencies:
     "@babel/core" "7.3.4"
     babel-core "7.0.0-bridge.0"
     babel-preset-cozy-app "1.5.1"
     cozy-client "6.20.0"
     cozy-device-helper "1.7.1"
-    cozy-harvest-lib "0.39.3"
+    cozy-harvest-lib "0.41.0"
     cozy-interapp "0.4.4"
-    cozy-realtime "2.0.7"
+    cozy-realtime "2.0.8"
+    cozy-ui "19.28.0"
     enzyme-to-json "3.3.5"
     hammerjs "2.0.8"
     lerna-changelog "0.8.2"
@@ -4448,21 +4449,6 @@ cozy-client-js@0.9.0:
     pouchdb "6.1.1"
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
-
-cozy-client@6.19.0:
-  version "6.19.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.19.0.tgz#ea44c2681f6d206dae5fdb2d1d91075a35d8434e"
-  integrity sha512-aYXIRQR/pX8vbpTG7fmcgQhpCdA5t0JL9HEH09ti6dh7TCPMHqZ1f91VhM6Pb7NCPQYsL9rTU+2vAEYn4RQKyQ==
-  dependencies:
-    cozy-device-helper "1.6.3"
-    cozy-stack-client "^6.18.1"
-    lodash "4.17.11"
-    prop-types "15.6.2"
-    react "16.7.0"
-    react-redux "5.0.7"
-    redux "3.7.2"
-    redux-thunk "2.3.0"
-    sift "6.0.0"
 
 cozy-client@6.20.0:
   version "6.20.0"
@@ -4519,19 +4505,16 @@ cozy-flags@1.6.0:
     detect-node "2.0.4"
     microee "^0.0.6"
 
-cozy-harvest-lib@0.39.3:
-  version "0.39.3"
-  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-0.39.3.tgz#9decf6686f84c172179ebe5c84db434b1daca934"
-  integrity sha512-H4fn53cAYrKbvpimVGkskevKhUbZUa2/xeOjFBNAusmNsv/wyhnKv/zy+eJvw9r6mkbBI/bmhF9hiE78GsgD7g==
+cozy-harvest-lib@0.41.0:
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-0.41.0.tgz#0bdf1f9343fd6c5918f3e0f2b5ccf5d313455c98"
+  integrity sha512-AK6yNV6JoEWTc9qRj5XRKd5Y1ECehKOnuXNdxLhHmt1XGf+MSmqQGWclZ40aF3xjL4TAhBv0790kAnnIOvM6/g==
   dependencies:
-    cozy-client "6.19.0"
-    cozy-realtime "2.0.7"
-    cozy-ui "19.21.2"
     final-form "4.11.1"
     lodash "4.17.11"
+    preact-portal "^1.1.3"
     react-final-form "3.7.0"
     react-markdown "4.0.6"
-    react-proptypes "1.0.0"
 
 cozy-interapp@0.4.4:
   version "0.4.4"
@@ -4566,11 +4549,6 @@ cozy-logger@1.3.1, cozy-logger@^1.2.0:
   integrity sha512-oa2h6wkLuCTucUeeFQKOYE0hGtP6VZ+tRMxV/MKqIRKMq8xngareUusQX03jXP3C+O1GeaEhSmaboHlIDJnH7A==
   dependencies:
     json-stringify-safe "5.0.1"
-
-cozy-realtime@2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-2.0.7.tgz#1ca40806e4a3e752bf1d6ea4f8a761a8eaa123d2"
-  integrity sha512-rGJ4lLqbhcw6CKYIKir3lpuck1GbJCy2hUiEKeQXjeLU0j4TIPB1OBk01oz46RyTcAr2tzW8EesRGd4eqy/8Hw==
 
 cozy-realtime@2.0.8:
   version "2.0.8"
@@ -4629,15 +4607,6 @@ cozy-scripts@1.13.0:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-stack-client@^6.18.1:
-  version "6.18.1"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.18.1.tgz#d3e4b27cb17576eb780d491941a81cead4d0cd0e"
-  integrity sha512-/AOMH7x/1Kw+a9NAzQhkc962eBBIOqjs2UabxOv8x75+bJ5AKYrZ93PCCQqwFiRMdVjSntjvBUm39feeIK/89g==
-  dependencies:
-    detect-node "2.0.4"
-    mime-types "2.1.20"
-    qs "6.6.0"
-
 cozy-stack-client@^6.20.0:
   version "6.20.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.20.0.tgz#3d4b5334bd2a7c919e8b9e3989a46e470e2ab779"
@@ -4647,10 +4616,10 @@ cozy-stack-client@^6.20.0:
     mime-types "2.1.20"
     qs "6.6.0"
 
-cozy-ui@19.21.2:
-  version "19.21.2"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.21.2.tgz#acb9813b6c569bd3670c2fd6be90cae330babdc6"
-  integrity sha512-7rHZJiWJPBxWONYZYakBHObp757HBJqm9Rt37B5e2PTUY+SxIc2xtj7u28+K7Jd3V6GU/81+DiLJvcaiyWCPxQ==
+cozy-ui@19.25.1:
+  version "19.25.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.25.1.tgz#5c755fa0e31d899ed8511e36f33095b8a01c7e31"
+  integrity sha512-XHghvkLOhzlZnTj1IHRvfkKxnQVwD40sPWnV9mzcJSDDl1Q5FhfnJH3dIhwFIVpe3PcXr4DliRAOeAuVoTkzsw==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -4662,10 +4631,10 @@ cozy-ui@19.21.2:
     react-hot-loader "^4.3.11"
     react-select "2.2.0"
 
-cozy-ui@19.25.1:
-  version "19.25.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.25.1.tgz#5c755fa0e31d899ed8511e36f33095b8a01c7e31"
-  integrity sha512-XHghvkLOhzlZnTj1IHRvfkKxnQVwD40sPWnV9mzcJSDDl1Q5FhfnJH3dIhwFIVpe3PcXr4DliRAOeAuVoTkzsw==
+cozy-ui@19.28.0:
+  version "19.28.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.28.0.tgz#4976638b0a11d83d200fb58deac423b587238580"
+  integrity sha512-WjcxuBw4F3m5X+ThlLtSvjNTxP+KiXXeQBCD6O12vjDb8ST8uHWe+mrns3Xd8JDuNu8Bm+6pBzoUO43tYn0erg==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -12576,6 +12545,11 @@ pouchdb@6.4.3:
     uuid "3.2.1"
     vuvuzela "1.0.3"
 
+preact-portal@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/preact-portal/-/preact-portal-1.1.3.tgz#22cdd3ecf6ad9aaa3f830607a9c6591de90aedb7"
+  integrity sha512-rE0KG2b7ggIly4VVsSm7+WmQmG/EoUZzBOed2IbycyaFIArOvz+yab/8RBoDogA0JWZuTsbMTStR41Ghc+5m7Q==
+
 prebuild-install@^2.1.0:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-2.5.3.tgz#9f65f242782d370296353710e9bc843490c19f69"
@@ -12762,15 +12736,6 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
-  version "15.7.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
-  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
-  dependencies:
-    loose-envify "^1.4.0"
-    object-assign "^4.1.1"
-    react-is "^16.8.1"
-
 prop-types@15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
@@ -12778,6 +12743,15 @@ prop-types@15.6.2:
   dependencies:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+  version "15.7.2"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
 
 properties-parser@0.2.3:
   version "0.2.3"
@@ -13216,13 +13190,6 @@ react-pdf@3.0.6:
     merge-class-names "^1.1.1"
     pdfjs-dist "2.0.305"
     prop-types "^15.6.1"
-
-react-proptypes@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-proptypes/-/react-proptypes-1.0.0.tgz#88e9cf5cc61b18844a5f57a06c839ae39fe9a57f"
-  integrity sha1-iOnPXMYbGIRKX1egbIOa45/ppX8=
-  dependencies:
-    prop-types "*"
 
 react-redux@5.0.7:
   version "5.0.7"
