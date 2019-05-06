@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import get from 'lodash/get'
 
-import { Contact, Group } from 'models'
 import { Button, Icon } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
 import SelectBox, { components } from 'cozy-ui/react/SelectBox'
 import palette from 'cozy-ui/react/palette'
 
+import { Contact, Group } from 'models'
+import { contactsResponseType, groupsResponseType } from 'sharing/propTypes'
 import ShareRecipientsInput from 'sharing/components/ShareRecipientsInput'
 import styles from 'sharing/share.styl'
 
@@ -278,30 +279,8 @@ class ShareByEmail extends Component {
 }
 
 ShareByEmail.propTypes = {
-  contacts: PropTypes.shape({
-    count: PropTypes.number,
-    data: PropTypes.arrayOf(Contact.propType),
-    definition: PropTypes.object,
-    fetchMore: PropTypes.func,
-    fetchStatus: PropTypes.string,
-    hasMore: PropTypes.bool,
-    id: PropTypes.string,
-    lastError: PropTypes.string,
-    lastFetch: PropTypes.number,
-    lastUpdate: PropTypes.number
-  }).isRequired,
-  groups: PropTypes.shape({
-    count: PropTypes.number,
-    data: PropTypes.arrayOf(Group.propType),
-    definition: PropTypes.object,
-    fetchMore: PropTypes.func,
-    fetchStatus: PropTypes.string,
-    hasMore: PropTypes.bool,
-    id: PropTypes.string,
-    lastError: PropTypes.string,
-    lastFetch: PropTypes.number,
-    lastUpdate: PropTypes.number
-  }).isRequired,
+  contacts: contactsResponseType.isRequired,
+  groups: groupsResponseType.isRequired,
   document: PropTypes.object.isRequired,
   documentType: PropTypes.string.isRequired,
   sharingDesc: PropTypes.string.isRequired,

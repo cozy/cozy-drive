@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import flow from 'lodash/flow'
 import { queryConnect, withClient } from 'cozy-client'
 
 import { Contact, Group } from 'models'
-
+import { contactsResponseType, groupsResponseType } from 'sharing/propTypes'
 import SharingContext from 'sharing/context'
 import ContactsAndGroupsDataLoader from 'sharing/components/ContactsAndGroupsDataLoader'
 import { default as DumbShareModal } from 'sharing/components/ShareModal'
@@ -51,6 +52,13 @@ const EditableSharingModal = ({
       </SharingContext.Consumer>
     </ContactsAndGroupsDataLoader>
   )
+}
+
+EditableSharingModal.PropTypes = {
+  client: PropTypes.object.isRequired,
+  document: PropTypes.object,
+  contacts: contactsResponseType.isRequired,
+  groups: groupsResponseType.isRequired
 }
 
 const contactsQuery = client =>

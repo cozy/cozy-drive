@@ -61,5 +61,13 @@ describe('Contact model', () => {
       const result = Contact.getDisplayName(contact)
       expect(result).toEqual('Arya Stark')
     })
+
+    it('should use email if a recipient is given', () => {
+      const recipient = {
+        email: 'arya.stark@winterfell.westeros'
+      }
+      const result = Contact.getDisplayName(recipient)
+      expect(result).toEqual('arya.stark@winterfell.westeros')
+    })
   })
 })
