@@ -168,9 +168,9 @@ class ShareByEmail extends Component {
 
     const filtered = contactsToAdd
       .filter(
-        contact => contact.email && contact.email.length > 0
-        // TODO: uncomment next line when contacts without email can actually be added
-        //  || (contact.cozy && contact.cozy.length > 0)
+        contact =>
+          (contact.email && contact.email.length > 0) ||
+          (contact.cozy && contact.cozy.length > 0)
       )
       .filter(contact => !this.state.recipients.find(r => r === contact))
 
