@@ -1,6 +1,6 @@
-import { PdfJsViewer, MIN_SCALE, MAX_SCALE, MAX_PAGES } from './PdfJsViewer'
 import React from 'react'
 import { shallow } from 'enzyme'
+import { PdfJsViewer, MIN_SCALE, MAX_SCALE, MAX_PAGES } from './PdfJsViewer'
 
 describe('PDFViewer', () => {
   let component

@@ -24,6 +24,19 @@ if (isDrive && target === 'mobile')
 if (target !== 'mobile')
   configurationFiles.push(require('./webpack/appicon.config.js'))
 const extraConfig = {
+  module: {
+    rules: [
+      {
+        test: /\.worker(\.entry)\.js$/,
+        use: [{
+          loader: 'worker-loader',
+          options: {
+            name: 'public/[name].[hash].worker.js'
+          }
+        }]
+      },
+    ]
+  },
   resolve: {
     modules: ['node_modules', SRC_DIR],
     alias: {
