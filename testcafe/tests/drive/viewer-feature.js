@@ -8,8 +8,8 @@ import {
   deleteLocalFile
 } from '../helpers/utils'
 let data = require('../helpers/data')
-import DrivePage from '../pages/drive-model'
-import ViewerPage from '../pages/drive-viewer-model'
+import DrivePage from '../pages/drive/drive-model-private'
+import ViewerPage from '../pages/drive-viewer/drive-viewer-model'
 
 const drivePage = new DrivePage()
 const viewerPage = new ViewerPage()
@@ -19,7 +19,7 @@ const viewerPage = new ViewerPage()
 //************************
 fixture`Drive : Viewer features : prepare data`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  console.group(`\n↳ ℹ️  Login & Initialization`)
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
   console.groupEnd()
@@ -27,7 +27,7 @@ fixture`Drive : Viewer features : prepare data`
 
 test('Dri ve : Create a $test_date_time folder in Drive', async () => {
   console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
-  await drivePage.addNewFolder(data.FOLDER_DATE_TIME)
+  await drivePage.addNewFolder({ newFolderName: data.FOLDER_DATE_TIME })
   console.groupEnd()
 })
 
@@ -46,7 +46,7 @@ test('Drive : Go to $test_date_time and upload 26 files', async () => {
 fixture`Drive : Viewer features (and Download)`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   console.group(
-    `\n↳ ℹ️  Loggin, Page Initialization & data.DOWNLOAD_PATH initialization`
+    `\n↳ ℹ️  Login, Page Initialization & data.DOWNLOAD_PATH initialization`
   )
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
@@ -75,8 +75,7 @@ test('Viewer : checking common features for all files (expect PDF)', async t => 
       data.FOLDER_DATE_TIME,
       t.ctx.fileNameListNoPDF[i]
     )
-    await viewerPage.checkCommonViewerDownload(
-      data.FOLDER_DATE_TIME,
+    await viewerPage.openFileAndCheckCommonViewerDownload(
       t.ctx.fileNameListNoPDF[i]
     )
     console.groupEnd()
@@ -104,7 +103,13 @@ test('Viewer : no Viewer : other Download', async t => {
         t.ctx.fileNameListNoViewer[i]
       }`
     )
-    await viewerPage.checkNoViewer(t.ctx.fileNameListNoViewer[i])
+    await viewerPage.openViewerForFile(t.ctx.fileNameListNoViewer[i])
+    await viewerPage.checkNoViewer()
+    await viewerPage.checkNoViewerDownload()
+
+    await viewerPage.closeViewer({
+      exitWithEsc: true
+    })
     console.groupEnd()
   }
 }).after(async t => {
@@ -128,7 +133,7 @@ test('Viewer : no Viewer : other Download', async t => {
 //************************
 fixture`Drive : Viewer features`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   async t => {
-    console.group(`\n↳ ℹ️  Loggin, Page Initialization`)
+    console.group(`\n↳ ℹ️  Login, Page Initialization`)
     await t.useRole(driveUser)
     await drivePage.waitForLoading()
     await drivePage.goToFolder(data.FOLDER_DATE_TIME)
@@ -145,7 +150,11 @@ test('Viewer : Image Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking text features for 📁 ${fileNameListImage[i]}`
     )
-    await viewerPage.checkImageViewer(fileNameListImage[i])
+    await viewerPage.openViewerForFile(fileNameListImage[i])
+    await viewerPage.checkImageViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: false
+    })
     console.groupEnd()
   }
 })
@@ -161,7 +170,11 @@ test('Viewer : PDF Viewer : Download', async () => {
         fileNameListPdf[i]
       }`
     )
-    await viewerPage.checkPdfViewer(fileNameListPdf[i])
+    await viewerPage.openViewerForFile(fileNameListPdf[i])
+    await viewerPage.checkPdfViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: true
+    })
     console.groupEnd()
   }
 })
@@ -175,7 +188,11 @@ test('Viewer : audio Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking Audio features for 📁 ${fileNameListAudio[i]}`
     )
-    await viewerPage.checkAudioViewer(fileNameListAudio[i])
+    await viewerPage.openViewerForFile(fileNameListAudio[i])
+    await viewerPage.checkAudioViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: false
+    })
     console.groupEnd()
   }
 })
@@ -189,7 +206,11 @@ test('Viewer : video Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking video features for 📁 ${fileNameListVideo[i]}`
     )
-    await viewerPage.checkVideoViewer(fileNameListVideo[i])
+    await viewerPage.openViewerForFile(fileNameListVideo[i])
+    await viewerPage.checkVideoViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: false
+    })
     console.groupEnd()
   }
 })
@@ -203,7 +224,11 @@ test('Viewer : text Viewer', async () => {
     console.group(
       `\n↳ ℹ️  Viewer : checking text features for 📁 ${fileNameListText[i]}`
     )
-    await viewerPage.checkTextViewer(fileNameListText[i])
+    await viewerPage.openViewerForFile(fileNameListText[i])
+    await viewerPage.checkTextViewer()
+    await viewerPage.closeViewer({
+      exitWithEsc: true
+    })
     console.groupEnd()
   }
 })
@@ -213,7 +238,7 @@ test('Viewer : text Viewer', async () => {
 //************************
 fixture`Test clean up : remove files and folders`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Loggin & Initialization`)
+  console.group(`\n↳ ℹ️  Login & Initialization`)
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
   console.groupEnd()
@@ -222,6 +247,6 @@ fixture`Test clean up : remove files and folders`
 test('Delete foler', async () => {
   console.group('↳ ℹ️  Drive : Delete and foler')
   await drivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await drivePage.deleteCurrentFolder()
+  await drivePage.deleteCurrentFolder({})
   console.groupEnd()
 })
