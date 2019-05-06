@@ -10,7 +10,13 @@ import AlbumsPage from '../pages/photos-albums/albums-model'
 import { initVR } from '../helpers/visualreview-utils'
 import * as selectors from '../pages/selectors'
 import { checkToastAppearsAndDisappears } from '../pages/commons'
-import { IMG0, DATA_PATH, THUMBNAIL_DELAY } from '../helpers/data'
+import {
+  IMG0,
+  DATA_PATH,
+  THUMBNAIL_DELAY,
+  maskPhotosCluster,
+  maskPhotosAddToAlbum
+} from '../helpers/data'
 
 const timelinePage = new Timeline()
 const photoAlbumPage = new AlbumPage()
@@ -63,7 +69,8 @@ test(TEST_CREATE_ALBUM, async t => {
   await photoAlbumsPage.addNewAlbum({
     albumName: FEATURE_PREFIX,
     photoNumber: 3,
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_ALBUM}-2`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_ALBUM}-2`,
+    withMask: maskPhotosAddToAlbum
   })
   //we need to check the album page, just after the redirection from album creation, hence this step being in this test
   await photoAlbumPage.checkAlbumPage(FEATURE_PREFIX, 3)
@@ -124,7 +131,8 @@ test(TEST_ADD_EXISTING_PHOTOS, async t => {
   await checkAllImagesExists()
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_ADD_EXISTING_PHOTOS}-1`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_ADD_EXISTING_PHOTOS}-1`,
+    withMask: maskPhotosCluster
   })
   await t.click(selectors.album(`New2_${FEATURE_PREFIX}`))
 
@@ -148,12 +156,14 @@ test(TEST_DELETE_PHOTO_FROM_TIMELINE, async t => {
   await timelinePage.selectPhotosByName([IMG0])
   await timelinePage.deletePhotosFromTimeline({
     numOfFiles: 1,
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_PHOTO_FROM_TIMELINE}-1`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_PHOTO_FROM_TIMELINE}-1`,
+    withMask: maskPhotosCluster
   })
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_PHOTO_FROM_TIMELINE}-2`,
     delay: THUMBNAIL_DELAY,
-    pageToWait: timelinePage
+    pageToWait: timelinePage,
+    withMask: maskPhotosCluster
   })
   console.groupEnd()
 })
@@ -194,7 +204,8 @@ test(TEST_CLEAN_UP, async t => {
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_CLEAN_UP}-1`,
     delay: THUMBNAIL_DELAY,
-    pageToWait: timelinePage
+    pageToWait: timelinePage,
+    withMask: maskPhotosCluster
   })
   console.groupEnd()
 })

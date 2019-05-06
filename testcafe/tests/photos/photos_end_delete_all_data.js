@@ -41,7 +41,8 @@ test(TEST_DELETE1, async t => {
   //pic is removed
   await timelinePage.deletePhotosFromTimeline({
     numOfFiles: 1,
-    screenshotPath: 'DeleteImage/delete-1-pic-modal'
+    screenshotPath: 'DeleteImage/delete-1-pic-modal',
+    withMask: maskPhotosCluster
   })
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
@@ -59,7 +60,8 @@ test(TEST_DELETE2, async t => {
   //pics are removed, there are no more pictures on  page
   await timelinePage.deletePhotosFromTimeline({
     numOfFiles: 4,
-    screenshotPath: 'DeleteImage/delete-4-pic-modal'
+    screenshotPath: 'DeleteImage/delete-4-pic-modal',
+    withMask: maskPhotosCluster
   })
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
