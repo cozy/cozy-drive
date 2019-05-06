@@ -12,6 +12,7 @@ import getSharedDocument from 'sharing/getSharedDocument'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 
+import appMetadata from 'photos/appMetadata'
 import doctypes from '../browser/doctypes'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main.styl'
@@ -32,6 +33,7 @@ async function init() {
   const client = new CozyClient({
     uri: cozyUrl,
     token: sharecode,
+    appMetadata,
     schema: doctypes
   })
 

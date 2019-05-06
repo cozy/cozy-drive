@@ -17,6 +17,7 @@ import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'sharing/getSharedDocument'
+import appMetadata from 'drive/appMetadata'
 
 const initCozyBar = (data, client) => {
   if (
@@ -57,6 +58,7 @@ const init = async () => {
   const client = new CozyClient({
     uri: cozyUrl,
     token: sharecode,
+    appMetadata,
     schema
   })
   configureReporter()
