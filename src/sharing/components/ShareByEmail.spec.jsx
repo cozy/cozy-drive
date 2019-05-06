@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import ShareByEmail from './ShareByEmail'
+import ShareByEmail, { countNewRecipients } from './ShareByEmail'
 
 const fakeDoc = {
   _id: 'c0455ddf-5f4c',
@@ -30,6 +30,7 @@ describe('ShareByEmail component', () => {
         hasMore: false,
         fetchStatus: 'loaded'
       },
+      currentRecipients: [{ email: 'sansa.stark@winterfell.westeros' }],
       document: fakeDoc,
       documentType: 'Files',
       sharingDesc: 'fake-doc.odt',
@@ -47,7 +48,8 @@ describe('ShareByEmail component', () => {
       component.setState({
         recipients: [
           { email: 'jon.snow@thewall.westeros' },
-          { email: 'arya.stark@winterfell.westeros' }
+          { email: 'arya.stark@winterfell.westeros' },
+          { email: 'sansa.stark@winterfell.westeros' }
         ]
       })
       const [message, params] = component.instance().getSuccessMessage()
@@ -118,5 +120,128 @@ describe('ShareByEmail component', () => {
       expect(message).toEqual('Files.share.shareByEmail.genericSuccess')
       expect(params).toEqual({ count: 1 })
     })
+  })
+})
+
+describe('countNewRecipients function', () => {
+  const currentRecipients = [
+    {
+      email: 'arya.stark@winterfell.westeros'
+    },
+    {
+      email: 'sansa.stark@winterfell.westeros'
+    },
+    {
+      email: 'jon.snow@thewall.westeros'
+    }
+  ]
+  const addedRecipients = [
+    {
+      id: '5d4916fa-e193',
+      email: [
+        {
+          address: 'jon.snow@thewall.westeros',
+          type: 'primary'
+        }
+      ]
+    },
+    {
+      id: '4df64228-ce84',
+      email: [
+        {
+          address: 'sansa.stark@winterfell.westeros',
+          type: 'primary'
+        }
+      ]
+    },
+    {
+      id: 'ff955bb1-f696',
+      email: [
+        {
+          address: 'bran.stark@winterfell.westeros',
+          type: 'primary'
+        }
+      ]
+    }
+  ]
+
+  it('should count only the new recipients using email', () => {
+    const result = countNewRecipients(currentRecipients, addedRecipients)
+    expect(result).toEqual(1)
+  })
+
+  it('should count the new recipients when there are no current recipients', () => {
+    const result = countNewRecipients([], addedRecipients)
+    expect(result).toEqual(3)
+  })
+
+  it('should return 0 if there is no new recipients', () => {
+    const currentRecipients = [
+      {
+        email: 'arya.stark@winterfell.westeros'
+      },
+      {
+        email: 'sansa.stark@winterfell.westeros'
+      },
+      {
+        email: 'jon.snow@thewall.westeros'
+      },
+      {
+        email: 'bran.stark@winterfell.westeros'
+      }
+    ]
+    const result = countNewRecipients(currentRecipients, addedRecipients)
+    expect(result).toEqual(0)
+  })
+
+  it('should count the new recipients using cozy url', () => {
+    const currentRecipients = [
+      {
+        instance: 'https://bran.mycozy.cloud'
+      },
+      {
+        instance: 'https://jon.mycozy.cloud'
+      }
+    ]
+    const addedRecipients = [
+      {
+        id: '5d4916fa-e193',
+        cozy: [
+          {
+            url: 'https://jon.mycozy.cloud',
+            type: 'primary'
+          }
+        ]
+      },
+      {
+        id: '4df64228-ce84',
+        cozy: [
+          {
+            url: 'https://sansa.mycozy.cloud',
+            type: 'primary'
+          }
+        ]
+      },
+      {
+        id: 'ff955bb1-f696',
+        cozy: [
+          {
+            url: 'https://bran.mycozy.cloud',
+            type: 'primary'
+          }
+        ]
+      },
+      {
+        id: '0761944a-c740',
+        cozy: [
+          {
+            url: 'https://arya.mycozy.cloud',
+            type: 'primary'
+          }
+        ]
+      }
+    ]
+    const result = countNewRecipients(currentRecipients, addedRecipients)
+    expect(result).toEqual(2)
   })
 })
