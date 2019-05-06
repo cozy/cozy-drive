@@ -1,6 +1,6 @@
 /* global cozy */
-
-import 'drive/styles/main'
+// eslint-disable-next-line no-unused-vars
+import mainStyles from 'drive/styles/main.styl'
 
 import 'whatwg-fetch'
 import React from 'react'
@@ -14,7 +14,8 @@ import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
-require('../../../lib/initHelper')
+import 'cozy-ui/transpiled/react/stylesheet.css'
+
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cozy.bar.init({
     appName: data.cozyAppName,
     appEditor: data.cozyAppEditor,
+    cozyClient: client,
     iconPath: data.cozyIconPath,
     lang: data.cozyLocale,
     replaceTitleOnMobile: false

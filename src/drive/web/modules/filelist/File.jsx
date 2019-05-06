@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, forwardRef } from 'react'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
@@ -10,10 +10,9 @@ import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
 import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
-import { ImageLoader } from 'components/Image'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
-import { SharedBadge, SharedStatus } from 'sharing'
-import { getFileMimetype } from 'drive/lib/getFileMimetype'
+import { SharedStatus } from 'sharing'
+import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 
 import {
   toggleItemSelection,
@@ -39,16 +38,6 @@ export const splitFilename = file =>
         extension: file.name.slice(file.name.lastIndexOf('.')),
         filename: file.name.slice(0, file.name.lastIndexOf('.'))
       }
-
-export const getClassFromMime = attrs => {
-  if (isDirectory(attrs)) {
-    return styles['fil-file-folder']
-  }
-  return styles[
-    'fil-file-' +
-      (getFileMimetype(styles, 'fil-file-')(attrs.mime, attrs.name) || 'files')
-  ]
-}
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
@@ -106,7 +95,13 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => (
   >
     {withSelectionCheckbox && (
       <span data-input="checkbox">
-        <input type="checkbox" checked={selected} />
+        <input
+          onChange={() => {
+            // handled by onClick on the <div>
+          }}
+          type="checkbox"
+          checked={selected}
+        />
         <label />
       </span>
     )}
@@ -118,7 +113,6 @@ const FileName = ({
   isRenaming,
   interactive,
   withFilePath,
-  withSharedBadge,
   isMobile,
   formattedSize,
   formattedUpdatedAt
@@ -126,31 +120,11 @@ const FileName = ({
   const classes = classNames(
     styles['fil-content-cell'],
     styles['fil-content-file'],
-    getClassFromMime(attributes),
     { [styles['fil-content-file-openable']]: !isRenaming && interactive }
   )
   const { filename, extension } = splitFilename(attributes)
   return (
     <div className={classes}>
-      {attributes.class === 'image' && (
-        <ImageLoader
-          file={attributes}
-          size="small"
-          render={src => (
-            <div
-              className={styles['fil-file-preview']}
-              style={`background-image: url(${src});`}
-            />
-          )}
-        />
-      )}
-      {withSharedBadge && (
-        <SharedBadge
-          docId={attributes.id}
-          className={styles['fil-content-shared']}
-          xsmall
-        />
-      )}
       {isRenaming ? (
         <RenameInput />
       ) : (
@@ -235,12 +209,13 @@ const Status = ({ isAvailableOffline, id }) => (
   </div>
 )
 
-const FileAction = ({ t, onClick }) => (
+const FileAction = forwardRef(({ t, onClick }, ref) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
       styles['fil-content-file-action']
     )}
+    ref={ref}
   >
     <Button
       theme="action"
@@ -251,11 +226,16 @@ const FileAction = ({ t, onClick }) => (
       label={t('Toolbar.more')}
     />
   </div>
-)
+))
 
 class File extends Component {
   state = {
     actionMenuVisible: false
+  }
+
+  constructor(props) {
+    super(props)
+    this.filerowMenuToggleRef = React.createRef()
   }
 
   showActionMenu = () => {
@@ -284,7 +264,7 @@ class File extends Component {
   }
 
   componentWillUnmount() {
-    this.gesturesHandler.destroy()
+    this.gesturesHandler && this.gesturesHandler.destroy()
   }
 
   toggle(e) {
@@ -346,12 +326,12 @@ class File extends Component {
           selected={selected}
           onClick={e => this.toggle(e)}
         />
+        <FileThumbnail file={attributes} withSharedBadge={withSharedBadge} />
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
           interactive={!disabled}
           withFilePath={withFilePath}
-          withSharedBadge={withSharedBadge}
           isMobile={isMobile}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
@@ -365,9 +345,7 @@ class File extends Component {
         {actions && (
           <FileAction
             t={t}
-            ref={toggle => {
-              this.filerowMenuToggle = toggle
-            }}
+            ref={this.filerowMenuToggleRef}
             onClick={e => {
               this.showActionMenu()
               e.stopPropagation()
@@ -378,7 +356,7 @@ class File extends Component {
           actionMenuVisible && (
             <ActionMenu
               file={attributes}
-              reference={this.filerowMenuToggle}
+              reference={this.filerowMenuToggleRef.current}
               actions={actions}
               onClose={this.hideActionMenu}
             />

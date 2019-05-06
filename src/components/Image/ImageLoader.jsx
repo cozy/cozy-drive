@@ -11,20 +11,28 @@ const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
 class ImageLoader extends React.Component {
+  static contextTypes = {
+    client: PropTypes.object.isRequired
+  }
+
   state = {
     status: PENDING,
     src: null
   }
 
+  _mounted = false
+
   componentDidMount() {
+    this._mounted = true
     this.loadNextSrc()
   }
 
   componentWillUnmount() {
+    this._mounted = false
+    clearTimeout(this.timeout)
     if (this.img) {
       this.img.onload = this.img.onerror = null
       this.img.src = ''
-      clearTimeout(this.timeout)
     }
   }
 
@@ -38,6 +46,7 @@ class ImageLoader extends React.Component {
     if (status === PENDING) this.loadLink()
     else if (status === LOADING_LINK) this.loadFallback()
     else if (status === LOADING_FALLBACK) {
+      // eslint-disable-next-line no-console
       console.warn('failed loading thumbnail', lastError)
       this.setState({ status: FAILED })
       this.props.onError(lastError)
@@ -89,10 +98,12 @@ class ImageLoader extends React.Component {
 
       const src = client.options.uri + link
       await this.checkImageSource(src)
-      this.setState({
-        status: LOADED,
-        src
-      })
+      if (this._mounted) {
+        this.setState({
+          status: LOADED,
+          src
+        })
+      }
     } catch (e) {
       this.loadNextSrc(e)
     }
@@ -105,10 +116,12 @@ class ImageLoader extends React.Component {
     try {
       const src = await this.getDownloadLink(this.getFileId(file))
       await this.checkImageSource(src)
-      this.setState({
-        status: LOADED,
-        src
-      })
+      if (this._mounted) {
+        this.setState({
+          status: LOADED,
+          src
+        })
+      }
     } catch (e) {
       this.loadNextSrc(e)
     }
@@ -126,8 +139,11 @@ class ImageLoader extends React.Component {
 
   render() {
     const { src } = this.state
-    const { render } = this.props
-    return src ? render(src) : false
+    const { render, renderFallback } = this.props
+
+    if (src) return render(src)
+    else if (renderFallback) return renderFallback()
+    else return null
   }
 }
 
@@ -135,7 +151,8 @@ ImageLoader.propTypes = {
   file: PropTypes.object.isRequired,
   render: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  renderFallback: PropTypes.func
 }
 
 ImageLoader.defaultProps = {

@@ -1,4 +1,4 @@
-import styles from '../../../styles/confirms'
+import styles from '../../../styles/confirms.styl'
 import classNames from 'classnames'
 import React from 'react'
 import Modal from 'cozy-ui/react/Modal'

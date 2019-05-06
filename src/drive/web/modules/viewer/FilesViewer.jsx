@@ -1,7 +1,8 @@
 /* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Viewer, { LoadingViewer } from 'viewer'
+import { Overlay, Spinner } from 'cozy-ui/transpiled/react'
+import Viewer from 'viewer'
 import {
   getFolderIdFromRoute,
   fetchMoreFiles
@@ -18,7 +19,10 @@ class FilesViewer extends Component {
     currentFile: null
   }
 
+  _mounted = false
+
   componentDidMount() {
+    this._mounted = true
     this.fetchFileIfNecessary()
     this.fetchMoreIfNecessary()
   }
@@ -27,23 +31,30 @@ class FilesViewer extends Component {
     this.fetchMoreIfNecessary()
   }
 
+  componentWillUnmount() {
+    this._mounted = false
+  }
+
   // If we can't find the file in the loaded files, that's probably because the user is trying to open
   // a direct link to a file that wasn't in the first 50 files of the containing folder
   // (it comes from a fetchMore...) ; we load the file attributes directly as a contingency measure
   fetchFileIfNecessary() {
     if (this.getCurrentIndex() !== -1) return
-    if (this.state.currentFile)
+    if (this.state.currentFile && this._mounted)
       this.setState(state => ({ ...state, currentFile: null }))
 
     cozy.client.files
       .statById(this.props.params.fileId)
       .then(resp => {
-        this.setState(state => ({
-          ...state,
-          currentFile: { ...resp, ...resp.attributes, id: resp._id }
-        }))
+        if (this._mounted) {
+          this.setState(state => ({
+            ...state,
+            currentFile: { ...resp, ...resp.attributes, id: resp._id }
+          }))
+        }
       })
       .catch(() => {
+        // eslint-disable-next-line no-console
         console.warn("can't find the file")
         this.onClose()
       })
@@ -91,24 +102,32 @@ class FilesViewer extends Component {
     // direct stat made by the viewer
     if (currentIndex === -1) {
       if (!this.state.currentFile) {
-        return <LoadingViewer />
+        return (
+          <Overlay>
+            <Spinner size="xxlarge" middle noMargin color="white" />
+          </Overlay>
+        )
       }
       return (
-        <Viewer
-          files={[this.state.currentFile]}
-          currentIndex={0}
-          onChange={this.onChange}
-          onClose={this.onClose}
-        />
+        <Overlay>
+          <Viewer
+            files={[this.state.currentFile]}
+            currentIndex={0}
+            onChange={this.onChange}
+            onClose={this.onClose}
+          />
+        </Overlay>
       )
     }
     return (
-      <Viewer
-        files={files}
-        currentIndex={currentIndex}
-        onChange={this.onChange}
-        onClose={this.onClose}
-      />
+      <Overlay>
+        <Viewer
+          files={files}
+          currentIndex={currentIndex}
+          onChange={this.onChange}
+          onClose={this.onClose}
+        />
+      </Overlay>
     )
   }
 }

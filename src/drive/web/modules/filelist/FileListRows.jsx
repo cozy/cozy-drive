@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react'
+import ReactDOM from 'react-dom'
+
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -6,8 +8,8 @@ import { isMobileApp } from 'cozy-device-helper'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 
 import File from './File'
-import FilePlaceholder from './FilePlaceholder'
-import LoadMore from './LoadMore'
+import FilePlaceholder from 'drive/web/modules/filelist/FilePlaceholder'
+import LoadMore from 'drive/web/modules/filelist/LoadMore'
 
 require('intersection-observer') // polyfill for safari
 
@@ -39,7 +41,7 @@ class FileListRows extends PureComponent {
 
     if (element) {
       // eslint-disable-next-line react/no-find-dom-node
-      this.loadMoreElement = React.findDOMNode(element)
+      this.loadMoreElement = ReactDOM.findDOMNode(element)
       this.intersectionObserver.observe(this.loadMoreElement)
     }
   }

@@ -1,24 +1,60 @@
-import { photosUser } from '../helpers/roles' //import roles for login
-import { TESTCAFE_PHOTOS_URL } from '../helpers/utils'
-import Page from '../pages/photos-model'
-import { IMG0, IMG1, IMG2, IMG3, IMG4 } from '../helpers/data'
+import { photosUser } from '../helpers/roles'
+import { TESTCAFE_PHOTOS_URL, SLUG } from '../helpers/utils'
+import {
+  IMG0,
+  IMG1,
+  IMG2,
+  IMG3,
+  IMG4,
+  maskPhotosCluster
+} from '../helpers/data'
+import { initVR } from '../helpers/visualreview-utils'
+import TimelinePage from '../pages/photos/photos-timeline-model'
 
-const page = new Page()
+const timelinePage = new TimelinePage()
 
-fixture`Delete all photos`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
-  await t.useRole(photosUser)
-  await page.waitForLoading()
-  await page.initPhotosCount()
-})
+//Scenario const
+const FEATURE_PREFIX = 'PhotosDelete'
+const FIXTURE_INIT = `${FEATURE_PREFIX} 1- Delete Photos`
+const TEST_DELETE1 = `1-1 Delete 1 photo`
+const TEST_DELETE2 = `1-2 Delete 4 photos`
 
-test('Deleting 1st pic on Timeline : Open up a modal, and confirm', async () => {
-  await page.selectPhotosByName([IMG0])
+fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
+  .before(async ctx => {
+    await initVR(ctx, SLUG, FIXTURE_INIT)
+  })
+  .beforeEach(async t => {
+    console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.useRole(photosUser)
+    await timelinePage.waitForLoading()
+    await timelinePage.initPhotosCount()
+    console.groupEnd()
+  })
+  .after(async ctx => {
+    await ctx.vr.checkRunStatus()
+  })
+
+test(TEST_DELETE1, async t => {
+  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE1}`)
+  await timelinePage.selectPhotosByName([IMG0])
   //pic is removed
-  await page.deletePhotos(1)
+  await timelinePage.deletePhotosFromTimeline(1)
+
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE1}-1`,
+    withMask: maskPhotosCluster
+  })
+  console.groupEnd()
 })
 
-test('Deleting 4 pics on Timeline : Open up a modal, and confirm', async () => {
-  await page.selectPhotosByName([IMG1, IMG2, IMG3, IMG4])
+test(TEST_DELETE2, async t => {
+  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE2}`)
+  await timelinePage.selectPhotosByName([IMG1, IMG2, IMG3, IMG4])
   //pics are removed, there are no more pictures on  page
-  await page.deletePhotos(4, true)
+  await timelinePage.deletePhotosFromTimeline(4, true)
+
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE2}-1`
+  })
+  console.groupEnd()
 })

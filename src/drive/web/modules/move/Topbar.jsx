@@ -44,11 +44,13 @@ const MoveTopbar = (
 
 MoveTopbar.propTypes = {
   navigateTo: PropTypes.func.isRequired,
-  currentDir: PropTypes.string.isRequired,
+  currentDir: PropTypes.object.isRequired,
   fetchStatus: PropTypes.string.isRequired,
   breakpoints: PropTypes.shape({
     isMobile: PropTypes.bool
   }).isRequired
 }
-
+MoveTopbar.contextTypes = {
+  t: PropTypes.func.isRequired
+}
 export default withBreakpoints()(MoveTopbar)

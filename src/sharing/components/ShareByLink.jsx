@@ -1,12 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import copy from 'copy-text-to-clipboard'
 import Toggle from 'cozy-ui/react/Toggle'
 import { Spinner, SubTitle } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
 import cx from 'classnames'
 import styles from '../share.styl'
+import palette from 'cozy-ui/react/palette'
 
 class ShareByLink extends React.Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  }
+
   state = {
     loading: false
   }
@@ -31,6 +37,7 @@ class ShareByLink extends React.Component {
       await this.props.onEnable(this.props.document)
     } catch (e) {
       Alerter.error(`${this.props.documentType}.share.error.generic`)
+      // eslint-disable-next-line no-console
       console.log(e)
     } finally {
       this.setState(state => ({ ...state, loading: false }))
@@ -43,6 +50,7 @@ class ShareByLink extends React.Component {
       await this.props.onDisable(this.props.document)
     } catch (e) {
       Alerter.error(`${this.props.documentType}.share.error.revoke`)
+      // eslint-disable-next-line no-console
       console.log(e)
     } finally {
       this.setState(state => ({ ...state, loading: false }))
@@ -60,7 +68,7 @@ class ShareByLink extends React.Component {
           className={cx(styles['share-bylink-header'], 'u-mt-1', 'u-mb-1')}
         >
           <SubTitle>{t(`${documentType}.share.shareByLink.subtitle`)}</SubTitle>
-          {loading && <Spinner />}
+          {loading && <Spinner color={palette.dodgerBlue} />}
           {loading && (
             <span className={styles['share-bylink-header-creating']}>
               {t(`${documentType}.share.shareByLink.creating`)}

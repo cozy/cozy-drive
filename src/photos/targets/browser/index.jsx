@@ -1,5 +1,5 @@
 /* global cozy __DEVELOPMENT__ */
-
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main'
 
 import React from 'react'
@@ -18,12 +18,10 @@ import {
   getTracker,
   createTrackerMiddleware
 } from 'cozy-ui/react/helpers/tracker'
-import eventTrackerMiddleware from 'photos/middlewares/EventTracker'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 import doctypes from './doctypes'
-require('../../../lib/initHelper')
 const loggerMiddleware = createLogger()
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cozy.bar.init({
     appName: data.cozyAppName,
     appEditor: data.cozyAppEditor,
+    cozyClient: client,
     iconPath: data.cozyIconPath,
     lang: data.cozyLocale,
     replaceTitleOnMobile: true
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let trackerInstance = getTracker()
     history = trackerInstance.connectToHistory(hashHistory)
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
-    middlewares.push(eventTrackerMiddleware)
     middlewares.push(createTrackerMiddleware())
   }
 

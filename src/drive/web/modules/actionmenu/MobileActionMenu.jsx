@@ -1,14 +1,13 @@
 import React from 'react'
 import classNames from 'classnames'
-import ActionMenu from 'cozy-ui/react/ActionMenu'
+import { ActionMenu, Icon } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
-import {
-  splitFilename,
-  getClassFromMime
-} from 'drive/web/modules/filelist/File'
+import { splitFilename } from 'drive/web/modules/filelist/File'
+import { isDirectory } from 'drive/web/modules/drive/files'
+import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 import MenuItem from './MenuItem'
 
-import styles from 'drive/styles/actionmenu'
+import styles from 'drive/styles/actionmenu.styl'
 
 const Menu = props => {
   const { t, file, actions, onClose } = props
@@ -53,11 +52,17 @@ const MenuHeaderFile = ({ file }) => {
     <div>
       <div
         className={classNames(
-          styles['fil-mobileactionmenu-file'],
           styles['fil-mobileactionmenu-header'],
-          getClassFromMime(file)
+          'u-p-1',
+          'u-flex',
+          'u-flex-items-center'
         )}
       >
+        <Icon
+          icon={getMimeTypeIcon(isDirectory(file), file.name, file.mime)}
+          size={32}
+          className="u-mr-1"
+        />
         <span className={styles['fil-mobileactionmenu-file-name']}>
           {filename}
         </span>

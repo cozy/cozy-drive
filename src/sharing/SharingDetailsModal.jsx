@@ -1,14 +1,18 @@
 import styles from './share.styl'
-
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { UserAvatar as Owner } from './components/Recipient'
 import WhoHasAccess from './components/WhoHasAccess'
 
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 
-import { getDisplayName } from '.'
+import { Contact } from 'models'
 
 export class SharingDetailsModal extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired,
+    f: PropTypes.object.isRequired
+  }
   render() {
     const { t, f } = this.context
     const {
@@ -33,7 +37,7 @@ export class SharingDetailsModal extends Component {
           <div className={styles['share-details']}>
             <Owner
               name={t(`${documentType}.share.sharedBy`, {
-                name: getDisplayName(owner)
+                name: Contact.getDisplayName(owner)
               })}
               url={owner.instance}
             />

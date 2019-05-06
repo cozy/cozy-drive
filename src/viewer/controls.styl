@@ -1,0 +1,121 @@
+@require 'components/selectionbar.styl'
+@require 'settings/breakpoints.styl'
+@require 'settings/palette.styl'
+
+.pho-viewer-controls
+    display         flex
+    flex-direction  column
+    justify-content center
+    align-items center
+    width           100%
+    height          100%
+
+.pho-viewer-nav
+    position   absolute
+    top        5.625rem
+    bottom     0
+    margin-top           5.625rem
+    z-index              $modal-index + 1
+    width                20%
+    cursor               pointer
+    background-color     transparent
+    transition           .4s opacity ease-out
+    opacity              0
+    display              flex
+    align-items          center
+    justify-content      center
+    flex-direction       column
+
+    +medium-screen()
+      display none
+
+    &--visible:hover
+        opacity           1
+        transition        none
+    &--previous
+        left 0
+        .pho-viewer-nav-arrow
+            align-self          flex-start
+            margin-left         2.5rem
+            background-image    embedurl('./icons/icon-arrow-left.svg')
+    &--next
+        right 0
+        .pho-viewer-nav-arrow
+            align-self          flex-end
+            margin-right        2.5rem
+            background-image    embedurl('./icons/icon-arrow-right.svg')
+
+.pho-viewer-controls.--expanded .pho-viewer-nav
+    margin-top 0
+    width      40%
+
+.pho-viewer-nav-arrow
+    height 4.375rem
+    width  4.375rem
+    border-radius       50%
+    opacity             0.7
+    background-color    charcoalGrey
+    background-repeat   no-repeat
+    background-position center center
+
+.pho-viewer-toolbar
+    position    absolute
+    top 0
+    z-index     $modal-index + 1
+    display     flex
+    flex-shrink 0
+    width       100%
+    height      5.625rem
+    transition .4s opacity ease-out
+    background linear-gradient(to bottom, rgba(50, 54, 63, .5), rgba(50, 54, 63, .33), rgba(50, 54, 63, 0))
+
+    &--mobilebrowser
+        background-color charcoalGrey
+        opacity 0.9
+
+    &--hidden
+        opacity 0
+
+    +medium-screen()
+        height  3rem
+
+.pho-viewer-toolbar-actions
+    position          static
+    z-index           0
+    display           flex
+    align-items       center
+    justify-content   center
+    width             100%
+    height            auto
+    background-color  transparent
+
+    button
+        color white
+
+        &:hover
+        &:focus
+            color white
+
+.pho-viewer-toolbar-close
+    position         absolute
+    top              0
+    right            0
+    display          flex
+    align-items      center
+    justify-content  center
+    width            5.625rem
+    height           5.625rem
+    cursor           pointer
+
+    +medium-screen()
+        width   3rem
+        height  3rem
+
+    button
+        color white
+        background-color transparent
+        border 0
+
+        &:hover
+        &:focus
+            background-color transparent

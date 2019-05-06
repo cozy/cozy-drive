@@ -1,17 +1,24 @@
 import React from 'react'
-import { SharedDocuments } from 'sharing'
 import { connect } from 'react-redux'
-import Container from './Container'
+import PropTypes from 'prop-types'
 import { Empty } from 'cozy-ui/react'
+
+import Container from 'drive/web/modules/drive/Container'
 import {
   FETCH_SHARINGS,
   FETCH_SHARINGS_SUCCESS,
   FETCH_SHARINGS_FAILURE
 } from 'drive/web/modules/navigation/duck/actions'
+import SharedDocuments from 'sharing/components/SharedDocuments'
 
 export class SharingFetcher extends React.Component {
   state = {
     error: null
+  }
+
+  static contextTypes = {
+    client: PropTypes.object.isRequired,
+    t: PropTypes.func.isRequired
   }
 
   async fetchSharedDocuments() {

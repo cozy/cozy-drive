@@ -7,7 +7,7 @@ import Spinner from 'cozy-ui/react/Spinner'
 import Icon from 'cozy-ui/react/Icon'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
-import { SharedDocuments } from 'sharing'
+import SharedDocuments from 'sharing/components/SharedDocuments'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
@@ -104,6 +104,7 @@ export class Breadcrumb extends Component {
                     e.stopPropagation()
                     onBreadcrumbClick(folder)
                   }}
+                  key={index}
                 >
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
@@ -122,6 +123,7 @@ export class Breadcrumb extends Component {
                     e.stopPropagation()
                     if (path.length >= 2) this.toggleDeploy()
                   }}
+                  key={index}
                 >
                   <span className={styles['fil-path-current-name']}>
                     {folder.name}

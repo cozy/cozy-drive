@@ -6,6 +6,7 @@ import classNames from 'classnames'
 
 const ErrorUnsharedComponent = () => (
   <div
+    data-test-id="pho-public-layout"
     className={classNames(
       styles['pho-public-layout'],
       styles['pho-public-layout--full'],

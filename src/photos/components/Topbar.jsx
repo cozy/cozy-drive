@@ -1,5 +1,5 @@
 /* global cozy  */
-import styles from '../styles/topbar'
+import styles from '../styles/topbar.styl'
 
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
@@ -49,7 +49,7 @@ class EditableAlbumName extends Component {
     return (
       <input
         type="text"
-        value={albumName}
+        defaultValue={albumName}
         onKeyDown={this.handleKeyDown}
         onBlur={this.handleBlur}
         ref={elem => {

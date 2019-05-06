@@ -1,6 +1,8 @@
-import styles from './styles'
+import styles from './styles.styl'
 
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
 import Hammer from 'hammerjs'
 
 import Spinner from 'cozy-ui/react/Spinner'
@@ -96,7 +98,7 @@ export default class ImageViewer extends Component {
   }
 
   onSwipe = e => {
-    // when a swipa happens while zoomed into an image, it's most likely a pan gesture and not a swipe
+    // when a swipe happens while zoomed into an image, it's most likely a pan gesture and not a swipe
     if (this.state.scale > 1) return
     // a pan event is triggered after the swipe and may trigger a getBoundingClientRect error
     this.gestures.off('pan')
@@ -231,7 +233,7 @@ export default class ImageViewer extends Component {
             size="large"
             ref={photo => {
               //eslint-disable-next-line
-              this.photo = React.findDOMNode(photo)
+              this.photo = ReactDOM.findDOMNode(photo)
             }}
             onError={this.onImageError}
             key={file.id}

@@ -1,4 +1,4 @@
-import styles from 'photos/styles/albumsList'
+import styles from 'photos/styles/albumsList.styl'
 
 import React from 'react'
 import { Content } from 'cozy-ui/react/Layout'

@@ -5,7 +5,14 @@ import { shallow } from 'enzyme'
 import { SharingFetcher } from './SharingsContainer'
 import { ROOT_DIR_ID } from 'drive/constants/config.js'
 
-jest.mock('cozy-client')
+jest.mock('cozy-client', () => {
+  const automaticMock = jest.genMockFromModule('cozy-client')
+  return {
+    ...automaticMock,
+    // we need queryConnect to return a function
+    queryConnect: jest.fn().mockImplementation(() => () => {})
+  }
+})
 
 describe('SharingFetcher component', () => {
   describe('componentDidMount', () => {
@@ -89,12 +96,12 @@ describe('SharingFetcher component', () => {
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true
+        disableLifecycleMethod: true,
+        context: {
+          client,
+          t: translateSpy
+        }
       })
-      wrapper.instance().context = {
-        client,
-        t: translateSpy
-      }
       wrapper.setState({ error: new Error('Houston, we have a problem') })
       await wrapper.instance().fetchSharedDocuments()
 
@@ -122,12 +129,12 @@ describe('SharingFetcher component', () => {
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true
+        disableLifecycleMethod: true,
+        context: {
+          client,
+          t: translateSpy
+        }
       })
-      wrapper.instance().context = {
-        client,
-        t: translateSpy
-      }
       await wrapper.instance().fetchSharedDocuments()
 
       expect(fetchSuccessSpy).not.toHaveBeenCalled()

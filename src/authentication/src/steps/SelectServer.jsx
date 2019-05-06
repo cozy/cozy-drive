@@ -10,7 +10,7 @@ import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
 import 'cozy-ui/assets/icons/ui/previous.svg'
 import 'cozy-ui/assets/icons/ui/next.svg'
 import 'cozy-ui/assets/icons/ui/lock.svg'
-import styles from '../styles'
+import styles from '../styles.styl'
 import { ButtonLinkRegistration } from './ButtonLinkRegistration'
 import { onboardingPropTypes } from '../../OnboardingPropTypes'
 
@@ -39,6 +39,7 @@ export class SelectServer extends Component {
     if (window.Keyboard && window.Keyboard.shrinkView) {
       window.Keyboard.shrinkView(true)
     } else {
+      // eslint-disable-next-line no-console
       console.warn(
         'Cozy-Authentication needs a cozy/cordova-plugin-keyboard plugin to work better.'
       )

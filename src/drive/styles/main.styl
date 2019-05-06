@@ -1,3 +1,4 @@
+@require '~cozy-ui/dist/cozy-ui.min.css'
 @require 'settings/breakpoints.styl'
 
 div:focus
@@ -13,17 +14,3 @@ div:focus
     &.--working
         // we forbid clicks when loading something to avoid concurrent data fetches and consequent flash effects
         pointer-events none
-//!TODO Remove this code after upgrading to cozy-bar@6
-[aria-hidden=true]
-   display: initial
-   visibility: initial
-
-[role=application][aria-hidden=true]
-    display: initial
-    visibility: initial
-
-[role=toolbar] 
-    button
-        svg
-            display: initial
-            visibility: initial

@@ -13,7 +13,7 @@ import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import { emptyTrash } from './actions'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
-import styles from 'drive/styles/toolbar'
+import styles from 'drive/styles/toolbar.styl'
 
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 
@@ -47,7 +47,11 @@ const Toolbar = ({
   )
 
   return (
-    <div className={styles['fil-toolbar-trash']} role="toolbar">
+    <div
+      data-test-id="empty-trash"
+      className={styles['fil-toolbar-trash']}
+      role="toolbar"
+    >
       <Button
         theme={'danger-outline'}
         className={classNames(styles['u-hide--mob'])}

@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import SharingProvider, { SharedDocument } from 'sharing'
-
+import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 import { BarContextProvider } from 'react-cozy-helpers'
@@ -12,7 +12,7 @@ import Menu, { Item } from 'components/Menu'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
-import styles from 'drive/styles/toolbar'
+import styles from 'drive/styles/toolbar.styl'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 
@@ -27,6 +27,11 @@ import SharedRecipients from './Toolbar/share/SharedRecipients'
 const { BarRight } = cozy.bar
 
 class Toolbar extends Component {
+  static contextTypes = {
+    client: PropTypes.object.isRequired,
+    t: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired
+  }
   render() {
     const {
       t,
@@ -78,7 +83,7 @@ class Toolbar extends Component {
             </a>
           </SelectableItem>
         </Item>
-        <NotRootFolder>
+        <NotRootFolder type="hr">
           <hr />
         </NotRootFolder>
         <NotRootFolder>
