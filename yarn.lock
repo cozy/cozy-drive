@@ -4493,10 +4493,10 @@ cozy-device-helper@1.7.1:
   dependencies:
     lodash "4.17.11"
 
-cozy-doctypes@1.43.0:
-  version "1.43.0"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.43.0.tgz#8ea622c86c7e16cf9aa2e2110daa51fe6b257d19"
-  integrity sha512-ue/fJAEuDvAWIF99Upp9UlbcL1Od9EX+9uGHgAQRtu+xKXJsdBUnJbwgUqYTAh9uLcubKM+nFTXHmQeoyB1jhQ==
+cozy-doctypes@1.44.1:
+  version "1.44.1"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.44.1.tgz#9e411fa89a90fbb8141a44d772f2d57cd2eed59e"
+  integrity sha512-2tLkB6L70pQAh7AcM0gfmVEejtEUWtG7snpNeqmc3ntatKWKvygeBke9n4JrJ6ZqCIY9XUw/uQ+10J+MCYmkZQ==
   dependencies:
     "@babel/runtime" "7.3.1"
     cozy-logger "1.3.1"
@@ -4504,10 +4504,10 @@ cozy-doctypes@1.43.0:
     lodash "4.17.11"
     prop-types "^15.7.2"
 
-cozy-flags@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.6.0.tgz#dcbadf075279e9db2f24df99dc541392d9994b5b"
-  integrity sha512-fFg6H0NmZyom6kJvBGRdIPBwT3qKzCR8UzeLcpIoLcx8uqlcbMqpA+uphcVyJNbSUiPyR1I9qUqOEuGx7s9MFg==
+cozy-flags@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-1.6.1.tgz#27e8bed076f0676e512beda0f4532548862df0f4"
+  integrity sha512-L0Nh8DdgqRBAu4UkSWTbfJZAlcVYQPX2G09nSiOgsgBzr002txXRz1899r9jHoLJPFFR+Ep9zkSmnOnPzMHUwA==
   dependencies:
     detect-node "2.0.4"
     microee "^0.0.6"
