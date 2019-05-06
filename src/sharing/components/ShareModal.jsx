@@ -74,6 +74,7 @@ export default class ShareModal extends Component {
             !hasSharedParent &&
             !hasSharedChild && (
               <DumbShareByEmail
+                currentRecipients={recipients}
                 document={document}
                 documentType={documentType}
                 sharingDesc={sharingDesc}

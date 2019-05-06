@@ -98,6 +98,18 @@ ShareSubmit.defaultProps = {
   loading: false
 }
 
+export const countNewRecipients = (currentRecipients, newRecipients) => {
+  return newRecipients.filter(contact => {
+    const email = Contact.getPrimaryEmail(contact)
+    const cozyUrl = Contact.getPrimaryCozy(contact)
+    return !currentRecipients.find(
+      r =>
+        (email && r.email && r.email === email) ||
+        (cozyUrl && r.instance && r.instance === cozyUrl)
+    )
+  }).length
+}
+
 class ShareByEmail extends Component {
   static contextTypes = {
     t: PropTypes.func.isRequired,
@@ -192,7 +204,7 @@ class ShareByEmail extends Component {
   }
 
   getSuccessMessage = () => {
-    const { documentType } = this.props
+    const { currentRecipients, documentType } = this.props
     const { recipients } = this.state
     if (recipients.length === 1) {
       const recipient = recipients[0]
@@ -227,7 +239,7 @@ class ShareByEmail extends Component {
       return [
         `${documentType}.share.shareByEmail.genericSuccess`,
         {
-          count: recipients.length
+          count: countNewRecipients(currentRecipients, recipients)
         }
       ]
     }
@@ -305,6 +317,7 @@ class ShareByEmail extends Component {
 }
 
 ShareByEmail.propTypes = {
+  currentRecipients: PropTypes.arrayOf(PropTypes.object),
   contacts: contactsResponseType.isRequired,
   groups: groupsResponseType.isRequired,
   document: PropTypes.object.isRequired,
