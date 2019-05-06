@@ -52,7 +52,6 @@ export default class Timeline extends Commons {
   }
 
   //@param { number } numOfFiles : number of file to delete
-  //@param { bool } isRemoveAll: true if all photos are supposed to be remove at the end
   async deletePhotosFromTimeline({
     numOfFiles: numOfFiles,
     screenshotPath: screenshotPath,
