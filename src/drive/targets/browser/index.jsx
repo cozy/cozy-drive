@@ -11,6 +11,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
+import manifest from 'drive/targets/manifest.webapp'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
@@ -28,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const client = new CozyClient({
     uri: cozyUrl,
     token: data.cozyToken,
+    appMetadata: {
+      slug: manifest.name,
+      version: manifest.version
+    },
     schema
   })
 
