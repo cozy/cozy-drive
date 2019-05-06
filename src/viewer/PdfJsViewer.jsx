@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Document, Page } from 'react-pdf/dist/entry.webpack'
+import { Document, Page, pdfjs } from 'react-pdf'
+import createWorker from 'react-pdf/dist/pdf.worker.entry.js'
 import cx from 'classnames'
 import throttle from 'lodash/throttle'
 import { Spinner } from 'cozy-ui/react'
@@ -8,6 +9,8 @@ import withFileUrl from './withFileUrl'
 import ToolbarButton from './PdfToolbarButton'
 import NoViewer from './NoViewer'
 import styles from './styles.styl'
+
+pdfjs.GlobalWorkerOptions.workerPort = createWorker()
 
 export const MIN_SCALE = 0.25
 export const MAX_SCALE = 3
