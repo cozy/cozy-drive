@@ -7,6 +7,8 @@ import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 import { isMobileApp, getDeviceName } from 'cozy-device-helper'
+import appMetadata from 'drive/appMetadata'
+
 export const getOauthOptions = () => {
   return {
     redirectURI: isMobileApp() ? 'cozydrive://auth' : 'http://localhost',
@@ -36,6 +38,7 @@ export const initClient = url => {
     scope: permissions,
     oauth: getOauthOptions(),
     offline: { doctypes: [DOCTYPE_FILES] },
+    appMetadata,
     schema
   })
 }

@@ -20,7 +20,7 @@ import {
 } from 'cozy-ui/react/helpers/tracker'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
-
+import appMetadata from 'photos/appMetadata'
 import doctypes from './doctypes'
 const loggerMiddleware = createLogger()
 
@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const client = new CozyClient({
     uri: cozyUrl,
     token: data.cozyToken,
+    appMetadata,
     schema: doctypes
   })
 
