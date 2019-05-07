@@ -1,5 +1,6 @@
-/* global __SENTRY_URL__, __DEVELOPMENT__, __APP_VERSION__ */
+/* global __SENTRY_URL__, __DEVELOPMENT__ */
 import Raven from 'raven-js'
+import appMetadata from 'drive/appMetadata'
 
 export const ANALYTICS_URL =
   typeof __SENTRY_URL__ === 'undefined' ? '' : __SENTRY_URL__
@@ -35,7 +36,7 @@ export const normalizeData = data => {
 export const getReporterConfiguration = () => ({
   shouldSendCallback: true,
   environment: __DEVELOPMENT__ ? 'development' : 'production',
-  release: __APP_VERSION__,
+  release: appMetadata.version,
   allowSecretKey: true,
   dataCallback: normalizeData
 })

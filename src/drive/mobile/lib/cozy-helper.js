@@ -1,4 +1,4 @@
-/* global cozy, document, __APP_VERSION__, */
+/* global cozy, document */
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient from 'cozy-client'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
@@ -14,7 +14,7 @@ export const getOauthOptions = () => {
     redirectURI: isMobileApp() ? 'cozydrive://auth' : 'http://localhost',
     softwareID: SOFTWARE_ID,
     clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
-    softwareVersion: __APP_VERSION__,
+    softwareVersion: appMetadata.version,
     clientKind: 'mobile',
     clientURI: 'https://github.com/cozy/cozy-drive/',
     logoURI:
