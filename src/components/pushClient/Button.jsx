@@ -7,6 +7,9 @@ import localforage from 'localforage'
 import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'drive/config/config.json'
 
+import { Icon } from 'cozy-ui/react'
+import DeviceIcon from 'cozy-ui/assets/icons/illus/device-laptop.svg'
+
 class ButtonClient extends Component {
   state = {
     mustShow: false
@@ -39,6 +42,9 @@ class ButtonClient extends Component {
           track('button')
         }}
       >
+        <figure>
+          <Icon width="32" height="32" icon={DeviceIcon} />
+        </figure>
         <span>{t('Nav.btn-client')}</span>
       </a>
     )
