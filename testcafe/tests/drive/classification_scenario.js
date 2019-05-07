@@ -1,4 +1,5 @@
 import { driveUser } from '../helpers/roles'
+import logger from '../helpers/logger'
 import {
   TESTCAFE_DRIVE_URL,
   SLUG,
@@ -168,7 +169,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
   //set mask only once, all screen in this test use the same mask
   await privateDrivePage.goToFolder(`${FEATURE_PREFIX}-Folder2`)
 
-  console.log('Show Action Menu & Cancel')
+  logger.info('Show Action Menu & Cancel')
   await privateDrivePage.clickOnActionMenuforElementName(FILE_PDF)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-1`,
@@ -176,7 +177,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
   })
   await t.pressKey('esc')
 
-  console.log('Show Move Moadal, and Cancel (X button)')
+  logger.info('Show Move Moadal, and Cancel (X button)')
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // move modale show up : we need a specific mask for it
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
@@ -190,7 +191,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
     withMask: maskDriveFolderWithDate
   })
   //Remove comment below when https://trello.com/c/RoNPTPZV/1692-modale-d%C3%A9placement-touch-echap-ne-ferme-pas-la-modale is fixed
-  // console.log('Show Move Moadal, and Cancel (esc)')
+  // logger.info('Show Move Moadal, and Cancel (esc)')
   // await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // // no need to screenshot again the modal
   // await t.pressKey('esc')
@@ -199,7 +200,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
   //   withMask: maskDriveFolderWithDate
   // })
 
-  console.log('Show Move Moadal, and Cancel (Cancel button)')
+  logger.info('Show Move Moadal, and Cancel (Cancel button)')
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // no need to screenshot again the modal
   await isExistingAndVisibile(

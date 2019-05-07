@@ -1,4 +1,5 @@
 import { t } from 'testcafe'
+import logger from '../../helpers/logger'
 import { isExistingAndVisibile } from '../../helpers/utils'
 import * as selectors from '../selectors'
 
@@ -7,7 +8,7 @@ export default class Viewer {
     await t.expect(selectors.spinner.exists).notOk('Spinner still spinning')
     await isExistingAndVisibile(selectors.viewerWrapper, 'Viewer Wrapper')
     await isExistingAndVisibile(selectors.viewerControls, 'Viewer Controls')
-    console.log('Viewer Ok')
+    logger.debug('Viewer Ok')
   }
 
   //@param { bool } exitWithEsc : true to exit by pressing esc, false to click on the button
@@ -61,7 +62,8 @@ export default class Viewer {
     startIndex: startIndex,
     numberOfNavigation: numberOfNavigation
   }) {
-    console.log(
+    logger.info(`↳ 📁 Check Navigation for file with index : ${startIndex}`)
+    logger.debug(
       `startIndex : ${startIndex} / numberOfNavigation : ${numberOfNavigation}`
     )
     for (let i = startIndex; i < startIndex + numberOfNavigation; i++) {
@@ -78,8 +80,6 @@ export default class Viewer {
     }
 
     for (let i = startIndex + numberOfNavigation - 1; i > startIndex; i--) {
-      console.log(` i : ${i} `)
-
       await this.navigateToPrevFile(i)
       await t.hover(selectors.btnViewerNavNext, {
         offsetX: 0,

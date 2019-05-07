@@ -1,3 +1,4 @@
+import logger from '../../helpers/logger'
 import { t } from 'testcafe'
 import { PRECISION } from '../../helpers/visualreview-utils'
 import PublicDriveVRPage from '../drive/drive-model-public'
@@ -19,7 +20,7 @@ export default class PublicViewerPage extends ViewerPage {
     withMask = false
   }) {
     const index = await publicDrivePage.getElementIndex(fileName)
-    console.log(`↳ 📁 ${fileName} with index : ${index}`)
+    logger.info(`↳ 📁 ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
 
     switch (type) {

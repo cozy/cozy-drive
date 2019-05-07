@@ -1,4 +1,5 @@
 import { t } from 'testcafe'
+import logger from '../../helpers/logger'
 import {
   getPageUrl,
   isExistingAndVisibile,
@@ -18,7 +19,7 @@ export default class Page extends PhotoPage {
     )
   }
 
-  //@param {string} when : text for console.log
+  //@param {string} when : text for logger.debug
   async getPhotosToAddCount(when) {
     await checkAllImagesExists()
     await isExistingAndVisibile(
@@ -28,7 +29,7 @@ export default class Page extends PhotoPage {
     await isExistingAndVisibile(selectors.allPhotosAddToAlbum, 'Photo item(s)')
     const allPhotosCount = await selectors.allPhotosAddToAlbum.count
 
-    console.log(
+    logger.debug(
       `Number of pictures ready to be added (${when} test):  ${allPhotosCount}`
     )
     return allPhotosCount
@@ -37,7 +38,7 @@ export default class Page extends PhotoPage {
   // @param {Number} indexStart : which photo is the 1st selected
   // @param {Number} numOfFiles : Number of photo to add (X photos from timeline)
   async selectPhotostoAdd(indexStart, numOfFiles) {
-    console.log(`Selecting ${numOfFiles} picture(s) from index ${indexStart}`)
+    logger.debug(`Selecting ${numOfFiles} picture(s) from index ${indexStart}`)
     for (let i = indexStart; i < indexStart + numOfFiles; i++) {
       await isExistingAndVisibile(
         selectors.photoThumb(i),
@@ -151,7 +152,7 @@ export default class Page extends PhotoPage {
     await this.selectPhotos(photoNumber)
     await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
 
-    console.log('Removing ' + photoNumber + ' picture(s)')
+    logger.debug('Removing ' + photoNumber + ' picture(s)')
     await isExistingAndVisibile(
       selectors.btnRemoveFromAlbumCozySelectionBar,
       'Remove from album Button'

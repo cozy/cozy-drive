@@ -1,4 +1,5 @@
 import { t } from 'testcafe'
+import logger from '../../helpers/logger'
 import { isExistingAndVisibile } from '../../helpers/utils'
 import Viewer from '../viewer/viewer-model'
 import { THUMBNAIL_DELAY } from '../../helpers/data'
@@ -22,7 +23,6 @@ export default class PhotoViewer extends Viewer {
     startIndex: startIndex,
     numberOfNavigation: numberOfNavigation
   }) {
-    console.log(`↳ 📁 photo with index : ${startIndex}`)
     await this.openPhotoFullscreen(startIndex)
     await this.navigateInViewer({
       screenshotPath: screenshotPath,
@@ -41,7 +41,7 @@ export default class PhotoViewer extends Viewer {
     screenshotPath: screenshotPath,
     withMask = false
   }) {
-    console.log(`↳ 📁 photo with index : ${index}`)
+    logger.info(`↳ 📁 Check Viewer for photo with index : ${index}`)
     await this.openPhotoFullscreen(index)
     await this.checkImageViewer()
 

@@ -1,4 +1,5 @@
 import { t } from 'testcafe'
+import logger from '../../helpers/logger'
 import {
   getPageUrl,
   isExistingAndVisibile,
@@ -6,13 +7,12 @@ import {
   getLastExecutedCommand
 } from '../../helpers/utils'
 import * as selectors from '../selectors'
-import { THUMBNAIL_DELAY } from '../../helpers/data'
 import DrivePage from './drive-model'
 
 export default class privateDrivePage extends DrivePage {
   //@param {Selector}  btn : button to tests
   //@param {text} path : redirection path
-  //@param {text} title : text for console.log
+  //@param {text} title : text for logger.debug
   async isSidebarButton(btn, path, title) {
     await isExistingAndVisibile(btn, `Button ${title}`)
     await t.expect(btn.getAttribute('href')).eql(path)
@@ -33,7 +33,7 @@ export default class privateDrivePage extends DrivePage {
 
     await t.expect(selectors.errorEmpty.exists).notOk('Error shows up')
     await t.expect(selectors.errorOops.exists).notOk('Error shows up')
-    console.log(`Navigation using Button ${title} OK!`)
+    logger.debug(`Navigation using Button ${title} OK!`)
   }
 
   async openCozyBarMenu() {
@@ -122,14 +122,13 @@ export default class privateDrivePage extends DrivePage {
     if (!t.fixtureCtx.isVR)
       rowCountStart = await this.getContentRowCount('Before Upload')
 
-    console.log(`Uploading ${numOfFiles} file(s)`)
+    logger.info(`Uploading ${numOfFiles} file(s)`)
 
     await isExistingAndVisibile(selectors.btnUpload, 'Upload Button')
     await t.setFilesToUpload(selectors.btnUpload, files)
 
     await isExistingAndVisibile(selectors.divUpload, 'Upload pop-in')
 
-    console.group('Files uploaded : ')
     for (let i = 0; i < numOfFiles; i++) {
       const fileNameChunks = files[i].split('/')
       const fileName = fileNameChunks[fileNameChunks.length - 1]
@@ -142,7 +141,6 @@ export default class privateDrivePage extends DrivePage {
         .expect(selectors.uploadedItem(fileName).getAttribute('class'))
         .contains('upload-queue-item--done')
     }
-    console.groupEnd()
 
     if (!t.fixtureCtx.isVR) {
       // When uploading one file, check for the alert wrapper. When there are lots of files to upload, it already disappear once we finish checking each line
@@ -303,7 +301,7 @@ export default class privateDrivePage extends DrivePage {
   async deleteElementByName(fileName) {
     const index = await this.getElementIndex(fileName)
 
-    console.log(`index : ${index}`)
+    logger.debug(`index : ${index}`)
     await this.deleteElementsByIndex([index])
   }
 

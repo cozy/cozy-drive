@@ -1,4 +1,5 @@
 import { t } from 'testcafe'
+import logger from '../../helpers/logger'
 import { isExistingAndVisibile } from '../../helpers/utils'
 import * as selectors from '../selectors'
 
@@ -16,15 +17,15 @@ export default class DrivePage {
         await isExistingAndVisibile(selectors.folderOrFileName, 'folder list')
       }
     }
-    console.log('Loading Ok')
+    logger.debug('Loading Ok')
   }
 
-  //@param {string} when : text for console.log
+  //@param {string} when : text for logger.debug
   async getContentRowCount(when) {
     //Count only 'real' content row, not the headers
     const contentRowsCount = await selectors.contentRows.count
 
-    console.log(
+    logger.debug(
       `Number of Content row(s) on page (${when} test):  ${contentRowsCount}`
     )
     return contentRowsCount
@@ -57,7 +58,7 @@ export default class DrivePage {
     await isExistingAndVisibile(breadcrumb.child(0), 'breadcrumb (base folder)')
     await t.click(breadcrumb.child(0))
     await this.waitForLoading()
-    console.log(`Navigation to base folder OK!`)
+    logger.info(`Navigation to base folder OK!`)
   }
 
   //@param {String} folderName
@@ -80,12 +81,12 @@ export default class DrivePage {
       const breadcrumbEnd = await this.getbreadcrumb()
       await t.expect(breadcrumbEnd).eql(`${breadcrumbStart} > ${folderName}`)
     }
-    console.log(`Navigation into ${folderName} OK!`)
+    logger.info(`Navigation into ${folderName} OK!`)
   }
 
   //@param { Array } filesIndexArray : Array of files index
   async selectElements(filesIndexArray) {
-    console.log(`Selecting ${filesIndexArray.length} elements`)
+    logger.debug(`Selecting ${filesIndexArray.length} elements`)
 
     await isExistingAndVisibile(
       selectors.contentRows.nth(filesIndexArray[0]),

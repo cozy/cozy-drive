@@ -13,6 +13,7 @@ import {
 import { initVR } from '../helpers/visualreview-utils'
 import TimelinePage from '../pages/photos/photos-timeline-model'
 import * as selectors from '../pages/selectors'
+import logger from '../helpers/logger'
 
 const timelinePage = new TimelinePage()
 
