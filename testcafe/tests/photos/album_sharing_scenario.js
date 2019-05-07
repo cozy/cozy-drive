@@ -1,4 +1,5 @@
 //import { Role } from 'testcafe'
+import logger from '../helpers/logger'
 import { photosUser } from '../helpers/roles'
 import {
   TESTCAFE_PHOTOS_URL,
@@ -73,7 +74,7 @@ test(TEST_SHARE_ALBUM, async () => {
   const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
-    console.log(`data.sharingLink : ` + data.sharingLink)
+    logger.debug(`data.sharingLink : ` + data.sharingLink)
   }
   console.groupEnd()
 })
@@ -97,7 +98,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_PHOTOS_URL}/`
     console.groupEnd()
   })
   .afterEach(async () => {
-    console.log(
+    logger.info(
       `↳ ℹ️  ${FEATURE_PREFIX} - Checking downloaded file for ${FEATURE_PREFIX.toLowerCase()}.zip`
     )
     await checkLocalFile(

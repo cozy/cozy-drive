@@ -1,4 +1,5 @@
 import { driveUser } from '../helpers/roles'
+import logger from '../helpers/logger'
 import {
   TESTCAFE_DRIVE_URL,
   setDownloadPath,
@@ -25,7 +26,7 @@ fixture`Drive : Viewer features : prepare data`
   console.groupEnd()
 })
 
-test('Dri ve : Create a $test_date_time folder in Drive', async () => {
+test('Drive : Create a $test_date_time folder in Drive', async () => {
   console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
   await drivePage.addNewFolder({ newFolderName: data.FOLDER_DATE_TIME })
   console.groupEnd()
@@ -82,7 +83,7 @@ test('Viewer : checking common features for all files (expect PDF)', async t => 
   }
 }).after(async t => {
   for (let i = 0; i < t.ctx.fileNameListNoPDF.length; i++) {
-    console.log(
+    logger.info(
       `↳ ℹ️  Viewer (Commons) - Checking downloaded files for ${
         t.ctx.fileNameListNoPDF[i]
       }`
@@ -114,7 +115,7 @@ test('Viewer : no Viewer : other Download', async t => {
   }
 }).after(async t => {
   for (let i = 0; i < t.ctx.fileNameListNoViewer.length; i++) {
-    console.log(
+    logger.info(
       `↳ ℹ️  Viewer (No-Viewer) - Checking downloaded files for ${
         t.ctx.fileNameListNoViewer[i]
       }`

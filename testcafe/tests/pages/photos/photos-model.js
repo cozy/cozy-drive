@@ -1,5 +1,6 @@
 //!FIXME Change selector (ID or react)
 import { t } from 'testcafe'
+import logger from '../../helpers/logger'
 import {
   getPageUrl,
   isExistingAndVisibile,
@@ -9,7 +10,7 @@ import * as selectors from '../selectors'
 
 export default class Page {
   async initPhotoCountZero() {
-    console.log(`Number of pictures on page (Before test): 0`)
+    logger.debug(`Number of pictures on page (Before test): 0`)
     t.ctx.totalFilesCount = 0
   }
 
@@ -26,7 +27,7 @@ export default class Page {
       .contains('albums')
   }
 
-  //@param {string} when : text for console.log
+  //@param {string} when : text for logger.debug
   async getPhotosCount(when) {
     await checkAllImagesExists()
     await isExistingAndVisibile(selectors.photoSection, 'photo Section')
@@ -34,14 +35,16 @@ export default class Page {
     await isExistingAndVisibile(selectors.allPhotos, 'Photo item(s)')
     const allPhotosCount = await selectors.allPhotos.count
 
-    console.log(`Number of pictures on page (${when} test):  ${allPhotosCount}`)
+    logger.debug(
+      `Number of pictures on page (${when} test):  ${allPhotosCount}`
+    )
 
     return allPhotosCount
   }
 
   //@param { number } numOfFiles : number of file to select
   async selectPhotos(numOfFiles) {
-    console.log('Selecting ' + numOfFiles + ' picture(s)')
+    logger.debug('Selecting ' + numOfFiles + ' picture(s)')
     await isExistingAndVisibile(selectors.photoThumb(0), '1st Photo thumb')
     await t.hover(selectors.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
 
@@ -56,7 +59,7 @@ export default class Page {
 
   //@param { [string] } NameArray: files names to select
   async selectPhotosByName(NameArray) {
-    console.log('Selecting ' + NameArray.length + ' picture(s)')
+    logger.debug('Selecting ' + NameArray.length + ' picture(s)')
     await isExistingAndVisibile(
       selectors.photoThumbByName(NameArray[0]),
       `Photo thumb for ${NameArray[0]}`

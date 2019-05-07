@@ -1,4 +1,5 @@
 //import { Role } from 'testcafe'
+import logger from '../helpers/logger'
 import { driveUser } from '../helpers/roles'
 import {
   deleteLocalFile,
@@ -50,6 +51,7 @@ test('Drive : from Drive, go in a folder, upload a file, and share the folder', 
   const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
+    logger.debug(`data.sharingLink : ` + data.sharingLink)
   }
   console.groupEnd()
 })

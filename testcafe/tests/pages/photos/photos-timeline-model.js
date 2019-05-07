@@ -1,4 +1,5 @@
 import { t } from 'testcafe'
+import logger from '../../helpers/logger'
 import { isExistingAndVisibile } from '../../helpers/utils'
 import * as selectors from '../selectors'
 import Commons from './photos-model'
@@ -13,7 +14,7 @@ export default class Timeline extends Commons {
   //@param {array of fileName} files
   async uploadPhotos(files) {
     const numOfFiles = files.length
-    console.log('Uploading ' + numOfFiles + ' picture(s)')
+    logger.debug('Uploading ' + numOfFiles + ' picture(s)')
 
     await isExistingAndVisibile(selectors.btnUpload, 'Upload Button')
     await t.setFilesToUpload(selectors.btnUpload, files)
@@ -55,7 +56,7 @@ export default class Timeline extends Commons {
   async deletePhotosFromTimeline(numOfFiles, isRemoveAll) {
     await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
 
-    console.log('Deleting ' + numOfFiles + ' picture(s)')
+    logger.debug('Deleting ' + numOfFiles + ' picture(s)')
     await isExistingAndVisibile(
       selectors.btnDeleteCozySelectionBar,
       'Delete Button'
@@ -73,7 +74,7 @@ export default class Timeline extends Commons {
     let allPhotosEndCount
     if (isRemoveAll) {
       await isExistingAndVisibile(selectors.folderEmpty, 'Folder Empty')
-      console.log(`Number of pictures on page (Before test): 0`)
+      logger.debug(`Number of pictures on page (Before test): 0`)
       allPhotosEndCount = 0
     } else {
       allPhotosEndCount = await this.getPhotosCount('After')

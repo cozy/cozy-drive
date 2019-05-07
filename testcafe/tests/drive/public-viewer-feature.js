@@ -1,4 +1,5 @@
 import { driveUser } from '../helpers/roles'
+import logger from '../helpers/logger'
 //import { Role } from 'testcafe'
 import {
   TESTCAFE_DRIVE_URL,
@@ -97,6 +98,7 @@ test(TEST_UPLOAD_AND_SHARE, async t => {
   const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
+    logger.debug(`data.sharingLink : ` + data.sharingLink)
   }
   console.groupEnd()
 })
@@ -124,7 +126,7 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
     console.groupEnd()
   })
   .afterEach(async t => {
-    console.log(
+    logger.info(
       `↳ ℹ️  ${FEATURE_PREFIX} - Checking downloaded file for ${
         t.ctx.fileDownloaded
       }`

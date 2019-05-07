@@ -1,3 +1,4 @@
+import logger from '../../helpers/logger'
 import { t } from 'testcafe'
 import { isExistingAndVisibile } from '../../helpers/utils'
 import DrivePage from '../drive/drive-model'
@@ -16,7 +17,6 @@ export default class ViewerDrive extends Viewer {
       .click(selectors.folderOrFileName.withText(fileName))
 
     await this.waitForLoading()
-    console.log(`Navigation to ${fileName} OK!`)
   }
 
   //@param {String} screenshotPath : path for screenshots taken in this test
@@ -28,7 +28,7 @@ export default class ViewerDrive extends Viewer {
     numberOfNavigation: numberOfNavigation
   }) {
     const startIndex = await drivePage.getElementIndex(fileStartName)
-    console.log(`↳ 📁 ${fileStartName} with index : ${startIndex}`)
+    logger.info(`↳ 📁 ${fileStartName} with index : ${startIndex}`)
     await this.openViewerForFile(fileStartName)
     await this.navigateInViewer({
       screenshotPath: screenshotPath,
@@ -43,10 +43,8 @@ export default class ViewerDrive extends Viewer {
   // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer, for one file
   async checkCommonViewerControls(folderName, fileName) {
     const index = await drivePage.getElementIndex(fileName)
-    console.log(`↳ 📁 ${fileName} with index : ${index}`)
+    logger.info(`↳ 📁 Check Viewer for ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)
-    await t.takeScreenshot()
-
     await this.navigateToNextFile(index)
     await this.closeViewer({
       exitWithEsc: true

@@ -1,4 +1,6 @@
 import { ClientFunction, Selector, t } from 'testcafe'
+import logger from './logger'
+
 import fs from 'fs-extra'
 import path from 'path'
 import unzipper from 'unzipper'
@@ -69,7 +71,7 @@ export async function isExistingAndVisibile(selector, selectorName) {
     .ok(`'${selectorName}' doesnt exist`)
     .expect(selector.visible)
     .ok(`'${selectorName}' is not visible`)
-  console.log(` - '${selectorName}' exists and is visible!`)
+  logger.debug(` - '${selectorName}' exists and is visible!`)
 }
 
 export function getCurrentDateTime() {
@@ -93,14 +95,14 @@ export const getLastExecutedCommand = ClientFunction(
 export async function checkLocalFile(filepath) {
   await t.wait(data.DOWNLOAD_DELAY)
   await t.expect(fs.existsSync(filepath)).ok(`${filepath} doesn't exist`)
-  console.log(`${filepath} exists on local drive`)
+  logger.debug(`${filepath} exists on local drive`)
 }
 //@param{string} filepath : Expected full path to file
 export async function deleteLocalFile(filepath) {
   fs.unlink(filepath, function(err) {
     if (err) throw err
     // if no error, file has been deleted successfully
-    console.log(`${filepath} deleted`)
+    logger.debug(`${filepath} deleted`)
   })
 }
 
@@ -136,7 +138,6 @@ export async function checkAllImagesExists() {
     )
   }
   let statuses = await Promise.all(requestPromises)
-  console.log(statuses)
   for (const status of statuses) await t.expect(status).eql(200)
 }
 
@@ -184,9 +185,9 @@ export async function extractZip(pathToZip, extractPath) {
       .createReadStream(pathToZip)
       .pipe(unzipper.Extract({ path: extractPath }))
       .promise()
-      .then(() => console.log('data unzipped'), e => console.log('error', e))
+      .then(() => logger.debug('data unzipped'), e => logger.error('error', e))
   } catch (error) {
-    console.error(
+    logger.error(
       `↳ ❌ Unable to extract app archive. Is unzipper installed as a dependency ? Error : ${
         error.message
       }`

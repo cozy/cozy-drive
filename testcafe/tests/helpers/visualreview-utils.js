@@ -1,4 +1,5 @@
 import VisualReview from 'visualreview-client'
+import logger from './logger'
 import { t } from 'testcafe'
 import { VR_STATUS_DELAY, VR_UPLOAD_DELAY } from './data'
 import {
@@ -104,11 +105,11 @@ export class VisualReviewTestcafe extends VisualReview {
       })
     ]).then(
       function() {
-        console.log(`➡️ "${screenshotPath}.png" uploaded`)
+        logger.debug(`➡️ "${screenshotPath}.png" uploaded`)
       },
       function(error) {
         //log error instead of throwing error so tests don't crash if VR server is taking too long
-        console.log(error.message)
+        logger.error(error.message)
       }
     )
   }
@@ -133,9 +134,9 @@ export class VisualReviewTestcafe extends VisualReview {
       process.env.vrErrorMsg = `${
         process.env.vrErrorMsg
       } <li>${vrMessageUrl}</li>`
-      console.log(`${vrMessageUrl}`)
+      logger.warn(`Please review screenshot(s) : ${vrMessageUrl}`)
     } else {
-      console.log(
+      logger.info(
         `✅ ${runAnalysis.analysis.projectName} : ${
           runAnalysis.analysis.suiteName
         } : Screenshots accepted`
