@@ -3,6 +3,7 @@ import React from 'react'
 import { Route, Redirect, IndexRoute } from 'react-router'
 
 import Settings from 'drive/mobile/modules/settings/Settings'
+import SelectMediaBuckets from 'drive/mobile/modules/settings/components/SelectMediaBuckets'
 import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
 import Layout from 'drive/web/modules/layout/Layout'
@@ -48,6 +49,9 @@ const AppRoute = (
       </Route>
       {__TARGET__ === 'mobile' && (
         <Route path="settings" component={Settings} />
+      )}
+      {__TARGET__ === 'mobile' && (
+        <Route path="/selectMediaBuckets" component={SelectMediaBuckets} />
       )}
       <Route path="file/:fileId" component={FileOpenerExternal} />
     </Route>

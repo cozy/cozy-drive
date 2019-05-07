@@ -4,7 +4,9 @@ import {
   BACKUP_IMAGES,
   BACKUP_CONTACTS,
   SET_ANALYTICS,
-  WIFI_ONLY
+  WIFI_ONLY,
+  ADD_MEDIA_BUCKET,
+  DEL_MEDIA_BUCKET
 } from './actions'
 
 const initialState = {
@@ -12,7 +14,8 @@ const initialState = {
   offline: false,
   analytics: false,
   backupImages: false,
-  wifiOnly: true
+  wifiOnly: true,
+  mediaBuckets: new Set(['Camera'])
 }
 
 const settings = (state = initialState, action) => {
@@ -29,6 +32,26 @@ const settings = (state = initialState, action) => {
       return { ...state, backupContacts: action.backupContacts }
     case WIFI_ONLY:
       return { ...state, wifiOnly: action.wifiOnly }
+    case ADD_MEDIA_BUCKET: {
+      const newMediaBuckets = new Set(
+        state.mediaBuckets || initialState.mediaBuckets
+      )
+      newMediaBuckets.add(action.mediaBucket)
+      return {
+        ...state,
+        mediaBuckets: newMediaBuckets
+      }
+    }
+    case DEL_MEDIA_BUCKET: {
+      const newMediaBuckets = new Set(
+        state.mediaBuckets || initialState.mediaBuckets
+      )
+      newMediaBuckets.delete(action.mediaBucket)
+      return {
+        ...state,
+        mediaBuckets: newMediaBuckets
+      }
+    }
     default:
       return state
   }
@@ -52,3 +75,5 @@ export const isOfflineCapable = state => getSetting(state, 'offline')
 export const isImagesBackupOn = state => getSetting(state, 'backupImages')
 export const isWifiOnlyOn = state => getSetting(state, 'wifiOnly')
 export const isAnalyticsOn = state => getSetting(state, 'analytics')
+export const getMediaBuckets = state =>
+  getSetting(state, 'mediaBuckets') || initialState.mediaBuckets

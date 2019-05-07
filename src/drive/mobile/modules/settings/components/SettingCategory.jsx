@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import { Button } from 'cozy-ui/react/Button'
 import Toggle from 'cozy-ui/react/Toggle'
 
@@ -6,6 +7,7 @@ import styles from '../styles.styl'
 export const ELEMENT_TEXT = 'ELEMENT_TEXT'
 export const ELEMENT_CHECKBOX = 'ELEMENT_CHECKBOX'
 export const ELEMENT_BUTTON = 'ELEMENT_BUTTON'
+export const ELEMENT_LINK = 'ELMENT_LINK'
 
 const SettingCategory = ({ title, elements }) => (
   <div className={styles['settings__category']}>
@@ -67,6 +69,9 @@ const SettingCategory = ({ title, elements }) => (
                 className={styles['settings__button']}
                 label={element.text}
               />
+            )}
+            {element.type === ELEMENT_LINK && (
+              <Link to={element.location}>{element.text}</Link>
             )}
           </div>
         )

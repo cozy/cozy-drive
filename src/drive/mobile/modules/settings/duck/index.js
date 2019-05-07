@@ -3,7 +3,9 @@ export {
   setAnalytics,
   setOffline,
   setBackupImages,
-  setWifiOnly
+  setWifiOnly,
+  addMediaBucket,
+  delMediaBucket
 } from './actions'
 
 export {
@@ -12,5 +14,6 @@ export {
   isAnalyticsOn,
   isOfflineCapable,
   isImagesBackupOn,
-  isWifiOnlyOn
+  isWifiOnlyOn,
+  getMediaBuckets
 } from './reducers'

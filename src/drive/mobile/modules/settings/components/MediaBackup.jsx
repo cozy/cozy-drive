@@ -9,8 +9,10 @@ import {
 import { setWifiOnly, isImagesBackupOn, isWifiOnlyOn } from '../duck'
 import SettingCategory, {
   ELEMENT_CHECKBOX,
-  ELEMENT_BUTTON
+  ELEMENT_BUTTON,
+  ELEMENT_LINK
 } from './SettingCategory'
+import { isAndroidApp } from 'cozy-device-helper'
 
 export const MediaBackup = ({
   t,
@@ -31,6 +33,17 @@ export const MediaBackup = ({
         id: 'backup_images_checkbox',
         checked: backupImages,
         onChange: setBackupImages
+      },
+      {
+        type: ELEMENT_LINK,
+        display: isAndroidApp(),
+        title: t('mobile.settings.media_backup.media_buckets.title'),
+        description: t(
+          'mobile.settings.media_backup.media_buckets.description'
+        ),
+        text: t('mobile.settings.media_backup.media_buckets.button'),
+        theme: 'regular',
+        location: '/selectMediaBuckets'
       },
       {
         type: ELEMENT_CHECKBOX,

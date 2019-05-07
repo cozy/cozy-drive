@@ -1,6 +1,6 @@
 import { getToken, getClientUrl } from './cozy-helper'
 import { logException } from 'drive/lib/reporter'
-import { isMobileApp } from 'cozy-device-helper'
+import { isMobileApp, isAndroidApp } from 'cozy-device-helper'
 import logger from 'lib/logger'
 
 const hasCordovaPlugin = () => {
@@ -121,16 +121,54 @@ export const uploadLibraryItem = async (
   return Promise.resolve()
 }
 
-export const getPhotos = async () => {
+export const getPhotos = async mediaBuckets => {
   const defaultReturn = []
 
   if (hasCordovaPlugin()) {
     return new Promise(resolve => {
-      window.cordova.plugins.listLibraryItems.listItems(
-        true,
-        true,
-        false, // includePictures, includeVideos, includeCloud
-        response => resolve(response.library),
+      if (isAndroidApp) {
+        window.cordova.plugins.listLibraryItems.listItems(
+          true,
+          true,
+          false, // includePictures, includeVideos, includeCloud
+          mediaBuckets,
+          response => resolve(response.library),
+          err => {
+            logger.warn(err)
+            resolve(defaultReturn)
+          }
+        )
+      } else {
+        window.cordova.plugins.listLibraryItems.listItems(
+          true,
+          true,
+          false, // includePictures, includeVideos, includeCloud
+          response => resolve(response.library),
+          err => {
+            logger.warn(err)
+            resolve(defaultReturn)
+          }
+        )
+      }
+    })
+  }
+
+  return Promise.resolve(defaultReturn)
+}
+
+export const getMediaBuckets = async () => {
+  const defaultReturn = []
+
+  if (!isAndroidApp()) {
+    return defaultReturn
+  }
+
+  if (hasCordovaPlugin()) {
+    return new Promise(resolve => {
+      window.cordova.plugins.listLibraryItems.listMediaBuckets(
+        response => {
+          resolve(response)
+        },
         err => {
           logger.warn(err)
           resolve(defaultReturn)
