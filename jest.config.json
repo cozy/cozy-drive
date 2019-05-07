@@ -21,7 +21,8 @@
   },
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "transform": {
-    "^.+\\.(js|jsx)?$": "<rootDir>/test/jestLib/babel-transformer.js"
+    "^.+\\.(js|jsx)?$": "<rootDir>/test/jestLib/babel-transformer.js",
+    "^.+\\.webapp$": "<rootDir>/test/jestLib/json-transformer.js"
   },
   "transformIgnorePatterns": ["node_modules/(?!cozy-ui)/"],
   "testMatch": ["**/(*.)(spec|test).js?(x)"],
