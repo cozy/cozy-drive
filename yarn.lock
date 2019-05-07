@@ -4493,10 +4493,10 @@ cozy-device-helper@1.7.1:
   dependencies:
     lodash "4.17.11"
 
-cozy-doctypes@1.43.0:
-  version "1.43.0"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.43.0.tgz#8ea622c86c7e16cf9aa2e2110daa51fe6b257d19"
-  integrity sha512-ue/fJAEuDvAWIF99Upp9UlbcL1Od9EX+9uGHgAQRtu+xKXJsdBUnJbwgUqYTAh9uLcubKM+nFTXHmQeoyB1jhQ==
+cozy-doctypes@1.44.1:
+  version "1.44.1"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.44.1.tgz#9e411fa89a90fbb8141a44d772f2d57cd2eed59e"
+  integrity sha512-2tLkB6L70pQAh7AcM0gfmVEejtEUWtG7snpNeqmc3ntatKWKvygeBke9n4JrJ6ZqCIY9XUw/uQ+10J+MCYmkZQ==
   dependencies:
     "@babel/runtime" "7.3.1"
     cozy-logger "1.3.1"
@@ -4623,10 +4623,10 @@ cozy-stack-client@^6.20.0:
     mime-types "2.1.20"
     qs "6.6.0"
 
-cozy-ui@19.25.1:
-  version "19.25.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.25.1.tgz#5c755fa0e31d899ed8511e36f33095b8a01c7e31"
-  integrity sha512-XHghvkLOhzlZnTj1IHRvfkKxnQVwD40sPWnV9mzcJSDDl1Q5FhfnJH3dIhwFIVpe3PcXr4DliRAOeAuVoTkzsw==
+cozy-ui@19.28.0:
+  version "19.28.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.28.0.tgz#4976638b0a11d83d200fb58deac423b587238580"
+  integrity sha512-WjcxuBw4F3m5X+ThlLtSvjNTxP+KiXXeQBCD6O12vjDb8ST8uHWe+mrns3Xd8JDuNu8Bm+6pBzoUO43tYn0erg==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -4638,10 +4638,10 @@ cozy-ui@19.25.1:
     react-hot-loader "^4.3.11"
     react-select "2.2.0"
 
-cozy-ui@19.28.0:
-  version "19.28.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.28.0.tgz#4976638b0a11d83d200fb58deac423b587238580"
-  integrity sha512-WjcxuBw4F3m5X+ThlLtSvjNTxP+KiXXeQBCD6O12vjDb8ST8uHWe+mrns3Xd8JDuNu8Bm+6pBzoUO43tYn0erg==
+cozy-ui@19.30.1:
+  version "19.30.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.30.1.tgz#8ab9a270847e025a3fb500ada43f195fcefeb448"
+  integrity sha512-UYBeOI0ElkyJjOCvBffKVIrKnhQlrawxauAv86fPngxr4PcvIBtNVXO/vYL18k5U8mrVoF/LswAVW/YLnXCrHQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
