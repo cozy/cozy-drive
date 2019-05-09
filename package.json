@@ -97,6 +97,7 @@
     "babel-preset-cozy-app": "1.2.2",
     "classnames": "2.2.6",
     "copy-text-to-clipboard": "1.0.4",
+    "cozy-authentication": "^1.13.0",
     "cozy-bar": "6.23.3",
     "cozy-ci": "0.2.0",
     "cozy-client": "6.20.0",
@@ -120,6 +121,7 @@
     "localforage": "1.7.3",
     "lodash": "4.17.11",
     "mime-types": "2.1.19",
+    "minilog": "3.1.0",
     "node-polyglot": "2.3.0",
     "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",
@@ -145,7 +147,6 @@
     "redux-thunk": "2.3.0",
     "url-polyfill": "1.1.0",
     "webpack-node-externals": "1.7.2",
-    "whatwg-fetch": "3.0.0",
-    "minilog": "3.1.0"
+    "whatwg-fetch": "3.0.0"
   }
 }
