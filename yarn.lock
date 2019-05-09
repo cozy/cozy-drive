@@ -4402,10 +4402,10 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cozy-bar@6.23.3:
-  version "6.23.3"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.23.3.tgz#fe3af088cc9cf29ca002d8d24a2d56fd6530ba4a"
-  integrity sha512-0aJdii8HWR4yxvWGP6UpPPmPhChQyjQza/10+4Z5IWnEfTA4Jp+o2iIpqkyEQ4MDtPlxIu04DtfxTZnzBjw+Pw==
+cozy-bar@6.24.4:
+  version "6.24.4"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.24.4.tgz#eae6362052cb3f9e4e8632c666802ac3a6e72929"
+  integrity sha512-1TvI55SstnkAjfRM69EKTdDk56xS/PD4RxtO46moRsupyeywD3lai9XbrOetwHxcq0XuXSpD12dwGt9bVsRIjA==
   dependencies:
     "@babel/core" "7.3.4"
     babel-core "7.0.0-bridge.0"
@@ -4415,7 +4415,7 @@ cozy-bar@6.23.3:
     cozy-harvest-lib "0.41.0"
     cozy-interapp "0.4.4"
     cozy-realtime "2.0.8"
-    cozy-ui "19.28.0"
+    cozy-ui "19.30.2"
     enzyme-to-json "3.3.5"
     hammerjs "2.0.8"
     lerna-changelog "0.8.2"
@@ -4623,10 +4623,10 @@ cozy-stack-client@^6.20.0:
     mime-types "2.1.20"
     qs "6.6.0"
 
-cozy-ui@19.28.0:
-  version "19.28.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.28.0.tgz#4976638b0a11d83d200fb58deac423b587238580"
-  integrity sha512-WjcxuBw4F3m5X+ThlLtSvjNTxP+KiXXeQBCD6O12vjDb8ST8uHWe+mrns3Xd8JDuNu8Bm+6pBzoUO43tYn0erg==
+cozy-ui@19.30.1:
+  version "19.30.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.30.1.tgz#8ab9a270847e025a3fb500ada43f195fcefeb448"
+  integrity sha512-UYBeOI0ElkyJjOCvBffKVIrKnhQlrawxauAv86fPngxr4PcvIBtNVXO/vYL18k5U8mrVoF/LswAVW/YLnXCrHQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -4638,10 +4638,10 @@ cozy-ui@19.28.0:
     react-hot-loader "^4.3.11"
     react-select "2.2.0"
 
-cozy-ui@19.30.1:
-  version "19.30.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.30.1.tgz#8ab9a270847e025a3fb500ada43f195fcefeb448"
-  integrity sha512-UYBeOI0ElkyJjOCvBffKVIrKnhQlrawxauAv86fPngxr4PcvIBtNVXO/vYL18k5U8mrVoF/LswAVW/YLnXCrHQ==
+cozy-ui@19.30.2:
+  version "19.30.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.30.2.tgz#9e10d4a687c6db0de91b386d1cc9d1ea9176341d"
+  integrity sha512-U7B2eyw1CahlmDN7JfxqSK6MVrEvLPgu0sMRZaaevLMn2ymutPxPKz3TLgmQHFSRiPgUzRdMM52ifRZt4p3uBg==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
