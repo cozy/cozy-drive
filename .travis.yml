@@ -16,14 +16,14 @@ stages:
   - build
 jobs:
   include:
-    - name: 'Lint'
-      stage: 'prebuild'
-      <<: *node
-      script: yarn lint
-    - name: 'Unit tests'
-      stage: 'prebuild'
-      <<: *node
-      script: yarn test
+    # - name: 'Lint'
+    #   stage: 'prebuild'
+    #   <<: *node
+    #   script: yarn lint
+    # - name: 'Unit tests'
+    #   stage: 'prebuild'
+    #   <<: *node
+    #   script: yarn test
     - &build-web
       name: 'Drive web'
       stage: 'build'
