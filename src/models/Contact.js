@@ -5,7 +5,10 @@ class Contact extends DoctypeContact {
     if (Contact.isContact(contactOrRecipient)) {
       return DoctypeContact.getInitials(contactOrRecipient)
     } else {
-      const s = contactOrRecipient.public_name || contactOrRecipient.name
+      const s =
+        contactOrRecipient.public_name ||
+        contactOrRecipient.name ||
+        contactOrRecipient.email
       return (s && s[0].toUpperCase()) || ''
     }
   }
