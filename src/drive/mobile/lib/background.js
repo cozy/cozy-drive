@@ -4,6 +4,8 @@ import { loadState } from 'drive/store/persistedState'
 import { startMediaBackup } from 'drive/mobile/modules/mediaBackup/duck'
 import { initClient } from './cozy-helper'
 import { logException, configureReporter } from 'drive/lib/reporter'
+import logger from 'lib/logger'
+
 import { getTranslateFunction } from './i18n'
 
 import {
@@ -73,13 +75,13 @@ export const disableBackgroundService = async () => {
 
 const notCompatibleError = () => {
   const msg = 'Background Service is not compatible with your platform.'
-  console.warn(msg)
+  logger.warn(msg)
   if (isMobileApp()) {
-    console.log(getPlatform())
+    logger.log(getPlatform())
     if (isIOSApp()) {
-      console.log(window.BackgroundFetch)
+      logger.log(window.BackgroundFetch)
     } else if (isAndroidApp()) {
-      console.log(window.JSBackgroundService)
+      logger.log(window.JSBackgroundService)
     }
   }
   logException(msg)
@@ -89,7 +91,7 @@ const notCompatibleError = () => {
 
 const backgroundService = () =>
   new Promise(resolve => {
-    console.log('BackgroundFetch initiated')
+    logger.log('BackgroundFetch initiated')
 
     loadState()
       .then(persistedState => {
@@ -118,7 +120,7 @@ const enableAndroidBackgroundService = async () => {
     const repeatingPeriod = 60 * 60 * 1000
     window.JSBackgroundService.setRepeating(repeatingPeriod, err => {
       if (err) {
-        console.warn(err)
+        logger.warn(err)
         logException('enableAndroidBackgroundService error')
       }
     })
@@ -130,7 +132,7 @@ const disableAndroidBackgroundService = async () => {
   if (isEnable) {
     window.JSBackgroundService.cancelRepeating(err => {
       if (err) {
-        console.warn(err)
+        logger.warn(err)
         logException('disableAndroidBackgroundService error')
       }
     })
@@ -151,7 +153,7 @@ const isEnableAndroidBackgroundService = () =>
   new Promise(resolve => {
     window.JSBackgroundService.isRepeating((err, isSet) => {
       if (err) {
-        console.warn(err)
+        logger.warn(err)
         logException('isEnableAndroidBackgroundService error')
         resolve(false)
       }
@@ -169,7 +171,7 @@ const enableIosBackgroundService = () => {
   const fetcher = window.BackgroundFetch
 
   const failureCallback = error => {
-    console.log('BackgroundFetch failed', error)
+    logger.log('BackgroundFetch failed', error)
   }
 
   const options = {

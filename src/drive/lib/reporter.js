@@ -1,6 +1,7 @@
 /* global __SENTRY_URL__, __DEVELOPMENT__ */
 import Raven from 'raven-js'
 import appMetadata from 'drive/appMetadata'
+import logger from 'lib/logger'
 
 export const ANALYTICS_URL =
   typeof __SENTRY_URL__ === 'undefined' ? '' : __SENTRY_URL__
@@ -49,9 +50,9 @@ export const logException = (err, extraContext = null, fingerprint = null) => {
   return new Promise(resolve => {
     Raven.captureException(err, { extra: extraContext, fingerprint })
     // eslint-disable-next-line no-console
-    console.warn('Raven is recording exception')
+    logger.warn('Raven is recording exception')
     // eslint-disable-next-line no-console
-    console.error(err)
+    logger.error(err)
     resolve()
   })
 }

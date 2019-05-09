@@ -1,4 +1,6 @@
 /* global cozy emit */
+import logger from 'lib/logger'
+
 import { ROOT_DIR_ID } from '../../constants/config.js'
 
 const clientRevokedMsg = 'Client has been revoked'
@@ -17,10 +19,10 @@ export const startReplication = async (
     if (!hasFinishedFirstReplication) {
       await startFirstReplication()
       // eslint-disable-next-line no-console
-      console.log('End of first replication, warming up indexes')
+      logger.log('End of first replication, warming up indexes')
       await warmUpIndexes(indexes)
       // eslint-disable-next-line no-console
-      console.log('indexes ready')
+      logger.log('indexes ready')
       firstReplicationFinished()
     }
 
@@ -40,14 +42,14 @@ export const startReplication = async (
       err.error === 'code=400, message=Invalid JWT token'
     ) {
       // eslint-disable-next-line no-console
-      console.warn('The device is not connected to your server anymore')
+      logger.warn('The device is not connected to your server anymore')
       revokeClient()
     } else if (err.message === 'ETIMEDOUT') {
       // eslint-disable-next-line no-console
-      console.log('replication timed out')
+      logger.log('replication timed out')
     } else {
       // eslint-disable-next-line no-console
-      console.warn(err)
+      logger.warn(err)
     }
   }
 }
@@ -134,7 +136,7 @@ const startRepeatedReplication = ({ afterReplication }) => {
     const options = {
       onError: error => {
         // eslint-disable-next-line no-console
-        console.warn(error)
+        logger.warn(error)
         reject(error)
       },
       onComplete: result => {

@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
+import logger from 'lib/logger'
 
 import { withBreakpoints, Menu, MenuItem, Icon } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
@@ -187,7 +188,7 @@ class PublicToolbar extends React.Component {
       this.setState({ discoveryLink: link })
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.warn('Failed to load sharing discovery link', err)
+      logger.warn('Failed to load sharing discovery link', err)
     }
   }
 

@@ -8,6 +8,7 @@ import { getVisibleFiles } from 'drive/web/modules/navigation/duck'
 import { META_DEFAULTS as meta } from 'drive/web/modules/navigation/duck/actions'
 import { extractFileAttributes } from 'drive/web/modules/navigation/duck/async'
 
+import logger from 'lib/logger'
 // constants
 
 const START_RENAMING = 'START_RENAMING'
@@ -76,6 +77,6 @@ export const rename = () => async (dispatch, getState) => {
     dispatch(renamed(extractFileAttributes(updated)))
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.warn(e)
+    logger.warn(e)
   }
 }

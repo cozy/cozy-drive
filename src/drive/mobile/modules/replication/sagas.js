@@ -24,7 +24,7 @@ import {
 
 export const startReplication = () => async (dispatch, getState) => {
   // eslint-disable-next-line no-console
-  console.info('Starting replication...')
+  logger.info('Starting replication...')
 
   const firstReplication = isFirstReplicationDone(getState())
   const existingIndexes = getPouchIndexes(getState())

@@ -23,7 +23,7 @@ export const getEntry = path =>
   new Promise((resolve, reject) => {
     window.resolveLocalFileSystemURL(path, resolve, err => {
       // eslint-disable-next-line
-      console.error(`${path} could not be resolved: ${err.message}`)
+      logger.error(`${path} could not be resolved: ${err.message}`)
       reject(err)
     })
   })
@@ -42,9 +42,9 @@ export const getDirectory = (rootDirEntry, folderName) =>
   new Promise((resolve, reject) => {
     rootDirEntry.getDirectory(folderName, { create: true }, resolve, error => {
       // eslint-disable-next-line
-      console.warn(ERROR_GET_DIRECTORY, folderName)
+      logger.warn(ERROR_GET_DIRECTORY, folderName)
       // eslint-disable-next-line
-      console.warn(error)
+      logger.warn(error)
       reject(ERROR_GET_DIRECTORY)
     })
   })
@@ -57,9 +57,9 @@ export const writeFile = (fileEntry, dataObj) =>
       }
       fileWriter.onerror = error => {
         // eslint-disable-next-line
-        console.warn(ERROR_WRITE_FILE)
+        logger.warn(ERROR_WRITE_FILE)
         // eslint-disable-next-line
-        console.warn(error)
+        logger.warn(error)
         reject(ERROR_WRITE_FILE)
       }
       fileWriter.write(dataObj)
@@ -80,9 +80,9 @@ const saveFile = (dirEntry, fileData, fileName) =>
       },
       error => {
         // eslint-disable-next-line
-        console.warn(ERROR_GET_FILE)
+        logger.warn(ERROR_GET_FILE)
         // eslint-disable-next-line
-        console.warn(error)
+        logger.warn(error)
         reject(ERROR_GET_FILE)
       }
     )

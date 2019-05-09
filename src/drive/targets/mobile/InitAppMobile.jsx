@@ -152,7 +152,7 @@ class InitAppMobile {
     if (window.plugins && window.plugins.intentShim) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store))
       window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
-        console.error('Error getting launch intent', err)
+        logger.error('Error getting launch intent', err)
       })
     }
 
@@ -215,10 +215,10 @@ class InitAppMobile {
       await store.dispatch(startReplication())
     } catch (e) {
       // eslint-disable no-console
-      console.warn(e)
+      logger.warn(e)
       if (isClientRevoked(e, store.getState())) {
         // eslint-disable no-console
-        console.warn('Your device is not connected to your server anymore')
+        logger.warn('Your device is not connected to your server anymore')
         store.dispatch(revokeClient())
         resetClient(client)
       } else if (getServerUrl(store.getState())) {

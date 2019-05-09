@@ -2,6 +2,7 @@ import { getEntry } from './filesystem'
 import Alerter from 'cozy-ui/react/Alerter'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
+import logger from 'lib/logger'
 
 const getFile = (dirEntry, type = '') =>
   new Promise(resolve => {
@@ -36,7 +37,7 @@ const resolveNativePath = path =>
   new Promise((resolve, reject) => {
     window.FilePath.resolveNativePath(path, resolve, err => {
       // eslint-disable-next-line no-console
-      console.error(
+      logger.error(
         `${path} could not be resolved by the plugin: ${err.message}`
       )
       reject(err)
@@ -53,7 +54,7 @@ const getFiles = contentFiles =>
       } catch (err) {
         try {
           // eslint-disable-next-line no-console
-          console.warn(
+          logger.warn(
             `Unable to get files with their real filename, let's try another way: ${
               err.message
             }`
@@ -63,7 +64,7 @@ const getFiles = contentFiles =>
           return file
         } catch (err) {
           // eslint-disable-next-line no-console
-          console.error(err)
+          logger.error(err)
           throw new Error(`Unable to get files: ${err.message}`)
         }
       }

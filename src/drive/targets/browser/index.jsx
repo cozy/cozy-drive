@@ -15,9 +15,12 @@ import appMetadata from 'drive/appMetadata'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
+import logger from 'lib/logger'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
 document.addEventListener('DOMContentLoaded', () => {
+  logger.log('**********************************')
+
   const root = document.querySelector('[role=application]')
   const data = root.dataset
 

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import logger from 'lib/logger'
 
 import Alerter from 'cozy-ui/react/Alerter'
 
@@ -69,7 +70,7 @@ const processNextFile = callback => async (dispatch, getState) => {
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log(error)
+    logger.log(error)
     dispatch({
       type: RECEIVE_UPLOAD_ERROR,
       file,

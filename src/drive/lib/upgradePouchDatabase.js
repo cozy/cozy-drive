@@ -1,4 +1,5 @@
 /* global cozy */
+import logger from 'lib/logger'
 
 export const upgradePouchDatabase = async dbName => {
   const db = cozy.client.offline.getDatabase(dbName)
@@ -12,7 +13,7 @@ export const upgradePouchDatabase = async dbName => {
       return true
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.warn(err)
+      logger.warn(err)
       return false
     }
   } else {
