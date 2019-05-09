@@ -54,7 +54,7 @@ const EditableSharingModal = ({
   )
 }
 
-EditableSharingModal.PropTypes = {
+EditableSharingModal.propTypes = {
   client: PropTypes.object.isRequired,
   document: PropTypes.object,
   contacts: contactsResponseType.isRequired,
