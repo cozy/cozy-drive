@@ -24,7 +24,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     className={className}
     style={styles.parent}
   >
-    <span className="u-flex u-flex-items-center">
+    <span>
       <Icon icon="upload" />
       <span>{label}</span>
       <input

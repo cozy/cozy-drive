@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styles from './picker.styl'
 
 const OriginHint = ({ title, icon }, { t }) => (
@@ -13,9 +12,5 @@ const OriginHint = ({ title, icon }, { t }) => (
     </div>
   </div>
 )
-
-OriginHint.contextTypes = {
-  t: PropTypes.func.isRequired
-}
 
 export default OriginHint

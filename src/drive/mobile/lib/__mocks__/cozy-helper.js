@@ -9,6 +9,7 @@ const mock = {
     getStackClient: jest.fn(() => mockStackClient)
   })),
   initBar: jest.fn(),
+  updateBarAccessToken: jest.fn(),
   restoreCozyClientJs: jest.fn(),
   resetClient: jest.fn(),
   getOauthOptions: jest.fn(),

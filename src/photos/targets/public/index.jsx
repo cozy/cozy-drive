@@ -10,11 +10,8 @@ import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import getSharedDocument from 'sharing/getSharedDocument'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
-import { IconSprite } from 'cozy-ui/transpiled/react'
 
-import appMetadata from 'photos/appMetadata'
 import doctypes from '../browser/doctypes'
-import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main.styl'
 
 import App from './App'
@@ -33,7 +30,6 @@ async function init() {
   const client = new CozyClient({
     uri: cozyUrl,
     token: sharecode,
-    appMetadata,
     schema: doctypes
   })
 
@@ -46,7 +42,6 @@ async function init() {
     cozy.bar.init({
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
-      cozyClient: client,
       iconPath: data.cozyIconPath,
       lang: data.cozyLocale,
       replaceTitleOnMobile: true
@@ -79,10 +74,7 @@ async function init() {
   } finally {
     render(
       <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
-        <>
-          {app}
-          <IconSprite />
-        </>
+        {app}
       </I18n>,
       root
     )

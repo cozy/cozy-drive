@@ -1,7 +1,6 @@
 /* global cozy */
 
 import 'whatwg-fetch'
-import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import React from 'react'
 import { render } from 'react-dom'
@@ -9,7 +8,6 @@ import IntentHandler from 'drive/web/modules/services'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
-import appMetadata from 'drive/appMetadata'
 import { schema } from 'drive/lib/doctypes'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const client = new CozyClient({
     uri: cozyUrl,
     token: data.cozyToken,
-    appMetadata,
     schema
   })
 

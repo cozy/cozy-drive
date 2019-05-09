@@ -1,17 +1,77 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import get from 'lodash/get'
 
 import { Button, Icon } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
 import SelectBox, { components } from 'cozy-ui/react/SelectBox'
+import ShareAutosuggest from './ShareAutosuggest'
+import { getPrimaryEmail } from '..'
+import { renewAuthorization } from 'drive/mobile/modules/authorization/sagas'
 import palette from 'cozy-ui/react/palette'
 
-import { Contact, Group } from 'models'
-import { contactsResponseType, groupsResponseType } from 'sharing/propTypes'
-import ShareRecipientsInput from 'sharing/components/ShareRecipientsInput'
-import styles from 'sharing/share.styl'
+import styles from '../share.styl'
+
+const ShareRecipientsInput = props => (
+  <div>
+    <label className={styles['coz-form-label']} htmlFor="email">
+      {props.label}
+    </label>
+    <ShareAutosuggest
+      contacts={props.contacts}
+      recipients={props.recipients}
+      onFocus={props.onFocus}
+      onPick={props.onPick}
+      onRemove={props.onRemove}
+      placeholder={props.placeholder}
+    />
+  </div>
+)
+
+ShareRecipientsInput.propTypes = {
+  label: PropTypes.string,
+  contacts: PropTypes.array,
+  recipients: PropTypes.array,
+  onFocus: PropTypes.func.isRequired,
+  onPick: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
+}
+
+ShareRecipientsInput.defaultProps = {
+  label: 'To:',
+  contacts: [],
+  recipients: []
+}
+
+const RequestPermissionPopin = ({ onClose, onAccept }, { t }) => (
+  <div className={styles['permission-required-popin']}>
+    <Button
+      theme="close"
+      className={styles['permission-required-popin-close']}
+      onClick={onClose}
+      extension="narrow"
+      iconOnly
+      label={t('SelectionBar.close')}
+    >
+      <Icon icon="cross" width="14" height="14" color="coolGrey" />
+    </Button>
+
+    <h4>{t('Share.contacts.permissionRequired.title')}</h4>
+    <p>{t('Share.contacts.permissionRequired.desc')}</p>
+    <Button
+      className={styles['permission-required-popin-accept']}
+      label={t('Share.contacts.permissionRequired.action')}
+      onClick={onAccept}
+    />
+  </div>
+)
+
+RequestPermissionPopin.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onAccept: PropTypes.func.isRequired
+}
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
@@ -20,14 +80,13 @@ const DropdownIndicator = props => (
 )
 const Option = props => (
   <components.Option {...props}>
-    <div className={cx(styles['select-option'])}>
-      {props.isSelected && (
-        <Icon icon="check-circleless" color={palette.dodgerBlue} />
-      )}
-      <div>
-        <div className={styles['select-option-label']}>{props.label}</div>
-        <div className={styles['select-option-desc']}>{props.data.desc}</div>
-      </div>
+    <div
+      className={cx(styles['select-option'], {
+        [styles['select-option--selected']]: props.isSelected
+      })}
+    >
+      <div className={styles['select-option-label']}>{props.label}</div>
+      <div className={styles['select-option-desc']}>{props.data.desc}</div>
     </div>
   </components.Option>
 )
@@ -70,7 +129,6 @@ ShareTypeSelect.propTypes = {
 }
 
 ShareTypeSelect.defaultProps = {
-  // eslint-disable-next-line no-console
   onChange: console.log,
   value: ''
 }
@@ -99,10 +157,6 @@ ShareSubmit.defaultProps = {
 }
 
 class ShareByEmail extends Component {
-  static contextTypes = {
-    t: PropTypes.func.isRequired,
-    client: PropTypes.object.isRequired
-  }
   sharingTypes = [
     {
       value: 'two-way',
@@ -121,13 +175,24 @@ class ShareByEmail extends Component {
   initialState = {
     recipients: [],
     sharingType: 'two-way',
-    loading: false
+    loading: false,
+    showPermissionPopin: false,
+    hasPopinBeenShowed: false
   }
 
   state = { ...this.initialState }
 
   reset = () => {
     this.setState({ ...this.initialState })
+  }
+
+  onInputFocus = () => {
+    if (
+      this.props.needsContactsPermission === true &&
+      !this.state.hasPopinBeenShowed
+    ) {
+      this.setState(state => ({ ...state, showPermissionPopin: true }))
+    }
   }
 
   onChange = value => {
@@ -150,34 +215,13 @@ class ShareByEmail extends Component {
   }
 
   onRecipientPick = recipient => {
-    let contactsToAdd
-    if (recipient._type === Group.doctype) {
-      const groupId = recipient.id
-      contactsToAdd = this.props.contacts.data.filter(contact => {
-        const contactGroupIds = get(
-          contact,
-          'relationships.groups.data',
-          []
-        ).map(group => group._id)
-
-        return contactGroupIds.includes(groupId)
-      })
-    } else {
-      contactsToAdd = [recipient]
+    const existing = this.state.recipients.find(r => r === recipient)
+    if (!existing) {
+      this.setState(state => ({
+        ...state,
+        recipients: [...state.recipients, recipient]
+      }))
     }
-
-    const filtered = contactsToAdd
-      .filter(
-        contact =>
-          (contact.email && contact.email.length > 0) ||
-          (contact.cozy && contact.cozy.length > 0)
-      )
-      .filter(contact => !this.state.recipients.find(r => r === contact))
-
-    this.setState(state => ({
-      ...state,
-      recipients: [...state.recipients, ...filtered]
-    }))
   }
 
   onRecipientRemove = recipient => {
@@ -209,7 +253,7 @@ class ShareByEmail extends Component {
         recipient =>
           recipient.id
             ? recipient
-            : createContact({
+            : createContact('io.cozy.contacts', {
                 email: [{ address: recipient.email, primary: true }]
               }).then(resp => resp.data)
       )
@@ -221,7 +265,7 @@ class ShareByEmail extends Component {
         if (recipients.length === 1) {
           Alerter.success(`${documentType}.share.shareByEmail.success`, {
             email: recipients[0].id
-              ? Contact.getPrimaryEmail(recipients[0])
+              ? getPrimaryEmail(recipients[0])
               : recipients[0].email
           })
         } else {
@@ -238,10 +282,28 @@ class ShareByEmail extends Component {
       })
   }
 
+  closePermissionPopin = () => {
+    this.setState(state => ({
+      ...state,
+      showPermissionPopin: false,
+      hasPopinBeenShowed: true
+    }))
+  }
+
+  onPermissionRequire = async () => {
+    try {
+      await this.props.renewAuthorization(this.context.client)
+      this.closePermissionPopin()
+      Alerter.success('Share.contacts.permissionRequired.success')
+    } catch (e) {
+      Alerter.error('Error.generic')
+    }
+  }
+
   render() {
     const { t } = this.context
-    const { contacts, documentType, groups } = this.props
-    const { recipients } = this.state
+    const { contacts, documentType } = this.props
+    const { recipients, showPermissionPopin } = this.state
 
     return (
       <div className={styles['coz-form-group']}>
@@ -257,10 +319,15 @@ class ShareByEmail extends Component {
             onPick={recipient => this.onRecipientPick(recipient)}
             onRemove={recipient => this.onRecipientRemove(recipient)}
             contacts={contacts}
-            groups={groups}
             recipients={recipients}
           />
         </div>
+        {showPermissionPopin && (
+          <RequestPermissionPopin
+            onClose={this.closePermissionPopin}
+            onAccept={this.onPermissionRequire}
+          />
+        )}
         <div className={styles['share-type-control']}>
           <ShareTypeSelect
             options={this.sharingTypes}
@@ -279,13 +346,23 @@ class ShareByEmail extends Component {
 }
 
 ShareByEmail.propTypes = {
-  contacts: contactsResponseType.isRequired,
-  groups: groupsResponseType.isRequired,
+  contacts: PropTypes.array,
   document: PropTypes.object.isRequired,
   documentType: PropTypes.string.isRequired,
   sharingDesc: PropTypes.string.isRequired,
   onShare: PropTypes.func.isRequired,
-  createContact: PropTypes.func.isRequired
+  createContact: PropTypes.func.isRequired,
+  needsContactsPermission: PropTypes.bool,
+  renewAuthorization: PropTypes.func.isRequired
 }
 
-export default ShareByEmail
+ShareByEmail.defaultProps = {
+  contacts: []
+}
+
+export default connect(
+  null,
+  dispatch => ({
+    renewAuthorization: client => dispatch(renewAuthorization(client))
+  })
+)(ShareByEmail)

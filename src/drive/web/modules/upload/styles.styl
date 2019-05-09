@@ -4,6 +4,7 @@
 @require 'settings/breakpoints.styl'
 @require 'settings/z-index.styl'
 
+@import '~drive/styles/mimetypes'
 
 .upload-queue
     @extend $popover
@@ -96,12 +97,27 @@ progress.upload-queue-progress::-moz-progress-bar
     max-width       'calc(100vw - %s)' % 13.75rem
     border-bottom   .0625rem solid silver
 
+    .item-cell
+        box-sizing  border-box
+        padding     .9375rem 2rem
+        font-size   .875rem
+
+    .item-cell.item-file
+        padding-left   3.75rem
+        font-size      1rem
+        line-height    1.3
+        white-space    nowrap
+        overflow       hidden
+        text-overflow  ellipsis
+        color          charcoalGrey
+
     .item-file
         flex        0 0 85%
         user-select none
-        box-sizing  border-box
-        color          charcoalGrey
-        overflow hidden
+        background-position .9375rem center
+        background-repeat no-repeat
+
+    mime-types('item-type-', '../../../assets/icons/')
 
     .item-ext
         color coolGrey
@@ -116,6 +132,27 @@ progress.upload-queue-progress::-moz-progress-bar
         font-size      .75rem
         font-weight    bold
         line-height    2rem
+
+    .item-loading
+        @extend $icon-16
+        @extend $icon-spinner-blue
+
+    .item-canceled
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-cross.svg')
+
+    .item-failed,
+    .item-conflict,
+    .item-network
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-warning.svg')
+
+    .item-loaded
+        @extend $icon-16
+        @extend $icon
+        background-image embedurl('./assets/icons/icon-checked.svg')
 
 +medium-screen()
     // we need to cover the border-bottom of the cozy-bar

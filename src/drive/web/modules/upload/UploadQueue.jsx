@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
-import { Icon, Spinner } from 'cozy-ui/transpiled/react'
-import palette from 'cozy-ui/stylus/settings/palette.json'
-import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
+import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
-import styles from './styles.styl'
+import styles from './styles'
 import {
   getUploadQueue,
   getProcessed,
@@ -22,6 +20,16 @@ const splitFilename = filename => {
   }
 }
 
+const getFileTypeClass = (file, isDirectory) => {
+  if (isDirectory) {
+    return styles['item-type-folder']
+  }
+  return styles[
+    'item-type-' +
+      (getFileMimetype(styles, 'item-type-')(file.type, file.name) || 'files')
+  ]
+}
+
 const Pending = translate()(props => (
   <span className={styles['item-pending']}>
     {props.t('UploadQueue.item.pending')}
@@ -30,37 +38,6 @@ const Pending = translate()(props => (
 
 const Item = translate()(({ file, status, isDirectory }) => {
   const { filename, extension } = splitFilename(file.name)
-  let statusIcon
-  switch (status) {
-    case 'loading':
-      statusIcon = <Spinner class="u-ml-half" color={palette['dodgerBlue']} />
-      break
-    case 'cancel':
-      statusIcon = (
-        <Icon class="u-ml-half" icon="cross" color={palette['monza']} />
-      )
-      break
-    case 'failed':
-    case 'conflict':
-    case 'network':
-      statusIcon = (
-        <Icon class="u-ml-half" icon="warning" color={palette['monza']} />
-      )
-      break
-    case 'loaded':
-      statusIcon = (
-        <Icon
-          class="u-ml-half"
-          icon="check-circleless"
-          color={palette['emerald']}
-        />
-      )
-      break
-    case 'pending':
-    default:
-      statusIcon = <Pending />
-      break
-  }
   return (
     <div
       data-test-id="upload-queue-item"
@@ -72,23 +49,23 @@ const Item = translate()(({ file, status, isDirectory }) => {
     >
       <div
         className={classNames(
+          styles['item-cell'],
           styles['item-file'],
-          'u-flex',
-          'u-flex-items-center',
-          'u-p-1'
+          getFileTypeClass(file, isDirectory)
         )}
       >
-        <Icon
-          icon={getMimeTypeIcon(isDirectory, file.name, file.type)}
-          size={32}
-          className="u-flex-shrink-0 u-mr-1"
-        />
-        <div data-test-id="upload-queue-item-name" className="u-ellipsis">
+        <div data-test-id="upload-queue-item-name">
           {filename}
           {extension && <span className={styles['item-ext']}>{extension}</span>}
         </div>
       </div>
-      <div className={styles['item-status']}>{statusIcon}</div>
+      <div className={styles['item-status']}>
+        {status === 'pending' ? (
+          <Pending />
+        ) : (
+          <div className={styles[`item-${status}`]} />
+        )}
+      </div>
     </div>
   )
 })

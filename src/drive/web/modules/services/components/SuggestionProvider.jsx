@@ -95,10 +95,6 @@ class SuggestionProvider extends React.Component {
       resolve()
     })
   }
-
-  render() {
-    return null
-  }
 }
 
 const iconsContext = require.context(

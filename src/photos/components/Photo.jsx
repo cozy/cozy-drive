@@ -1,4 +1,4 @@
-import styles from '../styles/photoList.styl'
+import styles from '../styles/photoList'
 
 import React from 'react'
 import classNames from 'classnames'
@@ -41,11 +41,11 @@ const Photo = props => {
           className={styles['pho-photo-select']}
           data-input="checkbox"
           onClick={e => {
-            e.stopPropagation()
+            e.stopImmediatePropagation()
             onToggle(photo, selected)
           }}
         >
-          <input type="checkbox" checked={selected} onChange={() => {}} />
+          <input type="checkbox" checked={selected} />
           <label />
         </span>
         <Link
@@ -59,7 +59,6 @@ const Photo = props => {
             size="small"
             render={src => (
               <img
-                data-test-id="pho-photo-item"
                 src={src}
                 className={styles['pho-photo-item']}
                 style={style}

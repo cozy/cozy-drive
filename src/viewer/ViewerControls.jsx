@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import Hammer from 'hammerjs'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
+
 import { translate } from 'cozy-ui/react/I18n'
 import { Button } from 'cozy-ui/react/Button'
 
-import styles from './styles.styl'
+import styles from './styles'
 
 const ACTIONS_HIDE_DELAY = 3000
 
@@ -16,27 +16,17 @@ class ViewerControls extends Component {
     gestures: null
   }
 
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
-
-  _mounted = false
-
   showControls = () => {
-    if (this._mounted) {
-      this.setState({ hidden: false })
-      this.hideAfterDelay()
-      document.removeEventListener('mousemove', this.showControls)
-      document.addEventListener('mousemove', this.hideAfterDelay)
-    }
+    this.setState({ hidden: false })
+    this.hideAfterDelay()
+    document.removeEventListener('mousemove', this.showControls)
+    document.addEventListener('mousemove', this.hideAfterDelay)
   }
 
   hideControls = () => {
-    if (this._mounted) {
-      this.setState({ hidden: true })
-      document.removeEventListener('mousemove', this.hideAfterDelay)
-      document.addEventListener('mousemove', this.showControls)
-    }
+    this.setState({ hidden: true })
+    document.removeEventListener('mousemove', this.hideAfterDelay)
+    document.addEventListener('mousemove', this.showControls)
   }
 
   onTap = () => {
@@ -57,19 +47,15 @@ class ViewerControls extends Component {
   }
 
   componentDidMount() {
-    this._mounted = true
-    clearTimeout(this.hideTimeout)
     this.hideAfterDelay()
     //eslint-disable-next-line react/no-find-dom-node
-    const gestures = new Hammer(ReactDOM.findDOMNode(this.wrapped))
+    const gestures = new Hammer(React.findDOMNode(this.wrapped))
     gestures.on('swipe', this.onSwipe)
     gestures.on('tap', this.onTap)
     this.setState({ gestures })
   }
 
   componentWillUnmount() {
-    this._mounted = false
-    clearTimeout(this.hideTimeout)
     if (this.state.gestures) this.state.gestures.destroy()
   }
 
@@ -90,6 +76,8 @@ class ViewerControls extends Component {
     } = this.props
     const { hidden } = this.state
     const { client } = this.context
+
+    const isPDF = currentFile.class === 'pdf'
 
     return (
       <div
@@ -113,18 +101,25 @@ class ViewerControls extends Component {
             onMouseEnter={this.showControls}
             onMouseLeave={this.hideControls}
           >
-            <div className={classNames(styles['pho-viewer-toolbar-actions'])}>
-              {!isMobile && (
-                <Button
-                  data-test-id="viewer-toolbar-download"
-                  onClick={() => {
-                    client.collection('io.cozy.files').download(currentFile)
-                  }}
-                  icon="download"
-                  label={t('Viewer.actions.download')}
-                  subtle
-                />
+            <div
+              className={classNames(
+                styles['coz-selectionbar'],
+                styles['pho-viewer-toolbar-actions']
               )}
+            >
+              {!isPDF &&
+                !isMobile && (
+                  <Button
+                    data-test-id="viewer-toolbar-download"
+                    theme="secondary"
+                    onClick={() => {
+                      client.collection('io.cozy.files').download(currentFile)
+                    }}
+                    icon="download"
+                    label={t('Viewer.actions.download')}
+                    subtle
+                  />
+                )}
             </div>
             {onClose && (
               <div
@@ -192,7 +187,7 @@ class ViewerControls extends Component {
 
   renderChildren(children) {
     if (!children) return null
-    return React.cloneElement(children, {
+    return React.cloneElement(children[0], {
       gestures: this.state.gestures,
       gesturesRef: this.wrapped,
       onSwipe: this.onSwipe

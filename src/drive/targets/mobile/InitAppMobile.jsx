@@ -1,5 +1,8 @@
 /* global __DEVELOPMENT__ */
 
+import 'drive/styles/main'
+import 'drive/styles/mobile'
+
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
@@ -31,6 +34,7 @@ import {
   getLang,
   initClient,
   initBar,
+  updateBarAccessToken,
   restoreCozyClientJs,
   resetClient,
   getOauthOptions,
@@ -200,18 +204,18 @@ class InitAppMobile {
       realOauthOptions =
         clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
       const token = getToken(store.getState())
-
       const stackClient = client.getStackClient()
 
       stackClient.setOAuthOptions(realOauthOptions)
       stackClient.setCredentials(token)
       restoreCozyClientJs(client.options.uri, realOauthOptions, token)
       stackClient.onTokenRefresh = token => {
+        updateBarAccessToken(token.accessToken)
         restoreCozyClientJs(client.options.uri, realOauthOptions, token)
         store.dispatch(setToken(token))
       }
       //In order to check if the token is good
-      await stackClient.fetchJSON('GET', '/apps/settings')
+      await stackClient.fetchJSON('GET', '/settings/disk-usage')
       shouldInitBar = true
       await store.dispatch(startReplication())
     } catch (e) {

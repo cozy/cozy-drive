@@ -4,7 +4,6 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 
-import 'cozy-ui/transpiled/react/stylesheet.css'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
@@ -17,9 +16,8 @@ import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'sharing/getSharedDocument'
-import appMetadata from 'drive/appMetadata'
 
-const initCozyBar = (data, client) => {
+const initCozyBar = data => {
   if (
     data.cozyAppName &&
     data.cozyAppEditor &&
@@ -29,7 +27,6 @@ const initCozyBar = (data, client) => {
     cozy.bar.init({
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
-      cozyClient: client,
       iconPath: data.cozyIconPath,
       lang: data.cozyLocale,
       replaceTitleOnMobile: true,
@@ -58,7 +55,6 @@ const init = async () => {
   const client = new CozyClient({
     uri: cozyUrl,
     token: sharecode,
-    appMetadata,
     schema
   })
   configureReporter()
@@ -103,9 +99,8 @@ const init = async () => {
       root
     )
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.warn(e)
-    initCozyBar(dataset, client)
+    initCozyBar(dataset)
     renderError(lang, root)
   }
 }

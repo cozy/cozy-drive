@@ -34,9 +34,7 @@ Footer.propTypes = {
   currentDirId: PropTypes.string.isRequired,
   isMoving: PropTypes.bool
 }
-Footer.contextTypes = {
-  t: PropTypes.func.isRequired
-}
+
 Footer.defaultProps = {
   isMoving: false
 }

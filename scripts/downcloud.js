@@ -28,7 +28,6 @@ const launchCmd = (cmd, params, options) => {
 const updateVersion = async folderName => {
   const buildCommit = process.env.TRAVIS_COMMIT
   const TRAVIS_BUILD_DIR = process.env.TRAVIS_BUILD_DIR
-  const TRAVIS_BUILD_ID = process.env.TRAVIS_BUILD_ID
 
   const pathToManifest = path.join(
     TRAVIS_BUILD_DIR,
@@ -36,9 +35,7 @@ const updateVersion = async folderName => {
     'manifest.webapp'
   )
   const appManifestObj = fs.readJSONSync(pathToManifest)
-  const appVersion = `${
-    appManifestObj.version
-  }-dev.${buildCommit}-${TRAVIS_BUILD_ID}`
+  const appVersion = `${appManifestObj.version}-dev.${buildCommit}`
   appManifestObj.version = appVersion
   console.warn(`↳ ℹ️  Updating manifest version to ${appVersion}`)
 

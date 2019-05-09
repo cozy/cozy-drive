@@ -28,7 +28,7 @@ import {
   EMPTY_TRASH_FAILURE,
   RESTORE_FILES_SUCCESS,
   DESTROY_FILES_SUCCESS
-} from 'drive/web/modules/trash/actions'
+} from 'drive/web/modules/trash'
 import { RENAME_SUCCESS } from 'drive/web/modules/drive/rename'
 import { isDirectory } from 'drive/web/modules/drive/files'
 

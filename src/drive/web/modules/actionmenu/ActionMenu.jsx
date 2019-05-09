@@ -6,7 +6,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Overlay } from 'cozy-ui/react'
 import MenuItem from './MenuItem'
 
-import styles from 'drive/styles/actionmenu.styl'
+import styles from 'drive/styles/actionmenu'
 
 class Menu extends Component {
   componentDidMount() {
@@ -19,9 +19,7 @@ class Menu extends Component {
   }
 
   componentWillUnmount() {
-    if (this.popper !== undefined) {
-      this.popper.destroy()
-    }
+    this.popper.destroy()
   }
 
   render() {
@@ -41,7 +39,6 @@ class Menu extends Component {
           className={styles['fil-actionmenu-overlay']}
         />
         <div
-          data-test-id="fil-actionmenu-inner"
           className={styles['fil-actionmenu-inner']}
           ref={el => {
             this.menuEl = el

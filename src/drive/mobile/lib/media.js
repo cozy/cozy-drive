@@ -30,6 +30,7 @@ export const requestAuthorization = async () => {
       () => resolve(true),
       error => {
         if (!error.startsWith('Permission')) {
+          console.warn(error)
           logException('requestAuthorization error:', error)
         }
         resolve(false)
@@ -131,7 +132,6 @@ export const getPhotos = async () => {
         false, // includePictures, includeVideos, includeCloud
         response => resolve(response.library),
         err => {
-          // eslint-disable-next-line no-console
           console.warn(err)
           resolve(defaultReturn)
         }

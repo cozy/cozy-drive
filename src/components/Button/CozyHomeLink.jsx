@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ButtonLink } from 'cozy-ui/react'
-import styles from 'components/Button/index.styl'
-import getHomeLinkHref from 'components/Button/getHomeLinkHref'
-import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
+import styles from './index.styl'
+import getHomeLinkHref from './getHomeLinkHref'
+
 const CozyHomeLink = ({ from, embedInCozyBar = false, t, size, className }) => (
   <ButtonLink
     label={t('Share.create-cozy')}
-    icon={CozyHomeLinkIcon}
+    icon="cozy-negative"
     className={embedInCozyBar ? styles['bar-homelink'] : className}
     href={getHomeLinkHref(from)}
     size={size}

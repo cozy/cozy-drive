@@ -1,0 +1,28 @@
+import { PRE_UPLOAD_FILE } from 'drive/web/modules/navigation/duck/actions'
+
+const CATEGORY = {
+  INTERACTION: 'interaction'
+}
+
+const ACTIONS = {
+  UPLOAD: 'upload'
+}
+
+const tracker = () => next => action => {
+  switch (action.type) {
+    case PRE_UPLOAD_FILE:
+      action.trackEvent = {
+        category: CATEGORY.INTERACTION,
+        action: ACTIONS.UPLOAD,
+        name: 'file',
+        value: action.count
+      }
+      break
+    default:
+      break
+  }
+
+  return next(action)
+}
+
+export default tracker

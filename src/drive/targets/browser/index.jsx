@@ -1,6 +1,6 @@
 /* global cozy */
-// eslint-disable-next-line no-unused-vars
-import mainStyles from 'drive/styles/main.styl'
+
+import 'drive/styles/main'
 
 import 'whatwg-fetch'
 import React from 'react'
@@ -11,12 +11,10 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
-import appMetadata from 'drive/appMetadata'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
-import 'cozy-ui/transpiled/react/stylesheet.css'
-
+require('../../../lib/initHelper')
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -29,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const client = new CozyClient({
     uri: cozyUrl,
     token: data.cozyToken,
-    appMetadata,
     schema
   })
 
@@ -41,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
   cozy.bar.init({
     appName: data.cozyAppName,
     appEditor: data.cozyAppEditor,
-    cozyClient: client,
     iconPath: data.cozyIconPath,
     lang: data.cozyLocale,
     replaceTitleOnMobile: false

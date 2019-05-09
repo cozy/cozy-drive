@@ -35,7 +35,6 @@ const getFile = (dirEntry, type = '') =>
 const resolveNativePath = path =>
   new Promise((resolve, reject) => {
     window.FilePath.resolveNativePath(path, resolve, err => {
-      // eslint-disable-next-line no-console
       console.error(
         `${path} could not be resolved by the plugin: ${err.message}`
       )
@@ -52,7 +51,6 @@ const getFiles = contentFiles =>
         return file
       } catch (err) {
         try {
-          // eslint-disable-next-line no-console
           console.warn(
             `Unable to get files with their real filename, let's try another way: ${
               err.message
@@ -62,7 +60,6 @@ const getFiles = contentFiles =>
           const file = await getFile(dirEntry)
           return file
         } catch (err) {
-          // eslint-disable-next-line no-console
           console.error(err)
           throw new Error(`Unable to get files: ${err.message}`)
         }

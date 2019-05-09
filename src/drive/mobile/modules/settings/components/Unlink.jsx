@@ -10,9 +10,6 @@ import {
 } from 'drive/mobile/modules/authorization/duck'
 
 export class Unlink extends Component {
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
   render() {
     const { t, unlink, clientSettings } = this.props
     const { client } = this.context
@@ -34,11 +31,14 @@ export class Unlink extends Component {
     )
   }
 }
-Unlink.propTypes = {
+Unlink.PropTypes = {
   t: PropTypes.func,
   unlink: PropTypes.func,
   clientSettings: PropTypes.object,
   router: PropTypes.object
+}
+Unlink.contextTypes = {
+  client: PropTypes.func
 }
 
 const mapStateToProps = state => ({

@@ -2,7 +2,7 @@
   "name": "Photos",
   "name_prefix": "Cozy",
   "slug": "photos",
-  "version": "1.18.3",
+  "version": "1.15.6",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -51,7 +51,7 @@
     "files": {
       "description": "Required for photo access",
       "type": "io.cozy.files",
-      "verbs": [
+      "methods": [
         "GET",
         "POST",
         "PUT"
@@ -61,24 +61,22 @@
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",
       "verbs": [
-        "GET",
-        "PUT"
+        "GET"
       ]
     },
     "albums": {
       "description": "Required to manage photos albums",
       "type": "io.cozy.photos.albums",
-      "verbs": [
+      "methods": [
         "GET",
         "POST",
-        "PUT",
-        "DELETE"
+        "PUT"
       ]
     },
     "photos_settings": {
       "description": "Required to manage photos albums settings",
       "type": "io.cozy.photos.settings",
-      "verbs": [
+      "methods": [
         "GET",
         "POST",
         "PUT"
@@ -87,7 +85,7 @@
     "contacts": {
       "description": "Required to to share photos with your contacts",
       "type": "io.cozy.contacts",
-      "verbs": [
+      "methods": [
         "GET",
         "POST"
       ]

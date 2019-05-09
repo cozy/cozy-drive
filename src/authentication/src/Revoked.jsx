@@ -26,7 +26,6 @@ class Revoked extends Component {
         router: this.props.router
       })
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.warn(e)
     }
   }

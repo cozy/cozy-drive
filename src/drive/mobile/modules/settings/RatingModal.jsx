@@ -6,7 +6,7 @@ import withPersistentState from '../../lib/withPersistentState'
 import { SOFTWARE_NAME, APP_STORE_ID, APP_MARKET_ID } from '../../lib/constants'
 import FeedbackForm from './components/FeedbackForm'
 
-import styles from './styles.styl'
+import styles from './styles'
 
 const SCREEN_ENJOY = 'SCREEN_ENJOY'
 const SCREEN_FEEDBACK = 'SCREEN_FEEDBACK'
@@ -22,9 +22,7 @@ class RatingModal extends Component {
   state = {
     screen: SCREEN_ENJOY
   }
-  static contextTypes = {
-    t: PropTypes.func.isRequired
-  }
+
   onUserReply = async enjoyed => {
     if (enjoyed) {
       try {
@@ -100,9 +98,7 @@ const EnjoyCozy = (props, context) => {
     </Modal>
   )
 }
-EnjoyCozy.contextTypes = {
-  t: PropTypes.func.isRequired
-}
+
 EnjoyCozy.propTypes = {
   onReply: PropTypes.func.isRequired
 }

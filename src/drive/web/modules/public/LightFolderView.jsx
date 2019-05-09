@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { Content, Overlay } from 'cozy-ui/react'
+import { Content } from 'cozy-ui/react/Layout'
 import FileList from 'drive/web/modules/filelist/FileList'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
@@ -85,14 +85,12 @@ class DumbFolderView extends React.Component {
             {...this.props}
           />
           {viewerOpened && (
-            <Overlay>
-              <Viewer
-                files={this.props.files}
-                currentIndex={currentViewedIndex}
-                onChange={this.showInViewer}
-                onClose={this.closeViewer}
-              />
-            </Overlay>
+            <Viewer
+              files={this.props.files}
+              currentIndex={currentViewedIndex}
+              onChange={this.showInViewer}
+              onClose={this.closeViewer}
+            />
           )}
         </Content>
       </Main>

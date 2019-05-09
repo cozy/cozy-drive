@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, ButtonAction, withBreakpoints, Icon } from 'cozy-ui/react'
 import IconFolderAdd from 'drive/assets/icons/icon-folder-add.svg'
@@ -21,10 +20,6 @@ const AddFolderButton = ({ addFolder, breakpoints: { isMobile } }, { t }) => {
         {t('toolbar.menu_new_folder')}
       </Button>
     )
-}
-
-AddFolderButton.contextTypes = {
-  t: PropTypes.func.isRequired
 }
 
 const mapDispatchToPropsButton = dispatch => ({

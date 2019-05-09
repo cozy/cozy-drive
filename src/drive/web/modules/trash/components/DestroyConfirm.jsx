@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Modal from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 
-import styles from 'drive/styles/confirms.styl'
+import styles from 'drive/styles/confirms'
 
 const DestroyConfirm = ({ t, fileCount, confirm, onClose }) => {
   const confirmationTexts = ['forbidden', 'restore'].map(type => (

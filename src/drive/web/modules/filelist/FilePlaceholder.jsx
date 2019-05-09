@@ -1,9 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import { withBreakpoints } from 'cozy-ui/react'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'drive/styles/filelist'
 
 // using a seeded PRNG to prevent re-renders from changing the results
 const seededRandom = seed => {
@@ -25,7 +24,7 @@ PlaceholderBlock.defaultProps = {
   width: '100%'
 }
 
-const FilePlaceholder = ({ index, breakpoints: { isMobile } }) => (
+const FilePlaceholder = ({ index }) => (
   <div className={styles['fil-content-row']}>
     <div
       className={classNames(
@@ -33,15 +32,6 @@ const FilePlaceholder = ({ index, breakpoints: { isMobile } }) => (
         styles['fil-content-file-select']
       )}
     />
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-file-thumbnail'],
-        { 'u-pl-0': !isMobile }
-      )}
-    >
-      <PlaceholderBlock width="2rem" />
-    </div>
     <div
       className={classNames(
         styles['fil-content-cell'],
@@ -85,4 +75,4 @@ FilePlaceholder.defaultProps = {
   index: 1
 }
 
-export default withBreakpoints()(FilePlaceholder)
+export default FilePlaceholder

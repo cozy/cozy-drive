@@ -32,7 +32,16 @@
         margin-top 0
 
 .fil-mobileactionmenu-header
+    padding     1.25rem 1.5rem 1.25rem 1.25rem
+    font-size   1rem
     font-weight bold
+    display     flex
+
+.fil-mobileactionmenu-file
+    margin-left   1.1875rem
+    padding-left  2.8125rem
+    background-position 0 center
+    background-repeat no-repeat
 
 .fil-mobileactionmenu-file-name
     overflow hidden
@@ -46,7 +55,7 @@
     position relative
     background embedurl('../assets/icons/icon-phone-download.svg') 1rem center no-repeat
 
-    [class*='toggle']
+    [class^='toggle']
         position absolute
         top 50%
         transform translateY(-50%)

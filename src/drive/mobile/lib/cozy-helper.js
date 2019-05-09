@@ -1,4 +1,4 @@
-/* global cozy, document */
+/* global cozy, document, __APP_VERSION__, */
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient from 'cozy-client'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
@@ -7,14 +7,12 @@ import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
 import { isMobileApp, getDeviceName } from 'cozy-device-helper'
-import appMetadata from 'drive/appMetadata'
-
 export const getOauthOptions = () => {
   return {
     redirectURI: isMobileApp() ? 'cozydrive://auth' : 'http://localhost',
     softwareID: SOFTWARE_ID,
     clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
-    softwareVersion: appMetadata.version,
+    softwareVersion: __APP_VERSION__,
     clientKind: 'mobile',
     clientURI: 'https://github.com/cozy/cozy-drive/',
     logoURI:
@@ -28,7 +26,6 @@ export const permissions = [
   'io.cozy.apps:GET',
   'io.cozy.settings:GET',
   'io.cozy.contacts',
-  'io.cozy.contacts.groups',
   'io.cozy.jobs:POST:sendmail:worker'
 ]
 
@@ -38,7 +35,6 @@ export const initClient = url => {
     scope: permissions,
     oauth: getOauthOptions(),
     offline: { doctypes: [DOCTYPE_FILES] },
-    appMetadata,
     schema
   })
 }
@@ -52,7 +48,6 @@ export const initBar = async client => {
     appName: 'Drive',
     appNamePrefix: 'Cozy',
     appSlug: 'drive',
-    cozyClient: client,
     iconPath: require('../../targets/vendor/assets/app-icon.svg'),
     lang: getLang(),
     cozyURL: client.options.uri,
@@ -62,6 +57,9 @@ export const initBar = async client => {
     displayOnMobile: true
   })
 }
+
+export const updateBarAccessToken = accessToken =>
+  cozy.bar.updateAccessToken(accessToken)
 
 export const restoreCozyClientJs = (uri, clientInfos, token) => {
   const offline = { doctypes: ['io.cozy.files'] }

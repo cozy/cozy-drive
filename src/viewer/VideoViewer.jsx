@@ -1,7 +1,7 @@
 import React from 'react'
 
 import withFileUrl from './withFileUrl'
-import styles from './styles.styl'
+import styles from './styles'
 
 const VideoViewer = ({ file, url }) => (
   <div data-test-id="viewer-video" className={styles['pho-viewer-videoviewer']}>

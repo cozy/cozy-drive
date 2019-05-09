@@ -68,7 +68,6 @@ const processNextFile = callback => async (dispatch, getState) => {
     await callback(file)
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log(error)
     dispatch({
       type: RECEIVE_UPLOAD_ERROR,

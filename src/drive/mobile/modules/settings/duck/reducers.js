@@ -44,6 +44,7 @@ const getSetting = (state, key) => {
   ) {
     return state.mobile.settings[key]
   }
+  console.warn(`Not found mobile setting ${key}`)
   return undefined
 }
 

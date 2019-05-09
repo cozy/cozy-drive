@@ -6,7 +6,6 @@ import styles from './index.styl'
 
 const MoreButton = ({ t, disabled, onClick }) => (
   <Button
-    data-test-id="more-button"
     className={styles['dri-btn--more']}
     theme="secondary"
     disabled={disabled}

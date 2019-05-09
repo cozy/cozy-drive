@@ -1,5 +1,4 @@
-//import { Role } from 'testcafe'
-import logger from '../helpers/logger'
+import { Role } from 'testcafe'
 import { driveUser } from '../helpers/roles'
 import {
   deleteLocalFile,
@@ -7,12 +6,11 @@ import {
   setDownloadPath,
   TESTCAFE_DRIVE_URL
 } from '../helpers/utils'
-import * as selectors from '../pages/selectors'
-import PrivateDrivePage from '../pages/drive/drive-model-private'
-import PublicDrivePage from '../pages/drive/drive-model-public'
+import DrivePage from '../pages/drive-model'
+import PublicDrivePage from '../pages/drive-model-public'
 
 let data = require('../helpers/data')
-const privateDrivePage = new PrivateDrivePage()
+const drivePage = new DrivePage()
 const publicDrivePage = new PublicDrivePage()
 
 //************************
@@ -20,16 +18,16 @@ const publicDrivePage = new PublicDrivePage()
 //************************
 fixture`Folder link Sharing Scenario`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   async t => {
-    console.group(`\n↳ ℹ️  Login & Initialization`)
+    console.group(`\n↳ ℹ️  Loggin & Initialization`)
     await t.useRole(driveUser)
-    await privateDrivePage.waitForLoading()
+    await drivePage.waitForLoading()
     console.groupEnd()
   }
 )
 
 test('Drive : Create a $test_date_time folder in Drive', async () => {
   console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
-  await privateDrivePage.addNewFolder({ newFolderName: data.FOLDER_DATE_TIME })
+  await drivePage.addNewFolder(data.FOLDER_DATE_TIME)
   //We need to pass data.FOLDER_DATE_TIME through multiple fixture, so we cannot use ctx here.
   console.groupEnd()
 })
@@ -40,18 +38,16 @@ test('Drive : from Drive, go in a folder, upload a file, and share the folder', 
       data.FOLDER_DATE_TIME
     }, upload a file, and share the folder`
   )
-  await privateDrivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await privateDrivePage.openActionMenu()
+  await drivePage.goToFolder(data.FOLDER_DATE_TIME)
+  await drivePage.openActionMenu()
   await t.pressKey('esc') //close action Menu
-  await privateDrivePage.uploadFiles([
-    `${data.FILE_FROM_ZIP_PATH}/${data.FILE_PDF}`
-  ])
-  await privateDrivePage.shareFolderPublicLink()
+  await drivePage.uploadFiles([`${data.FILE_FROM_ZIP_PATH}/${data.FILE_PDF}`])
+  await drivePage.shareFolderPublicLink()
 
-  const link = await selectors.btnCopyShareByLink.getAttribute('data-test-url')
+  const link = await drivePage.copyBtnShareByLink.getAttribute('data-test-url')
   if (link) {
     data.sharingLink = link
-    logger.debug(`data.sharingLink : ` + data.sharingLink)
+    console.log(`data.sharingLink : ` + data.sharingLink)
   }
   console.groupEnd()
 })
@@ -61,11 +57,11 @@ test('Drive : from Drive, go in a folder, upload a file, and share the folder', 
 //************************
 fixture`Drive : Access a folder public link, download the file(s), and check the 'create Cozy' link`
   .page`${TESTCAFE_DRIVE_URL}/`
-  .beforeEach(async () => {
+  .beforeEach(async t => {
     console.group(
       `\n↳ ℹ️  no Loggin (anonymous) & DOWNLOAD_PATH initialization`
     )
-    //await t.useRole(Role.anonymous())
+    await t.useRole(Role.anonymous())
     await setDownloadPath(data.DOWNLOAD_PATH)
     console.groupEnd()
   })
@@ -78,17 +74,15 @@ test(`[Desktop] Drive : Access a folder public link, download the file(s), and c
     `↳ ℹ️ [Desktop] Drive : Access a folder public link, download the file, and check the 'create Cozy' link`
   )
   await t.navigateTo(data.sharingLink)
-  await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
+  await publicDrivePage.waitForLoading()
 
   await publicDrivePage.checkActionMenuPublicDesktop('folder')
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
-    .click(selectors.btnPublicDownloadDrive)
-    .click(selectors.btnDrivePublicCreateCozy)
+    .click(publicDrivePage.btnPublicDownload)
+    .click(publicDrivePage.btnPublicCreateCozyFolder)
   await publicDrivePage.checkCreateCozy()
-  await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
-
   console.groupEnd()
 })
 
@@ -100,17 +94,15 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
     portraitOrientation: true
   })
   await t.navigateTo(data.sharingLink)
-  await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
-
+  await publicDrivePage.waitForLoading()
   await publicDrivePage.checkActionMenuPublicMobile('folder')
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
-    .click(selectors.btnPublicMobileDownload)
-    .click(selectors.btnMoreMenu) //need to re-open the more menu
-    .click(selectors.btnPublicMobileCreateCozy)
+    .click(publicDrivePage.btnPublicMobileDownload)
+    .click(publicDrivePage.btnPublicMoreMenuFolder) //need to re-open the more menu
+    .click(publicDrivePage.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
-  await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
 
   await t.maximizeWindow() //Back to desktop
   console.groupEnd()
@@ -121,17 +113,17 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
 //************************
 fixture`Drive : Unshare public link`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   async t => {
-    console.group(`\n↳ ℹ️  Login & Initialization`)
+    console.group(`\n↳ ℹ️  Loggin & Initialization`)
     await t.useRole(driveUser)
-    await privateDrivePage.waitForLoading()
+    await drivePage.waitForLoading()
     console.groupEnd()
   }
 )
 
 test('Unshare folder', async () => {
   console.group('↳ ℹ️  Unshare folder')
-  await privateDrivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await privateDrivePage.unshareFolderPublicLink()
+  await drivePage.goToFolder(data.FOLDER_DATE_TIME)
+  await drivePage.unshareFolderPublicLink()
   console.groupEnd()
 })
 
@@ -139,9 +131,9 @@ test('Unshare folder', async () => {
 // Public (no authentification)
 //************************
 fixture`Drive : No Access to an old folder public link`
-  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async () => {
+  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   console.group(`\n↳ ℹ️  no Loggin (anonymous)`)
-  //await t.useRole(Role.anonymous())
+  await t.useRole(Role.anonymous())
   console.groupEnd()
 })
 
@@ -149,7 +141,7 @@ test('`Drive : No Access to an old folder public link', async t => {
   console.group('↳ ℹ️  Drive : No Access to an old folder public link')
   await t.navigateTo(data.sharingLink)
 
-  await publicDrivePage.waitForLoading({ isNotAvailable: true })
+  await publicDrivePage.waitForLoading()
   await publicDrivePage.checkNotAvailable()
   console.groupEnd()
 })
@@ -159,17 +151,17 @@ test('`Drive : No Access to an old folder public link', async t => {
 //************************
 fixture`Test clean up : remove files and folders`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Login & Initialization`)
+  console.group(`\n↳ ℹ️  Loggin & Initialization`)
   await t.useRole(driveUser)
-  await privateDrivePage.waitForLoading()
+  await drivePage.waitForLoading()
   console.groupEnd()
 })
 
 test('(foldersharing) Delete File, and foler', async () => {
   console.group('↳ ℹ️  Drive : Delete File, and foler')
 
-  await privateDrivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await privateDrivePage.deleteElementByName(data.FILE_PDF)
-  await privateDrivePage.deleteCurrentFolder({})
+  await drivePage.goToFolder(data.FOLDER_DATE_TIME)
+  await drivePage.deleteElementByName(data.FILE_PDF)
+  await drivePage.deleteCurrentFolder()
   console.groupEnd()
 })

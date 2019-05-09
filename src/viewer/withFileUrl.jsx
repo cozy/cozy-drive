@@ -1,6 +1,5 @@
 /* global cozy */
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Spinner from 'cozy-ui/react/Spinner'
 
 import NoNetworkViewer from './NoNetworkViewer'
@@ -17,9 +16,7 @@ const withFileUrl = BaseComponent =>
       status: LOADING,
       downloadUrl: null
     }
-    static contextTypes = {
-      client: PropTypes.object.isRequired
-    }
+
     componentWillMount() {
       this.loadDownloadUrl()
     }

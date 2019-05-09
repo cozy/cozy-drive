@@ -7,6 +7,8 @@ import TimelineClusters from '../ducks/timeline-clusters'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import PhotosViewer from '../components/PhotosViewer'
 
+export const ComingSoon = () => <p style="margin-left: 2em">Coming soon!</p>
+
 const AppRoute = (
   <Route component={Layout}>
     <Route path="photos" component={Timeline}>

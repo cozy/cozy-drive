@@ -19,7 +19,7 @@
     "date-fns": "1.29.0",
     "eslint-cli": "1.1.1",
     "jest": "22.0.6",
-    "parcel": "1.12.3",
+    "parcel": "1.10.3",
     "react": "16.6.3",
     "react-dom": "16.6.3",
     "react-styleguidist": "6.5.3",

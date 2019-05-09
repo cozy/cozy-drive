@@ -1,14 +1,14 @@
 import { driveUser } from '../helpers/roles'
 import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from '../helpers/utils'
-import * as selectors from '../pages/selectors'
-import PrivateDrivePage from '../pages/drive/drive-model-private'
 
-const privateDrivePage = new PrivateDrivePage()
+import DrivePage from '../pages/drive-model'
+
+const drivePage = new DrivePage()
 
 fixture`DRIVE - NAV`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Login & Initialization`)
+  console.group(`\n↳ ℹ️  Loggin & Initialization`)
   await t.useRole(driveUser)
-  await privateDrivePage.waitForLoading()
+  await drivePage.waitForLoading()
   console.groupEnd()
 })
 
@@ -17,55 +17,47 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
     '↳ ℹ️  Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash'
   )
   //Check Menu and links. Go to page. Check main menu on each page
-  await isExistingAndVisibile(selectors.sidebar, 'Sidebar')
+  await isExistingAndVisibile(drivePage.sidebar, 'Sidebar')
 
   //!FIXME change params to use key/keyword
-  await privateDrivePage.isSidebarButton(
-    selectors.btnNavToRecent,
+  await drivePage.isSidebarButton(
+    drivePage.btnNavToRecent,
     '#/recent',
     'Recent'
   )
-  await privateDrivePage.clickOnSidebarButton(
-    selectors.btnNavToRecent,
+  await drivePage.clickOnSidebarButton(
+    drivePage.btnNavToRecent,
     '#/recent',
     'Recent'
   )
-  await privateDrivePage.checkMainMenu()
+  await drivePage.checkMainMenu()
 
-  await privateDrivePage.isSidebarButton(
-    selectors.btnNavToFolder,
+  await drivePage.isSidebarButton(drivePage.btnNavToFolder, '#/folder', 'Drive')
+  await drivePage.clickOnSidebarButton(
+    drivePage.btnNavToFolder,
     '#/folder',
     'Drive'
   )
-  await privateDrivePage.clickOnSidebarButton(
-    selectors.btnNavToFolder,
-    '#/folder',
-    'Drive'
-  )
-  await privateDrivePage.checkMainMenu()
+  await drivePage.checkMainMenu()
 
-  await privateDrivePage.isSidebarButton(
-    selectors.btnNavToSharing,
+  await drivePage.isSidebarButton(
+    drivePage.btnNavToSharing,
     '#/sharings',
     'Sharing'
   )
-  await privateDrivePage.clickOnSidebarButton(
-    selectors.btnNavToSharing,
+  await drivePage.clickOnSidebarButton(
+    drivePage.btnNavToSharing,
     '#/sharings',
     'Sharing'
   )
-  await privateDrivePage.checkMainMenu()
+  await drivePage.checkMainMenu()
 
-  await privateDrivePage.isSidebarButton(
-    selectors.btnNavToTrash,
+  await drivePage.isSidebarButton(drivePage.btnNavToTrash, '#/trash', 'Trash')
+  await drivePage.clickOnSidebarButton(
+    drivePage.btnNavToTrash,
     '#/trash',
     'Trash'
   )
-  await privateDrivePage.clickOnSidebarButton(
-    selectors.btnNavToTrash,
-    '#/trash',
-    'Trash'
-  )
-  await privateDrivePage.checkMainMenu()
+  await drivePage.checkMainMenu()
   console.groupEnd()
 })

@@ -42,7 +42,6 @@ export const checkCorruptedFiles = async (photosOnDevice, dispatch) => {
               await localforage.setItem('CORRUPTED_FILES', newObj)
               return memo.push(photoOnDevice.id)
             } catch (error) {
-              // eslint-disable-next-line no-console
               console.log('error on CORRUPTED FILES', error)
             }
           }
@@ -51,7 +50,6 @@ export const checkCorruptedFiles = async (photosOnDevice, dispatch) => {
       return memo
     }, [])
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log('error globale', error)
   }
 }

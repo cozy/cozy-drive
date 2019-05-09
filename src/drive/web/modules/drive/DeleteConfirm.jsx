@@ -5,7 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 
 import { SharedDocument, SharedRecipientsList } from 'sharing'
 
-import styles from 'drive/styles/confirms.styl'
+import styles from 'drive/styles/confirms'
 
 const Message = translate()(({ t, type, fileCount }) => (
   <p className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}>

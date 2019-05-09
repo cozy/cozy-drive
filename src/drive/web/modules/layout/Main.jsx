@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Main as MainUI } from 'cozy-ui/react/Layout'
 import BannerClient from 'components/pushClient/Banner'
 
-import styles from 'drive/styles/main.styl'
+import styles from 'drive/styles/main'
 
 const Main = ({ children, working = false, isPublic = false }) => (
   <MainUI

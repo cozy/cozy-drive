@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 import { startMediaBackup } from 'drive/mobile/modules/mediaBackup/duck'

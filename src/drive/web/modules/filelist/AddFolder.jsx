@@ -4,13 +4,10 @@ import classNames from 'classnames'
 
 import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
-import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
-import {
-  isTypingNewFolderName,
-  hideNewFolderInput
-} from 'drive/web/modules/filelist/duck'
+import FilenameInput from './FilenameInput'
+import { isTypingNewFolderName, hideNewFolderInput } from './duck'
 import { createFolder } from 'drive/web/modules/navigation/duck'
-import styles from 'drive/styles/filelist.styl'
+import styles from 'drive/styles/filelist'
 
 const AddFolder = ({ f, visible, onSubmit, onAbort }) =>
   !visible ? null : (

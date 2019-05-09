@@ -3,7 +3,7 @@ import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import { ShareButton } from 'sharing'
 
-import styles from 'photos/styles/toolbar.styl'
+import styles from 'photos/styles/toolbar'
 
 import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
 
@@ -39,7 +39,7 @@ class AlbumToolbar extends Component {
           />
         )}
         <Menu
-          data-test-id="more-button"
+          data-test-id="more-btn-album"
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
           component={<MoreButton />}

@@ -8,6 +8,7 @@ import {
   createTrackerMiddleware
 } from 'cozy-ui/react/helpers/tracker'
 import thunkMiddleware from 'redux-thunk'
+import eventTrackerMiddleware from './middlewares/EventTracker'
 import createRootReducer from './rootReducer'
 import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
@@ -18,6 +19,7 @@ const configureStore = (client, t, initialState = {}) => {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
   }
   if (shouldEnableTracking() && getTracker()) {
+    middlewares.push(eventTrackerMiddleware)
     middlewares.push(createTrackerMiddleware())
   }
   middlewares.push(createLogger(loggerOptions()))

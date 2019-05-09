@@ -8,11 +8,9 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
-import get from 'lodash/get'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
-import styles from './styles.styl'
+import styles from './styles'
 import Viewer from 'viewer'
 
 const doNothing = () => {}
@@ -21,34 +19,22 @@ const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
 ))
 
-export class FileOpener extends Component {
+class FileOpener extends Component {
   state = {
     loading: true,
     file: null
   }
   componentWillMount() {
-    const routerFileId = get(this.props, 'routeParams.fileId')
-    if (this.props.fileId) {
-      this.loadFileInfo(this.props.fileId)
-    } else if (routerFileId) {
-      this.loadFileInfo(routerFileId)
-    }
+    this.loadFileInfo()
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.fileId !== this.props.fileId) {
-      return this.loadFileInfo(this.props.fileId)
-    }
-    const previousRouterFileId = get(prevProps, 'routeParams.fileId')
-    const routerFileId = get(this.props, 'routeParams.fileId')
-    if (previousRouterFileId !== routerFileId) {
-      return this.loadFileInfo(routerFileId)
-    }
-  }
-  async loadFileInfo(id) {
+  async loadFileInfo() {
     try {
       this.setState({ fileNotFound: false })
-      const resp = await cozy.client.files.statById(id, false)
+      const resp = await cozy.client.files.statById(
+        getFileId(this.props),
+        false
+      )
       const file = { ...resp, ...resp.attributes, id: resp._id }
       this.setState({ file, loading: false })
     } catch (e) {
@@ -57,14 +43,8 @@ export class FileOpener extends Component {
     }
   }
 
-  navigateToDrive = () => {
-    const parentDir = get(this.state, 'file.dir_id', '')
-    this.props.router.push(`/folder/${parentDir}`)
-  }
-
   render() {
     const { file, loading, fileNotFound } = this.state
-    const { withCloseButtton = true } = this.props
 
     return (
       <div className={styles.fileOpener}>
@@ -73,11 +53,10 @@ export class FileOpener extends Component {
         {!loading &&
           !fileNotFound && (
             <Viewer
-              fullscreen={false}
+              style={{ top: '3rem' }}
               files={[file]}
               currentIndex={0}
               onChange={doNothing}
-              onClose={withCloseButtton ? this.navigateToDrive : null}
             />
           )}
       </div>
@@ -85,18 +64,17 @@ export class FileOpener extends Component {
   }
 }
 
-FileOpener.propTypes = {
+const getFileId = ownProps => {
+  return ownProps.fileId || ownProps.router.params.fileId
+}
+
+FileOpener.PropTypes = {
   router: PropTypes.shape({
-    push: PropTypes.func.isRequired,
     params: PropTypes.shape({
       fileId: PropTypes.string.isRequired
     }).isRequired
-  }),
-  routeParams: PropTypes.shape({
-    fileId: PropTypes.string
-  }),
-  fileId: PropTypes.string,
-  withCloseButtton: PropTypes.bool
+  }).isRequired,
+  fileId: PropTypes.number
 }
 
-export default translate()(withRouter(FileOpener))
+export default translate()(FileOpener)

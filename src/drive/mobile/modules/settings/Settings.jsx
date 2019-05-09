@@ -11,8 +11,8 @@ import Support from './components/Support'
 import MediaBackup from './components/MediaBackup'
 import Unlink from './components/Unlink'
 import FeedbackForm from './components/FeedbackForm'
-import ScrollToTop from 'drive/web/modules/navigation/ScrollToTop'
-import styles from './styles.styl'
+
+import styles from './styles'
 
 const { BarCenter } = cozy.bar
 
@@ -37,13 +37,8 @@ class Settings extends Component {
   render() {
     const { t } = this.props
     const isDebug = this.state.tapCount >= 3
-    /*
-    See https://reacttraining.com/react-router/web/guides/scroll-restoration
-    for the ScrollToTop explanation
-    */
     return (
       <Main>
-        <ScrollToTop />
         <BarCenter>
           <h2 className={styles['settings__title']}>
             {t('mobile.settings.title')}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from '../styles.styl'
+import styles from '../styles'
 
 const Breadcrumb = ({ currentStep, totalSteps }) => {
   const elementsArray = []

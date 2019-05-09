@@ -86,7 +86,6 @@ const processNextFile = (
     }
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.warn(error)
     const statusError = {
       409: CONFLICT,

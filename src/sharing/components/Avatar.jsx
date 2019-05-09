@@ -3,13 +3,14 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { SharingTooltip, TooltipRecipientList } from './Tooltip'
 import styles from './recipient.styl'
+import { Avatar as CozyUIAvatar, Tooltip } from 'cozy-ui/react'
 import ColorHash from './colorhash'
 
 export const Avatar = ({ text, size, textId }) => {
   const initial = text.charAt(0)
   const bg = ColorHash().getColor(textId)
   const style = {
-    backgroundColor: bg
+    'background-color': bg
   }
   return (
     <div
@@ -23,6 +24,14 @@ export const Avatar = ({ text, size, textId }) => {
       <span>{initial}</span>
       <SharingTooltip id={`recipient-avatar-${text}`} />
     </div>
+  )
+}
+
+export const AvatarToUseAfer = props => {
+  return (
+    <Tooltip title={props.textId}>
+      <CozyUIAvatar {...props} className={styles['recipient-avatar']} />
+    </Tooltip>
   )
 }
 

@@ -8,7 +8,7 @@ import { withBreakpoints, Menu, MenuItem, Icon } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import DownloadButton from './DownloadButton'
 import { downloadFiles } from 'drive/web/modules/navigation/duck'
-import toolbarstyles from 'drive/styles/toolbar.styl'
+import toolbarstyles from 'drive/styles/toolbar'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyHomeLink from 'components/Button/CozyHomeLink'
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
@@ -101,19 +101,11 @@ const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     />
   </BarRight>
 )
-
-MobileToolbar.contextTypes = {
-  t: PropTypes.func.isRequired
-}
-
 MobileToolbar.propTypes = toolbarProptypes
 
 const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <BarRight>
-    <div
-      data-test-id="toolbar-viewer-public"
-      className={toolbarstyles['toolbar-inside-bar']}
-    >
+    <div className={toolbarstyles['toolbar-inside-bar']}>
       {discoveryLink ? (
         <OpenInCozyButton href={discoveryLink} t={t} size="small" />
       ) : (
@@ -128,16 +120,11 @@ const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     </div>
   </BarRight>
 )
-
-CozybarToolbar.contextTypes = {
-  t: PropTypes.func.isRequired
-}
-
 CozybarToolbar.propTypes = toolbarProptypes
 
 const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
   <div
-    data-test-id="toolbar-files-public"
+    data-test-id="fil-toolbar-files-public"
     className={toolbarstyles['fil-toolbar-files']}
     role="toolbar"
   >
@@ -152,20 +139,13 @@ const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     </BarRight>
   </div>
 )
-
-DesktopToolbar.contextTypes = {
-  t: PropTypes.func.isRequired
-}
-
 DesktopToolbar.propTypes = toolbarProptypes
 
 class PublicToolbar extends React.Component {
   state = {
     discoveryLink: null
   }
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
+
   componentDidMount() {
     if (window.location.pathname === '/preview') this.loadSharingDiscoveryLink()
   }
@@ -186,7 +166,6 @@ class PublicToolbar extends React.Component {
         .getDiscoveryLink(sharingId, sharecode)
       this.setState({ discoveryLink: link })
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.warn('Failed to load sharing discovery link', err)
     }
   }

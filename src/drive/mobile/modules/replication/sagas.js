@@ -23,7 +23,6 @@ import {
 } from './duck'
 
 export const startReplication = () => async (dispatch, getState) => {
-  // eslint-disable-next-line no-console
   console.info('Starting replication...')
 
   const firstReplication = isFirstReplicationDone(getState())

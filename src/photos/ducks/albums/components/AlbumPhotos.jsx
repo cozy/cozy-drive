@@ -9,7 +9,7 @@ import Alerter from 'cozy-ui/react/Alerter'
 import { ShareModal } from 'sharing'
 import flow from 'lodash/flow'
 
-import styles from '../../../styles/layout.styl'
+import styles from '../../../styles/layout'
 
 import AlbumToolbar from './AlbumToolbar'
 import { AddToAlbumModal } from '..'
@@ -26,9 +26,7 @@ class AlbumPhotos extends Component {
     editing: false,
     showAddAlbumModal: false
   }
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
+
   showAddAlbumModal = () => {
     this.setState(state => ({ ...state, showAddAlbumModal: true }))
   }
@@ -199,10 +197,8 @@ class AlbumPhotos extends Component {
     )
   }
 
-  componentWillUnmount() {
-    if (this.props.selection !== undefined) {
-      this.props.selection.clear()
-    }
+  componentDidUnmount() {
+    this.props.selection.clear()
   }
 }
 
@@ -212,7 +208,6 @@ const mapDispatchToProps = dispatch => ({
       showModal(<ShareModal document={album} sharingDesc={album.name} />)
     )
 })
-
 AlbumPhotos.propTypes = {
   hasMore: PropTypes.bool.isRequired,
   fetchMore: PropTypes.func.isRequired,
@@ -222,7 +217,6 @@ AlbumPhotos.propTypes = {
   t: PropTypes.func.isRequired,
   router: PropTypes.object.isRequired
 }
-
 export default flow(
   connect(
     null,

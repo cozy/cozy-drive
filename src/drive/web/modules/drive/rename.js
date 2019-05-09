@@ -75,7 +75,6 @@ export const rename = () => async (dispatch, getState) => {
     )
     dispatch(renamed(extractFileAttributes(updated)))
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.warn(e)
   }
 }

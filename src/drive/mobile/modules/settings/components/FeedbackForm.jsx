@@ -1,13 +1,12 @@
-/* global cozy */
+/* global cozy __APP_VERSION__ */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
 import { Button } from 'cozy-ui/react/Button'
 
-import styles from '../styles.styl'
+import styles from '../styles'
 import { logInfo } from 'drive/lib/reporter'
-import appMetadata from 'drive/appMetadata'
 
 const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
 
@@ -15,15 +14,12 @@ class FeedbackForm extends Component {
   state = {
     sending: false
   }
-  static contextTypes = {
-    t: PropTypes.func.isRequired
-  }
 
   submitForm = async e => {
     e.preventDefault()
     const { t } = this.context
     const envInfo =
-      `Cozy Drive Mobile v${appMetadata.version}` +
+      `Cozy Drive Mobile v${__APP_VERSION__}` +
       `\nOn ${navigator.platform}` +
       `\nFrom ${navigator.vendor}` +
       `\n${navigator.userAgent}`

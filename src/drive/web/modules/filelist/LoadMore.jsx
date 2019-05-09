@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { Button, Spinner } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
-import styles from 'drive/styles/filelist.styl'
+import styles from 'drive/styles/filelist'
 
 const LoadMore = ({ onClick, isLoading, text }) => (
   <div

@@ -1,4 +1,4 @@
-import styles from '../../../styles/albumsList.styl'
+import styles from '../../../styles/albumsList'
 
 import React from 'react'
 import classNames from 'classnames'

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import FilePlaceholder from 'drive/web/modules/filelist/FilePlaceholder'
+import FilePlaceholder from './FilePlaceholder'
 
 const FileListPlaceholder = ({ rows }) => (
   <div>

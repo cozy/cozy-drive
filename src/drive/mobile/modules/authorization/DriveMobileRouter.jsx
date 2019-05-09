@@ -7,7 +7,11 @@ import MobileRouter from 'authentication/MobileRouter'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setToken } from 'drive/mobile/modules/authorization/duck'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
-import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
+import {
+  restoreCozyClientJs,
+  initBar,
+  updateBarAccessToken
+} from 'drive/mobile/lib/cozy-helper'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
 import {
   unlink,
@@ -23,10 +27,6 @@ import {
   onboardingPropTypes
 } from '../../../../authentication/OnboardingPropTypes'
 class DriveMobileRouter extends Component {
-  static contextTypes = {
-    client: Proptypes.object.isRequired
-  }
-
   afterAuthentication = async ({ url, clientInfo, token, router }) => {
     const wasRevoked = this.props.isRevoked
     this.context.client.options.uri = url
@@ -41,6 +41,7 @@ class DriveMobileRouter extends Component {
     oauthClient.setCredentials(token)
     oauthClient.setUri(url)
     oauthClient.onTokenRefresh = () => {
+      updateBarAccessToken(token.accessToken)
       restoreCozyClientJs(url, clientInfo, token)
       this.props.dispatch(setToken(token))
     }

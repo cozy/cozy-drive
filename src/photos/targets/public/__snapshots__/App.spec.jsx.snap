@@ -1,24 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Public view should render children when they are present 1`] = `
-<ContextProvider
+<Provider
   value={Array []}
 >
   <div>
     <div>
       <div
-        className="pho-content-header --no-icon --hide-bar"
+        className=""
       >
-        <h2
-          className="pho-content-title"
-        />
+        <h2 />
         <div
-          className="pho-toolbar"
-          data-test-id="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
-            className="pho-public-mycozy"
             from="sharing-photos"
             size="normal"
             t={
@@ -87,8 +82,6 @@ exports[`Public view should render children when they are present 1`] = `
             }
           />
           <Button
-            className="pho-public-download"
-            data-test-id="album-public-download"
             icon="download"
             onClick={[Function]}
             size="normal"
@@ -107,7 +100,6 @@ exports[`Public view should render children when they are present 1`] = `
             position="right"
           >
             <MenuItem
-              data-test-id="album-public-create-cozy-mobile"
               icon={
                 <Icon
                   icon="cozy-negative"
@@ -117,7 +109,6 @@ exports[`Public view should render children when they are present 1`] = `
               onSelect={[Function]}
             />
             <MenuItem
-              data-test-id="album-public-download-mobile"
               icon={
                 <Icon
                   icon="download"
@@ -162,28 +153,23 @@ exports[`Public view should render children when they are present 1`] = `
       />
     </div>
   </div>
-</ContextProvider>
+</Provider>
 `;
 
 exports[`Public view should render the album 1`] = `
-<ContextProvider
+<Provider
   value={Array []}
 >
   <div>
     <div>
       <div
-        className="pho-content-header --no-icon --hide-bar"
+        className=""
       >
-        <h2
-          className="pho-content-title"
-        />
+        <h2 />
         <div
-          className="pho-toolbar"
-          data-test-id="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
-            className="pho-public-mycozy"
             from="sharing-photos"
             size="normal"
             t={
@@ -224,8 +210,6 @@ exports[`Public view should render the album 1`] = `
             }
           />
           <Button
-            className="pho-public-download"
-            data-test-id="album-public-download"
             icon="download"
             onClick={[Function]}
             size="normal"
@@ -244,7 +228,6 @@ exports[`Public view should render the album 1`] = `
             position="right"
           >
             <MenuItem
-              data-test-id="album-public-create-cozy-mobile"
               icon={
                 <Icon
                   icon="cozy-negative"
@@ -254,7 +237,6 @@ exports[`Public view should render the album 1`] = `
               onSelect={[Function]}
             />
             <MenuItem
-              data-test-id="album-public-download-mobile"
               icon={
                 <Icon
                   icon="download"
@@ -285,5 +267,5 @@ exports[`Public view should render the album 1`] = `
       />
     </div>
   </div>
-</ContextProvider>
+</Provider>
 `;

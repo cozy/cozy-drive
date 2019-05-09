@@ -16,10 +16,6 @@ import Footer from './Footer'
 import Topbar from './Topbar'
 
 class MoveModal extends React.Component {
-  static contextTypes = {
-    client: PropTypes.object.isRequired,
-    t: PropTypes.func.isRequired
-  }
   constructor(props) {
     super(props)
 
@@ -59,7 +55,6 @@ class MoveModal extends React.Component {
       )
       this.trackEvent(entries.length)
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.warn(e)
       Alerter.error(t('Move.error', { smart_count: entries.length }))
     } finally {
@@ -84,7 +79,6 @@ class MoveModal extends React.Component {
         })
       )
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.warn(e)
       Alerter.error(t('Move.cancelled_error', { smart_count: entries.length }))
     }
@@ -165,7 +159,7 @@ class MoveModal extends React.Component {
   }
 }
 
-MoveModal.propTypes = {
+MoveModal.PropTypes = {
   entries: PropTypes.array
 }
 

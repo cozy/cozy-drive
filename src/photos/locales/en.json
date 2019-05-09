@@ -252,7 +252,7 @@
     "path_photos": "Photos",
     "path_upload": "Uploaded from Cozy Photos",
     "header": "Uploading %{smart_count} photo to Cozy Photos |||| Uploading %{smart_count} photos to Cozy Photos",
-    "header_mobile": "Uploading %{done} of %{total}",
+    "header_mobile": "%{done} of %{total} uploading…",
     "header_done": "Uploaded %{done} out of %{total} successfully",
     "close": "close",
     "item": {

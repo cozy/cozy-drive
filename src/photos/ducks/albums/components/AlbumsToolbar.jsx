@@ -5,7 +5,7 @@ import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/react'
 
 import { MoreButton } from 'components/Button'
 
-import styles from 'photos/styles/toolbar.styl'
+import styles from 'photos/styles/toolbar'
 
 const AlbumsToolbar = ({ t, router }) => (
   <div

@@ -6,9 +6,7 @@ const pkg = require(path.resolve(__dirname, './package.json'))
 const SRC_DIR = path.resolve(__dirname, './src')
 const configurationFiles = []
 
-configurationFiles.push(
-  require('cozy-scripts/config/webpack.bundle.default.js')
-)
+configurationFiles.push(require('cozy-scripts/config/webpack.bundle.preact.js'))
 
 configurationFiles.push(
   require('cozy-scripts/config/webpack.config.css-modules')
@@ -24,24 +22,14 @@ if (isDrive && target === 'mobile')
 if (target !== 'mobile')
   configurationFiles.push(require('./webpack/appicon.config.js'))
 const extraConfig = {
-  module: {
-    rules: [
-      {
-        test: /\.worker(\.entry)\.js$/,
-        use: [{
-          loader: 'worker-loader',
-          options: {
-            name: 'public/[name].[hash].worker.js'
-          }
-        }]
-      },
-    ]
-  },
   resolve: {
     modules: ['node_modules', SRC_DIR],
     alias: {
       'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers'),
-      'cozy-ui/react': 'cozy-ui/transpiled/react'
+      'create-react-class': path.resolve(
+        'node_modules',
+        'preact-compat/lib/create-react-class'
+      )
     }
   },
   plugins: [

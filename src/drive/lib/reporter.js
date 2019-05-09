@@ -1,6 +1,5 @@
-/* global __SENTRY_URL__, __DEVELOPMENT__ */
+/* global __SENTRY_URL__, __DEVELOPMENT__, __APP_VERSION__ */
 import Raven from 'raven-js'
-import appMetadata from 'drive/appMetadata'
 
 export const ANALYTICS_URL =
   typeof __SENTRY_URL__ === 'undefined' ? '' : __SENTRY_URL__
@@ -36,7 +35,7 @@ export const normalizeData = data => {
 export const getReporterConfiguration = () => ({
   shouldSendCallback: true,
   environment: __DEVELOPMENT__ ? 'development' : 'production',
-  release: appMetadata.version,
+  release: __APP_VERSION__,
   allowSecretKey: true,
   dataCallback: normalizeData
 })
@@ -48,9 +47,7 @@ export const configureReporter = () => {
 export const logException = (err, extraContext = null, fingerprint = null) => {
   return new Promise(resolve => {
     Raven.captureException(err, { extra: extraContext, fingerprint })
-    // eslint-disable-next-line no-console
     console.warn('Raven is recording exception')
-    // eslint-disable-next-line no-console
     console.error(err)
     resolve()
   })

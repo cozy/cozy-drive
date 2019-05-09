@@ -1,5 +1,8 @@
-import { DOCTYPE_ALBUMS, DOCTYPE_FILES } from 'drive/lib/doctypes'
-import { Contact } from 'cozy-doctypes'
+import {
+  DOCTYPE_ALBUMS,
+  DOCTYPE_FILES,
+  DOCTYPE_CONTACTS
+} from 'drive/lib/doctypes'
 
 import { QueryDefinition, HasMany } from 'cozy-client'
 class HasManyAlbums extends HasMany {
@@ -53,6 +56,6 @@ export default {
     }
   },
   contacts: {
-    doctype: Contact.doctype
+    doctype: DOCTYPE_CONTACTS
   }
 }

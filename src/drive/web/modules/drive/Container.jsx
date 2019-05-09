@@ -1,6 +1,5 @@
 /* global __TARGET__ */
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import Toggle from 'cozy-ui/react/Toggle'
@@ -26,7 +25,7 @@ import {
   toggleAvailableOffline
 } from 'drive/mobile/modules/offline/duck'
 
-import styles from 'drive/styles/actionmenu.styl'
+import styles from 'drive/styles/actionmenu'
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>
@@ -42,10 +41,6 @@ const ShareMenuItem = ({ docId, ...rest }, { t }) => (
     )}
   </SharedDocument>
 )
-
-ShareMenuItem.contextTypes = {
-  t: PropTypes.func.isRequired
-}
 
 const MakeAvailableOfflineMenuItem = connect(
   (state, ownProps) => ({

@@ -15,7 +15,6 @@ import {
 } from '.'
 import { Button, ButtonLink, Icon } from 'cozy-ui/react'
 
-import Config from 'drive/config/config.json'
 import localforage from 'localforage'
 
 class BannerClient extends Component {
@@ -24,30 +23,24 @@ class BannerClient extends Component {
   }
 
   async componentWillMount() {
-    if (Config.promoteDesktop.isActivated !== true) return
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     if (!seen) {
       const mustSee = !(await isClientAlreadyInstalled())
       if (mustSee) {
-        this.setState({ mustShow: true })
+        this.setState(state => ({ ...state, mustShow: true }))
       }
     }
   }
 
-  componentWillUnmount() {
-    // TODO: cancel all async tasks
-  }
-
   markAsSeen(element) {
     localforage.setItem(DESKTOP_BANNER, true)
-    this.setState({ mustShow: false })
+    this.setState(state => ({ ...state, mustShow: false }))
     track(element)
   }
 
   render() {
-    if (Config.promoteDesktop.isActivated !== true || !this.state.mustShow)
-      return null
     const { t } = this.props
+    if (!this.state.mustShow) return null
 
     const mobileLink = isIOS()
       ? 'Nav.link-client-ios'
@@ -70,9 +63,6 @@ class BannerClient extends Component {
           label={t('Nav.btn-client-mobile')}
         />
         <p className={styles['coz-banner-text']}>
-          <figure>
-            <Icon icon="cozy" width="44" height="44" />
-          </figure>
           <span>{t('Nav.banner-txt-client')}</span>
           <ButtonLink
             href={t(desktopLink)}
