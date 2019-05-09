@@ -191,14 +191,50 @@ class ShareByEmail extends Component {
     }))
   }
 
+  getSuccessMessage = () => {
+    const { documentType } = this.props
+    const { recipients } = this.state
+    if (recipients.length === 1) {
+      const recipient = recipients[0]
+      const email = Contact.isContact(recipient)
+        ? Contact.getPrimaryEmail(recipient)
+        : recipient.email
+      const cozyUrl = Contact.getPrimaryCozy(recipient)
+
+      if (email) {
+        return [
+          `${documentType}.share.shareByEmail.success`,
+          {
+            email
+          }
+        ]
+      } else if (cozyUrl) {
+        return [
+          `${documentType}.share.shareByEmail.success`,
+          {
+            email: cozyUrl
+          }
+        ]
+      } else {
+        return [
+          `${documentType}.share.shareByEmail.genericSuccess`,
+          {
+            count: 1
+          }
+        ]
+      }
+    } else {
+      return [
+        `${documentType}.share.shareByEmail.genericSuccess`,
+        {
+          count: recipients.length
+        }
+      ]
+    }
+  }
+
   share = () => {
-    const {
-      document,
-      documentType,
-      sharingDesc,
-      onShare,
-      createContact
-    } = this.props
+    const { document, sharingDesc, onShare, createContact } = this.props
     const { recipients, sharingType } = this.state
     if (recipients.length === 0) {
       return
@@ -218,17 +254,7 @@ class ShareByEmail extends Component {
         onShare(document, recipients, sharingType, sharingDesc)
       )
       .then(() => {
-        if (recipients.length === 1) {
-          Alerter.success(`${documentType}.share.shareByEmail.success`, {
-            email: recipients[0].id
-              ? Contact.getPrimaryEmail(recipients[0])
-              : recipients[0].email
-          })
-        } else {
-          Alerter.success(`${documentType}.share.shareByEmail.genericSuccess`, {
-            count: recipients.length
-          })
-        }
+        Alerter.success(...this.getSuccessMessage())
         this.reset()
       })
       .catch(err => {
