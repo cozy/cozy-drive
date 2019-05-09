@@ -19,6 +19,16 @@ describe('Contact model', () => {
       expect(result).toEqual('J')
     })
 
+    it('should return the first letter of email if it is a recipient and name/public_name are not defined', () => {
+      const recipient = {
+        name: undefined,
+        public_name: undefined,
+        email: 'janedoe@example.com'
+      }
+      const result = Contact.getInitials(recipient)
+      expect(result).toEqual('J')
+    })
+
     it('should return an empty string if name/public_name are undefined', () => {
       const recipient = {}
       const result = Contact.getInitials(recipient)
