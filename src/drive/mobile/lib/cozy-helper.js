@@ -76,8 +76,8 @@ export const restoreCozyClientJs = (uri, clientInfos, token) => {
     },
     offline
   })
-  const realToken = new cozy.client.auth.AccessToken(token)
-  cozy.client.saveCredentials(clientInfos, realToken)
+  //const realToken = new cozy.client.auth.AccessToken(token)
+  cozy.client.saveCredentials(clientInfos, token)
 }
 
 export function resetClient(client, clientInfo = null) {

@@ -4483,6 +4483,22 @@ cozy-client@6.20.0:
     redux-thunk "2.3.0"
     sift "6.0.0"
 
+cozy-client@6.27.0:
+  version "6.27.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.27.0.tgz#27cd1c9e1e6827f7fcc431f8ef1294056b4d3cd7"
+  integrity sha512-lKdWvKrBsBs8SimfvSqb3ExInH/pGA00GfZXr4Ki8bDV0Z/d/g7geQVUepIIpwyun+PqKaIQ/Fko5a1lYfx89Q==
+  dependencies:
+    cozy-device-helper "1.6.3"
+    cozy-stack-client "^6.25.0"
+    lodash "4.17.11"
+    microee "0.0.6"
+    prop-types "15.6.2"
+    react "16.7.0"
+    react-redux "5.0.7"
+    redux "3.7.2"
+    redux-thunk "2.3.0"
+    sift "6.0.0"
+
 cozy-device-helper@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.5.0.tgz#43cdb18a813202f5c9a9330897cf013c1c398b28"
@@ -4633,6 +4649,15 @@ cozy-stack-client@^6.20.0:
     detect-node "2.0.4"
     mime-types "2.1.20"
     qs "6.6.0"
+
+cozy-stack-client@^6.25.0:
+  version "6.25.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.25.0.tgz#4fc50087d900be4b0976ceca3606c77703cf5f52"
+  integrity sha512-SY7450Yg9n9HDcPsMaNgfTcId5rXOR7hpzyCo1OUZoLINOGlG9Crd10p01aiOLSbvw8z1piKJnGyxYSSrmBOXA==
+  dependencies:
+    detect-node "2.0.4"
+    mime-types "2.1.24"
+    qs "6.7.0"
 
 cozy-ui@19.28.0:
   version "19.28.0"
@@ -10283,6 +10308,11 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
+mime-db@1.40.0:
+  version "1.40.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.40.0.tgz#a65057e998db090f732a68f6c276d387d4126c32"
+  integrity sha512-jYdeOMPy9vnxEqFRRo6ZvTZ8d9oPb+k18PKoYNYUe2stVEBPPwsln/qWzdbmaIvnhZ9v2P+CuecK+fpUfsV2mA==
+
 "mime-db@>= 1.38.0 < 2":
   version "1.39.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.39.0.tgz#f95a20275742f7d2ad0429acfe40f4233543780e"
@@ -10316,6 +10346,13 @@ mime-types@2.1.20:
   integrity sha512-HrkrPaP9vGuWbLK1B1FfgAkbqNjIuy4eHlIYnFi7kamZyLLrGlo2mpcx0bBmNpKqBtYtAfGbodDddIgddSJC2A==
   dependencies:
     mime-db "~1.36.0"
+
+mime-types@2.1.24:
+  version "2.1.24"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.24.tgz#b6f8d0b3e951efb77dedeca194cff6d16f676f81"
+  integrity sha512-WaFHS3MCl5fapm3oLxU4eYDw77IQM2ACcxQ9RIxfaC3ooc6PFuBMGZZsYpvoXS5D5QTWPieo1jjLdAm3TBP3cQ==
+  dependencies:
+    mime-db "1.40.0"
 
 mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.19, mime-types@~2.1.7:
   version "2.1.22"
@@ -12925,6 +12962,11 @@ qs@6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.6.0.tgz#a99c0f69a8d26bf7ef012f871cdabb0aee4424c2"
   integrity sha512-KIJqT9jQJDQx5h5uAVPimw6yVg2SekOKu959OCtktD3FjzbpvaPr8i4zzg07DOMz+igA4W/aNM7OV8H37pFYfA==
+
+qs@6.7.0:
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
+  integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
 qs@~1.0.0:
   version "1.0.2"
