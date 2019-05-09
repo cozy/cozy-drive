@@ -26,6 +26,7 @@ import {
   REF_PHOTOS,
   REF_BACKUP
 } from 'folder-references'
+import logger from 'lib/logger'
 
 const ERROR_CODE_TOO_LARGE = 413
 
@@ -167,7 +168,7 @@ const uploadPhoto = (dirName, dirID, photo) => async dispatch => {
     dispatch(mediaUploadSucceed(photo))
     return
   } catch (_) {
-    //console.log('_')
+    //logger.log('_')
   } // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
   const MILLISECOND = 1
@@ -176,7 +177,7 @@ const uploadPhoto = (dirName, dirID, photo) => async dispatch => {
   const maxBackupTime = 5 * MINUTE
   const timeout = setTimeout(() => {
     // eslint-disable-next-line no-console
-    console.info(JSON.stringify(photo))
+    logger.info(JSON.stringify(photo))
     logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
   }, maxBackupTime)
   try {
@@ -200,9 +201,9 @@ const uploadPhoto = (dirName, dirID, photo) => async dispatch => {
       dispatch({ type: MEDIA_UPLOAD_QUOTA })
     } else {
       /* eslint-disable no-console */
-      console.warn('startMediaBackup upload item error')
-      console.warn(JSON.stringify(err))
-      console.info(JSON.stringify(photo))
+      logger.warn('startMediaBackup upload item error')
+      logger.warn(JSON.stringify(err))
+      logger.info(JSON.stringify(photo))
       const reason = err.message ? err.message : JSON.stringify(err)
       logException('Backup error: ' + reason, null, ['backup error'])
     }

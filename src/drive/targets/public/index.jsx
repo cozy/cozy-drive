@@ -18,7 +18,7 @@ import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'sharing/getSharedDocument'
 import appMetadata from 'drive/appMetadata'
-
+import logger from 'lib/logger'
 const initCozyBar = (data, client) => {
   if (
     data.cozyAppName &&
@@ -104,7 +104,7 @@ const init = async () => {
     )
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.warn(e)
+    logger.warn(e)
     initCozyBar(dataset, client)
     renderError(lang, root)
   }

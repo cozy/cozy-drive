@@ -13,6 +13,7 @@ import {
   deleteFile
 } from 'drive/web/modules/navigation/duck'
 import { updateOfflineFileCopyIfNecessary } from 'drive/mobile/modules/offline/duck'
+import logger from 'lib/logger'
 
 export class RealtimeFiles extends React.Component {
   realtimeListener = null
@@ -48,7 +49,7 @@ export class RealtimeFiles extends React.Component {
         })
         .on('error', err => {
           // eslint-disable-next-line no-console
-          console.warn('Pouch changefeed error', err)
+          logger.warn('Pouch changefeed error', err)
         })
     }
   }
@@ -60,7 +61,7 @@ export class RealtimeFiles extends React.Component {
     const { token, uri } = client
     if (token !== this.context.client.stackClient.token) {
       // eslint-disable-next-line no-console
-      console.log('Update realtime token')
+      logger.log('Update realtime token')
       if (this.realtimeListener) {
         this.realtimeListener.unsubscribe()
         this.realtimeListener = null

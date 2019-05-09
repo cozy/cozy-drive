@@ -5,6 +5,7 @@ import createWorker from 'react-pdf/dist/pdf.worker.entry.js'
 import cx from 'classnames'
 import throttle from 'lodash/throttle'
 import { Spinner } from 'cozy-ui/react'
+import logger from 'lib/logger'
 import withFileUrl from './withFileUrl'
 import ToolbarButton from './PdfToolbarButton'
 import NoViewer from './NoViewer'
@@ -60,7 +61,7 @@ export class PdfJsViewer extends Component {
 
   onLoadError = error => {
     // eslint-disable-next-line no-console
-    console.warn(error)
+    logger.warn(error)
     this.setState({
       errored: true
     })

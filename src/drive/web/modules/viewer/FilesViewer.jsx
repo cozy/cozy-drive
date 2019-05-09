@@ -8,6 +8,7 @@ import {
   fetchMoreFiles
 } from 'drive/web/modules/navigation/duck'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
+import logger from 'lib/logger'
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -55,7 +56,7 @@ class FilesViewer extends Component {
       })
       .catch(() => {
         // eslint-disable-next-line no-console
-        console.warn("can't find the file")
+        logger.warn("can't find the file")
         this.onClose()
       })
   }

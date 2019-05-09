@@ -12,6 +12,7 @@ import { Contact, Group } from 'models'
 import { contactsResponseType, groupsResponseType } from 'sharing/propTypes'
 import ShareRecipientsInput from 'sharing/components/ShareRecipientsInput'
 import styles from 'sharing/share.styl'
+import logger from 'lib/logger'
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
@@ -71,7 +72,7 @@ ShareTypeSelect.propTypes = {
 
 ShareTypeSelect.defaultProps = {
   // eslint-disable-next-line no-console
-  onChange: console.log,
+  onChange: logger.log,
   value: ''
 }
 

@@ -28,20 +28,23 @@ const extraConfig = {
     rules: [
       {
         test: /\.worker(\.entry)\.js$/,
-        use: [{
-          loader: 'worker-loader',
-          options: {
-            name: 'public/[name].[hash].worker.js'
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              name: 'public/[name].[hash].worker.js'
+            }
           }
-        }]
-      },
+        ]
+      }
     ]
   },
   resolve: {
     modules: ['node_modules', SRC_DIR],
     alias: {
       'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers'),
-      'cozy-ui/react': 'cozy-ui/transpiled/react'
+      'cozy-ui/react': 'cozy-ui/transpiled/react',
+      lib: path.resolve(SRC_DIR, './lib/')
     }
   },
   plugins: [

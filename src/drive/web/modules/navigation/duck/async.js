@@ -4,6 +4,7 @@ import {
   getPouchIndexes,
   shouldWorkFromPouchDB
 } from 'drive/mobile/modules/replication/duck'
+import logger from 'lib/logger'
 
 class Stack {
   constructor() {
@@ -21,7 +22,7 @@ class Stack {
       (await cozy.client.files.statById(parentId, false).catch(ex => {
         if (ex.status === 403) {
           // eslint-disable-next-line no-console
-          console.warn("User don't have access to parent folder")
+          logger.warn("User don't have access to parent folder")
         } else {
           throw ex
         }
@@ -235,7 +236,7 @@ class PouchDB {
 
     if (!index)
       // eslint-disable-next-line no-console
-      console.warn(
+      logger.warn(
         `No suitable index found for atribute ${sortAttribute}. This might be slow.`
       )
 

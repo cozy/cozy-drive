@@ -5,6 +5,8 @@ import Toggle from 'cozy-ui/react/Toggle'
 import { Spinner, SubTitle } from 'cozy-ui/react'
 import Alerter from 'cozy-ui/react/Alerter'
 import cx from 'classnames'
+import logger from 'lib/logger'
+
 import styles from '../share.styl'
 import palette from 'cozy-ui/react/palette'
 
@@ -38,7 +40,7 @@ class ShareByLink extends React.Component {
     } catch (e) {
       Alerter.error(`${this.props.documentType}.share.error.generic`)
       // eslint-disable-next-line no-console
-      console.log(e)
+      logger.log(e)
     } finally {
       this.setState(state => ({ ...state, loading: false }))
     }
@@ -51,7 +53,7 @@ class ShareByLink extends React.Component {
     } catch (e) {
       Alerter.error(`${this.props.documentType}.share.error.revoke`)
       // eslint-disable-next-line no-console
-      console.log(e)
+      logger.log(e)
     } finally {
       this.setState(state => ({ ...state, loading: false }))
     }

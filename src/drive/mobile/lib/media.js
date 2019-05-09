@@ -1,6 +1,7 @@
 import { getToken, getClientUrl } from './cozy-helper'
 import { logException } from 'drive/lib/reporter'
 import { isMobileApp } from 'cozy-device-helper'
+import logger from 'lib/logger'
 
 const hasCordovaPlugin = () => {
   return (
@@ -132,7 +133,7 @@ export const getPhotos = async () => {
         response => resolve(response.library),
         err => {
           // eslint-disable-next-line no-console
-          console.warn(err)
+          logger.warn(err)
           resolve(defaultReturn)
         }
       )

@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'
+import logger from 'lib/logger'
 import withFileUrl from './withFileUrl'
 import styles from './styles.styl'
 import NoViewer from './NoViewer'
@@ -72,7 +73,7 @@ class TextViewer extends React.Component {
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.warn(error)
+      logger.warn(error)
       if (this._mounted) {
         this.setState({
           loading: false,

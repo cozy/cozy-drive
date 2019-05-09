@@ -6,6 +6,7 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
 import { connect } from 'react-redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
+import logger from 'lib/logger'
 
 import Header from './Header'
 import Explorer from './Explorer'
@@ -60,7 +61,7 @@ class MoveModal extends React.Component {
       this.trackEvent(entries.length)
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.warn(e)
+      logger.warn(e)
       Alerter.error(t('Move.error', { smart_count: entries.length }))
     } finally {
       this.setState({ isMoveInProgress: false })
@@ -85,7 +86,7 @@ class MoveModal extends React.Component {
       )
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.warn(e)
+      logger.warn(e)
       Alerter.error(t('Move.cancelled_error', { smart_count: entries.length }))
     }
   }

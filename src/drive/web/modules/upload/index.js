@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import logger from 'lib/logger'
 
 import flag from 'cozy-flags'
 
@@ -134,8 +135,7 @@ export const processNextFile = (
     }
 
     if (error) {
-      // eslint-disable-next-line no-console
-      console.warn(error)
+      logger.warn(error)
       const statusError = {
         409: CONFLICT,
         413: QUOTA
