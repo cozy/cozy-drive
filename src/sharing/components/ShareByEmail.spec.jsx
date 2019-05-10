@@ -52,7 +52,29 @@ describe('ShareByEmail component', () => {
           { email: 'sansa.stark@winterfell.westeros' }
         ]
       })
-      const [message, params] = component.instance().getSuccessMessage()
+      const recipientsBefore = props.currentRecipients
+      const [message, params] = component
+        .instance()
+        .getSuccessMessage(recipientsBefore)
+      expect(message).toEqual('Files.share.shareByEmail.genericSuccess')
+      expect(params).toEqual({ count: 2 })
+    })
+
+    // see https://github.com/cozy/cozy-drive/pull/1671
+    it('should work if currentRecipients prop change before it is called', () => {
+      const newRecipients = [
+        { email: 'jon.snow@thewall.westeros' },
+        { email: 'arya.stark@winterfell.westeros' },
+        { email: 'sansa.stark@winterfell.westeros' }
+      ]
+      component.setState({
+        recipients: newRecipients
+      })
+      const recipientsBefore = props.currentRecipients
+      component.setProps({ ...props, currentRecipients: newRecipients })
+      const [message, params] = component
+        .instance()
+        .getSuccessMessage(recipientsBefore)
       expect(message).toEqual('Files.share.shareByEmail.genericSuccess')
       expect(params).toEqual({ count: 2 })
     })
@@ -61,7 +83,10 @@ describe('ShareByEmail component', () => {
       component.setState({
         recipients: [{ email: 'jon.snow@thewall.westeros' }]
       })
-      const [message, params] = component.instance().getSuccessMessage()
+      const recipientsBefore = props.currentRecipients
+      const [message, params] = component
+        .instance()
+        .getSuccessMessage(recipientsBefore)
       expect(message).toEqual('Files.share.shareByEmail.success')
       expect(params).toEqual({ email: 'jon.snow@thewall.westeros' })
     })
@@ -86,7 +111,10 @@ describe('ShareByEmail component', () => {
           }
         ]
       })
-      const [message, params] = component.instance().getSuccessMessage()
+      const recipientsBefore = props.currentRecipients
+      const [message, params] = component
+        .instance()
+        .getSuccessMessage(recipientsBefore)
       expect(message).toEqual('Files.share.shareByEmail.success')
       expect(params).toEqual({ email: 'jon.snow@thewall.westeros' })
     })
@@ -103,7 +131,10 @@ describe('ShareByEmail component', () => {
           }
         ]
       })
-      const [message, params] = component.instance().getSuccessMessage()
+      const recipientsBefore = props.currentRecipients
+      const [message, params] = component
+        .instance()
+        .getSuccessMessage(recipientsBefore)
       expect(message).toEqual('Files.share.shareByEmail.success')
       expect(params).toEqual({ email: 'https://doranmartell.mycozy.cloud' })
     })
@@ -116,7 +147,10 @@ describe('ShareByEmail component', () => {
           }
         ]
       })
-      const [message, params] = component.instance().getSuccessMessage()
+      const recipientsBefore = props.currentRecipients
+      const [message, params] = component
+        .instance()
+        .getSuccessMessage(recipientsBefore)
       expect(message).toEqual('Files.share.shareByEmail.genericSuccess')
       expect(params).toEqual({ count: 1 })
     })
