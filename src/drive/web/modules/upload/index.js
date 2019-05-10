@@ -60,7 +60,7 @@ const queue = (state = [], action) => {
 }
 export default combineReducers({ queue })
 
-const processNextFile = (
+export const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
   dirID
