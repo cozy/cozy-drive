@@ -35,6 +35,12 @@ describe('Contact model', () => {
       expect(result).toEqual('')
     })
 
+    it('should use a default value if name/public_name are undefined', () => {
+      const recipient = {}
+      const result = Contact.getInitials(recipient, 'A')
+      expect(result).toEqual('A')
+    })
+
     it('should use the original implementation if a contact is given', () => {
       const contact = {
         _id: '46b5d129-0296-4466-8c02-9a6a0c17c4cb',
@@ -64,6 +70,16 @@ describe('Contact model', () => {
       expect(result).toEqual('Arya Stark')
     })
 
+    it('should use public_name if available', () => {
+      const contact = {
+        email: 'arya@winterfell.westeros',
+        name: 'Arya Stark',
+        public_name: 'aryastark'
+      }
+      const result = Contact.getDisplayName(contact)
+      expect(result).toEqual('aryastark')
+    })
+
     it('should use name if a recipient is given', () => {
       const contact = {
         name: 'Arya Stark'
@@ -78,6 +94,18 @@ describe('Contact model', () => {
       }
       const result = Contact.getDisplayName(recipient)
       expect(result).toEqual('arya.stark@winterfell.westeros')
+    })
+
+    it('should use an empty string as default value if nothing is available', () => {
+      const recipient = {}
+      const result = Contact.getDisplayName(recipient)
+      expect(result).toEqual('')
+    })
+
+    it('should use a default value if nothing is available', () => {
+      const recipient = {}
+      const result = Contact.getDisplayName(recipient, 'Anonymous')
+      expect(result).toEqual('Anonymous')
     })
   })
 })

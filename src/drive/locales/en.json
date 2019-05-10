@@ -523,5 +523,10 @@
         "description": "Required to share files with your groups"
       }
     }
+  },
+  "models": {
+    "contact": {
+      "defaultDisplayName": "Anonymous"
+    }
   }
 }
