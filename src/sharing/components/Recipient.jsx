@@ -17,6 +17,7 @@ import { Contact } from 'models'
 import Identity from 'sharing/components/Identity'
 
 const MAX_DISPLAYED_RECIPIENTS = 3
+const DEFAULT_DISPLAY_NAME = 'models.contact.defaultDisplayName'
 
 export const RecipientsAvatars = ({
   recipients,
@@ -166,11 +167,13 @@ const Recipient = (props, { client, t }) => {
   const { instance, isOwner, status, ...rest } = props
   const isMe =
     (isOwner && status === 'owner') || instance === client.options.uri
-  const name = Contact.getDisplayName(rest)
+  const defaultDisplayName = t(DEFAULT_DISPLAY_NAME)
+  const defaultInitials = defaultDisplayName[0].toUpperCase()
+  const name = Contact.getDisplayName(rest, defaultDisplayName)
   return (
     <div className={classNames(styles['recipient'], 'u-mt-1')}>
       <Avatar
-        text={Contact.getInitials(rest)}
+        text={Contact.getInitials(rest, defaultInitials)}
         size={'small-plus'}
         textId={name}
       />
