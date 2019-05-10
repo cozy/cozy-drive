@@ -49,14 +49,16 @@ export const RecipientsAvatars = ({
           size={size}
         />
       )}
-      {reversedRecipients.slice(0, MAX_DISPLAYED_RECIPIENTS).map(recipient => (
-        <Avatar
-          key={`key_avatar_${recipient.email}`}
-          text={Contact.getInitials(recipient)}
-          size={size}
-          textId={Contact.getDisplayName(recipient)}
-        />
-      ))}
+      {reversedRecipients
+        .slice(0, MAX_DISPLAYED_RECIPIENTS)
+        .map((recipient, idx) => (
+          <Avatar
+            key={idx}
+            text={Contact.getInitials(recipient)}
+            size={size}
+            textId={Contact.getDisplayName(recipient)}
+          />
+        ))}
     </div>
   )
 }
