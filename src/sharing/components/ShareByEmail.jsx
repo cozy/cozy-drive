@@ -203,8 +203,8 @@ class ShareByEmail extends Component {
     }))
   }
 
-  getSuccessMessage = () => {
-    const { currentRecipients, documentType } = this.props
+  getSuccessMessage = recipientsBefore => {
+    const { documentType } = this.props
     const { recipients } = this.state
     if (recipients.length === 1) {
       const recipient = recipients[0]
@@ -239,7 +239,7 @@ class ShareByEmail extends Component {
       return [
         `${documentType}.share.shareByEmail.genericSuccess`,
         {
-          count: countNewRecipients(currentRecipients, recipients)
+          count: countNewRecipients(recipientsBefore, recipients)
         }
       ]
     }
@@ -251,6 +251,11 @@ class ShareByEmail extends Component {
     if (recipients.length === 0) {
       return
     }
+
+    // we can't use currentRecipients prop in getSuccessMessage because it may use
+    // the updated prop to count the new recipients
+    const recipientsBefore = this.props.currentRecipients
+
     this.setState(state => ({ ...state, loading: true }))
     Promise.all(
       recipients.map(
@@ -266,7 +271,7 @@ class ShareByEmail extends Component {
         onShare(document, recipients, sharingType, sharingDesc)
       )
       .then(() => {
-        Alerter.success(...this.getSuccessMessage())
+        Alerter.success(...this.getSuccessMessage(recipientsBefore))
         this.reset()
       })
       .catch(err => {
