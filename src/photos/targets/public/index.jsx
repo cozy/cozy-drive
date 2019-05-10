@@ -49,7 +49,8 @@ async function init() {
       cozyClient: client,
       iconPath: data.cozyIconPath,
       lang: data.cozyLocale,
-      replaceTitleOnMobile: true
+      replaceTitleOnMobile: true,
+      isPublic: true
     })
   }
   configureReporter()
