@@ -20,6 +20,8 @@ const CONFLICT = 'conflict'
 const QUOTA = 'quota'
 const NETWORK = 'network'
 
+const CONFLICT_ERROR = 409
+
 const itemInitialState = item => ({
   ...item,
   status: PENDING
@@ -36,8 +38,11 @@ const status = action => {
   }
 }
 
-const item = (state, action) =>
-  Object.assign({}, state, { status: status(action) })
+const item = (state, action = { isUpdate: false }) =>
+  Object.assign({}, state, {
+    isUpdate: action.isUpdate,
+    status: status(action)
+  })
 
 const queue = (state = [], action) => {
   switch (action.type) {
@@ -65,6 +70,7 @@ export const processNextFile = (
   queueCompletedCallback,
   dirID
 ) => async (dispatch, getState, { client }) => {
+  let error = null
   if (!client) {
     throw new Error(
       'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
@@ -85,20 +91,33 @@ export const processNextFile = (
       fileUploadedCallback(uploadedFile)
     }
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn(error)
-    const statusError = {
-      409: CONFLICT,
-      413: QUOTA
+  } catch (uploadError) {
+    if (uploadError.status === CONFLICT_ERROR) {
+      try {
+        const uploadedFile = await overwriteFile(client, file, dirID)
+        fileUploadedCallback(uploadedFile)
+        dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
+      } catch (updateError) {
+        error = updateError
+      }
+    } else {
+      error = uploadError
     }
 
-    const status =
-      statusError[error.status] ||
-      (/Failed to fetch$/.exec(error.toString()) && NETWORK) ||
-      FAILED
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.warn(error)
+      const statusError = {
+        413: QUOTA
+      }
 
-    dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
+      const status =
+        statusError[error.status] ||
+        (/Failed to fetch$/.exec(error.toString()) && NETWORK) ||
+        FAILED
+
+      dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
+    }
   }
   dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
 }
@@ -135,6 +154,20 @@ const uploadFile = async (client, file, dirID) => {
   const resp = await client
     .collection('io.cozy.files')
     .createFile(file, { dirId: dirID })
+  return resp.data
+}
+
+export const overwriteFile = async (client, file, dirID) => {
+  const dirResp = await client.collection('io.cozy.files').get(dirID)
+  const parentDirectory = dirResp.data
+  const path = `${parentDirectory.path}/${file.name}`
+  const statResp = await client.collection('io.cozy.files').statByPath(path)
+  // TODO: use statResp.data.meta.rev in If-Match header?
+  const fileId = statResp.data.id
+  const resp = await client
+    .collection('io.cozy.files')
+    .updateFile(file, { dirId: dirID, fileId })
+
   return resp.data
 }
 
