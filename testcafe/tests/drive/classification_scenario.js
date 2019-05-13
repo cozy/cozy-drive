@@ -142,7 +142,8 @@ test(TEST_RENAME_FILE, async t => {
     elementName: FILE_PDF,
     newName: `${fileName}2.${ext}`,
     exitWithEnter: true,
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-1`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-1`,
+    withMask: maskDriveFolderWithDate
   })
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-1-rename2`,
@@ -153,7 +154,8 @@ test(TEST_RENAME_FILE, async t => {
     elementName: `${fileName}2.${ext}`,
     newName: FILE_PDF,
     screenshotPath: `${FEATURE_PREFIX}/${TEST_RENAME_FILE}-2`,
-    exitWithEnter: false
+    exitWithEnter: false,
+    withMask: maskDriveFolderWithDate
   })
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
