@@ -19,7 +19,7 @@ import {
   getFolderUrl
 } from 'drive/web/modules/navigation/duck'
 
-import Viewer from 'viewer'
+import { Viewer } from 'cozy-ui/transpiled/react'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 
 class DumbFolderView extends React.Component {
@@ -89,8 +89,8 @@ class DumbFolderView extends React.Component {
               <Viewer
                 files={this.props.files}
                 currentIndex={currentViewedIndex}
-                onChange={this.showInViewer}
-                onClose={this.closeViewer}
+                onChangeRequest={this.showInViewer}
+                onCloseRequest={this.closeViewer}
               />
             </Overlay>
           )}

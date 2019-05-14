@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import { Overlay } from 'cozy-ui/transpiled/react'
-import Viewer from 'viewer'
+import { Overlay, Viewer } from 'cozy-ui/transpiled/react'
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -17,19 +16,18 @@ class PhotosViewer extends Component {
         <Viewer
           files={photos}
           currentIndex={currentIndex}
-          onChange={nextPhoto =>
+          onChangeRequest={nextPhoto =>
             router.push({
               pathname: `${getParentPath(router)}/${nextPhoto.id}`,
               query: router.location.query
             })
           }
-          onClose={() =>
+          onCloseRequest={() =>
             router.push({
               pathname: getParentPath(router),
               query: router.location.query
             })
           }
-          {...this.props}
         />
       </Overlay>
     )
