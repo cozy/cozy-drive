@@ -22,6 +22,11 @@ import {
 import { Viewer } from 'cozy-ui/transpiled/react'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 
+import createWorker from 'react-pdf/dist/pdf.worker.entry.js'
+import { pdfjs } from 'react-pdf'
+
+pdfjs.GlobalWorkerOptions.workerPort = createWorker()
+
 class DumbFolderView extends React.Component {
   state = {
     revoked: false,

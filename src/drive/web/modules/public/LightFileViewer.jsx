@@ -5,6 +5,11 @@ import PropTypes from 'prop-types'
 import PublicToolbar from './PublicToolbar'
 import styles from 'drive/web/modules/viewer/barviewer.styl'
 
+import createWorker from 'react-pdf/dist/pdf.worker.entry.js'
+import { pdfjs } from 'react-pdf'
+
+pdfjs.GlobalWorkerOptions.workerPort = createWorker()
+
 const LightFileViewer = ({ files, isFile }) => (
   <div className={styles['viewer-wrapper-with-bar']}>
     <PublicToolbar files={files} renderInBar isFile={isFile} />
