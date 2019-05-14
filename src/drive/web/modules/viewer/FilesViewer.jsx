@@ -8,6 +8,7 @@ import {
 } from 'drive/web/modules/navigation/duck'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 import logger from 'lib/logger'
+import Fallback from 'drive/web/modules/viewer/Fallback'
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -125,6 +126,7 @@ class FilesViewer extends Component {
           currentIndex={currentIndex}
           onChangeRequest={this.onChange}
           onCloseRequest={this.onClose}
+          renderFallbackExtraContent={Fallback}
         />
       </Overlay>
     )
