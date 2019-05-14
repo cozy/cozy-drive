@@ -12,7 +12,7 @@ import { withRouter } from 'react-router'
 import get from 'lodash/get'
 
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
-import Viewer from 'viewer'
+import { Viewer } from 'cozy-ui/transpiled/react'
 import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const doNothing = () => {}
@@ -75,8 +75,8 @@ export class FileOpener extends Component {
             <Viewer
               files={[file]}
               currentIndex={0}
-              onChange={doNothing}
-              onClose={withCloseButtton ? this.navigateToDrive : null}
+              onChangeRequest={doNothing}
+              onCloseRequest={withCloseButtton ? this.navigateToDrive : null}
             />
           )}
       </div>

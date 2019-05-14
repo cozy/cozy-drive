@@ -1,8 +1,7 @@
 /* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Overlay, Spinner } from 'cozy-ui/transpiled/react'
-import Viewer from 'viewer'
+import { Overlay, Spinner, Viewer } from 'cozy-ui/transpiled/react'
 import {
   getFolderIdFromRoute,
   fetchMoreFiles
@@ -113,8 +112,8 @@ class FilesViewer extends Component {
           <Viewer
             files={[this.state.currentFile]}
             currentIndex={0}
-            onChange={this.onChange}
-            onClose={this.onClose}
+            onChangeRequest={this.onChange}
+            onCloseRequest={this.onClose}
           />
         </Overlay>
       )
@@ -124,8 +123,8 @@ class FilesViewer extends Component {
         <Viewer
           files={files}
           currentIndex={currentIndex}
-          onChange={this.onChange}
-          onClose={this.onClose}
+          onChangeRequest={this.onChange}
+          onCloseRequest={this.onClose}
         />
       </Overlay>
     )

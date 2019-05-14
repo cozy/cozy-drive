@@ -1,5 +1,5 @@
 import React from 'react'
-import Viewer from 'viewer'
+import { Viewer } from 'cozy-ui/transpiled/react'
 import PropTypes from 'prop-types'
 
 import PublicToolbar from './PublicToolbar'
@@ -8,7 +8,7 @@ import styles from 'drive/web/modules/viewer/barviewer.styl'
 const LightFileViewer = ({ files, isFile }) => (
   <div className={styles['viewer-wrapper-with-bar']}>
     <PublicToolbar files={files} renderInBar isFile={isFile} />
-    <Viewer files={files} currentIndex={0} dark={false} controls={false} />
+    <Viewer files={files} currentIndex={0} dark={false} showToolbar={false} />
   </div>
 )
 
