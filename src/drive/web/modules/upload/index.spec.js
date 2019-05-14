@@ -1,4 +1,4 @@
-import { processNextFile } from './index'
+import { processNextFile, selectors } from './index'
 
 describe('processNextFile function', () => {
   const fileUploadedCallbackSpy = jest.fn()
@@ -38,7 +38,14 @@ describe('processNextFile function', () => {
       client: fakeClient
     })
     result(dispatchSpy, getState)
-    expect(queueCompletedCallbackSpy).toHaveBeenCalledWith([], [], [], [], [])
+    expect(queueCompletedCallbackSpy).toHaveBeenCalledWith(
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    )
   })
 
   it('should process files in the queue', async () => {
@@ -184,6 +191,61 @@ describe('processNextFile function', () => {
       file,
       status: 'quota',
       type: 'RECEIVE_UPLOAD_ERROR'
+    })
+  })
+})
+
+describe('selectors', () => {
+  const queue = [
+    { status: 'loaded' },
+    { status: 'loaded', isUpdate: true },
+    { status: 'conflict' },
+    { status: 'failed' },
+    { status: 'quota' },
+    { status: 'network' },
+    { status: 'pending' }
+  ]
+  const state = {
+    upload: {
+      queue
+    }
+  }
+
+  describe('getSuccessful selector', () => {
+    it('should return all successful items', () => {
+      const result = selectors.getSuccessful(state)
+      expect(result).toEqual([
+        {
+          status: 'loaded'
+        },
+        {
+          status: 'loaded',
+          isUpdate: true
+        }
+      ])
+    })
+  })
+
+  describe('getUploaded selector', () => {
+    it('should return all uploaded items', () => {
+      const result = selectors.getUploaded(queue)
+      expect(result).toEqual([
+        {
+          status: 'loaded'
+        }
+      ])
+    })
+  })
+
+  describe('getUpdated selector', () => {
+    it('should return all updated items', () => {
+      const result = selectors.getUpdated(queue)
+      expect(result).toEqual([
+        {
+          status: 'loaded',
+          isUpdate: true
+        }
+      ])
     })
   })
 })

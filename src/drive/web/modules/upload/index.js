@@ -188,13 +188,14 @@ export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
 
 export const onQueueEmpty = callback => (dispatch, getState) => {
   const queue = getUploadQueue(getState())
-  const loaded = getLoaded(queue)
+  const uploaded = getUploaded(queue)
   const quotas = getQuotaErrors(queue)
   const conflicts = getConflicts(queue)
+  const updated = getUpdated(queue)
   const networkErrors = getNetworkErrors(queue)
   const errors = getErrors(queue)
 
-  return callback(loaded, quotas, conflicts, networkErrors, errors)
+  return callback(uploaded, quotas, conflicts, networkErrors, errors, updated)
 }
 
 // selectors
@@ -204,11 +205,25 @@ const getErrors = queue => filterByStatus(queue, FAILED)
 const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
 const getNetworkErrors = queue => filterByStatus(queue, NETWORK)
 const getLoaded = queue => filterByStatus(queue, LOADED)
+const getUploaded = queue => getLoaded(queue).filter(f => !f.isUpdate)
+const getUpdated = queue => getLoaded(queue).filter(f => f.isUpdate)
 
 export const getUploadQueue = state => state[SLUG].queue
 export const getProcessed = state =>
   getUploadQueue(state).filter(f => f.status !== PENDING)
 export const getSuccessful = state => getLoaded(getUploadQueue(state))
+
+export const selectors = {
+  getConflicts,
+  getErrors,
+  getQuotaErrors,
+  getNetworkErrors,
+  getLoaded,
+  getUploaded,
+  getUpdated,
+  getProcessed,
+  getSuccessful
+}
 
 // DOM helpers
 const extractFilesEntries = items => {
