@@ -444,6 +444,8 @@
     "alert": {
       "success": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
       "success_conflicts": "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
+      "success_updated": "%{smart_count} file uploaded and %{updatedCount} updated(s). |||| %{smart_count} files uploaded and %{updatedCount} file(s) updated.",
+      "updated": "%{smart_count} file updated. |||| %{smart_count} files updated.",
       "errors": "Errors occurred during the file upload.",
       "network": "You are currenly offline. Please try again once you're connected."
     }

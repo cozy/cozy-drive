@@ -231,9 +231,16 @@ export const uploadFiles = (files, dirId) => dispatch => {
       files,
       dirId,
       () => null,
-      (loaded, quotas, conflicts, networkErrors, errors) =>
+      (loaded, quotas, conflicts, networkErrors, errors, updated) =>
         dispatch(
-          uploadQueueProcessed(loaded, quotas, conflicts, networkErrors, errors)
+          uploadQueueProcessed(
+            loaded,
+            quotas,
+            conflicts,
+            networkErrors,
+            errors,
+            updated
+          )
         )
     )
   )
@@ -244,7 +251,8 @@ const uploadQueueProcessed = (
   quotas,
   conflicts,
   networkErrors,
-  errors
+  errors,
+  updated
 ) => dispatch => {
   if (quotas.length > 0) {
     // quota errors have their own modal instead of a notification
@@ -258,6 +266,15 @@ const uploadQueueProcessed = (
     Alerter.info('upload.alert.network')
   } else if (errors.length > 0) {
     Alerter.info('upload.alert.errors')
+  } else if (updated.length > 0 && loaded.length === 0) {
+    Alerter.success('upload.alert.updated', {
+      smart_count: updated.length
+    })
+  } else if (updated.length > 0 && loaded.length > 0) {
+    Alerter.success('upload.alert.success_updated', {
+      smart_count: loaded.length,
+      updatedCount: updated.length
+    })
   } else {
     Alerter.success('upload.alert.success', {
       smart_count: loaded.length
