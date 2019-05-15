@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
+import { compose } from 'redux'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 import styles from 'drive/styles/dropzone.styl'
+import withSharingState from 'sharing/hoc/withSharingState'
 import DropzoneTeaser from 'drive/web/modules/upload/DropzoneTeaser'
+
 class StatefulDropzone extends Component {
   state = {
     dropzoneActive: false
@@ -20,16 +23,24 @@ class StatefulDropzone extends Component {
     this.setState(state => ({ ...state, dropzoneActive: false }))
 
   onDrop = async (files, _, evt) => {
-    const folderId = this.props.displayedFolder.id
+    const { displayedFolder, sharingState, uploadFiles } = this.props
+    const folderId = displayedFolder.id
     this.setState(state => ({ ...state, dropzoneActive: false }))
     if (!canDrop(evt)) return
     const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
-    this.props.uploadFiles(filesToUpload, folderId)
+    uploadFiles(filesToUpload, folderId, sharingState)
   }
 
   render() {
     const { dropzoneActive } = this.state
-    const { displayedFolder, children, ...rest } = this.props
+    const {
+      displayedFolder,
+      children,
+      /* don't pass these props to Dropzone */
+      sharingState, // eslint-disable-line no-unused-vars
+      uploadFiles, // eslint-disable-line no-unused-vars
+      ...rest
+    } = this.props
     return (
       <Dropzone
         {...rest}
@@ -62,13 +73,14 @@ const canDrop = evt => {
   return true
 }
 
-const mapDispatchToProps = dispatch => ({
-  uploadFiles: (files, folderId) => {
-    dispatch(uploadFiles(files, folderId))
-  }
-})
+const mapDispatchToProps = {
+  uploadFiles
+}
 
-export default connect(
-  null,
-  mapDispatchToProps
+export default compose(
+  withSharingState,
+  connect(
+    null,
+    mapDispatchToProps
+  )
 )(StatefulDropzone)
