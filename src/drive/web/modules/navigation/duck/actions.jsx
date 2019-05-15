@@ -225,11 +225,12 @@ export const getFileDownloadUrl = async id => {
   return `${cozy.client._url}${link}`
 }
 
-export const uploadFiles = (files, dirId) => dispatch => {
+export const uploadFiles = (files, dirId, sharingState) => dispatch => {
   dispatch(
     addToUploadQueue(
       files,
       dirId,
+      sharingState,
       () => null,
       (loaded, quotas, conflicts, networkErrors, errors, updated) =>
         dispatch(

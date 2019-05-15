@@ -321,6 +321,9 @@ export const hasSharedChild = (state, document) => {
   return ret
 }
 
+export const isShared = (state, document) =>
+  state.sharedPaths.some(path => path === document.path)
+
 // helpers
 const getSharedDocIds = doc =>
   doc.type === 'io.cozy.sharings'
