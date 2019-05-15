@@ -1,4 +1,5 @@
 import { Contact, Group } from 'models'
+import extraDoctypes from 'drive/lib/extraDoctypes'
 
 export const DOCTYPE_FILES = 'io.cozy.files'
 export const DOCTYPE_ALBUMS = 'io.cozy.photos.albums'
@@ -12,5 +13,6 @@ export const schema = {
     doctype: Contact.doctype,
     doctypeVersion: DOCTYPE_CONTACTS_VERSION
   },
-  groups: { doctype: Group.doctype }
+  groups: { doctype: Group.doctype },
+  ...extraDoctypes
 }
