@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Icon from 'cozy-ui/react/Icon'
-import { translate } from 'cozy-ui/react/I18n'
 
 import localforage from 'localforage'
 import {
@@ -11,7 +10,7 @@ import {
 import styles from './styles.styl'
 import Config from 'drive/config/config.json'
 
-class CallToAction extends Component {
+export default class CallToAction extends Component {
   state = {
     mustShow: false
   }
@@ -67,5 +66,3 @@ class CallToAction extends Component {
     )
   }
 }
-
-export default translate()(CallToAction)

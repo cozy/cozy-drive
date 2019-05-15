@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Overlay, Spinner, Viewer } from 'cozy-ui/transpiled/react'
+import { translate } from 'cozy-ui/react/I18n'
 import {
   getFolderIdFromRoute,
   fetchMoreFiles
@@ -96,6 +97,7 @@ class FilesViewer extends Component {
   }
 
   render() {
+    const { t } = this.props
     const files = this.getViewableFiles()
     const currentIndex = this.getCurrentIndex(files)
     // If we can't find the file, we fallback to the (potentially loading)
@@ -126,7 +128,7 @@ class FilesViewer extends Component {
           currentIndex={currentIndex}
           onChangeRequest={this.onChange}
           onCloseRequest={this.onClose}
-          renderFallbackExtraContent={Fallback}
+          renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
         />
       </Overlay>
     )
@@ -146,4 +148,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FilesViewer)
+)(translate()(FilesViewer))
