@@ -16,32 +16,6 @@ const drivePage = new DrivePage()
 const viewerPage = new ViewerPage()
 
 //************************
-//Tests when authentified
-//************************
-fixture`Drive : Viewer features : prepare data`
-  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Login & Initialization`)
-  await t.useRole(driveUser)
-  await drivePage.waitForLoading()
-  console.groupEnd()
-})
-
-test('Drive : Create a $test_date_time folder in Drive', async () => {
-  console.group(`↳ ℹ️  Drive : Create a ${data.FOLDER_DATE_TIME} folder`)
-  await drivePage.addNewFolder({ newFolderName: data.FOLDER_DATE_TIME })
-  console.groupEnd()
-})
-
-test('Drive : Go to $test_date_time and upload 26 files', async () => {
-  console.group(
-    `↳ ℹ️  Drive : Go to ${data.FOLDER_DATE_TIME} and upload 26 files`
-  )
-  await drivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await drivePage.uploadFiles(data.filesList)
-  console.groupEnd()
-})
-
-//************************
 //Tests when authentified : with downloads
 //************************
 fixture`Drive : Viewer features (and Download)`
@@ -51,7 +25,7 @@ fixture`Drive : Viewer features (and Download)`
   )
   await t.useRole(driveUser)
   await drivePage.waitForLoading()
-  await drivePage.goToFolder(data.FOLDER_DATE_TIME)
+  await drivePage.goToFolder(data.FOLDER_NAME)
   await setDownloadPath(data.DOWNLOAD_PATH)
   console.groupEnd()
 })
@@ -59,7 +33,7 @@ fixture`Drive : Viewer features (and Download)`
 test('Viewer : checking common features for all files (expect PDF)', async t => {
   //Files count needed for navigation tests
   t.ctx.totalFilesCount = await drivePage.getContentRowCount(
-    `${data.FOLDER_DATE_TIME} - Before`
+    `${data.FOLDER_NAME} - Before`
   )
   // put all files names , execpt pdf in an array for testing commons features in viewer
   t.ctx.fileNameListNoPDF = await getFilesWithoutExt(
@@ -73,7 +47,7 @@ test('Viewer : checking common features for all files (expect PDF)', async t => 
       }`
     )
     await viewerPage.checkCommonViewerControls(
-      data.FOLDER_DATE_TIME,
+      data.FOLDER_NAME,
       t.ctx.fileNameListNoPDF[i]
     )
     await viewerPage.openFileAndCheckCommonViewerDownload(
@@ -137,7 +111,7 @@ fixture`Drive : Viewer features`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
     console.group(`\n↳ ℹ️  Login, Page Initialization`)
     await t.useRole(driveUser)
     await drivePage.waitForLoading()
-    await drivePage.goToFolder(data.FOLDER_DATE_TIME)
+    await drivePage.goToFolder(data.FOLDER_NAME)
     console.groupEnd()
   }
 )
@@ -232,22 +206,4 @@ test('Viewer : text Viewer', async () => {
     })
     console.groupEnd()
   }
-})
-
-//************************
-//Tests when authentified - Clean up
-//************************
-fixture`Test clean up : remove files and folders`
-  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(`\n↳ ℹ️  Login & Initialization`)
-  await t.useRole(driveUser)
-  await drivePage.waitForLoading()
-  console.groupEnd()
-})
-
-test('Delete foler', async () => {
-  console.group('↳ ℹ️  Drive : Delete and foler')
-  await drivePage.goToFolder(data.FOLDER_DATE_TIME)
-  await drivePage.deleteCurrentFolder({})
-  console.groupEnd()
 })

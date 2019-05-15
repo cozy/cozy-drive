@@ -12,6 +12,8 @@ export const DOWNLOAD_PATH = `${homedir()}/Downloads`
 export const DOWNLOAD_FOLDER_PATH = `${DOWNLOAD_PATH}/files.zip`
 export const filesList = []
 
+export const FOLDER_NAME = 'TestFolder'
+
 //Path to Zip file
 export const DATA_ZIP_PATH = path.resolve('./testcafe/data/files-to-test.zip')
 //Path where the zip is extract & other data
