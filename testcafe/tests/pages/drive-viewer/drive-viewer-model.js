@@ -19,6 +19,15 @@ export default class ViewerDrive extends Viewer {
     await this.waitForLoading()
   }
 
+  async openViewerForFileIndex(fileIndex) {
+    await t
+      .expect(selectors.folderOrFileName.nth(fileIndex).exists)
+      .ok(`No file with index ${fileIndex}`)
+      .click(selectors.folderOrFileName.nth(fileIndex))
+
+    await this.waitForLoading()
+  }
+
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param {string} fileStartName : file to open to start the navigation testing
   //@param {number} numberOfNavigation : the number of file we want to go through during the test.
@@ -41,7 +50,7 @@ export default class ViewerDrive extends Viewer {
   }
 
   // perform checks commons to all viewer : navigation / toolbar download btn / closing viewer, for one file
-  async checkCommonViewerControls(folderName, fileName) {
+  async openFileAndCheckCommonViewerControls(folderName, fileName) {
     const index = await drivePage.getElementIndex(fileName)
     logger.info(`↳ 📁 Check Viewer for ${fileName} with index : ${index}`)
     await this.openViewerForFile(fileName)

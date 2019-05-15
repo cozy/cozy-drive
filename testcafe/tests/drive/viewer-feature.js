@@ -3,207 +3,149 @@ import logger from '../helpers/logger'
 import {
   TESTCAFE_DRIVE_URL,
   setDownloadPath,
-  getFilesWithExt,
-  getFilesWithoutExt,
   checkLocalFile,
   deleteLocalFile
 } from '../helpers/utils'
 let data = require('../helpers/data')
-import DrivePage from '../pages/drive/drive-model-private'
-import ViewerPage from '../pages/drive-viewer/drive-viewer-model'
+import PrivateDriveVRPage from '../pages/drive/drive-model-private'
+import PrivateViewerPage from '../pages/drive-viewer/drive-viewer-model'
 
-const drivePage = new DrivePage()
-const viewerPage = new ViewerPage()
+const privateDrivePage = new PrivateDriveVRPage()
+const viewerPage = new PrivateViewerPage()
+
+//Scenario const
+const FEATURE_PREFIX = 'PrivateViewerFeature'
+
+const FIXTURE_PRIVATE_WITH_DL = `${FEATURE_PREFIX} 3- PRIVATE Viewer - Go to folder and download files`
+const TEST_PRIVATE_VIEWER_ZIP = `3-1 Check viewer for zip file`
+const TEST_PPRIVATE_VIEWER_PPTX = `3-2 Check viewer for pptx file - alternate download`
+const TEST_PRIVATE_VIEWER_IMG = '3-3 Check viewer for img file'
+const TEST_PRIVATE_VIEWER_AUDIO = '3-4 Check viewer for audio file'
+const TEST_PRIVATE_VIEWER_VIDEO = '3-5 Check viewer for video file'
+const TEST_PRIVATE_VIEWER_TXT = '3-6 Check viewer for text/md file'
+const TEST_PRIVATE_VIEWER_PDF = `3-7 Check viewer for pdf file`
 
 //************************
-//Tests when authentified : with downloads
+//Tests when authentified - with Download
 //************************
-fixture`Drive : Viewer features (and Download)`
-  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
-  console.group(
-    `\n↳ ℹ️  Login, Page Initialization & data.DOWNLOAD_PATH initialization`
-  )
-  await t.useRole(driveUser)
-  await drivePage.waitForLoading()
-  await drivePage.goToFolder(data.FOLDER_NAME)
-  await setDownloadPath(data.DOWNLOAD_PATH)
+fixture`${FIXTURE_PRIVATE_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
+  .beforeEach(async t => {
+    console.group(
+      `\n↳ ℹ️  no Login (anonymous), DOWNLOAD_PATH initialization and Navigate to link`
+    )
+    await t.useRole(driveUser)
+    await privateDrivePage.waitForLoading()
+    await privateDrivePage.goToFolder(data.FOLDER_NAME)
+    await setDownloadPath(data.DOWNLOAD_PATH)
+    console.groupEnd()
+  })
+  .afterEach(async t => {
+    logger.info(
+      `↳ ℹ️  ${FEATURE_PREFIX} - Checking downloaded file for ${
+        t.ctx.fileDownloaded
+      }`
+    )
+    await checkLocalFile(`${data.DOWNLOAD_PATH}/${t.ctx.fileDownloaded}`)
+    await deleteLocalFile(`${data.DOWNLOAD_PATH}/${t.ctx.fileDownloaded}`)
+  })
+
+test(TEST_PRIVATE_VIEWER_ZIP, async t => {
+  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PRIVATE_VIEWER_ZIP}`)
+  //Common for all viewer
+  await viewerPage.openFileAndCheckCommonViewerDownload(data.FILE_ZIP)
+  t.ctx.fileDownloaded = data.FILE_ZIP
+
+  //Specific viewer
+  await viewerPage.openViewerForFile(data.FILE_ZIP)
+  await viewerPage.checkNoViewer()
+  await viewerPage.closeViewer({
+    exitWithEsc: true
+  })
   console.groupEnd()
 })
 
-test('Viewer : checking common features for all files (expect PDF)', async t => {
-  //Files count needed for navigation tests
-  t.ctx.totalFilesCount = await drivePage.getContentRowCount(
-    `${data.FOLDER_NAME} - Before`
-  )
-  // put all files names , execpt pdf in an array for testing commons features in viewer
-  t.ctx.fileNameListNoPDF = await getFilesWithoutExt(
-    data.FILE_FROM_ZIP_PATH,
-    data.pdfFilesExt
-  )
-  for (let i = 0; i < t.ctx.fileNameListNoPDF.length; i++) {
-    console.group(
-      `\n↳ ℹ️  Viewer : checking commons features for ${
-        t.ctx.fileNameListNoPDF[i]
-      }`
-    )
-    await viewerPage.checkCommonViewerControls(
-      data.FOLDER_NAME,
-      t.ctx.fileNameListNoPDF[i]
-    )
-    await viewerPage.openFileAndCheckCommonViewerDownload(
-      t.ctx.fileNameListNoPDF[i]
-    )
-    console.groupEnd()
-  }
-}).after(async t => {
-  for (let i = 0; i < t.ctx.fileNameListNoPDF.length; i++) {
-    logger.info(
-      `↳ ℹ️  Viewer (Commons) - Checking downloaded files for ${
-        t.ctx.fileNameListNoPDF[i]
-      }`
-    )
-    await checkLocalFile(`${data.DOWNLOAD_PATH}/${t.ctx.fileNameListNoPDF[i]}`)
-    await deleteLocalFile(`${data.DOWNLOAD_PATH}/${t.ctx.fileNameListNoPDF[i]}`)
-  }
+test(TEST_PPRIVATE_VIEWER_PPTX, async t => {
+  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PPRIVATE_VIEWER_PPTX}`)
+  //Specific viewer
+  await viewerPage.openViewerForFile(data.FILE_PPTX)
+  await viewerPage.checkNoViewer()
+  await viewerPage.checkNoViewerDownload()
+  t.ctx.fileDownloaded = data.FILE_PPTX
+  await viewerPage.closeViewer({
+    exitWithEsc: true
+  })
+  console.groupEnd()
 })
 
-test('Viewer : no Viewer : other Download', async t => {
-  t.ctx.fileNameListNoViewer = await getFilesWithoutExt(
-    data.FILE_FROM_ZIP_PATH,
-    data.allSpecialFilesExt
-  )
-  for (let i = 0; i < t.ctx.fileNameListNoViewer.length; i++) {
-    console.group(
-      `\n↳ ℹ️  Viewer : checking no Viewer : other Download features for 📁 ${
-        t.ctx.fileNameListNoViewer[i]
-      }`
-    )
-    await viewerPage.openViewerForFile(t.ctx.fileNameListNoViewer[i])
-    await viewerPage.checkNoViewer()
-    await viewerPage.checkNoViewerDownload()
+test(TEST_PRIVATE_VIEWER_IMG, async t => {
+  //Common for all viewer
+  await viewerPage.openFileAndCheckCommonViewerDownload(data.FILE_IMG)
+  t.ctx.fileDownloaded = data.FILE_IMG
 
-    await viewerPage.closeViewer({
-      exitWithEsc: true
-    })
-    console.groupEnd()
-  }
-}).after(async t => {
-  for (let i = 0; i < t.ctx.fileNameListNoViewer.length; i++) {
-    logger.info(
-      `↳ ℹ️  Viewer (No-Viewer) - Checking downloaded files for ${
-        t.ctx.fileNameListNoViewer[i]
-      }`
-    )
-    await checkLocalFile(
-      `${data.DOWNLOAD_PATH}/${t.ctx.fileNameListNoViewer[i]}`
-    )
-    await deleteLocalFile(
-      `${data.DOWNLOAD_PATH}/${t.ctx.fileNameListNoViewer[i]}`
-    )
-  }
+  //Specific viewer
+  await viewerPage.openViewerForFile(data.FILE_IMG)
+  await viewerPage.checkImageViewer()
+  await viewerPage.closeViewer({
+    exitWithEsc: true
+  })
+  console.groupEnd()
 })
 
-//************************
-//Tests when authentified - goes to folder in beforeEach
-//************************
-fixture`Drive : Viewer features`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
-  async t => {
-    console.group(`\n↳ ℹ️  Login, Page Initialization`)
-    await t.useRole(driveUser)
-    await drivePage.waitForLoading()
-    await drivePage.goToFolder(data.FOLDER_NAME)
-    console.groupEnd()
-  }
-)
+test(TEST_PRIVATE_VIEWER_AUDIO, async t => {
+  //Common for all viewer
+  await viewerPage.openFileAndCheckCommonViewerDownload(data.FILE_AUDIO)
+  t.ctx.fileDownloaded = data.FILE_AUDIO
 
-test('Viewer : Image Viewer', async () => {
-  const fileNameListImage = await getFilesWithExt(
-    data.FILE_FROM_ZIP_PATH,
-    data.imageFilesExt
-  )
-  for (let i = 0; i < fileNameListImage.length; i++) {
-    console.group(
-      `\n↳ ℹ️  Viewer : checking text features for 📁 ${fileNameListImage[i]}`
-    )
-    await viewerPage.openViewerForFile(fileNameListImage[i])
-    await viewerPage.checkImageViewer()
-    await viewerPage.closeViewer({
-      exitWithEsc: false
-    })
-    console.groupEnd()
-  }
+  //Specific viewer
+  await viewerPage.openViewerForFile(data.FILE_AUDIO)
+  await viewerPage.checkAudioViewer()
+  await viewerPage.closeViewer({
+    exitWithEsc: false
+  })
+  console.groupEnd()
 })
 
-test('Viewer : PDF Viewer : Download', async () => {
-  const fileNameListPdf = await getFilesWithExt(
-    data.FILE_FROM_ZIP_PATH,
-    data.pdfFilesExt
-  )
-  for (let i = 0; i < fileNameListPdf.length; i++) {
-    console.group(
-      `\n↳ ℹ️  Viewer : checking Pdf Viewer : Download features for 📁 ${
-        fileNameListPdf[i]
-      }`
-    )
-    await viewerPage.openViewerForFile(fileNameListPdf[i])
-    await viewerPage.checkPdfViewer()
-    await viewerPage.closeViewer({
-      exitWithEsc: true
-    })
-    console.groupEnd()
-  }
+test(TEST_PRIVATE_VIEWER_VIDEO, async t => {
+  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PRIVATE_VIEWER_VIDEO}`)
+  //Common for all viewer
+  await viewerPage.openFileAndCheckCommonViewerDownload(data.FILE_VIDEO)
+  t.ctx.fileDownloaded = data.FILE_VIDEO
+
+  //Specific viewer
+  await viewerPage.openViewerForFile(data.FILE_VIDEO)
+  await viewerPage.checkVideoViewer()
+  await viewerPage.closeViewer({
+    exitWithEsc: true
+  })
+  console.groupEnd()
 })
 
-test('Viewer : audio Viewer', async () => {
-  const fileNameListAudio = await getFilesWithExt(
-    data.FILE_FROM_ZIP_PATH,
-    data.audioFilesExt
-  )
-  for (let i = 0; i < fileNameListAudio.length; i++) {
-    console.group(
-      `\n↳ ℹ️  Viewer : checking Audio features for 📁 ${fileNameListAudio[i]}`
-    )
-    await viewerPage.openViewerForFile(fileNameListAudio[i])
-    await viewerPage.checkAudioViewer()
-    await viewerPage.closeViewer({
-      exitWithEsc: false
-    })
-    console.groupEnd()
-  }
+test(TEST_PRIVATE_VIEWER_TXT, async t => {
+  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PRIVATE_VIEWER_TXT}`)
+  //Common for all viewer
+  await viewerPage.openFileAndCheckCommonViewerDownload(data.FILE_TXT)
+  t.ctx.fileDownloaded = data.FILE_TXT
+
+  //Specific viewer
+  await viewerPage.openViewerForFile(data.FILE_TXT)
+  await viewerPage.checkTextViewer()
+  await viewerPage.closeViewer({
+    exitWithEsc: false
+  })
+  console.groupEnd()
 })
 
-test('Viewer : video Viewer', async () => {
-  const fileNameListVideo = await getFilesWithExt(
-    data.FILE_FROM_ZIP_PATH,
-    data.videoFilesExt
-  )
-  for (let i = 0; i < fileNameListVideo.length; i++) {
-    console.group(
-      `\n↳ ℹ️  Viewer : checking video features for 📁 ${fileNameListVideo[i]}`
-    )
-    await viewerPage.openViewerForFile(fileNameListVideo[i])
-    await viewerPage.checkVideoViewer()
-    await viewerPage.closeViewer({
-      exitWithEsc: false
-    })
-    console.groupEnd()
-  }
-})
+test(TEST_PRIVATE_VIEWER_PDF, async t => {
+  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_PRIVATE_VIEWER_PDF}`)
+  //Common for all viewer
+  await viewerPage.openFileAndCheckCommonViewerDownload(data.FILE_PDF)
+  t.ctx.fileDownloaded = data.FILE_PDF
 
-test('Viewer : text Viewer', async () => {
-  const fileNameListText = await getFilesWithExt(
-    data.FILE_FROM_ZIP_PATH,
-    data.textFilesExt
-  )
-  for (let i = 0; i < fileNameListText.length; i++) {
-    console.group(
-      `\n↳ ℹ️  Viewer : checking text features for 📁 ${fileNameListText[i]}`
-    )
-    await viewerPage.openViewerForFile(fileNameListText[i])
-    await viewerPage.checkTextViewer()
-    await viewerPage.closeViewer({
-      exitWithEsc: true
-    })
-    console.groupEnd()
-  }
+  //Specific viewer
+  await viewerPage.openViewerForFile(data.FILE_PDF)
+  await viewerPage.checkPdfViewer()
+  await viewerPage.closeViewer({
+    exitWithEsc: true
+  })
+  console.groupEnd()
 })
