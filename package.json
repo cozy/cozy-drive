@@ -103,7 +103,7 @@
     "cozy-client-js": "0.13.0",
     "cozy-device-helper": "1.5.0",
     "cozy-doctypes": "1.44.1",
-    "cozy-flags": "1.6.0",
+    "cozy-flags": "1.6.1",
     "cozy-konnector-libs": "4.11.4",
     "cozy-realtime": "2.0.8",
     "cozy-scripts": "1.13.0",
@@ -119,7 +119,9 @@
     "kd-tree-javascript": "1.0.3",
     "localforage": "1.7.3",
     "lodash": "4.17.11",
+    "log-prefix": "0.1.1",
     "mime-types": "2.1.19",
+    "minilog": "3.1.0",
     "node-polyglot": "2.3.0",
     "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",
@@ -145,8 +147,6 @@
     "redux-thunk": "2.3.0",
     "url-polyfill": "1.1.0",
     "webpack-node-externals": "1.7.2",
-    "whatwg-fetch": "3.0.0",
-    "minilog": "3.1.0",
-    "log-prefix": "0.1.1"
+    "whatwg-fetch": "3.0.0"
   }
 }
