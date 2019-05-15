@@ -228,7 +228,12 @@ export const checboxFolderByRowIndex = value => {
     .child('[class*="fil-content-cell"]')
     .child('[data-input="checkbox"]')
 }
+//Search
+export const searchInput = Selector('.coz-searchbar-autosuggest-input')
 
+export const searchResult = value => {
+  return Selector('.coz-searchbar-autosuggest-suggestion-content').nth(value)
+}
 //************************
 // Photos
 //************************

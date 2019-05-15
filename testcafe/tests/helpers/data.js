@@ -53,6 +53,7 @@ export const THUMBNAIL_DELAY = 3000
 export const VR_STATUS_DELAY = 3000
 export const VR_UPLOAD_DELAY = 5000
 export const DOWNLOAD_DELAY = 5000
+export const SEARCH_DELAY = 3000
 
 //Mask Coordonnates
 export const maskDriveFolderWithDate = {

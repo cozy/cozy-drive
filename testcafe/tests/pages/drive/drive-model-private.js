@@ -6,6 +6,7 @@ import {
   overwriteCopyCommand,
   getLastExecutedCommand
 } from '../../helpers/utils'
+import { SEARCH_DELAY } from '../../helpers/data'
 import * as selectors from '../selectors'
 import DrivePage from './drive-model'
 
@@ -459,5 +460,20 @@ export default class privateDrivePage extends DrivePage {
       .expect(selectors.modalFooter.visible)
       .ok('Delete button does not show up')
       .click(selectors.btnModalSecondButton)
+  }
+
+  async typeInSearchInput(text) {
+    await isExistingAndVisibile(selectors.searchInput, 'selectors.searchInput')
+    await t.typeText(selectors.searchInput, text)
+    //wait for result to appears
+    await t.wait(SEARCH_DELAY)
+  }
+
+  async openSearchResultByIndex(index) {
+    await isExistingAndVisibile(
+      selectors.searchResult(index),
+      `selectors.searchResult(${index})`
+    )
+    await t.click(selectors.searchResult(index))
   }
 }
