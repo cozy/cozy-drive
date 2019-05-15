@@ -9,7 +9,6 @@ import {
   deleteLocalFile
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
-import { checkToastAppearsAndDisappears } from '../pages/commons'
 let data = require('../helpers/data')
 import PrivateDriveVRPage from '../pages/drive/drive-model-private'
 import PublicDrivePage from '../pages/drive/drive-model-public'
@@ -24,8 +23,7 @@ const publicViewerPage = new PublicViewerPage()
 const FEATURE_PREFIX = 'PublicViewerFeature'
 
 const FIXTURE_INIT = `${FEATURE_PREFIX} 1- Prepare Data`
-const TEST_CREATE_FOLDER = `1-1 Create Folder`
-const TEST_UPLOAD_AND_SHARE = `1-2 Upload Files and Share Folder`
+const TEST_UPLOAD_AND_SHARE = `1-1 Share Folder`
 
 const FIXTURE_PUBLIC_WITH_DL = `${FEATURE_PREFIX} 2- Go to public link and download files`
 const TEST_PUBLIC_VIEWER_ZIP = `2-1 Check viewer for zip file`
@@ -35,8 +33,6 @@ const TEST_PUBLIC_VIEWER_AUDIO = '2-4 Check viewer for audio file'
 const TEST_PUBLIC_VIEWER_VIDEO = '2-5 Check viewer for video file'
 const TEST_PUBLIC_VIEWER_TXT = '2-6 Check viewer for text/md file'
 
-const FIXTURE_CLEANUP = `${FEATURE_PREFIX} 3- Cleanup Data`
-const TEST_DELETE_FOLDER = `3-1 Delete Folder`
 //************************
 //Tests when authentified
 //************************
@@ -54,40 +50,13 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
     await ctx.vr.checkRunStatus()
   })
 
-test(TEST_CREATE_FOLDER, async t => {
-  await t.maximizeWindow() //Real fullscren for VR
-  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_CREATE_FOLDER}`)
-  await privateDrivePage.addNewFolder({
-    newFolderName: `${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}`,
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-1`
-  })
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_CREATE_FOLDER}-2`
-  })
-  console.groupEnd()
-})
-
 test(TEST_UPLOAD_AND_SHARE, async t => {
   console.group(
-    `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD_AND_SHARE} (in "${FEATURE_PREFIX} - ${TEST_CREATE_FOLDER}" folder)`
+    `↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_UPLOAD_AND_SHARE} (in "${
+      data.FOLDER_NAME
+    }" folder)`
   )
-  await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-1`
-  })
-  await privateDrivePage.uploadFiles(data.filesList)
-
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2-Divupload`,
-    selector: selectors.divUpload
-  })
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_UPLOAD_AND_SHARE}-2`,
-    delay: data.THUMBNAIL_DELAY,
-    withMask: data.maskDriveFolderWithDate,
-    pageToWait: privateDrivePage
-  })
-
+  await privateDrivePage.goToFolder(data.FOLDER_NAME)
   await privateDrivePage.shareFolderPublicLink()
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
@@ -260,45 +229,6 @@ test(TEST_PUBLIC_VIEWER_TXT, async t => {
   await publicViewerPage.openFileAndCheckMobilePublicViewerBiggerResolution({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_VIEWER_TXT}-mob1`,
     fileName: data.FILE_TXT
-  })
-  console.groupEnd()
-})
-
-//************************
-//Tests when authentified - Clean up
-//************************
-fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_DRIVE_URL}/`
-  .before(async ctx => {
-    await initVR(ctx, SLUG, FIXTURE_CLEANUP)
-  })
-  .beforeEach(async t => {
-    console.group(`\n↳ ℹ️  Login & Initialization`)
-    await t.useRole(driveUser)
-    await privateDrivePage.waitForLoading()
-    console.groupEnd()
-  })
-  .after(async ctx => {
-    await ctx.vr.checkRunStatus()
-  })
-
-test(TEST_DELETE_FOLDER, async t => {
-  console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_DELETE_FOLDER}`)
-  await privateDrivePage.goToFolder(TEST_CREATE_FOLDER)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-1`,
-    withMask: data.maskDriveFolderWithDate
-  })
-
-  await privateDrivePage.deleteCurrentFolder({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-2`,
-    withMask: data.maskDeleteFolder
-  })
-
-  await checkToastAppearsAndDisappears(
-    'The selection has been moved to the Trash.'
-  )
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER}-3`
   })
   console.groupEnd()
 })
