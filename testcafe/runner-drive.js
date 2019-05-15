@@ -25,6 +25,7 @@ async function runRunner() {
       'testcafe/tests/drive/file_sharing_scenario.js',
       'testcafe/tests/drive/viewer-feature.js',
       'testcafe/tests/drive/public-viewer-feature.js',
+      'testcafe/tests/drive/search.js',
       //cleanup
       'testcafe/tests/drive/clean-data.js'
     ])
