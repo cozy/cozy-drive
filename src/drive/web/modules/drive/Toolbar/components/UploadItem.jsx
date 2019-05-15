@@ -10,14 +10,18 @@ const UploadItem = translate()(
   ({ t, displayedFolder, insideMoreMenu, isDisabled, uploadFiles }) =>
     insideMoreMenu ? (
       <UploadButton
-        onUpload={files => uploadFiles(files, displayedFolder)}
+        onUpload={(files, sharingState) =>
+          uploadFiles(files, displayedFolder, sharingState)
+        }
         label={t('toolbar.menu_upload')}
         className={styles['fil-action-upload']}
       />
     ) : (
       <UploadButton
         disabled={isDisabled}
-        onUpload={files => uploadFiles(files, displayedFolder)}
+        onUpload={(files, sharingState) =>
+          uploadFiles(files, displayedFolder, sharingState)
+        }
         label={t('toolbar.item_upload')}
         className={classNames(styles['c-btn'], styles['u-hide--mob'])}
       />

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Icon } from 'cozy-ui/react'
 
+import SharingContext from 'sharing/context'
+
 const styles = {
   parent: {
     position: 'relative',
@@ -18,29 +20,33 @@ const styles = {
 }
 
 const UploadButton = ({ label, disabled, onUpload, className }) => (
-  <label
-    role="button"
-    disabled={disabled}
-    className={className}
-    style={styles.parent}
-  >
-    <span className="u-flex u-flex-items-center">
-      <Icon icon="upload" />
-      <span>{label}</span>
-      <input
-        data-test-id="upload-btn"
-        type="file"
-        multiple
-        style={styles.input}
+  <SharingContext.Consumer>
+    {sharingState => (
+      <label
+        role="button"
         disabled={disabled}
-        onChange={e => {
-          if (e.target.files) {
-            onUpload(Array.from(e.target.files))
-          }
-        }}
-      />
-    </span>
-  </label>
+        className={className}
+        style={styles.parent}
+      >
+        <span className="u-flex u-flex-items-center">
+          <Icon icon="upload" />
+          <span>{label}</span>
+          <input
+            data-test-id="upload-btn"
+            type="file"
+            multiple
+            style={styles.input}
+            disabled={disabled}
+            onChange={e => {
+              if (e.target.files) {
+                onUpload(Array.from(e.target.files), sharingState)
+              }
+            }}
+          />
+        </span>
+      </label>
+    )}
+  </SharingContext.Consumer>
 )
 
 export default UploadButton

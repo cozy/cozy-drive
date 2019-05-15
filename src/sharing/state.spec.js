@@ -7,7 +7,9 @@ import reducer, {
   revokeRecipient,
   revokeSelf,
   matchingInstanceName,
-  getSharingLink
+  getSharingLink,
+  hasSharedParent,
+  isShared
 } from './state'
 
 import {
@@ -309,5 +311,53 @@ describe('generating a sharing link', () => {
     expect(getSharingLink(state, 'folder_2', 'Document')).toBe(
       'https://drive.cozy.tools/public?sharecode=shortcode'
     )
+  })
+})
+
+describe('hasSharedParent helper', () => {
+  it("should return true if one of the document's parents is shared", () => {
+    const state = {
+      sharedPaths: ['/dir0/doc0', '/dir1', '/dir2/doc1']
+    }
+    const document = {
+      path: '/dir1/subdir0/doc2'
+    }
+    const result = hasSharedParent(state, document)
+    expect(result).toBe(true)
+  })
+
+  it("should return true if one of the document's parents is shared", () => {
+    const state = {
+      sharedPaths: ['/dir0/doc0', '/dir1', '/dir2/doc1']
+    }
+    const document = {
+      path: '/dir3/doc3'
+    }
+    const result = hasSharedParent(state, document)
+    expect(result).toBe(false)
+  })
+})
+
+describe('isShared helper', () => {
+  it('should return true if document is shared', () => {
+    const state = {
+      sharedPaths: ['/dir0/doc0', '/dir1/doc1']
+    }
+    const document = {
+      path: '/dir1/doc1'
+    }
+    const result = isShared(state, document)
+    expect(result).toBe(true)
+  })
+
+  it('should return true if document is shared', () => {
+    const state = {
+      sharedPaths: ['/dir0/doc0', '/dir1/doc1']
+    }
+    const document = {
+      path: '/dir1/doc2'
+    }
+    const result = isShared(state, document)
+    expect(result).toBe(false)
   })
 })

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 
+import { hasSharedParent, isShared } from 'sharing/state'
 import UploadQueue from './UploadQueue'
 
 export { UploadQueue }
@@ -68,7 +69,8 @@ export default combineReducers({ queue })
 export const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
-  dirID
+  dirID,
+  sharingState
 ) => async (dispatch, getState, { client }) => {
   let error = null
   if (!client) {
@@ -94,20 +96,27 @@ export const processNextFile = (
   } catch (uploadError) {
     if (uploadError.status === CONFLICT_ERROR) {
       try {
-        const uploadedFile = await overwriteFile(client, file, dirID)
-        fileUploadedCallback(uploadedFile)
-        dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
+        error = uploadError
+        const path = await getFilePath(client, file, dirID)
+        if (
+          !isShared(sharingState, { path }) &&
+          !hasSharedParent(sharingState, { path })
+        ) {
+          const uploadedFile = await overwriteFile(client, file, path, dirID)
+          fileUploadedCallback(uploadedFile)
+          dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
+          error = null
+        }
       } catch (updateError) {
         error = updateError
       }
-    } else {
-      error = uploadError
     }
 
     if (error) {
       // eslint-disable-next-line no-console
       console.warn(error)
       const statusError = {
+        409: CONFLICT,
         413: QUOTA
       }
 
@@ -119,7 +128,14 @@ export const processNextFile = (
       dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
     }
   }
-  dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
+  dispatch(
+    processNextFile(
+      fileUploadedCallback,
+      queueCompletedCallback,
+      dirID,
+      sharingState
+    )
+  )
 }
 
 const getFileFromEntry = entry => new Promise(resolve => entry.file(resolve))
@@ -157,12 +173,14 @@ const uploadFile = async (client, file, dirID) => {
   return resp.data
 }
 
-export const overwriteFile = async (client, file, dirID) => {
-  const dirResp = await client.collection('io.cozy.files').get(dirID)
-  const parentDirectory = dirResp.data
-  const path = `${parentDirectory.path}/${file.name}`
+export const getFilePath = async (client, file, dirID) => {
+  const resp = await client.collection('io.cozy.files').get(dirID)
+  const parentDirectory = resp.data
+  return `${parentDirectory.path}/${file.name}`
+}
+
+export const overwriteFile = async (client, file, path, dirID) => {
   const statResp = await client.collection('io.cozy.files').statByPath(path)
-  // TODO: use statResp.data.meta.rev in If-Match header?
   const fileId = statResp.data.id
   const resp = await client
     .collection('io.cozy.files')
@@ -174,6 +192,7 @@ export const overwriteFile = async (client, file, dirID) => {
 export const addToUploadQueue = (
   files,
   dirID,
+  sharingState,
   fileUploadedCallback,
   queueCompletedCallback
 ) => async dispatch => {
@@ -181,7 +200,14 @@ export const addToUploadQueue = (
     type: ADD_TO_UPLOAD_QUEUE,
     files: extractFilesEntries(files)
   })
-  dispatch(processNextFile(fileUploadedCallback, queueCompletedCallback, dirID))
+  dispatch(
+    processNextFile(
+      fileUploadedCallback,
+      queueCompletedCallback,
+      dirID,
+      sharingState
+    )
+  )
 }
 
 export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })

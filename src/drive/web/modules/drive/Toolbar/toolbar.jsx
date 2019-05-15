@@ -12,8 +12,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  uploadFiles: (files, displayedFolder) => {
-    dispatch(uploadFiles(files, displayedFolder.id))
+  uploadFiles: (files, displayedFolder, sharingState) => {
+    dispatch(uploadFiles(files, displayedFolder.id, sharingState))
   }
 })
 

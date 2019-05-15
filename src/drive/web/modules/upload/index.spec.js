@@ -18,6 +18,9 @@ describe('processNextFile function', () => {
     })
   }
   const file = new File(['foo'], 'my-doc.odt')
+  const sharingState = {
+    sharedPaths: []
+  }
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -32,7 +35,8 @@ describe('processNextFile function', () => {
     const asyncProcess = processNextFile(
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
-      dirId
+      dirId,
+      sharingState
     )
     const result = await asyncProcess(dispatchSpy, getState, {
       client: fakeClient
@@ -69,7 +73,8 @@ describe('processNextFile function', () => {
     const asyncProcess = processNextFile(
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
-      dirId
+      dirId,
+      sharingState
     )
     await asyncProcess(dispatchSpy, getState, { client: fakeClient })
     expect(dispatchSpy).toHaveBeenCalledWith({
@@ -118,7 +123,8 @@ describe('processNextFile function', () => {
     const asyncProcess = processNextFile(
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
-      dirId
+      dirId,
+      sharingState
     )
     await asyncProcess(dispatchSpy, getState, { client: fakeClient })
 
@@ -141,6 +147,69 @@ describe('processNextFile function', () => {
       type: 'RECEIVE_UPLOAD_SUCCESS',
       file,
       isUpdate: true
+    })
+  })
+
+  it('should not update a file in conflict if it is shared', async () => {
+    const getState = () => ({
+      upload: {
+        queue: [
+          {
+            status: 'pending',
+            file,
+            entry: '',
+            isDirectory: false
+          }
+        ]
+      }
+    })
+    createFileSpy.mockRejectedValue({
+      status: 409,
+      title: 'Conflict',
+      detail: 'file already exists',
+      source: {}
+    })
+
+    getSpy.mockResolvedValue({
+      data: {
+        path: '/my-dir'
+      }
+    })
+
+    statByPathSpy.mockResolvedValue({
+      data: {
+        id: 'b552a167-1aa4'
+      }
+    })
+
+    updateFileSpy.mockResolvedValue({ data: file })
+
+    const sharingState = {
+      sharedPaths: ['/my-dir']
+    }
+
+    const asyncProcess = processNextFile(
+      fileUploadedCallbackSpy,
+      queueCompletedCallbackSpy,
+      dirId,
+      sharingState
+    )
+    await asyncProcess(dispatchSpy, getState, { client: fakeClient })
+
+    expect(dispatchSpy).toHaveBeenNthCalledWith(1, {
+      type: 'UPLOAD_FILE',
+      file
+    })
+    expect(createFileSpy).toHaveBeenCalledWith(file, {
+      dirId: 'my-dir'
+    })
+
+    expect(fileUploadedCallbackSpy).not.toHaveBeenCalled()
+
+    expect(dispatchSpy).toHaveBeenNthCalledWith(2, {
+      file,
+      status: 'conflict',
+      type: 'RECEIVE_UPLOAD_ERROR'
     })
   })
 
@@ -181,7 +250,8 @@ describe('processNextFile function', () => {
     const asyncProcess = processNextFile(
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
-      dirId
+      dirId,
+      sharingState
     )
     await asyncProcess(dispatchSpy, getState, { client: fakeClient })
 
