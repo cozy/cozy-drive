@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { getPlatform } from 'cozy-device-helper'
 import { Button } from 'cozy-ui/react'
-//import flag from 'cozy-flags'
 
 import { nativeLinkOpen } from '../LinkManager'
 
