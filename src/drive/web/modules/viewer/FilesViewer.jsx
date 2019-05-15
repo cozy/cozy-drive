@@ -102,36 +102,29 @@ class FilesViewer extends Component {
     const currentIndex = this.getCurrentIndex(files)
     // If we can't find the file, we fallback to the (potentially loading)
     // direct stat made by the viewer
-    if (currentIndex === -1) {
-      if (!this.state.currentFile) {
-        return (
-          <Overlay>
-            <Spinner size="xxlarge" middle noMargin color="white" />
-          </Overlay>
-        )
-      }
+    if (currentIndex === -1 && !this.state.currentFile) {
+      return (
+        <Overlay>
+          <Spinner size="xxlarge" middle noMargin color="white" />
+        </Overlay>
+      )
+    } else {
+      const hasCurrentIndex = currentIndex != -1
+      const viewerFiles = hasCurrentIndex ? files : [this.state.currentFile]
+      const viewerIndex = hasCurrentIndex ? currentIndex : 0
+
       return (
         <Overlay>
           <Viewer
-            files={[this.state.currentFile]}
-            currentIndex={0}
+            files={viewerFiles}
+            currentIndex={viewerIndex}
             onChangeRequest={this.onChange}
             onCloseRequest={this.onClose}
+            renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
           />
         </Overlay>
       )
     }
-    return (
-      <Overlay>
-        <Viewer
-          files={files}
-          currentIndex={currentIndex}
-          onChangeRequest={this.onChange}
-          onCloseRequest={this.onClose}
-          renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
-        />
-      </Overlay>
-    )
   }
 }
 

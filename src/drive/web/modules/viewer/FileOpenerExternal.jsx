@@ -14,6 +14,7 @@ import get from 'lodash/get'
 import { Spinner, Alerter, translate } from 'cozy-ui/react'
 import { Viewer } from 'cozy-ui/transpiled/react'
 import styles from 'drive/web/modules/viewer/barviewer.styl'
+import Fallback from 'drive/web/modules/viewer/Fallback'
 
 const doNothing = () => {}
 
@@ -64,7 +65,7 @@ export class FileOpener extends Component {
 
   render() {
     const { file, loading, fileNotFound } = this.state
-    const { withCloseButtton = true } = this.props
+    const { withCloseButtton = true, t } = this.props
 
     return (
       <div className={styles['viewer-wrapper-with-bar']}>
@@ -77,6 +78,9 @@ export class FileOpener extends Component {
               currentIndex={0}
               onChangeRequest={doNothing}
               onCloseRequest={withCloseButtton ? this.navigateToDrive : null}
+              renderFallbackExtraContent={file => (
+                <Fallback file={file} t={t} />
+              )}
             />
           )}
       </div>
