@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { translate } from 'cozy-ui/react/I18n'
 import { Button, Alerter } from 'cozy-ui/transpiled/react'
 import { logException } from 'drive/lib/reporter'
 import { isMobileApp } from 'cozy-device-helper'
@@ -73,4 +72,4 @@ const NoViewerButton = ({ file, t }) => {
   else return <DownloadButton t={t} file={file} />
 }
 
-export default translate()(NoViewerButton)
+export default NoViewerButton
