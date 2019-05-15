@@ -1,8 +1,8 @@
 @require 'settings/z-index.styl'
-bar-height = 3rem
+@require '../../../styles/coz-bar-size.styl'
 
 .viewer-wrapper-with-bar
   position absolute
   width 100%
-  height "calc(100% - %s)" % bar-height
+  height "calc(100% - %s)" % $coz-bar-size
   z-index ($bar-index - 2)

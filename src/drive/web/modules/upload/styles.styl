@@ -3,7 +3,7 @@
 @require 'settings/icons.styl'
 @require 'settings/breakpoints.styl'
 @require 'settings/z-index.styl'
-
+@require '../../../styles/coz-bar-size.styl'
 
 .upload-queue
     @extend $popover
@@ -119,7 +119,6 @@ progress.upload-queue-progress::-moz-progress-bar
 
 +medium-screen()
     // we need to cover the border-bottom of the cozy-bar
-    $coz-bar-size = 3rem
     $coz-bar-border-size = .0625rem
 
     .upload-queue
