@@ -41,11 +41,11 @@ const status = action => {
   }
 }
 
-const item = (state, action = { isUpdate: false }) =>
-  Object.assign({}, state, {
-    isUpdate: action.isUpdate,
-    status: status(action)
-  })
+const item = (state, action = { isUpdate: false }) => ({
+  ...state,
+  isUpdate: action.isUpdate,
+  status: status(action)
+})
 
 const queue = (state = [], action) => {
   switch (action.type) {
