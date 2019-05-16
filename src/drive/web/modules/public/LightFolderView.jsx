@@ -19,13 +19,8 @@ import {
   getFolderUrl
 } from 'drive/web/modules/navigation/duck'
 
-import { Viewer } from 'cozy-ui/transpiled/react'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
-
-import createWorker from 'react-pdf/dist/pdf.worker.entry.js'
-import { pdfjs } from 'react-pdf'
-
-pdfjs.GlobalWorkerOptions.workerPort = createWorker()
+import Viewer from 'drive/web/modules/viewer/PublicViewer'
 
 class DumbFolderView extends React.Component {
   state = {
