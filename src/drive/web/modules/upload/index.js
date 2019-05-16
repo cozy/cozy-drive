@@ -247,7 +247,6 @@ export const selectors = {
   getErrors,
   getQuotaErrors,
   getNetworkErrors,
-  getLoaded,
   getUploaded,
   getUpdated,
   getProcessed,
