@@ -1,14 +1,9 @@
 import React from 'react'
-import { Viewer } from 'cozy-ui/transpiled/react'
 import PropTypes from 'prop-types'
 
 import PublicToolbar from './PublicToolbar'
+import Viewer from 'drive/web/modules/viewer/PublicViewer'
 import styles from 'drive/web/modules/viewer/barviewer.styl'
-
-import createWorker from 'react-pdf/dist/pdf.worker.entry.js'
-import { pdfjs } from 'react-pdf'
-
-pdfjs.GlobalWorkerOptions.workerPort = createWorker()
 
 const LightFileViewer = ({ files, isFile }) => (
   <div className={styles['viewer-wrapper-with-bar']}>
