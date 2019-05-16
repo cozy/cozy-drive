@@ -105,7 +105,7 @@ export const processNextFile = (
           !isShared(sharingState, { path }) &&
           !hasSharedParent(sharingState, { path })
         ) {
-          const uploadedFile = await overwriteFile(client, file, path, dirID)
+          const uploadedFile = await overwriteFile(client, file, path)
           fileUploadedCallback(uploadedFile)
           dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
           error = null
@@ -182,12 +182,12 @@ export const getFilePath = async (client, file, dirID) => {
   return `${parentDirectory.path}/${file.name}`
 }
 
-export const overwriteFile = async (client, file, path, dirID) => {
+export const overwriteFile = async (client, file, path) => {
   const statResp = await client.collection('io.cozy.files').statByPath(path)
-  const fileId = statResp.data.id
+  const { id: fileId, dir_id: dirId } = statResp.data
   const resp = await client
     .collection('io.cozy.files')
-    .updateFile(file, { dirId: dirID, fileId })
+    .updateFile(file, { dirId, fileId })
 
   return resp.data
 }
