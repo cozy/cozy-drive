@@ -23,12 +23,11 @@ class StatefulDropzone extends Component {
     this.setState(state => ({ ...state, dropzoneActive: false }))
 
   onDrop = async (files, _, evt) => {
-    const { displayedFolder, sharingState, uploadFiles } = this.props
-    const folderId = displayedFolder.id
+    const { uploadFiles } = this.props
     this.setState(state => ({ ...state, dropzoneActive: false }))
     if (!canDrop(evt)) return
     const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
-    uploadFiles(filesToUpload, folderId, sharingState)
+    uploadFiles(filesToUpload)
   }
 
   render() {
@@ -73,9 +72,10 @@ const canDrop = evt => {
   return true
 }
 
-const mapDispatchToProps = {
-  uploadFiles
-}
+const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
+  uploadFiles: files =>
+    dispatch(uploadFiles(files, displayedFolder.id, sharingState))
+})
 
 export default compose(
   withSharingState,
