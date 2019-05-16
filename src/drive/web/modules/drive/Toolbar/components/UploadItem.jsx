@@ -7,21 +7,17 @@ import styles from 'drive/styles/toolbar.styl'
 import toolbarContainer from '../toolbar'
 
 const UploadItem = translate()(
-  ({ t, displayedFolder, insideMoreMenu, isDisabled, uploadFiles }) =>
+  ({ t, displayedFolder, insideMoreMenu, isDisabled }) =>
     insideMoreMenu ? (
       <UploadButton
-        onUpload={(files, sharingState) =>
-          uploadFiles(files, displayedFolder, sharingState)
-        }
+        displayedFolder={displayedFolder}
         label={t('toolbar.menu_upload')}
         className={styles['fil-action-upload']}
       />
     ) : (
       <UploadButton
         disabled={isDisabled}
-        onUpload={(files, sharingState) =>
-          uploadFiles(files, displayedFolder, sharingState)
-        }
+        displayedFolder={displayedFolder}
         label={t('toolbar.item_upload')}
         className={classNames(styles['c-btn'], styles['u-hide--mob'])}
       />

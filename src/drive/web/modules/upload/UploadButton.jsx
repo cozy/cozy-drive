@@ -1,7 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { Icon } from 'cozy-ui/react'
 
-import SharingContext from 'sharing/context'
+import withSharingState from 'sharing/hoc/withSharingState'
+import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const styles = {
   parent: {
@@ -20,33 +23,41 @@ const styles = {
 }
 
 const UploadButton = ({ label, disabled, onUpload, className }) => (
-  <SharingContext.Consumer>
-    {sharingState => (
-      <label
-        role="button"
+  <label
+    role="button"
+    disabled={disabled}
+    className={className}
+    style={styles.parent}
+  >
+    <span className="u-flex u-flex-items-center">
+      <Icon icon="upload" />
+      <span>{label}</span>
+      <input
+        data-test-id="upload-btn"
+        type="file"
+        multiple
+        style={styles.input}
         disabled={disabled}
-        className={className}
-        style={styles.parent}
-      >
-        <span className="u-flex u-flex-items-center">
-          <Icon icon="upload" />
-          <span>{label}</span>
-          <input
-            data-test-id="upload-btn"
-            type="file"
-            multiple
-            style={styles.input}
-            disabled={disabled}
-            onChange={e => {
-              if (e.target.files) {
-                onUpload(Array.from(e.target.files), sharingState)
-              }
-            }}
-          />
-        </span>
-      </label>
-    )}
-  </SharingContext.Consumer>
+        onChange={e => {
+          if (e.target.files) {
+            onUpload(Array.from(e.target.files))
+          }
+        }}
+      />
+    </span>
+  </label>
 )
 
-export default UploadButton
+const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
+  onUpload: files => {
+    dispatch(uploadFiles(files, displayedFolder.id, sharingState))
+  }
+})
+
+export default compose(
+  withSharingState,
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(UploadButton)
