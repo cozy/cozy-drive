@@ -100,7 +100,7 @@ export const processNextFile = (
     if (uploadError.status === CONFLICT_ERROR) {
       try {
         error = uploadError
-        const path = await getFilePath(client, file, dirID)
+        const path = await getFileFullpath(client, file, dirID)
         if (
           flag('handle-conflicts') &&
           !isShared(sharingState, { path }) &&
@@ -177,7 +177,7 @@ const uploadFile = async (client, file, dirID) => {
   return resp.data
 }
 
-export const getFilePath = async (client, file, dirID) => {
+export const getFileFullpath = async (client, file, dirID) => {
   const resp = await client.collection('io.cozy.files').get(dirID)
   const parentDirectory = resp.data
   return `${parentDirectory.path}/${file.name}`
