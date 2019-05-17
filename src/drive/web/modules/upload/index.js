@@ -18,6 +18,7 @@ const PURGE_UPLOAD_QUEUE = 'PURGE_UPLOAD_QUEUE'
 const PENDING = 'pending'
 const LOADING = 'loading'
 const LOADED = 'loaded'
+const UPDATED = 'updated'
 const FAILED = 'failed'
 const CONFLICT = 'conflict'
 const QUOTA = 'quota'
@@ -30,12 +31,12 @@ const itemInitialState = item => ({
   status: PENDING
 })
 
-const status = action => {
+const getStatus = action => {
   switch (action.type) {
     case UPLOAD_FILE:
       return LOADING
     case RECEIVE_UPLOAD_SUCCESS:
-      return LOADED
+      return action.isUpdate ? UPDATED : LOADED
     case RECEIVE_UPLOAD_ERROR:
       return action.status
   }
@@ -43,8 +44,7 @@ const status = action => {
 
 const item = (state, action = { isUpdate: false }) => ({
   ...state,
-  isUpdate: action.isUpdate,
-  status: status(action)
+  status: getStatus(action)
 })
 
 const queue = (state = [], action) => {
@@ -66,6 +66,7 @@ const queue = (state = [], action) => {
       return state
   }
 }
+
 export default combineReducers({ queue })
 
 export const processNextFile = (
@@ -233,14 +234,18 @@ const getConflicts = queue => filterByStatus(queue, CONFLICT)
 const getErrors = queue => filterByStatus(queue, FAILED)
 const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
 const getNetworkErrors = queue => filterByStatus(queue, NETWORK)
-const getLoaded = queue => filterByStatus(queue, LOADED)
-const getUploaded = queue => getLoaded(queue).filter(f => !f.isUpdate)
-const getUpdated = queue => getLoaded(queue).filter(f => f.isUpdate)
+const getUploaded = queue => filterByStatus(queue, LOADED)
+const getUpdated = queue => filterByStatus(queue, UPDATED)
 
 export const getUploadQueue = state => state[SLUG].queue
+
 export const getProcessed = state =>
   getUploadQueue(state).filter(f => f.status !== PENDING)
-export const getSuccessful = state => getLoaded(getUploadQueue(state))
+
+export const getSuccessful = state => {
+  const queue = getUploadQueue(state)
+  return queue.filter(f => [LOADED, UPDATED].includes(f.status))
+}
 
 export const selectors = {
   getConflicts,
