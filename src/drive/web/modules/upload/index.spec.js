@@ -1,4 +1,7 @@
 import { processNextFile, selectors } from './index'
+import flag from 'cozy-flags'
+
+jest.mock('cozy-flags')
 
 describe('processNextFile function', () => {
   const fileUploadedCallbackSpy = jest.fn()
@@ -24,6 +27,10 @@ describe('processNextFile function', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+  })
+
+  beforeEach(() => {
+    flag.mockReturnValue(true)
   })
 
   it('should handle an empty queue', async () => {
@@ -114,6 +121,7 @@ describe('processNextFile function', () => {
 
     statByPathSpy.mockResolvedValue({
       data: {
+        dir_id: 'my-dir',
         id: 'b552a167-1aa4'
       }
     })
@@ -178,6 +186,7 @@ describe('processNextFile function', () => {
 
     statByPathSpy.mockResolvedValue({
       data: {
+        dir_id: 'my-dir',
         id: 'b552a167-1aa4'
       }
     })
@@ -268,7 +277,7 @@ describe('processNextFile function', () => {
 describe('selectors', () => {
   const queue = [
     { status: 'loaded' },
-    { status: 'loaded', isUpdate: true },
+    { status: 'updated' },
     { status: 'conflict' },
     { status: 'failed' },
     { status: 'quota' },
@@ -289,8 +298,7 @@ describe('selectors', () => {
           status: 'loaded'
         },
         {
-          status: 'loaded',
-          isUpdate: true
+          status: 'updated'
         }
       ])
     })
@@ -312,9 +320,32 @@ describe('selectors', () => {
       const result = selectors.getUpdated(queue)
       expect(result).toEqual([
         {
-          status: 'loaded',
-          isUpdate: true
+          status: 'updated'
         }
+      ])
+    })
+  })
+
+  describe('getSuccessful selector', () => {
+    it('should return all successful items', () => {
+      const queue = [
+        { id: '1', status: 'updated' },
+        { id: '2', status: 'quota' },
+        { id: '3', status: 'conflict' },
+        { id: '4', status: 'updated' },
+        { id: '5', status: 'failed' },
+        { id: '6', status: 'updated' }
+      ]
+      const state = {
+        upload: {
+          queue
+        }
+      }
+      const result = selectors.getSuccessful(state)
+      expect(result).toEqual([
+        { id: '1', status: 'updated' },
+        { id: '4', status: 'updated' },
+        { id: '6', status: 'updated' }
       ])
     })
   })
