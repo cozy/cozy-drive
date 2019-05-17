@@ -17,7 +17,7 @@ const PURGE_UPLOAD_QUEUE = 'PURGE_UPLOAD_QUEUE'
 
 const PENDING = 'pending'
 const LOADING = 'loading'
-const LOADED = 'loaded'
+const CREATED = 'created'
 const UPDATED = 'updated'
 const FAILED = 'failed'
 const CONFLICT = 'conflict'
@@ -36,7 +36,7 @@ const getStatus = action => {
     case UPLOAD_FILE:
       return LOADING
     case RECEIVE_UPLOAD_SUCCESS:
-      return action.isUpdate ? UPDATED : LOADED
+      return action.isUpdate ? UPDATED : CREATED
     case RECEIVE_UPLOAD_ERROR:
       return action.status
   }
@@ -51,7 +51,7 @@ const queue = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
       return [
-        ...state.filter(i => i.status !== LOADED),
+        ...state.filter(i => i.status !== CREATED),
         ...action.files.map(f => itemInitialState(f))
       ]
     case PURGE_UPLOAD_QUEUE:
@@ -218,14 +218,14 @@ export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
 
 export const onQueueEmpty = callback => (dispatch, getState) => {
   const queue = getUploadQueue(getState())
-  const uploaded = getUploaded(queue)
   const quotas = getQuotaErrors(queue)
   const conflicts = getConflicts(queue)
+  const created = getCreated(queue)
   const updated = getUpdated(queue)
   const networkErrors = getNetworkErrors(queue)
   const errors = getErrors(queue)
 
-  return callback(uploaded, quotas, conflicts, networkErrors, errors, updated)
+  return callback(created, quotas, conflicts, networkErrors, errors, updated)
 }
 
 // selectors
@@ -234,7 +234,7 @@ const getConflicts = queue => filterByStatus(queue, CONFLICT)
 const getErrors = queue => filterByStatus(queue, FAILED)
 const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
 const getNetworkErrors = queue => filterByStatus(queue, NETWORK)
-const getUploaded = queue => filterByStatus(queue, LOADED)
+const getCreated = queue => filterByStatus(queue, CREATED)
 const getUpdated = queue => filterByStatus(queue, UPDATED)
 
 export const getUploadQueue = state => state[SLUG].queue
@@ -244,7 +244,7 @@ export const getProcessed = state =>
 
 export const getSuccessful = state => {
   const queue = getUploadQueue(state)
-  return queue.filter(f => [LOADED, UPDATED].includes(f.status))
+  return queue.filter(f => [CREATED, UPDATED].includes(f.status))
 }
 
 export const selectors = {
@@ -252,7 +252,7 @@ export const selectors = {
   getErrors,
   getQuotaErrors,
   getNetworkErrors,
-  getUploaded,
+  getCreated,
   getUpdated,
   getProcessed,
   getSuccessful

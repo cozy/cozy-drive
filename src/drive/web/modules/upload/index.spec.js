@@ -276,7 +276,7 @@ describe('processNextFile function', () => {
 
 describe('selectors', () => {
   const queue = [
-    { status: 'loaded' },
+    { status: 'created' },
     { status: 'updated' },
     { status: 'conflict' },
     { status: 'failed' },
@@ -284,32 +284,13 @@ describe('selectors', () => {
     { status: 'network' },
     { status: 'pending' }
   ]
-  const state = {
-    upload: {
-      queue
-    }
-  }
 
-  describe('getSuccessful selector', () => {
-    it('should return all successful items', () => {
-      const result = selectors.getSuccessful(state)
-      expect(result).toEqual([
-        {
-          status: 'loaded'
-        },
-        {
-          status: 'updated'
-        }
-      ])
-    })
-  })
-
-  describe('getUploaded selector', () => {
+  describe('getCreated selector', () => {
     it('should return all uploaded items', () => {
-      const result = selectors.getUploaded(queue)
+      const result = selectors.getCreated(queue)
       expect(result).toEqual([
         {
-          status: 'loaded'
+          status: 'created'
         }
       ])
     })
@@ -329,7 +310,7 @@ describe('selectors', () => {
   describe('getSuccessful selector', () => {
     it('should return all successful items', () => {
       const queue = [
-        { id: '1', status: 'updated' },
+        { id: '1', status: 'created' },
         { id: '2', status: 'quota' },
         { id: '3', status: 'conflict' },
         { id: '4', status: 'updated' },
@@ -343,7 +324,7 @@ describe('selectors', () => {
       }
       const result = selectors.getSuccessful(state)
       expect(result).toEqual([
-        { id: '1', status: 'updated' },
+        { id: '1', status: 'created' },
         { id: '4', status: 'updated' },
         { id: '6', status: 'updated' }
       ])
