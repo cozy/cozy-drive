@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Icon } from 'cozy-ui/react'
@@ -47,6 +48,20 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     </span>
   </label>
 )
+
+UploadButton.propTypes = {
+  label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  onUpload: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
+  displayedFolder: PropTypes.object.isRequired, // io.cozy.files
+  // in case of upload conflicts, shared files are not overridden
+  sharingState: PropTypes.object.isRequired
+}
+
+UploadButton.defaultProps = {
+  disabled: false
+}
 
 const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
   onUpload: files => {
