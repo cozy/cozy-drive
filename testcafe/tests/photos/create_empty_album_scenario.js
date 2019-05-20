@@ -12,6 +12,7 @@ const photoAlbumsPage = new AlbumsPage()
 fixture`Create new empty album and add photos`
   .page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
   console.group(`\n↳ ℹ️  Login & Initialization`)
+  await t.maximizeWindow()
 
   await t.useRole(photosUser)
   await timelinePage.waitForLoading()

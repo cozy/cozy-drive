@@ -33,6 +33,8 @@ fixture`${FIXTURE_PRIVATE_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
     console.group(
       `\n↳ ℹ️  no Login (anonymous), DOWNLOAD_PATH initialization and Navigate to link`
     )
+    await t.maximizeWindow()
+
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     await privateDrivePage.goToFolder(data.FOLDER_NAME)

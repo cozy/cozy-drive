@@ -26,6 +26,8 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
   })
   .beforeEach(async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow()
+
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     await timelinePage.initPhotosCount()

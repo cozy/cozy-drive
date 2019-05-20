@@ -42,6 +42,8 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
   })
   .beforeEach(async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow() //Back to desktop
+
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -84,6 +86,8 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
       `\n↳ ℹ️  no Login (anonymous), DOWNLOAD_PATH initialization and Navigate to link`
     )
     //await t.useRole(Role.anonymous())
+    await t.maximizeWindow() //Back to desktop
+
     await t.navigateTo(data.sharingLink)
     await publicDrivePage.waitForLoading({ isFull: true })
 

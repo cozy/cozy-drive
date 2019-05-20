@@ -13,7 +13,6 @@ import {
 import { initVR } from '../helpers/visualreview-utils'
 import TimelinePage from '../pages/photos/photos-timeline-model'
 import * as selectors from '../pages/selectors'
-import logger from '../helpers/logger'
 
 const timelinePage = new TimelinePage()
 
@@ -29,6 +28,8 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`
   })
   .beforeEach(async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow()
+
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     console.groupEnd()
