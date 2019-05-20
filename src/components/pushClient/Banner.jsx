@@ -22,20 +22,23 @@ class BannerClient extends Component {
   state = {
     mustShow: false
   }
+  constructor(props) {
+    super(props)
+    this.willUnmount = false
+  }
 
-  async componentWillMount() {
-    if (Config.promoteDesktop.isActivated !== true) return
+  async componentDidMount() {
+    this.willUnmount = false
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     if (!seen) {
       const mustSee = !(await isClientAlreadyInstalled())
-      if (mustSee) {
+      if (mustSee && !this.willUnmount) {
         this.setState({ mustShow: true })
       }
     }
   }
-
   componentWillUnmount() {
-    // TODO: cancel all async tasks
+    this.willUnmount = true
   }
 
   markAsSeen(element) {
