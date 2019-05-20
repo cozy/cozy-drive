@@ -73,7 +73,7 @@ FileListBody.propTypes = {
   withSelectionCheckbox: PropTypes.bool,
   files: PropTypes.array,
   fileCount: PropTypes.number,
-  fetchMoreFiles: PropTypes.fund,
+  fetchMoreFiles: PropTypes.func,
   displayedFolder: PropTypes.object,
   fileActions: PropTypes.object,
   onFolderOpen: PropTypes.func,
