@@ -225,12 +225,19 @@ export const getFileDownloadUrl = async id => {
   return `${cozy.client._url}${link}`
 }
 
+/*
+ * @function
+ * @param {Array} files - The list of File objects to upload
+ * @param {string} dirId - The id of the directory in which we upload the files
+ * @param {Object} sharingState - The sharing context (provided by SharingContext.Provider)
+ * @returns {function} - A function that dispatches addToUploadQueue action
+ */
 export const uploadFiles = (files, dirId, sharingState) => dispatch => {
   dispatch(
     addToUploadQueue(
       files,
       dirId,
-      sharingState,
+      sharingState, // used to know if files are shared for conflicts management
       () => null,
       (loaded, quotas, conflicts, networkErrors, errors, updated) =>
         dispatch(

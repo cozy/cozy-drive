@@ -177,12 +177,26 @@ const uploadFile = async (client, file, dirID) => {
   return resp.data
 }
 
+/*
+ * @function
+ * @param {Object} client - A CozyClient instance
+ * @param {Object} file - The uploaded javascript File object
+ * @param {string} dirID - The id of the parent directory
+ * @return {Object} - The full path of the file in the cozy
+ */
 export const getFileFullpath = async (client, file, dirID) => {
   const resp = await client.collection('io.cozy.files').get(dirID)
   const parentDirectory = resp.data
   return `${parentDirectory.path}/${file.name}`
 }
 
+/*
+ * @function
+ * @param {Object} client - A CozyClient instance
+ * @param {Object} file - The uploaded javascript File object
+ * @param {string} path - The file's path in the cozy
+ * @return {Object} - The updated io.cozy.files
+ */
 export const overwriteFile = async (client, file, path) => {
   const statResp = await client.collection('io.cozy.files').statByPath(path)
   const { id: fileId, dir_id: dirId } = statResp.data
