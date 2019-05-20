@@ -1,4 +1,4 @@
-import { processNextFile, selectors } from './index'
+import { processNextFile, selectors, queue } from './index'
 import flag from 'cozy-flags'
 
 jest.mock('cozy-flags')
@@ -329,5 +329,167 @@ describe('selectors', () => {
         { id: '6', status: 'updated' }
       ])
     })
+  })
+})
+
+describe('queue reducer', () => {
+  const state = [
+    {
+      status: 'pending',
+      file: {
+        name: 'doc1.odt'
+      }
+    },
+    {
+      status: 'pending',
+      file: {
+        name: 'doc2.odt'
+      }
+    },
+    {
+      status: 'pending',
+      file: {
+        name: 'doc3.odt'
+      }
+    }
+  ]
+  it('should be empty (initial state)', () => {
+    const result = queue(undefined, {})
+    expect(result).toEqual([])
+  })
+
+  it('should handle PURGE_UPLOAD_QUEUE action type', () => {
+    const action = {
+      type: 'PURGE_UPLOAD_QUEUE'
+    }
+    const state = [{ status: 'created', id: '1' }]
+    const result = queue(state, action)
+    expect(result).toEqual([])
+  })
+
+  it('should handle UPLOAD_FILE action type', () => {
+    const action = {
+      type: 'UPLOAD_FILE',
+      file: {
+        name: 'doc1.odt'
+      }
+    }
+    const expected = [
+      {
+        status: 'loading',
+        file: {
+          name: 'doc1.odt'
+        }
+      },
+      {
+        status: 'pending',
+        file: {
+          name: 'doc2.odt'
+        }
+      },
+      {
+        status: 'pending',
+        file: {
+          name: 'doc3.odt'
+        }
+      }
+    ]
+    const result = queue(state, action)
+    expect(result).toEqual(expected)
+  })
+
+  it('should handle RECEIVE_UPLOAD_SUCCESS action type', () => {
+    const action = {
+      type: 'RECEIVE_UPLOAD_SUCCESS',
+      file: {
+        name: 'doc3.odt'
+      }
+    }
+    const expected = [
+      {
+        status: 'pending',
+        file: {
+          name: 'doc1.odt'
+        }
+      },
+      {
+        status: 'pending',
+        file: {
+          name: 'doc2.odt'
+        }
+      },
+      {
+        status: 'created',
+        file: {
+          name: 'doc3.odt'
+        }
+      }
+    ]
+    const result = queue(state, action)
+    expect(result).toEqual(expected)
+  })
+
+  it('should handle RECEIVE_UPLOAD_SUCCESS action type (update)', () => {
+    const action = {
+      type: 'RECEIVE_UPLOAD_SUCCESS',
+      file: {
+        name: 'doc3.odt'
+      },
+      isUpdate: true
+    }
+    const expected = [
+      {
+        status: 'pending',
+        file: {
+          name: 'doc1.odt'
+        }
+      },
+      {
+        status: 'pending',
+        file: {
+          name: 'doc2.odt'
+        }
+      },
+      {
+        status: 'updated',
+        file: {
+          name: 'doc3.odt'
+        }
+      }
+    ]
+    const result = queue(state, action)
+    expect(result).toEqual(expected)
+  })
+
+  it('should handle RECEIVE_UPLOAD_ERROR action type', () => {
+    const action = {
+      type: 'RECEIVE_UPLOAD_ERROR',
+      file: {
+        name: 'doc2.odt'
+      },
+      status: 'conflict'
+    }
+    const expected = [
+      {
+        status: 'pending',
+        file: {
+          name: 'doc1.odt'
+        }
+      },
+      {
+        status: 'conflict',
+        file: {
+          name: 'doc2.odt'
+        }
+      },
+      {
+        status: 'pending',
+        file: {
+          name: 'doc3.odt'
+        }
+      }
+    ]
+    const result = queue(state, action)
+    expect(result).toEqual(expected)
   })
 })

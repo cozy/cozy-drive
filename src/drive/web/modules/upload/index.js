@@ -47,7 +47,7 @@ const item = (state, action = { isUpdate: false }) => ({
   status: getStatus(action)
 })
 
-const queue = (state = [], action) => {
+export const queue = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
       return [
