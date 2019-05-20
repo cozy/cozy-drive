@@ -15,6 +15,7 @@ const RECEIVE_UPLOAD_SUCCESS = 'RECEIVE_UPLOAD_SUCCESS'
 const RECEIVE_UPLOAD_ERROR = 'RECEIVE_UPLOAD_ERROR'
 const PURGE_UPLOAD_QUEUE = 'PURGE_UPLOAD_QUEUE'
 
+const CANCEL = 'cancel'
 const PENDING = 'pending'
 const LOADING = 'loading'
 const CREATED = 'created'
@@ -23,6 +24,22 @@ const FAILED = 'failed'
 const CONFLICT = 'conflict'
 const QUOTA = 'quota'
 const NETWORK = 'network'
+const DONE_STATUSES = [CREATED, UPDATED]
+const ERROR_STATUSES = [CONFLICT, NETWORK, QUOTA]
+
+export const status = {
+  CANCEL,
+  PENDING,
+  LOADING,
+  CREATED,
+  UPDATED,
+  FAILED,
+  CONFLICT,
+  QUOTA,
+  NETWORK,
+  DONE_STATUSES,
+  ERROR_STATUSES
+}
 
 const CONFLICT_ERROR = 409
 
