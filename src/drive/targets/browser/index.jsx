@@ -16,7 +16,7 @@ import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
 import 'cozy-ui/transpiled/react/stylesheet.css'
-
+import { hot } from 'react-hot-loader'
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -61,11 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const store = configureStore(client, polyglot.t.bind(polyglot))
 
   render(
-    <I18n lang={data.cozyLocale} polyglot={polyglot}>
-      <CozyProvider store={store} client={client}>
-        <Router history={history} routes={AppRoute} />
-      </CozyProvider>
-    </I18n>,
+    <HotedApp
+      lang={data.cozyLocale}
+      polyglot={polyglot}
+      store={store}
+      client={client}
+      history={history}
+    />,
     root
   )
 })
+
+const AppComponent = props => (
+  <I18n lang={props.lang} polyglot={props.polyglot}>
+    <CozyProvider store={props.store} client={props.client}>
+      <Router history={props.history} routes={AppRoute} />
+    </CozyProvider>
+  </I18n>
+)
+
+const HotedApp = hot(module)(AppComponent)
