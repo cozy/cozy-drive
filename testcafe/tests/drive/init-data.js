@@ -49,6 +49,8 @@ fixture`${FIXTURE_INIT}`.page`${TESTCAFE_DRIVE_URL}/`
   })
   .beforeEach(async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow()
+
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()

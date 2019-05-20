@@ -50,6 +50,8 @@ const TEST_DELETE_ALBUM = `5-1 Delete Album`
 //************************
 fixture`${FIXTURE_INIT}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(async t => {
   console.group(`\n↳ ℹ️  Login & Initialization`)
+  await t.maximizeWindow()
+
   await t.useRole(photosUser)
   await timelinePage.waitForLoading()
   await timelinePage.initPhotosCount()
@@ -93,6 +95,8 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_PHOTOS_URL}/`
     console.group(
       `\n↳ ℹ️  no Loggin (anonymous) & DOWNLOAD_PATH initialization`
     )
+    await t.maximizeWindow()
+
     //await t.useRole(Role.anonymous())
     await setDownloadPath(data.DOWNLOAD_PATH)
     await t.navigateTo(data.sharingLink)
@@ -167,7 +171,6 @@ test(TEST_PUBLIC_ALBUM_MOBILE, async t => {
     .click(selectors.btnAlbumPublicCreateCozyMobile)
   await publicPhotoPage.checkCreateCozy()
 
-  await t.maximizeWindow() //Back to desktop
   console.groupEnd()
 })
 
@@ -177,6 +180,8 @@ test(TEST_PUBLIC_ALBUM_MOBILE, async t => {
 fixture`${FIXTURE_UNSHARE}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
   async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow() //Back to desktop
+
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     await timelinePage.initPhotosCount()
@@ -196,8 +201,10 @@ test(TEST_UNSHARE_ALBUM, async () => {
 // Public (no authentification)
 //************************
 fixture`${FIXTURE_PUBLIC_NO_ACCESS}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
-  async () => {
+  async t => {
     console.group(`\n↳ ℹ️  no Loggin (anonymous)`)
+    await t.maximizeWindow()
+
     //await t.useRole(Role.anonymous())
     console.groupEnd()
   }
@@ -217,6 +224,8 @@ test(TEST_PUBLIC_NO_ACCESS, async t => {
 fixture`${FIXTURE_CLEANUP}`.page`${TESTCAFE_PHOTOS_URL}/`.beforeEach(
   async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow()
+
     await t.useRole(photosUser)
     await timelinePage.waitForLoading()
     await timelinePage.initPhotosCount()

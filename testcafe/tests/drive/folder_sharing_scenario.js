@@ -21,6 +21,8 @@ const publicDrivePage = new PublicDrivePage()
 fixture`Folder link Sharing Scenario`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow()
+
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -61,10 +63,12 @@ test('Drive : from Drive, go in a folder, upload a file, and share the folder', 
 //************************
 fixture`Drive : Access a folder public link, download the file(s), and check the 'create Cozy' link`
   .page`${TESTCAFE_DRIVE_URL}/`
-  .beforeEach(async () => {
+  .beforeEach(async t => {
     console.group(
       `\n↳ ℹ️  no Loggin (anonymous) & DOWNLOAD_PATH initialization`
     )
+    await t.maximizeWindow()
+
     //await t.useRole(Role.anonymous())
     await setDownloadPath(data.DOWNLOAD_PATH)
     console.groupEnd()
@@ -112,7 +116,6 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
   await publicDrivePage.checkCreateCozy()
   await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
 
-  await t.maximizeWindow() //Back to desktop
   console.groupEnd()
 })
 
@@ -122,6 +125,8 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
 fixture`Drive : Unshare public link`.page`${TESTCAFE_DRIVE_URL}/`.beforeEach(
   async t => {
     console.group(`\n↳ ℹ️  Login & Initialization`)
+    await t.maximizeWindow() //Back to desktop
+
     await t.useRole(driveUser)
     await privateDrivePage.waitForLoading()
     console.groupEnd()
@@ -139,8 +144,10 @@ test('Unshare folder', async () => {
 // Public (no authentification)
 //************************
 fixture`Drive : No Access to an old folder public link`
-  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async () => {
+  .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   console.group(`\n↳ ℹ️  no Loggin (anonymous)`)
+  await t.maximizeWindow()
+
   //await t.useRole(Role.anonymous())
   console.groupEnd()
 })
@@ -160,6 +167,8 @@ test('`Drive : No Access to an old folder public link', async t => {
 fixture`Test clean up : remove files and folders`
   .page`${TESTCAFE_DRIVE_URL}/`.beforeEach(async t => {
   console.group(`\n↳ ℹ️  Login & Initialization`)
+  await t.maximizeWindow()
+
   await t.useRole(driveUser)
   await privateDrivePage.waitForLoading()
   console.groupEnd()

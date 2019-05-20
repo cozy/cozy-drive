@@ -83,7 +83,6 @@ export default class PublicViewerPage extends ViewerPage {
     await this.closeViewer({
       exitWithEsc: true
     })
-    await t.maximizeWindow() //Back to desktop
   }
 
   //Temp method to avoid problem with chrome 73
@@ -112,6 +111,5 @@ export default class PublicViewerPage extends ViewerPage {
     await this.closeViewer({
       exitWithEsc: true
     })
-    await t.maximizeWindow() //Back to desktop
   }
 }
