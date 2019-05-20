@@ -8,6 +8,7 @@ import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
 import styles from './styles.styl'
 import {
+  status as uploadStatus,
   getUploadQueue,
   getProcessed,
   getSuccessful,
@@ -29,45 +30,41 @@ const Pending = translate()(props => (
 ))
 
 const Item = translate()(({ file, status, isDirectory }) => {
+  const { CANCEL, LOADING, DONE_STATUSES, ERROR_STATUSES } = uploadStatus
   const { filename, extension } = splitFilename(file.name)
   let statusIcon
-  switch (status) {
-    case 'loading':
-      statusIcon = <Spinner class="u-ml-half" color={palette['dodgerBlue']} />
-      break
-    case 'cancel':
-      statusIcon = (
-        <Icon class="u-ml-half" icon="cross" color={palette['monza']} />
-      )
-      break
-    case 'failed':
-    case 'conflict':
-    case 'network':
-      statusIcon = (
-        <Icon class="u-ml-half" icon="warning" color={palette['monza']} />
-      )
-      break
-    case 'loaded':
-      statusIcon = (
-        <Icon
-          class="u-ml-half"
-          icon="check-circleless"
-          color={palette['emerald']}
-        />
-      )
-      break
-    case 'pending':
-    default:
-      statusIcon = <Pending />
-      break
+  let done = false
+  let error = false
+  if (status === LOADING) {
+    statusIcon = <Spinner class="u-ml-half" color={palette['dodgerBlue']} />
+  } else if (status === CANCEL) {
+    statusIcon = (
+      <Icon class="u-ml-half" icon="cross" color={palette['monza']} />
+    )
+  } else if (ERROR_STATUSES.includes(status)) {
+    error = true
+    statusIcon = (
+      <Icon class="u-ml-half" icon="warning" color={palette['monza']} />
+    )
+  } else if (DONE_STATUSES.includes(status)) {
+    done = true
+    statusIcon = (
+      <Icon
+        class="u-ml-half"
+        icon="check-circleless"
+        color={palette['emerald']}
+      />
+    )
+  } else {
+    statusIcon = <Pending />
   }
+
   return (
     <div
       data-test-id="upload-queue-item"
       className={classNames(styles['upload-queue-item'], {
-        [styles['upload-queue-item--done']]: status === 'loaded',
-        [styles['upload-queue-item--error']]:
-          status === 'failed' || status === 'conflict' || status === 'network'
+        [styles['upload-queue-item--done']]: done,
+        [styles['upload-queue-item--error']]: error
       })}
     >
       <div
