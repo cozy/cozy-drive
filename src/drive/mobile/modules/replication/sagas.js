@@ -15,6 +15,8 @@ import {
   checkMissingIndexes
 } from 'drive/lib/upgradePouchDatabase'
 
+import logger from 'lib/logger'
+
 import {
   isFirstReplicationDone,
   getPouchIndexes,
@@ -23,7 +25,6 @@ import {
 } from './duck'
 
 export const startReplication = () => async (dispatch, getState) => {
-  // eslint-disable-next-line no-console
   logger.info('Starting replication...')
 
   const firstReplication = isFirstReplicationDone(getState())

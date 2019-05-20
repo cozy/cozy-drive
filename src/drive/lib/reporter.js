@@ -49,9 +49,7 @@ export const configureReporter = () => {
 export const logException = (err, extraContext = null, fingerprint = null) => {
   return new Promise(resolve => {
     Raven.captureException(err, { extra: extraContext, fingerprint })
-    // eslint-disable-next-line no-console
     logger.warn('Raven is recording exception')
-    // eslint-disable-next-line no-console
     logger.error(err)
     resolve()
   })

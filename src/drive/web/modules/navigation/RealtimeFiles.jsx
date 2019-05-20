@@ -48,7 +48,6 @@ export class RealtimeFiles extends React.Component {
           else this.onDocumentChange(change.doc)
         })
         .on('error', err => {
-          // eslint-disable-next-line no-console
           logger.warn('Pouch changefeed error', err)
         })
     }
@@ -60,7 +59,6 @@ export class RealtimeFiles extends React.Component {
     const { stackClient: client } = nextContext.client
     const { token, uri } = client
     if (token !== this.context.client.stackClient.token) {
-      // eslint-disable-next-line no-console
       logger.log('Update realtime token')
       if (this.realtimeListener) {
         this.realtimeListener.unsubscribe()

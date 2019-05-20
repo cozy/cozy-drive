@@ -72,7 +72,6 @@ class TextViewer extends React.Component {
         })
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       logger.warn(error)
       if (this._mounted) {
         this.setState({
