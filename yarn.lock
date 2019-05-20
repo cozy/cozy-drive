@@ -10375,7 +10375,7 @@ mini-css-extract-plugin@0.5.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
-minilog@3.1.0, minilog@^3.1.0:
+minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
