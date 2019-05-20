@@ -69,7 +69,7 @@ class BannerClient extends Component {
           }}
           label={t('Nav.btn-client-mobile')}
         />
-        <p className={styles['coz-banner-text']}>
+        <div className={styles['coz-banner-text']}>
           <figure>
             <Icon icon="cozy" width="44" height="44" />
           </figure>
@@ -83,7 +83,7 @@ class BannerClient extends Component {
             }}
             label={t('Nav.banner-btn-client')}
           />
-        </p>
+        </div>
         <Button
           theme="close"
           extension="narrow"
