@@ -6,7 +6,7 @@ set -eu
 # $3 isRetry
 function runRundeckJob {
 
-  IS_RETRY=${3:-false}
+  IS_RETRY=${3:-0}
   CURL=$(curl -s -X POST \
        -H "X-Rundeck-Auth-Token: $RUNDECK_TOKEN" \
        -H "Content-Type: application/json" \
@@ -17,10 +17,11 @@ function runRundeckJob {
     EXEC_ID_COUNT=$(echo $CURL | grep  -oP "(?s)execution id='\K.*?(?=\' href)"  | wc -l)
     # If EXEC_ID is not available, check if it is conflict, then retry once. Else display CURL response and exit
     if [ $EXEC_ID_COUNT == "0" ] ; then
-      if [[ "${CURL,,}" == *"api.error.execution.conflict"* ]] && [ "$IS_RETRY" == "false" ]; then
+      if [[ "${CURL,,}" == *"api.error.execution.conflict"* ]] && [ "$IS_RETRY" -lt 3 ]; then
         #wait 10s before retrying
         sleep 10
-        EXEC_ID=$(runRundeckJob "${1}" "${2}" true) 2>&1
+        ((IS_RETRY++))
+        EXEC_ID=$(runRundeckJob "${1}" "${2}" "$IS_RETRY") 2>&1
         echo $EXEC_ID
       else
       echo $CURL && exit 1;
@@ -58,7 +59,7 @@ function getRundeckStatus {
 
     #The job can be succesfull. but return an error, so we need to check!
     if [[ "${LOG_OUTPUT,,}" == *"error"* ]]; then
-      echo "❌ Execution ${1} returned an error :" && echo $LOG_OUTPUT 
+      echo "❌ Execution ${1} returned an error :" && echo $LOG_OUTPUT
       else
         return 0
     fi
