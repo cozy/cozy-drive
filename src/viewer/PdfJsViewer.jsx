@@ -60,7 +60,6 @@ export class PdfJsViewer extends Component {
   }
 
   onLoadError = error => {
-    // eslint-disable-next-line no-console
     logger.warn(error)
     this.setState({
       errored: true

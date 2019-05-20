@@ -38,7 +38,6 @@ const migrateSettings = async prevState => {
     availableOffline: prevState.availableOffline
   }
   await localforage.setItem('state', newState)
-  /* eslint-disable no-console */
   logger.info('Migrated persisted settings')
   logger.info('Previously persisted state: ', prevState)
   logger.info('New persisted state: ', newState)
@@ -52,14 +51,12 @@ export const loadState = async () => {
       return undefined
     }
     if (shouldMigrateSettings(persistedState)) {
-      // eslint-disable-next-line no-console
       logger.warn('Migrating persisted settings')
       const newState = await migrateSettings(persistedState)
       return newState
     }
     return persistedState
   } catch (err) {
-    // eslint-disable-next-line no-console
     logger.warn(err)
     return undefined
   }
@@ -69,7 +66,6 @@ export const saveState = async state => {
   try {
     await localforage.setItem('state', state)
   } catch (err) {
-    // eslint-disable-next-line no-console
     logger.warn(err)
   }
 }

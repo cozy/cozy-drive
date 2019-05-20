@@ -132,7 +132,6 @@ export const getPhotos = async () => {
         false, // includePictures, includeVideos, includeCloud
         response => resolve(response.library),
         err => {
-          // eslint-disable-next-line no-console
           logger.warn(err)
           resolve(defaultReturn)
         }

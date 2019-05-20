@@ -12,7 +12,6 @@ export const upgradePouchDatabase = async dbName => {
       await cozy.client.offline.migrateDatabase(dbName)
       return true
     } catch (err) {
-      // eslint-disable-next-line no-console
       logger.warn(err)
       return false
     }

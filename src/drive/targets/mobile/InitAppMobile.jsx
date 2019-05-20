@@ -214,10 +214,8 @@ class InitAppMobile {
       shouldInitBar = true
       await store.dispatch(startReplication())
     } catch (e) {
-      // eslint-disable no-console
       logger.warn(e)
       if (isClientRevoked(e, store.getState())) {
-        // eslint-disable no-console
         logger.warn('Your device is not connected to your server anymore')
         store.dispatch(revokeClient())
         resetClient(client)

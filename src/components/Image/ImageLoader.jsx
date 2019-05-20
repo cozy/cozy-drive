@@ -47,7 +47,6 @@ class ImageLoader extends React.Component {
     if (status === PENDING) this.loadLink()
     else if (status === LOADING_LINK) this.loadFallback()
     else if (status === LOADING_FALLBACK) {
-      // eslint-disable-next-line no-console
       logger.warn('failed loading thumbnail', lastError)
       this.setState({ status: FAILED })
       this.props.onError(lastError)

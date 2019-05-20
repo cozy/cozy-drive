@@ -21,7 +21,6 @@ class Stack {
       !!parentId &&
       (await cozy.client.files.statById(parentId, false).catch(ex => {
         if (ex.status === 403) {
-          // eslint-disable-next-line no-console
           logger.warn("User don't have access to parent folder")
         } else {
           throw ex
@@ -235,7 +234,6 @@ class PouchDB {
     const index = this.indexes[sortAttribute]
 
     if (!index)
-      // eslint-disable-next-line no-console
       logger.warn(
         `No suitable index found for atribute ${sortAttribute}. This might be slow.`
       )

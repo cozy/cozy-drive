@@ -55,7 +55,6 @@ class FilesViewer extends Component {
         }
       })
       .catch(() => {
-        // eslint-disable-next-line no-console
         logger.warn("can't find the file")
         this.onClose()
       })

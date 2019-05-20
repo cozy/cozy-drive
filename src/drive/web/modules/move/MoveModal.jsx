@@ -60,7 +60,6 @@ class MoveModal extends React.Component {
       )
       this.trackEvent(entries.length)
     } catch (e) {
-      // eslint-disable-next-line no-console
       logger.warn(e)
       Alerter.error(t('Move.error', { smart_count: entries.length }))
     } finally {
@@ -85,7 +84,6 @@ class MoveModal extends React.Component {
         })
       )
     } catch (e) {
-      // eslint-disable-next-line no-console
       logger.warn(e)
       Alerter.error(t('Move.cancelled_error', { smart_count: entries.length }))
     }
