@@ -255,37 +255,51 @@ export const uploadFiles = (files, dirId, sharingState) => dispatch => {
 }
 
 const uploadQueueProcessed = (
-  loaded,
+  created,
   quotas,
   conflicts,
   networkErrors,
   errors,
   updated
 ) => dispatch => {
+  const conflictCount = conflicts.length
+  const createdCount = created.length
+  const updatedCount = updated.length
   if (quotas.length > 0) {
     // quota errors have their own modal instead of a notification
     dispatch(showModal(<QuotaAlert />))
-  } else if (conflicts.length > 0) {
-    Alerter.info('upload.alert.success_conflicts', {
-      smart_count: loaded.length,
-      conflictNumber: conflicts.length
-    })
   } else if (networkErrors.length > 0) {
     Alerter.info('upload.alert.network')
   } else if (errors.length > 0) {
     Alerter.info('upload.alert.errors')
-  } else if (updated.length > 0 && loaded.length === 0) {
-    Alerter.success('upload.alert.updated', {
-      smart_count: updated.length
+  } else if (updatedCount > 0 && createdCount > 0 && conflictCount > 0) {
+    Alerter.success('upload.alert.success_updated_conflicts', {
+      smart_count: createdCount,
+      updatedCount,
+      conflictCount
     })
-  } else if (updated.length > 0 && loaded.length > 0) {
+  } else if (updatedCount > 0 && createdCount > 0) {
     Alerter.success('upload.alert.success_updated', {
-      smart_count: loaded.length,
-      updatedCount: updated.length
+      smart_count: createdCount,
+      updatedCount
+    })
+  } else if (updatedCount > 0 && conflictCount > 0) {
+    Alerter.success('upload.alert.updated_conflicts', {
+      smart_count: updatedCount,
+      conflictCount
+    })
+  } else if (conflictCount > 0) {
+    Alerter.info('upload.alert.success_conflicts', {
+      smart_count: createdCount,
+      conflictNumber: conflictCount
+    })
+  } else if (updatedCount > 0 && createdCount === 0) {
+    Alerter.success('upload.alert.updated', {
+      smart_count: updatedCount
     })
   } else {
     Alerter.success('upload.alert.success', {
-      smart_count: loaded.length
+      smart_count: createdCount
     })
   }
 }
