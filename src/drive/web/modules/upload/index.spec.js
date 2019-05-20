@@ -1,25 +1,32 @@
-import { processNextFile, selectors, queue } from './index'
+import {
+  processNextFile,
+  selectors,
+  queue,
+  getFileFullpath,
+  overwriteFile
+} from './index'
 import flag from 'cozy-flags'
 
 jest.mock('cozy-flags')
+
+const createFileSpy = jest.fn()
+const getSpy = jest.fn()
+const statByPathSpy = jest.fn()
+const updateFileSpy = jest.fn()
+const fakeClient = {
+  collection: () => ({
+    createFile: createFileSpy,
+    get: getSpy,
+    statByPath: statByPathSpy,
+    updateFile: updateFileSpy
+  })
+}
 
 describe('processNextFile function', () => {
   const fileUploadedCallbackSpy = jest.fn()
   const queueCompletedCallbackSpy = jest.fn()
   const dirId = 'my-dir'
   const dispatchSpy = jest.fn(x => x)
-  const createFileSpy = jest.fn()
-  const getSpy = jest.fn()
-  const statByPathSpy = jest.fn()
-  const updateFileSpy = jest.fn()
-  const fakeClient = {
-    collection: () => ({
-      createFile: createFileSpy,
-      get: getSpy,
-      statByPath: statByPathSpy,
-      updateFile: updateFileSpy
-    })
-  }
   const file = new File(['foo'], 'my-doc.odt')
   const sharingState = {
     sharedPaths: []
@@ -491,5 +498,68 @@ describe('queue reducer', () => {
     ]
     const result = queue(state, action)
     expect(result).toEqual(expected)
+  })
+})
+
+describe('getFileFullpath function', () => {
+  const getSpy = jest.fn()
+  const fakeClient = {
+    collection: () => ({
+      get: getSpy
+    })
+  }
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should return the full path of the file', async () => {
+    getSpy.mockResolvedValue({
+      data: {
+        path: '/GrandParent/Parent'
+      }
+    })
+    const file = new File([''], 'mydoc.odt')
+    const result = await getFileFullpath(fakeClient, file, 'parent')
+    expect(result).toEqual('/GrandParent/Parent/mydoc.odt')
+  })
+})
+
+describe('overwriteFile function', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should update the io.cozy.files', async () => {
+    updateFileSpy.mockResolvedValue({
+      data: {
+        id: 'b7cb22be72d2',
+        type: 'io.cozy.files',
+        attributes: {
+          type: 'file',
+          name: 'mydoc.odt'
+        }
+      }
+    })
+    statByPathSpy.mockResolvedValue({
+      data: {
+        id: 'b7cb22be72d2',
+        dir_id: '972bc693-f015'
+      }
+    })
+    const file = new File([''], 'mydoc.odt')
+    const result = await overwriteFile(fakeClient, file, '/parent/mydoc.odt')
+    expect(updateFileSpy).toHaveBeenCalledWith(file, {
+      dirId: '972bc693-f015',
+      fileId: 'b7cb22be72d2'
+    })
+    expect(result).toEqual({
+      id: 'b7cb22be72d2',
+      type: 'io.cozy.files',
+      attributes: {
+        type: 'file',
+        name: 'mydoc.odt'
+      }
+    })
   })
 })
