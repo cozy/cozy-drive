@@ -23,19 +23,9 @@ export const getOauthOptions = () => {
   }
 }
 
-export const permissions = [
-  'io.cozy.files',
-  'io.cozy.apps:GET',
-  'io.cozy.settings:GET',
-  'io.cozy.contacts',
-  'io.cozy.contacts.groups',
-  'io.cozy.jobs:POST:sendmail:worker'
-]
-
 export const initClient = url => {
   return new CozyClient({
     uri: url,
-    scope: permissions,
     oauth: getOauthOptions(),
     offline: { doctypes: [DOCTYPE_FILES] },
     appMetadata,

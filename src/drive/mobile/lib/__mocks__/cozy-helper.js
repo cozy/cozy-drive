@@ -11,8 +11,7 @@ const mock = {
   initBar: jest.fn(),
   restoreCozyClientJs: jest.fn(),
   resetClient: jest.fn(),
-  getOauthOptions: jest.fn(),
-  permissions: []
+  getOauthOptions: jest.fn()
 }
 
 module.exports = mock

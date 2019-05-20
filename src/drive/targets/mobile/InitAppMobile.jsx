@@ -33,8 +33,7 @@ import {
   initBar,
   restoreCozyClientJs,
   resetClient,
-  getOauthOptions,
-  permissions
+  getOauthOptions
 } from 'drive/mobile/lib/cozy-helper'
 import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
 import { backupImages } from 'drive/mobile/modules/mediaBackup/duck'
@@ -238,8 +237,7 @@ class InitAppMobile {
     const root = document.querySelector('[role=application]')
     const onboarding = {
       oauth: {
-        ...getOauthOptions(),
-        scope: permissions
+        ...getOauthOptions()
       }
     }
     render(
