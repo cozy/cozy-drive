@@ -20,7 +20,7 @@ const configureStore = (client, t, initialState = {}) => {
   if (shouldEnableTracking() && getTracker()) {
     middlewares.push(createTrackerMiddleware())
   }
-  middlewares.push(createLogger(loggerOptions))
+  middlewares.push(createLogger(loggerOptions()))
 
   // Enable Redux dev tools
   const composeEnhancers =
