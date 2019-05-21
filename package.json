@@ -121,7 +121,7 @@
     "lodash": "4.17.11",
     "log-prefix": "0.1.1",
     "mime-types": "2.1.19",
-    "minilog": "https://github.com/cozy/minilog.git#fix/Octal",
+    "minilog": "https://github.com/cozy/minilog.git#master",
     "node-polyglot": "2.3.0",
     "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",

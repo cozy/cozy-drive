@@ -10382,9 +10382,9 @@ minilog@3.1.0:
   dependencies:
     microee "0.0.6"
 
-"minilog@https://github.com/cozy/minilog.git#fix/Octal":
+"minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
-  resolved "https://github.com/cozy/minilog.git#7b11307a799e07157f47b7db84f259fb185fd57b"
+  resolved "https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
