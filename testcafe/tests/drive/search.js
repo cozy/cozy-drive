@@ -1,7 +1,12 @@
 import { driveUser } from '../helpers/roles'
-import { TESTCAFE_DRIVE_URL, SLUG } from '../helpers/utils'
+import {
+  TESTCAFE_DRIVE_URL,
+  SLUG,
+  isExistingAndVisibile
+} from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 import { FOLDER_NAME, maskDriveFolderWithDate } from '../helpers/data'
+import * as selectors from '../pages/selectors'
 import PrivateDrivePage from '../pages/drive/drive-model-private'
 //import ViewerDrivePage from '../pages/drive-viewer/drive-viewer-model'
 
@@ -37,11 +42,14 @@ fixture`${FEATURE_PREFIX}`.page`${TESTCAFE_DRIVE_URL}/`
 test(TEST_SEARCH1, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SEARCH1}`)
   await privateDrivePage.typeInSearchInput('a')
+  await privateDrivePage.checkSearchResultCount(10)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-A`
   })
 
   await privateDrivePage.typeInSearchInput('t')
+  await privateDrivePage.checkSearchResultCount(3)
+
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-T`
   })
@@ -57,11 +65,15 @@ test(TEST_SEARCH1, async t => {
 test(TEST_SEARCH2, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SEARCH2}`)
   await privateDrivePage.typeInSearchInput('cozy')
+  await privateDrivePage.checkSearchResultCount(4)
+
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-Cozy`
   })
 
   await privateDrivePage.typeInSearchInput(' pho')
+  await privateDrivePage.checkSearchResultCount(1)
+
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-Pho`
   })
@@ -79,6 +91,8 @@ test(TEST_SEARCH3, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SEARCH3}`)
   await privateDrivePage.goToFolder(FOLDER_NAME)
   await privateDrivePage.typeInSearchInput('tes')
+  await privateDrivePage.checkSearchResultCount(10)
+
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH3}-Tes`,
     withMask: maskDriveFolderWithDate
@@ -97,6 +111,10 @@ test(TEST_SEARCH3, async t => {
 test(TEST_SEARCH_NO_RESULT, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SEARCH_NO_RESULT}`)
   await privateDrivePage.typeInSearchInput('qwerty')
+  await isExistingAndVisibile(
+    selectors.searchNoResult,
+    `selectors.searchNoResult`
+  )
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH3}-Qwerty`,
     withMask: maskDriveFolderWithDate
