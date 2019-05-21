@@ -12,10 +12,6 @@ export default class PublicDrivePage extends DrivePage {
       .notOk('[...] Menu exists')
       .expect(selectors.innerPublicMoreMenu.exists)
       .notOk('Inner More Menu exists')
-      .expect(selectors.btnPublicMobileCreateCozy.exists)
-      .notOk('Create my Cozy Button (mobile) exists')
-      .expect(selectors.btnPublicMobileDownload.exists)
-      .notOk('Create my Cozy Button (mobile) exists')
     await isExistingAndVisibile(selectors.logo, 'Logo')
     await isExistingAndVisibile(
       isFile ? selectors.toolbarViewerPublic : selectors.toolbarDrivePublic,
