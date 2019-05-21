@@ -10,10 +10,6 @@ export default class PublicDrivePage extends DrivePage {
     await t //Mobile elements don't exist
       .expect(selectors.btnMoreMenu.exists)
       .notOk('[...] Menu exists')
-      .expect(selectors.btnMoreMenu.exists)
-      .notOk('[...] Menu exists')
-      .expect(selectors.innerPublicMoreMenu.exists)
-      .notOk('Inner More Menu exists')
       .expect(selectors.innerPublicMoreMenu.exists)
       .notOk('Inner More Menu exists')
       .expect(selectors.btnPublicMobileCreateCozy.exists)
