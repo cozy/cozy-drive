@@ -8,6 +8,7 @@ import { CozyProvider } from 'cozy-client'
 
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
 
+import logger from 'lib/logger'
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 
