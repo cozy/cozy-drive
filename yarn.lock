@@ -10382,6 +10382,12 @@ minilog@3.1.0:
   dependencies:
     microee "0.0.6"
 
+"minilog@https://github.com/cozy/minilog.git#fix/Octal":
+  version "3.1.0"
+  resolved "https://github.com/cozy/minilog.git#7b11307a799e07157f47b7db84f259fb185fd57b"
+  dependencies:
+    microee "0.0.6"
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
