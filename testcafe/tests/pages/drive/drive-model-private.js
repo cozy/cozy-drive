@@ -6,7 +6,6 @@ import {
   overwriteCopyCommand,
   getLastExecutedCommand
 } from '../../helpers/utils'
-import { SEARCH_DELAY } from '../../helpers/data'
 import * as selectors from '../selectors'
 import DrivePage from './drive-model'
 
@@ -455,7 +454,6 @@ export default class privateDrivePage extends DrivePage {
       screenshotPath: `${screenshotPath}-emptyTrash`,
       withMask: withMask
     })
-
     await t
       .expect(selectors.modalFooter.visible)
       .ok('Delete button does not show up')
@@ -464,15 +462,23 @@ export default class privateDrivePage extends DrivePage {
 
   async typeInSearchInput(text) {
     await isExistingAndVisibile(selectors.searchInput, 'selectors.searchInput')
-    await t.typeText(selectors.searchInput, text)
-    //wait for result to appears
-    await t.wait(SEARCH_DELAY)
+    await t.typeText(selectors.searchInput, text, { speed: 0.5 })
+  }
+
+  async checkSearchResultCount(expectResultsCount) {
+    await isExistingAndVisibile(
+      selectors.searchResult,
+      `selectors.searchResult`
+    )
+    const resultsCount = await selectors.searchResult.count
+    logger.debug(`resultsCount : ${resultsCount}`)
+    await t.expect(resultsCount).eql(expectResultsCount)
   }
 
   async openSearchResultByIndex(index) {
     await isExistingAndVisibile(
-      selectors.searchResult(index),
-      `selectors.searchResult(${index})`
+      selectors.searchResult.sibling(index),
+      `selectors.searchResult.sibling(${index})`
     )
     await t.click(selectors.searchResult(index))
   }

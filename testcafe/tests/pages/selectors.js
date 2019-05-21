@@ -227,9 +227,13 @@ export const checboxFolderByRowIndex = value => {
 //Search
 export const searchInput = Selector('.coz-searchbar-autosuggest-input')
 
-export const searchResult = value => {
-  return Selector('.coz-searchbar-autosuggest-suggestion-content').nth(value)
-}
+export const searchResult = Selector(
+  '.coz-searchbar-autosuggest-suggestion-content'
+)
+
+export const searchNoResult = Selector(
+  '.coz-searchbar-autosuggest-status-container'
+)
 //************************
 // Photos
 //************************
