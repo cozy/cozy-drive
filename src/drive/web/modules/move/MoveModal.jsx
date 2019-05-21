@@ -1,13 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'redux'
 import { Modal } from 'cozy-ui/react'
 import { Query } from 'cozy-client'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
 import { connect } from 'react-redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
-import logger from 'lib/logger'
+import flag from 'cozy-flags'
 
+import { CozyFile } from 'models'
+import logger from 'lib/logger'
+import withSharingState from 'sharing/hoc/withSharingState'
 import Header from './Header'
 import Explorer from './Explorer'
 import FileList from './FileList'
@@ -21,6 +25,7 @@ class MoveModal extends React.Component {
     client: PropTypes.object.isRequired,
     t: PropTypes.func.isRequired
   }
+
   constructor(props) {
     super(props)
 
@@ -36,15 +41,22 @@ class MoveModal extends React.Component {
   }
 
   moveEntries = async () => {
-    const { entries, onClose } = this.props
+    const { entries, onClose, sharingState } = this.props
+    const { sharedPaths } = sharingState
     const { client, t } = this.context
     const { folderId } = this.state
 
     try {
       this.setState({ isMoveInProgress: true })
       await Promise.all(
-        entries.map(entry => this.moveEntry(entry._id, folderId))
+        entries.map(async entry => {
+          const targetPath = await CozyFile.getFullpath(folderId, entry.name)
+          const force =
+            flag('handle-move-conflicts') && !sharedPaths.includes(targetPath)
+          await CozyFile.move(entry._id, { folderId }, force)
+        })
       )
+
       const response = await client.query(client.get('io.cozy.files', folderId))
       const targetName = response.data.name
       Alerter.info(
@@ -74,8 +86,12 @@ class MoveModal extends React.Component {
     const { t } = this.context
 
     try {
+      // TODO: restore the deleted files
       await Promise.all(
-        entries.map(entry => this.moveEntry(entry._id, entry.dir_id))
+        entries.map(
+          async entry =>
+            await CozyFile.move(entry._id, { folderId: entry.dir_id })
+        )
       )
       Alerter.info(
         t('Move.cancelled', {
@@ -87,12 +103,6 @@ class MoveModal extends React.Component {
       logger.warn(e)
       Alerter.error(t('Move.cancelled_error', { smart_count: entries.length }))
     }
-  }
-
-  moveEntry = (entryId, destinationId) => {
-    return this.context.client
-      .collection('io.cozy.files')
-      .updateFileMetadata(entryId, { dir_id: destinationId })
   }
 
   trackEvent(eventValue) {
@@ -172,4 +182,7 @@ const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder
 })
 
-export default connect(mapStateToProps)(MoveModal)
+export default compose(
+  connect(mapStateToProps),
+  withSharingState
+)(MoveModal)
