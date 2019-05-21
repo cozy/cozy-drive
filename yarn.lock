@@ -4653,21 +4653,6 @@ cozy-stack-client@^6.33.0:
     mime-types "2.1.24"
     qs "6.7.0"
 
-cozy-ui@19.30.1:
-  version "19.30.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.30.1.tgz#8ab9a270847e025a3fb500ada43f195fcefeb448"
-  integrity sha512-UYBeOI0ElkyJjOCvBffKVIrKnhQlrawxauAv86fPngxr4PcvIBtNVXO/vYL18k5U8mrVoF/LswAVW/YLnXCrHQ==
-  dependencies:
-    "@babel/runtime" "^7.3.4"
-    body-scroll-lock "^2.5.8"
-    classnames "^2.2.5"
-    date-fns "^1.28.5"
-    hammerjs "^2.0.8"
-    node-polyglot "^2.2.2"
-    normalize.css "^7.0.0"
-    react-hot-loader "^4.3.11"
-    react-select "2.2.0"
-
 cozy-ui@19.35.1:
   version "19.35.1"
   resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.35.1.tgz#7ac41938684782b4430a98311e9823f03cc42e72"
@@ -4677,6 +4662,23 @@ cozy-ui@19.35.1:
     body-scroll-lock "^2.5.8"
     classnames "^2.2.5"
     cozy-client "6.26.0"
+    date-fns "^1.28.5"
+    hammerjs "^2.0.8"
+    node-polyglot "^2.2.2"
+    normalize.css "^7.0.0"
+    react-hot-loader "^4.3.11"
+    react-markdown "^4.0.8"
+    react-pdf "^4.0.5"
+    react-select "2.2.0"
+
+cozy-ui@19.36.1:
+  version "19.36.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.36.1.tgz#12b663f62b7edded5a1fcb4403a3ebdb9ec97359"
+  integrity sha512-ZTUpdrDTf1U76LHwcGShXRg1Ou7tOW/3QfpN/DTRjMp1l1pH9vIMDJW9RNWZTe1rSTUeR0MNsb3XYeFGVCFznA==
+  dependencies:
+    "@babel/runtime" "^7.3.4"
+    body-scroll-lock "^2.5.8"
+    classnames "^2.2.5"
     date-fns "^1.28.5"
     hammerjs "^2.0.8"
     node-polyglot "^2.2.2"
