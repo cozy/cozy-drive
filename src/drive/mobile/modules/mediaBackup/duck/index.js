@@ -20,7 +20,6 @@ import {
   CURRENT_UPLOAD,
   CURRENT_UPLOAD_PROGRESS
 } from './reducer'
-import { checkCorruptedFiles } from './checkCorruptedFiles'
 import {
   getReferencedFolders,
   getOrCreateFolderWithReference,
@@ -119,8 +118,6 @@ export const startMediaBackup = (isManualBackup = false) => async (
     try {
       const photosOnDevice = await getPhotos()
       const alreadyUploaded = getState().mobile.mediaBackup.uploaded
-      //! TODO : RM after a while. Deal with photos here
-      await checkCorruptedFiles(photosOnDevice, dispatch)
 
       const photosToUpload = photosOnDevice.filter(
         photo => !alreadyUploaded.includes(photo.id)
