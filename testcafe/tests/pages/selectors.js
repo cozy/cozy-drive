@@ -24,9 +24,9 @@ export const btnPublicDownloadPhotosDesktop = getElementWithTestId(
 export const btnPublicDownloadPhotosMobile = getElementWithTestId(
   'album-public-download-mobile'
 )
-export const btnDownloadViewerToolbar = getElementWithTestId(
-  'viewer-toolbar-download'
-)
+export const btnDownloadViewerToolbar = Selector(
+  '[class*="viewer-toolbar-actions"]'
+).find('button')
 
 // Create Cozy
 export const btnDrivePublicCreateCozy = toolbarDrivePublic
@@ -126,36 +126,32 @@ export const errorAvailable = getElementWithTestId('empty-share')
 //************************
 // Viewer
 //************************
-export const viewerWrapper = getElementWithTestId('viewer-wrapper')
-export const viewerControls = getElementWithTestId('pho-viewer-controls')
-export const viewerToolbar = getElementWithTestId('viewer-toolbar')
+export const viewerWrapper = Selector('[role="viewer"]')
+export const viewerControls = viewerWrapper.find('[class*="viewer-controls"]')
+export const viewerToolbar = Selector('[role="viewer-toolbar"]')
 // Navigation in viewer
-export const viewerNavNext = getElementWithTestId('viewer-nav--next')
-export const btnViewerNavNext = viewerNavNext.find(
-  '[class*="pho-viewer-nav-arrow"]'
-)
-export const viewerNavPrevious = getElementWithTestId('viewer-nav--previous')
-export const btnViewerNavPrevious = viewerNavPrevious.find(
-  '[class*="pho-viewer-nav-arrow"]'
-)
-export const viewerBtnClose = getElementWithTestId('btn-viewer-toolbar-close')
+export const viewerNavNext = Selector('[class*="viewer-nav--next"]')
+export const btnViewerNavNext = viewerNavNext
+export const viewerNavPrevious = Selector('[class*="viewer-nav--previous"]')
+export const btnViewerNavPrevious = viewerNavPrevious
+export const viewerBtnClose = Selector('[class*="viewer-toolbar-close"]')
 //Specific viewers
-export const imageViewer = getElementWithTestId('viewer-image')
+export const imageViewer = Selector('[class*="viewer-imageviewer"]')
 export const imageViewerContent = imageViewer.find('img')
-export const photoFull = Selector('[class*="pho-viewer-imageviewer"]').find(
+export const photoFull = Selector('[class*="viewer-imageviewer"]').find(
   'img'
 )
-export const audioViewer = getElementWithTestId('viewer-audio')
+export const audioViewer = Selector('[class*="viewer-audio"]')
 export const audioViewerControls = audioViewer.find('audio')
-export const txtViewer = getElementWithTestId('viewer-text')
+export const txtViewer = Selector('[class*="viewer-text"]')
 export const txtViewerContent = txtViewer.find(
-  '[class*="pho-viewer-textviewer-content"]'
+  '[class*="viewer-textviewer-content"]'
 )
-export const videoViewer = getElementWithTestId('viewer-video')
+export const videoViewer = Selector('[class*="viewer-video"]')
 export const videoViewerControls = videoViewer.find('video')
-export const noViewer = getElementWithTestId('viewer-noviewer')
+export const noViewer = Selector('[class*="viewer-noviewer"]')
 export const btnNoViewerDownload = noViewer.find('button')
-export const pdfViewer = getElementWithTestId('viewer-pdf')
+export const pdfViewer = Selector('[class*="viewer-pdf"]')
 //************************
 // Drive
 //************************
