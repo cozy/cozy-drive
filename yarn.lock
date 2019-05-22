@@ -9435,12 +9435,12 @@ jsx-ast-utils@^2.0.1:
   dependencies:
     array-includes "^3.0.3"
 
-justified-layout@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/justified-layout/-/justified-layout-2.1.1.tgz#22da0c296d3a95b7a3d5fb7f48dbbe0e6539b7f1"
-  integrity sha512-AgfLjtcooqI4XHC+Uq6SkbyFvRUbl71QG411KGIkLcHw4OcYhIWrkOSbvrrZSrlHVq3klCO3/RGKc/qubQudPA==
+justified-layout@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/justified-layout/-/justified-layout-2.1.2.tgz#ecf1c91db721c6cd25833b42bfff8a373ce898ec"
+  integrity sha512-Lp+xJO3Lv5oBcNW3ir+/tV1FZugkEManl9N6ajXgpcONgZVPntOPv+WvwxF6iVC8ee70OQfCei4Qtyr8aWwrTQ==
   dependencies:
-    merge "1.2.0"
+    merge "1.2.1"
 
 kd-tree-javascript@1.0.3:
   version "1.0.3"
@@ -10254,12 +10254,7 @@ merge2@^1.2.3:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.2.3.tgz#7ee99dbd69bb6481689253f018488a1b902b0ed5"
   integrity sha512-gdUU1Fwj5ep4kplwcmftruWofEFt6lfpkkr3h860CXbAB9c3hGb55EOL2ali0Td5oebvW0E1+3Sr+Ur7XfKpRA==
 
-merge@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
-  integrity sha1-dTHjnUlJwoGma4xabgJl6LBYlNo=
-
-merge@^1.2.0:
+merge@1.2.1, merge@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
   integrity sha512-VjFo4P5Whtj4vsLzsYBu5ayHhoHJ0UqNm7ibvShmbmoz7tGi0vXaoJbGdB+GmDMLUdg8DpQXEIeVDAe8MaABvQ==
