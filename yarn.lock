@@ -5022,24 +5022,6 @@ cozy-stack-client@^6.33.0:
     mime-types "2.1.24"
     qs "6.7.0"
 
-cozy-ui@19.35.1:
-  version "19.35.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.35.1.tgz#7ac41938684782b4430a98311e9823f03cc42e72"
-  integrity sha512-rB7GmE4h8m08vxhiFe+IrdO2M3aCdqsJRySZ3bGzQFL3c1StwceJ/9UdU8pcSiErXg2p8qsf5LOx6rt+B3ah8A==
-  dependencies:
-    "@babel/runtime" "^7.3.4"
-    body-scroll-lock "^2.5.8"
-    classnames "^2.2.5"
-    cozy-client "6.26.0"
-    date-fns "^1.28.5"
-    hammerjs "^2.0.8"
-    node-polyglot "^2.2.2"
-    normalize.css "^7.0.0"
-    react-hot-loader "^4.3.11"
-    react-markdown "^4.0.8"
-    react-pdf "^4.0.5"
-    react-select "2.2.0"
-
 cozy-ui@19.36.1:
   version "19.36.1"
   resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.36.1.tgz#12b663f62b7edded5a1fcb4403a3ebdb9ec97359"
@@ -11109,6 +11091,7 @@ mini-css-extract-plugin@0.5.0:
 minilog@3.1.0, "minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
   resolved "https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
+  integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
   dependencies:
     microee "0.0.6"
 
