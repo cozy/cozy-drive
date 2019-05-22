@@ -523,6 +523,17 @@ describe('getFileFullpath function', () => {
     const result = await getFileFullpath(fakeClient, file, 'parent')
     expect(result).toEqual('/GrandParent/Parent/mydoc.odt')
   })
+
+  it('should return the full path of a file in root directory', async () => {
+    getSpy.mockResolvedValue({
+      data: {
+        path: '/'
+      }
+    })
+    const file = new File([''], 'mydoc.odt')
+    const result = await getFileFullpath(fakeClient, file, 'parent')
+    expect(result).toEqual('/mydoc.odt')
+  })
 })
 
 describe('overwriteFile function', () => {

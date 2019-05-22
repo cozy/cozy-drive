@@ -204,7 +204,7 @@ const uploadFile = async (client, file, dirID) => {
 export const getFileFullpath = async (client, file, dirID) => {
   const resp = await client.collection('io.cozy.files').get(dirID)
   const parentDirectory = resp.data
-  return `${parentDirectory.path}/${file.name}`
+  return `${parentDirectory.path}/${file.name}`.replace('//', '/')
 }
 
 /*
