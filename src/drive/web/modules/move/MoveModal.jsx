@@ -131,9 +131,17 @@ class MoveModal extends React.Component {
   render() {
     const { onClose, entries } = this.props
     const { folderId, isMoveInProgress } = this.state
+    const { t } = this.context
 
     return (
-      <Modal size={'xlarge'} closable={false} overflowHidden mobileFullscreen>
+      <Modal
+        size={'xlarge'}
+        closable={false}
+        overflowHidden
+        mobileFullscreen
+        into="body"
+        aria-label={t('Move.modalTitle')}
+      >
         <Header entries={entries} onClose={onClose} />
         <Query query={this.breadcrumbQuery} key={`breadcrumb-${folderId}`}>
           {({ data, fetchStatus }) => (
