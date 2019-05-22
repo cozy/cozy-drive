@@ -29,10 +29,12 @@ const extraConfig = {
       {
         test: /\.worker(\.entry)\.js$/,
         issuer: { not: [/node_modules\//] }, // we want to use this rule only for the apps webworkers, but not for workers created by dependencies
-        use: [{
-          loader: 'worker-loader',
-          options: {
-            name: 'public/[name].[hash].worker.js'
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              name: 'public/[name].[hash].worker.js'
+            }
           }
         ]
       }
@@ -43,11 +45,8 @@ const extraConfig = {
     alias: {
       'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers'),
       'cozy-ui/react': 'cozy-ui/transpiled/react',
-<<<<<<< HEAD
-      lib: path.resolve(SRC_DIR, './lib/')
-=======
+      lib: path.resolve(SRC_DIR, './lib/'),
       'react-pdf$': 'react-pdf/dist/entry.webpack.js'
->>>>>>> fix: Use public worker for pdfjs
     }
   },
   plugins: [
