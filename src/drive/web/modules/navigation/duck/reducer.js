@@ -90,11 +90,7 @@ const currentView = (state = '', action) => {
       return state
   }
 }
-const latestAction = (state, action) => {
-  return action.type
-}
 
-export const lastestActionSelector = ({ view }) => view.latestAction
 const openedFolderId = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER:
@@ -403,7 +399,6 @@ export default combineReducers({
   isOpening,
   displayedFolder,
   openedFolderId,
-  latestAction,
   fileCount: deduplicateCreateDeleteActions(fileCount),
   sort,
   files,
