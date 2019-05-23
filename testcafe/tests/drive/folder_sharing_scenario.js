@@ -5,6 +5,7 @@ import {
   deleteLocalFile,
   checkLocalFile,
   setDownloadPath,
+  isExistingAndVisibile,
   TESTCAFE_DRIVE_URL
 } from '../helpers/utils'
 import * as selectors from '../pages/selectors'
@@ -105,14 +106,18 @@ test(`[Mobile] Drive : Access a folder public link, download the file(s), and ch
   })
   await t.navigateTo(data.sharingLink)
   await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
+  await publicDrivePage.checkDesktopElementsNotShowingOnMobile('folder')
 
-  await publicDrivePage.checkActionMenuPublicMobile('folder')
+  //Download
+  await publicDrivePage.checkDownloadButtonOnMobile()
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
     .click(selectors.btnPublicMobileDownload)
-    .click(selectors.btnMoreMenu) //need to re-open the more menu
-    .click(selectors.btnPublicMobileCreateCozy)
+
+  //create my cozy
+  await publicDrivePage.checkCozyCreationButtonOnMobile()
+  await t.click(selectors.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
   await publicDrivePage.waitForLoading({ isNotAvailable: false, isFull: true })
 
