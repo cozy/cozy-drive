@@ -238,9 +238,10 @@ const mapStateToProps = (state, ownProps) => ({
   path: renamePathNames(
     getFolderPath(
       state.view.displayedFolder,
-      ownProps.location.pathname,
+      state.view.currentView,
       ownProps.isPublic,
-      ownProps.sharedDocuments
+      ownProps.sharedDocuments,
+      state.view.openedFolderId
     ),
     ownProps.location.pathname,
     ownProps.t
