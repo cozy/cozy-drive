@@ -30,7 +30,7 @@ export default class PublicDrivePage extends DrivePage {
   }
 
   // @param {string} type : 'file' or 'folder' : the toolbar is different depending on share type
-  async checkActionMenuPublicMobile(type) {
+  async checkDesktopElementsNotShowingOnMobile(type) {
     const isFile = type === 'file' ? true : false
     await t
       .expect(selectors.btnPublicDownloadDrive.exists)
@@ -45,24 +45,6 @@ export default class PublicDrivePage extends DrivePage {
       .notOk('toolbar_file exists')
       .expect(selectors.btnViewerPublicCreateCozy.exists)
       .notOk('Create Cozy button (desktop) exists')
-
-    await isExistingAndVisibile(
-      isFile ? selectors.btnMoreMenu : selectors.btnMoreMenu,
-      '[...] Button'
-    )
-    await t.click(isFile ? selectors.btnMoreMenu : selectors.btnMoreMenu)
-    await isExistingAndVisibile(
-      selectors.innerPublicMoreMenu,
-      'Innner More Menu'
-    )
-    await isExistingAndVisibile(
-      selectors.btnPublicMobileDownload,
-      'Download Button (mobile)'
-    )
-    await isExistingAndVisibile(
-      selectors.btnPublicMobileCreateCozy,
-      'Create my Cozy Button (mobile)'
-    )
   }
 
   async checkCreateCozy() {
@@ -73,6 +55,30 @@ export default class PublicDrivePage extends DrivePage {
       )
 
     await goBack()
+  }
+  async checkDownloadButtonOnMobile() {
+    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await t.click(selectors.btnMoreMenu, { speed: 0.5 })
+    await isExistingAndVisibile(
+      selectors.innerPublicMoreMenu,
+      'Innner More Menu'
+    )
+    await isExistingAndVisibile(
+      selectors.btnPublicMobileDownload,
+      'Download Button (mobile)'
+    )
+  }
+  async checkCozyCreationButtonOnMobile() {
+    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await t.click(selectors.btnMoreMenu, { speed: 0.5 })
+    await isExistingAndVisibile(
+      selectors.innerPublicMoreMenu,
+      'Innner More Menu'
+    )
+    await isExistingAndVisibile(
+      selectors.btnPublicMobileCreateCozy,
+      'Create my Cozy Button (mobile)'
+    )
   }
 
   async checkNotAvailable() {

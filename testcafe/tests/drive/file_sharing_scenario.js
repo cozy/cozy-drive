@@ -5,6 +5,7 @@ import {
   deleteLocalFile,
   checkLocalFile,
   setDownloadPath,
+  isExistingAndVisibile,
   TESTCAFE_DRIVE_URL
 } from '../helpers/utils'
 import PrivateDrivePage from '../pages/drive/drive-model-private'
@@ -107,13 +108,17 @@ test(`[Mobile] Drive : Access a file public link, download the file, and check t
   })
   await t.navigateTo(data.sharingLink)
   await publicViewerPage.waitForLoading()
+  await publicDrivePage.checkDesktopElementsNotShowingOnMobile('file')
 
-  await publicDrivePage.checkActionMenuPublicMobile('file')
+  //Download
+  await publicDrivePage.checkDownloadButtonOnMobile()
   await t
     .setNativeDialogHandler(() => true)
     .click(selectors.btnPublicMobileDownload)
-    .click(selectors.btnMoreMenu) //need to re-open the more menu
-    .click(selectors.btnPublicMobileCreateCozy)
+
+  //create my cozy
+  await publicDrivePage.checkCozyCreationButtonOnMobile()
+  await t.click(selectors.btnPublicMobileCreateCozy)
   await publicDrivePage.checkCreateCozy()
   await publicViewerPage.waitForLoading()
 

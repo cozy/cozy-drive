@@ -6,7 +6,8 @@ import {
   SLUG,
   deleteLocalFile,
   checkLocalFile,
-  setDownloadPath
+  setDownloadPath,
+  isExistingAndVisibile
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 import * as selectors from '../pages/selectors'
@@ -154,23 +155,23 @@ test(TEST_PUBLIC_ALBUM_MOBILE, async t => {
     portraitOrientation: true
   })
   await publicPhotoPage.waitForLoading()
-  await publicPhotoPage.checkActionMenuAlbumPublicMobile()
-
   //Viewer
   await photosViewer.openPhotoAndCheckViewer({
     index: 0,
     screenshotPath: `${FEATURE_PREFIX}/${TEST_PUBLIC_ALBUM_MOBILE}-1`
   })
 
+  //Download
+  await publicPhotoPage.checkPhotosDownloadButtonOnMobile()
   await t
     .wait(3000) //!FIXME to remove after https://trello.com/c/IZfev6F1/1658-drive-public-share-impossible-de-t%C3%A9l%C3%A9charger-le-fichier is fixed
     .setNativeDialogHandler(() => true)
-    .click(selectors.btnMoreMenu)
     .click(selectors.btnPublicDownloadPhotosMobile)
-    .click(selectors.btnMoreMenu)
-    .click(selectors.btnAlbumPublicCreateCozyMobile)
-  await publicPhotoPage.checkCreateCozy()
 
+  //create my cozy
+  await publicPhotoPage.checkPhotosCozyCreationButtonOnMobile()
+  await t.click(selectors.btnAlbumPublicCreateCozyMobile)
+  await publicPhotoPage.checkCreateCozy()
   console.groupEnd()
 })
 

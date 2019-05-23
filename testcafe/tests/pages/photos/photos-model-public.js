@@ -38,23 +38,29 @@ export default class PublicPhotos extends Photos {
     )
   }
 
-  async checkActionMenuAlbumPublicMobile() {
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Menu')
-    await t.click(selectors.btnMoreMenu)
+  async checkPhotosDownloadButtonOnMobile() {
+    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await t.click(selectors.btnMoreMenu, { speed: 0.5 })
     await isExistingAndVisibile(
       selectors.innerPublicMoreMenu,
-      'inner [...] Menu'
-    )
-    await isExistingAndVisibile(
-      selectors.btnAlbumPublicCreateCozyMobile,
-      'Create my Cozy Button (Mobile)'
+      'Innner More Menu'
     )
     await isExistingAndVisibile(
       selectors.btnPublicDownloadPhotosMobile,
-      'Mobile download button'
+      'Download Button (mobile)'
     )
-    // Close [...] menu after check
-    await t.click(selectors.btnMoreMenu)
+  }
+  async checkPhotosCozyCreationButtonOnMobile() {
+    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await t.click(selectors.btnMoreMenu, { speed: 0.5 })
+    await isExistingAndVisibile(
+      selectors.innerPublicMoreMenu,
+      'Innner More Menu'
+    )
+    await isExistingAndVisibile(
+      selectors.btnAlbumPublicCreateCozyMobile,
+      'Create my Cozy Button (mobile)'
+    )
   }
 
   async checkNotAvailable() {
