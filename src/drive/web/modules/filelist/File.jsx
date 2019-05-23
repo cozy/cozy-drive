@@ -1,4 +1,5 @@
 import React, { Component, forwardRef } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
@@ -247,17 +248,18 @@ class File extends Component {
   }
 
   componentDidMount() {
+    const { disabled, selectionModeActive, attributes } = this.props
     this.gesturesHandler = new Hammer.Manager(this.filerow)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
     this.gesturesHandler.on('onpress singletap', ev => {
-      if (this.state.actionMenuVisible || this.props.disabled) return
+      if (this.state.actionMenuVisible || disabled) return
       if (enableTouchEvents(ev)) {
         ev.preventDefault() // prevent a ghost click
-        if (ev.type === 'onpress' || this.props.selectionModeActive) {
+        if (ev.type === 'onpress' || selectionModeActive) {
           this.toggle(ev.srcEvent)
         } else {
-          this.open(ev.srcEvent, this.props.attributes)
+          this.open(ev.srcEvent, attributes)
         }
       }
     })
@@ -274,11 +276,13 @@ class File extends Component {
   }
 
   open(e, attributes) {
+    const { onFolderOpen, onFileOpen, isAvailableOffline } = this.props
     e.stopPropagation()
     if (isDirectory(attributes)) {
-      this.props.onFolderOpen(attributes.id)
+      console.log('***isDirectory')
+      onFolderOpen(attributes.id)
     } else {
-      this.props.onFileOpen(attributes, this.props.isAvailableOffline)
+      onFileOpen(attributes, isAvailableOffline)
     }
   }
 
@@ -364,6 +368,25 @@ class File extends Component {
       </div>
     )
   }
+}
+
+File.propTypes = {
+  t: PropTypes.func,
+  f: PropTypes.func,
+  attributes: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired,
+  actions: PropTypes.object.isRequired,
+  isRenaming: PropTypes.bool.isRequired,
+  withSelectionCheckbox: PropTypes.bool.isRequired,
+  withFilePath: PropTypes.bool,
+  withSharedBadge: PropTypes.bool.isRequired,
+  isAvailableOffline: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
+  breakpoints: PropTypes.object.isRequired,
+  selectionModeActive: PropTypes.func,
+  onFolderOpen: PropTypes.func.isRequired,
+  onFileOpen: PropTypes.func.isRequired,
+  onCheckboxToggle: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => ({
