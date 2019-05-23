@@ -17,7 +17,7 @@ import { addToUploadQueue } from 'drive/web/modules/upload'
 import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/react/Alerter'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
-
+import { getOpenedFolderId } from 'drive/web/modules/navigation/duck'
 //import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config.js'
 
 export const OPEN_FOLDER = 'OPEN_FOLDER'
@@ -70,9 +70,8 @@ export const openTrash = () => {
 
 export const openFolder = folderId => {
   return async (dispatch, getState) => {
-    const action = OPEN_FOLDER
     dispatch({
-      type: action,
+      type: OPEN_FOLDER,
       folderId,
       meta: {
         cancelSelection: true
@@ -82,12 +81,22 @@ export const openFolder = folderId => {
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList
       const folder = await getAdapter(getState()).getFolder(folderId)
-      return dispatch({
-        type: OPEN_FOLDER_SUCCESS,
-        folder,
-        fileCount: folder.contents.meta.count || 0,
-        files: folder.contents.data
-      })
+
+      /*
+        Since getFolder is async, if we have a very bad network we can receive multiple response 
+        if the user clicks multiple times. We are not sure about the order of the response. 
+        So before dispatching the success, we check if the folder is still the one we want to open 
+        and display. To do that, we get the folder id from the latest OPEN_FOLDER call
+      */
+      const currentFolderId = getOpenedFolderId(getState())
+      if (folder._id === currentFolderId) {
+        return dispatch({
+          type: OPEN_FOLDER_SUCCESS,
+          folder,
+          fileCount: folder.contents.meta.count || 0,
+          files: folder.contents.data
+        })
+      }
     } catch (err) {
       logException(err, {
         context: OPEN_FOLDER_FAILURE
