@@ -18,7 +18,7 @@ import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/react/Alerter'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config.js'
+//import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config.js'
 
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
@@ -56,7 +56,7 @@ export const META_DEFAULTS = {
   hideActionMenu: true
 }
 
-export const openFiles = () => {
+/* export const openFiles = () => {
   return async dispatch => dispatch(openFolder(ROOT_DIR_ID))
 }
 
@@ -66,7 +66,7 @@ export const openRecent = () => {
 
 export const openTrash = () => {
   return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
-}
+} */
 
 export const openFolder = folderId => {
   return async (dispatch, getState) => {

@@ -10,9 +10,9 @@ export {
 } from './reducer'
 
 export {
-  openFiles,
+  /*   openFiles,
   openRecent,
-  openTrash,
+  openTrash, */
   openFolder,
   sortFolder,
   fetchMoreFiles,
