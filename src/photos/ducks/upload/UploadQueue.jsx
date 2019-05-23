@@ -32,24 +32,26 @@ const Item = translate()(({ file, status }) => {
   let statusIcon
   switch (status) {
     case 'loading':
-      statusIcon = <Spinner class="u-ml-half" color={palette['dodgerBlue']} />
+      statusIcon = (
+        <Spinner className="u-ml-half" color={palette['dodgerBlue']} />
+      )
       break
     case 'cancel':
       statusIcon = (
-        <Icon class="u-ml-half" icon="cross" color={palette['monza']} />
+        <Icon className="u-ml-half" icon="cross" color={palette['monza']} />
       )
       break
     case 'failed':
     case 'conflict':
     case 'network':
       statusIcon = (
-        <Icon class="u-ml-half" icon="warning" color={palette['monza']} />
+        <Icon className="u-ml-half" icon="warning" color={palette['monza']} />
       )
       break
     case 'loaded':
       statusIcon = (
         <Icon
-          class="u-ml-half"
+          className="u-ml-half"
           icon="check-circleless"
           color={palette['emerald']}
         />
