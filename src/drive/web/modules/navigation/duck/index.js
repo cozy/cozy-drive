@@ -6,13 +6,12 @@ export {
   getOpenedFolderId,
   getFolderIdFromRoute,
   getFolderUrl,
-  getSort
+  getSort,
+  isRecentViewSelector,
+  isSharingsViewSelector
 } from './reducer'
 
 export {
-  /*   openFiles,
-  openRecent,
-  openTrash, */
   openFolder,
   sortFolder,
   fetchMoreFiles,
