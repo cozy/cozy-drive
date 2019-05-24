@@ -4,6 +4,7 @@ import logger from 'lib/logger'
 import flag from 'cozy-flags'
 
 import { hasSharedParent, isShared } from 'sharing/state'
+import { CozyFile } from 'models'
 import UploadQueue from './UploadQueue'
 
 export { UploadQueue }
@@ -99,6 +100,7 @@ export const processNextFile = (
       'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
     )
   }
+
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
   if (!item) {
     return dispatch(onQueueEmpty(queueCompletedCallback))
@@ -118,7 +120,7 @@ export const processNextFile = (
     if (uploadError.status === CONFLICT_ERROR) {
       try {
         error = uploadError
-        const path = await getFileFullpath(client, file, dirID)
+        const path = await CozyFile.getFullpath(dirID, file.name)
         if (
           flag('handle-conflicts') &&
           !isShared(sharingState, { path }) &&
@@ -192,19 +194,6 @@ const uploadFile = async (client, file, dirID) => {
     .collection('io.cozy.files')
     .createFile(file, { dirId: dirID })
   return resp.data
-}
-
-/*
- * @function
- * @param {Object} client - A CozyClient instance
- * @param {Object} file - The uploaded javascript File object
- * @param {string} dirID - The id of the parent directory
- * @return {Object} - The full path of the file in the cozy
- */
-export const getFileFullpath = async (client, file, dirID) => {
-  const resp = await client.collection('io.cozy.files').get(dirID)
-  const parentDirectory = resp.data
-  return `${parentDirectory.path}/${file.name}`
 }
 
 /*

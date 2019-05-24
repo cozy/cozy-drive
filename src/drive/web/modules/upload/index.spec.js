@@ -1,26 +1,23 @@
-import {
-  processNextFile,
-  selectors,
-  queue,
-  getFileFullpath,
-  overwriteFile
-} from './index'
+import { CozyFile } from 'cozy-doctypes'
 import flag from 'cozy-flags'
 
+import { processNextFile, selectors, queue, overwriteFile } from './index'
+
+jest.mock('cozy-doctypes')
 jest.mock('cozy-flags')
 
-const createFileSpy = jest.fn()
-const getSpy = jest.fn()
-const statByPathSpy = jest.fn()
-const updateFileSpy = jest.fn()
+const createFileSpy = jest.fn().mockName('createFile')
+const statByPathSpy = jest.fn().mockName('statByPath')
+const updateFileSpy = jest.fn().mockName('updateFile')
 const fakeClient = {
   collection: () => ({
     createFile: createFileSpy,
-    get: getSpy,
     statByPath: statByPathSpy,
     updateFile: updateFileSpy
   })
 }
+
+CozyFile.getFullpath.mockResolvedValue('/my-dir/mydoc.odt')
 
 describe('processNextFile function', () => {
   const fileUploadedCallbackSpy = jest.fn()
@@ -120,12 +117,6 @@ describe('processNextFile function', () => {
       source: {}
     })
 
-    getSpy.mockResolvedValue({
-      data: {
-        path: '/my-dir'
-      }
-    })
-
     statByPathSpy.mockResolvedValue({
       data: {
         dir_id: 'my-dir',
@@ -185,12 +176,6 @@ describe('processNextFile function', () => {
       source: {}
     })
 
-    getSpy.mockResolvedValue({
-      data: {
-        path: '/my-dir'
-      }
-    })
-
     statByPathSpy.mockResolvedValue({
       data: {
         dir_id: 'my-dir',
@@ -247,12 +232,6 @@ describe('processNextFile function', () => {
       title: 'Conflict',
       detail: 'file already exists',
       source: {}
-    })
-
-    getSpy.mockResolvedValue({
-      data: {
-        path: '/my-dir'
-      }
     })
 
     statByPathSpy.mockResolvedValue({
@@ -498,30 +477,6 @@ describe('queue reducer', () => {
     ]
     const result = queue(state, action)
     expect(result).toEqual(expected)
-  })
-})
-
-describe('getFileFullpath function', () => {
-  const getSpy = jest.fn()
-  const fakeClient = {
-    collection: () => ({
-      get: getSpy
-    })
-  }
-
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
-  it('should return the full path of the file', async () => {
-    getSpy.mockResolvedValue({
-      data: {
-        path: '/GrandParent/Parent'
-      }
-    })
-    const file = new File([''], 'mydoc.odt')
-    const result = await getFileFullpath(fakeClient, file, 'parent')
-    expect(result).toEqual('/GrandParent/Parent/mydoc.odt')
   })
 })
 

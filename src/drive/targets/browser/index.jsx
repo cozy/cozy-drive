@@ -17,6 +17,8 @@ import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import { hot } from 'react-hot-loader'
+import { Document } from 'cozy-doctypes'
+
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -32,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     appMetadata,
     schema
   })
+
+  if (!Document.cozyClient) {
+    Document.registerClient(client)
+  }
 
   cozy.client.init({
     cozyURL: cozyUrl,
