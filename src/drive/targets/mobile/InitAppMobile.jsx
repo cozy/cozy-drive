@@ -27,6 +27,7 @@ import {
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { isIOSApp } from 'cozy-device-helper'
+import { Document } from 'cozy-doctypes'
 
 import {
   getLang,
@@ -117,6 +118,10 @@ class InitAppMobile {
     if (this.client) return this.client
     const cozyURL = await this.getCozyURL()
     this.client = initClient(cozyURL)
+
+    if (!Document.cozyClient) {
+      Document.registerClient(this.client)
+    }
     return this.client
   }
 
