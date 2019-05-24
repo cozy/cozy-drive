@@ -173,6 +173,10 @@ class PouchDB {
     _type: 'io.cozy.files'
   })
 
+  /*
+    Fetch the folder and its files 
+    @param {folderId} uuid - uuid of the folder
+  */
   getFolder = async folderId => {
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     const folder = await db.get(folderId)
