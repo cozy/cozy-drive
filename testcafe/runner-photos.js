@@ -38,9 +38,9 @@ async function runRunner() {
       '${DATE}_${TIME}/${FIXTURE}/${TEST_ID}-${TEST}/${FILE_INDEX}.png'
     )
     .run({
-      assertionTimeout: 8000, //Testcafe Default value: 3000
+      assertionTimeout: 6000, //Testcafe Default value: 3000
       pageLoadTimeout: 6000, //Testcafe Default value: 3000
-      selectorTimeout: 15000, //Testcafe Default value: 10000
+      //  selectorTimeout: 15000, //Testcafe Default value: 10000
       skipJsErrors: true,
       skipUncaughtErrors: true
     })
