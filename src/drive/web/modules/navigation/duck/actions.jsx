@@ -18,7 +18,6 @@ import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/react/Alerter'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import { getOpenedFolderId } from 'drive/web/modules/navigation/duck'
-//import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config.js'
 
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
@@ -56,18 +55,6 @@ export const META_DEFAULTS = {
   hideActionMenu: true
 }
 
-/* export const openFiles = () => {
-  return async dispatch => dispatch(openFolder(ROOT_DIR_ID))
-}
-
-export const openRecent = () => {
-  return async dispatch => dispatch(fetchRecentFiles())
-}
-
-export const openTrash = () => {
-  return async dispatch => dispatch(openFolder(TRASH_DIR_ID))
-} */
-
 export const openFolder = folderId => {
   return async (dispatch, getState) => {
     dispatch({
@@ -81,7 +68,6 @@ export const openFolder = folderId => {
       // PB: Pouch Mango queries don't return the total count...
       // and so the fetchMore button would not be displayed unless... see FileList
       const folder = await getAdapter(getState()).getFolder(folderId)
-
       /*
         Since getFolder is async, if we have a very bad network we can receive multiple response 
         if the user clicks multiple times. We are not sure about the order of the response. 
@@ -97,6 +83,8 @@ export const openFolder = folderId => {
           files: folder.contents.data
         })
       }
+
+      return
     } catch (err) {
       logException(err, {
         context: OPEN_FOLDER_FAILURE
