@@ -76,6 +76,8 @@ const displayedFolder = (state = null, action) => {
       return action.folder
     case FETCH_RECENT_SUCCESS:
     case FETCH_SHARINGS_SUCCESS:
+    case FETCH_SHARINGS:
+    case FETCH_RECENT:
       return null
     default:
       return state
@@ -107,6 +109,9 @@ const currentView = (state = '', action) => {
       return state
   }
 }
+export const isRecentViewSelector = ({ view }) => view.currentView === 'recent'
+export const isSharingsViewSelector = ({ view }) =>
+  view.currentView === 'sharings'
 
 const openedFolderId = (state = null, action) => {
   switch (action.type) {
