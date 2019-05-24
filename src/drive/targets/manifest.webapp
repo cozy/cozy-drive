@@ -137,7 +137,7 @@
     },
     "mail": {
       "description": "Send feedback emails to the support team",
-      "type": "io.cozy.jobs:POST",
+      "type": "io.cozy.jobs",
       "verbs": ["POST"],
       "selector": "worker",
       "values": ["sendmail"]
