@@ -279,7 +279,6 @@ class File extends Component {
     const { onFolderOpen, onFileOpen, isAvailableOffline } = this.props
     e.stopPropagation()
     if (isDirectory(attributes)) {
-      console.log('***isDirectory')
       onFolderOpen(attributes.id)
     } else {
       onFileOpen(attributes, isAvailableOffline)
@@ -384,7 +383,9 @@ File.propTypes = {
   disabled: PropTypes.bool,
   breakpoints: PropTypes.object.isRequired,
   selectionModeActive: PropTypes.func,
+  //When a user click on a Folder
   onFolderOpen: PropTypes.func.isRequired,
+  //onFileOpen : When a user click on a File
   onFileOpen: PropTypes.func.isRequired,
   onCheckboxToggle: PropTypes.func.isRequired
 }
