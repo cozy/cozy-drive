@@ -105,11 +105,12 @@ fixture`${FIXTURE_PUBLIC_WITH_DL}`.page`${TESTCAFE_PHOTOS_URL}/`
     t.ctx.totalFilesCount = await publicPhotoPage.getPhotosCount('Before')
     console.groupEnd()
   })
-  .afterEach(async () => {
+  .afterEach(async t => {
     logger.info(
       `↳ ℹ️  ${FEATURE_PREFIX} - Checking downloaded file for ${FEATURE_PREFIX.toLowerCase()}.zip`
     )
     await checkLocalFile(
+      t,
       `${data.DOWNLOAD_PATH}/${FEATURE_PREFIX.toLowerCase()}.zip`
     )
     await deleteLocalFile(
