@@ -47,7 +47,7 @@ fixture`${FIXTURE_PRIVATE_WITH_DL}`.page`${TESTCAFE_DRIVE_URL}/`
         t.ctx.fileDownloaded
       }`
     )
-    await checkLocalFile(`${data.DOWNLOAD_PATH}/${t.ctx.fileDownloaded}`)
+    await checkLocalFile(t, `${data.DOWNLOAD_PATH}/${t.ctx.fileDownloaded}`)
     await deleteLocalFile(`${data.DOWNLOAD_PATH}/${t.ctx.fileDownloaded}`)
   })
 

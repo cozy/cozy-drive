@@ -92,11 +92,26 @@ export const getLastExecutedCommand = ClientFunction(
 )
 
 //@param{string} filepath : Expected full path to file
-export async function checkLocalFile(filepath) {
-  await t.wait(data.DOWNLOAD_DELAY)
-  await t.expect(fs.existsSync(filepath)).ok(`${filepath} doesn't exist`)
-  logger.debug(`${filepath} exists on local drive`)
+export async function checkLocalFile(t, filepath) {
+  for (var i = 0; i < data.DOWNLOAD_CHECK_RETRIES; i++) {
+    await t.wait(10)
+    if (fs.existsSync(filepath)) {
+      logger.info(
+        `${filepath} exists on local drive. Waited for a total of ${i.toString()} milliseconds`
+      )
+      break
+    }
+  }
+  //Will throw error if file was not download
+  await t
+    .expect(fs.existsSync(filepath))
+    .ok(
+      `${filepath} doesn't exist after ${
+        data.DOWNLOAD_CHECK_RETRIES
+      } milliseconds`
+    )
 }
+
 //@param{string} filepath : Expected full path to file
 export async function deleteLocalFile(filepath) {
   fs.unlink(filepath, function(err) {
