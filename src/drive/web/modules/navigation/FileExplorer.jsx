@@ -11,39 +11,70 @@ import {
   fetchMoreFiles,
   getFolderIdFromRoute,
   getVisibleFiles,
-  getFolderUrl
+  getFolderUrl,
+  isRecentViewSelector,
+  isSharingsViewSelector
 } from 'drive/web/modules/navigation/duck'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 
-const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
-const isSharingsFilesView = props =>
+const isRecentFilesViewByPath = props =>
+  props.location.pathname.match(/^\/recent/)
+const isSharingsFilesViewByPath = props =>
   props.location.pathname.match(/^\/sharings/) && !props.params.folderId
 
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
 
-const isUrlMatchingOpenedFolder = (props, openedFolderId) =>
-  openedFolderId &&
-  openedFolderId === getFolderIdFromRoute(props.location, props.params)
+const isUrlMatchingOpenedFolder = (props, openedFolderId) => {
+  return (
+    openedFolderId &&
+    openedFolderId === getFolderIdFromRoute(props.location, props.params)
+  )
+}
 
 class FileExplorer extends Component {
   componentWillMount() {
-    if (isRecentFilesView(this.props)) {
+    const {
+      isRecentFilesView,
+      isSharingsFilesView,
+      location,
+      params
+    } = this.props
+    if (isRecentFilesView) {
       this.props.fetchRecentFiles()
-    } else if (isSharingsFilesView(this.props)) {
+    } else if (isSharingsFilesView) {
       // Do nothing — the fetching will be started by a sub-component
     } else {
-      this.props.fetchFolder(
-        getFolderIdFromRoute(this.props.location, this.props.params)
-      )
+      this.props.fetchFolder(getFolderIdFromRoute(location, params))
     }
   }
 
+  /*
+    We need this method since <Nav is using href and not onClick
+    and we listen to the URL changes in order to call the right action 
+
+    This is only needed for this case, since the navigation in a Folder 
+    is managed by navigateToFolder function.
+
+    We should perhaps have : 
+    - FileFolderExplorer 
+    - RecentFileExplorer 
+    - TrashFileExplorer ?
+
+    We have to use newProps and newProps.location, because has we use both : 
+    - props location 
+    and 
+    - redux store 
+    props.location is the first to be updated 
+
+    Also we check the matching between the openedFilderId (and not the displayFolderId)
+    and the new props location (folder id in the url)
+  */
   componentWillReceiveProps(newProps) {
     if (
       urlHasChanged(this.props, newProps) &&
-      !isRecentFilesView(newProps) &&
-      !isSharingsFilesView(newProps) &&
+      !isRecentFilesViewByPath(newProps) &&
+      !isSharingsFilesViewByPath(newProps) &&
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
     ) {
       this.navigateToFolder(
@@ -51,12 +82,21 @@ class FileExplorer extends Component {
       )
     } else if (
       urlHasChanged(this.props, newProps) &&
-      isRecentFilesView(newProps)
+      isSharingsFilesViewByPath(newProps)
     ) {
       this.props.fetchRecentFiles()
     }
   }
 
+  /*
+   @performance 
+
+    Thanks to this, we're updating twice the redux store and we cause
+    a lof of re-render issues
+
+    Very deep in the three (File.jsx), we use navigateToForlder renamed as 
+    openFolder. 
+  */
   navigateToFolder = async folderId => {
     await this.props.fetchFolder(folderId)
     this.props.router.push(getFolderUrl(folderId, this.props.location))
@@ -81,7 +121,9 @@ const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
-  files: getVisibleFiles(state)
+  files: getVisibleFiles(state),
+  isSharingsFilesView: isSharingsViewSelector(state),
+  isRecentFilesView: isRecentViewSelector(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
