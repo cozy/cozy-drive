@@ -118,10 +118,6 @@ const currentView = (state = '', action) => {
       return state
   }
 }
-export const isRecentViewSelector = ({ view }) =>
-  view.currentView === RECENT_VIEW
-export const isSharingsViewSelector = ({ view }) =>
-  view.currentView === SHARINGS_VIEW
 
 const openedFolderId = (state = null, action) => {
   switch (action.type) {

@@ -6,9 +6,7 @@ export {
   getOpenedFolderId,
   getFolderIdFromRoute,
   getFolderUrl,
-  getSort,
-  isRecentViewSelector,
-  isSharingsViewSelector
+  getSort
 } from './reducer'
 
 export {
