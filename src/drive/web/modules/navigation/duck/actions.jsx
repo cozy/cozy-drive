@@ -96,9 +96,8 @@ export const openFolder = folderId => {
 
 export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
   return async (dispatch, getState) => {
-    const action = SORT_FOLDER
     dispatch({
-      type: action,
+      type: SORT_FOLDER,
       folderId,
       sortAttribute,
       sortOrder,
@@ -128,8 +127,7 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
 export const fetchMoreFiles = (folderId, skip, limit) => {
   return async (dispatch, getState) => {
     const sort = getSort(getState())
-    const action = FETCH_MORE_FILES
-    dispatch({ type: action, folderId, skip, limit })
+    dispatch({ type: FETCH_MORE_FILES, folderId, skip, limit })
     try {
       const files =
         sort === null
@@ -162,10 +160,8 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
 
 export const fetchRecentFiles = () => {
   return async (dispatch, getState) => {
-    const action = FETCH_RECENT
-
     dispatch({
-      type: action,
+      type: FETCH_RECENT,
       meta: META_DEFAULTS
     })
 
