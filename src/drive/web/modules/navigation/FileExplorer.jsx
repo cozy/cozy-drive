@@ -11,9 +11,7 @@ import {
   fetchMoreFiles,
   getFolderIdFromRoute,
   getVisibleFiles,
-  getFolderUrl,
-  isRecentViewSelector,
-  isSharingsViewSelector
+  getFolderUrl
 } from 'drive/web/modules/navigation/duck'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 
@@ -40,9 +38,9 @@ class FileExplorer extends Component {
       location,
       params
     } = this.props
-    if (isRecentFilesView) {
+    if (isRecentFilesViewByPath(this.props)) {
       this.props.fetchRecentFiles()
-    } else if (isSharingsFilesView) {
+    } else if (isSharingsFilesViewByPath(this.props)) {
       // Do nothing — the fetching will be started by a sub-component
     } else {
       this.props.fetchFolder(getFolderIdFromRoute(location, params))
@@ -130,9 +128,7 @@ const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
   fileCount: state.view.fileCount,
-  files: getVisibleFiles(state),
-  isSharingsFilesView: isSharingsViewSelector(state),
-  isRecentFilesView: isRecentViewSelector(state)
+  files: getVisibleFiles(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
