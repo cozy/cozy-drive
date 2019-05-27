@@ -68,6 +68,9 @@ export const isNavigating = ({ view }) =>
   and 
   `openedFolderId` which is set just after the dispatch of OPEN_FOLDER
   without waiting for any success / faillure 
+
+  Also `openedFilderId` is just the uuid of the folder. 
+  `displayFolder` is a io.cozy.file object
 */
 // reducer for the currently displayed folder properties
 const displayedFolder = (state = null, action) => {
@@ -94,24 +97,31 @@ const displayedFolder = (state = null, action) => {
     - Recent 
     - Trash 
 */
+
+const TRASH_VIEW = 'trash'
+const FOLDER_VIEW = 'folder'
+const RECENT_VIEW = 'recent'
+const SHARINGS_VIEW = 'sharings'
+
 const currentView = (state = '', action) => {
   switch (action.type) {
     case OPEN_FOLDER:
-      if (action.folderId === 'io.cozy.files.trash-dir') {
-        return 'trash'
+      if (action.folderId === TRASH_DIR_ID) {
+        return TRASH_VIEW
       }
-      return 'folder'
+      return FOLDER_VIEW
     case FETCH_RECENT:
-      return 'recent'
+      return RECENT_VIEW
     case FETCH_SHARINGS:
-      return 'sharings'
+      return SHARINGS_VIEW
     default:
       return state
   }
 }
-export const isRecentViewSelector = ({ view }) => view.currentView === 'recent'
+export const isRecentViewSelector = ({ view }) =>
+  view.currentView === RECENT_VIEW
 export const isSharingsViewSelector = ({ view }) =>
-  view.currentView === 'sharings'
+  view.currentView === SHARINGS_VIEW
 
 const openedFolderId = (state = null, action) => {
   switch (action.type) {
@@ -234,9 +244,10 @@ const files = (
     case OPEN_FOLDER_SUCCESS:
       /* 
         Special case for the Trash dir since `Trash` has its own 
-        reducer to store its files
+        reducer to store its files and that Trash is a "regular"
+        folder
         */
-      if (action.folder.id === 'io.cozy.files.trash-dir') {
+      if (action.folder.id === TRASH_DIR_ID) {
         return {
           ...state,
           trashed: action.files
@@ -445,13 +456,13 @@ export const getSort = ({ view }) => view.sort
 
 export const getCurrentFilesIndex = view => {
   switch (view.currentView) {
-    case 'folder':
+    case FOLDER_VIEW:
       return view.files.folder
-    case 'recent':
+    case RECENT_VIEW:
       return view.files.recent
-    case 'sharings':
+    case SHARINGS_VIEW:
       return view.files.shared
-    case 'trash':
+    case TRASH_VIEW:
       return view.files.trashed
     default:
       return view.files.folder
