@@ -69,30 +69,39 @@ class FileExplorer extends Component {
 
     Also we check the matching between the openedFilderId (and not the displayFolderId)
     and the new props location (folder id in the url)
+
+    I can't use isRecentFilesView for instance, since when we click on the "Recent" links
+    we don't dispatch any action. We're just listeninng the URL, and dispatch the actio 
+    if the url has changed and that we're on the /recent url 
   */
   componentWillReceiveProps(newProps) {
+    //As we're url based here, if nothing changed, let's shortcut
+    if (!urlHasChanged(this.props, newProps)) return
+
+    //if url has changed and the new one is Recent
+    if (isRecentFilesViewByPath(newProps)) {
+      return this.props.fetchRecentFiles()
+    }
+
+    //if url has changed and we're not on the recent, not on the sharings
+    // and the desired folder is different than the opened... Let's navigate
+    // to it
+    // Didn't try, but I think here we can use props.openedFolderId !== newprops.openedFolderId
     if (
-      urlHasChanged(this.props, newProps) &&
-      !isRecentFilesViewByPath(newProps) &&
       !isSharingsFilesViewByPath(newProps) &&
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
     ) {
       this.navigateToFolder(
         getFolderIdFromRoute(newProps.location, newProps.params)
       )
-    } else if (
-      urlHasChanged(this.props, newProps) &&
-      isSharingsFilesViewByPath(newProps)
-    ) {
-      this.props.fetchRecentFiles()
     }
   }
 
   /*
    @performance 
 
-    Thanks to this, we're updating twice the redux store and we cause
-    a lof of re-render issues
+    Thanks to this, we're updating twice the redux store (url and fetchfolder) 
+    and we cause a lof of re-render issues
 
     Very deep in the three (File.jsx), we use navigateToForlder renamed as 
     openFolder. 
