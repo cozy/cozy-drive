@@ -303,7 +303,7 @@ const uploadQueueProcessed = (
 
 export const createFolder = name => {
   return async (dispatch, getState) => {
-    const existingFolder = getState().view.files.find(
+    const existingFolder = getState().view.files.folder.find(
       f => isDirectory(f) && f.name === name
     )
     const currentFileCount = getState().view.fileCount
