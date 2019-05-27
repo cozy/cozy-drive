@@ -375,7 +375,7 @@ File.propTypes = {
   attributes: PropTypes.object.isRequired,
   selected: PropTypes.bool.isRequired,
   actions: PropTypes.object.isRequired,
-  isRenaming: PropTypes.bool.isRequired,
+  isRenaming: PropTypes.bool,
   withSelectionCheckbox: PropTypes.bool.isRequired,
   withFilePath: PropTypes.bool,
   withSharedBadge: PropTypes.bool.isRequired,
