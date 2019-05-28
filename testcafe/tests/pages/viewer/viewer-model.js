@@ -6,15 +6,24 @@ import * as selectors from '../selectors'
 export default class Viewer {
   async waitForLoading() {
     await t.expect(selectors.spinner.exists).notOk('Spinner still spinning')
-    await isExistingAndVisibile(selectors.viewerWrapper, 'Viewer Wrapper')
-    await isExistingAndVisibile(selectors.viewerControls, 'Viewer Controls')
+    await isExistingAndVisibile(
+      selectors.viewerWrapper,
+      'selectors.viewerWrapper'
+    )
+    await isExistingAndVisibile(
+      selectors.viewerControls,
+      'selectors.viewerControls'
+    )
     logger.debug('Viewer Ok')
   }
 
   //@param { bool } exitWithEsc : true to exit by pressing esc, false to click on the button
   async closeViewer(exitWithEsc) {
     await t.hover(selectors.viewerWrapper)
-    await isExistingAndVisibile(selectors.viewerBtnClose, 'Close button')
+    await isExistingAndVisibile(
+      selectors.viewerBtnClose,
+      'selectors.viewerWrapper'
+    )
     exitWithEsc
       ? await t.pressKey('esc')
       : await t.click(selectors.viewerBtnClose)
@@ -26,12 +35,12 @@ export default class Viewer {
       //this is the last picture, so next button does not exist
       await t
         .expect(selectors.viewerNavNext.exists)
-        .notOk('Next button on last picture')
+        .notOk('selectors.viewerNavNex on last picture')
     } else {
       await t
         .hover(selectors.viewerNavNext) //not last photo, so next button should exists
         .expect(selectors.btnViewerNavNext.visible)
-        .ok('Next arrow does not show up')
+        .ok('selectors.btnViewerNavNext does not show up')
         .click(selectors.btnViewerNavNext)
       await this.waitForLoading()
     }
@@ -43,12 +52,12 @@ export default class Viewer {
       //this is the 1st picture, so previous button does not exist
       await t
         .expect(selectors.viewerNavPrevious.exists)
-        .notOk('Previous button on first picture')
+        .notOk('selectors.viewerNavPrevious on first picture')
     } else {
       await t
         .hover(selectors.viewerNavPrevious) //not 1st photo, so previous button should exists
         .expect(selectors.btnViewerNavPrevious.visible)
-        .ok('Previous arrow does not show up')
+        .ok('selectors.btnViewerNavPrevious does not show up')
         .click(selectors.viewerNavPrevious)
       await this.waitForLoading()
     }
@@ -97,7 +106,7 @@ export default class Viewer {
     await t.hover(selectors.viewerWrapper)
     await isExistingAndVisibile(
       selectors.btnDownloadViewerToolbar,
-      'Download button in toolbar'
+      'selectors.btnDownloadViewerToolbar'
     )
     await t
       .setNativeDialogHandler(() => true)
@@ -106,10 +115,10 @@ export default class Viewer {
 
   //Specific check for imageViewer (Common to drive/photos)
   async checkImageViewer() {
-    await isExistingAndVisibile(selectors.imageViewer, 'image viewer')
+    await isExistingAndVisibile(selectors.imageViewer, 'selectors.imageViewer')
     await isExistingAndVisibile(
       selectors.imageViewerContent,
-      'image viewer controls'
+      'selectors.imageViewerContent'
     )
   }
 }

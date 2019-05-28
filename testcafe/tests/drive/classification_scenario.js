@@ -190,7 +190,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-2`,
     withMask: maskMoveMoadal
   })
-  await isExistingAndVisibile(selectors.modalClose, 'Modal button close')
+  await isExistingAndVisibile(selectors.modalClose, 'selectors.modalClose')
   await t.click(selectors.modalClose)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-3`,
@@ -211,7 +211,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
   // no need to screenshot again the modal
   await isExistingAndVisibile(
     selectors.btnModalFirstButton,
-    'Modal button cancel'
+    'selectors.btnModalFirstButton'
   )
   await t.click(selectors.btnModalFirstButton)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
@@ -343,7 +343,7 @@ test(TEST_DELETE_FOLDER_FROM_DRIVE, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-1`
   })
   await t.click(selectors.btnRemoveActionMenu)
-  await isExistingAndVisibile(selectors.modalFooter, 'Modal delete')
+  await isExistingAndVisibile(selectors.modalFooter, 'selectors.modalFooter')
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-2`
@@ -403,11 +403,11 @@ test(TEST_EMPTY_TRASH, async t => {
       selectors.alertWrapper.withText(
         'Your trash is being emptied. This might take a few moments.'
       ),
-      'Toast : Your trash is being emptied. This might take a few moments. '
+      'selectors.alertWrapper.withText(Your trash is being emptied. This might take a few moments.)'
     ),
     await isExistingAndVisibile(
       selectors.alertWrapper.withText('The trash has been emptied.'),
-      'Toast : The trash has been emptied.'
+      'selectors.alertWrapper.withText(The trash has been emptied.)'
     )
   ])
   await Promise.all([
@@ -417,12 +417,16 @@ test(TEST_EMPTY_TRASH, async t => {
           'Your trash is being emptied. This might take a few moments.'
         ).exists
       )
-      .notOk('Toast still exists'),
+      .notOk(
+        'selectors.alertWrapper.withText(Your trash is being emptied. This might take a few moments.) still exists'
+      ),
     await t
       .expect(
         selectors.alertWrapper.withText('The trash has been emptied.').exists
       )
-      .notOk('Toast still exists')
+      .notOk(
+        'selectors.alertWrapper.withText(The trash has been emptied.) still exists'
+      )
   ])
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({

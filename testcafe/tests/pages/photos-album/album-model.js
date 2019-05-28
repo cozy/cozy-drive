@@ -13,10 +13,12 @@ import PhotoPage from '../photos/photos-model'
 
 export default class Page extends PhotoPage {
   async waitForLoading() {
-    await t.expect(selectors.loading.exists).notOk('Page still loading')
+    await t
+      .expect(selectors.loading.exists)
+      .notOk('Page still loading : selectors.loading exists')
     await isExistingAndVisibile(
       selectors.albumContentWrapper,
-      'Content Wrapper'
+      'selectors.albumContentWrapper'
     )
   }
 
@@ -25,9 +27,12 @@ export default class Page extends PhotoPage {
     await checkAllImagesExists()
     await isExistingAndVisibile(
       selectors.photoSectionAddToAlbum,
-      'Photo section (add to album)'
+      'selectors.photoSectionAddToAlbum'
     )
-    await isExistingAndVisibile(selectors.allPhotosAddToAlbum, 'Photo item(s)')
+    await isExistingAndVisibile(
+      selectors.allPhotosAddToAlbum,
+      'selectors.allPhotosAddToAlbum'
+    )
     const allPhotosCount = await selectors.allPhotosAddToAlbum.count
 
     logger.debug(
@@ -43,7 +48,7 @@ export default class Page extends PhotoPage {
     for (let i = indexStart; i < indexStart + numOfFiles; i++) {
       await isExistingAndVisibile(
         selectors.photoThumb(i),
-        `${i + 1}th Photo thumb`
+        `selectors.photoThumb(${i})`
       )
       await t.click(selectors.photoToAddCheckbox.nth(i))
     }
@@ -62,7 +67,10 @@ export default class Page extends PhotoPage {
       .eql(albumName)
 
     if (photoNumber == 0) {
-      await isExistingAndVisibile(selectors.folderEmpty, 'Folder Empty')
+      await isExistingAndVisibile(
+        selectors.folderEmpty,
+        'selectors.folderEmpty'
+      )
     } else {
       const allPhotosAlbumCount = await this.getPhotosCount('On Album page')
       await t.expect(allPhotosAlbumCount).eql(photoNumber) //all expected photos are displayed
@@ -73,18 +81,24 @@ export default class Page extends PhotoPage {
   // @param {String} NewAlbumName : New Name of the album (after renamming)
   // @param {string} exit : enter or click : Choose the exit method
   async renameAlbum(OldAlbumName, NewAlbumName, exitWithEnter) {
-    await isExistingAndVisibile(selectors.albumTitle, 'Album Name')
+    await isExistingAndVisibile(selectors.albumTitle, 'selectors.albumTitle')
     await t
       .expect(selectors.albumTitle.find('input').exists)
       .notOk('Title is already in input mode')
-    await isExistingAndVisibile(selectors.toolbarAlbum, 'Toolabr Album')
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await isExistingAndVisibile(
+      selectors.toolbarAlbum,
+      'selectors.toolbarAlbum'
+    )
+    await isExistingAndVisibile(selectors.btnMoreMenu, 'selectors.btnMoreMenu')
     await t.click(selectors.btnMoreMenu)
-    await isExistingAndVisibile(selectors.moreMenuRenameAlbum, 'Rename Button')
+    await isExistingAndVisibile(
+      selectors.moreMenuRenameAlbum,
+      'selectors.moreMenuRenameAlbum'
+    )
     await t.click(selectors.moreMenuRenameAlbum)
     await isExistingAndVisibile(
       selectors.albumTitle.find('input'),
-      'Input Album Name'
+      `selectors.albumTitle.find('input')`
     )
     await t
       .expect(selectors.albumTitle.find('input').value)
@@ -102,12 +116,15 @@ export default class Page extends PhotoPage {
   // @param { number } photoNumber : Number of photos to add to the new album (
   // @param {String} AlbumName : Name of the album
   async addPhotosToAlbum(albumName, count, photoNumber) {
-    await isExistingAndVisibile(selectors.toolbarAlbum, 'Toolabr Album')
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await isExistingAndVisibile(
+      selectors.toolbarAlbum,
+      'selectors.toolbarAlbum'
+    )
+    await isExistingAndVisibile(selectors.btnMoreMenu, 'selectors.btnMoreMenu')
     await t.click(selectors.btnMoreMenu)
     await isExistingAndVisibile(
       selectors.moreMenuAddPhotosToAlbum,
-      'Rename Button'
+      'selectors.moreMenuAddPhotosToAlbum'
     )
     await t.click(selectors.moreMenuAddPhotosToAlbum)
 
@@ -115,7 +132,10 @@ export default class Page extends PhotoPage {
     await this.selectPhotostoAdd(count, photoNumber)
     await t.click(selectors.btnValidateAlbum)
 
-    await isExistingAndVisibile(selectors.alertWrapper, 'modal Alert')
+    await isExistingAndVisibile(
+      selectors.alertWrapper,
+      'selectors.alertWrapper'
+    )
     const modalTxt = (await selectors.alertWrapper.innerText).split(' ')
     await t.expect(modalTxt[modalTxt.length - 2]).eql(`${photoNumber}`)
 
@@ -126,7 +146,10 @@ export default class Page extends PhotoPage {
   // @param {String} count : Number of photos already in the album (needed to count photos, as photos already in the album shows up twice)
   async checkAddToAlbumPage(albumName) {
     await t.expect(getPageUrl()).contains('edit')
-    await isExistingAndVisibile(selectors.pickerAlbumName, 'Album Name')
+    await isExistingAndVisibile(
+      selectors.pickerAlbumName,
+      'selectors.pickerAlbumName'
+    )
     await t.expect(selectors.pickerAlbumName.innerText).eql(albumName)
     const photosToAddCount = await this.getPhotosToAddCount(
       'On Add to Album page'
@@ -134,14 +157,14 @@ export default class Page extends PhotoPage {
     await t.expect(photosToAddCount).eql(t.ctx.totalFilesCount) //all photos are displayed
     await isExistingAndVisibile(
       selectors.btnValidateAlbum,
-      'Add to Album Button'
+      'selectors.btnValidateAlbum'
     )
   }
 
   async backToAlbumsList() {
     await isExistingAndVisibile(
       selectors.btnBackToAlbum,
-      'Back to albums List btn'
+      'selectors.btnBackToAlbum'
     )
     await t.click(selectors.btnBackToAlbum)
     await this.waitForLoading()
@@ -154,16 +177,22 @@ export default class Page extends PhotoPage {
       photoAlbumStart = await this.getPhotosCount('In album, before')
     }
     await this.selectPhotos(photoNumber)
-    await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
+    await isExistingAndVisibile(
+      selectors.cozySelectionbar,
+      'selectors.cozySelectionbar'
+    )
 
     logger.debug('Removing ' + photoNumber + ' picture(s)')
     await isExistingAndVisibile(
       selectors.btnRemoveFromAlbumCozySelectionBar,
-      'Remove from album Button'
+      'selectors.btnRemoveFromAlbumCozySelectionBars'
     )
     await t.click(selectors.btnRemoveFromAlbumCozySelectionBar)
 
-    await isExistingAndVisibile(selectors.alertWrapper, 'modal Alert')
+    await isExistingAndVisibile(
+      selectors.alertWrapper,
+      'selectors.alertWrapper'
+    )
     await checkToastAppearsAndDisappears(
       'The photo has been removed from album'
     )
@@ -174,28 +203,43 @@ export default class Page extends PhotoPage {
   }
 
   async deleteAlbum() {
-    await isExistingAndVisibile(selectors.toolbarAlbum, 'Toolabr Album')
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await isExistingAndVisibile(
+      selectors.toolbarAlbum,
+      'selectors.toolbarAlbum'
+    )
+    await isExistingAndVisibile(selectors.btnMoreMenu, 'selectors.btnMoreMenu')
     await t.click(selectors.btnMoreMenu)
-    await isExistingAndVisibile(selectors.moreMenuDeleteAlbum, 'Delete Button')
+    await isExistingAndVisibile(
+      selectors.moreMenuDeleteAlbum,
+      'selectors.moreMenuDeleteAlbum'
+    )
     await t.click(selectors.moreMenuDeleteAlbum)
 
-    await isExistingAndVisibile(selectors.modalFooter, 'Modal delete')
+    await isExistingAndVisibile(selectors.modalFooter, 'selectors.modalFooter')
     await isExistingAndVisibile(
       selectors.btnModalSecondButton,
-      'Modal delete button Delete'
+      'selectors.btnModalSecondButton'
     )
     await t.click(selectors.btnModalSecondButton)
   }
 
   async shareAlbumPublicLink() {
-    await isExistingAndVisibile(selectors.toolbarAlbum, 'toolbarAlbum')
-    await isExistingAndVisibile(selectors.btnShareAlbum, `Share button`)
+    await isExistingAndVisibile(
+      selectors.toolbarAlbum,
+      'selectors.toolbarAlbum'
+    )
+    await isExistingAndVisibile(
+      selectors.btnShareAlbum,
+      `selectors.btnShareAlbum`
+    )
     await t.click(selectors.btnShareAlbum)
-    await isExistingAndVisibile(selectors.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(
+      selectors.divShareByLink,
+      'selectors.divShareByLink'
+    )
     await isExistingAndVisibile(
       selectors.toggleShareLink,
-      'Toggle Share by Link'
+      'selectors.toggleShareLink'
     )
     await t
       .click(selectors.toggleShareLink)
@@ -203,7 +247,10 @@ export default class Page extends PhotoPage {
       .ok('toggle Link is unchecked')
       .expect(selectors.spanLinkCreating.exist)
       .notOk('Still creating Link')
-    await isExistingAndVisibile(selectors.btnCopyShareByLink, 'Copy Link')
+    await isExistingAndVisibile(
+      selectors.btnCopyShareByLink,
+      'selectors.btnCopyShareByLink'
+    )
 
     await overwriteCopyCommand()
 
@@ -214,27 +261,39 @@ export default class Page extends PhotoPage {
 
     await isExistingAndVisibile(
       selectors.alertWrapper,
-      '"successfull" modal alert'
+      'selectors.alertWrapper'
     )
   }
 
   async unshareAlbumPublicLink() {
-    await isExistingAndVisibile(selectors.toolbarAlbum, 'toolbarAlbum')
-    await isExistingAndVisibile(selectors.btnShareAlbum, `Share button`)
+    await isExistingAndVisibile(
+      selectors.toolbarAlbum,
+      'selectors.toolbarAlbum'
+    )
+    await isExistingAndVisibile(
+      selectors.btnShareAlbum,
+      `selectors.btnShareAlbum`
+    )
     await t.click(selectors.btnShareAlbum)
-    await isExistingAndVisibile(selectors.divShareByLink, 'div Share by Link')
+    await isExistingAndVisibile(
+      selectors.divShareByLink,
+      'selectors.divShareByLink'
+    )
     await isExistingAndVisibile(
       selectors.toggleShareLink,
-      'Toggle Share by Link'
+      'selectors.toggleShareLink'
     )
     await t
       .click(selectors.toggleShareLink)
       .expect(selectors.toggleShareLink.find('input').checked)
-      .notOk('Toggle Link is checked')
+      .notOk(`selectors.toggleShareLink.find('input') is checked`)
       .expect(selectors.btnCopyShareByLink.exists)
-      .notOk('Copy Link button still exists')
+      .notOk('selectors.btnCopyShareByLink still exists')
       .pressKey('esc')
 
-    await isExistingAndVisibile(selectors.btnShareAlbum, `Share button`)
+    await isExistingAndVisibile(
+      selectors.btnShareAlbum,
+      `selectors.btnShareAlbum`
+    )
   }
 }

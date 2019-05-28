@@ -23,48 +23,51 @@ export default class PublicPhotos extends Photos {
   }
 
   async checkActionMenuAlbumPublicDesktop() {
-    await isExistingAndVisibile(selectors.logo, 'Logo')
+    await isExistingAndVisibile(selectors.logo, 'selectors.logo')
     await isExistingAndVisibile(
       selectors.toolbarAlbumPublic,
-      'toolbarAlbumPublic'
+      '  selectors.toolbarAlbumPublic'
     )
     await isExistingAndVisibile(
       selectors.btnAlbumPublicCreateCozyMobileDesktop,
-      'Create my Cozy Button'
+      'selectors.btnAlbumPublicCreateCozyMobileDesktop'
     )
     await isExistingAndVisibile(
       selectors.btnPublicDownloadPhotosDesktop,
-      'Download FolderButton'
+      'selectors.btnPublicDownloadPhotosDesktop'
     )
   }
 
   async checkPhotosDownloadButtonOnMobile() {
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await isExistingAndVisibile(selectors.btnMoreMenu, 'selectors.btnMoreMenu')
     await t.click(selectors.btnMoreMenu, { speed: 0.5 })
     await isExistingAndVisibile(
       selectors.innerPublicMoreMenu,
-      'Innner More Menu'
+      'selectors.innerPublicMoreMenu'
     )
     await isExistingAndVisibile(
       selectors.btnPublicDownloadPhotosMobile,
-      'Download Button (mobile)'
+      'selectors.btnPublicDownloadPhotosMobile'
     )
   }
   async checkPhotosCozyCreationButtonOnMobile() {
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await isExistingAndVisibile(selectors.btnMoreMenu, 'selectors.btnMoreMenu')
     await t.click(selectors.btnMoreMenu, { speed: 0.5 })
     await isExistingAndVisibile(
       selectors.innerPublicMoreMenu,
-      'Innner More Menu'
+      'selectors.innerPublicMoreMenu'
     )
     await isExistingAndVisibile(
       selectors.btnAlbumPublicCreateCozyMobile,
-      'Create my Cozy Button (mobile)'
+      'selectors.btnAlbumPublicCreateCozyMobile'
     )
   }
 
   async checkNotAvailable() {
-    await isExistingAndVisibile(selectors.errorAvailable, 'Not available div')
+    await isExistingAndVisibile(
+      selectors.errorAvailable,
+      'selectors.errorAvailable'
+    )
     await t
       .expect(selectors.errorAvailable.innerText)
       .contains('Sorry, this link is no longer available.') //!FIXME

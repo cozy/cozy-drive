@@ -19,13 +19,13 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
     '↳ ℹ️  Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash'
   )
   //Check Menu and links. Go to page. Check main menu on each page
-  await isExistingAndVisibile(selectors.sidebar, 'Sidebar')
+  await isExistingAndVisibile(selectors.sidebar, 'selectors.sidebar')
 
   //!FIXME change params to use key/keyword
   await privateDrivePage.isSidebarButton(
     selectors.btnNavToRecent,
     '#/recent',
-    'Recent'
+    'selectors.btnNavToRecent'
   )
   await privateDrivePage.clickOnSidebarButton(
     selectors.btnNavToRecent,
@@ -37,7 +37,7 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
   await privateDrivePage.isSidebarButton(
     selectors.btnNavToFolder,
     '#/folder',
-    'Drive'
+    'selectors.btnNavToFolder'
   )
   await privateDrivePage.clickOnSidebarButton(
     selectors.btnNavToFolder,
@@ -49,7 +49,7 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
   await privateDrivePage.isSidebarButton(
     selectors.btnNavToSharing,
     '#/sharings',
-    'Sharing'
+    'electors.btnNavToSharing'
   )
   await privateDrivePage.clickOnSidebarButton(
     selectors.btnNavToSharing,
@@ -61,7 +61,7 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
   await privateDrivePage.isSidebarButton(
     selectors.btnNavToTrash,
     '#/trash',
-    'Trash'
+    'selectors.btnNavToTrash'
   )
   await privateDrivePage.clickOnSidebarButton(
     selectors.btnNavToTrash,

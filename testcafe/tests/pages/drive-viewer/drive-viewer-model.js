@@ -79,10 +79,10 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for audioViewer
   async checkAudioViewer() {
-    await isExistingAndVisibile(selectors.audioViewer, 'Audio viewer')
+    await isExistingAndVisibile(selectors.audioViewer, 'selectors.audioViewer')
     await isExistingAndVisibile(
       selectors.audioViewerControls,
-      'Audio viewer controls'
+      'selectors.audioViewerControls'
     )
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
@@ -92,10 +92,10 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for videoViewer
   async checkVideoViewer() {
-    await isExistingAndVisibile(selectors.videoViewer, 'Video viewer')
+    await isExistingAndVisibile(selectors.videoViewer, 'selectors.videoViewer')
     await isExistingAndVisibile(
       selectors.videoViewerControls,
-      'Video viewer controls'
+      'selectors.videoViewerControls'
     )
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
@@ -105,23 +105,23 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for textViewer
   async checkTextViewer() {
-    await isExistingAndVisibile(selectors.txtViewer, 'text viewer')
+    await isExistingAndVisibile(selectors.txtViewer, 'selectors.txtViewer')
     await isExistingAndVisibile(
       selectors.txtViewerContent,
-      'text viewer controls'
+      'selectors.txtViewerContent'
     )
   }
 
   //Specific check for no viewer : other download btn
   async checkNoViewer() {
-    await isExistingAndVisibile(selectors.noViewer, 'no-viewer Viewer')
+    await isExistingAndVisibile(selectors.noViewer, 'selectors.noViewer')
   }
 
   //Specific check for no viewer : other download btn
   async checkNoViewerDownload() {
     await isExistingAndVisibile(
       selectors.btnNoViewerDownload,
-      'no Viewer Download button'
+      'selectors.btnNoViewerDownload'
     )
     await t
       .setNativeDialogHandler(() => true)
@@ -131,6 +131,6 @@ export default class ViewerDrive extends Viewer {
   //Specific check for pdf viewer : download btn
   async checkPdfViewer() {
     await t.takeScreenshot()
-    await isExistingAndVisibile(selectors.pdfViewer, 'Pdf Viewer')
+    await isExistingAndVisibile(selectors.pdfViewer, 'selectors.pdfViewer')
   }
 }

@@ -10,11 +10,17 @@ export default class DrivePage {
   async waitForLoading({ isNotAvailable, isFull } = {}) {
     await t
       .expect(selectors.contentPlaceHolder.exists)
-      .notOk('Content placeholder still displayed')
+      .notOk('selectors.contentPlaceHolder still displayed')
     if (!isNotAvailable) {
-      await isExistingAndVisibile(selectors.contentTable, 'content Table')
+      await isExistingAndVisibile(
+        selectors.contentTable,
+        'selectors.contentTable'
+      )
       if (isFull) {
-        await isExistingAndVisibile(selectors.folderOrFileName, 'folder list')
+        await isExistingAndVisibile(
+          selectors.folderOrFileName,
+          'selectors.folderOrFileName'
+        )
       }
     }
     logger.debug('Loading Ok')
@@ -33,7 +39,7 @@ export default class DrivePage {
 
   //return breadcrumb text
   async getbreadcrumb() {
-    await isExistingAndVisibile(selectors.breadcrumb, 'breadcrumb')
+    await isExistingAndVisibile(selectors.breadcrumb, 'selectors.breadcrumb')
     const childElCount = await selectors.breadcrumb.childElementCount
     let breadcrumbTitle = await selectors.breadcrumb.child(0).innerText
     if (childElCount > 1) {
@@ -55,7 +61,12 @@ export default class DrivePage {
     inModal
       ? (breadcrumb = selectors.modalBreadcrumb)
       : (breadcrumb = selectors.breadcrumb)
-    await isExistingAndVisibile(breadcrumb.child(0), 'breadcrumb (base folder)')
+    await isExistingAndVisibile(
+      breadcrumb.child(0),
+      inModal
+        ? `selectors.modalBreadcrumb.child(0)`
+        : `selectors.breadcrumb.child(0)`
+    )
     await t.click(breadcrumb.child(0))
     await this.waitForLoading()
     logger.info(`Navigation to base folder OK!`)
@@ -90,23 +101,23 @@ export default class DrivePage {
 
     await isExistingAndVisibile(
       selectors.contentRows.nth(filesIndexArray[0]),
-      `element with index ${filesIndexArray[0]}`
+      `selectors.contentRows.nth(${filesIndexArray[0]})`
     )
     await t.hover(selectors.contentRows.nth(filesIndexArray[0])) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
     for (let i = 0; i < filesIndexArray.length; i++) {
       await isExistingAndVisibile(
         selectors.contentRows.nth(filesIndexArray[i]),
-        `element with index ${filesIndexArray[i]}`
+        `selectors.contentRows.nth(${filesIndexArray[i]})`
       )
       await isExistingAndVisibile(
         selectors.checboxFolderByRowIndex(filesIndexArray[i]),
-        `checkbox for element with index ${filesIndexArray[i]}`
+        `selectors.checboxFolderByRowIndex(${filesIndexArray[i]})`
       )
       await t.click(selectors.checboxFolderByRowIndex(filesIndexArray[i]))
     }
     await isExistingAndVisibile(
       selectors.cozySelectionbar,
-      'Cozy Selection Bar'
+      'selectors.cozySelectionbar'
     )
   }
 

@@ -5,7 +5,6 @@ import {
   deleteLocalFile,
   checkLocalFile,
   setDownloadPath,
-  isExistingAndVisibile,
   TESTCAFE_DRIVE_URL
 } from '../helpers/utils'
 import * as selectors from '../pages/selectors'
