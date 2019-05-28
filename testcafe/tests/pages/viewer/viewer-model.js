@@ -5,16 +5,20 @@ import * as selectors from '../selectors'
 
 export default class Viewer {
   async waitForLoading() {
-    await t.expect(selectors.spinner.exists).notOk('Spinner still spinning')
+    await t
+      .expect(selectors.spinner.exists)
+      .notOk(
+        'waitForLoading - Page didnt Load : selectors.spinner still exists'
+      )
     await isExistingAndVisibile(
       selectors.viewerWrapper,
-      'selectors.viewerWrapper'
+      'waitForLoading - selectors.viewerWrapper'
     )
     await isExistingAndVisibile(
       selectors.viewerControls,
-      'selectors.viewerControls'
+      'waitForLoading - selectors.viewerControls'
     )
-    logger.debug('Viewer Ok')
+    logger.debug(`viewer-model : waitForLoading Ok`)
   }
 
   //@param { bool } exitWithEsc : true to exit by pressing esc, false to click on the button
