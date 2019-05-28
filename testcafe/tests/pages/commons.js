@@ -9,9 +9,9 @@ export async function checkToastAppearsAndDisappears(toastText) {
   await t
   isExistingAndVisibile(
     selectors.alertWrapper.withText(toastText),
-    `Toast Alert`
+    `selectors.alertWrapper.withText(${toastText})`
   )
   await t
     .expect(selectors.alertWrapper.withText(toastText).exists)
-    .notOk('Toast still exists')
+    .notOk(`selectors.alertWrapper.withText(${toastText}) still exists`)
 }

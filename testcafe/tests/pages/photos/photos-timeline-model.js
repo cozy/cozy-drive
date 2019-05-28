@@ -8,7 +8,10 @@ export default class Timeline extends Commons {
   //timeline specific as selectors.contentWrapper is only on timeline
   async waitForLoading() {
     await t.expect(selectors.loading.exists).notOk('Page still loading')
-    await isExistingAndVisibile(selectors.contentWrapper, 'Content Wrapper')
+    await isExistingAndVisibile(
+      selectors.contentWrapper,
+      'selectors.contentWrapper'
+    )
   }
 
   //@param {array of fileName} files
@@ -18,12 +21,15 @@ export default class Timeline extends Commons {
 
     await t.expect(selectors.btnUpload.exists).ok(`Upload button doesnt exist`)
     await t.setFilesToUpload(selectors.btnUpload, files)
-    await isExistingAndVisibile(selectors.divUpload, 'Upload div')
+    await isExistingAndVisibile(selectors.divUpload, 'selectors.divUpload')
     await isExistingAndVisibile(
       selectors.divUploadSuccess,
-      'Upload pop-in successfull'
+      'selectors.divUploadSuccess'
     )
-    await isExistingAndVisibile(selectors.alertWrapper, 'Photo(s) uploaded')
+    await isExistingAndVisibile(
+      selectors.alertWrapper,
+      'selectors.alertWrapper'
+    )
     await t
       .expect(selectors.divUpload.innerText)
       .match(
@@ -36,18 +42,21 @@ export default class Timeline extends Commons {
   }
 
   async checkCozyBarOnTimeline() {
-    await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
+    await isExistingAndVisibile(
+      selectors.cozySelectionbar,
+      'selectors.cozySelectionbar'
+    )
     await isExistingAndVisibile(
       selectors.btnAddToAlbumCozySelectionBar,
-      'Button "Add to Album"'
+      'selectors.btnAddToAlbumCozySelectionBar'
     )
     await isExistingAndVisibile(
       selectors.btnDownloadCozySelectionBar,
-      'Button "Download"'
+      'selectors.btnDownloadCozySelectionBar'
     )
     await isExistingAndVisibile(
       selectors.btnDeleteCozySelectionBar,
-      'Button "Delete"'
+      'selectors.btnDeleteCozySelectionBar'
     )
   }
 
@@ -57,19 +66,22 @@ export default class Timeline extends Commons {
     screenshotPath: screenshotPath,
     withMask = false
   }) {
-    await isExistingAndVisibile(selectors.cozySelectionbar, 'Selection bar')
+    await isExistingAndVisibile(
+      selectors.cozySelectionbar,
+      'selectors.cozySelectionbar'
+    )
 
     logger.debug('Deleting ' + numOfFiles + ' picture(s)')
     await isExistingAndVisibile(
       selectors.btnDeleteCozySelectionBar,
-      'Delete Button'
+      'selectors.btnDeleteCozySelectionBar'
     )
     await t.click(selectors.btnDeleteCozySelectionBar)
 
-    await isExistingAndVisibile(selectors.modalFooter, 'Modal delete')
+    await isExistingAndVisibile(selectors.modalFooter, 'selectors.modalFooter')
     await isExistingAndVisibile(
       selectors.btnModalSecondButton,
-      'Modal delete button Delete'
+      'selectors.btnModalSecondButton'
     )
     if (t.fixtureCtx.isVR)
       //dates show up here, so there is a mask for screenshots

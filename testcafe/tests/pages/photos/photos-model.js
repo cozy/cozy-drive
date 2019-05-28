@@ -19,8 +19,14 @@ export default class Page {
   }
 
   async goToAlbums() {
-    await isExistingAndVisibile(selectors.sidebarPhotos, 'Sidebar')
-    await isExistingAndVisibile(selectors.btnNavToAlbum, 'Album Button')
+    await isExistingAndVisibile(
+      selectors.sidebarPhotos,
+      'selectors.sidebarPhotos'
+    )
+    await isExistingAndVisibile(
+      selectors.btnNavToAlbum,
+      'selectors.btnNavToAlbum'
+    )
     await t
       .click(selectors.btnNavToAlbum)
       .expect(getPageUrl())
@@ -30,9 +36,15 @@ export default class Page {
   //@param {string} when : text for logger.debug
   async getPhotosCount(when) {
     await checkAllImagesExists()
-    await isExistingAndVisibile(selectors.photoSection, 'photo Section')
-    await isExistingAndVisibile(selectors.allPhotosWrapper, 'Picture wrapper')
-    await isExistingAndVisibile(selectors.allPhotos, 'Photo item(s)')
+    await isExistingAndVisibile(
+      selectors.photoSection,
+      'selectors.photoSection'
+    )
+    await isExistingAndVisibile(
+      selectors.allPhotosWrapper,
+      'selectors.allPhotosWrapper'
+    )
+    await isExistingAndVisibile(selectors.allPhotos, 'selectors.allPhotos')
     const allPhotosCount = await selectors.allPhotos.count
 
     logger.debug(
@@ -45,13 +57,16 @@ export default class Page {
   //@param { number } numOfFiles : number of file to select
   async selectPhotos(numOfFiles) {
     logger.debug('Selecting ' + numOfFiles + ' picture(s)')
-    await isExistingAndVisibile(selectors.photoThumb(0), '1st Photo thumb')
+    await isExistingAndVisibile(
+      selectors.photoThumb(0),
+      'selectors.photoThumb(0)'
+    )
     await t.hover(selectors.photoThumb(0)) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
 
     for (let i = 0; i < numOfFiles; i++) {
       await isExistingAndVisibile(
         selectors.photoThumb(i),
-        `${i + 1}th Photo thumb`
+        `selectors.photoThumb(${i})`
       )
       await t.click(selectors.photoCheckbox.nth(i))
     }
@@ -62,14 +77,14 @@ export default class Page {
     logger.debug('Selecting ' + NameArray.length + ' picture(s)')
     await isExistingAndVisibile(
       selectors.photoThumbByName(NameArray[0]),
-      `Photo thumb for ${NameArray[0]}`
+      `selectors.photoThumbByName(${NameArray[0]})`
     )
     await t.hover(selectors.photoThumbByName(NameArray[0])) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
 
     for (let i = 0; i < NameArray.length; i++) {
       await isExistingAndVisibile(
         selectors.photoThumbByName(NameArray[i]),
-        `Photo thumb for ${NameArray[i]}`
+        `selectors.photoThumbByName(${NameArray[i]})`
       )
       await t.click(selectors.photoThumbByNameCheckbox(NameArray[i]))
     }

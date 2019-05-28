@@ -9,23 +9,25 @@ export default class PublicDrivePage extends DrivePage {
     const isFile = type === 'file' ? true : false
     await t //Mobile elements don't exist
       .expect(selectors.btnMoreMenu.exists)
-      .notOk('[...] Menu exists')
+      .notOk('selectors.btnMoreMenu exists')
       .expect(selectors.innerPublicMoreMenu.exists)
-      .notOk('Inner More Menu exists')
-    await isExistingAndVisibile(selectors.logo, 'Logo')
+      .notOk('selectors.innerPublicMoreMenu exists')
+    await isExistingAndVisibile(selectors.logo, 'selectors.logo')
     await isExistingAndVisibile(
       isFile ? selectors.toolbarViewerPublic : selectors.toolbarDrivePublic,
-      'toolbarDrive'
+      isFile ? `selectors.toolbarViewerPublic` : `selectors.toolbarDrivePublic`
     )
     await isExistingAndVisibile(
       isFile
         ? selectors.btnViewerPublicCreateCozy
         : selectors.btnDrivePublicCreateCozy,
-      'Create my Cozy Button'
+      isFile
+        ? `selectors.btnViewerPublicCreateCozy`
+        : `selectors.btnDrivePublicCreateCozy`
     )
     await isExistingAndVisibile(
       selectors.btnPublicDownloadDrive,
-      'Download FolderButton'
+      'selectors.btnPublicDownloadDrive'
     )
   }
 
@@ -34,17 +36,17 @@ export default class PublicDrivePage extends DrivePage {
     const isFile = type === 'file' ? true : false
     await t
       .expect(selectors.btnPublicDownloadDrive.exists)
-      .notOk('Download Button (desktop) exists')
+      .notOk('selectors.btnPublicDownloadDrive exists')
       //On File Sharing, logo still exist on mobile, but is not visible (no problem on folder)
       .expect(isFile ? selectors.logo.visible : selectors.logo.exists)
-      .notOk('Logo exists/visible')
+      .notOk('selectors.logo exists/visible')
       .expect(
         (isFile ? selectors.toolbarViewerPublic : selectors.toolbarDrivePublic)
           .exists
       )
       .notOk('toolbar_file exists')
       .expect(selectors.btnViewerPublicCreateCozy.exists)
-      .notOk('Create Cozy button (desktop) exists')
+      .notOk('selectors.btnViewerPublicCreateCozy exists')
   }
 
   async checkCreateCozy() {
@@ -57,34 +59,34 @@ export default class PublicDrivePage extends DrivePage {
     await goBack()
   }
   async checkDownloadButtonOnMobile() {
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await isExistingAndVisibile(selectors.btnMoreMenu, 'selectors.btnMoreMenu')
     await t.click(selectors.btnMoreMenu, { speed: 0.5 })
     await isExistingAndVisibile(
       selectors.innerPublicMoreMenu,
-      'Innner More Menu'
+      'selectors.innerPublicMoreMenu'
     )
     await isExistingAndVisibile(
       selectors.btnPublicMobileDownload,
-      'Download Button (mobile)'
+      'selectors.btnPublicMobileDownload'
     )
   }
   async checkCozyCreationButtonOnMobile() {
-    await isExistingAndVisibile(selectors.btnMoreMenu, '[...] Button')
+    await isExistingAndVisibile(selectors.btnMoreMenu, 'selectors.btnMoreMenu')
     await t.click(selectors.btnMoreMenu, { speed: 0.5 })
     await isExistingAndVisibile(
       selectors.innerPublicMoreMenu,
-      'Innner More Menu'
+      'selectors.innerPublicMoreMenu'
     )
     await isExistingAndVisibile(
       selectors.btnPublicMobileCreateCozy,
-      'Create my Cozy Button (mobile)'
+      'selectors.btnPublicMobileCreateCozy'
     )
   }
 
   async checkNotAvailable() {
     await isExistingAndVisibile(
       selectors.errorAvailable,
-      'Not available message'
+      'selectors.errorAvailable'
     )
   }
 }

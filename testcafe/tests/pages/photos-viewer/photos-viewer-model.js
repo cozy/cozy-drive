@@ -9,10 +9,10 @@ export default class PhotoViewer extends Viewer {
   async openPhotoFullscreen(index) {
     await isExistingAndVisibile(
       selectors.photoThumb(index),
-      `${index}th Photo thumb`
+      `selectors.photoThumb(${index})`
     )
     await t.click(selectors.photoThumb(index))
-    await isExistingAndVisibile(selectors.photoFull, 'fullscreen photos')
+    await isExistingAndVisibile(selectors.photoFull, 'selectors.photoFull')
   }
 
   //@param {String} screenshotPath : path for screenshots taken in this test

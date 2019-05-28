@@ -8,20 +8,22 @@ const albumPage = new AlbumPage()
 
 export default class AlbumsPage extends PhotoPage {
   async waitForLoading() {
-    await t.expect(selectors.loading.exists).notOk('Page still loading')
+    await t
+      .expect(selectors.loading.exists)
+      .notOk('selectors.loading still exists')
     await isExistingAndVisibile(
       selectors.albumContentWrapper,
-      'Content Wrapper'
+      'selectors.albumContentWrapper'
     )
   }
 
   // check that the albums view is empty
   async checkEmptyAlbum() {
     await this.waitForLoading()
-    await isExistingAndVisibile(selectors.folderEmpty, 'Empty Album')
+    await isExistingAndVisibile(selectors.folderEmpty, 'selectors.folderEmpty')
     await isExistingAndVisibile(
       selectors.albumEmptyText,
-      "Text: You don't have any album yet"
+      'selectors.albumEmptyText'
     )
   }
 
@@ -37,18 +39,21 @@ export default class AlbumsPage extends PhotoPage {
     await this.waitForLoading()
     await isExistingAndVisibile(
       selectors.toolbarAlbumsList,
-      'toolbar (album list)'
+      'selectors.toolbarAlbumsList'
     )
-    await isExistingAndVisibile(selectors.btnNewAlbum, 'New album button')
+    await isExistingAndVisibile(selectors.btnNewAlbum, 'selectors.btnNewAlbum')
     await t.click(selectors.btnNewAlbum)
     //Check new album page :
     await t.expect(getPageUrl()).contains('albums/new')
-    await isExistingAndVisibile(selectors.inputAlbumName, 'Input album Name')
+    await isExistingAndVisibile(
+      selectors.inputAlbumName,
+      'selectors.inputAlbumName'
+    )
     await t
       .expect(selectors.inputAlbumName.value)
       .eql('Untitled album')
       .expect(selectors.inputAlbumName.focused)
-      .ok('Input album Name is not focus')
+      .ok('selectors.inputAlbumName.value is not focus')
 
     const allPhotosAlbumCount = await albumPage.getPhotosToAddCount(
       'On create Album page'
@@ -56,7 +61,7 @@ export default class AlbumsPage extends PhotoPage {
     await t.expect(allPhotosAlbumCount).eql(t.ctx.totalFilesCount) //all photos are displayed
     await isExistingAndVisibile(
       selectors.btnValidateAlbum,
-      'Create Album Button'
+      'selectors.btnValidateAlbum'
     )
 
     await t.typeText(selectors.inputAlbumName, albumName)
@@ -74,14 +79,20 @@ export default class AlbumsPage extends PhotoPage {
 
   // @param {String} AlbumName : Name of the album
   async goToAlbum(albumName) {
-    await isExistingAndVisibile(selectors.album(albumName), albumName)
+    await isExistingAndVisibile(
+      selectors.album(albumName),
+      `selectors.album(${albumName})`
+    )
     await t.click(selectors.album(albumName))
   }
 
   // @param {String} AlbumName : Name of the album
   // @param { number } photoNumber : Number of photos expected in the album (
   async isAlbumExistsAndVisible(albumName, photoNumber) {
-    await isExistingAndVisibile(selectors.album(albumName), albumName)
+    await isExistingAndVisibile(
+      selectors.album(albumName),
+      `selectors.album(${albumName})`
+    )
     await t
       .expect(selectors.album(albumName).innerText)
       .contains(`${photoNumber} photo`)

@@ -6,8 +6,7 @@ import {
   SLUG,
   deleteLocalFile,
   checkLocalFile,
-  setDownloadPath,
-  isExistingAndVisibile
+  setDownloadPath
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 import * as selectors from '../pages/selectors'

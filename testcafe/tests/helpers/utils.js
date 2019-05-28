@@ -68,9 +68,13 @@ export const getElementWithTestItem = Selector(
 export async function isExistingAndVisibile(selector, selectorName) {
   await t
     .expect(selector.exists)
-    .ok(`'${selectorName}' doesnt exist`)
+    .ok(
+      `'${selectorName}' doesnt exist - please check its definition in testcafe/tests/pages/selectors`
+    )
     .expect(selector.visible)
-    .ok(`'${selectorName}' is not visible`)
+    .ok(
+      `'${selectorName}' exists, but is not visible - please check its definition in testcafe/tests/pages/selectors`
+    )
   logger.debug(` - '${selectorName}' exists and is visible!`)
 }
 
