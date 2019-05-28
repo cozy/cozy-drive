@@ -42,7 +42,7 @@ class FolderView extends Component {
     return (
       <Main>
         <Topbar>
-          <Breadcrumb />
+          <Breadcrumb onFolderOpen={this.props.onFolderOpen} />
           <AsyncBoundary>
             {({ isLoading, isInError }) => (
               <Toolbar

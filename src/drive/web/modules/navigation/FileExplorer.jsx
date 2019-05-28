@@ -23,7 +23,7 @@ import {
 const isRecentFilesViewByPath = props =>
   props.location.pathname.match(/^\/recent/)
 const isSharingsFilesViewByPath = props =>
-  props.location.pathname.match(/^\/sharings/) && !props.params.folderId
+  props.location.pathname.match(/^\/sharings/)
 const isTrashFilesViewByPath = props =>
   props.location.pathname.match(/^\/trash/)
 const urlHasChanged = (props, newProps) =>
@@ -104,6 +104,13 @@ class FileExplorer extends Component {
         getFolderIdFromRoute(newProps.location, newProps.params)
       )
     }
+    /**
+     *  Peut-être qu'ici on doit dispatcher le FETCH_SHARINGS histoire d'éviter un didUpdate dans le SharingContainer  
+     */
+    
+    /* if(isSharingsFilesViewByPath(newProps)){
+      
+    } */
   }
 
   /*

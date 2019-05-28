@@ -32,9 +32,8 @@ const AppRoute = (
         <Route path="recent" component={Recent}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
-        <Route path="sharings">
-          <IndexRoute component={Sharings} />
-          <Route path=":folderId" component={Folder}>
+        <Route path="sharings" component={Sharings}>
+          <Route path=":folderId">
             <Route path="file/:fileId" component={FilesViewer} />
           </Route>
           <Route path="file/:fileId" component={FilesViewer} />

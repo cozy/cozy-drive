@@ -74,13 +74,19 @@ export class SharingFetcher extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSharedDocuments()
+    if (!this.props.params.folderId) {
+      this.fetchSharedDocuments()
+    } else {
+      this.props.onFolderOpen(this.props.params.folderId, false)
+    }
   }
   componentWillUnmount() {
     //In order to not dispatch fetch sucess, we cancel the promises
     if (this.fetchSharedFiles) this.fetchSharedFiles.cancel()
     if (this.fetSharedParents) this.fetSharedParents.cancel()
   }
+
+
   async componentDidUpdate(prevProps) {
     const { sharedDocuments } = this.props
 
@@ -88,8 +94,32 @@ export class SharingFetcher extends React.Component {
       sharedDocuments.length !== prevProps.sharedDocuments.length ||
       sharedDocuments.find(id => !prevProps.sharedDocuments.includes(id)) !==
         undefined
-
-    if (hasNewSharings) this.fetchSharedDocuments()
+    /**
+     * Il faut faire un fetchSharedDocument pour afficher les sharings une première fois. C'est fait dans le didMount() 
+     * mais si on se balade jusqu'à la racine du Sharings via le breadcrumb (ie on a commencé dans un sous-dossier) alors 
+     * on ne dispatch jamais le fetch_sharings et donc on réucpère jamais les sharings de la racine 
+     */
+    if (hasNewSharings) {
+      this.fetchSharedDocuments()
+    } else {
+      /**
+       * !TODO: Ici on peut facilement avoir boucle infinie et si on arrive sur un lien "profond" dans les sharings, on ne charge pas
+       * le bon contenu car il semblerait que l'action effectuée dans le DidMount() mette à jour le componsant et que comme on a 
+       * des novueaux sharings, on fasse le fetchSharedDocuments et que lui, nous casse les bonbons car il reset le state. 
+       */
+      if (
+        this.props.params.folderId &&
+        this.props.params.folderId !== prevProps.params.folderId
+      ) {
+        this.props.onFolderOpen(this.props.params.folderId)
+      }
+      if (
+        !this.props.params.folderId &&
+        this.props.params.folderId !== prevProps.params.folderId
+      ) {
+        this.fetchSharedDocuments()
+      }
+    }
   }
 
   render() {
@@ -138,7 +168,7 @@ const ConnectedSharingFetcher = connect(
         type: FETCH_SHARINGS_FAILURE,
         error: e
       }),
-    onFolderOpen: folderId => {
+    onFolderOpen: (folderId, forceRoutePush = true) => {
       dispatch(
         openFolder(
           folderId,
@@ -147,7 +177,8 @@ const ConnectedSharingFetcher = connect(
           OPEN_FOLDER_FROM_SHARINGS_FAILURE
         )
       )
-      ownProps.router.push(getFolderUrl(folderId, ownProps.location))
+      if (forceRoutePush)
+        ownProps.router.push(getFolderUrl(folderId, ownProps.location))
     }
   })
 )(SharingFetcher)

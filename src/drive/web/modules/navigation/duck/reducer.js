@@ -89,6 +89,7 @@ const displayedFolder = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
+    case OPEN_FOLDER_FROM_SHARINGS_SUCCESS:
       return action.folder
     case FETCH_RECENT_SUCCESS:
     case FETCH_SHARINGS_SUCCESS:

@@ -16,6 +16,8 @@ import getFolderPath from './getFolderPath'
 import styles from './breadcrumb.styl'
 
 export const renamePathNames = (path, pathname, t) => {
+  console.log('path', path)
+  console.log('pathname', pathname)
   if (pathname === '/recent') {
     path.unshift({
       name: t('breadcrumb.title_recent')
@@ -159,7 +161,7 @@ class RouterBreadCrumb extends Component {
 
     goToFolder(folderId).then(() => {
       this.toggleOpening()
-      router.push(getFolderUrl(folderId, location))
+      //router.push(getFolderUrl(folderId, location))
     })
   }
 
@@ -169,7 +171,7 @@ class RouterBreadCrumb extends Component {
   }
 
   navigateTo = folder => {
-    if (folder.id) this.navigateToFolder(folder.id)
+    if (folder.id) this.props.onFolderOpen(folder.id)
     else this.navigateToPath(folder.url)
   }
 
@@ -206,7 +208,7 @@ class RouterPreviousButton extends Component {
 
   navigateBack = () => {
     const previousSegment = this.props.path[this.props.path.length - 2]
-    if (previousSegment.id) this.navigateToFolder(previousSegment.id)
+    if (previousSegment.id) this.props.onFolderOpen(previousSegment.id)
     else this.navigateToPath(previousSegment.url)
   }
 
@@ -250,7 +252,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  goToFolder: folderId => dispatch(openFolder(folderId))
+  goToFolder: folderId => dispatch(openFolder(folderId, 'ACTION_SUCCESS'))
 })
 
 const withSharedDocuments = Wrapped =>
