@@ -4515,13 +4515,13 @@ cozy-client-js@0.9.0:
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
 
-cozy-client@6.33.0:
-  version "6.33.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.33.0.tgz#9415c3616225e81884d911bf4bfe8bf770236d0b"
-  integrity sha512-khkOL9v5HoQzdNnCm3TVMhsXti3ubZCrcIh1twoFYaG7dYEwUsW6XHE4Mgzv8gw7J/KCTDaEYiu5+P568tN4Eg==
+cozy-client@6.38.0:
+  version "6.38.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.38.0.tgz#61a55dc01fa18f025b6cba155c74401c179e44b6"
+  integrity sha512-fAJdpnRihlCq8YOoHcm9q6/WkOJrxolGg2GEjl4W66vpIxNXhicLuB0R1YU8r0zoy/FrNVYuVl+aI7xRGjJBIA==
   dependencies:
     cozy-device-helper "1.6.3"
-    cozy-stack-client "^6.33.0"
+    cozy-stack-client "^6.38.0"
     lodash "4.17.11"
     microee "0.0.6"
     prop-types "15.6.2"
@@ -4530,6 +4530,7 @@ cozy-client@6.33.0:
     redux "3.7.2"
     redux-thunk "2.3.0"
     sift "6.0.0"
+    url-search-params-polyfill "^6.0.0"
 
 cozy-device-helper@1.5.0:
   version "1.5.0"
@@ -4669,10 +4670,10 @@ cozy-scripts@1.13.0:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-stack-client@^6.33.0:
-  version "6.33.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.33.0.tgz#62eca6b63f1d7202ae5032b28b47461be5e85199"
-  integrity sha512-7S8xPcd03BoEd/VFhBv/vxB/2P0U2SLK/wgFoLor7lPHJ00Al8q/pFFgDIb8r1eoK247augH/JrcDUGbSIhVQA==
+cozy-stack-client@^6.38.0:
+  version "6.38.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.38.0.tgz#f7e921d377071f83dadee5450572b495f9e83ddf"
+  integrity sha512-CL9v2NEkyGI9AXd2hqtSAw86+7iwxpe6gMnPK+HiHUFoV/jtK5Rc4tdJ7FkwG6WkH9rPCaghACCsduqjVow7OA==
   dependencies:
     detect-node "2.0.4"
     mime-types "2.1.24"
@@ -16903,6 +16904,11 @@ url-polyfill@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.0.tgz#d34e1a596d954b864bc8608f84c592820df422db"
   integrity sha512-QAbzqCwd84yA6VyjV30aZXla+lrRmczDurvlsVnK+tFOu677ZNGz8shcFWQRp5BF9/z7qvNiCQLqpWPtVoUEBg==
+
+url-search-params-polyfill@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-6.0.0.tgz#f5e5fc230d56125f5b0ba67d9cbcd6555fa347e3"
+  integrity sha512-69Bl5s3SiEgcHe8SMpzLGOyag27BQeTeSaP/CfVHkKc/VdUHtNjaP2PnhshFVC021221ItueOzuMMGofZ/HDmQ==
 
 url-slug@2.0.0:
   version "2.0.0"

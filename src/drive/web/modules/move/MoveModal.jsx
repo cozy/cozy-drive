@@ -31,6 +31,7 @@ class MoveModal extends React.Component {
 
     const { displayedFolder } = props
     this.state = {
+      trashedFiles: [], // files we trashed because of conflicts
       folderId: displayedFolder ? displayedFolder._id : ROOT_DIR_ID,
       isMoveInProgress: false
     }
@@ -48,14 +49,21 @@ class MoveModal extends React.Component {
 
     try {
       this.setState({ isMoveInProgress: true })
+      const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
           const targetPath = await CozyFile.getFullpath(folderId, entry.name)
           const force =
             flag('handle-move-conflicts') && !sharedPaths.includes(targetPath)
-          await CozyFile.move(entry._id, { folderId }, force)
+          const moveResponse = await CozyFile.move(
+            entry._id,
+            { folderId },
+            force
+          )
+          trashedFiles.push(moveResponse.deleted)
         })
       )
+      this.setState({ trashedFiles })
 
       const response = await client.query(client.get('io.cozy.files', folderId))
       const targetName = response.data.name
@@ -83,22 +91,39 @@ class MoveModal extends React.Component {
   }
 
   cancelMove = async entries => {
-    const { t } = this.context
+    const { client, t } = this.context
 
     try {
-      // TODO: restore the deleted files
       await Promise.all(
         entries.map(
           async entry =>
             await CozyFile.move(entry._id, { folderId: entry.dir_id })
         )
       )
+      const fileCollection = client.collection(CozyFile.doctype)
+      let restoreErrorsCount = 0
+      await Promise.all(
+        this.state.trashedFiles.map(async id => {
+          try {
+            await fileCollection.restore(id)
+          } catch (e) {
+            restoreErrorsCount++
+          }
+        })
+      )
+
       Alerter.info(
         t('Move.cancelled', {
           subject: entries.length === 1 ? entries[0].name : '',
           smart_count: entries.length
         })
       )
+
+      if (restoreErrorsCount) {
+        Alerter.error(
+          t('Move.restoreErrors', { smart_count: restoreErrorsCount })
+        )
+      }
     } catch (e) {
       logger.warn(e)
       Alerter.error(t('Move.cancelled_error', { smart_count: entries.length }))
