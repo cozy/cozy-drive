@@ -12,6 +12,9 @@ import {
 import SharedDocuments from 'sharing/components/SharedDocuments'
 
 import { makeCancelable } from 'lib/promise'
+
+import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
+
 export class SharingFetcher extends React.Component {
   state = {
     error: null
@@ -93,7 +96,6 @@ export class SharingFetcher extends React.Component {
     const { ...otherProps } = this.props
     const { error } = this.state
     const { t } = this.context
-
     return error ? (
       <Empty
         icon="cozy"
@@ -117,7 +119,7 @@ export class SharingFetcher extends React.Component {
 
 const ConnectedSharingFetcher = connect(
   null,
-  dispatch => ({
+  (dispatch, ownProps) => ({
     startFetch: () =>
       dispatch({
         type: FETCH_SHARINGS,
@@ -135,7 +137,18 @@ const ConnectedSharingFetcher = connect(
       dispatch({
         type: FETCH_SHARINGS_FAILURE,
         error: e
-      })
+      }),
+    onFolderOpen: folderId => {
+      dispatch(
+        openFolder(
+          folderId,
+          OPEN_FOLDER_FROM_SHARINGS,
+          OPEN_FOLDER_FROM_SHARINGS_SUCCESS,
+          OPEN_FOLDER_FROM_SHARINGS_FAILURE
+        )
+      )
+      ownProps.router.push(getFolderUrl(folderId, ownProps.location))
+    }
   })
 )(SharingFetcher)
 
@@ -146,5 +159,9 @@ const SharingsContainer = props => (
     )}
   </SharedDocuments>
 )
-
+export const OPEN_FOLDER_FROM_SHARINGS = 'OPEN_FOLDER_FROM_SHARINGS'
+export const OPEN_FOLDER_FROM_SHARINGS_SUCCESS =
+  'OPEN_FOLDER_FROM_SHARINGS_SUCCESS'
+export const OPEN_FOLDER_FROM_SHARINGS_FAILURE =
+  'OPEN_FOLDER_FROM_SHARINGS_FAILURE'
 export default SharingsContainer
