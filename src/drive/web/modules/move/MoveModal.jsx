@@ -95,9 +95,8 @@ class MoveModal extends React.Component {
 
     try {
       await Promise.all(
-        entries.map(
-          async entry =>
-            await CozyFile.move(entry._id, { folderId: entry.dir_id })
+        entries.map(entry =>
+          CozyFile.move(entry._id, { folderId: entry.dir_id })
         )
       )
       const fileCollection = client.collection(CozyFile.doctype)
