@@ -55,10 +55,15 @@ export const META_DEFAULTS = {
   hideActionMenu: true
 }
 
-export const openFolder = folderId => {
+export const openFolder = (
+  folderId,
+  openFolderAction = OPEN_FOLDER,
+  openFolderActionSucess = OPEN_FOLDER_SUCCESS,
+  openFolderActionFailure = OPEN_FOLDER_FAILURE
+) => {
   return async (dispatch, getState) => {
     dispatch({
-      type: OPEN_FOLDER,
+      type: openFolderAction,
       folderId,
       meta: {
         cancelSelection: true
@@ -77,7 +82,7 @@ export const openFolder = folderId => {
       const currentFolderId = getOpenedFolderId(getState())
       if (folder._id === currentFolderId) {
         return dispatch({
-          type: OPEN_FOLDER_SUCCESS,
+          type: openFolderActionSucess,
           folder,
           fileCount: folder.contents.meta.count || 0,
           files: folder.contents.data
@@ -87,9 +92,9 @@ export const openFolder = folderId => {
       return
     } catch (err) {
       logException(err, {
-        context: OPEN_FOLDER_FAILURE
+        context: openFolderActionFailure
       })
-      return dispatch({ type: OPEN_FOLDER_FAILURE, error: err })
+      return dispatch({ type: openFolderActionFailure, error: err })
     }
   }
 }

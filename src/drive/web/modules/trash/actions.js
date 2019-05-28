@@ -10,7 +10,9 @@ export const RESTORE_FILES_FAILURE = 'RESTORE_FILES_FAILURE'
 export const DESTROY_FILES = 'DESTROY_FILES'
 export const DESTROY_FILES_SUCCESS = 'DESTROY_FILES_SUCCESS'
 export const DESTROY_FILES_FAILURE = 'DESTROY_FILES_FAILURE'
-
+export const OPEN_FOLDER_FROM_TRASH = 'OPEN_FOLDER_FROM_TRASH'
+export const OPEN_FOLDER_FROM_TRASH_SUCCESS = 'OPEN_FOLDER_FROM_TRASH_SUCCESS'
+export const OPEN_FOLDER_FROM_TRASH_FAILURE = 'OPEN_FOLDER_FROM_TRASH_FAILURE'
 export const emptyTrash = () => async dispatch => {
   Alerter.info('alert.empty_trash_progress')
   dispatch({

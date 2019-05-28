@@ -15,11 +15,17 @@ import {
 } from 'drive/web/modules/navigation/duck'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 
+import {
+  OPEN_FOLDER_FROM_TRASH,
+  OPEN_FOLDER_FROM_TRASH_SUCCESS,
+  OPEN_FOLDER_FROM_TRASH_FAILURE
+} from 'drive/web/modules/trash/actions'
 const isRecentFilesViewByPath = props =>
   props.location.pathname.match(/^\/recent/)
 const isSharingsFilesViewByPath = props =>
   props.location.pathname.match(/^\/sharings/) && !props.params.folderId
-
+const isTrashFilesViewByPath = props =>
+  props.location.pathname.match(/^\/trash/)
 const urlHasChanged = (props, newProps) =>
   props.location.pathname !== newProps.location.pathname
 
@@ -31,12 +37,22 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) => {
 }
 
 class FileExplorer extends Component {
+  /*
+    This function is needed when the user comes to a "deep" url without clicking 
+    on the nav button. Acceding to /sharings/4e33fd27e1d8e55a34742bac6d0dd120 directly
+    for instance.
+
+  TODO: It should not be the responsability to the FileExplorer to do the right request. 
+  It should be done by the "Container" itself. It's already done by the SharingsContainer
+  */
   componentWillMount() {
     const { location, params } = this.props
     if (isRecentFilesViewByPath(this.props)) {
       this.props.fetchRecentFiles()
     } else if (isSharingsFilesViewByPath(this.props)) {
       // Do nothing — the fetching will be started by a sub-component
+    } else if (isTrashFilesViewByPath(this.props)) {
+      this.props.fetchFolderFromTrash(getFolderIdFromRoute(location, params))
     } else {
       this.props.fetchFolder(getFolderIdFromRoute(location, params))
     }
@@ -131,6 +147,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchMoreFiles: (folderId, skip, limit) =>
     dispatch(fetchMoreFiles(folderId, skip, limit)),
   fetchFolder: folderId => dispatch(openFolder(folderId)),
+  fetchFolderFromTrash: folderId =>
+    dispatch(
+      openFolder(
+        folderId,
+        OPEN_FOLDER_FROM_TRASH,
+        OPEN_FOLDER_FROM_TRASH_SUCCESS,
+        OPEN_FOLDER_FROM_TRASH_FAILURE
+      )
+    ),
   onFileOpen: (file, availableOffline) => {
     if (availableOffline) {
       return dispatch(openLocalFile(file))
