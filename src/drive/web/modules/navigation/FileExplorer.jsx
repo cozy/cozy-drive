@@ -32,12 +32,7 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) => {
 
 class FileExplorer extends Component {
   componentWillMount() {
-    const {
-      isRecentFilesView,
-      isSharingsFilesView,
-      location,
-      params
-    } = this.props
+    const { location, params } = this.props
     if (isRecentFilesViewByPath(this.props)) {
       this.props.fetchRecentFiles()
     } else if (isSharingsFilesViewByPath(this.props)) {
