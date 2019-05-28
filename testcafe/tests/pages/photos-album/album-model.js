@@ -15,11 +15,12 @@ export default class Page extends PhotoPage {
   async waitForLoading() {
     await t
       .expect(selectors.loading.exists)
-      .notOk('Page still loading : selectors.loading exists')
+      .notOk('waitForLoading - Page didnt Load : selectors.loading exists')
     await isExistingAndVisibile(
       selectors.albumContentWrapper,
-      'selectors.albumContentWrapper'
+      'waitForLoading - selectors.albumContentWrapper'
     )
+    logger.debug(`album-model : waitForLoading Ok`)
   }
 
   //@param {string} when : text for logger.debug

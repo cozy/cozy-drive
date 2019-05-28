@@ -3,6 +3,7 @@ import { getPageUrl, isExistingAndVisibile } from '../../helpers/utils'
 import * as selectors from '../selectors'
 import AlbumPage from '../photos-album/album-model'
 import PhotoPage from '../photos/photos-model'
+import logger from '../../helpers/logger'
 
 const albumPage = new AlbumPage()
 
@@ -10,11 +11,14 @@ export default class AlbumsPage extends PhotoPage {
   async waitForLoading() {
     await t
       .expect(selectors.loading.exists)
-      .notOk('selectors.loading still exists')
+      .notOk(
+        'waitForLoading - Page didnt Load : selectors.loading still exists'
+      )
     await isExistingAndVisibile(
       selectors.albumContentWrapper,
-      'selectors.albumContentWrapper'
+      'waitForLoading - selectors.albumContentWrapper'
     )
+    logger.debug(`albums-model : waitForLoading Ok`)
   }
 
   // check that the albums view is empty

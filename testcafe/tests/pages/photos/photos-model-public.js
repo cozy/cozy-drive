@@ -2,14 +2,20 @@ import { t } from 'testcafe'
 import { getPageUrl, isExistingAndVisibile, goBack } from '../../helpers/utils'
 import * as selectors from '../selectors'
 import Photos from './photos-model'
+import logger from '../../helpers/logger'
 
 export default class PublicPhotos extends Photos {
   async waitForLoading() {
-    await t.expect(selectors.loading.exists).notOk('Page still loading')
+    await t
+      .expect(selectors.loading.exists)
+      .notOk(
+        'waitForLoading - Page didnt Load : selectors.loading still exists'
+      )
     await isExistingAndVisibile(
       selectors.albumPublicLayout,
-      'Album Public Layout'
+      'waitForLoading - selectors.albumPublicLayout'
     )
+    logger.debug(`photos-model-public : waitForLoading Ok`)
   }
 
   async checkCreateCozy() {

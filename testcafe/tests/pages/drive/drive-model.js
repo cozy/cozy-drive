@@ -10,20 +10,24 @@ export default class DrivePage {
   async waitForLoading({ isNotAvailable, isFull } = {}) {
     await t
       .expect(selectors.contentPlaceHolder.exists)
-      .notOk('selectors.contentPlaceHolder still displayed')
+      .notOk(
+        'waitForLoading - Page didnt Load : selectors.contentPlaceHolder still displayed'
+      )
     if (!isNotAvailable) {
       await isExistingAndVisibile(
         selectors.contentTable,
-        'selectors.contentTable'
+        'waitForLoading - selectors.contentTable'
       )
       if (isFull) {
         await isExistingAndVisibile(
           selectors.folderOrFileName,
-          'selectors.folderOrFileName'
+          'waitForLoading - selectors.folderOrFileName'
         )
       }
     }
-    logger.debug('Loading Ok')
+    logger.debug(
+      `drive-model : waitForLoading Ok (isNotAvailable:${isNotAvailable}, isFull:${isFull})`
+    )
   }
 
   //@param {string} when : text for logger.debug
