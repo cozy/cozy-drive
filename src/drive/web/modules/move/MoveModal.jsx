@@ -113,16 +113,20 @@ export class MoveModal extends React.Component {
       )
       this.setState({ trashedFiles: [] })
 
-      Alerter.info(
-        t('Move.cancelled', {
-          subject: entries.length === 1 ? entries[0].name : '',
-          smart_count: entries.length
-        })
-      )
-
       if (restoreErrorsCount) {
-        Alerter.error(
-          t('Move.restoreErrors', { smart_count: restoreErrorsCount })
+        Alerter.info(
+          t('Move.cancelledWithRestoreErrors', {
+            subject: entries.length === 1 ? entries[0].name : '',
+            smart_count: entries.length,
+            restoreErrorsCount
+          })
+        )
+      } else {
+        Alerter.info(
+          t('Move.cancelled', {
+            subject: entries.length === 1 ? entries[0].name : '',
+            smart_count: entries.length
+          })
         )
       }
     } catch (e) {
