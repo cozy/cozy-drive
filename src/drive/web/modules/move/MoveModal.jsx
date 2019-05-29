@@ -210,7 +210,8 @@ MoveModal.propTypes = {
   displayedFolder: PropTypes.object.isRequired,
   entries: PropTypes.array,
   t: PropTypes.func.isRequired,
-  sharingState: PropTypes.object // to know how to handle conflicts
+  // in case of move conflicts, shared files are not overridden
+  sharingState: PropTypes.object
 }
 
 const mapStateToProps = state => ({
