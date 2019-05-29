@@ -1,14 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import flag from 'cozy-flags'
 import CozyClient from 'cozy-client'
 import { CozyFile } from 'cozy-doctypes'
 
 import { MoveModal } from './MoveModal'
 
 jest.mock('cozy-doctypes')
-jest.mock('cozy-flags')
 jest.mock('cozy-stack-client')
 
 CozyFile.doctype = 'io.cozy.files'
@@ -28,8 +26,6 @@ const cozyClient = new CozyClient({
     collection: collectionSpy
   }
 })
-
-flag.mockReturnValue(true)
 
 describe('MoveModal component', () => {
   afterEach(() => {

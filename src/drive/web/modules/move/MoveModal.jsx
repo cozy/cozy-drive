@@ -8,7 +8,6 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
 import { connect } from 'react-redux'
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
-import flag from 'cozy-flags'
 
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
@@ -47,8 +46,7 @@ export class MoveModal extends React.Component {
       await Promise.all(
         entries.map(async entry => {
           const targetPath = await CozyFile.getFullpath(folderId, entry.name)
-          const force =
-            flag('handle-move-conflicts') && !sharedPaths.includes(targetPath)
+          const force = !sharedPaths.includes(targetPath)
           const moveResponse = await CozyFile.move(
             entry._id,
             { folderId },
