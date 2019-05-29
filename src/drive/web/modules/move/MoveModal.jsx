@@ -32,7 +32,7 @@ export class MoveModal extends React.Component {
   }
 
   componentWillUnmount() {
-    this.promises.forEach(p => p.cancel())
+    this.unregisterCancelables()
   }
 
   navigateTo = folder => {
@@ -40,9 +40,15 @@ export class MoveModal extends React.Component {
   }
 
   registerCancelable = promise => {
+    if (!this.promises) this.promises = []
     const cancelableP = cancelable(promise)
     this.promises.push(cancelableP)
     return cancelableP
+  }
+
+  unregisterCancelables = () => {
+    this.promises.forEach(p => p.cancel())
+    this.promises = []
   }
 
   moveEntries = async () => {
