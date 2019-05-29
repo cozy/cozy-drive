@@ -1,17 +1,25 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { MoveModal } from './MoveModal'
+import flag from 'cozy-flags'
 import CozyClient from 'cozy-client'
 import { CozyFile } from 'cozy-doctypes'
 
+import { MoveModal } from './MoveModal'
+
 jest.mock('cozy-doctypes')
+jest.mock('cozy-flags')
 jest.mock('cozy-stack-client')
 
 CozyFile.doctype = 'io.cozy.files'
 
+const getSpy = jest.fn().mockResolvedValue({
+  data: { id: 'fakeDoc', _type: 'io.cozy.files' }
+})
+const onCloseSpy = jest.fn()
 const restoreSpy = jest.fn()
 const collectionSpy = jest.fn(() => ({
+  get: getSpy,
   restore: restoreSpy
 }))
 const fakeContext = {
@@ -22,31 +30,97 @@ const fakeContext = {
   }),
   t: jest.fn()
 }
+flag.mockReturnValue(true)
 
 describe('MoveModal component', () => {
-  const setupComponent = (entries = []) => {
-    const props = { entries }
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  const defaultEntries = [
+    { _id: 'bill_201901', dir_id: 'bills', name: 'bill_201901.pdf' },
+    { _id: 'bill_201902', dir_id: 'bills', name: 'bill_201902.pdf' },
+    // shared file:
+    { _id: 'bill_201903', dir_id: 'bills', name: 'bill_201903.pdf' }
+  ]
+
+  const sharingState = {
+    sharedPaths: ['/sharedFolder', '/bills/bill_201903.pdf']
+  }
+
+  const setupComponent = (entries = defaultEntries) => {
+    const props = { entries, onClose: onCloseSpy, sharingState }
     return shallow(<MoveModal {...props} />, {
       context: fakeContext
     })
   }
+
+  describe('moveEntries', () => {
+    it('should move entries to destination', async () => {
+      const component = setupComponent(defaultEntries, sharingState)
+      component.setState({ folderId: 'destinationFolder' })
+      CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
+        Promise.resolve(
+          name === 'bill_201903.pdf' ? '/bills/bill_201903.pdf' : '/whatever'
+        )
+      )
+      CozyFile.move.mockImplementation(id => {
+        if (id === 'bill_201902') {
+          return Promise.resolve({
+            deleted: 'other_bill_201902',
+            moved: { id }
+          })
+        } else {
+          return Promise.resolve({
+            deleted: null,
+            moved: { id }
+          })
+        }
+      })
+      await component.instance().moveEntries()
+      expect(CozyFile.move).toHaveBeenNthCalledWith(
+        1,
+        'bill_201901',
+        {
+          folderId: 'destinationFolder'
+        },
+        true
+      )
+      // delete destination file
+      expect(CozyFile.move).toHaveBeenNthCalledWith(
+        2,
+        'bill_201902',
+        {
+          folderId: 'destinationFolder'
+        },
+        true
+      )
+      expect(component.state('trashedFiles')).toEqual(['other_bill_201902'])
+      // don't force a shared file
+      expect(CozyFile.move).toHaveBeenNthCalledWith(
+        3,
+        'bill_201903',
+        {
+          folderId: 'destinationFolder'
+        },
+        false
+      )
+      expect(onCloseSpy).toHaveBeenCalled()
+    })
+  })
 
   describe('cancelMove', () => {
     afterEach(() => {
       jest.restoreAllMocks()
     })
     it('should move items back to their previous location', async () => {
-      const entries = [
-        { _id: 'bill_201901.pdf', dir_id: '/bills' },
-        { _id: 'bill_201902.pdf', dir_id: '/bills' }
-      ]
-      const component = setupComponent(entries)
-      await component.instance().cancelMove(entries)
-      expect(CozyFile.move).toHaveBeenCalledWith('bill_201901.pdf', {
-        folderId: '/bills'
+      const component = setupComponent()
+      await component.instance().cancelMove(defaultEntries)
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201901', {
+        folderId: 'bills'
       })
-      expect(CozyFile.move).toHaveBeenCalledWith('bill_201902.pdf', {
-        folderId: '/bills'
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201902', {
+        folderId: 'bills'
       })
       expect(restoreSpy).not.toHaveBeenCalled()
     })
