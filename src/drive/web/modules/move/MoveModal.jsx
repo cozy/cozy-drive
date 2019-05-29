@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { Modal } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
-import { Query, withClient } from 'cozy-client'
+import { Query, cancelable, withClient } from 'cozy-client'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
 import { connect } from 'react-redux'
@@ -23,7 +23,7 @@ import Topbar from 'drive/web/modules/move/Topbar'
 export class MoveModal extends React.Component {
   constructor(props) {
     super(props)
-
+    this.promises = []
     const { displayedFolder } = props
     this.state = {
       trashedFiles: [], // files we trashed because of conflicts
@@ -32,8 +32,18 @@ export class MoveModal extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.promises.forEach(p => p.cancel())
+  }
+
   navigateTo = folder => {
     this.setState({ folderId: folder.id })
+  }
+
+  registerCancelable = promise => {
+    const cancelableP = cancelable(promise)
+    this.promises.push(cancelableP)
+    return cancelableP
   }
 
   moveEntries = async () => {
@@ -45,12 +55,12 @@ export class MoveModal extends React.Component {
       const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
-          const targetPath = await CozyFile.getFullpath(folderId, entry.name)
+          const targetPath = await this.registerCancelable(
+            CozyFile.getFullpath(folderId, entry.name)
+          )
           const force = !sharedPaths.includes(targetPath)
-          const moveResponse = await CozyFile.move(
-            entry._id,
-            { folderId },
-            force
+          const moveResponse = await this.registerCancelable(
+            CozyFile.move(entry._id, { folderId }, force)
           )
           if (moveResponse.deleted) {
             trashedFiles.push(moveResponse.deleted)
@@ -59,7 +69,9 @@ export class MoveModal extends React.Component {
       )
       this.setState({ trashedFiles })
 
-      const response = await client.query(client.get('io.cozy.files', folderId))
+      const response = await this.registerCancelable(
+        client.query(client.get('io.cozy.files', folderId))
+      )
       const targetName = response.data.name
       Alerter.info('Move.success', {
         subject: entries.length === 1 ? entries[0].name : '',
@@ -85,7 +97,9 @@ export class MoveModal extends React.Component {
     try {
       await Promise.all(
         entries.map(entry =>
-          CozyFile.move(entry._id, { folderId: entry.dir_id })
+          this.registerCancelable(
+            CozyFile.move(entry._id, { folderId: entry.dir_id })
+          )
         )
       )
       const fileCollection = client.collection(CozyFile.doctype)
@@ -93,7 +107,7 @@ export class MoveModal extends React.Component {
       await Promise.all(
         this.state.trashedFiles.map(async id => {
           try {
-            await fileCollection.restore(id)
+            this.registerCancelable(fileCollection.restore(id))
           } catch (e) {
             restoreErrorsCount++
           }
