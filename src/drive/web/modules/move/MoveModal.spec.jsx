@@ -18,18 +18,17 @@ const getSpy = jest.fn().mockResolvedValue({
 })
 const onCloseSpy = jest.fn()
 const restoreSpy = jest.fn()
+const tSpy = jest.fn()
 const collectionSpy = jest.fn(() => ({
   get: getSpy,
   restore: restoreSpy
 }))
-const fakeContext = {
-  client: new CozyClient({
-    stackClient: {
-      collection: collectionSpy
-    }
-  }),
-  t: jest.fn()
-}
+const cozyClient = new CozyClient({
+  stackClient: {
+    collection: collectionSpy
+  }
+})
+
 flag.mockReturnValue(true)
 
 describe('MoveModal component', () => {
@@ -49,10 +48,15 @@ describe('MoveModal component', () => {
   }
 
   const setupComponent = (entries = defaultEntries) => {
-    const props = { entries, onClose: onCloseSpy, sharingState }
-    return shallow(<MoveModal {...props} />, {
-      context: fakeContext
-    })
+    const props = {
+      client: cozyClient,
+      displayedFolder: { _id: 'bills' },
+      entries,
+      onClose: onCloseSpy,
+      sharingState,
+      t: tSpy
+    }
+    return shallow(<MoveModal {...props} />)
   }
 
   describe('moveEntries', () => {
