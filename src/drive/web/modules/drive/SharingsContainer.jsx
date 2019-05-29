@@ -74,7 +74,7 @@ export class SharingFetcher extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.params.folderId) {
+    if (!this.props.params && !this.props.params.folderId) {
       this.fetchSharedDocuments()
     } else {
       this.props.onFolderOpen(this.props.params.folderId, false)
