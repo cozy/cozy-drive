@@ -505,8 +505,8 @@
     "success": "%{subject} has been moved to %{target}. |||| %{smart_count} elements have been moved to %{target}.",
     "error": "Something went wrong while moving this element, please try again later. |||| Something went wrong while moving these elements, please try again later.",
     "cancelled": "%{subject} has been moved back to it's original location. |||| %{smart_count} elements have been moved back to their original location.",
-    "cancelled_error": "Sorry, there was an error while moving the element back. |||| Sorry, there was an error while moving these elements back.",
-    "restoreErrors": "Sorry, there was an error while restoring a trashed file. |||| Sorry, there was an error while restoring %{smart_count} trashed files."
+    "cancelledWithRestoreErrors": "%{subject} has been moved back to it's original location but there was an error while restoring the file from trash. |||| %{smart_count} elements have been moved back to their original location but there was %{restoreErrorsCount} error(s) while restoring the file(s) from trash.",
+    "cancelled_error": "Sorry, there was an error while moving the element back. |||| Sorry, there was an error while moving these elements back."
   },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
