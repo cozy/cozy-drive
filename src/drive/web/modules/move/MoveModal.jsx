@@ -205,7 +205,11 @@ export class MoveModal extends React.Component {
 }
 
 MoveModal.propTypes = {
-  entries: PropTypes.array
+  client: PropTypes.object.isRequired,
+  displayedFolder: PropTypes.object.isRequired,
+  entries: PropTypes.array,
+  t: PropTypes.func.isRequired,
+  sharingState: PropTypes.object // to know how to handle conflicts
 }
 
 const mapStateToProps = state => ({
