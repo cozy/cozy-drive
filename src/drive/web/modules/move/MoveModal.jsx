@@ -61,21 +61,17 @@ export class MoveModal extends React.Component {
 
       const response = await client.query(client.get('io.cozy.files', folderId))
       const targetName = response.data.name
-      Alerter.info(
-        t('Move.success', {
-          subject: entries.length === 1 ? entries[0].name : '',
-          target: targetName,
-          smart_count: entries.length
-        }),
-        {
-          buttonText: t('Move.cancel'),
-          buttonAction: () => this.cancelMove(entries)
-        }
-      )
+      Alerter.info('Move.success', {
+        subject: entries.length === 1 ? entries[0].name : '',
+        target: targetName,
+        smart_count: entries.length,
+        buttonText: t('Move.cancel'),
+        buttonAction: () => this.cancelMove(entries)
+      })
       this.trackEvent(entries.length)
     } catch (e) {
       logger.warn(e)
-      Alerter.error(t('Move.error', { smart_count: entries.length }))
+      Alerter.error('Move.error', { smart_count: entries.length })
     } finally {
       this.setState({ isMoveInProgress: false })
       onClose({
@@ -85,7 +81,7 @@ export class MoveModal extends React.Component {
   }
 
   cancelMove = async entries => {
-    const { client, t } = this.props
+    const { client } = this.props
     try {
       await Promise.all(
         entries.map(entry =>
@@ -106,24 +102,20 @@ export class MoveModal extends React.Component {
       this.setState({ trashedFiles: [] })
 
       if (restoreErrorsCount) {
-        Alerter.info(
-          t('Move.cancelledWithRestoreErrors', {
-            subject: entries.length === 1 ? entries[0].name : '',
-            smart_count: entries.length,
-            restoreErrorsCount
-          })
-        )
+        Alerter.info('Move.cancelledWithRestoreErrors', {
+          subject: entries.length === 1 ? entries[0].name : '',
+          smart_count: entries.length,
+          restoreErrorsCount
+        })
       } else {
-        Alerter.info(
-          t('Move.cancelled', {
-            subject: entries.length === 1 ? entries[0].name : '',
-            smart_count: entries.length
-          })
-        )
+        Alerter.info('Move.cancelled', {
+          subject: entries.length === 1 ? entries[0].name : '',
+          smart_count: entries.length
+        })
       }
     } catch (e) {
       logger.warn(e)
-      Alerter.error(t('Move.cancelled_error', { smart_count: entries.length }))
+      Alerter.error('Move.cancelled_error', { smart_count: entries.length })
     }
   }
 
