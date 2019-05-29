@@ -96,14 +96,19 @@ describe('Computing a folders path', () => {
   })
 
   describe('in the trash view', () => {
-    const location = '/trash'
+    const currentView = 'trash'
 
     it('should handle the trash root folder', () => {
       const curentFolder = {
-        id: TRASH_DIR_ID,
-        parent: false
+        id: TRASH_DIR_ID
       }
-      const path = getFolderPath(curentFolder, location, false, [])
+      const path = getFolderPath(
+        curentFolder,
+        currentView,
+        false,
+        [],
+        TRASH_DIR_ID
+      )
 
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
@@ -114,7 +119,13 @@ describe('Computing a folders path', () => {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(curentFolder, location, false, [])
+      const path = getFolderPath(
+        curentFolder,
+        currentView,
+        false,
+        [],
+        TRASH_DIR_ID
+      )
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
@@ -127,7 +138,14 @@ describe('Computing a folders path', () => {
           id: ROOT_DIR_ID
         }
       }
-      const path = getFolderPath(curentFolder, location, false, [])
+      const path = getFolderPath(
+        curentFolder,
+        currentView,
+        false,
+        [],
+        TRASH_DIR_ID
+      )
+      console.log('path ********', path)
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
@@ -141,7 +159,13 @@ describe('Computing a folders path', () => {
           dir_id: ROOT_DIR_ID
         }
       }
-      const path = getFolderPath(curentFolder, location, false, [])
+      const path = getFolderPath(
+        curentFolder,
+        currentView,
+        false,
+        [],
+        TRASH_DIR_ID
+      )
       expect(path.length).toEqual(3)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder.parent)
