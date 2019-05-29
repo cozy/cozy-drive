@@ -20,7 +20,7 @@ import LoadMore from './LoadMore'
 import Footer from './Footer'
 import Topbar from './Topbar'
 
-class MoveModal extends React.Component {
+export class MoveModal extends React.Component {
   static contextTypes = {
     client: PropTypes.object.isRequired,
     t: PropTypes.func.isRequired
