@@ -26,7 +26,6 @@ export class MoveModal extends React.Component {
     this.promises = []
     const { displayedFolder } = props
     this.state = {
-      trashedFiles: [], // files we trashed because of conflicts
       folderId: displayedFolder ? displayedFolder._id : ROOT_DIR_ID,
       isMoveInProgress: false
     }
@@ -51,7 +50,7 @@ export class MoveModal extends React.Component {
     const { sharedPaths } = sharingState
     const { folderId } = this.state
     try {
-      this.setState({ isMoveInProgress: true, trashedFiles: [] })
+      this.setState({ isMoveInProgress: true })
       const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
@@ -67,7 +66,6 @@ export class MoveModal extends React.Component {
           }
         })
       )
-      this.setState({ trashedFiles })
 
       const response = await this.registerCancelable(
         client.query(client.get('io.cozy.files', folderId))
@@ -78,7 +76,7 @@ export class MoveModal extends React.Component {
         target: targetName,
         smart_count: entries.length,
         buttonText: t('Move.cancel'),
-        buttonAction: () => this.cancelMove(entries)
+        buttonAction: () => this.cancelMove(entries, trashedFiles)
       })
       this.trackEvent(entries.length)
     } catch (e) {
@@ -92,7 +90,7 @@ export class MoveModal extends React.Component {
     }
   }
 
-  cancelMove = async entries => {
+  cancelMove = async (entries, trashedFiles) => {
     const { client } = this.props
     try {
       await Promise.all(
@@ -105,7 +103,7 @@ export class MoveModal extends React.Component {
       const fileCollection = client.collection(CozyFile.doctype)
       let restoreErrorsCount = 0
       await Promise.all(
-        this.state.trashedFiles.map(async id => {
+        trashedFiles.map(id => {
           try {
             this.registerCancelable(fileCollection.restore(id))
           } catch (e) {
@@ -113,7 +111,6 @@ export class MoveModal extends React.Component {
           }
         })
       )
-      this.setState({ trashedFiles: [] })
 
       if (restoreErrorsCount) {
         Alerter.info('Move.cancelledWithRestoreErrors', {

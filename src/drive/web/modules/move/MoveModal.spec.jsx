@@ -95,7 +95,6 @@ describe('MoveModal component', () => {
         },
         true
       )
-      expect(component.state('trashedFiles')).toEqual(['other_bill_201902'])
       // don't force a shared file
       expect(CozyFile.move).toHaveBeenNthCalledWith(
         3,
@@ -106,6 +105,7 @@ describe('MoveModal component', () => {
         false
       )
       expect(onCloseSpy).toHaveBeenCalled()
+      // TODO: check that trashedFiles are passed to cancel button
     })
   })
 
@@ -115,7 +115,7 @@ describe('MoveModal component', () => {
     })
     it('should move items back to their previous location', async () => {
       const component = setupComponent()
-      await component.instance().cancelMove(defaultEntries)
+      await component.instance().cancelMove(defaultEntries, [])
       expect(CozyFile.move).toHaveBeenCalledWith('bill_201901', {
         folderId: 'bills'
       })
@@ -127,11 +127,7 @@ describe('MoveModal component', () => {
 
     it('should restore files that have been trashed due to conflicts', async () => {
       const component = setupComponent()
-      component.setState({
-        trashedFiles: ['trashed-1', 'trashed-2']
-      })
-
-      await component.instance().cancelMove([])
+      await component.instance().cancelMove([], ['trashed-1', 'trashed-2'])
       expect(collectionSpy).toHaveBeenCalledWith('io.cozy.files')
       expect(restoreSpy).toHaveBeenCalledWith('trashed-1')
       expect(restoreSpy).toHaveBeenCalledWith('trashed-2')
