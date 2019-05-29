@@ -112,7 +112,7 @@ export class MoveModal extends React.Component {
         trashedFiles.map(id => {
           try {
             this.registerCancelable(fileCollection.restore(id))
-          } catch (e) {
+          } catch {
             restoreErrorsCount++
           }
         })
