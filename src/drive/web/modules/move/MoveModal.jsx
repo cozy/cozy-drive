@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { Modal } from 'cozy-ui/react'
-import { Query } from 'cozy-client'
+import { translate } from 'cozy-ui/react/I18n'
+import { Query, withClient } from 'cozy-client'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/react/Alerter'
 import { connect } from 'react-redux'
@@ -21,11 +22,6 @@ import Footer from './Footer'
 import Topbar from './Topbar'
 
 export class MoveModal extends React.Component {
-  static contextTypes = {
-    client: PropTypes.object.isRequired,
-    t: PropTypes.func.isRequired
-  }
-
   constructor(props) {
     super(props)
 
@@ -42,9 +38,8 @@ export class MoveModal extends React.Component {
   }
 
   moveEntries = async () => {
-    const { entries, onClose, sharingState } = this.props
+    const { client, entries, onClose, sharingState, t } = this.props
     const { sharedPaths } = sharingState
-    const { client, t } = this.context
     const { folderId } = this.state
     try {
       this.setState({ isMoveInProgress: true, trashedFiles: [] })
@@ -92,8 +87,7 @@ export class MoveModal extends React.Component {
   }
 
   cancelMove = async entries => {
-    const { client, t } = this.context
-
+    const { client, t } = this.props
     try {
       await Promise.all(
         entries.map(entry =>
@@ -159,10 +153,8 @@ export class MoveModal extends React.Component {
   }
 
   render() {
-    const { onClose, entries } = this.props
+    const { onClose, entries, t } = this.props
     const { folderId, isMoveInProgress } = this.state
-    const { t } = this.context
-
     return (
       <Modal
         size={'xlarge'}
@@ -222,5 +214,7 @@ const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps),
+  translate(),
+  withClient,
   withSharingState
 )(MoveModal)
