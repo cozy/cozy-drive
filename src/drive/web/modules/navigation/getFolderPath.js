@@ -12,24 +12,31 @@ const getFolderPath = (
   const isBrowsingTrash = /^trash/.test(currentView)
   const isBrowsingRecentFiles = /^recent/.test(currentView)
   const isBrowsingSharings = /^sharings/.test(currentView)
-
+  console.log('isBrowsingSharings', isBrowsingSharings)
   /* 
   Let's shorcut all the code above if we know we are at the TOP level 
-  directory. As `openedFolderId` is the folder we want to OPEN and not
-  the openedFolder. 
+  directory and we want to rest at the top level navigation. 
+  
+  
+  Remember : 
+  - `openedFolderId` is the folder we want to OPEN 
+  - displayedFolder is the folder we already have opened 
+
+  
 
   With this shortcut, we can display `Trash` or `Drive` in the breadcrumb 
   without waiting the end of the request. 
   */
-  switch (openedFolderId) {
+  /*   switch (openedFolderId && !displayedFolder.parent) {
     case ROOT_DIR_ID:
     case TRASH_DIR_ID:
       path.push({ id: openedFolderId })
       return path
     default:
+      console.log('brefore break')
       break
-  }
-
+  } */
+  //console.log('after break')
   // dring the first fetch, displayedFolder is null, and we don't want to display anything
   if (displayedFolder) {
     path.push(displayedFolder)
