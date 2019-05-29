@@ -46,9 +46,8 @@ export class MoveModal extends React.Component {
     const { sharedPaths } = sharingState
     const { client, t } = this.context
     const { folderId } = this.state
-
     try {
-      this.setState({ isMoveInProgress: true })
+      this.setState({ isMoveInProgress: true, trashedFiles: [] })
       const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
@@ -60,7 +59,9 @@ export class MoveModal extends React.Component {
             { folderId },
             force
           )
-          trashedFiles.push(moveResponse.deleted)
+          if (moveResponse.deleted) {
+            trashedFiles.push(moveResponse.deleted)
+          }
         })
       )
       this.setState({ trashedFiles })
@@ -110,6 +111,7 @@ export class MoveModal extends React.Component {
           }
         })
       )
+      this.setState({ trashedFiles: [] })
 
       Alerter.info(
         t('Move.cancelled', {
