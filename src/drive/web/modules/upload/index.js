@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux'
 import logger from 'lib/logger'
 
-import flag from 'cozy-flags'
-
 import { hasSharedParent, isShared } from 'sharing/state'
 import { CozyFile } from 'models'
 import UploadQueue from './UploadQueue'
@@ -122,7 +120,6 @@ export const processNextFile = (
         error = uploadError
         const path = await CozyFile.getFullpath(dirID, file.name)
         if (
-          flag('handle-conflicts') &&
           !isShared(sharingState, { path }) &&
           !hasSharedParent(sharingState, { path })
         ) {

@@ -18,6 +18,4 @@ export const initFlags = () => {
 
 const flagsList = () => {
   flag('switcher', true)
-  flag('handle-conflicts', false)
-  flag('handle-move-conflicts', false)
 }
