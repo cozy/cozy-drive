@@ -41,18 +41,19 @@ fixture`${FEATURE_PREFIX}`.page`${TESTCAFE_DRIVE_URL}/`
 
 test(TEST_SEARCH1, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SEARCH1}`)
-  await privateDrivePage.typeInSearchInput('a')
-  await privateDrivePage.checkSearchResultCount(10)
-  await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-A`
-  })
-
-  await privateDrivePage.typeInSearchInput('t')
+  await privateDrivePage.typeInSearchInput('at')
   await privateDrivePage.checkSearchResultCount(3)
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-T`
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-AT`
   })
+
+  await privateDrivePage.typeInSearchInput('i')
+  await privateDrivePage.checkSearchResultCount(2)
+  await t.fixtureCtx.vr.takeScreenshotAndUpload({
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH1}-I`
+  })
+
   await privateDrivePage.openSearchResultByIndex(0)
   // uncomment the following lines when https://trello.com/c/N8kFROf3 is fixed
   // await viewerDrivePage.waitForLoading()
@@ -90,11 +91,11 @@ test(TEST_SEARCH2, async t => {
 test(TEST_SEARCH3, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SEARCH3}`)
   await privateDrivePage.goToFolder(FOLDER_NAME)
-  await privateDrivePage.typeInSearchInput('tes')
-  await privateDrivePage.checkSearchResultCount(10)
+  await privateDrivePage.typeInSearchInput('tes im')
+  await privateDrivePage.checkSearchResultCount(7)
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
-    screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH3}-Tes`,
+    screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH3}-TesIm`,
     withMask: maskDriveFolderWithDate
   })
 
