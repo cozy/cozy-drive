@@ -911,7 +911,7 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
   integrity sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==
@@ -4461,18 +4461,19 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-cozy-bar@6.26.2:
-  version "6.26.2"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.26.2.tgz#56b3f8d55bc8c587f5d807cc72a0104566336c81"
-  integrity sha512-zsBJVYonH9AU83Y4E2nr2XliG7Pb35+UhQV7IA352gjuq1FaaUo9YlKq5ONeZOCwTzrQoknadhtL8kxaiuDKmw==
+cozy-bar@6.28.5:
+  version "6.28.5"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-6.28.5.tgz#0186ee761a1b7bca75bda9dcdb934254a94b7d25"
+  integrity sha512-8SOPZzo/r/xKfviSjsmGjXCgFaGUY65IFbXTIwYCmHpHnRLmXWDeFFfBfFUNHAVwRl1FHhmGxl8D/PmWeyyeCg==
   dependencies:
     "@babel/core" "7.3.4"
     babel-core "7.0.0-bridge.0"
     babel-preset-cozy-app "1.5.1"
     cozy-device-helper "1.7.1"
-    cozy-interapp "0.4.4"
-    cozy-realtime "3.0.0"
-    cozy-ui "19.36.1"
+    cozy-harvest-lib "0.43.0"
+    cozy-interapp "0.4.5"
+    cozy-realtime "3.0.0-beta.11"
+    cozy-ui "20.7.0"
     enzyme-to-json "3.3.5"
     hammerjs "2.0.8"
     lerna-changelog "0.8.2"
@@ -4480,7 +4481,7 @@ cozy-bar@6.26.2:
     lodash.debounce "4.0.8"
     lodash.unionwith "4.6.0"
     minilog "3.1.0"
-    parcel "^1.12.3"
+    parcel "1.12.3"
     piwik-react-router "0.12.1"
     prop-types "15.7.2"
     react-autosuggest "9.4.3"
@@ -4572,10 +4573,22 @@ cozy-flags@1.6.1:
     detect-node "2.0.4"
     microee "^0.0.6"
 
-cozy-interapp@0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.4.4.tgz#86a7d0d6b849cd6f251877116612901c59f93cf7"
-  integrity sha512-55bSrj1jymMb9Qe/sPjmVfaOcjuTOL//AQzYV2fMIaQZfRtjn1vx0O15C/RC9Qhgjv22fzxcnRtUEg6fi7FHHw==
+cozy-harvest-lib@0.43.0:
+  version "0.43.0"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-0.43.0.tgz#c59def5058cfa5c09d87ecc4e79972d3d0f8277e"
+  integrity sha512-vD7pxbH4FaqMF2Kp3qoLi5GLlXxv+qUzjYbT3EHwymnCrr1MGh7AcOaWEOCot59hhke2MgKyqevBTOZrKlPntg==
+  dependencies:
+    final-form "4.11.1"
+    lodash "4.17.11"
+    microee "^0.0.6"
+    preact-portal "^1.1.3"
+    react-final-form "3.7.0"
+    react-markdown "4.0.6"
+
+cozy-interapp@0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.4.5.tgz#115912a389448ebb8dc532972270b46e15010063"
+  integrity sha512-CuiZ4PIrDj+jcK1sCizFNCC9r8+/sgKXLtDgkpKHRHk+q0lhvqz/fQAVPWiIsZAr9WdbfxaBfsJCoHP/41+G1Q==
 
 cozy-konnector-libs@4.11.4:
   version "4.11.4"
@@ -4611,10 +4624,10 @@ cozy-realtime@2.0.8:
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-2.0.8.tgz#e2e9abfaeff8b610c2bbd1bf9cb5898484df2ef1"
   integrity sha512-L0PAaZXT6u1ixmdMIaSsPwcX1edLZ+8AdiqdOKL+olPaMDgNseyyjr4Vlnnsr7Sx5f6BpcWQFUQr+do+yX9i+w==
 
-cozy-realtime@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.0.0.tgz#3328ff853683ff21b28026810c7f5c2f8382d8c3"
-  integrity sha512-5HTZ4VM/RSLrhAta4oMhnckj9f2klonj9Hx9FfzOyg7ObSq/eKrXJaAGFmepLYQEMewx9ynU4VmsyDXPZ2QV3A==
+cozy-realtime@3.0.0-beta.11:
+  version "3.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.0.0-beta.11.tgz#1c3d4b4e145e0cdec7026696d7a00dd107382019"
+  integrity sha512-NwD3oKCIjec5WA/s4bOWP96F3CTge+cvH6kgR8f9r3+8hDf4MCZ2lsJITXmsCJevJn2DYr5dpeCinAAQD41M0Q==
   dependencies:
     minilog "3.1.0"
 
@@ -4683,6 +4696,23 @@ cozy-ui@19.36.1:
   version "19.36.1"
   resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-19.36.1.tgz#12b663f62b7edded5a1fcb4403a3ebdb9ec97359"
   integrity sha512-ZTUpdrDTf1U76LHwcGShXRg1Ou7tOW/3QfpN/DTRjMp1l1pH9vIMDJW9RNWZTe1rSTUeR0MNsb3XYeFGVCFznA==
+  dependencies:
+    "@babel/runtime" "^7.3.4"
+    body-scroll-lock "^2.5.8"
+    classnames "^2.2.5"
+    date-fns "^1.28.5"
+    hammerjs "^2.0.8"
+    node-polyglot "^2.2.2"
+    normalize.css "^7.0.0"
+    react-hot-loader "^4.3.11"
+    react-markdown "^4.0.8"
+    react-pdf "^4.0.5"
+    react-select "2.2.0"
+
+cozy-ui@20.7.0:
+  version "20.7.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-20.7.0.tgz#f6704e0ae9702b6b3dc8dbf21ad8c0165111513d"
+  integrity sha512-xNznm8SQFkQzi0dkaLPaZCRWLXxJe/71SSfagokOuhHr3z0sZXybgVfPiHulha7cx230UFTe8nxMAKd1j4s15A==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -6708,6 +6738,13 @@ fill-range@^4.0.0:
     is-number "^3.0.0"
     repeat-string "^1.6.1"
     to-regex-range "^2.1.0"
+
+final-form@4.11.1:
+  version "4.11.1"
+  resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.11.1.tgz#cf84a995a75140727c3676647d7cdb858869cb22"
+  integrity sha512-GuRAcbUE+vs/IFcvsRxMAaz0MQp5QaJKXU8FnNf4qlsVDuKoAyvDJGvvDsSTSgQDixavoxPmqwzJOVXrf0Hw1w==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
 
 finalhandler@~1.1.2:
   version "1.1.2"
@@ -11693,7 +11730,7 @@ param-case@2.1.x:
   dependencies:
     no-case "^2.2.0"
 
-parcel@^1.12.3:
+parcel@1.12.3:
   version "1.12.3"
   resolved "https://registry.yarnpkg.com/parcel/-/parcel-1.12.3.tgz#1f1341589380f20be924f1dd67c7fed193b346ec"
   integrity sha512-j9XCVLeol9qZvGemRKt2z8bptbXq9LVy8/IzjqWQKMiKd8DR0NpDAlRHV0zyF72/J/UUTsdsrhnw6UGo9nGI+Q==
@@ -12930,6 +12967,11 @@ pouchdb@6.4.3:
     uuid "3.2.1"
     vuvuzela "1.0.3"
 
+preact-portal@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/preact-portal/-/preact-portal-1.1.3.tgz#22cdd3ecf6ad9aaa3f830607a9c6591de90aedb7"
+  integrity sha512-rE0KG2b7ggIly4VVsSm7+WmQmG/EoUZzBOed2IbycyaFIArOvz+yab/8RBoDogA0JWZuTsbMTStR41Ghc+5m7Q==
+
 prebuild-install@^2.1.0:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-2.5.3.tgz#9f65f242782d370296353710e9bc843490c19f69"
@@ -13485,6 +13527,13 @@ react-dropzone@5.1.1:
     attr-accept "^1.1.3"
     prop-types "^15.6.2"
 
+react-final-form@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/react-final-form/-/react-final-form-3.7.0.tgz#89196cc18340d0bcdb308941ea3e5dafe0f26684"
+  integrity sha512-/FAn1z7i2RFCMC1Bxg9CLA4rKelom6NF8at7PZgOp23T1e45giJQs9hTvuHx5LlX0u6948k0XbYw3y3zBmPOgw==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+
 react-hot-loader@4.8.4:
   version "4.8.4"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.8.4.tgz#357ba342e367fd42d6a870a9c0601c23fa0730c6"
@@ -13538,6 +13587,19 @@ react-markdown@3.4.1:
   integrity sha512-fXvqKJk6GEu5PwuVy9t42WIBJ+8Dfv7F88TIT9qhc/tnOum7p7xYOSXR/NaRlT2zSZv8FKRXSaOluV8jXx6lEQ==
   dependencies:
     mdast-add-list-metadata "^1.0.1"
+    prop-types "^15.6.1"
+    remark-parse "^5.0.0"
+    unified "^6.1.5"
+    unist-util-visit "^1.3.0"
+    xtend "^4.0.1"
+
+react-markdown@4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-4.0.6.tgz#927d44421735cd90b7634bb221e9d7d8656e01e9"
+  integrity sha512-E1d/q+OBk5eumId42oYqVrJRB/+whrZdk+YHqUBCCNeWxqeV+Qzt+yLTsft9+4HRDj89Od7eAbUPQBYq8ZwShQ==
+  dependencies:
+    html-to-react "^1.3.4"
+    mdast-add-list-metadata "1.0.1"
     prop-types "^15.6.1"
     remark-parse "^5.0.0"
     unified "^6.1.5"
