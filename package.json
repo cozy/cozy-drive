@@ -71,7 +71,7 @@
   },
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
-    "@sentry/cli": "1.35.4",
+    "@sentry/cli": "1.44.2",
     "babel-core": "7.0.0-bridge.0",
     "chrome-remote-interface": "0.27.1",
     "cordova": "7.1.0",
