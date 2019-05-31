@@ -3,7 +3,7 @@ import flatten from 'lodash/flatten'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Query } from 'cozy-client'
-import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/react'
+import { Button, Menu, MenuItem, Icon, Spinner, AppTitle } from 'cozy-ui/react'
 import palette from 'cozy-ui/react/palette'
 import { Main } from 'cozy-ui/react/Layout'
 
@@ -80,7 +80,7 @@ export class App extends Component {
                     styles['--hide-bar']
                   )}
                 >
-                  <h2 className={styles['pho-content-title']}>{album.name}</h2>
+                  <AppTitle>{album.name}</AppTitle>
                   <div
                     data-test-id="pho-toolbar-album-public"
                     className={styles['pho-toolbar']}

@@ -10,7 +10,6 @@
 
 .fil-path-title
     margin    0
-    font-size 1.5rem
     overflow hidden
     white-space nowrap
     text-overflow ellipsis
@@ -19,9 +18,11 @@
     display          inline-flex
     align-items      baseline
     font-weight      normal
-    color            coolGrey
     text-decoration  none
     cursor           pointer
+
+    +small-screen('min')
+        color coolGrey
 
     .fil-path-separator
         margin 0 .25rem
@@ -36,10 +37,10 @@
 .fil-path-down
     display     none
     min-width   .875rem
-    height      .625rem
-    margin-left .4375rem
+    height      1.5rem
+    margin-left .5rem
     border      0
-    background  embedurl('../../../assets/icons/icon-arrow-down.svg') center center no-repeat
+    background  embedurl('../../../assets/icons/icon-arrow-down.svg') center bottom .125rem / contain no-repeat
 
 .fil-path-current-name
     text-overflow  ellipsis
@@ -54,7 +55,7 @@
     .fil-path-title
         display        flex
         flex-direction column-reverse
-        font-size      1.3rem
+        align-items    flex-start
 
     .fil-path-link
     .fil-path-current
@@ -93,7 +94,6 @@
 
         .fil-path-link
             display flex
-            color   charcoalGrey
             background white
 
         .fil-path-link-name

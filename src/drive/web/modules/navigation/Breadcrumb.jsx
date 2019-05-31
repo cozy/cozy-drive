@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 import Spinner from 'cozy-ui/react/Spinner'
 import Icon from 'cozy-ui/react/Icon'
+import AppTitle from 'cozy-ui/react/AppTitle'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 import SharedDocuments from 'sharing/components/SharedDocuments'
@@ -87,7 +88,7 @@ export class Breadcrumb extends Component {
           className
         )}
       >
-        <h2
+        <AppTitle
           data-test-id="path-title"
           className={styles['fil-path-title']}
           onClick={this.toggleDeploy}
@@ -137,7 +138,7 @@ export class Breadcrumb extends Component {
               )
             }
           })}
-        </h2>
+        </AppTitle>
       </div>
     )
   }

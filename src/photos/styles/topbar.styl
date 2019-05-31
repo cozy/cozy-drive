@@ -31,7 +31,7 @@ $coz-bar-size = 3rem
     background   embedurl('../assets/icons/icon-back.svg')
     cursor       pointer
 
-    +tiny-screen()
+    +small-screen()
         width           1rem
         height          1rem
         background-size cover
@@ -44,16 +44,10 @@ $coz-bar-size = 3rem
     padding-top   .1rem
     overflow      hidden
     text-overflow ellipsis
-    font-size 1.5rem
 
     input[type=text]
         padding 0.17rem 0.3rem 0.17rem 0.4rem
         max-width 100%
-
-    +small-screen()
-       font-size 1.25rem
-       display flex
-       align-items center
 
     +tiny-screen()
        white-space   nowrap

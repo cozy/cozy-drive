@@ -3,7 +3,7 @@ import styles from '../styles/topbar.styl'
 
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/react/I18n'
-import { withBreakpoints } from 'cozy-ui/react'
+import { withBreakpoints, AppTitle } from 'cozy-ui/react'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import flow from 'lodash/flow'
@@ -66,9 +66,12 @@ EditableAlbumName.propTypes = {
 }
 
 const TopbarTitle = ({ children }) => (
-  <h2 data-test-id="pho-content-title" className={styles['pho-content-title']}>
+  <AppTitle
+    data-test-id="pho-content-title"
+    className={styles['pho-content-title']}
+  >
     {children}
-  </h2>
+  </AppTitle>
 )
 
 const BackToAlbumsButton = ({ onClick }) => (
