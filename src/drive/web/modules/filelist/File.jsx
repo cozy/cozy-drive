@@ -276,7 +276,6 @@ class File extends Component {
   }
 
   open(e, attributes) {
-    console.log('onFolderOpen', onFolderOpen)
     const { onFolderOpen, onFileOpen, isAvailableOffline } = this.props
     e.stopPropagation()
     if (isDirectory(attributes)) {

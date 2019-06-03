@@ -56,16 +56,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-/*
-
-navigateToFolder = async folderId => {
-    await this.props.fetchFolder(folderId)
-    this.props.router.push(getFolderUrl(folderId, this.props.location))
-  }
-  fetchFolder: folderId => dispatch(openFolder(folderId)),
-
-*/
-
 export default translate()(
   connect(
     mapStateToProps,

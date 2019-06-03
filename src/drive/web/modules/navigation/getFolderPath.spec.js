@@ -145,7 +145,6 @@ describe('Computing a folders path', () => {
         [],
         TRASH_DIR_ID
       )
-      console.log('path ********', path)
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
