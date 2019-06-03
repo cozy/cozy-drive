@@ -1,6 +1,6 @@
 import logger from '../../helpers/logger'
 import { t } from 'testcafe'
-import { isExistingAndVisibile } from '../../helpers/utils'
+import { isExistingAndVisible } from '../../helpers/utils'
 import DrivePage from '../drive/drive-model'
 import Viewer from '../viewer/viewer-model'
 import { THUMBNAIL_DELAY } from '../../helpers/data'
@@ -79,11 +79,8 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for audioViewer
   async checkAudioViewer() {
-    await isExistingAndVisibile(selectors.audioViewer, 'selectors.audioViewer')
-    await isExistingAndVisibile(
-      selectors.audioViewerControls,
-      'selectors.audioViewerControls'
-    )
+    await isExistingAndVisible('selectors.audioViewer')
+    await isExistingAndVisible('selectors.audioViewerControls')
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
       await t.wait(THUMBNAIL_DELAY)
@@ -92,11 +89,8 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for videoViewer
   async checkVideoViewer() {
-    await isExistingAndVisibile(selectors.videoViewer, 'selectors.videoViewer')
-    await isExistingAndVisibile(
-      selectors.videoViewerControls,
-      'selectors.videoViewerControls'
-    )
+    await isExistingAndVisible('selectors.videoViewer')
+    await isExistingAndVisible('selectors.videoViewerControls')
     if (t.fixtureCtx.isVR) {
       //wait for file to load to get a good screenshots
       await t.wait(THUMBNAIL_DELAY)
@@ -105,24 +99,18 @@ export default class ViewerDrive extends Viewer {
 
   //Specific check for textViewer
   async checkTextViewer() {
-    await isExistingAndVisibile(selectors.txtViewer, 'selectors.txtViewer')
-    await isExistingAndVisibile(
-      selectors.txtViewerContent,
-      'selectors.txtViewerContent'
-    )
+    await isExistingAndVisible('selectors.txtViewer')
+    await isExistingAndVisible('selectors.txtViewerContent')
   }
 
   //Specific check for no viewer : other download btn
   async checkNoViewer() {
-    await isExistingAndVisibile(selectors.noViewer, 'selectors.noViewer')
+    await isExistingAndVisible('selectors.noViewer')
   }
 
   //Specific check for no viewer : other download btn
   async checkNoViewerDownload() {
-    await isExistingAndVisibile(
-      selectors.btnNoViewerDownload,
-      'selectors.btnNoViewerDownload'
-    )
+    await isExistingAndVisible('selectors.btnNoViewerDownload')
     await t
       .setNativeDialogHandler(() => true)
       .click(selectors.btnNoViewerDownload)
@@ -131,6 +119,6 @@ export default class ViewerDrive extends Viewer {
   //Specific check for pdf viewer : download btn
   async checkPdfViewer() {
     await t.takeScreenshot()
-    await isExistingAndVisibile(selectors.pdfViewer, 'selectors.pdfViewer')
+    await isExistingAndVisible('selectors.pdfViewer')
   }
 }

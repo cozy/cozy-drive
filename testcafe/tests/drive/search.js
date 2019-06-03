@@ -2,7 +2,7 @@ import { driveUser } from '../helpers/roles'
 import {
   TESTCAFE_DRIVE_URL,
   SLUG,
-  isExistingAndVisibile
+  isExistingAndVisible
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 import { FOLDER_NAME, maskDriveFolderWithDate } from '../helpers/data'
@@ -112,10 +112,7 @@ test(TEST_SEARCH3, async t => {
 test(TEST_SEARCH_NO_RESULT, async t => {
   console.group(`↳ ℹ️  ${FEATURE_PREFIX} : ${TEST_SEARCH_NO_RESULT}`)
   await privateDrivePage.typeInSearchInput('qwerty')
-  await isExistingAndVisibile(
-    selectors.searchNoResult,
-    `selectors.searchNoResult`
-  )
+  await isExistingAndVisible(`selectors.searchNoResult`)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_SEARCH3}-Qwerty`,
     withMask: maskDriveFolderWithDate

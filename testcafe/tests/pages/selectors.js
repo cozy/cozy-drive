@@ -1,5 +1,13 @@
 import { Selector } from 'testcafe'
-import { getElementWithTestId, getElementWithTestItem } from '../helpers/utils'
+
+const getElementWithTestId = Selector(
+  id => document.querySelectorAll(`[data-test-id='${id}']`)
+  //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
+)
+const getElementWithTestItem = Selector(
+  id => document.querySelectorAll(`[data-test-item='${id}']`)
+  //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
+)
 //************************
 // Commons, but with different contexts
 //************************
@@ -138,9 +146,7 @@ export const viewerBtnClose = Selector('[class*="viewer-toolbar-close"]')
 //Specific viewers
 export const imageViewer = Selector('[class*="viewer-imageviewer"]')
 export const imageViewerContent = imageViewer.find('img')
-export const photoFull = Selector('[class*="viewer-imageviewer"]').find(
-  'img'
-)
+export const photoFull = Selector('[class*="viewer-imageviewer"]').find('img')
 export const audioViewer = Selector('[class*="viewer-audio"]')
 export const audioViewerControls = audioViewer.find('audio')
 export const txtViewer = Selector('[class*="viewer-text"]')
