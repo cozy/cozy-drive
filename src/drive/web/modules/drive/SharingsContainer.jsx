@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import get from 'lodash/get'
 import { Empty } from 'cozy-ui/react'
 
 import Container from 'drive/web/modules/drive/Container'
@@ -74,7 +75,7 @@ export class SharingFetcher extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.params.folderId) {
+    if (!get(this.props, 'params.folderId')) {
       this.fetchSharedDocuments()
     } else {
       this.props.onFolderOpen(this.props.params.folderId, false)
