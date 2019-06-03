@@ -10,7 +10,6 @@ const UploadButton = ({ label, inMenu, disabled, onUpload, className }) => (
     accept="image/*"
     className={cx(className, { [`${button['c-btn']}`]: !inMenu })}
     data-test-id="upload-btn"
-    label={label}
     disabled={disabled}
     multiple
     onChange={onUpload}
