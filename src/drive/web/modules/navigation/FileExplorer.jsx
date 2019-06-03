@@ -100,9 +100,11 @@ class FileExplorer extends Component {
       !isSharingsFilesViewByPath(newProps) &&
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
     ) {
-      this.navigateToFolder(
-        getFolderIdFromRoute(newProps.location, newProps.params)
-      )
+      if (isTrashFilesViewByPath(newProps)) {
+        this.props.fetchFolderFromTrash(getFolderIdFromRoute(newProps.location, newProps.params))
+      } else {
+        this.props.fetchFolder(getFolderIdFromRoute(newProps.location, newProps.params))
+      }
     }
     /**
      *  Peut-être qu'ici on doit dispatcher le FETCH_SHARINGS histoire d'éviter un didUpdate dans le SharingContainer  
