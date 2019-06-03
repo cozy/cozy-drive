@@ -62,8 +62,8 @@ export class SharingFetcher extends React.Component {
       }))
       this.props.fetchSuccess(filesWithPath)
     } catch (e) {
-      /* 
-      If the error is a cancelable promise, don't use setState sinnce the 
+      /*
+      If the error is a cancelable promise, don't use setState sinnce the
       component is not mounted anymore
       */
       if (e.isCanceled !== true) {
@@ -74,7 +74,7 @@ export class SharingFetcher extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.params && !this.props.params.folderId) {
+    if (!this.props.params.folderId) {
       this.fetchSharedDocuments()
     } else {
       this.props.onFolderOpen(this.props.params.folderId, false)
@@ -94,31 +94,23 @@ export class SharingFetcher extends React.Component {
       sharedDocuments.length !== prevProps.sharedDocuments.length ||
       sharedDocuments.find(id => !prevProps.sharedDocuments.includes(id)) !==
         undefined
-    /**
-     * Il faut faire un fetchSharedDocument pour afficher les sharings une première fois. C'est fait dans le didMount() 
-     * mais si on se balade jusqu'à la racine du Sharings via le breadcrumb (ie on a commencé dans un sous-dossier) alors 
-     * on ne dispatch jamais le fetch_sharings et donc on réucpère jamais les sharings de la racine 
-     */
-    if (hasNewSharings) {
+    const isOnSharingsRoot = !this.props.params.folderId
+    const wasOnSharingsRoot = !prevProps.params.folderId
+
+    const movedToSharedRoot = isOnSharingsRoot && !wasOnSharingsRoot
+    const movedAwayFromSharedRoot = !isOnSharingsRoot && wasOnSharingsRoot
+
+    if (isOnSharingsRoot && hasNewSharings) {
+      // in case the list of sharings changes while we're on the sharings view root
       this.fetchSharedDocuments()
-    } else {
-      /**
-       * !TODO: Ici on peut facilement avoir boucle infinie et si on arrive sur un lien "profond" dans les sharings, on ne charge pas
-       * le bon contenu car il semblerait que l'action effectuée dans le DidMount() mette à jour le componsant et que comme on a 
-       * des novueaux sharings, on fasse le fetchSharedDocuments et que lui, nous casse les bonbons car il reset le state. 
-       */
-      if (
-        this.props.params.folderId &&
-        this.props.params.folderId !== prevProps.params.folderId
-      ) {
-        this.props.onFolderOpen(this.props.params.folderId)
-      }
-      if (
-        !this.props.params.folderId &&
-        this.props.params.folderId !== prevProps.params.folderId
-      ) {
-        this.fetchSharedDocuments()
-      }
+    }
+    else if (movedToSharedRoot) {
+      // if we start the navigation inside a folder in the saring view, and navigate back to the root, we need to load the root content again
+      this.fetchSharedDocuments()
+    }
+    else if (movedAwayFromSharedRoot) {
+      // in case we open a folder from the root fo the sharing view
+      this.props.onFolderOpen(this.props.params.folderId)
     }
   }
 
