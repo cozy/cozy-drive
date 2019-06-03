@@ -1,56 +1,38 @@
+import cx from 'classnames'
 import React from 'react'
-import { translate } from 'cozy-ui/react/I18n'
-import { Icon } from 'cozy-ui/react'
+import PropTypes from 'prop-types'
+import { Icon, FileInput } from 'cozy-ui/react'
 
 import button from '../styles/toolbar.styl'
 
-const styles = {
-  parent: {
-    position: 'relative',
-    overflow: 'hidden'
-  },
-  input: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    opacity: 0,
-    width: '100%',
-    height: '100%',
-    zIndex: 1
-  }
-}
-
-export const UploadButton = ({
-  label,
-  inMenu = false,
-  disabled,
-  onUpload,
-  className = ''
-}) => (
-  <label
-    role="button"
+const UploadButton = ({ label, inMenu, disabled, onUpload, className }) => (
+  <FileInput
+    accept="image/*"
+    className={cx(className, { [`${button['c-btn']}`]: !inMenu })}
+    data-test-id="upload-btn"
+    label={label}
     disabled={disabled}
-    className={`${className} ${inMenu ? '' : button['c-btn']}`}
-    style={styles.parent}
+    multiple
+    onChange={onUpload}
   >
     <span>
       {!inMenu && <Icon icon="upload" />}
       <span>{label}</span>
-      <input
-        data-test-id="upload-btn"
-        type="file"
-        accept="image/*"
-        multiple
-        disabled={disabled}
-        style={styles.input}
-        onChange={e => {
-          // e.target.files is an array-like, transform it to Array instance
-          const photosArray = Array.from(e.target.files)
-          onUpload(photosArray)
-        }}
-      />
     </span>
-  </label>
+  </FileInput>
 )
 
-export default translate()(UploadButton)
+UploadButton.propTypes = {
+  label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  inMenu: PropTypes.bool,
+  onUpload: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired
+}
+
+UploadButton.defaultProps = {
+  disabled: false,
+  inMenu: false
+}
+
+export default UploadButton
