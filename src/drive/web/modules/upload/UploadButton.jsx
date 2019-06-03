@@ -10,11 +10,11 @@ import { uploadFiles } from 'drive/web/modules/navigation/duck'
 const UploadButton = ({ label, disabled, onUpload, className }) => (
   <FileInput
     className={className}
-    data-test-id="upload-btn"
     label={label}
     disabled={disabled}
     multiple
     onChange={onUpload}
+    data-test-id="upload-btn"
   >
     <span>
       <Icon icon="upload" />
