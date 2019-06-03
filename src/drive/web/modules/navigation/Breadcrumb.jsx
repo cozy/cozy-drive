@@ -16,8 +16,6 @@ import getFolderPath from './getFolderPath'
 import styles from './breadcrumb.styl'
 
 export const renamePathNames = (path, pathname, t) => {
-  console.log('path', path)
-  console.log('pathname', pathname)
   if (pathname === '/recent') {
     path.unshift({
       name: t('breadcrumb.title_recent')
@@ -155,13 +153,12 @@ class RouterBreadCrumb extends Component {
   }
 
   navigateToFolder = folderId => {
-    const { router, location, goToFolder, getFolderUrl } = this.props
+    const { goToFolder } = this.props
 
     this.toggleOpening()
 
     goToFolder(folderId).then(() => {
       this.toggleOpening()
-      //router.push(getFolderUrl(folderId, location))
     })
   }
 

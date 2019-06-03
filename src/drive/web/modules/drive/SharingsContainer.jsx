@@ -87,7 +87,6 @@ export class SharingFetcher extends React.Component {
     if (this.fetSharedParents) this.fetSharedParents.cancel()
   }
 
-
   async componentDidUpdate(prevProps) {
     const { sharedDocuments } = this.props
 
@@ -104,12 +103,10 @@ export class SharingFetcher extends React.Component {
     if (isOnSharingsRoot && hasNewSharings) {
       // in case the list of sharings changes while we're on the sharings view root
       this.fetchSharedDocuments()
-    }
-    else if (movedToSharedRoot) {
+    } else if (movedToSharedRoot) {
       // if we start the navigation inside a folder in the saring view, and navigate back to the root, we need to load the root content again
       this.fetchSharedDocuments()
-    }
-    else if (movedAwayFromSharedRoot) {
+    } else if (movedAwayFromSharedRoot) {
       // in case we open a folder from the root fo the sharing view
       this.props.onFolderOpen(this.props.params.folderId)
     }

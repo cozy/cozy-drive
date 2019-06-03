@@ -38,11 +38,11 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) => {
 
 class FileExplorer extends Component {
   /*
-    This function is needed when the user comes to a "deep" url without clicking 
+    This function is needed when the user comes to a "deep" url without clicking
     on the nav button. Acceding to /sharings/4e33fd27e1d8e55a34742bac6d0dd120 directly
     for instance.
 
-  TODO: It should not be the responsability to the FileExplorer to do the right request. 
+  TODO: It should not be the responsability to the FileExplorer to do the right request.
   It should be done by the "Container" itself. It's already done by the SharingsContainer
   */
   componentWillMount() {
@@ -60,28 +60,28 @@ class FileExplorer extends Component {
 
   /*
     We need this method since <Nav is using href and not onClick
-    and we listen to the URL changes in order to call the right action 
+    and we listen to the URL changes in order to call the right action
 
-    This is only needed for this case, since the navigation in a Folder 
+    This is only needed for this case, since the navigation in a Folder
     is managed by navigateToFolder function.
 
-    We should perhaps have : 
-    - FileFolderExplorer 
-    - RecentFileExplorer 
+    We should perhaps have :
+    - FileFolderExplorer
+    - RecentFileExplorer
     - TrashFileExplorer ?
 
-    We have to use newProps and newProps.location, because has we use both : 
-    - props location 
-    and 
-    - redux store 
-    props.location is the first to be updated 
+    We have to use newProps and newProps.location, because has we use both :
+    - props location
+    and
+    - redux store
+    props.location is the first to be updated
 
     Also we check the matching between the openedFilderId (and not the displayFolderId)
     and the new props location (folder id in the url)
 
     I can't use isRecentFilesView for instance, since when we click on the "Recent" links
-    we don't dispatch any action. We're just listeninng the URL, and dispatch the actio 
-    if the url has changed and that we're on the /recent url 
+    we don't dispatch any action. We're just listeninng the URL, and dispatch the actio
+    if the url has changed and that we're on the /recent url
   */
   componentWillReceiveProps(newProps) {
     //As we're url based here, if nothing changed, let's shortcut
@@ -101,28 +101,25 @@ class FileExplorer extends Component {
       !isUrlMatchingOpenedFolder(newProps, this.props.openedFolderId)
     ) {
       if (isTrashFilesViewByPath(newProps)) {
-        this.props.fetchFolderFromTrash(getFolderIdFromRoute(newProps.location, newProps.params))
+        this.props.fetchFolderFromTrash(
+          getFolderIdFromRoute(newProps.location, newProps.params)
+        )
       } else {
-        this.props.fetchFolder(getFolderIdFromRoute(newProps.location, newProps.params))
+        this.props.fetchFolder(
+          getFolderIdFromRoute(newProps.location, newProps.params)
+        )
       }
     }
-    /**
-     *  Peut-être qu'ici on doit dispatcher le FETCH_SHARINGS histoire d'éviter un didUpdate dans le SharingContainer  
-     */
-    
-    /* if(isSharingsFilesViewByPath(newProps)){
-      
-    } */
   }
 
   /*
-   @performance 
+   @performance
 
-    Thanks to this, we're updating twice the redux store (url and fetchfolder) 
+    Thanks to this, we're updating twice the redux store (url and fetchfolder)
     and we cause a lof of re-render issues
 
-    Very deep in the three (File.jsx), we use navigateToForlder renamed as 
-    openFolder. 
+    Very deep in the three (File.jsx), we use navigateToForlder renamed as
+    openFolder.
   */
   navigateToFolder = async folderId => {
     await this.props.fetchFolder(folderId)
