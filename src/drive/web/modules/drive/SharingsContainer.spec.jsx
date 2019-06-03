@@ -30,10 +30,12 @@ describe('SharingFetcher component', () => {
   describe('componentDidUpdate', () => {
     it('should fetch shared documents if there are new sharings', async () => {
       const props = {
-        sharedDocuments: ['foo']
+        sharedDocuments: ['foo'],
+        params: {}
       }
       const nextProps = {
-        sharedDocuments: ['foo', 'bar']
+        sharedDocuments: ['foo', 'bar'],
+        params: {}
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
         disableLifecycleMethod: true
@@ -46,10 +48,12 @@ describe('SharingFetcher component', () => {
 
     it('should not fetch shared documents if there are no new sharings', async () => {
       const props = {
-        sharedDocuments: ['foo']
+        sharedDocuments: ['foo'],
+        params: {}
       }
       const nextProps = {
-        sharedDocuments: ['foo']
+        sharedDocuments: ['foo'],
+        params: {}
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
         disableLifecycleMethod: true

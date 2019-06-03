@@ -186,14 +186,14 @@ describe('Computing a folders path', () => {
   })
 
   describe('in the sharings view', () => {
-    const location = '/sharings'
+    const currentView = 'sharings'
 
     it('should not add the root folder', () => {
       const curentFolder = {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(curentFolder, location, true, [])
+      const path = getFolderPath(curentFolder, currentView, true, [])
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
     })
@@ -205,7 +205,7 @@ describe('Computing a folders path', () => {
           id: '456'
         }
       }
-      const path = getFolderPath(curentFolder, location, true, [])
+      const path = getFolderPath(curentFolder, currentView, true, [])
       expect(path.length).toEqual(2)
       expect(path[0]).toEqual(curentFolder.parent)
       expect(path[1]).toEqual(curentFolder)
@@ -218,7 +218,7 @@ describe('Computing a folders path', () => {
           id: '456'
         }
       }
-      const path = getFolderPath(curentFolder, location, true, ['123'])
+      const path = getFolderPath(curentFolder, currentView, true, ['123'])
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
     })
@@ -231,7 +231,7 @@ describe('Computing a folders path', () => {
           dir_id: '789'
         }
       }
-      const path = getFolderPath(curentFolder, location, true, ['456'])
+      const path = getFolderPath(curentFolder, currentView, true, ['456'])
       expect(path.length).toEqual(2)
       expect(path[0]).toEqual(curentFolder.parent)
       expect(path[1]).toEqual(curentFolder)
