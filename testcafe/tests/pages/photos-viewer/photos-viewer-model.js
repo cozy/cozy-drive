@@ -1,18 +1,18 @@
 import { t } from 'testcafe'
 import logger from '../../helpers/logger'
-import { isExistingAndVisibile } from '../../helpers/utils'
+import { isExistingAndVisible } from '../../helpers/utils'
 import Viewer from '../viewer/viewer-model'
 import { THUMBNAIL_DELAY } from '../../helpers/data'
 import * as selectors from '../selectors'
 
 export default class PhotoViewer extends Viewer {
   async openPhotoFullscreen(index) {
-    await isExistingAndVisibile(
-      selectors.photoThumb(index),
-      `selectors.photoThumb(${index})`
+    await isExistingAndVisible(
+      `selectors.photoThumb(${index})`,
+      selectors.photoThumb(index)
     )
     await t.click(selectors.photoThumb(index))
-    await isExistingAndVisibile(selectors.photoFull, 'selectors.photoFull')
+    await isExistingAndVisible('selectors.photoFull')
   }
 
   //@param {String} screenshotPath : path for screenshots taken in this test

@@ -1,5 +1,5 @@
 import { t } from 'testcafe'
-import { getPageUrl, isExistingAndVisibile } from '../../helpers/utils'
+import { getPageUrl, isExistingAndVisible } from '../../helpers/utils'
 import * as selectors from '../selectors'
 import AlbumPage from '../photos-album/album-model'
 import PhotoPage from '../photos/photos-model'
@@ -11,24 +11,16 @@ export default class AlbumsPage extends PhotoPage {
   async waitForLoading() {
     await t
       .expect(selectors.loading.exists)
-      .notOk(
-        'waitForLoading - Page didnt Load : selectors.loading still exists'
-      )
-    await isExistingAndVisibile(
-      selectors.albumContentWrapper,
-      'waitForLoading - selectors.albumContentWrapper'
-    )
+      .notOk('Page didnt Load : selectors.loading still exists')
+    await isExistingAndVisible('selectors.albumContentWrapper')
     logger.debug(`albums-model : waitForLoading Ok`)
   }
 
   // check that the albums view is empty
   async checkEmptyAlbum() {
     await this.waitForLoading()
-    await isExistingAndVisibile(selectors.folderEmpty, 'selectors.folderEmpty')
-    await isExistingAndVisibile(
-      selectors.albumEmptyText,
-      'selectors.albumEmptyText'
-    )
+    await isExistingAndVisible('selectors.folderEmpty')
+    await isExistingAndVisible('selectors.albumEmptyText')
   }
 
   // @param {String} albumName : Name for the new album
@@ -41,18 +33,12 @@ export default class AlbumsPage extends PhotoPage {
     withMask = false
   }) {
     await this.waitForLoading()
-    await isExistingAndVisibile(
-      selectors.toolbarAlbumsList,
-      'selectors.toolbarAlbumsList'
-    )
-    await isExistingAndVisibile(selectors.btnNewAlbum, 'selectors.btnNewAlbum')
+    await isExistingAndVisible('selectors.toolbarAlbumsList')
+    await isExistingAndVisible('selectors.btnNewAlbum')
     await t.click(selectors.btnNewAlbum)
     //Check new album page :
     await t.expect(getPageUrl()).contains('albums/new')
-    await isExistingAndVisibile(
-      selectors.inputAlbumName,
-      'selectors.inputAlbumName'
-    )
+    await isExistingAndVisible('selectors.inputAlbumName')
     await t
       .expect(selectors.inputAlbumName.value)
       .eql('Untitled album')
@@ -63,10 +49,7 @@ export default class AlbumsPage extends PhotoPage {
       'On create Album page'
     )
     await t.expect(allPhotosAlbumCount).eql(t.ctx.totalFilesCount) //all photos are displayed
-    await isExistingAndVisibile(
-      selectors.btnValidateAlbum,
-      'selectors.btnValidateAlbum'
-    )
+    await isExistingAndVisible('selectors.btnValidateAlbum')
 
     await t.typeText(selectors.inputAlbumName, albumName)
     await albumPage.selectPhotostoAdd(0, photoNumber)
@@ -83,9 +66,9 @@ export default class AlbumsPage extends PhotoPage {
 
   // @param {String} AlbumName : Name of the album
   async goToAlbum(albumName) {
-    await isExistingAndVisibile(
-      selectors.album(albumName),
-      `selectors.album(${albumName})`
+    await isExistingAndVisible(
+      `selectors.album(${albumName})`,
+      selectors.album(albumName)
     )
     await t.click(selectors.album(albumName))
   }
@@ -93,9 +76,9 @@ export default class AlbumsPage extends PhotoPage {
   // @param {String} AlbumName : Name of the album
   // @param { number } photoNumber : Number of photos expected in the album (
   async isAlbumExistsAndVisible(albumName, photoNumber) {
-    await isExistingAndVisibile(
-      selectors.album(albumName),
-      `selectors.album(${albumName})`
+    await isExistingAndVisible(
+      `selectors.album(${albumName})`,
+      selectors.album(albumName)
     )
     await t
       .expect(selectors.album(albumName).innerText)

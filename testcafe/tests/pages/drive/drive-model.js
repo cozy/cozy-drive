@@ -1,6 +1,6 @@
 import { t } from 'testcafe'
 import logger from '../../helpers/logger'
-import { isExistingAndVisibile } from '../../helpers/utils'
+import { isExistingAndVisible } from '../../helpers/utils'
 import * as selectors from '../selectors'
 
 export default class DrivePage {
@@ -14,15 +14,9 @@ export default class DrivePage {
         'waitForLoading - Page didnt Load : selectors.contentPlaceHolder still displayed'
       )
     if (!isNotAvailable) {
-      await isExistingAndVisibile(
-        selectors.contentTable,
-        'waitForLoading - selectors.contentTable'
-      )
+      await isExistingAndVisible('selectors.contentTable')
       if (isFull) {
-        await isExistingAndVisibile(
-          selectors.folderOrFileName,
-          'waitForLoading - selectors.folderOrFileName'
-        )
+        await isExistingAndVisible('selectors.folderOrFileName')
       }
     }
     logger.debug(
@@ -43,7 +37,7 @@ export default class DrivePage {
 
   //return breadcrumb text
   async getbreadcrumb() {
-    await isExistingAndVisibile(selectors.breadcrumb, 'selectors.breadcrumb')
+    await isExistingAndVisible('selectors.breadcrumb')
     const childElCount = await selectors.breadcrumb.childElementCount
     let breadcrumbTitle = await selectors.breadcrumb.child(0).innerText
     if (childElCount > 1) {
@@ -65,11 +59,11 @@ export default class DrivePage {
     inModal
       ? (breadcrumb = selectors.modalBreadcrumb)
       : (breadcrumb = selectors.breadcrumb)
-    await isExistingAndVisibile(
-      breadcrumb.child(0),
+    await isExistingAndVisible(
       inModal
         ? `selectors.modalBreadcrumb.child(0)`
-        : `selectors.breadcrumb.child(0)`
+        : `selectors.breadcrumb.child(0)`,
+      breadcrumb.child(0)
     )
     await t.click(breadcrumb.child(0))
     await this.waitForLoading()
@@ -103,26 +97,23 @@ export default class DrivePage {
   async selectElements(filesIndexArray) {
     logger.debug(`Selecting ${filesIndexArray.length} elements`)
 
-    await isExistingAndVisibile(
-      selectors.contentRows.nth(filesIndexArray[0]),
-      `selectors.contentRows.nth(${filesIndexArray[0]})`
+    await isExistingAndVisible(
+      `selectors.contentRows.nth(${filesIndexArray[0]})`,
+      selectors.contentRows.nth(filesIndexArray[0])
     )
     await t.hover(selectors.contentRows.nth(filesIndexArray[0])) //Only one 'hover' as all checkbox should be visible once the 1st checkbox is checked
     for (let i = 0; i < filesIndexArray.length; i++) {
-      await isExistingAndVisibile(
-        selectors.contentRows.nth(filesIndexArray[i]),
-        `selectors.contentRows.nth(${filesIndexArray[i]})`
+      await isExistingAndVisible(
+        `selectors.contentRows.nth(${filesIndexArray[i]})`,
+        selectors.contentRows.nth(filesIndexArray[i])
       )
-      await isExistingAndVisibile(
-        selectors.checboxFolderByRowIndex(filesIndexArray[i]),
-        `selectors.checboxFolderByRowIndex(${filesIndexArray[i]})`
+      await isExistingAndVisible(
+        `selectors.checboxFolderByRowIndex(${filesIndexArray[i]})`,
+        selectors.checboxFolderByRowIndex(filesIndexArray[i])
       )
       await t.click(selectors.checboxFolderByRowIndex(filesIndexArray[i]))
     }
-    await isExistingAndVisibile(
-      selectors.cozySelectionbar,
-      'selectors.cozySelectionbar'
-    )
+    await isExistingAndVisible('selectors.cozySelectionbar')
   }
 
   //@param {string} fileName : file name

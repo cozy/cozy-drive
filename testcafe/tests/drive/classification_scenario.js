@@ -3,7 +3,7 @@ import logger from '../helpers/logger'
 import {
   TESTCAFE_DRIVE_URL,
   SLUG,
-  isExistingAndVisibile
+  isExistingAndVisible
 } from '../helpers/utils'
 import { initVR } from '../helpers/visualreview-utils'
 import {
@@ -190,7 +190,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-2`,
     withMask: maskMoveMoadal
   })
-  await isExistingAndVisibile(selectors.modalClose, 'selectors.modalClose')
+  await isExistingAndVisible('selectors.modalClose')
   await t.click(selectors.modalClose)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-3`,
@@ -209,10 +209,7 @@ test(TEST_MOVE_FILE_CANCEL, async t => {
   logger.info('Show Move Moadal, and Cancel (Cancel button)')
   await privateDrivePage.showMoveModalForElement(FILE_PDF)
   // no need to screenshot again the modal
-  await isExistingAndVisibile(
-    selectors.btnModalFirstButton,
-    'selectors.btnModalFirstButton'
-  )
+  await isExistingAndVisible('selectors.btnModalFirstButton')
   await t.click(selectors.btnModalFirstButton)
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_MOVE_FILE_CANCEL}-5`,
@@ -343,7 +340,7 @@ test(TEST_DELETE_FOLDER_FROM_DRIVE, async t => {
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-1`
   })
   await t.click(selectors.btnRemoveActionMenu)
-  await isExistingAndVisibile(selectors.modalFooter, 'selectors.modalFooter')
+  await isExistingAndVisible('selectors.modalFooter')
 
   await t.fixtureCtx.vr.takeScreenshotAndUpload({
     screenshotPath: `${FEATURE_PREFIX}/${TEST_DELETE_FOLDER_FROM_DRIVE}-2`
@@ -399,15 +396,15 @@ test(TEST_EMPTY_TRASH, async t => {
 
   //We cannot use checkToastAppearsAndDisappears here, as both toast might appears at the same time, or the 1st one may disappear before the second one shows up.
   await Promise.all([
-    await isExistingAndVisibile(
+    await isExistingAndVisible(
+      'selectors.alertWrapper.withText(Your trash is being emptied. This might take a few moments.)',
       selectors.alertWrapper.withText(
         'Your trash is being emptied. This might take a few moments.'
-      ),
-      'selectors.alertWrapper.withText(Your trash is being emptied. This might take a few moments.)'
+      )
     ),
-    await isExistingAndVisibile(
-      selectors.alertWrapper.withText('The trash has been emptied.'),
-      'selectors.alertWrapper.withText(The trash has been emptied.)'
+    await isExistingAndVisible(
+      'selectors.alertWrapper.withText(The trash has been emptied.)',
+      selectors.alertWrapper.withText('The trash has been emptied.')
     )
   ])
   await Promise.all([

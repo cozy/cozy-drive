@@ -2,7 +2,7 @@ import { t } from 'testcafe'
 import logger from '../../helpers/logger'
 import {
   getPageUrl,
-  isExistingAndVisibile,
+  isExistingAndVisible,
   overwriteCopyCommand,
   getLastExecutedCommand
 } from '../../helpers/utils'
@@ -14,7 +14,7 @@ export default class privateDrivePage extends DrivePage {
   //@param {text} path : redirection path
   //@param {text} title : text for logger.debug
   async isSidebarButton(btn, path, title) {
-    await isExistingAndVisibile(btn, `${title}`)
+    await isExistingAndVisible(`${title}`, btn)
     await t.expect(btn.getAttribute('href')).eql(path)
   }
 
@@ -37,21 +37,15 @@ export default class privateDrivePage extends DrivePage {
   }
 
   async openCozyBarMenu() {
-    await isExistingAndVisibile(selectors.btnMainApp, 'selectors.btnMainApp')
+    await isExistingAndVisible('selectors.btnMainApp')
     await t.click(selectors.btnMainApp)
-    await isExistingAndVisibile(
-      selectors.cozNavPopContent,
-      'selectors.cozNavPopContent'
-    )
+    await isExistingAndVisible('selectors.cozNavPopContent')
   }
 
   async checkMainMenu() {
-    await isExistingAndVisibile(selectors.cozBar, 'selectors.cozBar')
+    await isExistingAndVisible('selectors.cozBar')
     await this.openCozyBarMenu()
-    await isExistingAndVisibile(
-      selectors.btnCozBarDrive,
-      'selectors.btnCozBarDrive'
-    )
+    await isExistingAndVisible('selectors.btnCozBarDrive')
 
     await t
       .expect(
@@ -61,16 +55,10 @@ export default class privateDrivePage extends DrivePage {
   }
 
   async openActionMenu() {
-    await isExistingAndVisibile(
-      selectors.toolbarDrive,
-      'selectors.toolbarDrive'
-    )
-    await isExistingAndVisibile(selectors.btnMoreMenu, `selectors.btnMoreMenu`)
+    await isExistingAndVisible('selectors.toolbarDrive')
+    await isExistingAndVisible(`selectors.btnMoreMenu`)
     await t.click(selectors.btnMoreMenu)
-    await isExistingAndVisibile(
-      selectors.cozyMenuInner,
-      'selectors.cozyMenuInner'
-    )
+    await isExistingAndVisible('selectors.cozyMenuInner')
   }
 
   //@param {String} newFolderName
@@ -92,10 +80,7 @@ export default class privateDrivePage extends DrivePage {
         withMask: withMask
       })
 
-    await isExistingAndVisibile(
-      selectors.btnAddFolder,
-      'selectors.btnAddFolder'
-    )
+    await isExistingAndVisible('selectors.btnAddFolder')
     await t.click(selectors.btnAddFolder)
 
     if (!t.fixtureCtx.isVR) {
@@ -103,10 +88,7 @@ export default class privateDrivePage extends DrivePage {
       await t.expect(rowCountEnd).eql(rowCountStart + 1) //New content line appears
     }
 
-    await isExistingAndVisibile(
-      selectors.foldersNamesInputs,
-      'selectors.foldersNamesInputs'
-    )
+    await isExistingAndVisible('selectors.foldersNamesInputs')
     await t
       .typeText(selectors.foldersNamesInputs, newFolderName)
       .pressKey('enter')
@@ -133,14 +115,14 @@ export default class privateDrivePage extends DrivePage {
     await t.expect(selectors.btnUpload.exists).ok(`Upload button doesnt exist`)
     await t.setFilesToUpload(selectors.btnUpload, files)
 
-    await isExistingAndVisibile(selectors.divUpload, 'selectors.divUpload')
+    await isExistingAndVisible('selectors.divUpload')
 
     for (let i = 0; i < numOfFiles; i++) {
       const fileNameChunks = files[i].split('/')
       const fileName = fileNameChunks[fileNameChunks.length - 1]
-      await isExistingAndVisibile(
-        selectors.uploadedItem(fileName),
-        `selectors.uploadedItem(${fileName})`
+      await isExistingAndVisible(
+        `selectors.uploadedItem('${fileName}')`,
+        selectors.uploadedItem(fileName)
       )
       await t
         //hasClass doesn't support [class*='upload-queue-item--done'], only full class name, so we cannot use it
@@ -151,15 +133,9 @@ export default class privateDrivePage extends DrivePage {
     if (!t.fixtureCtx.isVR) {
       // When uploading one file, check for the alert wrapper. When there are lots of files to upload, it already disappear once we finish checking each line
       if (numOfFiles == 1) {
-        await isExistingAndVisibile(
-          selectors.alertWrapper,
-          'selectors.alertWrapper'
-        )
+        await isExistingAndVisible('selectors.alertWrapper')
       }
-      await isExistingAndVisibile(
-        selectors.divUploadSuccess,
-        'selectors.divUploadSuccess'
-      )
+      await isExistingAndVisible('selectors.divUploadSuccess')
       await t
         .expect(selectors.divUpload.child('h4').innerText)
         .match(
@@ -173,30 +149,18 @@ export default class privateDrivePage extends DrivePage {
   }
 
   async shareFolderPublicLink() {
-    await isExistingAndVisibile(
-      selectors.toolbarDrive,
-      'selectors.toolbarDrive'
-    )
-    await isExistingAndVisibile(selectors.btnShare, `selectors.btnShare`)
+    await isExistingAndVisible('selectors.toolbarDrive')
+    await isExistingAndVisible(`selectors.btnShare`)
     await t.click(selectors.btnShare)
-    await isExistingAndVisibile(
-      selectors.divShareByLink,
-      'selectors.divShareByLink'
-    )
-    await isExistingAndVisibile(
-      selectors.toggleShareLink,
-      'selectors.toggleShareLink'
-    )
+    await isExistingAndVisible('selectors.divShareByLink')
+    await isExistingAndVisible('selectors.toggleShareLink')
     await t
       .click(selectors.toggleShareLink)
       .expect(selectors.toggleShareLink.find('input').checked)
       .ok(`selectors.toggleShareLink.find('input') is unchecked`)
       .expect(selectors.spanLinkCreating.exist)
       .notOk('selectors.spanLinkCreating still exists')
-    await isExistingAndVisibile(
-      selectors.btnCopyShareByLink,
-      'selectors.btnCopyShareByLink'
-    )
+    await isExistingAndVisible('selectors.btnCopyShareByLink')
 
     await overwriteCopyCommand()
 
@@ -205,30 +169,15 @@ export default class privateDrivePage extends DrivePage {
       .expect(getLastExecutedCommand())
       .eql('copy') //check link copy actually happens
 
-    await isExistingAndVisibile(
-      selectors.alertWrapper,
-      'selectors.alertWrapper'
-    )
+    await isExistingAndVisible('selectors.alertWrapper')
   }
 
   async unshareFolderPublicLink() {
-    await isExistingAndVisibile(
-      selectors.toolbarDrive,
-      'selectors.toolbarDrive'
-    )
-    await isExistingAndVisibile(
-      selectors.btnShareByMe,
-      `selectors.btnShareByMe`
-    )
+    await isExistingAndVisible('selectors.toolbarDrive')
+    await isExistingAndVisible(`selectors.btnShareByMe`)
     await t.click(selectors.btnShareByMe)
-    await isExistingAndVisibile(
-      selectors.divShareByLink,
-      'selectors.divShareByLink'
-    )
-    await isExistingAndVisibile(
-      selectors.toggleShareLink,
-      'selectors.toggleShareLink'
-    )
+    await isExistingAndVisible('selectors.divShareByLink')
+    await isExistingAndVisible('selectors.toggleShareLink')
     await t
       .click(selectors.toggleShareLink)
       .expect(selectors.toggleShareLink.find('input').checked)
@@ -239,31 +188,22 @@ export default class privateDrivePage extends DrivePage {
       .expect(selectors.btnShareByMe.exists)
       .notOk('selectors.btnShareByMe.exists still exists')
 
-    await isExistingAndVisibile(selectors.btnShare, `selectors.btnShare`)
+    await isExistingAndVisible(`selectors.btnShare`)
   }
 
   async shareFirstFilePublicLink() {
     await this.selectElements([0])
 
     await t.click(selectors.btnShareCozySelectionBar)
-    await isExistingAndVisibile(
-      selectors.divShareByLink,
-      'selectors.divShareByLink'
-    )
-    await isExistingAndVisibile(
-      selectors.toggleShareLink,
-      'selectors.toggleShareLink'
-    )
+    await isExistingAndVisible('selectors.divShareByLink')
+    await isExistingAndVisible('selectors.toggleShareLink')
     await t
       .click(selectors.toggleShareLink)
       .expect(selectors.toggleShareLink.find('input').checked)
       .ok(`selectors.toggleShareLink.find('input') is unchecked`)
       .expect(selectors.spanLinkCreating.exist)
       .notOk('selectors.spanLinkCreating still exists')
-    await isExistingAndVisibile(
-      selectors.btnCopyShareByLink,
-      'selectors.btnCopyShareByLink'
-    )
+    await isExistingAndVisible('selectors.btnCopyShareByLink')
 
     await overwriteCopyCommand()
 
@@ -272,33 +212,24 @@ export default class privateDrivePage extends DrivePage {
       .expect(getLastExecutedCommand())
       .eql('copy') //check link copy actually happens
 
-    await isExistingAndVisibile(
-      selectors.alertWrapper,
-      'selectors.alertWrapper'
-    )
-    await isExistingAndVisibile(
-      selectors.shareBadgeForRowindex(0),
-      'selectors.shareBadgeForRowindex(0)'
+    await isExistingAndVisible('selectors.alertWrapper')
+    await isExistingAndVisible(
+      'selectors.shareBadgeForRowindex(0)',
+      selectors.shareBadgeForRowindex(0)
     )
   }
 
   async unshareFirstFilePublicLink() {
     await this.selectElements([0])
-    await isExistingAndVisibile(
-      selectors.shareBadgeForRowindex(0),
-      'selectors.shareBadgeForRowindex(0)'
+    await isExistingAndVisible(
+      'selectors.shareBadgeForRowindex(0)',
+      selectors.shareBadgeForRowindex(0)
     )
-    //check the bagge after selecting the 1st row, as `selectElements` already check await isExistingAndVisibile(1st row)
+    //check the bagge after selecting the 1st row, as `selectElements` already check await isExistingAndVisible(1st row)
 
     await t.click(selectors.btnShareCozySelectionBar)
-    await isExistingAndVisibile(
-      selectors.divShareByLink,
-      'selectors.divShareByLink'
-    )
-    await isExistingAndVisibile(
-      selectors.toggleShareLink,
-      'selectors.toggleShareLink'
-    )
+    await isExistingAndVisible('selectors.divShareByLink')
+    await isExistingAndVisible('selectors.toggleShareLink')
     await t
       .click(selectors.toggleShareLink)
       .expect(selectors.toggleShareLink.find('input').checked)
@@ -354,7 +285,7 @@ export default class privateDrivePage extends DrivePage {
     }
     await this.openActionMenu()
     await t.click(selectors.btnRemoveFolder)
-    await isExistingAndVisibile(selectors.modalFooter, 'selectors.modalFooter')
+    await isExistingAndVisible('selectors.modalFooter')
 
     if (t.fixtureCtx.isVR)
       //dates show up here, so there is a mask for screenshots
@@ -364,10 +295,7 @@ export default class privateDrivePage extends DrivePage {
       })
 
     await t.click(selectors.btnModalSecondButton)
-    await isExistingAndVisibile(
-      selectors.alertWrapper,
-      'selectors.alertWrapper'
-    )
+    await isExistingAndVisible('selectors.alertWrapper')
 
     await this.waitForLoading()
     if (!t.fixtureCtx.isVR) {
@@ -390,10 +318,7 @@ export default class privateDrivePage extends DrivePage {
     await this.selectElements([index])
 
     await t.click(selectors.btnRenameCozySelectionBar)
-    await isExistingAndVisibile(
-      selectors.foldersNamesInputs,
-      'selectors.foldersNamesInputs'
-    )
+    await isExistingAndVisible('selectors.foldersNamesInputs')
     //dates shows up here, so there is a mask for screenshots
     await t.fixtureCtx.vr.takeScreenshotAndUpload({
       screenshotPath: `${screenshotPath}-rename1`,
@@ -438,21 +363,18 @@ export default class privateDrivePage extends DrivePage {
 
   //@param { integer } index :  file index
   async clickOnActionMenuforFile(index) {
-    await isExistingAndVisibile(
-      selectors.contentRows.nth(index),
-      `selectors.contentRows.nth(${index})`
+    await isExistingAndVisible(
+      `selectors.contentRows.nth(${index})`,
+      selectors.contentRows.nth(index)
     )
 
-    await isExistingAndVisibile(
-      selectors.elementActionMenuByRowIndex(index),
-      `selectors.elementActionMenuByRowIndex(${index})`
+    await isExistingAndVisible(
+      `selectors.elementActionMenuByRowIndex(${index})`,
+      selectors.elementActionMenuByRowIndex(index)
     )
     await t.click(selectors.elementActionMenuByRowIndex(index))
 
-    await isExistingAndVisibile(
-      selectors.actionMenuInner,
-      'selectors.actionMenuInner'
-    )
+    await isExistingAndVisible('selectors.actionMenuInner')
   }
 
   //@param {string} fileName : file/folder on which to click on action menu
@@ -465,10 +387,7 @@ export default class privateDrivePage extends DrivePage {
   async showMoveModalForElement(elementToMove) {
     await this.clickOnActionMenuforElementName(elementToMove)
     await t.click(selectors.btnMoveToActionMenu)
-    await isExistingAndVisibile(
-      selectors.modalContent,
-      'selectors.modalContent'
-    )
+    await isExistingAndVisible('selectors.modalContent')
     await this.waitForLoading()
   }
 
@@ -477,10 +396,7 @@ export default class privateDrivePage extends DrivePage {
     await this.goToBaseFolder(true)
     await this.goToFolder(destinationFolder, true)
 
-    await isExistingAndVisibile(
-      selectors.btnModalSecondButton,
-      'selectors.btnModalSecondButton'
-    )
+    await isExistingAndVisible('selectors.btnModalSecondButton')
 
     await t.click(selectors.btnModalSecondButton)
   }
@@ -488,14 +404,8 @@ export default class privateDrivePage extends DrivePage {
   //@param {String} screenshotPath : path for screenshots taken in this test
   //@param { mask } withmask for screenshot
   async emptyTrash({ screenshotPath: screenshotPath, withMask = false }) {
-    await isExistingAndVisibile(
-      selectors.toolbarTrash,
-      'selectors.toolbarTrash'
-    )
-    await isExistingAndVisibile(
-      selectors.btnEmptyTrash,
-      'selectors.btnEmptyTrash'
-    )
+    await isExistingAndVisible('selectors.toolbarTrash')
+    await isExistingAndVisible('selectors.btnEmptyTrash')
     await t.click(selectors.btnEmptyTrash)
     await t.fixtureCtx.vr.takeScreenshotAndUpload({
       screenshotPath: `${screenshotPath}-emptyTrash`,
@@ -508,24 +418,21 @@ export default class privateDrivePage extends DrivePage {
   }
 
   async typeInSearchInput(text) {
-    await isExistingAndVisibile(selectors.searchInput, 'selectors.searchInput')
+    await isExistingAndVisible('selectors.searchInput')
     await t.typeText(selectors.searchInput, text, { speed: 0.5 })
   }
 
   async checkSearchResultCount(expectResultsCount) {
-    await isExistingAndVisibile(
-      selectors.searchResult,
-      `selectors.searchResult`
-    )
+    await isExistingAndVisible(`selectors.searchResult`)
     const resultsCount = await selectors.searchResult.count
     logger.debug(`resultsCount : ${resultsCount}`)
     await t.expect(resultsCount).eql(expectResultsCount)
   }
 
   async openSearchResultByIndex(index) {
-    await isExistingAndVisibile(
-      selectors.searchResult.sibling(index),
-      `selectors.searchResult.sibling(${index})`
+    await isExistingAndVisible(
+      `selectors.searchResult.sibling(${index})`,
+      selectors.searchResult.sibling(index)
     )
     await t.click(selectors.searchResult(index))
   }

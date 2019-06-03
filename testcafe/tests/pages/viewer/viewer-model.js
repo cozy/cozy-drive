@@ -1,33 +1,22 @@
 import { t } from 'testcafe'
 import logger from '../../helpers/logger'
-import { isExistingAndVisibile } from '../../helpers/utils'
+import { isExistingAndVisible } from '../../helpers/utils'
 import * as selectors from '../selectors'
 
 export default class Viewer {
   async waitForLoading() {
     await t
       .expect(selectors.spinner.exists)
-      .notOk(
-        'waitForLoading - Page didnt Load : selectors.spinner still exists'
-      )
-    await isExistingAndVisibile(
-      selectors.viewerWrapper,
-      'waitForLoading - selectors.viewerWrapper'
-    )
-    await isExistingAndVisibile(
-      selectors.viewerControls,
-      'waitForLoading - selectors.viewerControls'
-    )
+      .notOk('Page didnt Load : selectors.spinner still exists')
+    await isExistingAndVisible('selectors.viewerWrapper')
+    await isExistingAndVisible('selectors.viewerControls')
     logger.debug(`viewer-model : waitForLoading Ok`)
   }
 
   //@param { bool } exitWithEsc : true to exit by pressing esc, false to click on the button
   async closeViewer(exitWithEsc) {
     await t.hover(selectors.viewerWrapper)
-    await isExistingAndVisibile(
-      selectors.viewerBtnClose,
-      'selectors.viewerWrapper'
-    )
+    await isExistingAndVisible('selectors.viewerWrapper')
     exitWithEsc
       ? await t.pressKey('esc')
       : await t.click(selectors.viewerBtnClose)
@@ -108,10 +97,7 @@ export default class Viewer {
   //download using the common download button
   async checkCommonViewerDownload() {
     await t.hover(selectors.viewerWrapper)
-    await isExistingAndVisibile(
-      selectors.btnDownloadViewerToolbar,
-      'selectors.btnDownloadViewerToolbar'
-    )
+    await isExistingAndVisible('selectors.btnDownloadViewerToolbar')
     await t
       .setNativeDialogHandler(() => true)
       .click(selectors.btnDownloadViewerToolbar)
@@ -119,10 +105,7 @@ export default class Viewer {
 
   //Specific check for imageViewer (Common to drive/photos)
   async checkImageViewer() {
-    await isExistingAndVisibile(selectors.imageViewer, 'selectors.imageViewer')
-    await isExistingAndVisibile(
-      selectors.imageViewerContent,
-      'selectors.imageViewerContent'
-    )
+    await isExistingAndVisible('selectors.imageViewer')
+    await isExistingAndVisible('selectors.imageViewerContent')
   }
 }

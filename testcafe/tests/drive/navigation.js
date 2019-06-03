@@ -1,5 +1,5 @@
 import { driveUser } from '../helpers/roles'
-import { TESTCAFE_DRIVE_URL, isExistingAndVisibile } from '../helpers/utils'
+import { TESTCAFE_DRIVE_URL, isExistingAndVisible } from '../helpers/utils'
 import * as selectors from '../pages/selectors'
 import PrivateDrivePage from '../pages/drive/drive-model-private'
 
@@ -19,7 +19,7 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
     '↳ ℹ️  Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash'
   )
   //Check Menu and links. Go to page. Check main menu on each page
-  await isExistingAndVisibile(selectors.sidebar, 'selectors.sidebar')
+  await isExistingAndVisible('selectors.sidebar')
 
   //!FIXME change params to use key/keyword
   await privateDrivePage.isSidebarButton(

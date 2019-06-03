@@ -1,12 +1,15 @@
 import { ClientFunction, Selector, t } from 'testcafe'
 import logger from './logger'
-
+import get from 'lodash/get'
 import fs from 'fs-extra'
 import path from 'path'
 import unzipper from 'unzipper'
 import request from 'request'
 import CDP from 'chrome-remote-interface'
 let data = require('../helpers/data')
+let selectors = require('../pages/selectors')
+
+//import * as selectors from '../pages/selectors'
 
 const INSTANCE_TESTCAFE = process.env.INSTANCE_TESTCAFE
 
@@ -55,17 +58,12 @@ export const getResolution = ClientFunction(
   () => `${window.innerWidth} x ${window.innerHeight}`
 )
 
-export const getElementWithTestId = Selector(
-  id => document.querySelectorAll(`[data-test-id='${id}']`)
-  //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
-)
-export const getElementWithTestItem = Selector(
-  id => document.querySelectorAll(`[data-test-item='${id}']`)
-  //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
-)
-
 //It's best practice to check both exist and visible for an element
-export async function isExistingAndVisibile(selector, selectorName) {
+export async function isExistingAndVisible(selectorName, selector = false) {
+  if (!selector) {
+    const selectorNameShort = selectorName.replace('selectors.', '')
+    selector = get(selectors, selectorNameShort)
+  }
   await t
     .expect(selector.exists)
     .ok(
