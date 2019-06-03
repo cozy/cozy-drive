@@ -16,7 +16,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     multiple
     onChange={onUpload}
   >
-    <span className="u-flex u-flex-items-center">
+    <span>
       <Icon icon="upload" />
       <span>{label}</span>
     </span>

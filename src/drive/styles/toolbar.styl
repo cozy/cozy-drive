@@ -44,11 +44,12 @@
     a
     label
         &.fil-action-upload
-            display flex
-            padding-left 1rem
-
+            span[role=button]
+                display flex
+                padding-left 1rem
             svg
                 margin-right .5rem
+
         &.fil-action-newfolder
             background embedurl('../assets/icons/icon-folder-add-16.svg') 1rem center no-repeat
         &.fil-action-download
@@ -70,14 +71,13 @@
     .fil-action-share
         display none
 
-
 +medium-screen()
     .fil-toolbar-menu
         display block
         left 1em
-        .fil-action-upload
         .fil-action-share
         .fil-action-select
+        .fil-action-upload
             display block
 
 +small-screen()
