@@ -127,7 +127,7 @@
     "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",
     "popper.js": "1.14.4",
-    "pouchdb": "6.4.2",
+    "pouchdb": "6.4.3",
     "pouchdb-find": "0.10.5",
     "prop-types": "15.6.2",
     "raven-js": "3.26.4",
