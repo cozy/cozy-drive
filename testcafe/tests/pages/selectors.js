@@ -224,7 +224,7 @@ export const foldersNamesInputs = getElementWithTestId('name-input')
 export const folderOrFileName = getElementWithTestId(
   'fil-file-filename-and-ext'
 )
-export const checboxFolderByRowIndex = value => {
+export const checkboxFolderByRowIndex = value => {
   return contentRows
     .nth(value)
     .child('[class*="fil-content-cell"]')

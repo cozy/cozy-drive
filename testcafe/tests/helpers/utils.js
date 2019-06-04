@@ -9,8 +9,6 @@ import CDP from 'chrome-remote-interface'
 let data = require('../helpers/data')
 let selectors = require('../pages/selectors')
 
-//import * as selectors from '../pages/selectors'
-
 const INSTANCE_TESTCAFE = process.env.INSTANCE_TESTCAFE
 
 export let TESTCAFE_PHOTOS_URL = ''
