@@ -16,7 +16,7 @@ export default class Timeline extends Commons {
     const numOfFiles = files.length
     logger.debug('Uploading ' + numOfFiles + ' picture(s)')
 
-    await isExistingAndVisibile(selectors.btnUpload, 'Upload Button')
+    await t.expect(selectors.btnUpload.exists).ok(`Upload button doesnt exist`)
     await t.setFilesToUpload(selectors.btnUpload, files)
     await isExistingAndVisibile(selectors.divUpload, 'Upload div')
     await isExistingAndVisibile(
