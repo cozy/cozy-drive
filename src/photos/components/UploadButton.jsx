@@ -9,11 +9,12 @@ const UploadButton = ({ label, inMenu, disabled, onUpload, className }) => (
   <FileInput
     accept="image/*"
     className={cx(className, { [`${button['c-btn']}`]: !inMenu })}
+    data-test-id="upload-btn"
     disabled={disabled}
     multiple
     onChange={onUpload}
   >
-    <span data-test-id="upload-btn">
+    <span>
       {!inMenu && <Icon icon="upload" />}
       <span>{label}</span>
     </span>
