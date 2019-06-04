@@ -108,10 +108,10 @@ export default class DrivePage {
         selectors.contentRows.nth(filesIndexArray[i])
       )
       await isExistingAndVisible(
-        `selectors.checboxFolderByRowIndex(${filesIndexArray[i]})`,
-        selectors.checboxFolderByRowIndex(filesIndexArray[i])
+        `selectors.checkboxFolderByRowIndex(${filesIndexArray[i]})`,
+        selectors.checkboxFolderByRowIndex(filesIndexArray[i])
       )
-      await t.click(selectors.checboxFolderByRowIndex(filesIndexArray[i]))
+      await t.click(selectors.checkboxFolderByRowIndex(filesIndexArray[i]))
     }
     await isExistingAndVisible('selectors.cozySelectionbar')
   }

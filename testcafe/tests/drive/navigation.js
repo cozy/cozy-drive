@@ -49,7 +49,7 @@ test('Drive Navigation Desktop Resolution: Drive, Recent, Sharing, Trash', async
   await privateDrivePage.isSidebarButton(
     selectors.btnNavToSharing,
     '#/sharings',
-    'electors.btnNavToSharing'
+    'selectors.btnNavToSharing'
   )
   await privateDrivePage.clickOnSidebarButton(
     selectors.btnNavToSharing,

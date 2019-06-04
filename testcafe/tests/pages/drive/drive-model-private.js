@@ -112,7 +112,9 @@ export default class privateDrivePage extends DrivePage {
 
     logger.info(`Uploading ${numOfFiles} file(s)`)
 
-    await t.expect(selectors.btnUpload.exists).ok(`Upload button doesnt exist`)
+    await t
+      .expect(selectors.btnUpload.exists)
+      .ok(`selectors.btnUpload doesnt exist`)
     await t.setFilesToUpload(selectors.btnUpload, files)
 
     await isExistingAndVisible('selectors.divUpload')
