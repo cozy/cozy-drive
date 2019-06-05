@@ -272,17 +272,6 @@ const files = (
         trashed: action.files
       }
     case OPEN_FOLDER_SUCCESS:
-      /*
-        Special case for the Trash dir since `Trash` has its own
-        reducer to store its files and that Trash is a "regular"
-        folder
-        */
-      if (action.folder.id === TRASH_DIR_ID) {
-        return {
-          ...state,
-          trashed: action.files
-        }
-      }
       return {
         ...state,
         folder: action.files
