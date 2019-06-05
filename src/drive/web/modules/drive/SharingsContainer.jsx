@@ -12,7 +12,7 @@ import {
 } from 'drive/web/modules/navigation/duck/actions'
 import SharedDocuments from 'sharing/components/SharedDocuments'
 
-import { makeCancelable } from 'lib/promise'
+import { cancelable as makeCancelable } from 'cozy-client/dist/utils'
 
 import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
 
@@ -42,14 +42,14 @@ export class SharingFetcher extends React.Component {
         client.collection('io.cozy.files').all({ keys: sharedDocuments })
       )
 
-      const resp = await this.fetchSharedFiles.promise
+      const resp = await this.fetchSharedFiles
       const parentIds = resp.data.map(f => f.dir_id)
       this.fetchSharedParents = makeCancelable(
         client.collection('io.cozy.files').all({
           keys: parentIds
         })
       )
-      const parentsResp = await this.fetchSharedParents.promise
+      const parentsResp = await this.fetchSharedParents
       const parents = parentsResp.data
       const files = resp.data.sort((a, b) => {
         if (a.type === 'directory' && b.type !== 'directory') return -1
