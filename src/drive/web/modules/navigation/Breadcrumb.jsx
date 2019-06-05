@@ -152,14 +152,13 @@ class RouterBreadCrumb extends Component {
     this.setState(state => ({ opening: !state.opening }))
   }
 
-  navigateToFolder = folderId => {
+  navigateToFolder = async folderId => {
     const { goToFolder } = this.props
 
     this.toggleOpening()
 
-    goToFolder(folderId).then(() => {
-      this.toggleOpening()
-    })
+    await goToFolder(folderId)
+    this.toggleOpening()
   }
 
   navigateToPath = path => {
@@ -191,11 +190,10 @@ export const PreviousButton = ({ onClick }) => (
 )
 
 class RouterPreviousButton extends Component {
-  navigateToFolder = folderId => {
+  navigateToFolder = async folderId => {
     const { router, location, goToFolder, getFolderUrl } = this.props
-    goToFolder(folderId).then(() => {
-      router.push(getFolderUrl(folderId, location))
-    })
+    await goToFolder(folderId)
+    router.push(getFolderUrl(folderId, location))
   }
 
   navigateToPath = path => {
@@ -239,8 +237,7 @@ const mapStateToProps = (state, ownProps) => ({
       state.view.displayedFolder,
       state.view.currentView,
       ownProps.isPublic,
-      ownProps.sharedDocuments,
-      state.view.openedFolderId
+      ownProps.sharedDocuments
     ),
     ownProps.location.pathname,
     ownProps.t

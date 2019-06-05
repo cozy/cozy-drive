@@ -28,7 +28,7 @@ export class SharingFetcher extends React.Component {
   constructor(props) {
     super(props)
     this.fetchSharedFiles = null
-    this.fetSharedParents = null
+    this.fetchSharedParents = null
   }
   async fetchSharedDocuments() {
     const { sharedDocuments } = this.props
@@ -44,12 +44,12 @@ export class SharingFetcher extends React.Component {
 
       const resp = await this.fetchSharedFiles.promise
       const parentIds = resp.data.map(f => f.dir_id)
-      this.fetSharedParents = makeCancelable(
+      this.fetchSharedParents = makeCancelable(
         client.collection('io.cozy.files').all({
           keys: parentIds
         })
       )
-      const parentsResp = await this.fetSharedParents.promise
+      const parentsResp = await this.fetchSharedParents.promise
       const parents = parentsResp.data
       const files = resp.data.sort((a, b) => {
         if (a.type === 'directory' && b.type !== 'directory') return -1
@@ -63,10 +63,7 @@ export class SharingFetcher extends React.Component {
       }))
       this.props.fetchSuccess(filesWithPath)
     } catch (e) {
-      /*
-      If the error is a cancelable promise, don't use setState sinnce the
-      component is not mounted anymore
-      */
+      // if the error is a cancelable promise, don't use setState since the component is not mounted anymore
       if (e.isCanceled !== true) {
         this.setState({ error: e })
         this.props.fetchFailure(e)
@@ -82,9 +79,9 @@ export class SharingFetcher extends React.Component {
     }
   }
   componentWillUnmount() {
-    //In order to not dispatch fetch sucess, we cancel the promises
+    //In order to not dispatch fetch success, we cancel the promises
     if (this.fetchSharedFiles) this.fetchSharedFiles.cancel()
-    if (this.fetSharedParents) this.fetSharedParents.cancel()
+    if (this.fetchSharedParents) this.fetchSharedParents.cancel()
   }
 
   async componentDidUpdate(prevProps) {
@@ -104,10 +101,10 @@ export class SharingFetcher extends React.Component {
       // in case the list of sharings changes while we're on the sharings view root
       this.fetchSharedDocuments()
     } else if (movedToSharedRoot) {
-      // if we start the navigation inside a folder in the saring view, and navigate back to the root, we need to load the root content again
+      // if we start the navigation inside a folder in the sharing view, and navigate back to the root, we need to load the root content again
       this.fetchSharedDocuments()
     } else if (movedAwayFromSharedRoot) {
-      // in case we open a folder from the root fo the sharing view
+      // in case we open a folder from the root to the sharing view
       this.props.onFolderOpen(this.props.params.folderId)
     }
   }

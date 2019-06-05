@@ -30,7 +30,7 @@ const getFolderPath = (
       parent.id &&
       //If we're not at the root of the Trash
       !(isBrowsingTrash && parent.id === ROOT_DIR_ID) &&
-      //If we're not
+      //If we're not at the root of the sharings view
       !(isBrowsingSharings && isShared)
     ) {
       path.unshift(parent)

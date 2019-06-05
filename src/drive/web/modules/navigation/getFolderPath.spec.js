@@ -102,13 +102,7 @@ describe('Computing a folders path', () => {
       const curentFolder = {
         id: TRASH_DIR_ID
       }
-      const path = getFolderPath(
-        curentFolder,
-        currentView,
-        false,
-        [],
-        TRASH_DIR_ID
-      )
+      const path = getFolderPath(curentFolder, currentView, false, [])
 
       expect(path.length).toEqual(1)
       expect(path[0]).toEqual(curentFolder)
@@ -119,13 +113,7 @@ describe('Computing a folders path', () => {
         id: '123',
         parent: false
       }
-      const path = getFolderPath(
-        curentFolder,
-        currentView,
-        false,
-        [],
-        TRASH_DIR_ID
-      )
+      const path = getFolderPath(curentFolder, currentView, false, [])
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
@@ -138,13 +126,7 @@ describe('Computing a folders path', () => {
           id: ROOT_DIR_ID
         }
       }
-      const path = getFolderPath(
-        curentFolder,
-        currentView,
-        false,
-        [],
-        TRASH_DIR_ID
-      )
+      const path = getFolderPath(curentFolder, currentView, false, [])
       expect(path.length).toEqual(2)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder)
@@ -158,13 +140,7 @@ describe('Computing a folders path', () => {
           dir_id: ROOT_DIR_ID
         }
       }
-      const path = getFolderPath(
-        curentFolder,
-        currentView,
-        false,
-        [],
-        TRASH_DIR_ID
-      )
+      const path = getFolderPath(curentFolder, currentView, false, [])
       expect(path.length).toEqual(3)
       expect(path[0].id).toEqual(TRASH_DIR_ID)
       expect(path[1]).toEqual(curentFolder.parent)
