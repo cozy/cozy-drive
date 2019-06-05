@@ -13,6 +13,7 @@ const UploadButton = ({ label, inMenu, disabled, onUpload, className }) => (
     disabled={disabled}
     multiple
     onChange={onUpload}
+    value={[]} // always erase the value to be able to re-upload the same file
   >
     <span>
       {!inMenu && <Icon icon="upload" />}
