@@ -75,14 +75,14 @@ export const isNavigating = ({ view }) =>
   view.hasDisplayedSomething && view.isOpening
 
 /*
-  It seems that we have a distinction between 
+  It seems that we have a distinction between
   `displayedFolder` which is set after a success (generaly async)
-  and 
+  and
   `openedFolderId` which is set just after the dispatch of OPEN_FOLDER
-  without waiting for any success / faillure 
+  without waiting for any success / faillure
 
-  Also `openedFilderId` is just the uuid of the folder. 
-  `displayFolder` is a io.cozy.file object
+  Also `openedFilderId` is just the uuid of the folder.
+  `displayedFolder` is a io.cozy.file object
 */
 // reducer for the currently displayed folder properties
 const displayedFolder = (state = null, action) => {
@@ -102,14 +102,14 @@ const displayedFolder = (state = null, action) => {
 }
 
 /*
-  CurrentView is not async. It is called at the begining 
-  of a new action. 
+  CurrentView is not async. It is called at the beginning
+  of a new action.
 
-  `View` is related to our navigation. We currently have 4 views : 
-    - Drive / Folder 
-    - Sharings 
-    - Recent 
-    - Trash 
+  `View` is related to our navigation. We currently have 4 views :
+    - Drive / Folder
+    - Sharings
+    - Recent
+    - Trash
 */
 
 const TRASH_VIEW = 'trash'
@@ -272,8 +272,8 @@ const files = (
         trashed: action.files
       }
     case OPEN_FOLDER_SUCCESS:
-      /* 
-        Special case for the Trash dir since `Trash` has its own 
+      /*
+        Special case for the Trash dir since `Trash` has its own
         reducer to store its files and that Trash is a "regular"
         folder
         */

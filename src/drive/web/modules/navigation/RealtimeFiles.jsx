@@ -52,7 +52,7 @@ export class RealtimeFiles extends React.Component {
         })
     }
   }
-  /* 
+  /*
   I know, willReceiveProps is deprecated but we use the old API context
   */
   componentWillReceiveProps(nextProps, nextContext) {
@@ -93,7 +93,7 @@ export class RealtimeFiles extends React.Component {
   }
 
   onDocumentDeletion = doc => {
-    //Ne pas faire un deleteFile quand on vide la corbeille car on a déjà une action pour cela
+    // don't call deleteFile when emptying the trash because there's already an action for this.
     if (this.isInCurrentView(doc) && doc.dir_id !== 'io.cozy.files.trash-dir')
       this.props.deleteFile(this.normalizeId(doc))
   }

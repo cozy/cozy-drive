@@ -39,7 +39,7 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) => {
 class FileExplorer extends Component {
   /*
     This function is needed when the user comes to a "deep" url without clicking
-    on the nav button. Acceding to /sharings/4e33fd27e1d8e55a34742bac6d0dd120 directly
+    on the nav button. Acceding to /drive/4e33fd27e1d8e55a34742bac6d0dd120 directly
     for instance.
 
   TODO: It should not be the responsability to the FileExplorer to do the right request.
@@ -59,7 +59,7 @@ class FileExplorer extends Component {
   }
 
   /*
-    We need this method since <Nav is using href and not onClick
+    We need this method since the Nav component is using href and not onClick
     and we listen to the URL changes in order to call the right action
 
     This is only needed for this case, since the navigation in a Folder
@@ -80,7 +80,7 @@ class FileExplorer extends Component {
     and the new props location (folder id in the url)
 
     I can't use isRecentFilesView for instance, since when we click on the "Recent" links
-    we don't dispatch any action. We're just listeninng the URL, and dispatch the actio
+    we don't dispatch any action. We're just listeninng the URL, and dispatch the action
     if the url has changed and that we're on the /recent url
   */
   componentWillReceiveProps(newProps) {
