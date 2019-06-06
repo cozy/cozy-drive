@@ -24,7 +24,6 @@ import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
 import ShareItem from './Toolbar/share/ShareItem'
 import ShareButton from './Toolbar/share/ShareButton'
 import SharedRecipients from './Toolbar/share/SharedRecipients'
-const { BarRight } = cozy.bar
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -45,6 +44,7 @@ class Toolbar extends Component {
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
+    const { BarRight } = cozy.bar
 
     const MoreMenu = (
       <Menu
