@@ -3,6 +3,7 @@ const tests = [
   //Init data : Unzip archive with files to upload
   ['testcafe/tests/drive/init-data.js'],
   //Tests !
+  ['testcafe/tests/drive/upload-conflicts.js'],
   ['testcafe/tests/drive/classification_scenario.js'],
   ['testcafe/tests/drive/navigation.js'],
   ['testcafe/tests/drive/folder_sharing_scenario.js'],
