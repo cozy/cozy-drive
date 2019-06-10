@@ -125,7 +125,6 @@
     "minilog": "https://github.com/cozy/minilog.git#master",
     "node-polyglot": "2.3.0",
     "node-uuid": "1.4.8",
-    "piwik-react-router": "0.8.2",
     "popper.js": "1.14.4",
     "pouchdb": "6.4.2",
     "pouchdb-find": "0.10.5",
