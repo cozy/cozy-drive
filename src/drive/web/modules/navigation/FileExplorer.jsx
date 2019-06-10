@@ -15,6 +15,9 @@ import {
 } from 'drive/web/modules/navigation/duck'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 
+import bin from 'drive/assets/1M.bin'
+
+console.log('bin£*********************', bin)
 const isRecentFilesView = props => props.location.pathname.match(/^\/recent/)
 const isSharingsFilesView = props =>
   props.location.pathname.match(/^\/sharings/) && !props.params.folderId

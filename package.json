@@ -95,6 +95,7 @@
     "worker-loader": "2.0.0"
   },
   "dependencies": {
+    "arraybuffer-loader": "^1.0.7",
     "babel-preset-cozy-app": "1.2.2",
     "classnames": "2.2.6",
     "copy-text-to-clipboard": "1.0.4",

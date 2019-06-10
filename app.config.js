@@ -37,6 +37,10 @@ const extraConfig = {
             }
           }
         ]
+      },
+      {
+        test: /\.bin$/,
+        use: [{ loader: 'arraybuffer-loader' }]
       }
     ]
   },
