@@ -9,8 +9,8 @@ exports[`Public view should render children when they are present 1`] = `
       <div
         className="pho-content-header --no-icon --hide-bar"
       >
-        <h2
-          className="pho-content-title"
+        <AppTitle
+          className=""
         />
         <div
           className="pho-toolbar"
@@ -174,8 +174,8 @@ exports[`Public view should render the album 1`] = `
       <div
         className="pho-content-header --no-icon --hide-bar"
       >
-        <h2
-          className="pho-content-title"
+        <AppTitle
+          className=""
         />
         <div
           className="pho-toolbar"
