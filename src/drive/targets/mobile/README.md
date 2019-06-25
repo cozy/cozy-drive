@@ -35,6 +35,11 @@ or if you develop :loop::
 $ yarn watch:drive:mobile
 ```
 
+if you have a message saying that you're not in a Cordova Project you have to create the `www` folder
+```sh
+mkdir src/drive/targets/mobile/www
+```
+
 
 ### :helicopter: Deploy
 
