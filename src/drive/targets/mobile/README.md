@@ -10,7 +10,7 @@
 - ImageMagick (on macOS: `brew install imagemagick`)
 - Android SDK >= 25.0.0 to deploy on android
 - Xcode 8.1 >= to deploy on ios
-- Cordova v6 CLI (`npm install cordova@6 -g`)
+- Cordova v7.1.0 CLI (`npm install cordova@7.1.0 -g`)
 
 
 ### :package: Install and run in dev mode
