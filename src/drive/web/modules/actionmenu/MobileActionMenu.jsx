@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { ActionMenu, Icon } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
-import { splitFilename } from 'drive/web/modules/filelist/File'
+import { CozyFile } from 'models'
 import { isDirectory } from 'drive/web/modules/drive/files'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 import MenuItem from './MenuItem'
@@ -47,7 +47,7 @@ const Menu = props => {
 }
 
 const MenuHeaderFile = ({ file }) => {
-  const { filename, extension } = splitFilename(file)
+  const { filename, extension } = CozyFile.splitFilename(file)
   return (
     <div>
       <div
