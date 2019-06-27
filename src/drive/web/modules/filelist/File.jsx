@@ -13,7 +13,7 @@ import { isDirectory } from 'drive/web/modules/drive/files'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedStatus } from 'sharing'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
-
+import { CozyFile } from 'models'
 import {
   toggleItemSelection,
   isSelected
@@ -30,14 +30,6 @@ const ActionMenu = withBreakpoints()(
       <DesktopActionMenu {...props} />
     )
 )
-
-export const splitFilename = file =>
-  isDirectory(file)
-    ? { filename: file.name, extension: '' }
-    : {
-        extension: file.name.slice(file.name.lastIndexOf('.')),
-        filename: file.name.slice(0, file.name.lastIndexOf('.'))
-      }
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
@@ -122,7 +114,7 @@ const FileName = ({
     styles['fil-content-file'],
     { [styles['fil-content-file-openable']]: !isRenaming && interactive }
   )
-  const { filename, extension } = splitFilename(attributes)
+  const { filename, extension } = CozyFile.splitFilename(attributes)
   return (
     <div className={classes}>
       {isRenaming ? (

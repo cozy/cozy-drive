@@ -5,6 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Icon, Spinner } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/stylus/settings/palette.json'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
+import { CozyFile } from 'models'
 
 import styles from './styles.styl'
 import {
@@ -15,14 +16,6 @@ import {
   purgeUploadQueue
 } from '.'
 
-const splitFilename = filename => {
-  const dotIdx = (filename.lastIndexOf('.') - 1) >>> 0
-  return {
-    extension: filename.slice(dotIdx + 1),
-    filename: filename.slice(0, dotIdx + 1)
-  }
-}
-
 const Pending = translate()(props => (
   <span className={styles['item-pending']}>
     {props.t('UploadQueue.item.pending')}
@@ -31,7 +24,7 @@ const Pending = translate()(props => (
 
 const Item = translate()(({ file, status, isDirectory }) => {
   const { CANCEL, LOADING, DONE_STATUSES, ERROR_STATUSES } = uploadStatus
-  const { filename, extension } = splitFilename(file.name)
+  const { filename, extension } = CozyFile.splitFilename(file.name)
   let statusIcon
   let done = false
   let error = false

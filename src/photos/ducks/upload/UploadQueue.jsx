@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { Icon, Spinner } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/stylus/settings/palette.json'
-
+import { CozyFile } from 'models'
 import styles from './styles.styl'
 import {
   getUploadQueue,
@@ -13,14 +13,6 @@ import {
   purgeUploadQueue
 } from '.'
 
-const splitFilename = filename => {
-  const dotIdx = (filename.lastIndexOf('.') - 1) >>> 0
-  return {
-    extension: filename.slice(dotIdx + 1),
-    filename: filename.slice(0, dotIdx + 1)
-  }
-}
-
 const Pending = translate()(props => (
   <span className={styles['item-pending']}>
     {props.t('UploadQueue.item.pending')}
@@ -28,7 +20,7 @@ const Pending = translate()(props => (
 ))
 
 const Item = translate()(({ file, status }) => {
-  const { filename, extension } = splitFilename(file)
+  const { filename, extension } = CozyFile.splitFilename(file)
   let statusIcon
   switch (status) {
     case 'loading':
