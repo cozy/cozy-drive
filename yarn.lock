@@ -16586,10 +16586,10 @@ unzip-response@^1.0.0:
   resolved "https://registry.yarnpkg.com/unzip-response/-/unzip-response-1.0.2.tgz#b984f0877fc0a89c2c773cc1ef7b5b232b5b06fe"
   integrity sha1-uYTwh3/AqJwsdzzB73tbIytbBv4=
 
-unzipper@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/unzipper/-/unzipper-0.10.0.tgz#99e0d2755de4d15fac6ad04a9cb6c1fcfc7c3e4c"
-  integrity sha512-Vi1fHl+isVKXAiDloz8ykI+DJ9pIzDFhwxbd6ceC8XltYQfoKPhswX3yRsccXnA8tP8LPAxZO1bVWVtGE/VHaQ==
+unzipper@0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/unzipper/-/unzipper-0.10.1.tgz#8c1f089fcb7f4b2d0582e5b159ea1d7ace342215"
+  integrity sha512-ft0sDT8S/LVNKSOP2dYS3zl4aSw9lAtLY9w9XdNy3Cnt//+SvmTYo+OT7dT9b0C/eg/Ky+BARgWgaibq19ewcA==
   dependencies:
     big-integer "^1.6.17"
     binary "~0.3.0"
