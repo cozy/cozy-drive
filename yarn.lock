@@ -4575,10 +4575,10 @@ cozy-realtime@3.0.0-beta.11:
   dependencies:
     minilog "3.1.0"
 
-cozy-scripts@1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-1.13.0.tgz#7e1381496b25123ea767554552c3adb81ee9dc60"
-  integrity sha512-H1W+VZ1yX0Zub10Ho9OAOpFjZekG07Vp0UT+G368/D4xidb6vMtOp8ODz2ucCZwqlJcuHYZSyEP8VGEgdP0lCg==
+cozy-scripts@1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-1.13.2.tgz#f8f3858d2bfc7f2c76fc715c12106ea963c76c59"
+  integrity sha512-WNgD9Vezz8N5CEeK2dYmsqchPcEXu2hupOIydiC2MLUDLuwfZatd54uwVCZnKOALP1gz5F1fP6fWHUj5DGRI4w==
   dependencies:
     "@babel/core" "7.2.2"
     autoprefixer "9.4.7"
