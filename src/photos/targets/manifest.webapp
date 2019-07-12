@@ -54,7 +54,8 @@
       "verbs": [
         "GET",
         "POST",
-        "PUT"
+        "PUT",
+        "PATCH"
       ]
     },
     "apps": {
