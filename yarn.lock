@@ -4442,14 +4442,14 @@ cozy-client-js@0.9.0:
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
 
-cozy-client@6.48.0:
-  version "6.48.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.48.0.tgz#23bdf234b3837845d64912e9986a561b84cf0d67"
-  integrity sha512-HctMuTgOaWKL+xqH16Zy36AMTHAqg5k2BCWOuDDJbNGSluu2G52wt9Zpc9mUAkguemerwZ98jMMEfQXEcSiKdA==
+cozy-client@6.53.0:
+  version "6.53.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.53.0.tgz#e066d42d8c3172ce573ab9b9fe913d214abe6daa"
+  integrity sha512-BAvh+2X94Q0IdnXnzjR57iVeMQir9fltE0D+9spzzEjfn+hA2o989WqTXZ7vtB1ssHF2LWYtneMK//8pJTrjAg==
   dependencies:
-    cozy-device-helper "1.6.3"
-    cozy-stack-client "^6.47.0"
-    lodash "4.17.11"
+    cozy-device-helper "1.7.3"
+    cozy-stack-client "^6.53.0"
+    lodash "4.17.14"
     microee "0.0.6"
     prop-types "15.6.2"
     react "16.7.0"
@@ -4466,19 +4466,19 @@ cozy-device-helper@1.5.0:
   dependencies:
     lodash "4.17.11"
 
-cozy-device-helper@1.6.3:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.6.3.tgz#186cf0682921fa3ec7c2343d94fb84f317c992ba"
-  integrity sha512-fJIvGirPxF82B0kZVIrp4H6be9pidpnOSOljQZbp9HZfFT+nGQMcuwj6lUfZ8JS0EixsVPfAimIqS8qkMV+7rg==
-  dependencies:
-    lodash "4.17.11"
-
 cozy-device-helper@1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.7.1.tgz#56c57a14b423de2700a0a695c3f7710cf6a2383d"
   integrity sha512-CTEJOzRK+AtrGN/Wqjj5n0DM1mMMvNGSZDxKlTCvY0FNYYko05vX5qIEb9vFVm7UhH7GFZjZ+S73g3Kwq/hF4Q==
   dependencies:
     lodash "4.17.11"
+
+cozy-device-helper@1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.7.3.tgz#9952004454e73ba2c340ca58717af065c6326984"
+  integrity sha512-fneU5CvmLaW2qaK01Van5z53PXA0OT2JC8R6YGpexJGeIZSY7s4gg73JWxFUpdPVz1OSWUP4CY0mrAWSfVIkzw==
+  dependencies:
+    lodash "4.17.13"
 
 cozy-doctypes@1.47.0:
   version "1.47.0"
@@ -4608,13 +4608,13 @@ cozy-scripts@1.13.0:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-stack-client@^6.47.0:
-  version "6.47.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.47.0.tgz#2ea33334b58a28c4abf27e0ca3fcc839d7b0597a"
-  integrity sha512-luZh7m4FtD9b0UfyiWKpzz+ZbDQSBTeui3i2M3Yzf1MFiPXR/gdo4HHp8/xkuWBzCbuBmP3O8oPrkgBYIxx8+w==
+cozy-stack-client@^6.53.0:
+  version "6.53.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.53.0.tgz#875016620cbf35303e289a802410f57974093843"
+  integrity sha512-b4l3x5HsNbYFz0N90OMmEv0fnoWU6TGHVX7Ynvfdezq9hI2iu/CMdiqeAOnVMDvy/iaMaGi/JkoK3d+oOLlpRQ==
   dependencies:
     detect-node "2.0.4"
-    mime-types "2.1.24"
+    mime "2.4.0"
     qs "6.7.0"
 
 cozy-ui@20.7.0:
@@ -9757,6 +9757,11 @@ lodash@4.17.13:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.13.tgz#0bdc3a6adc873d2f4e0c4bac285df91b64fc7b93"
   integrity sha512-vm3/XWXfWtRua0FkUyEHBZy8kCPjErNBT9fJx8Zvs+U6zjqPbTUOpkaoum3O5uiA8sm+yNMHXfYkTUHFoMxFNA==
 
+lodash@4.17.14:
+  version "4.17.14"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
+  integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
+
 lodash@^3.3.1, lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
@@ -10164,7 +10169,7 @@ mime-types@2.1.19:
   dependencies:
     mime-db "~1.35.0"
 
-mime-types@2.1.24, mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.19, mime-types@~2.1.24, mime-types@~2.1.7:
+mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.19, mime-types@~2.1.24, mime-types@~2.1.7:
   version "2.1.24"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.24.tgz#b6f8d0b3e951efb77dedeca194cff6d16f676f81"
   integrity sha512-WaFHS3MCl5fapm3oLxU4eYDw77IQM2ACcxQ9RIxfaC3ooc6PFuBMGZZsYpvoXS5D5QTWPieo1jjLdAm3TBP3cQ==
@@ -10175,6 +10180,11 @@ mime@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
+
+mime@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.0.tgz#e051fd881358585f3279df333fe694da0bcffdd6"
+  integrity sha512-ikBcWwyqXQSHKtciCcctu9YfPbFYZ4+gbHEmE0Q8jzcTYQg5dHCr3g2wwAZjPoJfQVXZq6KXAjpXOTf5/cjT7w==
 
 mime@^2.3.1:
   version "2.4.3"
