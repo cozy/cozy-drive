@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import createReactContext from 'create-react-context'
 import SelectionBar from 'cozy-ui/react/SelectionBar'
 
-const SelectionContext = createReactContext([])
+const SelectionContext = React.createContext([])
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
