@@ -43,10 +43,12 @@ class ImageLoader extends React.Component {
 
   loadNextSrc(lastError = null) {
     const { status } = this.state
-
-    if (status === PENDING) this.loadLink()
+    /**
+     * If we know that the navigator is offline, don't try to loadLink.
+     * */
+    if (status === PENDING && window.navigator.onLine) this.loadLink()
     else if (status === LOADING_LINK) this.loadFallback()
-    else if (status === LOADING_FALLBACK) {
+    else if (status === LOADING_FALLBACK || !window.navigator.onLine) {
       logger.warn('failed loading thumbnail', lastError)
       this.setState({ status: FAILED })
       this.props.onError(lastError)
@@ -140,8 +142,8 @@ class ImageLoader extends React.Component {
   render() {
     const { src } = this.state
     const { render, renderFallback } = this.props
-
-    if (src) return render(src)
+    //If the navigator is not onLine, let's render the fallback directly
+    if (src && window.navigator.onLine) return render(src)
     else if (renderFallback) return renderFallback()
     else return null
   }
