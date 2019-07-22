@@ -5,6 +5,20 @@ import { shallow } from 'enzyme'
 import { SharingFetcher } from './SharingsContainer'
 import { ROOT_DIR_ID } from 'drive/constants/config.js'
 
+const all = jest
+  .fn()
+  .mockName('all')
+  .mockResolvedValue({ data: [] })
+const statByPathSpy = jest.fn().mockName('statByPath')
+const updateFileSpy = jest.fn().mockName('updateFile')
+const fakeClient = {
+  collection: () => ({
+    all: all,
+    statByPath: statByPathSpy,
+    updateFile: updateFileSpy
+  })
+}
+
 jest.mock('cozy-client', () => {
   const automaticMock = jest.genMockFromModule('cozy-client')
   return {
@@ -17,8 +31,18 @@ jest.mock('cozy-client', () => {
 describe('SharingFetcher component', () => {
   describe('componentDidMount', () => {
     it('should call fetchSharedDocuments', () => {
-      const wrapper = shallow(<SharingFetcher />, {
-        disableLifecycleMethod: true
+      const props = {
+        sharedDocuments: [],
+        params: {},
+        startFetch: jest.fn(),
+        fetchSuccess: jest.fn()
+      }
+      const wrapper = shallow(<SharingFetcher {...props} />, {
+        disableLifecycleMethod: true,
+        context: {
+          client: fakeClient,
+          t: jest.fn(() => 'whatever')
+        }
       })
       const fetchSharedDocumentsSpy = jest.fn()
       wrapper.instance().fetchSharedDocuments = fetchSharedDocumentsSpy
@@ -31,14 +55,21 @@ describe('SharingFetcher component', () => {
     it('should fetch shared documents if there are new sharings', async () => {
       const props = {
         sharedDocuments: ['foo'],
-        params: {}
+        params: {},
+        startFetch: jest.fn(),
+        fetchSuccess: jest.fn()
       }
       const nextProps = {
         sharedDocuments: ['foo', 'bar'],
-        params: {}
+        params: {},
+        startFetch: jest.fn()
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true
+        disableLifecycleMethod: true,
+        context: {
+          client: fakeClient,
+          t: jest.fn(() => 'whatever')
+        }
       })
       const fetchSharedDocumentsSpy = jest.fn()
       wrapper.instance().fetchSharedDocuments = fetchSharedDocumentsSpy
@@ -49,14 +80,22 @@ describe('SharingFetcher component', () => {
     it('should not fetch shared documents if there are no new sharings', async () => {
       const props = {
         sharedDocuments: ['foo'],
-        params: {}
+        params: {},
+        startFetch: jest.fn(),
+        fetchSuccess: jest.fn()
       }
       const nextProps = {
         sharedDocuments: ['foo'],
-        params: {}
+        params: {},
+        startFetch: jest.fn(),
+        fetchSuccess: jest.fn()
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true
+        disableLifecycleMethod: true,
+        context: {
+          client: fakeClient,
+          t: jest.fn(() => 'whatever')
+        }
       })
       const fetchSharedDocumentsSpy = jest.fn()
       wrapper.instance().fetchSharedDocuments = fetchSharedDocumentsSpy

@@ -64,7 +64,7 @@ export class SharingFetcher extends React.Component {
       this.props.fetchSuccess(filesWithPath)
     } catch (e) {
       // if the error is a cancelable promise, don't use setState since the component is not mounted anymore
-      if (e.isCanceled !== true) {
+      if (e.canceled !== true) {
         this.setState({ error: e })
         this.props.fetchFailure(e)
       }
