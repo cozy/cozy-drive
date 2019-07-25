@@ -10,7 +10,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
 import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
-import { isDirectory } from 'drive/web/modules/drive/files'
+import { isDirectory, isFile } from 'drive/web/modules/drive/files'
 import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
 import { SharedStatus } from 'sharing'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
@@ -32,13 +32,19 @@ const ActionMenu = withBreakpoints()(
     )
 )
 
-export const splitFilename = file =>
-  isDirectory(file)
-    ? { filename: file.name, extension: '' }
-    : {
-        extension: file.name.slice(file.name.lastIndexOf('.')),
-        filename: file.name.slice(0, file.name.lastIndexOf('.'))
-      }
+const FILENAME_WITH_EXTENSION_REGEX = /(.+)(\..*)$/
+
+export const splitFilename = file => {
+  if (isFile(file)) {
+    const match = file.name.match(FILENAME_WITH_EXTENSION_REGEX)
+
+    if (match) {
+      return { filename: match[1], extension: match[2] }
+    }
+  }
+
+  return { filename: file.name, extension: '' }
+}
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
