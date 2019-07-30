@@ -4536,17 +4536,16 @@ cozy-client-js@0.9.0:
     pouchdb-adapter-cordova-sqlite "https://github.com/SnceGroup/pouchdb-adapter-cordova-sqlite.git#f3ee23009b70209c611435d57491aa77fb88802a"
     pouchdb-find "0.10.4"
 
-cozy-client@6.53.0:
-  version "6.53.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.53.0.tgz#e066d42d8c3172ce573ab9b9fe913d214abe6daa"
-  integrity sha512-BAvh+2X94Q0IdnXnzjR57iVeMQir9fltE0D+9spzzEjfn+hA2o989WqTXZ7vtB1ssHF2LWYtneMK//8pJTrjAg==
+cozy-client@6.55.1:
+  version "6.55.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.55.1.tgz#4f07d1bc71de086e7c6761c27be31bf093dbc939"
+  integrity sha512-wjJQGQ+ZMDrXeY366+EH5UY2VbW/24DODEYovg6MjSlwXJQduZOfWNjvITH+29g7IQiN6CXhZ/q61Vuph60WEg==
   dependencies:
     cozy-device-helper "1.7.3"
-    cozy-stack-client "^6.53.0"
+    cozy-stack-client "^6.55.0"
     lodash "4.17.14"
     microee "0.0.6"
     prop-types "15.6.2"
-    react "16.7.0"
     react-redux "5.0.7"
     redux "3.7.2"
     redux-thunk "2.3.0"
@@ -4676,10 +4675,10 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-stack-client@^6.53.0:
-  version "6.53.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.53.0.tgz#875016620cbf35303e289a802410f57974093843"
-  integrity sha512-b4l3x5HsNbYFz0N90OMmEv0fnoWU6TGHVX7Ynvfdezq9hI2iu/CMdiqeAOnVMDvy/iaMaGi/JkoK3d+oOLlpRQ==
+cozy-stack-client@^6.55.0:
+  version "6.55.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.55.0.tgz#8d77e377a6515180b19d5386078845f9ddd7609a"
+  integrity sha512-Ho611ECKLSROrmQ+gLetniU9C5nYP0vIjfMzhRGDWdHkDVrhM19dTjyNoSj9uNd64SrdNs182f8pi183g7TOfQ==
   dependencies:
     detect-node "2.0.4"
     mime "2.4.0"
@@ -13516,16 +13515,6 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@16.7.0:
-  version "16.7.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.7.0.tgz#b674ec396b0a5715873b350446f7ea0802ab6381"
-  integrity sha512-StCz3QY8lxTb5cl2HJxjwLFOXPIFQp+p+hxQfc8WE0QiLfCtIlKj8/+5tjjKm8uSTlAW+fCPaavGFS06V9Ar3A==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.12.0"
-
 react@16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.1.tgz#ae11831f6cb2a05d58603a976afc8a558e852c4a"
@@ -14482,14 +14471,6 @@ sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
-
-scheduler@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.12.0.tgz#8ab17699939c0aedc5a196a657743c496538647b"
-  integrity sha512-t7MBR28Akcp4Jm+QoR63XgAi9YgCUmgvDHqf5otgAj4QvdoBE4ImCX0ffehefePPG+aitiYHp0g/mW6s4Tp+dw==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.13.1, scheduler@^0.13.5, scheduler@^0.13.6:
   version "0.13.6"
