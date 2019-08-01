@@ -4562,10 +4562,10 @@ cozy-ci@0.2.0:
   resolved "https://registry.yarnpkg.com/cozy-ci/-/cozy-ci-0.2.0.tgz#441259c2c7b81a1497204fb4329b4bcc0e010ac0"
   integrity sha512-nBM0y/0eytUJx7noY7t2JeqPVUj58LdVyQUET3+jctkdNTNeoh+gUN5pSHiUGAx86ZXL72EM5xqHciyZeCBOHA==
 
-cozy-client-js@0.15.1:
-  version "0.15.1"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.15.1.tgz#187e83021a730291f6fdc6ac287c712f9bb56e3f"
-  integrity sha512-8qa6WeKkuYKQ04gaR8R4HJ/dKeeMNO389QrhJlh4TJnRDkqA4qM7vlCNwIjNQ9bRsy86CqtD/IAvU62QglF03Q==
+cozy-client-js@0.16.4:
+  version "0.16.4"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.16.4.tgz#2f902bb985b3d8babb925d3f889f423aceb7f676"
+  integrity sha512-xiW+RpOMo3gPuvUcOx8+VtVRmLjxcTv8ZKHgbKifUa5r+T/qTpibswA5/46AGaWsLLa75tbGnoWUnIiyoe5Tcw==
   dependencies:
     core-js "^2.5.3"
     isomorphic-fetch "^2.2.1"
