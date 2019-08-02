@@ -106,11 +106,12 @@ export const updateParamsPeriod = async (setting, params, photos) => {
   return updateSetting(setting, newSetting)
 }
 
-export const updateSettingStatus = async (setting, count, changes) => {
-  log('info', 'Update setting for last seq', changes.newLastSeq)
+export const updateSettingStatus = async (setting, count, lastDate) => {
+  log('info', `Update setting for last date ${lastDate}`)
   const evaluationCount =
     count > 0 ? setting.evaluationCount + count : setting.evaluationCount
-  const lastSeq = changes.newLastSeq
-  const newSetting = { ...setting, evaluationCount, lastSeq }
+  const runs = setting.runs ? setting.runs + 1 : 1
+  const newSetting = { ...setting, evaluationCount, lastDate, runs }
+
   return cozyClient.data.update(DOCTYPE_PHOTOS_SETTINGS, setting, newSetting)
 }
