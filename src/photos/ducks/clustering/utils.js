@@ -1,4 +1,5 @@
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import get from 'lodash/get'
 
 /**
  * Returns the photos metadata sorted by date, from oldest to newest
@@ -29,12 +30,7 @@ export const prepareDataset = (photos, albums = []) => {
       photo.timestamp = hours
       // For each photo, we need to check the clusterid, i.e. the auto-album
       // referenced by the file. If there is none, the photo wasn't clustered before
-      if (
-        !photo.clusterId &&
-        file.relationships &&
-        file.relationships.referenced_by &&
-        file.relationships.referenced_by.data
-      ) {
+      if (!photo.clusterId && get(file, 'relationships.referenced_by.data')) {
         const ref = file.relationships.referenced_by.data.find(
           ref => ref.type === DOCTYPE_ALBUMS && albumIds.includes(ref.id)
         )
