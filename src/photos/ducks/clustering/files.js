@@ -1,44 +1,19 @@
 import { cozyClient, log } from 'cozy-konnector-libs'
 import { DOCTYPE_FILES, DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
-export const getChanges = async (lastSeq, limit) => {
-  log('info', `Get changes on files since ${lastSeq}`)
-  const result = await cozyClient.fetchJSON(
-    'GET',
-    `/data/${DOCTYPE_FILES}/_changes?include_docs=true&since=${lastSeq}`
-  )
-  // Filter the changes to only get non-trashed images.
-  const photosChanges = result.results
-    .map(res => {
-      return { doc: res.doc, seq: res.seq }
-    })
-    .filter(res => {
-      return (
-        res.doc.class === 'image' &&
-        !res.doc._id.includes('_design') &&
-        !res.doc.trashed
-      )
-    })
-    .slice(0, limit)
-
-  const newLastSeq =
-    photosChanges.length > 0
-      ? photosChanges[photosChanges.length - 1].seq
-      : null
-  const photos = photosChanges.map(photo => photo.doc)
-  return { photos, newLastSeq }
-}
-
-export const getFilesFromDate = async date => {
-  // Note a file without a metadata.datetime would not be indexed: this is not
-  // a big deal as this is only used to compute parameters
+export const getFilesFromDate = async (
+  date,
+  { indexDateField, limit = 0 } = {}
+) => {
+  log('info', `Get files from ${date}`)
+  const dateField = indexDateField || 'metadata.datetime'
   const filesIndex = await cozyClient.data.defineIndex(DOCTYPE_FILES, [
-    'metadata.datetime',
+    dateField,
     'class',
     'trashed'
   ])
   const selector = {
-    'metadata.datetime': { $gt: date },
+    [dateField]: { $gt: date },
     class: 'image',
     trashed: false
   }
@@ -53,6 +28,10 @@ export const getFilesFromDate = async date => {
       skip: skip
     })
     files = files.concat(result.data)
+    if (limit && files.length >= limit) {
+      next = false
+      files = files.slice(0, limit)
+    }
     skip = files.length
     // NOTE: this is because of https://github.com/cozy/cozy-stack/pull/598
     if (result.meta.count < Math.pow(2, 31) - 2) {
@@ -71,24 +50,29 @@ export const getFilesByAutoAlbum = async album => {
   album._type = DOCTYPE_ALBUMS
   let files = []
   let next = true
-  let skip = 0
+  let startDocid = ''
+
   while (next) {
-    const result = await cozyClient.data.fetchReferencedFiles(album, {
-      skip: skip,
-      wholeResponse: true
-    })
+    const key = [DOCTYPE_ALBUMS, album._id]
+    const cursor = [key, startDocid]
+    const result = await cozyClient.data.fetchReferencedFiles(
+      album,
+      { cursor },
+      'id'
+    )
     if (result && result.included) {
-      const includedFiles = result.included.map(included => {
-        const attributes = included.attributes
-        attributes.id = included.id
-        attributes.clusterId = album._id
-        return attributes
+      let included = result.included.map(included => {
+        included.clusterId = album._id
+        return included
       })
-      files = files.concat(includedFiles)
-      skip = files.length
-      if (result.meta.count < includedFiles.length) {
+      // Remove the last element, used as starting point for the next run
+      if (files.length + included.length < result.meta.count) {
+        included = included.slice(0, result.included.length - 1)
+        startDocid = result.included[result.included.length - 1].id
+      } else {
         next = false
       }
+      files = files.concat(included)
     } else {
       next = false
     }

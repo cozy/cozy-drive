@@ -11,7 +11,7 @@ export const PERCENTILE = 99.5
 export const MAX_DISTANCE = 24 * 7
 export const COARSE_COEFFICIENT = 1
 export const EVALUATION_THRESHOLD = 314
-export const CHANGES_RUN_LIMIT = 200
+export const CHANGES_RUN_LIMIT = 1000
 
 export const DEFAULT_SETTING = {
   type: SETTING_TYPE,

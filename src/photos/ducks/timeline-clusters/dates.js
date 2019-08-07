@@ -47,7 +47,7 @@ const addYear = (f, date) => {
 export const isSameMonth = (f, newerDate, olderDate) => {
   const newer = formatDate(f, newerDate)
   const older = formatDate(f, olderDate)
-  return differenceInCalendarMonths(older, newer) < 1
+  return differenceInCalendarMonths(newer, older) < 1
 }
 
 export const isSameDay = (f, newerDate, olderDate) => {

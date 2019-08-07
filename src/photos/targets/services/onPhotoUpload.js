@@ -1,10 +1,5 @@
 import { cozyClient, log } from 'cozy-konnector-libs'
-
-import {
-  getChanges,
-  getAllPhotos,
-  getFilesFromDate
-} from 'photos/ducks/clustering/files'
+import { getAllPhotos, getFilesFromDate } from 'photos/ducks/clustering/files'
 import {
   readSetting,
   createSetting,
@@ -142,34 +137,30 @@ const recomputeParameters = async setting => {
 }
 
 const runClustering = async setting => {
-  const since = setting.lastSeq ? setting.lastSeq : 0
-  const changes = await getChanges(since, CHANGES_RUN_LIMIT)
-  if (changes.photos.length < 1) {
+  const sinceDate = setting.lastDate ? setting.lastDate : 0
+  const photos = await getFilesFromDate(sinceDate, {
+    indexDateField: 'created_at',
+    limit: CHANGES_RUN_LIMIT
+  })
+  if (photos.length < 1) {
     log('warn', 'No photo found to clusterize')
     return 0
   }
   const albums = await findAutoAlbums()
-  const dataset = prepareDataset(changes.photos, albums)
+  const dataset = prepareDataset(photos, albums)
   const result = await clusterizePhotos(setting, dataset, albums)
   if (!result) {
     return 0
   }
-  /*
-  WARNING: we save the lastSeq retrieved at the beginning of the clustering.
-  However, we might have produced new _changes on files by saving the
-  referenced-by, so they will be computed again at the next run.
-  We cannot save the new lastSeq, as new files might have been uploaded by
-  this time and would be ignored for the next run.
-  This is unpleasant, but harmless, as no new write will be produced on the
-  already clustered files.
- */
-  log('info', `${result.clusteredCount} photos clustered since ${since}`)
+
+  log('info', `${result.clusteredCount} photos clustered since ${sinceDate}`)
+  const newLastDate = photos[photos.length - 1].attributes.created_at
   setting = await updateSettingStatus(
     result.setting,
     result.clusteredCount,
-    changes
+    newLastDate
   )
-  return changes.photos
+  return photos
 }
 
 const onPhotoUpload = async () => {
@@ -207,12 +198,13 @@ const onPhotoUpload = async () => {
       log('info', `Setting updated with ${JSON.stringify(newParams)}`)
     }
   }
+
   /*
     NOTE: A service has a limited execution window, defined in the stack config,
     e.g. 200s. As the clustering of thousands of photos can be time-consuming,
     we force a CHANGES_RUN_LIMIT to serialize the execution and be able to
     restart the clustering from the last run.
-  */
+    */
   const processedPhotos = await runClustering(setting)
   if (processedPhotos.length >= CHANGES_RUN_LIMIT) {
     // There are still changes to process: re-launch the service
