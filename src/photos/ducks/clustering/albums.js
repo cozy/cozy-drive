@@ -1,4 +1,4 @@
-import { cozyClient, log } from 'cozy-konnector-libs'
+import log from 'cozy-logger'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import uniq from 'lodash/uniq'
 
@@ -15,40 +15,55 @@ const albumPeriod = photos => {
   return { start: startDate, end: endDate }
 }
 
-const updateAlbumPeriod = async (photos, album) => {
-  const newPeriod = albumPeriod(photos)
-  if (
-    newPeriod.start !== album.period.start ||
-    newPeriod.end !== album.period.end
-  ) {
-    const newAlbum = {
-      ...album,
-      period: newPeriod,
-      name: photos[0].datetime
-    }
-    return cozyClient.data.update(DOCTYPE_ALBUMS, album, newAlbum)
+const updateAlbumPeriod = async (client, photos, album) => {
+  const period = albumPeriod(photos)
+  if (period.start !== album.period.start || period.end !== album.period.end) {
+    const name = photos[0].datetime
+    const dehydrated = album.photos.dehydrate(album)
+    const updatedAlbum = await client.save({ ...dehydrated, period, name })
+    return updatedAlbum.data
   }
   return album
 }
 
-const addAutoAlbumReferences = async (photos, album) => {
+//TODO: we should probably use addById from HasManyFiles. However, it causes
+// unexpected relationships writes in the albums. So we skip it for now.
+const addRefs = async (client, ids, album) => {
+  ids = Array.isArray(ids) ? ids : [ids]
+  const relations = ids.map(id => ({
+    _id: id,
+    _type: 'io.cozy.files'
+  }))
+  await client.mutate(album.photos.insertDocuments(relations))
+}
+
+//TODO: we should probably use removeById from HasManyFiles. However, it causes
+// unexpected relationships writes in the albums. So we skip it for now.
+const removeRefs = async (client, ids, album) => {
+  ids = Array.isArray(ids) ? ids : [ids]
+  const relations = ids.map(id => ({
+    _id: id,
+    _type: this.doctype
+  }))
+  await client.mutate(album.photos.removeDocuments(relations))
+}
+
+const addAutoAlbumReferences = async (client, photos, album) => {
   let refCount = 0
   try {
     const refsIds = []
     for (const photo of photos) {
-      const albumId = photo.clusterId
-      if (!albumId) {
-        // The photo references nothing: it must be referenced
-        refsIds.push(photo.id)
-      } else if (albumId !== album._id) {
-        // The photo references another album: remove it
-        const refAlbum = await cozyClient.data.find(DOCTYPE_ALBUMS, albumId)
-        await cozyClient.data.removeReferencedFiles(refAlbum, photo.id)
-        refsIds.push(photo.id)
+      if (photo.clusterId === album._id) {
+        continue
       }
+      if (photo.clusterId && photo.clusterId !== album._id) {
+        // The photo references another album: remove it
+        await removeRefs(photo.clusterId)
+      }
+      refsIds.push(photo.id)
     }
     if (refsIds.length > 0) {
-      await cozyClient.data.addReferencedFiles(album, refsIds)
+      await addRefs(client, refsIds, album)
       log(
         'info',
         `${refsIds.length} photos clustered into: ${JSON.stringify(album._id)}`
@@ -58,64 +73,64 @@ const addAutoAlbumReferences = async (photos, album) => {
       log('info', `Nothing to clusterize for ${album._id}`)
     }
   } catch (e) {
-    log('error', e.reason)
+    log('error', e)
   }
   return refCount
 }
 
-const createAutoAlbum = async photos => {
+const createAutoAlbum = async (client, photos) => {
   const name = albumName(photos)
   const period = albumPeriod(photos)
   const created_at = new Date()
   const album = { name, created_at, auto: true, period }
-  return cozyClient.data.create(DOCTYPE_ALBUMS, album)
+  const result = await client.create(DOCTYPE_ALBUMS, album)
+  const autoAlbum = client.hydrateDocument(result.data)
+  return autoAlbum
 }
 
-const removeAutoAlbums = async albums => {
+const removeAutoAlbums = async (client, albums) => {
   for (const album of albums) {
-    await cozyClient.data.delete(DOCTYPE_ALBUMS, album)
+    await client.destroy(album)
   }
 }
 
-const removeAutoAlbumReferences = async (photos, album) => {
-  await cozyClient.data.removeReferencedFiles(album, photos.map(p => p.id))
+const removeAutoAlbumReferences = async (client, photos, album) => {
+  const ids = []
   for (const photo of photos) {
+    ids.push(photo.id)
     photo.clusterId = ''
   }
+  await removeRefs(client, photos, album)
 }
 
-export const findAutoAlbums = async () => {
-  const autoAlbumsIndex = await cozyClient.data.defineIndex(DOCTYPE_ALBUMS, [
-    'auto',
-    'name'
-  ])
-
-  let next = true
-  let skip = 0
-  let autoAlbums = []
-  while (next) {
-    const results = await cozyClient.data.query(autoAlbumsIndex, {
-      selector: { auto: true },
-      sort: [{ name: 'desc' }],
-      skip: skip,
-      wholeResponse: true
-    })
-    if (results && results.docs) {
-      autoAlbums = autoAlbums.concat(results.docs)
-      skip = autoAlbums.length
-      if (!results.next) {
-        next = false
+export const findAutoAlbums = async client => {
+  const query = client
+    .find(DOCTYPE_ALBUMS)
+    .where({ auto: true })
+    .sortBy([
+      {
+        name: 'desc'
       }
-    }
+    ])
+
+  let result = await client.query(query)
+  let hydrated = client.hydrateDocuments(DOCTYPE_ALBUMS, result.data)
+  let autoAlbums = hydrated
+  let skip = autoAlbums.length
+  while (result.next) {
+    result = await client.query(query.offset(skip))
+    hydrated = client.hydrateDocuments(DOCTYPE_ALBUMS, result.data)
+    autoAlbums = autoAlbums.concat(hydrated)
+    skip = autoAlbums.length
   }
   return autoAlbums
 }
 
-const createClusters = async clusters => {
+const createClusters = async (client, clusters) => {
   let refsCount = 0
   for (const photos of clusters) {
-    const album = await createAutoAlbum(photos)
-    refsCount += await addAutoAlbumReferences(photos, album)
+    const album = await createAutoAlbum(client, photos)
+    refsCount += await addAutoAlbumReferences(client, photos, album)
   }
   return refsCount
 }
@@ -131,7 +146,7 @@ const createClusters = async clusters => {
  * @returns {number} Number of references updated in database
  *
  */
-export const saveClustering = async (clusters, clusterAlbums = []) => {
+export const saveClustering = async (client, clusters, clusterAlbums = []) => {
   let refsCount = 0
   if (clusterAlbums.length > 0) {
     const processedAlbumsIds = []
@@ -142,22 +157,22 @@ export const saveClustering = async (clusters, clusterAlbums = []) => {
       )
       if (clusterIds.length === 0) {
         // No clusterId : create the new cluster
-        const album = await createAutoAlbum(photos)
-        refsCount += await addAutoAlbumReferences(photos, album)
+        const album = await createAutoAlbum(client, photos)
+        refsCount += await addAutoAlbumReferences(client, photos, album)
       } else if (clusterIds.length === 1) {
         const album = clusterAlbums.find(album => album._id === clusterIds[0])
         if (processedAlbumsIds.includes(album._id)) {
           // Album already processed for another cluster: remove the refs and create a new album
-          await removeAutoAlbumReferences(photos, album)
-          const newAlbum = await createAutoAlbum(photos)
-          refsCount += await addAutoAlbumReferences(photos, newAlbum)
+          await removeAutoAlbumReferences(client, photos, album)
+          const newAlbum = await createAutoAlbum(client, photos)
+          refsCount += await addAutoAlbumReferences(client, photos, newAlbum)
         } else {
           // Album not processed elsewhere: add the refs and update the period
-          refsCount += await addAutoAlbumReferences(photos, album)
+          refsCount += await addAutoAlbumReferences(client, photos, album)
           const idx = clusterAlbums.findIndex(
             album => album._id === clusterIds[0]
           )
-          clusterAlbums[idx] = await updateAlbumPeriod(photos, album)
+          clusterAlbums[idx] = await updateAlbumPeriod(client, photos, album)
           processedAlbumsIds.push(album._id)
         }
       } else {
@@ -168,12 +183,12 @@ export const saveClustering = async (clusters, clusterAlbums = []) => {
             const album = clusterAlbums.find(
               album => album._id === photo.clusterId
             )
-            await removeAutoAlbumReferences([photo], album)
+            await removeAutoAlbumReferences(client, [photo], album)
           }
         }
         // Create the album and add the refs
-        const newAlbum = await createAutoAlbum(photos)
-        refsCount += await addAutoAlbumReferences(photos, newAlbum)
+        const newAlbum = await createAutoAlbum(client, photos)
+        refsCount += await addAutoAlbumReferences(client, photos, newAlbum)
       }
     }
     // Remove the "ghost" albums: they do not reference any files anymore
@@ -181,11 +196,11 @@ export const saveClustering = async (clusters, clusterAlbums = []) => {
       album => !processedAlbumsIds.includes(album._id)
     )
     if (albumsToRemove.length > 0) {
-      await removeAutoAlbums(albumsToRemove)
+      await removeAutoAlbums(client, albumsToRemove)
     }
   } else {
     // No album exist for these clusters: create them
-    refsCount = await createClusters(clusters)
+    refsCount = await createClusters(client, clusters)
   }
   return refsCount
 }

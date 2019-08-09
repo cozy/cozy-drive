@@ -13,7 +13,8 @@ export const prepareDataset = (photos, albums = []) => {
     .map(file => {
       const photo = {
         id: file._id || file.id,
-        clusterId: file.clusterId
+        clusterId: file.clusterId,
+        albums: file.albums
       }
       // Depending on the query, the attributes object might exists, or not
       const attributes = file.attributes ? file.attributes : file

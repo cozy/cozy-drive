@@ -17,12 +17,12 @@ const insertNewPhoto = (photos, newPhoto) => {
   }
 }
 
-const findPhotosToReclusterize = async albums => {
+const findPhotosToReclusterize = async (client, albums) => {
   const photos = flatten(
     await Promise.all(
       albums.map(async album => {
-        const files = await getFilesByAutoAlbum(album)
-        return prepareDataset(files)
+        const files = await getFilesByAutoAlbum(client, album)
+        return prepareDataset(files, [album])
       })
     )
   ).sort((a, b) => a.timestamp - b.timestamp)
@@ -41,14 +41,13 @@ const findPhotosToReclusterize = async albums => {
  * @returns {Map} Map associating a set of albums to a set of photos.
  *
  */
-export const albumsToClusterize = async (newPhotos, albums) => {
+export const albumsToClusterize = async (client, newPhotos, albums) => {
   const clusterize = new Map()
   for (const newPhoto of newPhotos) {
     // Find clusters matching the photo
     const matchingAlbums = getMatchingClusters(newPhoto, albums)
     if (matchingAlbums.length > 0) {
       let clusterAlbumsExist = false
-
       for (const clusterAlbums of clusterize.keys()) {
         if (difference(matchingAlbums, clusterAlbums).length < 1) {
           // The matchingAlbums are included in the key: add the photo
@@ -72,7 +71,10 @@ export const albumsToClusterize = async (newPhotos, albums) => {
               clusterize.delete(album)
             } else {
               // Album does not exist in the Map: add it with its photos
-              const photosToClusterize = await findPhotosToReclusterize([album])
+              const photosToClusterize = await findPhotosToReclusterize(
+                client,
+                [album]
+              )
               mergedValues = mergedValues.concat(photosToClusterize)
             }
           }
@@ -91,6 +93,7 @@ export const albumsToClusterize = async (newPhotos, albums) => {
       if (!clusterAlbumsExist) {
         // The matching albums don't exist in the Map: add them with their photos
         const photosToClusterize = await findPhotosToReclusterize(
+          client,
           matchingAlbums
         )
         clusterize.set(
