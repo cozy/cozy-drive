@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { translate } from 'cozy-ui/react/I18n'
-import { ActionMenu, MenuItem } from 'cozy-ui/react'
+import { ActionMenu, Button, MenuItem, Icon } from 'cozy-ui/react'
+import { toggleThumbnailSize } from '../navigation/duck/actions'
+import iconList from 'drive/assets/icons/icon-list.svg'
+import iconListMin from 'drive/assets/icons/icon-list-min.svg'
 
 import {
   sortFolder,
@@ -97,7 +100,15 @@ class MobileHeader extends Component {
   hideSortMenu = () => this.setState({ showSortMenu: false })
 
   render() {
-    const { t, folderId, canSort, sort, onFolderSort } = this.props
+    const {
+      t,
+      folderId,
+      canSort,
+      sort,
+      onFolderSort,
+      thumbnailSizeBig,
+      toggleThumbnailSize
+    } = this.props
     if (!canSort) return null
     const actualSort = sort || DEFAULT_SORT
     return (
@@ -124,12 +135,43 @@ class MobileHeader extends Component {
             onSort={(attr, order) => onFolderSort(folderId, attr, order)}
           />
         )}
+        <div
+          className={classNames(
+            styles['fil-content-mobile-header'],
+            styles['fil-content-header-action']
+          )}
+        >
+          <Button
+            theme={'action'}
+            onClick={() => {
+              toggleThumbnailSize()
+            }}
+            label={t('table.head_thumbnail_size')}
+            extension="narrow"
+            icon={
+              <Icon
+                icon={thumbnailSizeBig ? iconListMin : iconList}
+                size={17}
+                label={t('table.head_thumbnail_size')}
+              />
+            }
+            iconOnly
+          />
+        </div>
       </div>
     )
   }
 }
 
-const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => {
+const FileListHeader = ({
+  t,
+  folderId,
+  canSort,
+  sort,
+  onFolderSort,
+  thumbnailSizeBig,
+  toggleThumbnailSize
+}) => {
   const actualSort = sort || DEFAULT_SORT
   return (
     <div
@@ -180,18 +222,37 @@ const FileListHeader = ({ t, folderId, canSort, sort, onFolderSort }) => {
           styles['fil-content-header'],
           styles['fil-content-header-action']
         )}
-      />
+      >
+        <Button
+          theme={'action'}
+          onClick={() => {
+            toggleThumbnailSize()
+          }}
+          label={t('table.head_thumbnail_size')}
+          extension="narrow"
+          icon={
+            <Icon
+              icon={thumbnailSizeBig ? iconListMin : iconList}
+              size={17}
+              label={t('table.head_thumbnail_size')}
+            />
+          }
+          iconOnly
+        />
+      </div>
     </div>
   )
 }
 
 const mapStateToProps = state => ({
   sort: getSort(state),
-  folderId: getOpenedFolderId(state)
+  folderId: getOpenedFolderId(state),
+  thumbnailSizeBig: state.view.thumbnailSize
 })
 const mapDispatchToProps = dispatch => ({
   onFolderSort: (folderId, attr, order) =>
-    dispatch(sortFolder(folderId, attr, order))
+    dispatch(sortFolder(folderId, attr, order)),
+  toggleThumbnailSize: () => dispatch(toggleThumbnailSize())
 })
 
 export default connect(

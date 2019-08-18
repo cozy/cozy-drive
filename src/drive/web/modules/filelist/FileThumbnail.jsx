@@ -10,7 +10,8 @@ import styles from 'drive/styles/filelist.styl'
 const FileThumbnail = ({
   file,
   withSharedBadge,
-  breakpoints: { isMobile }
+  breakpoints: { isMobile },
+  size
 }) => {
   const isImage = file.class === 'image'
   return (
@@ -26,15 +27,15 @@ const FileThumbnail = ({
           render={src => (
             <img
               src={src}
-              width={32}
-              height={32}
+              width={size || 32}
+              height={size || 32}
               className={styles['fil-file-thumbnail-image']}
             />
           )}
-          renderFallback={() => <FileIcon file={file} />}
+          renderFallback={() => <FileIcon file={file} size={size} />}
         />
       ) : (
-        <FileIcon file={file} />
+        <FileIcon file={file} size={size} />
       )}
       {withSharedBadge && (
         <SharedBadge
@@ -56,7 +57,8 @@ FileThumbnail.propTypes = {
   withSharedBadge: PropTypes.bool,
   breakpoints: PropTypes.shape({
     isMobile: PropTypes.bool
-  }).isRequired
+  }).isRequired,
+  size: PropTypes.number
 }
 
 export default withBreakpoints()(FileThumbnail)

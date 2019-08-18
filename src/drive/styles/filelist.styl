@@ -38,6 +38,9 @@
     &:hover
       background inherit
 
+.fil-content-row-bigger
+    height rem(128)
+
 .fil-content-ext
     color coolGrey
 
@@ -108,6 +111,7 @@ column-width-large = 40%
 column-width-medium = 20%
 column-width-small = 15%
 column-width-thumbnail = 3rem
+column-width-thumbnail-bigger = 7rem
 
 .fil-content-file
     flex        0 0 column-width-large
@@ -130,13 +134,16 @@ column-width-thumbnail = 3rem
     overflow       hidden
     color charcoalGrey
 
+.fil-content-row-bigger .fil-content-cell.fil-content-file
+    flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
+
 .fil-content-file-openable
     cursor pointer
 
 .fil-file-thumbnail
   position relative
   flex 0 0 column-width-thumbnail - 1rem //width without padding
-  svg  
+  svg
     display block
 .fil-file-thumbnail-image
   object-fit cover
@@ -167,6 +174,15 @@ column-width-thumbnail = 3rem
 .fil-content-file-action
 .fil-content-header-action
     flex 0 0 5%
+
+.fil-content-header-action
+    text-align right
+    width 1.5rem
+    padding 0 0 0 .5rem
+
+    button
+        opacity 1
+        color coolGrey
 
 .fil-content-file-select
     flex       0 0 2rem
@@ -300,15 +316,27 @@ column-width-thumbnail = 3rem
     .fil-content-row
         height 4rem
 
+    .fil-content-row-bigger
+        height rem(128)
+
     .fil-content-head
     .fil-content-date
     .fil-content-size
         display none
 
     .fil-content-mobile-head
-        display block
+        display flex
+
+    .fil-content-mobile-header.fil-content-header-sortasc
+    .fil-content-mobile-header.fil-content-header-sortdesc
+        flex 1 1 auto
+
+    .fil-content-mobile-header.fil-content-header-action
+        width auto
+        padding 0
 
     .fil-content-cell.fil-content-file
+    .fil-content-row-bigger .fil-content-cell.fil-content-file
         flex 1 1 auto
 
     .fil-content-status
