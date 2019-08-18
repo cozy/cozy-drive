@@ -19,7 +19,8 @@ import {
   CREATE_FOLDER_SUCCESS,
   ADD_FILE,
   UPDATE_FILE,
-  DELETE_FILE
+  DELETE_FILE,
+  TOGGLE_THUMBNAIL_SIZE
 } from './actions'
 
 import {
@@ -459,6 +460,15 @@ const deduplicateCreateDeleteActions = originalReducer => {
   }
 }
 
+const thumbnailSize = (state = false, action) => {
+  switch (action.type) {
+    case TOGGLE_THUMBNAIL_SIZE:
+      return !state
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   hasDisplayedSomething,
   isOpening,
@@ -469,7 +479,8 @@ export default combineReducers({
   files,
   fetchStatus,
   lastFetch,
-  currentView
+  currentView,
+  thumbnailSize
 })
 
 // TODO: temp

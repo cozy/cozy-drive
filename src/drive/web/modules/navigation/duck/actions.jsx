@@ -47,6 +47,7 @@ export const OPEN_FILE_WITH = 'OPEN_FILE_WITH'
 export const ADD_FILE = 'ADD_FILE'
 export const UPDATE_FILE = 'UPDATE_FILE'
 export const DELETE_FILE = 'DELETE_FILE'
+export const TOGGLE_THUMBNAIL_SIZE = 'TOGGLE_THUMBNAIL_SIZE'
 
 const HTTP_CODE_CONFLICT = 409
 
@@ -74,9 +75,9 @@ export const openFolder = (
       // and so the fetchMore button would not be displayed unless... see FileList
       const folder = await getAdapter(getState()).getFolder(folderId)
       /*
-        Since getFolder is async, if we have a very bad network we can receive multiple response 
-        if the user clicks multiple times. We are not sure about the order of the response. 
-        So before dispatching the success, we check if the folder is still the one we want to open 
+        Since getFolder is async, if we have a very bad network we can receive multiple response
+        if the user clicks multiple times. We are not sure about the order of the response.
+        So before dispatching the success, we check if the folder is still the one we want to open
         and display. To do that, we get the folder id from the latest OPEN_FOLDER call
       */
       const currentFolderId = getOpenedFolderId(getState())
@@ -504,3 +505,5 @@ export const openFileWith = (id, filename) => {
     }
   }
 }
+
+export const toggleThumbnailSize = () => ({ type: TOGGLE_THUMBNAIL_SIZE })

@@ -4,11 +4,11 @@ import { Icon } from 'cozy-ui/react'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 import { isDirectory } from 'drive/web/modules/drive/files'
 
-const FileIcon = ({ file }) => {
+const FileIcon = ({ file, size }) => {
   return (
     <Icon
       icon={getMimeTypeIcon(isDirectory(file), file.name, file.mime)}
-      size={32}
+      size={size || 32}
     />
   )
 }
@@ -18,7 +18,8 @@ FileIcon.propTypes = {
     class: PropTypes.string,
     mime: PropTypes.string,
     name: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  size: PropTypes.number
 }
 
 export default FileIcon

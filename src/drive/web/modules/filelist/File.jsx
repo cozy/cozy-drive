@@ -290,13 +290,15 @@ class File extends Component {
       withSharedBadge,
       isAvailableOffline,
       disabled,
+      thumbnailSizeBig,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { actionMenuVisible } = this.state
     const filContentRowSelected = classNames(styles['fil-content-row'], {
       [styles['fil-content-row-selected']]: selected,
       [styles['fil-content-row-actioned']]: actionMenuVisible,
-      [styles['fil-content-row-disabled']]: disabled
+      [styles['fil-content-row-disabled']]: disabled,
+      [styles['fil-content-row-bigger']]: thumbnailSizeBig
     })
     const formattedSize = isDirectory(attributes)
       ? undefined
@@ -321,7 +323,11 @@ class File extends Component {
           selected={selected}
           onClick={e => this.toggle(e)}
         />
-        <FileThumbnail file={attributes} withSharedBadge={withSharedBadge} />
+        <FileThumbnail
+          file={attributes}
+          withSharedBadge={withSharedBadge}
+          size={thumbnailSizeBig ? 96 : undefined}
+        />
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
@@ -384,7 +390,8 @@ File.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   selected: isSelected(state, ownProps.attributes.id),
-  isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id)
+  isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
+  thumbnailSizeBig: state.view.thumbnailSize
 })
 
 const mapDispatchToProps = dispatch => ({
