@@ -20,7 +20,8 @@ import {
  */
 const formatDate = (f, date, formatter) => {
   const [year, month, day] = date.substr(0, 10).split('-')
-  const [hours, minutes, seconds] = date.substr(11, 8).split(':')
+  const [hours, minutes, seconds] =
+    date.length > 10 ? date.substr(11, 8).split(':') : [0, 0, 0]
   return f(new Date(year, month - 1, day, hours, minutes, seconds), formatter)
 }
 
@@ -47,19 +48,19 @@ const addYear = (f, date) => {
 export const isSameMonth = (f, newerDate, olderDate) => {
   const newer = formatDate(f, newerDate)
   const older = formatDate(f, olderDate)
-  return differenceInCalendarMonths(newer, older) < 1
+  return differenceInCalendarMonths(newer, older) === 0
 }
 
 export const isSameDay = (f, newerDate, olderDate) => {
   const newer = formatDate(f, newerDate)
   const older = formatDate(f, olderDate)
-  return differenceInCalendarDays(newer, older) < 1
+  return differenceInCalendarDays(newer, older) === 0
 }
 
 export const isSameHour = (f, newerDate, olderDate) => {
   const newer = formatDate(f, newerDate)
   const older = formatDate(f, olderDate)
-  return differenceInHours(newer, older) < 1
+  return differenceInHours(newer, older) === 0
 }
 
 export const isEqualOrNewer = (newerDate, olderDate) => {

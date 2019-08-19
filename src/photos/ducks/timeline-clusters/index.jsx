@@ -126,7 +126,6 @@ const getMatchingSection = (sections, datetime, f) => {
 const getPhotosByClusters = (photos, f) => {
   const sections = {}
   const photosNotClustered = []
-
   photos.forEach(p => {
     const refAlbums = p.albums ? p.albums.data : []
     // A photo can be referenced by only one auto album
