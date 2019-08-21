@@ -1,6 +1,7 @@
 import doctypes from 'photos/targets/browser/doctypes'
 import log from 'cozy-logger'
 import CozyClient from 'cozy-client'
+import fetch from 'node-fetch'
 import { getAllPhotos, getFilesFromDate } from 'photos/ducks/clustering/files'
 import {
   readSetting,
@@ -28,6 +29,10 @@ import { saveClustering, findAutoAlbums } from 'photos/ducks/clustering/albums'
 import { albumsToClusterize } from 'photos/ducks/clustering/reclusterize'
 import { prepareDataset } from 'photos/ducks/clustering/utils'
 import { getMatchingParameters } from 'photos/ducks/clustering/matching'
+
+// This is required for using cozy-client as a node service.
+// See https://github.com/cozy/cozy-client/blob/5f5939aef5f55f069b88f0bc1b897a7027a128e5/docs/details.md#how-to-use-the-client-on-node-environment-referenceerror-fetch-is-not-defined-
+global.fetch = fetch
 
 // Compute the actual clustering based on the new dataset and the existing albums
 const createNewClusters = async (client, params, clusterAlbums, dataset) => {
