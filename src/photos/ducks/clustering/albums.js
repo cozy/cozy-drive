@@ -112,18 +112,8 @@ export const findAutoAlbums = async client => {
         name: 'desc'
       }
     ])
-
-  let result = await client.query(query)
-  let hydrated = client.hydrateDocuments(DOCTYPE_ALBUMS, result.data)
-  let autoAlbums = hydrated
-  let skip = autoAlbums.length
-  while (result.next) {
-    result = await client.query(query.offset(skip))
-    hydrated = client.hydrateDocuments(DOCTYPE_ALBUMS, result.data)
-    autoAlbums = autoAlbums.concat(hydrated)
-    skip = autoAlbums.length
-  }
-  return autoAlbums
+  const results = await client.queryAll(query)
+  return client.hydrateDocuments(DOCTYPE_ALBUMS, results)
 }
 
 const createClusters = async (client, clusters) => {
