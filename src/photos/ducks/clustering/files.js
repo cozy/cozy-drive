@@ -36,12 +36,11 @@ export const getFilesFromDate = async (
 }
 
 export const getAllPhotos = async client => {
-  // This does not use pagination but is significantly faster
+  // This does not use pagination but is significantly faster as it queries
+  // the _all_docs endpoint
   // Note this is only used once, for init
-  const results = await client
-    .getStackClient()
-    .collection('io.cozy.files')
-    .all({ limit: null })
+  const query = client.find(DOCTYPE_FILES).limitBy(null)
+  const results = await client.query(query)
   const files = results.data
   return files.filter(file => file.class === 'image' && !file.trashed)
 }
