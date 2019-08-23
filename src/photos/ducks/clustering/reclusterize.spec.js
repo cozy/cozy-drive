@@ -1,9 +1,11 @@
-jest.mock('cozy-konnector-libs', () => jest.fn())
 jest.mock('./files')
 
 import { getFilesByAutoAlbum } from './files'
 import { albumsToClusterize } from './reclusterize'
 import { prepareDataset } from './utils'
+import CozyClient from 'cozy-client'
+
+const client = new CozyClient({})
 
 // Photos are sorted in ascending order
 let newPhotos = [
@@ -71,6 +73,7 @@ const existingPhotos = [
     clusterId: 'a1'
   }
 ]
+
 const existingPhotosPrepared = prepareDataset(existingPhotos)
 
 // Albums are sorted in descending order
@@ -103,7 +106,7 @@ describe('clusterize', () => {
     const photos = [...newPhotos]
     photos.splice(3, 1)
     getFilesByAutoAlbum.mockImplementation(() => Promise.resolve([]))
-    const clusterize = await albumsToClusterize(photos, albums)
+    const clusterize = await albumsToClusterize(client, photos, albums)
     const expected = new Map([
       [[albums[0]], [photos[3]]],
       [[albums[1]], [photos[1], photos[2]]],
@@ -114,7 +117,7 @@ describe('clusterize', () => {
 
   it('Should build the clusterize map with only new photos and merge', async () => {
     getFilesByAutoAlbum.mockImplementation(() => Promise.resolve([]))
-    const clusterize = await albumsToClusterize(newPhotos, albums)
+    const clusterize = await albumsToClusterize(client, newPhotos, albums)
 
     const expected = new Map([
       [
@@ -127,11 +130,11 @@ describe('clusterize', () => {
   })
 
   it('Should build the clusterize map with new and old photos', async () => {
-    getFilesByAutoAlbum.mockImplementation(album => {
+    getFilesByAutoAlbum.mockImplementation((client, album) => {
       const files = existingPhotos.filter(p => p.clusterId === album.id)
       return Promise.resolve(files)
     })
-    const clusterize = await albumsToClusterize(newPhotos, albums)
+    const clusterize = await albumsToClusterize(client, newPhotos, albums)
 
     const expected = new Map([
       [

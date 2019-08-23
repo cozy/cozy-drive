@@ -1,4 +1,4 @@
-import { cozyClient, log } from 'cozy-konnector-libs'
+import log from 'cozy-logger'
 import { DOCTYPE_PHOTOS_SETTINGS } from 'drive/lib/doctypes'
 import {
   SETTING_TYPE,
@@ -11,20 +11,27 @@ import {
 } from './consts'
 import { gradientAngle } from 'photos/ducks/clustering/gradient'
 
-export const createSetting = initParameters => {
+export const createSetting = async (client, initParameters) => {
   log('info', 'Create setting')
   const defaultSetting = DEFAULT_SETTING
   defaultSetting.parameters[0] = initParameters
-  return cozyClient.data.create(DOCTYPE_PHOTOS_SETTINGS, defaultSetting)
+  const setting = await client.create(DOCTYPE_PHOTOS_SETTINGS, defaultSetting)
+  return setting.data
 }
 
-export const readSetting = async () => {
-  const settings = await cozyClient.data.findAll(DOCTYPE_PHOTOS_SETTINGS)
-  return settings.find(doc => doc.type === SETTING_TYPE)
+export const readSetting = async client => {
+  const settings = await client.query(client.find(DOCTYPE_PHOTOS_SETTINGS))
+  return settings.data.find(doc => doc.type === SETTING_TYPE)
 }
 
-export const updateSetting = async (oldSetting, newSetting) => {
-  return cozyClient.data.update(DOCTYPE_PHOTOS_SETTINGS, oldSetting, newSetting)
+export const updateParameters = async (client, setting, params) => {
+  const parameters = [...setting.parameters, params]
+  const newSetting = await client.save({
+    ...setting,
+    parameters,
+    evaluationCount: 0
+  })
+  return newSetting.data
 }
 
 export const getDefaultParametersMode = params => {
@@ -81,7 +88,7 @@ const getPhotosPeriod = (params, photos) => {
   return params.period
 }
 
-export const updateParamsPeriod = async (setting, params, photos) => {
+export const updateParamsPeriod = async (client, setting, params, photos) => {
   const newParams = {
     ...params,
     period: getPhotosPeriod(params, photos)
@@ -99,19 +106,20 @@ export const updateParamsPeriod = async (setting, params, photos) => {
   const parameters = [...setting.parameters]
   parameters[idx] = newParams
 
-  const newSetting = {
-    ...setting,
-    parameters: parameters
-  }
-  return updateSetting(setting, newSetting)
+  const newSetting = await client.save({ ...setting, parameters })
+  return newSetting.data
 }
 
-export const updateSettingStatus = async (setting, count, lastDate) => {
+export const updateSettingStatus = async (client, setting, count, lastDate) => {
   log('info', `Update setting for last date ${lastDate}`)
   const evaluationCount =
     count > 0 ? setting.evaluationCount + count : setting.evaluationCount
   const runs = setting.runs ? setting.runs + 1 : 1
-  const newSetting = { ...setting, evaluationCount, lastDate, runs }
-
-  return cozyClient.data.update(DOCTYPE_PHOTOS_SETTINGS, setting, newSetting)
+  const updatedSetting = await client.save({
+    ...setting,
+    evaluationCount,
+    lastDate,
+    runs
+  })
+  return updatedSetting.data
 }
