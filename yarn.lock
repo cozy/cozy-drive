@@ -10415,17 +10415,7 @@ node-notifier@^5.2.1:
     shellwords "^0.1.1"
     which "^1.3.0"
 
-node-polyglot@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/node-polyglot/-/node-polyglot-2.3.0.tgz#e97cc9354e87e648f04858647c6e3be38ad36ce1"
-  integrity sha512-9cF870GdUW72lCaZiaahS3PyYy3M9pRw+qYx5jMvQMww8VQ3Oz7fIVUtrPpPWtXz1+mC2GAuqmYucXCs/H/VWQ==
-  dependencies:
-    for-each "^0.3.3"
-    has "^1.0.3"
-    string.prototype.trim "^1.1.2"
-    warning "^4.0.1"
-
-node-polyglot@^2.2.2:
+node-polyglot@2.3.1, node-polyglot@^2.2.2:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/node-polyglot/-/node-polyglot-2.3.1.tgz#975e8ae4cd2c717c3aac50aebc1700655d1b0b1c"
   integrity sha512-5BWNWXiY+JHFz3DtAOhEhtwbsyr8/qgq2QmlKQYeaugm+hkqSbCpzcjn+cZ2SIqFkGVGkFAPpNQdQLms5ADNcQ==
@@ -16286,7 +16276,7 @@ warning@^3.0.0:
   dependencies:
     loose-envify "^1.0.0"
 
-warning@^4.0.1, warning@^4.0.3:
+warning@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
