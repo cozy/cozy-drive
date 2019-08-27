@@ -3931,7 +3931,12 @@ commander@2.19.0, commander@~2.19.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
   integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
 
-commander@2.20.0, commander@^2.11.0, commander@^2.18.0, commander@^2.19.0, commander@^2.20.0, commander@^2.5.0, commander@^2.8.1, commander@^2.9.0, commander@~2.20.0:
+commander@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-3.0.0.tgz#0641ea00838c7a964627f04cddc336a2deddd60a"
+  integrity sha512-pl3QrGOBa9RZaslQiqnnKX2J068wcQw7j9AIaBQ9/JEp5RY6je4jKTImg0Bd+rpoONSe7GUFSgkxLeo17m3Pow==
+
+commander@^2.11.0, commander@^2.18.0, commander@^2.19.0, commander@^2.20.0, commander@^2.5.0, commander@^2.8.1, commander@^2.9.0, commander@~2.20.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
   integrity sha512-7j2y+40w61zy6YC2iRNpUe/NwhNyoXrYpHMrSunaMG64nRnaf96zO/KMQR4OyN/UnE5KLyEBnKHd4aG3rskjpQ==
@@ -4386,7 +4391,7 @@ cozy-client-js@0.16.4, cozy-client-js@^0.16.4:
     pouchdb-browser "7.0.0"
     pouchdb-find "7.0.0"
 
-cozy-client@6.58.1, cozy-client@^6.58.0:
+cozy-client@6.58.1, cozy-client@^6.58.1:
   version "6.58.1"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.58.1.tgz#8e0d4e2de5c3ead222ef48a7cd4bfb4c6cbca700"
   integrity sha512-lpvkowxb7Xeu5k00awn0KzGJbShF9MWM40rcW+pqvyNftJDB8Qd8x5qAR3J8rnO3HLR2IsdsRsWgw2zZOqtVqw==
@@ -4428,10 +4433,10 @@ cozy-doctypes@1.63.2:
     lodash "4.17.15"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.62.0:
-  version "1.63.1"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.63.1.tgz#2755d531bc137c75b26d5a61bf3374501ac7400c"
-  integrity sha512-tz3vp2LHtSgOEwa50WzFshcmSrCFmSf3iR5ziRnFcldWfc5dLuwuX1pI0Ceq7qVemnBeiYOI1ObeTU+v+Aa5sQ==
+cozy-doctypes@^1.63.2:
+  version "1.63.3"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.63.3.tgz#206c5afcf904b119a499c4ba142f0b6d0f7c7157"
+  integrity sha512-lHlberOm4V/5lPysR1h9V2jEZRb4rThdkufG2pyS7foVY59AwFiFTyCeD+QohhktEhGYqBcqjJj6Utf0EH8sdg==
   dependencies:
     "@babel/runtime" "7.5.5"
     cozy-logger "^1.5.1"
@@ -4452,18 +4457,18 @@ cozy-interapp@0.4.5:
   resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.4.5.tgz#115912a389448ebb8dc532972270b46e15010063"
   integrity sha512-CuiZ4PIrDj+jcK1sCizFNCC9r8+/sgKXLtDgkpKHRHk+q0lhvqz/fQAVPWiIsZAr9WdbfxaBfsJCoHP/41+G1Q==
 
-cozy-jobs-cli@1.9.14:
-  version "1.9.14"
-  resolved "https://registry.yarnpkg.com/cozy-jobs-cli/-/cozy-jobs-cli-1.9.14.tgz#7c0750f48449dbf35ea233d81629661235e5c5fd"
-  integrity sha512-HCFUo0v5lp9G/Cos/kpG9b1b2myr1tfXUiHc1tx9Kc1M+p9JtUKkEXd+oxhAALZAnP9aBCyU9GWG489dBFYocQ==
+cozy-jobs-cli@1.9.17:
+  version "1.9.17"
+  resolved "https://registry.yarnpkg.com/cozy-jobs-cli/-/cozy-jobs-cli-1.9.17.tgz#5a4dfd2026c30c1ddc491d1307e1774d8120089d"
+  integrity sha512-VE0VQZp1aE2x27y2Bb4ZsYIOsd6CDEwX/RK3bLhF+mSRIhYM9BmigF/Z0VhBQvMFqIAZS3KMtZQvLosqa39bpg==
   dependencies:
     btoa "1.2.1"
     cheerio "1.0.0-rc.3"
     cli-highlight "2.1.1"
-    commander "2.20.0"
+    commander "3.0.0"
     core-js "3.2.1"
     cozy-client-js "0.16.4"
-    cozy-konnector-libs "^4.23.0"
+    cozy-konnector-libs "^4.24.2"
     cozy-logger "1.5.1"
     open "6.4.0"
     pretty "2.0.0"
@@ -4471,18 +4476,18 @@ cozy-jobs-cli@1.9.14:
     replay "2.4.0"
     strip-json-comments "3.0.1"
 
-cozy-konnector-libs@^4.23.0:
-  version "4.23.0"
-  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.23.0.tgz#f60ba3d1870b24843afae5316728bb758d02972d"
-  integrity sha512-EKXZlStx9xflpbgmhMQQtqy5TOOZdVE1grykYpNuQQIQj3P8suvhluCyOhcYH70nEHGf/PWF2LH+sDfiL6Pf3w==
+cozy-konnector-libs@^4.24.2:
+  version "4.24.2"
+  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.24.2.tgz#d21a29f4ffdb38c47caf1a2db692fe98cc3725d9"
+  integrity sha512-H5IRnvG4Gl9Fu9jdlLwJoTBi6g3aae/3xTbm/KHT9ZUFBVxvL7vQniwUx9DiwG/stTjvCBpzA7T0N8joSzCZFQ==
   dependencies:
     bluebird "^3.5.5"
     bluebird-retry "^0.11.0"
     cheerio "^1.0.0-rc.3"
     classificator "^0.3.3"
-    cozy-client "^6.58.0"
+    cozy-client "^6.58.1"
     cozy-client-js "^0.16.4"
-    cozy-doctypes "^1.62.0"
+    cozy-doctypes "^1.63.2"
     cozy-logger "1.5.1"
     date-fns "^1.30.1"
     file-type "^12.2.0"
