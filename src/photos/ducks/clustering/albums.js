@@ -21,7 +21,7 @@ const updateAlbumPeriod = async (client, photos, album) => {
     const name = photos[0].datetime
     const dehydrated = album.photos.dehydrate(album)
     const updatedAlbum = await client.save({ ...dehydrated, period, name })
-    return updatedAlbum.data
+    return client.hydrateDocument(updatedAlbum.data)
   }
   return album
 }
@@ -43,7 +43,7 @@ const removeRefs = async (client, ids, album) => {
   ids = Array.isArray(ids) ? ids : [ids]
   const relations = ids.map(id => ({
     _id: id,
-    _type: this.doctype
+    _type: 'io.cozy.files'
   }))
   await client.mutate(album.photos.removeDocuments(relations))
 }
@@ -58,7 +58,7 @@ const addAutoAlbumReferences = async (client, photos, album) => {
       }
       if (photo.clusterId && photo.clusterId !== album._id) {
         // The photo references another album: remove it
-        await removeRefs(photo.clusterId)
+        await removeRefs(client, photo.clusterId, album)
       }
       refsIds.push(photo.id)
     }
@@ -100,7 +100,7 @@ const removeAutoAlbumReferences = async (client, photos, album) => {
     ids.push(photo.id)
     photo.clusterId = ''
   }
-  await removeRefs(client, photos, album)
+  await removeRefs(client, ids, album)
 }
 
 export const findAutoAlbums = async client => {
