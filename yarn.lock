@@ -4405,19 +4405,7 @@ cozy-device-helper@1.7.5:
   dependencies:
     lodash "4.17.15"
 
-cozy-doctypes@1.63.3:
-  version "1.63.3"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.63.3.tgz#206c5afcf904b119a499c4ba142f0b6d0f7c7157"
-  integrity sha512-lHlberOm4V/5lPysR1h9V2jEZRb4rThdkufG2pyS7foVY59AwFiFTyCeD+QohhktEhGYqBcqjJj6Utf0EH8sdg==
-  dependencies:
-    "@babel/runtime" "7.5.5"
-    cozy-logger "^1.5.1"
-    date-fns "1.30.1"
-    es6-promise-pool "2.5.0"
-    lodash "4.17.15"
-    prop-types "^15.7.2"
-
-cozy-doctypes@^1.63.2:
+cozy-doctypes@1.63.3, cozy-doctypes@^1.63.2:
   version "1.63.3"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.63.3.tgz#206c5afcf904b119a499c4ba142f0b6d0f7c7157"
   integrity sha512-lHlberOm4V/5lPysR1h9V2jEZRb4rThdkufG2pyS7foVY59AwFiFTyCeD+QohhktEhGYqBcqjJj6Utf0EH8sdg==
@@ -12789,19 +12777,18 @@ react-dropzone@5.1.1:
     attr-accept "^1.1.3"
     prop-types "^15.6.2"
 
-react-hot-loader@4.8.4:
-  version "4.8.4"
-  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.8.4.tgz#357ba342e367fd42d6a870a9c0601c23fa0730c6"
-  integrity sha512-O98btZXcm24ZgP+aPBD0W9N+GEnkOg6vlLEy/IMZ53u3K/dGqO0I/RU4qrmQzE+wMDLpwNo5TwxaAjVw9Y+IBA==
+react-hot-loader@4.12.12:
+  version "4.12.12"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.12.12.tgz#8b33f59efef8a34f64e01f0d9393230d4b4bc6d4"
+  integrity sha512-Tkd412j5yPKHoTRsJzZb+5UJNFKkPszm7QGKGYvt+jnzTkDS+qK0u3AYPlB0MmBlwzUKVHICqq5KH9Srzda7XA==
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"
     hoist-non-react-statics "^3.3.0"
     loader-utils "^1.1.0"
-    lodash "^4.17.11"
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
-    shallowequal "^1.0.2"
+    shallowequal "^1.1.0"
     source-map "^0.7.3"
 
 react-hot-loader@^4.3.11:
@@ -14126,7 +14113,7 @@ shallow-equal@^1.0.0:
   resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.2.0.tgz#fd828d2029ff4e19569db7e19e535e94e2d1f5cc"
   integrity sha512-Z21pVxR4cXsfwpMKMhCEIO1PCi5sp7KEp+CmOpBQ+E8GpHwKOw2sEzk7sgblM3d/j4z4gakoWEoPcjK0VJQogA==
 
-shallowequal@^1.0.2, shallowequal@^1.1.0:
+shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
