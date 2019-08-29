@@ -133,7 +133,7 @@
     "react-autosuggest": "9.3.4",
     "react-dom": "16.8.5",
     "react-dropzone": "5.1.1",
-    "react-hot-loader": "4.8.4",
+    "react-hot-loader": "4.12.12",
     "react-markdown": "3.4.1",
     "react-measure": "2.2.4",
     "react-redux": "5.0.7",
