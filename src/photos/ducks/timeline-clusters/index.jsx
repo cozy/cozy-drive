@@ -87,7 +87,7 @@ const getSectionTitleHours = (dates, index, section, f) => {
       const startPeriod = section.album.period.start
       const endPeriod = section.album.period.end
 
-      let titleWithHours = section.title + ' ⠂' + formatH(f, startPeriod) + 'h'
+      let titleWithHours = section.title + ' · ' + formatH(f, startPeriod) + 'h'
       if (!isSameHour(f, endPeriod, startPeriod)) {
         titleWithHours += '-' + formatH(f, endPeriod) + 'h'
       }
