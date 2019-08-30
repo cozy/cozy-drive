@@ -1,7 +1,6 @@
 import React from 'react'
-import { Query } from 'cozy-client'
+import { Query, withClient } from 'cozy-client'
 import Timeline from '../timeline/components/Timeline'
-import PhotoBoard from '../../components/PhotoBoard'
 import {
   formatDMY,
   formatD,
@@ -180,35 +179,37 @@ const getPhotosByClusters = (photos, f) => {
   })
 }
 
-// eslint-disable-next-line
-export default translate()(props => (
-  <Query query={TIMELINE_QUERY} as={TIMELINE} mutations={TIMELINE_MUTATIONS}>
-    {({ data, ...result }, mutations) => (
-      <Timeline
-        lists={data ? getPhotosByClusters(data, props.f) : []}
-        data={data}
-        {...mutations}
-        {...result}
-        {...props}
-      />
-    )}
-  </Query>
-))
+export class TimelineBoard extends React.Component {
+  componentDidMount() {
+    // WARNING: this is a temporary code to be able to test the clustering
+    // directly from the app
+    this.props.client.getStackClient().jobs.create('service', {
+      message: {
+        name: 'onPhotoUpload',
+        slug: 'photos'
+      }
+    })
+  }
 
-export const TimelineBoard = ({ selection, ...props }) => (
-  <Query query={TIMELINE_QUERY}>
-    {({ data, ...result }) => (
-      <PhotoBoard
-        lists={data ? getPhotosByClusters(data, props.f) : []}
-        photosContext="timeline"
-        onPhotoToggle={selection.toggle}
-        onPhotosSelect={selection.select}
-        onPhotosUnselect={selection.unselect}
-        {...result}
-        {...props}
-      />
-    )}
-  </Query>
-)
+  render() {
+    return (
+      <Query
+        query={TIMELINE_QUERY}
+        as={TIMELINE}
+        mutations={TIMELINE_MUTATIONS}
+      >
+        {({ data, ...result }, mutations) => (
+          <Timeline
+            lists={data ? getPhotosByClusters(data, this.props.f) : []}
+            data={data}
+            {...mutations}
+            {...result}
+            {...this.props}
+          />
+        )}
+      </Query>
+    )
+  }
+}
 
-translate()(TimelineBoard)
+export default translate()(withClient(TimelineBoard))
