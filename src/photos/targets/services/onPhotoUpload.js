@@ -151,13 +151,13 @@ const runClustering = async (client, setting) => {
   })
   if (photos.length < 1) {
     log('warn', 'No photo found to clusterize')
-    return 0
+    return { photos: [], newSetting: setting }
   }
   const albums = await findAutoAlbums(client)
   const dataset = prepareDataset(photos, albums)
   const result = await clusterizePhotos(client, setting, dataset, albums)
   if (!result) {
-    return 0
+    return { photos: [], newSetting: setting }
   }
 
   log('info', `${result.clusteredCount} photos clustered since ${sinceDate}`)
@@ -168,7 +168,7 @@ const runClustering = async (client, setting) => {
     result.clusteredCount,
     newLastDate
   )
-  return photos
+  return { photos, newSetting: setting }
 }
 
 const onPhotoUpload = async () => {
@@ -199,31 +199,58 @@ const onPhotoUpload = async () => {
     )
   }
 
-  if (setting.evaluationCount > EVALUATION_THRESHOLD) {
-    // Recompute parameters when enough photos had been processed
-    const newParams = await recomputeParameters(client, setting)
-    if (newParams) {
-      setting = await updateParameters(client, setting, newParams)
-      log('info', `Setting updated with ${JSON.stringify(newParams)}`)
+  /*
+    There is no way to prevent the service to be run in parallel for
+    the same instance, which could lead to inconsistent results.
+    To avoid this, we use a lock which is set to true during the execution
+  */
+  if (setting.isJobRunning) {
+    log('warn', 'The service is already executed. Abort.')
+    return
+  } else {
+    try {
+      const res = await client.save({ ...setting, isJobRunning: true })
+      setting = res.data
+    } catch (e) {
+      if (e.status === 409) {
+        log('error', 'Several jobs running. Abort')
+      }
+      return
     }
   }
 
-  /*
-    NOTE: A service has a limited execution window, defined in the stack config,
-    e.g. 200s. As the clustering of thousands of photos can be time-consuming,
-    we force a CHANGES_RUN_LIMIT to serialize the execution and be able to
-    restart the clustering from the last run.
-    */
-  const processedPhotos = await runClustering(client, setting)
-  if (processedPhotos.length >= CHANGES_RUN_LIMIT) {
-    // There are still changes to process: re-launch the service
-    const args = {
-      message: {
-        name: 'onPhotoUpload',
-        slug: 'photos'
+  try {
+    if (setting.evaluationCount > EVALUATION_THRESHOLD) {
+      // Recompute parameters when enough photos had been processed
+      const newParams = await recomputeParameters(client, setting)
+      if (newParams) {
+        setting = await updateParameters(client, setting, newParams)
+        log('info', `Setting updated with ${JSON.stringify(newParams)}`)
       }
     }
-    await client.getStackClient().jobs.create('service', args)
+
+    /*
+      NOTE: A service has a limited execution window, defined in the stack config,
+      e.g. 200s. As the clustering of thousands of photos can be time-consuming,
+      we force a CHANGES_RUN_LIMIT to serialize the execution and be able to
+      restart the clustering from the last run.
+      */
+    const { photos, newSetting } = await runClustering(client, setting)
+    await client.save({ ...newSetting, isJobRunning: false })
+    if (photos.length >= CHANGES_RUN_LIMIT) {
+      // There are still changes to process: re-launch the service
+      const args = {
+        message: {
+          name: 'onPhotoUpload',
+          slug: 'photos'
+        }
+      }
+      await client.getStackClient().jobs.create('service', args)
+    }
+  } catch (e) {
+    // Release the lock in case of error
+    log('error', e.reason)
+    await client.save({ ...setting, isJobRunning: false })
   }
 }
 
