@@ -3915,10 +3915,10 @@ commander@2.19.0, commander@~2.19.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
   integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
 
-commander@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-3.0.0.tgz#0641ea00838c7a964627f04cddc336a2deddd60a"
-  integrity sha512-pl3QrGOBa9RZaslQiqnnKX2J068wcQw7j9AIaBQ9/JEp5RY6je4jKTImg0Bd+rpoONSe7GUFSgkxLeo17m3Pow==
+commander@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-3.0.1.tgz#4595aec3530525e671fb6f85fb173df8ff8bf57a"
+  integrity sha512-UNgvDd+csKdc9GD4zjtkHKQbT8Aspt2jCBqNSPp53vAS0L1tS9sXB2TCEOPHJ7kt9bN/niWkYj8T3RQSoMXdSQ==
 
 commander@^2.11.0, commander@^2.18.0, commander@^2.19.0, commander@^2.20.0, commander@^2.5.0, commander@^2.8.1, commander@^2.9.0, commander@~2.20.0:
   version "2.20.0"
@@ -4445,18 +4445,18 @@ cozy-interapp@0.4.9:
   resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.4.9.tgz#5ef68d54755cc99c3e154e5a4646b68cbe5f16fd"
   integrity sha512-skyjrewnMu5zMfST7vTNGl3jsuWae1Iwfdev6pW9RLgb58M7oBSpsIa3ofRANv5tx0XVQDVSEzWvbFQ84WJPSg==
 
-cozy-jobs-cli@1.9.17:
-  version "1.9.17"
-  resolved "https://registry.yarnpkg.com/cozy-jobs-cli/-/cozy-jobs-cli-1.9.17.tgz#5a4dfd2026c30c1ddc491d1307e1774d8120089d"
-  integrity sha512-VE0VQZp1aE2x27y2Bb4ZsYIOsd6CDEwX/RK3bLhF+mSRIhYM9BmigF/Z0VhBQvMFqIAZS3KMtZQvLosqa39bpg==
+cozy-jobs-cli@1.9.19:
+  version "1.9.19"
+  resolved "https://registry.yarnpkg.com/cozy-jobs-cli/-/cozy-jobs-cli-1.9.19.tgz#43ffba89442f2a4478d032de5449109656ba1889"
+  integrity sha512-7Kd0+VgKFH+utjJkt6hXrAINoDUaXipeOHndyAlp3PlDAlsdP4pIeju02gLgdnRGMb5N5EMTftb1aKGtclsjCA==
   dependencies:
     btoa "1.2.1"
     cheerio "1.0.0-rc.3"
     cli-highlight "2.1.1"
-    commander "3.0.0"
+    commander "3.0.1"
     core-js "3.2.1"
     cozy-client-js "0.16.4"
-    cozy-konnector-libs "^4.24.2"
+    cozy-konnector-libs "^4.26.0"
     cozy-logger "1.5.1"
     open "6.4.0"
     pretty "2.0.0"
@@ -4464,10 +4464,10 @@ cozy-jobs-cli@1.9.17:
     replay "2.4.0"
     strip-json-comments "3.0.1"
 
-cozy-konnector-libs@^4.24.2:
-  version "4.24.2"
-  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.24.2.tgz#d21a29f4ffdb38c47caf1a2db692fe98cc3725d9"
-  integrity sha512-H5IRnvG4Gl9Fu9jdlLwJoTBi6g3aae/3xTbm/KHT9ZUFBVxvL7vQniwUx9DiwG/stTjvCBpzA7T0N8joSzCZFQ==
+cozy-konnector-libs@^4.26.0:
+  version "4.26.0"
+  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.26.0.tgz#c19e5b9d2b49629a56eaec7cee1602f1ce81fb9c"
+  integrity sha512-BKF8cbnUDNt8Ent04uhw3BQ5jtKWJLouLKwORjwcGI6AcUYbIxesjdTibt2JGMSRO4VepITYuPGeFyKBJPDgdw==
   dependencies:
     bluebird "^3.5.5"
     bluebird-retry "^0.11.0"
