@@ -152,7 +152,8 @@ export class MoveModal extends React.Component {
           $ne: TRASH_DIR_ID
         }
       })
-      .sortBy([{ type: 'asc' }, { name: 'asc' }])
+      .indexFields(['dir_id', 'type', 'name'])
+      .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }])
   }
 
   breadcrumbQuery = client => {
