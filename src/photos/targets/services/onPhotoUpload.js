@@ -101,9 +101,13 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
 
 const createParameter = (dataset, epsTemporal, epsSpatial) => {
   return {
-    period: {
+    evaluation: {
       start: dataset[0].datetime,
       end: dataset[dataset.length - 1].datetime
+    },
+    period: {
+      start: dataset[0].datetime,
+      end: dataset[0].datetime
     },
     modes: [
       {
@@ -126,11 +130,11 @@ const recomputeParameters = async (client, setting) => {
   // The defaultEvaluation field is used at init if there are not enough files
   // for a proper parameters evaluation: we use default metrics and therefore,
   // this end period should not be taken into consideration.
-  const lastPeriodEnd = lastParams.defaultEvaluation
-    ? lastParams.period.start
-    : lastParams.period.end
+  const lastEvaluationEnd = lastParams.defaultEvaluation
+    ? lastParams.evaluation.start
+    : lastParams.evaluation.end
 
-  const files = await getFilesFromDate(client, lastPeriodEnd)
+  const files = await getFilesFromDate(client, lastEvaluationEnd)
   // Safety check
   if (files.length < EVALUATION_THRESHOLD) {
     return
@@ -162,10 +166,19 @@ const runClustering = async (client, setting) => {
 
   log('info', `${result.clusteredCount} photos clustered since ${sinceDate}`)
   const newLastDate = photos[photos.length - 1].attributes.created_at
+  // The oldest photo in the dataset is older or equal than the last photo used
+  // to compute the parameters: do not count this dataset in the evaluation
+  // as it has been already used to compute parameters
+  const lastParams = setting.parameters[setting.parameters.length - 1]
+  const evalCount =
+    new Date(dataset[0].datetime).getTime() <=
+    new Date(lastParams.evaluation.end).getTime()
+      ? 0
+      : result.clusteredCount
   setting = await updateSettingStatus(
     client,
     result.setting,
-    result.clusteredCount,
+    evalCount,
     newLastDate
   )
   return { photos, newSetting: setting }

@@ -59,6 +59,10 @@ export const getDefaultParameters = photos => {
   return {
     period: {
       start: photos[0].datetime,
+      end: photos[0].datetime
+    },
+    evaluation: {
+      start: photos[0].datetime,
       end: photos[photos.length - 1].datetime
     },
     defaultEvaluation: true,
