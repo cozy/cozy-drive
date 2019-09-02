@@ -4582,10 +4582,10 @@ cozy-stack-client@^6.58.2:
     mime "^2.4.0"
     qs "^6.7.0"
 
-cozy-ui@20.8.0:
-  version "20.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-20.8.0.tgz#992f2ac7c46238bba2c74e6eaf7b16dd85afabc8"
-  integrity sha512-YQgLIN0imJij9dzrYR6+i39xWDkPapOvEurei+JPcVcDboIt8OAQWlAojrYAiW3OA/ctUEjkVcRIZW21FU2OAw==
+cozy-ui@20.24.0:
+  version "20.24.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-20.24.0.tgz#bdda2123fb75ecdc671985f383b7029a43c20852"
+  integrity sha512-er4MDKg1yanMoFd/eU7aH2goFNnRDA2N/gZfUol593d/x4XyNSMWSaxwVzTK6rPv8ksUa/2BYI+r975H3Umz2A==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
