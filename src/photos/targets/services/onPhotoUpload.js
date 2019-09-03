@@ -7,7 +7,7 @@ import {
   readSetting,
   createSetting,
   updateParameters,
-  getDefaultParameters,
+  createParameter,
   updateSettingStatus,
   getDefaultParametersMode,
   updateParamsPeriod
@@ -19,7 +19,6 @@ import {
 } from 'photos/ducks/clustering/service'
 import {
   PERCENTILE,
-  DEFAULT_MODE,
   EVALUATION_THRESHOLD,
   CHANGES_RUN_LIMIT
 } from 'photos/ducks/clustering/consts'
@@ -99,21 +98,6 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
   return { setting, clusteredCount }
 }
 
-const createParameter = (dataset, epsTemporal, epsSpatial) => {
-  return {
-    period: {
-      start: dataset[0].datetime,
-      end: dataset[dataset.length - 1].datetime
-    },
-    modes: [
-      {
-        name: DEFAULT_MODE,
-        epsTemporal: epsTemporal,
-        epsSpatial: epsSpatial
-      }
-    ]
-  }
-}
 const initParameters = dataset => {
   log('info', `Compute clustering parameters on ${dataset.length} photos`)
   const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
@@ -126,11 +110,11 @@ const recomputeParameters = async (client, setting) => {
   // The defaultEvaluation field is used at init if there are not enough files
   // for a proper parameters evaluation: we use default metrics and therefore,
   // this end period should not be taken into consideration.
-  const lastPeriodEnd = lastParams.defaultEvaluation
-    ? lastParams.period.start
-    : lastParams.period.end
+  const lastEvaluationEnd = lastParams.defaultEvaluation
+    ? lastParams.evaluation.start
+    : lastParams.evaluation.end
 
-  const files = await getFilesFromDate(client, lastPeriodEnd)
+  const files = await getFilesFromDate(client, lastEvaluationEnd)
   // Safety check
   if (files.length < EVALUATION_THRESHOLD) {
     return
@@ -162,10 +146,19 @@ const runClustering = async (client, setting) => {
 
   log('info', `${result.clusteredCount} photos clustered since ${sinceDate}`)
   const newLastDate = photos[photos.length - 1].attributes.created_at
+  // The oldest photo in the dataset is older or equal than the last photo used
+  // to compute the parameters: do not count this dataset in the evaluation
+  // as it has been already used to compute parameters
+  const lastParams = setting.parameters[setting.parameters.length - 1]
+  const evalCount =
+    new Date(dataset[0].datetime).getTime() <=
+    new Date(lastParams.evaluation.end).getTime()
+      ? 0
+      : result.clusteredCount
   setting = await updateSettingStatus(
     client,
     result.setting,
-    result.clusteredCount,
+    evalCount,
     newLastDate
   )
   return { photos, newSetting: setting }
@@ -189,7 +182,7 @@ const onPhotoUpload = async () => {
     const params =
       dataset.length > EVALUATION_THRESHOLD
         ? initParameters(dataset)
-        : getDefaultParameters(dataset)
+        : createParameter(dataset)
     setting = await createSetting(client, params)
     log(
       'info',
@@ -220,6 +213,17 @@ const onPhotoUpload = async () => {
   }
 
   try {
+    const lastParams = setting.parameters[setting.parameters.length - 1]
+    if (!lastParams.evaluation) {
+      // Temporary code for migration: existing instances with clusters do not
+      // have the evaluation parameter
+      lastParams.evaluation = {
+        start: lastParams.period.start,
+        end: lastParams.period.end
+      }
+      setting = await client.save({ ...setting })
+    }
+
     if (setting.evaluationCount > EVALUATION_THRESHOLD) {
       // Recompute parameters when enough photos had been processed
       const newParams = await recomputeParameters(client, setting)
