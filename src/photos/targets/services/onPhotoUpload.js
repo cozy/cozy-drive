@@ -213,6 +213,17 @@ const onPhotoUpload = async () => {
   }
 
   try {
+    const lastParams = setting.parameters[setting.parameters.length - 1]
+    if (!lastParams.evaluation) {
+      // Temporary code for migration: existing instances with clusters do not
+      // have the evaluation parameter
+      lastParams.evaluation = {
+        start: lastParams.period.start,
+        end: lastParams.period.end
+      }
+      setting = await client.save({ ...setting })
+    }
+
     if (setting.evaluationCount > EVALUATION_THRESHOLD) {
       // Recompute parameters when enough photos had been processed
       const newParams = await recomputeParameters(client, setting)
