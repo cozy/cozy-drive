@@ -7,7 +7,7 @@ import {
   readSetting,
   createSetting,
   updateParameters,
-  getDefaultParameters,
+  createParameter,
   updateSettingStatus,
   getDefaultParametersMode,
   updateParamsPeriod
@@ -19,7 +19,6 @@ import {
 } from 'photos/ducks/clustering/service'
 import {
   PERCENTILE,
-  DEFAULT_MODE,
   EVALUATION_THRESHOLD,
   CHANGES_RUN_LIMIT
 } from 'photos/ducks/clustering/consts'
@@ -99,25 +98,6 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
   return { setting, clusteredCount }
 }
 
-const createParameter = (dataset, epsTemporal, epsSpatial) => {
-  return {
-    evaluation: {
-      start: dataset[0].datetime,
-      end: dataset[dataset.length - 1].datetime
-    },
-    period: {
-      start: dataset[0].datetime,
-      end: dataset[0].datetime
-    },
-    modes: [
-      {
-        name: DEFAULT_MODE,
-        epsTemporal: epsTemporal,
-        epsSpatial: epsSpatial
-      }
-    ]
-  }
-}
 const initParameters = dataset => {
   log('info', `Compute clustering parameters on ${dataset.length} photos`)
   const epsTemporal = computeEpsTemporal(dataset, PERCENTILE)
@@ -202,7 +182,7 @@ const onPhotoUpload = async () => {
     const params =
       dataset.length > EVALUATION_THRESHOLD
         ? initParameters(dataset)
-        : getDefaultParameters(dataset)
+        : createParameter(dataset)
     setting = await createSetting(client, params)
     log(
       'info',

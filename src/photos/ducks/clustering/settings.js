@@ -55,24 +55,24 @@ export const getDefaultParametersMode = params => {
   }
 }
 
-export const getDefaultParameters = photos => {
+export const createParameter = (dataset, epsTemporal, epsSpatial) => {
   return {
-    period: {
-      start: photos[0].datetime,
-      end: photos[0].datetime
-    },
     evaluation: {
-      start: photos[0].datetime,
-      end: photos[photos.length - 1].datetime
+      start: dataset[0].datetime,
+      end: dataset[dataset.length - 1].datetime
     },
-    defaultEvaluation: true,
+    period: {
+      start: dataset[0].datetime,
+      end: dataset[0].datetime
+    },
     modes: [
       {
         name: DEFAULT_MODE,
-        epsTemporal: DEFAULT_EPS_TEMPORAL,
-        epsSpatial: DEFAULT_EPS_SPATIAL
+        epsTemporal: epsTemporal ? epsTemporal : DEFAULT_EPS_TEMPORAL,
+        epsSpatial: epsSpatial ? epsSpatial : DEFAULT_EPS_SPATIAL
       }
-    ]
+    ],
+    defaultEvaluation: epsTemporal ? false : true
   }
 }
 
