@@ -110,9 +110,9 @@
       "type": "cc.cozycloud.sentry",
       "verbs": ["POST"]
     },
-    "clustering": {
+    "triggers": {
       "description": "Required to re-execute the clustering",
-      "type": "io.cozy.jobs",
+      "type": "io.cozy.triggers",
       "verbs": ["POST"],
       "selector": "worker",
       "values": ["service"]

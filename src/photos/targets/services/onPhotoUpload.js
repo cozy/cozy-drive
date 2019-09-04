@@ -20,13 +20,17 @@ import {
 import {
   PERCENTILE,
   EVALUATION_THRESHOLD,
-  CHANGES_RUN_LIMIT
+  CHANGES_RUN_LIMIT,
+  TRIGGER_ELAPSED
 } from 'photos/ducks/clustering/consts'
 import { spatioTemporalScaled } from 'photos/ducks/clustering/metrics'
 import { gradientClustering } from 'photos/ducks/clustering/gradient'
 import { saveClustering, findAutoAlbums } from 'photos/ducks/clustering/albums'
 import { albumsToClusterize } from 'photos/ducks/clustering/reclusterize'
-import { prepareDataset } from 'photos/ducks/clustering/utils'
+import {
+  prepareDataset,
+  convertDurationInMilliseconds
+} from 'photos/ducks/clustering/utils'
 import { getMatchingParameters } from 'photos/ducks/clustering/matching'
 
 // This is required for using cozy-client as a node service.
@@ -197,19 +201,25 @@ const onPhotoUpload = async () => {
     the same instance, which could lead to inconsistent results.
     To avoid this, we use a lock which is set to true during the execution
   */
-  if (setting.isJobRunning) {
+  if (setting.jobStatus === 'running') {
     log('warn', 'The service is already executed. Abort.')
     return
-  } else {
-    try {
-      const res = await client.save({ ...setting, isJobRunning: true })
-      setting = res.data
-    } catch (e) {
-      if (e.status === 409) {
-        log('error', 'Several jobs running. Abort')
-      }
+  } else if (setting.jobStatus === 'postponed') {
+    const duration = convertDurationInMilliseconds(TRIGGER_ELAPSED)
+    // Stop if a trigger is planned later
+    if (setting.lastExecution + duration > Date.now()) {
+      log('warn', 'The service is already planned later. Abort.')
       return
     }
+  }
+  try {
+    const res = await client.save({ ...setting, jobStatus: 'running' })
+    setting = res.data
+  } catch (e) {
+    if (e.status === 409) {
+      log('error', 'Several jobs running. Abort')
+    }
+    return
   }
 
   try {
@@ -240,21 +250,36 @@ const onPhotoUpload = async () => {
       restart the clustering from the last run.
       */
     const { photos, newSetting } = await runClustering(client, setting)
-    await client.save({ ...newSetting, isJobRunning: false })
     if (photos.length >= CHANGES_RUN_LIMIT) {
-      // There are still changes to process: re-launch the service
-      const args = {
+      // There are still changes to process: re-launch the service.
+      // We use a @in trigger to postpone the next execution as we might
+      // reach the rate thumbnails jobs limit (5000/h the 2019-09-04)
+      const attrs = {
+        type: '@in',
+        arguments: TRIGGER_ELAPSED,
+        worker: 'service',
         message: {
           name: 'onPhotoUpload',
           slug: 'photos'
         }
       }
-      await client.getStackClient().jobs.create('service', args)
+      client
+        .getStackClient()
+        .collection('io.cozy.triggers')
+        .create(attrs)
+      await client.save({
+        ...newSetting,
+        jobStatus: 'postponed',
+        lastExecution: Date.now()
+      })
+      log('info', `The service will be run again in ${TRIGGER_ELAPSED}`)
+    } else {
+      await client.save({ ...newSetting, jobStatus: '' })
     }
   } catch (e) {
     // Release the lock in case of error
     log('error', e.reason)
-    await client.save({ ...setting, isJobRunning: false })
+    await client.save({ ...setting, jobStatus: '' })
   }
 }
 

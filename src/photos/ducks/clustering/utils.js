@@ -56,3 +56,21 @@ export const averageTime = photos => {
   const averageHours = sumHours / photos.length
   return new Date(averageHours * 3600 * 1000).getTime()
 }
+
+/**
+  Convert a duration into milliseconds.
+  See https://golang.org/pkg/time/#ParseDuration for the duration format
+  @param {string} duration - The duration in hms format
+  @returns {number} The duration in milliseconds
+
+*/
+export const convertDurationInMilliseconds = duration => {
+  const offsetH = duration.indexOf('h')
+  const offsetM = duration.indexOf('m')
+  const offsetS = duration.indexOf('s')
+
+  const hours = offsetH > 0 ? duration.substring(0, offsetH) : 0
+  const minutes = offsetM > 0 ? duration.substring(offsetH + 1, offsetM) : 0
+  const seconds = offsetS > 0 ? duration.substring(offsetM + 1, offsetS) : 0
+  return seconds * 1000 + minutes * 60 * 1000 + hours * 3600 * 1000
+}
