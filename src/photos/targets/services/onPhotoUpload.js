@@ -168,7 +168,7 @@ const runClustering = async (client, setting) => {
   return { photos, newSetting: setting }
 }
 
-const onPhotoUpload = async () => {
+export const onPhotoUpload = async () => {
   log('info', `Service called with COZY_URL: ${process.env.COZY_URL}`)
 
   const options = {
