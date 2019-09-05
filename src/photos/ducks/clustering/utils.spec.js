@@ -1,4 +1,4 @@
-import { averageTime } from './utils'
+import { averageTime, convertDurationInMilliseconds } from './utils'
 
 describe('date', () => {
   it('Should compute the mean date', () => {
@@ -22,5 +22,20 @@ describe('date', () => {
     ]
     const expectedTime = new Date('2018-06-13T01:35:26.249Z').getTime()
     expect(averageTime(data)).toEqual(expectedTime)
+  })
+})
+
+describe('convert duration', () => {
+  it('Should correctly convert duration', () => {
+    const d1 = '2h'
+    const d2 = '3m'
+    const d3 = '4s'
+    const d4 = '1h10m15s'
+    const d5 = 'wrongduration'
+    expect(convertDurationInMilliseconds(d1)).toEqual(7200000)
+    expect(convertDurationInMilliseconds(d2)).toEqual(180000)
+    expect(convertDurationInMilliseconds(d3)).toEqual(4000)
+    expect(convertDurationInMilliseconds(d4)).toEqual(4215000)
+    expect(convertDurationInMilliseconds(d5)).toEqual(0)
   })
 })

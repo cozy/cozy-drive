@@ -11,6 +11,7 @@ export const MAX_DISTANCE = 24 * 7
 export const COARSE_COEFFICIENT = 1
 export const EVALUATION_THRESHOLD = 500
 export const CHANGES_RUN_LIMIT = 1000
+export const TRIGGER_ELAPSED = '20m'
 
 export const DEFAULT_SETTING = {
   type: SETTING_TYPE,
