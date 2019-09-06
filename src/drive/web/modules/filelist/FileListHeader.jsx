@@ -223,22 +223,25 @@ const FileListHeader = ({
           styles['fil-content-header-action']
         )}
       >
-        <Button
-          theme={'action'}
-          onClick={() => {
-            toggleThumbnailSize()
-          }}
-          label={t('table.head_thumbnail_size')}
-          extension="narrow"
-          icon={
-            <Icon
-              icon={thumbnailSizeBig ? iconListMin : iconList}
-              size={17}
-              label={t('table.head_thumbnail_size')}
-            />
-          }
-          iconOnly
-        />
+        {/** in order to not display this button in a MoveModal for instance */}
+        {canSort && (
+          <Button
+            theme={'action'}
+            onClick={() => {
+              toggleThumbnailSize()
+            }}
+            label={t('table.head_thumbnail_size')}
+            extension="narrow"
+            icon={
+              <Icon
+                icon={thumbnailSizeBig ? iconListMin : iconList}
+                size={17}
+                label={t('table.head_thumbnail_size')}
+              />
+            }
+            iconOnly
+          />
+        )}
       </div>
     </div>
   )
