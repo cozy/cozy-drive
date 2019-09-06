@@ -171,6 +171,7 @@ export class MoveModal extends React.Component {
         mobileFullscreen
         into="body"
         aria-label={t('Move.modalTitle')}
+        className={'u-mih-100'}
       >
         <Header entries={entries} onClose={onClose} />
         <Query query={this.breadcrumbQuery} key={`breadcrumb-${folderId}`}>
