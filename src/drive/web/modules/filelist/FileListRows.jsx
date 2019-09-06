@@ -22,6 +22,14 @@ class FileListRows extends PureComponent {
   intersectionObserver = null
   loadMoreElement = null
 
+  constructor(props) {
+    super(props)
+    this.myFilesListRowsContainer = React.createRef()
+  }
+
+  componentDidMount() {
+    this.myFilesListRowsContainer.current.scrollTo(0, 0)
+  }
   componentWillMount() {
     this.intersectionObserver = new IntersectionObserver(
       this.checkIntersectionsEntries
@@ -61,7 +69,7 @@ class FileListRows extends PureComponent {
 
   render() {
     return (
-      <div>
+      <div ref={this.myFilesListRowsContainer}>
         {this.props.files.map((file, index) => {
           return this.rowRenderer({ index, key: file.id })
         })}
