@@ -31,7 +31,7 @@ import { albumsToClusterize } from 'photos/ducks/clustering/reclusterize'
 import {
   prepareDataset,
   convertDurationInMilliseconds,
-  pickInstance
+  isPartOfProgressiveRollout
 } from 'photos/ducks/clustering/utils'
 import { getMatchingParameters } from 'photos/ducks/clustering/matching'
 
@@ -176,7 +176,7 @@ export const onPhotoUpload = async () => {
     the clustering gradually, we only run the service for a % of instances
    */
   const instanceURL = process.env.COZY_URL
-  if (!pickInstance(instanceURL, PERCENT_INSTANCES)) {
+  if (!isPartOfProgressiveRollout(instanceURL, PERCENT_INSTANCES)) {
     return
   }
   log('info', `Service called with COZY_URL: ${process.env.COZY_URL}`)

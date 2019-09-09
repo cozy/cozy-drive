@@ -92,11 +92,11 @@ const hashCode = toHash => {
 }
 
 /**
- *  Pick the instance if it matches the condition, met a percentage of cases
+ *  Returns true if `instance` is chosen to be part of a progressive rollout, according to `percentage`
  *  @param {string} instance - The string to hash
  *  @param {number} percent - The percent of instances that should match
  *  @returns {boolean} If the instance is picked or not
  */
-export const pickInstance = (instance, percent) => {
+export const isPartOfProgressiveRollout = (instance, percent) => {
   return Math.abs(hashCode(instance)) % 100 <= percent
 }

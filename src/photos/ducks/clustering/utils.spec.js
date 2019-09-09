@@ -1,7 +1,7 @@
 import {
   averageTime,
   convertDurationInMilliseconds,
-  pickInstance
+  isPartOfProgressiveRollout
 } from './utils'
 
 describe('date', () => {
@@ -52,13 +52,13 @@ describe('pick instance', () => {
       match100percent = 0
     for (let i = 0; i < 10000; i++) {
       instances[i] = i + '.mycozy.cloud'
-      if (pickInstance(instances[i], 10)) {
+      if (isPartOfProgressiveRollout(instances[i], 10)) {
         match10percent++
       }
-      if (pickInstance(instances[i], -1)) {
+      if (isPartOfProgressiveRollout(instances[i], -1)) {
         match0percent++
       }
-      if (pickInstance(instances[i], 100)) {
+      if (isPartOfProgressiveRollout(instances[i], 100)) {
         match100percent++
       }
     }
