@@ -74,7 +74,7 @@ class DumbFolderView extends React.Component {
     return (
       <Main isPublic>
         <Topbar>
-          <Breadcrumb isPublic />
+          <Breadcrumb isPublic onFolderOpen={this.props.fetchFolder} />
           <PublicToolbar files={[this.props.displayedFolder]} isFile={false} />
         </Topbar>
         <Content>
