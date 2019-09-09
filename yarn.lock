@@ -2547,6 +2547,22 @@ babel-preset-cozy-app@1.6.0:
     browserslist-config-cozy "0.2.0"
     lodash "4.17.15"
 
+babel-preset-cozy-app@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-cozy-app/-/babel-preset-cozy-app-1.7.0.tgz#edb2f9f733dddf92647069047702bbc8eb7e698d"
+  integrity sha512-4bs8hvPF+x+svLEAIJ+CW3UQPh8C2qRMA1z1OdWLPe6iFXpOVcGlNzENcB8E61VWvOYUx30huSAWbDmtA7L1nA==
+  dependencies:
+    "@babel/core" "7.2.2"
+    "@babel/helper-plugin-utils" "7.0.0"
+    "@babel/plugin-proposal-class-properties" "7.3.0"
+    "@babel/plugin-proposal-object-rest-spread" "7.3.2"
+    "@babel/plugin-transform-runtime" "7.2.0"
+    "@babel/preset-env" "7.3.1"
+    "@babel/preset-react" "7.0.0"
+    "@babel/runtime" "7.2.0"
+    browserslist-config-cozy "^0.3.0"
+    lodash "4.17.15"
+
 babel-preset-env@^1.1.8:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.7.0.tgz#dea79fa4ebeb883cd35dab07e260c1c9c04df77a"
@@ -3128,6 +3144,11 @@ browserslist-config-cozy@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/browserslist-config-cozy/-/browserslist-config-cozy-0.2.0.tgz#6056e7bcfcfe07b04a5319068ea6c12cdcd53d96"
   integrity sha512-Ma87bBi3cfwA686nMziSxxv+mvGd3kWPQXrqwUeSYcNvXvqcXd8gmvLoMsuo2B4IuwGpVGdNGEcyDy9b7i05tA==
+
+browserslist-config-cozy@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/browserslist-config-cozy/-/browserslist-config-cozy-0.3.0.tgz#8df42275b168885c6961ce4b0d253b5f415d357f"
+  integrity sha512-EWCKW1Vb6OGNFgHvqnTDOI0anqVRaXmuf/uP8QB6jiH8FVrL0DAj/WuxYUFd4oVYawJZ2A5Xit86NSEWtILsSw==
 
 browserslist@^3.2.6:
   version "3.2.8"

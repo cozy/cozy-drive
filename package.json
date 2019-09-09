@@ -96,7 +96,7 @@
     "worker-loader": "2.0.0"
   },
   "dependencies": {
-    "babel-preset-cozy-app": "1.6.0",
+    "babel-preset-cozy-app": "1.7.0",
     "classnames": "2.2.6",
     "copy-text-to-clipboard": "1.0.4",
     "cozy-bar": "7.7.3",
