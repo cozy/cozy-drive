@@ -1,6 +1,9 @@
 import { onPhotoUpload } from './onPhotoUpload'
 import { readSetting } from 'photos/ducks/clustering/settings'
-import { convertDurationInMilliseconds } from 'photos/ducks/clustering/utils'
+import {
+  convertDurationInMilliseconds,
+  isPartOfProgressiveRollout
+} from 'photos/ducks/clustering/utils'
 import CozyClient from 'cozy-client'
 
 CozyClient.fromEnv = jest.fn()
@@ -8,7 +11,8 @@ jest.mock('photos/ducks/clustering/settings', () => ({
   readSetting: jest.fn()
 }))
 jest.mock('photos/ducks/clustering/utils', () => ({
-  convertDurationInMilliseconds: jest.fn()
+  convertDurationInMilliseconds: jest.fn(),
+  isPartOfProgressiveRollout: jest.fn()
 }))
 jest.mock('cozy-client')
 const client = new CozyClient({})
@@ -17,6 +21,7 @@ client.save = jest.fn(() => Promise.resolve({ data: {} }))
 describe('onPhotoUpload', () => {
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockImplementation(() => 1000)
+    isPartOfProgressiveRollout.mockReturnValue(true)
   })
   afterEach(() => {
     jest.restoreAllMocks()
