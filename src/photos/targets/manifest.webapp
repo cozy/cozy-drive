@@ -43,8 +43,8 @@
     "onPhotoUpload": {
       "type": "node",
       "file": "services/onPhotoUpload/photos.js",
-      "trigger": "@event io.cozy.clusters.dummy",
-      "debounce": "1s"
+      "trigger": "@event io.cozy.files:CREATED:image:class",
+      "debounce": "5m"
     }
   },
   "permissions": {
