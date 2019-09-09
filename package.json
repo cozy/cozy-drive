@@ -91,7 +91,7 @@
     "stylint": "1.5.9",
     "tar": "4.4.10",
     "testcafe": "1.4.3",
-    "unzipper": "0.10.4",
+    "unzipper": "0.10.5",
     "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4",
     "worker-loader": "2.0.0"
   },
