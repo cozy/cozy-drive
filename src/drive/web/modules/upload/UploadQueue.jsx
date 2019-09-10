@@ -24,7 +24,7 @@ const Pending = translate()(props => (
 
 const Item = translate()(({ file, status, isDirectory }) => {
   const { CANCEL, LOADING, DONE_STATUSES, ERROR_STATUSES } = uploadStatus
-  const { filename, extension } = CozyFile.splitFilename(file.name)
+  const { filename, extension } = CozyFile.splitFilename(file)
   let statusIcon
   let done = false
   let error = false
