@@ -103,7 +103,7 @@
     "cozy-ci": "0.4.1",
     "cozy-client": "6.64.0",
     "cozy-client-js": "0.16.4",
-    "cozy-device-helper": "1.7.5",
+    "cozy-device-helper": "1.8.0",
     "cozy-doctypes": "1.64.0",
     "cozy-flags": "1.9.3",
     "cozy-realtime": "2.0.8",
