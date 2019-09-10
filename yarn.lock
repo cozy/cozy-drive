@@ -10487,7 +10487,17 @@ node-notifier@^5.2.1:
     shellwords "^0.1.1"
     which "^1.3.0"
 
-node-polyglot@2.3.1, node-polyglot@^2.2.2:
+node-polyglot@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/node-polyglot/-/node-polyglot-2.4.0.tgz#0d2717ed06640d9ff48a2aebe8d13e39ef03518f"
+  integrity sha512-KRzKwzMWm3wSAjOSop7/WwNyzaMkCe9ddkwXTQsIZEJmvEnqy/bCqLpAVw6xBszKfy4iLdYVA0d83L+cIkYPbA==
+  dependencies:
+    for-each "^0.3.3"
+    has "^1.0.3"
+    string.prototype.trim "^1.1.2"
+    warning "^4.0.3"
+
+node-polyglot@^2.2.2:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/node-polyglot/-/node-polyglot-2.3.1.tgz#975e8ae4cd2c717c3aac50aebc1700655d1b0b1c"
   integrity sha512-5BWNWXiY+JHFz3DtAOhEhtwbsyr8/qgq2QmlKQYeaugm+hkqSbCpzcjn+cZ2SIqFkGVGkFAPpNQdQLms5ADNcQ==
