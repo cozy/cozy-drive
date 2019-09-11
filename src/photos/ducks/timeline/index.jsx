@@ -13,7 +13,7 @@ import {
   isEqualOrOlder,
   isEqualOrNewer
 } from './dates'
-import { format } from 'date-fns'
+import { translate } from 'cozy-ui/react/I18n'
 // constants
 const TIMELINE = 'timeline'
 const FILES_DOCTYPE = 'io.cozy.files'
@@ -173,11 +173,11 @@ const getPhotosByClusters = (photos, f) => {
 }
 
 // eslint-disable-next-line
-export default props => (
+export default translate()(props => (
   <Query query={TIMELINE_QUERY} as={TIMELINE} mutations={TIMELINE_MUTATIONS}>
     {({ data, ...result }, mutations) => (
       <Timeline
-        lists={data ? getPhotosByClusters(data, format) : []}
+        lists={data ? getPhotosByClusters(data, props.f) : []}
         data={data}
         {...mutations}
         {...result}
@@ -185,18 +185,18 @@ export default props => (
       />
     )}
   </Query>
-)
+))
 
 /**
  *
  * This component is used by the Picker, when we create an album
  * We have to deal with selection for instance
  */
-export const TimelineBoard = ({ selection, ...props }) => (
+export const TimelineBoard = translate()(({ selection, ...props }) => (
   <Query query={TIMELINE_QUERY}>
     {({ data, ...result }) => (
       <PhotoBoard
-        lists={data ? getPhotosByClusters(data, format) : []}
+        lists={data ? getPhotosByClusters(data, props.f) : []}
         photosContext="timeline"
         onPhotoToggle={selection.toggle}
         onPhotosSelect={selection.select}
@@ -206,4 +206,4 @@ export const TimelineBoard = ({ selection, ...props }) => (
       />
     )}
   </Query>
-)
+))
