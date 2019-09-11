@@ -28,7 +28,7 @@ class FileListRows extends PureComponent {
   }
 
   componentDidMount() {
-    this.myFilesListRowsContainer.current.scrollTo(0, 0)
+    this.myFilesListRowsContainer.current.scrollTop = 0
   }
   componentWillMount() {
     this.intersectionObserver = new IntersectionObserver(
