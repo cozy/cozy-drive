@@ -1,7 +1,7 @@
 import React from 'react'
 import { Query } from 'cozy-client'
 import Timeline from './components/Timeline'
-import { translate } from 'cozy-ui/react/I18n'
+import PhotoBoard from '../../components/PhotoBoard'
 import {
   formatDMY,
   formatD,
@@ -172,26 +172,38 @@ const getPhotosByClusters = (photos, f) => {
   })
 }
 
-export class TimelineBoard extends React.Component {
-  render() {
-    return (
-      <Query
-        query={TIMELINE_QUERY}
-        as={TIMELINE}
-        mutations={TIMELINE_MUTATIONS}
-      >
-        {({ data, ...result }, mutations) => (
-          <Timeline
-            lists={data ? getPhotosByClusters(data, format) : []}
-            data={data}
-            {...mutations}
-            {...result}
-            {...this.props}
-          />
-        )}
-      </Query>
-    )
-  }
-}
+// eslint-disable-next-line
+export default props => (
+  <Query query={TIMELINE_QUERY} as={TIMELINE} mutations={TIMELINE_MUTATIONS}>
+    {({ data, ...result }, mutations) => (
+      <Timeline
+        lists={data ? getPhotosByClusters(data, format) : []}
+        data={data}
+        {...mutations}
+        {...result}
+        {...props}
+      />
+    )}
+  </Query>
+)
 
-export default translate()(TimelineBoard)
+/**
+ *
+ * This component is used by the Picker, when we create an album
+ * We have to deal with selection for instance
+ */
+export const TimelineBoard = ({ selection, ...props }) => (
+  <Query query={TIMELINE_QUERY}>
+    {({ data, ...result }) => (
+      <PhotoBoard
+        lists={data ? getPhotosByClusters(data, format) : []}
+        photosContext="timeline"
+        onPhotoToggle={selection.toggle}
+        onPhotosSelect={selection.select}
+        onPhotosUnselect={selection.unselect}
+        {...result}
+        {...props}
+      />
+    )}
+  </Query>
+)
