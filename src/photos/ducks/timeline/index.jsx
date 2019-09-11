@@ -13,7 +13,7 @@ import {
   isEqualOrOlder,
   isEqualOrNewer
 } from './dates'
-
+import { format } from 'date-fns'
 // constants
 const TIMELINE = 'timeline'
 const FILES_DOCTYPE = 'io.cozy.files'
@@ -182,7 +182,7 @@ export class TimelineBoard extends React.Component {
       >
         {({ data, ...result }, mutations) => (
           <Timeline
-            lists={data ? getPhotosByClusters(data, this.props.f) : []}
+            lists={data ? getPhotosByClusters(data, format) : []}
             data={data}
             {...mutations}
             {...result}
