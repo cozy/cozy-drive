@@ -29,6 +29,7 @@ const TIMELINE_QUERY = client =>
     .sortBy({
       'metadata.datetime': 'desc'
     })
+    .include(['albums'])
 
 const TIMELINE_MUTATIONS = client => ({
   uploadPhoto: async (file, dirId) => {
