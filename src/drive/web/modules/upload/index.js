@@ -231,13 +231,6 @@ export const addToUploadQueue = (
   )
 }
 
-export const onlyAddToQueue = files => async dispatch => {
-  dispatch({
-    type: ADD_TO_UPLOAD_QUEUE,
-    files: extractFilesEntries(files)
-  })
-}
-
 export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
 
 export const onQueueEmpty = callback => (dispatch, getState) => {
