@@ -17,7 +17,8 @@ import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import { CozyFile } from 'models'
 import {
   toggleItemSelection,
-  isSelected
+  isSelected,
+  isSelectionBarVisible
 } from 'drive/web/modules/selection/duck'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 
@@ -78,28 +79,32 @@ const enableTouchEvents = ev => {
   return true
 }
 
-const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => (
-  <div
-    className={classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-file-select']
-    )}
-    onClick={onClick}
-  >
-    {withSelectionCheckbox && (
-      <span data-input="checkbox">
-        <input
-          onChange={() => {
-            // handled by onClick on the <div>
-          }}
-          type="checkbox"
-          checked={selected}
-        />
-        <label />
-      </span>
-    )}
-  </div>
-)
+const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => {
+  console.log('withSelectionCheckbox', withSelectionCheckbox)
+  return (
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file-action'],
+        styles['fil-content-file-select']
+      )}
+      onClick={onClick}
+    >
+      {withSelectionCheckbox && (
+        <span data-input="checkbox">
+          <input
+            onChange={() => {
+              // handled by onClick on the <div>
+            }}
+            type="checkbox"
+            checked={selected}
+          />
+          <label />
+        </span>
+      )}
+    </div>
+  )
+}
 
 const FileName = ({
   attributes,
@@ -291,7 +296,8 @@ class File extends Component {
       isAvailableOffline,
       disabled,
       thumbnailSizeBig,
-      breakpoints: { isExtraLarge, isMobile }
+      breakpoints: { isExtraLarge, isMobile },
+      isSelectionBarVisible
     } = this.props
     const { actionMenuVisible } = this.state
     const filContentRowSelected = classNames(styles['fil-content-row'], {
@@ -311,6 +317,7 @@ class File extends Component {
         ? t('table.row_update_format_full')
         : t('table.row_update_format')
     )
+    console.log('isSelectionBarVisible', isSelectionBarVisible)
     return (
       <div
         ref={filerow => {
@@ -318,11 +325,6 @@ class File extends Component {
         }}
         className={filContentRowSelected}
       >
-        <SelectBox
-          withSelectionCheckbox={withSelectionCheckbox}
-          selected={selected}
-          onClick={e => this.toggle(e)}
-        />
         <FileThumbnail
           file={attributes}
           withSharedBadge={withSharedBadge}
@@ -343,17 +345,26 @@ class File extends Component {
         />
         <Size filesize={formattedSize} />
         <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
-        {actions && (
-          <FileAction
-            t={t}
-            ref={this.filerowMenuToggleRef}
-            onClick={e => {
-              this.showActionMenu()
-              e.stopPropagation()
-            }}
+        {isSelectionBarVisible && (
+          <SelectBox
+            withSelectionCheckbox={withSelectionCheckbox}
+            selected={selected}
+            onClick={e => this.toggle(e)}
           />
         )}
         {actions &&
+          !isSelectionBarVisible && (
+            <FileAction
+              t={t}
+              ref={this.filerowMenuToggleRef}
+              onClick={e => {
+                this.showActionMenu()
+                e.stopPropagation()
+              }}
+            />
+          )}
+        {actions &&
+          !isSelectionBarVisible &&
           actionMenuVisible && (
             <ActionMenu
               file={attributes}
@@ -391,7 +402,8 @@ File.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   selected: isSelected(state, ownProps.attributes.id),
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
-  thumbnailSizeBig: state.view.thumbnailSize
+  thumbnailSizeBig: state.view.thumbnailSize,
+  isSelectionBarVisible: isSelectionBarVisible(state)
 })
 
 const mapDispatchToProps = dispatch => ({
