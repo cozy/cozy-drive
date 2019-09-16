@@ -4399,10 +4399,10 @@ cozy-bar@7.7.4:
     redux-persist "5.10.0"
     redux-thunk "2.3.0"
 
-cozy-ci@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-ci/-/cozy-ci-0.3.0.tgz#a7fd3ae765072a8259aa5cb1ac967ddabb2f8da5"
-  integrity sha512-ddp1zRX4sIpXdHND65L8HMM8vFV+v6/N0CyPP+XpCkbrGxhZXYIkayAA+BEId333n8onbJbeGk9sdyL92Oc0xQ==
+cozy-ci@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/cozy-ci/-/cozy-ci-0.4.1.tgz#f5991f9acc8fb81480003441e190d4be3a0f8446"
+  integrity sha512-SKlFoecbneXe4ctop0Al3jQ6jts8bu5pJij9XU5HjhxwKx4whkzwPOkpJ+F1k5lkgstfNU7k9YQPE+nizp6W9Q==
 
 cozy-client-js@0.16.4, cozy-client-js@^0.16.4:
   version "0.16.4"
