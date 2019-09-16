@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Button, Text, translate } from 'cozy-ui/transpiled/react'
 import Scanner from './Scanner'
 import toolbarContainer from '../toolbar'
 import { UploadQueue } from 'drive/web/modules/upload/UploadQueue'
 import { onlyAddToQueue } from 'drive/web/modules/upload'
 import { connect } from 'react-redux'
+/**
+ *
+ */
 class ScanItem extends Component {
   render() {
     const { displayedFolder, t, onlyAddToQueue } = this.props
@@ -35,7 +39,7 @@ class ScanItem extends Component {
 
           return (
             <>
-              {
+              {ReactDOM.createPortal(
                 <UploadQueue
                   queue={[
                     {
@@ -48,8 +52,9 @@ class ScanItem extends Component {
                   ]}
                   doneCount={0}
                   t={t}
-                />
-              }
+                />,
+                document.querySelector('[role=application]')
+              )}
               <Button label="Prendre une photo" onClick={onClick} />
             </>
           )
