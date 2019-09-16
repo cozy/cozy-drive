@@ -3,14 +3,13 @@ import { Button, Text } from 'cozy-ui/transpiled/react'
 import Scanner from './Scanner'
 import toolbarContainer from '../toolbar'
 import PortaledQueue from './PortaledQueue'
-import { connect } from 'react-redux'
 /**
  *
  */
 class ScanItem extends Component {
   resetState = () => {}
   render() {
-    const { displayedFolder, onlyAddToQueue } = this.props
+    const { displayedFolder } = this.props
     return (
       <>
         <Scanner
@@ -72,13 +71,4 @@ class ScanItem extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onlyAddToQueue: files => dispatch(onlyAddToQueue(files))
-})
-
-export default toolbarContainer(
-  connect(
-    null,
-    mapDispatchToProps
-  )(ScanItem)
-)
+export default toolbarContainer(ScanItem)
