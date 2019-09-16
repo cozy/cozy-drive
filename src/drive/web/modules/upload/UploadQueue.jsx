@@ -28,25 +28,29 @@ const Item = translate()(({ file, status, isDirectory }) => {
   let statusIcon
   let done = false
   let error = false
-  if (status === LOADING) {
+  /**
+   * Status cames from the Upload Queue, but sometimes we're using
+   * manual upload without using the Upload Queue system but we're still
+   * using the UI component. When this is the case, the file handles on
+   * his own its status.
+   */
+  const statusToUse = file.status ? file.status : status
+
+  if (statusToUse === LOADING) {
     statusIcon = <Spinner className="u-ml-half" color={palette['dodgerBlue']} />
-  } else if (status === CANCEL) {
+  } else if (statusToUse === CANCEL) {
     statusIcon = (
       <Icon className="u-ml-half" icon="cross" color={palette['monza']} />
     )
-  } else if (ERROR_STATUSES.includes(status)) {
+  } else if (ERROR_STATUSES.includes(statusToUse)) {
     error = true
     statusIcon = (
       <Icon className="u-ml-half" icon="warning" color={palette['monza']} />
     )
-  } else if (DONE_STATUSES.includes(status)) {
+  } else if (DONE_STATUSES.includes(statusToUse)) {
     done = true
     statusIcon = (
-      <Icon
-        className="u-ml-half"
-        icon="check-circleless"
-        color={palette['emerald']}
-      />
+      <Icon className="u-ml-half" icon="check" color={palette['emerald']} />
     )
   } else {
     statusIcon = <Pending />

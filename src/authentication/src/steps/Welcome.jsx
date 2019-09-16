@@ -64,7 +64,7 @@ export class Welcome extends Component {
               />
               <div className={styles['wizard-logo-badge']}>
                 <Icon
-                  icon="cozy-negative"
+                  icon="cloud"
                   width="20"
                   height="20"
                   color="white"
@@ -92,7 +92,7 @@ export class Welcome extends Component {
           </footer>
         </div>
       </div>
-    )
+    );
   }
 }
 

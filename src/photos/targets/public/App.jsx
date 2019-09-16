@@ -112,7 +112,7 @@ export class App extends Component {
                         onSelect={() =>
                           (window.location = getHomeLinkHref('sharing-photos'))
                         }
-                        icon={<Icon icon="cozy-negative" />}
+                        icon={<Icon icon="cloud" />}
                       >
                         {t('Share.create-cozy')}
                       </MenuItem>
@@ -144,7 +144,7 @@ export class App extends Component {
           </Selection>
         </Main>
       </div>
-    )
+    );
   }
 }
 
