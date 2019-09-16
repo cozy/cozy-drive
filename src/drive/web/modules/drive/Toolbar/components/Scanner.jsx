@@ -74,7 +74,7 @@ class Scanner extends React.Component {
                 this.setState({ status: 'done' })
               }
             }
-            this.setState({ status: 'uploading' })
+            this.setState({ status: 'uploading', name })
             // Read the file as an ArrayBuffer
             reader.readAsArrayBuffer(file)
           },
@@ -168,7 +168,7 @@ class Scanner extends React.Component {
    */
   render() {
     const { children } = this.props
-    const { status, error } = this.state
+    const { status, error, name } = this.state
     return (
       <>
         {children({
