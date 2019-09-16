@@ -24,6 +24,7 @@ import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
 import ShareItem from './Toolbar/share/ShareItem'
 import ShareButton from './Toolbar/share/ShareButton'
 import SharedRecipients from './Toolbar/share/SharedRecipients'
+import ScanItem from './Toolbar/components/ScanItem'
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -63,6 +64,12 @@ class Toolbar extends Component {
           hasWriteAccess && (
             <Item>
               <UploadItem insideMoreMenu disabled={isDisabled} />
+            </Item>
+          )}
+        {canUpload &&
+          hasWriteAccess && (
+            <Item>
+              <ScanItem insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
         {canCreateFolder &&

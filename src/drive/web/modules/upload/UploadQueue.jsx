@@ -83,7 +83,7 @@ const Item = translate()(({ file, status, isDirectory }) => {
   )
 })
 
-class UploadQueue extends Component {
+export class UploadQueue extends Component {
   state = {
     collapsed: false
   }
