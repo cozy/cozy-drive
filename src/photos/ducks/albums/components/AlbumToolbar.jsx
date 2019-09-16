@@ -90,7 +90,7 @@ class AlbumToolbar extends Component {
             <MenuItem
               data-test-id="menu-delete-album"
               className={styles['pho-action-delete']}
-              icon={<Icon icon="delete" />}
+              icon={<Icon icon="trash" />}
               onSelect={deleteAlbum}
             >
               {t('Toolbar.menu.album_delete')}
@@ -98,7 +98,7 @@ class AlbumToolbar extends Component {
           )}
         </Menu>
       </div>
-    )
+    );
   }
 }
 

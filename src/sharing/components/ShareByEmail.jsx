@@ -23,7 +23,7 @@ const Option = props => (
   <components.Option {...props}>
     <div className={cx(styles['select-option'])}>
       {props.isSelected && (
-        <Icon icon="check-circleless" color={palette.dodgerBlue} />
+        <Icon icon="check" color={palette.dodgerBlue} />
       )}
       <div>
         <div className={styles['select-option-label']}>{props.label}</div>

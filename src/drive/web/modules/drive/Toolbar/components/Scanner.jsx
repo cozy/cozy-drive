@@ -40,7 +40,13 @@ class Scanner extends React.Component {
    * @param {String} imageURI native path to the file (file:///var....)
    */
   onSuccess = async imageURI => {
-    const { generateName, dirId, onConflict } = this.props
+    const {
+      generateName,
+      dirId,
+      onConflict,
+      onBeforeUpload,
+      onFinish
+    } = this.props
     const name = generateName()
 
     this.setState({ error: null })
@@ -62,12 +68,14 @@ class Scanner extends React.Component {
             reader.onloadend = async () => {
               //we get the of the readAsBuffer in the `result` attr
               try {
+                if (onBeforeUpload) onBeforeUpload()
                 await this.uploadFileWithConflictStrategy(
                   name,
                   reader.result,
                   dirId,
                   onConflict
                 )
+                if (onFinish) onFinish()
               } catch (error) {
                 this.setState({ error })
               } finally {
@@ -148,7 +156,7 @@ class Scanner extends React.Component {
       .createFile(file, { name, dirId, contentType: 'image/jpeg' })
   }
   onFail(message) {
-    alert('Failed because: ' + message)
+    console.log('failed', message)
   }
   onClick = () => {
     this.defaultPluginConfig = {

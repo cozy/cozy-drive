@@ -44,7 +44,7 @@ const Item = translate()(({ file, status }) => {
       statusIcon = (
         <Icon
           className="u-ml-half"
-          icon="check-circleless"
+          icon="check"
           color={palette['emerald']}
         />
       )
