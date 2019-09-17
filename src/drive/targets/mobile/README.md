@@ -1,8 +1,6 @@
 # Drive Mobile version
 
-
 ## :boat: Compile yourself
-
 
 ### :wrench: Requirements
 
@@ -11,7 +9,6 @@
 - Android SDK >= 25.0.0 to deploy on android
 - Xcode 8.1 >= to deploy on ios
 - Cordova v6 CLI (`npm install cordova@6 -g`)
-
 
 ### :package: Install and run in dev mode
 
@@ -35,7 +32,6 @@ or if you develop :loop::
 $ yarn watch:drive:mobile
 ```
 
-
 ### :helicopter: Deploy
 
 After that, you can deploy with one of these commands:
@@ -54,7 +50,30 @@ $ cd src/drive/targets/mobile
 $ cordova run ios
 ```
 
+### HMR mode on a smartphone
+
+You need to export your local host IP address
+
+```sh
+export DEV_HOST=10.1.3.252
+```
+
+Then you have to watch in `hot` mode:
+
+```sh
+yarn watch:drive:mobile:hot
+```
+
+Once the previous command is finished a first time then run on Android / iOS :
+
+```sh
+yarn run:drive:android
+```
+
+Enjoy
+
 ### Standalone mode
+
 - Open your browser with web-security CORS disabled
 - launch `$ yarn watch:mobile:standalone`
 - Go to localhost:8084 in your browser and open the console
