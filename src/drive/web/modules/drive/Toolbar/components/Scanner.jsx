@@ -4,25 +4,6 @@ import { withClient } from 'cozy-client'
 
 import { CozyFile } from 'cozy-doctypes'
 
-//TODO Put this in File Doctypes
-export const generateNewFileName = filenameWithoutExtension => {
-  //Check if the string ends by _1
-  const regex = new RegExp('(_)([0-9]+)$')
-  const matches = filenameWithoutExtension.match(regex)
-  if (matches) {
-    let versionNumber = matches[2]
-    //increment versionNumber
-    versionNumber++
-    const newFilenameWithoutExtension = filenameWithoutExtension.replace(
-      new RegExp('(_)([0-9]+)$'),
-      `_${versionNumber}`
-    )
-    return newFilenameWithoutExtension
-  } else {
-    return `${filenameWithoutExtension}_1`
-  }
-}
-
 class Scanner extends React.Component {
   state = {
     status: 'iddle',
@@ -153,7 +134,8 @@ class Scanner extends React.Component {
           name,
           type: 'file'
         })
-        const newFileName = generateNewFileName(filename) + extension
+        const newFileName =
+          CozyFile.generateNewFileNameOnConflict(filename) + extension
         //recall itself with the newFilename.
         return this.uploadFileWithConflictStrategy(
           newFileName,
