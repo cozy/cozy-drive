@@ -9,6 +9,7 @@ import {
 } from 'components/pushClient'
 import styles from './styles.styl'
 import Config from 'drive/config/config.json'
+import palette from 'cozy-ui/react/palette'
 
 export default class CallToAction extends Component {
   state = {
@@ -43,7 +44,7 @@ export default class CallToAction extends Component {
       <div className={styles['pho-viewer-noviewer-cta']}>
         <Icon
           className={styles['pho-viewer-noviewer-cta-cross']}
-          color="white"
+          color={palette.white}
           icon="cross"
           onClick={this.markAsSeen}
         />

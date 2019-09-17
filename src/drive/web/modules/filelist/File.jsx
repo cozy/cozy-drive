@@ -20,6 +20,7 @@ import {
   isSelected
 } from 'drive/web/modules/selection/duck'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
+import palette from 'cozy-ui/react/palette'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -195,7 +196,12 @@ const Status = ({ isAvailableOffline, id }) => (
   >
     {isAvailableOffline && (
       <span className={styles['fil-content-offline']}>
-        <Icon icon="phone-download" color="white" width="14" height="14" />
+        <Icon
+          icon="phone-download"
+          color={palette.white}
+          width="14"
+          height="14"
+        />
       </span>
     )}
     <SharedStatus docId={id} className={styles['fil-content-sharestatus']} />
@@ -214,7 +220,9 @@ const FileAction = forwardRef(({ t, onClick }, ref) => (
       theme="action"
       onClick={onClick}
       extension="narrow"
-      icon={<Icon icon="dots" color="charcoalGrey" width="17" height="17" />}
+      icon={
+        <Icon icon="dots" color={palette.charcoalGrey} width="17" height="17" />
+      }
       iconOnly
       label={t('Toolbar.more')}
     />

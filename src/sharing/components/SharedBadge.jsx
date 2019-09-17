@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Icon } from 'cozy-ui/react'
 import styles from './badge.styl'
+import palette from 'cozy-ui/react/palette'
 
 const SharedBadge = ({ byMe, className, small, xsmall }) => (
   <div
@@ -13,7 +14,11 @@ const SharedBadge = ({ byMe, className, small, xsmall }) => (
       styles[byMe ? '--by-me' : '--with-me']
     )}
   >
-    <Icon icon="share" color="white" className={styles['shared-badge-icon']} />
+    <Icon
+      icon="share"
+      color={palette.white}
+      className={styles['shared-badge-icon']}
+    />
   </div>
 )
 

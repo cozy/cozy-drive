@@ -10,6 +10,7 @@ import {
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 import logger from 'lib/logger'
 import Fallback from 'drive/web/modules/viewer/Fallback'
+import palette from 'cozy-ui/react/palette'
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -105,7 +106,7 @@ class FilesViewer extends Component {
     if (currentIndex === -1 && !this.state.currentFile) {
       return (
         <Overlay>
-          <Spinner size="xxlarge" middle noMargin color="white" />
+          <Spinner size="xxlarge" middle noMargin color={palette.white} />
         </Overlay>
       )
     } else {
