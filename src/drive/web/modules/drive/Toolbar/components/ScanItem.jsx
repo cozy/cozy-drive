@@ -87,7 +87,7 @@ class ScanItem extends Component {
                     }
                   }}
                   successCount={status === 'done' ? 1 : 0}
-                  doneCount={status === 'done' ? 1 : 0}
+                  doneCount={1}
                   key={filename}
                   onClear={onClear}
                 />
