@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 import { BarContextProvider } from 'react-cozy-helpers'
+import { isAndroidApp } from 'cozy-device-helper'
 
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
@@ -66,7 +67,8 @@ class Toolbar extends Component {
               <UploadItem insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
-        {canUpload &&
+        {isAndroidApp() &&
+          canUpload &&
           hasWriteAccess && (
             <Item>
               <ScanItem insideMoreMenu disabled={isDisabled} />
