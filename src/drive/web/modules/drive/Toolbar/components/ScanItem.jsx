@@ -31,7 +31,7 @@ const ScanItemMenu = translate()(({ status, onClick, t, online }) => {
   return (
     <span className="u-pl-1 u-flex u-pt-half u-pb-half" onClick={actionOnClick}>
       <Icon icon="camera" />
-      <span className="u-pl-half">{t('scann a doc')}</span>
+      <span className="u-pl-half">{t('Scan.scan_a_doc')}</span>
     </span>
   )
 })
