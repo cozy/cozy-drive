@@ -5,21 +5,21 @@ import { withClient } from 'cozy-client'
 import { CozyFile } from 'cozy-doctypes'
 
 //TODO Put this in File Doctypes
-export const generateNewFileName = filename => {
+export const generateNewFileName = filenameWithoutExtension => {
   //Check if the string ends by _1
   const regex = new RegExp('(_)([0-9]+)$')
-  const matches = filename.match(regex)
+  const matches = filenameWithoutExtension.match(regex)
   if (matches) {
     let versionNumber = matches[2]
     //increment versionNumber
     versionNumber++
-    const newFilename = filename.replace(
+    const newFilenameWithoutExtension = filenameWithoutExtension.replace(
       new RegExp('(_)([0-9]+)$'),
       `_${versionNumber}`
     )
-    return newFilename
+    return newFilenameWithoutExtension
   } else {
-    return `${filename}_1`
+    return `${filenameWithoutExtension}_1`
   }
 }
 
@@ -49,7 +49,7 @@ class Scanner extends React.Component {
     } = this.props
     const name = generateName()
 
-    this.setState({ error: null })
+    this.setState({ error: null, name })
     /**
      * file:/// can not be converted to a fileEntry without the Cordova's File plugin.
      * `resolveLocalFileSystemURL` is provided by this plugin and can resolve the native
@@ -69,12 +69,17 @@ class Scanner extends React.Component {
               //we get the of the readAsBuffer in the `result` attr
               try {
                 if (onBeforeUpload) onBeforeUpload()
-                await this.uploadFileWithConflictStrategy(
+                const newFile = await this.uploadFileWithConflictStrategy(
                   name,
                   reader.result,
                   dirId,
                   onConflict
                 )
+                //It's possible that the filename as changed, so let's update it
+                if (onConflict === 'rename') {
+                  this.setState({ name: newFile.data.name })
+                }
+
                 if (onFinish) onFinish()
               } catch (error) {
                 this.setState({ error })
@@ -82,7 +87,7 @@ class Scanner extends React.Component {
                 this.setState({ status: 'done' })
               }
             }
-            this.setState({ status: 'uploading', name })
+            this.setState({ status: 'uploading' })
             // Read the file as an ArrayBuffer
             reader.readAsArrayBuffer(file)
           },
@@ -109,11 +114,10 @@ class Scanner extends React.Component {
    * @param {String} onConflict Actually only 2 hardcoded strategies 'erase' or 'rename'
    */
   async uploadFileWithConflictStrategy(name, file, dirId, onConflict) {
-    this.setState({ name })
     const { client } = this.props
     const filesCollection = client.collection('io.cozy.files')
-    let path = await CozyFile.getFullpath(dirId, '')
-    if (!path.endsWith('/')) path = path + '/'
+    //Since we want the path of the directory, we pass '' as filename
+    const path = await CozyFile.getFullpath(dirId, '')
     try {
       const existingFile = await filesCollection.statByPath(path + name)
       const { id: fileId, dir_id: dirId } = existingFile.data
@@ -141,7 +145,7 @@ class Scanner extends React.Component {
       }
     } catch (error) {
       if (/Not Found/.test(error)) {
-        this.upload(name, file, dirId)
+        return await this.upload(name, file, dirId)
       } else {
         console.log('error', error)
         this.setState({ error })

@@ -17,19 +17,16 @@ const MoreMenu = ({ t, disabled, uploadPhotos, selectItems }) => (
     className={styles['pho-toolbar-menu']}
     component={<MoreButton />}
   >
-    <MenuItem icon={<Icon icon="upload" />} className={styles['u-hide--desk']}>
+    <MenuItem icon={<Icon icon="upload" />} className={'u-hide--desk'}>
       <UploadButton
         onUpload={uploadPhotos}
         disabled={disabled}
         label={t('Toolbar.menu.photo_upload')}
         inMenu
-        className={classNames(
-          styles['u-hide--tablet'],
-          styles['pho-action-upload']
-        )}
+        className={classNames('u-hide--tablet', styles['pho-action-upload'])}
       />
     </MenuItem>
-    <hr className={styles['u-hide--desk']} />
+    <hr className={'u-hide--desk'} />
     <MenuItem onSelect={selectItems} icon={<Icon icon={CheckboxIcon} />}>
       {t('Toolbar.menu.select_items')}
     </MenuItem>
@@ -46,7 +43,7 @@ MoreMenu.propTypes = {
 const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
   <div className={styles['pho-toolbar']} role="toolbar">
     <UploadButton
-      className={styles['u-hide--mob']}
+      className={'u-hide--mob'}
       onUpload={uploadPhotos}
       disabled={disabled}
       label={t('Toolbar.photo_upload')}

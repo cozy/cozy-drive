@@ -1,6 +1,5 @@
 import React from 'react'
 import { ShareButton } from 'sharing'
-import styles from 'drive/styles/toolbar.styl'
 
 import shareContainer from './share'
 const ShareButtonWithProps = ({ displayedFolder, share, isDisabled }) => {
@@ -9,7 +8,7 @@ const ShareButtonWithProps = ({ displayedFolder, share, isDisabled }) => {
       docId={displayedFolder.id}
       disabled={isDisabled}
       onClick={() => share(displayedFolder)}
-      className={styles['u-hide--mob']}
+      className={'u-hide--mob'}
     />
   )
 }

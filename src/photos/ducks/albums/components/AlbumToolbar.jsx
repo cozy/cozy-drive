@@ -47,7 +47,7 @@ class AlbumToolbar extends Component {
         >
           {!sharedWithMe && (
             <MenuItem
-              className={styles['u-hide--desk']}
+              className={'u-hide--desk'}
               icon={<Icon icon="share" />}
               onSelect={() => shareAlbum(album)}
             >
@@ -77,9 +77,9 @@ class AlbumToolbar extends Component {
               {t('Toolbar.menu.add_photos')}
             </MenuItem>
           )}
-          <hr className={styles['u-hide--desk']} />
+          <hr className={'u-hide--desk'} />
           <MenuItem
-            className={styles['u-hide--desk']}
+            className={'u-hide--desk'}
             icon={<Icon icon={CheckboxIcon} />}
             onSelect={selectItems}
           >

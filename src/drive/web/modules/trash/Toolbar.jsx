@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button, withBreakpoints } from 'cozy-ui/react'
 import { showModal } from 'react-cozy-helpers'
-import classNames from 'classnames'
 
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
@@ -54,7 +53,7 @@ const Toolbar = ({
     >
       <Button
         theme={'danger-outline'}
-        className={classNames(styles['u-hide--mob'])}
+        className={'u-hide--mob'}
         onClick={() => emptyTrash()}
         disabled={disabled || selectionModeActive}
         icon="delete"
