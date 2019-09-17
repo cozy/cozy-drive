@@ -144,7 +144,7 @@ export class App extends Component {
           </Selection>
         </Main>
       </div>
-    );
+    )
   }
 }
 

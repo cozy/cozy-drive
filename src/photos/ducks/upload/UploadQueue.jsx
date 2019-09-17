@@ -42,11 +42,7 @@ const Item = translate()(({ file, status }) => {
       break
     case 'loaded':
       statusIcon = (
-        <Icon
-          className="u-ml-half"
-          icon="check"
-          color={palette['emerald']}
-        />
+        <Icon className="u-ml-half" icon="check" color={palette['emerald']} />
       )
       break
     case 'pending':
