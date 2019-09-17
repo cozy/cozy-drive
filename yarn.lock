@@ -4477,17 +4477,17 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-cozy-bar@7.7.4:
-  version "7.7.4"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.7.4.tgz#a99a3f408ee2656218d9acf90ed910cddf1180fb"
-  integrity sha512-8OTfBEz1gvFgGRdFDz0hvuP7R7NcXGZgpUxEGMND7KUG+W6EV/f+D1A9gzgApOODIC9bh1NoVzymPiLl20mHAw==
+cozy-bar@7.7.6:
+  version "7.7.6"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.7.6.tgz#a0127bd8df953d3e0a2b16f846db02aac0b4c296"
+  integrity sha512-TaFOmt/W0D7ltPEuoSnSfLx3O4KWAbt1c/thQtgGdirI//I6tl+4DbSd9uPpf7JMSrJUOfuH2pqy3wCWr/a0Kw==
   dependencies:
     "@babel/core" "7.5.5"
     babel-core "7.0.0-bridge.0"
     babel-preset-cozy-app "1.6.0"
-    cozy-device-helper "1.7.3"
+    cozy-device-helper "1.8.0"
     cozy-interapp "0.4.9"
-    cozy-realtime "3.1.3"
+    cozy-realtime "3.2.1"
     cozy-ui "22.3.1"
     enzyme-to-json "3.3.5"
     hammerjs "2.0.8"
@@ -4675,10 +4675,10 @@ cozy-realtime@2.0.8:
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-2.0.8.tgz#e2e9abfaeff8b610c2bbd1bf9cb5898484df2ef1"
   integrity sha512-L0PAaZXT6u1ixmdMIaSsPwcX1edLZ+8AdiqdOKL+olPaMDgNseyyjr4Vlnnsr7Sx5f6BpcWQFUQr+do+yX9i+w==
 
-cozy-realtime@3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.1.3.tgz#5799ae6bc1a04bf9a60e57a0fa4f3690cd602c0a"
-  integrity sha512-ShC8yeyLiHIuz8Kt2TPyy9x7imrgeAatVv2YFjjzL/JarkAVC7rip32Dpebx3GzziHbHctNi9g1tsutiEIoSbw==
+cozy-realtime@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.2.1.tgz#b22cb9468566ae691edfa0383efbab3071a2f01e"
+  integrity sha512-Ff1vQ8vxam5aH9GmL6+YgEApV40aku7Z84yTdfcEUaOYo4OJ+n40P0EUsQoqgpA2suGONdUfvJ+FnS0aha+9nw==
   dependencies:
     minilog "3.1.0"
 
