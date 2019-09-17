@@ -98,7 +98,7 @@ class AlbumToolbar extends Component {
           )}
         </Menu>
       </div>
-    );
+    )
   }
 }
 

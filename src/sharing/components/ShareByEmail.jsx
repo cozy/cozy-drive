@@ -22,9 +22,7 @@ const DropdownIndicator = props => (
 const Option = props => (
   <components.Option {...props}>
     <div className={cx(styles['select-option'])}>
-      {props.isSelected && (
-        <Icon icon="check" color={palette.dodgerBlue} />
-      )}
+      {props.isSelected && <Icon icon="check" color={palette.dodgerBlue} />}
       <div>
         <div className={styles['select-option-label']}>{props.label}</div>
         <div className={styles['select-option-desc']}>{props.data.desc}</div>

@@ -109,12 +109,9 @@ export class Breadcrumb extends Component {
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
                   </span>
-                  <Icon
-                    icon="right"
-                    className={styles['fil-path-separator']}
-                  />
+                  <Icon icon="right" className={styles['fil-path-separator']} />
                 </span>
-              );
+              )
             } else {
               return (
                 <span
@@ -139,7 +136,7 @@ export class Breadcrumb extends Component {
           })}
         </h2>
       </div>
-    );
+    )
   }
 }
 
@@ -250,7 +247,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const withSharedDocuments = Wrapped =>
-  (class withSharedDocumentsClass extends React.Component {
+  class withSharedDocumentsClass extends React.Component {
     render() {
       return (
         <SharedDocuments>
@@ -260,7 +257,7 @@ const withSharedDocuments = Wrapped =>
         </SharedDocuments>
       )
     }
-  })
+  }
 
 export default withBreakpoints()(
   withRouter(
