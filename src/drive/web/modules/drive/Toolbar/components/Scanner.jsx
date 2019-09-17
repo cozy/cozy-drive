@@ -27,14 +27,34 @@ class Scanner extends React.Component {
   state = {
     status: 'iddle',
     error: null,
-    filename: ''
+    filename: '',
+    online: window.navigator.onLine
   }
   constructor(props) {
     super(props)
     if (!CozyFile.cozyClient) CozyFile.registerClient(this.props.client)
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    window.addEventListener('offline', this.onOffline)
+    window.addEventListener('online', this.onOnline)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('offline', this.onOffline)
+    window.removeEventListener('online', this.onOnline)
+  }
+
+  onOffline = () => {
+    this.setState({
+      online: false
+    })
+  }
+  onOnline = () => {
+    this.setState({
+      online: true
+    })
+  }
   /**
    *
    * @param {String} imageURI native path to the file (file:///var....)
@@ -49,7 +69,7 @@ class Scanner extends React.Component {
     } = this.props
     const name = generateName()
 
-    this.setState({ error: null, filename: name })
+    this.setState({ error: null, filename: name, status: 'uploading' })
     /**
      * file:/// can not be converted to a fileEntry without the Cordova's File plugin.
      * `resolveLocalFileSystemURL` is provided by this plugin and can resolve the native
@@ -87,7 +107,6 @@ class Scanner extends React.Component {
                 this.setState({ status: 'done' })
               }
             }
-            this.setState({ status: 'uploading' })
             // Read the file as an ArrayBuffer
             reader.readAsArrayBuffer(file)
           },
@@ -146,10 +165,8 @@ class Scanner extends React.Component {
     } catch (error) {
       if (/Not Found/.test(error)) {
         return await this.upload(name, file, dirId)
-      } else {
-        console.log('error', error)
-        this.setState({ error })
       }
+      throw error
     }
   }
   async upload(name, file, dirId) {
@@ -184,7 +201,7 @@ class Scanner extends React.Component {
    */
   render() {
     const { children } = this.props
-    const { status, error, filename } = this.state
+    const { status, error, filename, online } = this.state
     return (
       <>
         {children({
@@ -192,7 +209,8 @@ class Scanner extends React.Component {
           status,
           filename,
           onClick: this.onClick,
-          onClear: this.onClear
+          onClear: this.onClear,
+          online
         })}
       </>
     )

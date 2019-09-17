@@ -15,12 +15,21 @@ import { connect } from 'react-redux'
  *
  */
 
-const ScanItemMenu = translate()(({ status, onClick, t }) => {
+const ScanItemMenu = translate()(({ status, onClick, t, online }) => {
+  const offlineMessage = () => {
+    return alert(t('Scan.error.offline'))
+  }
+  const uploadingMessage = () => {
+    return alert(t('Scan.error.uploading'))
+  }
+  const actionOnClick = (() => {
+    if (status === 'uploading') return uploadingMessage
+    if (!online) return offlineMessage
+    return onClick
+  })()
+
   return (
-    <span
-      className="u-pl-1 u-flex u-pt-half u-pb-half"
-      onClick={status !== 'uploading' ? onClick : ''}
-    >
+    <span className="u-pl-1 u-flex u-pt-half u-pb-half" onClick={actionOnClick}>
       <Icon icon="camera" />
       <span className="u-pl-half">{t('scann a doc')}</span>
     </span>
@@ -44,16 +53,31 @@ class ScanItem extends Component {
           onBeforeUpload={() => stopMediaBackup()}
           onFinish={() => startMediaBackup()}
         >
-          {({ status, error, onClick, filename, onClear }) => {
+          {({ status, error, onClick, filename, onClear, online }) => {
             if (error) {
-              console.log('error', error)
-              return <ScanItemMenu status={status} onClick={onClick} />
+              return (
+                <ScanItemMenu
+                  status={status}
+                  onClick={onClick}
+                  online={online}
+                />
+              )
             }
             if (!filename)
-              return <ScanItemMenu status={status} onClick={onClick} />
+              return (
+                <ScanItemMenu
+                  status={status}
+                  onClick={onClick}
+                  online={online}
+                />
+              )
             return (
               <>
-                <ScanItemMenu status={status} onClick={onClick} />
+                <ScanItemMenu
+                  status={status}
+                  onClick={onClick}
+                  online={online}
+                />
                 <PortaledQueue
                   file={{
                     file: {
