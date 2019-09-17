@@ -19,7 +19,7 @@ const UploadItem = translate()(
         disabled={isDisabled}
         displayedFolder={displayedFolder}
         label={t('toolbar.item_upload')}
-        className={classNames(styles['c-btn'], styles['u-hide--mob'])}
+        className={classNames(styles['c-btn'], 'u-hide--mob')}
       />
     )
 )

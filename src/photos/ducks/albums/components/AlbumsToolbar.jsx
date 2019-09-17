@@ -13,7 +13,7 @@ const AlbumsToolbar = ({ t, router }) => (
     className={styles['pho-toolbar']}
     role="toolbar"
   >
-    <div className={styles['u-hide--mob']}>
+    <div className={'u-hide--mob'}>
       <ButtonLink
         data-test-id="album-add"
         theme="secondary"
@@ -23,7 +23,7 @@ const AlbumsToolbar = ({ t, router }) => (
       />
     </div>
     <Menu
-      className={classNames(styles['pho-toolbar-menu'], styles['u-hide--desk'])}
+      className={classNames(styles['pho-toolbar-menu'], 'u-hide--desk')}
       component={<MoreButton />}
       position="right"
     >
