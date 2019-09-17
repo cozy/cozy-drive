@@ -44,80 +44,31 @@ class ScanItem extends Component {
           onBeforeUpload={() => stopMediaBackup()}
           onFinish={() => startMediaBackup()}
         >
-          {({ status, error, onClick, name }) => {
+          {({ status, error, onClick, filename, onClear }) => {
+            if (error) {
+              console.log('error', error)
+              return <ScanItemMenu status={status} onClick={onClick} />
+            }
+            if (!filename)
+              return <ScanItemMenu status={status} onClick={onClick} />
             return (
               <>
                 <ScanItemMenu status={status} onClick={onClick} />
                 <PortaledQueue
                   file={{
                     file: {
-                      name: 'toto.png',
+                      name: filename,
                       isDirectory: false,
                       status
                     }
                   }}
-                  successCount={0}
-                  doneCount={0}
-                  key={name}
+                  successCount={status === 'done' ? 1 : 0}
+                  doneCount={status === 'done' ? 1 : 0}
+                  key={filename}
+                  onClear={onClear}
                 />
               </>
             )
-            if (error) {
-              return (
-                <>
-                  <ScanItemMenu status={status} onClick={onClick} />
-                  <PortaledQueue
-                    file={{
-                      file: {
-                        name: name ? name : 'default_name.jpg',
-                        isDirectory: false,
-                        status: error
-                      }
-                    }}
-                    doneCount={0}
-                    key={name}
-                  />
-                </>
-              )
-            }
-            if (status === 'uploading') {
-              return (
-                <>
-                  <ScanItemMenu status={status} onClick={onClick} />
-                  <PortaledQueue
-                    file={{
-                      file: {
-                        name,
-                        isDirectory: false,
-                        status
-                      }
-                    }}
-                    doneCount={0}
-                    key={name}
-                  />
-                </>
-              )
-            }
-            if (status === 'done') {
-              return (
-                <>
-                  <ScanItemMenu status={status} onClick={onClick} />
-                  <PortaledQueue
-                    file={{
-                      file: {
-                        name,
-                        isDirectory: false,
-                        status
-                      }
-                    }}
-                    doneCount={1}
-                    successCount={1}
-                    key={name}
-                  />
-                </>
-              )
-            }
-            return <ScanItemMenu status={status} onClick={onClick} />
           }}
         </Scanner>
       </>

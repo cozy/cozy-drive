@@ -27,7 +27,7 @@ class Scanner extends React.Component {
   state = {
     status: 'iddle',
     error: null,
-    name: ''
+    filename: ''
   }
   constructor(props) {
     super(props)
@@ -49,7 +49,7 @@ class Scanner extends React.Component {
     } = this.props
     const name = generateName()
 
-    this.setState({ error: null, name })
+    this.setState({ error: null, filename: name })
     /**
      * file:/// can not be converted to a fileEntry without the Cordova's File plugin.
      * `resolveLocalFileSystemURL` is provided by this plugin and can resolve the native
@@ -77,7 +77,7 @@ class Scanner extends React.Component {
                 )
                 //It's possible that the filename as changed, so let's update it
                 if (onConflict === 'rename') {
-                  this.setState({ name: newFile.data.name })
+                  this.setState({ filename: newFile.data.name })
                 }
 
                 if (onFinish) onFinish()
@@ -116,10 +116,10 @@ class Scanner extends React.Component {
   async uploadFileWithConflictStrategy(name, file, dirId, onConflict) {
     const { client } = this.props
     const filesCollection = client.collection('io.cozy.files')
-    //Since we want the path of the directory, we pass '' as filename
-    const path = await CozyFile.getFullpath(dirId, '')
+
+    const path = await CozyFile.getFullpath(dirId, name)
     try {
-      const existingFile = await filesCollection.statByPath(path + name)
+      const existingFile = await filesCollection.statByPath(path)
       const { id: fileId, dir_id: dirId } = existingFile.data
       if (onConflict === 'erase') {
         //!TODO Bug Fix. Seems we have to pass a name attribute ?!
@@ -175,19 +175,24 @@ class Scanner extends React.Component {
       ...this.props.pluginConfig
     })
   }
+
+  onClear = () => {
+    this.setState({ filename: undefined })
+  }
   /**
    * Si pas de dirId => FilePicker
    */
   render() {
     const { children } = this.props
-    const { status, error, name } = this.state
+    const { status, error, filename } = this.state
     return (
       <>
         {children({
           error,
           status,
-          name,
-          onClick: this.onClick
+          filename,
+          onClick: this.onClick,
+          onClear: this.onClear
         })}
       </>
     )
