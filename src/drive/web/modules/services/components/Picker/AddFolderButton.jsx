@@ -4,13 +4,14 @@ import { connect } from 'react-redux'
 import { Button, ButtonAction, withBreakpoints, Icon } from 'cozy-ui/react'
 import IconFolderAdd from 'drive/assets/icons/icon-folder-add.svg'
 import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
+import palette from 'cozy-ui/react/palette'
 
 const AddFolderButton = ({ addFolder, breakpoints: { isMobile } }, { t }) => {
   if (isMobile)
     return (
       <ButtonAction
         compact
-        rightIcon={<Icon icon={IconFolderAdd} color="coolGrey" />}
+        rightIcon={<Icon icon={IconFolderAdd} color={palette.coolGrey} />}
         onClick={addFolder}
         label={t('intents.picker.new_folder')}
       />

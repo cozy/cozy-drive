@@ -13,6 +13,8 @@ import 'cozy-ui/assets/icons/ui/lock.svg'
 import styles from '../styles.styl'
 import { ButtonLinkRegistration } from './ButtonLinkRegistration'
 import { onboardingPropTypes } from '../../OnboardingPropTypes'
+import palette from 'cozy-ui/react/palette'
+
 
 require('url-polyfill')
 
@@ -346,7 +348,7 @@ export class SelectServer extends Component {
               label={t('mobile.onboarding.server_selection.button')}
               size={isTiny ? 'normal' : 'large'}
             >
-              <Icon icon="next" color="white" />
+              <Icon icon="next" color={palette.white} />
             </Button>
             <ButtonLinkRegistration
               className={classNames('wizard-buttonlink')}

@@ -12,9 +12,9 @@
     height   13.125rem
     width    30rem
     max-width 90%
-    border   .0625rem solid silver
+    border   .0625rem solid var(--silver)
     border-radius    .25rem
-    background-color white
+    background-color var(--white)
     display          flex
     flex-direction   column
     transition       0.5s
@@ -28,8 +28,8 @@
     transform  translate(0)
 
 .upload-queue-header
-    background-color paleGrey
-    color            charcoalGrey
+    background-color var(--paleGrey)
+    color            var(--charcoalGrey)
     font-weight      bold
     margin           0
     padding          .5rem 1rem .5rem
@@ -44,7 +44,7 @@
         background 0
         margin 0
         padding .4rem 0 .4rem .8rem
-        color dodgerBlue
+        color var(--dodgerBlue)
         text-transform uppercase
         font-size .8rem
 
@@ -58,11 +58,11 @@ progress.upload-queue-progress
     margin     0
 
 progress.upload-queue-progress::-webkit-progress-bar
-    background-color silver
+    background-color var(--silver)
 progress.upload-queue-progress::-webkit-progress-value
-    background-color dodgerBlue
+    background-color var(--dodgerBlue)
 progress.upload-queue-progress::-moz-progress-bar
-    background-color dodgerBlue
+    background-color var(--dodgerBlue)
 
 .upload-queue-content
     overflow auto
@@ -79,10 +79,10 @@ progress.upload-queue-progress::-moz-progress-bar
     flex-direction column
 
 .upload-queue-item--error
-    background-color chablis
+    background-color var(--chablis)
 
 .upload-queue-item--done
-    background-color paleGrey
+    background-color var(--paleGrey)
 
 .upload-queue-item
     height          3rem
@@ -93,7 +93,7 @@ progress.upload-queue-progress::-moz-progress-bar
     flex            0 0 auto
     width           100%
     max-width       'calc(100vw - %s)' % 13.75rem
-    border-bottom   .0625rem solid silver
+    border-bottom   .0625rem solid var(--silver)
 
     .item-cell
         box-sizing  border-box
@@ -107,14 +107,14 @@ progress.upload-queue-progress::-moz-progress-bar
         white-space    nowrap
         overflow       hidden
         text-overflow  ellipsis
-        color          charcoalGrey
+        color          var(--charcoalGrey)
 
     .item-file
         flex        0 0 85%
         user-select none
 
     .item-ext
-        color coolGrey
+        color var(--coolGrey)
 
     .item-image
         background embedurl('./assets/icons/icon-type-image.svg') 1rem center no-repeat
@@ -125,7 +125,7 @@ progress.upload-queue-progress::-moz-progress-bar
 
     .item-pending
         text-transform uppercase
-        color          dodgerBlue
+        color          var(--dodgerBlue)
         font-size      .75rem
         font-weight    bold
         line-height    2rem
@@ -148,7 +148,7 @@ progress.upload-queue-progress::-moz-progress-bar
         max-height 0
         border-radius 0
         border 0
-        background-color white
+        background-color var(--white)
         box-shadow none
 
         &:before
@@ -158,7 +158,7 @@ progress.upload-queue-progress::-moz-progress-bar
             width 100%
             height $coz-bar-border-size
             content ''
-            background white
+            background var(--white)
 
     .upload-queue--visible
         max-height 30%
@@ -168,5 +168,5 @@ progress.upload-queue-progress::-moz-progress-bar
 
     .upload-queue-header
         background 0
-        color dodgerBlue
+        color var(--dodgerBlue)
         text-transform uppercase

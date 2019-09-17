@@ -5,6 +5,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { Button, MainTitle, Icon } from 'cozy-ui/react'
 import 'cozy-ui/assets/icons/ui/cozy-negative.svg'
 import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
+import palette from 'cozy-ui/react/palette'
 
 import styles from '../styles.styl'
 import { ButtonLinkRegistration } from './ButtonLinkRegistration'
@@ -63,7 +64,12 @@ export class Welcome extends Component {
                 focusable="false"
               />
               <div className={styles['wizard-logo-badge']}>
-                <Icon icon="cloud" width="20" height="20" color="white" />
+                <Icon
+                  icon="cloud"
+                  width="20"
+                  height="20"
+                  color={palette.white}
+                />
               </div>
             </div>
             <MainTitle

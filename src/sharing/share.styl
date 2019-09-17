@@ -5,7 +5,7 @@
 
 .divider
     border 0
-    background-color silver
+    background-color var(--silver)
     height 1px
     margin-top 0
 
@@ -24,13 +24,13 @@
     .share-bylink-header-dot
         height .2rem
         width  .2rem
-        background-color black
+        background-color var(--black)
         border-radius    50%
         display inline-block
 
     .share-bylink-header-creating
     .share-bylink-header-copybtn
-        color dodgerBlue
+        color var(--dodgerBlue)
         font-weight bold
         cursor pointer
 
@@ -40,7 +40,7 @@
         padding 0
 
 .share-bylink-desc
-    color     coolGrey
+    color     var(--coolGrey)
     font-size .875rem
 
 @media (max-width 32em)
@@ -48,10 +48,10 @@
         width 80%
 
 .share-byemail-onlybylink
-    background paleGrey
+    background var(--paleGrey)
     padding    1rem 1.5rem
     margin 0
-    border-top 1px solid silver
+    border-top 1px solid var(--silver)
 
 .share-moral-override-bottom
     padding-bottom : 0 !important
@@ -93,7 +93,7 @@
         margin-top: rem(24)
         width: calc(100% + 3em);
         height: 1px
-        background-color: silver
+        background-color: var(--silver)
         
 
 @media (max-width 32em)
@@ -114,7 +114,7 @@
         margin 0
 
     .coz-form-desc
-        color coolGrey
+        color var(--coolGrey)
 
 .share-type-control
     display flex
@@ -142,7 +142,7 @@
         .select-option-desc
             line-height 1.5
             font-size   .8125rem
-            color coolGrey
+            color var(--coolGrey)
 
        
 
@@ -153,7 +153,7 @@
 :global
     // dirty hack for react-select: its API doesn't allow to make change to active styles
     .react-select__option:active
-        background-color paleGrey !important
+        background-color var(--paleGrey) !important
 
     @media (max-width 32em)
         .react-select__menu
@@ -227,7 +227,7 @@ input[type=text]
         margin 0 1rem 1rem 1rem
 
     .permission-required-popin-accept
-        color white
+        color var(--white)
         margin 0 1rem 1.5rem 1rem
 
 .share-details-created
@@ -250,4 +250,4 @@ input[type=text]
     margin        0 0 0.5rem 3.5rem
     padding-left  1.5rem
     line-height   1.5
-    color         coolGrey
+    color         var(--coolGrey)
