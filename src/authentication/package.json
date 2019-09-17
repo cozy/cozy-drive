@@ -27,6 +27,6 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
-    "url-polyfill": "1.1.0"
+    "url-polyfill": "1.1.7"
   }
 }

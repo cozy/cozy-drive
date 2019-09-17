@@ -145,7 +145,7 @@
     "redux-mock-store": "1.5.3",
     "redux-raven-middleware": "1.2.0",
     "redux-thunk": "2.3.0",
-    "url-polyfill": "1.1.0",
+    "url-polyfill": "1.1.7",
     "webpack-node-externals": "1.7.2",
     "whatwg-fetch": "3.0.0"
   }
