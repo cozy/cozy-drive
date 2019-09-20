@@ -540,7 +540,7 @@
     "scan_a_doc": "Scan a doc",
     "error": {
       "offline": "You are currently offline and you can't use this functionnality. Try it later",
-      "uploading": "You are currently already uploading a file. Please wait the end of this upload and retry."
+      "uploading": "You are already uploading a file. Wait until the end of this upload and try again."
     }
   }
 }

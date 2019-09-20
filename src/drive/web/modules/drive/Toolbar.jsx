@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
 import { BarContextProvider } from 'react-cozy-helpers'
-import { isAndroidApp } from 'cozy-device-helper'
+import { isMobileApp } from 'cozy-device-helper'
 
 import { MoreButton } from 'components/Button'
 import Menu, { Item } from 'components/Menu'
@@ -25,7 +25,7 @@ import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
 import ShareItem from './Toolbar/share/ShareItem'
 import ShareButton from './Toolbar/share/ShareButton'
 import SharedRecipients from './Toolbar/share/SharedRecipients'
-import ScanItem from './Toolbar/components/ScanItem'
+import ScanWrapper from './Toolbar/components/ScanWrapper'
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -67,11 +67,11 @@ class Toolbar extends Component {
               <UploadItem insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
-        {isAndroidApp() &&
+        {isMobileApp() &&
           canUpload &&
           hasWriteAccess && (
             <Item>
-              <ScanItem insideMoreMenu disabled={isDisabled} />
+              <ScanWrapper insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
         {canCreateFolder &&

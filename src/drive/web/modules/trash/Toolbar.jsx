@@ -52,8 +52,8 @@ const Toolbar = ({
       role="toolbar"
     >
       <Button
-        theme={'danger-outline'}
-        className={'u-hide--mob'}
+        theme="danger-outline"
+        className="u-hide--mob"
         onClick={() => emptyTrash()}
         disabled={disabled || selectionModeActive}
         icon="delete"
