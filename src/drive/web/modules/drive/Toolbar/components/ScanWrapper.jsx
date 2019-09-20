@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Icon, translate } from 'cozy-ui/transpiled/react'
 
 import Scanner from './Scanner'
+import { SCANNER_DONE, SCANNER_UPLOADING } from './Scanner'
 import toolbarContainer from '../toolbar'
 import PortaledQueue from './PortaledQueue'
 
@@ -11,11 +12,11 @@ import {
 } from 'drive/mobile/modules/mediaBackup/duck'
 
 import { connect } from 'react-redux'
-/**
- *
- */
 
-const ScanItemMenu = translate()(({ status, onClick, t, online }) => {
+/**
+ * ScanMenItem Display the "Scan" item in the "More Menu"
+ */
+const ScanMenuItem = translate()(({ status, onClick, t, online }) => {
   const offlineMessage = () => {
     return alert(t('Scan.error.offline'))
   }
@@ -23,7 +24,7 @@ const ScanItemMenu = translate()(({ status, onClick, t, online }) => {
     return alert(t('Scan.error.uploading'))
   }
   const actionOnClick = (() => {
-    if (status === 'uploading') return uploadingMessage
+    if (status === SCANNER_UPLOADING) return uploadingMessage
     if (!online) return offlineMessage
     return onClick
   })()
@@ -35,7 +36,14 @@ const ScanItemMenu = translate()(({ status, onClick, t, online }) => {
     </span>
   )
 })
-class ScanItem extends Component {
+
+/**
+ * ScanWrapper is a wrapper of Scanner. It has the responsability to decide of :
+ * - generating the filename
+ * - Dispatching some events before and after the scan
+ * - call the component to render
+ */
+class ScanWrapper extends Component {
   render() {
     const { displayedFolder, stopMediaBackup, startMediaBackup } = this.props
     return (
@@ -53,29 +61,21 @@ class ScanItem extends Component {
           onBeforeUpload={() => stopMediaBackup()}
           onFinish={() => startMediaBackup()}
         >
-          {({ status, error, onClick, filename, onClear, online }) => {
-            if (error) {
+          {({ status, error, startScanner, filename, onClear, online }) => {
+            if (error || !filename) {
               return (
-                <ScanItemMenu
+                <ScanMenuItem
                   status={status}
-                  onClick={onClick}
+                  onClick={startScanner}
                   online={online}
                 />
               )
             }
-            if (!filename)
-              return (
-                <ScanItemMenu
-                  status={status}
-                  onClick={onClick}
-                  online={online}
-                />
-              )
             return (
               <>
-                <ScanItemMenu
+                <ScanMenuItem
                   status={status}
-                  onClick={onClick}
+                  onClick={startScanner}
                   online={online}
                 />
                 <PortaledQueue
@@ -86,7 +86,7 @@ class ScanItem extends Component {
                       status
                     }
                   }}
-                  successCount={status === 'done' ? 1 : 0}
+                  successCount={status === SCANNER_DONE ? 1 : 0}
                   doneCount={1}
                   key={filename}
                   onClear={onClear}
@@ -106,4 +106,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(toolbarContainer(ScanItem))
+)(toolbarContainer(ScanWrapper))

@@ -4,9 +4,12 @@ import { withClient } from 'cozy-client'
 
 import { CozyFile } from 'cozy-doctypes'
 
+export const SCANNER_IDLE = 'idle'
+export const SCANNER_DONE = 'done'
+export const SCANNER_UPLOADING = 'uploading'
 class Scanner extends React.Component {
   state = {
-    status: 'iddle',
+    status: SCANNER_IDLE,
     error: null,
     filename: '',
     online: window.navigator.onLine
@@ -50,7 +53,7 @@ class Scanner extends React.Component {
     } = this.props
     const name = generateName()
 
-    this.setState({ error: null, filename: name, status: 'uploading' })
+    this.setState({ error: null, filename: name, status: SCANNER_UPLOADING })
     /**
      * file:/// can not be converted to a fileEntry without the Cordova's File plugin.
      * `resolveLocalFileSystemURL` is provided by this plugin and can resolve the native
@@ -85,7 +88,7 @@ class Scanner extends React.Component {
               } catch (error) {
                 this.setState({ error })
               } finally {
-                this.setState({ status: 'done' })
+                this.setState({ status: SCANNER_DONE })
               }
             }
             // Read the file as an ArrayBuffer
@@ -93,14 +96,14 @@ class Scanner extends React.Component {
           },
           err => {
             this.setState({ error: err })
-            this.setState({ status: 'done' })
+            this.setState({ status: SCANNER_DONE })
             console.error('error getting fileentry file!' + err)
           }
         )
       },
       error => {
         this.setState({ error })
-        this.setState({ status: 'done' })
+        this.setState({ status: SCANNER_DONE })
       }
     )
   }
@@ -154,25 +157,33 @@ class Scanner extends React.Component {
   async upload(name, file, dirId) {
     const { client } = this.props
 
-    return client
-      .collection('io.cozy.files')
-      .createFile(file, { name, dirId, contentType: 'image/jpeg' })
+    return client.collection('io.cozy.files').createFile(file, {
+      name,
+      dirId,
+      contentType: 'image/jpeg',
+      lastModifiedDate: new Date()
+    })
   }
   onFail(message) {
     console.log('failed', message)
   }
-  onClick = () => {
-    this.defaultPluginConfig = {
-      quality: 70,
-      destinationType: window.navigator.camera.DestinationType.FILE_URI,
-      sourceTypes: window.navigator.camera.PictureSourceType.CAMERA,
-      correctOrientation: true
-    }
+  startScanner = () => {
+    try {
+      this.defaultPluginConfig = {
+        quality: 1,
+        destinationType: window.navigator.camera.DestinationType.FILE_URI,
+        sourceTypes: window.navigator.camera.PictureSourceType.CAMERA,
+        correctOrientation: true,
+        saveToPhotoAlbum: true
+      }
 
-    window.navigator.camera.getPicture(this.onSuccess, this.onFail, {
-      ...this.defaultPluginConfig,
-      ...this.props.pluginConfig
-    })
+      window.navigator.camera.getPicture(this.onSuccess, this.onFail, {
+        ...this.defaultPluginConfig,
+        ...this.props.pluginConfig
+      })
+    } catch (e) {
+      console.error('You have to install cordova camera plugin', e)
+    }
   }
 
   onClear = () => {
@@ -190,7 +201,7 @@ class Scanner extends React.Component {
           error,
           status,
           filename,
-          onClick: this.onClick,
+          startScanner: this.startScanner,
           onClear: this.onClear,
           online
         })}
