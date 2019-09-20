@@ -9,7 +9,10 @@ import {
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { isWifi } from 'drive/mobile/lib/network'
 import { logException } from 'drive/lib/reporter'
-import { setBackupImages } from 'drive/mobile/modules/settings/duck'
+import {
+  setBackupImages,
+  getMediaBuckets
+} from 'drive/mobile/modules/settings/duck'
 import {
   MEDIA_UPLOAD_START,
   MEDIA_UPLOAD_END,
@@ -117,7 +120,8 @@ export const startMediaBackup = (isManualBackup = false) => async (
 
   if (canBackup(isManualBackup, getState)) {
     try {
-      const photosOnDevice = await getPhotos()
+      const mediaBuckets = getMediaBuckets(getState())
+      const photosOnDevice = await getPhotos(mediaBuckets)
       const alreadyUploaded = getState().mobile.mediaBackup.uploaded
 
       const photosToUpload = photosOnDevice.filter(

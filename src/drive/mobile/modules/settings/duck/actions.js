@@ -8,6 +8,8 @@ export const BACKUP_CONTACTS = 'BACKUP_CONTACTS'
 export const WIFI_ONLY = 'WIFI_ONLY'
 export const SET_ANALYTICS = 'SET_ANALYTICS'
 export const SET_OFFLINE = 'SET_OFFLINE'
+export const ADD_MEDIA_BUCKET = 'ADD_MEDIA_BUCKET'
+export const DEL_MEDIA_BUCKET = 'DEL_MEDIA_BUCKET'
 
 export const setUrl = url => ({ type: SET_URL, url })
 
@@ -28,4 +30,14 @@ export const setAnalytics = analytics => (dispatch, getState) => {
 export const setBackupImages = backupImages => ({
   type: BACKUP_IMAGES,
   backupImages
+})
+
+export const addMediaBucket = mediaBucket => ({
+  type: ADD_MEDIA_BUCKET,
+  mediaBucket
+})
+
+export const delMediaBucket = mediaBucket => ({
+  type: DEL_MEDIA_BUCKET,
+  mediaBucket
 })
