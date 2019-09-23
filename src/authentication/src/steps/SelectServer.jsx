@@ -15,7 +15,6 @@ import { ButtonLinkRegistration } from './ButtonLinkRegistration'
 import { onboardingPropTypes } from '../../OnboardingPropTypes'
 import palette from 'cozy-ui/react/palette'
 
-
 require('url-polyfill')
 
 const ERR_WRONG_ADDRESS = 'mobile.onboarding.server_selection.wrong_address'
@@ -238,17 +237,15 @@ export class SelectServer extends Component {
       <form className={styles['wizard']} onSubmit={this.onSubmit}>
         <div className={styles['wizard-wrapper']}>
           <header className={styles['wizard-header']}>
-            <div className={styles['wizard-header-fixed']}>
-              <Button
-                subtle
-                icon="previous"
-                iconOnly
-                extension="narrow"
-                className={classNames(styles['wizard-previous'])}
-                onClick={previousStep}
-                type="button"
-              />
-            </div>
+            <Button
+              subtle
+              icon="previous"
+              iconOnly
+              extension="narrow"
+              className={classNames(styles['wizard-previous'])}
+              onClick={previousStep}
+              type="button"
+            />
             <MainTitle tag="h1" className={styles['wizard-title']}>
               {t('mobile.onboarding.server_selection.title')}
             </MainTitle>
@@ -348,7 +345,7 @@ export class SelectServer extends Component {
               label={t('mobile.onboarding.server_selection.button')}
               size={isTiny ? 'normal' : 'large'}
             >
-              <Icon icon="next" color={palette.white} />
+              {!fetching && <Icon icon="next" color={palette.white} />}
             </Button>
             <ButtonLinkRegistration
               className={classNames('wizard-buttonlink')}
