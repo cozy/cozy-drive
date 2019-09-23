@@ -87,6 +87,7 @@ exports[`Public view should render children when they are present 1`] = `
             }
           />
           <Button
+            align="center"
             className="pho-public-download"
             data-test-id="album-public-download"
             icon="download"
@@ -110,7 +111,7 @@ exports[`Public view should render children when they are present 1`] = `
               data-test-id="album-public-create-cozy-mobile"
               icon={
                 <Icon
-                  icon="cozy-negative"
+                  icon="cloud"
                   spin={false}
                 />
               }
@@ -224,6 +225,7 @@ exports[`Public view should render the album 1`] = `
             }
           />
           <Button
+            align="center"
             className="pho-public-download"
             data-test-id="album-public-download"
             icon="download"
@@ -247,7 +249,7 @@ exports[`Public view should render the album 1`] = `
               data-test-id="album-public-create-cozy-mobile"
               icon={
                 <Icon
-                  icon="cozy-negative"
+                  icon="cloud"
                   spin={false}
                 />
               }
