@@ -170,11 +170,10 @@ class Scanner extends React.Component {
   startScanner = () => {
     try {
       this.defaultPluginConfig = {
-        quality: 1,
+        quality: 100,
         destinationType: window.navigator.camera.DestinationType.FILE_URI,
         sourceTypes: window.navigator.camera.PictureSourceType.CAMERA,
-        correctOrientation: true,
-        saveToPhotoAlbum: true
+        correctOrientation: true
       }
 
       window.navigator.camera.getPicture(this.onSuccess, this.onFail, {
