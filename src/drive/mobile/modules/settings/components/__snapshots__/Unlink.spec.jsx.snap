@@ -70,6 +70,7 @@ exports[`Unlink should render the Component 1`] = `
             mobile.settings.unlink.description
           </p>
           <Button
+            align="center"
             className="settings__button"
             label="mobile.settings.unlink.button"
             onClick={[Function]}
@@ -79,6 +80,7 @@ exports[`Unlink should render the Component 1`] = `
             type="submit"
           >
             <BaseButton
+              align="center"
               className="settings__button"
               label="mobile.settings.unlink.button"
               onClick={[Function]}
@@ -88,7 +90,7 @@ exports[`Unlink should render the Component 1`] = `
               type="submit"
             >
               <button
-                className="c-btn c-btn--danger-outline settings__button"
+                className="c-btn c-btn--danger-outline c-btn--center settings__button"
                 onClick={[Function]}
                 title={null}
                 type="submit"
