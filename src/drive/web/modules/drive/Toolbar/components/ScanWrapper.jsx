@@ -10,6 +10,7 @@ import {
   startMediaBackup,
   cancelMediaBackup
 } from 'drive/mobile/modules/mediaBackup/duck'
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
 
 import { connect } from 'react-redux'
 
@@ -28,9 +29,20 @@ const ScanMenuItem = translate()(({ status, onClick, t, online }) => {
     if (!online) return offlineMessage
     return onClick
   })()
-
+  const trackEvent = () => {
+    const tracker = getTracker()
+    if (tracker) {
+      tracker.push(['trackEvent', 'Drive', 'Scanner', 'Scan Click'])
+    }
+  }
   return (
-    <span className="u-pl-1 u-flex u-pt-half u-pb-half" onClick={actionOnClick}>
+    <span
+      className="u-pl-1 u-flex u-pt-half u-pb-half"
+      onClick={() => {
+        trackEvent()
+        return actionOnClick()
+      }}
+    >
       <Icon icon="camera" />
       <span className="u-pl-half">{t('Scan.scan_a_doc')}</span>
     </span>
@@ -59,7 +71,13 @@ class ScanWrapper extends Component {
           }}
           onConflict={'rename'}
           onBeforeUpload={() => stopMediaBackup()}
-          onFinish={() => startMediaBackup()}
+          onFinish={() => {
+            const tracker = getTracker()
+            if (tracker) {
+              tracker.push(['trackEvent', 'Drive', 'Scanner', 'Finished'])
+            }
+            startMediaBackup()
+          }}
         >
           {({ status, error, startScanner, filename, onClear, online }) => {
             if (error || !filename) {
