@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { Button, MainTitle, Icon } from 'cozy-ui/react'
-import 'cozy-ui/assets/icons/ui/cozy-negative.svg'
 import withBreakpoints from 'cozy-ui/react/helpers/withBreakpoints'
 import palette from 'cozy-ui/react/palette'
 
