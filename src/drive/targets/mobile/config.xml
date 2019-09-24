@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="11812000" id="io.cozy.drive.mobile" ios-CFBundleVersion="1.18.12.0" version="1.18.12" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="11812002" id="io.cozy.drive.mobile" ios-CFBundleVersion="1.18.12.2" version="1.18.12" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -114,7 +114,7 @@
     <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items.git#1.5.2">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-camera" spec="^4.1.0">
+    <plugin name="cordova-plugin-camera" spec="https://github.com/spoonconsulting/cordova-plugin-camera.git#a7b416530d640fded34f13a1f4d98de4364863f4">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
 </widget>
