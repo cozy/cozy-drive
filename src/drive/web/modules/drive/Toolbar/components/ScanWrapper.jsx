@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Icon, translate } from 'cozy-ui/transpiled/react'
+import palette from 'cozy-ui/react/palette'
 
 import Scanner from './Scanner'
 import { SCANNER_DONE, SCANNER_UPLOADING } from './Scanner'
@@ -35,16 +36,17 @@ const ScanMenuItem = translate()(({ status, onClick, t, online }) => {
       tracker.push(['trackEvent', 'Drive', 'Scanner', 'Scan Click'])
     }
   }
+  //!TODO Color should be removed after the fix of https://github.com/cozy/cozy-ui/issues/1170
   return (
     <span
-      className="u-pl-1 u-flex u-pt-half u-pb-half"
+      className="u-pl-1 u-flex u-pt-half u-pb-half u-charcoalGrey"
       onClick={() => {
         trackEvent()
         return actionOnClick()
       }}
     >
-      <Icon icon="camera" />
-      <span className="u-pl-half">{t('Scan.scan_a_doc')}</span>
+      <Icon icon="camera" color={palette.slateGrey} />
+      <span className="u-pl-half u">{t('Scan.scan_a_doc')}</span>
     </span>
   )
 })
