@@ -54,6 +54,48 @@ class Scanner extends React.Component {
     const name = generateName()
 
     this.setState({ error: null, filename: name, status: SCANNER_UPLOADING })
+
+    const onResolvedLocalFS = async fileEntry => {
+      fileEntry.file(
+        file => {
+          const reader = new FileReader()
+          reader.onloadend = async () => {
+            //we get the of the readAsBuffer in the `result` attr
+            try {
+              if (onBeforeUpload) onBeforeUpload()
+              const newFile = await this.uploadFileWithConflictStrategy(
+                name,
+                reader.result,
+                dirId,
+                onConflict
+              )
+              //It's possible that the filename as changed, so let's update it
+              if (onConflict === 'rename') {
+                this.setState({ filename: newFile.data.name })
+              }
+
+              if (onFinish) onFinish()
+            } catch (error) {
+              this.setState({ error })
+            } finally {
+              this.setState({ status: SCANNER_DONE })
+            }
+          }
+          // Read the file as an ArrayBuffer
+          reader.readAsArrayBuffer(file)
+        },
+        err => {
+          this.setState({ error: err })
+          this.setState({ status: SCANNER_DONE })
+          console.error('error getting fileentry file!' + err)
+        }
+      )
+    }
+
+    const onError = error => {
+      this.setState({ error })
+      this.setState({ status: SCANNER_DONE })
+    }
     /**
      * file:/// can not be converted to a fileEntry without the Cordova's File plugin.
      * `resolveLocalFileSystemURL` is provided by this plugin and can resolve the native
@@ -63,49 +105,7 @@ class Scanner extends React.Component {
      *
      */
 
-    window.resolveLocalFileSystemURL(
-      imageURI,
-      async fileEntry => {
-        fileEntry.file(
-          file => {
-            const reader = new FileReader()
-            reader.onloadend = async () => {
-              //we get the of the readAsBuffer in the `result` attr
-              try {
-                if (onBeforeUpload) onBeforeUpload()
-                const newFile = await this.uploadFileWithConflictStrategy(
-                  name,
-                  reader.result,
-                  dirId,
-                  onConflict
-                )
-                //It's possible that the filename as changed, so let's update it
-                if (onConflict === 'rename') {
-                  this.setState({ filename: newFile.data.name })
-                }
-
-                if (onFinish) onFinish()
-              } catch (error) {
-                this.setState({ error })
-              } finally {
-                this.setState({ status: SCANNER_DONE })
-              }
-            }
-            // Read the file as an ArrayBuffer
-            reader.readAsArrayBuffer(file)
-          },
-          err => {
-            this.setState({ error: err })
-            this.setState({ status: SCANNER_DONE })
-            console.error('error getting fileentry file!' + err)
-          }
-        )
-      },
-      error => {
-        this.setState({ error })
-        this.setState({ status: SCANNER_DONE })
-      }
-    )
+    window.resolveLocalFileSystemURL(imageURI, onResolvedLocalFS, onError)
   }
 
   //TODO Put this in Files Doctypes
