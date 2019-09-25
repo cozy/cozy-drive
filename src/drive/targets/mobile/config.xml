@@ -114,7 +114,7 @@
     <plugin name="io.cozy.plugins.listlibraryitems" spec="https://github.com/cozy/cordova-plugin-list-library-items.git#1.5.2">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-camera" spec="https://github.com/spoonconsulting/cordova-plugin-camera.git#a7b416530d640fded34f13a1f4d98de4364863f4">
+    <plugin name="cordova-plugin-camera" spec="https://github.com/cozy/cordova-plugin-camera.git#bf519ca009eeaec3a47237ee07a09d515cc733df">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
 </widget>
