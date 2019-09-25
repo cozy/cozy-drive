@@ -45,7 +45,7 @@ const ScanMenuItem = translate()(({ status, onClick, t, online }) => {
         return actionOnClick()
       }}
     >
-      <Icon icon="camera" color={palette.slateGrey} />
+      <Icon icon="camera" />
       <span className="u-pl-half u">{t('Scan.scan_a_doc')}</span>
     </span>
   )
@@ -69,7 +69,9 @@ class ScanWrapper extends Component {
           }}
           generateName={() => {
             const date = new Date()
-            return `Scan_${date.toISOString()}.jpg`
+            //We had to replace : by - since the Cordova File plugin doesn't support : in the filename
+            //https://github.com/apache/cordova-plugin-file/issues/289#issuecomment-477954331
+            return `Scan_${date.toISOString().replace(/:/g, '-')}.jpg`
           }}
           onConflict={'rename'}
           onBeforeUpload={() => stopMediaBackup()}
