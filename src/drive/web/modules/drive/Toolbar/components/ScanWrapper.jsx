@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Icon, translate } from 'cozy-ui/transpiled/react'
-import palette from 'cozy-ui/react/palette'
 
 import Scanner from './Scanner'
 import { SCANNER_DONE, SCANNER_UPLOADING } from './Scanner'
