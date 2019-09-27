@@ -12,14 +12,14 @@ class ScannerQualification extends Component {
     const { qualification } = this.state
     return (
       <Modal
-        primaryText={t('save')}
+        primaryText={t('Scan.save')}
         mobileFullscreen
         primaryAction={async () => await onUpload(qualification)}
-        secondaryText={t('cancel')}
+        secondaryText={t('Scan.cancel')}
         secondaryAction={() => dismissAction()}
         dismissAction={() => dismissAction()}
         overflowHidden={true}
-        title={t('scan.save_doc')}
+        title={t('Scan.save_doc')}
       >
         <ModalDescription className="u-flex-grow-1">
           <DocumentType
