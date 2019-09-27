@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import cx from 'classnames'
+import classNames from 'classnames'
+
 import { Title, Icon } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 import ActionMenu, {
@@ -7,8 +8,11 @@ import ActionMenu, {
   ActionMenuHeader
 } from 'cozy-ui/react/ActionMenu'
 import palette from 'cozy-ui/react/palette'
-
+import styles from './styles.styl'
 import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
+
+import IconFileBlue from 'drive/assets/icons/icons-files-colored-bleu.svg'
+import IconFileGray from 'drive/assets/icons/icons-files-colored-gray.svg'
 class DocumentTypeItem extends Component {
   state = {
     displayed: false
@@ -28,17 +32,25 @@ class DocumentTypeItem extends Component {
     return (
       <>
         <div
-          className={cx(
-            'u-bg-paleGrey u-w-4 u-h-4 u-mr-half u-mb-half u-ellipsis u-bdrs-3 u-flex u-flex-column u-flex-justify-around u-flex-items-center'
+          className={classNames(
+            'u-bg-paleGrey u-mr-half u-mb-half u-bxz u-bdrs-3 u-flex u-flex-column u-flex-justify-around',
+            styles['grid-item'],
+            { [styles['border-selected']]: isSelected }
           )}
           onClick={() => this.toggleMenu()}
         >
-          <Icon
-            icon="file"
-            color={isSelected ? palette.azure : palette.coolGrey}
-            size={'32'}
-          />
-          <span>{isSelected ? selectedItem.label : category.label}</span>
+          <div className="u-pos-relative u-flex-self-center">
+            <Icon icon={isSelected ? IconFileBlue : IconFileGray} size={'32'} />
+            <Icon
+              icon="team"
+              color={isSelected ? palette.dodgerBlue : palette.coolGrey}
+              size={'16'}
+              className={classNames(styles['icon-absolute-centered'])}
+            />
+          </div>
+          <span className="u-ph-half u-fz-tiny u-ta-center u-ellipsis">
+            {isSelected ? selectedItem.label : category.label}
+          </span>
         </div>
         {displayed && (
           <ActionMenu onClose={() => this.toggleMenu()}>

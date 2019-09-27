@@ -3,6 +3,7 @@ import { withClient } from 'cozy-client'
 import { CozyFile } from 'cozy-doctypes'
 
 import ScannerQualification from './ScannerQualification'
+import { Overlay } from 'cozy-ui/transpiled/react'
 
 export const SCANNER_IDLE = 'idle'
 export const SCANNER_DONE = 'done'
@@ -14,7 +15,8 @@ class Scanner extends React.Component {
     filename: '',
     online: window.navigator.onLine,
     shouldShowScannerQualification: false,
-    imageURI: ''
+    imageURI: '',
+    loadingScreen: false
   }
   constructor(props) {
     super(props)
@@ -46,18 +48,21 @@ class Scanner extends React.Component {
    * @param {String} imageURI native path to the file (file:///var....)
    */
   onSuccess = async imageURI => {
+    console.log('loading screen false')
     this.setState({
       error: null,
+      loadingScreen: false,
       shouldShowScannerQualification: true,
       imageURI
     })
   }
 
   onUpload = async (imageURI, qualification) => {
+    console.log('upload ? ')
     const { generateName } = this.props
-    this.setState({ status: SCANNER_UPLOADING, filename: generateName() })
+    const name = generateName()
+    this.setState({ status: SCANNER_UPLOADING, filename: name })
     const { dirId, onConflict, onBeforeUpload, onFinish } = this.props
-    const { filename } = this.state
     const onResolvedLocalFS = async fileEntry => {
       fileEntry.file(
         file => {
@@ -67,7 +72,7 @@ class Scanner extends React.Component {
             try {
               if (onBeforeUpload) onBeforeUpload()
               const newFile = await this.uploadFileWithConflictStrategy(
-                filename,
+                name,
                 reader.result,
                 dirId,
                 onConflict,
@@ -85,6 +90,7 @@ class Scanner extends React.Component {
               this.setState({ status: SCANNER_DONE })
             }
           }
+          console.log('read')
           // Read the file as an ArrayBuffer
           reader.readAsArrayBuffer(file)
         },
@@ -127,6 +133,7 @@ class Scanner extends React.Component {
     onConflict,
     metadata
   ) {
+    console.log('upload file with conflict')
     const { client } = this.props
     const filesCollection = client.collection('io.cozy.files')
 
@@ -160,13 +167,17 @@ class Scanner extends React.Component {
         )
       }
     } catch (error) {
+      console.log('y a une erreur', error)
       if (/Not Found/.test(error)) {
+        console.log('ok not found')
         return await this.upload(name, file, dirId, metadata)
       }
+      console.log('devrait être notre found')
       throw error
     }
   }
   async upload(name, file, dirId, metadata) {
+    console.log('upload ok ?')
     const { client } = this.props
 
     return client.collection('io.cozy.files').createFile(file, {
@@ -177,11 +188,15 @@ class Scanner extends React.Component {
       metadata
     })
   }
-  onFail(message) {
+  onFail = message => {
+    this.setState({ loadingScreen: false })
     console.log('failed', message)
   }
   startScanner = () => {
     try {
+      //
+      this.setState({ loadingScreen: true })
+      console.log('loadingScreen passe à true')
       this.defaultPluginConfig = {
         quality: 80,
         destinationType: window.navigator.camera.DestinationType.FILE_URI,
@@ -212,8 +227,17 @@ class Scanner extends React.Component {
       filename,
       online,
       shouldShowScannerQualification,
-      imageURI
+      imageURI,
+      loadingScreen
     } = this.state
+    if (loadingScreen) {
+      console.log('loading screen display')
+      return (
+        <Overlay>
+          <div className="u-bg-black u-mih-100" />
+        </Overlay>
+      )
+    }
     if (shouldShowScannerQualification)
       return (
         <ScannerQualification
