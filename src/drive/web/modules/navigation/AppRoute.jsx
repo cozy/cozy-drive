@@ -9,7 +9,7 @@ import Layout from 'drive/web/modules/layout/Layout'
 import FileExplorer from './FileExplorer'
 import FilesViewer from 'drive/web/modules/viewer/FilesViewer'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
-
+import ScannerQualification from '../../modules/drive/Toolbar/components/ScannerQualification'
 import {
   FolderContainer as Folder,
   RecentContainer as Recent,
@@ -20,6 +20,7 @@ import { Container as Trash } from 'drive/web/modules/trash'
 const AppRoute = (
   <Route>
     <Route component={Layout}>
+      <Route path="/scan" component={ScannerQualification} />
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />

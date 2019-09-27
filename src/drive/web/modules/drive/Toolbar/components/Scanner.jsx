@@ -1,8 +1,8 @@
 import React from 'react'
-
 import { withClient } from 'cozy-client'
-
 import { CozyFile } from 'cozy-doctypes'
+
+import ScannerQualification from './ScannerQualification'
 
 export const SCANNER_IDLE = 'idle'
 export const SCANNER_DONE = 'done'
@@ -12,7 +12,9 @@ class Scanner extends React.Component {
     status: SCANNER_IDLE,
     error: null,
     filename: '',
-    online: window.navigator.onLine
+    online: window.navigator.onLine,
+    shouldShowScannerQualification: false,
+    imageURI: ''
   }
   constructor(props) {
     super(props)
@@ -44,17 +46,18 @@ class Scanner extends React.Component {
    * @param {String} imageURI native path to the file (file:///var....)
    */
   onSuccess = async imageURI => {
-    const {
-      generateName,
-      dirId,
-      onConflict,
-      onBeforeUpload,
-      onFinish
-    } = this.props
-    const name = generateName()
+    this.setState({
+      error: null,
+      shouldShowScannerQualification: true,
+      imageURI
+    })
+  }
 
-    this.setState({ error: null, filename: name, status: SCANNER_UPLOADING })
-
+  onUpload = async (imageURI, qualification) => {
+    const { generateName } = this.props
+    this.setState({ status: SCANNER_UPLOADING, filename: generateName() })
+    const { dirId, onConflict, onBeforeUpload, onFinish } = this.props
+    const { filename } = this.state
     const onResolvedLocalFS = async fileEntry => {
       fileEntry.file(
         file => {
@@ -64,10 +67,11 @@ class Scanner extends React.Component {
             try {
               if (onBeforeUpload) onBeforeUpload()
               const newFile = await this.uploadFileWithConflictStrategy(
-                name,
+                filename,
                 reader.result,
                 dirId,
-                onConflict
+                onConflict,
+                qualification
               )
               //It's possible that the filename as changed, so let's update it
               if (onConflict === 'rename') {
@@ -107,7 +111,6 @@ class Scanner extends React.Component {
 
     window.resolveLocalFileSystemURL(imageURI, onResolvedLocalFS, onError)
   }
-
   //TODO Put this in Files Doctypes
   /**
    *
@@ -115,8 +118,15 @@ class Scanner extends React.Component {
    * @param {ArrayBuffer} file data
    * @param {String} dirId dir id when to upload
    * @param {String} onConflict Actually only 2 hardcoded strategies 'erase' or 'rename'
+   * @param {Object} metadata An object containing the wanted metadata to attach
    */
-  async uploadFileWithConflictStrategy(name, file, dirId, onConflict) {
+  async uploadFileWithConflictStrategy(
+    name,
+    file,
+    dirId,
+    onConflict,
+    metadata
+  ) {
     const { client } = this.props
     const filesCollection = client.collection('io.cozy.files')
 
@@ -129,7 +139,8 @@ class Scanner extends React.Component {
         const resp = await filesCollection.updateFile(file, {
           dirId,
           fileId,
-          name
+          name,
+          metadata
         })
         return resp
       } else {
@@ -144,24 +155,26 @@ class Scanner extends React.Component {
           newFileName,
           file,
           dirId,
-          onConflict
+          onConflict,
+          metadata
         )
       }
     } catch (error) {
       if (/Not Found/.test(error)) {
-        return await this.upload(name, file, dirId)
+        return await this.upload(name, file, dirId, metadata)
       }
       throw error
     }
   }
-  async upload(name, file, dirId) {
+  async upload(name, file, dirId, metadata) {
     const { client } = this.props
 
     return client.collection('io.cozy.files').createFile(file, {
       name,
       dirId,
       contentType: 'image/jpeg',
-      lastModifiedDate: new Date()
+      lastModifiedDate: new Date(),
+      metadata
     })
   }
   onFail(message) {
@@ -193,7 +206,33 @@ class Scanner extends React.Component {
    */
   render() {
     const { children } = this.props
-    const { status, error, filename, online } = this.state
+    const {
+      status,
+      error,
+      filename,
+      online,
+      shouldShowScannerQualification,
+      imageURI
+    } = this.state
+    if (shouldShowScannerQualification)
+      return (
+        <ScannerQualification
+          onUpload={async qualification => {
+            this.setState({ shouldShowScannerQualification: false })
+            console.log('before upload ? ')
+            return await this.onUpload(imageURI, qualification)
+          }}
+          dismissAction={() => {
+            window.navigator.camera.cleanup(
+              () => {
+                console.log('clean ok')
+              },
+              () => console.log('clean ko')
+            )
+            this.setState({ shouldShowScannerQualification: false })
+          }}
+        />
+      )
     return (
       <>
         {children({
