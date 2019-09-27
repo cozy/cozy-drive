@@ -28,7 +28,7 @@ class DocumentTypeItem extends Component {
   }
   render() {
     const { displayed } = this.state
-    const { category, isSelected, selectedItem, items } = this.props
+    const { category, isSelected, selectedItem, items, t } = this.props
     return (
       <>
         <div
@@ -49,7 +49,9 @@ class DocumentTypeItem extends Component {
             />
           </div>
           <span className="u-ph-half u-fz-tiny u-ta-center u-ellipsis">
-            {isSelected ? selectedItem.label : category.label}
+            {isSelected
+              ? t(`Scan.items.${selectedItem.label}`)
+              : t(`Scan.categories.${category.label}`)}
           </span>
         </div>
         {displayed && (
@@ -69,7 +71,7 @@ class DocumentTypeItem extends Component {
                 </Img>
                 <Bd className={'u-ml-1'}>
                   <Bold tag="span" ellipsis>
-                    {category.label}
+                    {t(`Scan.categories.${category.label}`)}
                   </Bold>
                 </Bd>
               </Media>
@@ -86,7 +88,7 @@ class DocumentTypeItem extends Component {
                   }}
                   key={item.id}
                 >
-                  {item.label}
+                  {t(`Scan.items.${item.label}`)}
                 </ActionMenuItem>
               )
             })}
@@ -116,7 +118,7 @@ class DocumentType extends Component {
     const { selected } = this.state
     return (
       <>
-        <Title>{t('scan.doc_type')}</Title>
+        <Title className="u-mv-1">{t('Scan.doc_type')}</Title>
         <div className="u-flex u-flex-wrap">
           {categories.map((category, i) => {
             return (
@@ -129,6 +131,7 @@ class DocumentType extends Component {
                 selectedItem={
                   selected.itemId ? getItemById(selected.itemId) : {}
                 }
+                t={t}
               />
             )
           })}

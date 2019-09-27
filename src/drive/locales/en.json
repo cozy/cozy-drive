@@ -538,9 +538,57 @@
   },
   "Scan": {
     "scan_a_doc": "Scan a doc",
+    "save_doc": "Save the doc",
+    "doc_type": "Types of document",
+    "save": "Save",
+    "cancel": "Cancel",
     "error": {
       "offline": "You are currently offline and you can't use this functionnality. Try it later",
       "uploading": "You are already uploading a file. Wait until the end of this upload and try again."
+    },
+    "items": {
+      "national_id_card": "Carte d'identité",
+      "passport": "Passeport",
+      "residence_permit": "Titre de séjour",
+      "family_record_book": "Livret de famille",
+      "birth_certificate": "Certificat de naissance",
+      "driver_license": "Permis",
+      "weeding": "Contrat de mariage",
+      "pacs": "Attestion de PACS",
+      "divorce": "Attestation de divorce",
+      "large_family_card": "Carte famille nombreuse",
+      "caf": "CAF",
+      "diploma": "Diplôme",
+      "work_contract": "Contrat",
+      "pay_sheet": "Fiche de paie",
+      "unemployment_benefit": "Allocations chômage",
+      "pension": "Retraite",
+      "other_revenue": "Autres revenues",
+      "gradebook": "Bulletin de notes",
+      "health_book": "Carnet de Santé",
+      "insurance_card": "Carte vitale",
+      "prescription": "Ordonnance",
+      "health_invoice": "Facture médicale",
+      "registration": "Carte grise",
+      "car_insurance": "Assurance voiture",
+      "mechanic_invoice": "Facture de réparation",
+      "transport_invoice": "Facture de transport",
+      "phone_invoice": "Facture de téléphone",
+      "isp_invoice": "Facture de télécom",
+      "energy_invoice": "Fature d'électricité",
+      "web_service_invoice": "Service web",
+      "lease": "Bail",
+      "house_insurance": "Assurance logement"
+    },
+    "categories": {
+      "identity": "Pièce d’identité",
+      "family": "Famille",
+      "work_study": "Travail/Etudes",
+      "health": "Santé",
+      "home": "Logement",
+      "transport": "Transport",
+      "invoice": "Factures",
+      "others": "Others"
     }
   }
 }
