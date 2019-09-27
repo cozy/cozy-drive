@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
-import { Title, Icon } from 'cozy-ui/react'
+import { Title, Icon, Media, Bd, Img, Bold } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 import ActionMenu, {
   ActionMenuItem,
@@ -39,10 +39,10 @@ class DocumentTypeItem extends Component {
           )}
           onClick={() => this.toggleMenu()}
         >
-          <div className="u-pos-relative u-flex-self-center">
+          <div className="u-pos-relative u-flex-self-center u-mt-1">
             <Icon icon={isSelected ? IconFileBlue : IconFileGray} size={'32'} />
             <Icon
-              icon="team"
+              icon={category.icon}
               color={isSelected ? palette.dodgerBlue : palette.coolGrey}
               size={'16'}
               className={classNames(styles['icon-absolute-centered'])}
@@ -54,7 +54,26 @@ class DocumentTypeItem extends Component {
         </div>
         {displayed && (
           <ActionMenu onClose={() => this.toggleMenu()}>
-            <ActionMenuHeader>{category.label}</ActionMenuHeader>
+            <ActionMenuHeader>
+              <Media>
+                <Img>
+                  <div className="u-pos-relative u-w-2">
+                    <Icon icon={IconFileBlue} size={'32'} />
+                    <Icon
+                      icon={category.icon}
+                      color={palette.dodgerBlue}
+                      size={'16'}
+                      className={classNames(styles['icon-absolute-centered'])}
+                    />
+                  </div>
+                </Img>
+                <Bd className={'u-ml-1'}>
+                  <Bold tag="span" ellipsis>
+                    {category.label}
+                  </Bold>
+                </Bd>
+              </Media>
+            </ActionMenuHeader>
             {items.map(item => {
               return (
                 <ActionMenuItem
