@@ -220,13 +220,13 @@ export const categories = [
     id: 'cat5',
     label: 'home',
     icon: 'home',
-    file_type_ids: [19, 20, 21, 22]
+    file_type_ids: [31, 32, 33, 27, 28, 29]
   },
   {
     id: 'cat6',
     label: 'transport',
-    icon: 'paperplane',
-    file_type_ids: [31, 32, 33, 27, 28, 29]
+    icon: 'car',
+    file_type_ids: [6, 23, 24, 25, 26]
   },
   {
     id: 'cat8',
