@@ -233,13 +233,13 @@ export const categories = [
     label: 'invoice',
     icon: 'euro',
     file_type_ids: [27, 28, 29, 26, 30]
-  },
+  } /* ,
   {
     id: 'cat9',
     label: 'others',
     icon: 'dots',
     file_type_ids: []
-  }
+  } */
 ]
 
 export const getItemsByCategory = ({ label }) => {
