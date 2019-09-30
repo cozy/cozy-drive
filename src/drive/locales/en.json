@@ -578,12 +578,13 @@
       "energy_invoice": "Fature d'électricité",
       "web_service_invoice": "Service web",
       "lease": "Bail",
-      "house_insurance": "Assurance logement"
+      "house_insurance": "Assurance logement",
+      "rent_receipt": "Quitance de loyer"
     },
     "categories": {
-      "identity": "Pièce d’identité",
+      "identity": "Identité",
       "family": "Famille",
-      "work_study": "Travail/Etudes",
+      "work_study": "Étude",
       "health": "Santé",
       "home": "Logement",
       "transport": "Transport",
