@@ -22,7 +22,8 @@ import {
   EVALUATION_THRESHOLD,
   CHANGES_RUN_LIMIT,
   TRIGGER_ELAPSED,
-  PERCENT_INSTANCES
+  PERCENT_INSTANCES,
+  LOG_ERROR_MSG_LIMIT
 } from 'photos/ducks/clustering/consts'
 import { spatioTemporalScaled } from 'photos/ducks/clustering/metrics'
 import { gradientClustering } from 'photos/ducks/clustering/gradient'
@@ -98,7 +99,7 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
       setting = await updateParamsPeriod(client, setting, params, dataset)
     }
   } catch (e) {
-    log('error', `An error occured during the clustering: ${JSON.stringify(e)}`)
+    log('critical', String(e).substr(0, LOG_ERROR_MSG_LIMIT))
     return
   }
   return { setting, clusteredCount }
@@ -289,7 +290,7 @@ export const onPhotoUpload = async () => {
     }
   } catch (e) {
     // Release the lock in case of error
-    log('error', e.reason)
+    log('critical', String(e).substr(0, LOG_ERROR_MSG_LIMIT))
     await client.save({ ...setting, jobStatus: '' })
   }
 }

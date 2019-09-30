@@ -13,6 +13,7 @@ export const EVALUATION_THRESHOLD = 500
 export const CHANGES_RUN_LIMIT = 1000
 export const TRIGGER_ELAPSED = '20m'
 export const PERCENT_INSTANCES = 66
+export const LOG_ERROR_MSG_LIMIT = 32 * 1024 - 1 // Avoid unreadable logs by the stack
 
 export const DEFAULT_SETTING = {
   type: SETTING_TYPE,
