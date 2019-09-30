@@ -33,9 +33,12 @@ class DocumentTypeItem extends Component {
       <>
         <div
           className={classNames(
-            'u-bg-paleGrey u-mr-half u-mb-half u-bxz u-bdrs-3 u-flex u-flex-column u-flex-justify-around',
+            'u-mr-half u-mb-half u-bxz u-bdrs-3 u-flex u-flex-column u-flex-justify-around',
             styles['grid-item'],
-            { [styles['border-selected']]: isSelected }
+            {
+              [styles['border-selected']]: isSelected,
+              [styles['border-not-selected']]: !isSelected
+            }
           )}
           onClick={() => this.toggleMenu()}
         >
@@ -48,7 +51,7 @@ class DocumentTypeItem extends Component {
               className={classNames(styles['icon-absolute-centered'])}
             />
           </div>
-          <span className="u-ph-half u-fz-tiny u-ta-center u-ellipsis">
+          <span className="u-ph-half u-pb-half u-fz-tiny u-ta-center u-ellipsis">
             {isSelected
               ? t(`Scan.items.${selectedItem.label}`)
               : t(`Scan.categories.${category.label}`)}
