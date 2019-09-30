@@ -241,7 +241,7 @@ class Scanner extends React.Component {
     if (shouldShowScannerQualification)
       return (
         <ScannerQualification
-          onUpload={async qualification => {
+          onSave={async qualification => {
             this.setState({ shouldShowScannerQualification: false })
             console.log('before upload ? ')
             return await this.onUpload(imageURI, qualification)

@@ -120,7 +120,7 @@ class DocumentTypeItem extends Component {
 DocumentTypeItem.propTypes = {
   onSelect: PropTypes.func
 }
-class DocumentType extends Component {
+class DocumentQualification extends Component {
   state = {
     selected: {
       categoryLabel: null,
@@ -171,11 +171,11 @@ class DocumentType extends Component {
   }
 }
 
-DocumentType.propTypes = {
+DocumentQualification.propTypes = {
   /**
    * This callback is called after a select.
    *
    */
   onQualified: PropTypes.func
 }
-export default translate()(DocumentType)
+export default translate()(DocumentQualification)
