@@ -131,7 +131,10 @@ class DocumentQualification extends Component {
   onSelect = item => {
     this.setState({ selected: item })
     const { onQualified } = this.props
-    if (onQualified) onQualified(getItemById(item.itemId))
+    if (onQualified) {
+      const realItem = getItemById(item.itemId)
+      if (realItem) onQualified(realItem)
+    }
   }
 
   render() {
