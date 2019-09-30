@@ -42,13 +42,27 @@ CategoryGridItem.propTypes = {
   icon: PropTypes.string,
   label: PropTypes.string.isRequired
 }
-class DocumentTypeItem extends Component {
+
+/**
+ * DocumentCategory component
+ *
+ * The goal of this component is to display a
+ * category / type of document and also manage
+ * its associated ActionMenu since a category has
+ * several associated items.
+ *
+ * If an item from a category is selected, we display
+ * its label instead of the label from the category
+ *
+ * @TODO this component should use a Grid system from UI
+ */
+class DocumentCategory extends Component {
   state = {
-    displayed: false
+    isMenuDisplayed: false
   }
 
   toggleMenu() {
-    this.setState({ displayed: !this.state.displayed })
+    this.setState({ isMenuDisplayed: !this.state.isMenuDisplayed })
   }
 
   onSelect = item => {
@@ -56,7 +70,7 @@ class DocumentTypeItem extends Component {
     if (onSelect) onSelect(item)
   }
   render() {
-    const { displayed } = this.state
+    const { isMenuDisplayed } = this.state
     const { category, isSelected, selectedItem, items, t } = this.props
     return (
       <>
@@ -72,7 +86,7 @@ class DocumentTypeItem extends Component {
           />
         </GridItem>
 
-        {displayed && (
+        {isMenuDisplayed && (
           <ActionMenu onClose={() => this.toggleMenu()}>
             <ActionMenuHeader>
               <Media>
@@ -117,9 +131,27 @@ class DocumentTypeItem extends Component {
   }
 }
 
-DocumentTypeItem.propTypes = {
-  onSelect: PropTypes.func
+DocumentCategory.propTypes = {
+  onSelect: PropTypes.func,
+  category: PropTypes.object.isRequired,
+  isSelected: PropTypes.bool,
+  selectedItem: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired,
+  t: PropTypes.func.isRequired
 }
+
+/**
+ * Document Qualification
+ *
+ * This screen is used to qualify a document ie:
+ *  Selecting a metadata category etc
+ *  Renaming the file
+ *
+ * When a selection is done, we call a callback from
+ * its parent
+ *
+ * @Todo this component should use a Grid system from UI
+ */
 class DocumentQualification extends Component {
   state = {
     selected: {
@@ -133,6 +165,8 @@ class DocumentQualification extends Component {
     const { onQualified } = this.props
     if (onQualified) {
       const realItem = getItemById(item.itemId)
+      //We only call the callback if a "real" item is selected
+      //not if `Scan.categories.undefined` is
       if (realItem) onQualified(realItem)
     }
   }
@@ -155,7 +189,7 @@ class DocumentQualification extends Component {
           </GridItem>
           {categories.map((category, i) => {
             return (
-              <DocumentTypeItem
+              <DocumentCategory
                 onSelect={item => this.onSelect(item)}
                 category={category}
                 items={getItemsByCategory(category)}
