@@ -27,6 +27,6 @@ class GridItem extends Component {
 GridItem.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-  childre: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired
 }
 export default GridItem
