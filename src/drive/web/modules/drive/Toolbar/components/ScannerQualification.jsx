@@ -27,7 +27,7 @@ import styles from './styles.styl'
  */
 class ScannerQualification extends Component {
   state = {
-    qualification: ''
+    qualification: undefined
   }
   render() {
     const { onSave, t, dismissAction } = this.props
