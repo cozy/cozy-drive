@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 import { Title, Icon, Media, Bd, Img, Bold } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
@@ -35,6 +36,11 @@ const CategoryGridItem = ({ isSelected, icon, label }) => {
       </span>
     </>
   )
+}
+CategoryGridItem.propTypes = {
+  isSelected: PropTypes.bool.isRequired,
+  icon: PropTypes.string,
+  label: PropTypes.string.isRequired
 }
 class DocumentTypeItem extends Component {
   state = {
@@ -110,9 +116,12 @@ class DocumentTypeItem extends Component {
     )
   }
 }
+
+DocumentTypeItem.propTypes = {
+  onSelect: PropTypes.func
+}
 class DocumentType extends Component {
   state = {
-    displayed: false,
     selected: {
       categoryLabel: null,
       itemId: null
@@ -162,4 +171,11 @@ class DocumentType extends Component {
   }
 }
 
+DocumentType.propTypes = {
+  /**
+   * This callback is called after a select.
+   *
+   */
+  onQualified: PropTypes.func
+}
 export default translate()(DocumentType)
