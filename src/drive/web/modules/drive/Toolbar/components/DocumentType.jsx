@@ -11,8 +11,31 @@ import palette from 'cozy-ui/react/palette'
 import styles from './styles.styl'
 import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
 
+import GridItem from './Grid/GridItem'
+
 import IconFileBlue from 'drive/assets/icons/icons-files-colored-bleu.svg'
 import IconFileGray from 'drive/assets/icons/icons-files-colored-gray.svg'
+
+const CategoryGridItem = ({ isSelected, icon, label }) => {
+  return (
+    <>
+      <div className="u-pos-relative u-flex-self-center u-mt-1">
+        <Icon icon={isSelected ? IconFileBlue : IconFileGray} size={'32'} />
+        {icon && (
+          <Icon
+            icon={icon}
+            color={isSelected ? palette.dodgerBlue : palette.coolGrey}
+            size={'16'}
+            className={classNames(styles['icon-absolute-centered'])}
+          />
+        )}
+      </div>
+      <span className="u-ph-half u-pb-half u-fz-tiny u-ta-center u-ellipsis">
+        {label}
+      </span>
+    </>
+  )
+}
 class DocumentTypeItem extends Component {
   state = {
     displayed: false
@@ -31,32 +54,18 @@ class DocumentTypeItem extends Component {
     const { category, isSelected, selectedItem, items, t } = this.props
     return (
       <>
-        <div
-          className={classNames(
-            'u-mr-half u-mb-half u-bxz u-bdrs-3 u-flex u-flex-column u-flex-justify-around',
-            styles['grid-item'],
-            {
-              [styles['border-selected']]: isSelected,
-              [styles['border-not-selected']]: !isSelected
+        <GridItem onClick={() => this.toggleMenu()} isSelected={isSelected}>
+          <CategoryGridItem
+            isSelected={isSelected}
+            icon={category.icon}
+            label={
+              isSelected
+                ? t(`Scan.items.${selectedItem.label}`)
+                : t(`Scan.categories.${category.label}`)
             }
-          )}
-          onClick={() => this.toggleMenu()}
-        >
-          <div className="u-pos-relative u-flex-self-center u-mt-1">
-            <Icon icon={isSelected ? IconFileBlue : IconFileGray} size={'32'} />
-            <Icon
-              icon={category.icon}
-              color={isSelected ? palette.dodgerBlue : palette.coolGrey}
-              size={'16'}
-              className={classNames(styles['icon-absolute-centered'])}
-            />
-          </div>
-          <span className="u-ph-half u-pb-half u-fz-tiny u-ta-center u-ellipsis">
-            {isSelected
-              ? t(`Scan.items.${selectedItem.label}`)
-              : t(`Scan.categories.${category.label}`)}
-          </span>
-        </div>
+          />
+        </GridItem>
+
         {displayed && (
           <ActionMenu onClose={() => this.toggleMenu()}>
             <ActionMenuHeader>
@@ -123,6 +132,15 @@ class DocumentType extends Component {
       <>
         <Title className="u-mv-1">{t('Scan.doc_type')}</Title>
         <div className="u-flex u-flex-wrap">
+          <GridItem
+            onClick={() => this.onSelect({ categoryLabel: null, itemId: null })}
+            isSelected={selected.categoryLabel === null}
+          >
+            <CategoryGridItem
+              isSelected={selected.categoryLabel === null}
+              label={t(`Scan.categories.undefined`)}
+            />
+          </GridItem>
           {categories.map((category, i) => {
             return (
               <DocumentTypeItem

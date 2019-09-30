@@ -589,7 +589,8 @@
       "home": "Logement",
       "transport": "Transport",
       "invoice": "Factures",
-      "others": "Others"
+      "others": "Autres",
+      "undefined": "Indéfini"
     }
   }
 }
