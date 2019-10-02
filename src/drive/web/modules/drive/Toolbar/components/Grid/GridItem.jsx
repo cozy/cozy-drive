@@ -1,31 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-
-import styles from '../styles.styl'
+import Grid from 'cozy-ui/react/MuiCozyTheme/Grid'
 
 class GridItem extends Component {
   render() {
-    const { isSelected, onClick, children } = this.props
+    const { onClick, children } = this.props
     return (
-      <div
-        className={classNames(
-          'u-mr-half u-mb-half u-bxz u-bdrs-3 u-flex u-flex-column u-flex-justify-around',
-          styles['grid-item'],
-          {
-            [styles['border-selected']]: isSelected,
-            [styles['border-not-selected']]: !isSelected
-          }
-        )}
+      <Grid
+        item
+        xs={3}
         onClick={() => onClick && onClick()}
+        className="u-ta-center u-bxz u-bdrs-3 u-ellipsis"
       >
         {children}
-      </div>
+      </Grid>
     )
   }
 }
 GridItem.propTypes = {
-  isSelected: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired
 }
