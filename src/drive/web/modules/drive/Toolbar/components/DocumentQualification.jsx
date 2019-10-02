@@ -14,14 +14,17 @@ import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
 
 import GridItem from './Grid/GridItem'
 
-import IconFileBlue from 'drive/assets/icons/icons-files-colored-bleu.svg'
-import IconFileGray from 'drive/assets/icons/icons-files-colored-gray.svg'
+import IconFile from 'drive/assets/icons/icons-files-bi-color.svg'
 
 const CategoryGridItem = ({ isSelected, icon, label }) => {
   return (
     <>
       <div className="u-pos-relative u-flex-self-center u-mt-1">
-        <Icon icon={isSelected ? IconFileBlue : IconFileGray} size={'32'} />
+        <Icon
+          icon={IconFile}
+          size={'32'}
+          color={isSelected ? palette.dodgerBlue : palette.coolGrey}
+        />
         {icon && (
           <Icon
             icon={icon}
@@ -92,7 +95,11 @@ class DocumentCategory extends Component {
               <Media>
                 <Img>
                   <div className="u-pos-relative u-w-2">
-                    <Icon icon={IconFileBlue} size={'32'} />
+                    <Icon
+                      icon={IconFile}
+                      size={'32'}
+                      color={palette.dodgerBlue}
+                    />
                     <Icon
                       icon={category.icon}
                       color={palette.dodgerBlue}
