@@ -38,7 +38,11 @@ class DocumentCategory extends Component {
   }
 
   toggleMenu() {
-    this.setState({ isMenuDisplayed: !this.state.isMenuDisplayed })
+    this.setState(prevState => {
+      return {
+        isMenuDisplayed: !prevState.isMenuDisplayed
+      }
+    })
   }
 
   onSelect = item => {
