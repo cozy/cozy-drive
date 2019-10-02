@@ -196,43 +196,43 @@ export const categories = [
     id: 'cat1',
     label: 'identity',
     icon: 'people',
-    file_type_ids: [1, 2, 3, 4, 5, 6]
+    file_type_ids: ['1', '2', '3', '4', '5', '6']
   },
   {
     id: 'cat2',
     label: 'family',
     icon: 'team',
-    file_type_ids: [4, 5, 7, 8, 9, 10, 11]
+    file_type_ids: ['4', '5', '7', '8', '9', '10', '11']
   },
   {
     id: 'cat3',
     label: 'work_study',
     icon: 'company',
-    file_type_ids: [12, 13, 14, 15, 16, 17, 18]
+    file_type_ids: ['12', '13', '14', '15', '16', '17', '18']
   },
   {
     id: 'cat4',
     label: 'health',
     icon: 'heart',
-    file_type_ids: [19, 20, 21, 22]
+    file_type_ids: ['19', '20', '21', '22']
   },
   {
     id: 'cat5',
     label: 'home',
     icon: 'home',
-    file_type_ids: [31, 32, 33, 27, 28, 29]
+    file_type_ids: ['31', '32', '33', '27', '28', '29']
   },
   {
     id: 'cat6',
     label: 'transport',
     icon: 'car',
-    file_type_ids: [6, 23, 24, 25, 26]
+    file_type_ids: ['6', '23', '24', '25', '26']
   },
   {
     id: 'cat8',
     label: 'invoice',
     icon: 'euro',
-    file_type_ids: [27, 28, 29, 26, 30]
+    file_type_ids: ['27', '28', '29', '26', '30']
   } /* ,
   {
     id: 'cat9',
@@ -255,9 +255,5 @@ export const getItemsByCategory = ({ label }) => {
 }
 
 export const getItemById = id => {
-  let itemToReturn = ''
-  items.map(item => {
-    if (item.id == id) itemToReturn = item
-  })
-  return itemToReturn
+  return items.find(item => item.id === id)
 }
