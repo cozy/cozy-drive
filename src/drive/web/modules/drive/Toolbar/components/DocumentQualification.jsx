@@ -9,14 +9,15 @@ import ActionMenu, {
   ActionMenuHeader
 } from 'cozy-ui/react/ActionMenu'
 import palette from 'cozy-ui/react/palette'
-import styles from './styles.styl'
-import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
-
-import GridItem from './Grid/GridItem'
-
-import IconFile from 'drive/assets/icons/icons-files-bi-color.svg'
 import MuiCozyTheme from 'cozy-ui/react/MuiCozyTheme'
 import Grid from 'cozy-ui/react/MuiCozyTheme/Grid'
+
+import styles from './styles.styl'
+import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
+import GridItem from './Grid/GridItem'
+//TODO Wait for https://github.com/cozy/cozy-ui/pull/1182 to be merged
+import IconFile from 'drive/assets/icons/icons-files-bi-color.svg'
+
 const CategoryGridItem = ({ isSelected, icon, label }) => {
   return (
     <div
@@ -61,7 +62,6 @@ CategoryGridItem.propTypes = {
  * If an item from a category is selected, we display
  * its label instead of the label from the category
  *
- * @TODO this component should use a Grid system from UI
  */
 class DocumentCategory extends Component {
   state = {
@@ -161,7 +161,6 @@ DocumentCategory.propTypes = {
  * When a selection is done, we call a callback from
  * its parent
  *
- * @Todo this component should use a Grid system from UI
  */
 class DocumentQualification extends Component {
   state = {
