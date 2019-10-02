@@ -15,11 +15,17 @@ import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
 import GridItem from './Grid/GridItem'
 
 import IconFile from 'drive/assets/icons/icons-files-bi-color.svg'
-
+import MuiCozyTheme from 'cozy-ui/react/MuiCozyTheme'
+import Grid from 'cozy-ui/react/MuiCozyTheme/Grid'
 const CategoryGridItem = ({ isSelected, icon, label }) => {
   return (
-    <>
-      <div className="u-pos-relative u-flex-self-center u-mt-1">
+    <div
+      className={classNames('u-pt-1 u-pb-half u-ph-half u-bxz  u-ellipsis', {
+        [styles['border-selected']]: isSelected,
+        [styles['border-not-selected']]: !isSelected
+      })}
+    >
+      <div className="u-pos-relative">
         <Icon
           icon={IconFile}
           size={'32'}
@@ -34,10 +40,8 @@ const CategoryGridItem = ({ isSelected, icon, label }) => {
           />
         )}
       </div>
-      <span className="u-ph-half u-pb-half u-fz-tiny u-ta-center u-ellipsis">
-        {label}
-      </span>
-    </>
+      <span className="u-fz-tiny">{label}</span>
+    </div>
   )
 }
 CategoryGridItem.propTypes = {
@@ -77,7 +81,7 @@ class DocumentCategory extends Component {
     const { category, isSelected, selectedItem, items, t } = this.props
     return (
       <>
-        <GridItem onClick={() => this.toggleMenu()} isSelected={isSelected}>
+        <GridItem onClick={() => this.toggleMenu()}>
           <CategoryGridItem
             isSelected={isSelected}
             icon={category.icon}
@@ -182,18 +186,18 @@ class DocumentQualification extends Component {
     const { t } = this.props
     const { selected } = this.state
     return (
-      <>
+      <MuiCozyTheme>
         <Title className="u-mv-1">{t('Scan.doc_type')}</Title>
-        <div className="u-flex u-flex-wrap">
+        <Grid container spacing={1}>
           <GridItem
             onClick={() => this.onSelect({ categoryLabel: null, itemId: null })}
-            isSelected={selected.categoryLabel === null}
           >
             <CategoryGridItem
               isSelected={selected.categoryLabel === null}
               label={t(`Scan.categories.undefined`)}
             />
           </GridItem>
+
           {categories.map((category, i) => {
             return (
               <DocumentCategory
@@ -209,8 +213,8 @@ class DocumentQualification extends Component {
               />
             )
           })}
-        </div>
-      </>
+        </Grid>
+      </MuiCozyTheme>
     )
   }
 }
