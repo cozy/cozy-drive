@@ -14,7 +14,7 @@ import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 import MoveModal from 'drive/web/modules/move/MoveModal'
-
+import EditDocumentQualification from 'drive/web/modules/drive/Toolbar/components/EditDocumentQualification'
 import {
   openFileWith,
   downloadFiles,
@@ -139,6 +139,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
           displayCondition: () => canMove
+        },
+        qualify: {
+          action: selected =>
+            dispatch(
+              showModal(<EditDocumentQualification document={selected[0]} />)
+            ),
+          displayCondition: selections =>
+            selections.length === 1 && isFile(selections[0])
         },
         'phone-download': {
           displayCondition: selections =>

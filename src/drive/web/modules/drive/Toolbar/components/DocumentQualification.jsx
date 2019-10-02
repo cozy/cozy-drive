@@ -153,11 +153,11 @@ class DocumentQualification extends Component {
   }
 
   render() {
-    const { t } = this.props
+    const { t, title } = this.props
     const { selected } = this.state
     return (
       <MuiCozyTheme>
-        <Title className="u-mv-1">{t('Scan.doc_type')}</Title>
+        {title && <Title className="u-mv-1">{title}</Title>}
         <Grid container spacing={1}>
           <GridItem
             onClick={() => this.onSelect({ categoryLabel: null, itemId: null })}
@@ -194,6 +194,7 @@ DocumentQualification.propTypes = {
    * This callback is called after a select.
    *
    */
-  onQualified: PropTypes.func
+  onQualified: PropTypes.func,
+  title: PropTypes.string
 }
 export default translate()(DocumentQualification)

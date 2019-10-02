@@ -39,6 +39,7 @@ class ScannerQualification extends Component {
             onQualified={qualification => {
               this.setState({ qualification })
             }}
+            title={t('Scan.doc_type')}
           />
         }
       />
