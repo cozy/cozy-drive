@@ -17,8 +17,6 @@ import CategoryGridItem from './Grid/CategoryGridItem'
 import styles from './styles.styl'
 import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
 import GridItem from './Grid/GridItem'
-//TODO Wait for https://github.com/cozy/cozy-ui/pull/1182 to be merged
-import IconFile from 'drive/assets/icons/icons-files-bi-color.svg'
 
 /**
  * DocumentCategory component
@@ -73,7 +71,7 @@ class DocumentCategory extends Component {
                 <Img>
                   <div className="u-pos-relative u-w-2">
                     <Icon
-                      icon={IconFile}
+                      icon={'file-duotone'}
                       size={'32'}
                       color={palette.dodgerBlue}
                     />

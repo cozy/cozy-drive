@@ -54,14 +54,11 @@ class ScannerQualification extends Component {
           />
         </ModalContent>
         <ModalFooter className={classNames(styles['modal-footer'])}>
-          {/**@TODO remove primaryType / secondary after https://github.com/cozy/cozy-ui/pull/1183 */}
           <ModalButtons
             primaryText={t('Scan.save')}
             primaryAction={() => onSave(qualification)}
-            primaryType={'regular'}
             secondaryText={t('Scan.cancel')}
             secondaryAction={() => dismissAction()}
-            secondaryType={'secondary'}
           />
         </ModalFooter>
       </Modal>
