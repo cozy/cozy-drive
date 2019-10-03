@@ -12,7 +12,9 @@ class EditDocumentQualification extends Component {
     const { document, onClose, t, client } = this.props
     const { qualification } = this.state
     const item = document.metadata.id ? getItemById(document.metadata.id) : null
-    const theme = getThemeByItem(item)
+    const itemId = item ? item.id : null
+
+    const theme = item ? getThemeByItem(item) : null
     const categoryLabel = item ? theme.label : null
     return (
       <NewModal
@@ -42,7 +44,7 @@ class EditDocumentQualification extends Component {
               this.setState({ qualification })
             }}
             selected={{
-              itemId: item.id,
+              itemId,
               categoryLabel
             }}
           />
