@@ -5,9 +5,6 @@ import palette from 'cozy-ui/react/palette'
 import { Icon } from 'cozy-ui/react'
 
 import styles from '../styles.styl'
-//TODO Wait for https://github.com/cozy/cozy-ui/pull/1182 to be merged
-
-import IconFile from 'drive/assets/icons/icons-files-bi-color.svg'
 
 const CategoryGridItem = ({ isSelected, icon, label }) => {
   return (
@@ -19,7 +16,7 @@ const CategoryGridItem = ({ isSelected, icon, label }) => {
     >
       <div className="u-pos-relative">
         <Icon
-          icon={IconFile}
+          icon={'file-duotone'}
           size={'32'}
           color={isSelected ? palette.dodgerBlue : palette.coolGrey}
         />
