@@ -213,7 +213,8 @@
     "close": "Close",
     "openWith": "Open with",
     "moveto": "Move to…",
-    "phone-download": "Make available offline"
+    "phone-download": "Make available offline",
+    "qualify": "Qualify"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",
