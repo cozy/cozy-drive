@@ -550,6 +550,14 @@
       "uploading": "You are already uploading a file. Wait until the end of this upload and try again."
     },
     "items": {
+      "identity": "Identité",
+      "family": "Famille",
+      "work_study": "Étude",
+      "health": "Santé",
+      "home": "Logement",
+      "transport": "Transport",
+      "invoice": "Factures",
+      "others": "Others",
       "national_id_card": "Carte d'identité",
       "passport": "Passeport",
       "residence_permit": "Titre de séjour",
@@ -582,9 +590,13 @@
       "web_service_invoice": "Service web",
       "lease": "Bail",
       "house_insurance": "Assurance logement",
-      "rent_receipt": "Quitance de loyer"
+      "rent_receipt": "Quitance de loyer",
+      "tax_return": "Déclaration d'impôt",
+      "tax_notice": "Avis d'imposition",
+      "tax_timetable": "Echéancier d'imposition",
+      "invoices": "Factures"
     },
-    "categories": {
+    "themes": {
       "identity": "Identité",
       "family": "Famille",
       "work_study": "Étude",
@@ -593,7 +605,8 @@
       "transport": "Transport",
       "invoice": "Factures",
       "others": "Autres",
-      "undefined": "Indéfini"
+      "undefined": "Indéfini",
+      "tax": "Impôts"
     }
   }
 }

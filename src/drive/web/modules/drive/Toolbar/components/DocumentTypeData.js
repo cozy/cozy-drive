@@ -21,19 +21,22 @@ const items = [
     id: '4',
     classification: 'identity_document',
     subClassification: 'family_record_book',
-    label: 'family_record_book'
+    label: 'family_record_book',
+    defaultTheme: 'theme2'
   },
   {
     id: '5',
     classification: 'certificate',
     subject: 'life',
-    label: 'birth_certificate'
+    label: 'birth_certificate',
+    defaultTheme: 'theme1'
   },
   {
     id: '6',
     classification: 'diploma',
     subClassification: 'car',
-    label: 'driver_license'
+    label: 'driver_license',
+    defaultTheme: 'theme6'
   },
   {
     id: '7',
@@ -104,12 +107,15 @@ const items = [
   },
   {
     id: '19',
-    classification: 'office',
+    classification: 'certificate',
+    subject: 'health',
     label: 'health_book'
   },
   {
     id: '20',
     classification: 'certificate',
+    subject: 'health',
+    categorie: 'insurance',
     label: 'insurance_card'
   },
   {
@@ -180,8 +186,8 @@ const items = [
   },
   {
     id: '32',
-    classification: 'contract',
-    subject: 'home',
+    classification: 'invoicing',
+    subClassification: 'payment_statement',
     label: 'rent_receipt'
   },
   {
@@ -189,57 +195,78 @@ const items = [
     classification: 'contract',
     subject: 'house',
     label: 'house_insurance'
+  },
+  {
+    id: '34',
+    classification: 'tax_return',
+    label: 'tax_return'
+  },
+  {
+    id: '35',
+    classification: 'tax_notice',
+    label: 'tax_notice'
+  },
+  {
+    id: '36',
+    classification: 'tax_notice',
+    label: 'tax_timetable'
+  },
+  {
+    id: '37',
+    classification: 'invoicing',
+    label: 'invoices'
   }
 ]
+
 export const categories = [
   {
-    id: 'cat1',
+    id: 'theme1',
     label: 'identity',
     icon: 'people',
     file_type_ids: ['1', '2', '3', '4', '5', '6']
   },
   {
-    id: 'cat2',
+    id: 'theme2',
     label: 'family',
     icon: 'team',
     file_type_ids: ['4', '5', '7', '8', '9', '10', '11']
   },
   {
-    id: 'cat3',
+    id: 'theme3',
     label: 'work_study',
     icon: 'company',
     file_type_ids: ['12', '13', '14', '15', '16', '17', '18']
   },
   {
-    id: 'cat4',
+    id: 'theme4',
     label: 'health',
     icon: 'heart',
     file_type_ids: ['19', '20', '21', '22']
   },
   {
-    id: 'cat5',
+    id: 'theme5',
     label: 'home',
     icon: 'home',
     file_type_ids: ['31', '32', '33', '27', '28', '29']
   },
   {
-    id: 'cat6',
+    id: 'theme6',
     label: 'transport',
     icon: 'car',
     file_type_ids: ['6', '23', '24', '25', '26']
   },
   {
-    id: 'cat8',
+    id: 'theme7',
+    label: 'tax',
+    icon: 'bank',
+    file_type_ids: ['34', '35', '36']
+  },
+  {
+    id: 'theme8',
     label: 'invoice',
     icon: 'euro',
     file_type_ids: ['27', '28', '29', '26', '30']
-  } /* ,
-  {
-    id: 'cat9',
-    label: 'others',
-    icon: 'dots',
-    file_type_ids: []
-  } */
+  }
 ]
 
 export const getItemsByCategory = ({ label }) => {
@@ -259,5 +286,8 @@ export const getItemById = id => {
 }
 
 export const getThemeByItem = item => {
+  if (item.defaultTheme) {
+    return categories.find(category => category.id === item.defaultTheme)
+  }
   return categories.find(category => category.file_type_ids.includes(item.id))
 }

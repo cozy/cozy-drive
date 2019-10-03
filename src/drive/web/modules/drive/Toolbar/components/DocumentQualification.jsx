@@ -85,7 +85,7 @@ class DocumentCategory extends Component {
                 </Img>
                 <Bd className={'u-ml-1'}>
                   <Bold tag="span" ellipsis>
-                    {t(`Scan.categories.${category.label}`)}
+                    {t(`Scan.themes.${category.label}`)}
                   </Bold>
                 </Bd>
               </Media>
