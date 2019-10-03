@@ -543,6 +543,8 @@
     "doc_type": "Types of document",
     "save": "Save",
     "cancel": "Cancel",
+    "qualify": "Qualify",
+    "apply": "Apply",
     "error": {
       "offline": "You are currently offline and you can't use this functionnality. Try it later",
       "uploading": "You are already uploading a file. Wait until the end of this upload and try again."
