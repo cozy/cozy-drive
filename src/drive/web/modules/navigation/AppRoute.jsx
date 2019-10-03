@@ -1,4 +1,4 @@
-/* global __TARGET__ */
+/* global __TARGET__ , __DEVELOPMENT__*/
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 
@@ -20,7 +20,10 @@ import { Container as Trash } from 'drive/web/modules/trash'
 const AppRoute = (
   <Route>
     <Route component={Layout}>
-      <Route path="/scan" component={ScannerQualification} />
+      {/**@TODO remove this route when we have a cordova playground */}
+      {__DEVELOPMENT__ && (
+        <Route path="/scan" component={ScannerQualification} />
+      )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
