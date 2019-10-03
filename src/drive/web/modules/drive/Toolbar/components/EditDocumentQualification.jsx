@@ -9,13 +9,10 @@ class EditDocumentQualification extends Component {
     qualification: undefined
   }
   render() {
-    const { document, onClose, t, onSave, client } = this.props
+    const { document, onClose, t, client } = this.props
     const { qualification } = this.state
-    console.log('document', document)
     const item = document.metadata.id ? getItemById(document.metadata.id) : null
-    console.log('item', item)
     const theme = getThemeByItem(item)
-    console.log({ theme })
     const categoryLabel = item ? theme.label : null
     return (
       <NewModal
@@ -23,15 +20,16 @@ class EditDocumentQualification extends Component {
         dismissAction={onClose}
         primaryText={t('Scan.apply')}
         primaryAction={async () => {
-          const fileCollection = client.collection('io.cozy.files')
-          const metadata = fileCollection.createFileMetadata(qualification)
+          /* const fileCollection = client.collection('io.cozy.files')
+           const metadata = fileCollection.createFileMetadata(qualification)
           const test = await fileCollection.updateFileMetadata(document._id, {
             metadata: {
               hhh: 'nnn',
               extractor_version: '5'
             },
             name: 'toto3'
-          })
+          }) */
+          alert('SOON ')
           onClose()
         }}
         primaryType={'regular'}
