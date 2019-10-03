@@ -257,3 +257,7 @@ export const getItemsByCategory = ({ label }) => {
 export const getItemById = id => {
   return items.find(item => item.id === id)
 }
+
+export const getThemeByItem = item => {
+  return categories.find(category => category.file_type_ids.includes(item.id))
+}

@@ -134,13 +134,19 @@ DocumentCategory.propTypes = {
  *
  */
 class DocumentQualification extends Component {
-  state = {
-    selected: {
-      categoryLabel: null,
-      itemId: null
+  constructor(props) {
+    super(props)
+    this.state = {
+      selected: {
+        categoryLabel:
+          props.selected && props.selected.categoryLabel
+            ? props.selected.categoryLabel
+            : null,
+        itemId:
+          props.selected && props.selected.itemId ? props.selected.itemId : null
+      }
     }
   }
-
   onSelect = item => {
     this.setState({ selected: item })
     const { onQualified } = this.props
@@ -195,6 +201,10 @@ DocumentQualification.propTypes = {
    *
    */
   onQualified: PropTypes.func,
-  title: PropTypes.string
+  title: PropTypes.string,
+  selected: PropTypes.shape({
+    itemId: PropTypes.string,
+    categoryLabel: PropTypes.string
+  })
 }
 export default translate()(DocumentQualification)

@@ -3,7 +3,7 @@ import { translate } from 'cozy-ui/react/I18n'
 import { withClient } from 'cozy-client'
 import NewModal from './NewModal'
 import DocumentQualification from './DocumentQualification'
-
+import { getItemById, getThemeByItem } from './DocumentTypeData'
 class EditDocumentQualification extends Component {
   state = {
     qualification: undefined
@@ -11,7 +11,12 @@ class EditDocumentQualification extends Component {
   render() {
     const { document, onClose, t, onSave, client } = this.props
     const { qualification } = this.state
-
+    console.log('document', document)
+    const item = document.metadata.id ? getItemById(document.metadata.id) : null
+    console.log('item', item)
+    const theme = getThemeByItem(item)
+    console.log({ theme })
+    const categoryLabel = item ? theme.label : null
     return (
       <NewModal
         title={t('Scan.qualify')}
@@ -37,6 +42,10 @@ class EditDocumentQualification extends Component {
           <DocumentQualification
             onQualified={qualification => {
               this.setState({ qualification })
+            }}
+            selected={{
+              itemId: item.id,
+              categoryLabel
             }}
           />
         }
