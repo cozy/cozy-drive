@@ -1,5 +1,9 @@
 'use strict'
 
+jest.mock('cozy-ui/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
+
 import { getParentLink } from './File'
 
 describe('getParentLink function', () => {

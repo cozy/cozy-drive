@@ -4,8 +4,13 @@ import { render } from 'react-dom'
 jest.mock('drive/mobile/lib/cozy-helper')
 jest.mock('drive/store/configureStore')
 jest.mock('drive/lib/reporter')
-
-jest.mock('drive/mobile/modules/authorization/DriveMobileRouter', () => () => {})
+jest.mock('cozy-ui/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
+jest.mock(
+  'drive/mobile/modules/authorization/DriveMobileRouter',
+  () => () => {}
+)
 
 jest.mock('react-dom', () => {
   return {
@@ -16,7 +21,6 @@ jest.mock('react-dom', () => {
 })
 
 describe('App initialize', () => {
-
   beforeAll(() => {
     global.__DEVELOPMENT__ = false
   })

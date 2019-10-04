@@ -3,7 +3,9 @@ import {
   getDisplayedFilePath,
   getFilePath
 } from './reducer'
-
+jest.mock('cozy-ui/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
 describe('ensureFileHavePath function', () => {
   it('should ensure that the file has path and displayedPath attributes', () => {
     const view = {

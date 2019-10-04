@@ -8,6 +8,9 @@ import { MoveModal } from './MoveModal'
 
 jest.mock('cozy-doctypes')
 jest.mock('cozy-stack-client')
+jest.mock('cozy-ui/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
 
 CozyFile.doctype = 'io.cozy.files'
 

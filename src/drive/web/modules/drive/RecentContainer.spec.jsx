@@ -1,6 +1,8 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-
+jest.mock('cozy-ui/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
 import RecentContainer from './RecentContainer'
 
 describe('RecentContainer', () => {
