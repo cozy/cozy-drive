@@ -3,11 +3,19 @@ import { withClient } from 'cozy-client'
 import { CozyFile } from 'cozy-doctypes'
 
 import ScannerQualification from './ScannerQualification'
-import { Overlay } from 'cozy-ui/transpiled/react'
+import { Overlay, Modal } from 'cozy-ui/transpiled/react'
 
 export const SCANNER_IDLE = 'idle'
 export const SCANNER_DONE = 'done'
 export const SCANNER_UPLOADING = 'uploading'
+/**
+ * LoadingScreen is used to create a better transition between
+ * the native camera and the Qualification Modale.
+ *
+ * This Overlay has to be in a Modal since the menu item can be
+ * closed
+ *
+ */
 class Scanner extends React.Component {
   state = {
     status: SCANNER_IDLE,
@@ -223,9 +231,11 @@ class Scanner extends React.Component {
     } = this.state
     if (loadingScreen) {
       return (
-        <Overlay>
-          <div className="u-bg-black u-mih-100" />
-        </Overlay>
+        <Modal mobileFullscreen closable={false}>
+          <Overlay>
+            <div className="u-bg-black u-mih-100" />
+          </Overlay>
+        </Modal>
       )
     }
     if (shouldShowScannerQualification)
