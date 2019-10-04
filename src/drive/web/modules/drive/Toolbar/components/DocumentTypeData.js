@@ -218,7 +218,7 @@ const items = [
   }
 ]
 
-const themes = [
+export const themes = [
   {
     id: 'theme1',
     label: 'identity',

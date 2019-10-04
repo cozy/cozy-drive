@@ -15,7 +15,7 @@ import Grid from 'cozy-ui/react/MuiCozyTheme/Grid'
 import CategoryGridItem from './Grid/CategoryGridItem'
 
 import styles from './styles.styl'
-import { categories, getItemById, getItemsByCategory } from './DocumentTypeData'
+import { themes, getItemById, getItemsByCategory } from './DocumentTypeData'
 import GridItem from './Grid/GridItem'
 
 /**
@@ -59,7 +59,7 @@ class DocumentCategory extends Component {
             label={
               isSelected
                 ? t(`Scan.items.${selectedItem.label}`)
-                : t(`Scan.categories.${category.label}`)
+                : t(`Scan.themes.${category.label}`)
             }
           />
         </GridItem>
@@ -170,11 +170,11 @@ class DocumentQualification extends Component {
           >
             <CategoryGridItem
               isSelected={selected.categoryLabel === null}
-              label={t(`Scan.categories.undefined`)}
+              label={t(`Scan.themes.undefined`)}
             />
           </GridItem>
 
-          {categories.map((category, i) => {
+          {themes.map((category, i) => {
             return (
               <DocumentCategory
                 onSelect={item => this.onSelect(item)}
