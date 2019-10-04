@@ -4,6 +4,7 @@ import { withClient } from 'cozy-client'
 import NewModal from './NewModal'
 import DocumentQualification from './DocumentQualification'
 import { getItemById, getThemeByItem } from './DocumentTypeData'
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
 class EditDocumentQualification extends Component {
   state = {
     qualification: undefined
@@ -31,6 +32,25 @@ class EditDocumentQualification extends Component {
             },
             name: 'toto3'
           }) */
+          const tracker = getTracker()
+          if (tracker) {
+            tracker.push([
+              'trackEvent',
+              'Drive',
+              'Scanner',
+              'Edit Qualification'
+            ])
+            item &&
+              item.label &&
+              tracker.push([
+                'trackEvent',
+                'Drive',
+                'Scanner',
+                'qualification',
+                item.label
+              ])
+          }
+
           alert('SOON ')
           onClose()
         }}

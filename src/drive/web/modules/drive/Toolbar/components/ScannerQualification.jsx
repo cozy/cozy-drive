@@ -5,6 +5,8 @@ import { translate } from 'cozy-ui/react/I18n'
 import DocumentQualification from './DocumentQualification'
 
 import NewModal from './NewModal'
+
+import { getTracker } from 'cozy-ui/react/helpers/tracker'
 /**
  * ScannerQualification component
  *
@@ -29,7 +31,27 @@ class ScannerQualification extends Component {
         title={t('Scan.save_doc')}
         dismissAction={dismissAction}
         primaryText={t('Scan.save')}
-        primaryAction={async () => await onSave(qualification)}
+        primaryAction={async () => {
+          if (tracker) {
+            tracker.push([
+              'trackEvent',
+              'Drive',
+              'Scanner',
+              'Add Qualification'
+            ])
+            qualification &&
+              qualification.label &&
+              tracker.push([
+                'trackEvent',
+                'Drive',
+                'Scanner',
+                'qualification',
+                qualification.label
+              ])
+          }
+          const tracker = getTracker()
+          await onSave(qualification)
+        }}
         primaryType={'regular'}
         secondaryText={t('Scan.cancel')}
         secondaryAction={() => dismissAction()}
