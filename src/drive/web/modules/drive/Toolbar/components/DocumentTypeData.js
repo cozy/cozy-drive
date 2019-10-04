@@ -218,7 +218,7 @@ const items = [
   }
 ]
 
-export const categories = [
+const themes = [
   {
     id: 'theme1',
     label: 'identity',
@@ -271,9 +271,9 @@ export const categories = [
 
 export const getItemsByCategory = ({ label }) => {
   const items = []
-  categories.map(category => {
-    if (category.label === label) {
-      category.file_type_ids.map(itemId => {
+  themes.map(theme => {
+    if (theme.label === label) {
+      theme.file_type_ids.map(itemId => {
         items.push(getItemById(itemId))
       })
     }
@@ -287,7 +287,7 @@ export const getItemById = id => {
 
 export const getThemeByItem = item => {
   if (item.defaultTheme) {
-    return categories.find(category => category.id === item.defaultTheme)
+    return themes.find(theme => theme.id === item.defaultTheme)
   }
-  return categories.find(category => category.file_type_ids.includes(item.id))
+  return themes.find(theme => theme.file_type_ids.includes(item.id))
 }
