@@ -32,6 +32,8 @@ class ScannerQualification extends Component {
         dismissAction={dismissAction}
         primaryText={t('Scan.save')}
         primaryAction={async () => {
+          const tracker = getTracker()
+
           if (tracker) {
             tracker.push([
               'trackEvent',
@@ -49,7 +51,6 @@ class ScannerQualification extends Component {
                 qualification.label
               ])
           }
-          const tracker = getTracker()
           await onSave(qualification)
         }}
         primaryType={'regular'}
