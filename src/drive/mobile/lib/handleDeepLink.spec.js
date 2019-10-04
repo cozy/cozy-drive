@@ -1,6 +1,10 @@
 import { handleDeeplink } from './handleDeepLink'
 import { createMemoryHistory } from 'react-router'
 
+jest.mock('cozy-ui/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
+
 describe('Handling deep links', () => {
   const store = {
     dispatch: jest.fn()

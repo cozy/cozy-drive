@@ -9,6 +9,9 @@ global.cozy = {
     }
   }
 }
+jest.mock('cozy-ui/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
 
 jest.mock('cozy-realtime', () => {
   const mockReturn = {
