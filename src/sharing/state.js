@@ -203,9 +203,17 @@ const sharings = (state = [], action) => {
 const sharedPaths = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_PATHS:
+      //!TODO Remove after we solved the sharedPaths bugs
+      //eslint-disable-next-line
+      console.log('RECEIVE PATHS', action)
       return action.paths
     case ADD_SHARING:
-      return [...state, action.path]
+      //!TODO Remove after we solved the sharedPaths bugs
+      //eslint-disable-next-line
+      console.log('ADD SHARING', action)
+      //eslint-disable-next-line
+      const newState = [...state, action.path]
+      return newState
     case REVOKE_RECIPIENT:
       if (areAllRecipientsRevoked(action.sharing)) {
         return state.filter(p => p !== action.path)
@@ -311,18 +319,35 @@ const getPermissionById = (state, id) =>
 
 const getApps = state => state.apps
 
-export const hasSharedParent = (state, document) =>
-  state.sharedPaths.some(path => document.path.indexOf(`${path}/`) === 0)
+export const hasSharedParent = (state, document) => {
+  if (!state.sharedPaths) {
+    //eslint-disable-next-line
+    console.log('hasSharedParent should not occurs', state, document)
+    return false
+  }
+  return state.sharedPaths.some(path => document.path.indexOf(`${path}/`) === 0)
+}
 
 export const hasSharedChild = (state, document) => {
+  if (!state.sharedPaths) {
+    //eslint-disable-next-line
+    console.log('hasSharedChild should not occurs', state, document)
+    return false
+  }
   const ret = state.sharedPaths.some(
     path => path.indexOf(`${document.path}/`) === 0
   )
   return ret
 }
 
-export const isShared = (state, document) =>
-  state.sharedPaths.some(path => path === document.path)
+export const isShared = (state, document) => {
+  if (!state.sharedPaths) {
+    //eslint-disable-next-line
+    console.log('isShared should not occurs', state, document)
+    return false
+  }
+  return state.sharedPaths.some(path => path === document.path)
+}
 
 // helpers
 const getSharedDocIds = doc =>
