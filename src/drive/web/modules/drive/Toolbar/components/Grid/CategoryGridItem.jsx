@@ -9,10 +9,13 @@ import styles from '../styles.styl'
 const CategoryGridItem = ({ isSelected, icon, label }) => {
   return (
     <div
-      className={classNames('u-pt-1 u-pb-half u-ph-half u-bxz  u-ellipsis', {
-        [styles['border-selected']]: isSelected,
-        [styles['border-not-selected']]: !isSelected
-      })}
+      className={classNames(
+        'u-pt-1 u-pb-half u-ph-half u-bxz  u-ellipsis u-c-pointer',
+        {
+          [styles['border-selected']]: isSelected,
+          [styles['border-not-selected']]: !isSelected
+        }
+      )}
     >
       <div className="u-pos-relative">
         <Icon
