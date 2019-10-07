@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { withClient } from 'cozy-client'
 import NewModal from './NewModal'
@@ -15,6 +16,9 @@ const pushAnalytics = item => {
     }
   }
 }
+/**
+ * Display the Modal to Edit the category of the selected files
+ */
 class EditDocumentQualification extends Component {
   state = {
     qualification: undefined
@@ -65,5 +69,10 @@ class EditDocumentQualification extends Component {
     )
   }
 }
-
+EditDocumentQualification.propTypes = {
+  document: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
+  client: PropTypes.object
+}
 export default translate()(withClient(EditDocumentQualification))

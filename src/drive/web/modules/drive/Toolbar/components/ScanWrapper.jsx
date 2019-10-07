@@ -73,6 +73,9 @@ class ScanWrapper extends Component {
             return `Scan_${date.toISOString().replace(/:/g, '-')}.jpg`
           }}
           onConflict={'rename'}
+          //We need to cancel the MediaBackup before doing the upload since the scanned file will be
+          //inserted we don't know where in the queue resulting in a non uploaded file if the queue is
+          //big enough
           onBeforeUpload={() => stopMediaBackup()}
           onFinish={() => {
             const tracker = getTracker()
