@@ -136,16 +136,8 @@ DocumentCategory.propTypes = {
 class DocumentQualification extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      selected: {
-        categoryLabel:
-          props.selected && props.selected.categoryLabel
-            ? props.selected.categoryLabel
-            : null,
-        itemId:
-          props.selected && props.selected.itemId ? props.selected.itemId : null
-      }
-    }
+    const { categoryLabel = null, itemId = null } = props.initialSelected || {}
+    this.state = { selected: { categoryLabel, itemId } }
   }
   onSelect = item => {
     this.setState({ selected: item })
@@ -202,7 +194,7 @@ DocumentQualification.propTypes = {
    */
   onQualified: PropTypes.func,
   title: PropTypes.string,
-  selected: PropTypes.shape({
+  initialSelected: PropTypes.shape({
     itemId: PropTypes.string,
     categoryLabel: PropTypes.string
   })

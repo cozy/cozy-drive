@@ -59,7 +59,7 @@ class EditDocumentQualification extends Component {
             onQualified={qualification => {
               this.setState({ qualification })
             }}
-            selected={{
+            initialSelected={{
               itemId,
               categoryLabel
             }}
