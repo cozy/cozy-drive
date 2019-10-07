@@ -7,6 +7,21 @@ import DocumentQualification from './DocumentQualification'
 import NewModal from './NewModal'
 
 import { getTracker } from 'cozy-ui/react/helpers/tracker'
+
+const pushAnalytics = qualification => {
+  const tracker = getTracker()
+  if (tracker) {
+    tracker.push(['trackEvent', 'Drive', 'Scanner', 'Add Qualification'])
+    if (qualification && qualification.label) {
+      tracker.push([
+        'trackEvent',
+        'Drive',
+        'Qualification',
+        qualification.label
+      ])
+    }
+  }
+}
 /**
  * ScannerQualification component
  *
@@ -22,6 +37,7 @@ class ScannerQualification extends Component {
   state = {
     qualification: undefined
   }
+
   render() {
     const { onSave, t, dismissAction } = this.props
     const { qualification } = this.state
@@ -32,25 +48,7 @@ class ScannerQualification extends Component {
         dismissAction={dismissAction}
         primaryText={t('Scan.save')}
         primaryAction={async () => {
-          const tracker = getTracker()
-
-          if (tracker) {
-            tracker.push([
-              'trackEvent',
-              'Drive',
-              'Scanner',
-              'Add Qualification'
-            ])
-            qualification &&
-              qualification.label &&
-              tracker.push([
-                'trackEvent',
-                'Drive',
-                'Scanner',
-                'qualification',
-                qualification.label
-              ])
-          }
+          pushAnalytics(qualification)
           await onSave(qualification)
         }}
         primaryType={'regular'}
