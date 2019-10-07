@@ -214,7 +214,7 @@
     "openWith": "Open with",
     "moveto": "Move to…",
     "phone-download": "Make available offline",
-    "qualify": "Qualify"
+    "qualify": "Categorize"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",
@@ -543,7 +543,7 @@
     "doc_type": "Types of document",
     "save": "Save",
     "cancel": "Cancel",
-    "qualify": "Qualify",
+    "qualify": "Categorize",
     "apply": "Apply",
     "error": {
       "offline": "You are currently offline and you can't use this functionnality. Try it later",
@@ -563,12 +563,12 @@
       "residence_permit": "Residence permit",
       "family_record_book": "Family record book",
       "birth_certificate": "Birth certificate",
-      "driver_license": "Drive license",
-      "weeding": "Weeding contract",
+      "driver_license": "Driving license",
+      "wedding": "Wedding contract",
       "pacs": "Civil union",
       "divorce": "Divorce",
       "large_family_card": " Large Family Card",
-      "caf": "Child benefit",
+      "caf": "Social benefit",
       "diploma": "Diploma",
       "work_contract": "Contract",
       "pay_sheet": "Pay sheet",
@@ -576,7 +576,7 @@
       "pension": "Pension",
       "other_revenue": "Other revenues",
       "gradebook": "Gradebook",
-      "health_book": "Personal Child Health Record",
+      "health_book": "Health Record",
       "insurance_card": "Insurance card",
       "prescription": "Prescription",
       "health_invoice": "Health invoice",

@@ -41,8 +41,8 @@ const items = [
   {
     id: '7',
     classification: 'contract',
-    subject: 'weeding',
-    label: 'weeding'
+    subject: 'wedding',
+    label: 'wedding'
   },
   {
     id: '8',
