@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 import Modal, {
   ModalContent,
@@ -15,9 +14,6 @@ import styles from './styles.styl'
 
 class NewModal extends Component {
   render() {
-    /* const { onSave, t, dismissAction } = this.props
-    const { qualification } = this.state */
-
     const {
       title,
       dismissAction,
