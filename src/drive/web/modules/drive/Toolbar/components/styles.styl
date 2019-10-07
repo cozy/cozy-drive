@@ -3,7 +3,9 @@
     position absolute
     left 50%
     top 50%
-    transform translate(-50%,-50%)
+    //It seems that styles__icon___23x3R is overwriting
+    //this value
+    transform translate(-50%,-50%) !important
 }
 
 .border-selected {
@@ -17,9 +19,9 @@
 }
 
 .modal-header {
-    padding-left 1rem
-    padding-right 1rem
-    padding-top 0
+    padding-left 1rem !important
+    padding-right 1rem !important 
+    padding-top 0 !important
     display flex
     width 100% 
     box-sizing border-box
