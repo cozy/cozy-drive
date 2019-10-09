@@ -35,13 +35,13 @@ const pushAnalytics = qualification => {
  */
 class ScannerQualification extends Component {
   state = {
-    qualification: undefined
+    qualification: undefined,
+    filename: ''
   }
 
   render() {
     const { onSave, t, dismissAction } = this.props
-    const { qualification } = this.state
-    //!TODO Move this new kind of Modal to UI
+    const { qualification, filename } = this.state
     return (
       <NewModal
         title={t('Scan.save_doc')}
@@ -49,7 +49,7 @@ class ScannerQualification extends Component {
         primaryText={t('Scan.save')}
         primaryAction={async () => {
           pushAnalytics(qualification)
-          await onSave(qualification)
+          await onSave(qualification, filename)
         }}
         primaryType={'regular'}
         secondaryText={t('Scan.cancel')}
@@ -57,8 +57,8 @@ class ScannerQualification extends Component {
         secondaryType={'secondary'}
         description={
           <DocumentQualification
-            onQualified={qualification => {
-              this.setState({ qualification })
+            onQualified={(qualification, filename) => {
+              this.setState({ qualification, filename })
             }}
             title={t('Scan.doc_type')}
           />

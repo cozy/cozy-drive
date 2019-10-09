@@ -64,9 +64,10 @@ class Scanner extends React.Component {
     })
   }
 
-  onUpload = async (imageURI, qualification) => {
+  onUpload = async (imageURI, qualification, filename = '') => {
+    console.log('qualification', qualification)
     const { generateName } = this.props
-    const name = generateName()
+    const name = filename === '' ? generateName() : filename
     this.setState({ status: SCANNER_UPLOADING, filename: name })
     const { dirId, onConflict, onBeforeUpload, onFinish } = this.props
     const onResolvedLocalFS = async fileEntry => {
@@ -241,9 +242,9 @@ class Scanner extends React.Component {
     if (shouldShowScannerQualification)
       return (
         <ScannerQualification
-          onSave={async qualification => {
+          onSave={async (qualification, filename) => {
             this.setState({ shouldShowScannerQualification: false })
-            return await this.onUpload(imageURI, qualification)
+            return await this.onUpload(imageURI, qualification, filename)
           }}
           dismissAction={() => {
             window.navigator.camera.cleanup(() => {}, () => {})

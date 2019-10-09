@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import { Title, Icon, Media, Bd, Img, Bold } from 'cozy-ui/react'
+import { Title, Icon, Media, Bd, Img, Bold, Field } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 import ActionMenu, {
   ActionMenuItem,
@@ -137,24 +137,57 @@ class DocumentQualification extends Component {
   constructor(props) {
     super(props)
     const { categoryLabel = null, itemId = null } = props.initialSelected || {}
-    this.state = { selected: { categoryLabel, itemId } }
+    this.state = {
+      selected: { categoryLabel, itemId },
+      filename: `Scan_${new Date().toISOString().replace(/:/g, '-')}.jpg`
+    }
+    this.textInput = React.createRef()
+  }
+
+  getFilenameFromCategory = (item, t) => {
+    const realItem = getItemById(item.itemId)
+    return `${t(realItem.label).replace(
+      ' ',
+      '-'
+    )}_${new Date().toISOString().replace(/:/g, '-')}`
   }
   onSelect = item => {
-    this.setState({ selected: item })
+    const { t } = this.props
+    const filename = this.getFilenameFromCategory(item, t)
+    this.setState({ selected: item, filename })
+
+    console.log('this.textInput', this.textInput)
+    console.log('this.textInput')
+    this.textInput.current.focus()
+    setTimeout(() => {
+      this.textInput.current.setSelectionRange(0, filename.length - 1)
+    }, 5)
+
     const { onQualified } = this.props
     if (onQualified) {
       const realItem = getItemById(item.itemId)
       //We only call the callback if a "real" item is selected
       //not if `Scan.categories.undefined` is
-      if (realItem) onQualified(realItem)
+      if (realItem) onQualified(realItem, filename)
     }
   }
 
   render() {
     const { t, title } = this.props
-    const { selected } = this.state
+    const { selected, filename } = this.state
     return (
       <MuiCozyTheme>
+        <Field
+          id="filename"
+          label="Nom du fichier"
+          type="text"
+          fullwidth={true}
+          value={filename}
+          onChange={event => {
+            console.log('event', event)
+          }}
+          inputRef={this.textInput}
+        />
         {title && <Title className="u-mv-1">{title}</Title>}
         <Grid container spacing={1}>
           <GridItem
