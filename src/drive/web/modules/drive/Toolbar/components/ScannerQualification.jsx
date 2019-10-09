@@ -60,6 +60,7 @@ class ScannerQualification extends Component {
             onQualified={(qualification, filename) => {
               this.setState({ qualification, filename })
             }}
+            editFileName={true}
             title={t('Scan.doc_type')}
           />
         }

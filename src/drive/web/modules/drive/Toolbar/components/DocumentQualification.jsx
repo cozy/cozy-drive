@@ -185,28 +185,37 @@ class DocumentQualification extends Component {
 
   render() {
     const { t, title } = this.props
-    const { selected, filename, shouldAutomaticalyRenameFile } = this.state
+    const {
+      selected,
+      filename,
+      shouldAutomaticalyRenameFile,
+      editFileName
+    } = this.state
     return (
       <MuiCozyTheme>
-        <Label htmlFor="filename_input">Nom du fichier</Label>
-        <InputGroup fullwidth append={<Bold className="u-pr-1">.jpg</Bold>}>
-          <Input
-            placeholder="Nom du fichier"
-            value={filename}
-            onChange={event => {
-              //If the user write something once, we don't want to rename the file automatically anymore
-              if (shouldAutomaticalyRenameFile) {
-                this.setState({ shouldAutomaticalyRenameFile: false })
-              }
-              this.setState({ filename: event.target.value })
-            }}
-            onClick={() => {
-              this.textInput.current.setSelectionRange(0, filename.length)
-            }}
-            inputRef={this.textInput}
-            id="filename_input"
-          />
-        </InputGroup>
+        {editFileName && (
+          <>
+            <Label htmlFor="filename_input">Nom du fichier</Label>
+            <InputGroup fullwidth append={<Bold className="u-pr-1">.jpg</Bold>}>
+              <Input
+                placeholder="Nom du fichier"
+                value={filename}
+                onChange={event => {
+                  //If the user write something once, we don't want to rename the file automatically anymore
+                  if (shouldAutomaticalyRenameFile) {
+                    this.setState({ shouldAutomaticalyRenameFile: false })
+                  }
+                  this.setState({ filename: event.target.value })
+                }}
+                onClick={() => {
+                  this.textInput.current.setSelectionRange(0, filename.length)
+                }}
+                inputRef={this.textInput}
+                id="filename_input"
+              />
+            </InputGroup>
+          </>
+        )}
 
         {title && <Title className="u-mv-1">{title}</Title>}
         <Grid container spacing={1}>
@@ -240,6 +249,9 @@ class DocumentQualification extends Component {
   }
 }
 
+DocumentQualification.defaultProps = {
+  editFileName: false
+}
 DocumentQualification.propTypes = {
   /**
    * This callback is called after a select.
@@ -250,6 +262,7 @@ DocumentQualification.propTypes = {
   initialSelected: PropTypes.shape({
     itemId: PropTypes.string,
     categoryLabel: PropTypes.string
-  })
+  }),
+  editFileName: PropTypes.bool
 }
 export default translate()(DocumentQualification)
