@@ -1,8 +1,4 @@
-import {
-  averageTime,
-  convertDurationInMilliseconds,
-  isPartOfProgressiveRollout
-} from './utils'
+import { averageTime, convertDurationInMilliseconds } from './utils'
 
 describe('date', () => {
   it('Should compute the mean date', () => {
@@ -41,30 +37,5 @@ describe('convert duration', () => {
     expect(convertDurationInMilliseconds(d3)).toEqual(4000)
     expect(convertDurationInMilliseconds(d4)).toEqual(4215000)
     expect(convertDurationInMilliseconds(d5)).toEqual(0)
-  })
-})
-
-describe('pick instance', () => {
-  it('Should pick a % of instances', () => {
-    const instances = []
-    let match10percent = 0,
-      match0percent = 0,
-      match100percent = 0
-    for (let i = 0; i < 10000; i++) {
-      instances[i] = i + '.mycozy.cloud'
-      if (isPartOfProgressiveRollout(instances[i], 10)) {
-        match10percent++
-      }
-      if (isPartOfProgressiveRollout(instances[i], -1)) {
-        match0percent++
-      }
-      if (isPartOfProgressiveRollout(instances[i], 100)) {
-        match100percent++
-      }
-    }
-    expect(match10percent).toBeGreaterThan(900)
-    expect(match10percent).toBeLessThan(1100)
-    expect(match0percent).toEqual(0)
-    expect(match100percent).toEqual(10000)
   })
 })

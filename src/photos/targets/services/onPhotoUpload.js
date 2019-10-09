@@ -22,7 +22,6 @@ import {
   EVALUATION_THRESHOLD,
   CHANGES_RUN_LIMIT,
   TRIGGER_ELAPSED,
-  PERCENT_INSTANCES,
   LOG_ERROR_MSG_LIMIT
 } from 'photos/ducks/clustering/consts'
 import { spatioTemporalScaled } from 'photos/ducks/clustering/metrics'
@@ -31,8 +30,7 @@ import { saveClustering, findAutoAlbums } from 'photos/ducks/clustering/albums'
 import { albumsToClusterize } from 'photos/ducks/clustering/reclusterize'
 import {
   prepareDataset,
-  convertDurationInMilliseconds,
-  isPartOfProgressiveRollout
+  convertDurationInMilliseconds
 } from 'photos/ducks/clustering/utils'
 import { getMatchingParameters } from 'photos/ducks/clustering/matching'
 
@@ -172,14 +170,6 @@ const runClustering = async (client, setting) => {
 }
 
 export const onPhotoUpload = async () => {
-  /*
-    NOTE : we do a progressive deployment: as we want to monitor
-    the clustering gradually, we only run the service for a % of instances
-   */
-  const instanceURL = process.env.COZY_URL
-  if (!isPartOfProgressiveRollout(instanceURL, PERCENT_INSTANCES)) {
-    return
-  }
   log('info', `Service called with COZY_URL: ${process.env.COZY_URL}`)
 
   const options = {
