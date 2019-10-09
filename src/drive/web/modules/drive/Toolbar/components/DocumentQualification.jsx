@@ -2,7 +2,17 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import { Title, Icon, Media, Bd, Img, Bold, Field } from 'cozy-ui/react'
+import {
+  Title,
+  Icon,
+  Media,
+  Bd,
+  Img,
+  Bold,
+  InputGroup,
+  Input,
+  Label
+} from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 import ActionMenu, {
   ActionMenuItem,
@@ -139,29 +149,30 @@ class DocumentQualification extends Component {
     const { categoryLabel = null, itemId = null } = props.initialSelected || {}
     this.state = {
       selected: { categoryLabel, itemId },
-      filename: `Scan_${new Date().toISOString().replace(/:/g, '-')}.jpg`
+      filename: `Scan_${new Date().toISOString().replace(/:/g, '-')}`,
+      shouldAutomaticalyRenameFile: true
     }
     this.textInput = React.createRef()
   }
 
   getFilenameFromCategory = (item, t) => {
     const realItem = getItemById(item.itemId)
-    return `${t(realItem.label).replace(
-      ' ',
-      '-'
-    )}_${new Date().toISOString().replace(/:/g, '-')}`
+    const name = t(`Scan.items.${realItem.label}`)
+    return `${name.replace(/ /g, '-')}_${new Date()
+      .toLocaleDateString()
+      .replace(/:/g, '-')
+      .replace(/\//g, '-')}`
   }
   onSelect = item => {
     const { t } = this.props
-    const filename = this.getFilenameFromCategory(item, t)
+    const { shouldAutomaticalyRenameFile } = this.state
+    let filename = null
+    if (shouldAutomaticalyRenameFile) {
+      filename = this.getFilenameFromCategory(item, t)
+    } else {
+      filename = this.state.filename
+    }
     this.setState({ selected: item, filename })
-
-    console.log('this.textInput', this.textInput)
-    console.log('this.textInput')
-    this.textInput.current.focus()
-    setTimeout(() => {
-      this.textInput.current.setSelectionRange(0, filename.length - 1)
-    }, 5)
 
     const { onQualified } = this.props
     if (onQualified) {
@@ -174,20 +185,29 @@ class DocumentQualification extends Component {
 
   render() {
     const { t, title } = this.props
-    const { selected, filename } = this.state
+    const { selected, filename, shouldAutomaticalyRenameFile } = this.state
     return (
       <MuiCozyTheme>
-        <Field
-          id="filename"
-          label="Nom du fichier"
-          type="text"
-          fullwidth={true}
-          value={filename}
-          onChange={event => {
-            console.log('event', event)
-          }}
-          inputRef={this.textInput}
-        />
+        <Label htmlFor="filename_input">Nom du fichier</Label>
+        <InputGroup fullwidth append={<Bold className="u-pr-1">.jpg</Bold>}>
+          <Input
+            placeholder="Nom du fichier"
+            value={filename}
+            onChange={event => {
+              //If the user write something once, we don't want to rename the file automatically anymore
+              if (shouldAutomaticalyRenameFile) {
+                this.setState({ shouldAutomaticalyRenameFile: false })
+              }
+              this.setState({ filename: event.target.value })
+            }}
+            onClick={() => {
+              this.textInput.current.setSelectionRange(0, filename.length)
+            }}
+            inputRef={this.textInput}
+            id="filename_input"
+          />
+        </InputGroup>
+
         {title && <Title className="u-mv-1">{title}</Title>}
         <Grid container spacing={1}>
           <GridItem
