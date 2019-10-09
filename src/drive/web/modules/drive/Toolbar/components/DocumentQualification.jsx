@@ -200,7 +200,8 @@ class DocumentQualification extends Component {
             <Label htmlFor="filename_input">{t('Scan.filename')}</Label>
             <InputGroup
               fullwidth
-              append={<Bold className="u-pr-1">{filename_extension}</Bold>}
+              append={<span className="u-pr-1">{filename_extension}</span>}
+              className="u-bdrs-3"
             >
               <Input
                 placeholder={t('Scan.filename')}
@@ -217,7 +218,14 @@ class DocumentQualification extends Component {
                   })
                 }}
                 onClick={() => {
-                  this.textInput.current.setSelectionRange(0, filename.length)
+                  if (shouldAutomaticalyRenameFile)
+                    this.textInput.current.setSelectionRange(0, filename.length)
+                }}
+                onBlur={() => {
+                  if (filename === '')
+                    this.setState({
+                      filename: this.getFilenameFromCategory(selected, t)
+                    })
                 }}
                 inputRef={this.textInput}
                 id="filename_input"
