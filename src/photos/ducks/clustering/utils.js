@@ -73,30 +73,3 @@ export const convertDurationInMilliseconds = duration => {
   const seconds = offsetS > 0 ? duration.substring(offsetM + 1, offsetS) : 0
   return seconds * 1000 + minutes * 60 * 1000 + hours * 3600 * 1000
 }
-
-/**
- *  Hash a string into a 32-bit integer
- *  @param {string} toHash - The string to hash
- *  @returns {number} The 32-bit hash value
- */
-const hashCode = toHash => {
-  let hash = 0
-  let i, chr
-  if (toHash.length === 0) return toHash
-  for (i = 0; i < toHash.length; i++) {
-    chr = toHash.charCodeAt(i)
-    hash = (hash << 5) - hash + chr
-    hash = hash & hash // Convert to 32-bit integer
-  }
-  return hash
-}
-
-/**
- *  Returns true if `instance` is chosen to be part of a progressive rollout, according to `percentage`
- *  @param {string} instance - The string to hash
- *  @param {number} percent - The percent of instances that should match
- *  @returns {boolean} If the instance is picked or not
- */
-export const isPartOfProgressiveRollout = (instance, percent) => {
-  return Math.abs(hashCode(instance)) % 100 <= percent
-}
