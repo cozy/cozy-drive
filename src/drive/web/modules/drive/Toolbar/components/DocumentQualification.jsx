@@ -143,13 +143,15 @@ DocumentCategory.propTypes = {
  * its parent
  *
  */
+const filename_extension = '.jpg'
 class DocumentQualification extends Component {
   constructor(props) {
     super(props)
     const { categoryLabel = null, itemId = null } = props.initialSelected || {}
+    this.defaultFilename = `Scan_${new Date().toISOString().replace(/:/g, '-')}`
     this.state = {
       selected: { categoryLabel, itemId },
-      filename: `Scan_${new Date().toISOString().replace(/:/g, '-')}`,
+      filename: this.defaultFilename,
       shouldAutomaticalyRenameFile: true
     }
     this.textInput = React.createRef()
@@ -157,11 +159,15 @@ class DocumentQualification extends Component {
 
   getFilenameFromCategory = (item, t) => {
     const realItem = getItemById(item.itemId)
-    const name = t(`Scan.items.${realItem.label}`)
-    return `${name.replace(/ /g, '-')}_${new Date()
-      .toLocaleDateString()
-      .replace(/:/g, '-')
-      .replace(/\//g, '-')}`
+    if (realItem) {
+      const name = t(`Scan.items.${realItem.label}`)
+      return `${name.replace(/ /g, '-')}_${new Date()
+        .toLocaleDateString()
+        .replace(/:/g, '-')
+        .replace(/\//g, '-')}`
+    } else {
+      return this.defaultFilename
+    }
   }
   onSelect = item => {
     const { t } = this.props
@@ -177,35 +183,38 @@ class DocumentQualification extends Component {
     const { onQualified } = this.props
     if (onQualified) {
       const realItem = getItemById(item.itemId)
-      //We only call the callback if a "real" item is selected
-      //not if `Scan.categories.undefined` is
-      if (realItem) onQualified(realItem, filename)
+      onQualified(
+        realItem ? realItem : undefined,
+        filename + filename_extension
+      )
     }
   }
 
   render() {
-    const { t, title } = this.props
-    const {
-      selected,
-      filename,
-      shouldAutomaticalyRenameFile,
-      editFileName
-    } = this.state
+    const { t, title, editFileName } = this.props
+    const { selected, filename, shouldAutomaticalyRenameFile } = this.state
     return (
       <MuiCozyTheme>
         {editFileName && (
           <>
-            <Label htmlFor="filename_input">Nom du fichier</Label>
-            <InputGroup fullwidth append={<Bold className="u-pr-1">.jpg</Bold>}>
+            <Label htmlFor="filename_input">{t('Scan.filename')}</Label>
+            <InputGroup
+              fullwidth
+              append={<Bold className="u-pr-1">{filename_extension}</Bold>}
+            >
               <Input
-                placeholder="Nom du fichier"
+                placeholder={t('Scan.filename')}
                 value={filename}
                 onChange={event => {
                   //If the user write something once, we don't want to rename the file automatically anymore
                   if (shouldAutomaticalyRenameFile) {
                     this.setState({ shouldAutomaticalyRenameFile: false })
                   }
-                  this.setState({ filename: event.target.value })
+                  if (event.target.value === '')
+                    this.setState({ shouldAutomaticalyRenameFile: true })
+                  this.setState({
+                    filename: event.target.value
+                  })
                 }}
                 onClick={() => {
                   this.textInput.current.setSelectionRange(0, filename.length)
