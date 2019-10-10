@@ -152,7 +152,7 @@ class DocumentQualification extends Component {
     this.state = {
       selected: { categoryLabel, itemId },
       filename: this.defaultFilename,
-      shouldAutomaticalyRenameFile: true
+      hasUserWrittenFileName: false
     }
     this.textInput = React.createRef()
   }
@@ -171,9 +171,9 @@ class DocumentQualification extends Component {
   }
   onSelect = item => {
     const { t } = this.props
-    const { shouldAutomaticalyRenameFile } = this.state
+    const { hasUserWrittenFileName } = this.state
     let filename = null
-    if (shouldAutomaticalyRenameFile) {
+    if (!hasUserWrittenFileName) {
       filename = this.getFilenameFromCategory(item, t)
     } else {
       filename = this.state.filename
@@ -192,7 +192,7 @@ class DocumentQualification extends Component {
 
   render() {
     const { t, title, editFileName } = this.props
-    const { selected, filename, shouldAutomaticalyRenameFile } = this.state
+    const { selected, filename, hasUserWrittenFileName } = this.state
     return (
       <MuiCozyTheme>
         {editFileName && (
@@ -208,17 +208,19 @@ class DocumentQualification extends Component {
                 value={filename}
                 onChange={event => {
                   //If the user write something once, we don't want to rename the file automatically anymore
-                  if (shouldAutomaticalyRenameFile) {
-                    this.setState({ shouldAutomaticalyRenameFile: false })
+                  if (!hasUserWrittenFileName) {
+                    this.setState({ hasUserWrittenFileName: true })
                   }
+                  //If we left an empty value, then we reset the behavior
                   if (event.target.value === '')
-                    this.setState({ shouldAutomaticalyRenameFile: true })
+                    this.setState({ hasUserWrittenFileName: false })
+
                   this.setState({
                     filename: event.target.value
                   })
                 }}
                 onClick={() => {
-                  if (shouldAutomaticalyRenameFile)
+                  if (!hasUserWrittenFileName)
                     this.textInput.current.setSelectionRange(0, filename.length)
                 }}
                 onBlur={() => {
