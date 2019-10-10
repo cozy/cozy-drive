@@ -232,11 +232,11 @@ class Scanner extends React.Component {
     } = this.state
     if (loadingScreen) {
       return (
-        <Modal mobileFullscreen closable={false}>
-          <Overlay>
-            <div className="u-bg-black u-mih-100" />
-          </Overlay>
-        </Modal>
+        <Modal
+          mobileFullscreen
+          closable={false}
+          className="u-bg-black u-mih-100"
+        />
       )
     }
     if (shouldShowScannerQualification)
