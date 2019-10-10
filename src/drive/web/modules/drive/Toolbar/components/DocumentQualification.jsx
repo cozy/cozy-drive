@@ -1,136 +1,16 @@
 import React, { Component } from 'react'
-import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import {
-  Title,
-  Icon,
-  Media,
-  Bd,
-  Img,
-  Bold,
-  InputGroup,
-  Input,
-  Label
-} from 'cozy-ui/react'
+import { Title, InputGroup, Input, Label } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
-import ActionMenu, {
-  ActionMenuItem,
-  ActionMenuHeader
-} from 'cozy-ui/react/ActionMenu'
-import palette from 'cozy-ui/react/palette'
 import MuiCozyTheme from 'cozy-ui/react/MuiCozyTheme'
 import Grid from 'cozy-ui/react/MuiCozyTheme/Grid'
 
 import CategoryGridItem from './Grid/CategoryGridItem'
+import DocumentCategory from './DocumentCategory'
 
-import styles from './styles.styl'
 import { themes, getItemById, getItemsByCategory } from './DocumentTypeData'
 import GridItem from './Grid/GridItem'
-
-/**
- * DocumentCategory component
- *
- * The goal of this component is to display a
- * category / type of document and also manage
- * its associated ActionMenu since a category has
- * several associated items.
- *
- * If an item from a category is selected, we display
- * its label instead of the label from the category
- *
- */
-class DocumentCategory extends Component {
-  state = {
-    isMenuDisplayed: false
-  }
-
-  toggleMenu() {
-    this.setState(prevState => {
-      return {
-        isMenuDisplayed: !prevState.isMenuDisplayed
-      }
-    })
-  }
-
-  onSelect = item => {
-    const { onSelect } = this.props
-    if (onSelect) onSelect(item)
-  }
-  render() {
-    const { isMenuDisplayed } = this.state
-    const { category, isSelected, selectedItem, items, t } = this.props
-    return (
-      <>
-        <GridItem onClick={() => this.toggleMenu()}>
-          <CategoryGridItem
-            isSelected={isSelected}
-            icon={category.icon}
-            label={
-              isSelected
-                ? t(`Scan.items.${selectedItem.label}`)
-                : t(`Scan.themes.${category.label}`)
-            }
-          />
-        </GridItem>
-
-        {isMenuDisplayed && (
-          <ActionMenu onClose={() => this.toggleMenu()}>
-            <ActionMenuHeader>
-              <Media>
-                <Img>
-                  <div className="u-pos-relative u-w-2">
-                    <Icon
-                      icon={'file-duotone'}
-                      size={'32'}
-                      color={palette.dodgerBlue}
-                    />
-                    <Icon
-                      icon={category.icon}
-                      color={palette.dodgerBlue}
-                      size={'16'}
-                      className={classNames(styles['icon-absolute-centered'])}
-                    />
-                  </div>
-                </Img>
-                <Bd className={'u-ml-1'}>
-                  <Bold tag="span" ellipsis>
-                    {t(`Scan.themes.${category.label}`)}
-                  </Bold>
-                </Bd>
-              </Media>
-            </ActionMenuHeader>
-            {items.map(item => {
-              return (
-                <ActionMenuItem
-                  onClick={() => {
-                    this.onSelect({
-                      categoryLabel: category.label,
-                      itemId: item.id
-                    })
-                    this.toggleMenu()
-                  }}
-                  key={item.id}
-                >
-                  {t(`Scan.items.${item.label}`)}
-                </ActionMenuItem>
-              )
-            })}
-          </ActionMenu>
-        )}
-      </>
-    )
-  }
-}
-
-DocumentCategory.propTypes = {
-  onSelect: PropTypes.func,
-  category: PropTypes.object.isRequired,
-  isSelected: PropTypes.bool,
-  selectedItem: PropTypes.object.isRequired,
-  items: PropTypes.array.isRequired,
-  t: PropTypes.func.isRequired
-}
 
 /**
  * Document Qualification
