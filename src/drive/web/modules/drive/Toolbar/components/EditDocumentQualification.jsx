@@ -24,7 +24,7 @@ class EditDocumentQualification extends Component {
     qualification: undefined
   }
   render() {
-    const { document, onClose, t, client } = this.props
+    const { document, onClose, t, client, onQualified } = this.props
     const { qualification } = this.state
     const item = document.metadata.id ? getItemById(document.metadata.id) : null
     const itemId = item ? item.id : null
@@ -37,17 +37,13 @@ class EditDocumentQualification extends Component {
         dismissAction={onClose}
         primaryText={t('Scan.apply')}
         primaryAction={async () => {
-          /* const fileCollection = client.collection('io.cozy.files')
-           const metadata = fileCollection.createFileMetadata(qualification)
-          const test = await fileCollection.updateFileMetadata(document._id, {
-            metadata: {
-              hhh: 'nnn',
-              extractor_version: '5'
-            },
-            name: 'toto3'
-          }) */
+          const fileCollection = client.collection('io.cozy.files')
+          const updatedFile = await fileCollection.updateFileMetadataAttribute(
+            document._id,
+            qualification
+          )
           pushAnalytics(item)
-          alert('SOON ')
+          if (onQualified) onQualified(updatedFile.data)
           onClose()
         }}
         primaryType={'regular'}
@@ -73,6 +69,7 @@ EditDocumentQualification.propTypes = {
   document: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
-  client: PropTypes.object
+  client: PropTypes.object,
+  onQualified: PropTypes.func
 }
 export default translate()(withClient(EditDocumentQualification))

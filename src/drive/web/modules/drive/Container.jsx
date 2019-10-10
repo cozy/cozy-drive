@@ -19,13 +19,14 @@ import {
   openFileWith,
   downloadFiles,
   exportFilesNative,
-  trashFiles
+  trashFiles,
+  updateFile
 } from 'drive/web/modules/navigation/duck'
 import {
   isAvailableOffline,
   toggleAvailableOffline
 } from 'drive/mobile/modules/offline/duck'
-
+import { extractFileAttributes } from 'drive/web/modules/navigation/duck/async'
 import styles from 'drive/styles/actionmenu.styl'
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
@@ -143,7 +144,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         qualify: {
           action: selected =>
             dispatch(
-              showModal(<EditDocumentQualification document={selected[0]} />)
+              showModal(
+                <EditDocumentQualification
+                  document={selected[0]}
+                  onQualified={file => {
+                    dispatch(updateFile(extractFileAttributes(file)))
+                  }}
+                />
+              )
             ),
           displayCondition: selections =>
             selections.length === 1 && isFile(selections[0])
