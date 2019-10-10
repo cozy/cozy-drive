@@ -65,7 +65,6 @@ class Scanner extends React.Component {
   }
 
   onUpload = async (imageURI, qualification, filename = '') => {
-    console.log('qualification', qualification)
     const { generateName } = this.props
     const name = filename === '' ? generateName() : filename
     this.setState({ status: SCANNER_UPLOADING, filename: name })

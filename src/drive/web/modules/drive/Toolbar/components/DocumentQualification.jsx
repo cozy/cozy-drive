@@ -170,8 +170,9 @@ class DocumentQualification extends Component {
       return this.defaultFilename
     }
   }
+
   onSelect = item => {
-    const { t } = this.props
+    const { t, editFileName } = this.props
     const { hasUserWrittenFileName } = this.state
     let filename = null
     if (!hasUserWrittenFileName) {
@@ -184,10 +185,20 @@ class DocumentQualification extends Component {
     const { onQualified } = this.props
     if (onQualified) {
       const realItem = getItemById(item.itemId)
-      onQualified(
-        realItem ? realItem : undefined,
-        filename + filename_extension
-      )
+      /* ATM, we only accept JPG extension from the scanner. So 
+      we hardcode the filename extension here. 
+
+      If we can't editFileName, then we don't need to use the 
+      generated filename 
+      */
+      if (editFileName) {
+        onQualified(
+          realItem ? realItem : undefined,
+          filename + filename_extension
+        )
+      } else {
+        onQualified(realItem ? realItem : undefined)
+      }
     }
   }
 
@@ -220,7 +231,7 @@ class DocumentQualification extends Component {
                     filename: event.target.value
                   })
                 }}
-                onClick={() => {
+                onFocus={() => {
                   if (!hasUserWrittenFileName)
                     this.textInput.current.setSelectionRange(0, filename.length)
                 }}
