@@ -144,6 +144,7 @@ DocumentCategory.propTypes = {
  *
  */
 const filename_extension = '.jpg'
+const id_filename_input = 'filename_input'
 class DocumentQualification extends Component {
   constructor(props) {
     super(props)
@@ -197,7 +198,7 @@ class DocumentQualification extends Component {
       <MuiCozyTheme>
         {editFileName && (
           <>
-            <Label htmlFor="filename_input">{t('Scan.filename')}</Label>
+            <Label htmlFor={id_filename_input}>{t('Scan.filename')}</Label>
             <InputGroup
               fullwidth
               append={<span className="u-pr-1">{filename_extension}</span>}
@@ -230,7 +231,7 @@ class DocumentQualification extends Component {
                     })
                 }}
                 inputRef={this.textInput}
-                id="filename_input"
+                id={id_filename_input}
               />
             </InputGroup>
           </>
