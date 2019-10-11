@@ -60,7 +60,8 @@ class DocumentQualification extends Component {
     } else {
       filename = this.state.filename
     }
-    this.setState({ selected: item, filename })
+    this.setState({ selected: item })
+    this.handleFileNameChange(filename)
 
     const { onQualified } = this.props
     if (onQualified) {
@@ -80,6 +81,15 @@ class DocumentQualification extends Component {
         onQualified(realItem ? realItem : undefined)
       }
     }
+  }
+  /**
+   * Method used to synchronize our internal state and
+   * our parent state if needed
+   */
+  handleFileNameChange = filename => {
+    const { onFileNameChanged } = this.props
+    this.setState({ filename })
+    onFileNameChanged && onFileNameChanged(filename + filename_extension)
   }
 
   render() {
@@ -106,20 +116,18 @@ class DocumentQualification extends Component {
                   //If we left an empty value, then we reset the behavior
                   if (event.target.value === '')
                     this.setState({ hasUserWrittenFileName: false })
-
-                  this.setState({
-                    filename: event.target.value
-                  })
+                  this.handleFileNameChange(event.target.value)
                 }}
                 onFocus={() => {
                   if (!hasUserWrittenFileName)
                     this.textInput.current.setSelectionRange(0, filename.length)
                 }}
                 onBlur={() => {
-                  if (filename === '')
-                    this.setState({
-                      filename: this.getFilenameFromCategory(selected, t)
-                    })
+                  if (filename === '') {
+                    this.handleFileNameChange(
+                      this.getFilenameFromCategory(selected, t)
+                    )
+                  }
                 }}
                 inputRef={this.textInput}
                 id={id_filename_input}
@@ -169,6 +177,7 @@ DocumentQualification.propTypes = {
    *
    */
   onQualified: PropTypes.func,
+  onFileNameChanged: PropTypes.func,
   title: PropTypes.string,
   initialSelected: PropTypes.shape({
     itemId: PropTypes.string,
