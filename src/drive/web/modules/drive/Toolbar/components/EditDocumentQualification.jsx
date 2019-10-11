@@ -38,7 +38,7 @@ class EditDocumentQualification extends Component {
         primaryText={t('Scan.apply')}
         primaryAction={async () => {
           const fileCollection = client.collection('io.cozy.files')
-          const updatedFile = await fileCollection.updateFileMetadataAttribute(
+          const updatedFile = await fileCollection.updateMetadataAttribute(
             document._id,
             qualification
           )
