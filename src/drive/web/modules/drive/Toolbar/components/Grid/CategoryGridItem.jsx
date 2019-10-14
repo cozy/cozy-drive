@@ -14,7 +14,8 @@ const CategoryGridItem = ({ isSelected, icon, theme, label }) => {
         'u-pb-half u-ph-half u-bxz  u-ellipsis u-c-pointer',
         {
           [styles['border-selected']]: isSelected,
-          [styles['grid-item__selected']]: isSelected,
+          [styles['grid-item__selected']]: isSelected && label,
+          [styles['grid-item__selected__without_label']]: isSelected && !label,
           [styles['border-not-selected']]: !isSelected
         }
       )}

@@ -138,7 +138,7 @@ class DocumentQualification extends Component {
         )}
 
         {title && (
-          <div className="u-flex u-flex-items-center">
+          <div className="u-flex u-flex-items-center u-mt-1-half">
             <Icon icon="qualify" />
             <Title
               className={classNames(
