@@ -42,14 +42,20 @@ class EditDocumentQualification extends Component {
           if (isOffline) {
             Alerter.error('Scan.error.offline')
           } else {
-            const fileCollection = client.collection('io.cozy.files')
-            const updatedFile = await fileCollection.updateMetadataAttribute(
-              document._id,
-              qualification
-            )
-            pushAnalytics(item)
-            if (onQualified) onQualified(updatedFile.data)
-            onClose()
+            try {
+              const fileCollection = client.collection('io.cozy.files')
+              const updatedFile = await fileCollection.updateMetadataAttribute(
+                document._id,
+                qualification
+              )
+              pushAnalytics(item)
+              if (onQualified) onQualified(updatedFile.data)
+              onClose()
+              Alerter.success('Scan.successful.qualified_ok')
+            } catch (error) {
+              console.error('Scan.error.generic', error)
+              Alerter.error('Scan.error.generic')
+            }
           }
         }}
         primaryType={'regular'}

@@ -547,8 +547,13 @@
     "apply": "Apply",
     "error": {
       "offline": "You are currently offline and you can't use this functionnality. Try it later",
-      "uploading": "You are already uploading a file. Wait until the end of this upload and try again."
+      "uploading": "You are already uploading a file. Wait until the end of this upload and try again.",
+      "generic": "Something went wrong. Please try again."
     },
+    "successful": {
+      "qualified_ok": "You just have categorized your file with success! "
+    },
+
     "items": {
       "identity": "Identity",
       "family": "Family",
