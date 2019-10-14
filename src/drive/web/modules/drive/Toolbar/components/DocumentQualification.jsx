@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
-import { Title, InputGroup, Input, Label } from 'cozy-ui/react'
+import { Title, InputGroup, Input, Label, Icon } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 import MuiCozyTheme from 'cozy-ui/react/MuiCozyTheme'
 import Grid from 'cozy-ui/react/MuiCozyTheme/Grid'
@@ -11,7 +12,7 @@ import DocumentCategory from './DocumentCategory'
 
 import { themes, getItemById, getItemsByCategory } from './DocumentTypeData'
 import GridItem from './Grid/GridItem'
-
+import styles from './styles.styl'
 /**
  * Document Qualification
  *
@@ -136,14 +137,26 @@ class DocumentQualification extends Component {
           </>
         )}
 
-        {title && <Title className="u-mv-1">{title}</Title>}
+        {title && (
+          <div className="u-flex u-flex-items-center">
+            <Icon icon="qualify" />
+            <Title
+              className={classNames(
+                styles['grid-item-title'],
+                'u-pl-half u-mb-1'
+              )}
+            >
+              {title}
+            </Title>
+          </div>
+        )}
         <Grid container spacing={1}>
           <GridItem
             onClick={() => this.onSelect({ categoryLabel: null, itemId: null })}
           >
             <CategoryGridItem
               isSelected={selected.categoryLabel === null}
-              label={t(`Scan.themes.undefined`)}
+              theme={t(`Scan.themes.undefined`)}
             />
           </GridItem>
 

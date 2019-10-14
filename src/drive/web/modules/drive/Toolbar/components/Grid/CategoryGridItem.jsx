@@ -6,13 +6,15 @@ import { Icon } from 'cozy-ui/react'
 
 import styles from '../styles.styl'
 
-const CategoryGridItem = ({ isSelected, icon, label }) => {
+const CategoryGridItem = ({ isSelected, icon, theme, label }) => {
   return (
     <div
       className={classNames(
-        'u-pt-1 u-pb-half u-ph-half u-bxz  u-ellipsis u-c-pointer',
+        styles['grid-item'],
+        'u-pb-half u-ph-half u-bxz  u-ellipsis u-c-pointer',
         {
           [styles['border-selected']]: isSelected,
+          [styles['grid-item__selected']]: isSelected,
           [styles['border-not-selected']]: !isSelected
         }
       )}
@@ -32,14 +34,24 @@ const CategoryGridItem = ({ isSelected, icon, label }) => {
           />
         )}
       </div>
-      <span className="u-fz-tiny">{label}</span>
+      <div className="u-flex u-flex-column u-ellipsis u-bxz">
+        <span className={classNames(styles['grid-item-theme'], 'u-ellipsis')}>
+          {theme}
+        </span>
+        {label && (
+          <span className={classNames(styles['grid-item-label'], 'u-ellipsis')}>
+            {label}
+          </span>
+        )}
+      </div>
     </div>
   )
 }
 CategoryGridItem.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   icon: PropTypes.string,
-  label: PropTypes.string.isRequired
+  theme: PropTypes.string.isRequired,
+  label: PropTypes.string
 }
 
 export default CategoryGridItem

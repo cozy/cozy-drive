@@ -64,7 +64,7 @@ class ScannerQualification extends Component {
               this.setState({ filename })
             }}
             editFileName={true}
-            title={t('Scan.doc_type')}
+            title={t('Scan.qualify')}
           />
         }
       />

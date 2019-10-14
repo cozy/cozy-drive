@@ -540,7 +540,6 @@
   "Scan": {
     "scan_a_doc": "Scan a doc",
     "save_doc": "Save the doc",
-    "doc_type": "Types of document",
     "filename": "Filename",
     "save": "Save",
     "cancel": "Cancel",

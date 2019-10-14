@@ -53,10 +53,9 @@ class DocumentCategory extends Component {
           <CategoryGridItem
             isSelected={isSelected}
             icon={category.icon}
+            theme={t(`Scan.themes.${category.label}`)}
             label={
-              isSelected
-                ? t(`Scan.items.${selectedItem.label}`)
-                : t(`Scan.themes.${category.label}`)
+              isSelected ? t(`Scan.items.${selectedItem.label}`) : undefined
             }
           />
         </GridItem>
