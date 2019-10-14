@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { translate } from 'cozy-ui/react/I18n'
+import Alerter from 'cozy-ui/react/Alerter'
+
 import DocumentQualification from './DocumentQualification'
 
 import NewModal from './NewModal'
@@ -49,7 +51,12 @@ class ScannerQualification extends Component {
         primaryText={t('Scan.save')}
         primaryAction={async () => {
           pushAnalytics(qualification)
-          await onSave(qualification, filename)
+          try {
+            await onSave(qualification, filename)
+          } catch (error) {
+            console.error('error', error)
+            Alerter.error('Scan.error.generic')
+          }
         }}
         primaryType={'regular'}
         secondaryText={t('Scan.cancel')}
