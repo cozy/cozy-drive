@@ -35,7 +35,7 @@ class EditDocumentQualification extends Component {
     const categoryLabel = item ? theme.label : null
     return (
       <NewModal
-        title={t('Scan.qualify')}
+        title={document.name}
         dismissAction={onClose}
         primaryText={t('Scan.apply')}
         primaryAction={async () => {
