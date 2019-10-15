@@ -551,7 +551,7 @@
       "generic": "Something went wrong. Please try again."
     },
     "successful": {
-      "qualified_ok": "You just have categorized your file with success! "
+      "qualified_ok": "You just have successfully categorized your file! "
     },
 
     "items": {
