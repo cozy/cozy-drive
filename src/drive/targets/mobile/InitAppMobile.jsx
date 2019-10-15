@@ -246,7 +246,7 @@ class InitAppMobile {
     }
     render(
       <I18n lang={getLang()} polyglot={polyglot}>
-        <CozyProvider store={store} client={client}>
+        <CozyProvider client={client}>
           <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
         </CozyProvider>
       </I18n>,

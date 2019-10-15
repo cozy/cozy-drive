@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { ActionMenu, Icon } from 'cozy-ui/react'
+import { ActionMenu, Icon, Caption } from 'cozy-ui/react'
 import { translate } from 'cozy-ui/react/I18n'
 import { CozyFile } from 'models'
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -19,7 +19,7 @@ const Menu = props => {
   })
   return (
     <ActionMenu className={styles['fil-mobileactionmenu']} onClose={onClose}>
-      <MenuHeaderFile file={file} />
+      <MenuHeaderFile file={file} t={t} />
       <hr />
       {actionNames.map(actionName => {
         const Component = actions[actionName].Component || MenuItem
@@ -46,29 +46,34 @@ const Menu = props => {
   )
 }
 
-const MenuHeaderFile = ({ file }) => {
+const MenuHeaderFile = ({ file, t }) => {
   const { filename, extension } = CozyFile.splitFilename(file)
   return (
     <div>
-      <div
-        className={classNames(
-          styles['fil-mobileactionmenu-header'],
-          'u-p-1',
-          'u-flex',
-          'u-flex-items-center'
-        )}
-      >
+      <div className={'u-p-1 u-flex u-flex-items-center'}>
         <Icon
           icon={getMimeTypeIcon(isDirectory(file), file.name, file.mime)}
           size={32}
           className="u-mr-1"
         />
-        <span className={styles['fil-mobileactionmenu-file-name']}>
-          {filename}
-        </span>
-        <span className={styles['fil-mobileactionmenu-file-ext']}>
-          {extension}
-        </span>
+        <div>
+          <div className={classNames(styles['fil-mobileactionmenu-header'])}>
+            <span className={styles['fil-mobileactionmenu-file-name']}>
+              {filename}
+            </span>
+            <span className={styles['fil-mobileactionmenu-file-ext']}>
+              {extension}
+            </span>
+          </div>
+          <div className="u-coolGrey u-fz-tiny u-fs-normal u-flex u-flex-items-center">
+            <Icon icon="qualify" size="10" />
+            <Caption
+              className={classNames(styles['fil-mobileactionmenu-category'])}
+            >
+              {t(`Scan.items.${file.metadata.label}`)}
+            </Caption>
+          </div>
+        </div>
       </div>
     </div>
   )

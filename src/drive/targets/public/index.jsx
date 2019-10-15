@@ -73,7 +73,7 @@ const init = async () => {
     require(`drive/locales/${lang}`)
   )
 
-  const store = configureStore(client, polyglot.t.bind(polyglot))
+  configureStore(client, polyglot.t.bind(polyglot))
 
   try {
     const sharedDocumentId = await getSharedDocument(client)
@@ -85,7 +85,7 @@ const init = async () => {
     initCozyBar(dataset)
     render(
       <I18n lang={lang} polyglot={polyglot}>
-        <CozyProvider store={store} client={client}>
+        <CozyProvider client={client}>
           {isFile ? (
             <PublicLayout>
               <LightFileViewer files={[data]} isFile={true} />

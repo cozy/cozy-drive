@@ -1,19 +1,29 @@
 import React from 'react'
 import { withClient } from 'cozy-client'
+import PropTypes from 'prop-types'
 import { CozyFile } from 'cozy-doctypes'
 
 import ScannerQualification from './ScannerQualification'
-import { Overlay } from 'cozy-ui/transpiled/react'
+import { Modal } from 'cozy-ui/transpiled/react'
+
+import withOffline from './withOffline'
 
 export const SCANNER_IDLE = 'idle'
 export const SCANNER_DONE = 'done'
 export const SCANNER_UPLOADING = 'uploading'
+/**
+ * LoadingScreen is used to create a better transition between
+ * the native camera and the Qualification Modale.
+ *
+ * This Overlay has to be in a Modal since the menu item can be
+ * closed
+ *
+ */
 class Scanner extends React.Component {
   state = {
     status: SCANNER_IDLE,
     error: null,
     filename: '',
-    online: window.navigator.onLine,
     shouldShowScannerQualification: false,
     imageURI: '',
     loadingScreen: false
@@ -23,26 +33,6 @@ class Scanner extends React.Component {
     if (!CozyFile.cozyClient) CozyFile.registerClient(this.props.client)
   }
 
-  componentDidMount() {
-    window.addEventListener('offline', this.onOffline)
-    window.addEventListener('online', this.onOnline)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('offline', this.onOffline)
-    window.removeEventListener('online', this.onOnline)
-  }
-
-  onOffline = () => {
-    this.setState({
-      online: false
-    })
-  }
-  onOnline = () => {
-    this.setState({
-      online: true
-    })
-  }
   /**
    *
    * @param {String} imageURI native path to the file (file:///var....)
@@ -56,9 +46,9 @@ class Scanner extends React.Component {
     })
   }
 
-  onUpload = async (imageURI, qualification) => {
+  onUpload = async (imageURI, qualification, filename = '') => {
     const { generateName } = this.props
-    const name = generateName()
+    const name = filename === '' ? generateName() : filename
     this.setState({ status: SCANNER_UPLOADING, filename: name })
     const { dirId, onConflict, onBeforeUpload, onFinish } = this.props
     const onResolvedLocalFS = async fileEntry => {
@@ -211,29 +201,30 @@ class Scanner extends React.Component {
    * Si pas de dirId => FilePicker
    */
   render() {
-    const { children } = this.props
+    const { children, isOffline } = this.props
     const {
       status,
       error,
       filename,
-      online,
       shouldShowScannerQualification,
       imageURI,
       loadingScreen
     } = this.state
     if (loadingScreen) {
       return (
-        <Overlay>
-          <div className="u-bg-black u-mih-100" />
-        </Overlay>
+        <Modal
+          mobileFullscreen
+          closable={false}
+          className="u-bg-black u-mih-100"
+        />
       )
     }
     if (shouldShowScannerQualification)
       return (
         <ScannerQualification
-          onSave={async qualification => {
+          onSave={async (qualification, filename) => {
             this.setState({ shouldShowScannerQualification: false })
-            return await this.onUpload(imageURI, qualification)
+            return await this.onUpload(imageURI, qualification, filename)
           }}
           dismissAction={() => {
             window.navigator.camera.cleanup(() => {}, () => {})
@@ -249,7 +240,7 @@ class Scanner extends React.Component {
           filename,
           startScanner: this.startScanner,
           onClear: this.onClear,
-          online
+          online: !isOffline
         })}
       </>
     )
@@ -263,5 +254,7 @@ Scanner.defaultProps = {
  *
  */
 
-Scanner.propTypes = {}
-export default withClient(Scanner)
+Scanner.propTypes = {
+  isOffline: PropTypes.bool.isRequired
+}
+export default withOffline(withClient(Scanner))

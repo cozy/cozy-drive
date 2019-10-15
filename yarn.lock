@@ -4520,13 +4520,13 @@ cozy-client-js@0.16.4, cozy-client-js@^0.16.4:
     pouchdb-browser "7.0.0"
     pouchdb-find "7.0.0"
 
-cozy-client@6.64.0:
-  version "6.64.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.64.0.tgz#500673a452fc6aed69600c14bac5304c9ed7ec8f"
-  integrity sha512-+uBckk7S9vp7dg0wsaQ5HtfbrAtsaI5EpcrBP38RHVbNFvTRtTM+efRCsDkl6oHwHq9wiyEhlRVAOqk/gsjLUg==
+cozy-client@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-7.1.0.tgz#aaf7e1c927fbba58a53327365722f267d680ef43"
+  integrity sha512-5GSceaT9qCuEu+xoKVlFec6CsCjUAiyq6CNfXzBBkT+RstM1ug7vyVpVMpYKZ2yq7LSNO4pIA9iBbu0hejUJ1w==
   dependencies:
     cozy-device-helper "^1.7.3"
-    cozy-stack-client "^6.63.0"
+    cozy-stack-client "^7.1.0"
     lodash "^4.17.13"
     microee "^0.0.6"
     prop-types "^15.6.2"
@@ -4534,7 +4534,7 @@ cozy-client@6.64.0:
     redux "^3.7.2"
     redux-thunk "^2.3.0"
     sift "^6.0.0"
-    url-search-params-polyfill "^6.0.0"
+    url-search-params-polyfill "^7.0.0"
 
 cozy-client@^6.58.1:
   version "6.58.1"
@@ -4743,10 +4743,10 @@ cozy-stack-client@^6.58.1:
     mime "2.4.0"
     qs "6.7.0"
 
-cozy-stack-client@^6.63.0:
-  version "6.63.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-6.63.0.tgz#aa642bf77b7ed74d0752a3c7acce4f5f19d745f4"
-  integrity sha512-G7Bwj7+5CEHJqPPcGVD7oei8702cK9mj5Rrkpt3YhWG6+x53XLM1NsBQ8+3sm47/LIQwAySdbYxKck/EghTO+w==
+cozy-stack-client@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-7.1.0.tgz#671c09d44017b9f3c29ede18fe381ec6585eae72"
+  integrity sha512-TwccxRkYx7uGb30yMkfFRpmuXzAdCNLUGb7YYn3QwOqhqDjyKfRxZ+MSEa0XMM8rwjQPdSpBt1ZgeUnA+BMYMw==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -4769,10 +4769,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@25.0.0:
-  version "25.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-25.0.0.tgz#f83a41f3bd9cb3a30e3b1c80440ed2ec265ea50e"
-  integrity sha512-HAyUJyt8qMY6zrThVmU6JxAcjfzG9gJK0nLSluDcmRtsaKm3RC8CDI/tRbKfHM+F7UmJQaO4p3lP7H4J7/2xlQ==
+cozy-ui@25.3.1:
+  version "25.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-25.3.1.tgz#66f6a757386e2af4c75c930616e9f919f1f6b3ff"
+  integrity sha512-crzh9FYwZe4kVj8nMfZTcS4ZivgDfzr4xLMifPorEjJvVeHBahaI7v1ZyPYaUAf/qRk4S586mM/mdCU1TBuC3w==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -16313,6 +16313,11 @@ url-search-params-polyfill@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-6.0.0.tgz#f5e5fc230d56125f5b0ba67d9cbcd6555fa347e3"
   integrity sha512-69Bl5s3SiEgcHe8SMpzLGOyag27BQeTeSaP/CfVHkKc/VdUHtNjaP2PnhshFVC021221ItueOzuMMGofZ/HDmQ==
+
+url-search-params-polyfill@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-7.0.0.tgz#98b56ed29e67710588fdc3c361083b0f78303d95"
+  integrity sha512-0SEH3s+wCNbxEE/rWUalN004ICNi23Q74Ksc0gS2kG8EXnbayxGOrV97JdwnIVPKZ75Xk0hvKXvtIC4xReLMgg==
 
 url-slug@2.0.0:
   version "2.0.0"

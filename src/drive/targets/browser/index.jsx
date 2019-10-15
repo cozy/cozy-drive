@@ -64,13 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     require(`drive/locales/${lang}`)
   )
 
-  const store = configureStore(client, polyglot.t.bind(polyglot))
+  configureStore(client, polyglot.t.bind(polyglot))
 
   render(
     <HotedApp
       lang={data.cozyLocale}
       polyglot={polyglot}
-      store={store}
       client={client}
       history={history}
     />,
@@ -80,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const AppComponent = props => (
   <I18n lang={props.lang} polyglot={props.polyglot}>
-    <CozyProvider store={props.store} client={props.client}>
+    <CozyProvider client={props.client}>
       <Router history={props.history} routes={AppRoute} />
     </CozyProvider>
   </I18n>

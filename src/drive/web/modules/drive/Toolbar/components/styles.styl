@@ -3,7 +3,9 @@
     position absolute
     left 50%
     top 50%
-    transform translate(-50%,-50%)
+    //It seems that styles__icon___23x3R is overwriting
+    //this value
+    transform translate(-50%,-50%) !important
 }
 
 .border-selected {
@@ -17,18 +19,44 @@
 }
 
 .modal-header {
-    padding-left 1rem
-    padding-right 1rem
-    padding-top 0
+    //!important is needed since UI modal are overwriting those values
+    padding-left 1rem !important
+    padding-right 1rem !important 
+    padding-top 0 !important
     display flex
     width 100% 
     box-sizing border-box
     justify-content space-between
     align-items center
-    box-shadow 0 0.5px 0 0 rgba(0, 0, 0, 0.3)
+    border-bottom 0.5px solid rgba(0, 0, 0, 0.3)
 }
 
 .modal-footer {
     padding rem(8)
+    padding-bottom calc(0.5rem + env(safe-area-inset-bottom))
     box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.06)
 }
+
+.grid-item {
+    height rem(84)
+    padding-top rem(16)
+    }
+/*This 19 number is pretty magic. it seems that the qualify icon 
+is not well centered. So I can't just rem(16) ... */
+.grid-item-title {
+    margin-top rem(19)
+    }
+.grid-item__selected__without_label {
+    padding-top rem(16)
+    }
+.grid-item__selected {
+    padding-top rem(12)
+    }
+
+.grid-item-theme {
+    font-size rem(12)
+    padding-top rem(4)
+    }
+.grid-item-label {
+    font-size rem(10)
+    }

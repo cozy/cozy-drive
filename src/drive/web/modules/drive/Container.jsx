@@ -14,18 +14,19 @@ import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 import MoveModal from 'drive/web/modules/move/MoveModal'
-
+import EditDocumentQualification from 'drive/web/modules/drive/Toolbar/components/EditDocumentQualification'
 import {
   openFileWith,
   downloadFiles,
   exportFilesNative,
-  trashFiles
+  trashFiles,
+  updateFile
 } from 'drive/web/modules/navigation/duck'
 import {
   isAvailableOffline,
   toggleAvailableOffline
 } from 'drive/mobile/modules/offline/duck'
-
+import { extractFileAttributes } from 'drive/web/modules/navigation/duck/async'
 import styles from 'drive/styles/actionmenu.styl'
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
@@ -139,6 +140,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
           displayCondition: () => canMove
+        },
+        qualify: {
+          action: selected =>
+            dispatch(
+              showModal(
+                <EditDocumentQualification
+                  document={selected[0]}
+                  onQualified={file => {
+                    dispatch(updateFile(extractFileAttributes(file)))
+                  }}
+                />
+              )
+            ),
+          displayCondition: selections =>
+            selections.length === 1 && isFile(selections[0])
         },
         'phone-download': {
           displayCondition: selections =>

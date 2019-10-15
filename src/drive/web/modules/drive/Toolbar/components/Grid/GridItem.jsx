@@ -9,6 +9,7 @@ class GridItem extends Component {
       <Grid
         item
         xs={3}
+        sm={2}
         onClick={() => onClick && onClick()}
         className="u-ta-center u-bxz u-bdrs-3 u-ellipsis"
       >
