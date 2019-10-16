@@ -65,14 +65,19 @@ const MenuHeaderFile = ({ file, t }) => {
               {extension}
             </span>
           </div>
-          <div className="u-coolGrey u-fz-tiny u-fs-normal u-flex u-flex-items-center">
-            <Icon icon="qualify" size="10" />
-            <Caption
-              className={classNames(styles['fil-mobileactionmenu-category'])}
-            >
-              {t(`Scan.items.${file.metadata.label}`)}
-            </Caption>
-          </div>
+          {file.metadata &&
+            file.metadata.label && (
+              <div className="u-coolGrey u-fz-tiny u-fs-normal u-flex u-flex-items-center">
+                <Icon icon="qualify" size="10" />
+                <Caption
+                  className={classNames(
+                    styles['fil-mobileactionmenu-category']
+                  )}
+                >
+                  {t(`Scan.items.${file.metadata.label}`)}
+                </Caption>
+              </div>
+            )}
         </div>
       </div>
     </div>
