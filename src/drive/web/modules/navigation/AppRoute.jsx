@@ -9,7 +9,7 @@ import Layout from 'drive/web/modules/layout/Layout'
 import FileExplorer from './FileExplorer'
 import FilesViewer from 'drive/web/modules/viewer/FilesViewer'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
-import ScannerQualification from '../../modules/drive/Toolbar/components/ScannerQualification'
+import { ScannerQualification } from 'cozy-scanner'
 import {
   FolderContainer as Folder,
   RecentContainer as Recent,

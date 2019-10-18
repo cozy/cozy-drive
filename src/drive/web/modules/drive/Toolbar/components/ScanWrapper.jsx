@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Icon, translate } from 'cozy-ui/transpiled/react'
 
-import Scanner from './Scanner'
-import { SCANNER_DONE, SCANNER_UPLOADING } from './Scanner'
+import { Scanner, SCANNER_DONE, SCANNER_UPLOADING } from 'cozy-scanner'
 import toolbarContainer from '../toolbar'
 import PortaledQueue from './PortaledQueue'
 

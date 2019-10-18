@@ -9,6 +9,7 @@ import MenuItem from './MenuItem'
 
 import styles from 'drive/styles/actionmenu.styl'
 
+import { getBoundT } from 'cozy-scanner'
 const Menu = props => {
   const { t, file, actions, onClose } = props
   const actionNames = Object.keys(actions).filter(actionName => {
@@ -46,8 +47,10 @@ const Menu = props => {
   )
 }
 
-const MenuHeaderFile = ({ file, t }) => {
+const MenuHeaderFile = ({ file, lang }) => {
   const { filename, extension } = CozyFile.splitFilename(file)
+
+  const scannerT = getBoundT(lang)
   return (
     <div>
       <div className={'u-p-1 u-flex u-flex-items-center'}>
@@ -74,7 +77,7 @@ const MenuHeaderFile = ({ file, t }) => {
                     styles['fil-mobileactionmenu-category']
                   )}
                 >
-                  {t(`Scan.items.${file.metadata.label}`)}
+                  {scannerT(`Scan.items.${file.metadata.label}`)}
                 </Caption>
               </div>
             )}

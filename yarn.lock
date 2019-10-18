@@ -872,6 +872,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.5.2":
+  version "7.6.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.3.tgz#935122c74c73d2240cafd32ddb5fc2a6cd35cf1f"
+  integrity sha512-kq6anf9JGjW8Nt5rYfEuGRaEAaH1mkv3Bbu6rYvLOpPh/RusSJXuKPEAoZ7L7gybZkchE8+NV5g9vKF4AGAtsA==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.44.tgz#f8832f4fdcee5d59bf515e595fc5106c529b394f"
@@ -4671,6 +4678,10 @@ cozy-realtime@3.2.2:
   integrity sha512-3K3rCo7V4gXN0dIVysKXhbJspNQD594nEUGDUKg6DL4C14zEzr+KKxBWLTfN+qLMYV7/YZc+iIPnycvgEOnk5w==
   dependencies:
     minilog "https://github.com/cozy/minilog.git#master"
+"cozy-scanner@file:../libs9/packages/cozy-scanner":
+  version "0.0.1"
+  dependencies:
+    "@babel/runtime" "^7.5.2"
 
 cozy-scripts@1.13.2:
   version "1.13.2"
