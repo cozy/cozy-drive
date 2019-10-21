@@ -21,6 +21,7 @@ import {
 } from 'drive/web/modules/selection/duck'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 import palette from 'cozy-ui/react/palette'
+import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -248,12 +249,14 @@ class File extends Component {
   }
 
   componentDidMount() {
-    const { disabled, selectionModeActive, attributes } = this.props
+    const { disabled, attributes } = this.props
     this.gesturesHandler = new Hammer.Manager(this.filerow)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
     this.gesturesHandler.on('onpress singletap', ev => {
       if (this.state.actionMenuVisible || disabled) return
+      //don't read this value on the didMount... prefer when the listener is called
+      const { selectionModeActive } = this.props
       if (enableTouchEvents(ev)) {
         ev.preventDefault() // prevent a ghost click
         if (ev.type === 'onpress' || selectionModeActive) {
@@ -302,6 +305,7 @@ class File extends Component {
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { actionMenuVisible } = this.state
+
     const filContentRowSelected = classNames(styles['fil-content-row'], {
       [styles['fil-content-row-selected']]: selected,
       [styles['fil-content-row-actioned']]: actionMenuVisible,
@@ -388,7 +392,7 @@ File.propTypes = {
   isAvailableOffline: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,
   breakpoints: PropTypes.object.isRequired,
-  selectionModeActive: PropTypes.func,
+  selectionModeActive: PropTypes.bool.isRequired,
   /** When a user click on a Folder */
   onFolderOpen: PropTypes.func.isRequired,
   /** onFileOpen : When a user click on a File */
@@ -399,7 +403,8 @@ File.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   selected: isSelected(state, ownProps.attributes.id),
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
-  thumbnailSizeBig: state.view.thumbnailSize
+  thumbnailSizeBig: state.view.thumbnailSize,
+  selectionModeActive: isSelectionBarVisible(state)
 })
 
 const mapDispatchToProps = dispatch => ({
