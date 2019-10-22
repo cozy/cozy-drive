@@ -3,6 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import logger from 'lib/logger'
 
+import Realtime from 'cozy-realtime'
+import { withClient } from 'cozy-client'
+
 const TTL = 10000
 
 const PENDING = 'PENDING'
@@ -12,10 +15,6 @@ const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
 class ImageLoader extends React.Component {
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
-
   state = {
     status: PENDING,
     src: null
@@ -23,9 +22,25 @@ class ImageLoader extends React.Component {
 
   _mounted = false
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { client } = this.props
     this._mounted = true
     this.loadNextSrc()
+    this.realtime = new Realtime({ client })
+    this.type = 'io.cozy.files.thumbnails'
+    this.realtime.subscribe('created', this.type, this.handleCreate)
+  }
+
+  /**
+   * Reload the link when realtime tell us that the
+   * thumbnail is created. By default size === small
+   */
+  handleCreate = doc => {
+    const { file, size } = this.props
+    if (file._id === doc._id && doc.format === size) {
+      this.loadLink()
+      this.unsubscribeRealtime()
+    }
   }
 
   componentWillUnmount() {
@@ -35,8 +50,13 @@ class ImageLoader extends React.Component {
       this.img.onload = this.img.onerror = null
       this.img.src = ''
     }
+    this.unsubscribeRealtime()
   }
 
+  unsubscribeRealtime = () => {
+    this.realtime &&
+      this.realtime.unsubscribe('created', this.type, this.handleCreate)
+  }
   getFileId(file) {
     return file.id || file._id
   }
@@ -89,8 +109,7 @@ class ImageLoader extends React.Component {
 
   async loadLink() {
     this.setState({ status: LOADING_LINK })
-    const { file, size } = this.props
-    const { client } = this.context
+    const { file, size, client } = this.props
 
     try {
       const links = await this.getFileLinks(file, size)
@@ -130,13 +149,9 @@ class ImageLoader extends React.Component {
   }
 
   getDownloadLink(fileId) {
-    return this.context.client
-      ? this.context.client
-          .collection('io.cozy.files')
-          .getDownloadLinkById(fileId)
-      : cozy.client.files
-          .getDownloadLinkById(fileId)
-          .then(path => `${cozy.client._url}${path}`)
+    return this.props.client
+      .collection('io.cozy.files')
+      .getDownloadLinkById(fileId)
   }
 
   render() {
@@ -154,7 +169,8 @@ ImageLoader.propTypes = {
   render: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   onError: PropTypes.func,
-  renderFallback: PropTypes.func
+  renderFallback: PropTypes.func,
+  client: PropTypes.object.isRequired
 }
 
 ImageLoader.defaultProps = {
@@ -162,4 +178,4 @@ ImageLoader.defaultProps = {
   onError: () => {}
 }
 
-export default ImageLoader
+export default withClient(ImageLoader)

@@ -20,7 +20,7 @@ export class RealtimeFiles extends React.Component {
   realtimeListener = null
   pouchListener = null
 
-  componentWillMount() {
+  componentDidMount() {
     const { client } = this.props
     this.realtime = new CozyRealtime({ client })
     this.realtime.subscribe('created', 'io.cozy.files', this.onDocumentChange)
@@ -48,10 +48,8 @@ export class RealtimeFiles extends React.Component {
   onDocumentChange = rawDoc => {
     const doc = this.normalizeId(rawDoc)
     const previousDoc = this.props.files.find(f => f.id === doc.id)
-
     const docIsInCurrentView = this.isInCurrentView(doc)
     const docWasInCurrentView = previousDoc && this.isInCurrentView(previousDoc)
-
     if (docWasInCurrentView && !docIsInCurrentView) this.props.deleteFile(doc)
     else if (!previousDoc && docIsInCurrentView) this.props.addFile(doc)
     else if (previousDoc && docIsInCurrentView) {
