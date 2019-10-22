@@ -107,7 +107,7 @@
     "cozy-device-helper": "1.8.0",
     "cozy-doctypes": "1.67.0",
     "cozy-flags": "1.10.0",
-    "cozy-realtime": "2.0.8",
+    "cozy-realtime": "3.2.1",
     "cozy-scripts": "1.13.2",
     "cozy-ui": "25.4.1",
     "date-fns": "1.30.1",
