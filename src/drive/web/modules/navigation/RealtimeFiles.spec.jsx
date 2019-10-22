@@ -1,7 +1,8 @@
 import { mount } from 'enzyme'
 import React from 'react'
-import realtime from 'cozy-realtime'
+
 import { RealtimeFiles } from './RealtimeFiles'
+
 global.cozy = {
   client: {
     offline: {
@@ -9,108 +10,86 @@ global.cozy = {
     }
   }
 }
+
 jest.mock('cozy-ui/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
 
 jest.mock('cozy-realtime', () => {
-  const mockReturn = {
-    onCreate: jest.fn(() => mockReturn),
-    onUpdate: jest.fn(() => mockReturn),
-    onDelete: jest.fn(() => mockReturn),
-    unsubscribe: jest.fn(() => mockReturn)
-  }
-  return {
-    ...require.requireActual('cozy-realtime'),
-    subscribe: jest.fn(() => mockReturn)
+  return class {
+    constructor() {
+      this.subscribe = jest.fn()
+    }
   }
 })
 
 describe('RealTimeFiles', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-  it('should instanciate Realtime', () => {
-    const context = {
-      client: {
-        stackClient: {
-          token: {
-            token: '1'
-          },
-          uri: 'http://mycozy.cloud'
-        }
+  let client,
+    updateFile,
+    updateOfflineFileCopyIfNecessary,
+    addFile,
+    deleteFile,
+    component
+  const setup = () => {
+    client = {
+      stackClient: {
+        token: {
+          token: '1'
+        },
+        uri: 'http://mycozy.cloud'
       }
     }
     //eslint-disable-next-line
-    const component = mount(<RealtimeFiles />, { context })
-    expect(realtime.subscribe).toHaveBeenCalledWith(
+    const files = [
       {
-        token: '1',
-        url: 'http://mycozy.cloud'
+        id: '2',
+        _id: '2'
       },
-      'io.cozy.files'
+      {
+        id: '3',
+        _id: '3'
+      }
+    ]
+    updateFile = jest.fn()
+    updateOfflineFileCopyIfNecessary = jest.fn()
+    addFile = jest.fn()
+    deleteFile = jest.fn()
+    component = mount(
+      <RealtimeFiles
+        client={client}
+        files={files}
+        updateFile={updateFile}
+        addFile={addFile}
+        deleteFile={deleteFile}
+        updateOfflineFileCopyIfNecessary={updateOfflineFileCopyIfNecessary}
+      />
     )
+  }
+  beforeEach(() => {
+    jest.clearAllMocks()
+    setup()
   })
+  it('should call Update', () => {
+    //Doc was present and in the current view => updateFile
+    component.instance().isInCurrentView = jest.fn().mockReturnValue(true)
 
-  it('should instanciate Realtime and update when context change', () => {
-    const context = {
-      client: {
-        stackClient: {
-          token: {
-            token: '1'
-          },
-          uri: 'http://mycozy.cloud'
-        }
-      }
-    }
-    const component = mount(<RealtimeFiles />, { context })
-    // jest.spyOn(realtime, 'subscribe')
-    expect(realtime.subscribe).toHaveBeenCalledWith(
-      {
-        token: '1',
-        url: 'http://mycozy.cloud'
-      },
-      'io.cozy.files'
-    )
-
-    component.setContext({
-      client: {
-        stackClient: {
-          token: {
-            token: '2'
-          },
-          uri: 'http://mycozy.cloud'
-        }
-      }
-    })
-    expect(realtime.subscribe).toHaveBeenCalledWith(
-      {
-        token: '2',
-        url: 'http://mycozy.cloud'
-      },
-      'io.cozy.files'
-    )
+    component.instance().onDocumentChange({ _id: '2' })
+    expect(updateFile).toBeCalled()
+    expect(updateOfflineFileCopyIfNecessary).toBeCalled()
   })
-
-  it('should instanciate Realtime even with accessToken ', () => {
-    const context = {
-      client: {
-        stackClient: {
-          token: {
-            accessToken: '1'
-          },
-          uri: 'http://mycozy.cloud'
-        }
-      }
-    }
-    mount(<RealtimeFiles />, { context })
-    // jest.spyOn(realtime, 'subscribe')
-    expect(realtime.subscribe).toHaveBeenCalledWith(
-      {
-        token: '1',
-        url: 'http://mycozy.cloud'
-      },
-      'io.cozy.files'
-    )
+  it('should call deleteFile', () => {
+    //Doc was present, but not the current view => delete
+    component.instance().isInCurrentView = jest
+      .fn()
+      .mockReturnValueOnce(false)
+      .mockReturnValue(true)
+    component.instance().onDocumentChange({ _id: '2' })
+    expect(deleteFile).toBeCalled()
+  })
+  it('should call addFile', () => {
+    //Doc was not present, but the current view => add
+    component.instance().isInCurrentView = jest.fn().mockReturnValue(true)
+    component.instance().onDocumentChange({ _id: '4' })
+    expect(addFile).toBeCalled()
   })
 })
