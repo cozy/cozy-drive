@@ -2,7 +2,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import realtime from 'cozy-realtime'
+import { withClient } from 'cozy-client'
+import CozyRealtime from 'cozy-realtime'
 import PropTypes from 'prop-types'
 
 import {
@@ -18,23 +19,14 @@ import logger from 'lib/logger'
 export class RealtimeFiles extends React.Component {
   realtimeListener = null
   pouchListener = null
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
+
   componentWillMount() {
-    const { stackClient: client } = this.context.client
-    const { token, uri } = client
-    this.realtimeListener = realtime
-      .subscribe(
-        {
-          token: token.token || token.accessToken,
-          url: uri
-        },
-        'io.cozy.files'
-      )
-      .onCreate(this.onDocumentChange)
-      .onUpdate(this.onDocumentChange)
-      .onDelete(this.onDocumentDeletion)
+    const { client } = this.props
+    this.realtime = new CozyRealtime({ client })
+    this.realtime.subscribe('created', 'io.cozy.files', this.onDocumentChange)
+    this.realtime.subscribe('updated', 'io.cozy.files', this.onDocumentChange)
+    this.realtime.subscribe('deleted', 'io.cozy.files', this.onDocumentChange)
+
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     if (db) {
       this.pouchListener = db.changes({
@@ -52,31 +44,7 @@ export class RealtimeFiles extends React.Component {
         })
     }
   }
-  /*
-  I know, willReceiveProps is deprecated but we use the old API context
-  */
-  componentWillReceiveProps(nextProps, nextContext) {
-    const { stackClient: client } = nextContext.client
-    const { token, uri } = client
-    if (token !== this.context.client.stackClient.token) {
-      logger.log('Update realtime token')
-      if (this.realtimeListener) {
-        this.realtimeListener.unsubscribe()
-        this.realtimeListener = null
-      }
-      this.realtimeListener = realtime
-        .subscribe(
-          {
-            token: token.token || token.accessToken,
-            url: uri
-          },
-          'io.cozy.files'
-        )
-        .onCreate(this.onDocumentChange)
-        .onUpdate(this.onDocumentChange)
-        .onDelete(this.onDocumentDeletion)
-    }
-  }
+
   onDocumentChange = rawDoc => {
     const doc = this.normalizeId(rawDoc)
     const previousDoc = this.props.files.find(f => f.id === doc.id)
@@ -113,7 +81,23 @@ export class RealtimeFiles extends React.Component {
   normalizeId = doc => ({ ...doc, id: doc._id })
 
   componentWillUnmount() {
-    if (this.realtimeListener) this.realtimeListener.unsubscribe()
+    if (this.realtime) {
+      this.realtime.unsubscribe(
+        'created',
+        'io.cozy.files',
+        this.onDocumentChange
+      )
+      this.realtime.unsubscribe(
+        'updated',
+        'io.cozy.files',
+        this.onDocumentChange
+      )
+      this.realtime.unsubscribe(
+        'deleted',
+        'io.cozy.files',
+        this.onDocumentChange
+      )
+    }
     if (this.pouchListener) this.pouchListener.cancel()
   }
 
@@ -138,6 +122,10 @@ const mapDispatchToProps = dispatch => ({
 const RealtimeFilesConnected = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(RealtimeFiles))
+)(withRouter(withClient(RealtimeFiles)))
 
+RealtimeFilesConnected.propTypes = {
+  client: PropTypes.object.isRequired,
+  files: PropTypes.array.isRequired
+}
 export default RealtimeFilesConnected
