@@ -242,7 +242,8 @@
   "quotaalert": {
     "title": "Your disk space is full :(",
     "desc": " Please remove files and empty your trash before uploading files again.",
-    "confirm": "OK"
+    "confirm": "OK",
+    "increase": "Increase your disk space"
   },
   "loading": {
     "message": "Loading"
