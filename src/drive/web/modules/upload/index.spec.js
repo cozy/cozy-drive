@@ -258,6 +258,43 @@ describe('processNextFile function', () => {
       type: 'RECEIVE_UPLOAD_ERROR'
     })
   })
+
+  it('should handle an error during upload', async () => {
+    const getState = () => ({
+      upload: {
+        queue: [
+          {
+            status: 'pending',
+            file,
+            entry: '',
+            isDirectory: false
+          }
+        ]
+      }
+    })
+    createFileSpy.mockRejectedValue({
+      status: 413,
+      title: 'QUOTA',
+      detail: 'QUOTA',
+      source: {}
+    })
+
+    const asyncProcess = processNextFile(
+      fileUploadedCallbackSpy,
+      queueCompletedCallbackSpy,
+      dirId,
+      sharingState
+    )
+    await asyncProcess(dispatchSpy, getState, { client: fakeClient })
+
+    expect(fileUploadedCallbackSpy).not.toHaveBeenCalled()
+
+    expect(dispatchSpy).toHaveBeenNthCalledWith(2, {
+      file,
+      status: 'quota',
+      type: 'RECEIVE_UPLOAD_ERROR'
+    })
+  })
 })
 
 describe('selectors', () => {

@@ -115,9 +115,9 @@ export const processNextFile = (
     }
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
   } catch (uploadError) {
+    error = uploadError
     if (uploadError.status === CONFLICT_ERROR) {
       try {
-        error = uploadError
         const path = await CozyFile.getFullpath(dirID, file.name)
         if (
           !isShared(sharingState, { path }) &&
@@ -132,7 +132,6 @@ export const processNextFile = (
         error = updateError
       }
     }
-
     if (error) {
       logger.warn(error)
       const statusError = {
