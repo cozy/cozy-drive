@@ -25,6 +25,7 @@ const QuotaAlert = ({ t, onClose, client }) => {
           ? window.open(buildPremiumLink(uuid, managerUrl), 'self')
           : onClose
       }
+      dismissAction={onClose}
     />
   )
 }
