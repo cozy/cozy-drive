@@ -184,8 +184,35 @@ const createFolder = async (client, name, dirID) => {
     .createDirectory({ name, dirId: dirID })
   return resp.data
 }
-
 const uploadFile = async (client, file, dirID) => {
+  /** We have a bug with Chrome returning SPDY_ERROR_PROTOCOL.
+   * This is certainly caused by the couple HTTP2 / HAProxy / CozyStack
+   * when something cut the HTTP connexion before the Stack
+   *
+   * We can not intercept this error since Chrome only returns
+   * `Failed to fetch` as if we were offline. The only workaround for
+   * now, is to check if we'll have enough size on the Cozy before
+   * trying to upload the file to detect if we'll go out of quota
+   * before connexion being cut by something.
+   *
+   * We don't need to do that work on other browser (window.chrome
+   * should be available on new Edge, Chrome, Chromium, Brave, Opera...)
+   */
+  if (window.chrome) {
+    const { data: diskUsage } = await client
+      .getStackClient()
+      .fetchJSON('GET', '/settings/disk-usage')
+    if (diskUsage.attributes.quota) {
+      if (
+        parseInt(diskUsage.attributes.used) + parseInt(file.size) >
+        parseInt(diskUsage.attributes.quota)
+      ) {
+        const error = new Error('Payload Too Large')
+        error.status = 413
+        throw error
+      }
+    }
+  }
   const resp = await client
     .collection('io.cozy.files')
     .createFile(file, { dirId: dirID })
