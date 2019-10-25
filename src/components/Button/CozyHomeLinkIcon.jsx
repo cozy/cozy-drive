@@ -1,3 +1,3 @@
-export const CozyHomeLinkIcon = 'cozy-negative'
+export const CozyHomeLinkIcon = 'cloud'
 
 export default CozyHomeLinkIcon
