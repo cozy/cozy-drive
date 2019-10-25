@@ -15,8 +15,6 @@ import CozyHomeLink from 'components/Button/CozyHomeLink'
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import OpenInCozyButton from './OpenInCozyButton'
 
-import CloudIcon from 'drive/assets/icons/icon-cloud-open.svg'
-import CloudNegative from 'drive/assets/icons/icon-cloud-negative.svg'
 import DownloadIcon from 'drive/assets/icons/icon-download-16.svg'
 
 const { BarRight } = cozy.bar
@@ -54,12 +52,18 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy, isFile }) => (
     position="right"
   >
     {onOpenInCozy && (
-      <MenuItem onSelect={onOpenInCozy} icon={<Icon icon={CloudIcon} />}>
+      <MenuItem
+        onSelect={onOpenInCozy}
+        icon={<Icon icon={'to-the-cloud'} color={'#000000'} />}
+      >
         {t('toolbar.menu_open_cozy')}
       </MenuItem>
     )}
     {onCreateCozy && (
-      <MenuItem onSelect={onCreateCozy} icon={<Icon icon={CloudNegative} />}>
+      <MenuItem
+        onSelect={onCreateCozy}
+        icon={<Icon icon={'cloud'} color={'#000000'} />}
+      >
         {t('Share.create-cozy')}
       </MenuItem>
     )}
@@ -177,14 +181,16 @@ class PublicToolbar extends React.Component {
       const response = await client
         .collection('io.cozy.permissions')
         .getOwnPermissions()
+      console.log('response', response)
       const sourceId = response.data.attributes.source_id
       const sharingId = sourceId.split('/')[1]
-
+      console.log('sharingId', sharingId)
       const { sharecode } = getQueryParameter()
 
       const link = client
         .collection('io.cozy.sharings')
         .getDiscoveryLink(sharingId, sharecode)
+      console.log('link', link)
       this.setState({ discoveryLink: link })
     } catch (err) {
       logger.warn('Failed to load sharing discovery link', err)
