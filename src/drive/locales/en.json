@@ -241,7 +241,7 @@
   },
   "quotaalert": {
     "title": "Your disk space is full :(",
-    "desc": " Please remove files and empty your trash before uploading files again.",
+    "desc": "Please remove files, empty your trash or increase your disk space before uploading files again.",
     "confirm": "OK",
     "increase": "Increase your disk space"
   },
