@@ -16,11 +16,11 @@ const QuotaAlert = ({ t, onClose, client }) => {
   return (
     <Modal
       title={t('quotaalert.title')}
-      description={<p>{t('quotaalert.desc')}</p>}
-      primaryText={t('quotaalert.confirm')}
-      secondaryText={uuid && managerUrl ? t('quotaalert.increase') : undefined}
-      primaryAction={onClose}
-      secondaryAction={() =>
+      description={t('quotaalert.desc')}
+      secondaryText={t('quotaalert.confirm')}
+      secondaryAction={onClose}
+      primaryText={uuid && managerUrl ? t('quotaalert.increase') : undefined}
+      primaryAction={() =>
         uuid && managerUrl
           ? window.open(buildPremiumLink(uuid, managerUrl), 'self')
           : onClose
