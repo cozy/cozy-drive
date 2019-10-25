@@ -6,16 +6,24 @@ const withInstance = client => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const instanceFetched = await client
+        const instancePromise = client
           .getStackClient()
           .fetchJSON('GET', '/settings/instance')
-        setInstance(instanceFetched)
-      } catch (e) {} //eslint-disable-line
-      try {
-        const contextFetched = await client
+
+        const contextPromise = client
           .getStackClient()
           .fetchJSON('GET', '/settings/context')
-        setContext(contextFetched)
+        const promises = [instancePromise, contextPromise]
+
+        const [instanceFetched, contextFetched] = await Promise.all(
+          promises.map(p => p.catch(e => e))
+        )
+        if (!(instanceFetched instanceof Error)) {
+          setInstance(instanceFetched)
+        }
+        if (!(contextFetched instanceof Error)) {
+          setContext(contextFetched)
+        }
       } catch (e) {} //eslint-disable-line
     }
     fetchData()
