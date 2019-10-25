@@ -15,8 +15,6 @@ import CozyHomeLink from 'components/Button/CozyHomeLink'
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import OpenInCozyButton from './OpenInCozyButton'
 
-import CloudIcon from 'drive/assets/icons/icon-cloud-open.svg'
-import CloudNegative from 'drive/assets/icons/icon-cloud-negative.svg'
 import DownloadIcon from 'drive/assets/icons/icon-download-16.svg'
 
 const { BarRight } = cozy.bar
@@ -54,12 +52,12 @@ const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy, isFile }) => (
     position="right"
   >
     {onOpenInCozy && (
-      <MenuItem onSelect={onOpenInCozy} icon={<Icon icon={CloudIcon} />}>
+      <MenuItem onSelect={onOpenInCozy} icon={<Icon icon={'to-the-cloud'} />}>
         {t('toolbar.menu_open_cozy')}
       </MenuItem>
     )}
     {onCreateCozy && (
-      <MenuItem onSelect={onCreateCozy} icon={<Icon icon={CloudNegative} />}>
+      <MenuItem onSelect={onCreateCozy} icon={<Icon icon={'cloud'} />}>
         {t('Share.create-cozy')}
       </MenuItem>
     )}
@@ -179,7 +177,6 @@ class PublicToolbar extends React.Component {
         .getOwnPermissions()
       const sourceId = response.data.attributes.source_id
       const sharingId = sourceId.split('/')[1]
-
       const { sharecode } = getQueryParameter()
 
       const link = client
