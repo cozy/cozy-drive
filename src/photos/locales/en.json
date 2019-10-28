@@ -263,5 +263,11 @@
       "success_conflicts": "%{smart_count} photo uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} photos uploaded with %{conflictNumber} conflict(s).",
       "errors": "Errors occurred during the photos upload."
     }
+  },
+  "quotaalert": {
+    "title": "Your disk space is full :(",
+    "desc": "Please remove files, empty your trash or increase your disk space before uploading files again.",
+    "confirm": "OK",
+    "increase": "Increase your disk space"
   }
 }

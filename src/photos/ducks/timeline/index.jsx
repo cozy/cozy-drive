@@ -35,8 +35,24 @@ const TIMELINE_MUTATIONS = client => ({
   uploadPhoto: async (file, dirId) => {
     return client.mutate({
       mutationType: 'UPLOAD_PHOTO',
-      execute: () =>
-        client.collection('io.cozy.files').createFile(file, { dirId })
+      execute: async () => {
+        if (window.chrome) {
+          const { data: diskUsage } = await client
+            .getStackClient()
+            .fetchJSON('GET', '/settings/disk-usage')
+          if (diskUsage.attributes.quota) {
+            if (
+              parseInt(diskUsage.attributes.used) + parseInt(file.size) >
+              parseInt(diskUsage.attributes.quota)
+            ) {
+              const error = new Error('Payload Too Large')
+              error.status = 413
+              throw error
+            }
+          }
+        }
+        return client.collection('io.cozy.files').createFile(file, { dirId })
+      }
     })
   },
   deletePhoto: photo => client.destroy(photo)
