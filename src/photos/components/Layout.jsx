@@ -14,12 +14,14 @@ import BannerClient from '../../components/pushClient/Banner'
 import Alerter from 'cozy-ui/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
 import { IconSprite } from 'cozy-ui/transpiled/react'
+import { ModalManager } from 'react-cozy-helpers'
 
 const NavLink = genNavLink(RRNavLink)
 
 export const Layout = ({ t, children }) => (
   <LayoutUI>
     <Sidebar className={styles['pho-sidebar']}>
+      <ModalManager />
       <Nav>
         <NavItem>
           <NavLink to="/photos">

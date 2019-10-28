@@ -1,9 +1,12 @@
+import React from 'react'
 import { combineReducers } from 'redux'
 import logger from 'lib/logger'
 
 import Alerter from 'cozy-ui/react/Alerter'
 
 import UploadQueue from './UploadQueue'
+import { showModal } from 'react-cozy-helpers'
+import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 
 export { UploadQueue }
 
@@ -15,11 +18,13 @@ const RECEIVE_UPLOAD_SUCCESS = 'RECEIVE_UPLOAD_SUCCESS'
 const RECEIVE_UPLOAD_ERROR = 'RECEIVE_UPLOAD_ERROR'
 const PURGE_UPLOAD_QUEUE = 'PURGE_UPLOAD_QUEUE'
 
+//!TODO mutualize in FileCollection
 const PENDING = 'pending'
 const LOADING = 'loading'
 const LOADED = 'loaded'
 const FAILED = 'failed'
 const CONFLICT = 'conflict'
+const QUOTA = 'quota'
 
 const itemInitialState = file => ({
   file,
@@ -70,11 +75,24 @@ const processNextFile = callback => async (dispatch, getState) => {
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
   } catch (error) {
     logger.log(error)
+    const statusError = {
+      409: CONFLICT,
+      413: QUOTA
+    }
+    //Photo doesn't have a status QUOTA. So
+    //we just use FAILED as it seems to do the job
+    const status =
+      statusError[error.status] ||
+      /Failed to fetch$/.exec(error.toString()) ||
+      FAILED
     dispatch({
       type: RECEIVE_UPLOAD_ERROR,
       file,
-      status: error.status === 409 ? CONFLICT : FAILED
+      status: status === CONFLICT ? CONFLICT : FAILED
     })
+    if (status === QUOTA) {
+      dispatch(showModal(<QuotaAlert t={() => {}} />))
+    }
   }
   dispatch(processNextFile(callback))
 }

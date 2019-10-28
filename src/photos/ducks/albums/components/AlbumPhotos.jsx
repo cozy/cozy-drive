@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
-import { showModal, ModalManager } from 'react-cozy-helpers'
+import { showModal } from 'react-cozy-helpers'
 import { translate } from 'cozy-ui/react/I18n'
 import Alerter from 'cozy-ui/react/Alerter'
 import { ShareModal } from 'sharing'
@@ -183,7 +183,6 @@ class AlbumPhotos extends Component {
               />
             )}
             {this.renderViewer(this.props.children)}
-            <ModalManager />
           </div>
         )}
       </Selection>
