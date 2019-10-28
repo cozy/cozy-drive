@@ -4,14 +4,23 @@ import Modal from 'cozy-ui/react/Modal'
 import { translate } from 'cozy-ui/react/I18n'
 import { withClient } from 'cozy-client'
 import withInstance from './withInstance'
+import { isMobileApp } from 'cozy-device-helper'
 
 const buildPremiumLink = (uuid, managerUrl) =>
   `${managerUrl}/cozy/instances/${uuid}/premium`
 
 const QuotaAlert = ({ t, onClose, client }) => {
-  const instanceInfo = withInstance(client)
-  const uuid = get(instanceInfo, 'instance.data.attributes.uuid')
-  const managerUrl = get(instanceInfo, 'context.data.attributes.manager_url')
+  let uuid, managerUrl
+  /**
+   * We do the request only on the web since Apple
+   * and Google have a retriscted policy for the
+   * inApp purchase...
+   */
+  if (!isMobileApp()) {
+    const instanceInfo = withInstance(client)
+    uuid = get(instanceInfo, 'instance.data.attributes.uuid')
+    managerUrl = get(instanceInfo, 'context.data.attributes.manager_url')
+  }
 
   return (
     <Modal
