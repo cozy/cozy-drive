@@ -143,7 +143,7 @@ export class PhotoList extends Component {
             <Photo
               photo={photo}
               box={layout.boxes[index]}
-              key={photo.id}
+              key={photo.id + index}
               selected={this.isPhotoSelected(photo, selected)}
               onToggle={onPhotoToggle}
             />
