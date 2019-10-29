@@ -21,7 +21,6 @@ const NavLink = genNavLink(RRNavLink)
 export const Layout = ({ t, children }) => (
   <LayoutUI>
     <Sidebar className={styles['pho-sidebar']}>
-      <ModalManager />
       <Nav>
         <NavItem>
           <NavLink to="/photos">
@@ -45,6 +44,8 @@ export const Layout = ({ t, children }) => (
       {__TARGET__ !== 'mobile' && <BannerClient />}
       {children}
     </Main>
+    <ModalManager />
+
     <IconSprite />
   </LayoutUI>
 )

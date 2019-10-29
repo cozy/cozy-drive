@@ -10,6 +10,9 @@ import { createLogger } from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/react/I18n'
+import SharingProvider from 'sharing'
+
+import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 import appReducers from 'photos/reducers'
 import AppRoute from 'photos/components/AppRoute'
@@ -75,7 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
   render(
     <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
       <CozyProvider store={store} client={client}>
-        <Router history={history} routes={AppRoute} />
+        <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
+          <Router history={history} routes={AppRoute} />
+        </SharingProvider>
       </CozyProvider>
     </I18n>,
     root
