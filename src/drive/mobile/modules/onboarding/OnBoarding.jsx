@@ -8,13 +8,10 @@ import BackupPhotosVideos from './components/BackupPhotosVideos'
 import Analytics from './components/Analytics'
 
 export default class OnBoarding extends Component {
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
   onboardingSteps = [Files, BackupPhotosVideos, Analytics]
 
   async redirectToApp() {
-    await initBar(this.context.client)
+    //  await initBar(this.context.client)
     this.props.router.replace('/')
   }
 

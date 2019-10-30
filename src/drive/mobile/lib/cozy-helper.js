@@ -45,29 +45,37 @@ export const initBar = async client => {
     cozyClient: client,
     iconPath: require('../../targets/vendor/assets/app-icon.svg'),
     lang: getLang(),
-    cozyURL: client.options.uri,
-    token: await getTokenWithNoException(),
-    renewToken: () => client.getClient().refreshToken(),
+    cozyURL: client.uri,
+    //  token: await getTokenWithNoException(),
+    //renewToken: () => client.getClient().refreshToken(),
     replaceTitleOnMobile: false,
     displayOnMobile: true
   })
 }
 
 export const restoreCozyClientJs = (uri, clientInfos, token) => {
-  const offline = { doctypes: ['io.cozy.files'] }
-  cozy.client.init({
-    cozyURL: uri,
-    oauth: {
-      storage: new Storage(),
-      clientParams: {
-        ...clientInfos,
-        scopes: token.scope
-      }
-    },
-    offline
-  })
-  const realToken = new cozy.client.auth.AccessToken(token)
-  cozy.client.saveCredentials(clientInfos, realToken)
+  console.log('uri', uri)
+  console.log('clientIfon', clientInfos)
+  console.log('token', token)
+  try {
+    const offline = { doctypes: ['io.cozy.files'] }
+    cozy.client.init({
+      cozyURL: uri,
+      oauth: {
+        storage: new Storage(),
+        clientParams: {
+          ...clientInfos,
+          scopes: token.scope
+        }
+      },
+      offline
+    })
+
+    cozy.client.saveCredentials(clientInfos, token)
+    console.log('cozy client', cozy.client)
+  } catch (error) {
+    console.log('error', error)
+  }
 }
 
 export function resetClient(client, clientInfo = null) {

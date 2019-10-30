@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
+import { withClient } from 'cozy-client'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/react/I18n'
 import SettingCategory, { ELEMENT_BUTTON } from './SettingCategory'
@@ -10,12 +11,8 @@ import {
 } from 'drive/mobile/modules/authorization/duck'
 
 export class Unlink extends Component {
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
   render() {
-    const { t, unlink, clientSettings } = this.props
-    const { client } = this.context
+    const { t, unlink, clientSettings, client } = this.props
     return (
       <div>
         <SettingCategory
@@ -56,5 +53,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(translate()(Unlink))
+  )(translate()(withClient(Unlink)))
 )

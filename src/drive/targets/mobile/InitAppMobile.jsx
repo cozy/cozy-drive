@@ -199,10 +199,10 @@ class InitAppMobile {
     let realOauthOptions
 
     try {
-      const clientInfos = getClientSettings(store.getState())
+      // const clientInfos = getClientSettings(store.getState())
       /*Since we can update our OauthConfig sometimes, we need to
         override the cached one */
-      realOauthOptions =
+      /* realOauthOptions =
         clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
       const token = getToken(store.getState())
 
@@ -214,11 +214,11 @@ class InitAppMobile {
       stackClient.onTokenRefresh = token => {
         restoreCozyClientJs(client.options.uri, realOauthOptions, token)
         store.dispatch(setToken(token))
-      }
+      } */
       //In order to check if the token is good
-      await stackClient.fetchJSON('GET', '/apps/settings')
+      // await stackClient.fetchJSON('GET', '/apps/settings')
       shouldInitBar = true
-      await store.dispatch(startReplication())
+      // await store.dispatch(startReplication())
     } catch (e) {
       logger.warn(e)
       if (isClientRevoked(e, store.getState())) {
@@ -230,7 +230,7 @@ class InitAppMobile {
         shouldInitBar = true
       }
     } finally {
-      if (shouldInitBar) await initBar(client)
+      // if (shouldInitBar) await initBar(client)
     }
 
     useHistoryForTracker(hashHistory)

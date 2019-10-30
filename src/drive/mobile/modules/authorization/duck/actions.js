@@ -15,6 +15,8 @@ export const unrevokeClient = () => ({ type: UNREVOKE })
 
 export const unlink = (client, clientInfo) => async dispatch => {
   resetClient(client, clientInfo)
+  client.logout()
+
   await resetPersistedState()
   // This action will be handled by the rootReducer: the store will be restored to its initial state
   return dispatch({ type: UNLINK })

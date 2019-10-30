@@ -3,12 +3,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
-import MobileRouter from 'authentication/MobileRouter'
+//import MobileRouter from 'authentication/MobileRouter'
+import { MobileRouter } from 'cozy-authentication'
+import { getUniversalLinkDomain } from 'cozy-ui/transpiled/react/AppLinker'
+import { withClient } from 'cozy-client'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setToken } from 'drive/mobile/modules/authorization/duck'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
+import { startReplication } from 'drive/mobile/modules/replication/sagas'
+
 import {
   unlink,
   isAuthorized,
@@ -18,43 +23,58 @@ import {
 import { saveCredentials } from './sagas'
 import { setCozyUrl } from 'drive/lib/reporter'
 
-import {
-  onboardingInformationsPropTypes,
-  onboardingPropTypes
-} from '../../../../authentication/OnboardingPropTypes'
 class DriveMobileRouter extends Component {
-  static contextTypes = {
+  /* static contextTypes = {
     client: Proptypes.object.isRequired
+  } */
+  state = {
+    isFinished: false
   }
+  afterAuthentication = async () => {
+    const { client } = this.props
+    console.log('this.props.client', this.props.client)
+    console.log('client.getStackClient().uri', client.getStackClient().uri)
+    console.log('client.getStackClient()', client.getStackClient())
+    //this.props.dispatch(startReplication())
+    const wasRevoked = client.isRevoked
+    /* this.context.client.options.uri = client.getStackClient().uri */
+    const accesstoken = client.getStackClient().token
+    restoreCozyClientJs(
+      client.getStackClient().uri,
+      client.getStackClient().oauthOptions,
+      client.getStackClient().token
+    )
+    await initBar(client)
 
-  afterAuthentication = async ({ url, clientInfo, token, router }) => {
-    const wasRevoked = this.props.isRevoked
-    this.context.client.options.uri = url
-    const accesstoken = new cozy.client.auth.AccessToken(token)
-    restoreCozyClientJs(url, clientInfo, token)
-    await initBar(this.context.client)
+    //await initBar(this.context.client)
 
-    this.props.saveServerUrl(url)
-    setCozyUrl(url)
-    this.props.saveCredentials(clientInfo, accesstoken)
-    const oauthClient = this.context.client.getStackClient()
-    oauthClient.setCredentials(token)
-    oauthClient.setUri(url)
-    oauthClient.onTokenRefresh = () => {
-      restoreCozyClientJs(url, clientInfo, token)
+    this.props.saveServerUrl(client.getStackClient().uri)
+    setCozyUrl(client.getStackClient().uri)
+    this.props.saveCredentials(client, accesstoken)
+    const oauthClient = client.getStackClient()
+    oauthClient.onTokenRefresh = token => {
+      restoreCozyClientJs(
+        client.getStackClient().uri,
+        client.getStackClient().oauthOptions,
+        token
+      )
       this.props.dispatch(setToken(token))
     }
 
     if (wasRevoked) {
-      await initBar(this.context.client)
-      router.replace('/')
+      await initBar(this.props.client)
+      this.props.history.replace('/')
     } else {
-      router.replace('/onboarding')
+      this.props.history.replace('/onboarding')
     }
+    console.log('afterAuth finished')
+    //this.setState({ isFinished: true })
   }
 
   afterLogout = () => {
-    this.props.unlink(this.context.client)
+    console.log('afterLogout')
+    this.props.unlink(this.props.client)
+    this.setState({ isFinished: false })
   }
 
   render() {
@@ -68,31 +88,44 @@ class DriveMobileRouter extends Component {
     } = this.props
     return (
       <div style={{ flex: '1' }}>
+        {/*
+         <MobileRouter
+              history={hashHistory}
+              protocol="cozyexample://"
+              universalLinkDomain={getUniversalLinkDomain()}
+              appTitle={title}
+              appIcon={icon}
+              appSlug="example"
+              loginPath={window.location.hash.replace('#', '')}
+            >
+        */}
         <MobileRouter
-          isAuthenticated={isAuthenticated}
-          isRevoked={isRevoked}
-          appRoutes={appRoutes}
+          //appRoutes={appRoutes}
+          protocol="cozydrive://"
+          appTitle={'Cozy Drive'}
+          universalLinkDomain={getUniversalLinkDomain()}
+          appSlug="drive"
+          //loginPath="/onboarding"
           history={history}
-          onAuthenticated={this.afterAuthentication}
+          onAuthenticated={async () => {
+            return await this.afterAuthentication()
+          }}
+          isFinished={this.state.isFinished}
           onLogout={this.afterLogout}
-          allowRegistration={false}
           appIcon={require('../../../../../src/drive/targets/vendor/assets/apple-touch-icon-180x180.png')}
-          onboarding={onboarding}
-          onboardingInformations={onboardingInformations}
-          client={this.context.client}
-        />
+        >
+          {appRoutes}
+        </MobileRouter>
         <IconSprite />
       </div>
     )
   }
 }
 DriveMobileRouter.propTypes = {
-  onboarding: onboardingPropTypes.isRequired,
   isAuthenticated: Proptypes.bool.isRequired,
   isRevoked: Proptypes.bool.isRequired,
   appRoutes: Proptypes.object.isRequired,
-  history: Proptypes.object.isRequired,
-  onboardingInformations: onboardingInformationsPropTypes.isRequired
+  history: Proptypes.object.isRequired
 }
 const DriveMobileRouterWithRoutes = props => (
   <DriveMobileRouter {...props} appRoutes={AppRoute} />
@@ -114,4 +147,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DriveMobileRouterWithRoutes)
+)(withClient(DriveMobileRouterWithRoutes))
