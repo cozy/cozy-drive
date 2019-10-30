@@ -62,7 +62,7 @@ class DriveMobileRouter extends Component {
     }
 
     if (wasRevoked) {
-      await initBar(this.props.client)
+      await initBar(client)
       this.props.history.replace('/')
     } else {
       this.props.history.replace('/onboarding')
@@ -105,9 +105,10 @@ class DriveMobileRouter extends Component {
           appTitle={'Cozy Drive'}
           universalLinkDomain={getUniversalLinkDomain()}
           appSlug="drive"
-          //loginPath="/onboarding"
+          loginPath="/onboarding"
           history={history}
           onAuthenticated={async () => {
+            console.log('passe dans onAuthenticated ')
             return await this.afterAuthentication()
           }}
           isFinished={this.state.isFinished}

@@ -239,15 +239,11 @@ class InitAppMobile {
     }
 
     const root = document.querySelector('[role=application]')
-    const onboarding = {
-      oauth: {
-        ...getOauthOptions()
-      }
-    }
+    console.log('StartApplication')
     render(
       <I18n lang={getLang()} polyglot={polyglot}>
         <CozyProvider client={client}>
-          <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
+          <DriveMobileRouter history={hashHistory} />
         </CozyProvider>
       </I18n>,
       root,

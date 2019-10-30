@@ -38,6 +38,7 @@ import { SharingDetailsModal } from './SharingDetailsModal'
 import { default as RecipientsList } from './components/WhoHasAccessLight'
 import { RecipientsAvatars } from './components/Recipient'
 import { default as DumbSharedStatus } from './components/SharedStatus'
+import { withClient } from 'cozy-client'
 
 const track = (document, action) => {
   const tracker = getTracker()
@@ -54,13 +55,13 @@ const track = (document, action) => {
 const trackSharingByLink = document => track(document, 'shareByLink')
 const isFile = ({ _type }) => _type === 'io.cozy.files'
 
-export default class SharingProvider extends Component {
-  static contextTypes = {
+class SharingProvider extends Component {
+  /* static contextTypes = {
     client: PropTypes.object.isRequired
-  }
+  } */
   constructor(props, context) {
     super(props, context)
-    const instanceUri = this.context.client.options.uri
+    const instanceUri = props.client.getStackClient().uri
     const documentType = props.documentType || 'Document'
     this.state = {
       byDocId: {},
@@ -206,7 +207,7 @@ export default class SharingProvider extends Component {
     )
   }
 }
-
+export default withClient(SharingProvider)
 export const SharedDocument = ({ docId, children }) => (
   <SharingContext.Consumer>
     {({

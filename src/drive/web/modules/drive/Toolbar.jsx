@@ -5,6 +5,7 @@ import SharingProvider, { SharedDocument } from 'sharing'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
 import { withBreakpoints } from 'cozy-ui/react'
+import { withClient } from 'cozy-client'
 import { BarContextProvider } from 'react-cozy-helpers'
 import { isMobileApp } from 'cozy-device-helper'
 
@@ -29,7 +30,7 @@ import ScanWrapper from './Toolbar/components/ScanWrapper'
 
 class Toolbar extends Component {
   static contextTypes = {
-    client: PropTypes.object.isRequired,
+    //client: PropTypes.object.isRequired,
     t: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired
   }
@@ -42,7 +43,8 @@ class Toolbar extends Component {
       canCreateFolder,
       hasWriteAccess,
       isShared,
-      breakpoints: { isMobile }
+      breakpoints: { isMobile },
+      client
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -122,7 +124,7 @@ class Toolbar extends Component {
         {isMobile ? (
           <BarRight>
             <BarContextProvider
-              client={this.context.client}
+              client={client}
               store={this.context.store}
               t={this.context.t}
             >
@@ -162,6 +164,6 @@ export default translate()(
     connect(
       mapStateToProps,
       null
-    )(ToolbarWithSharingContext)
+    )(withClient(ToolbarWithSharingContext))
   )
 )
