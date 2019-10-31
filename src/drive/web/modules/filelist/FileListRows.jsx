@@ -69,7 +69,7 @@ class FileListRows extends PureComponent {
 
   render() {
     return (
-      <div style={{ overflow: 'hidden' }} ref={this.myFilesListRowsContainer}>
+      <div className="u-ov-hidden" ref={this.myFilesListRowsContainer}>
         {this.props.files.map((file, index) => {
           return this.rowRenderer({ index, key: file.id })
         })}
