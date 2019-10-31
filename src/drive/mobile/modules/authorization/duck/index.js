@@ -10,11 +10,4 @@ export {
 
 export { default } from './reducer'
 
-export {
-  getClientSettings,
-  getToken,
-  isAuthorized,
-  isRevoked,
-  isClientRevoked,
-  getOnboardingInformations
-} from './selectors'
+export { getClientSettings, getToken, isClientRevoked } from './selectors'
