@@ -13,7 +13,7 @@ import {
 import SharedDocuments from 'sharing/components/SharedDocuments'
 
 import { cancelable as makeCancelable } from 'cozy-client/dist/utils'
-
+import { withClient } from 'cozy-client'
 import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
 
 export class SharingFetcher extends React.Component {
@@ -31,8 +31,7 @@ export class SharingFetcher extends React.Component {
     this.fetchSharedParents = null
   }
   async fetchSharedDocuments() {
-    const { sharedDocuments } = this.props
-    const { client } = this.context
+    const { sharedDocuments, client } = this.props
 
     try {
       this.props.startFetch()
@@ -168,7 +167,7 @@ const ConnectedSharingFetcher = connect(
         ownProps.router.push(getFolderUrl(folderId, ownProps.location))
     }
   })
-)(SharingFetcher)
+)(withClient(SharingFetcher))
 
 const SharingsContainer = props => (
   <SharedDocuments>

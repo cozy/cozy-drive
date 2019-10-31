@@ -56,9 +56,6 @@ const trackSharingByLink = document => track(document, 'shareByLink')
 const isFile = ({ _type }) => _type === 'io.cozy.files'
 
 class SharingProvider extends Component {
-  /* static contextTypes = {
-    client: PropTypes.object.isRequired
-  } */
   constructor(props, context) {
     super(props, context)
     const instanceUri = props.client.getStackClient().uri
@@ -89,8 +86,7 @@ class SharingProvider extends Component {
     this.setState(state => ({ ...state, ...reducer(state, action) }))
 
   async componentDidMount() {
-    const { client } = this.context
-    const { doctype } = this.props
+    const { doctype, client } = this.props
     const [sharings, permissions, apps] = await Promise.all([
       client.collection('io.cozy.sharings').findByDoctype(doctype),
       client.collection('io.cozy.permissions').findLinksByDoctype(doctype),
@@ -123,7 +119,7 @@ class SharingProvider extends Component {
     const parentDirIds = files
       .map(f => f.dir_id)
       .filter((f, idx, arr) => arr.indexOf(f) === idx)
-    const parentDirs = await this.context.client
+    const parentDirs = await this.props.client
       .collection(this.props.doctype)
       .all({ keys: parentDirIds })
     const filePaths = files.map(f => {
@@ -136,7 +132,7 @@ class SharingProvider extends Component {
   share = async (document, recipients, sharingType, description) => {
     const sharing = getDocumentSharing(this.state, document.id)
     if (sharing) return this.addRecipients(sharing, recipients, sharingType)
-    const resp = await this.context.client
+    const resp = await this.props.client
       .collection('io.cozy.sharings')
       .share(document, recipients, sharingType, description, '/preview')
     this.dispatch(
@@ -149,7 +145,7 @@ class SharingProvider extends Component {
   }
 
   addRecipients = async (sharing, recipients, sharingType) => {
-    const resp = await this.context.client
+    const resp = await this.props.client
       .collection('io.cozy.sharings')
       .addRecipients(sharing, recipients, sharingType)
     this.dispatch(updateSharing(resp.data))
@@ -157,7 +153,7 @@ class SharingProvider extends Component {
 
   revoke = async (document, sharingId, recipientIndex) => {
     const sharing = getSharingById(this.state, sharingId)
-    await this.context.client
+    await this.props.client
       .collection('io.cozy.sharings')
       .revokeRecipient(sharing, recipientIndex)
     this.dispatch(
@@ -171,13 +167,13 @@ class SharingProvider extends Component {
 
   revokeSelf = async document => {
     const sharing = getSharingForSelf(this.state, document.id)
-    await this.context.client.collection('io.cozy.sharings').revokeSelf(sharing)
+    await this.props.client.collection('io.cozy.sharings').revokeSelf(sharing)
     this.dispatch(revokeSelf(sharing))
   }
 
   shareByLink = async document => {
     trackSharingByLink(document)
-    const resp = await this.context.client
+    const resp = await this.props.client
       .collection('io.cozy.permissions')
       .createSharingLink(document)
     this.dispatch(addSharingLink(resp.data))
@@ -190,7 +186,7 @@ class SharingProvider extends Component {
     const perms = getDocumentPermissions(this.state, document.id)
     await Promise.all(
       perms.map(p =>
-        this.context.client.collection('io.cozy.permissions').destroy(p)
+        this.props.client.collection('io.cozy.permissions').destroy(p)
       )
     )
     this.dispatch(revokeSharingLink(perms))
