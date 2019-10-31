@@ -28,7 +28,10 @@ class EditDocumentQualification extends Component {
   render() {
     const { document, onClose, t, client, onQualified, isOffline } = this.props
     const { qualification } = this.state
-    const item = document.metadata.id ? getItemById(document.metadata.id) : null
+    const item =
+      document.metadata && document.metadata.id
+        ? getItemById(document.metadata.id)
+        : null
     const itemId = item ? item.id : null
 
     const theme = item ? getThemeByItem(item) : null
