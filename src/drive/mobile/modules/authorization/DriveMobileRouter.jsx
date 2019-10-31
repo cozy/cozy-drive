@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
+import localForage from 'localforage'
 //import MobileRouter from 'authentication/MobileRouter'
 import { MobileRouter } from 'cozy-authentication'
 import { getUniversalLinkDomain } from 'cozy-ui/transpiled/react/AppLinker'
@@ -22,20 +23,10 @@ import {
 } from './duck/index'
 import { saveCredentials } from './sagas'
 import { setCozyUrl } from 'drive/lib/reporter'
-
+import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
 class DriveMobileRouter extends Component {
-  /* static contextTypes = {
-    client: Proptypes.object.isRequired
-  } */
-
   afterAuthentication = async () => {
     const { client } = this.props
-    console.log('this.props.client', this.props.client)
-    console.log('client.getStackClient().uri', client.getStackClient().uri)
-    console.log('client.getStackClient()', client.getStackClient())
-    //this.props.dispatch(startReplication())
-    const wasRevoked = client.isRevoked
-    /* this.context.client.options.uri = client.getStackClient().uri */
     const accesstoken = client.getStackClient().token
     restoreCozyClientJs(
       client.getStackClient().uri,
@@ -43,9 +34,6 @@ class DriveMobileRouter extends Component {
       client.getStackClient().token
     )
     await initBar(client)
-
-    //await initBar(this.context.client)
-
     this.props.saveServerUrl(client.getStackClient().uri)
     setCozyUrl(client.getStackClient().uri)
     this.props.saveCredentials(client, accesstoken)
@@ -58,19 +46,17 @@ class DriveMobileRouter extends Component {
       )
       this.props.dispatch(setToken(token))
     }
-
-    if (wasRevoked) {
-      await initBar(client)
-      this.props.history.replace('/')
+    //Check if we have something in the localStorage to see if
+    //we need to redirect to /onboarding
+    const alreadyOnboarded = await localForage.getItem(ONBOARDED_ITEM)
+    if (!alreadyOnboarded) {
+      this.props.history.replace('/onboarding')
     } else {
-      //this.props.history.replace('/onboarding')
+      this.props.history.replace('/')
     }
-    console.log('afterAuth finished')
-    //this.setState({ isFinished: true })
   }
 
   afterLogout = () => {
-    console.log('afterLogout')
     this.props.unlink(this.props.client)
   }
 
