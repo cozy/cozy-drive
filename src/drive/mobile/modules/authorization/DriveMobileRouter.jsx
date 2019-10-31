@@ -27,9 +27,7 @@ class DriveMobileRouter extends Component {
   /* static contextTypes = {
     client: Proptypes.object.isRequired
   } */
-  state = {
-    isFinished: false
-  }
+
   afterAuthentication = async () => {
     const { client } = this.props
     console.log('this.props.client', this.props.client)
@@ -65,7 +63,7 @@ class DriveMobileRouter extends Component {
       await initBar(client)
       this.props.history.replace('/')
     } else {
-      this.props.history.replace('/onboarding')
+      //this.props.history.replace('/onboarding')
     }
     console.log('afterAuth finished')
     //this.setState({ isFinished: true })
@@ -74,7 +72,6 @@ class DriveMobileRouter extends Component {
   afterLogout = () => {
     console.log('afterLogout')
     this.props.unlink(this.props.client)
-    this.setState({ isFinished: false })
   }
 
   render() {
@@ -105,13 +102,17 @@ class DriveMobileRouter extends Component {
           appTitle={'Cozy Drive'}
           universalLinkDomain={getUniversalLinkDomain()}
           appSlug="drive"
-          loginPath="/onboarding"
+          /**
+           * it can't be /onboarding since we pass everytime in
+           * this loginpath="" after just a refresh or after a
+           * real login
+           */
           history={history}
           onAuthenticated={async () => {
             console.log('passe dans onAuthenticated ')
             return await this.afterAuthentication()
           }}
-          isFinished={this.state.isFinished}
+          loginPath={false}
           onLogout={this.afterLogout}
           appIcon={require('../../../../../src/drive/targets/vendor/assets/apple-touch-icon-180x180.png')}
         >
