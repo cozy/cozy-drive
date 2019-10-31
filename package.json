@@ -96,7 +96,7 @@
     "worker-loader": "2.0.0"
   },
   "dependencies": {
-    "@material-ui/core": "^4.4.3",
+    "@material-ui/core": "4.4.3",
     "babel-preset-cozy-app": "1.7.0",
     "classnames": "2.2.6",
     "copy-text-to-clipboard": "1.0.4",
@@ -145,7 +145,7 @@
     "redux-mock-store": "1.5.3",
     "redux-raven-middleware": "1.2.0",
     "redux-thunk": "2.3.0",
-    "scheduler": "^0.17.0",
+    "scheduler": "0.17.0",
     "url-polyfill": "1.1.7",
     "webpack-node-externals": "1.7.2",
     "whatwg-fetch": "3.0.0"
