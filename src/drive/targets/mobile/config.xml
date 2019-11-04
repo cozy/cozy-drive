@@ -75,6 +75,12 @@
     </platform>
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="AutoHideSplashScreen" value="false" />
+    <universal-links>
+        <host name="links.mycozy.cloud" scheme="https">
+            <path event="openUniversalLink" scheme="https" url="/drive/*" />
+        </host>
+        <ios-team-id value="3AKXFMV43J" />
+    </universal-links>
     <engine name="android" spec="^7.1.4" />
     <engine name="ios" spec="^4.5.5" />
     <plugin name="cordova-plugin-splashscreen" spec="git+https://github.com/cozy/cordova-plugin-splashscreen.git#e10cadcd07b613f745370ba023ac0c52cf415648" />
