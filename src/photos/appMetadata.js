@@ -1,7 +1,7 @@
 import manifest from 'photos/targets/manifest.webapp'
 
 const appMetadata = {
-  slug: manifest.name,
+  slug: manifest.slug,
   version: manifest.version
 }
 
