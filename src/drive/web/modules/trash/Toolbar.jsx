@@ -56,7 +56,7 @@ const Toolbar = ({
         className="u-hide--mob"
         onClick={() => emptyTrash()}
         disabled={disabled || selectionModeActive}
-        icon="delete"
+        icon="trash"
         label={t('toolbar.empty_trash')}
       />
 

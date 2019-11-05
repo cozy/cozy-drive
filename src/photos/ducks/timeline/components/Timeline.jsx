@@ -99,7 +99,7 @@ class Timeline extends Component {
         actions={selection => ({
           'album-add': this.showAddAlbumModal,
           download: this.downloadPhotos,
-          delete: selected => this.deletePhotos(selected, selection.clear)
+          trash: selected => this.deletePhotos(selected, selection.clear)
         })}
       >
         {(selected, active, selection) => (
