@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
 import localForage from 'localforage'
-//import MobileRouter from 'authentication/MobileRouter'
 import { MobileRouter } from 'cozy-authentication'
 import { getUniversalLinkDomain } from 'cozy-ui/transpiled/react/AppLinker'
 import { withClient } from 'cozy-client'
@@ -11,13 +10,24 @@ import { setToken } from 'drive/mobile/modules/authorization/duck'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
-import { startReplication } from 'drive/mobile/modules/replication/sagas'
 
 import { unlink } from './duck/index'
 import { saveCredentials } from './sagas'
 import { setCozyUrl } from 'drive/lib/reporter'
 import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
+import { PROTOCOL, SOFTWARE_NAME } from 'drive/mobile/lib/constants'
+import appMetadata from 'drive/appMetadata'
+
+import appBooted from '../../../targets/mobile/'
 class DriveMobileRouter extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  async componentDidMount() {
+    //Wait for the app to be booted to avoid race condition between cordova & JS
+    await appBooted
+  }
   afterAuthentication = async () => {
     const { client } = this.props
     const accesstoken = client.getStackClient().token
@@ -31,26 +41,28 @@ class DriveMobileRouter extends Component {
     setCozyUrl(client.getStackClient().uri)
     this.props.saveCredentials(client, accesstoken)
     const oauthClient = client.getStackClient()
-    oauthClient.onTokenRefresh = token => {
+    oauthClient.onTokenRefresh = async token => {
       restoreCozyClientJs(
         client.getStackClient().uri,
         client.getStackClient().oauthOptions,
         token
       )
       this.props.dispatch(setToken(token))
+      await initBar(client)
     }
     //Check if we have something in the localStorage to see if
     //we need to redirect to /onboarding
     const alreadyOnboarded = await localForage.getItem(ONBOARDED_ITEM)
+    //Do not try to add an else case since we can arrive from an universal
+    //link and then, we need to redirect to a specific url
     if (!alreadyOnboarded) {
       this.props.history.replace('/onboarding')
-    } else {
-      this.props.history.replace('/')
     }
   }
 
   afterLogout = () => {
     this.props.unlink(this.props.client)
+    this.props.history.replace('/')
   }
 
   render() {
@@ -58,10 +70,10 @@ class DriveMobileRouter extends Component {
     return (
       <div style={{ flex: '1' }}>
         <MobileRouter
-          protocol="cozydrive://"
-          appTitle={'Cozy Drive'}
+          protocol={PROTOCOL}
+          appTitle={SOFTWARE_NAME}
           universalLinkDomain={getUniversalLinkDomain()}
-          appSlug="drive"
+          appSlug={appMetadata.slug}
           history={history}
           onAuthenticated={async () => {
             return await this.afterAuthentication()

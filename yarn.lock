@@ -4456,10 +4456,10 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-cozy-authentication@^1.19.2:
-  version "1.19.2"
-  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-1.19.2.tgz#290246c44d46b5dc38f2fe2ff2517ab7d169c62e"
-  integrity sha512-weFcYcxeLIDk6P2+UCMsVW6okqzTfm2v33Zz7K0F4dPpn/+VlGqaGWVLcjhX99Hgk5iuNsxTh+d1TD/dyVyhkQ==
+cozy-authentication@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.0.0.tgz#ad8df824225b482d4d619648f0e76dcd0757bda0"
+  integrity sha512-NeEcastYmj2ay+ZfgedY0yoj3Yg1MUw3R4djzreyEM6LQJCJ9so7+FkZPxuWlGCJEnhMRaMeMt3oZJPGSjxqKA==
   dependencies:
     cozy-device-helper "^1.8.0"
     localforage "1.7.3"

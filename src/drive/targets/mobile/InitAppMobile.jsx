@@ -195,44 +195,6 @@ class InitAppMobile {
     const polyglot = await this.getPolyglot()
 
     configureReporter()
-    let shouldInitBar = false
-    let realOauthOptions
-
-    try {
-      // const clientInfos = getClientSettings(store.getState())
-      /*Since we can update our OauthConfig sometimes, we need to
-        override the cached one */
-      /* realOauthOptions =
-        clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
-      const token = getToken(store.getState())
-
-      const stackClient = client.getStackClient()
-
-      stackClient.setOAuthOptions(realOauthOptions)
-      stackClient.setCredentials(token)
-      restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-      stackClient.onTokenRefresh = token => {
-        restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-        store.dispatch(setToken(token))
-      } */
-      //In order to check if the token is good
-      // await stackClient.fetchJSON('GET', '/apps/settings')
-      shouldInitBar = true
-      // await store.dispatch(startReplication())
-    } catch (e) {
-      logger.warn(e)
-      if (isClientRevoked(e, store.getState())) {
-        logger.warn('Your device is not connected to your server anymore')
-        store.dispatch(revokeClient())
-        resetClient(client)
-      } else if (getServerUrl(store.getState())) {
-        // the server is not responding, but it doesn't mean we're revoked yet
-        shouldInitBar = true
-      }
-    } finally {
-      // if (shouldInitBar) await initBar(client)
-    }
-
     useHistoryForTracker(hashHistory)
     if (isAnalyticsOn(store.getState())) {
       startTracker(getServerUrl(store.getState()))
