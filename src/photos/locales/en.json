@@ -74,6 +74,7 @@
   "SelectionBar": {
     "selected_count": "item selected |||| items selected",
     "delete": "Delete",
+    "trash": "Delete",
     "album-add": "Add to album",
     "album-remove": "Remove from album",
     "download": "Download",
