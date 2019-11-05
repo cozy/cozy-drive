@@ -22,7 +22,6 @@ export class SharingFetcher extends React.Component {
   }
 
   static contextTypes = {
-    client: PropTypes.object.isRequired,
     t: PropTypes.func.isRequired
   }
   constructor(props) {
@@ -133,41 +132,43 @@ export class SharingFetcher extends React.Component {
   }
 }
 
-const ConnectedSharingFetcher = connect(
-  null,
-  (dispatch, ownProps) => ({
-    startFetch: () =>
-      dispatch({
-        type: FETCH_SHARINGS,
-        meta: {
-          cancelSelection: true
-        }
-      }),
-    fetchSuccess: files =>
-      dispatch({
-        type: FETCH_SHARINGS_SUCCESS,
-        fileCount: files.length,
-        files
-      }),
-    fetchFailure: e =>
-      dispatch({
-        type: FETCH_SHARINGS_FAILURE,
-        error: e
-      }),
-    onFolderOpen: (folderId, forceRoutePush = true) => {
-      dispatch(
-        openFolder(
-          folderId,
-          OPEN_FOLDER_FROM_SHARINGS,
-          OPEN_FOLDER_FROM_SHARINGS_SUCCESS,
-          OPEN_FOLDER_FROM_SHARINGS_FAILURE
+const ConnectedSharingFetcher = withClient(
+  connect(
+    null,
+    (dispatch, ownProps) => ({
+      startFetch: () =>
+        dispatch({
+          type: FETCH_SHARINGS,
+          meta: {
+            cancelSelection: true
+          }
+        }),
+      fetchSuccess: files =>
+        dispatch({
+          type: FETCH_SHARINGS_SUCCESS,
+          fileCount: files.length,
+          files
+        }),
+      fetchFailure: e =>
+        dispatch({
+          type: FETCH_SHARINGS_FAILURE,
+          error: e
+        }),
+      onFolderOpen: (folderId, forceRoutePush = true) => {
+        dispatch(
+          openFolder(
+            folderId,
+            OPEN_FOLDER_FROM_SHARINGS,
+            OPEN_FOLDER_FROM_SHARINGS_SUCCESS,
+            OPEN_FOLDER_FROM_SHARINGS_FAILURE
+          )
         )
-      )
-      if (forceRoutePush)
-        ownProps.router.push(getFolderUrl(folderId, ownProps.location))
-    }
-  })
-)(withClient(SharingFetcher))
+        if (forceRoutePush)
+          ownProps.router.push(getFolderUrl(folderId, ownProps.location))
+      }
+    })
+  )(SharingFetcher)
+)
 
 const SharingsContainer = props => (
   <SharedDocuments>

@@ -161,9 +161,11 @@ const ToolbarWithSharingContext = props =>
   )
 export default translate()(
   withBreakpoints()(
-    connect(
-      mapStateToProps,
-      null
-    )(withClient(ToolbarWithSharingContext))
+    withClient(
+      connect(
+        mapStateToProps,
+        null
+      )(ToolbarWithSharingContext)
+    )
   )
 )

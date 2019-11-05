@@ -39,12 +39,12 @@ describe('SharingFetcher component', () => {
         sharedDocuments: [],
         params: {},
         startFetch: jest.fn(),
-        fetchSuccess: jest.fn()
+        fetchSuccess: jest.fn(),
+        client: fakeClient
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
         disableLifecycleMethod: true,
         context: {
-          client: fakeClient,
           t: jest.fn(() => 'whatever')
         }
       })
@@ -61,7 +61,8 @@ describe('SharingFetcher component', () => {
         sharedDocuments: ['foo'],
         params: {},
         startFetch: jest.fn(),
-        fetchSuccess: jest.fn()
+        fetchSuccess: jest.fn(),
+        client: fakeClient
       }
       const nextProps = {
         sharedDocuments: ['foo', 'bar'],
@@ -71,7 +72,6 @@ describe('SharingFetcher component', () => {
       const wrapper = shallow(<SharingFetcher {...props} />, {
         disableLifecycleMethod: true,
         context: {
-          client: fakeClient,
           t: jest.fn(() => 'whatever')
         }
       })
@@ -86,7 +86,8 @@ describe('SharingFetcher component', () => {
         sharedDocuments: ['foo'],
         params: {},
         startFetch: jest.fn(),
-        fetchSuccess: jest.fn()
+        fetchSuccess: jest.fn(),
+        client: fakeClient
       }
       const nextProps = {
         sharedDocuments: ['foo'],
@@ -97,7 +98,6 @@ describe('SharingFetcher component', () => {
       const wrapper = shallow(<SharingFetcher {...props} />, {
         disableLifecycleMethod: true,
         context: {
-          client: fakeClient,
           t: jest.fn(() => 'whatever')
         }
       })
@@ -139,13 +139,13 @@ describe('SharingFetcher component', () => {
         fetchFailure: fetchFailureSpy,
         sharedDocuments: ['1', '2'],
         startFetch: jest.fn(),
-        store: {}
+        store: {},
+        client
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
         disableLifecycleMethod: true,
         context: {
-          client,
           t: translateSpy
         }
       })
@@ -172,13 +172,13 @@ describe('SharingFetcher component', () => {
         fetchFailure: fetchFailureSpy,
         sharedDocuments: ['1', '2'],
         startFetch: jest.fn(),
-        store: {}
+        store: {},
+        client
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
         disableLifecycleMethod: true,
         context: {
-          client,
           t: translateSpy
         }
       })
