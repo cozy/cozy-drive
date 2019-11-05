@@ -10,7 +10,6 @@ export default class OnBoarding extends Component {
   onboardingSteps = [Files, BackupPhotosVideos, Analytics]
 
   async redirectToApp() {
-    //  await initBar(this.context.client)
     this.props.router.replace('/')
   }
 

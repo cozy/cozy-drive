@@ -1,21 +1,10 @@
-import {
-  SET_CLIENT,
-  SET_TOKEN,
-  REVOKE,
-  UNREVOKE,
-  SET_ONBOARDING
-} from './actions'
+import { SET_CLIENT, SET_TOKEN, REVOKE, UNREVOKE } from './actions'
 
 const initialState = {
   authorized: false,
   revoked: false,
   client: null,
-  token: null,
-  onboarding: {
-    code: null,
-    state: null,
-    cozy_url: null
-  }
+  token: null
 }
 
 const authorization = (state = initialState, action) => {
@@ -33,15 +22,7 @@ const authorization = (state = initialState, action) => {
       return { ...state, revoked: true }
     case UNREVOKE:
       return { ...state, revoked: false }
-    case SET_ONBOARDING:
-      return {
-        ...state,
-        onboarding: {
-          code: action.code,
-          state: action.state,
-          cozy_url: action.cozy_url
-        }
-      }
+
     default:
       return state
   }

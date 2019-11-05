@@ -4,8 +4,7 @@ export {
   setToken,
   revokeClient,
   unrevokeClient,
-  unlink,
-  setOnboarding
+  unlink
 } from './actions'
 
 export { default } from './reducer'

@@ -20,10 +20,6 @@ import appMetadata from 'drive/appMetadata'
 
 import appBooted from '../../../targets/mobile/'
 class DriveMobileRouter extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   async componentDidMount() {
     //Wait for the app to be booted to avoid race condition between cordova & JS
     await appBooted

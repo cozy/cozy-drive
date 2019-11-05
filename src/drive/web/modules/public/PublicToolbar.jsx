@@ -235,7 +235,9 @@ const mapDispatchToProps = dispatch => ({
   onDownload: files => dispatch(downloadFiles(files))
 })
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(withBreakpoints()(withClient(PublicToolbar)))
+export default withClient(
+  connect(
+    null,
+    mapDispatchToProps
+  )(withBreakpoints()(PublicToolbar))
+)

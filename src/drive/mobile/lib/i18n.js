@@ -3,7 +3,6 @@ import { _polyglot, initTranslation } from 'cozy-ui/react/I18n/translation'
 
 // used when translating things outside of components, eg. native UIs
 export const getTranslateFunction = () => {
-  console.log('_polyglot', _polyglot)
   if (_polyglot === undefined) {
     const lang = getLang()
     const dictRequire = lang => require(`../../locales/${lang}`)

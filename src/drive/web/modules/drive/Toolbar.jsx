@@ -30,7 +30,6 @@ import ScanWrapper from './Toolbar/components/ScanWrapper'
 
 class Toolbar extends Component {
   static contextTypes = {
-    //client: PropTypes.object.isRequired,
     t: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired
   }

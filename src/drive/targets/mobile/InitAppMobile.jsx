@@ -201,7 +201,6 @@ class InitAppMobile {
     }
 
     const root = document.querySelector('[role=application]')
-    console.log('StartApplication')
     render(
       <I18n lang={getLang()} polyglot={polyglot}>
         <CozyProvider client={client}>
