@@ -2,6 +2,16 @@
 
 exports[`Unlink should render the Component 1`] = `
 <Unlink
+  client={
+    Object {
+      "stackClient": Object {
+        "token": Object {
+          "token": "1",
+        },
+        "uri": "http://mycozy.cloud",
+      },
+    }
+  }
   clientSettings={
     Object {
       "data": "foo",
