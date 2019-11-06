@@ -18,7 +18,7 @@ export default class OnBoarding extends Component {
       <Wizard
         steps={this.onboardingSteps}
         onComplete={() => {
-          localforage.setItem('ONBOARDED', true)
+          localforage.setItem(ONBOARDED_ITEM, true)
           return this.redirectToApp()
         }}
       />

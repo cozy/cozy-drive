@@ -4,14 +4,16 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
-import { CozyProvider } from 'cozy-client'
+import localforage from 'localforage'
 
+import { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
+import { isIOSApp } from 'cozy-device-helper'
+import { Document } from 'cozy-doctypes'
 
 import logger from 'lib/logger'
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
-
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { configureReporter } from 'drive/lib/reporter'
 import {
@@ -26,9 +28,6 @@ import {
 } from 'drive/mobile/lib/tracker'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
-import { isIOSApp } from 'cozy-device-helper'
-import { Document } from 'cozy-doctypes'
-
 import {
   getLang,
   initClient,
@@ -48,6 +47,7 @@ import {
 } from 'drive/mobile/modules/authorization/duck'
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
 import { startReplication } from 'drive/mobile/modules/replication/sagas'
+import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
 
 // Allows to know if the launch of the application has been done by the service background
 // @see: https://git.io/vSQBC
@@ -187,12 +187,35 @@ class InitAppMobile {
     }
   }
 
+  migrateToCozyAuth = async () => {
+    const store = await this.getStore()
+    const oauthOptions = getClientSettings(store.getState())
+    const token = getToken(store.getState())
+    const uri = await this.getCozyURL()
+    const alreadyMigrated = await localforage.getItem('credentials')
+
+    if (uri && oauthOptions && token && !alreadyMigrated) {
+      await localforage.setItem(ONBOARDED_ITEM, true)
+      return await localforage.setItem('credentials', {
+        uri,
+        oauthOptions,
+        token
+      })
+    }
+
+    return
+  }
   startApplication = async () => {
     if (this.stardedApp) return
 
     const store = await this.getStore()
     const client = await this.getClient()
     const polyglot = await this.getPolyglot()
+
+    //needed to migrate from cozy-drive auth to cozy-authenticate.
+    //@TODO should be remove one day. It has been added for the migration
+    //from 1.18.17 to 1.18.18
+    await this.migrateToCozyAuth()
 
     configureReporter()
     useHistoryForTracker(hashHistory)
