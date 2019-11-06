@@ -20,9 +20,15 @@ import appMetadata from 'drive/appMetadata'
 
 import appBooted from '../../../targets/mobile/'
 class DriveMobileRouter extends Component {
+  state = {
+    isAppBooted: false
+  }
   async componentDidMount() {
     //Wait for the app to be booted to avoid race condition between cordova & JS
     await appBooted
+    this.setState({
+      isAppBooted: true
+    })
   }
   afterAuthentication = async () => {
     const { client } = this.props
@@ -62,6 +68,8 @@ class DriveMobileRouter extends Component {
   }
 
   render() {
+    const { isAppBooted } = this.state
+    if (!isAppBooted) return null
     const { history } = this.props
     return (
       <div style={{ flex: '1' }}>
@@ -71,8 +79,8 @@ class DriveMobileRouter extends Component {
           universalLinkDomain={getUniversalLinkDomain()}
           appSlug={appMetadata.slug}
           history={history}
-          onAuthenticated={async () => {
-            return await this.afterAuthentication()
+          onAuthenticated={() => {
+            this.afterAuthentication()
           }}
           loginPath={false}
           onLogout={this.afterLogout}
