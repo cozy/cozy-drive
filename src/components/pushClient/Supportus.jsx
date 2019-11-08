@@ -24,17 +24,13 @@ const Supportus = ({ t, client }) => {
     'context.data.attributes.enable_premium_links'
   )
   const diskUsage = withDiskUsage(client)
+  const quota = get(diskUsage, 'data.attributes.quota', false)
   /**
    * enable_prenium_links is set on a context (cozy_default and so on)
    * if quota < 50Gb then, the user is freemium
    * if managerUrl then user is not self hosted
    */
-  if (
-    enable_premium_links &&
-    managerUrl &&
-    uuid &&
-    diskUsage.data.attributes.quota < 50000000
-  )
+  if (enable_premium_links && managerUrl && uuid && quota && quota < 50000000)
     return (
       <a
         href={buildPremiumLink(uuid, managerUrl)}
