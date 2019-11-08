@@ -102,6 +102,11 @@
       "type": "io.cozy.files",
       "verbs": ["ALL"]
     },
+    "filesversions": {
+      "description": "Required to access the file revisions",
+      "type": "io.cozy.files.versions",
+      "vebrs": ["ALL"]
+    },
     "apps": {
       "description": "Required by the cozy-bar to display the icons of the apps",
       "type": "io.cozy.apps",

@@ -28,6 +28,7 @@ import {
 } from 'drive/mobile/modules/offline/duck'
 import { extractFileAttributes } from 'drive/web/modules/navigation/duck/async'
 import styles from 'drive/styles/actionmenu.styl'
+import FileHistory from 'components/FileHistory'
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>
@@ -153,6 +154,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 />
               )
             ),
+          displayCondition: selections =>
+            selections.length === 1 && isFile(selections[0])
+        },
+        history: {
+          action: selected =>
+            ownProps.router.push(
+              `${ownProps.location.pathname}/file/${selected[0].id}/revision`
+            ),
+          //dispatch(showModal(<FileHistory file={selected[0]} />)),
           displayCondition: selections =>
             selections.length === 1 && isFile(selections[0])
         },

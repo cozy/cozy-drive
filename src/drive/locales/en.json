@@ -215,7 +215,8 @@
     "openWith": "Open with",
     "moveto": "Move to…",
     "phone-download": "Make available offline",
-    "qualify": "Categorize"
+    "qualify": "Categorize",
+    "history": "History"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",

@@ -441,7 +441,7 @@ const downloadFile = (file, meta) => {
   }
 }
 
-const forceFileDownload = (href, filename) => {
+export const forceFileDownload = (href, filename) => {
   const element = document.createElement('a')
   element.setAttribute('href', href)
   element.setAttribute('download', filename)
