@@ -24,7 +24,11 @@ const Supportus = ({ t, client }) => {
     'context.data.attributes.enable_premium_links'
   )
   const diskUsage = withDiskUsage(client)
-
+  /**
+   * enable_prenium_links is set on a context (cozy_default and so on)
+   * if quota < 50Gb then, the user is freemium
+   * if managerUrl then user is not self hosted
+   */
   if (
     enable_premium_links &&
     managerUrl &&
