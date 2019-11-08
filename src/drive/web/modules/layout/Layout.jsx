@@ -9,6 +9,8 @@ import flag, { FlagSwitcher } from 'cozy-flags'
 import { initFlags } from 'lib/flags'
 import Nav from 'drive/web/modules/navigation/Nav'
 import ButtonClient from 'components/pushClient/Button'
+import Supportus from 'components/pushClient/Supportus'
+
 import { UploadQueue } from 'drive/web/modules/upload'
 import UserActionRequired from 'drive/mobile/modules/authorization/UserActionRequired'
 import { IconSprite } from 'cozy-ui/transpiled/react'
@@ -20,7 +22,10 @@ const Layout = ({ t, children }) => (
     {flag('switcher') && <FlagSwitcher />}
     <Sidebar className="u-flex-justify-between">
       <Nav />
-      <ButtonClient />
+      <div>
+        <ButtonClient />
+        <Supportus />
+      </div>
     </Sidebar>
     <Alerter t={t} />
     <UploadQueue />
