@@ -6,7 +6,7 @@ import { withClient } from 'cozy-client'
 import withInstance from './withInstance'
 import { isMobileApp } from 'cozy-device-helper'
 
-const buildPremiumLink = (uuid, managerUrl) =>
+export const buildPremiumLink = (uuid, managerUrl) =>
   `${managerUrl}/cozy/instances/${uuid}/premium`
 
 const QuotaAlert = ({ t, onClose, client }) => {
