@@ -1,4 +1,5 @@
 /* global cozy */
+import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 import { getAdapter, extractFileAttributes } from './async'
 import { getSort } from './reducer'
 import React from 'react'
@@ -439,16 +440,6 @@ const downloadFile = (file, meta) => {
     forceFileDownload(`${cozy.client._url}${downloadURL}?Dl=1`, filename)
     return dispatch({ type: DOWNLOAD_FILE, file, meta })
   }
-}
-
-export const forceFileDownload = (href, filename) => {
-  const element = document.createElement('a')
-  element.setAttribute('href', href)
-  element.setAttribute('download', filename)
-  element.style.display = 'none'
-  document.body.appendChild(element)
-  element.click()
-  document.body.removeChild(element)
 }
 
 // MOBILE STUFF
