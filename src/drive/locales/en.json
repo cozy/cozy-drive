@@ -616,5 +616,8 @@
       "undefined": "Undefined",
       "tax": "Tax"
     }
+  },
+  "History": {
+    "description": "The last 20 versions of your files are automatically kept. Select a version to download it."
   }
 }

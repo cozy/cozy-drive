@@ -1,14 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Modal from 'cozy-ui/transpiled/react/Modal'
+import ExperimentalModal from 'cozy-ui/transpiled/react/Labs/ExperimentalModal'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/react/I18n'
+import { Caption } from 'cozy-ui/transpiled/react/Text'
 
 import { withClient } from 'cozy-client'
 import { withRouter } from 'react-router'
 
 import HistoryRow from './HistoryRow'
+import styles from './styles.styl'
+
 import { CozyFile } from 'models'
 
 const formatDate = (date, f) => {
@@ -21,26 +24,32 @@ const HistoryModal = ({
   revisions,
   client,
   f,
+  t,
   revisionsFetchStatus
 }) => {
   const fileCollection = client.collection('io.cozy.files')
   return (
-    <Modal
+    <ExperimentalModal
       dismissAction={() => router.goBack()}
       overflowHidden={true}
       title={file.name}
       description={
         <>
+          <Caption className={styles.HistoryRowCaption}>
+            {t('History.description')}
+          </Caption>
           <HistoryRow
             image="file"
             tag="Version actuelle"
             primaryText={formatDate(file.updated_at, f)}
-            secondaryText={`${fileCollection.getBeautifulSize(file)} · ${
-              file.name
-            }`}
+            secondaryText={fileCollection.getBeautifulSize(file)}
             downloadLink={() => fileCollection.download(file)}
           />
-          {revisionsFetchStatus === 'loading' && <Spinner size="xxlarge" />}
+          {revisionsFetchStatus === 'loading' && (
+            <div className={styles.HistoryRowRevisionLoader}>
+              <Spinner size="xxlarge" />
+            </div>
+          )}
           {revisionsFetchStatus === 'loaded' &&
             revisions.map((revision, index) => {
               return (
@@ -48,9 +57,7 @@ const HistoryModal = ({
                   image="file"
                   // tag="Version actuelle"
                   primaryText={formatDate(revision.updated_at, f)}
-                  secondaryText={`${fileCollection.getBeautifulSize(
-                    revision
-                  )} · ${file.name}`}
+                  secondaryText={fileCollection.getBeautifulSize(revision)}
                   key={index}
                   downloadLink={() =>
                     fileCollection.download(
@@ -67,12 +74,14 @@ const HistoryModal = ({
     />
   )
 }
+withClient(HistoryModal).prototype = React.Component.prototype
 HistoryModal.propTypes = {
   file: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   revisions: PropTypes.array,
   client: PropTypes.object.isRequired,
   f: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   revisionsFetchStatus: PropTypes.string.isRequired
 }
 export default translate()(withRouter(withClient(HistoryModal)))

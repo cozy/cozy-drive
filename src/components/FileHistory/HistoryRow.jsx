@@ -16,7 +16,6 @@ const denseStyle = { height: '48px' }
  */
 const HistoryRow = ({
   style,
-  className,
   primaryText,
   secondaryText,
   image,
@@ -28,13 +27,13 @@ const HistoryRow = ({
 }) => {
   return (
     <Media
-      className={cx(className, dense ? 'u-ph-1' : 'u-p-1')}
+      className={cx(styles.HistoryRowMedia, dense ? 'u-ph-1' : 'u-p-1')}
       style={dense ? Object.assign({}, denseStyle, style) : style}
       {...rest}
     >
       <div className="u-media u-media-grow u-row-m">
         <div className={styles.HistoryRowCircleWrapper}>
-          <Img className="u-flex-self-start">
+          <Img className={styles.HistoryRowMediaImg}>
             <Circle
               size={tag ? 'small' : 'xsmall'}
               backgroundColor="var(--white)"
@@ -44,7 +43,7 @@ const HistoryRow = ({
             </Circle>
           </Img>
         </div>
-        <div className="u-media-grow u-stack-xs">
+        <div className="u-media-grow u-stack-xs ">
           <div className="u-media u-row-m">
             <Bd>
               <Bold>{primaryText}</Bold>
@@ -71,8 +70,6 @@ const HistoryRow = ({
 HistoryRow.propTypes = {
   /** Custom CSS */
   style: PropTypes.object,
-  /** Custom class */
-  className: PropTypes.string,
   /** title  */
   title: PropTypes.string,
   /** First line */
