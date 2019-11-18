@@ -466,13 +466,13 @@ export const exportFilesNative = (files, client = null, filename) => {
         duration: Math.min(downloadAllFiles.length * 2000, 6000)
       })
       const urls = await Promise.all(downloadAllFiles)
-      if (urls.length === 1 && isIOS()) {
+      if (isIOS()) {
         //TODO
         //It seems that files: is not well supported on iOS. url seems to work well
         //at with one file. Need to check when severals
         window.plugins.socialsharing.shareWithOptions(
           {
-            url: urls[0]
+            url: urls
           },
           result => Alerter.success(`OK c bon ${result}`),
           error => {
