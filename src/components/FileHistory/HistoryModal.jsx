@@ -44,7 +44,13 @@ const HistoryModal = ({
             tag={t('History.current_version')}
             primaryText={formatDate(file.updated_at, f)}
             secondaryText={fileCollection.getBeautifulSize(file)}
-            downloadLink={() => fileCollection.download(file)}
+            downloadLink={async () => {
+              if (!isMobile()) {
+                fileCollection.download(file)
+              } else {
+                exportFilesNative([file._id])()
+              }
+            }}
           />
           {revisionsFetchStatus === 'loading' && (
             <div className={styles.HistoryRowRevisionLoader}>
