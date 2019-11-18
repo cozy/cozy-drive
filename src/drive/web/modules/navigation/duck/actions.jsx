@@ -3,7 +3,7 @@ import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 import { getAdapter, extractFileAttributes } from './async'
 import { getSort } from './reducer'
 import React from 'react'
-import { isMobileApp } from 'cozy-device-helper'
+import { isMobileApp, isIOS } from 'cozy-device-helper'
 import {
   saveFileWithCordova,
   saveAndOpenWithCordova
@@ -466,15 +466,30 @@ export const exportFilesNative = (files, client = null, filename) => {
         duration: Math.min(downloadAllFiles.length * 2000, 6000)
       })
       const urls = await Promise.all(downloadAllFiles)
-      window.plugins.socialsharing.shareWithOptions(
-        {
-          files: urls
-        },
-        null,
-        error => {
-          throw error
-        }
-      )
+      if (urls.length === 1 && isIOS()) {
+        //TODO
+        //It seems that files: is not well supported on iOS. url seems to work well
+        //at with one file. Need to check when severals
+        window.plugins.socialsharing.shareWithOptions(
+          {
+            url: urls[0]
+          },
+          result => Alerter.success(`OK c bon ${result}`),
+          error => {
+            throw error
+          }
+        )
+      } else {
+        window.plugins.socialsharing.shareWithOptions(
+          {
+            files: urls
+          },
+          null,
+          error => {
+            throw error
+          }
+        )
+      }
     } catch (error) {
       Alerter.error(downloadFileError(error))
     }

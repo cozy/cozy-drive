@@ -1,12 +1,13 @@
 /* global cozy */
 import { isAndroidApp } from 'cozy-device-helper'
 import logger from 'lib/logger'
+import { isIOS } from 'cozy-device-helper/dist/platform'
 
 const ERROR_GET_DIRECTORY = 'Error to get directory'
 const ERROR_WRITE_FILE = 'Error to write file'
 const ERROR_GET_FILE = 'Error to get file'
 const COZY_PATH = 'Cozy'
-const COZY_FILES_PATH = 'Cozy Drive'
+const COZY_FILES_PATH = isIOS() ? 'CozyDrive' : 'Cozy Drive'
 
 export const getRootPath = () =>
   isAndroidApp()
