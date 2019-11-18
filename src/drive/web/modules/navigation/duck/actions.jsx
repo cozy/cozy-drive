@@ -443,13 +443,21 @@ const downloadFile = (file, meta) => {
 }
 
 // MOBILE STUFF
-export const exportFilesNative = files => {
+export const exportFilesNative = (files, client = null, filename) => {
   return async () => {
     const downloadAllFiles = files.map(async file => {
-      const response = await cozy.client.files.downloadById(file.id)
+      let response
+      if (!client) {
+        response = await cozy.client.files.downloadById(file.id)
+      } else {
+        response = await client
+          .collection('io.cozy.files')
+          .downloadVersionById(file)
+      }
+
       const blob = await response.blob()
-      const filename = file.name
-      const localFile = await saveFileWithCordova(blob, filename)
+      const filenameToUse = filename ? filename : file.name
+      const localFile = await saveFileWithCordova(blob, filenameToUse)
       return localFile.nativeURL
     })
 

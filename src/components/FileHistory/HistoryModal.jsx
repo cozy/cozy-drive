@@ -13,7 +13,8 @@ import HistoryRow from './HistoryRow'
 import styles from './styles.styl'
 
 import { CozyFile } from 'models'
-
+import { isMobile } from 'cozy-device-helper/dist/platform'
+import { exportFilesNative } from 'drive/web/modules/navigation/duck/actions'
 const formatDate = (date, f) => {
   return f(date, 'DD MMMM - HH[h]mm')
 }
@@ -40,7 +41,7 @@ const HistoryModal = ({
           </Caption>
           <HistoryRow
             image="file"
-            tag="Version actuelle"
+            tag={t('History.current_version')}
             primaryText={formatDate(file.updated_at, f)}
             secondaryText={fileCollection.getBeautifulSize(file)}
             downloadLink={() => fileCollection.download(file)}
@@ -59,13 +60,21 @@ const HistoryModal = ({
                   primaryText={formatDate(revision.updated_at, f)}
                   secondaryText={fileCollection.getBeautifulSize(revision)}
                   key={index}
-                  downloadLink={() =>
-                    fileCollection.download(
-                      file,
-                      revision._id,
-                      CozyFile.generateFileNameForRevision(file, revision, f)
-                    )
-                  }
+                  downloadLink={async () => {
+                    if (!isMobile()) {
+                      fileCollection.download(
+                        file,
+                        revision._id,
+                        CozyFile.generateFileNameForRevision(file, revision, f)
+                      )
+                    } else {
+                      exportFilesNative(
+                        [revision._id],
+                        client,
+                        CozyFile.generateFileNameForRevision(file, revision, f)
+                      )()
+                    }
+                  }}
                 />
               )
             })}
