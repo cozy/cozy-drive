@@ -48,7 +48,7 @@ const HistoryModal = ({
               if (!isMobile()) {
                 fileCollection.download(file)
               } else {
-                exportFilesNative([file._id])()
+                exportFilesNative([file._id], client, file.name)()
               }
             }}
           />
