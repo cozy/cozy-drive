@@ -100,6 +100,7 @@
     "babel-preset-cozy-app": "1.7.0",
     "classnames": "2.2.6",
     "copy-text-to-clipboard": "1.0.4",
+    "cozy-authentication": "2.0.0",
     "cozy-bar": "7.7.6",
     "cozy-ci": "0.4.1",
     "cozy-client": "^7.9.0",

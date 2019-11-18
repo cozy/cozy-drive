@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import logger from 'lib/logger'
-
+import { withClient } from 'cozy-client'
 import { withBreakpoints, Menu, MenuItem, Icon } from 'cozy-ui/react'
 import { MoreButton } from 'components/Button'
 import DownloadButton from './DownloadButton'
@@ -162,16 +162,14 @@ class PublicToolbar extends React.Component {
   state = {
     discoveryLink: null
   }
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
+
   componentDidMount() {
     if (window.location.pathname === '/preview') this.loadSharingDiscoveryLink()
   }
 
   async loadSharingDiscoveryLink() {
     try {
-      const { client } = this.context
+      const { client } = this.props
       const response = await client
         .collection('io.cozy.permissions')
         .getOwnPermissions()
@@ -237,7 +235,9 @@ const mapDispatchToProps = dispatch => ({
   onDownload: files => dispatch(downloadFiles(files))
 })
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(withBreakpoints()(PublicToolbar))
+export default withClient(
+  connect(
+    null,
+    mapDispatchToProps
+  )(withBreakpoints()(PublicToolbar))
+)

@@ -7,20 +7,27 @@ jest.mock('cozy-ui/react/utils/color', () => ({
 }))
 
 describe('Unlink', () => {
-  const client = jest.fn()
-  const options = {
-    context: {
-      client
+  const client = {
+    stackClient: {
+      token: {
+        token: '1'
+      },
+      uri: 'http://mycozy.cloud'
     }
   }
+
   const unlink = jest.fn()
   const t = jest.fn(s => s)
   const clientSettings = {
     data: 'foo'
   }
   const comp = mount(
-    <Unlink t={t} unlink={unlink} clientSettings={clientSettings} />,
-    options
+    <Unlink
+      t={t}
+      unlink={unlink}
+      clientSettings={clientSettings}
+      client={client}
+    />
   )
 
   afterEach(() => {

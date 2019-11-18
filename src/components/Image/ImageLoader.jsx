@@ -117,7 +117,7 @@ class ImageLoader extends React.Component {
 
       if (!link) throw new Error(`${size} link is not available`)
 
-      const src = client.options.uri + link
+      const src = client.getStackClient().uri + link
       await this.checkImageSource(src)
       if (this._mounted) {
         this.setState({

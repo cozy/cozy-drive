@@ -4,14 +4,16 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
-import { CozyProvider } from 'cozy-client'
+import localforage from 'localforage'
 
+import { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/react/I18n'
+import { isIOSApp } from 'cozy-device-helper'
+import { Document } from 'cozy-doctypes'
 
 import logger from 'lib/logger'
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
-
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { configureReporter } from 'drive/lib/reporter'
 import {
@@ -26,9 +28,6 @@ import {
 } from 'drive/mobile/lib/tracker'
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { scheduleNotification } from 'drive/mobile/lib/notification'
-import { isIOSApp } from 'cozy-device-helper'
-import { Document } from 'cozy-doctypes'
-
 import {
   getLang,
   initClient,
@@ -48,6 +47,7 @@ import {
 } from 'drive/mobile/modules/authorization/duck'
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
 import { startReplication } from 'drive/mobile/modules/replication/sagas'
+import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
 
 // Allows to know if the launch of the application has been done by the service background
 // @see: https://git.io/vSQBC
@@ -187,6 +187,24 @@ class InitAppMobile {
     }
   }
 
+  migrateToCozyAuth = async () => {
+    const store = await this.getStore()
+    const oauthOptions = getClientSettings(store.getState())
+    const token = getToken(store.getState())
+    const uri = await this.getCozyURL()
+    const alreadyMigrated = await localforage.getItem('credentials')
+
+    if (uri && oauthOptions && token && !alreadyMigrated) {
+      await localforage.setItem(ONBOARDED_ITEM, true)
+      return await localforage.setItem('credentials', {
+        uri,
+        oauthOptions,
+        token
+      })
+    }
+
+    return
+  }
   startApplication = async () => {
     if (this.stardedApp) return
 
@@ -194,60 +212,22 @@ class InitAppMobile {
     const client = await this.getClient()
     const polyglot = await this.getPolyglot()
 
+    //needed to migrate from cozy-drive auth to cozy-authenticate.
+    //@TODO should be remove one day. It has been added for the migration
+    //from 1.18.17 to 1.18.18
+    await this.migrateToCozyAuth()
+
     configureReporter()
-    let shouldInitBar = false
-    let realOauthOptions
-
-    try {
-      const clientInfos = getClientSettings(store.getState())
-      /*Since we can update our OauthConfig sometimes, we need to
-        override the cached one */
-      realOauthOptions =
-        clientInfos !== null ? { ...clientInfos, ...getOauthOptions() } : null
-      const token = getToken(store.getState())
-
-      const stackClient = client.getStackClient()
-
-      stackClient.setOAuthOptions(realOauthOptions)
-      stackClient.setCredentials(token)
-      restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-      stackClient.onTokenRefresh = token => {
-        restoreCozyClientJs(client.options.uri, realOauthOptions, token)
-        store.dispatch(setToken(token))
-      }
-      //In order to check if the token is good
-      await stackClient.fetchJSON('GET', '/apps/settings')
-      shouldInitBar = true
-      await store.dispatch(startReplication())
-    } catch (e) {
-      logger.warn(e)
-      if (isClientRevoked(e, store.getState())) {
-        logger.warn('Your device is not connected to your server anymore')
-        store.dispatch(revokeClient())
-        resetClient(client)
-      } else if (getServerUrl(store.getState())) {
-        // the server is not responding, but it doesn't mean we're revoked yet
-        shouldInitBar = true
-      }
-    } finally {
-      if (shouldInitBar) await initBar(client)
-    }
-
     useHistoryForTracker(hashHistory)
     if (isAnalyticsOn(store.getState())) {
       startTracker(getServerUrl(store.getState()))
     }
 
     const root = document.querySelector('[role=application]')
-    const onboarding = {
-      oauth: {
-        ...getOauthOptions()
-      }
-    }
     render(
       <I18n lang={getLang()} polyglot={polyglot}>
         <CozyProvider client={client}>
-          <DriveMobileRouter history={hashHistory} onboarding={onboarding} />
+          <DriveMobileRouter history={hashHistory} />
         </CozyProvider>
       </I18n>,
       root,

@@ -26,7 +26,6 @@ export class RealtimeFiles extends React.Component {
     this.realtime.subscribe('created', 'io.cozy.files', this.onDocumentChange)
     this.realtime.subscribe('updated', 'io.cozy.files', this.onDocumentChange)
     this.realtime.subscribe('deleted', 'io.cozy.files', this.onDocumentChange)
-
     const db = cozy.client.offline.getDatabase('io.cozy.files')
     if (db) {
       this.pouchListener = db.changes({

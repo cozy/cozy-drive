@@ -6,12 +6,12 @@ import { disableBackgroundService } from './background'
 import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
-import { isMobileApp, getDeviceName } from 'cozy-device-helper'
+import { getDeviceName } from 'cozy-device-helper'
 import appMetadata from 'drive/appMetadata'
-
+import { getRedirectUri } from 'drive/mobile/lib/redirect'
 export const getOauthOptions = () => {
   return {
-    redirectURI: isMobileApp() ? 'cozydrive://auth' : 'http://localhost',
+    redirectURI: getRedirectUri(appMetadata.slug),
     softwareID: SOFTWARE_ID,
     clientName: `${SOFTWARE_NAME} (${getDeviceName()})`,
     softwareVersion: appMetadata.version,
@@ -45,9 +45,7 @@ export const initBar = async client => {
     cozyClient: client,
     iconPath: require('../../targets/vendor/assets/app-icon.svg'),
     lang: getLang(),
-    cozyURL: client.options.uri,
-    token: await getTokenWithNoException(),
-    renewToken: () => client.getClient().refreshToken(),
+    cozyURL: client.uri,
     replaceTitleOnMobile: false,
     displayOnMobile: true
   })
@@ -66,8 +64,8 @@ export const restoreCozyClientJs = (uri, clientInfos, token) => {
     },
     offline
   })
-  const realToken = new cozy.client.auth.AccessToken(token)
-  cozy.client.saveCredentials(clientInfos, realToken)
+
+  cozy.client.saveCredentials(clientInfos, token)
 }
 
 export function resetClient(client, clientInfo = null) {
@@ -95,14 +93,6 @@ export function resetClient(client, clientInfo = null) {
 export const getToken = async () => {
   const credentials = await cozy.client.authorize()
   return credentials.token.accessToken
-}
-
-const getTokenWithNoException = async () => {
-  try {
-    return await getToken()
-  } catch (_) {
-    return null
-  }
 }
 
 export const getClientUrl = () => cozy.client._url

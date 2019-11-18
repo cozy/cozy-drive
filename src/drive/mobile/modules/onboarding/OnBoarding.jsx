@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { initBar } from 'drive/mobile/lib/cozy-helper'
 
 import Wizard from './components/Wizard'
 import Files from './components/Files'
 import BackupPhotosVideos from './components/BackupPhotosVideos'
 import Analytics from './components/Analytics'
-
+import localforage from 'localforage'
+export const ONBOARDED_ITEM = 'ONBOARDED'
 export default class OnBoarding extends Component {
-  static contextTypes = {
-    client: PropTypes.object.isRequired
-  }
   onboardingSteps = [Files, BackupPhotosVideos, Analytics]
 
   async redirectToApp() {
-    await initBar(this.context.client)
     this.props.router.replace('/')
   }
 
@@ -22,7 +17,10 @@ export default class OnBoarding extends Component {
     return (
       <Wizard
         steps={this.onboardingSteps}
-        onComplete={() => this.redirectToApp()}
+        onComplete={() => {
+          localforage.setItem(ONBOARDED_ITEM, true)
+          return this.redirectToApp()
+        }}
       />
     )
   }

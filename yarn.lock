@@ -4456,6 +4456,17 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+cozy-authentication@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.0.0.tgz#ad8df824225b482d4d619648f0e76dcd0757bda0"
+  integrity sha512-NeEcastYmj2ay+ZfgedY0yoj3Yg1MUw3R4djzreyEM6LQJCJ9so7+FkZPxuWlGCJEnhMRaMeMt3oZJPGSjxqKA==
+  dependencies:
+    cozy-device-helper "^1.8.0"
+    localforage "1.7.3"
+    prop-types "15.7.2"
+    snarkdown "1.2.2"
+    url-polyfill "1.1.7"
+
 cozy-bar@7.7.6:
   version "7.7.6"
   resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.7.6.tgz#a0127bd8df953d3e0a2b16f846db02aac0b4c296"
@@ -4538,7 +4549,7 @@ cozy-device-helper@1.7.3:
   dependencies:
     lodash "4.17.13"
 
-cozy-device-helper@1.8.0:
+cozy-device-helper@1.8.0, cozy-device-helper@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.8.0.tgz#17b41d0ea28a504b906669a43449952e72615abb"
   integrity sha512-XomsjdCCWcS01x1QK/Wc4EI4zTxJN8Ouh7956wm2AEQyjj4lN+7cj8tqEBlb8fLWm68/3S3Z4V3iSJDgnJHu6A==
@@ -14618,6 +14629,11 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^3.1.0"
+
+snarkdown@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/snarkdown/-/snarkdown-1.2.2.tgz#0cfe2f3012b804de120fc0c9f7791e869c59cc74"
+  integrity sha1-DP4vMBK4BN4SD8DJ93kehpxZzHQ=
 
 sntp@1.x.x:
   version "1.0.9"
