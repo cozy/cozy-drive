@@ -123,7 +123,7 @@
     <plugin name="cordova-plugin-camera" spec="https://github.com/cozy/cordova-plugin-camera.git#bf519ca009eeaec3a47237ee07a09d515cc733df">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
-    <plugin name="cordova-plugin-x-socialsharing" spec="^5.6.2">
+    <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/cozy/SocialSharing-PhoneGap-Plugin.git#71f6a9964dc15409992d4acc411d762876bb2629">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
         <variable name="PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION" value="This app requires photo library access to function properly." />
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="This app requires photo library access to function properly." />
