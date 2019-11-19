@@ -443,6 +443,9 @@
     },
     "notifications": {
       "backup_paused": "Your photos backup is paused. Keep the application open and prevent the screen from going to sleep to complete the backup."
+    },
+    "download": {
+      "success": "Your file has been shared with success"
     }
   },
   "upload": {
