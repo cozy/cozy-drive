@@ -624,6 +624,6 @@
     "description": "The last 20 versions of your files are automatically kept. Select a version to download it.",
     "current_version": "Current version",
     "loading": "Loading...",
-    "noFileVersionEnabled": "Your cozy doesn't support file versioning yet. Coming soon."
+    "noFileVersionEnabled": "Your Cozy will soon be able to archive the last modifications of a file to never risk losing them again"
   }
 }
