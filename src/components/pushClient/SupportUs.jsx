@@ -12,6 +12,10 @@ import { buildPremiumLink } from 'drive/web/modules/upload/QuotaAlert'
 import { isMobileApp } from 'cozy-device-helper'
 import get from 'lodash/get'
 
+const GB = 1000 * 1000 * 1000
+const PREMIUM_QUOTA = 50 * GB
+
+//TODO use cozy-client helpers after https://github.com/cozy/cozy-client/pull/567 merge
 const SupportUs = ({ t, client }) => {
   if (isMobileApp()) return null
 
@@ -30,7 +34,13 @@ const SupportUs = ({ t, client }) => {
    * if quota < 50Gb then, the user is freemium
    * if managerUrl then user is not self hosted
    */
-  if (enable_premium_links && managerUrl && uuid && quota && quota < 5000000000)
+  if (
+    enable_premium_links &&
+    managerUrl &&
+    uuid &&
+    quota &&
+    parseInt(quota) < PREMIUM_QUOTA
+  )
     return (
       <a
         href={buildPremiumLink(uuid, managerUrl)}
