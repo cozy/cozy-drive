@@ -11,7 +11,7 @@ import styles from './styles.styl'
 //@todo this component will be moved to UI when polished with an HistoryTimeLine
 /**
  *
- * This component is heavily based on CompositeRow but it deffers in several way:
+ * This component is heavily based on CompositeRow but it differs in several way:
  * can have three text : Primary / Seconday and Tag
  */
 const HistoryRow = ({
