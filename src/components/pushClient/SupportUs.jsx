@@ -39,7 +39,7 @@ const SupportUs = ({ t, client }) => {
     managerUrl &&
     uuid &&
     quota &&
-    parseInt(quota) < PREMIUM_QUOTA
+    parseInt(quota) <= PREMIUM_QUOTA
   )
     return (
       <a

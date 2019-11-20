@@ -15,9 +15,7 @@ const withDiskUsage = client => {
     fetchData()
   }, [])
 
-  return {
-    diskusage
-  }
+  return diskusage
 }
 
 export default withDiskUsage
