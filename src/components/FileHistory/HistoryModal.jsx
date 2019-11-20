@@ -106,7 +106,7 @@ const HistoryModal = ({
     />
   )
 }
-withClient(HistoryModal).prototype = React.Component.prototype
+
 HistoryModal.propTypes = {
   file: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,

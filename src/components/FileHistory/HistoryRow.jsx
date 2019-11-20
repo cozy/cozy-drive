@@ -8,11 +8,11 @@ import palette from 'cozy-ui/react/palette'
 
 import styles from './styles.styl'
 
-const denseStyle = { height: '48px' }
-
 //@todo this component will be moved to UI when polished with an HistoryTimeLine
 /**
- * A ready-made row layout for presenting rich information.
+ *
+ * This component is heavily based on CompositeRow but it deffers in several way:
+ * can have three text : Primary / Seconday and Tag
  */
 const HistoryRow = ({
   style,
@@ -20,15 +20,14 @@ const HistoryRow = ({
   secondaryText,
   image,
   actions,
-  dense,
   tag,
   downloadLink,
   ...rest
 }) => {
   return (
     <Media
-      className={cx(styles.HistoryRowMedia, dense ? 'u-ph-1' : 'u-p-1')}
-      style={dense ? Object.assign({}, denseStyle, style) : style}
+      className={cx(styles.HistoryRowMedia, 'u-p-1')}
+      style={style}
       {...rest}
     >
       <div className="u-media u-media-grow u-row-m">
@@ -84,9 +83,7 @@ HistoryRow.propTypes = {
    */
   actions: PropTypes.element,
   /* Element(s) to the show to the right of the CompositeRow */
-  right: PropTypes.element,
-  /** Row height will be fixed to 48px */
-  dense: PropTypes.bool
+  right: PropTypes.element
 }
 
 export default HistoryRow
