@@ -12,7 +12,7 @@ import styles from './styles.styl'
 /**
  *
  * This component is heavily based on CompositeRow but it differs in several way:
- * can have three text : Primary / Seconday and Tag
+ * can have three text : Primary / Secondary and Tag
  */
 const HistoryRow = ({
   style,
