@@ -156,6 +156,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           displayCondition: selections =>
             selections.length === 1 && isFile(selections[0])
         },
+        history: {
+          action: selected =>
+            ownProps.router.push(
+              `${ownProps.location.pathname}/file/${selected[0].id}/revision`
+            ),
+          displayCondition: selections =>
+            selections.length === 1 && isFile(selections[0])
+        },
         'phone-download': {
           displayCondition: selections =>
             __TARGET__ === 'mobile' &&

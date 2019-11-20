@@ -1,6 +1,7 @@
 /* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import SharingProvider, { SharedDocument } from 'sharing'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/react/I18n'
@@ -158,13 +159,14 @@ const ToolbarWithSharingContext = props =>
       )}
     </SharedDocument>
   )
-export default translate()(
-  withBreakpoints()(
-    withClient(
-      connect(
-        mapStateToProps,
-        null
-      )(ToolbarWithSharingContext)
-    )
-  )
-)
+ToolbarWithSharingContext.displayName = 'ToolbarWithSharingContext'
+
+export default compose(
+  translate(),
+  withClient,
+  connect(
+    mapStateToProps,
+    null
+  ),
+  withBreakpoints()
+)(ToolbarWithSharingContext)

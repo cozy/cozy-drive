@@ -16,6 +16,7 @@ import {
   SharingsContainer as Sharings
 } from 'drive/web/modules/drive'
 import { Container as Trash } from 'drive/web/modules/trash'
+import FileHistory from '../../../../components/FileHistory'
 
 const AppRoute = (
   <Route>
@@ -30,6 +31,7 @@ const AppRoute = (
         <Route path="folder" component={Folder}>
           <Route path=":folderId">
             <Route path="file/:fileId" component={FilesViewer} />
+            <Route path="file/:fileId/revision" component={FileHistory} />
           </Route>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>

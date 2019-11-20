@@ -1,0 +1,35 @@
+.HistoryRowCircleWrapper 
+    width: 2.6rem;
+    height: 2.6rem;
+    justify-content: center;
+    display: flex;
+    align-self: start;
+
+.HistoryRowCirle
+    border 1px var(--silver) solid
+    background-color #fff
+
+.HistoryRowRevisionLoader
+    display flex
+    justify-content center
+
+.HistoryRowCaption
+    margin-bottom 32px
+    padding-left 32px
+    padding-right 32px
+
+.HistoryRowMedia
+    position relative
+.HistoryRowMedia::before
+    content ''
+    border-left 1px var(--coolGrey) dashed
+    position absolute
+    margin-left 20px
+    top: 35px
+    bottom: -15px
+.HistoryRowMedia:last-child::before
+    border 0
+//z-index is needed since we want the IMG to be displayed above the border
+.HistoryRowMediaImg
+    align-self: flex-start
+    z-index 1

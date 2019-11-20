@@ -1,8 +1,9 @@
 /* global cozy */
+import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 import { getAdapter, extractFileAttributes } from './async'
 import { getSort } from './reducer'
 import React from 'react'
-import { isMobileApp } from 'cozy-device-helper'
+import { isMobileApp, isIOS } from 'cozy-device-helper'
 import {
   saveFileWithCordova,
   saveAndOpenWithCordova
@@ -441,24 +442,22 @@ const downloadFile = (file, meta) => {
   }
 }
 
-const forceFileDownload = (href, filename) => {
-  const element = document.createElement('a')
-  element.setAttribute('href', href)
-  element.setAttribute('download', filename)
-  element.style.display = 'none'
-  document.body.appendChild(element)
-  element.click()
-  document.body.removeChild(element)
-}
-
 // MOBILE STUFF
-export const exportFilesNative = files => {
+export const exportFilesNative = (files, client = null, filename) => {
   return async () => {
     const downloadAllFiles = files.map(async file => {
-      const response = await cozy.client.files.downloadById(file.id)
+      let response
+      if (!client) {
+        response = await cozy.client.files.downloadById(file.id)
+      } else {
+        response = await client
+          .collection('io.cozy.files')
+          .downloadVersionById(file)
+      }
+
       const blob = await response.blob()
-      const filename = file.name
-      const localFile = await saveFileWithCordova(blob, filename)
+      const filenameToUse = filename ? filename : file.name
+      const localFile = await saveFileWithCordova(blob, filenameToUse)
       return localFile.nativeURL
     })
 
@@ -467,15 +466,34 @@ export const exportFilesNative = files => {
         duration: Math.min(downloadAllFiles.length * 2000, 6000)
       })
       const urls = await Promise.all(downloadAllFiles)
-      window.plugins.socialsharing.shareWithOptions(
-        {
-          files: urls
-        },
-        null,
-        error => {
-          throw error
-        }
-      )
+      if (urls.length === 1 && isIOS()) {
+        //TODO
+        //It seems that files: is not well supported on iOS. url seems to work well
+        //at with one file. Need to check when severals
+        window.plugins.socialsharing.shareWithOptions(
+          {
+            url: urls[0]
+          },
+          result => {
+            if (result.completed === true) {
+              Alerter.success('mobile.download.success')
+            }
+          },
+          error => {
+            throw error
+          }
+        )
+      } else {
+        window.plugins.socialsharing.shareWithOptions(
+          {
+            files: urls
+          },
+          null,
+          error => {
+            throw error
+          }
+        )
+      }
     } catch (error) {
       Alerter.error(downloadFileError(error))
     }

@@ -4526,13 +4526,13 @@ cozy-client@^6.58.1:
     sift "6.0.0"
     url-search-params-polyfill "^6.0.0"
 
-cozy-client@^7.9.0:
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-7.9.0.tgz#d3f2b7a2228b9856e869bff443d095fe6a336988"
-  integrity sha512-yftKRjddQ3APKIcwuKGvPiZLYmZ1hr5Cz8eiLfHaDbNyhQCk3Z+FVPmmQA9PmckdcvhuiT9Vhr6qk0vU7V1gvQ==
+cozy-client@^7.12.0:
+  version "7.12.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-7.12.0.tgz#c5b01c720ba205cb99ca3b54f1906d5e099eb266"
+  integrity sha512-goLh1Mkp6ym4ZquhatnRfQmSNowzH39/ZpkdtA7wBJExTzoEWBRyYuGtWf+euSo1Guqss8Yyo/MRy6T5OJ4PFw==
   dependencies:
     cozy-device-helper "^1.7.3"
-    cozy-stack-client "^7.8.0"
+    cozy-stack-client "^7.12.0"
     lodash "^4.17.13"
     microee "^0.0.6"
     prop-types "^15.6.2"
@@ -4733,10 +4733,10 @@ cozy-stack-client@^6.58.1:
     mime "2.4.0"
     qs "6.7.0"
 
-cozy-stack-client@^7.8.0:
-  version "7.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-7.8.0.tgz#357d22e1b1658540ca71650c1821835ce25163c1"
-  integrity sha512-yP9/Aw/QkocnzbnPygTiKT3uYPuyN+DkSXK1YqFVSwZYbJr8L1XsTqw4GaiHo4a5DXSbwN9Sxt+p0qGZKZFQVA==
+cozy-stack-client@^7.12.0:
+  version "7.12.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-7.12.0.tgz#9a5df9fa77730d04cf1a31c1e5db9c931c8db94d"
+  integrity sha512-ld0/Hm4F9HGjGESEg/QbO71cRFslprxo4EZ4bWKhm5gi1iMeUnOBeDHSTI36iI+xs4ouZTvf9KxTcnkchKG8Cw==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -4759,10 +4759,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@^26.6.0:
-  version "26.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-26.6.0.tgz#bbf194fbf2a588cb768ce3fee232e9c2dd1f18e7"
-  integrity sha512-AhLA+WvybVjm2wUvmUa7b2pmZqGU70EwwIMOnzlWv2Pf1VO/dhODDEbIQd5fQ6dcqR7DmdkvwwZSoKfGJDuFBA==
+cozy-ui@^26.9.0:
+  version "26.9.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-26.9.0.tgz#6d81210063903429e07f5b8db7cb2c53e50dd0c1"
+  integrity sha512-qUjWL0eT5CDWCHKzNRk/REbhS0s/whEu1WnMC6fCgYd/2lD/d3nZ+HgNcl4VoldXyN8ENPpg/rkTHNDk2oSwTQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"

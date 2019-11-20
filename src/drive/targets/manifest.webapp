@@ -2,7 +2,7 @@
   "name": "Drive",
   "name_prefix": "Cozy",
   "slug": "drive",
-  "version": "1.18.18",
+  "version": "1.18.19",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -101,6 +101,11 @@
       "description": "Required to access the files",
       "type": "io.cozy.files",
       "verbs": ["ALL"]
+    },
+    "filesversions": {
+      "description": "Required to access the file revisions",
+      "type": "io.cozy.files.versions",
+      "vebrs": ["ALL"]
     },
     "apps": {
       "description": "Required by the cozy-bar to display the icons of the apps",
