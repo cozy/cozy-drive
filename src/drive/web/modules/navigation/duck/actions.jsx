@@ -475,7 +475,6 @@ export const exportFilesNative = (files, client = null, filename) => {
             url: urls[0]
           },
           result => {
-            console.log('result', result)
             if (result.completed === true) {
               Alerter.success('mobile.download.success')
             }

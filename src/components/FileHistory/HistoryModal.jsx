@@ -18,7 +18,7 @@ import { exportFilesNative } from 'drive/web/modules/navigation/duck/actions'
 
 import useCapabilities from 'lib/hooks/useCapabilities'
 const formatDate = (date, f) => {
-  return f(date, 'DD MMMM - HH[h]mm')
+  return f(date, 'DD MMMM - HH:mm')
 }
 
 const HistoryModal = ({
@@ -62,7 +62,7 @@ const HistoryModal = ({
             tag={t('History.current_version')}
             primaryText={formatDate(file.updated_at, f)}
             secondaryText={fileCollection.getBeautifulSize(file)}
-            downloadLink={async () => {
+            downloadLink={() => {
               if (!isMobile()) {
                 fileCollection.download(file)
               } else {
@@ -76,15 +76,14 @@ const HistoryModal = ({
             </div>
           )}
           {revisionsFetchStatus === 'loaded' &&
-            revisions.map((revision, index) => {
+            revisions.map(revision => {
               return (
                 <HistoryRow
                   image="file"
-                  // tag="Version actuelle"
                   primaryText={formatDate(revision.updated_at, f)}
                   secondaryText={fileCollection.getBeautifulSize(revision)}
-                  key={index}
-                  downloadLink={async () => {
+                  key={revision._id}
+                  downloadLink={() => {
                     if (!isMobile()) {
                       fileCollection.download(
                         file,
