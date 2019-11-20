@@ -622,6 +622,8 @@
   },
   "History": {
     "description": "The last 20 versions of your files are automatically kept. Select a version to download it.",
-    "current_version": "Current version"
+    "current_version": "Current version",
+    "loading": "Loading...",
+    "noFileVersionEnabled": "Your cozy doesn't support file versioning yet. Coming soon."
   }
 }

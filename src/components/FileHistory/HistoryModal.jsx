@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import get from 'lodash/get'
 import ExperimentalModal from 'cozy-ui/transpiled/react/Labs/ExperimentalModal'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/react/I18n'
@@ -15,6 +15,8 @@ import styles from './styles.styl'
 import { CozyFile } from 'models'
 import { isMobile } from 'cozy-device-helper/dist/platform'
 import { exportFilesNative } from 'drive/web/modules/navigation/duck/actions'
+
+import useCapabilities from 'lib/hooks/useCapabilities'
 const formatDate = (date, f) => {
   return f(date, 'DD MMMM - HH[h]mm')
 }
@@ -29,6 +31,11 @@ const HistoryModal = ({
   revisionsFetchStatus
 }) => {
   const fileCollection = client.collection('io.cozy.files')
+  const capabilities = useCapabilities(client)
+  const isFileVersioningEnabled = get(
+    capabilities,
+    'capabilities.attributes.file_versioning'
+  )
   return (
     <ExperimentalModal
       dismissAction={() => router.goBack()}
@@ -37,7 +44,18 @@ const HistoryModal = ({
       description={
         <>
           <Caption className={styles.HistoryRowCaption}>
-            {t('History.description')}
+            {capabilities.fetchStatus === 'loading' && (
+              <span>{t('History.loading')}</span>
+            )}
+            {capabilities.fetchStatus === 'loaded' &&
+              isFileVersioningEnabled && (
+                <span>{t('History.description')}</span>
+              )}
+            {(capabilities.fetchStatus === 'failed' ||
+              (!isFileVersioningEnabled &&
+                capabilities.fetchStatus !== 'loading')) && (
+              <span>{t('History.noFileVersionEnabled')}</span>
+            )}
           </Caption>
           <HistoryRow
             image="file"
