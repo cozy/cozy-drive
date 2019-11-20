@@ -9,7 +9,7 @@ import { Caption } from 'cozy-ui/transpiled/react/Text'
 import { withClient } from 'cozy-client'
 import { withRouter } from 'react-router'
 
-import HistoryRow from './HistoryRow'
+import HistoryRow from 'cozy-ui/transpiled/react/HistoryRow'
 import styles from './styles.styl'
 
 import { CozyFile } from 'models'
@@ -58,7 +58,6 @@ const HistoryModal = ({
             )}
           </Caption>
           <HistoryRow
-            image="file"
             tag={t('History.current_version')}
             primaryText={formatDate(file.updated_at, f)}
             secondaryText={fileCollection.getBeautifulSize(file)}
@@ -79,7 +78,6 @@ const HistoryModal = ({
             revisions.map(revision => {
               return (
                 <HistoryRow
-                  image="file"
                   primaryText={formatDate(revision.updated_at, f)}
                   secondaryText={fileCollection.getBeautifulSize(revision)}
                   key={revision._id}
