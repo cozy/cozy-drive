@@ -28,6 +28,7 @@ import {
 } from 'drive/mobile/modules/offline/duck'
 import { extractFileAttributes } from 'drive/web/modules/navigation/duck/async'
 import styles from 'drive/styles/actionmenu.styl'
+import { isIOSApp } from 'cozy-device-helper'
 
 const ShareMenuItem = ({ docId, ...rest }, { t }) => (
   <SharedDocument docId={docId}>
@@ -102,11 +103,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           __TARGET__ === 'mobile'
             ? {
                 action: files => dispatch(exportFilesNative(files)),
-                displayCondition: files =>
-                  files.reduce(
+                displayCondition: files => {
+                  if (isIOSApp()) return files.length === 1 && isFile(files[0])
+                  return files.reduce(
                     (onlyFiles, file) => onlyFiles && isFile(file),
                     true
                   )
+                }
               }
             : {
                 action: files => dispatch(downloadFiles(files))
