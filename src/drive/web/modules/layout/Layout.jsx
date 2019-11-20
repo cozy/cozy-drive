@@ -9,7 +9,7 @@ import flag, { FlagSwitcher } from 'cozy-flags'
 import { initFlags } from 'lib/flags'
 import Nav from 'drive/web/modules/navigation/Nav'
 import ButtonClient from 'components/pushClient/Button'
-import Supportus from 'components/pushClient/Supportus'
+import SupportUs from 'components/pushClient/SupportUs'
 
 import { UploadQueue } from 'drive/web/modules/upload'
 import UserActionRequired from 'drive/mobile/modules/authorization/UserActionRequired'
@@ -24,7 +24,7 @@ const Layout = ({ t, children }) => (
       <Nav />
       <div>
         <ButtonClient />
-        <Supportus />
+        <SupportUs />
       </div>
     </Sidebar>
     <Alerter t={t} />

@@ -103,7 +103,6 @@
       "verbs": ["ALL"]
     },
     "filesversions": {
-      "description": "Required to access the file revisions",
       "type": "io.cozy.files.versions",
       "vebrs": ["ALL"]
     },
