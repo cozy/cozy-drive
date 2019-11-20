@@ -1,4 +1,4 @@
-import styles from './supportus.styl'
+import styles from './supportUs.styl'
 
 import { translate } from 'cozy-ui/react/I18n'
 
@@ -12,7 +12,7 @@ import { buildPremiumLink } from 'drive/web/modules/upload/QuotaAlert'
 import { isMobileApp } from 'cozy-device-helper'
 import get from 'lodash/get'
 
-const Supportus = ({ t, client }) => {
+const SupportUs = ({ t, client }) => {
   if (isMobileApp()) return null
 
   const instanceInfo = withInstance(client)
@@ -30,7 +30,7 @@ const Supportus = ({ t, client }) => {
    * if quota < 50Gb then, the user is freemium
    * if managerUrl then user is not self hosted
    */
-  if (enable_premium_links && managerUrl && uuid && quota && quota < 50000000)
+  if (enable_premium_links && managerUrl && uuid && quota && quota < 5000000000)
     return (
       <a
         href={buildPremiumLink(uuid, managerUrl)}
@@ -46,4 +46,4 @@ const Supportus = ({ t, client }) => {
   return null
 }
 
-export default translate()(withClient(Supportus))
+export default translate()(withClient(SupportUs))
