@@ -9,7 +9,7 @@ import {
   startMediaBackup,
   cancelMediaBackup
 } from 'drive/mobile/modules/mediaBackup/duck'
-import { getTracker } from 'cozy-ui/react/helpers/tracker'
+import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import { connect } from 'react-redux'
 

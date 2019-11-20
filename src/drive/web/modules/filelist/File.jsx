@@ -6,12 +6,17 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import Hammer from 'hammerjs'
 
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
 import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
-import { Button, Icon, withBreakpoints, MidEllipsis } from 'cozy-ui/react'
+import {
+  Button,
+  Icon,
+  withBreakpoints,
+  MidEllipsis
+} from 'cozy-ui/transpiled/react'
 import { SharedStatus } from 'sharing'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import { CozyFile } from 'models'
@@ -20,7 +25,7 @@ import {
   isSelected
 } from 'drive/web/modules/selection/duck'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
-import palette from 'cozy-ui/react/palette'
+import palette from 'cozy-ui/transpiled/react/palette'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist.styl'

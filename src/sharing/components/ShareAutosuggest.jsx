@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
 
-import { Icon, Spinner } from 'cozy-ui/react'
-import palette from 'cozy-ui/react/palette'
+import { Icon, Spinner } from 'cozy-ui/transpiled/react'
+import palette from 'cozy-ui/transpiled/react/palette'
 
 import styles from 'sharing/components/autosuggest.styl'
 import BoldCross from 'sharing/assets/icons/icon-cross-bold.svg'

@@ -5,7 +5,7 @@ import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
-import { Alerter } from 'cozy-ui/react/'
+import { Alerter } from 'cozy-ui/transpiled/react/'
 import Loading from '../../components/Loading'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'

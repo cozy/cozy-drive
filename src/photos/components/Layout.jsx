@@ -3,15 +3,20 @@
 import styles from '../styles/layout'
 
 import React from 'react'
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
-import { Layout as LayoutUI, Main } from 'cozy-ui/react/Layout'
-import Sidebar from 'cozy-ui/react/Sidebar'
-import Nav, { NavItem, NavIcon, NavText, genNavLink } from 'cozy-ui/react/Nav'
+import { Layout as LayoutUI, Main } from 'cozy-ui/transpiled/react/Layout'
+import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
+import Nav, {
+  NavItem,
+  NavIcon,
+  NavText,
+  genNavLink
+} from 'cozy-ui/transpiled/react/Nav'
 import { Link as RRNavLink } from 'react-router'
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
-import Alerter from 'cozy-ui/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 import { ModalManager } from 'react-cozy-helpers'

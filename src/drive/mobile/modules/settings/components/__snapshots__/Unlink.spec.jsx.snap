@@ -100,7 +100,7 @@ exports[`Unlink should render the Component 1`] = `
               type="submit"
             >
               <button
-                className="c-btn c-btn--danger-outline c-btn--center settings__button"
+                className="styles__c-btn___-2Vnj styles__c-btn--danger-outline___1mO1B styles__c-btn--center___16_Xh settings__button"
                 onClick={[Function]}
                 title={null}
                 type="submit"

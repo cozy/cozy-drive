@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
-import { Avatar } from 'cozy-ui/react'
-import { translate } from 'cozy-ui/react/I18n'
+import { Avatar } from 'cozy-ui/transpiled/react'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import styles from 'sharing/components/recipient.styl'
 

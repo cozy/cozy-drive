@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonLink } from 'cozy-ui/react'
+import { ButtonLink } from 'cozy-ui/transpiled/react'
 
 const OpenInCozyButton = ({ t, size = 'normal', href = '' }) => (
   <ButtonLink

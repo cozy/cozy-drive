@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import SelectionBar from 'cozy-ui/react/SelectionBar'
+import SelectionBar from 'cozy-ui/transpiled/react/SelectionBar'
 import {
   getSelectedFiles,
   hideSelectionBar,

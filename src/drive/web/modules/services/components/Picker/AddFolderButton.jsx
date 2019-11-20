@@ -1,10 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, ButtonAction, withBreakpoints, Icon } from 'cozy-ui/react'
+import {
+  Button,
+  ButtonAction,
+  withBreakpoints,
+  Icon
+} from 'cozy-ui/transpiled/react'
 import IconFolderAdd from 'drive/assets/icons/icon-folder-add.svg'
 import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
-import palette from 'cozy-ui/react/palette'
+import palette from 'cozy-ui/transpiled/react/palette'
 
 const AddFolderButton = ({ addFolder, breakpoints: { isMobile } }, { t }) => {
   if (isMobile)

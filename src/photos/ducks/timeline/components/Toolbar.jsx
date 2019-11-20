@@ -3,7 +3,7 @@ import styles from '../../../styles/toolbar.styl'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Menu, MenuItem, Icon } from 'cozy-ui/react'
+import { Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
 
 import UploadButton from '../../../components/UploadButton'
 import { MoreButton } from 'components/Button'

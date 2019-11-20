@@ -1,8 +1,8 @@
 /* global cozy */
 import React from 'react'
 import { connect } from 'react-redux'
-import { translate } from 'cozy-ui/react/I18n'
-import { Button, withBreakpoints } from 'cozy-ui/react'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { Button, withBreakpoints } from 'cozy-ui/transpiled/react'
 import { showModal } from 'react-cozy-helpers'
 
 import { MoreButton } from 'components/Button'

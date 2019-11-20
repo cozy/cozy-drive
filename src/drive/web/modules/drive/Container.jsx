@@ -2,8 +2,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { translate } from 'cozy-ui/react/I18n'
-import Toggle from 'cozy-ui/react/Toggle'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Toggle from 'cozy-ui/transpiled/react/Toggle'
 import { showModal } from 'react-cozy-helpers'
 import { SharedDocument, SharedRecipients, ShareModal } from 'sharing'
 

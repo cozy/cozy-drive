@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { withBreakpoints } from 'cozy-ui/react'
+import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import { ImageLoader } from 'components/Image'
 import { SharedBadge } from 'sharing'
 import FileIcon from 'drive/web/modules/filelist/FileIcon'

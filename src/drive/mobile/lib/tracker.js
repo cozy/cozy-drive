@@ -3,7 +3,7 @@ import {
   getTracker,
   configureTracker,
   resetTracker
-} from 'cozy-ui/react/helpers/tracker'
+} from 'cozy-ui/transpiled/react/helpers/tracker'
 import { SOFTWARE_ID } from './constants'
 
 const mobileHeartBeatDelay = 30 // how many seconds between each hreatbeat ping to the server

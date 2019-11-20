@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Icon from 'cozy-ui/react/Icon'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import localforage from 'localforage'
 import {
@@ -9,7 +9,7 @@ import {
 } from 'components/pushClient'
 import styles from './styles.styl'
 import Config from 'drive/config/config.json'
-import palette from 'cozy-ui/react/palette'
+import palette from 'cozy-ui/transpiled/react/palette'
 
 export default class CallToAction extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import Modal from 'cozy-ui/react/Modal'
-import { translate } from 'cozy-ui/react/I18n'
+import Modal from 'cozy-ui/transpiled/react/Modal'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import styles from 'drive/styles/confirms.styl'
 

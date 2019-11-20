@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { UserAvatar as Owner } from './components/Recipient'
 import WhoHasAccess from './components/WhoHasAccess'
 
-import Modal, { ModalContent } from 'cozy-ui/react/Modal'
+import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
 
 import { Contact } from 'models'
 

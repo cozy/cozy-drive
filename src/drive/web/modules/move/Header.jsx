@@ -11,7 +11,7 @@ import {
   Button,
   Caption,
   Bold
-} from 'cozy-ui/react'
+} from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/stylus/settings/palette.json'
 import DriveIcon from 'drive/assets/icons/icon-drive.svg'
 

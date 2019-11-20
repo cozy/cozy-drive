@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Recipient from './Recipient'
-import { SubTitle } from 'cozy-ui/react'
+import { SubTitle } from 'cozy-ui/transpiled/react'
 
 class WhoHasAccess extends PureComponent {
   static contextTypes = {

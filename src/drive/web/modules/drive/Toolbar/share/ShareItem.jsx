@@ -1,6 +1,6 @@
 import React from 'react'
 import { RecipientsAvatars } from 'sharing/components/Recipient'
-import { translate } from 'cozy-ui/react'
+import { translate } from 'cozy-ui/transpiled/react'
 import styles from 'drive/styles/toolbar.styl'
 import { SharedDocument } from 'sharing'
 import shareContainer from './share'

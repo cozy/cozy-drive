@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 
 import PropTypes from 'prop-types'
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import { isMobileApp } from 'cozy-device-helper'
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'

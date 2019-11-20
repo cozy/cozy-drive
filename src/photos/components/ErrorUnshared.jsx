@@ -1,6 +1,6 @@
 import React from 'react'
 import ErrorShare from 'components/Error/ErrorShare'
-import { Main } from 'cozy-ui/react/Layout'
+import { Main } from 'cozy-ui/transpiled/react/Layout'
 import styles from '../targets/public/index.styl'
 import classNames from 'classnames'
 

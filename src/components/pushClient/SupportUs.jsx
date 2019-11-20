@@ -1,6 +1,6 @@
 import styles from './supportUs.styl'
 
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import React from 'react'
 

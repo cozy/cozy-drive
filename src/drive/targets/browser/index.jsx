@@ -6,9 +6,12 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, hashHistory } from 'react-router'
-import { I18n, initTranslation } from 'cozy-ui/react/I18n'
+import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import CozyClient, { CozyProvider } from 'cozy-client'
-import { shouldEnableTracking, getTracker } from 'cozy-ui/react/helpers/tracker'
+import {
+  shouldEnableTracking,
+  getTracker
+} from 'cozy-ui/transpiled/react/helpers/tracker'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 import appMetadata from 'drive/appMetadata'

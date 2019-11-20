@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button } from 'cozy-ui/react/Button'
-import Toggle from 'cozy-ui/react/Toggle'
+import { Button } from 'cozy-ui/transpiled/react/Button'
+import Toggle from 'cozy-ui/transpiled/react/Toggle'
 
 import styles from '../styles.styl'
 export const ELEMENT_TEXT = 'ELEMENT_TEXT'

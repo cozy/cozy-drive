@@ -16,7 +16,7 @@ import {
 } from 'drive/web/modules/drive/files'
 import { addToUploadQueue } from 'drive/web/modules/upload'
 import { showModal } from 'react-cozy-helpers'
-import Alerter from 'cozy-ui/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import { getOpenedFolderId } from 'drive/web/modules/navigation/duck'
 

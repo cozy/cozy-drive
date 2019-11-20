@@ -7,7 +7,7 @@ import { hashHistory } from 'react-router'
 import localforage from 'localforage'
 
 import { CozyProvider } from 'cozy-client'
-import { I18n, initTranslation } from 'cozy-ui/react/I18n'
+import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import { isIOSApp } from 'cozy-device-helper'
 import { Document } from 'cozy-doctypes'
 

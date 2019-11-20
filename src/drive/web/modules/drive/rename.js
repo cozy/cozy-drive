@@ -1,5 +1,5 @@
 /* global cozy */
-import Alerter from 'cozy-ui/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import { getVisibleFiles } from 'drive/web/modules/navigation/duck'
 

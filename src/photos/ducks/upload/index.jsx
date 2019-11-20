@@ -2,7 +2,7 @@ import React from 'react'
 import { combineReducers } from 'redux'
 import logger from 'lib/logger'
 
-import Alerter from 'cozy-ui/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import UploadQueue from './UploadQueue'
 import { showModal } from 'react-cozy-helpers'

@@ -1,7 +1,7 @@
 /* global cozy */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'cozy-ui/react'
+import { Button } from 'cozy-ui/transpiled/react'
 import { logException, logInfo } from 'drive/lib/reporter'
 import {
   isFirstReplicationDone,

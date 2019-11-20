@@ -1,7 +1,7 @@
 import styles from '../../../styles/confirms.styl'
 import classNames from 'classnames'
 import React from 'react'
-import Modal from 'cozy-ui/react/Modal'
+import Modal from 'cozy-ui/transpiled/react/Modal'
 
 const DeleteConfirm = ({ t, count, confirm, abort, related }) => {
   let types = ['trash', 'restore', 'shared']

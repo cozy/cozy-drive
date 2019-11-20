@@ -10,7 +10,7 @@ import {
 } from 'drive/mobile/lib/filesystem'
 import { isMobileApp } from 'cozy-device-helper'
 
-import Alerter from 'cozy-ui/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import logger from 'lib/logger'
 const MAKE_AVAILABLE_OFFLINE = 'MAKE_AVAILABLE_OFFLINE'
 const UNDO_MAKE_AVAILABLE_OFFLINE = 'UNDO_MAKE_AVAILABLE_OFFLINE'

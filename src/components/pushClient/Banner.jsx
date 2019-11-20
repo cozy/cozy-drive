@@ -2,7 +2,7 @@
 
 import styles from './pushClient.styl'
 
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import React, { Component } from 'react'
 import {
@@ -13,7 +13,7 @@ import {
   isClientAlreadyInstalled,
   DESKTOP_BANNER
 } from '.'
-import { Button, ButtonLink, Icon } from 'cozy-ui/react'
+import { Button, ButtonLink, Icon } from 'cozy-ui/transpiled/react'
 
 import Config from 'drive/config/config.json'
 import localforage from 'localforage'

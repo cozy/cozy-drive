@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Overlay, Spinner, Viewer } from 'cozy-ui/transpiled/react'
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 import {
   getFolderIdFromRoute,
   fetchMoreFiles
@@ -10,7 +10,7 @@ import {
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 import logger from 'lib/logger'
 import Fallback from 'drive/web/modules/viewer/Fallback'
-import palette from 'cozy-ui/react/palette'
+import palette from 'cozy-ui/transpiled/react/palette'
 
 const getParentPath = router => {
   const url = router.location.pathname

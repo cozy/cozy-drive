@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import { Main as MainUI } from 'cozy-ui/react/Layout'
+import { Main as MainUI } from 'cozy-ui/transpiled/react/Layout'
 import BannerClient from 'components/pushClient/Banner'
 
 import styles from 'drive/styles/main.styl'

@@ -2,8 +2,8 @@
 import styles from '../styles/topbar.styl'
 
 import React, { Component } from 'react'
-import { translate } from 'cozy-ui/react/I18n'
-import { withBreakpoints } from 'cozy-ui/react'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import flow from 'lodash/flow'

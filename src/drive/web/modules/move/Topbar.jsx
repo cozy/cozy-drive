@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
 import Topbar from 'drive/web/modules/layout/Topbar'
-import { withBreakpoints } from 'cozy-ui/react'
+import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import {
   Breadcrumb,
   PreviousButton,
