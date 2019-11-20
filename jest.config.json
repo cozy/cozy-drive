@@ -6,6 +6,7 @@
     ".(png|gif|jpe?g)$": "<rootDir>/jestHelpers/mocks/fileMock.js",
     ".svg$": "<rootDir>/jestHelpers/mocks/iconMock.js",
     ".styl$": "identity-obj-proxy",
+    "\\.(css|less)$": "identity-obj-proxy",
     "^drive/locales/.*": "<rootDir>/src/drive/locales/en.json",
     "^photos/locales/.*": "<rootDir>/src/photos/locales/en.json",
     "^drive/(.*)": "<rootDir>/src/drive/$1",
