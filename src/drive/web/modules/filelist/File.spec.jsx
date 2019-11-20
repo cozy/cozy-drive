@@ -3,6 +3,9 @@
 jest.mock('cozy-ui/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
+jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
 
 import { getParentLink } from './File'
 

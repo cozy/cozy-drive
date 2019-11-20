@@ -6,6 +6,10 @@ import {
 jest.mock('cozy-ui/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
+jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
+
 describe('ensureFileHavePath function', () => {
   it('should ensure that the file has path and displayedPath attributes', () => {
     const view = {

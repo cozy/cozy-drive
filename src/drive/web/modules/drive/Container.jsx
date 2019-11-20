@@ -14,7 +14,7 @@ import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 import MoveModal from 'drive/web/modules/move/MoveModal'
-import EditDocumentQualification from 'drive/web/modules/drive/Toolbar/components/EditDocumentQualification'
+import { EditDocumentQualification } from 'cozy-scanner'
 import {
   openFileWith,
   downloadFiles,
