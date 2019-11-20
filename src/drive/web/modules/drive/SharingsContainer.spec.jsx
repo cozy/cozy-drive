@@ -8,6 +8,9 @@ import { ROOT_DIR_ID } from 'drive/constants/config.js'
 jest.mock('cozy-ui/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
+jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
+  getCssVariableValue: () => '#fff'
+}))
 
 const all = jest
   .fn()
