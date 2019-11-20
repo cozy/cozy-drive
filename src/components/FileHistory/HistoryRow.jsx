@@ -8,7 +8,7 @@ import palette from 'cozy-ui/react/palette'
 
 import styles from './styles.styl'
 
-//@todo this component will be moved to UI when polished with an HistoryTimeLine
+//@todo this component will be moved to UI
 /**
  *
  * This component is heavily based on CompositeRow but it differs in several way:
