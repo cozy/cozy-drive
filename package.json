@@ -109,13 +109,9 @@
     "cozy-doctypes": "1.67.0",
     "cozy-flags": "1.10.0",
     "cozy-realtime": "3.2.2",
-    "cozy-scanner": "0.1.0",
+    "cozy-scanner": "^0.1.1",
     "cozy-scripts": "1.13.2",
-<<<<<<< HEAD
     "cozy-ui": "^26.9.0",
-=======
-    "cozy-ui": "25.7.0",
->>>>>>> refactor: Use cozy-scanner
     "date-fns": "1.30.1",
     "diacritics": "1.3.0",
     "fastclick": "1.0.6",

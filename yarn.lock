@@ -4679,10 +4679,10 @@ cozy-realtime@3.2.2:
   dependencies:
     minilog "https://github.com/cozy/minilog.git#master"
 
-cozy-scanner@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.1.0.tgz#c32d77b35aa31d9cd4e3c51bf0ac517ac8069c88"
-  integrity sha512-YLZK39kik/wejF1AFnRJNVfL9ubwWmh9iHWuyUnZBDdG/RjCoMsf+7h6nupUSNRFdlkSvOPeKcg1W4ZqgLLQcQ==
+cozy-scanner@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.1.1.tgz#073a92cb1cbb18082c3865241967205757fa7113"
+  integrity sha512-rORDpdLa+DBvGFAtg70KKjN2LpYVPiYtasV58nB5nPzHV3cbjFHPhAf7cWwhQGRFlYMLJ2gJoWyQ0iK1YH4gvg==
   dependencies:
     "@babel/runtime" "^7.5.2"
 
