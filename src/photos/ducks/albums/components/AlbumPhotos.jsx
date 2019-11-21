@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
 import { showModal } from 'react-cozy-helpers'
-import { translate } from 'cozy-ui/react/I18n'
-import Alerter from 'cozy-ui/react/Alerter'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { ShareModal } from 'sharing'
 import flow from 'lodash/flow'
 

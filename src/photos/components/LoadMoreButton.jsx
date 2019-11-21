@@ -1,7 +1,7 @@
 import styles from '../styles/photoList.styl'
 
 import React, { Component } from 'react'
-import { Button, Spinner } from 'cozy-ui/react'
+import { Button, Spinner } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/stylus/settings/palette.json'
 
 class LoadMoreButton extends Component {

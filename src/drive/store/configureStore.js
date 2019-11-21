@@ -6,7 +6,7 @@ import {
   shouldEnableTracking,
   getTracker,
   createTrackerMiddleware
-} from 'cozy-ui/react/helpers/tracker'
+} from 'cozy-ui/transpiled/react/helpers/tracker'
 import thunkMiddleware from 'redux-thunk'
 import createRootReducer from './rootReducer'
 import { saveState } from './persistedState'

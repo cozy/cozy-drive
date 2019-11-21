@@ -1,8 +1,8 @@
 import styles from '../../../styles/addToAlbum.styl'
 
 import React, { Component } from 'react'
-import { translate } from 'cozy-ui/react/I18n'
-import Modal, { ModalSection } from 'cozy-ui/react/Modal'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Modal, { ModalSection } from 'cozy-ui/transpiled/react/Modal'
 import classNames from 'classnames'
 
 import CreateAlbumForm from './CreateAlbumForm'

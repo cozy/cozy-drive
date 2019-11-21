@@ -1,8 +1,8 @@
 import React from 'react'
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { SharingTooltip, TooltipRecipientList } from './Tooltip'
 import cx from 'classnames'
-import Icon from 'cozy-ui/react/Icon'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import { Contact } from 'models'
 import styles from './status.styl'

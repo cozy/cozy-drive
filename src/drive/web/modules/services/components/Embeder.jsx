@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spinner, IntentHeader } from 'cozy-ui/react'
+import { Spinner, IntentHeader } from 'cozy-ui/transpiled/react'
 import FileOpener from 'drive/web/modules/viewer/FileOpenerExternal'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
 

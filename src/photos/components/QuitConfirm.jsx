@@ -2,7 +2,7 @@ import styles from '../styles/confirms.styl'
 import classNames from 'classnames'
 
 import React from 'react'
-import Modal from 'cozy-ui/react/Modal'
+import Modal from 'cozy-ui/transpiled/react/Modal'
 
 const QuitConfirm = ({ t, confirm, abort }) => {
   const confirmationTexts = ['forbidden'].map(type => (

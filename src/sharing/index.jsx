@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { getTracker } from 'cozy-ui/react/helpers/tracker'
+import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import reducer, {
   receiveSharings,

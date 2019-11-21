@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import copy from 'copy-text-to-clipboard'
-import Toggle from 'cozy-ui/react/Toggle'
-import { Spinner, SubTitle } from 'cozy-ui/react'
-import Alerter from 'cozy-ui/react/Alerter'
+import Toggle from 'cozy-ui/transpiled/react/Toggle'
+import { Spinner, SubTitle } from 'cozy-ui/transpiled/react'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import cx from 'classnames'
 import logger from 'lib/logger'
 
 import styles from '../share.styl'
-import palette from 'cozy-ui/react/palette'
+import palette from 'cozy-ui/transpiled/react/palette'
 
 class ShareByLink extends React.Component {
   static contextTypes = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import classNames from 'classnames'
-import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/react'
+import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
 
 import { MoreButton } from 'components/Button'
 

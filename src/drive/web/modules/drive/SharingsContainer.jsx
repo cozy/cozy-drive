@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
-import { Empty } from 'cozy-ui/react'
+import { Empty } from 'cozy-ui/transpiled/react'
 
 import Container from 'drive/web/modules/drive/Container'
 import {

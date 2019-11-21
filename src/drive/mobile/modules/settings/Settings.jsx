@@ -1,8 +1,8 @@
 /* globals __DEVELOPMENT__ cozy */
 
 import React, { Component } from 'react'
-import { translate } from 'cozy-ui/react/I18n'
-import Alerter from 'cozy-ui/react/Alerter'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import Main from 'drive/web/modules/layout/Main'
 
 import DebugTools from './components/DebugTools'

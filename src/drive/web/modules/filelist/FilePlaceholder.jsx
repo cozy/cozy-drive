@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import { withBreakpoints } from 'cozy-ui/react'
+import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
 import styles from 'drive/styles/filelist.styl'
 

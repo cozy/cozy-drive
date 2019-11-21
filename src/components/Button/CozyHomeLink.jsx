@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ButtonLink } from 'cozy-ui/react'
+import { ButtonLink } from 'cozy-ui/transpiled/react'
 import styles from 'components/Button/index.styl'
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'

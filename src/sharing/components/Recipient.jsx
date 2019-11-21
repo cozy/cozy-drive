@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import { Spinner, MenuItem, withBreakpoints, Icon } from 'cozy-ui/react'
+import {
+  Spinner,
+  MenuItem,
+  withBreakpoints,
+  Icon
+} from 'cozy-ui/transpiled/react'
 
 import MenuAwareMobile from '../../components/Menu/Menuawaremobile'
 import { AvatarPlusX, AvatarLink, Avatar } from './Avatar'

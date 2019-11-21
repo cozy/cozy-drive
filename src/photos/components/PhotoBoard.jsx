@@ -2,7 +2,7 @@ import styles from '../styles/photoList.styl'
 
 import React, { Component } from 'react'
 import { withContentRect } from 'react-measure'
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import PhotoList from './PhotoList'
 import { EmptyPhotos } from 'components/Error/Empty'

@@ -2,8 +2,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-import { translate } from 'cozy-ui/react/I18n'
-import Icon from 'cozy-ui/react/Icon'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import styles from 'drive/styles/nav.styl'
 

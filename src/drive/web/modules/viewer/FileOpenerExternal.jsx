@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import get from 'lodash/get'
 
-import { Spinner, Alerter, translate } from 'cozy-ui/react'
+import { Spinner, Alerter, translate } from 'cozy-ui/transpiled/react'
 import { Viewer } from 'cozy-ui/transpiled/react'
 import styles from 'drive/web/modules/viewer/barviewer.styl'
 import Fallback from 'drive/web/modules/viewer/Fallback'

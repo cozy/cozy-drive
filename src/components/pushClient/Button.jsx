@@ -1,13 +1,13 @@
 import styles from './pushClient.styl'
 
-import { translate } from 'cozy-ui/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import React, { Component } from 'react'
 import localforage from 'localforage'
 import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'drive/config/config.json'
 
-import { Icon } from 'cozy-ui/react'
+import { Icon } from 'cozy-ui/transpiled/react'
 import DeviceIcon from 'cozy-ui/assets/icons/illus/device-laptop.svg'
 
 class ButtonClient extends Component {

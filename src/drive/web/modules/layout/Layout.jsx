@@ -1,9 +1,9 @@
 /* global __TARGET__ */
 import React from 'react'
-import { translate } from 'cozy-ui/react/I18n'
-import { Layout as LayoutUI } from 'cozy-ui/react/Layout'
-import Sidebar from 'cozy-ui/react/Sidebar'
-import Alerter from 'cozy-ui/react/Alerter'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
+import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import flag, { FlagSwitcher } from 'cozy-flags'
 
 import { initFlags } from 'lib/flags'

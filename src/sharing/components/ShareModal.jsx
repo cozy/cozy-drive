@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import Modal, { ModalContent } from 'cozy-ui/react/Modal'
+import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
 
 import styles from 'sharing/share.styl'
 

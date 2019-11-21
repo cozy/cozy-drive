@@ -1,5 +1,5 @@
 /* global cozy */
-import Alerter from 'cozy-ui/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 export const EMPTY_TRASH = 'EMPTY_TRASH'
 export const EMPTY_TRASH_SUCCESS = 'EMPTY_TRASH_SUCCESS'

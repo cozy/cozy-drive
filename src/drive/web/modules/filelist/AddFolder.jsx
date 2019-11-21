@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 
-import { translate } from 'cozy-ui/react/I18n'
-import Alerter from 'cozy-ui/react/Alerter'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
 import {
   isTypingNewFolderName,

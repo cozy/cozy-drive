@@ -1,8 +1,8 @@
 import styles from 'photos/styles/albumsList.styl'
 
 import React from 'react'
-import { Content } from 'cozy-ui/react/Layout'
-import { translate } from 'cozy-ui/react/I18n'
+import { Content } from 'cozy-ui/transpiled/react/Layout'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { EmptyPhotos } from 'components/Error/Empty'
 import LoadMoreButton from 'photos/components/LoadMoreButton'
 import AlbumItem from './AlbumItem'

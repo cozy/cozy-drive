@@ -8,9 +8,6 @@ import { MoveModal } from './MoveModal'
 
 jest.mock('cozy-doctypes')
 jest.mock('cozy-stack-client')
-jest.mock('cozy-ui/react/utils/color', () => ({
-  getCssVariableValue: () => '#fff'
-}))
 jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))

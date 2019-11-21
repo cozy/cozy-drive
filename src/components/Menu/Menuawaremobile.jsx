@@ -5,7 +5,7 @@ import {
   MenuButton,
   MenuItem,
   withBreakpoints
-} from 'cozy-ui/react/'
+} from 'cozy-ui/transpiled/react/'
 import { UserAvatar } from '../../sharing/components/Recipient'
 import styles from 'drive/styles/actionmenu.styl'
 

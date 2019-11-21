@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SelectionBar from 'cozy-ui/react/SelectionBar'
+import SelectionBar from 'cozy-ui/transpiled/react/SelectionBar'
 
 const SelectionContext = React.createContext([])
 

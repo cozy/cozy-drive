@@ -1,6 +1,6 @@
 import React from 'react'
-import { translate } from 'cozy-ui/react/I18n'
-import { Empty } from 'cozy-ui/react'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { Empty } from 'cozy-ui/transpiled/react'
 import EmptyIcon from 'components/icons/icon-cloud-wrong.svg'
 
 export const ErrorShare = ({ t, errorType }) => {

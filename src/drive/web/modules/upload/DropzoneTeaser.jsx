@@ -1,8 +1,8 @@
 import React from 'react'
-import { translate, Icon } from 'cozy-ui/react'
+import { translate, Icon } from 'cozy-ui/transpiled/react'
 
 import styles from 'drive/styles/dropzone.styl'
-import palette from 'cozy-ui/react/palette'
+import palette from 'cozy-ui/transpiled/react/palette'
 
 import IconDropZone from 'drive/web/modules/upload/IconDropZone'
 const DropzoneTeaser = translate()(({ t, currentFolder }) => (

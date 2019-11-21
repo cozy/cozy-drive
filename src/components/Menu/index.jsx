@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { Overlay } from 'cozy-ui/react'
+import { Overlay } from 'cozy-ui/transpiled/react'
 
 import styles from 'components/Menu/index.styl'
 

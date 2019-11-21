@@ -9,7 +9,7 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
-import { I18n } from 'cozy-ui/react/I18n'
+import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'sharing'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
@@ -20,7 +20,7 @@ import {
   shouldEnableTracking,
   getTracker,
   createTrackerMiddleware
-} from 'cozy-ui/react/helpers/tracker'
+} from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import appMetadata from 'photos/appMetadata'

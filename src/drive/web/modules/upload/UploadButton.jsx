@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { Icon, FileInput } from 'cozy-ui/react'
+import { Icon, FileInput } from 'cozy-ui/transpiled/react'
 
 import withSharingState from 'sharing/hoc/withSharingState'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'

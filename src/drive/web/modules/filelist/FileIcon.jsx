@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Icon } from 'cozy-ui/react'
+import { Icon } from 'cozy-ui/transpiled/react'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 import { isDirectory } from 'drive/web/modules/drive/files'
 
