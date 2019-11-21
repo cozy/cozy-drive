@@ -1,17 +1,19 @@
-import styles from './supportUs.styl'
-
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-
 import React from 'react'
-
-import { withClient } from 'cozy-client'
-import withInstance from 'drive/web/modules/upload/withInstance'
-import withDiskUsage from './withDiskUsage'
-
-import { buildPremiumLink } from 'drive/web/modules/upload/QuotaAlert'
-import { isMobileApp } from 'cozy-device-helper'
 import get from 'lodash/get'
 
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { Caption } from 'cozy-ui/transpiled/react/Text'
+import Stack from 'cozy-ui/transpiled/react/Stack'
+import { ButtonLink } from 'cozy-ui/transpiled/react/Button'
+
+import { withClient } from 'cozy-client'
+import { isMobileApp } from 'cozy-device-helper'
+
+import withInstance from 'drive/web/modules/upload/withInstance'
+import { buildPremiumLink } from 'drive/web/modules/upload/QuotaAlert'
+
+import withDiskUsage from './withDiskUsage'
+import styles from './supportUs.styl'
 const GB = 1000 * 1000 * 1000
 const PREMIUM_QUOTA = 50 * GB
 
@@ -42,16 +44,19 @@ const SupportUs = ({ t, client }) => {
     parseInt(quota) <= PREMIUM_QUOTA
   )
     return (
-      <a
-        href={buildPremiumLink(uuid, managerUrl)}
-        //eslint-disable-next-line react/jsx-no-target-blank
-        target="_blank"
-        className={styles['supportus']}
-        theme={'secondary'}
-      >
-        <figure>🎁</figure>
-        <span>{t('Nav.support-us')}</span>
-      </a>
+      <Stack className={styles['SupportUs__wrapper']} spacing="s">
+        <Caption className={styles['SupportUs__description']}>
+          {t('Nav.support-us-description')}
+        </Caption>
+        <ButtonLink
+          size="tiny"
+          href={buildPremiumLink(uuid, managerUrl)}
+          target="_blank"
+          label={t('Nav.support-us')}
+          className={styles['Supportus__button']}
+          theme="secondary"
+        />
+      </Stack>
     )
   return null
 }
