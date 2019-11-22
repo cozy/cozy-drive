@@ -8,6 +8,7 @@ import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'drive/config/config.json'
 
 import { Icon } from 'cozy-ui/transpiled/react'
+//@TODO Use PushClient button from cozy-ui
 import DeviceIcon from 'cozy-ui/assets/icons/illus/device-laptop.svg'
 
 class ButtonClient extends Component {

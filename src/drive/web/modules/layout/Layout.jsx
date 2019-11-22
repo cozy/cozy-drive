@@ -23,8 +23,8 @@ const Layout = ({ t, children }) => (
     <Sidebar className="u-flex-justify-between">
       <Nav />
       <div>
-        <ButtonClient />
         <SupportUs />
+        <ButtonClient />
       </div>
     </Sidebar>
     <Alerter t={t} />
