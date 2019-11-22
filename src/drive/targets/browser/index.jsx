@@ -41,6 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
+  const polyglot = initTranslation(data.cozyLocale, lang =>
+    require(`drive/locales/${lang}`)
+  )
+  configureStore(client, polyglot.t.bind(polyglot))
 
   cozy.client.init({
     cozyURL: cozyUrl,
@@ -62,12 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     history = trackerInstance.connectToHistory(hashHistory)
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
   }
-
-  const polyglot = initTranslation(data.cozyLocale, lang =>
-    require(`drive/locales/${lang}`)
-  )
-
-  configureStore(client, polyglot.t.bind(polyglot))
 
   render(
     <HotedApp
