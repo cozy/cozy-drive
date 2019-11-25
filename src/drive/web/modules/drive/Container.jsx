@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Toggle from 'cozy-ui/transpiled/react/Toggle'
+import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
+
 import { showModal } from 'react-cozy-helpers'
 import { SharedDocument, SharedRecipients, ShareModal } from 'sharing'
 
@@ -68,6 +70,13 @@ const isAnyFileReferencedByAlbum = files => {
     if (isReferencedByAlbum(files[i])) return true
   }
   return false
+}
+
+const trackEvent = () => {
+  const tracker = getTracker()
+  if (tracker) {
+    tracker.push(['trackEvent', 'Drive', 'Versioning', 'ClickFromMenuFile'])
+  }
 }
 
 const mapStateToProps = state => ({
@@ -160,10 +169,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             selections.length === 1 && isFile(selections[0])
         },
         history: {
-          action: selected =>
-            ownProps.router.push(
+          action: selected => {
+            trackEvent()
+            return ownProps.router.push(
               `${ownProps.location.pathname}/file/${selected[0].id}/revision`
-            ),
+            )
+          },
           displayCondition: selections =>
             selections.length === 1 && isFile(selections[0])
         },

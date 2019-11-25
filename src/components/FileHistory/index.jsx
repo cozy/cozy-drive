@@ -1,10 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Query } from 'cozy-client'
+import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import HistoryModal from './HistoryModal'
 
+const trackEvent = () => {
+  const tracker = getTracker()
+  if (tracker) {
+    tracker.push(['trackEvent', 'Drive', 'Versioning', 'OpenVersioningModal'])
+  }
+}
+
 const FileHistory = ({ params: { fileId } }) => {
+  trackEvent()
   return (
     <Query query={client => client.get('io.cozy.files', fileId)}>
       {({ data: file, fetchStatus: fileFetchStatus }) => {
