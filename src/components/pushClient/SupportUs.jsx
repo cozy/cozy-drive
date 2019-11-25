@@ -5,6 +5,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Caption } from 'cozy-ui/transpiled/react/Text'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import { ButtonLink } from 'cozy-ui/transpiled/react/Button'
+import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import { withClient } from 'cozy-client'
 import { isMobileApp } from 'cozy-device-helper'
@@ -16,6 +17,13 @@ import withDiskUsage from './withDiskUsage'
 import styles from './supportUs.styl'
 const GB = 1000 * 1000 * 1000
 const PREMIUM_QUOTA = 50 * GB
+
+const trackEvent = () => {
+  const tracker = getTracker()
+  if (tracker) {
+    tracker.push(['trackEvent', 'Drive', 'CTAOffers', 'LEFT_BUTTON'])
+  }
+}
 
 //TODO use cozy-client helpers after https://github.com/cozy/cozy-client/pull/567 merge
 const SupportUs = ({ t, client }) => {
@@ -55,6 +63,7 @@ const SupportUs = ({ t, client }) => {
           label={t('Nav.support-us')}
           className={styles['Supportus__button']}
           theme="secondary"
+          onClick={trackEvent}
         />
       </Stack>
     )
