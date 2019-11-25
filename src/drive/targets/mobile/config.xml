@@ -111,7 +111,6 @@
     <plugin name="com-darryncampbell-cordova-plugin-intent" spec="^1.1.1" />
     <plugin name="com.lampa.startapp" spec="^0.1.4" />
     <plugin name="cordova-plugin-queries-schemes" spec="https://github.com/cozy/cordova-plugin-queries-schemes.git#f7cc50ec542d7eeab6857e366dceb2f039f5dcd9" />
-    <plugin name="cordova-plugin-keyboard" spec="https://github.com/cozy/cordova-plugin-keyboard.git#4fa4850e6f0ea78e1e2ce573ccde5531a2353edb" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.2.0">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
