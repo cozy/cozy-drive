@@ -33,7 +33,10 @@ const AppRoute = (
             <Route path="file/:fileId" component={FilesViewer} />
             <Route path="file/:fileId/revision" component={FileHistory} />
           </Route>
+          {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
+          next url will be /folder/file/:fileId/ */}
           <Route path="file/:fileId" component={FilesViewer} />
+          <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
         <Route path="recent" component={Recent}>
           <Route path="file/:fileId" component={FilesViewer} />
