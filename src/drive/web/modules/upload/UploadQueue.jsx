@@ -151,14 +151,16 @@ export class UploadQueue extends Component {
         />
         <div className={styles['upload-queue-content']}>
           <div className={styles['upload-queue-list']}>
-            {queue.map((item, index) => (
-              <Item
-                key={`key_queue_${index}`}
-                file={item.file}
-                isDirectory={item.isDirectory}
-                status={item.status}
-              />
-            ))}
+            {queue.map((item, index) => {
+              return (
+                <Item
+                  key={`key_queue_${index}`}
+                  file={item.file}
+                  isDirectory={item.isDirectory}
+                  status={item.status}
+                />
+              )
+            })}
           </div>
         </div>
       </div>

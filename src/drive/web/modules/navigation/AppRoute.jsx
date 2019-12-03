@@ -17,7 +17,7 @@ import {
 } from 'drive/web/modules/drive'
 import { Container as Trash } from 'drive/web/modules/trash'
 import FileHistory from '../../../../components/FileHistory'
-
+import UploadFromMobile from 'drive/mobile/modules/upload'
 const AppRoute = (
   <Route>
     <Route component={Layout}>
@@ -25,6 +25,7 @@ const AppRoute = (
       {__DEVELOPMENT__ && (
         <Route path="/scan" component={ScannerQualification} />
       )}
+      <Route path="uploadfrommobile" component={UploadFromMobile} />
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
