@@ -3,6 +3,8 @@ import logger from 'lib/logger'
 
 import { hasSharedParent, isShared } from 'sharing/state'
 import { CozyFile } from 'models'
+import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
+
 import UploadQueue from './UploadQueue'
 
 export { UploadQueue }
@@ -67,6 +69,7 @@ const item = (state, action = { isUpdate: false }) => ({
 export const queue = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
+      console.log('ici ? ', action)
       return [
         ...state.filter(i => i.status !== CREATED),
         ...action.files.map(f => itemInitialState(f))
@@ -236,6 +239,31 @@ export const overwriteFile = async (client, file, path) => {
   return resp.data
 }
 
+export const uploadFilesFromNative = (
+  files,
+  folderId,
+  uploadFilesSuccessCallback
+) => async dispatch => {
+  dispatch({
+    type: ADD_TO_UPLOAD_QUEUE,
+    files: files
+  })
+  //!TODO Promise.All
+  for (var i = 0; i < files.length; ++i) {
+    await doUpload(
+      files[i].file.fileUrl,
+      null,
+      files[i].file.name,
+      folderId,
+      'rename'
+    )
+    dispatch(removeFileToUploadQueue(files[i].file))
+  }
+  if (uploadFilesSuccessCallback) uploadFilesSuccessCallback()
+}
+export const removeFileToUploadQueue = file => async dispatch => {
+  dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
+}
 export const addToUploadQueue = (
   files,
   dirID,

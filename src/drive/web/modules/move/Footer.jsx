@@ -6,7 +6,8 @@ const areTargetsInCurrentDir = (targets, currentDirId) => {
   const targetsInCurrentDir = targets.filter(
     target => target.dir_id === currentDirId
   )
-
+  console.log('targetsInCurrentDir', targetsInCurrentDir)
+  console.log('targets', targets)
   return targetsInCurrentDir.length === targets.length
 }
 
