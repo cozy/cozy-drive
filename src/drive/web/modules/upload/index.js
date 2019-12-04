@@ -69,7 +69,6 @@ const item = (state, action = { isUpdate: false }) => ({
 export const queue = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_UPLOAD_QUEUE:
-      console.log('ici ? ', action)
       return [
         ...state.filter(i => i.status !== CREATED),
         ...action.files.map(f => itemInitialState(f))
@@ -255,7 +254,8 @@ export const uploadFilesFromNative = (
       null,
       files[i].file.name,
       folderId,
-      'rename'
+      'rename',
+      files[i].file.type
     )
     dispatch(removeFileToUploadQueue(files[i].file))
   }
