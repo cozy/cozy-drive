@@ -1,4 +1,4 @@
-import { getEntry } from './filesystem'
+/* import { getEntry } from './filesystem'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
@@ -145,3 +145,4 @@ export const intentHandlerIOS = store => async intent => {
     }
   }
 }
+ */
