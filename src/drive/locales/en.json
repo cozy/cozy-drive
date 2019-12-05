@@ -517,6 +517,13 @@
     "cancelledWithRestoreErrors": "%{subject} has been moved back to it's original location but there was an error while restoring the file from trash. |||| %{smart_count} elements have been moved back to their original location but there was %{restoreErrorsCount} error(s) while restoring the file(s) from trash.",
     "cancelled_error": "Sorry, there was an error while moving the element back. |||| Sorry, there was an error while moving these elements back."
   },
+  "ImportToDrive": {
+    "title": "%{smart_count} element |||| %{smart_count} elements",
+    "to": "Save in:",
+    "action": "Save",
+    "cancel": "Cancel",
+    "success": "%{smart_count} saved file |||| %{smart_count} saved files"
+  },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
   },

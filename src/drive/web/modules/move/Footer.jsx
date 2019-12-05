@@ -6,34 +6,48 @@ const areTargetsInCurrentDir = (targets, currentDirId) => {
   const targetsInCurrentDir = targets.filter(
     target => target.dir_id === currentDirId
   )
-  console.log('targetsInCurrentDir', targetsInCurrentDir)
-  console.log('targets', targets)
   return targetsInCurrentDir.length === targets.length
 }
 
 const Footer = (
-  { onConfirm, onClose, targets, currentDirId, isMoving },
+  {
+    onConfirm,
+    onClose,
+    targets,
+    currentDirId,
+    isMoving,
+    primaryTextAction,
+    secondaryTextAction
+  },
   { t }
-) => (
-  <ModalFooter>
-    <ModalButtons>
-      <Button label={t('Move.cancel')} theme="secondary" onClick={onClose} />
-      <Button
-        label={t('Move.action')}
-        onClick={onConfirm}
-        disabled={areTargetsInCurrentDir(targets, currentDirId) || isMoving}
-        busy={isMoving}
-      />
-    </ModalButtons>
-  </ModalFooter>
-)
+) => {
+  const primaryText = primaryTextAction ? primaryTextAction : t('Move.action')
+  const secondaryText = secondaryTextAction
+    ? secondaryTextAction
+    : t('Move.cancel')
+  return (
+    <ModalFooter>
+      <ModalButtons>
+        <Button label={secondaryText} theme="secondary" onClick={onClose} />
+        <Button
+          label={primaryText}
+          onClick={onConfirm}
+          disabled={areTargetsInCurrentDir(targets, currentDirId) || isMoving}
+          busy={isMoving}
+        />
+      </ModalButtons>
+    </ModalFooter>
+  )
+}
 
 Footer.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   targets: PropTypes.array.isRequired,
   currentDirId: PropTypes.string.isRequired,
-  isMoving: PropTypes.bool
+  isMoving: PropTypes.bool,
+  primaryTextAction: PropTypes.string,
+  secondaryTextAction: PropTypes.string
 }
 Footer.contextTypes = {
   t: PropTypes.func.isRequired
