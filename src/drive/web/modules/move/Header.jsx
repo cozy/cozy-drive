@@ -25,26 +25,40 @@ const HeaderIlustration = ({ count }) => {
   )
 }
 
-const Header = ({ entries, onClose }, { t }) => (
-  <Well>
-    <Media>
-      <Img className="u-mr-1">
-        <HeaderIlustration count={entries.length} />
-      </Img>
-      <Bd>
-        <Bold ellipsis>
-          {entries.length > 1
-            ? t('Move.title', { smart_count: entries.length })
-            : entries[0].name}
-        </Bold>
-        <Caption ellipsis>{t('Move.to')}</Caption>
-      </Bd>
-      <Button theme="close" onClick={onClose} extension="narrow" type="button">
-        <Icon icon="cross" width="14" height="14" color={palette['coolGrey']} />
-      </Button>
-    </Media>
-  </Well>
-)
+const Header = ({ entries, onClose, title, subTitle }, { t }) => {
+  const titleToUse = title
+    ? title
+    : t('Move.title', { smart_count: entries.length })
+  const subTitleToUse = subTitle ? subTitle : t('Move.to')
+  return (
+    <Well>
+      <Media>
+        <Img className="u-mr-1">
+          <HeaderIlustration count={entries.length} />
+        </Img>
+        <Bd>
+          <Bold ellipsis>
+            {entries.length > 1 ? titleToUse : entries[0].name}
+          </Bold>
+          <Caption ellipsis>{subTitleToUse}</Caption>
+        </Bd>
+        <Button
+          theme="close"
+          onClick={onClose}
+          extension="narrow"
+          type="button"
+        >
+          <Icon
+            icon="cross"
+            width="14"
+            height="14"
+            color={palette['coolGrey']}
+          />
+        </Button>
+      </Media>
+    </Well>
+  )
+}
 
 Header.propTypes = {
   entries: PropTypes.arrayOf(
@@ -52,7 +66,9 @@ Header.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  subTitle: PropTypes.string
 }
 
 Header.contextTypes = {
