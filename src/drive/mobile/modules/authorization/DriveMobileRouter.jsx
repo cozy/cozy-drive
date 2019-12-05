@@ -30,29 +30,27 @@ class DriveMobileRouter extends Component {
       isAppBooted: true
     })
   }
-  afterAuthentication = async () => {
-    const { client, setToken } = this.props
+
+  initClientAndBar = async client => {
+    const { saveServerUrl, saveCredentials, setToken } = this.props
     const accesstoken = client.getStackClient().token
     restoreCozyClientJs(
       client.getStackClient().uri,
       client.getStackClient().oauthOptions,
       client.getStackClient().token
     )
+    setToken(accesstoken)
     await initBar(client)
-    this.props.saveServerUrl(client.getStackClient().uri)
+    saveServerUrl(client.getStackClient().uri)
     setCozyUrl(client.getStackClient().uri)
-    this.props.saveCredentials(client, accesstoken)
+    saveCredentials(client, accesstoken)
+  }
+  afterAuthentication = async () => {
+    const { client } = this.props
+    await this.initClientAndBar(client)
     const oauthClient = client.getStackClient()
-    oauthClient.onTokenRefresh = async token => {
-      console.log('this.props', this.props)
-      console.log('this', this)
-      restoreCozyClientJs(
-        client.getStackClient().uri,
-        client.getStackClient().oauthOptions,
-        token
-      )
-      setToken(token)
-      await initBar(client)
+    oauthClient.onTokenRefresh = async (/*token*/) => {
+      await this.initClientAndBar(client)
     }
     //Check if we have something in the localStorage to see if
     //we need to redirect to /onboarding
