@@ -4517,6 +4517,22 @@ cozy-client-js@0.16.4, cozy-client-js@^0.16.4:
     pouchdb-browser "7.0.0"
     pouchdb-find "7.0.0"
 
+cozy-client@8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-8.5.1.tgz#7303302a3f0241b965798c1a7239c3697f659b46"
+  integrity sha512-Ds+U2sGkQjK8nslcCIlysK/RAhCkjNX7jZdpun8KIZCRoryvmDYWND9Xprd+cB+MN4kueLPIZdasTHoFF4i38g==
+  dependencies:
+    cozy-device-helper "^1.7.3"
+    cozy-stack-client "^8.5.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    prop-types "^15.6.2"
+    react-redux "^5.0.7"
+    redux "^3.7.2"
+    redux-thunk "^2.3.0"
+    sift "^6.0.0"
+    url-search-params-polyfill "^7.0.0"
+
 cozy-client@^6.58.1:
   version "6.58.1"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-6.58.1.tgz#8e0d4e2de5c3ead222ef48a7cd4bfb4c6cbca700"
@@ -4532,22 +4548,6 @@ cozy-client@^6.58.1:
     redux-thunk "2.3.0"
     sift "6.0.0"
     url-search-params-polyfill "^6.0.0"
-
-cozy-client@^8.3.1:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-8.3.1.tgz#5e3ef7f9901f91a3e2d820dfff2ef7587c5f8053"
-  integrity sha512-Mj6Gt/YIuZ4nmSnnevyCVzgFuYMJrGeSmzo3agmdNNT7rmV8z7DFHSiZNqtYQNfTRY5y3NYWOXRSy7/dt2bC1A==
-  dependencies:
-    cozy-device-helper "^1.7.3"
-    cozy-stack-client "^8.3.0"
-    lodash "^4.17.13"
-    microee "^0.0.6"
-    prop-types "^15.6.2"
-    react-redux "^5.0.7"
-    redux "^3.7.2"
-    redux-thunk "^2.3.0"
-    sift "^6.0.0"
-    url-search-params-polyfill "^7.0.0"
 
 cozy-device-helper@1.7.3:
   version "1.7.3"
@@ -4570,10 +4570,10 @@ cozy-device-helper@^1.7.3:
   dependencies:
     lodash "4.17.15"
 
-cozy-doctypes@1.69.0:
-  version "1.69.0"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.69.0.tgz#6718f016206f2afff75b9976d6f429e45f966bdc"
-  integrity sha512-VsC/E1liapUuLXXAjd18o2b2pLEgO57KEh+L5qGVHjleoefaBzVH05HFBFpQ05BwyxbGl7XOAJt+jBGcQaco6g==
+cozy-doctypes@1.70.0:
+  version "1.70.0"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.70.0.tgz#22c031b2d0f50174a06bd9d7fd3d2e88cc8187ea"
+  integrity sha512-F9u2gff90Fz4RF1pI6rGmhgoWmHHzjK25N4fuUgkTgTgn5cL6mb8jiDDjFPEJsFkis6a+ah5TX3ttsFa2ms35w==
   dependencies:
     "@babel/runtime" "7.5.5"
     cozy-logger "^1.6.0"
@@ -4679,10 +4679,10 @@ cozy-realtime@3.2.2:
   dependencies:
     minilog "https://github.com/cozy/minilog.git#master"
 
-cozy-scanner@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.1.1.tgz#073a92cb1cbb18082c3865241967205757fa7113"
-  integrity sha512-rORDpdLa+DBvGFAtg70KKjN2LpYVPiYtasV58nB5nPzHV3cbjFHPhAf7cWwhQGRFlYMLJ2gJoWyQ0iK1YH4gvg==
+cozy-scanner@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.2.0.tgz#2de0233ebb68eb5556d5ff4c8aa1754da52f2db6"
+  integrity sha512-iOpmI0oMHLPnQBZOFzFmZONVESLZjjTpZAv1fMtIfJYbYYklhBPf7tphJ3f3e6G1PB//HXhx/5ilWz9vQjl+FA==
   dependencies:
     "@babel/runtime" "^7.5.2"
 
@@ -4747,10 +4747,10 @@ cozy-stack-client@^6.58.1:
     mime "2.4.0"
     qs "6.7.0"
 
-cozy-stack-client@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-8.3.0.tgz#fb9d8a7eac0ae8c24ef93b90ee83a7d01389182d"
-  integrity sha512-sxVMtfbePe2iZZYPV+ZxBw+P7mNzcgl7OmOrJxbYqaTkVkJYFKJt/kyrat/XmxAGbKlTviYCh7CMJgQd3I0EBQ==
+cozy-stack-client@^8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-8.5.1.tgz#a3f88eee07d168a0eafe70bc68f9333ed34c71a3"
+  integrity sha512-SZB1hma9Zh50FeTiCl9bFneUy2XNwo++W6x9zd70tfNsMlXt504iDaV8MCew2lvuVszK+HFzsq+hyByB0m2VlA==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
