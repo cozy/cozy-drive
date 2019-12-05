@@ -1,10 +1,23 @@
 import { CozyFile } from 'cozy-doctypes'
 import flag from 'cozy-flags'
+import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
 
-import { processNextFile, selectors, queue, overwriteFile } from './index'
+import {
+  processNextFile,
+  selectors,
+  queue,
+  overwriteFile,
+  uploadFilesFromNative,
+  ADD_TO_UPLOAD_QUEUE
+} from './index'
 
 jest.mock('cozy-doctypes')
 jest.mock('cozy-flags')
+
+jest.mock('cozy-scanner/dist/ScannerUpload', () => ({
+  ...require.requireActual('cozy-scanner/dist/ScannerUpload'),
+  doUpload: jest.fn()
+}))
 
 const createFileSpy = jest.fn().mockName('createFile')
 const statByPathSpy = jest.fn().mockName('statByPath')
@@ -19,6 +32,44 @@ const fakeClient = {
 
 CozyFile.getFullpath.mockResolvedValue('/my-dir/mydoc.odt')
 
+describe('uploadFilesFromNative function', () => {
+  it('should upload files from native and put items to the queue', async () => {
+    const filesToUpload = [
+      {
+        file: {
+          fileUrl: '/path/native/1',
+          name: 'file1.jpg',
+          type: 'image/jpeg'
+        }
+      },
+      {
+        file: {
+          fileUrl: '/path/native/2',
+          name: 'file2.pdf',
+          type: 'application/pdf'
+        }
+      }
+    ]
+    const folderID = '123'
+    const successCallBack = jest.fn()
+    const uploadProcess = uploadFilesFromNative(
+      filesToUpload,
+      folderID,
+      successCallBack
+    )
+    doUpload.mockResolvedValue({ message: 'ok' })
+    const dispatchSpy = jest.fn(x => x)
+
+    await uploadProcess(dispatchSpy)
+    expect(dispatchSpy).toHaveBeenCalledWith({
+      type: ADD_TO_UPLOAD_QUEUE,
+      files: filesToUpload
+    })
+
+    expect(doUpload).toHaveBeenCalledTimes(2)
+    expect(successCallBack).toHaveBeenCalled()
+  })
+})
 describe('processNextFile function', () => {
   const fileUploadedCallbackSpy = jest.fn()
   const queueCompletedCallbackSpy = jest.fn()

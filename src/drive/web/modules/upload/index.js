@@ -3,6 +3,8 @@ import logger from 'lib/logger'
 
 import { hasSharedParent, isShared } from 'sharing/state'
 import { CozyFile } from 'models'
+//!TODO Remove this method from Scanner and use from cozy-client files models
+//see https://github.com/cozy/cozy-client/pull/571
 import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
 
 import UploadQueue from './UploadQueue'
