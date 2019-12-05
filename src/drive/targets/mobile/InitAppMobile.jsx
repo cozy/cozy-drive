@@ -11,16 +11,11 @@ import { I18n, initTranslation } from "cozy-ui/transpiled/react/I18n";
 import { isIOSApp } from "cozy-device-helper";
 import { Document } from "cozy-doctypes";
 
-import logger from "lib/logger";
 import configureStore from "drive/store/configureStore";
 import { loadState } from "drive/store/persistedState";
 import { startBackgroundService } from "drive/mobile/lib/background";
 import { configureReporter } from "drive/lib/reporter";
-/* import {
-  intentHandlerAndroid,
-  intentHandlerIOS
-} from "drive/mobile/lib/intents";
- */
+
 import {
   startTracker,
   useHistoryForTracker,
@@ -29,28 +24,17 @@ import {
 } from "drive/mobile/lib/tracker";
 import { getTranslateFunction } from "drive/mobile/lib/i18n";
 import { scheduleNotification } from "drive/mobile/lib/notification";
-import {
-  getLang,
-  initClient,
-  initBar,
-  restoreCozyClientJs,
-  resetClient,
-  getOauthOptions
-} from "drive/mobile/lib/cozy-helper";
+import { getLang, initClient } from "drive/mobile/lib/cozy-helper";
 import DriveMobileRouter from "drive/mobile/modules/authorization/DriveMobileRouter";
 import { backupImages } from "drive/mobile/modules/mediaBackup/duck";
 import {
-  revokeClient,
   getClientSettings,
-  getToken,
-  setToken,
-  isClientRevoked
+  getToken
 } from "drive/mobile/modules/authorization/duck";
 import {
   getServerUrl,
   isAnalyticsOn
 } from "drive/mobile/modules/settings/duck";
-import { startReplication } from "drive/mobile/modules/replication/sagas";
 import { ONBOARDED_ITEM } from "drive/mobile/modules/onboarding/OnBoarding";
 
 // Allows to know if the launch of the application has been done by the service background
@@ -159,12 +143,6 @@ class InitAppMobile {
     const store = await this.getStore();
     this.startApplication();
     await this.appReady;
-    /*  if (window.plugins && window.plugins.intentShim) {
-      window.plugins.intentShim.onIntent(intentHandlerAndroid(store));
-      window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
-        logger.error("Error getting launch intent", err);
-      });
-    } */
     this.openWith();
     if (isBackgroundServiceParameter()) {
       startBackgroundService();
@@ -191,61 +169,32 @@ class InitAppMobile {
     }
   };
 
+  /**
+   * openWith is called when the app is launched by the OS
+   * when the user shares something to Cozy-Drive
+   */
   openWith = () => {
-    // Increase verbosity if you need more logs
-    cordova.openwith.setVerbosity(cordova.openwith.DEBUG);
-
-    // Initialize the plugin
-    cordova.openwith.init(initSuccess, initError);
-
+    //!TODO Remove this after a few weeks (5/12/19)
     function initSuccess() {
+      //eslint-disable-next-line
       console.log("init success!");
     }
     function initError(err) {
+      //eslint-disable-next-line
       console.log("init failed: " + err);
     }
 
-    // Define your file handler
+    cordova.openwith.init(initSuccess, initError);
     cordova.openwith.addHandler(myHandler);
-
+    //We write the items in localStorage and then push
+    //a to a specific route
     async function myHandler(intent) {
-      console.log("hashHistory", hashHistory);
-      console.log("intent received");
-      console.log("  text: " + intent.text); // description to the sharing, for instance title of the page when shared URL from Safari
       if (intent.items.length > 0) {
         try {
           await localforage.setItem("importedFiles", intent.items);
         } catch (error) {
           console.log("error", error);
         }
-      }
-      for (var i = 0; i < intent.items.length; ++i) {
-        var item = intent.items[i];
-        /*  console.log("  type: ", item.uti); // UTI. possible values: public.url, public.text or public.image
-        console.log("  type: ", item.type); // Mime type. For example: "image/jpeg"
-        console.log("  data: ", item.data); // shared data. For URLs and text - actually the shared URL or text. For image - its base64 string representation.
-        console.log("  text: ", item.text); // text to share alongside the item. as we don't allow user to enter text in native UI, in most cases this will be empty. However for sharing pages from Safari this might contain the title of the shared page.
-        console.log("  name: ", item.name); // suggested name of the image. For instance: "IMG_0404.JPG"
-        console.log("  utis: ", item.utis); // some optional additional info */
-        console.log("item.fileUrl", item.fileUrl);
-        // Read file with Cordova’s file plugin
-        /* if (item.fileUrl) {
-        resolveLocalFileSystemURL(item.fileUrl, (fileEntry) => {
-          fileEntry.file((file) => {
-            let mediaType = file.type.split('/')[0].toLowerCase()
-
-            if (mediaType == 'image') {
-              let reader = new FileReader
-
-              reader.readAsDataURL(file)
-              reader.onloadend = () => {
-                // Can use this for an <img> tag
-                file.src = reader.result
-              }
-            }
-          })
-        })
-      } */
       }
       hashHistory.push("/uploadfrommobile");
     }
