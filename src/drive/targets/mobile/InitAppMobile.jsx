@@ -16,10 +16,11 @@ import configureStore from "drive/store/configureStore";
 import { loadState } from "drive/store/persistedState";
 import { startBackgroundService } from "drive/mobile/lib/background";
 import { configureReporter } from "drive/lib/reporter";
-import {
+/* import {
   intentHandlerAndroid,
   intentHandlerIOS
 } from "drive/mobile/lib/intents";
+ */
 import {
   startTracker,
   useHistoryForTracker,
@@ -158,12 +159,12 @@ class InitAppMobile {
     const store = await this.getStore();
     this.startApplication();
     await this.appReady;
-    if (window.plugins && window.plugins.intentShim) {
+    /*  if (window.plugins && window.plugins.intentShim) {
       window.plugins.intentShim.onIntent(intentHandlerAndroid(store));
       window.plugins.intentShim.getIntent(intentHandlerAndroid(store), err => {
         logger.error("Error getting launch intent", err);
       });
-    }
+    } */
     this.openWith();
     if (isBackgroundServiceParameter()) {
       startBackgroundService();
