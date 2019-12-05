@@ -31,7 +31,7 @@ class DriveMobileRouter extends Component {
     })
   }
   afterAuthentication = async () => {
-    const { client } = this.props
+    const { client, setToken } = this.props
     const accesstoken = client.getStackClient().token
     restoreCozyClientJs(
       client.getStackClient().uri,
@@ -44,12 +44,14 @@ class DriveMobileRouter extends Component {
     this.props.saveCredentials(client, accesstoken)
     const oauthClient = client.getStackClient()
     oauthClient.onTokenRefresh = async token => {
+      console.log('this.props', this.props)
+      console.log('this', this)
       restoreCozyClientJs(
         client.getStackClient().uri,
         client.getStackClient().oauthOptions,
         token
       )
-      this.props.dispatch(setToken(token))
+      setToken(token)
       await initBar(client)
     }
     //Check if we have something in the localStorage to see if
@@ -101,7 +103,8 @@ const mapDispatchToProps = dispatch => ({
   saveServerUrl: url => dispatch(setUrl(url)),
   saveCredentials: (clientInfo, token) =>
     dispatch(saveCredentials(clientInfo, token)),
-  unlink: client => dispatch(unlink(client))
+  unlink: client => dispatch(unlink(client)),
+  setToken: token => dispatch(setToken(token))
 })
 
 export default connect(
