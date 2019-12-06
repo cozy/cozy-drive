@@ -25,7 +25,9 @@ const AppRoute = (
       {__DEVELOPMENT__ && (
         <Route path="/scan" component={ScannerQualification} />
       )}
-      <Route path="uploadfrommobile" component={UploadFromMobile} />
+      {__TARGET__ === 'mobile' && (
+        <Route path="uploadfrommobile" component={UploadFromMobile} />
+      )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
