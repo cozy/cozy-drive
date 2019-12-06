@@ -10,6 +10,7 @@ import { CozyProvider } from "cozy-client";
 import { I18n, initTranslation } from "cozy-ui/transpiled/react/I18n";
 import { isIOSApp } from "cozy-device-helper";
 import { Document } from "cozy-doctypes";
+import Alerter from "cozy-ui/transpiled/react/Alerter";
 
 import configureStore from "drive/store/configureStore";
 import { loadState } from "drive/store/persistedState";
@@ -175,6 +176,7 @@ class InitAppMobile {
    */
   openWith = () => {
     //!TODO Remove this after a few weeks (5/12/19)
+    //it's just here to have a few logs in sentry if needed
     function initSuccess() {
       //eslint-disable-next-line
       console.log("init success!");
@@ -185,18 +187,24 @@ class InitAppMobile {
     }
 
     cordova.openwith.init(initSuccess, initError);
-    cordova.openwith.addHandler(myHandler);
-    //We write the items in localStorage and then push
-    //a to a specific route
-    async function myHandler(intent) {
-      if (intent.items.length > 0) {
-        try {
-          await localforage.setItem("importedFiles", intent.items);
-        } catch (error) {
-          console.log("error", error);
-        }
+    cordova.openwith.addHandler(this.openWithHandler);
+  };
+  //We write the items in localStorage and then push
+  //a to a specific route
+  openWithHandler = async intent => {
+    try {
+      await localforage.removeItem("importedFiles");
+    } catch (e) {
+      console.log("error during removeItem", e);
+      return Alerter.error("ImportToDrive.error");
+    }
+    if (intent.items && intent.items.length > 0) {
+      try {
+        await localforage.setItem("importedFiles", intent.items);
+        hashHistory.push("/uploadfrommobile");
+      } catch (error) {
+        Alerter.error("ImportToDrive.error");
       }
-      hashHistory.push("/uploadfrommobile");
     }
   };
   migrateToCozyAuth = async () => {

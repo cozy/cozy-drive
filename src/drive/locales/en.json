@@ -522,7 +522,8 @@
     "to": "Save in:",
     "action": "Save",
     "cancel": "Cancel",
-    "success": "%{smart_count} saved file |||| %{smart_count} saved files"
+    "success": "%{smart_count} saved file |||| %{smart_count} saved files",
+    "error": "Something went wrong. Please try again"
   },
   "FileOpenerExternal": {
     "fileNotFoundError": "Error: file not found"
