@@ -110,7 +110,6 @@ describe('App initialize', () => {
       localforage.removeItem.mockRejectedValueOnce({ message: 'error' })
       await app.openWithHandler(intent)
       expect(Alerter.error).toHaveBeenCalled()
-      expect(localforage.setItem).not.toHaveBeenCalled()
     })
   })
 })
