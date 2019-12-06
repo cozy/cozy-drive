@@ -250,7 +250,7 @@ export const uploadFilesFromNative = (
     files: files
   })
   //!TODO Promise.All
-  for (var i = 0; i < files.length; ++i) {
+  for (let i = 0; i < files.length; i++) {
     await doUpload(
       files[i].file.fileUrl,
       null,
