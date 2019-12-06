@@ -44,7 +44,7 @@ describe('OpenWith component Modal', () => {
       component.setState({ items: defaultItems, folderId })
 
       component.instance().callbackSuccess = jest.fn()
-      await component.instance().uploadAndState()
+      await component.instance().uploadFiles()
       const genetaredForQueue = generateForQueue(defaultItems)
       expect(uploadFilesFromNativeSpy).toHaveBeenCalledWith(
         genetaredForQueue,
