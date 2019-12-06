@@ -6,7 +6,6 @@ import { MobileRouter } from 'cozy-authentication'
 import { getUniversalLinkDomain } from 'cozy-ui/transpiled/react/AppLinker'
 import { withClient } from 'cozy-client'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
-import { setToken } from 'drive/mobile/modules/authorization/duck'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
@@ -32,24 +31,24 @@ class DriveMobileRouter extends Component {
   }
 
   initClientAndBar = async client => {
-    const { saveServerUrl, saveCredentials, setToken } = this.props
+    const { saveServerUrl, saveCredentials } = this.props
     const accesstoken = client.getStackClient().token
     restoreCozyClientJs(
       client.getStackClient().uri,
       client.getStackClient().oauthOptions,
       client.getStackClient().token
     )
-    setToken(accesstoken)
-    await initBar(client)
-    saveServerUrl(client.getStackClient().uri)
-    setCozyUrl(client.getStackClient().uri)
     saveCredentials(client, accesstoken)
+    saveServerUrl(client.getStackClient().uri)
+    await initBar(client)
+    setCozyUrl(client.getStackClient().uri)
   }
+
   afterAuthentication = async () => {
     const { client } = this.props
     await this.initClientAndBar(client)
     const oauthClient = client.getStackClient()
-    oauthClient.onTokenRefresh = async (/*token*/) => {
+    oauthClient.onTokenRefresh = async () => {
       await this.initClientAndBar(client)
     }
     //Check if we have something in the localStorage to see if
@@ -101,8 +100,7 @@ const mapDispatchToProps = dispatch => ({
   saveServerUrl: url => dispatch(setUrl(url)),
   saveCredentials: (clientInfo, token) =>
     dispatch(saveCredentials(clientInfo, token)),
-  unlink: client => dispatch(unlink(client)),
-  setToken: token => dispatch(setToken(token))
+  unlink: client => dispatch(unlink(client))
 })
 
 export default connect(
