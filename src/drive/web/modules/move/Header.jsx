@@ -38,7 +38,7 @@ const Header = ({ entries, onClose, title, subTitle }, { t }) => {
         </Img>
         <Bd>
           <Bold ellipsis>
-            {entries.length > 1 ? titleToUse : entries[0].name}
+            {entries.length !== 1 ? titleToUse : entries[0].name}
           </Bold>
           <Caption ellipsis>{subTitleToUse}</Caption>
         </Bd>
