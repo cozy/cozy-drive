@@ -4,7 +4,6 @@ import Header from './Header'
 
 const onCloseSpy = jest.fn()
 describe('Header', () => {
-  //({ entries, onClose, title, subTitle }, { t })
   const setupComponent = ({ entries = [], onClose, title, subTitle }) => {
     const props = {
       entries,
