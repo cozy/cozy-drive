@@ -84,6 +84,7 @@ export class DumbUpload extends Component {
   }
   onClose = () => {
     const { router } = this.props
+    localforage.removeItem('importedFiles')
     router.push('/')
   }
 
