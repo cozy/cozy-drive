@@ -46,7 +46,9 @@ export class DumbUpload extends Component {
     const filesForQueue = generateForQueue(items)
     uploadFilesFromNative(filesForQueue, folderId, this.callbackSuccess)
     //just to be sure that first dispatch of uploadFilesFromNative was done
-    setTimeout(() => router.push(`/folder/${folderId}`), 50)
+    //we replace the URL to be sure that even with the back button on Android
+    //we don't arrive on this component
+    setTimeout(() => router.replace(`/folder/${folderId}`), 50)
   }
 
   callbackSuccess = () => {
@@ -78,7 +80,9 @@ export class DumbUpload extends Component {
   onClose = () => {
     const { router } = this.props
     localforage.removeItem('importedFiles')
-    router.push('/')
+    //we replace the URL to be sure that even with the back button on Android
+    //we don't arrive on this component
+    router.replace('/')
   }
 
   render() {
