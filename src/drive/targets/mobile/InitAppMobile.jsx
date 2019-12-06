@@ -187,12 +187,13 @@ class InitAppMobile {
     cordova.openwith.addHandler(this.openWithHandler)
   }
   //We write the items in localStorage and then push
-  //a to a specific route
+  //to a specific route
   openWithHandler = async intent => {
+    //We prefer to remove previous imported items if no
+    //imported in order to create a new fresh import
     try {
       await localforage.removeItem('importedFiles')
     } catch (e) {
-      console.log('error during removeItem', e)
       return Alerter.error('ImportToDrive.error')
     }
     if (intent.items && intent.items.length > 0) {

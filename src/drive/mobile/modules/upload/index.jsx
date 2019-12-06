@@ -32,7 +32,7 @@ export const generateForQueue = files => {
 
 export class DumbUpload extends Component {
   state = {
-    items: null,
+    items: [],
     folderId: ROOT_DIR_ID
   }
   async componentDidMount() {
@@ -40,19 +40,22 @@ export class DumbUpload extends Component {
     this.setState({ items })
   }
 
-  async uploadAndState() {
+  async uploadFiles() {
     const { items, folderId } = this.state
     const { router, uploadFilesFromNative } = this.props
     const filesForQueue = generateForQueue(items)
     uploadFilesFromNative(filesForQueue, folderId, this.callbackSuccess)
-    setTimeout(() => router.push(`/folder/${folderId}`), 500)
+    //just to be sure that first dispatch of uploadFilesFromNative was done
+    setTimeout(() => router.push(`/folder/${folderId}`), 50)
   }
+
   callbackSuccess = () => {
     const { items } = this.state
     const { t } = this.props
     Alerter.success(t('ImportToDrive.success', { smart_count: items.length }))
     localforage.removeItem('importedFiles')
   }
+
   navigateTo = folder => {
     this.setState({ folderId: folder.id })
   }
@@ -87,7 +90,6 @@ export class DumbUpload extends Component {
   render() {
     const { items, folderId, uploadInProgress } = this.state
     const { t } = this.props
-    if (items === null) return null
     return (
       <Modal
         size={'xlarge'}
@@ -132,7 +134,7 @@ export class DumbUpload extends Component {
           }}
         </Query>
         <Footer
-          onConfirm={() => this.uploadAndState()}
+          onConfirm={() => this.uploadFiles()}
           onClose={this.onClose}
           targets={items}
           currentDirId={folderId}
