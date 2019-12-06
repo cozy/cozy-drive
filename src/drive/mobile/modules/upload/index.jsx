@@ -3,6 +3,7 @@ import localforage from 'localforage'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { Query, cancelable, withClient } from 'cozy-client'
@@ -21,7 +22,7 @@ import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 
-const generateForQueue = files => {
+export const generateForQueue = files => {
   const filesForQueue = []
   files.map(file => {
     filesForQueue.push({ file: file, isDirectory: false })
@@ -29,7 +30,7 @@ const generateForQueue = files => {
   return filesForQueue
 }
 
-class Upload extends Component {
+export class DumbUpload extends Component {
   state = {
     items: null,
     folderId: ROOT_DIR_ID
@@ -41,15 +42,17 @@ class Upload extends Component {
 
   async uploadAndState() {
     const { items, folderId } = this.state
-    const { router, uploadFilesFromNative, t } = this.props
+    const { router, uploadFilesFromNative } = this.props
     const filesForQueue = generateForQueue(items)
-    uploadFilesFromNative(filesForQueue, folderId, () => {
-      Alerter.success(t('ImportToDrive.success', { smart_count: items.length }))
-      localforage.removeItem('importedFiles')
-    })
+    uploadFilesFromNative(filesForQueue, folderId, this.callbackSuccess)
     setTimeout(() => router.push(`/folder/${folderId}`), 500)
   }
-
+  callbackSuccess = () => {
+    const { items } = this.state
+    const { t } = this.props
+    Alerter.success(t('ImportToDrive.success', { smart_count: items.length }))
+    localforage.removeItem('importedFiles')
+  }
   navigateTo = folder => {
     this.setState({ folderId: folder.id })
   }
@@ -76,11 +79,14 @@ class Upload extends Component {
   breadcrumbQuery = client => {
     return client.get('io.cozy.files', this.state.folderId)
   }
+  onClose = () => {
+    const { router } = this.props
+    router.push('/')
+  }
 
   render() {
     const { items, folderId, uploadInProgress } = this.state
-    const { t, router } = this.props
-    const onClose = () => router.push('/')
+    const { t } = this.props
     if (items === null) return null
     return (
       <Modal
@@ -94,7 +100,7 @@ class Upload extends Component {
       >
         <Header
           entries={items}
-          onClose={onClose}
+          onClose={this.onClose}
           title={t('ImportToDrive.title', { smart_count: items.length })}
           subTitle={t('ImportToDrive.to')}
         />
@@ -127,7 +133,7 @@ class Upload extends Component {
         </Query>
         <Footer
           onConfirm={() => this.uploadAndState()}
-          onClose={onClose}
+          onClose={this.onClose}
           targets={items}
           currentDirId={folderId}
           isMoving={uploadInProgress}
@@ -139,6 +145,11 @@ class Upload extends Component {
   }
 }
 
+DumbUpload.propTypes = {
+  t: PropTypes.func.isRequired,
+  router: PropTypes.func.isRequired,
+  uploadFilesFromNative: PropTypes.func.isRequired
+}
 const mapDispatchToProps = dispatch => ({
   uploadFilesFromNative: (files, folderId, successCallback) =>
     dispatch(uploadFilesFromNative(files, folderId, successCallback))
@@ -152,4 +163,4 @@ export default compose(
     null,
     mapDispatchToProps
   )
-)(Upload)
+)(DumbUpload)
