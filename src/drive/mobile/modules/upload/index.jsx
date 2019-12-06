@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { Query, cancelable, withClient } from 'cozy-client'
+import { Query, withClient } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react'
 import { Modal } from 'cozy-ui/transpiled/react'
@@ -58,13 +58,6 @@ export class DumbUpload extends Component {
 
   navigateTo = folder => {
     this.setState({ folderId: folder.id })
-  }
-
-  registerCancelable = promise => {
-    if (!this.promises) this.promises = []
-    const cancelableP = cancelable(promise)
-    this.promises.push(cancelableP)
-    return cancelableP
   }
 
   contentQuery = client => {
