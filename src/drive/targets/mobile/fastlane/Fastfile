@@ -26,7 +26,8 @@ platform :ios do
         shallow_clone: true,
         clone_branch_directly: true,
         type: "appstore",
-        git_url: "git@gitlab.cozycloud.cc:labs/mobile-certificates.git"
+        git_url: "git@gitlab.cozycloud.cc:labs/mobile-certificates.git",
+        app_identifier: "io.cozy.drive.mobile,io.cozy.drive.mobile.shareextension"
       )
       # Build the
       #build('ios')
