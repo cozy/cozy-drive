@@ -38,7 +38,7 @@ class DriveMobileRouter extends Component {
       client.getStackClient().oauthOptions,
       client.getStackClient().token
     )
-    saveCredentials(client, accesstoken)
+    saveCredentials(client.getStackClient().oauthOptions, accesstoken)
     saveServerUrl(client.getStackClient().uri)
     await initBar(client)
     setCozyUrl(client.getStackClient().uri)
