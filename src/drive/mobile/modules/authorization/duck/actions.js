@@ -10,7 +10,6 @@ export const setClient = client => ({ type: SET_CLIENT, client })
 export const setToken = token => ({ type: SET_TOKEN, token })
 
 export const revokeClient = () => ({ type: REVOKE })
-export const unrevokeClient = () => ({ type: UNREVOKE })
 
 export const unlink = (client, clientInfo) => async dispatch => {
   client.logout()

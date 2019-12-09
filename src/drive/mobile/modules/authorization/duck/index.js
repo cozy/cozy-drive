@@ -1,11 +1,4 @@
-export {
-  UNLINK,
-  setClient,
-  setToken,
-  revokeClient,
-  unrevokeClient,
-  unlink
-} from './actions'
+export { UNLINK, setClient, setToken, revokeClient, unlink } from './actions'
 
 export { default } from './reducer'
 
