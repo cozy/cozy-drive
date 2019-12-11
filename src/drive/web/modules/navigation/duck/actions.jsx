@@ -452,7 +452,7 @@ export const exportFilesNative = (files, client = null, filename) => {
       } else {
         response = await client
           .collection('io.cozy.files')
-          .downloadVersionById(file)
+          .fetchFileContent(file)
       }
 
       const blob = await response.blob()
