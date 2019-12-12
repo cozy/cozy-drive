@@ -46,14 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     token: data.cozyToken
   })
 
-  cozy.bar.init({
-    appName: data.cozyAppName,
-    appEditor: data.cozyAppEditor,
-    cozyClient: client,
-    iconPath: data.cozyIconPath,
-    lang: data.cozyLocale,
-    replaceTitleOnMobile: true
-  })
   configureReporter()
   setCozyUrl(cozyUrl)
   let history = hashHistory
@@ -74,6 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
     combineReducers({ ...appReducers, cozy: client.reducer() }),
     composeEnhancers(applyMiddleware.apply(this, middlewares))
   )
+
+  cozy.bar.init({
+    appName: data.cozyAppName,
+    appEditor: data.cozyAppEditor,
+    cozyClient: client,
+    iconPath: data.cozyIconPath,
+    lang: data.cozyLocale,
+    replaceTitleOnMobile: true
+  })
 
   render(
     <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
