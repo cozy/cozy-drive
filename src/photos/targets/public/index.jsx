@@ -37,6 +37,17 @@ async function init() {
     schema: doctypes
   })
 
+  configureReporter()
+  setCozyUrl(cozyUrl)
+  const store = createStore(
+    combineReducers({
+      cozy: client.reducer()
+    }),
+    applyMiddleware(thunkMiddleware, createLogger())
+  )
+
+  let app = null
+  client.setStore(store)
   if (
     data.cozyAppName &&
     data.cozyAppEditor &&
@@ -53,20 +64,10 @@ async function init() {
       isPublic: true
     })
   }
-  configureReporter()
-  setCozyUrl(cozyUrl)
-  const store = createStore(
-    combineReducers({
-      cozy: client.reducer()
-    }),
-    applyMiddleware(thunkMiddleware, createLogger())
-  )
-
-  let app = null
   try {
     const id = await getSharedDocument(client)
     app = (
-      <CozyProvider store={store} client={client}>
+      <CozyProvider client={client}>
         <Router history={hashHistory}>
           <Route path="shared/:albumId" component={App}>
             <Route path=":photoId" component={PhotosViewer} />
