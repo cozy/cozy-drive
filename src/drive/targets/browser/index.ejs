@@ -28,7 +28,7 @@
     {{.CozyClientJS}}
     {{.CozyBar}}
     <% } %> <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
-      <link rel="stylesheet" href="<%- file %>" />
+    <link rel="stylesheet" href="<%- file %>" />
     <% }); %>
   </head>
   <div
@@ -42,11 +42,12 @@
     data-cozy-app-slug="{{.AppSlug}}"
     data-cozy-tracking="{{.Tracking}}"
     data-cozy-icon-path="{{.IconPath}}"
+    data-cozy-subdomain-type="{{.SubDomain}}"
   ></div>
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
-    <script src="<%- file %>"></script>
-  <% }); %>
-  <% if (__STACK_ASSETS__ || (__DEVELOPMENT__ && __TARGET__ !== 'mobile')) { %>
-    <script src="//{{.Domain}}/assets/js/piwik.js" async></script>
+  <script src="<%- file %>"></script>
+  <% }); %> <% if (__STACK_ASSETS__ || (__DEVELOPMENT__ && __TARGET__ !==
+  'mobile')) { %>
+  <script src="//{{.Domain}}/assets/js/piwik.js" async></script>
   <% } %>
 </html>
