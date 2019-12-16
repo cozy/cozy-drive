@@ -25,6 +25,7 @@
     data-cozy-app-editor="{{.AppEditor}}"
     data-cozy-app-slug="{{.AppSlug}}"
     data-cozy-icon-path="{{.IconPath}}"
+    data-cozy-subdomain-type="{{.SubDomain}}"
   >
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
     <script src="<%- file %>"></script>
