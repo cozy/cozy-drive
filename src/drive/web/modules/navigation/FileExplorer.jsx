@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { compose } from 'redux'
+
+import { queryConnect, models } from 'cozy-client'
+
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'sharing'
 import RealtimeFiles from './RealtimeFiles'
@@ -14,12 +18,13 @@ import {
   getFolderUrl
 } from 'drive/web/modules/navigation/duck'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
-
+import { isNote } from 'drive/web/modules/drive/files'
 import {
   OPEN_FOLDER_FROM_TRASH,
   OPEN_FOLDER_FROM_TRASH_SUCCESS,
   OPEN_FOLDER_FROM_TRASH_FAILURE
 } from 'drive/web/modules/trash/actions'
+
 const isRecentFilesViewByPath = props =>
   props.location.pathname.match(/^\/recent/)
 const isSharingsFilesViewByPath = props =>
@@ -36,7 +41,7 @@ const isUrlMatchingOpenedFolder = (props, openedFolderId) => {
   )
 }
 
-class FileExplorer extends Component {
+export class DumbFileExplorer extends Component {
   /*
     This function is needed when the user comes to a "deep" url without clicking
     on the nav button. Acceding to /drive/4e33fd27e1d8e55a34742bac6d0dd120 directly
@@ -141,6 +146,9 @@ class FileExplorer extends Component {
   }
 }
 
+const notesApp = {
+  slug: 'notes'
+}
 const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
@@ -164,17 +172,60 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       )
     ),
   onFileOpen: (file, availableOffline) => {
-    if (availableOffline) {
-      return dispatch(openLocalFile(file))
-    }
-    const viewPath = ownProps.location.pathname
-    ownProps.router.push(`${viewPath}/file/${file.id}`)
+    handleFileOpen(file, availableOffline, ownProps, dispatch)
   }
 })
 
-export default translate()(
+//TODO Put this to cozy-client
+const generateUrlForOneNote = (notesAppUrl, file) => {
+  return notesAppUrl + '#/n/' + file._id
+}
+
+export const handleFileOpen = (file, availableOffline, props, dispatch) => {
+  if (availableOffline) {
+    return dispatch(openLocalFile(file))
+  }
+
+  if (isNote(file)) {
+    const notesInstalled = models.applications.isInstalled(
+      props.apps.data,
+      notesApp
+    )
+    let url = ''
+    if (notesInstalled) {
+      url = generateUrlForOneNote(
+        models.applications.getUrl(notesInstalled),
+        file
+      )
+    } else {
+      url = models.applications.getStoreInstallationURL(
+        props.apps.data,
+        notesInstalled
+      )
+    }
+    if (url !== '') window.location.href = url
+    //If something went wrong previoulsy like the request to /apps has failled
+    //we display the note within the viewer
+    const viewPath = props.location.pathname
+    props.router.push(`${viewPath}/file/${file.id}`)
+  } else {
+    const viewPath = props.location.pathname
+    props.router.push(`${viewPath}/file/${file.id}`)
+  }
+}
+
+const appsQuery = client => client.all('io.cozy.apps')
+export default compose(
+  translate(),
+  queryConnect({
+    apps: {
+      query: appsQuery,
+      as: 'apps'
+    }
+  }),
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(withRouter(FileExplorer))
-)
+  ),
+  withRouter
+)(DumbFileExplorer)
