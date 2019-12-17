@@ -44,7 +44,7 @@ $ cd cozy-drive
 $ yarn install
 ```
 
-:pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version `6` before doing a `yarn install`.
+:pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version `8` before doing a `yarn install`.
 
 :warning: During its early ages, _cozy-drive_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know hot to install and configure the latest available versions.
 
@@ -58,25 +58,23 @@ You can easily view your current running app, you can use the [cozy-stack docker
 ```sh
 # in a terminal, run your app in watch mode
 $ cd cozy-drive
-$ yarn watch:browser
+$ yarn watch:drive:browser
 ```
 
 ```sh
 # in another terminal, run the docker container
-$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build":/data/cozy-app/drive cozy/cozy-app-dev
-or
-$ yarn stack:docker
+$ docker run --rm -it -p 8080:8080 -v "$(pwd)/build/drive":/data/cozy-app/drive cozy/cozy-app-dev
 ```
 
 your app is available at http://drive.cozy.tools:8080.
 
 ### Share and send mails in development
 
-[See specific documentation](src/ducks/sharing/README.md)
+[See specific documentation](src/sharing/README.md)
 
 ### Run on you mobile phone or your tablet :phone:
 
-[See specific documentation](mobile/README.md).
+[See specific documentation](src/drive/targets/mobile/README.md).
 
 
 ### Living on the edge
@@ -154,7 +152,7 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 
 
 [cozy]: https://cozy.io "Cozy Cloud"
-[setup]: https://dev.cozy.io/#set-up-the-development-environment "Cozy dev docs: Set up the Development Environment"
+[setup]: https://docs.cozy.io/en/tutorials/app/#install-the-development-environment "Cozy dev docs: Set up the Development Environment"
 [yarn]: https://yarnpkg.com/
 [yarn-install]: https://yarnpkg.com/en/docs/install
 [cozy-ui]: https://github.com/cozy/cozy-ui
@@ -173,7 +171,7 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [freenode]: http://webchat.freenode.net/?randomnick=1&channels=%23cozycloud&uio=d4
 [forum]: https://forum.cozy.io/
 [github]: https://github.com/cozy/
-[twitter]: https://twitter.com/mycozycloud
+[twitter]: https://twitter.com/cozycloud
 [nvm]: https://github.com/creationix/nvm
 [ndenv]: https://github.com/riywo/ndenv
 [cozy-dev]: https://github.com/cozy/cozy-dev/
