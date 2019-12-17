@@ -16,6 +16,7 @@ jest.mock('cozy-client', () => {
   return {
     ...require.requireActual('cozy-client'),
     models: {
+      ...require.requireActual('cozy-client').models,
       applications: {
         isInstalled: jest.fn(),
         getStoreInstallationURL: jest.fn(),

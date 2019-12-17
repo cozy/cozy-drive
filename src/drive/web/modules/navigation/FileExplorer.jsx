@@ -18,7 +18,6 @@ import {
   getFolderUrl
 } from 'drive/web/modules/navigation/duck'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
-import { isNote } from 'drive/web/modules/drive/files'
 import {
   OPEN_FOLDER_FROM_TRASH,
   OPEN_FOLDER_FROM_TRASH_SUCCESS,
@@ -176,24 +175,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-//TODO Put this to cozy-client
-const generateUrlForOneNote = (notesAppUrl, file) => {
-  return notesAppUrl + '#/n/' + file._id
-}
-
 export const handleFileOpen = (file, availableOffline, props, dispatch) => {
   if (availableOffline) {
     return dispatch(openLocalFile(file))
   }
 
-  if (isNote(file)) {
+  if (models.file.isNote(file)) {
     const notesInstalled = models.applications.isInstalled(
       props.apps.data,
       notesApp
     )
     let url = ''
     if (notesInstalled) {
-      url = generateUrlForOneNote(
+      url = models.note.generateUrlForNote(
         models.applications.getUrl(notesInstalled),
         file
       )
@@ -203,7 +197,10 @@ export const handleFileOpen = (file, availableOffline, props, dispatch) => {
         notesInstalled
       )
     }
-    if (url !== '') window.location.href = url
+    if (url !== '') {
+      window.location.href = url
+      return
+    }
     //If something went wrong previoulsy like the request to /apps has failled
     //we display the note within the viewer
     const viewPath = props.location.pathname
