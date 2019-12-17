@@ -1,4 +1,6 @@
 //!TODO Put this to cozy-client/models/files
+import get from 'lodash/get'
+
 const FILE_TYPE = 'file'
 const DIR_TYPE = 'directory'
 export const ALBUMS_DOCTYPE = 'io.cozy.photos.albums'
@@ -20,4 +22,15 @@ export const isReferencedByAlbum = file => {
     }
   }
   return false
+}
+/**
+ *
+ * @param {object} file io.cozy.files
+ * @param {object} client CozyClient instance
+ * @return boolean If the file was created on my cozy
+ */
+export const isNoteMine = (file, client) => {
+  const myCozyUrl = client.getStackClient().uri
+  const noteCreatedOnCozy = get(file, 'cozyMetadata.createdOn')
+  return noteCreatedOnCozy.startsWith(myCozyUrl)
 }

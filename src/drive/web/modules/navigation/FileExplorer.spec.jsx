@@ -26,6 +26,11 @@ jest.mock('cozy-client', () => {
   }
 })
 
+const client = {
+  getStackClient: () => ({
+    uri: 'http://cozy.tools'
+  })
+}
 const file = {
   _id: '1',
   id: '1',
@@ -43,6 +48,25 @@ const note = {
     schema: [],
     title: 'title',
     version: '0'
+  },
+  cozyMetadata: {
+    createdOn: 'http://cozy.tools/'
+  }
+}
+
+const sharedNote = {
+  _id: '3',
+  id: '3',
+  type: 'file',
+  name: 'test.cozy-note',
+  metadata: {
+    content: 'content',
+    schema: [],
+    title: 'title',
+    version: '0'
+  },
+  cozyMetadata: {
+    createdOn: 'http://q.cozy.tools/'
   }
 }
 
@@ -73,8 +97,8 @@ describe('FileExplorer', () => {
     const originalLocation = global.window.location
 
     beforeEach(() => {
-      delete global.window.location
-      global.window.location = {
+      delete window.location
+      window.location = {
         href: ''
       }
       jest.resetModules()
@@ -85,7 +109,7 @@ describe('FileExplorer', () => {
     })
     it('should call native method if available offline', () => {
       const isAvailableOffline = true
-      handleFileOpen(file, isAvailableOffline, {}, mockedDispatch)
+      handleFileOpen(file, isAvailableOffline, { client }, mockedDispatch)
       expect(openLocalFile).toHaveBeenCalled()
     })
     it('should call router push if this is a file', () => {
@@ -93,7 +117,7 @@ describe('FileExplorer', () => {
       handleFileOpen(
         file,
         isAvailableOffline,
-        { ...mockedRouter },
+        { ...mockedRouter, client },
         mockedDispatch
       )
       expect(mockedRouter.router.push).toHaveBeenCalledWith('/folder/a/file/1')
@@ -105,7 +129,7 @@ describe('FileExplorer', () => {
       handleFileOpen(
         note,
         isAvailableOffline,
-        { ...mockedRouter, ...notesNotInstalled },
+        { ...mockedRouter, ...notesNotInstalled, client },
         mockedDispatch
       )
       expect(models.applications.getStoreInstallationURL).toHaveBeenCalled()
@@ -128,7 +152,7 @@ describe('FileExplorer', () => {
       handleFileOpen(
         note,
         isAvailableOffline,
-        { ...mockedRouter, ...notesInstalled },
+        { ...mockedRouter, ...notesInstalled, client },
         mockedDispatch
       )
       expect(models.applications.getUrl).toHaveBeenCalled()
@@ -136,16 +160,29 @@ describe('FileExplorer', () => {
     })
   })
 
-  it('should call the router.push is the returned URL is empty', () => {
+  it('should call the router.push if the returned URL is empty', () => {
     const isAvailableOffline = false
     models.applications.getStoreInstallationURL.mockReturnValue('')
 
     handleFileOpen(
       note,
       isAvailableOffline,
-      { ...mockedRouter, ...notesNotInstalled },
+      { ...mockedRouter, ...notesNotInstalled, client },
       mockedDispatch
     )
     expect(mockedRouter.router.push).toHaveBeenCalledWith('/folder/a/file/2')
+  })
+
+  it('should call the router.push if the note is not mine', () => {
+    const isAvailableOffline = false
+    models.applications.getStoreInstallationURL.mockReturnValue('')
+
+    handleFileOpen(
+      sharedNote,
+      isAvailableOffline,
+      { ...mockedRouter, ...notesInstalled, client },
+      mockedDispatch
+    )
+    expect(mockedRouter.router.push).toHaveBeenCalledWith('/folder/a/file/3')
   })
 })

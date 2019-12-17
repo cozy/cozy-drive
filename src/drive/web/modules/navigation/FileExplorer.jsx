@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 
-import { queryConnect, models } from 'cozy-client'
+import { queryConnect, models, withClient } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'sharing'
@@ -23,6 +23,8 @@ import {
   OPEN_FOLDER_FROM_TRASH_SUCCESS,
   OPEN_FOLDER_FROM_TRASH_FAILURE
 } from 'drive/web/modules/trash/actions'
+
+import { isNoteMine } from 'drive/web/modules/drive/files'
 
 const isRecentFilesViewByPath = props =>
   props.location.pathname.match(/^\/recent/)
@@ -176,11 +178,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export const handleFileOpen = (file, availableOffline, props, dispatch) => {
+  const redirectToViewer = () => {
+    const viewPath = props.location.pathname
+    props.router.push(`${viewPath}/file/${file.id}`)
+  }
   if (availableOffline) {
     return dispatch(openLocalFile(file))
   }
 
-  if (models.file.isNote(file)) {
+  const isNote = models.file.isNote(file)
+  //This is a tmp hack since Notes doesn't handle sharing properly.
+  const isMyNote = isNote && isNoteMine(file, props.client)
+
+  if (isMyNote) {
     const notesInstalled = models.applications.isInstalled(
       props.apps.data,
       notesApp
@@ -199,15 +209,13 @@ export const handleFileOpen = (file, availableOffline, props, dispatch) => {
     }
     if (url !== '') {
       window.location.href = url
-      return
+    } else {
+      //If something went wrong previoulsy like the request to /apps has failled
+      //we display the note within the viewer
+      redirectToViewer()
     }
-    //If something went wrong previoulsy like the request to /apps has failled
-    //we display the note within the viewer
-    const viewPath = props.location.pathname
-    props.router.push(`${viewPath}/file/${file.id}`)
   } else {
-    const viewPath = props.location.pathname
-    props.router.push(`${viewPath}/file/${file.id}`)
+    redirectToViewer()
   }
 }
 
@@ -220,9 +228,10 @@ export default compose(
       as: 'apps'
     }
   }),
+  withRouter,
+  withClient,
   connect(
     mapStateToProps,
     mapDispatchToProps
-  ),
-  withRouter
+  )
 )(DumbFileExplorer)
