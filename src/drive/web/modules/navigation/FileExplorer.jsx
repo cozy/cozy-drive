@@ -204,7 +204,7 @@ export const handleFileOpen = (file, availableOffline, props, dispatch) => {
     } else {
       url = models.applications.getStoreInstallationURL(
         props.apps.data,
-        notesInstalled
+        notesApp
       )
     }
     if (url !== '') {
