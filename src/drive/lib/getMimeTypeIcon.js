@@ -18,7 +18,7 @@ import IconNote from 'drive/assets/icons/icon-type-note.svg'
 const getMimeTypeIcon = (isDirectory, name, mime) => {
   if (isDirectory) {
     return IconFolder
-  } else if (/\.cozynote$/.test(name)) {
+  } else if (/\.cozy-note$/.test(name)) {
     return IconNote
   } else {
     const iconsByMimeType = {
