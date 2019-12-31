@@ -78,7 +78,7 @@
     "cordova-android": "7.1.4",
     "cozy-jobs-cli": "1.10.2",
     "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.15.1",
+    "enzyme-adapter-react-16": "1.15.2",
     "enzyme-to-json": "3.4.3",
     "eslint-config-cozy-app": "1.1.4",
     "husky": "0.14.3",
