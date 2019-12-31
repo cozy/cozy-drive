@@ -10,6 +10,7 @@ import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { isWifi } from 'drive/mobile/lib/network'
 import { logException } from 'drive/lib/reporter'
 import { setBackupImages } from 'drive/mobile/modules/settings/duck'
+
 import {
   MEDIA_UPLOAD_START,
   MEDIA_UPLOAD_END,
@@ -27,6 +28,7 @@ import {
   REF_BACKUP
 } from 'folder-references'
 import logger from 'lib/logger'
+import { fixMagicFolderName } from './bugFix'
 
 const ERROR_CODE_TOO_LARGE = 413
 
@@ -45,6 +47,8 @@ const getUploadDir = async client => {
   const uploadedFolders = await getReferencedFolders(client, REF_BACKUP)
 
   if (uploadedFolders.length >= 1) {
+    //Let's fix the bug introduced between 1.18.18 and 1.18.24
+    await fixMagicFolderName(client, uploadedFolders[0])
     // There can be more than one referenced folder in case of consecutive delete/restores. We always want to return the most recently used.
     return uploadedFolders[0]
   } else {
