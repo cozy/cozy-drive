@@ -141,6 +141,7 @@ class InitAppMobile {
     const store = await this.getStore()
     this.startApplication()
     await this.appReady
+    this.getPolyglot()
     this.openWith()
     if (isBackgroundServiceParameter()) {
       startBackgroundService()
@@ -183,8 +184,8 @@ class InitAppMobile {
       console.log("init failed: " + err);
     }
 
-    cordova.openwith.init(initSuccess, initError)
-    cordova.openwith.addHandler(this.openWithHandler)
+    cordova.openwith && cordova.openwith.init(initSuccess, initError)
+    cordova.openwith && cordova.openwith.addHandler(this.openWithHandler)
   }
   //We write the items in localStorage and then push
   //to a specific route
@@ -229,7 +230,6 @@ class InitAppMobile {
     const store = await this.getStore()
     const client = await this.getClient()
     const polyglot = await this.getPolyglot()
-
     //needed to migrate from cozy-drive auth to cozy-authenticate.
     //@TODO should be remove one day. It has been added for the migration
     //from 1.18.17 to 1.18.18
