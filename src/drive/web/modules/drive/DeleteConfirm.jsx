@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Modal, { ModalDescription } from 'cozy-ui/transpiled/react/Modal'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
-import { SharedDocument, SharedRecipientsList } from 'sharing'
+import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
 
 import styles from 'drive/styles/confirms.styl'
 

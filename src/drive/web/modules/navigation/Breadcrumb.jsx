@@ -7,7 +7,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
-import SharedDocuments from 'sharing/components/SharedDocuments'
+import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'

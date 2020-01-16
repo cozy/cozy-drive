@@ -18,6 +18,9 @@ import {
 import { Container as Trash } from 'drive/web/modules/trash'
 import FileHistory from '../../../../components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
+
+import 'cozy-sharing/dist/stylesheet.css'
+
 const AppRoute = (
   <Route>
     <Route component={Layout}>

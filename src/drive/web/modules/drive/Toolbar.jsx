@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import SharingProvider, { SharedDocument } from 'sharing'
+import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'

@@ -11,7 +11,7 @@ import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
-import withSharingState from 'sharing/hoc/withSharingState'
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
 import FileList from 'drive/web/modules/move/FileList'

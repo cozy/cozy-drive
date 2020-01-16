@@ -6,7 +6,7 @@ import { compose } from 'redux'
 import { queryConnect, models, withClient } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import SharingProvider from 'sharing'
+import SharingProvider from 'cozy-sharing'
 import RealtimeFiles from './RealtimeFiles'
 import {
   openFolder,

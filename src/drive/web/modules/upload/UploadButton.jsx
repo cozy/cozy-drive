@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Icon, FileInput } from 'cozy-ui/transpiled/react'
 
-import withSharingState from 'sharing/hoc/withSharingState'
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const UploadButton = ({ label, disabled, onUpload, className }) => (

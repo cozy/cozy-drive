@@ -10,7 +10,7 @@ import {
   FETCH_SHARINGS_SUCCESS,
   FETCH_SHARINGS_FAILURE
 } from 'drive/web/modules/navigation/duck/actions'
-import SharedDocuments from 'sharing/components/SharedDocuments'
+import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 
 import { cancelable as makeCancelable } from 'cozy-client/dist/utils'
 import { withClient } from 'cozy-client'

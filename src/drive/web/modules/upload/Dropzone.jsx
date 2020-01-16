@@ -6,7 +6,7 @@ import { compose } from 'redux'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 import styles from 'drive/styles/dropzone.styl'
-import withSharingState from 'sharing/hoc/withSharingState'
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import DropzoneTeaser from 'drive/web/modules/upload/DropzoneTeaser'
 
 class StatefulDropzone extends Component {

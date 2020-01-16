@@ -10,7 +10,7 @@ import { createLogger } from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
-import SharingProvider from 'sharing'
+import SharingProvider from 'cozy-sharing'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
