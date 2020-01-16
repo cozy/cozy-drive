@@ -269,7 +269,8 @@
   },
   "Error": {
     "public_unshared_title": "Sorry, this link is no longer available.",
-    "public_unshared_text": "This link has expired, or it was removed by its owner. Let him or her know that you missed it!"
+    "public_unshared_text": "This link has expired, or it was removed by its owner. Let him or her know that you missed it!",
+    "generic": "Something went wrong. Wait a few minutes and retry."
   },
   "alert": {
     "could_not_open_file": "The file could not be opened",
