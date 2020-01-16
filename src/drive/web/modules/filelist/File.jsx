@@ -17,7 +17,7 @@ import {
   withBreakpoints,
   MidEllipsis
 } from 'cozy-ui/transpiled/react'
-import { SharedStatus } from 'sharing'
+import { SharedStatus } from 'cozy-sharing'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import { CozyFile } from 'models'
 import {

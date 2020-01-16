@@ -16,7 +16,7 @@ import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
-import getSharedDocument from 'sharing/getSharedDocument'
+import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import appMetadata from 'drive/appMetadata'
 import logger from 'lib/logger'
 const initCozyBar = (data, client) => {

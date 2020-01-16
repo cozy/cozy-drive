@@ -7,7 +7,7 @@ import Toggle from 'cozy-ui/transpiled/react/Toggle'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import { showModal } from 'react-cozy-helpers'
-import { SharedDocument, SharedRecipients, ShareModal } from 'sharing'
+import { SharedDocument, SharedRecipients, ShareModal } from 'cozy-sharing'
 
 import FolderView from 'drive/web/modules/layout/FolderView'
 import DeleteConfirm from './DeleteConfirm'

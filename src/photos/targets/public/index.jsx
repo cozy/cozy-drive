@@ -8,7 +8,7 @@ import { Router, Redirect, hashHistory, Route } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
-import getSharedDocument from 'sharing/getSharedDocument'
+import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 

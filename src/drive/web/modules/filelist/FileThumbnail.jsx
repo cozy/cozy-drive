@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import { ImageLoader } from 'components/Image'
-import { SharedBadge } from 'sharing'
+import { SharedBadge } from 'cozy-sharing'
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import styles from 'drive/styles/filelist.styl'
 
