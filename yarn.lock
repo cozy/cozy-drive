@@ -4846,10 +4846,10 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-sharing@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.5.4.tgz#cc3223b747086ba4f9e6c44f5832da303fb73ff1"
-  integrity sha512-u2nw6JrkwOfdITm3sPODxCeblVRmPpd+kHTldr45COEN8xiIG7RTU2RqYbzGJ4toiR6e8fw0pa41dNPsAgvYcg==
+cozy-sharing@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.6.0.tgz#a0658d213a79c3783ce5479914580406c9afa799"
+  integrity sha512-baWzEyWxQ6mn9TH3zLeIfgzjvxKeGD9OUcOm0zoEiJz4xMqVYZozuVzreqm19siVwVd3Nyx+RjSoJFXQSZheew==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
