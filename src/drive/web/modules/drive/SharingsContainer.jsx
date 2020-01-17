@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import get from 'lodash/get'
 import { Empty } from 'cozy-ui/transpiled/react'
-
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { compose } from 'redux'
 import Container from 'drive/web/modules/drive/Container'
 import {
   FETCH_SHARINGS,
@@ -21,9 +21,6 @@ export class SharingFetcher extends React.Component {
     error: null
   }
 
-  static contextTypes = {
-    t: PropTypes.func.isRequired
-  }
   constructor(props) {
     super(props)
     this.fetchSharedFiles = null
@@ -35,7 +32,6 @@ export class SharingFetcher extends React.Component {
     try {
       this.props.startFetch()
       this.setState({ error: null })
-
       this.fetchSharedFiles = makeCancelable(
         client.collection('io.cozy.files').all({ keys: sharedDocuments })
       )
@@ -71,7 +67,7 @@ export class SharingFetcher extends React.Component {
 
   componentDidMount() {
     if (!get(this.props, 'params.folderId')) {
-      this.fetchSharedDocuments()
+      if (this.props.hasLoadedAtLeastOnePage) this.fetchSharedDocuments()
     } else {
       this.props.onFolderOpen(this.props.params.folderId, false)
     }
@@ -83,8 +79,7 @@ export class SharingFetcher extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
-    const { sharedDocuments } = this.props
-
+    const { sharedDocuments, hasLoadedAtLeastOnePage } = this.props
     const hasNewSharings =
       sharedDocuments.length !== prevProps.sharedDocuments.length ||
       sharedDocuments.find(id => !prevProps.sharedDocuments.includes(id)) !==
@@ -97,7 +92,7 @@ export class SharingFetcher extends React.Component {
 
     if (isOnSharingsRoot && hasNewSharings) {
       // in case the list of sharings changes while we're on the sharings view root
-      this.fetchSharedDocuments()
+      if (hasLoadedAtLeastOnePage) this.fetchSharedDocuments()
     } else if (movedToSharedRoot) {
       // if we start the navigation inside a folder in the sharing view, and navigate back to the root, we need to load the root content again
       this.fetchSharedDocuments()
@@ -108,9 +103,8 @@ export class SharingFetcher extends React.Component {
   }
 
   render() {
-    const { ...otherProps } = this.props
+    const { t, ...otherProps } = this.props
     const { error } = this.state
-    const { t } = this.context
     return error ? (
       <Empty
         icon="cozy"
@@ -132,7 +126,9 @@ export class SharingFetcher extends React.Component {
   }
 }
 
-const ConnectedSharingFetcher = withClient(
+const ConnectedSharingFetcher = compose(
+  translate(),
+  withClient,
   connect(
     null,
     (dispatch, ownProps) => ({
@@ -167,13 +163,17 @@ const ConnectedSharingFetcher = withClient(
           ownProps.router.push(getFolderUrl(folderId, ownProps.location))
       }
     })
-  )(SharingFetcher)
-)
+  )
+)(SharingFetcher)
 
 const SharingsContainer = props => (
   <SharedDocuments>
-    {({ sharedDocuments }) => (
-      <ConnectedSharingFetcher {...props} sharedDocuments={sharedDocuments} />
+    {({ sharedDocuments, hasLoadedAtLeastOnePage }) => (
+      <ConnectedSharingFetcher
+        {...props}
+        sharedDocuments={sharedDocuments}
+        hasLoadedAtLeastOnePage={hasLoadedAtLeastOnePage}
+      />
     )}
   </SharedDocuments>
 )
