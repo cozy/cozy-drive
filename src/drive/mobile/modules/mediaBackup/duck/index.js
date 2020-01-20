@@ -45,7 +45,6 @@ const currentMediaUpload = (media, uploadCounter, totalUpload) => ({
 
 const getUploadDir = async client => {
   const uploadedFolders = await getReferencedFolders(client, REF_BACKUP)
-  console.log('uploadedFolders', uploadedFolders)
   if (uploadedFolders.length >= 1) {
     //Let's fix the bug introduced between 1.18.18 and 1.18.24
     await fixMagicFolderName(client, uploadedFolders[0])
