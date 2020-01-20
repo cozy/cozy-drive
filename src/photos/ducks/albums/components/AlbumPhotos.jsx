@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import { showModal } from 'react-cozy-helpers'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { ShareModal } from 'sharing'
+import { ShareModal } from 'cozy-sharing'
 import flow from 'lodash/flow'
 
 import styles from '../../../styles/layout.styl'
