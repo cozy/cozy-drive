@@ -14,8 +14,6 @@ import { IconSprite } from 'cozy-ui/transpiled/react'
 
 import appMetadata from 'photos/appMetadata'
 import doctypes from '../browser/doctypes'
-import 'cozy-ui/transpiled/react/stylesheet.css'
-import 'photos/styles/main.styl'
 
 import App from './App'
 import PhotosViewer from 'photos/components/PhotosViewer'

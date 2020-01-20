@@ -18,7 +18,6 @@ import appMetadata from 'drive/appMetadata'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
-import 'cozy-ui/transpiled/react/stylesheet.css'
 import { hot } from 'react-hot-loader'
 import { Document } from 'cozy-doctypes'
 
