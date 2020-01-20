@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/transpiled/react'
 import { MoreButton } from 'components/Button'
-import { ShareButton } from 'sharing'
+import { ShareButton } from 'cozy-sharing'
 
 import styles from 'photos/styles/toolbar.styl'
 
