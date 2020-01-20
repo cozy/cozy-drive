@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-
+import { SharedBadge, SharedDocument } from 'cozy-sharing'
 import { ImageLoader } from 'components/Image'
 
 const AlbumItemLink = ({ router, album, image, title, desc }) => {
@@ -54,26 +54,28 @@ const ClickableAlbumItem = ({
   )
 }
 
-const AlbumItemDesc = translate()(
-  ({ t, photoCount, shared = {} /* thumbnail  */ }) => (
-    <h4 className={styles['pho-album-description']}>
-      {/* (shared.byMe || shared.withMe) && (
-        <SharedBadge
-          byMe={shared.byMe}
-          className={styles['pho-album-shared']}
-          small={thumbnail}
-        />
-      ) */}
-      {t('Albums.album_item_description', { smart_count: photoCount })}
-      {(shared.byMe || shared.withMe) &&
-        ` - ${t(
-          `Albums.album_item_shared_${
-            shared.sharingType === 'one-way' ? 'ro' : 'rw'
-          }`
-        )}`}
-    </h4>
-  )
-)
+const AlbumItemDesc = translate()(({ t, photoCount, album }) => (
+  <h4 className={styles['pho-album-description']}>
+    <SharedBadge
+      docId={album.id}
+      className={styles['pho-album-shared']}
+      xsmall
+    />
+    <SharedDocument docId={album.id}>
+      {({ isSharedWithMe, isSharedByMe, hasWriteAccess }) => {
+        return (
+          <span>
+            {t('Albums.album_item_description', { smart_count: photoCount })}
+            {(isSharedWithMe || isSharedByMe) &&
+              ` - ${t(
+                `Albums.album_item_shared_${hasWriteAccess ? 'rw' : 'ro'}`
+              )}`}
+          </span>
+        )
+      }}
+    </SharedDocument>
+  </h4>
+))
 
 export default class AlbumItem extends Component {
   render() {
