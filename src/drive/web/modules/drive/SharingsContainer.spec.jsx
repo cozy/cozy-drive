@@ -40,18 +40,36 @@ describe('SharingFetcher component', () => {
         params: {},
         startFetch: jest.fn(),
         fetchSuccess: jest.fn(),
-        client: fakeClient
+        client: fakeClient,
+        t: x => x,
+        hasLoadedAtLeastOnePage: true
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true,
-        context: {
-          t: jest.fn(() => 'whatever')
-        }
+        disableLifecycleMethod: true
       })
       const fetchSharedDocumentsSpy = jest.fn()
       wrapper.instance().fetchSharedDocuments = fetchSharedDocumentsSpy
       wrapper.instance().componentDidMount()
       expect(fetchSharedDocumentsSpy).toHaveBeenCalled()
+    })
+
+    it('should not call fetchSharedDocuments if cozy-sharings has not loaded at least one page', () => {
+      const props = {
+        sharedDocuments: [],
+        params: {},
+        startFetch: jest.fn(),
+        fetchSuccess: jest.fn(),
+        client: fakeClient,
+        t: x => x,
+        hasLoadedAtLeastOnePage: false
+      }
+      const wrapper = shallow(<SharingFetcher {...props} />, {
+        disableLifecycleMethod: true
+      })
+      const fetchSharedDocumentsSpy = jest.fn()
+      wrapper.instance().fetchSharedDocuments = fetchSharedDocumentsSpy
+      wrapper.instance().componentDidMount()
+      expect(fetchSharedDocumentsSpy).not.toHaveBeenCalled()
     })
   })
 
@@ -62,7 +80,9 @@ describe('SharingFetcher component', () => {
         params: {},
         startFetch: jest.fn(),
         fetchSuccess: jest.fn(),
-        client: fakeClient
+        client: fakeClient,
+        t: x => x,
+        hasLoadedAtLeastOnePage: true
       }
       const nextProps = {
         sharedDocuments: ['foo', 'bar'],
@@ -70,10 +90,7 @@ describe('SharingFetcher component', () => {
         startFetch: jest.fn()
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true,
-        context: {
-          t: jest.fn(() => 'whatever')
-        }
+        disableLifecycleMethod: true
       })
       const fetchSharedDocumentsSpy = jest.fn()
       wrapper.instance().fetchSharedDocuments = fetchSharedDocumentsSpy
@@ -87,7 +104,9 @@ describe('SharingFetcher component', () => {
         params: {},
         startFetch: jest.fn(),
         fetchSuccess: jest.fn(),
-        client: fakeClient
+        client: fakeClient,
+        t: x => x,
+        hasLoadedAtLeastOnePage: true
       }
       const nextProps = {
         sharedDocuments: ['foo'],
@@ -96,10 +115,7 @@ describe('SharingFetcher component', () => {
         fetchSuccess: jest.fn()
       }
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true,
-        context: {
-          t: jest.fn(() => 'whatever')
-        }
+        disableLifecycleMethod: true
       })
       const fetchSharedDocumentsSpy = jest.fn()
       wrapper.instance().fetchSharedDocuments = fetchSharedDocumentsSpy
@@ -112,7 +128,6 @@ describe('SharingFetcher component', () => {
     const client = new CozyClient()
     const fetchSuccessSpy = jest.fn()
     const fetchFailureSpy = jest.fn()
-    const translateSpy = jest.fn(() => 'whatever')
 
     afterEach(() => {
       jest.clearAllMocks()
@@ -140,14 +155,13 @@ describe('SharingFetcher component', () => {
         sharedDocuments: ['1', '2'],
         startFetch: jest.fn(),
         store: {},
-        client
+        client,
+        t: x => x,
+        hasLoadedAtLeastOnePage: true
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true,
-        context: {
-          t: translateSpy
-        }
+        disableLifecycleMethod: true
       })
       wrapper.setState({ error: new Error('Houston, we have a problem') })
       await wrapper.instance().fetchSharedDocuments()
@@ -173,14 +187,13 @@ describe('SharingFetcher component', () => {
         sharedDocuments: ['1', '2'],
         startFetch: jest.fn(),
         store: {},
-        client
+        client,
+        t: x => x,
+        hasLoadedAtLeastOnePage: true
       }
 
       const wrapper = shallow(<SharingFetcher {...props} />, {
-        disableLifecycleMethod: true,
-        context: {
-          t: translateSpy
-        }
+        disableLifecycleMethod: true
       })
       await wrapper.instance().fetchSharedDocuments()
 
