@@ -3,14 +3,14 @@ import { REF_PHOTOS, getOrCreateFolderWithReference } from 'folder-references'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import { handleConflictOnMove } from './handleConflictOnMove'
 /**
-- eventuellement créer le dossier photos
-- supprimer /photos/t(backup) si vide
-- renommage dossier backup
-- déplacer t(backup) folder avec gestion conflits
-- supprimer la ref de media_folder
-- mettre la ref sur photosFolder
-- on supprime pas l'ancien media_foldr au cas ou il rete des choses dedans
-*/
+ * Here is how the bugFix works
+- possibly create the photos folder
+- delete / photos / t (backup) if empty
+- rename backup file
+- move t (backup) folder with conflict management
+- delete the ref from media_folder
+- put the ref on photosFolder
+- we don't delete the old media_foldr in case it retains things in it*/
 
 export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
   //LET'S FIX the bug introduced in 1.18.18. Used in 1.18.24 release
