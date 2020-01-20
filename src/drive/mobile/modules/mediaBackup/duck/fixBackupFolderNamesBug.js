@@ -18,7 +18,7 @@ export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
     savedFromMyDeviceFolder.name !==
     'mobile.settings.media_backup.backup_folder'
   )
-    return null // early exit if nothing to do
+    return null
 
   const t = getTranslateFunction()
   const photosRootPath = `/${t('mobile.settings.media_backup.media_folder')}`
@@ -35,7 +35,6 @@ export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
       .collection('io.cozy.files')
       .statByPath(photosRootPath)
   } catch (e) {
-    // marche pas
     photosRootFolder = await client
       .collection('io.cozy.files')
       .createDirectory({ dirId: ROOT_DIR_ID, name: newNamePhotoFolder })
