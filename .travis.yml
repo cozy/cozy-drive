@@ -30,12 +30,6 @@ jobs:
       <<: *node
       env:
         - COZY_APP_SLUG=drive
-      addons:
-        apt:
-          sources:
-            - google-chrome
-          packages:
-            - google-chrome-stable fluxbox
       before_script:
         - yarn run cozy-ci-transifex
         - scripts/decrypt.sh
