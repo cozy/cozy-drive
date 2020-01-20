@@ -4,15 +4,20 @@ jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
 
+jest.mock('./handleConflictOnMove', () => ({
+  ...jest.requireActual('./handleConflictOnMove'),
+  handleConflictOnMove: jest.fn()
+}))
+
 const statByPathSpy = jest.fn().mockName('statByPath')
 const updateAttributesSpy = jest.fn().mockName('updateAttributes')
-const removeReferenceBySpy = jest.fn().mockName('removeReferenceBy')
+const removeReferencedBySpy = jest.fn().mockName('removeReferenceBy')
 const createDirectorySpy = jest.fn().mockName('createDirectory')
 const fakeClient = {
   collection: () => ({
     statByPath: statByPathSpy,
     updateAttributes: updateAttributesSpy,
-    removeReferenceBy: removeReferenceBySpy,
+    removeReferencedBy: removeReferencedBySpy,
     createDirectory: createDirectorySpy
   })
 }
@@ -85,7 +90,7 @@ describe('bugFix fix', () => {
       '/mobile.settings.media_backup.media_folder'
     )
 
-    expect(removeReferenceBySpy).toHaveBeenCalledWith(
+    expect(removeReferencedBySpy).toHaveBeenCalledWith(
       {
         dir_id: 'aaa',
         id: '2',
