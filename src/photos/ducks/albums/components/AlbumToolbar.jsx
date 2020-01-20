@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/transpiled/react'
 import { MoreButton } from 'components/Button'
-import { ShareButton } from 'cozy-sharing'
+import { ShareButton, SharedRecipients, SharedDocument } from 'cozy-sharing'
+import { RecipientsAvatars } from 'cozy-sharing/dist/components/Recipient'
 
 import styles from 'photos/styles/toolbar.styl'
 
@@ -32,11 +33,18 @@ class AlbumToolbar extends Component {
         role="toolbar"
       >
         {!isMobile && (
-          <ShareButton
-            disabled={disabled}
-            label={t('Albums.share.cta')}
-            onClick={() => shareAlbum(album)}
-          />
+          <>
+            <SharedRecipients
+              docId={album.id}
+              onClick={() => shareAlbum(album)}
+            />
+            <ShareButton
+              disabled={disabled}
+              label={t('Albums.share.cta')}
+              onClick={() => shareAlbum(album)}
+              docId={album.id}
+            />
+          </>
         )}
         <Menu
           data-test-id="more-button"
@@ -51,7 +59,23 @@ class AlbumToolbar extends Component {
               icon={<Icon icon="share" />}
               onSelect={() => shareAlbum(album)}
             >
-              {t('Albums.share.cta')}
+              <SharedDocument docId={album.id}>
+                {({ isSharedWithMe, recipients, link }) => (
+                  <>
+                    {t(
+                      isSharedWithMe
+                        ? 'Albums.share.sharedWithMe'
+                        : 'Albums.share.cta'
+                    )}
+                    <RecipientsAvatars
+                      className={styles['fil-toolbar-menu-recipients']}
+                      recipients={recipients}
+                      link={link}
+                      size="small"
+                    />
+                  </>
+                )}
+              </SharedDocument>
             </MenuItem>
           )}
           <MenuItem
