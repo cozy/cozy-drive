@@ -28,7 +28,7 @@ import {
   REF_BACKUP
 } from 'folder-references'
 import logger from 'lib/logger'
-import { fixMagicFolderName } from './bugFix'
+import { fixMagicFolderName } from './fixBackupFolderNamesBug'
 
 const ERROR_CODE_TOO_LARGE = 413
 
