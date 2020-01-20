@@ -6,6 +6,8 @@ import Timeline from '../ducks/timeline'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import PhotosViewer from '../components/PhotosViewer'
 import 'cozy-sharing/dist/stylesheet.css'
+import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'photos/styles/main.styl'
 
 const AppRoute = (
   <Route component={Layout}>

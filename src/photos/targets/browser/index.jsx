@@ -1,6 +1,4 @@
 /* global cozy __DEVELOPMENT__ */
-import 'cozy-ui/transpiled/react/stylesheet.css'
-import 'photos/styles/main'
 
 import React from 'react'
 import { render } from 'react-dom'
