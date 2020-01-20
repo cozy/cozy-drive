@@ -4,9 +4,13 @@ import styles from '../styles/topbar.styl'
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
+import { withClient } from 'cozy-client'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import flow from 'lodash/flow'
+import { BarContextProvider } from 'react-cozy-helpers'
+import SharingProvider from 'cozy-sharing'
+import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 const { BarCenter, BarRight, BarLeft } = cozy.bar
 
@@ -85,6 +89,9 @@ BackToAlbumsButton.propTypes = {
 }
 
 class Topbar extends Component {
+  static contextTypes = {
+    store: PropTypes.object.isRequired
+  }
   componentDidMount() {
     const url = this.props.router.location.pathname
     this.parentUrl = url.substring(0, url.lastIndexOf('/'))
@@ -105,13 +112,25 @@ class Topbar extends Component {
       children,
       viewName,
       breakpoints: { isMobile },
-      router
+      router,
+      client,
+      t
     } = this.props
     const isAlbumContent = viewName === 'albumContent'
     const title = <TopbarTitle>{this.renderTitle()}</TopbarTitle>
     const responsiveTitle = isMobile ? <BarCenter>{title}</BarCenter> : title
 
-    const responsiveMenu = isMobile ? <BarRight>{children}</BarRight> : children
+    const responsiveMenu = isMobile ? (
+      <BarRight>
+        <BarContextProvider client={client} store={this.context.store} t={t}>
+          <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
+            {children}
+          </SharingProvider>
+        </BarContextProvider>
+      </BarRight>
+    ) : (
+      children
+    )
 
     const backButton = (
       <BackToAlbumsButton onClick={() => router.push(this.parentUrl)} />
@@ -150,6 +169,7 @@ Topbar.defaultProps = {
 
 export default flow(
   withRouter,
+  withClient,
   withBreakpoints(),
   translate()
 )(Topbar)
