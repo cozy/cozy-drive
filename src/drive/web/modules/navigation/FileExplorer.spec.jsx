@@ -11,20 +11,7 @@ jest.mock('drive/mobile/modules/offline/duck', () => {
     openLocalFile: jest.fn()
   }
 })
-
-jest.mock('cozy-client', () => {
-  return {
-    ...require.requireActual('cozy-client'),
-    models: {
-      ...require.requireActual('cozy-client').models,
-      applications: {
-        isInstalled: jest.fn(),
-        getStoreInstallationURL: jest.fn(),
-        getUrl: jest.fn()
-      }
-    }
-  }
-})
+jest.mock('cozy-client')
 
 const client = {
   getStackClient: () => ({
@@ -125,7 +112,7 @@ describe('FileExplorer', () => {
     it('should call the method to generate the URL to install the notes app from the store', () => {
       const isAvailableOffline = false
       models.applications.isInstalled = jest.fn().mockReturnValue(false)
-
+      models.applications.getStoreInstallationURL = jest.fn()
       handleFileOpen(
         note,
         isAvailableOffline,
@@ -139,7 +126,9 @@ describe('FileExplorer', () => {
       models.applications.isInstalled.mockReturnValue({
         links: { related: 'http://notes.foo.bar/' }
       })
-      models.applications.getUrl.mockReturnValue('http://notes.foo.bar/')
+      models.applications.getUrl = jest
+        .fn()
+        .mockReturnValue('http://notes.foo.bar/')
       global.window = Object.create(window)
       const url = 'http://notes.foo.bar/#/n/' + note._id
       delete global.window.location
