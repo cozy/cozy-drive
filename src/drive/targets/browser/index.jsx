@@ -13,6 +13,7 @@ import {
   getTracker
 } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
+import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 import appMetadata from 'drive/appMetadata'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
@@ -80,7 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
 const AppComponent = props => (
   <I18n lang={props.lang} polyglot={props.polyglot}>
     <CozyProvider client={props.client}>
-      <Router history={props.history} routes={AppRoute} />
+      <StyledApp>
+        <Router history={props.history} routes={AppRoute} />
+      </StyledApp>
     </CozyProvider>
   </I18n>
 )

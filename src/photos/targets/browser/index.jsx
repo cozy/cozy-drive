@@ -14,6 +14,7 @@ import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 import appReducers from 'photos/reducers'
 import AppRoute from 'photos/components/AppRoute'
+import StyledApp from 'photos/components/StyledApp'
 import {
   shouldEnableTracking,
   getTracker,
@@ -77,9 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
   render(
     <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
       <CozyProvider client={client}>
-        <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
-          <Router history={history} routes={AppRoute} />
-        </SharingProvider>
+        <StyledApp>
+          <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
+            <Router history={history} routes={AppRoute} />
+          </SharingProvider>
+        </StyledApp>
       </CozyProvider>
     </I18n>,
     root

@@ -17,6 +17,8 @@ import doctypes from '../browser/doctypes'
 
 import App from './App'
 import PhotosViewer from 'photos/components/PhotosViewer'
+import StyledApp from 'photos/components/StyledApp'
+
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 
 document.addEventListener('DOMContentLoaded', init)
@@ -66,12 +68,14 @@ async function init() {
     const id = await getSharedDocument(client)
     app = (
       <CozyProvider client={client}>
-        <Router history={hashHistory}>
-          <Route path="shared/:albumId" component={App}>
-            <Route path=":photoId" component={PhotosViewer} />
-          </Route>
-          <Redirect from="/*" to={`shared/${id}`} />
-        </Router>
+        <StyledApp>
+          <Router history={hashHistory}>
+            <Route path="shared/:albumId" component={App}>
+              <Route path=":photoId" component={PhotosViewer} />
+            </Route>
+            <Redirect from="/*" to={`shared/${id}`} />
+          </Router>
+        </StyledApp>
       </CozyProvider>
     )
   } catch (e) {
@@ -80,8 +84,10 @@ async function init() {
     render(
       <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
         <>
-          {app}
-          <IconSprite />
+          <StyledApp>
+            {app}
+            <IconSprite />
+          </StyledApp>
         </>
       </I18n>,
       root

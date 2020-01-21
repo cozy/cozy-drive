@@ -10,6 +10,7 @@ import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import appMetadata from 'drive/appMetadata'
 import { schema } from 'drive/lib/doctypes'
+import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('main')
@@ -38,7 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >
       <CozyProvider client={client}>
-        <IntentHandler intentId={intent} />
+        <StyledApp>
+          <IntentHandler intentId={intent} />
+        </StyledApp>
       </CozyProvider>
     </I18n>,
     root

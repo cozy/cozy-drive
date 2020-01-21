@@ -19,11 +19,6 @@ import { Container as Trash } from 'drive/web/modules/trash'
 import FileHistory from '../../../../components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
 
-import 'cozy-ui/transpiled/react/stylesheet.css'
-import 'cozy-sharing/dist/stylesheet.css'
-//eslint-disable-next-line
-import mainStyles from 'drive/styles/main.styl'
-
 const AppRoute = (
   <Route>
     <Route component={Layout}>
