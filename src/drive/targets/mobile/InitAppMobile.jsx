@@ -16,6 +16,7 @@ import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { configureReporter } from 'drive/lib/reporter'
+import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 import {
   startTracker,
@@ -245,7 +246,9 @@ class InitAppMobile {
     render(
       <I18n lang={getLang()} polyglot={polyglot}>
         <CozyProvider client={client}>
-          <DriveMobileRouter history={hashHistory} />
+          <StyledApp>
+            <DriveMobileRouter history={hashHistory} />
+          </StyledApp>
         </CozyProvider>
       </I18n>,
       root,

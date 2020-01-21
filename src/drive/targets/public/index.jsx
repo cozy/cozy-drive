@@ -4,6 +4,8 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 
+import StyledApp from 'drive/web/modules/drive/StyledApp'
+
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
@@ -85,18 +87,20 @@ const init = async () => {
     render(
       <I18n lang={lang} polyglot={polyglot}>
         <CozyProvider client={client}>
-          {isFile ? (
-            <PublicLayout>
-              <LightFileViewer files={[data]} isFile={true} />
-            </PublicLayout>
-          ) : (
-            <Router history={hashHistory}>
-              <Route component={PublicLayout}>
-                <Route path="files(/:folderId)" component={LightFolderView} />
-              </Route>
-              <Redirect from="/*" to={`files/${sharedDocumentId}`} />
-            </Router>
-          )}
+          <StyledApp>
+            {isFile ? (
+              <PublicLayout>
+                <LightFileViewer files={[data]} isFile={true} />
+              </PublicLayout>
+            ) : (
+              <Router history={hashHistory}>
+                <Route component={PublicLayout}>
+                  <Route path="files(/:folderId)" component={LightFolderView} />
+                </Route>
+                <Redirect from="/*" to={`files/${sharedDocumentId}`} />
+              </Router>
+            )}
+          </StyledApp>
         </CozyProvider>
       </I18n>,
       root
