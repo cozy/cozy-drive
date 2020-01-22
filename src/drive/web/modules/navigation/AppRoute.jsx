@@ -1,4 +1,4 @@
-/* global __TARGET__ , __DEVELOPMENT__*/
+/* global __TARGET__ */
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 
@@ -9,7 +9,6 @@ import Layout from 'drive/web/modules/layout/Layout'
 import FileExplorer from './FileExplorer'
 import FilesViewer from 'drive/web/modules/viewer/FilesViewer'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
-import { ScannerQualification } from 'cozy-scanner'
 import {
   FolderContainer as Folder,
   RecentContainer as Recent,
@@ -22,10 +21,6 @@ import UploadFromMobile from 'drive/mobile/modules/upload'
 const AppRoute = (
   <Route>
     <Route component={Layout}>
-      {/**@TODO remove this route when we have a cordova playground */}
-      {__DEVELOPMENT__ && (
-        <Route path="/scan" component={ScannerQualification} />
-      )}
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
