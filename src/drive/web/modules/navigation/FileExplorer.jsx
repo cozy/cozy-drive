@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 
-import { queryConnect, models, withClient } from 'cozy-client'
+import { queryConnect, models, withClient, Q } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'cozy-sharing'
@@ -219,12 +219,11 @@ export const handleFileOpen = (file, availableOffline, props, dispatch) => {
   }
 }
 
-const appsQuery = client => client.all('io.cozy.apps')
 export default compose(
   translate(),
   queryConnect({
     apps: {
-      query: appsQuery,
+      query: Q('io.cozy.apps'),
       as: 'apps'
     }
   }),
