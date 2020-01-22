@@ -25,6 +25,7 @@ export const withPersistentState = (WrappedComponent, persistenceKey) => {
         )
       } catch (e) {
         if (e.canceled !== true) {
+          //eslint-disable-next-line
           console.log('error', e)
         }
       }
@@ -39,6 +40,7 @@ export const withPersistentState = (WrappedComponent, persistenceKey) => {
         )
       } catch (e) {
         if (e.canceled !== true) {
+          //eslint-disable-next-line
           console.log('error', e)
         }
       }
