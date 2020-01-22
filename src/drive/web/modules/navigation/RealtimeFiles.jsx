@@ -121,7 +121,7 @@ const RealtimeFilesConnected = connect(
   mapDispatchToProps
 )(withRouter(withClient(RealtimeFiles)))
 
-RealtimeFilesConnected.propTypes = {
+RealtimeFiles.propTypes = {
   client: PropTypes.object.isRequired,
   files: PropTypes.array.isRequired
 }
