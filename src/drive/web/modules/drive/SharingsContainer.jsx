@@ -27,6 +27,9 @@ export class SharingFetcher extends React.Component {
     this.fetchSharedParents = null
   }
   async fetchSharedDocuments() {
+    //!TODO Cozy-Sharing should return all the needed information
+    //not just path. We should not run again the request to get the
+    // shared stuff
     const { sharedDocuments, client } = this.props
 
     try {
@@ -45,7 +48,7 @@ export class SharingFetcher extends React.Component {
       )
       const parentsResp = await this.fetchSharedParents
       const parents = parentsResp.data
-      const files = resp.data.sort((a, b) => {
+      const files = resp.data.filter(f => !f.trashed).sort((a, b) => {
         if (a.type === 'directory' && b.type !== 'directory') return -1
         else if (a.type !== 'directory' && b.type === 'directory') return 1
         else return a.name.localeCompare(b.name)
