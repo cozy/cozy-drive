@@ -86,7 +86,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { hasWriteAccess, canMove } = ownProps
+  const { hasWriteAccess, canMove, onFileDelete } = ownProps
   return {
     actions: Object.assign({}, ownProps.actions, {
       selection: {
@@ -130,7 +130,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 <DeleteConfirm
                   files={files}
                   referenced={isAnyFileReferencedByAlbum(files)}
-                  onConfirm={() => dispatch(trashFiles(files))}
+                  onConfirm={() => {
+                    onFileDelete()
+                    return dispatch(trashFiles(files))
+                  }}
                 />
               )
             ),
@@ -206,8 +209,12 @@ const FolderViewWithSharingContext = props =>
     <ConnectedFolderView {...props} hasWriteAccess={false} />
   ) : (
     <SharedDocument docId={props.displayedFolder.id}>
-      {({ hasWriteAccess }) => (
-        <ConnectedFolderView {...props} hasWriteAccess={hasWriteAccess} />
+      {({ hasWriteAccess, onFileDelete }) => (
+        <ConnectedFolderView
+          {...props}
+          hasWriteAccess={hasWriteAccess}
+          onFileDelete={onFileDelete}
+        />
       )}
     </SharedDocument>
   )
