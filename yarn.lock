@@ -5133,10 +5133,22 @@ cozy-doctypes@1.70.0:
     lodash "4.17.15"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.70.0, cozy-doctypes@^1.71.0:
+cozy-doctypes@^1.70.0:
   version "1.71.0"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.71.0.tgz#2b55f13099305765e6781d44f69d0ffe57f19073"
   integrity sha512-oeQPPfAkas6uxjncgcS9ATFYPvVXA95EJFHmjhOxcgVp9DbUKGGh99M70JWMAJrC8U/+1F0mCKaQhpmxKnpsMA==
+  dependencies:
+    "@babel/runtime" "7.5.5"
+    cozy-logger "^1.6.0"
+    date-fns "1.30.1"
+    es6-promise-pool "2.5.0"
+    lodash "4.17.15"
+    prop-types "^15.7.2"
+
+cozy-doctypes@^1.72.0:
+  version "1.72.0"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.72.0.tgz#42f9a5823b37c181ef60f949532ba70066c4cedb"
+  integrity sha512-KFezh/TsOFed2SX1q+TNSaWBx2gfEdGwEfRQA9nka6P3Bn3DZCSk8SKIXGa9nnnHOJedGPtN/L55mvpu7wG4dg==
   dependencies:
     "@babel/runtime" "7.5.5"
     cozy-logger "^1.6.0"
@@ -5288,16 +5300,16 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-sharing@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.6.1.tgz#384bc23c850b0493aa2a598524b33fef7636ed94"
-  integrity sha512-Ak7Pn7COAE54mD9vsLKXXAtl4PTVReAu1TsCtOlEa70SfzG2kgzKR/VR/2hBkjGFgfmkGRZb3wxv9RiY4jNbWQ==
+cozy-sharing@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.8.0.tgz#63d8b4f33606522be84b9395419b59c28ca28719"
+  integrity sha512-aGfrjBNbnui8/SiWQpixh2Jj17WJMiGDmnJtXjy0j1uTutJUGbsDHV77JHPJtrQtPdocfN2/dScr7eUj4N6dKg==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
     cozy-device-helper "^1.8.0"
-    cozy-doctypes "^1.71.0"
+    cozy-doctypes "^1.72.0"
     cozy-realtime "^3.4.0"
     lodash "^4.17.15"
     minilog "https://github.com/cozy/minilog.git#master"
@@ -11403,6 +11415,13 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
+  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 

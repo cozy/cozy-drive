@@ -87,7 +87,7 @@ export class MoveModal extends React.Component {
         target: targetName,
         smart_count: entries.length,
         buttonText: t('Move.cancel'),
-        buttonAction: () => this.cancelMove(entries, trashedFiles)
+        buttonAction: () => this.cancelMove(entries, trashedFiles, callback)
       })
       this.trackEvent(entries.length)
       if (callback) callback()
@@ -102,7 +102,7 @@ export class MoveModal extends React.Component {
     }
   }
 
-  cancelMove = async (entries, trashedFiles) => {
+  cancelMove = async (entries, trashedFiles, callback) => {
     const { client } = this.props
     try {
       await Promise.all(
@@ -123,7 +123,6 @@ export class MoveModal extends React.Component {
           }
         })
       )
-
       if (restoreErrorsCount) {
         Alerter.info('Move.cancelledWithRestoreErrors', {
           subject: entries.length === 1 ? entries[0].name : '',
@@ -139,6 +138,8 @@ export class MoveModal extends React.Component {
     } catch (e) {
       logger.warn(e)
       Alerter.error('Move.cancelled_error', { smart_count: entries.length })
+    } finally {
+      if (callback) callback()
     }
   }
 
