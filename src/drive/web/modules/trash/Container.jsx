@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { showModal } from 'react-cozy-helpers'
-
+import { RefreshableSharings } from 'cozy-sharing'
 import FolderView from 'drive/web/modules/layout/FolderView'
 import DestroyConfirm from './components/DestroyConfirm'
 import Toolbar from './Toolbar'
@@ -28,7 +28,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   actions: Object.assign({}, ownProps.actions, {
     selection: {
       restore: {
-        action: files => dispatch(restoreFiles(files))
+        action: files => {
+          ownProps.refreshSharings()
+          return dispatch(restoreFiles(files))
+        }
       },
       destroy: {
         action: files =>
@@ -56,9 +59,17 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default translate()(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(FolderView)
+const ConnectedContainerWithReduxAction = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FolderView)
+
+const ConnectedFolderViewWithRefreshableSharings = props => (
+  <RefreshableSharings>
+    {({ refresh }) => (
+      <ConnectedContainerWithReduxAction {...props} refreshSharings={refresh} />
+    )}
+  </RefreshableSharings>
 )
+
+export default translate()(ConnectedFolderViewWithRefreshableSharings)
