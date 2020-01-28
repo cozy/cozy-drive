@@ -1,17 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
+import { connect } from 'react-redux'
+
 import { Modal } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { Query, cancelable, withClient } from 'cozy-client'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { connect } from 'react-redux'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
+
+import { Query, cancelable, withClient } from 'cozy-client'
+
+import { RefreshableSharings } from 'cozy-sharing'
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
-import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+
+import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
 import FileList from 'drive/web/modules/move/FileList'
@@ -51,7 +56,7 @@ export class MoveModal extends React.Component {
     this.promises = []
   }
 
-  moveEntries = async () => {
+  moveEntries = async callback => {
     const { client, entries, onClose, sharingState, t } = this.props
     const { sharedPaths } = sharingState
     const { folderId } = this.state
@@ -85,6 +90,7 @@ export class MoveModal extends React.Component {
         buttonAction: () => this.cancelMove(entries, trashedFiles)
       })
       this.trackEvent(entries.length)
+      if (callback) callback()
     } catch (e) {
       logger.warn(e)
       Alerter.error('Move.error', { smart_count: entries.length })
@@ -201,13 +207,17 @@ export class MoveModal extends React.Component {
             )
           }}
         </Query>
-        <Footer
-          onConfirm={this.moveEntries}
-          onClose={onClose}
-          targets={entries}
-          currentDirId={folderId}
-          isMoving={isMoveInProgress}
-        />
+        <RefreshableSharings>
+          {({ refresh }) => (
+            <Footer
+              onConfirm={() => this.moveEntries(refresh)}
+              onClose={onClose}
+              targets={entries}
+              currentDirId={folderId}
+              isMoving={isMoveInProgress}
+            />
+          )}
+        </RefreshableSharings>
       </Modal>
     )
   }
