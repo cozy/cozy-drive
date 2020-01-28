@@ -66,11 +66,14 @@ class InitAppMobile {
   bindEvents = () => {
     document.addEventListener(
       'deviceready',
-      this.onDeviceReady.bind(this),
+      () => {
+        this.onDeviceReady()
+        document.addEventListener('resume', this.onResume.bind(this), false)
+        document.addEventListener('pause', this.onPause.bind(this), false)
+      },
       false
     )
-    document.addEventListener('resume', this.onResume.bind(this), false)
-    document.addEventListener('pause', this.onPause.bind(this), false)
+
     /*We add fastclick only for iOS since Chrome removed this behavior (iOS also, but
       we still use UIWebview and not WKWebview... )*/
     if (isIOSApp()) {
