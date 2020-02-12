@@ -150,7 +150,6 @@
     "redux-raven-middleware": "1.2.0",
     "redux-thunk": "2.3.0",
     "scheduler": "0.17.0",
-    "url-polyfill": "1.1.7",
     "webpack-node-externals": "1.7.2",
     "whatwg-fetch": "3.0.0"
   }
