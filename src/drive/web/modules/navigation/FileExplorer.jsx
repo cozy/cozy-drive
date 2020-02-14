@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 
-import { queryConnect, models, withClient, Q } from 'cozy-client'
+import { models, withClient } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+
+import { fetchUrlToOpenANote } from 'drive/web/modules/drive/files'
 import SharingProvider from 'cozy-sharing'
 import RealtimeFiles from './RealtimeFiles'
 import {
@@ -23,8 +26,6 @@ import {
   OPEN_FOLDER_FROM_TRASH_SUCCESS,
   OPEN_FOLDER_FROM_TRASH_FAILURE
 } from 'drive/web/modules/trash/actions'
-
-import { isNoteMine } from 'drive/web/modules/drive/files'
 
 const isRecentFilesViewByPath = props =>
   props.location.pathname.match(/^\/recent/)
@@ -147,9 +148,6 @@ export class DumbFileExplorer extends Component {
   }
 }
 
-const notesApp = {
-  slug: 'notes'
-}
 const mapStateToProps = state => ({
   displayedFolder: state.view.displayedFolder,
   openedFolderId: getOpenedFolderId(state),
@@ -177,7 +175,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export const handleFileOpen = (file, availableOffline, props, dispatch) => {
+export const handleFileOpen = async (
+  file,
+  availableOffline,
+  props,
+  dispatch
+) => {
   const redirectToViewer = () => {
     const viewPath = props.location.pathname
     props.router.push(`${viewPath}/file/${file.id}`)
@@ -187,32 +190,12 @@ export const handleFileOpen = (file, availableOffline, props, dispatch) => {
   }
 
   const isNote = models.file.isNote(file)
-  //This is a tmp hack since Notes doesn't handle sharing properly.
-  const isMyNote = isNote && isNoteMine(file, props.client)
-
-  if (isMyNote) {
-    const notesInstalled = models.applications.isInstalled(
-      props.apps.data,
-      notesApp
-    )
-    let url = ''
-    if (notesInstalled) {
-      url = models.note.generateUrlForNote(
-        models.applications.getUrl(notesInstalled),
-        file
-      )
-    } else {
-      url = models.applications.getStoreInstallationURL(
-        props.apps.data,
-        notesApp
-      )
-    }
-    if (url !== '') {
-      window.location.href = url
-    } else {
-      //If something went wrong previoulsy like the request to /apps has failled
-      //we display the note within the viewer
-      redirectToViewer()
+  const { client } = props
+  if (isNote) {
+    try {
+      window.location.href = await fetchUrlToOpenANote(client, file)
+    } catch (e) {
+      Alerter.error('alert.offline')
     }
   } else {
     redirectToViewer()
@@ -221,12 +204,6 @@ export const handleFileOpen = (file, availableOffline, props, dispatch) => {
 
 export default compose(
   translate(),
-  queryConnect({
-    apps: {
-      query: Q('io.cozy.apps'),
-      as: 'apps'
-    }
-  }),
   withRouter,
   withClient,
   connect(
