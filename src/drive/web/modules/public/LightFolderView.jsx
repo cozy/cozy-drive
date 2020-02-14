@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { models, withClient } from 'cozy-client'
+
 import FileList from 'drive/web/modules/filelist/FileList'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
@@ -21,6 +24,7 @@ import {
 
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 import Viewer from 'drive/web/modules/viewer/PublicViewer'
+import { fetchUrlToOpenANote } from 'drive/web/modules/drive/files'
 
 class DumbFolderView extends React.Component {
   state = {
@@ -28,7 +32,19 @@ class DumbFolderView extends React.Component {
     viewerOpened: false,
     currentViewedIndex: null
   }
-
+  handleFileOpen = async file => {
+    const isNote = models.file.isNote(file)
+    const { client } = this.props
+    if (isNote) {
+      try {
+        window.location.href = await fetchUrlToOpenANote(client, file)
+      } catch (e) {
+        Alerter.error('alert.offline')
+      }
+    } else {
+      this.showInViewer(file)
+    }
+  }
   showInViewer = file => {
     const { files, fileCount, params, location, fetchMoreFiles } = this.props
     const currentIndex = this.props.files.findIndex(f => f.id === file.id)
@@ -79,7 +95,7 @@ class DumbFolderView extends React.Component {
         </Topbar>
         <Content>
           <FileList
-            onFileOpen={this.showInViewer}
+            onFileOpen={this.handleFileOpen}
             onFolderOpen={this.navigateToFolder}
             withSelectionCheckbox={false}
             {...this.props}
@@ -116,4 +132,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(DumbFolderView))
+)(withRouter(withClient(DumbFolderView)))
