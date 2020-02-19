@@ -7,14 +7,18 @@ import { render } from 'react-dom'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 import { Router, Route, Redirect, hashHistory } from 'react-router'
-import CozyClient, { CozyProvider } from 'cozy-client'
+import CozyClient, { CozyProvider, models } from 'cozy-client'
+
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+
 import { getQueryParameter } from 'react-cozy-helpers'
 import { schema } from 'drive/lib/doctypes'
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
 import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
+import { fetchUrlToOpenANote } from 'drive/web/modules/drive/files'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
@@ -83,28 +87,40 @@ const init = async () => {
       .collection('io.cozy.files')
       .get(sharedDocumentId)
     const isFile = data && data.type === 'file'
-    initCozyBar(dataset)
-    render(
-      <I18n lang={lang} polyglot={polyglot}>
-        <CozyProvider client={client}>
-          <StyledApp>
-            {isFile ? (
-              <PublicLayout>
-                <LightFileViewer files={[data]} isFile={true} />
-              </PublicLayout>
-            ) : (
-              <Router history={hashHistory}>
-                <Route component={PublicLayout}>
-                  <Route path="files(/:folderId)" component={LightFolderView} />
-                </Route>
-                <Redirect from="/*" to={`files/${sharedDocumentId}`} />
-              </Router>
-            )}
-          </StyledApp>
-        </CozyProvider>
-      </I18n>,
-      root
-    )
+    const isNote = models.file.isNote(data)
+    if (isNote) {
+      try {
+        window.location.href = await fetchUrlToOpenANote(client, data)
+      } catch (e) {
+        Alerter.error('alert.offline')
+      }
+    } else {
+      initCozyBar(dataset)
+      render(
+        <I18n lang={lang} polyglot={polyglot}>
+          <CozyProvider client={client}>
+            <StyledApp>
+              {isFile ? (
+                <PublicLayout>
+                  <LightFileViewer files={[data]} isFile={true} />
+                </PublicLayout>
+              ) : (
+                <Router history={hashHistory}>
+                  <Route component={PublicLayout}>
+                    <Route
+                      path="files(/:folderId)"
+                      component={LightFolderView}
+                    />
+                  </Route>
+                  <Redirect from="/*" to={`files/${sharedDocumentId}`} />
+                </Router>
+              )}
+            </StyledApp>
+          </CozyProvider>
+        </I18n>,
+        root
+      )
+    }
   } catch (e) {
     logger.warn(e)
     initCozyBar(dataset, client)
