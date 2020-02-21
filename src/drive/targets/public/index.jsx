@@ -89,10 +89,7 @@ const init = async () => {
     const isNote = models.file.isNote(data)
     if (isNote) {
       try {
-        window.location.href = await models.note.fetchUrlToOpenANote(
-          client,
-          data
-        )
+        window.location.href = await models.note.fetchURL(client, data)
       } catch (e) {
         Alerter.error('alert.offline')
       }

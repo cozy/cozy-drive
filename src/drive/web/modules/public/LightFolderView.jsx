@@ -36,10 +36,7 @@ class DumbFolderView extends React.Component {
     const { client } = this.props
     if (isNote) {
       try {
-        window.location.href = await models.note.fetchUrlToOpenANote(
-          client,
-          file
-        )
+        window.location.href = await models.note.fetchURL(client, file)
       } catch (e) {
         Alerter.error('alert.offline')
       }
