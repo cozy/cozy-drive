@@ -8,7 +8,6 @@ import { models, withClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
-import { fetchUrlToOpenANote } from 'drive/web/modules/drive/files'
 import SharingProvider from 'cozy-sharing'
 import RealtimeFiles from './RealtimeFiles'
 import {
@@ -193,7 +192,7 @@ export const handleFileOpen = async (
   const { client } = props
   if (isNote) {
     try {
-      window.location.href = await fetchUrlToOpenANote(client, file)
+      window.location.href = await models.note.fetchUrlToOpenANote(client, file)
     } catch (e) {
       Alerter.error('alert.offline')
     }

@@ -18,7 +18,6 @@ import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
 import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
-import { fetchUrlToOpenANote } from 'drive/web/modules/drive/files'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
@@ -90,7 +89,10 @@ const init = async () => {
     const isNote = models.file.isNote(data)
     if (isNote) {
       try {
-        window.location.href = await fetchUrlToOpenANote(client, data)
+        window.location.href = await models.note.fetchUrlToOpenANote(
+          client,
+          data
+        )
       } catch (e) {
         Alerter.error('alert.offline')
       }

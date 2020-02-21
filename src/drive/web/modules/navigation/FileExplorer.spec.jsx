@@ -1,7 +1,7 @@
 import { handleFileOpen } from './FileExplorer'
 
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
-import { fetchUrlToOpenANote } from 'drive/web/modules/drive/files'
+import { models } from 'cozy-client'
 
 jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
@@ -12,10 +12,14 @@ jest.mock('drive/mobile/modules/offline/duck', () => {
     openLocalFile: jest.fn()
   }
 })
-jest.mock('drive/web/modules/drive/files', () => {
+jest.mock('cozy-client', () => {
   return {
-    ...require.requireActual('drive/web/modules/drive/files'),
-    fetchUrlToOpenANote: jest.fn()
+    ...require.requireActual('cozy-client'),
+    models: {
+      note: {
+        fetchUrlToOpenANote: jest.fn()
+      }
+    }
   }
 })
 jest.mock('cozy-client')
@@ -97,7 +101,7 @@ describe('FileExplorer', () => {
         { ...mockedRouter, client },
         mockedDispatch
       )
-      expect(fetchUrlToOpenANote).toHaveBeenCalled()
+      expect(models.note.fetchUrlToOpenANote).toHaveBeenCalled()
     })
   })
 })
