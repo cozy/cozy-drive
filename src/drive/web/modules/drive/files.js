@@ -1,5 +1,4 @@
 //!TODO Put this to cozy-client/models/files
-import { generateWebLink } from 'cozy-client'
 
 const FILE_TYPE = 'file'
 const DIR_TYPE = 'directory'
@@ -22,31 +21,4 @@ export const isReferencedByAlbum = file => {
     }
   }
   return false
-}
-/**
- * Fetch and build an URL to open a note.
- * @param {Object} client CozyClient instance
- * @param {Object} file io.cozy.file object
- * @return {String} url
- */
-export const fetchUrlToOpenANote = async (client, file) => {
-  const {
-    data: { note_id, subdomain, protocol, instance, sharecode, public_name }
-  } = await client
-    .getStackClient()
-    .collection('io.cozy.notes')
-    .fetchURL({ _id: file.id })
-  const searchParams = [['id', note_id]]
-  if (sharecode) searchParams.push(['sharecode', sharecode])
-  if (public_name) searchParams.push(['username', public_name])
-  const pathname = sharecode ? '/public/' : ''
-  const url = generateWebLink({
-    cozyUrl: `${protocol}://${instance}`,
-    searchParams,
-    pathname,
-    hash: `/n/${note_id}`,
-    slug: 'notes',
-    subDomainType: subdomain
-  })
-  return url
 }

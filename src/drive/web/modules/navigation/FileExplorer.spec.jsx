@@ -1,8 +1,6 @@
 import { handleFileOpen } from './FileExplorer'
 
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
-import { models } from 'cozy-client'
-
 jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
@@ -12,21 +10,14 @@ jest.mock('drive/mobile/modules/offline/duck', () => {
     openLocalFile: jest.fn()
   }
 })
-jest.mock('cozy-client', () => {
-  return {
-    ...require.requireActual('cozy-client'),
-    models: {
-      note: {
-        fetchUrlToOpenANote: jest.fn()
-      }
-    }
-  }
-})
-jest.mock('cozy-client')
 
+const fetchURLSpy = jest.fn()
 const client = {
   getStackClient: () => ({
-    uri: 'http://cozy.tools'
+    uri: 'http://cozy.tools',
+    collection: () => ({
+      fetchURL: fetchURLSpy
+    })
   })
 }
 const file = {
@@ -78,14 +69,14 @@ describe('FileExplorer', () => {
       jest.resetAllMocks()
       global.window = originalLocation
     })
-    it('should call native method if available offline', () => {
+    it('should call native method if available offline', async () => {
       const isAvailableOffline = true
-      handleFileOpen(file, isAvailableOffline, { client }, mockedDispatch)
+      await handleFileOpen(file, isAvailableOffline, { client }, mockedDispatch)
       expect(openLocalFile).toHaveBeenCalled()
     })
-    it('should call router push if this is a file', () => {
+    it('should call router push if this is a file', async () => {
       const isAvailableOffline = false
-      handleFileOpen(
+      await handleFileOpen(
         file,
         isAvailableOffline,
         { ...mockedRouter, client },
@@ -95,13 +86,14 @@ describe('FileExplorer', () => {
     })
     it('should call the stack route to open a note', async () => {
       const isAvailableOffline = false
-      handleFileOpen(
+      await handleFileOpen(
         note,
         isAvailableOffline,
         { ...mockedRouter, client },
         mockedDispatch
       )
-      expect(models.note.fetchUrlToOpenANote).toHaveBeenCalled()
+
+      expect(fetchURLSpy).toHaveBeenCalled()
     })
   })
 })
