@@ -19,14 +19,14 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
       onClick={async () => {
         if (!fetchStatus) return
         if (isInstalled) {
-          const { data: file } = await models.note.createNoteDocument(
-            client,
-            displayedFolder.id
-          )
-          window.location.href = await models.note.generateUrlForNoteWithReturnUrl(
+          const { data: file } = await client.create('io.cozy.notes', {
+            dir_id: displayedFolder.id
+          })
+
+          window.location.href = await models.note.generatePrivateUrl(
             url,
             file,
-            window.location.href
+            { returnUrl: window.location.href }
           )
         } else {
           window.location.href = url

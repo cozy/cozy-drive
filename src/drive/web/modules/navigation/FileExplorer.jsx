@@ -187,12 +187,11 @@ export const handleFileOpen = async (
   if (availableOffline) {
     return dispatch(openLocalFile(file))
   }
-
   const isNote = models.file.isNote(file)
   const { client } = props
   if (isNote) {
     try {
-      window.location.href = await models.note.fetchUrlToOpenANote(client, file)
+      window.location.href = await models.note.fetchURL(client, file)
     } catch (e) {
       Alerter.error('alert.offline')
     }
