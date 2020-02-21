@@ -24,7 +24,6 @@ import {
 
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 import Viewer from 'drive/web/modules/viewer/PublicViewer'
-import { fetchUrlToOpenANote } from 'drive/web/modules/drive/files'
 
 class DumbFolderView extends React.Component {
   state = {
@@ -37,7 +36,10 @@ class DumbFolderView extends React.Component {
     const { client } = this.props
     if (isNote) {
       try {
-        window.location.href = await fetchUrlToOpenANote(client, file)
+        window.location.href = await models.note.fetchUrlToOpenANote(
+          client,
+          file
+        )
       } catch (e) {
         Alerter.error('alert.offline')
       }
