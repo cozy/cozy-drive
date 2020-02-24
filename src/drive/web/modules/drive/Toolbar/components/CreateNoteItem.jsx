@@ -3,8 +3,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 
 import styles from 'drive/styles/toolbar.styl'
-import { withClient, models } from 'cozy-client'
-import useAppLinkWithStoreFallback from './useAppLinkWithStoreFallBack'
+import { withClient, models, useAppLinkWithStoreFallback } from 'cozy-client'
 
 const CreateNoteItem = ({ client, t, displayedFolder }) => {
   const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
