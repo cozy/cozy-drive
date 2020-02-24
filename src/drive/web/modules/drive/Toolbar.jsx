@@ -64,6 +64,15 @@ class Toolbar extends Component {
             <ShareItem />
           </Item>
         </NotRootFolder>
+        {canCreateFolder &&
+          hasWriteAccess && (
+            <Item>
+              <AddFolderItem />
+            </Item>
+          )}
+        <Item>
+          <CreateNoteItem />
+        </Item>
         {canUpload &&
           hasWriteAccess && (
             <Item>
@@ -77,12 +86,7 @@ class Toolbar extends Component {
               <ScanWrapper insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
-        {canCreateFolder &&
-          hasWriteAccess && (
-            <Item>
-              <AddFolderItem />
-            </Item>
-          )}
+        <hr />
         <NotRootFolder>
           <Item>
             <DownloadButtonItem />
@@ -95,14 +99,8 @@ class Toolbar extends Component {
             </a>
           </SelectableItem>
         </Item>
-        <hr />
-        <Item>
-          <CreateNoteItem />
-        </Item>
-        <NotRootFolder type="hr">
-          <hr />
-        </NotRootFolder>
         <NotRootFolder>
+          <hr />
           <Item>
             <DeleteItem />
           </Item>
