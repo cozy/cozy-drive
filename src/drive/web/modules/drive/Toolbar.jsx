@@ -59,11 +59,6 @@ class Toolbar extends Component {
         innerClassName={styles['fil-toolbar-inner-menu']}
         button={<MoreButton />}
       >
-        <NotRootFolder>
-          <Item>
-            <ShareItem />
-          </Item>
-        </NotRootFolder>
         {canCreateFolder &&
           hasWriteAccess && (
             <Item>
@@ -87,6 +82,11 @@ class Toolbar extends Component {
             </Item>
           )}
         <hr />
+        <NotRootFolder>
+          <Item>
+            <ShareItem />
+          </Item>
+        </NotRootFolder>
         <NotRootFolder>
           <Item>
             <DownloadButtonItem />
