@@ -24,8 +24,6 @@ import {
   startHeartBeat,
   stopHeartBeat
 } from 'drive/mobile/lib/tracker'
-import { getTranslateFunction } from 'drive/mobile/lib/i18n'
-import { scheduleNotification } from 'drive/mobile/lib/notification'
 import { getLang, initClient } from 'drive/mobile/lib/cozy-helper'
 import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
 import { backupImages } from 'drive/mobile/modules/mediaBackup/duck'
@@ -164,12 +162,13 @@ class InitAppMobile {
     const store = await this.getStore()
     if (isAnalyticsOn(store.getState())) stopHeartBeat()
     // TODO: selector
-    if (store.getState().mobile.mediaBackup.currentUpload && isIOSApp()) {
+    // We don't want to send the notification for now
+    /* if (store.getState().mobile.mediaBackup.currentUpload && isIOSApp()) {
       const t = getTranslateFunction()
       scheduleNotification({
         text: t('mobile.notifications.backup_paused')
       })
-    }
+    } */
   }
 
   /**
