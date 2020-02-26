@@ -6,7 +6,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Caption } from 'cozy-ui/transpiled/react/Text'
 
-import { withClient } from 'cozy-client'
+import { withClient, useCapabilities } from 'cozy-client'
 import { withRouter } from 'react-router'
 
 import HistoryRow from 'cozy-ui/transpiled/react/HistoryRow'
@@ -16,7 +16,6 @@ import { CozyFile } from 'models'
 import { isMobile } from 'cozy-device-helper/dist/platform'
 import { exportFilesNative } from 'drive/web/modules/navigation/duck/actions'
 
-import useCapabilities from 'lib/hooks/useCapabilities'
 const formatDate = (date, f) => {
   return f(date, 'DD MMMM - HH:mm')
 }

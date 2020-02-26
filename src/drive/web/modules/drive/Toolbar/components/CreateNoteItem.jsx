@@ -2,12 +2,16 @@ import React from 'react'
 import get from 'lodash/get'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { withClient, models, useAppLinkWithStoreFallback } from 'cozy-client'
+import {
+  withClient,
+  models,
+  useAppLinkWithStoreFallback,
+  useCapabilities
+} from 'cozy-client'
 import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
 
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 import styles from 'drive/styles/toolbar.styl'
-import useCapabilities from 'lib/hooks/useCapabilities'
 
 const CreateNoteItem = ({ client, t, displayedFolder }) => {
   const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
@@ -19,13 +23,16 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
     capabilities,
     'capabilities.attributes.flat_subdomains'
   )
+  let returnUrl = ''
+  if (displayedFolder) {
+    returnUrl = generateUniversalLink({
+      slug: 'drive',
+      cozyUrl: client.getStackClient().uri,
+      subDomainType: isFlatDomain ? 'flat' : 'nested',
+      nativePath: `/files/${displayedFolder.id}`
+    })
+  }
 
-  const returnUrl = generateUniversalLink({
-    slug: 'drive',
-    cozyUrl: client.getStackClient().uri,
-    subDomainType: isFlatDomain ? 'flat' : 'nested',
-    nativePath: `/files/${displayedFolder ? displayedFolder.id : null}`
-  })
   return (
     <a
       data-test-id="create-a-note"
