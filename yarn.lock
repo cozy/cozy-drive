@@ -5198,10 +5198,10 @@ cozy-client@10.5.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@11.4.1:
-  version "11.4.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-11.4.1.tgz#262cbe8b91ff827ac5cb5c47231fb7e224550259"
-  integrity sha512-H92ZPdd8yR0Uihit4nmTVHd/Bj8RkG0vrDVertI9oKVr5HHfgmnqiWH+gpmyNs9PZMGheeILDJiP/D1xL3BQVw==
+cozy-client@11.5.0:
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-11.5.0.tgz#8391dde24ecc2314bf2819e23d26cf685245c7da"
+  integrity sha512-Vw4VfvmhSpFMBjE5uys5z4bGo7Ur0pCeGH+cEVnt7sCiSuZYJwfUyMvJfCbZ45Zh59gXnar3toLOQ98FglY52Q==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
