@@ -13,7 +13,11 @@ const ShareItem = translate()(({ t, share, displayedFolder }) => {
           className={styles['fil-action-share']}
           onClick={() => share(displayedFolder)}
         >
-          {t(isSharedWithMe ? 'Files.share.sharedWithMe' : 'toolbar.share')}
+          {t(
+            isSharedWithMe
+              ? 'Files.share.sharedWithMe'
+              : 'toolbar.menu_share_folder'
+          )}
           <RecipientsAvatars
             className={styles['fil-toolbar-menu-recipients']}
             recipients={recipients}
