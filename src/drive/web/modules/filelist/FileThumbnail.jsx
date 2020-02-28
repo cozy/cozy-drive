@@ -37,13 +37,21 @@ const FileThumbnail = ({
       ) : (
         <FileIcon file={file} size={size} />
       )}
-      {withSharedBadge && (
-        <SharedBadge
-          docId={file.id}
-          className={styles['fil-content-shared']}
-          xsmall
-        />
-      )}
+      {/**
+       * @todo
+       * Since for shortcut we already display a kind of badge we're currently just
+       * not displaying the sharedBadge. The next functionnal's task is to work on
+       * sharing and we'll remove this badge from here. In the meantime, we take this
+       * workaround
+       */}
+      {withSharedBadge &&
+        file.class !== 'shortcut' && (
+          <SharedBadge
+            docId={file.id}
+            className={styles['fil-content-shared']}
+            xsmall
+          />
+        )}
     </div>
   )
 }
