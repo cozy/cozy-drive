@@ -23,6 +23,9 @@ import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import appMetadata from 'drive/appMetadata'
 import logger from 'lib/logger'
+
+import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
+
 const initCozyBar = (data, client) => {
   if (
     data.cozyAppName &&
@@ -111,6 +114,7 @@ const init = async () => {
                       component={LightFolderView}
                     />
                   </Route>
+                  <Route path="external/:fileId" component={ExternalRedirect} />
                   <Redirect from="/*" to={`files/${sharedDocumentId}`} />
                 </Router>
               )}

@@ -29,6 +29,7 @@ import palette from 'cozy-ui/transpiled/react/palette'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist.styl'
+import FileOpener from './FileOpener'
 
 const ActionMenu = withBreakpoints()(
   ({ breakpoints: { isMobile }, ...props }) =>
@@ -57,8 +58,7 @@ export const getParentLink = element => {
 
   return getParentLink(element.parentNode)
 }
-
-const enableTouchEvents = ev => {
+export const enableTouchEvents = ev => {
   // remove event when you rename a file
   if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
     return false
@@ -243,6 +243,8 @@ class File extends Component {
   constructor(props) {
     super(props)
     this.filerowMenuToggleRef = React.createRef()
+    this.toggle = this.toggle.bind(this)
+    this.open = this.open.bind(this)
   }
 
   showActionMenu = () => {
@@ -254,7 +256,7 @@ class File extends Component {
   }
 
   componentDidMount() {
-    const { disabled, attributes } = this.props
+    /* const { disabled, attributes } = this.props
     this.gesturesHandler = new Hammer.Manager(this.filerow)
     this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
     this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
@@ -267,10 +269,11 @@ class File extends Component {
         if (ev.type === 'onpress' || selectionModeActive) {
           this.toggle(ev.srcEvent)
         } else {
+          console.log('EVENT****', ev)
           this.open(ev.srcEvent, attributes)
         }
       }
-    })
+    }) */
   }
 
   componentWillUnmount() {
@@ -307,6 +310,7 @@ class File extends Component {
       isAvailableOffline,
       disabled,
       thumbnailSizeBig,
+      selectionModeActive,
       breakpoints: { isExtraLarge, isMobile }
     } = this.props
     const { actionMenuVisible } = this.state
@@ -340,26 +344,35 @@ class File extends Component {
           selected={selected}
           onClick={e => this.toggle(e)}
         />
-        <FileThumbnail
+        <FileOpener
           file={attributes}
-          withSharedBadge={withSharedBadge}
-          size={thumbnailSizeBig ? 96 : undefined}
-        />
-        <FileName
-          attributes={attributes}
-          isRenaming={isRenaming}
-          interactive={!disabled}
-          withFilePath={withFilePath}
-          isMobile={isMobile}
-          formattedSize={formattedSize}
-          formattedUpdatedAt={formattedUpdatedAt}
-        />
-        <LastUpdate
-          date={updatedAt}
-          formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
-        />
-        <Size filesize={formattedSize} />
-        <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
+          disabled={disabled}
+          actionMenuVisible={actionMenuVisible}
+          selectionModeActive={selectionModeActive}
+          open={this.open}
+          toggle={this.toggle}
+        >
+          <FileThumbnail
+            file={attributes}
+            withSharedBadge={withSharedBadge}
+            size={thumbnailSizeBig ? 96 : undefined}
+          />
+          <FileName
+            attributes={attributes}
+            isRenaming={isRenaming}
+            interactive={!disabled}
+            withFilePath={withFilePath}
+            isMobile={isMobile}
+            formattedSize={formattedSize}
+            formattedUpdatedAt={formattedUpdatedAt}
+          />
+          <LastUpdate
+            date={updatedAt}
+            formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
+          />
+          <Size filesize={formattedSize} />
+          <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
+        </FileOpener>
         {actions && (
           <FileAction
             t={t}
