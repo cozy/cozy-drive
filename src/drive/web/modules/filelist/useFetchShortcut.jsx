@@ -4,6 +4,8 @@ const useFetchShortcut = (client, file) => {
   const [shortcutInfos, setShortcutInfos] = useState()
   const [shortcurtImg, setShotcutImg] = useState()
   const [fetchStatus, setFetchStatus] = useState('idle')
+  const [shouldDisplayImg, setShouldDisplayImg] = useState(false)
+  let timeout
   useEffect(
     () => {
       const fetchData = async () => {
@@ -21,6 +23,7 @@ const useFetchShortcut = (client, file) => {
           }/icon.png`
 
           setShotcutImg(imgUrl)
+          timeout = setTimeout(() => setShouldDisplayImg(true), 400)
           setShortcutInfos(shortcutInfosResult)
           setFetchStatus('loaded')
         } catch (e) {
@@ -29,14 +32,16 @@ const useFetchShortcut = (client, file) => {
         }
       }
       fetchData()
+      return () => clearTimeout(timeout)
     },
-    [client]
+    [client, file]
   )
 
   return {
     shortcutInfos,
     shortcurtImg,
-    fetchStatus
+    fetchStatus,
+    shouldDisplayImg
   }
 }
 
