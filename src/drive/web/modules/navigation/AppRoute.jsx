@@ -18,8 +18,11 @@ import { Container as Trash } from 'drive/web/modules/trash'
 import FileHistory from '../../../../components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
 
+import ExternalRedirect from './ExternalRedirect'
+
 const AppRoute = (
   <Route>
+    <Route path="external/:fileId" component={ExternalRedirect} />
     <Route component={Layout}>
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" component={UploadFromMobile} />

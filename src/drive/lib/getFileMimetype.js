@@ -21,7 +21,7 @@ export const getFileMimetype = collection => (mime = '', name = '') => {
     mime === 'application/octet-stream'
       ? getMimetypeFromFilename(name.toLowerCase())
       : mime
-
+  console.log('mime', mime)
   const [type, subtype] = mimetype.split('/')
   if (collection[type]) {
     return type
