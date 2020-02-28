@@ -4,20 +4,22 @@ import classNames from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import Hammer from 'hammerjs'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import RenameInput from 'drive/web/modules/drive/RenameInput'
-import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
-import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
-import { isDirectory } from 'drive/web/modules/drive/files'
 import {
   Button,
   Icon,
   withBreakpoints,
   MidEllipsis
 } from 'cozy-ui/transpiled/react'
+import palette from 'cozy-ui/transpiled/react/palette'
+
 import { SharedStatus } from 'cozy-sharing'
+
+import RenameInput from 'drive/web/modules/drive/RenameInput'
+import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
+import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
+import { isDirectory } from 'drive/web/modules/drive/files'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import { CozyFile } from 'models'
 import {
@@ -25,11 +27,10 @@ import {
   isSelected
 } from 'drive/web/modules/selection/duck'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
-import palette from 'cozy-ui/transpiled/react/palette'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
+import FileOpener from 'drive/web/modules/filelist/FileOpener'
 
 import styles from 'drive/styles/filelist.styl'
-import FileOpener from './FileOpener'
 
 const ActionMenu = withBreakpoints()(
   ({ breakpoints: { isMobile }, ...props }) =>
@@ -58,6 +59,7 @@ export const getParentLink = element => {
 
   return getParentLink(element.parentNode)
 }
+
 export const enableTouchEvents = ev => {
   // remove event when you rename a file
   if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
@@ -253,31 +255,6 @@ class File extends Component {
 
   hideActionMenu = () => {
     this.setState(state => ({ ...state, actionMenuVisible: false }))
-  }
-
-  componentDidMount() {
-    /* const { disabled, attributes } = this.props
-    this.gesturesHandler = new Hammer.Manager(this.filerow)
-    this.gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
-    this.gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
-    this.gesturesHandler.on('onpress singletap', ev => {
-      if (this.state.actionMenuVisible || disabled) return
-      //don't read this value on the didMount... prefer when the listener is called
-      const { selectionModeActive } = this.props
-      if (enableTouchEvents(ev)) {
-        ev.preventDefault() // prevent a ghost click
-        if (ev.type === 'onpress' || selectionModeActive) {
-          this.toggle(ev.srcEvent)
-        } else {
-          console.log('EVENT****', ev)
-          this.open(ev.srcEvent, attributes)
-        }
-      }
-    }) */
-  }
-
-  componentWillUnmount() {
-    this.gesturesHandler && this.gesturesHandler.destroy()
   }
 
   toggle(e) {

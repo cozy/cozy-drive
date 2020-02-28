@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const useFetchShortcut = (client, file) => {
+const useFetchShortcut = (client, id) => {
   const [shortcutInfos, setShortcutInfos] = useState()
   const [shortcurtImg, setShotcutImg] = useState()
   const [fetchStatus, setFetchStatus] = useState('idle')
@@ -13,7 +13,7 @@ const useFetchShortcut = (client, file) => {
         try {
           const shortcutInfosResult = await client
             .getStackClient()
-            .fetchJSON('GET', `/shortcuts/${file.id}`)
+            .fetchJSON('GET', `/shortcuts/${id}`)
           const shortcutRemoteUrl = new URL(
             shortcutInfosResult.data.attributes.url
           )
@@ -23,6 +23,9 @@ const useFetchShortcut = (client, file) => {
           }/icon.png`
 
           setShotcutImg(imgUrl)
+          // this is used in conjonction with CSS display none/block to
+          // make the http request to load the image and not having a blank
+          // element for a few ms
           timeout = setTimeout(() => setShouldDisplayImg(true), 400)
           setShortcutInfos(shortcutInfosResult)
           setFetchStatus('loaded')
@@ -34,7 +37,7 @@ const useFetchShortcut = (client, file) => {
       fetchData()
       return () => clearTimeout(timeout)
     },
-    [client, file]
+    [client, id]
   )
 
   return {

@@ -6,7 +6,7 @@ import IconStack from 'cozy-ui/transpiled/react/IconStack'
 import palette from 'cozy-ui/transpiled/react/palette'
 
 const FileIconShortcut = ({ file, size, client }) => {
-  const { shortcurtImg, shouldDisplayImg } = useFetchShortcut(client, file)
+  const { shortcurtImg, shouldDisplayImg } = useFetchShortcut(client, file.id)
 
   return (
     <IconStack
