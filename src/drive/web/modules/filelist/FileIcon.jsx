@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Icon } from 'cozy-ui/transpiled/react'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 import { isDirectory } from 'drive/web/modules/drive/files'
-import FileIconShortcut from './FileIconShortCut'
+import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortCut'
 
 const FileIcon = ({ file, size = 32 }) => {
   if (file.class === 'shortcut') {

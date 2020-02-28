@@ -636,5 +636,11 @@
     "current_version": "Current version",
     "loading": "Loading...",
     "noFileVersionEnabled": "Your Cozy will soon be able to archive the last modifications of a file to never risk losing them again"
+  },
+  "External": {
+    "redirection": {
+      "title": "Redirection", 
+      "text": "You're about to be redirected..."
+    }
   }
 }
