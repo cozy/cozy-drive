@@ -5036,10 +5036,10 @@ cozy-authentication@^2.0.5:
     snarkdown "1.2.2"
     url-polyfill "1.1.7"
 
-cozy-bar@7.12.1:
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.12.1.tgz#b747767e109b3efd253518853b5941e8a0df2ac8"
-  integrity sha512-l3VFwa+sKhlIj7nnPE6Ow9qiOd5eGQ+d++ubMkugfI81u0osyO9nkwTj9ab8WYHPoMVhloeQtmbtDEjSkYgs1g==
+cozy-bar@7.12.2:
+  version "7.12.2"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.12.2.tgz#0c7ef8836c0c8745497838f515d8e61c25407e6f"
+  integrity sha512-J6XPjUHAinsTvaIxrvaQMq3DA3dBr/4w4Ce4xr9BX+vau/N7f/yFP3rElj0hrnL8qMKUlL4w4WRDda4NgKiFtw==
   dependencies:
     "@babel/core" "7.6.2"
     babel-core "7.0.0-bridge.0"
@@ -5054,7 +5054,7 @@ cozy-bar@7.12.1:
     localforage "1.7.3"
     lodash.debounce "4.0.8"
     lodash.unionwith "4.6.0"
-    minilog "3.1.0"
+    minilog "git+https://github.com/cozy/minilog.git#master"
     parcel "1.12.3"
     piwik-react-router "0.12.1"
     prop-types "15.7.2"
@@ -11403,6 +11403,13 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
+  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
