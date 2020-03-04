@@ -34,7 +34,7 @@ export const startTracker = (cozyServerUrl = '') => {
   })
 
   // connect to the router history if possible
-  if (appHistory) {
+  if (appHistory && trackerInstance) {
     trackerInstance.connectToHistory(appHistory)
     trackerInstance.track(appHistory.getCurrentLocation()) // force tracking the current page
   }
