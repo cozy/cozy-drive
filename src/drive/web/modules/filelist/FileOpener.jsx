@@ -45,8 +45,11 @@ const FileOpener = ({
 
   useEffect(
     () => {
-      const gesturesHandler = new Hammer.Manager(linkRef.current)
+      let gesturesHandler = null
+      //console.log('inkRef.current', linkRef.current)
       if (linkRef.current !== null) {
+        //gesturesHandler = new Hammer.Manager(document.getElementById(file.id))
+        gesturesHandler = new Hammer.Manager(linkRef.current)
         if (file.class === 'shortcut') {
           gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
 
@@ -54,9 +57,12 @@ const FileOpener = ({
             ev.srcEvent.stopImmediatePropagation()
           })
         } else {
+          //linkRef.current.addEventListener('touchstart', () => alert('tap'))
           gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
           gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
+          console.log('gesturesHandler', gesturesHandler)
           gesturesHandler.on('onpress singletap', ev => {
+            console.log('presse ?')
             if (actionMenuVisible || disabled) return
             //don't read this value on the didMount... prefer when the listener is called
             if (enableTouchEvents(ev)) {
@@ -72,7 +78,7 @@ const FileOpener = ({
           })
         }
       }
-      return () => gesturesHandler.destroy()
+      return () => gesturesHandler && gesturesHandler.destroy()
     },
     [linkRef.current]
   )
@@ -96,7 +102,7 @@ const FileOpener = ({
     )
   } else {
     return (
-      <span style={{ display: 'contents' }} ref={linkRef}>
+      <span style={{ display: 'contents' }} ref={linkRef} id={file.id}>
         {children}
       </span>
     )

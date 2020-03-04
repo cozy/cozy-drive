@@ -5,9 +5,8 @@ import { compose } from 'redux'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { withBreakpoints } from 'cozy-ui/transpiled/react'
+import { withBreakpoints, BarContextProvider } from 'cozy-ui/transpiled/react'
 import { withClient } from 'cozy-client'
-import { BarContextProvider } from 'react-cozy-helpers'
 import { isMobileApp } from 'cozy-device-helper'
 
 import { MoreButton } from 'components/Button'
@@ -32,9 +31,9 @@ import ScanWrapper from './Toolbar/components/ScanWrapper'
 
 class Toolbar extends Component {
   static contextTypes = {
-    t: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired
   }
+
   render() {
     const {
       t,
@@ -47,7 +46,6 @@ class Toolbar extends Component {
       breakpoints: { isMobile },
       client
     } = this.props
-
     const isDisabled = disabled || selectionModeActive
     const { BarRight } = cozy.bar
 
@@ -129,7 +127,7 @@ class Toolbar extends Component {
             <BarContextProvider
               client={client}
               store={this.context.store}
-              t={this.context.t}
+              t={t}
             >
               <SharingProvider doctype="io.cozy.files" documentType="Files">
                 {MoreMenu}

@@ -75,8 +75,12 @@ class ScanWrapper extends Component {
           //We need to cancel the MediaBackup before doing the upload since the scanned file will be
           //inserted we don't know where in the queue resulting in a non uploaded file if the queue is
           //big enough
-          onBeforeUpload={() => stopMediaBackup()}
+          onBeforeUpload={() => {
+            console.Log('before upload')
+            stopMediaBackup()
+          }}
           onFinish={() => {
+            console.log('finish ?')
             const tracker = getTracker()
             if (tracker) {
               tracker.push(['trackEvent', 'Drive', 'Scanner', 'Finished'])
