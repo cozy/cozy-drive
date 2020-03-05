@@ -12,7 +12,7 @@ global.cozy = {
 const routerMock = {
   push: () => {},
   params: {
-    fileId: 1
+    fileId: '1'
   }
 }
 describe('FileOpenerExternal', () => {
@@ -20,9 +20,9 @@ describe('FileOpenerExternal', () => {
     const wrapper = shallow(
       <FileOpener
         router={routerMock}
-        fileId={123}
+        fileId={'123'}
         routeParams={{
-          fileId: 123
+          fileId: '123'
         }}
       />,
       {
@@ -40,9 +40,9 @@ describe('FileOpenerExternal', () => {
     const wrapper = shallow(
       <FileOpener
         router={routerMock}
-        fileId={123}
+        fileId={'123'}
         routeParams={{
-          fileId: 123
+          fileId: '123'
         }}
       />,
       {
@@ -56,7 +56,7 @@ describe('FileOpenerExternal', () => {
     expect(wrapper.state().file.id).toBe('123')
     wrapper.setProps({
       routeParams: {
-        fileId: 456
+        fileId: '456'
       }
     })
     global.cozy.client.files.statById.mockResolvedValue({
