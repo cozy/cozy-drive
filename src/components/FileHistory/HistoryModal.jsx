@@ -42,8 +42,8 @@ const HistoryModal = ({
     'capabilities.attributes.file_versioning'
   )
   return (
-    <ExperimentalDialog>
-      <DialogCloseButton onClick={() => router.goBack()} />
+    <ExperimentalDialog onClose={router.goBack}>
+      <DialogCloseButton onClick={router.goBack} />
       <ExperimentalDialogTitle>{file.name}</ExperimentalDialogTitle>
       <DialogContent>
         <>

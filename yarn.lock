@@ -5374,10 +5374,10 @@ cozy-realtime@^3.4.0:
   dependencies:
     minilog "https://github.com/cozy/minilog.git#master"
 
-cozy-scanner@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.2.0.tgz#2de0233ebb68eb5556d5ff4c8aa1754da52f2db6"
-  integrity sha512-iOpmI0oMHLPnQBZOFzFmZONVESLZjjTpZAv1fMtIfJYbYYklhBPf7tphJ3f3e6G1PB//HXhx/5ilWz9vQjl+FA==
+cozy-scanner@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.3.0.tgz#79a6afe28b9f82098d1f902bb7dca69781885c87"
+  integrity sha512-e6M4HxNNVWqiXK5UC1wFMh3yb5m3VUihJKxDBS98hc9/TMHQJIxQk97H9bt0mc1qf1+9eSWQLYmBo+3AzHf/0g==
   dependencies:
     "@babel/runtime" "^7.5.2"
 
@@ -5484,10 +5484,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@^32.1.0:
-  version "32.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-32.1.0.tgz#e09efad5d9b9fa749995d86b5fa59e08456d819c"
-  integrity sha512-tHjPAlW3qdmjrA3WAJJ6CYsSeYQu7+F05ROqEz5g98H1LV8bl6FExVl662pHVsl1ZBOMAkCHgNERbikw9ZCzHg==
+cozy-ui@32.2.1:
+  version "32.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-32.2.1.tgz#ca65d45b7f7e61d0a655fa7aa6232417f7940e5d"
+  integrity sha512-QmANtx4BMoAQbTfwX7fw2cmdN/LXbil451y3J6zo8YigwY6K567assr0y95xn5Y9mcm2FjfXWjrqEZuvU2e49g==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
