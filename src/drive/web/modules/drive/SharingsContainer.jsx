@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
-import { Empty } from 'cozy-ui/transpiled/react'
+import Empty from 'cozy-ui/transpiled/react/Empty'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { compose } from 'redux'
 import Container from 'drive/web/modules/drive/Container'

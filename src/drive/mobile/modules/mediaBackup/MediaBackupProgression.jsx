@@ -83,4 +83,5 @@ UploadStatus.propTypes = {
   serverUrl: PropTypes.string
 }
 
+export const connectedUploadStatus = connect(mapStateToProps)(UploadStatus)
 export default connect(mapStateToProps)(translate()(UploadStatus))

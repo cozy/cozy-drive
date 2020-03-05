@@ -11,18 +11,18 @@ exports[`Header should display the right title if more than one files 1`] = `
       />
     </Img>
     <Bd>
-      <Bold
+      <ForwardRef(Bold)
         ellipsis={true}
         tag="div"
       >
         My Title
-      </Bold>
-      <Caption
+      </ForwardRef(Bold)>
+      <ForwardRef(Caption)
         ellipsis={true}
         tag="div"
       >
         Move.to
-      </Caption>
+      </ForwardRef(Caption)>
     </Bd>
     <Button
       align="center"
@@ -56,18 +56,18 @@ exports[`Header should display the right title if only one file 1`] = `
       />
     </Img>
     <Bd>
-      <Bold
+      <ForwardRef(Bold)
         ellipsis={true}
         tag="div"
       >
         FileName.txt
-      </Bold>
-      <Caption
+      </ForwardRef(Bold)>
+      <ForwardRef(Caption)
         ellipsis={true}
         tag="div"
       >
         Move.to
-      </Caption>
+      </ForwardRef(Caption)>
     </Bd>
     <Button
       align="center"
@@ -101,18 +101,18 @@ exports[`Header should display title if title is given and no file 1`] = `
       />
     </Img>
     <Bd>
-      <Bold
+      <ForwardRef(Bold)
         ellipsis={true}
         tag="div"
       >
         My Title
-      </Bold>
-      <Caption
+      </ForwardRef(Bold)>
+      <ForwardRef(Caption)
         ellipsis={true}
         tag="div"
       >
         Move.to
-      </Caption>
+      </ForwardRef(Caption)>
     </Bd>
     <Button
       align="center"
@@ -146,18 +146,18 @@ exports[`Header should fallback to Move title if no title is given 1`] = `
       />
     </Img>
     <Bd>
-      <Bold
+      <ForwardRef(Bold)
         ellipsis={true}
         tag="div"
       >
         Move.title
-      </Bold>
-      <Caption
+      </ForwardRef(Bold)>
+      <ForwardRef(Caption)
         ellipsis={true}
         tag="div"
       >
         Move.to
-      </Caption>
+      </ForwardRef(Caption)>
     </Bd>
     <Button
       align="center"

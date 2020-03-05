@@ -39,4 +39,4 @@ const QuotaAlert = ({ t, onClose, client }) => {
   )
 }
 
-export default translate()(withClient(QuotaAlert))
+export default withClient(translate()(QuotaAlert))

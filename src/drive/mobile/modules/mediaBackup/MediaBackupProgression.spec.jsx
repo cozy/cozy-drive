@@ -1,14 +1,26 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
+import { I18n } from 'cozy-ui/transpiled/react/I18n'
+const locales = { helloworld: 'Hello World !' }
 
 const render = () => {
-  const MediaBackupProgression = require('./MediaBackupProgression').default
-  const wrapper = shallow(<MediaBackupProgression />, {
-    context: { t: k => k, store: configureStore()({}) }
+  const MediaBackupProgression = require('./MediaBackupProgression')
+    .connectedUploadStatus
+  const wrapperProvider = ({ children }) => (
+    <Provider store={configureStore()({})}>
+      <I18n lang={'en'} dictRequire={() => locales}>
+        {children}
+      </I18n>
+    </Provider>
+  )
+
+  const wrapper = shallow(<MediaBackupProgression t={x => x} />, {
+    wrappingComponent: wrapperProvider
   })
   // we need to dive into the connect()ed and the translate()ed wrappers
-  return wrapper.dive().dive()
+  return wrapper.dive()
 }
 
 const mockSelectors = (providedSelectors = {}) => {

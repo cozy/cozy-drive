@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Album view should show a loader 1`] = `
-<Wrapper
+<withI18n(Loading)
   loadingType="photos_fetching"
   middle={true}
   size="xxlarge"
@@ -9,7 +9,7 @@ exports[`Album view should show a loader 1`] = `
 `;
 
 exports[`Album view should show a spinner when no album can be loaded 1`] = `
-<Wrapper
+<withI18n(Loading)
   loadingType="photos_fetching"
   middle={true}
   size="xxlarge"
@@ -17,7 +17,7 @@ exports[`Album view should show a spinner when no album can be loaded 1`] = `
 `;
 
 exports[`Album view should show an album when loaded 1`] = `
-<Wrapper
+<withI18n(withRouter(Connect(AlbumPhotos)))
   album={
     Object {
       "photos": Object {
