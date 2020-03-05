@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { Button } from 'cozy-ui/transpiled/react'
+import Button from 'cozy-ui/transpiled/react/Button'
 import { connect } from 'react-redux'
 import withPersistentState from 'drive/mobile/lib/withPersistentState'
 import { isIOSApp } from 'cozy-device-helper'

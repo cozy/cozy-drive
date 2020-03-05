@@ -1,6 +1,7 @@
 import React from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { Empty, Button } from 'cozy-ui/transpiled/react'
+import Empty from 'cozy-ui/transpiled/react/Empty'
+import Button from 'cozy-ui/transpiled/react/Button'
 import EmptyIcon from '../../drive/assets/icons/icon-folder-broken.svg'
 import styles from './oops.styl'
 

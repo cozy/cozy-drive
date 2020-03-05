@@ -6,12 +6,10 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import {
-  Button,
-  Icon,
-  withBreakpoints,
-  MidEllipsis
-} from 'cozy-ui/transpiled/react'
+import Button from 'cozy-ui/transpiled/react/Button'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
 
 import { SharedStatus } from 'cozy-sharing'

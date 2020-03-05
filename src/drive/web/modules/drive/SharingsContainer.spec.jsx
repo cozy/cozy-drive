@@ -27,8 +27,9 @@ jest.mock('cozy-client', () => {
   const automaticMock = jest.genMockFromModule('cozy-client')
   return {
     ...automaticMock,
+    withClient: jest.fn().mockImplementation(() => Component => Component),
     // we need queryConnect to return a function
-    queryConnect: jest.fn().mockImplementation(() => () => {})
+    queryConnect: jest.fn().mockImplementation(() => Component => Component)
   }
 })
 

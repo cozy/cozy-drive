@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import cx from 'classnames'
 import PopperJS from 'popper.js'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { Overlay } from 'cozy-ui/transpiled/react'
+import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import MenuItem from './MenuItem'
 
 import styles from 'drive/styles/actionmenu.styl'

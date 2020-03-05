@@ -7,7 +7,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 const ExternalRedirect = ({ client, params: { fileId }, t }) => {
   const { shortcutInfos } = useFetchShortcut(client, fileId)
   if (shortcutInfos) {
-    window.location.href = shortcutInfos.data.attributes.url
+    //window.location.href = shortcutInfos.data.attributes.url
   }
 
   return (
