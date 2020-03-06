@@ -190,13 +190,12 @@ export const handleFileOpen = async (
   const isNote = models.file.isNote(file)
   const isShortcut = models.file.isShortcurt(file)
   const { client } = props
+  //Should only be called if mobile
   if (isShortcut) {
-    //window.open('http://cozy.io', 'blank')
     const resp = await client
       .getStackClient()
       .fetchJSON('GET', `/shortcuts/${file.id}`)
-    //window.location.href = resp.data.attributes.url
-    window.open(resp.data.attributes.url, 'blank')
+    window.location.href = resp.data.attributes.url
   } else if (isNote) {
     try {
       window.location.href = await models.note.fetchURL(client, file)

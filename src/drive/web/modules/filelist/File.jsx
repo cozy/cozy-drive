@@ -1,9 +1,11 @@
-import React, { Component, forwardRef } from 'react'
+import React, { useState, forwardRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import get from 'lodash/get'
+import { useClient, useCapabilities } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
@@ -235,34 +237,27 @@ const FileAction = forwardRef(({ t, onClick }, ref) => (
   </div>
 ))
 
-class File extends Component {
-  state = {
-    actionMenuVisible: false
+const File = props => {
+  const [actionMenuVisible, setActionMenuVisible] = useState(false)
+  const client = useClient()
+  const filerowMenuToggleRef = useRef()
+
+  const showActionMenu = () => {
+    setActionMenuVisible(true)
   }
 
-  constructor(props) {
-    super(props)
-    this.filerowMenuToggleRef = React.createRef()
-    this.toggle = this.toggle.bind(this)
-    this.open = this.open.bind(this)
+  const hideActionMenu = () => {
+    setActionMenuVisible(false)
   }
 
-  showActionMenu = () => {
-    this.setState(state => ({ ...state, actionMenuVisible: true }))
-  }
-
-  hideActionMenu = () => {
-    this.setState(state => ({ ...state, actionMenuVisible: false }))
-  }
-
-  toggle(e) {
+  const toggle = e => {
     e.stopPropagation()
-    const { attributes, onCheckboxToggle, selected } = this.props
+    const { attributes, onCheckboxToggle, selected } = props
     onCheckboxToggle(attributes.id, selected)
   }
 
-  open(e, attributes) {
-    const { onFolderOpen, onFileOpen, isAvailableOffline } = this.props
+  const open = (e, attributes) => {
+    const { onFolderOpen, onFileOpen, isAvailableOffline } = props
     e.stopPropagation()
     if (isDirectory(attributes)) {
       onFolderOpen(attributes.id)
@@ -271,105 +266,102 @@ class File extends Component {
     }
   }
 
-  render() {
-    const {
-      t,
-      f,
-      attributes,
-      selected,
-      actions,
-      isRenaming,
-      withSelectionCheckbox,
-      withFilePath,
-      withSharedBadge,
-      isAvailableOffline,
-      disabled,
-      thumbnailSizeBig,
-      selectionModeActive,
-      breakpoints: { isExtraLarge, isMobile }
-    } = this.props
-    const { actionMenuVisible } = this.state
+  const {
+    t,
+    f,
+    attributes,
+    selected,
+    actions,
+    isRenaming,
+    withSelectionCheckbox,
+    withFilePath,
+    withSharedBadge,
+    isAvailableOffline,
+    disabled,
+    thumbnailSizeBig,
+    selectionModeActive,
+    breakpoints: { isExtraLarge, isMobile }
+  } = props
+  const capabilities = useCapabilities(client)
+  const isFlatDomain = get(
+    capabilities,
+    'capabilities.attributes.flat_subdomains'
+  )
+  const filContentRowSelected = classNames(styles['fil-content-row'], {
+    [styles['fil-content-row-selected']]: selected,
+    [styles['fil-content-row-actioned']]: actionMenuVisible,
+    [styles['fil-content-row-disabled']]: disabled,
+    [styles['fil-content-row-bigger']]: thumbnailSizeBig
+  })
+  const formattedSize = isDirectory(attributes)
+    ? undefined
+    : filesize(attributes.size, { base: 10 })
 
-    const filContentRowSelected = classNames(styles['fil-content-row'], {
-      [styles['fil-content-row-selected']]: selected,
-      [styles['fil-content-row-actioned']]: actionMenuVisible,
-      [styles['fil-content-row-disabled']]: disabled,
-      [styles['fil-content-row-bigger']]: thumbnailSizeBig
-    })
-    const formattedSize = isDirectory(attributes)
-      ? undefined
-      : filesize(attributes.size, { base: 10 })
-
-    const updatedAt = attributes.updated_at || attributes.created_at
-    const formattedUpdatedAt = f(
-      updatedAt,
-      isExtraLarge
-        ? t('table.row_update_format_full')
-        : t('table.row_update_format')
-    )
-    return (
-      <div
-        ref={filerow => {
-          this.filerow = filerow
-        }}
-        className={filContentRowSelected}
+  const updatedAt = attributes.updated_at || attributes.created_at
+  const formattedUpdatedAt = f(
+    updatedAt,
+    isExtraLarge
+      ? t('table.row_update_format_full')
+      : t('table.row_update_format')
+  )
+  return (
+    <div className={filContentRowSelected}>
+      <SelectBox
+        withSelectionCheckbox={withSelectionCheckbox}
+        selected={selected}
+        onClick={e => toggle(e)}
+      />
+      <FileOpener
+        file={attributes}
+        disabled={disabled}
+        actionMenuVisible={actionMenuVisible}
+        selectionModeActive={selectionModeActive}
+        open={open}
+        toggle={toggle}
+        isFlatDomain={isFlatDomain}
       >
-        <SelectBox
-          withSelectionCheckbox={withSelectionCheckbox}
-          selected={selected}
-          onClick={e => this.toggle(e)}
-        />
-        <FileOpener
+        <FileThumbnail
           file={attributes}
-          disabled={disabled}
-          actionMenuVisible={actionMenuVisible}
-          selectionModeActive={selectionModeActive}
-          open={this.open}
-          toggle={this.toggle}
-        >
-          <FileThumbnail
+          withSharedBadge={withSharedBadge}
+          size={thumbnailSizeBig ? 96 : undefined}
+        />
+        <FileName
+          attributes={attributes}
+          isRenaming={isRenaming}
+          interactive={!disabled}
+          withFilePath={withFilePath}
+          isMobile={isMobile}
+          formattedSize={formattedSize}
+          formattedUpdatedAt={formattedUpdatedAt}
+        />
+        <LastUpdate
+          date={updatedAt}
+          formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
+        />
+        <Size filesize={formattedSize} />
+        <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
+      </FileOpener>
+      {actions && (
+        <FileAction
+          t={t}
+          ref={filerowMenuToggleRef}
+          onClick={e => {
+            showActionMenu()
+            e.stopPropagation()
+          }}
+        />
+      )}
+      {actions &&
+        actionMenuVisible && (
+          <ActionMenu
             file={attributes}
-            withSharedBadge={withSharedBadge}
-            size={thumbnailSizeBig ? 96 : undefined}
-          />
-          <FileName
-            attributes={attributes}
-            isRenaming={isRenaming}
-            interactive={!disabled}
-            withFilePath={withFilePath}
-            isMobile={isMobile}
-            formattedSize={formattedSize}
-            formattedUpdatedAt={formattedUpdatedAt}
-          />
-          <LastUpdate
-            date={updatedAt}
-            formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
-          />
-          <Size filesize={formattedSize} />
-          <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
-        </FileOpener>
-        {actions && (
-          <FileAction
-            t={t}
-            ref={this.filerowMenuToggleRef}
-            onClick={e => {
-              this.showActionMenu()
-              e.stopPropagation()
-            }}
+            reference={filerowMenuToggleRef.current}
+            actions={actions}
+            onClose={hideActionMenu}
           />
         )}
-        {actions &&
-          actionMenuVisible && (
-            <ActionMenu
-              file={attributes}
-              reference={this.filerowMenuToggleRef.current}
-              actions={actions}
-              onClose={this.hideActionMenu}
-            />
-          )}
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 File.propTypes = {
