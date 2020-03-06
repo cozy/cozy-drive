@@ -188,7 +188,7 @@ export const handleFileOpen = async (
     return dispatch(openLocalFile(file))
   }
   const isNote = models.file.isNote(file)
-  const isShortcut = models.file.isShortcurt(file)
+  const isShortcut = models.file.isShortcut(file)
   const { client } = props
   //Should only be called if mobile
   if (isShortcut) {
