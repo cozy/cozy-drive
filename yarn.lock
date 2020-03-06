@@ -5205,10 +5205,10 @@ cozy-client@10.5.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@12.3.0:
-  version "12.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-12.3.0.tgz#194d472d80b547bb8950974f16482bc139f49181"
-  integrity sha512-mRwtbcZ3LU0z2jNrtZ2rgAVQvZ6Jl7iA8E+dibH+yLg9qQZ50aFHYAC1XW0qrbX2RljRWXnY6dijoqwEeN42Qg==
+cozy-client@12.4.0:
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-12.4.0.tgz#82ada9226c615b398c948b774310933758e4143e"
+  integrity sha512-1eqiaodhebVHJ8adWw5jLNKv4yuOJ4K3d3fMab4x/8gW0pe+PXrFyoC45/rxjrI0RoixZ3emWz4skfnax4CLsQ==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
@@ -11604,12 +11604,6 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
-  dependencies:
-    microee "0.0.6"
-
-"minilog@git+https://github.com/cozy/minilog.git#master":
-  version "3.1.0"
-  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
