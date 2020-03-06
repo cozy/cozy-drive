@@ -24,6 +24,7 @@ import {
 
 import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 import Viewer from 'drive/web/modules/viewer/PublicViewer'
+import { isMobileApp } from 'cozy-device-helper'
 
 class DumbFolderView extends React.Component {
   state = {
@@ -36,7 +37,12 @@ class DumbFolderView extends React.Component {
     const { client } = this.props
     if (isNote) {
       try {
-        window.location.href = await models.note.fetchURL(client, file)
+        const noteUrl = await models.note.fetchURL(client, file)
+        const url = new URL(noteUrl)
+        if (!isMobileApp()) {
+          url.searchParams.set('returnUrl', window.location.href)
+        }
+        window.location.href = url.toString()
       } catch (e) {
         Alerter.error('alert.offline')
       }
