@@ -53,6 +53,7 @@ const FileOpener = ({
     return (
       <a
         href={fileUrl}
+        rel="noopener noreferrer"
         target="_blank"
         style={{
           width: '100%',
