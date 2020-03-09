@@ -269,7 +269,6 @@ const uploadQueueProcessed = (
   const conflictCount = conflicts.length
   const createdCount = created.length
   const updatedCount = updated.length
-  console.log('created', created)
   if (quotas.length > 0) {
     // quota errors have their own modal instead of a notification
     dispatch(showModal(<QuotaAlert />))

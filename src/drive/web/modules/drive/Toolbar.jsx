@@ -5,7 +5,9 @@ import { compose } from 'redux'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { withBreakpoints, BarContextProvider } from 'cozy-ui/transpiled/react'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+
+import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { withClient } from 'cozy-client'
 import { isMobileApp } from 'cozy-device-helper'
 
