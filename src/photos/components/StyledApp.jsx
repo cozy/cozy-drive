@@ -1,5 +1,4 @@
 import React from 'react'
-import React from 'react'
 
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'photos/styles/main.styl'

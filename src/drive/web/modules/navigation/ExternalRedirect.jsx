@@ -1,10 +1,10 @@
 import React from 'react'
-import { withClient } from 'cozy-client'
-import useFetchShortcut from 'drive/web/modules/filelist/useFetchShortcut'
-import { Empty } from 'cozy-ui/transpiled/react'
-import { IconSprite } from 'cozy-ui/transpiled/react'
+import { useClient, useFetchShortcut } from 'cozy-client'
+import Empty from 'cozy-ui/transpiled/react/Empty'
+import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-const ExternalRedirect = ({ client, params: { fileId }, t }) => {
+const ExternalRedirect = ({ params: { fileId }, t }) => {
+  const client = useClient()
   const { shortcutInfos } = useFetchShortcut(client, fileId)
   if (shortcutInfos) {
     window.location.href = shortcutInfos.data.attributes.url
@@ -23,4 +23,4 @@ const ExternalRedirect = ({ client, params: { fileId }, t }) => {
   )
 }
 
-export default translate()(withClient(ExternalRedirect))
+export default translate()(ExternalRedirect)
