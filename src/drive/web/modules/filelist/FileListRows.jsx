@@ -117,7 +117,8 @@ class FileListRows extends PureComponent {
       withFilePath,
       withSharedBadge = true,
       isRenaming,
-      renamingFile
+      renamingFile,
+      isFlatDomain
     } = this.props
     const file = this.props.files[index]
     if (!file) {
@@ -137,6 +138,7 @@ class FileListRows extends PureComponent {
         withSelectionCheckbox={withSelectionCheckbox}
         withFilePath={withFilePath}
         withSharedBadge={withSharedBadge}
+        isFlatDomain={isFlatDomain}
       />
     )
   }
@@ -154,7 +156,8 @@ FileListRows.propTypes = {
   withFilePath: PropTypes.bool,
   withSharedBadge: PropTypes.bool,
   isRenaming: PropTypes.bool,
-  renamingFile: PropTypes.object
+  renamingFile: PropTypes.object,
+  isFlatDomain: PropTypes.bool
 }
 
 export default translate()(FileListRows)

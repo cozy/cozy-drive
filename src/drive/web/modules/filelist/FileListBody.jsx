@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
+import get from 'lodash/get'
+
+import { useClient, useCapabilities } from 'cozy-client'
 
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
@@ -40,32 +43,41 @@ export const FileListBody = ({
   isTypingNewFolderName,
   withSelectionCheckbox,
   ...props
-}) => (
-  <div
-    data-test-id="fil-content-body"
-    className={cx(styles['fil-content-body'], {
-      [styles['fil-content-body--selectable']]: selectionModeActive
-    })}
-  >
-    <AddFolder />
-    <AsyncBoundary>
-      {({ isLoading, isInError }) => {
-        if (isLoading) return <FileListRowsPlaceholder />
-        else if (isInError) return <Oops />
-        else if (files.length === 0 && !isTypingNewFolderName)
-          return <EmptyContent {...props} />
-        else
-          return (
-            <FileListRows
-              files={files}
-              withSelectionCheckbox={withSelectionCheckbox}
-              {...props}
-            />
-          )
-      }}
-    </AsyncBoundary>
-  </div>
-)
+}) => {
+  const client = useClient()
+  const capabilities = useCapabilities(client)
+  const isFlatDomain = get(
+    capabilities,
+    'capabilities.attributes.flat_subdomains'
+  )
+  return (
+    <div
+      data-test-id="fil-content-body"
+      className={cx(styles['fil-content-body'], {
+        [styles['fil-content-body--selectable']]: selectionModeActive
+      })}
+    >
+      <AddFolder />
+      <AsyncBoundary>
+        {({ isLoading, isInError }) => {
+          if (isLoading) return <FileListRowsPlaceholder />
+          else if (isInError) return <Oops />
+          else if (files.length === 0 && !isTypingNewFolderName)
+            return <EmptyContent {...props} />
+          else
+            return (
+              <FileListRows
+                files={files}
+                withSelectionCheckbox={withSelectionCheckbox}
+                isFlatDomain={isFlatDomain}
+                {...props}
+              />
+            )
+        }}
+      </AsyncBoundary>
+    </div>
+  )
+}
 
 FileListBody.propTypes = {
   selectionModeActive: PropTypes.bool,
