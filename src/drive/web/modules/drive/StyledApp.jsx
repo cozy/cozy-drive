@@ -4,7 +4,7 @@ import 'cozy-sharing/dist/stylesheet.css'
 //eslint-disable-next-line
 import mainStyles from 'drive/styles/main.styl'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
-const StyleApp = ({ children }) => {
+const StyledApp = ({ children }) => {
   return <MuiCozyTheme>{children}</MuiCozyTheme>
 }
-export default StyleApp
+export default StyledApp
