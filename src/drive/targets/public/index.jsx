@@ -4,10 +4,8 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 
-import StyledApp from 'drive/web/modules/drive/StyledApp'
-
 import { Router, Route, Redirect, hashHistory } from 'react-router'
-import CozyClient, { CozyProvider, models } from 'cozy-client'
+import CozyClient, { models } from 'cozy-client'
 
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -24,6 +22,7 @@ import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import appMetadata from 'drive/appMetadata'
 import logger from 'lib/logger'
 
+import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 
 const initCozyBar = (data, client) => {
@@ -80,7 +79,7 @@ const init = async () => {
     require(`drive/locales/${lang}`)
   )
 
-  configureStore(client, polyglot.t.bind(polyglot))
+  const store = configureStore(client, polyglot.t.bind(polyglot))
 
   try {
     const sharedDocumentId = await getSharedDocument(client)
@@ -99,28 +98,21 @@ const init = async () => {
     } else {
       initCozyBar(dataset)
       render(
-        <I18n lang={lang} polyglot={polyglot}>
-          <CozyProvider client={client}>
-            <StyledApp>
-              {isFile ? (
-                <PublicLayout>
-                  <LightFileViewer files={[data]} isFile={true} />
-                </PublicLayout>
-              ) : (
-                <Router history={hashHistory}>
-                  <Route component={PublicLayout}>
-                    <Route
-                      path="files(/:folderId)"
-                      component={LightFolderView}
-                    />
-                  </Route>
-                  <Route path="external/:fileId" component={ExternalRedirect} />
-                  <Redirect from="/*" to={`files/${sharedDocumentId}`} />
-                </Router>
-              )}
-            </StyledApp>
-          </CozyProvider>
-        </I18n>,
+        <App lang={lang} polyglot={polyglot} client={client} store={store}>
+          {isFile ? (
+            <PublicLayout>
+              <LightFileViewer files={[data]} isFile={true} />
+            </PublicLayout>
+          ) : (
+            <Router history={hashHistory}>
+              <Route component={PublicLayout}>
+                <Route path="files(/:folderId)" component={LightFolderView} />
+              </Route>
+              <Route path="external/:fileId" component={ExternalRedirect} />
+              <Redirect from="/*" to={`files/${sharedDocumentId}`} />
+            </Router>
+          )}
+        </App>,
         root
       )
     }

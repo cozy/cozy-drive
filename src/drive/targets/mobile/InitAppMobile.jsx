@@ -6,8 +6,7 @@ import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
 import localforage from 'localforage'
 
-import { CozyProvider } from 'cozy-client'
-import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
+import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import { isIOSApp } from 'cozy-device-helper'
 import { Document } from 'cozy-doctypes'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -16,7 +15,6 @@ import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { configureReporter } from 'drive/lib/reporter'
-import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 import {
   startTracker,
@@ -36,6 +34,7 @@ import {
 import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
 import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
 
+import App from 'components/App/App'
 // Allows to know if the launch of the application has been done by the service background
 // @see: https://git.io/vSQBC
 const isBackgroundServiceParameter = () => {
@@ -247,13 +246,9 @@ class InitAppMobile {
 
     const root = document.querySelector('[role=application]')
     render(
-      <I18n lang={getLang()} polyglot={polyglot}>
-        <CozyProvider client={client}>
-          <StyledApp>
-            <DriveMobileRouter history={hashHistory} />
-          </StyledApp>
-        </CozyProvider>
-      </I18n>,
+      <App lang={getLang()} polyglot={polyglot} client={client} store={store}>
+        <DriveMobileRouter history={hashHistory} />
+      </App>,
       root,
       () => {
         this.stardedApp = true
