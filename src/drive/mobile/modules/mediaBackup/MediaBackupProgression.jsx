@@ -32,7 +32,7 @@ const mapStateToProps = state => ({
   ...getUploadStatus(state)
 })
 
-const UploadStatus = props => {
+export const UploadStatus = props => {
   const {
     isEnabled,
     isPreparing,
@@ -83,5 +83,4 @@ UploadStatus.propTypes = {
   serverUrl: PropTypes.string
 }
 
-export const connectedUploadStatus = connect(mapStateToProps)(UploadStatus)
 export default connect(mapStateToProps)(translate()(UploadStatus))
