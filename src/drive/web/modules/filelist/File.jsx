@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import get from 'lodash/get'
-import { useClient, useCapabilities } from 'cozy-client'
+
+import { SharedStatus } from 'cozy-sharing'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
@@ -13,8 +13,6 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
-
-import { SharedStatus } from 'cozy-sharing'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
@@ -239,7 +237,6 @@ const FileAction = forwardRef(({ t, onClick }, ref) => (
 
 const File = props => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
-  const client = useClient()
   const filerowMenuToggleRef = useRef()
 
   const showActionMenu = () => {
@@ -280,13 +277,10 @@ const File = props => {
     disabled,
     thumbnailSizeBig,
     selectionModeActive,
+    isFlatDomain,
     breakpoints: { isExtraLarge, isMobile }
   } = props
-  const capabilities = useCapabilities(client)
-  const isFlatDomain = get(
-    capabilities,
-    'capabilities.attributes.flat_subdomains'
-  )
+
   const filContentRowSelected = classNames(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
@@ -382,7 +376,8 @@ File.propTypes = {
   onFolderOpen: PropTypes.func.isRequired,
   /** onFileOpen : When a user click on a File */
   onFileOpen: PropTypes.func.isRequired,
-  onCheckboxToggle: PropTypes.func.isRequired
+  onCheckboxToggle: PropTypes.func.isRequired,
+  isFlatDomain: PropTypes.bool
 }
 
 const mapStateToProps = (state, ownProps) => ({
