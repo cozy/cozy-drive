@@ -640,7 +640,8 @@
   "External": {
     "redirection": {
       "title": "Redirection", 
-      "text": "You're about to be redirected…"
+      "text": "You're about to be redirected…",
+      "error": "Error during the redirection. Generally, this means that the content of the file is not in the correct format."
     }
   }
 }
