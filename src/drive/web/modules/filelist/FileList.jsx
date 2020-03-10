@@ -7,6 +7,12 @@ import FileListBody from 'drive/web/modules/filelist/FileListBody'
 
 import styles from 'drive/styles/filelist.styl'
 
+export const FileListv2 = ({ children }) => (
+  <div className={styles['fil-content-table']} role="table">
+    {children}
+  </div>
+)
+
 const FileList = ({
   canSort,
   fileActions,
@@ -23,7 +29,7 @@ const FileList = ({
   isRenaming,
   renamingFile
 }) => (
-  <div className={styles['fil-content-table']} role="table">
+  <FileListv2>
     <MobileFileListHeader canSort={canSort} />
     <FileListHeader canSort={canSort} />
     {React.Children.count(children) > 0 ? (
@@ -44,7 +50,7 @@ const FileList = ({
         renamingFile={renamingFile}
       />
     )}
-  </div>
+  </FileListv2>
 )
 
 export default FileList

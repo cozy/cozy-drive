@@ -37,6 +37,17 @@ EmptyContent.defaultProps = {
   params: {}
 }
 
+export const FileListBodyV2 = ({ children, selectionModeActive }) => (
+  <div
+    data-test-id="fil-content-body"
+    className={cx(styles['fil-content-body'], {
+      [styles['fil-content-body--selectable']]: selectionModeActive
+    })}
+  >
+    {children}
+  </div>
+)
+
 export const FileListBody = ({
   files,
   selectionModeActive,
@@ -51,12 +62,7 @@ export const FileListBody = ({
     'capabilities.data.attributes.flat_subdomains'
   )
   return (
-    <div
-      data-test-id="fil-content-body"
-      className={cx(styles['fil-content-body'], {
-        [styles['fil-content-body--selectable']]: selectionModeActive
-      })}
-    >
+    <FileListBodyV2 selectionModeActive={selectionModeActive}>
       <AddFolder />
       <AsyncBoundary>
         {({ isLoading, isInError }) => {
@@ -75,7 +81,7 @@ export const FileListBody = ({
             )
         }}
       </AsyncBoundary>
-    </div>
+    </FileListBodyV2>
   )
 }
 
