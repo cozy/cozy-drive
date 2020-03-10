@@ -1,5 +1,5 @@
 /* global __TARGET__ */
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useQuery, Q } from 'cozy-client'
 
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
@@ -23,28 +23,35 @@ import { isMobileApp } from 'cozy-device-helper'
 import File from 'drive/web/modules/filelist/File'
 import LoadMore from 'drive/web/modules/filelist/LoadMore'
 
-const noop = () => {}
-
-const folderQuery = {
-  definition: () =>
-    Q('io.cozy.files')
-      .where({
-        dir_id: ROOT_DIR_ID,
-        _id: { $ne: TRASH_DIR_ID }
-      })
-      .indexFields(['dir_id', 'type', 'name'])
-      .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }]),
-  options: {
-    as: 'files'
-  }
-}
-
-const DriveView = ({ params }) => {
+const DriveView = ({ params, router }) => {
   const { folderId } = params
+  const currentFolderId = folderId || ROOT_DIR_ID
+
+  const folderQuery = {
+    definition: () =>
+      Q('io.cozy.files')
+        .where({
+          dir_id: currentFolderId,
+          _id: { $ne: TRASH_DIR_ID }
+        })
+        .indexFields(['dir_id', 'type', 'name'])
+        .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }]),
+    options: {
+      as: 'folder-' + new Date().toString() // pending https://github.com/cozy/cozy-client/pull/668 to use the folder id as suffix
+    }
+  }
   const { fetchStatus, data, hasMore, fetchMore } = useQuery(
     folderQuery.definition,
     folderQuery.options
   )
+
+  const navigateToFolder = useCallback(folderId => {
+    router.push(`/v2/${folderId}`)
+  })
+
+  const navigateToFile = useCallback(file => {
+    console.log({ file })
+  })
 
   return (
     <Main>
@@ -84,8 +91,8 @@ const DriveView = ({ params }) => {
                       displayedFolder={null}
                       actions={{}}
                       isRenaming={false}
-                      onFolderOpen={noop}
-                      onFileOpen={noop}
+                      onFolderOpen={navigateToFolder}
+                      onFileOpen={navigateToFile}
                       withSelectionCheckbox={true}
                       withFilePath={false}
                       withSharedBadge={true}
