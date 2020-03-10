@@ -3,3 +3,4 @@
 - Filelist body a un switch pour le composant empty qui a besoin de savoir s'il est dans trash ou dans drive, on veux pas ca
 - FileListRow s'occupait du fetchMore, c'est un bon endroit pour le faire mais plus de la meme façon
 - enlever les besoins de displayedFolder
+- réinsérer le sharing provider et consumer
