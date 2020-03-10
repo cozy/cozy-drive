@@ -19,6 +19,7 @@ import FileHistory from '../../../../components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
+import DriveView from '../views/DriveView'
 
 const AppRoute = (
   <Route>
@@ -27,6 +28,7 @@ const AppRoute = (
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
+      <Route path="v2/:folderId" component={DriveView} />
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
