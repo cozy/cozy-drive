@@ -21,7 +21,7 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
   const capabilities = useCapabilities(client)
   const isFlatDomain = get(
     capabilities,
-    'capabilities.attributes.flat_subdomains'
+    'capabilities.data.attributes.flat_subdomains'
   )
   let returnUrl = ''
   if (displayedFolder) {

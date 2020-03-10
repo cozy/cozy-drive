@@ -39,7 +39,7 @@ const HistoryModal = ({
   const capabilities = useCapabilities(client)
   const isFileVersioningEnabled = get(
     capabilities,
-    'capabilities.attributes.file_versioning'
+    'capabilities.data.attributes.file_versioning'
   )
   return (
     <ExperimentalDialog onClose={router.goBack}>
