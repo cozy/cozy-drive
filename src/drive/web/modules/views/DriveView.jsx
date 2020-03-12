@@ -2,6 +2,8 @@
 import React, { useCallback } from 'react'
 import { useQuery, Q } from 'cozy-client'
 import SharingProvider from 'cozy-sharing'
+import cx from 'classnames'
+import styles from 'drive/styles/filelist.styl'
 
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
@@ -22,7 +24,7 @@ import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 import { isMobileApp } from 'cozy-device-helper'
 import File from 'drive/web/modules/filelist/File'
-import LoadMore from 'drive/web/modules/filelist/LoadMore'
+import LoadMoreV2 from 'drive/web/modules/filelist/LoadMoreV2'
 
 const DriveView = ({ params, router }) => {
   const { folderId } = params
@@ -38,7 +40,7 @@ const DriveView = ({ params, router }) => {
         .indexFields(['dir_id', 'type', 'name'])
         .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }]),
     options: {
-      as: 'folder-' + new Date().toString() // pending https://github.com/cozy/cozy-client/pull/668 to use the folder id as suffix
+      as: 'folder-' + currentFolderId // pending https://github.com/cozy/cozy-client/pull/668 to use the folder id as suffix
     }
   }
   const { fetchStatus, data, hasMore, fetchMore } = useQuery(
@@ -79,11 +81,12 @@ const DriveView = ({ params, router }) => {
             <FileListHeader canSort={true} />
             <FileListBodyV2 selectionModeActive={false}>
               <AddFolder />
-              {fetchStatus === 'loading' && <FileListRowsPlaceholder />}
+              {fetchStatus === 'loading' &&
+                !data && <FileListRowsPlaceholder />}
               {fetchStatus === 'error' && <Oops />}
               {fetchStatus === 'loaded' &&
                 data.length === 0 && <EmptyDrive canUpload={true} />}
-              {fetchStatus === 'loaded' &&
+              {data &&
                 data.length > 0 && (
                   <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
                     {data.map(file => (
@@ -102,7 +105,14 @@ const DriveView = ({ params, router }) => {
                       />
                     ))}
                     {hasMore && (
-                      <LoadMore onClick={fetchMore} isLoading={false} />
+                      <div
+                        className={cx(
+                          styles['fil-content-row'],
+                          styles['fil-content-row--center']
+                        )}
+                      >
+                        <LoadMoreV2 fetchMore={fetchMore} text={'load MOAR'} />
+                      </div>
                     )}
                   </div>
                 )}
