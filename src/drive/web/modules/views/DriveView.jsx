@@ -1,5 +1,5 @@
 /* global __TARGET__ */
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useQuery, Q } from 'cozy-client'
 import SharingProvider from 'cozy-sharing'
 import cx from 'classnames'
@@ -16,8 +16,9 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { FileListv2 } from 'drive/web/modules/filelist/FileList'
 import { FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
-import FileListHeader, {
-  MobileFileListHeader
+import {
+  FileListHeader,
+  MobileHeader
 } from 'drive/web/modules/filelist/FileListHeader'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
@@ -28,6 +29,7 @@ import LoadMoreV2 from 'drive/web/modules/filelist/LoadMoreV2'
 
 const DriveView = ({ params, router }) => {
   const { folderId } = params
+  const [sortOrder, setSortOder] = useState({ attribute: 'name', order: 'asc' })
   const currentFolderId = folderId || ROOT_DIR_ID
 
   const folderQuery = {
@@ -37,12 +39,17 @@ const DriveView = ({ params, router }) => {
           dir_id: currentFolderId,
           _id: { $ne: TRASH_DIR_ID }
         })
-        .indexFields(['dir_id', 'type', 'name'])
-        .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }]),
+        .indexFields(['dir_id', 'type', sortOrder.attribute])
+        .sortBy([
+          { dir_id: sortOrder.order },
+          { type: sortOrder.order },
+          { [sortOrder.attribute]: sortOrder.order }
+        ]),
     options: {
-      as: 'folder-' + currentFolderId // pending https://github.com/cozy/cozy-client/pull/668 to use the folder id as suffix
+      as: `folder-${currentFolderId}-${sortOrder.attribute}-${sortOrder.order}`
     }
   }
+
   const { fetchStatus, data, hasMore, fetchMore } = useQuery(
     folderQuery.definition,
     folderQuery.options
@@ -55,6 +62,10 @@ const DriveView = ({ params, router }) => {
   const navigateToFile = useCallback(file => {
     console.log({ file })
   })
+
+  const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
+    setSortOder({ attribute, order })
+  )
 
   return (
     <SharingProvider doctype="io.cozy.files" documentType="Files">
@@ -77,8 +88,24 @@ const DriveView = ({ params, router }) => {
         >
           {false && <SelectionBar actions={[]} />}
           <FileListv2>
-            <MobileFileListHeader canSort={true} />
-            <FileListHeader canSort={true} />
+            <MobileHeader
+              t={s => s}
+              folderId={null}
+              canSort={true}
+              sort={sortOrder}
+              onFolderSort={changeSortOrder}
+              thumbnailSizeBig={false}
+              toggleThumbnailSize={() => {}}
+            />
+            <FileListHeader
+              t={s => s}
+              folderId={null}
+              canSort={true}
+              sort={sortOrder}
+              onFolderSort={changeSortOrder}
+              thumbnailSizeBig={false}
+              toggleThumbnailSize={() => {}}
+            />
             <FileListBodyV2 selectionModeActive={false}>
               <AddFolder />
               {fetchStatus === 'loading' &&

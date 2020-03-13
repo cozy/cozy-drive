@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { useState, useCallback } from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/react/I18n'
 import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
 import Button from 'cozy-ui/transpiled/react/Button'
 import { MenuItem } from 'cozy-ui/transpiled/react/Menu'
@@ -26,148 +26,83 @@ const SORTABLE_ATTRIBUTES = [
 ]
 const DEFAULT_SORT = { attribute: 'name', order: 'asc' }
 
-const HeaderCell = ({ t, label, css }) => (
-  <div
-    className={classNames(
-      styles['fil-content-header'],
-      styles[`fil-content-${css}`]
-    )}
-  >
-    {t(`table.head_${label}`)}
-  </div>
-)
+const HeaderCell = ({ label, css }) => {
+  const { t } = useI18n()
+  return (
+    <div
+      className={classNames(
+        styles['fil-content-header'],
+        styles[`fil-content-${css}`]
+      )}
+    >
+      {t(`table.head_${label}`)}
+    </div>
+  )
+}
 
 const SortableHeaderCell = ({
-  t,
   label,
   attr,
   css,
   order = null,
   defaultOrder,
   onSort
-}) => (
-  <div
-    onClick={() =>
-      onSort(attr, order ? (order === 'asc' ? 'desc' : 'asc') : defaultOrder)
-    }
-    className={classNames(
-      styles['fil-content-header'],
-      styles[`fil-content-${css}`],
-      {
-        [styles['fil-content-header-sortableasc']]:
-          order === null && defaultOrder === 'asc',
-        [styles['fil-content-header-sortabledesc']]:
-          order === null && defaultOrder === 'desc',
-        [styles['fil-content-header-sortasc']]: order === 'asc',
-        [styles['fil-content-header-sortdesc']]: order === 'desc'
+}) => {
+  const { t } = useI18n()
+  return (
+    <div
+      onClick={() =>
+        onSort(attr, order ? (order === 'asc' ? 'desc' : 'asc') : defaultOrder)
       }
-    )}
-  >
-    {t(`table.head_${label}`)}
-  </div>
-)
-
-const MobileSortMenu = ({ t, sort, onSort, onClose }) => (
-  <ActionMenu onClose={onClose}>
-    <div className={styles['fil-sort-menu']}>
-      {SORTABLE_ATTRIBUTES.map(({ attr }) => [
-        { attr, order: 'asc' },
-        { attr, order: 'desc' }
-      ])
-        .reduce((acc, val) => [...acc, ...val], [])
-        .map(({ attr, order }) => (
-          <MenuItem
-            key={`key_${attr}_${order}`}
-            className={classNames(styles['fil-sort-menu-item'], {
-              [styles['fil-sort-menu-item-selected']]:
-                sort.order === order && sort.attribute === attr
-            })}
-            onClick={() => {
-              onSort(attr, order)
-              onClose()
-            }}
-          >
-            {t(`table.mobile.head_${attr}_${order}`)}
-          </MenuItem>
-        ))}
+      className={classNames(
+        styles['fil-content-header'],
+        styles[`fil-content-${css}`],
+        {
+          [styles['fil-content-header-sortableasc']]:
+            order === null && defaultOrder === 'asc',
+          [styles['fil-content-header-sortabledesc']]:
+            order === null && defaultOrder === 'desc',
+          [styles['fil-content-header-sortasc']]: order === 'asc',
+          [styles['fil-content-header-sortdesc']]: order === 'desc'
+        }
+      )}
+    >
+      {t(`table.head_${label}`)}
     </div>
-  </ActionMenu>
-)
-
-class MobileHeader extends Component {
-  state = {
-    showSortMenu: false
-  }
-
-  showSortMenu = () => this.setState({ showSortMenu: true })
-  hideSortMenu = () => this.setState({ showSortMenu: false })
-
-  render() {
-    const {
-      t,
-      folderId,
-      canSort,
-      sort,
-      onFolderSort,
-      thumbnailSizeBig,
-      toggleThumbnailSize
-    } = this.props
-    if (!canSort) return null
-    const actualSort = sort || DEFAULT_SORT
-    return (
-      <div
-        className={classNames(
-          styles['fil-content-mobile-head'],
-          styles['fil-content-row-head']
-        )}
-      >
-        <div
-          onClick={this.showSortMenu}
-          className={classNames(styles['fil-content-mobile-header'], {
-            [styles['fil-content-header-sortasc']]: actualSort.order === 'asc',
-            [styles['fil-content-header-sortdesc']]: actualSort.order === 'desc'
-          })}
-        >
-          {t(`table.mobile.head_${actualSort.attribute}_${actualSort.order}`)}
-        </div>
-        {this.state.showSortMenu && (
-          <MobileSortMenu
-            t={t}
-            sort={actualSort}
-            onClose={this.hideSortMenu}
-            onSort={(attr, order) => onFolderSort(folderId, attr, order)}
-          />
-        )}
-        <div
-          className={classNames(
-            styles['fil-content-mobile-header'],
-            styles['fil-content-header-action']
-          )}
-        >
-          <Button
-            theme={'action'}
-            onClick={() => {
-              toggleThumbnailSize()
-            }}
-            label={t('table.head_thumbnail_size')}
-            extension="narrow"
-            icon={
-              <Icon
-                icon={thumbnailSizeBig ? iconListMin : iconList}
-                size={17}
-                label={t('table.head_thumbnail_size')}
-              />
-            }
-            iconOnly
-          />
-        </div>
-      </div>
-    )
-  }
+  )
 }
 
-const FileListHeader = ({
-  t,
+const MobileSortMenu = ({ sort, onSort, onClose }) => {
+  const { t } = useI18n()
+  return (
+    <ActionMenu onClose={onClose}>
+      <div className={styles['fil-sort-menu']}>
+        {SORTABLE_ATTRIBUTES.map(({ attr }) => [
+          { attr, order: 'asc' },
+          { attr, order: 'desc' }
+        ])
+          .reduce((acc, val) => [...acc, ...val], [])
+          .map(({ attr, order }) => (
+            <MenuItem
+              key={`key_${attr}_${order}`}
+              className={classNames(styles['fil-sort-menu-item'], {
+                [styles['fil-sort-menu-item-selected']]:
+                  sort.order === order && sort.attribute === attr
+              })}
+              onClick={() => {
+                onSort(attr, order)
+                onClose()
+              }}
+            >
+              {t(`table.mobile.head_${attr}_${order}`)}
+            </MenuItem>
+          ))}
+      </div>
+    </ActionMenu>
+  )
+}
+
+export const MobileHeader = ({
   folderId,
   canSort,
   sort,
@@ -175,6 +110,78 @@ const FileListHeader = ({
   thumbnailSizeBig,
   toggleThumbnailSize
 }) => {
+  const { t } = useI18n()
+  const [isShowingSortMenu, setIsShowingSortMenu] = useState(false)
+
+  const showSortMenu = useCallback(() => setIsShowingSortMenu(true), [
+    setIsShowingSortMenu
+  ])
+  const hideSortMenu = useCallback(() => setIsShowingSortMenu(false), [
+    setIsShowingSortMenu
+  ])
+
+  if (!canSort) return null
+  const actualSort = sort || DEFAULT_SORT
+  return (
+    <div
+      className={classNames(
+        styles['fil-content-mobile-head'],
+        styles['fil-content-row-head']
+      )}
+    >
+      <div
+        onClick={showSortMenu}
+        className={classNames(styles['fil-content-mobile-header'], {
+          [styles['fil-content-header-sortasc']]: actualSort.order === 'asc',
+          [styles['fil-content-header-sortdesc']]: actualSort.order === 'desc'
+        })}
+      >
+        {t(`table.mobile.head_${actualSort.attribute}_${actualSort.order}`)}
+      </div>
+      {isShowingSortMenu && (
+        <MobileSortMenu
+          t={t}
+          sort={actualSort}
+          onClose={hideSortMenu}
+          onSort={(attr, order) => onFolderSort(folderId, attr, order)}
+        />
+      )}
+      <div
+        className={classNames(
+          styles['fil-content-mobile-header'],
+          styles['fil-content-header-action']
+        )}
+      >
+        <Button
+          theme={'action'}
+          onClick={() => {
+            toggleThumbnailSize()
+          }}
+          label={t('table.head_thumbnail_size')}
+          extension="narrow"
+          icon={
+            <Icon
+              icon={thumbnailSizeBig ? iconListMin : iconList}
+              size={17}
+              label={t('table.head_thumbnail_size')}
+            />
+          }
+          iconOnly
+        />
+      </div>
+    </div>
+  )
+}
+
+export const FileListHeader = ({
+  folderId,
+  canSort,
+  sort,
+  onFolderSort,
+  thumbnailSizeBig,
+  toggleThumbnailSize
+}) => {
+  const { t } = useI18n()
   const actualSort = sort || DEFAULT_SORT
   return (
     <div
@@ -264,8 +271,8 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(FileListHeader))
+)(FileListHeader)
 export const MobileFileListHeader = connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(MobileHeader))
+)(MobileHeader)
