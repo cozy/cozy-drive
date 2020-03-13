@@ -5,7 +5,7 @@ import Button from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import iconList from 'drive/assets/icons/icon-list.svg'
 import iconListMin from 'drive/assets/icons/icon-list-min.svg'
-import { HeaderCell, SortableHeaderCell } from './HeaderCell'
+import HeaderCell from './HeaderCell'
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'drive/config/sort'
 
 import styles from 'drive/styles/filelist.styl'
@@ -33,16 +33,18 @@ const FileListHeader = ({
           styles['fil-content-file-select']
         )}
       />
-      {SORTABLE_ATTRIBUTES.map((props, index) => {
+      {SORTABLE_ATTRIBUTES.map(({ label, attr, css, defaultOrder }, index) => {
         if (!canSort) {
-          return <HeaderCell {...props} t={t} key={index} />
+          return <HeaderCell key={index} label={label} css={css} />
         }
-        const isActive = actualSort && actualSort.attribute === props.attr
+        const isActive = actualSort && actualSort.attribute === attr
         return (
-          <SortableHeaderCell
+          <HeaderCell
             key={`key_cell_${index}`}
-            {...props}
-            t={t}
+            label={label}
+            attr={attr}
+            css={css}
+            defaultOrder={defaultOrder}
             order={isActive ? actualSort.order : null}
             onSort={(attr, order) => onFolderSort(folderId, attr, order)}
           />

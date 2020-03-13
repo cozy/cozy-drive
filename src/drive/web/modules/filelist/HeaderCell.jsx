@@ -1,43 +1,36 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import cx from 'classnames'
 import { useI18n } from 'cozy-ui/react/I18n'
 import styles from 'drive/styles/filelist.styl'
 
-export const HeaderCell = ({ label, css }) => {
-  const { t } = useI18n()
-  return (
-    <div
-      className={cx(styles['fil-content-header'], styles[`fil-content-${css}`])}
-    >
-      {t(`table.head_${label}`)}
-    </div>
-  )
-}
-
-export const SortableHeaderCell = ({
+const HeaderCell = ({
   label,
-  attr,
   css,
+  attr,
   order = null,
   defaultOrder,
   onSort
 }) => {
   const { t } = useI18n()
+  const sortCallback = useCallback(
+    () =>
+      onSort &&
+      onSort(attr, order ? (order === 'asc' ? 'desc' : 'asc') : defaultOrder),
+    [onSort, attr, order, defaultOrder]
+  )
   return (
     <div
-      onClick={() =>
-        onSort(attr, order ? (order === 'asc' ? 'desc' : 'asc') : defaultOrder)
-      }
+      onClick={sortCallback}
       className={cx(
         styles['fil-content-header'],
         styles[`fil-content-${css}`],
         {
           [styles['fil-content-header-sortableasc']]:
-            order === null && defaultOrder === 'asc',
+            onSort && order === null && defaultOrder === 'asc',
           [styles['fil-content-header-sortabledesc']]:
-            order === null && defaultOrder === 'desc',
-          [styles['fil-content-header-sortasc']]: order === 'asc',
-          [styles['fil-content-header-sortdesc']]: order === 'desc'
+            onSort && order === null && defaultOrder === 'desc',
+          [styles['fil-content-header-sortasc']]: onSort && order === 'asc',
+          [styles['fil-content-header-sortdesc']]: onSort && order === 'desc'
         }
       )}
     >
@@ -45,3 +38,5 @@ export const SortableHeaderCell = ({
     </div>
   )
 }
+
+export default HeaderCell
