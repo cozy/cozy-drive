@@ -1,58 +1,27 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Spinner } from 'cozy-ui/transpiled/react'
+import cx from 'classnames'
+import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
-require('intersection-observer') // polyfill for safari
+import styles from 'drive/styles/filelist.styl'
 
-const LoadMore = ({ fetchMore, text }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const elementRef = useRef()
-
-  const startFetchMore = useCallback(
-    async () => {
-      if (!isLoading) {
-        setIsLoading(true)
-        try {
-          await fetchMore()
-        } catch (error) {
-          console.warn('failed to load more', error)
-        } finally {
-          setIsLoading(false)
-        }
-      }
-    },
-    [isLoading, fetchMore]
-  )
-
-  const checkIntersectionsEntries = intersectionEntries => {
-    if (intersectionEntries.filter(entry => entry.isIntersecting).length > 0)
-      startFetchMore()
-  }
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(checkIntersectionsEntries)
-    observer.observe(elementRef.current)
-
-    return () => {
-      observer.unobserve(elementRef.current)
-      observer.disconnect()
-    }
-  })
-
+const LoadMoreFiles = ({ fetchMore }) => {
+  const { t } = useI18n()
   return (
-    <span ref={elementRef}>
-      <Button
-        theme="text"
-        onClick={startFetchMore}
-        label={isLoading ? <Spinner noMargin /> : text}
-      />
-    </span>
+    <div
+      className={cx(
+        styles['fil-content-row'],
+        styles['fil-content-row--center']
+      )}
+    >
+      <LoadMore fetchMore={fetchMore} label={t('table.load_more')} />
+    </div>
   )
 }
 
-LoadMore.propTypes = {
-  fetchMore: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired
+LoadMoreFiles.propTypes = {
+  fetchMore: PropTypes.func.isRequired
 }
 
-export default LoadMore
+export default LoadMoreFiles

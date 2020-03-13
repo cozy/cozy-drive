@@ -2,8 +2,6 @@
 import React, { useCallback, useState } from 'react'
 import { useQuery, Q } from 'cozy-client'
 import SharingProvider from 'cozy-sharing'
-import cx from 'classnames'
-import styles from 'drive/styles/filelist.styl'
 
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
@@ -23,7 +21,7 @@ import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 import { isMobileApp } from 'cozy-device-helper'
 import File from 'drive/web/modules/filelist/File'
-import LoadMoreV2 from 'drive/web/modules/filelist/LoadMoreV2'
+import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 
 const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
   definition: () =>
@@ -149,17 +147,7 @@ const DriveView = ({ params, router }) => {
                     />
                   ))}
                   {foldersResult.hasMore && (
-                    <div
-                      className={cx(
-                        styles['fil-content-row'],
-                        styles['fil-content-row--center']
-                      )}
-                    >
-                      <LoadMoreV2
-                        fetchMore={foldersResult.fetchMore}
-                        text={'load MOAR'}
-                      />
-                    </div>
+                    <LoadMore fetchMore={foldersResult.fetchMore} />
                   )}
                   {filesResult.data.map(file => (
                     <File
@@ -177,17 +165,7 @@ const DriveView = ({ params, router }) => {
                     />
                   ))}
                   {filesResult.hasMore && (
-                    <div
-                      className={cx(
-                        styles['fil-content-row'],
-                        styles['fil-content-row--center']
-                      )}
-                    >
-                      <LoadMoreV2
-                        fetchMore={filesResult.fetchMore}
-                        text={'load MOAR'}
-                      />
-                    </div>
+                    <LoadMore fetchMore={filesResult.fetchMore} />
                   )}
                 </div>
               )}

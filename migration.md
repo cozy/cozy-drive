@@ -3,3 +3,4 @@
 - Filelist body a un switch pour le composant empty qui a besoin de savoir s'il est dans trash ou dans drive, on veux pas ca
 - enlever les besoins de displayedFolder
 - Les actions ont besoin d'un SharingConsumer pour savoir si hasWriteAccess et onFolderDelete. Possible d'utiliser un useContext ?
+- Coté cozey client, simplifier les états de requetes pour avoir un accès facile a isLoading, isError, en train de fetch more, isLoadingForALongTimeDisplaySpinner
