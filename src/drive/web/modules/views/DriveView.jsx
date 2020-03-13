@@ -27,33 +27,45 @@ import { isMobileApp } from 'cozy-device-helper'
 import File from 'drive/web/modules/filelist/File'
 import LoadMoreV2 from 'drive/web/modules/filelist/LoadMoreV2'
 
+const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        dir_id: currentFolderId,
+        _id: { $ne: TRASH_DIR_ID },
+        type
+      })
+      .indexFields(['dir_id', 'type', sortAttribute])
+      .sortBy([
+        { dir_id: sortOrder },
+        { type: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ]),
+  options: {
+    as: `${type}-${currentFolderId}-${sortAttribute}-${sortOrder}`
+  }
+})
+
 const DriveView = ({ params, router }) => {
   const { folderId } = params
   const [sortOrder, setSortOder] = useState({ attribute: 'name', order: 'asc' })
   const currentFolderId = folderId || ROOT_DIR_ID
 
-  const folderQuery = {
-    definition: () =>
-      Q('io.cozy.files')
-        .where({
-          dir_id: currentFolderId,
-          _id: { $ne: TRASH_DIR_ID }
-        })
-        .indexFields(['dir_id', 'type', sortOrder.attribute])
-        .sortBy([
-          { dir_id: sortOrder.order },
-          { type: sortOrder.order },
-          { [sortOrder.attribute]: sortOrder.order }
-        ]),
-    options: {
-      as: `folder-${currentFolderId}-${sortOrder.attribute}-${sortOrder.order}`
-    }
-  }
+  const folderQuery = buildQuery({
+    currentFolderId,
+    type: 'directory',
+    sortAttribute: sortOrder.attribute,
+    sortOrder: sortOrder.order
+  })
+  const fileQuery = buildQuery({
+    currentFolderId,
+    type: 'file',
+    sortAttribute: sortOrder.attribute,
+    sortOrder: sortOrder.order
+  })
 
-  const { fetchStatus, data, hasMore, fetchMore } = useQuery(
-    folderQuery.definition,
-    folderQuery.options
-  )
+  const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
+  const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const navigateToFolder = useCallback(folderId => {
     router.push(`/v2/${folderId}`)
@@ -66,6 +78,18 @@ const DriveView = ({ params, router }) => {
   const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
     setSortOder({ attribute, order })
   )
+
+  const isInError =
+    foldersResult.fetchStatus === 'error' || filesResult.fetchStatus === 'error'
+  const hasDataToShow =
+    !isInError &&
+    ((foldersResult.data && foldersResult.data.length > 0) ||
+      (filesResult.data && filesResult.data.length > 0))
+  const isLoading =
+    !hasDataToShow &&
+    foldersResult.fetchStatus === 'loading' &&
+    filesResult.fetchStatus === 'loading'
+  const isEmpty = !isLoading && !hasDataToShow
 
   return (
     <SharingProvider doctype="io.cozy.files" documentType="Files">
@@ -108,41 +132,69 @@ const DriveView = ({ params, router }) => {
             />
             <FileListBodyV2 selectionModeActive={false}>
               <AddFolder />
-              {fetchStatus === 'loading' &&
-                !data && <FileListRowsPlaceholder />}
-              {fetchStatus === 'error' && <Oops />}
-              {fetchStatus === 'loaded' &&
-                data.length === 0 && <EmptyDrive canUpload={true} />}
-              {data &&
-                data.length > 0 && (
-                  <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
-                    {data.map(file => (
-                      <File
-                        key={file._id}
-                        attributes={file}
-                        displayedFolder={null}
-                        actions={{}}
-                        isRenaming={false}
-                        onFolderOpen={navigateToFolder}
-                        onFileOpen={navigateToFile}
-                        withSelectionCheckbox={true}
-                        withFilePath={false}
-                        withSharedBadge={true}
-                        isFlatDomain={true}
+              {isInError && <Oops />}
+              {isLoading && <FileListRowsPlaceholder />}
+              {isEmpty && <EmptyDrive canUpload={true} />}
+              {hasDataToShow && (
+                <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
+                  {foldersResult.data.map(file => (
+                    <File
+                      key={file._id}
+                      attributes={file}
+                      displayedFolder={null}
+                      actions={{}}
+                      isRenaming={false}
+                      onFolderOpen={navigateToFolder}
+                      onFileOpen={navigateToFile}
+                      withSelectionCheckbox={true}
+                      withFilePath={false}
+                      withSharedBadge={true}
+                      isFlatDomain={true}
+                    />
+                  ))}
+                  {foldersResult.hasMore && (
+                    <div
+                      className={cx(
+                        styles['fil-content-row'],
+                        styles['fil-content-row--center']
+                      )}
+                    >
+                      <LoadMoreV2
+                        fetchMore={foldersResult.fetchMore}
+                        text={'load MOAR'}
                       />
-                    ))}
-                    {hasMore && (
-                      <div
-                        className={cx(
-                          styles['fil-content-row'],
-                          styles['fil-content-row--center']
-                        )}
-                      >
-                        <LoadMoreV2 fetchMore={fetchMore} text={'load MOAR'} />
-                      </div>
-                    )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                  {filesResult.data.map(file => (
+                    <File
+                      key={file._id}
+                      attributes={file}
+                      displayedFolder={null}
+                      actions={{}}
+                      isRenaming={false}
+                      onFolderOpen={navigateToFolder}
+                      onFileOpen={navigateToFile}
+                      withSelectionCheckbox={true}
+                      withFilePath={false}
+                      withSharedBadge={true}
+                      isFlatDomain={true}
+                    />
+                  ))}
+                  {filesResult.hasMore && (
+                    <div
+                      className={cx(
+                        styles['fil-content-row'],
+                        styles['fil-content-row--center']
+                      )}
+                    >
+                      <LoadMoreV2
+                        fetchMore={filesResult.fetchMore}
+                        text={'load MOAR'}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
             </FileListBodyV2>
           </FileListv2>
         </Dropzone>
