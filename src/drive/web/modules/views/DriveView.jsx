@@ -16,10 +16,8 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { FileListv2 } from 'drive/web/modules/filelist/FileList'
 import { FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
-import {
-  FileListHeader,
-  MobileHeader
-} from 'drive/web/modules/filelist/FileListHeader'
+import FileListHeader from 'drive/web/modules/filelist/FileListHeader'
+import MobileFileListHeader from 'drive/web/modules/filelist/MobileFileListHeader'
 import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
@@ -112,8 +110,7 @@ const DriveView = ({ params, router }) => {
         >
           {false && <SelectionBar actions={[]} />}
           <FileListv2>
-            <MobileHeader
-              t={s => s}
+            <MobileFileListHeader
               folderId={null}
               canSort={true}
               sort={sortOrder}
@@ -122,7 +119,6 @@ const DriveView = ({ params, router }) => {
               toggleThumbnailSize={() => {}}
             />
             <FileListHeader
-              t={s => s}
               folderId={null}
               canSort={true}
               sort={sortOrder}

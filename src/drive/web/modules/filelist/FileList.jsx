@@ -1,8 +1,9 @@
 import React from 'react'
 
-import FileListHeader, {
+import {
+  FileListHeader,
   MobileFileListHeader
-} from 'drive/web/modules/filelist/FileListHeader'
+} from 'drive/web/modules/filelist/ConnectedFileListHeader'
 import FileListBody from 'drive/web/modules/filelist/FileListBody'
 
 import styles from 'drive/styles/filelist.styl'
