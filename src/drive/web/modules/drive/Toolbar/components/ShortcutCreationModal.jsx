@@ -62,7 +62,7 @@ const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
           <div>
             <TextField
               label={t('Shortcut.filename')}
-              id="shortcuturl"
+              id="shortcutfilename"
               variant="outlined"
               onChange={e => setFilename(e.target.value)}
               fullWidth
