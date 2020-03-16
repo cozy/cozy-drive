@@ -1,7 +1,12 @@
 /* global __TARGET__ */
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useContext } from 'react'
 import { useQuery, Q } from 'cozy-client'
+
 import SharingProvider from 'cozy-sharing'
+import {
+  ThumbnailSizeContext,
+  ThumbnailSizeContextProvider
+} from 'drive/lib/ThumbnailSizeContext'
 
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
@@ -20,7 +25,7 @@ import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 import { isMobileApp } from 'cozy-device-helper'
-import File from 'drive/web/modules/filelist/File'
+import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 
 const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
@@ -43,6 +48,9 @@ const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
 })
 
 const DriveView = ({ params, router }) => {
+  const { isBigThumbnail, toggleThumbnailSize } = useContext(
+    ThumbnailSizeContext
+  )
   const { folderId } = params
   const [sortOrder, setSortOder] = useState({ attribute: 'name', order: 'asc' })
   const currentFolderId = folderId || ROOT_DIR_ID
@@ -88,93 +96,109 @@ const DriveView = ({ params, router }) => {
   const isEmpty = !isLoading && !hasDataToShow
 
   return (
-    <SharingProvider doctype="io.cozy.files" documentType="Files">
-      <Main>
-        <Topbar>
-          {false && <Breadcrumb onFolderOpen={null} />}
-          {false && (
-            <Toolbar
-              folderId={null}
-              canUpload={true}
-              canCreateFolder={true}
-              disabled={false}
-            />
-          )}
-        </Topbar>
-        <Dropzone
-          role="main"
-          disabled={__TARGET__ === 'mobile'}
-          displayedFolder={null}
-        >
-          {false && <SelectionBar actions={[]} />}
-          <FileListv2>
-            <MobileFileListHeader
-              folderId={null}
-              canSort={true}
-              sort={sortOrder}
-              onFolderSort={changeSortOrder}
-              thumbnailSizeBig={false}
-              toggleThumbnailSize={() => {}}
-            />
-            <FileListHeader
-              folderId={null}
-              canSort={true}
-              sort={sortOrder}
-              onFolderSort={changeSortOrder}
-              thumbnailSizeBig={false}
-              toggleThumbnailSize={() => {}}
-            />
-            <FileListBodyV2 selectionModeActive={false}>
-              <AddFolder />
-              {isInError && <Oops />}
-              {isLoading && <FileListRowsPlaceholder />}
-              {isEmpty && <EmptyDrive canUpload={true} />}
-              {hasDataToShow && (
-                <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
-                  {foldersResult.data.map(file => (
-                    <File
-                      key={file._id}
-                      attributes={file}
-                      displayedFolder={null}
-                      actions={{}}
-                      isRenaming={false}
-                      onFolderOpen={navigateToFolder}
-                      onFileOpen={navigateToFile}
-                      withSelectionCheckbox={true}
-                      withFilePath={false}
-                      withSharedBadge={true}
-                      isFlatDomain={true}
-                    />
-                  ))}
-                  {foldersResult.hasMore && (
-                    <LoadMore fetchMore={foldersResult.fetchMore} />
-                  )}
-                  {filesResult.data.map(file => (
-                    <File
-                      key={file._id}
-                      attributes={file}
-                      displayedFolder={null}
-                      actions={{}}
-                      isRenaming={false}
-                      onFolderOpen={navigateToFolder}
-                      onFileOpen={navigateToFile}
-                      withSelectionCheckbox={true}
-                      withFilePath={false}
-                      withSharedBadge={true}
-                      isFlatDomain={true}
-                    />
-                  ))}
-                  {filesResult.hasMore && (
-                    <LoadMore fetchMore={filesResult.fetchMore} />
-                  )}
-                </div>
-              )}
-            </FileListBodyV2>
-          </FileListv2>
-        </Dropzone>
-      </Main>
-    </SharingProvider>
+    <Main>
+      <Topbar>
+        {false && <Breadcrumb onFolderOpen={null} />}
+        {false && (
+          <Toolbar
+            folderId={null}
+            canUpload={true}
+            canCreateFolder={true}
+            disabled={false}
+          />
+        )}
+      </Topbar>
+      <Dropzone
+        role="main"
+        disabled={__TARGET__ === 'mobile'}
+        displayedFolder={null}
+      >
+        {false && <SelectionBar actions={[]} />}
+        <FileListv2>
+          <MobileFileListHeader
+            folderId={null}
+            canSort={true}
+            sort={sortOrder}
+            onFolderSort={changeSortOrder}
+            thumbnailSizeBig={isBigThumbnail}
+            toggleThumbnailSize={toggleThumbnailSize}
+          />
+          <FileListHeader
+            folderId={null}
+            canSort={true}
+            sort={sortOrder}
+            onFolderSort={changeSortOrder}
+            thumbnailSizeBig={isBigThumbnail}
+            toggleThumbnailSize={toggleThumbnailSize}
+          />
+          <FileListBodyV2 selectionModeActive={false}>
+            <AddFolder />
+            {isInError && <Oops />}
+            {isLoading && <FileListRowsPlaceholder />}
+            {isEmpty && <EmptyDrive canUpload={true} />}
+            {hasDataToShow && (
+              <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
+                {foldersResult.data.map(file => (
+                  <File
+                    key={file._id}
+                    attributes={file}
+                    displayedFolder={null}
+                    actions={{}}
+                    isRenaming={false}
+                    onFolderOpen={navigateToFolder}
+                    onFileOpen={navigateToFile}
+                    withSelectionCheckbox={true}
+                    withFilePath={false}
+                    withSharedBadge={true}
+                    isFlatDomain={true}
+                    selected={false}
+                    selectionModeActive={false}
+                    onCheckboxToggle={() => {}}
+                    isAvailableOffline={false}
+                    thumbnailSizeBig={isBigThumbnail}
+                  />
+                ))}
+                {foldersResult.hasMore && (
+                  <LoadMore fetchMore={foldersResult.fetchMore} />
+                )}
+                {filesResult.data.map(file => (
+                  <File
+                    key={file._id}
+                    attributes={file}
+                    displayedFolder={null}
+                    actions={{}}
+                    isRenaming={false}
+                    onFolderOpen={navigateToFolder}
+                    onFileOpen={navigateToFile}
+                    withSelectionCheckbox={true}
+                    withFilePath={false}
+                    withSharedBadge={true}
+                    isFlatDomain={true}
+                    selected={false}
+                    selectionModeActive={false}
+                    onCheckboxToggle={() => {}}
+                    isAvailableOffline={false}
+                    thumbnailSizeBig={isBigThumbnail}
+                  />
+                ))}
+                {filesResult.hasMore && (
+                  <LoadMore fetchMore={filesResult.fetchMore} />
+                )}
+              </div>
+            )}
+          </FileListBodyV2>
+        </FileListv2>
+      </Dropzone>
+    </Main>
   )
 }
 
-export default DriveView
+const DriveViewWithProvider = props => (
+  <SharingProvider doctype="io.cozy.files" documentType="Files">
+    <ThumbnailSizeContextProvider>
+      <DriveView {...props} />
+    </ThumbnailSizeContextProvider>
+  </SharingProvider>
+)
+
+export default DriveViewWithProvider
