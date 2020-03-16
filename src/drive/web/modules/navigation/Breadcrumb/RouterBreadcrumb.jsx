@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 import Breadcrumb from './Breadcrumb'
 
 class RouterBreadCrumb extends Component {
@@ -51,4 +52,4 @@ RouterBreadCrumb.propTypes = {
   router: PropTypes.object
 }
 
-export default RouterBreadCrumb
+export default withRouter(RouterBreadCrumb)
