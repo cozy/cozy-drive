@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import { CozyFile } from 'cozy-doctypes'
 import styles from 'drive/styles/filenameinput.styl'
 
 const ENTER_KEY = 13
@@ -10,16 +11,13 @@ const valueIsEmpty = value => value.toString() === ''
 export default class FilenameInput extends Component {
   constructor(props) {
     super(props)
+    this.textInput = React.createRef()
     this.state = {
       value: props.name || '',
       working: false,
       error: false,
       hasBeenSubmitedOrAborted: false
     }
-  }
-
-  componentDidMount() {
-    this.textInput.focus()
   }
 
   handleKeyDown(e) {
@@ -65,7 +63,15 @@ export default class FilenameInput extends Component {
   abort(accidental = false) {
     this.props.onAbort && this.props.onAbort(accidental)
   }
-
+  handleFocus() {
+    const { name } = this.props
+    const { filename } = CozyFile.splitFilename({ name, type: 'file' })
+    //Since we're mounting the component and focusing it at the same time
+    // let's add a small timeout to be sure the ref is populated
+    setTimeout(() => {
+      this.textInput.current.setSelectionRange(0, filename.length)
+    }, 5)
+  }
   render() {
     const { value, working, error } = this.state
     return (
@@ -73,14 +79,14 @@ export default class FilenameInput extends Component {
         <input
           type="text"
           value={value}
-          ref={input => {
-            this.textInput = input
-          }}
+          ref={this.textInput}
           disabled={working}
           onChange={e => this.handleChange(e)}
+          onFocus={() => this.handleFocus()}
           onBlur={() => this.handleBlur()}
           onKeyDown={e => this.handleKeyDown(e)}
           className={error ? styles['error'] : null}
+          autoFocus="autofocus"
         />
         {working && <Spinner />}
       </div>
