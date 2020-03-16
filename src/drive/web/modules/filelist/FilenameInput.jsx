@@ -3,12 +3,22 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { CozyFile } from 'cozy-doctypes'
 import styles from 'drive/styles/filenameinput.styl'
 
+import ExperimentalDialog, {
+  ExperimentalDialogTitle,
+  ExperimentalDialogActions
+} from 'cozy-ui/transpiled/react/Labs/ExperimentalDialog'
+import DialogCloseButton from 'cozy-ui/transpiled/react/MuiCozyTheme/Dialog/DialogCloseButton'
+import DialogContent from '@material-ui/core/DialogContent'
+
+import Button from 'cozy-ui/transpiled/react/Button'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+
 const ENTER_KEY = 13
 const ESC_KEY = 27
 
 const valueIsEmpty = value => value.toString() === ''
 
-export default class FilenameInput extends Component {
+class FilenameInput extends Component {
   constructor(props) {
     super(props)
     this.textInput = React.createRef()
@@ -16,8 +26,12 @@ export default class FilenameInput extends Component {
       value: props.name || '',
       working: false,
       error: false,
-      hasBeenSubmitedOrAborted: false
+      hasBeenSubmitedOrAborted: false,
+      isModalOpened: false
     }
+    this.fileNameOnMount = props.name
+    this.abort = this.abort.bind(this)
+    this.save = this.save.bind(this)
   }
 
   handleKeyDown(e) {
@@ -48,19 +62,33 @@ export default class FilenameInput extends Component {
 
   submit() {
     this.setState({ working: true, error: false })
-    this.props.onSubmit &&
-      this.props
-        .onSubmit(this.state.value)
-        .then(() => this.setState({ working: false }))
-        .catch(() =>
-          this.setState({
-            working: false,
-            error: true
-          })
-        )
+    const previousExtension = CozyFile.splitFilename({
+      name: this.fileNameOnMount,
+      type: 'file'
+    }).extension
+    const newExtension = CozyFile.splitFilename({
+      name: this.state.value,
+      type: 'file'
+    }).extension
+    if (previousExtension !== newExtension) {
+      this.setState({ isModalOpened: true })
+    } else {
+      this.save()
+    }
   }
-
+  save = async () => {
+    if (!this.props.onSubmit) return
+    try {
+      await this.props.onSubmit(this.state.value)
+    } catch (e) {
+      this.setState({
+        working: false,
+        error: true
+      })
+    }
+  }
   abort(accidental = false) {
+    if (this.state.isModalOpened) this.setState({ isModalOpened: false })
     this.props.onAbort && this.props.onAbort(accidental)
   }
   handleFocus() {
@@ -74,6 +102,7 @@ export default class FilenameInput extends Component {
   }
   render() {
     const { value, working, error } = this.state
+    const { t } = this.props
     return (
       <div data-test-id="name-input" className={styles['fil-file-name-input']}>
         <input
@@ -89,7 +118,31 @@ export default class FilenameInput extends Component {
           autoFocus="autofocus"
         />
         {working && <Spinner />}
+        <ExperimentalDialog
+          onClose={this.abort}
+          open={this.state.isModalOpened}
+        >
+          <DialogCloseButton onClick={this.abort} />
+          <ExperimentalDialogTitle>
+            {t('RenameModal.title')}
+          </ExperimentalDialogTitle>
+          <DialogContent>{t('RenameModal.description')}</DialogContent>
+          <ExperimentalDialogActions layout="row">
+            <Button
+              theme="secondary"
+              onClick={this.abort}
+              label={t('RenameModal.cancel')}
+            />
+            <Button
+              theme="primary"
+              label={t('RenameModal.continue')}
+              onClick={this.save}
+            />
+          </ExperimentalDialogActions>
+        </ExperimentalDialog>
       </div>
     )
   }
 }
+
+export default translate()(FilenameInput)
