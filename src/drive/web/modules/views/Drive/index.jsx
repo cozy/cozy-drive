@@ -1,9 +1,6 @@
 /* global __TARGET__ */
 import React, { useCallback, useState, useContext } from 'react'
 import { useQuery, Q } from 'cozy-client'
-import get from 'lodash/get'
-import uniqBy from 'lodash/uniqBy'
-import { useI18n } from 'cozy-ui/react/I18n'
 
 import SharingProvider from 'cozy-sharing'
 import {
@@ -29,7 +26,7 @@ import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlac
 import { isMobileApp } from 'cozy-device-helper'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
-import { MobileAwareBreadcrumbV2 as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
+import Breadcrumb from './Breadcrumb'
 
 const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
   definition: () =>
@@ -49,54 +46,6 @@ const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
     as: `${type}-${currentFolderId}-${sortAttribute}-${sortOrder}`
   }
 })
-
-const getBreadcrumbPath = (t, displayedFolder) =>
-  uniqBy(
-    [
-      {
-        id: ROOT_DIR_ID
-      },
-      {
-        id: get(displayedFolder, 'dir_id')
-      },
-      {
-        id: displayedFolder.id,
-        name: displayedFolder.name
-      }
-    ],
-    'id'
-  )
-    .filter(({ id }) => Boolean(id))
-    .map(breadcrumb => ({
-      id: breadcrumb.id,
-      name:
-        breadcrumb.name ||
-        (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
-    }))
-
-const Breadcrumbs = ({ currentFolderId, navigateToFolder }) => {
-  const { t } = useI18n()
-  const currentFolderQuery = useQuery(
-    () => Q('io.cozy.files').getById(currentFolderId),
-    {
-      as: 'folder-' + currentFolderId
-    }
-  )
-  const currentFolder = get(currentFolderQuery, 'data[0]')
-  const path = currentFolder ? getBreadcrumbPath(t, currentFolder) : []
-
-  const onBreadcrumbClick = useCallback(({ id }) => navigateToFolder(id), [
-    navigateToFolder
-  ])
-
-  return currentFolder ? (
-    <Breadcrumb
-      path={path}
-      onBreadcrumbClick={onBreadcrumbClick}
-      opening={false}
-    />
-  ) : null
-}
 
 const DriveView = ({ params, router }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
@@ -149,7 +98,7 @@ const DriveView = ({ params, router }) => {
   return (
     <Main>
       <Topbar>
-        <Breadcrumbs
+        <Breadcrumb
           currentFolderId={currentFolderId}
           navigateToFolder={navigateToFolder}
         />

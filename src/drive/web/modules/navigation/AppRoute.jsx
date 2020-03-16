@@ -19,7 +19,7 @@ import FileHistory from '../../../../components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
-import DriveView from '../views/DriveView'
+import DriveView from '../views/Drive'
 
 const AppRoute = (
   <Route>
