@@ -15,7 +15,8 @@ const FileOpener = ({
   toggle,
   open,
   selectionModeActive,
-  isFlatDomain
+  isFlatDomain,
+  isActive
 }) => {
   const linkRef = useRef(null)
   const client = useClient()
@@ -50,7 +51,7 @@ const FileOpener = ({
     [linkRef.current]
   )
 
-  if (shouldOpenInANewTab) {
+  if (shouldOpenInANewTab && isActive) {
     return (
       <a
         href={fileUrl}
