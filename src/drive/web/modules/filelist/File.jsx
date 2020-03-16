@@ -313,6 +313,7 @@ const File = props => {
         open={open}
         toggle={toggle}
         isFlatDomain={isFlatDomain}
+        isActive={!isRenaming}
       >
         <FileThumbnail
           file={attributes}
