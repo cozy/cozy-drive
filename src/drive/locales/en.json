@@ -644,5 +644,11 @@
       "text": "You're about to be redirected…",
       "error": "Error during the redirection. Generally, this means that the content of the file is not in the correct format."
     }
+  },
+  "RenameModal": {
+    "title": "Rename",
+    "description": "You're about to change the file's extension. Do you want to continue?",
+    "continue": "Continue",
+    "cancel": "Cancel"
   }
 }
