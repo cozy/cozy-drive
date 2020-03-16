@@ -1,7 +1,6 @@
 /* eslint-env jest */
 import React from 'react'
-import { shallow } from 'enzyme'
-import { render, fireEvent, cleanup } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import mediaQuery from 'css-mediaquery'
 
 import { createMockClient } from 'cozy-client'
@@ -50,10 +49,13 @@ describe('ShortcutCreationModal', () => {
     const filenameInput = getByLabelText('Filename')
     const submitButton = getByText('Create')
     fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
+
     fireEvent.click(submitButton)
     expect(client.stackClient.fetchJSON).not.toHaveBeenCalled()
     fireEvent.change(filenameInput, { target: { value: 'filename' } })
+
     fireEvent.click(submitButton)
+
     expect(client.stackClient.fetchJSON).toHaveBeenCalledWith(
       'POST',
       '/shortcuts',
@@ -69,6 +71,7 @@ describe('ShortcutCreationModal', () => {
         }
       }
     )
+
     fireEvent.change(filenameInput, { target: { value: 'filename.url' } })
     fireEvent.click(submitButton)
     expect(client.stackClient.fetchJSON).toHaveBeenCalledWith(
