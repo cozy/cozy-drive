@@ -43,6 +43,7 @@
     "menu_download_file": "Download this file",
     "menu_open_cozy": "Open in my Cozy",
     "menu_create_note": "New note",
+    "menu_create_shortcut": "New shortcut",
     "empty_trash": "Empty trash",
     "share": "Share",
     "trash": "Remove",
@@ -650,5 +651,16 @@
     "description": "You're about to change the file's extension. Do you want to continue?",
     "continue": "Continue",
     "cancel": "Cancel"
+  },
+  "Shortcut": {
+    "title_modal": "Create a shortcut",
+    "filename": "Filename",
+    "url": "URL",
+    "cancel": "Cancel",
+    "create": "Create",
+    "created": "Your shortcut has been created",
+    "errored": "An error occured",
+    "filename_error_ends": "The name should end with .url",
+    "needs_info": "Shorcut needs at least an url and a filename"
   }
 }

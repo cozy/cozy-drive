@@ -25,6 +25,8 @@ import SelectableItem from './Toolbar/selectable/SelectableItem'
 import AddFolderItem from './Toolbar/components/AddFolderItem'
 import UploadItem from './Toolbar/components/UploadItem'
 import CreateNoteItem from './Toolbar/components/CreateNoteItem'
+import CreateShortcut from './Toolbar/components/CreateShortcut'
+
 import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
 import ShareItem from './Toolbar/share/ShareItem'
 import ShareButton from './Toolbar/share/ShareButton'
@@ -65,9 +67,16 @@ class Toolbar extends Component {
               <AddFolderItem />
             </Item>
           )}
-        <Item>
-          <CreateNoteItem />
-        </Item>
+        {hasWriteAccess && (
+          <Item>
+            <CreateNoteItem />
+          </Item>
+        )}
+        {hasWriteAccess && (
+          <Item>
+            <CreateShortcut />
+          </Item>
+        )}
         {canUpload &&
           hasWriteAccess && (
             <Item>
