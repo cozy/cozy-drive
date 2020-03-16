@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 import PreviousButton from './PreviousButton'
 
 class RouterPreviousButton extends Component {
@@ -24,4 +26,11 @@ class RouterPreviousButton extends Component {
   }
 }
 
-export default RouterPreviousButton
+RouterPreviousButton.propTypes = {
+  path: PropTypes.array,
+  onFolderOpen: PropTypes.func.isRequired,
+  goToFolder: PropTypes.func.isRequired,
+  router: PropTypes.object
+}
+
+export default withRouter(RouterPreviousButton)

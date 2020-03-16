@@ -3,7 +3,6 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
@@ -71,15 +70,13 @@ const withSharedDocuments = Wrapped =>
     }
   }
 
-export default withBreakpoints()(
-  withRouter(
-    translate()(
-      withSharedDocuments(
-        connect(
-          mapStateToProps,
-          mapDispatchToProps
-        )(MobileAwareBreadcrumb)
-      )
+export default withRouter(
+  translate()(
+    withSharedDocuments(
+      connect(
+        mapStateToProps,
+        mapDispatchToProps
+      )(MobileAwareBreadcrumb)
     )
   )
 )
