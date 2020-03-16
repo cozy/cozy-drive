@@ -11,12 +11,10 @@ import DialogContent from '@material-ui/core/DialogContent'
 import Divider from '@material-ui/core/Divider'
 import DialogCloseButton from 'cozy-ui/transpiled/react/MuiCozyTheme/Dialog/DialogCloseButton'
 import Button from 'cozy-ui/transpiled/react/Button'
-import InputGroup from 'cozy-ui/transpiled/react/InputGroup'
-import { Bold } from 'cozy-ui/transpiled/react/Text'
-import Input from 'cozy-ui/transpiled/react/Input'
+import TextField from 'cozy-ui/transpiled/react/MuiCozyTheme/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import Label from 'cozy-ui/transpiled/react/Label'
 
 const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
   const { t } = useI18n()
@@ -51,19 +49,31 @@ const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
       <Divider />
       <DialogContent>
         <Stack>
-          <Label htmlFor="shortcuturl">{t('Shortcut.url')}</Label>
-          <Input
-            id="shortcuturl"
-            fullwidth
-            onChange={e => setUrl(e.target.value)}
-          />
-          <Label htmlFor="shortcutfilename">{t('Shortcut.filename')}</Label>
-          <InputGroup fullwidth append={<Bold className="u-pr-1">.url</Bold>}>
-            <Input
-              id="shortcutfilename"
-              onChange={e => setFilename(e.target.value)}
+          <div>
+            <TextField
+              label={t('Shortcut.url')}
+              id="shortcuturl"
+              variant="outlined"
+              onChange={e => setUrl(e.target.value)}
+              fullWidth
+              margin="normal"
             />
-          </InputGroup>
+          </div>
+          <div>
+            <TextField
+              label={t('Shortcut.filename')}
+              id="shortcuturl"
+              variant="outlined"
+              onChange={e => setFilename(e.target.value)}
+              fullWidth
+              margin="normal"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">.url</InputAdornment>
+                )
+              }}
+            />
+          </div>
         </Stack>
       </DialogContent>
 
