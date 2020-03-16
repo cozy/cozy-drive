@@ -8,7 +8,7 @@ import {
   PreviousButton,
   renamePathNames
 } from 'drive/web/modules/navigation/Breadcrumb'
-import getFolderPath from 'drive/web/modules/navigation/getFolderPath'
+import getFolderPath from 'drive/web/modules/navigation/Breadcrumb/getFolderPath'
 
 const buildBreadcrumbPath = (currentDir, t) =>
   renamePathNames(
