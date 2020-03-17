@@ -661,6 +661,7 @@
     "created": "Your shortcut has been created",
     "errored": "An error occured",
     "filename_error_ends": "The name should end with .url",
-    "needs_info": "Shorcut needs at least an url and a filename"
+    "needs_info": "Shorcut needs at least an url and a filename",
+    "url_badformat": "Your url is not in the right format"
   }
 }
