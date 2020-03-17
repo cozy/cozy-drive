@@ -3,9 +3,7 @@ import styles from '../styles/topbar.styl'
 
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
-
+import { withBreakpoints, BarContextProvider } from 'cozy-ui/transpiled/react'
 import { withClient } from 'cozy-client'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
