@@ -62,6 +62,7 @@ class FilenameInput extends Component {
 
   submit() {
     this.setState({ working: true, error: false })
+    if (!this.fileNameOnMount) this.save()
     const previousExtension = CozyFile.splitFilename({
       name: this.fileNameOnMount,
       type: 'file'
