@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import Overlay from 'cozy-ui/transpiled/react/Overlay'
-import Viewer from 'cozy-ui/transpiled/react/Viewer'
+import { Overlay, Viewer } from 'cozy-ui/transpiled/react'
 
 const getParentPath = router => {
   const url = router.location.pathname

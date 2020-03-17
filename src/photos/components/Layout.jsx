@@ -3,8 +3,8 @@
 import styles from '../styles/layout'
 
 import React from 'react'
-
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+
 import { Layout as LayoutUI, Main } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Nav, {
@@ -13,13 +13,12 @@ import Nav, {
   NavText,
   genNavLink
 } from 'cozy-ui/transpiled/react/Nav'
-import { Sprite as IconSprite } from 'cozy-ui/transpiled/react/Icon'
-
 import { Link as RRNavLink } from 'react-router'
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
+import { IconSprite } from 'cozy-ui/transpiled/react'
 import { ModalManager } from 'react-cozy-helpers'
 
 const NavLink = genNavLink(RRNavLink)

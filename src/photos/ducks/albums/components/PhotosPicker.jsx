@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import Button from 'cozy-ui/transpiled/react/Button'
+import { Button } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import { TimelineBoard } from '../../timeline'
