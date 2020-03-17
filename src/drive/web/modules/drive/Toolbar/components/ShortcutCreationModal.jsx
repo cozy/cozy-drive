@@ -16,6 +16,25 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
+const ENTER_KEY = 13
+
+const isURLValid = url => {
+  try {
+    const testedUrl = new URL(url)
+    if (!testedUrl.hostname.includes('.')) return false
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+const makeURLValid = str => {
+  if (!str.startsWith('http')) {
+    const firstTry = `https://${str}`
+    if (isURLValid(firstTry)) return firstTry
+  }
+  return false
+}
 const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
   const { t } = useI18n()
   const [filename, setFilename] = useState('')
@@ -27,10 +46,15 @@ const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
       Alerter.error(t('Shortcut.needs_info'))
       return
     }
+    const makedURL = makeURLValid(url)
+    if (!makedURL) {
+      Alerter.error(t('Shortcut.url_badformat'))
+      return
+    }
     const data = {
       name: filename.endsWith('.url') ? filename : filename + '.url',
       dir_id: displayedFolder.id,
-      url
+      url: makedURL
     }
     try {
       await client.collection('io.cozy.files.shortcuts').create(data)
@@ -38,6 +62,12 @@ const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
       onClose()
     } catch (e) {
       Alerter.error('Shortcut.errored')
+    }
+  }
+
+  const handleKeyDown = e => {
+    if (e.keyCode === ENTER_KEY) {
+      createShortcut()
     }
   }
   return (
@@ -55,8 +85,10 @@ const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
               id="shortcuturl"
               variant="outlined"
               onChange={e => setUrl(e.target.value)}
+              onKeyDown={e => handleKeyDown(e)}
               fullWidth
               margin="normal"
+              autoFocus
             />
           </div>
           <div>
@@ -67,6 +99,7 @@ const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
               onChange={e => setFilename(e.target.value)}
               fullWidth
               margin="normal"
+              onKeyDown={e => handleKeyDown(e)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">.url</InputAdornment>
