@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/transpiled/react'
+import Menu, { MenuItem } from 'cozy-ui/transpiled/react/Menu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+
 import { MoreButton } from 'components/Button'
 import { ShareButton, SharedRecipients, SharedDocument } from 'cozy-sharing'
 import { RecipientsAvatars } from 'cozy-sharing/dist/components/Recipient'
