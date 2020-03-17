@@ -20,8 +20,7 @@ const ENTER_KEY = 13
 
 const isURLValid = url => {
   try {
-    const testedUrl = new URL(url)
-    if (!testedUrl.hostname.includes('.')) return false
+    new URL(url)
     return true
   } catch (e) {
     return false
@@ -29,10 +28,8 @@ const isURLValid = url => {
 }
 
 const makeURLValid = str => {
-  if (!str.startsWith('http')) {
-    const firstTry = `https://${str}`
-    if (isURLValid(firstTry)) return firstTry
-  }
+  if (isURLValid(str)) return str
+  else if (isURLValid(`https://${str}`)) return `https://${str}`
   return false
 }
 const ShortcutCreationModal = ({ onClose, displayedFolder }) => {
