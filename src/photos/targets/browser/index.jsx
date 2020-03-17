@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
 import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
@@ -76,15 +77,17 @@ document.addEventListener('DOMContentLoaded', () => {
     replaceTitleOnMobile: true
   })
   render(
-    <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
-      <CozyProvider client={client}>
-        <StyledApp>
-          <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
-            <Router history={history} routes={AppRoute} />
-          </SharingProvider>
-        </StyledApp>
-      </CozyProvider>
-    </I18n>,
+    <Provider store={store}>
+      <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
+        <CozyProvider client={client}>
+          <StyledApp>
+            <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
+              <Router history={history} routes={AppRoute} />
+            </SharingProvider>
+          </StyledApp>
+        </CozyProvider>
+      </I18n>
+    </Provider>,
     root
   )
 })

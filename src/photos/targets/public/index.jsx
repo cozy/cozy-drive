@@ -1,6 +1,7 @@
 /* global cozy */
 import React from 'react'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
@@ -67,16 +68,18 @@ async function init() {
   try {
     const id = await getSharedDocument(client)
     app = (
-      <CozyProvider client={client}>
-        <StyledApp>
-          <Router history={hashHistory}>
-            <Route path="shared/:albumId" component={App}>
-              <Route path=":photoId" component={PhotosViewer} />
-            </Route>
-            <Redirect from="/*" to={`shared/${id}`} />
-          </Router>
-        </StyledApp>
-      </CozyProvider>
+      <Provider store={store}>
+        <CozyProvider client={client}>
+          <StyledApp>
+            <Router history={hashHistory}>
+              <Route path="shared/:albumId" component={App}>
+                <Route path=":photoId" component={PhotosViewer} />
+              </Route>
+              <Redirect from="/*" to={`shared/${id}`} />
+            </Router>
+          </StyledApp>
+        </CozyProvider>
+      </Provider>
     )
   } catch (e) {
     app = <ErrorUnsharedComponent />
