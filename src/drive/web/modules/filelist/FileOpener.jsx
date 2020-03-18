@@ -57,7 +57,7 @@ const FileOpener = ({
         href={fileUrl}
         rel="noopener noreferrer"
         target="_blank"
-        className={styles.container__a}
+        className={styles['file-opener__a']}
         ref={linkRef}
       >
         {children}
@@ -65,7 +65,7 @@ const FileOpener = ({
     )
   } else {
     return (
-      <span className={styles.container__span} ref={linkRef} id={file.id}>
+      <span className={styles['file-opener']} ref={linkRef} id={file.id}>
         {children}
       </span>
     )
