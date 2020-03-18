@@ -7,6 +7,7 @@ import {
   ThumbnailSizeContext,
   ThumbnailSizeContextProvider
 } from 'drive/lib/ThumbnailSizeContext'
+import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
 
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
@@ -97,6 +98,7 @@ const DriveView = ({ params, router, children }) => {
 
   return (
     <Main>
+      <ModalStack />
       <Topbar>
         <Breadcrumb
           currentFolderId={currentFolderId}
@@ -192,7 +194,9 @@ const DriveView = ({ params, router, children }) => {
 const DriveViewWithProvider = props => (
   <SharingProvider doctype="io.cozy.files" documentType="Files">
     <ThumbnailSizeContextProvider>
-      <DriveView {...props} />
+      <ModalContextProvider>
+        <DriveView {...props} />
+      </ModalContextProvider>
     </ThumbnailSizeContextProvider>
   </SharingProvider>
 )
