@@ -16,7 +16,7 @@ import Toolbar from 'drive/web/modules/drive/Toolbar.jsx'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 
 import { FileListv2 } from 'drive/web/modules/filelist/FileList'
-import { FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
+import { ConnectedFileListBodyV2 as FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
 import FileListHeader from 'drive/web/modules/filelist/FileListHeader'
 import MobileFileListHeader from 'drive/web/modules/filelist/MobileFileListHeader'
@@ -24,7 +24,7 @@ import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 import { isMobileApp } from 'cozy-device-helper'
-import { DumbFile as File } from 'drive/web/modules/filelist/File'
+import { FileV2 as File } from 'drive/web/modules/filelist/File'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
 
@@ -154,10 +154,6 @@ const DriveView = ({ params, router }) => {
                     withFilePath={false}
                     withSharedBadge={true}
                     isFlatDomain={true}
-                    selected={false}
-                    selectionModeActive={false}
-                    onCheckboxToggle={() => {}}
-                    isAvailableOffline={false}
                     thumbnailSizeBig={isBigThumbnail}
                   />
                 ))}
@@ -177,10 +173,6 @@ const DriveView = ({ params, router }) => {
                     withFilePath={false}
                     withSharedBadge={true}
                     isFlatDomain={true}
-                    selected={false}
-                    selectionModeActive={false}
-                    onCheckboxToggle={() => {}}
-                    isAvailableOffline={false}
                     thumbnailSizeBig={isBigThumbnail}
                   />
                 ))}
