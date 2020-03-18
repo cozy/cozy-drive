@@ -4,8 +4,16 @@ import { connect } from 'react-redux'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import logger from 'lib/logger'
-import { withClient } from 'cozy-client'
-import { withBreakpoints, Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
+import { withClient, useClient } from 'cozy-client'
+import {
+  withBreakpoints,
+  Menu,
+  MenuItem,
+  Icon,
+  useI18n
+} from 'cozy-ui/transpiled/react'
+import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
+
 import { MoreButton } from 'components/Button'
 import DownloadButton from './DownloadButton'
 import { downloadFiles } from 'drive/web/modules/navigation/duck'
@@ -83,53 +91,65 @@ const toolbarProptypes = {
 }
 const openExternalLink = url => (window.location = url)
 
-const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
-  <BarRight>
-    <MoreMenu
-      isFile={isFile}
-      t={t}
-      onDownload={onDownload}
-      onOpenInCozy={
-        discoveryLink ? () => openExternalLink(discoveryLink) : false
-      }
-      onCreateCozy={
-        discoveryLink
-          ? false
-          : () => openExternalLink(getHomeLinkHref('sharing-drive'))
-      }
-    />
-  </BarRight>
-)
+const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { store }) => {
+  const client = useClient()
+  const { t } = useI18n()
+  return (
+    <BarRight>
+      <BarContextProvider client={client} t={t} store={store}>
+        <MoreMenu
+          isFile={isFile}
+          t={t}
+          onDownload={onDownload}
+          onOpenInCozy={
+            discoveryLink ? () => openExternalLink(discoveryLink) : false
+          }
+          onCreateCozy={
+            discoveryLink
+              ? false
+              : () => openExternalLink(getHomeLinkHref('sharing-drive'))
+          }
+        />
+      </BarContextProvider>
+    </BarRight>
+  )
+}
 
 MobileToolbar.contextTypes = {
-  t: PropTypes.func.isRequired
+  store: PropTypes.object.isRequired
 }
 
 MobileToolbar.propTypes = toolbarProptypes
 
-const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
-  <BarRight>
-    <div
-      data-test-id="toolbar-viewer-public"
-      className={toolbarstyles['toolbar-inside-bar']}
-    >
-      {discoveryLink ? (
-        <OpenInCozyButton href={discoveryLink} t={t} size="small" />
-      ) : (
-        <CozyHomeLink from="sharing-drive" t={t} size="small" />
-      )}
-      <DownloadFilesButton
-        t={t}
-        onDownload={onDownload}
-        size="small"
-        isFile={isFile}
-      />
-    </div>
-  </BarRight>
-)
+const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { store }) => {
+  const client = useClient()
+  const { t } = useI18n()
+  return (
+    <BarRight>
+      <BarContextProvider client={client} t={t} store={store}>
+        <div
+          data-test-id="toolbar-viewer-public"
+          className={toolbarstyles['toolbar-inside-bar']}
+        >
+          {discoveryLink ? (
+            <OpenInCozyButton href={discoveryLink} t={t} size="small" />
+          ) : (
+            <CozyHomeLink from="sharing-drive" t={t} size="small" />
+          )}
+          <DownloadFilesButton
+            t={t}
+            onDownload={onDownload}
+            size="small"
+            isFile={isFile}
+          />
+        </div>
+      </BarContextProvider>
+    </BarRight>
+  )
+}
 
 CozybarToolbar.contextTypes = {
-  t: PropTypes.func.isRequired
+  store: PropTypes.object.isRequired
 }
 
 CozybarToolbar.propTypes = toolbarProptypes
