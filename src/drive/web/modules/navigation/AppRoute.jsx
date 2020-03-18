@@ -28,7 +28,9 @@ const AppRoute = (
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
-      <Route path="v2(/:folderId)" component={DriveView} />
+      <Route path="v2(/:folderId)" component={DriveView}>
+        <Route path="file/:fileId" component={FilesViewer} />
+      </Route>
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />

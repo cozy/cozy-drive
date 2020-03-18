@@ -129,6 +129,10 @@ class FilesViewer extends Component {
   }
 }
 
+FilesViewer.defaultProps = {
+  files: []
+}
+
 const mapStateToProps = state => ({
   fileCount: state.view.fileCount
 })
