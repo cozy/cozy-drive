@@ -5,7 +5,7 @@ import Badge from 'cozy-ui/transpiled/react/Badge'
 import palette from 'cozy-ui/transpiled/react/palette'
 
 const FileIconShortcut = ({ file, size, client }) => {
-  const { shortcurtImg } = useFetchShortcut(client, file.id)
+  const { shortcutImg } = useFetchShortcut(client, file.id)
   return (
     <Badge
       content={<Icon icon="link" size={10} />}
@@ -14,12 +14,12 @@ const FileIconShortcut = ({ file, size, client }) => {
       size="medium"
     >
       <>
-        <div style={{ display: shortcurtImg ? 'block' : 'none' }}>
-          <img src={shortcurtImg} width={size} height={size} />
+        <div style={{ display: shortcutImg ? 'block' : 'none' }}>
+          <img src={shortcutImg} width={size} height={size} />
         </div>
         <div
           style={{
-            display: !shortcurtImg ? 'block' : 'none'
+            display: !shortcutImg ? 'block' : 'none'
           }}
         >
           <Icon icon="globe" size={size} color={palette.coolGrey} />
