@@ -388,12 +388,22 @@ const mapStateToProps = (state, ownProps) => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
+const mapStateToPropsV2 = (state, ownProps) => ({
+  selected: isSelected(state, ownProps.attributes.id),
+  isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
+  selectionModeActive: isSelectionBarVisible(state)
+})
+
 const mapDispatchToProps = dispatch => ({
   onCheckboxToggle: (file, selected) =>
     dispatch(toggleItemSelection(file, selected))
 })
 
 export const DumbFile = withBreakpoints()(translate()(File))
+export const FileV2 = connect(
+  mapStateToPropsV2,
+  mapDispatchToProps
+)(DumbFile)
 
 export default connect(
   mapStateToProps,

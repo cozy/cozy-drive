@@ -108,3 +108,4 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(FileListBody)
+export const ConnectedFileListBodyV2 = connect(mapStateToProps)(FileListBodyV2)
