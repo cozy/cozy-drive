@@ -7,3 +7,4 @@
 - Viewer: on fait une route enfant ou une route à part ? On va probablement avoir des routes enfant pour les modales de share etc ?
 - On perd un niveau de titre dans le breadcrumb. On peut le récupérer au prix d'une requete en plus.
 - la classe .fil-content-body--selectable est appliquée sur le FileBody mais a des effets sur les checkbox, ca n'a pas de sens
+- le viewer a besoin de la liste des fichiers, mais on veux aussi le connecter au routeur. On peut faire 2 useQuery avce u,ne fetchPolicy je pense.

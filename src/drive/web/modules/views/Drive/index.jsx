@@ -47,7 +47,7 @@ const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
   }
 })
 
-const DriveView = ({ params, router }) => {
+const DriveView = ({ params, router, children }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
@@ -76,7 +76,7 @@ const DriveView = ({ params, router }) => {
   })
 
   const navigateToFile = useCallback(file => {
-    console.log({ file })
+    router.push(`/v2/${currentFolderId}/file/${file.id}`)
   })
 
   const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
@@ -183,6 +183,7 @@ const DriveView = ({ params, router }) => {
             )}
           </FileListBodyV2>
         </FileListv2>
+        {children}
       </Dropzone>
     </Main>
   )
