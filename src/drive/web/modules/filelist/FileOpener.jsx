@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { useClient } from 'cozy-client'
 import Hammer from 'hammerjs'
 import { isMobileApp } from 'cozy-device-helper'
+import cx from 'classnames'
 
 import { enableTouchEvents } from './File'
 import { generateFileUrl } from './generateFileUrl'
@@ -57,7 +58,7 @@ const FileOpener = ({
         href={fileUrl}
         rel="noopener noreferrer"
         target="_blank"
-        className={styles.container__a}
+        className={cx(styles['file-opener'], styles['file-opener__a'])}
         ref={linkRef}
       >
         {children}
@@ -65,7 +66,7 @@ const FileOpener = ({
     )
   } else {
     return (
-      <span className={styles.container__span} ref={linkRef} id={file.id}>
+      <span className={styles['file-opener']} ref={linkRef} id={file.id}>
         {children}
       </span>
     )
