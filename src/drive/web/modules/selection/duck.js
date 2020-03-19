@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux'
 import { getFileById } from 'drive/web/modules/navigation/duck'
+import get from 'lodash/get'
+
+const getFileByIdFromCozyClient = (state, id) =>
+  get(state, ['cozy', 'documents', 'io.cozy.files', id])
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
@@ -15,7 +19,9 @@ export const getSelectedIds = state => state.selection.selected
 export const isSelectionBarVisible = state =>
   state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
 export const getSelectedFiles = state =>
-  getSelectedIds(state).map(id => getFileById(state, id))
+  getSelectedIds(state).map(
+    id => getFileById(state, id) || getFileByIdFromCozyClient(state, id)
+  )
 
 // actions
 export const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
