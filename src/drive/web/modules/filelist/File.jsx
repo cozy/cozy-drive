@@ -400,7 +400,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export const DumbFile = withBreakpoints()(translate()(File))
-export const FileV2 = connect(
+export const FileWithSelection = connect(
   mapStateToPropsV2,
   mapDispatchToProps
 )(DumbFile)

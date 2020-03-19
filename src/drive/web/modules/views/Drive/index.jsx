@@ -9,7 +9,7 @@ import {
 } from 'drive/lib/ThumbnailSizeContext'
 import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
 
-import SelectionBar from 'drive/web/modules/selection/SelectionBar'
+import SelectionBar from './SelectionBarWithActions'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
@@ -25,9 +25,9 @@ import Oops from 'components/Error/Oops'
 import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 import { isMobileApp } from 'cozy-device-helper'
-import { FileV2 as File } from 'drive/web/modules/filelist/File'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
+import File from './FileWithActions'
 
 const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
   definition: () =>
@@ -118,7 +118,7 @@ const DriveView = ({ params, router, children }) => {
         disabled={__TARGET__ === 'mobile'}
         displayedFolder={null}
       >
-        {false && <SelectionBar actions={[]} />}
+        <SelectionBar documentId={currentFolderId} />
         <FileListv2>
           <MobileFileListHeader
             folderId={null}
@@ -148,8 +148,6 @@ const DriveView = ({ params, router, children }) => {
                     key={file._id}
                     attributes={file}
                     displayedFolder={null}
-                    actions={{}}
-                    isRenaming={false}
                     onFolderOpen={navigateToFolder}
                     onFileOpen={navigateToFile}
                     withSelectionCheckbox={true}
@@ -167,8 +165,6 @@ const DriveView = ({ params, router, children }) => {
                     key={file._id}
                     attributes={file}
                     displayedFolder={null}
-                    actions={{}}
-                    isRenaming={false}
                     onFolderOpen={navigateToFolder}
                     onFileOpen={navigateToFile}
                     withSelectionCheckbox={true}
