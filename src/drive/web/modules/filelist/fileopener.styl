@@ -1,8 +1,14 @@
-.file-opener
-     display flex
-     flex 1 1 auto
-     align-items center
-     width 100%
+@supports (display: contents) 
+     .file-opener
+          display contents
+
+@supports not (display: contents)
+     .file-opener
+          display flex
+          flex 1 1 auto
+          align-items center
+          width 100%
+
 .file-opener__a
     text-decoration none
     color var(--coolGrey)
