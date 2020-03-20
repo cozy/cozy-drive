@@ -3,7 +3,7 @@ import useActions from './useActions'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 
 const SelectionBarWithActions = ({ documentId, ...props }) => {
-  const actions = useActions(documentId)
+  const actions = useActions(documentId, { canMove: true })
 
   return <SelectionBar {...props} actions={actions} />
 }
