@@ -7,11 +7,11 @@ import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
-import getFolderPath from './getFolderPath'
-import MobileAwareBreadcrumb from './MobileAwareBreadcrumb'
+import getFolderPath from 'drive/web/modules/navigation/Breadcrumb/getFolderPath'
+import MobileAwareBreadcrumb from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 
-import Breadcrumb from './Breadcrumb'
-import PreviousButton from './PreviousButton'
+import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb/Breadcrumb'
+import PreviousButton from 'drive/web/modules/navigation/Breadcrumb/PreviousButton'
 
 export { Breadcrumb, PreviousButton }
 
