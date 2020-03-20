@@ -1,10 +1,10 @@
 /* global cozy */
 import React from 'react'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
-import RouterBreadCrumb from './RouterBreadCrumb'
-import RouterPreviousButton from './RouterPreviousButton'
-import BreadCrumb from './BreadCrumb'
-import PreviousButton from './PreviousButton'
+import RouterBreadCrumb from 'drive/web/modules/navigation/Breadcrumb/RouterBreadcrumb'
+import RouterPreviousButton from 'drive/web/modules/navigation/Breadcrumb/RouterPreviousButton'
+import BreadCrumb from 'drive/web/modules/navigation/Breadcrumb/Breadcrumb'
+import PreviousButton from 'drive/web/modules/navigation/Breadcrumb/PreviousButton'
 
 const MobileAwareBreadcrumb = props => {
   const { BarCenter, BarLeft } = cozy.bar

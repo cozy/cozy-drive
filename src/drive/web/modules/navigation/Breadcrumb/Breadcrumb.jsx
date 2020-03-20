@@ -5,7 +5,7 @@ import cx from 'classnames'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
-import styles from './breadcrumb.styl'
+import styles from 'drive/web/modules/navigation/Breadcrumb/breadcrumb.styl'
 
 export class Breadcrumb extends Component {
   state = {

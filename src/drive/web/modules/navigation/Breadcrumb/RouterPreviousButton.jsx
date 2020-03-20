@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
-import PreviousButton from './PreviousButton'
+import PreviousButton from 'drive/web/modules/navigation/Breadcrumb/PreviousButton'
 
 class RouterPreviousButton extends Component {
   navigateToFolder = async folderId => {

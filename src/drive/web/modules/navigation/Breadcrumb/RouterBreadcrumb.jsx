@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
-import Breadcrumb from './Breadcrumb'
+import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb/Breadcrumb'
 
 class RouterBreadCrumb extends Component {
   state = {
