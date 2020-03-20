@@ -1,20 +1,16 @@
 /* global __TARGET__ */
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import Toggle from 'cozy-ui/transpiled/react/Toggle'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
-
 import { showModal } from 'react-cozy-helpers'
-import { SharedDocument, SharedRecipients, ShareModal } from 'cozy-sharing'
+import { SharedDocument, ShareModal } from 'cozy-sharing'
 
 import FolderView from 'drive/web/modules/layout/FolderView'
 import DeleteConfirm from './DeleteConfirm'
 import Toolbar from './Toolbar'
 import { isRenaming, getRenamingFile, startRenamingAsync } from './rename'
 import { isFile, isReferencedByAlbum } from './files'
-import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 import MoveModal from 'drive/web/modules/move/MoveModal'
 import { EditDocumentQualification } from 'cozy-scanner'
 import {
@@ -24,46 +20,11 @@ import {
   trashFiles,
   updateFile
 } from 'drive/web/modules/navigation/duck'
-import {
-  isAvailableOffline,
-  toggleAvailableOffline
-} from 'drive/mobile/modules/offline/duck'
 import { extractFileAttributes } from 'drive/web/modules/navigation/duck/async'
-import styles from 'drive/styles/actionmenu.styl'
 import { isIOSApp } from 'cozy-device-helper'
 
-const ShareMenuItem = ({ docId, ...rest }, { t }) => (
-  <SharedDocument docId={docId}>
-    {({ isSharedWithMe }) => (
-      <MenuItem {...rest}>
-        {isSharedWithMe ? t('Files.share.sharedWithMe') : t('Files.share.cta')}
-        <SharedRecipients
-          className={styles['fil-actionmenu-recipients']}
-          docId={docId}
-          size="small"
-        />
-      </MenuItem>
-    )}
-  </SharedDocument>
-)
-
-ShareMenuItem.contextTypes = {
-  t: PropTypes.func.isRequired
-}
-
-const MakeAvailableOfflineMenuItem = connect(
-  (state, ownProps) => ({
-    checked: isAvailableOffline(state, ownProps.file.id)
-  }),
-  (dispatch, ownProps) => ({
-    onToggle: () => dispatch(toggleAvailableOffline(ownProps.file))
-  })
-)(({ checked, onToggle, children, ...rest }) => (
-  <MenuItem {...rest}>
-    {children}
-    <Toggle id={children} checked={checked} onToggle={onToggle} />
-  </MenuItem>
-))
+import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
+import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 
 const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {
