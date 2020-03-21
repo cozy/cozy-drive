@@ -1,3 +1,3 @@
-export const IconDropZone = 'cozy-negative'
+export const IconDropZone = 'cloud'
 
 export default IconDropZone
