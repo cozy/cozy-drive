@@ -15,6 +15,7 @@ const SLUG = 'upload'
 
 export const ADD_TO_UPLOAD_QUEUE = 'ADD_TO_UPLOAD_QUEUE'
 const UPLOAD_FILE = 'UPLOAD_FILE'
+const UPLOAD_PROGRESS = 'UPLOAD_PROGRESS'
 const RECEIVE_UPLOAD_SUCCESS = 'RECEIVE_UPLOAD_SUCCESS'
 const RECEIVE_UPLOAD_ERROR = 'RECEIVE_UPLOAD_ERROR'
 const PURGE_UPLOAD_QUEUE = 'PURGE_UPLOAD_QUEUE'
@@ -52,20 +53,35 @@ const itemInitialState = item => ({
   status: PENDING
 })
 
-const getStatus = action => {
+const getStatus = (action, state) => {
   switch (action.type) {
     case UPLOAD_FILE:
       return LOADING
     case RECEIVE_UPLOAD_SUCCESS:
       return action.isUpdate ? UPDATED : CREATED
-    case RECEIVE_UPLOAD_ERROR:
-      return action.status
+    default:
+      return state.status
+  }
+}
+
+const getProgress = (action, state) => {
+  switch (action.type) {
+    case UPLOAD_PROGRESS:
+      return {
+        loaded: action.event.loaded,
+        total: action.event.total
+      }
+    case RECEIVE_UPLOAD_SUCCESS:
+      return null
+    default:
+      return state.progress
   }
 }
 
 const item = (state, action = { isUpdate: false }) => ({
   ...state,
-  status: getStatus(action)
+  status: getStatus(action, state),
+  progress: getProgress(action, state)
 })
 
 export const queue = (state = [], action) => {
@@ -80,6 +96,7 @@ export const queue = (state = [], action) => {
     case UPLOAD_FILE:
     case RECEIVE_UPLOAD_SUCCESS:
     case RECEIVE_UPLOAD_ERROR:
+    case UPLOAD_PROGRESS:
       return state.map(
         i => (i.file.name !== action.file.name ? i : item(i, action))
       )
@@ -114,7 +131,11 @@ export const processNextFile = (
       const newDir = await uploadDirectory(client, entry, dirID)
       fileUploadedCallback(newDir)
     } else {
-      const uploadedFile = await uploadFile(client, file, dirID)
+      const uploadedFile = await uploadFile(client, file, dirID, {
+        onUploadProgress: event => {
+          dispatch({ type: UPLOAD_PROGRESS, file, event })
+        }
+      })
       fileUploadedCallback(uploadedFile)
     }
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
@@ -171,7 +192,8 @@ const uploadDirectory = async (client, directory, dirID) => {
       for (let i = 0; i < entries.length; i += 1) {
         const entry = entries[i]
         if (entry.isFile) {
-          await uploadFile(client, await getFileFromEntry(entry), newDir.id)
+          const file = await getFileFromEntry(entry)
+          await uploadFile(client, file, newDir.id)
         } else if (entry.isDirectory) {
           await uploadDirectory(client, entry, newDir.id)
         }
@@ -188,7 +210,8 @@ const createFolder = async (client, name, dirID) => {
     .createDirectory({ name, dirId: dirID })
   return resp.data
 }
-const uploadFile = async (client, file, dirID) => {
+
+const uploadFile = async (client, file, dirID, options) => {
   /** We have a bug with Chrome returning SPDY_ERROR_PROTOCOL.
    * This is certainly caused by the couple HTTP2 / HAProxy / CozyStack
    * when something cut the HTTP connexion before the Stack
@@ -217,9 +240,10 @@ const uploadFile = async (client, file, dirID) => {
       }
     }
   }
+  const onUploadProgress = options.onUploadProgress
   const resp = await client
     .collection('io.cozy.files')
-    .createFile(file, { dirId: dirID })
+    .createFile(file, { dirId: dirID, onUploadProgress })
   return resp.data
 }
 

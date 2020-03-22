@@ -37,7 +37,7 @@ const status = action => {
       return LOADING
     case RECEIVE_UPLOAD_SUCCESS:
       return LOADED
-    case RECEIVE_UPLOAD_ERROR:
+    default:
       return action.status
   }
 }
