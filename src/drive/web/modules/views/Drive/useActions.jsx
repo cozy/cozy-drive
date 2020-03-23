@@ -1,8 +1,10 @@
 /* global __TARGET__ */
 import React, { useContext } from 'react'
+import { models, useClient } from 'cozy-client'
 import { SharingContext, ShareModal } from 'cozy-sharing'
 import { ModalContext } from 'drive/lib/ModalContext'
 import keyBy from 'lodash/keyBy'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
@@ -11,8 +13,13 @@ import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 
 import { isIOSApp } from 'cozy-device-helper'
-import { isFile, isReferencedByAlbum } from 'drive/web/modules/drive/files' //TODO use cozy-client models
-import { trashFiles } from 'drive/web/modules/navigation/duck'
+// import { trashFiles } from 'drive/web/modules/navigation/duck'
+
+import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
+import { forceFileDownload } from 'cozy-stack-client/dist/utils'
+
+const { file: fileModel } = models
+const { isFile, isDirectory } = fileModel
 
 const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {
@@ -21,9 +28,42 @@ const isAnyFileReferencedByAlbum = files => {
   return false
 }
 
+const downloadFiles = async (files, client) => {
+  if (files.length === 1 && !isDirectory(files[0])) {
+    const file = files[0]
+
+    try {
+      const downloadURL = await client
+        .collection('io.cozy.files')
+        .getDownloadLinkById(file.id)
+      const filename = file.name
+
+      forceFileDownload(
+        `${client.getStackClient().uri}${downloadURL}?Dl=1`,
+        filename
+      )
+    } catch (error) {
+      const isMissingFile = error.status === 404
+      const errorMessage = isMissingFile
+        ? 'error.download_file.missing'
+        : 'error.download_file.offline'
+      Alerter.error(errorMessage)
+      throw error
+    }
+  } else {
+    const ids = files.map(f => f.id)
+    const href = await client
+      .collection('io.cozy.files')
+      .getArchiveLinkByIds(ids)
+    const fullpath = `${client.getStackClient().uri}${href}`
+    forceFileDownload(fullpath, 'files.zip')
+  }
+}
+
 const useActions = (documentId, { canMove } = {}) => {
   const { pushModal, popModal } = useContext(ModalContext)
   const { hasWriteAccess, refresh } = useContext(SharingContext)
+  const client = useClient()
 
   const isWritable = hasWriteAccess(documentId)
 
@@ -59,7 +99,7 @@ const useActions = (documentId, { canMove } = {}) => {
           }
         : {
             icon: 'download',
-            action: files => alert('not implemented') //dispatch(downloadFiles(files))
+            action: files => downloadFiles(files, client)
           },
     trash: {
       icon: 'trash',
