@@ -1,5 +1,6 @@
 /* global __TARGET__ */
 import React, { useContext } from 'react'
+import { useDispatch } from 'react-redux'
 import { models, useClient } from 'cozy-client'
 import { SharingContext, ShareModal } from 'cozy-sharing'
 import { ModalContext } from 'drive/lib/ModalContext'
@@ -13,8 +14,7 @@ import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 
 import { isIOSApp } from 'cozy-device-helper'
-// import { trashFiles } from 'drive/web/modules/navigation/duck'
-
+import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
 import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 
@@ -91,6 +91,7 @@ const useActions = (documentId, { canMove } = {}) => {
   const { pushModal, popModal } = useContext(ModalContext)
   const { hasWriteAccess, refresh } = useContext(SharingContext)
   const client = useClient()
+  const dispatch = useDispatch()
 
   const isWritable = hasWriteAccess(documentId)
 
@@ -157,7 +158,7 @@ const useActions = (documentId, { canMove } = {}) => {
     rename: {
       icon: 'rename',
       displayCondition: selection => isWritable && selection.length === 1,
-      action: files => alert('not implemented') //dispatch(startRenamingAsync(files[0])),
+      action: files => dispatch(startRenamingAsync(files[0]))
     },
     move: {
       icon: 'moveto',
@@ -173,8 +174,9 @@ const useActions = (documentId, { canMove } = {}) => {
         pushModal(
           <EditDocumentQualification
             document={files[0]}
-            onQualified={file => {
-              //dispatch(updateFile(extractFileAttributes(file)))
+            onQualified={() => {
+              popModal()
+              // changes should be retrieved through cozy-client
             }}
             onClose={popModal}
           />

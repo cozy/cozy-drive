@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import get from 'lodash/get'
 
 import { SharedStatus } from 'cozy-sharing'
 
@@ -24,6 +25,7 @@ import {
   toggleItemSelection,
   isSelected
 } from 'drive/web/modules/selection/duck'
+import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/rename'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
@@ -391,7 +393,10 @@ const mapStateToProps = (state, ownProps) => ({
 const mapStateToPropsV2 = (state, ownProps) => ({
   selected: isSelected(state, ownProps.attributes.id),
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
-  selectionModeActive: isSelectionBarVisible(state)
+  selectionModeActive: isSelectionBarVisible(state),
+  isRenaming:
+    isRenaming(state) &&
+    get(getRenamingFile(state), 'id') === ownProps.attributes.id
 })
 
 const mapDispatchToProps = dispatch => ({
