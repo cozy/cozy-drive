@@ -60,6 +60,33 @@ const downloadFiles = async (files, client) => {
   }
 }
 
+const isAlreadyInTrash = err => {
+  const reasons = err.reason !== undefined ? err.reason.errors : undefined
+  if (reasons) {
+    for (const reason of reasons) {
+      if (reason.detail === 'File or directory is already in the trash') {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+const trashFiles = async (files, client) => {
+  try {
+    for (const file of files) {
+      await client.collection('io.cozy.files').destroy(file)
+      client.collection('io.cozy.permissions').revokeSharingLink(file)
+    }
+
+    Alerter.success('alert.trash_file_success')
+  } catch (err) {
+    if (!isAlreadyInTrash(err)) {
+      Alerter.error('alert.try_again')
+    }
+  }
+}
+
 const useActions = (documentId, { canMove } = {}) => {
   const { pushModal, popModal } = useContext(ModalContext)
   const { hasWriteAccess, refresh } = useContext(SharingContext)
@@ -111,7 +138,9 @@ const useActions = (documentId, { canMove } = {}) => {
             referenced={isAnyFileReferencedByAlbum(files)}
             onConfirm={() => {
               refresh()
-              // trashFiles(files) // client.collection.delete() + Cordova delete) -> transformer en afterDelete
+              trashFiles(files, client) // TODO faire le trash a proprement parler dans la modale de confirmation
+              // TODO supprimer les fichiers de la sélection
+              popModal()
             }}
             onClose={popModal}
           />
