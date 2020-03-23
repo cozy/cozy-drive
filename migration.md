@@ -9,3 +9,4 @@
 - le viewer a besoin de la liste des fichiers, mais on veux aussi le connecter au routeur. On peut faire 2 useQuery avce u,ne fetchPolicy je pense.
 - on re-render tous les fichiers parce qu'ils sont branchés sur le redux de sélection via le menu more
 - On utilise client.collection() dans les actions, il faut passer par des queries quand c'est possible
+- RenameInput fait des dispatch pour renommer les fichiers
