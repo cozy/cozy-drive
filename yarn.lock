@@ -5085,7 +5085,28 @@ cozy-client@10.5.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@13.1.1, cozy-client@^13.1.0:
+cozy-client@13.2.0:
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.2.0.tgz#df6f4455615dc416bc2602e24a7e09cecb942dc1"
+  integrity sha512-+55NL/xqFuwTm/t9F0AQe1Tjq/N+TEU52/9oa1KsSXVDDAfdBp7mhZaY5iHfmif14ExWsVyqM8t8o4jyDtqAdQ==
+  dependencies:
+    btoa "^1.2.1"
+    cozy-device-helper "^1.7.3"
+    cozy-logger "^1.6.0"
+    cozy-stack-client "^13.2.0"
+    isomorphic-fetch "^2.2.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    open "^7.0.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "^3.7.2"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^7.0.0"
+
+cozy-client@^13.1.0:
   version "13.1.1"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.1.1.tgz#3e8818ab6ab2b202b6c06ef139e02b22d69ef5af"
   integrity sha512-3am6GDyiD6R2aMKKFjyQ5WZntDXg1QilIdC9SLZfLfMOP/j1TfS9VXu2Pl2NBCYdoAB0NUwrT1urbhOcYFv+MQ==
@@ -5315,6 +5336,15 @@ cozy-stack-client@^10.4.0:
   version "10.7.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-10.7.0.tgz#2f9a886af423abe9111d6c1524104c29d2ed517f"
   integrity sha512-O2z9sFwDhcbn/rZJr0f2BL3CAc2L37QMzmIlQXY/70x/SqkSd+zyFhgwfYImqlwYsByf6Mo6qwtpwv5goRj9Ig==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^13.2.0:
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.2.0.tgz#2096e3ea44bbd1f48550f39eb90f74cb96bb3334"
+  integrity sha512-RswnIp+M7L38IQx4PMnV2tmXka+ydLvnL6uv7GBnI/MgZZs5bS4U0lxSGN0vl6Jz1/8yw3KztAPYKN0k08FZjQ==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -14383,19 +14413,6 @@ react-redux@7.2.0, react-redux@^7.2.0:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.9.0"
-
-react-redux@^5.0.7:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.1.2.tgz#b19cf9e21d694422727bf798e934a916c4080f57"
-  integrity sha512-Ns1G0XXc8hDyH/OcBHOxNgQx9ayH3SPxBnFCOidGKSle8pKihysQw2rG/PmciUQRoclhVBO8HMhiRmGXnDja9Q==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    hoist-non-react-statics "^3.3.0"
-    invariant "^2.2.4"
-    loose-envify "^1.1.0"
-    prop-types "^15.6.1"
-    react-is "^16.6.0"
-    react-lifecycles-compat "^3.0.0"
 
 react-router@3.2.4:
   version "3.2.4"
