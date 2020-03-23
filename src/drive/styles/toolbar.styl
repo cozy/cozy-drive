@@ -55,20 +55,18 @@
             color var(--pomegranate)
             background embedurl('../assets/icons/icon-trash-red.svg') 1rem center no-repeat
         &.fil-action-share
+            position relative
             background embedurl('../assets/icons/icon-share-dark.svg') 1rem center no-repeat
         &.fil-action-create-note
             background embedurl('../assets/icons/icons-16-icon-note.svg') 1rem center no-repeat
         &.fil-action-create-shortcut
             background embedurl('../assets/icons/icon-link.svg') 1rem center no-repeat
-
-            .fil-toolbar-menu-recipients
-                position absolute
-                right    1rem
-                top      .1rem
-
+    .fil-toolbar-menu-recipients
+        position absolute
+        right    1rem
+        top      .1rem
     .fil-action-share
         display none
-
 +medium-screen()
     .fil-toolbar-menu
         display block
@@ -77,7 +75,9 @@
         .fil-action-select
         .fil-action-upload
             display block
-
++tablet()
+    .fil-toolbar-menu-recipients
+            display none
 +small-screen()
     .fil-toolbar-inner-menu
         position fixed
@@ -92,7 +92,9 @@
 
     .fil-public-download
         display none
-
+    .fil-toolbar-menu
+        .fil-toolbar-menu-recipients
+            display inline-flex 
 +small-screen('min')
     .fil-toolbar-menu--public
         display none
