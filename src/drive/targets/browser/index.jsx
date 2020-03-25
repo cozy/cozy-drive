@@ -21,6 +21,7 @@ import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
 import { hot } from 'react-hot-loader'
 import { Document } from 'cozy-doctypes'
+import { RealtimePlugin } from 'cozy-realtime'
 
 import App from 'components/App/App'
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
+  client.registerPlugin(RealtimePlugin)
   const polyglot = initTranslation(data.cozyLocale, lang =>
     require(`drive/locales/${lang}`)
   )

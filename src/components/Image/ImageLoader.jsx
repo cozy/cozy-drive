@@ -3,7 +3,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import logger from 'lib/logger'
 
-import Realtime from 'cozy-realtime'
 import { withClient } from 'cozy-client'
 
 const TTL = 10000
@@ -26,7 +25,7 @@ class ImageLoader extends React.Component {
     const { client } = this.props
     this._mounted = true
     this.loadNextSrc()
-    this.realtime = new Realtime({ client })
+    this.realtime = client.plugins.realtime.realtime
     this.type = 'io.cozy.files.thumbnails'
     this.realtime.subscribe('created', this.type, this.handleCreate)
   }
