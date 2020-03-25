@@ -25,7 +25,7 @@ class ImageLoader extends React.Component {
     const { client } = this.props
     this._mounted = true
     this.loadNextSrc()
-    this.realtime = client.plugins.realtime.realtime
+    this.realtime = client.plugins.realtime
     this.type = 'io.cozy.files.thumbnails'
     this.realtime.subscribe('created', this.type, this.handleCreate)
   }
