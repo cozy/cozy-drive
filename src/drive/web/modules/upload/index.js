@@ -50,21 +50,24 @@ const CONFLICT_ERROR = 409
 
 const itemInitialState = item => ({
   ...item,
-  status: PENDING
+  status: PENDING,
+  progress: null
 })
 
-const getStatus = (action, state) => {
+const getStatus = (state, action) => {
   switch (action.type) {
     case UPLOAD_FILE:
       return LOADING
     case RECEIVE_UPLOAD_SUCCESS:
       return action.isUpdate ? UPDATED : CREATED
+    case RECEIVE_UPLOAD_ERROR:
+      return action.status
     default:
       return state.status
   }
 }
 
-const getProgress = (action, state) => {
+const getProgress = (state, action) => {
   switch (action.type) {
     case UPLOAD_PROGRESS:
       return {
@@ -80,8 +83,8 @@ const getProgress = (action, state) => {
 
 const item = (state, action = { isUpdate: false }) => ({
   ...state,
-  status: getStatus(action, state),
-  progress: getProgress(action, state)
+  status: getStatus(state, action),
+  progress: getProgress(state, action)
 })
 
 export const queue = (state = [], action) => {
