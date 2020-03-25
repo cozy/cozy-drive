@@ -5367,10 +5367,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@^33.3.1:
-  version "33.3.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-33.3.1.tgz#ea9abf50d5d83379fe0c265ae2c4a555f749afff"
-  integrity sha512-zFRkaVm8fW/D0AF+CTdvJrdxtYhJENDK32J7CuIFrNHjeaX6k23f8YoV2iTWUhhubNaRLp30PP2xspAYSDHE0Q==
+cozy-ui@^33.5.0:
+  version "33.5.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-33.5.0.tgz#8ae0b1cbea26190cacf0cb7514c7698ac569e575"
+  integrity sha512-ERvLVA2jpXj5tvO/1IG9pJyvi3RVsSgmay09dNn6ineqiF4NkQhjbYMTcaC5+1CzncT+pM8kTXBxbAZ1YTjSSA==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -14413,6 +14413,19 @@ react-redux@7.2.0, react-redux@^7.2.0:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.9.0"
+
+react-redux@^5.0.7:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.1.2.tgz#b19cf9e21d694422727bf798e934a916c4080f57"
+  integrity sha512-Ns1G0XXc8hDyH/OcBHOxNgQx9ayH3SPxBnFCOidGKSle8pKihysQw2rG/PmciUQRoclhVBO8HMhiRmGXnDja9Q==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    hoist-non-react-statics "^3.3.0"
+    invariant "^2.2.4"
+    loose-envify "^1.1.0"
+    prop-types "^15.6.1"
+    react-is "^16.6.0"
+    react-lifecycles-compat "^3.0.0"
 
 react-router@3.2.4:
   version "3.2.4"
