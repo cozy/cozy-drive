@@ -6,6 +6,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import IntentHandler from 'drive/web/modules/services'
 import CozyClient, { CozyProvider } from 'cozy-client'
+import { RealtimePlugin } from 'cozy-realtime'
+
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import appMetadata from 'drive/appMetadata'
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cozyURL: cozyUrl,
     token: data.cozyToken
   })
+  client.registerPlugin(RealtimePlugin)
 
   render(
     <I18n
