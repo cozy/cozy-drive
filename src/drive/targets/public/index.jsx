@@ -6,6 +6,7 @@ import { render } from 'react-dom'
 
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { models } from 'cozy-client'
+import { RealtimePlugin } from 'cozy-realtime'
 
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -67,6 +68,8 @@ const init = async () => {
     appMetadata,
     schema
   })
+  client.registerPlugin(RealtimePlugin)
+
   configureReporter()
   setCozyUrl(cozyUrl)
   // we still need cozy-client-js for opening a folder

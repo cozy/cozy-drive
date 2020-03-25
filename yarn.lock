@@ -5307,10 +5307,10 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-sharing@^1.8.12:
-  version "1.8.12"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.8.12.tgz#98fe1595b2eda9464aac2e66ac0533706cd0acfa"
-  integrity sha512-2hOY4/2lcgcDIH2pzbJSJw7QDjFkAIQt64/anfUf8Wwt9l8zsNH1msjEbnPj+y1rHZ6IC8dS5mkGip0y+29F1g==
+cozy-sharing@1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.9.1.tgz#e7dbc0ec31472a27df307665725637a966b511a5"
+  integrity sha512-Skm0keriK+1AH6YCceFJsNHABRjjvqLtiLeo3AET2u6ueRROjdUEu4k3QegP0YDN9s26NqW3HcuboB89pNdZlQ==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
@@ -11399,6 +11399,13 @@ minilog@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
   integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
+  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
