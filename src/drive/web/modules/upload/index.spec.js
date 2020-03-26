@@ -144,7 +144,8 @@ describe('processNextFile function', () => {
       file
     })
     expect(createFileSpy).toHaveBeenCalledWith(file, {
-      dirId: 'my-dir'
+      dirId: 'my-dir',
+      onUploadProgress: expect.any(Function)
     })
   })
 
@@ -190,7 +191,8 @@ describe('processNextFile function', () => {
       file
     })
     expect(createFileSpy).toHaveBeenCalledWith(file, {
-      dirId: 'my-dir'
+      dirId: 'my-dir',
+      onUploadProgress: expect.any(Function)
     })
 
     expect(updateFileSpy).toHaveBeenCalledWith(file, {
@@ -253,7 +255,8 @@ describe('processNextFile function', () => {
       file
     })
     expect(createFileSpy).toHaveBeenCalledWith(file, {
-      dirId: 'my-dir'
+      dirId: 'my-dir',
+      onUploadProgress: expect.any(Function)
     })
 
     expect(fileUploadedCallbackSpy).not.toHaveBeenCalled()
@@ -412,19 +415,22 @@ describe('queue reducer', () => {
       status: 'pending',
       file: {
         name: 'doc1.odt'
-      }
+      },
+      progress: null
     },
     {
       status: 'pending',
       file: {
         name: 'doc2.odt'
-      }
+      },
+      progress: null
     },
     {
       status: 'pending',
       file: {
         name: 'doc3.odt'
-      }
+      },
+      progress: null
     }
   ]
   it('should be empty (initial state)', () => {
@@ -453,19 +459,22 @@ describe('queue reducer', () => {
         status: 'loading',
         file: {
           name: 'doc1.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'pending',
         file: {
           name: 'doc2.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'pending',
         file: {
           name: 'doc3.odt'
-        }
+        },
+        progress: null
       }
     ]
     const result = queue(state, action)
@@ -477,26 +486,30 @@ describe('queue reducer', () => {
       type: 'RECEIVE_UPLOAD_SUCCESS',
       file: {
         name: 'doc3.odt'
-      }
+      },
+      progress: null
     }
     const expected = [
       {
         status: 'pending',
         file: {
           name: 'doc1.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'pending',
         file: {
           name: 'doc2.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'created',
         file: {
           name: 'doc3.odt'
-        }
+        },
+        progress: null
       }
     ]
     const result = queue(state, action)
@@ -516,19 +529,22 @@ describe('queue reducer', () => {
         status: 'pending',
         file: {
           name: 'doc1.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'pending',
         file: {
           name: 'doc2.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'updated',
         file: {
           name: 'doc3.odt'
-        }
+        },
+        progress: null
       }
     ]
     const result = queue(state, action)
@@ -541,26 +557,71 @@ describe('queue reducer', () => {
       file: {
         name: 'doc2.odt'
       },
-      status: 'conflict'
+      status: 'conflict',
+      progress: null
     }
     const expected = [
       {
         status: 'pending',
         file: {
           name: 'doc1.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'conflict',
         file: {
           name: 'doc2.odt'
-        }
+        },
+        progress: null
       },
       {
         status: 'pending',
         file: {
           name: 'doc3.odt'
+        },
+        progress: null
+      }
+    ]
+    const result = queue(state, action)
+    expect(result).toEqual(expected)
+  })
+
+  it('should handle UPLOAD_PROGRESS action type', () => {
+    const action = {
+      type: 'UPLOAD_PROGRESS',
+      file: {
+        name: 'doc1.odt'
+      },
+      event: {
+        loaded: 100,
+        total: 400
+      }
+    }
+    const expected = [
+      {
+        status: 'pending',
+        file: {
+          name: 'doc1.odt'
+        },
+        progress: {
+          loaded: 100,
+          total: 400
         }
+      },
+      {
+        status: 'pending',
+        file: {
+          name: 'doc2.odt'
+        },
+        progress: null
+      },
+      {
+        status: 'pending',
+        file: {
+          name: 'doc3.odt'
+        },
+        progress: null
       }
     ]
     const result = queue(state, action)
