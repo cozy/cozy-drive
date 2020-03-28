@@ -10,6 +10,7 @@ import {
   uploadFilesFromNative,
   ADD_TO_UPLOAD_QUEUE
 } from './index'
+import merge from 'lodash/merge'
 
 jest.mock('cozy-doctypes')
 jest.mock('cozy-flags')
@@ -587,7 +588,7 @@ describe('queue reducer', () => {
     expect(result).toEqual(expected)
   })
 
-  it('should handle UPLOAD_PROGRESS action type', () => {
+  describe('progress action', () => {
     const action = {
       type: 'UPLOAD_PROGRESS',
       file: {
@@ -605,6 +606,9 @@ describe('queue reducer', () => {
           name: 'doc1.odt'
         },
         progress: {
+          lastUpdated: expect.any(Number),
+          remainingTime: null,
+          speed: null,
           loaded: 100,
           total: 400
         }
@@ -624,8 +628,34 @@ describe('queue reducer', () => {
         progress: null
       }
     ]
-    const result = queue(state, action)
-    expect(result).toEqual(expected)
+
+    beforeEach(() => {
+      jest.spyOn(Date, 'now')
+    })
+
+    afterEach(() => {
+      Date.now.mockRestore()
+    })
+
+    it('should handle UPLOAD_PROGRESS', () => {
+      const result = queue(state, action)
+      expect(result).toEqual(expected)
+    })
+
+    it('should compute speed and remaing time', () => {
+      const date = +new Date()
+      Date.now.mockReturnValueOnce(date).mockReturnValueOnce(date + 1000)
+      const result = queue(state, action)
+      expect(result[0].progress.remainingTime).toBe(null)
+      const result2 = queue(result, merge(action, { event: { loaded: 200 } }))
+      expect(result2[0].progress).toEqual({
+        lastUpdated: expect.any(Number),
+        loaded: 200,
+        remainingTime: 2,
+        speed: 100,
+        total: 400
+      })
+    })
   })
 })
 

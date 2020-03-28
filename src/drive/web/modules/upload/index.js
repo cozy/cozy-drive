@@ -67,15 +67,29 @@ const getStatus = (state, action) => {
   }
 }
 
+const getSpeed = (state, action) => {
+  const lastLoaded = state.loaded
+  const lastUpdated = state.lastUpdated
+  const now = Date.now()
+  const nowLoaded = action.event.loaded
+  return ((nowLoaded - lastLoaded) / (now - lastUpdated)) * 1000
+}
+
 const getProgress = (state, action) => {
   if (action.type == RECEIVE_UPLOAD_SUCCESS) {
     return null
   } else if (action.type === UPLOAD_PROGRESS) {
+    const speed = state ? getSpeed(state, action) : null
     const loaded = action.event.loaded
     const total = action.event.total
+    const remainingTime =
+      speed && total && loaded ? (total - loaded) / speed : null
     return {
       loaded,
       total,
+      lastUpdated: Date.now(),
+      speed,
+      remainingTime
     }
   } else {
     return state
