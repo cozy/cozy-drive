@@ -63,28 +63,29 @@ const getStatus = (state, action) => {
     case RECEIVE_UPLOAD_ERROR:
       return action.status
     default:
-      return state.status
+      return state
   }
 }
 
 const getProgress = (state, action) => {
-  switch (action.type) {
-    case UPLOAD_PROGRESS:
-      return {
-        loaded: action.event.loaded,
-        total: action.event.total
-      }
-    case RECEIVE_UPLOAD_SUCCESS:
-      return null
-    default:
-      return state.progress
+  if (action.type == RECEIVE_UPLOAD_SUCCESS) {
+    return null
+  } else if (action.type === UPLOAD_PROGRESS) {
+    const loaded = action.event.loaded
+    const total = action.event.total
+    return {
+      loaded,
+      total,
+    }
+  } else {
+    return state
   }
 }
 
 const item = (state, action = { isUpdate: false }) => ({
   ...state,
-  status: getStatus(state, action),
-  progress: getProgress(state, action)
+  status: getStatus(state.status, action),
+  progress: getProgress(state.progress, action)
 })
 
 export const queue = (state = [], action) => {
