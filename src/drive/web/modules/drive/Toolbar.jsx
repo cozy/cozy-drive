@@ -90,7 +90,7 @@ class Toolbar extends Component {
               <ScanWrapper insideMoreMenu disabled={isDisabled} />
             </Item>
           )}
-        <hr />
+        {hasWriteAccess && <hr />}
         <NotRootFolder>
           <Item>
             <ShareItem />
