@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Button, withBreakpoints } from 'cozy-ui/transpiled/react'
+import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
+import { useClient } from 'cozy-client'
 import { showModal } from 'react-cozy-helpers'
 
 import { MoreButton } from 'components/Button'
@@ -23,6 +25,7 @@ const Toolbar = ({
   emptyTrash,
   breakpoints: { isMobile }
 }) => {
+  const client = useClient()
   const { BarRight } = cozy.bar
   const MoreMenu = (
     <Menu
@@ -60,7 +63,15 @@ const Toolbar = ({
         label={t('toolbar.empty_trash')}
       />
 
-      {isMobile ? <BarRight>{MoreMenu}</BarRight> : MoreMenu}
+      {isMobile ? (
+        <BarRight>
+          <BarContextProvider client={client} t={t} store={client.store}>
+            {MoreMenu}
+          </BarContextProvider>
+        </BarRight>
+      ) : (
+        MoreMenu
+      )}
     </div>
   )
 }
