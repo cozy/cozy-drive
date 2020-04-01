@@ -108,7 +108,7 @@
     "cozy-client": "13.2.1",
     "cozy-client-js": "0.16.4",
     "cozy-device-helper": "1.9.2",
-    "cozy-doctypes": "1.70.0",
+    "cozy-doctypes": "1.72.2",
     "cozy-flags": "1.11.0",
     "cozy-realtime": "3.7.0",
     "cozy-scanner": "^0.3.2",
