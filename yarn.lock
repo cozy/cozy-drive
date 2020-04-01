@@ -5244,7 +5244,15 @@ cozy-realtime@3.2.1:
   dependencies:
     minilog "3.1.0"
 
-cozy-realtime@3.7.0, cozy-realtime@^3.7.0:
+cozy-realtime@3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.8.0.tgz#b161b105433d957f7cb68332ee3fe58e082d7cb4"
+  integrity sha512-VCgffHdMcqO8LRHnUZijR0UXE5FwdLGh9BOP0WKN6lP5eOEaRFL+OPfJuHJasgN5r1YfXautbze1wRQZByAcEg==
+  dependencies:
+    cozy-device-helper "^1.9.2"
+    minilog "git+https://github.com/cozy/minilog.git#master"
+
+cozy-realtime@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.7.0.tgz#a66b9335a95189c60cfb97dc63c18aa0461969a3"
   integrity sha512-yvNdrTQGeqSh2Phrw9XFcL80VHBRw99OdvkisjOAnrc+41EAryMbyE5yfwsmJ70cTDuwiF4hZiEg5ARygIh5Ug==
