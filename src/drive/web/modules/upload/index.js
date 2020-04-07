@@ -237,7 +237,7 @@ const createFolder = async (client, name, dirID) => {
   return resp.data
 }
 
-const uploadFile = async (client, file, dirID, options) => {
+const uploadFile = async (client, file, dirID, options = {}) => {
   /** We have a bug with Chrome returning SPDY_ERROR_PROTOCOL.
    * This is certainly caused by the couple HTTP2 / HAProxy / CozyStack
    * when something cut the HTTP connexion before the Stack
