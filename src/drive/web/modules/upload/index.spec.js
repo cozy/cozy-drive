@@ -8,6 +8,7 @@ import {
   queue,
   overwriteFile,
   uploadFilesFromNative,
+  uploadProgress,
   ADD_TO_UPLOAD_QUEUE
 } from './index'
 
@@ -587,17 +588,16 @@ describe('queue reducer', () => {
     expect(result).toEqual(expected)
   })
 
-  it('should handle UPLOAD_PROGRESS action type', () => {
-    const action = {
-      type: 'UPLOAD_PROGRESS',
-      file: {
-        name: 'doc1.odt'
-      },
-      event: {
-        loaded: 100,
-        total: 400
-      }
+  describe('progress action', () => {
+    const file = {
+      name: 'doc1.odt'
     }
+
+    const date1 = 1000
+    const date2 = 2000
+    const event1 = { loaded: 100, total: 400 }
+    const event2 = { loaded: 200, total: 400 }
+
     const expected = [
       {
         status: 'pending',
@@ -605,8 +605,11 @@ describe('queue reducer', () => {
           name: 'doc1.odt'
         },
         progress: {
-          loaded: 100,
-          total: 400
+          lastUpdated: date1,
+          remainingTime: null,
+          speed: null,
+          loaded: event1.loaded,
+          total: event1.total
         }
       },
       {
@@ -624,8 +627,25 @@ describe('queue reducer', () => {
         progress: null
       }
     ]
-    const result = queue(state, action)
-    expect(result).toEqual(expected)
+
+    it('should handle UPLOAD_PROGRESS', () => {
+      const action = uploadProgress(file, event1, date1)
+      const result = queue(state, action)
+      expect(result).toEqual(expected)
+    })
+
+    it('should compute speed and remaing time', () => {
+      const result = queue(state, uploadProgress(file, event1, date1))
+      expect(result[0].progress.remainingTime).toBe(null)
+      const result2 = queue(result, uploadProgress(file, event2, date2))
+      expect(result2[0].progress).toEqual({
+        lastUpdated: expect.any(Number),
+        loaded: 200,
+        remainingTime: 2,
+        speed: 100,
+        total: 400
+      })
+    })
   })
 })
 

@@ -63,28 +63,43 @@ const getStatus = (state, action) => {
     case RECEIVE_UPLOAD_ERROR:
       return action.status
     default:
-      return state.status
+      return state
   }
 }
 
+const getSpeed = (state, action) => {
+  const lastLoaded = state.loaded
+  const lastUpdated = state.lastUpdated
+  const now = action.date
+  const nowLoaded = action.loaded
+  return ((nowLoaded - lastLoaded) / (now - lastUpdated)) * 1000
+}
+
 const getProgress = (state, action) => {
-  switch (action.type) {
-    case UPLOAD_PROGRESS:
-      return {
-        loaded: action.event.loaded,
-        total: action.event.total
-      }
-    case RECEIVE_UPLOAD_SUCCESS:
-      return null
-    default:
-      return state.progress
+  if (action.type == RECEIVE_UPLOAD_SUCCESS) {
+    return null
+  } else if (action.type === UPLOAD_PROGRESS) {
+    const speed = state ? getSpeed(state, action) : null
+    const loaded = action.loaded
+    const total = action.total
+    const remainingTime =
+      speed && total && loaded ? (total - loaded) / speed : null
+    return {
+      loaded,
+      total,
+      lastUpdated: action.date,
+      speed,
+      remainingTime
+    }
+  } else {
+    return state
   }
 }
 
 const item = (state, action = { isUpdate: false }) => ({
   ...state,
-  status: getStatus(state, action),
-  progress: getProgress(state, action)
+  status: getStatus(state.status, action),
+  progress: getProgress(state.progress, action)
 })
 
 export const queue = (state = [], action) => {
@@ -109,6 +124,14 @@ export const queue = (state = [], action) => {
 }
 
 export default combineReducers({ queue })
+
+export const uploadProgress = (file, event, date) => ({
+  type: UPLOAD_PROGRESS,
+  file,
+  loaded: event.loaded,
+  total: event.total,
+  date: date || Date.now()
+})
 
 export const processNextFile = (
   fileUploadedCallback,
@@ -136,7 +159,7 @@ export const processNextFile = (
     } else {
       const uploadedFile = await uploadFile(client, file, dirID, {
         onUploadProgress: event => {
-          dispatch({ type: UPLOAD_PROGRESS, file, event })
+          dispatch(uploadProgress(file, event))
         }
       })
       fileUploadedCallback(uploadedFile)
