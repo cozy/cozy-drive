@@ -5054,7 +5054,7 @@ cozy-bar@7.12.2:
     localforage "1.7.3"
     lodash.debounce "4.0.8"
     lodash.unionwith "4.6.0"
-    minilog "git+https://github.com/cozy/minilog.git#master"
+    minilog "https://github.com/cozy/minilog.git#master"
     parcel "1.12.3"
     piwik-react-router "0.12.1"
     prop-types "15.7.2"
@@ -5101,18 +5101,19 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@13.2.1:
-  version "13.2.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.2.1.tgz#d84e42f45eaae0d758d02ad7f0d324bca8485f55"
-  integrity sha512-d4TJw8e8OfCSK0MJvBnQN9+zyBiIIqck7MOE1xlWc6PXaiI4JBh/0KQ/JyywmWodj9/5SLbIyceGJo48KPjcHQ==
+cozy-client@13.4.2:
+  version "13.4.2"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.4.2.tgz#b495c4da97db2cc97a99fce341ef4d0f037ebe3c"
+  integrity sha512-r2/RGznnov0VmSAk7onnc75UK9cbmNthGwkASOlCnuDZpSYdOxfcCzjIcYQOmEQFuWbOAQzzFMqhju7FYzwtyA==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^13.2.1"
+    cozy-stack-client "^13.4.2"
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
+    minilog "https://github.com/cozy/minilog.git#master"
     open "^7.0.2"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
@@ -5249,7 +5250,7 @@ cozy-realtime@3.8.0:
   integrity sha512-VCgffHdMcqO8LRHnUZijR0UXE5FwdLGh9BOP0WKN6lP5eOEaRFL+OPfJuHJasgN5r1YfXautbze1wRQZByAcEg==
   dependencies:
     cozy-device-helper "^1.9.2"
-    minilog "git+https://github.com/cozy/minilog.git#master"
+    minilog "https://github.com/cozy/minilog.git#master"
 
 cozy-realtime@^3.7.0:
   version "3.7.0"
@@ -5334,10 +5335,10 @@ cozy-sharing@1.9.1:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@13.2.1, cozy-stack-client@^13.2.1:
-  version "13.2.1"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.2.1.tgz#0b22931184fb2d3995d70aaa88aad045493992e9"
-  integrity sha512-V4DjxJpSjU/3JpRxcuhW3RxXazpCLq7+sWIXrhXY5MjOtM/3VbkhVEgVvktospZuWp5PSk4jPmfEs6V10qhZmQ==
+cozy-stack-client@13.4.2, cozy-stack-client@^13.4.2:
+  version "13.4.2"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.4.2.tgz#02f0ae98568fe9b90bb8bac84dda80f345bac797"
+  integrity sha512-9htrdXaIMfRk4mzsGnaSRk4/KsdJ6TvnQDC9n6AJtQ2wF9F/GG3p4QZc9sXO/9i9jhhK6kfbUp8UdDu9GZGC8w==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -5369,10 +5370,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@34.1.0:
-  version "34.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-34.1.0.tgz#daf047a9fd5ea1c450fc72514e1b83fed1c67cbd"
-  integrity sha512-CbI3lESeoj+w3oC04jbSvtpeo8tSt1wpCBw8/0Dz6j4PlNU3k3W/rVnBP/fF46QMzEyysXjpDW5PkVhLdovQPA==
+cozy-ui@35.1.0:
+  version "35.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-35.1.0.tgz#df5dd3e601c8d2b73860b03e6924ee986c7ea477"
+  integrity sha512-F9husNZbFFfI6LzMi9nZpub7RyYdbsK5mQ1DPfxRRGZREF0ujNPoprIuEznKA2tG8KZYj5Ry+xZqeBh1Kxp9AA==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
@@ -11397,21 +11398,7 @@ mini-css-extract-plugin@0.5.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
-minilog@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/minilog/-/minilog-3.1.0.tgz#d2d0f1887ca363d1acf0ea86d5c4df293b3fb675"
-  integrity sha1-0tDxiHyjY9Gs8OqG1cTfKTs/tnU=
-  dependencies:
-    microee "0.0.6"
-
-"minilog@git+https://github.com/cozy/minilog.git#master":
-  version "3.1.0"
-  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
-  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
-  dependencies:
-    microee "0.0.6"
-
-"minilog@https://github.com/cozy/minilog.git#master":
+minilog@3.1.0, "minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
   resolved "https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
