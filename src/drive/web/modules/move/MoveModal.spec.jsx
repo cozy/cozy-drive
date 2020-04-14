@@ -26,7 +26,8 @@ const collectionSpy = jest.fn(() => ({
 }))
 const cozyClient = new CozyClient({
   stackClient: {
-    collection: collectionSpy
+    collection: collectionSpy,
+    on: jest.fn()
   }
 })
 
