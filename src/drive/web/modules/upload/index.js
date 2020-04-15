@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux'
 import logger from 'lib/logger'
-
-import { hasSharedParent, isShared } from 'cozy-sharing/dist/state'
 import { CozyFile } from 'models'
+
 //!TODO Remove this method from Scanner and use from cozy-client files models
 //see https://github.com/cozy/cozy-client/pull/571
 import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
@@ -170,15 +169,10 @@ export const processNextFile = (
     if (uploadError.status === CONFLICT_ERROR) {
       try {
         const path = await CozyFile.getFullpath(dirID, file.name)
-        if (
-          !isShared(sharingState, { path }) &&
-          !hasSharedParent(sharingState, { path })
-        ) {
-          const uploadedFile = await overwriteFile(client, file, path)
-          fileUploadedCallback(uploadedFile)
-          dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
-          error = null
-        }
+        const uploadedFile = await overwriteFile(client, file, path)
+        fileUploadedCallback(uploadedFile)
+        dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
+        error = null
       } catch (updateError) {
         error = updateError
       }
