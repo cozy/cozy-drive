@@ -210,65 +210,6 @@ describe('processNextFile function', () => {
     })
   })
 
-  it('should not update a file in conflict if it is shared', async () => {
-    const getState = () => ({
-      upload: {
-        queue: [
-          {
-            status: 'pending',
-            file,
-            entry: '',
-            isDirectory: false
-          }
-        ]
-      }
-    })
-    createFileSpy.mockRejectedValue({
-      status: 409,
-      title: 'Conflict',
-      detail: 'file already exists',
-      source: {}
-    })
-
-    statByPathSpy.mockResolvedValue({
-      data: {
-        dir_id: 'my-dir',
-        id: 'b552a167-1aa4'
-      }
-    })
-
-    updateFileSpy.mockResolvedValue({ data: file })
-
-    const sharingState = {
-      sharedPaths: ['/my-dir']
-    }
-
-    const asyncProcess = processNextFile(
-      fileUploadedCallbackSpy,
-      queueCompletedCallbackSpy,
-      dirId,
-      sharingState
-    )
-    await asyncProcess(dispatchSpy, getState, { client: fakeClient })
-
-    expect(dispatchSpy).toHaveBeenNthCalledWith(1, {
-      type: 'UPLOAD_FILE',
-      file
-    })
-    expect(createFileSpy).toHaveBeenCalledWith(file, {
-      dirId: 'my-dir',
-      onUploadProgress: expect.any(Function)
-    })
-
-    expect(fileUploadedCallbackSpy).not.toHaveBeenCalled()
-
-    expect(dispatchSpy).toHaveBeenNthCalledWith(2, {
-      file,
-      status: 'conflict',
-      type: 'RECEIVE_UPLOAD_ERROR'
-    })
-  })
-
   it('should handle an error during overwrite', async () => {
     const getState = () => ({
       upload: {
