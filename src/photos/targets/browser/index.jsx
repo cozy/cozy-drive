@@ -8,6 +8,8 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { Router, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
+import { RealtimePlugin } from 'cozy-realtime'
+
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'cozy-sharing'
 
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     appMetadata,
     schema: doctypes
   })
-
+  client.registerPlugin(RealtimePlugin)
   // We still need to init cozy-client-js for the Uploader
   cozy.client.init({
     cozyURL: cozyUrl,
