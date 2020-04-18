@@ -7,6 +7,8 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
+import { RealtimePlugin } from 'cozy-realtime'
+
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
@@ -37,6 +39,8 @@ async function init() {
     appMetadata,
     schema: doctypes
   })
+
+  client.registerPlugin(RealtimePlugin)
 
   configureReporter()
   setCozyUrl(cozyUrl)
