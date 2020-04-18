@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from '../../../styles/layout.styl'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { withRouter } from 'react-router'
 
 import AlbumsToolbar from './AlbumsToolbar'
 import AlbumsList from './AlbumsList'
@@ -23,7 +24,7 @@ const Content = ({ list }) => {
 
 class AlbumsView extends Component {
   render() {
-    const { t } = this.props
+    const { t, router } = this.props
     if (this.props.children) return this.props.children
     if (!this.props.albums) {
       return null
@@ -34,7 +35,7 @@ class AlbumsView extends Component {
         className={styles['pho-content-wrapper']}
       >
         <Topbar viewName="albums">
-          <AlbumsToolbar t={t} />
+          <AlbumsToolbar t={t} router={router} />
         </Topbar>
         <Content list={this.props.albums} />
       </div>
@@ -42,4 +43,4 @@ class AlbumsView extends Component {
   }
 }
 
-export default translate()(AlbumsView)
+export default translate()(withRouter(AlbumsView))

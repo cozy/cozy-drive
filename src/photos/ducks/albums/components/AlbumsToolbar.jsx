@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router'
 import classNames from 'classnames'
 import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
 
@@ -37,4 +36,4 @@ const AlbumsToolbar = ({ t, router }) => (
   </div>
 )
 
-export default withRouter(AlbumsToolbar)
+export default AlbumsToolbar
