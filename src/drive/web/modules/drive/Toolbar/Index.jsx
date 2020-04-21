@@ -20,18 +20,18 @@ import styles from 'drive/styles/toolbar.styl'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 
-import DeleteItem from './Toolbar/delete/DeleteItem'
-import SelectableItem from './Toolbar/selectable/SelectableItem'
-import AddFolderItem from './Toolbar/components/AddFolderItem'
-import UploadItem from './Toolbar/components/UploadItem'
-import CreateNoteItem from './Toolbar/components/CreateNoteItem'
-import CreateShortcut from './Toolbar/components/CreateShortcut'
+import DeleteItem from './delete/DeleteItem'
+import SelectableItem from './selectable/SelectableItem'
+import AddFolderItem from './components/AddFolderItem'
+import UploadItem from './components/UploadItem'
+import CreateNoteItem from './components/CreateNoteItem'
+import CreateShortcut from './components/CreateShortcut'
 
-import DownloadButtonItem from './Toolbar/components/DownloadButtonItem'
-import ShareItem from './Toolbar/share/ShareItem'
-import ShareButton from './Toolbar/share/ShareButton'
-import SharedRecipients from './Toolbar/share/SharedRecipients'
-import ScanWrapper from './Toolbar/components/ScanWrapper'
+import DownloadButtonItem from './components/DownloadButtonItem'
+import ShareItem from './share/ShareItem'
+import ShareButton from './share/ShareButton'
+import SharedRecipients from './share/SharedRecipients'
+import ScanWrapper from './components/ScanWrapper'
 
 class Toolbar extends Component {
   static contextTypes = {
