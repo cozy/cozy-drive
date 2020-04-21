@@ -9,29 +9,17 @@ import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { withClient } from 'cozy-client'
-import { isMobileApp } from 'cozy-device-helper'
-
-import { MoreButton } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
-
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar.styl'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 
-import DeleteItem from './delete/DeleteItem'
-import SelectableItem from './selectable/SelectableItem'
-import AddFolderItem from './components/AddFolderItem'
 import UploadItem from './components/UploadItem'
-import CreateNoteItem from './components/CreateNoteItem'
-import CreateShortcut from './components/CreateShortcut'
+import MoreMenu from './components/MoreMenu'
 
-import DownloadButtonItem from './components/DownloadButtonItem'
-import ShareItem from './share/ShareItem'
 import ShareButton from './share/ShareButton'
 import SharedRecipients from './share/SharedRecipients'
-import ScanWrapper from './components/ScanWrapper'
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -52,70 +40,6 @@ class Toolbar extends Component {
     } = this.props
     const isDisabled = disabled || selectionModeActive
     const { BarRight } = cozy.bar
-
-    const MoreMenu = (
-      <Menu
-        title={t('toolbar.item_more')}
-        disabled={isDisabled}
-        className={styles['fil-toolbar-menu']}
-        innerClassName={styles['fil-toolbar-inner-menu']}
-        button={<MoreButton />}
-      >
-        {canCreateFolder &&
-          hasWriteAccess && (
-            <Item>
-              <AddFolderItem />
-            </Item>
-          )}
-        {hasWriteAccess && (
-          <Item>
-            <CreateNoteItem />
-          </Item>
-        )}
-        {hasWriteAccess && (
-          <Item>
-            <CreateShortcut />
-          </Item>
-        )}
-        {canUpload &&
-          hasWriteAccess && (
-            <Item>
-              <UploadItem insideMoreMenu disabled={isDisabled} />
-            </Item>
-          )}
-        {isMobileApp() &&
-          canUpload &&
-          hasWriteAccess && (
-            <Item>
-              <ScanWrapper insideMoreMenu disabled={isDisabled} />
-            </Item>
-          )}
-        <hr />
-        <NotRootFolder>
-          <Item>
-            <ShareItem />
-          </Item>
-        </NotRootFolder>
-        <NotRootFolder>
-          <Item>
-            <DownloadButtonItem />
-          </Item>
-        </NotRootFolder>
-        <Item>
-          <SelectableItem>
-            <a className={styles['fil-action-select']}>
-              {t('toolbar.menu_select')}
-            </a>
-          </SelectableItem>
-        </Item>
-        <NotRootFolder>
-          <hr />
-          <Item>
-            <DeleteItem />
-          </Item>
-        </NotRootFolder>
-      </Menu>
-    )
 
     return (
       <div
@@ -141,12 +65,22 @@ class Toolbar extends Component {
               t={t}
             >
               <SharingProvider doctype="io.cozy.files" documentType="Files">
-                {MoreMenu}
+                <MoreMenu
+                  isDisabled={isDisabled}
+                  canCreateFolder={canCreateFolder}
+                  canUpload={canUpload}
+                  hasWriteAccess={hasWriteAccess}
+                />
               </SharingProvider>
             </BarContextProvider>
           </BarRight>
         ) : (
-          MoreMenu
+          <MoreMenu
+            isDisabled={isDisabled}
+            canCreateFolder={canCreateFolder}
+            canUpload={canUpload}
+            hasWriteAccess={hasWriteAccess}
+          />
         )}
       </div>
     )
