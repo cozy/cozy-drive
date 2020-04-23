@@ -154,7 +154,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         moveto: {
           action: selected =>
             dispatch(showModal(<MoveModal entries={selected} />)),
-          displayCondition: () => canMove
+          displayCondition: () => hasWriteAccess && canMove
         },
         qualify: {
           action: selected =>
@@ -169,7 +169,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               )
             ),
           displayCondition: selections =>
-            selections.length === 1 && isFile(selections[0])
+            hasWriteAccess && selections.length === 1 && isFile(selections[0])
         },
         history: {
           action: selected => {
