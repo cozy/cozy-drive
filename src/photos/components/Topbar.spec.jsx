@@ -5,12 +5,11 @@ import { mockedRouter } from '../../../test/__mocks__/mockedRouter'
 import { Topbar } from './Topbar'
 import { createMockClient } from 'cozy-client'
 describe('Topbar', () => {
-  let component
   const client = createMockClient({})
 
-  const setup = isMobile => {
+  const setup = ({ isMobile }) => {
     const Child = props => <div {...props}> Child </div>
-    component = mount(
+    const component = mount(
       <AppLike client={client}>
         <Topbar
           breakpoints={{ isMobile: isMobile }}
@@ -23,14 +22,15 @@ describe('Topbar', () => {
         </Topbar>
       </AppLike>
     )
+    return { component }
   }
   it('should render the topbar for desktop', () => {
-    setup(false)
+    const { component } = setup({ isMobile: false })
     expect(component.render()).toMatchSnapshot()
   })
 
   it('renders the topbar for mobile and the child have the expected router', () => {
-    setup(true)
+    const { component } = setup({ isMobile: true })
     expect(component.render()).toMatchSnapshot()
     expect(component.find('Child').prop('router')).toBe(mockedRouter)
   })
