@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Topbar renders the topbar for mobile and the child have the expected router 1`] = `
+<div
+  class="pho-content-header"
+>
+  <div
+    router="[object Object]"
+  >
+     Child 
+  </div>
+</div>
+`;
+
+exports[`Topbar should render the topbar for desktop 1`] = `
+<div
+  class="pho-content-header"
+>
+  <div
+    class="pho-content-album-previous"
+    data-test-id="pho-content-album-previous"
+    role="button"
+  />
+  <h2
+    class="pho-content-title"
+    data-test-id="pho-content-title"
+  />
+  <div
+    router="[object Object]"
+  >
+     Child 
+  </div>
+</div>
+`;

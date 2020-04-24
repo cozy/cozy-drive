@@ -87,7 +87,7 @@ BackToAlbumsButton.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
-class Topbar extends Component {
+export class Topbar extends Component {
   static contextTypes = {
     store: PropTypes.object.isRequired
   }
@@ -118,7 +118,6 @@ class Topbar extends Component {
     const isAlbumContent = viewName === 'albumContent'
     const title = <TopbarTitle>{this.renderTitle()}</TopbarTitle>
     const responsiveTitle = isMobile ? <BarCenter>{title}</BarCenter> : title
-
     const responsiveMenu = isMobile ? (
       <BarRight>
         <BarContextProvider client={client} store={this.context.store} t={t}>
