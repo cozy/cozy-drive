@@ -30,11 +30,6 @@
   "transformIgnorePatterns": ["node_modules/(?!cozy-ui)/"],
   "testMatch": ["**/(*.)(spec|test).js?(x)"],
   "globals": {
-    "cozy": {
-      "bar": {
-        "BarRight": null
-      }
-    },
     "__APP_SLUG__": "drive"
   }
 }
