@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Albumsview displays an empty Component 1`] = `
+exports[`AlbumsView displays an empty Component 1`] = `
 <div
   class="pho-content-wrapper"
   data-test-id="album-pho-content-wrapper"

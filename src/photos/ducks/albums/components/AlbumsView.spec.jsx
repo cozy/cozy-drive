@@ -7,13 +7,12 @@ import { mockedRouter } from '../../../../../test/__mocks__/mockedRouter'
 import AlbumsView from './AlbumsView'
 import { createMockClient } from 'cozy-client'
 
-describe('Albumsview', () => {
+describe('AlbumsView', () => {
   const client = createMockClient({})
-  let component
-  const setup = data => {
-    component = mount(
+  const setup = ({ albums }) => {
+    const component = mount(
       <AppLike client={client}>
-        <AlbumsView albums={{ data }} />
+        <AlbumsView albums={albums} />
       </AppLike>,
       {
         context: {
@@ -26,9 +25,10 @@ describe('Albumsview', () => {
         }
       }
     )
+    return { component }
   }
   it('displays an empty Component', () => {
-    setup([])
+    const { component } = setup({ albums: { data: [] } })
     expect(component.render()).toMatchSnapshot()
   })
 })
