@@ -5101,15 +5101,15 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@13.4.2:
-  version "13.4.2"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.4.2.tgz#b495c4da97db2cc97a99fce341ef4d0f037ebe3c"
-  integrity sha512-r2/RGznnov0VmSAk7onnc75UK9cbmNthGwkASOlCnuDZpSYdOxfcCzjIcYQOmEQFuWbOAQzzFMqhju7FYzwtyA==
+cozy-client@13.5.1:
+  version "13.5.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.5.1.tgz#fce194b280e74e1df502bdc27eb93ffbc520e5f3"
+  integrity sha512-1xuA+qH7LHTKDWFPkNTtOymtJnRtlLNexAmxja0Lzwd2xhevqu72MUxIOGqJckA9ixiit0ADBbk7K8YEUR2vwQ==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^13.4.2"
+    cozy-stack-client "^13.5.1"
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -5335,10 +5335,10 @@ cozy-sharing@1.9.1:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@13.4.2, cozy-stack-client@^13.4.2:
-  version "13.4.2"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.4.2.tgz#02f0ae98568fe9b90bb8bac84dda80f345bac797"
-  integrity sha512-9htrdXaIMfRk4mzsGnaSRk4/KsdJ6TvnQDC9n6AJtQ2wF9F/GG3p4QZc9sXO/9i9jhhK6kfbUp8UdDu9GZGC8w==
+cozy-stack-client@13.5.1, cozy-stack-client@^13.5.1:
+  version "13.5.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.5.1.tgz#6fab278afef19dc9d5453ab0cef8751a9098c726"
+  integrity sha512-0qBO5RkqmqaRuXqhxpF4wu0T9qK/K2sOe0HtDpAv5oduedY0Xs9khpTpBkv4gFkSOzrEfsOiMZ5QMeG3Fuuavg==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -5370,10 +5370,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@35.7.3:
-  version "35.7.3"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-35.7.3.tgz#90d58ad6d8263df35248ea6bd628f57405a915be"
-  integrity sha512-6hmyBK6a3yf/M3HRtEIgIIWXNEG0TIY9yDuxNVYTbRu+11fGCwlmcBBt7Xuw8fRdiHDQI8Q94jIyzLhNaO8T3Q==
+cozy-ui@35.9.0:
+  version "35.9.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-35.9.0.tgz#03db32bf49d812cfadca097e3e8157d2632b34c8"
+  integrity sha512-/XSyzDV4tTkKgovrdVtw5YoeO9yniv7xHBUImtYHi0+XszKEuVz3V0sHhG1d9WdTdRguUScYF8W+j3/mBbPiWw==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"

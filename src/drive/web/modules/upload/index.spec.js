@@ -587,6 +587,14 @@ describe('queue reducer', () => {
         total: 400
       })
     })
+
+    it('should handle upload error', () => {
+      const result = queue(state, uploadProgress(file, event1, date1))
+      expect(result[0].progress.remainingTime).toBe(null)
+      const result2 = queue(result, uploadProgress(file, event2, date2))
+      const result3 = queue(result2, { type: 'RECEIVE_UPLOAD_ERROR', file })
+      expect(result3[0].progress).toEqual(null)
+    })
   })
 })
 

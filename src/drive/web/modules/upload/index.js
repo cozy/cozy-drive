@@ -90,6 +90,8 @@ const getProgress = (state, action) => {
       speed,
       remainingTime
     }
+  } else if (action.type === RECEIVE_UPLOAD_ERROR) {
+    return null
   } else {
     return state
   }
