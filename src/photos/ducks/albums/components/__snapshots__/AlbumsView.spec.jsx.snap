@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Albumsview displays an empty Component 1`] = `
+<div
+  class="pho-content-wrapper"
+  data-test-id="album-pho-content-wrapper"
+>
+  <div
+    class="pho-content-header"
+  >
+    <h2
+      class="pho-content-title"
+      data-test-id="pho-content-title"
+    >
+      Nav.albums
+    </h2>
+    <div
+      class="pho-toolbar"
+      data-test-id="pho-toolbar-albums"
+      role="toolbar"
+    >
+      <div
+        class="u-hide--mob"
+      >
+        <a
+          class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N"
+          data-test-id="album-add"
+          href="#/albums/new"
+        >
+          <span>
+            <svg
+              aria-hidden="true"
+              class="styles__icon___23x3R"
+              focusable="false"
+              height="16"
+              width="16"
+            >
+              <use
+                href="#album-add"
+              />
+            </svg>
+            <span>
+              Toolbar.album_new
+            </span>
+          </span>
+        </a>
+      </div>
+      <div
+        class="styles__c-menu___2YTiU styles__c-menu--right___3wxbb pho-toolbar-menu u-hide--desk"
+      >
+        <button
+          class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N styles__c-btn--narrow___27FHD styles__c-btn--center___16_Xh dri-btn--more"
+          data-test-id="more-button"
+          title="More"
+          type="submit"
+        >
+          <span>
+            <svg
+              aria-hidden="true"
+              class="styles__icon___23x3R"
+              focusable="false"
+              height="16"
+              width="16"
+            >
+              <use
+                href="#dots"
+              />
+            </svg>
+            <span
+              class="u-visuallyhidden"
+            >
+              More
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="styles__c-empty___3w5oV"
+    data-test-id="empty-folder"
+  >
+    <svg
+      class="styles__c-empty-img___2GC4d styles__icon___23x3R"
+      height="100%"
+      width="100%"
+    >
+      <use
+        href="#icon-0"
+      />
+    </svg>
+    <h2
+      class="u-title-h1 styles__c-empty-title___2HduE"
+    >
+      empty.albums_title
+    </h2>
+    <p
+      class="styles__c-empty-text___3HnvR"
+    >
+      empty.albums_text
+    </p>
+    <div
+      class="styles__c-empty-text___3HnvR"
+    />
+  </div>
+</div>
+`;
