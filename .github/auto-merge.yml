@@ -1,0 +1,7 @@
+minApprovals:
+  MEMBER: 1
+requiredLabels:
+- merge
+reportStatus: true
+blockingChecks:
+  status: 'pending'
