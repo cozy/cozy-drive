@@ -108,12 +108,14 @@ class Toolbar extends Component {
             </a>
           </SelectableItem>
         </Item>
-        <NotRootFolder>
-          <hr />
-          <Item>
-            <DeleteItem />
-          </Item>
-        </NotRootFolder>
+        {hasWriteAccess && (
+          <NotRootFolder>
+            <hr />
+            <Item>
+              <DeleteItem />
+            </Item>
+          </NotRootFolder>
+        )}
       </Menu>
     )
 
