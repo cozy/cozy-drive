@@ -198,7 +198,10 @@ describe('processNextFile function', () => {
 
     expect(updateFileSpy).toHaveBeenCalledWith(file, {
       dirId: 'my-dir',
-      fileId: 'b552a167-1aa4'
+      fileId: 'b552a167-1aa4',
+      options: {
+        onUploadProgress: expect.any(Function)
+      }
     })
 
     expect(fileUploadedCallbackSpy).toHaveBeenCalledWith(file)
@@ -624,7 +627,8 @@ describe('overwriteFile function', () => {
     const result = await overwriteFile(fakeClient, file, '/parent/mydoc.odt')
     expect(updateFileSpy).toHaveBeenCalledWith(file, {
       dirId: '972bc693-f015',
-      fileId: 'b7cb22be72d2'
+      fileId: 'b7cb22be72d2',
+      options: {}
     })
     expect(result).toEqual({
       id: 'b7cb22be72d2',
