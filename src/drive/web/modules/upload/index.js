@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux'
+import flag from 'cozy-flags'
+
 import logger from 'lib/logger'
 import { CozyFile } from 'models'
 
@@ -158,11 +160,19 @@ export const processNextFile = (
       const newDir = await uploadDirectory(client, entry, dirID)
       fileUploadedCallback(newDir)
     } else {
-      const uploadedFile = await uploadFile(client, file, dirID, {
-        onUploadProgress: event => {
-          dispatch(uploadProgress(file, event))
-        }
-      })
+      const uploadedFile = await uploadFile(
+        client,
+        file,
+        dirID,
+        flag('drive.upload.with-progress')
+          ? {
+              onUploadProgress: event => {
+                dispatch(uploadProgress(file, event))
+              }
+            }
+          : {}
+      )
+
       fileUploadedCallback(uploadedFile)
     }
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
@@ -171,7 +181,18 @@ export const processNextFile = (
     if (uploadError.status === CONFLICT_ERROR) {
       try {
         const path = await CozyFile.getFullpath(dirID, file.name)
-        const uploadedFile = await overwriteFile(client, file, path)
+        const uploadedFile = await overwriteFile(
+          client,
+          file,
+          path,
+          flag('drive.upload.with-progress')
+            ? {
+                onUploadProgress: event => {
+                  dispatch(uploadProgress(file, event))
+                }
+              }
+            : {}
+        )
         fileUploadedCallback(uploadedFile)
         dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
         error = null
@@ -274,14 +295,15 @@ const uploadFile = async (client, file, dirID, options = {}) => {
  * @param {Object} client - A CozyClient instance
  * @param {Object} file - The uploaded javascript File object
  * @param {string} path - The file's path in the cozy
+ * @param {{onUploadProgress}} options 
  * @return {Object} - The updated io.cozy.files
  */
-export const overwriteFile = async (client, file, path) => {
+export const overwriteFile = async (client, file, path, options = {}) => {
   const statResp = await client.collection('io.cozy.files').statByPath(path)
   const { id: fileId, dir_id: dirId } = statResp.data
   const resp = await client
     .collection('io.cozy.files')
-    .updateFile(file, { dirId, fileId })
+    .updateFile(file, { dirId, fileId, options })
 
   return resp.data
 }
