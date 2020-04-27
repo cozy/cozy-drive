@@ -9,9 +9,10 @@ import {
   useCapabilities
 } from 'cozy-client'
 import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
-import styles from 'drive/styles/toolbar.styl'
 
 const CreateNoteItem = ({ client, t, displayedFolder }) => {
   const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
@@ -34,9 +35,9 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
   }
 
   return (
-    <a
+    <ActionMenuItem
       data-test-id="create-a-note"
-      className={styles['fil-action-create-note']}
+      left={<Icon icon="note" />}
       onClick={async () => {
         if (!fetchStatus) return
         if (isInstalled) {
@@ -55,7 +56,7 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
       }}
     >
       {t('toolbar.menu_create_note')}
-    </a>
+    </ActionMenuItem>
   )
 }
 

@@ -1,28 +1,29 @@
 import React from 'react'
-import classNames from 'classnames'
-import styles from 'drive/styles/toolbar.styl'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import deleteContainer from './delete'
+
 const DeleteItem = translate()(
   ({ t, isSharedWithMe, displayedFolder, trashFolder, onLeave }) =>
     isSharedWithMe ? (
-      <a
+      <ActionMenuItem
         data-test-id="fil-action-delete"
-        className={classNames(styles['fil-action-delete'])}
+        left={<Icon icon="trash" color="var(--pomegranate)" />}
         onClick={() =>
           onLeave(displayedFolder).then(() => trashFolder(displayedFolder))
         }
       >
-        {t('toolbar.leave')}
-      </a>
+        <span className="u-pomegranate">{t('toolbar.leave')}</span>
+      </ActionMenuItem>
     ) : (
-      <a
+      <ActionMenuItem
         data-test-id="fil-action-delete"
-        className={classNames(styles['fil-action-delete'])}
+        left={<Icon icon="trash" color="var(--pomegranate)" />}
         onClick={() => trashFolder(displayedFolder)}
       >
-        {t('toolbar.trash')}
-      </a>
+        <span className="u-pomegranate">{t('toolbar.trash')}</span>
+      </ActionMenuItem>
     )
 )
 

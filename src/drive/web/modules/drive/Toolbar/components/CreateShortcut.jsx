@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import styles from 'drive/styles/toolbar.styl'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShortcutCreationModal from './ShortcutCreationModalConnected'
 
 const CreateShortcutWrapper = () => {
@@ -8,15 +9,15 @@ const CreateShortcutWrapper = () => {
   const { t } = useI18n()
   if (!isModalDisplayed) {
     return (
-      <a
+      <ActionMenuItem
         data-test-id="create-a-shortcut"
-        className={styles['fil-action-create-shortcut']}
+        left={<Icon icon="link" />}
         onClick={useCallback(() => {
           setIsModalDisplayed(true)
         })}
       >
         {t('toolbar.menu_create_shortcut')}
-      </a>
+      </ActionMenuItem>
     )
   } else {
     return (
