@@ -1,14 +1,17 @@
 /* global cozy */
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { Button, withBreakpoints } from 'cozy-ui/transpiled/react'
-import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { useClient } from 'cozy-client'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import Button from 'cozy-ui/transpiled/react/Button'
+import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { showModal } from 'react-cozy-helpers'
 
 import { MoreButton } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import { emptyTrash } from './actions'
@@ -27,25 +30,37 @@ const Toolbar = ({
 }) => {
   const client = useClient()
   const { BarRight } = cozy.bar
+  const [menuIsVisible, setMenuVisible] = useState(false)
+  const anchorRef = React.createRef()
+  const openMenu = useCallback(() => setMenuVisible(true))
+  const closeMenu = useCallback(() => setMenuVisible(false))
+
   const MoreMenu = (
-    <Menu
-      title={t('toolbar.item_more')}
-      disabled={disabled || selectionModeActive}
-      className={styles['fil-toolbar-menu']}
-      button={<MoreButton />}
-    >
-      <Item>
-        <a className={styles['fil-action-delete']} onClick={() => emptyTrash()}>
-          {t('toolbar.empty_trash')}
-        </a>
-      </Item>
-      <hr />
-      <SelectableItem>
-        <a className={styles['fil-action-select']}>
-          {t('toolbar.menu_select')}
-        </a>
-      </SelectableItem>
-    </Menu>
+    <div>
+      <div ref={anchorRef}>
+        <MoreButton onClick={openMenu} />
+      </div>
+      {menuIsVisible && (
+        <ActionMenu
+          placement="bottom-end"
+          anchorElRef={anchorRef}
+          onClose={closeMenu}
+        >
+          <ActionMenuItem
+            onClick={() => emptyTrash()}
+            left={<Icon icon="trash" color="var(--pomegranate)" />}
+          >
+            <span className="u-pomegranate">{t('toolbar.empty_trash')}</span>
+          </ActionMenuItem>
+          <hr />
+          <SelectableItem>
+            <ActionMenuItem left={<Icon icon="check-square" />}>
+              {t('toolbar.menu_select')}
+            </ActionMenuItem>
+          </SelectableItem>
+        </ActionMenu>
+      )}
+    </div>
   )
 
   return (
@@ -87,11 +102,11 @@ const mapDispatchToProps = dispatch => ({
     )
 })
 
-export default translate()(
-  withBreakpoints()(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(Toolbar)
+export default compose(
+  translate(),
+  withBreakpoints(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
   )
-)
+)(Toolbar)
