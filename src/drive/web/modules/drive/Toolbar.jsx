@@ -41,6 +41,7 @@ class Toolbar extends Component {
   render() {
     const {
       t,
+      lang,
       disabled,
       selectionModeActive,
       canUpload,
@@ -141,6 +142,7 @@ class Toolbar extends Component {
               client={client}
               store={this.context.store}
               t={t}
+              lang={lang}
             >
               <SharingProvider doctype="io.cozy.files" documentType="Files">
                 {MoreMenu}
