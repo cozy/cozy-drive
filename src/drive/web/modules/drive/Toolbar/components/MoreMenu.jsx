@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 
 import { MoreButton } from 'components/Button'
-import Menu, { Item } from 'components/Menu'
 import { isMobileApp } from 'cozy-device-helper'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-
-import styles from 'drive/styles/toolbar.styl'
+import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 
@@ -24,69 +24,57 @@ const MoreMenu = ({
   isDisabled,
   canCreateFolder,
   canUpload,
-  hasWriteAccess
-}) => (
-  <Menu
-    title={t('toolbar.item_more')}
-    disabled={isDisabled}
-    className={styles['fil-toolbar-menu']}
-    innerClassName={styles['fil-toolbar-inner-menu']}
-    button={<MoreButton />}
-  >
-    {canCreateFolder &&
-      hasWriteAccess && (
-        <Item>
-          <AddFolderItem />
-        </Item>
-      )}
-    {hasWriteAccess && (
-      <Item>
-        <CreateNoteItem />
-      </Item>
-    )}
-    {hasWriteAccess && (
-      <Item>
-        <CreateShortcut />
-      </Item>
-    )}
-    {canUpload &&
-      hasWriteAccess && (
-        <Item>
-          <UploadItem insideMoreMenu disabled={isDisabled} />
-        </Item>
-      )}
-    {isMobileApp() &&
-      canUpload &&
-      hasWriteAccess && (
-        <Item>
-          <ScanWrapper insideMoreMenu disabled={isDisabled} />
-        </Item>
-      )}
-    <hr />
-    <NotRootFolder>
-      <Item>
-        <ShareItem />
-      </Item>
-    </NotRootFolder>
-    <NotRootFolder>
-      <Item>
-        <DownloadButtonItem />
-      </Item>
-    </NotRootFolder>
-    <Item>
-      <SelectableItem>
-        <a className={styles['fil-action-select']}>
-          {t('toolbar.menu_select')}
-        </a>
-      </SelectableItem>
-    </Item>
-    <NotRootFolder>
-      <hr />
-      <Item>
-        <DeleteItem />
-      </Item>
-    </NotRootFolder>
-  </Menu>
-)
+  hasWriteAccess,
+  breakpoints: { isMobile }
+}) => {
+  const [menuIsVisible, setMenuVisible] = useState(false)
+  const anchorRef = React.createRef()
 
-export default translate()(MoreMenu)
+  const openMenu = useCallback(() => setMenuVisible(true))
+  const closeMenu = useCallback(() => setMenuVisible(false))
+
+  return (
+    <div>
+      <div ref={anchorRef}>
+        <MoreButton onClick={openMenu} />
+      </div>
+      {menuIsVisible && (
+        <ActionMenu
+          placement="bottom-end"
+          anchorElRef={anchorRef}
+          onClose={closeMenu}
+        >
+          {canCreateFolder && hasWriteAccess && <AddFolderItem />}
+          {hasWriteAccess && <CreateNoteItem />}
+          {hasWriteAccess && <CreateShortcut />}
+          {canUpload && hasWriteAccess && <UploadItem disabled={isDisabled} />}
+          {isMobileApp() &&
+            canUpload &&
+            hasWriteAccess && (
+              <ScanWrapper insideMoreMenu disabled={isDisabled} />
+            )}
+          <hr />
+          {isMobile && (
+            <NotRootFolder>
+              <ShareItem />
+            </NotRootFolder>
+          )}
+          <NotRootFolder>
+            <DownloadButtonItem />
+          </NotRootFolder>
+          <SelectableItem>
+            <ActionMenuItem left={<Icon icon="check-square" />}>
+              {t('toolbar.menu_select')}
+            </ActionMenuItem>
+          </SelectableItem>
+          <NotRootFolder>
+            <hr />
+            <DeleteItem />
+          </NotRootFolder>
+        </ActionMenu>
+      )}
+    </div>
+  )
+}
+
+export default translate()(withBreakpoints()(MoreMenu))

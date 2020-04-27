@@ -1,27 +1,42 @@
 import React from 'react'
-import classNames from 'classnames'
-import UploadButton from 'drive/web/modules/upload/UploadButton'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { translate } from 'cozy-ui/transpiled/react'
-import styles from 'drive/styles/toolbar.styl'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import FileInput from 'cozy-ui/transpiled/react/FileInput'
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 
+import { uploadFiles } from 'drive/web/modules/navigation/duck'
 import toolbarContainer from '../toolbar'
 
-const UploadItem = translate()(
-  ({ t, displayedFolder, insideMoreMenu, isDisabled }) =>
-    insideMoreMenu ? (
-      <UploadButton
-        displayedFolder={displayedFolder}
-        label={t('toolbar.menu_upload')}
-        className={styles['fil-action-upload']}
-      />
-    ) : (
-      <UploadButton
-        disabled={isDisabled}
-        displayedFolder={displayedFolder}
-        label={t('toolbar.item_upload')}
-        className={classNames(styles['c-btn'], 'u-hide--mob')}
-      />
-    )
+const UploadItem = ({ t, isDisabled, onUpload }) => (
+  <FileInput
+    label={t('toolbar.menu_upload')}
+    disabled={isDisabled}
+    multiple
+    onChange={onUpload}
+    data-test-id="upload-btn"
+    value={[]}
+  >
+    <ActionMenuItem left={<Icon icon="upload" />}>
+      {t('toolbar.menu_upload')}
+    </ActionMenuItem>
+  </FileInput>
 )
 
-export default toolbarContainer(UploadItem)
+const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
+  onUpload: files => {
+    dispatch(uploadFiles(files, displayedFolder.id, sharingState))
+  }
+})
+
+export default compose(
+  withSharingState,
+  toolbarContainer,
+  translate(),
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(UploadItem)
