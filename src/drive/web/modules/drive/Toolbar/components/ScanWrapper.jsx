@@ -4,6 +4,7 @@ import { Icon, translate } from 'cozy-ui/transpiled/react'
 import { Scanner, SCANNER_DONE, SCANNER_UPLOADING } from 'cozy-scanner'
 import toolbarContainer from '../toolbar'
 import PortaledQueue from './PortaledQueue'
+import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 
 import {
   startMediaBackup,
@@ -59,7 +60,7 @@ class ScanWrapper extends Component {
   render() {
     const { displayedFolder, stopMediaBackup, startMediaBackup } = this.props
     return (
-      <>
+      <MuiCozyTheme>
         <Scanner
           dirId={displayedFolder.id} //Pour savoir où uploader
           pluginConfig={{
@@ -118,7 +119,7 @@ class ScanWrapper extends Component {
             )
           }}
         </Scanner>
-      </>
+      </MuiCozyTheme>
     )
   }
 }
