@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { UploadQueue } from 'drive/web/modules/upload/UploadQueue'
+import { DumbUploadQueue as UploadQueue } from 'drive/web/modules/upload/UploadQueue'
 import { translate } from 'cozy-ui/transpiled/react'
 class PortaledQueue extends Component {
   render() {
