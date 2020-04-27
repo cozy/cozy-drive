@@ -11,7 +11,7 @@ import {
   purgeUploadQueue
 } from '.'
 
-const DumbUploadQueue = translate()(props => {
+export const DumbUploadQueue = translate()(props => {
   return (
     <UIUploadQueue
       popover={true}
