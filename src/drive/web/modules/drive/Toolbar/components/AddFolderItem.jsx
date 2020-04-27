@@ -1,18 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import styles from 'drive/styles/toolbar.styl'
 import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 
 const AddFolderItem = translate()(({ t, addFolder }) => {
   return (
-    <a
+    <ActionMenuItem
       data-test-id="add-folder-link"
-      className={styles['fil-action-newfolder']}
       onClick={addFolder}
+      left={<Icon icon="folder-add" />}
     >
       {t('toolbar.menu_new_folder')}
-    </a>
+    </ActionMenuItem>
   )
 })
 const mapDispatchToProps = dispatch => ({

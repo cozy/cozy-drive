@@ -15,7 +15,7 @@ import styles from 'drive/styles/toolbar.styl'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 
-import UploadItem from './components/UploadItem'
+import UploadButtonItem from './components/UploadButtonItem'
 import MoreMenu from './components/MoreMenu'
 
 import ShareButton from './share/ShareButton'
@@ -50,7 +50,7 @@ class Toolbar extends Component {
       >
         {!isShared &&
           canUpload &&
-          hasWriteAccess && <UploadItem disabled={isDisabled} />}
+          hasWriteAccess && <UploadButtonItem disabled={isDisabled} />}
         <NotRootFolder>
           <SharedRecipients />
         </NotRootFolder>
