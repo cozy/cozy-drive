@@ -31,78 +31,15 @@
     display     flex
     
 .menu-recipients-wrapper
-  position relative
+    position relative
   
 .menu-recipients
     position absolute
     right    0
     top      -.5rem
 
-.fil-toolbar-menu
-    //!TODO Remove this code after upgrading to cozy-bar@6
-    button
-        svg
-            visibility: initial
-            display: initial
-    a
-    label
-        &.fil-action-upload
-            span[role=button]
-                display flex
-                padding-left 1rem
-            svg
-                margin-right .5rem
-
-        &.fil-action-newfolder
-            background embedurl('../assets/icons/icon-folder-add-16.svg') 1rem center no-repeat
-        &.fil-action-download
-            background embedurl("../assets/icons/icon-download-16.svg") 1rem center no-repeat
-        &.fil-action-select
-            background embedurl('../assets/icons/icon-checkbox-16.svg') 1rem center no-repeat
-        &.fil-action-delete
-            color var(--pomegranate)
-            background embedurl('../assets/icons/icon-trash-red.svg') 1rem center no-repeat
-        &.fil-action-share
-            position relative
-            background embedurl('../assets/icons/icon-share-dark.svg') 1rem center no-repeat
-        &.fil-action-create-note
-            background embedurl('../assets/icons/icons-16-icon-note.svg') 1rem center no-repeat
-        &.fil-action-create-shortcut
-            background embedurl('../assets/icons/icon-link.svg') 1rem center no-repeat
-    .fil-toolbar-menu-recipients
-        position absolute
-        right    1rem
-        top      .1rem
-    .fil-action-share
-        display none
 +medium-screen()
     .fil-toolbar-menu
         display block
         left 1em
-        .fil-action-share
-        .fil-action-select
-        .fil-action-upload
-            display block
-+tablet()
-    .fil-toolbar-menu-recipients
-            display none
-+small-screen()
-    .fil-toolbar-inner-menu
-        position fixed
-        margin   .5rem
-        width    calc(100% - 1rem)
-    .fil-toolbar-files
-    .fil-toolbar-trash
-        position fixed
-        top      0
-        right    0
-        z-index  $nav-index
 
-    .fil-public-download
-        display none
-    .fil-toolbar-menu
-        .fil-toolbar-menu-recipients
-            display inline-flex 
-+small-screen('min')
-    .fil-toolbar-menu--public
-        display none
