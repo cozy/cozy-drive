@@ -40,9 +40,9 @@ const FolderView = props => {
     withFilePath,
     withSharedBadge,
     isRenaming,
-    renamingFile
+    renamingFile,
+    hasWriteAccess
   } = props
-
   const nothingToDo = isTrashContext && files.length === 0
   const folderId = getFolderIdFromRoute(location, params)
   const isRootfolder = folderId === ROOT_DIR_ID
@@ -63,7 +63,7 @@ const FolderView = props => {
       </Topbar>
       <Dropzone
         role="main"
-        disabled={__TARGET__ === 'mobile' || !canDrop}
+        disabled={__TARGET__ === 'mobile' || !canDrop || !hasWriteAccess}
         displayedFolder={displayedFolder}
       >
         {__TARGET__ === 'mobile' && (
