@@ -74,4 +74,4 @@ const MoreMenu = ({
   )
 }
 
-export default translate()(withBreakpoints()(MoreMenu))
+export default withBreakpoints()(translate()(MoreMenu))
