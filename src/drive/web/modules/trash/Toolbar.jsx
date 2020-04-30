@@ -53,11 +53,7 @@ const Toolbar = ({
             <span className="u-pomegranate">{t('toolbar.empty_trash')}</span>
           </ActionMenuItem>
           <hr />
-          <SelectableItem>
-            <ActionMenuItem left={<Icon icon="check-square" />}>
-              {t('toolbar.menu_select')}
-            </ActionMenuItem>
-          </SelectableItem>
+          <SelectableItem />
         </ActionMenu>
       )}
     </div>
