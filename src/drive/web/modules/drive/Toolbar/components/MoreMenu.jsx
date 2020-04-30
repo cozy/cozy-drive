@@ -2,9 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 import { MoreButton } from 'components/Button'
 import { isMobileApp } from 'cozy-device-helper'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
-import Icon from 'cozy-ui/transpiled/react/Icon'
+import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
@@ -20,7 +18,6 @@ import ShareItem from '../share/ShareItem'
 import ScanWrapper from './ScanWrapper'
 
 const MoreMenu = ({
-  t,
   isDisabled,
   canCreateFolder,
   canUpload,
@@ -62,11 +59,7 @@ const MoreMenu = ({
           <NotRootFolder>
             <DownloadButtonItem />
           </NotRootFolder>
-          <SelectableItem>
-            <ActionMenuItem left={<Icon icon="check-square" />}>
-              {t('toolbar.menu_select')}
-            </ActionMenuItem>
-          </SelectableItem>
+          <SelectableItem />
           <NotRootFolder>
             <hr />
             <DeleteItem />
@@ -77,4 +70,4 @@ const MoreMenu = ({
   )
 }
 
-export default translate()(withBreakpoints()(MoreMenu))
+export default withBreakpoints()(MoreMenu)
