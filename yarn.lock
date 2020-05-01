@@ -5244,18 +5244,10 @@ cozy-realtime@3.2.1:
   dependencies:
     minilog "3.1.0"
 
-cozy-realtime@3.8.0:
+cozy-realtime@3.8.0, cozy-realtime@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.8.0.tgz#b161b105433d957f7cb68332ee3fe58e082d7cb4"
   integrity sha512-VCgffHdMcqO8LRHnUZijR0UXE5FwdLGh9BOP0WKN6lP5eOEaRFL+OPfJuHJasgN5r1YfXautbze1wRQZByAcEg==
-  dependencies:
-    cozy-device-helper "^1.9.2"
-    minilog "https://github.com/cozy/minilog.git#master"
-
-cozy-realtime@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.7.0.tgz#a66b9335a95189c60cfb97dc63c18aa0461969a3"
-  integrity sha512-yvNdrTQGeqSh2Phrw9XFcL80VHBRw99OdvkisjOAnrc+41EAryMbyE5yfwsmJ70cTDuwiF4hZiEg5ARygIh5Ug==
   dependencies:
     cozy-device-helper "^1.9.2"
     minilog "https://github.com/cozy/minilog.git#master"
@@ -5319,19 +5311,19 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-sharing@1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.9.1.tgz#e7dbc0ec31472a27df307665725637a966b511a5"
-  integrity sha512-Skm0keriK+1AH6YCceFJsNHABRjjvqLtiLeo3AET2u6ueRROjdUEu4k3QegP0YDN9s26NqW3HcuboB89pNdZlQ==
+cozy-sharing@1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.11.0.tgz#de30fffa73c17f7e0c4d8c98824e77dd75622ac0"
+  integrity sha512-T92ST1OsGB/hC7ZS/fxWX14SIqqX16IMQptf6Oi63dQYDu+J2vMLj2W6/6KFgB9TDUqu98wP7pYWYM54DKnKOQ==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
     cozy-device-helper "^1.9.2"
     cozy-doctypes "^1.72.2"
-    cozy-realtime "^3.7.0"
+    cozy-realtime "^3.8.0"
     lodash "^4.17.15"
-    minilog "https://github.com/cozy/minilog.git#master"
+    minilog "git+https://github.com/cozy/minilog.git#master"
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
