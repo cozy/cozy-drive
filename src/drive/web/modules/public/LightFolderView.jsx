@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import get from 'lodash/get'
 
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -31,7 +32,8 @@ class DumbFolderView extends React.Component {
   state = {
     revoked: false,
     viewerOpened: false,
-    currentViewedIndex: null
+    currentViewedIndex: null,
+    hasWriteAccess: false
   }
   handleFileOpen = async file => {
     const isNote = models.file.isNote(file)
@@ -73,6 +75,7 @@ class DumbFolderView extends React.Component {
     }))
 
   componentWillMount() {
+    this.loadPermissions()
     this.props
       .fetchFolder(getFolderIdFromRoute(this.props.location, this.props.params))
       .then(e => {
@@ -80,6 +83,15 @@ class DumbFolderView extends React.Component {
           this.setState(state => ({ ...state, revoked: true }))
         }
       })
+  }
+
+  loadPermissions = async () => {
+    const { client } = this.props
+    const response = await client
+      .collection('io.cozy.permissions')
+      .getOwnPermissions()
+    const permission = get(response, 'data.attributes.permissions.files', {})
+    this.setState({ hasWriteAccess: !models.permission.isReadOnly(permission) })
   }
 
   navigateToFolder = async folderId => {
@@ -91,14 +103,18 @@ class DumbFolderView extends React.Component {
     if (this.state.revoked) {
       return <ErrorShare errorType={`public_unshared`} />
     }
-    const { viewerOpened, currentViewedIndex } = this.state
+    const { viewerOpened, currentViewedIndex, hasWriteAccess } = this.state
     const { children, ...fileListProps } = this.props
 
     return (
       <Main isPublic>
         <Topbar>
           <Breadcrumb isPublic onFolderOpen={this.props.fetchFolder} />
-          <PublicToolbar files={[this.props.displayedFolder]} isFile={false} />
+          <PublicToolbar
+            files={[this.props.displayedFolder]}
+            isFile={false}
+            hasWriteAccess={hasWriteAccess}
+          />
         </Topbar>
         <Content>
           <FileList
