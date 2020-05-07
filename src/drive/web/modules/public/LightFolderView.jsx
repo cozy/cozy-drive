@@ -8,12 +8,12 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { models, withClient } from 'cozy-client'
 import { ModalManager } from 'react-cozy-helpers'
 
-import FileList from 'drive/web/modules/filelist/FileList'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb'
 import ErrorShare from 'components/Error/ErrorShare'
 import PublicToolbar from './PublicToolbar'
+import LightFileList from './LightFileList'
 
 import {
   openFolder,
@@ -75,7 +75,11 @@ class DumbFolderView extends React.Component {
     }))
 
   componentWillMount() {
+    this.loadCurrentFolder()
     this.loadPermissions()
+  }
+
+  loadCurrentFolder = () => {
     this.props
       .fetchFolder(getFolderIdFromRoute(this.props.location, this.props.params))
       .then(e => {
@@ -117,12 +121,13 @@ class DumbFolderView extends React.Component {
           />
         </Topbar>
         <Content>
-          <FileList
+          <LightFileList
             onFileOpen={this.handleFileOpen}
             onFolderOpen={this.navigateToFolder}
-            withSelectionCheckbox={false}
-            {...this.props}
+            onFileDelete={this.loadCurrentFolder}
+            fileListProps={fileListProps}
           />
+
           {viewerOpened && (
             <Overlay>
               <Viewer
