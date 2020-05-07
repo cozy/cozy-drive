@@ -92,6 +92,7 @@ class DumbFolderView extends React.Component {
       return <ErrorShare errorType={`public_unshared`} />
     }
     const { viewerOpened, currentViewedIndex } = this.state
+    const { children, ...fileListProps } = this.props
 
     return (
       <Main isPublic>
@@ -116,6 +117,7 @@ class DumbFolderView extends React.Component {
               />
             </Overlay>
           )}
+          {children}
         </Content>
         <ModalManager />
       </Main>
