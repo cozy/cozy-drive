@@ -1,17 +1,12 @@
 /* global cozy */
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import { connect } from 'react-redux'
-import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import logger from 'lib/logger'
 import { withClient, useClient } from 'cozy-client'
-import {
-  withBreakpoints,
-  Menu,
-  MenuItem,
-  Icon,
-  useI18n
-} from 'cozy-ui/transpiled/react'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 
 import { MoreButton } from 'components/Button'
@@ -24,6 +19,13 @@ import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import OpenInCozyButton from './OpenInCozyButton'
 
 import DownloadIcon from 'drive/assets/icons/icon-download-16.svg'
+
+import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
+import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
+import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
+import CreateNoteItem from 'drive/web/modules/drive/Toolbar/components/CreateNoteItem'
+import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 
 const { BarRight } = cozy.bar
 
@@ -48,33 +50,72 @@ DownloadFilesButton.propTypes = {
   size: PropTypes.oneOf(['tiny', 'small', 'large'])
 }
 
-const MoreMenu = ({ t, onDownload, onOpenInCozy, onCreateCozy, isFile }) => (
-  <Menu
-    title={t('toolbar.item_more')}
-    className={classnames(
-      toolbarstyles['fil-toolbar-menu'],
-      toolbarstyles['fil-toolbar-menu--public']
-    )}
-    buttonClassName={toolbarstyles['fil-toolbar-more-btn']}
-    component={<MoreButton />}
-    position="right"
-  >
-    {onOpenInCozy && (
-      <MenuItem onSelect={onOpenInCozy} icon={<Icon icon={'to-the-cloud'} />}>
-        {t('toolbar.menu_open_cozy')}
-      </MenuItem>
-    )}
-    {onCreateCozy && (
-      <MenuItem onSelect={onCreateCozy} icon={<Icon icon={'cloud'} />}>
-        {t('Share.create-cozy')}
-      </MenuItem>
-    )}
-    <MenuItem onSelect={onDownload} icon={<Icon icon={DownloadIcon} />}>
-      {isFile
-        ? t('toolbar.menu_download_file')
-        : t('toolbar.menu_download_folder')}
-    </MenuItem>
-  </Menu>
+const MoreMenu = withBreakpoints()(
+  ({
+    t,
+    onDownload,
+    onOpenInCozy,
+    onCreateCozy,
+    isFile,
+    hasWriteAccess,
+    reloadView,
+    breakpoints: { isMobile }
+  }) => {
+    const anchorRef = React.createRef()
+    const [menuIsVisible, setMenuVisible] = useState(false)
+
+    const openMenu = useCallback(() => setMenuVisible(true))
+    const closeMenu = useCallback(() => setMenuVisible(false))
+
+    return (
+      <div>
+        <div ref={anchorRef}>
+          <MoreButton onClick={openMenu} />
+        </div>
+
+        {menuIsVisible && (
+          <ActionMenu
+            placement="bottom-end"
+            anchorElRef={anchorRef}
+            onClose={closeMenu}
+            autoclose
+          >
+            {onOpenInCozy &&
+              isMobile && (
+                <ActionMenuItem
+                  onSelect={onOpenInCozy}
+                  left={<Icon icon={'to-the-cloud'} />}
+                >
+                  {t('toolbar.menu_open_cozy')}
+                </ActionMenuItem>
+              )}
+            {onCreateCozy &&
+              isMobile && (
+                <ActionMenuItem
+                  onSelect={onCreateCozy}
+                  left={<Icon icon={'cloud'} />}
+                >
+                  {t('Share.create-cozy')}
+                </ActionMenuItem>
+              )}
+            <ActionMenuItem
+              onSelect={onDownload}
+              left={<Icon icon={DownloadIcon} />}
+            >
+              {isFile
+                ? t('toolbar.menu_download_file')
+                : t('toolbar.menu_download_folder')}
+            </ActionMenuItem>
+            {hasWriteAccess && <AddFolderItem />}
+            {hasWriteAccess && <CreateNoteItem />}
+            {hasWriteAccess && <CreateShortcut afterCreation={reloadView} />}
+            {hasWriteAccess && <UploadItem afterUpload={reloadView} />}
+            <SelectableItem />
+          </ActionMenu>
+        )}
+      </div>
+    )
+  }
 )
 MoreMenu.propTypes = {
   t: PropTypes.func.isRequired,
@@ -87,11 +128,15 @@ MoreMenu.propTypes = {
 const toolbarProptypes = {
   onDownload: PropTypes.func.isRequired,
   discoveryLink: PropTypes.string,
-  isFile: PropTypes.bool.isRequired
+  isFile: PropTypes.bool.isRequired,
+  hasWriteAccess: PropTypes.bool
 }
 const openExternalLink = url => (window.location = url)
 
-const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { store }) => {
+const MobileToolbar = (
+  { onDownload, discoveryLink, isFile, hasWriteAccess, reloadView },
+  { store }
+) => {
   const client = useClient()
   const { t } = useI18n()
   return (
@@ -99,7 +144,9 @@ const MobileToolbar = ({ onDownload, discoveryLink, isFile }, { store }) => {
       <BarContextProvider client={client} t={t} store={store}>
         <MoreMenu
           isFile={isFile}
+          hasWriteAccess={hasWriteAccess}
           t={t}
+          reloadView={reloadView}
           onDownload={onDownload}
           onOpenInCozy={
             discoveryLink ? () => openExternalLink(discoveryLink) : false
@@ -154,7 +201,10 @@ CozybarToolbar.contextTypes = {
 
 CozybarToolbar.propTypes = toolbarProptypes
 
-const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
+const DesktopToolbar = (
+  { onDownload, discoveryLink, isFile, hasWriteAccess, reloadView },
+  { t }
+) => (
   <div
     data-test-id="toolbar-files-public"
     className={toolbarstyles['fil-toolbar-files']}
@@ -165,7 +215,21 @@ const DesktopToolbar = ({ onDownload, discoveryLink, isFile }, { t }) => (
     ) : (
       <CozyHomeLink from="sharing-drive" t={t} />
     )}
-    <DownloadFilesButton t={t} onDownload={onDownload} isFile={isFile} />
+    <MoreMenu
+      isFile={isFile}
+      hasWriteAccess={hasWriteAccess}
+      reloadView={reloadView}
+      t={t}
+      onDownload={onDownload}
+      onOpenInCozy={
+        discoveryLink ? () => openExternalLink(discoveryLink) : false
+      }
+      onCreateCozy={
+        discoveryLink
+          ? false
+          : () => openExternalLink(getHomeLinkHref('sharing-drive'))
+      }
+    />
     <BarRight>
       <div />
     </BarRight>
@@ -214,7 +278,9 @@ class PublicToolbar extends React.Component {
     const {
       breakpoints: { isMobile },
       renderInBar = false,
-      isFile
+      isFile,
+      hasWriteAccess,
+      reloadView
     } = this.props
     const { discoveryLink } = this.state
 
@@ -224,6 +290,8 @@ class PublicToolbar extends React.Component {
           onDownload={this.downloadFiles}
           discoveryLink={discoveryLink}
           isFile={isFile}
+          hasWriteAccess={hasWriteAccess}
+          reloadView={reloadView}
         />
       )
     } else if (renderInBar) {
@@ -240,6 +308,8 @@ class PublicToolbar extends React.Component {
           onDownload={this.downloadFiles}
           discoveryLink={discoveryLink}
           isFile={isFile}
+          hasWriteAccess={hasWriteAccess}
+          reloadView={reloadView}
         />
       )
     }
@@ -249,7 +319,9 @@ PublicToolbar.propTypes = {
   isFile: PropTypes.bool.isRequired,
   renderInBar: PropTypes.bool,
   breakpoints: PropTypes.object.isRequired,
-  files: PropTypes.array.isRequired
+  files: PropTypes.array.isRequired,
+  hasWriteAccess: PropTypes.bool,
+  reloadView: PropTypes.func.isRequired
 }
 const mapDispatchToProps = dispatch => ({
   onDownload: files => dispatch(downloadFiles(files))

@@ -118,6 +118,7 @@ class DumbFolderView extends React.Component {
             files={[this.props.displayedFolder]}
             isFile={false}
             hasWriteAccess={hasWriteAccess}
+            reloadView={this.loadCurrentFolder}
           />
         </Topbar>
         <Content>
