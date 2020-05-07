@@ -9,6 +9,7 @@ import CozyClient, { models } from 'cozy-client'
 
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import SharingProvider from 'cozy-sharing'
 
 import { getQueryParameter } from 'react-cozy-helpers'
 import { schema } from 'drive/lib/doctypes'
@@ -16,6 +17,7 @@ import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
 import LightFolderView from 'drive/web/modules/public/LightFolderView'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
+import FileHistory from 'components/FileHistory'
 import ErrorShare from 'components/Error/ErrorShare'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
@@ -104,13 +106,20 @@ const init = async () => {
               <LightFileViewer files={[data]} isFile={true} />
             </PublicLayout>
           ) : (
-            <Router history={hashHistory}>
-              <Route component={PublicLayout}>
-                <Route path="files(/:folderId)" component={LightFolderView} />
-              </Route>
-              <Route path="external/:fileId" component={ExternalRedirect} />
-              <Redirect from="/*" to={`files/${sharedDocumentId}`} />
-            </Router>
+            <SharingProvider>
+              <Router history={hashHistory}>
+                <Route component={PublicLayout}>
+                  <Route path="files(/:folderId)" component={LightFolderView}>
+                    <Route
+                      path="file/:fileId/revision"
+                      component={FileHistory}
+                    />
+                  </Route>
+                </Route>
+                <Route path="external/:fileId" component={ExternalRedirect} />
+                <Redirect from="/*" to={`files/${sharedDocumentId}`} />
+              </Router>
+            </SharingProvider>
           )}
         </App>,
         root
