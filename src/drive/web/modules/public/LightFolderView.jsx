@@ -5,6 +5,7 @@ import { withRouter } from 'react-router'
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { models, withClient } from 'cozy-client'
+import { ModalManager } from 'react-cozy-helpers'
 
 import FileList from 'drive/web/modules/filelist/FileList'
 import Main from 'drive/web/modules/layout/Main'
@@ -116,6 +117,7 @@ class DumbFolderView extends React.Component {
             </Overlay>
           )}
         </Content>
+        <ModalManager />
       </Main>
     )
   }
