@@ -60,7 +60,8 @@ class ScanWrapper extends Component {
   render() {
     const { displayedFolder, stopMediaBackup, startMediaBackup } = this.props
     return (
-      <>
+      // The ActionMenu needs to stay open during the scan, so we prevent the click event from bubbling
+      <div onClick={e => e.stopPropagation()}>
         <Scanner
           dirId={displayedFolder.id} //Pour savoir où uploader
           pluginConfig={{
@@ -119,7 +120,7 @@ class ScanWrapper extends Component {
             )
           }}
         </Scanner>
-      </>
+      </div>
     )
   }
 }

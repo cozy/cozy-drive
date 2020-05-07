@@ -40,6 +40,7 @@ const MoreMenu = ({
           placement="bottom-end"
           anchorElRef={anchorRef}
           onClose={closeMenu}
+          autoclose
         >
           {canCreateFolder && hasWriteAccess && <AddFolderItem />}
           {hasWriteAccess && <CreateNoteItem />}

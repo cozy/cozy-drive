@@ -42,6 +42,7 @@ const Toolbar = ({
           placement="bottom-end"
           anchorElRef={anchorRef}
           onClose={closeMenu}
+          autoclose
         >
           <ActionMenuItem
             onClick={() => emptyTrash()}
