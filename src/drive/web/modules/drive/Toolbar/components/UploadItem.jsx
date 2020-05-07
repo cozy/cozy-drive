@@ -18,8 +18,13 @@ const UploadItem = ({ t, isDisabled, onUpload }) => (
     onChange={onUpload}
     data-test-id="upload-btn"
     value={[]}
+    // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
+    onClick={e => e.stopPropagation()}
   >
-    <ActionMenuItem left={<Icon icon="upload" />}>
+    <ActionMenuItem
+      left={<Icon icon="upload" />}
+      onClick={e => e.stopPropagation()}
+    >
       {t('toolbar.menu_upload')}
     </ActionMenuItem>
   </FileInput>

@@ -60,66 +60,69 @@ const ScanMenuItem = translate()(({ status, onClick, t, online }) => {
 class ScanWrapper extends Component {
   render() {
     const { displayedFolder, stopMediaBackup, startMediaBackup } = this.props
+    // The ActionMenu needs to stay open during the scan, so we prevent the click event from bubbling
     return (
       <MuiCozyTheme>
-        <Scanner
-          dirId={displayedFolder.id} //Pour savoir où uploader
-          pluginConfig={{
-            sourceType: 1 // Camera
-          }}
-          generateName={() => {
-            const date = new Date()
-            //We had to replace : by - since the Cordova File plugin doesn't support : in the filename
-            //https://github.com/apache/cordova-plugin-file/issues/289#issuecomment-477954331
-            return `Scan_${date.toISOString().replace(/:/g, '-')}.jpg`
-          }}
-          onConflict={'rename'}
-          //We need to cancel the MediaBackup before doing the upload since the scanned file will be
-          //inserted we don't know where in the queue resulting in a non uploaded file if the queue is
-          //big enough
-          onBeforeUpload={() => stopMediaBackup()}
-          onFinish={() => {
-            const tracker = getTracker()
-            if (tracker) {
-              tracker.push(['trackEvent', 'Drive', 'Scanner', 'Finished'])
-            }
-            startMediaBackup()
-          }}
-        >
-          {({ status, error, startScanner, filename, onClear, online }) => {
-            if (error || !filename) {
+        <div onClick={e => e.stopPropagation()}>
+          <Scanner
+            dirId={displayedFolder.id} //Pour savoir où uploader
+            pluginConfig={{
+              sourceType: 1 // Camera
+            }}
+            generateName={() => {
+              const date = new Date()
+              //We had to replace : by - since the Cordova File plugin doesn't support : in the filename
+              //https://github.com/apache/cordova-plugin-file/issues/289#issuecomment-477954331
+              return `Scan_${date.toISOString().replace(/:/g, '-')}.jpg`
+            }}
+            onConflict={'rename'}
+            //We need to cancel the MediaBackup before doing the upload since the scanned file will be
+            //inserted we don't know where in the queue resulting in a non uploaded file if the queue is
+            //big enough
+            onBeforeUpload={() => stopMediaBackup()}
+            onFinish={() => {
+              const tracker = getTracker()
+              if (tracker) {
+                tracker.push(['trackEvent', 'Drive', 'Scanner', 'Finished'])
+              }
+              startMediaBackup()
+            }}
+          >
+            {({ status, error, startScanner, filename, onClear, online }) => {
+              if (error || !filename) {
+                return (
+                  <ScanMenuItem
+                    status={status}
+                    onClick={startScanner}
+                    online={online}
+                  />
+                )
+              }
               return (
-                <ScanMenuItem
-                  status={status}
-                  onClick={startScanner}
-                  online={online}
-                />
+                <>
+                  <ScanMenuItem
+                    status={status}
+                    onClick={startScanner}
+                    online={online}
+                  />
+                  <PortaledQueue
+                    file={{
+                      file: {
+                        name: filename,
+                        isDirectory: false,
+                        status
+                      }
+                    }}
+                    successCount={status === SCANNER_DONE ? 1 : 0}
+                    doneCount={1}
+                    key={filename}
+                    onClear={onClear}
+                  />
+                </>
               )
-            }
-            return (
-              <>
-                <ScanMenuItem
-                  status={status}
-                  onClick={startScanner}
-                  online={online}
-                />
-                <PortaledQueue
-                  file={{
-                    file: {
-                      name: filename,
-                      isDirectory: false,
-                      status
-                    }
-                  }}
-                  successCount={status === SCANNER_DONE ? 1 : 0}
-                  doneCount={1}
-                  key={filename}
-                  onClear={onClear}
-                />
-              </>
-            )
-          }}
-        </Scanner>
+            }}
+          </Scanner>
+        </div>
       </MuiCozyTheme>
     )
   }
