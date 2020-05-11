@@ -8,22 +8,37 @@ import {
   useAppLinkWithStoreFallback,
   useCapabilities
 } from 'cozy-client'
-import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
+import {
+  generateUniversalLink,
+  generateWebLink
+} from 'cozy-ui/transpiled/react/AppLinker/native'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 
 const CreateNoteItem = ({ client, t, displayedFolder }) => {
-  const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
-    'notes',
-    client
-  )
   const capabilities = useCapabilities(client)
   const isFlatDomain = get(
     capabilities,
     'capabilities.data.attributes.flat_subdomains'
   )
+
+  let notesAppUrl = ''
+  const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
+    'notes',
+    client
+  )
+  if (fetchStatus === 'loaded') {
+    notesAppUrl = url
+  } else if (fetchStatus === 'errored') {
+    notesAppUrl = returnUrl = generateWebLink({
+      slug: 'notes',
+      cozyUrl: client.getStackClient().uri,
+      subDomainType: isFlatDomain ? 'flat' : 'nested'
+    })
+  }
+
   let returnUrl = ''
   if (displayedFolder) {
     returnUrl = generateUniversalLink({
@@ -46,12 +61,12 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
           })
 
           window.location.href = await models.note.generatePrivateUrl(
-            url,
+            notesAppUrl,
             file,
             { returnUrl }
           )
         } else {
-          window.location.href = url
+          window.location.href = notesAppUrl
         }
       }}
     >
