@@ -47,13 +47,19 @@ const Toolbar = ({
           onClose={closeMenu}
           autoclose
         >
-          <ActionMenuItem
-            onClick={() => emptyTrash()}
-            left={<Icon icon="trash" color="var(--pomegranate)" />}
-          >
-            <span className="u-pomegranate">{t('toolbar.empty_trash')}</span>
-          </ActionMenuItem>
-          <hr />
+          {isMobile && (
+            <>
+              <ActionMenuItem
+                onClick={() => emptyTrash()}
+                left={<Icon icon="trash" color="var(--pomegranate)" />}
+              >
+                <span className="u-pomegranate">
+                  {t('toolbar.empty_trash')}
+                </span>
+              </ActionMenuItem>
+              <hr />
+            </>
+          )}
           <SelectableItem />
         </ActionMenu>
       )}
