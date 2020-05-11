@@ -1601,14 +1601,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("W8MJ");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("PJYZ");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("7W2i");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("a1gu");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("Nsbk");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("a1gu");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("Nsbk");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("PJYZ");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("7W2i");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("lSNA");
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("q1tI");
@@ -1633,10 +1633,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { return function () { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6___default()(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5___default()(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
 /* global cozy */
 
 
@@ -1647,12 +1643,14 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-var RealtimeFiles = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(RealtimeFiles, _React$Component);
-
-  var _super = _createSuper(RealtimeFiles);
+var RealtimeFiles =
+/*#__PURE__*/
+function (_React$Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_6___default()(RealtimeFiles, _React$Component);
 
   function RealtimeFiles() {
+    var _getPrototypeOf2;
+
     var _this;
 
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, RealtimeFiles);
@@ -1661,13 +1659,13 @@ var RealtimeFiles = /*#__PURE__*/function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, (_getPrototypeOf2 = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(RealtimeFiles)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this), "realtimeListener", null);
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this), "realtimeListener", null);
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this), "pouchListener", null);
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this), "pouchListener", null);
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this), "onDocumentChange", function (rawDoc) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this), "onDocumentChange", function (rawDoc) {
       var doc = _this.normalizeId(rawDoc);
 
       var previousDoc = _this.props.files.find(function (f) {
@@ -1685,11 +1683,11 @@ var RealtimeFiles = /*#__PURE__*/function (_React$Component) {
       }
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this), "onDocumentDeletion", function (doc) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this), "onDocumentDeletion", function (doc) {
       _this.props.deleteFile(_this.normalizeId(doc));
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this), "normalizeId", function (doc) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this), "normalizeId", function (doc) {
       return _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, doc, {
         id: doc._id
       });
@@ -1703,9 +1701,7 @@ var RealtimeFiles = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var _this$props = this.props,
-          client = _this$props.client,
-          openedFolderId = _this$props.openedFolderId;
+      var client = this.props.client;
       this.realtime = new cozy_realtime__WEBPACK_IMPORTED_MODULE_12___default.a({
         client: client
       });
@@ -1730,10 +1726,10 @@ var RealtimeFiles = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "isInCurrentView",
     value: function isInCurrentView(doc) {
-      var _this$props2 = this.props,
-          location = _this$props2.location,
-          files = _this$props2.files,
-          openedFolderId = _this$props2.openedFolderId;
+      var _this$props = this.props,
+          location = _this$props.location,
+          files = _this$props.files,
+          openedFolderId = _this$props.openedFolderId;
 
       if (location.pathname.match(/^\/recent/)) {
         var earliest = files[files.length - 1];
@@ -7082,14 +7078,25 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
   var client = _ref.client,
       t = _ref.t,
       displayedFolder = _ref.displayedFolder;
+  var capabilities = Object(cozy_client__WEBPACK_IMPORTED_MODULE_5__["useCapabilities"])(client);
+  var isFlatDomain = lodash_get__WEBPACK_IMPORTED_MODULE_3___default()(capabilities, 'capabilities.data.attributes.flat_subdomains');
+  var notesAppUrl = '';
 
   var _useAppLinkWithStoreF = Object(cozy_client__WEBPACK_IMPORTED_MODULE_5__["useAppLinkWithStoreFallback"])('notes', client),
       fetchStatus = _useAppLinkWithStoreF.fetchStatus,
       url = _useAppLinkWithStoreF.url,
       isInstalled = _useAppLinkWithStoreF.isInstalled;
 
-  var capabilities = Object(cozy_client__WEBPACK_IMPORTED_MODULE_5__["useCapabilities"])(client);
-  var isFlatDomain = lodash_get__WEBPACK_IMPORTED_MODULE_3___default()(capabilities, 'capabilities.data.attributes.flat_subdomains');
+  if (fetchStatus === 'loaded') {
+    notesAppUrl = url;
+  } else if (fetchStatus === 'errored') {
+    notesAppUrl = returnUrl = Object(cozy_ui_transpiled_react_AppLinker_native__WEBPACK_IMPORTED_MODULE_6__["generateWebLink"])({
+      slug: 'notes',
+      cozyUrl: client.getStackClient().uri,
+      subDomainType: isFlatDomain ? 'flat' : 'nested'
+    });
+  }
+
   var returnUrl = '';
 
   if (displayedFolder) {
@@ -7101,13 +7108,13 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
     });
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_ActionMenu__WEBPACK_IMPORTED_MODULE_7__["ActionMenuItem"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_ActionMenu__WEBPACK_IMPORTED_MODULE_7__["ActionMenuItem"], {
     "data-test-id": "create-a-note",
-    left: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_Icon__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    left: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_Icon__WEBPACK_IMPORTED_MODULE_8__["default"], {
       icon: "note"
     }),
     onClick: /*#__PURE__*/_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var _ref3, file;
+      var _yield$client$create, file;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -7132,10 +7139,10 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
               });
 
             case 5:
-              _ref3 = _context.sent;
-              file = _ref3.data;
+              _yield$client$create = _context.sent;
+              file = _yield$client$create.data;
               _context.next = 9;
-              return cozy_client__WEBPACK_IMPORTED_MODULE_5__["models"].note.generatePrivateUrl(url, file, {
+              return cozy_client__WEBPACK_IMPORTED_MODULE_5__["models"].note.generatePrivateUrl(notesAppUrl, file, {
                 returnUrl: returnUrl
               });
 
@@ -7145,7 +7152,7 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
               break;
 
             case 12:
-              window.location.href = url;
+              window.location.href = notesAppUrl;
 
             case 13:
             case "end":

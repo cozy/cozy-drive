@@ -6746,14 +6746,25 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
   var client = _ref.client,
       t = _ref.t,
       displayedFolder = _ref.displayedFolder;
+  var capabilities = Object(cozy_client__WEBPACK_IMPORTED_MODULE_5__["useCapabilities"])(client);
+  var isFlatDomain = lodash_get__WEBPACK_IMPORTED_MODULE_3___default()(capabilities, 'capabilities.data.attributes.flat_subdomains');
+  var notesAppUrl = '';
 
   var _useAppLinkWithStoreF = Object(cozy_client__WEBPACK_IMPORTED_MODULE_5__["useAppLinkWithStoreFallback"])('notes', client),
       fetchStatus = _useAppLinkWithStoreF.fetchStatus,
       url = _useAppLinkWithStoreF.url,
       isInstalled = _useAppLinkWithStoreF.isInstalled;
 
-  var capabilities = Object(cozy_client__WEBPACK_IMPORTED_MODULE_5__["useCapabilities"])(client);
-  var isFlatDomain = lodash_get__WEBPACK_IMPORTED_MODULE_3___default()(capabilities, 'capabilities.data.attributes.flat_subdomains');
+  if (fetchStatus === 'loaded') {
+    notesAppUrl = url;
+  } else if (fetchStatus === 'errored') {
+    notesAppUrl = returnUrl = Object(cozy_ui_transpiled_react_AppLinker_native__WEBPACK_IMPORTED_MODULE_6__["generateWebLink"])({
+      slug: 'notes',
+      cozyUrl: client.getStackClient().uri,
+      subDomainType: isFlatDomain ? 'flat' : 'nested'
+    });
+  }
+
   var returnUrl = '';
 
   if (displayedFolder) {
@@ -6765,13 +6776,13 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
     });
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_ActionMenu__WEBPACK_IMPORTED_MODULE_7__["ActionMenuItem"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_ActionMenu__WEBPACK_IMPORTED_MODULE_7__["ActionMenuItem"], {
     "data-test-id": "create-a-note",
-    left: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_Icon__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    left: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(cozy_ui_transpiled_react_Icon__WEBPACK_IMPORTED_MODULE_8__["default"], {
       icon: "note"
     }),
     onClick: /*#__PURE__*/_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var _ref3, file;
+      var _yield$client$create, file;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -6796,10 +6807,10 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
               });
 
             case 5:
-              _ref3 = _context.sent;
-              file = _ref3.data;
+              _yield$client$create = _context.sent;
+              file = _yield$client$create.data;
               _context.next = 9;
-              return cozy_client__WEBPACK_IMPORTED_MODULE_5__["models"].note.generatePrivateUrl(url, file, {
+              return cozy_client__WEBPACK_IMPORTED_MODULE_5__["models"].note.generatePrivateUrl(notesAppUrl, file, {
                 returnUrl: returnUrl
               });
 
@@ -6809,7 +6820,7 @@ var CreateNoteItem = function CreateNoteItem(_ref) {
               break;
 
             case 12:
-              window.location.href = url;
+              window.location.href = notesAppUrl;
 
             case 13:
             case "end":
