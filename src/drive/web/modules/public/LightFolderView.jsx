@@ -127,6 +127,7 @@ class DumbFolderView extends React.Component {
             onFolderOpen={this.navigateToFolder}
             onFileDelete={this.loadCurrentFolder}
             fileListProps={fileListProps}
+            hasWriteAccess={hasWriteAccess}
           />
 
           {viewerOpened && (

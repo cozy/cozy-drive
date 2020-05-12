@@ -22,7 +22,7 @@ export const mapStateToProps = state => ({
 })
 
 export const mapDispatchToProps = (dispatch, ownProps) => {
-  const { onFileDelete } = ownProps
+  const { onFileDelete, hasWriteAccess } = ownProps
   return {
     actions: Object.assign({}, ownProps.actions, {
       download: {
@@ -41,11 +41,13 @@ export const mapDispatchToProps = (dispatch, ownProps) => {
                 }}
               />
             )
-          )
+          ),
+        displayCondition: () => hasWriteAccess
       },
       rename: {
         action: selected => dispatch(startRenamingAsync(selected[0])),
-        displayCondition: selections => selections.length === 1
+        displayCondition: selections =>
+          selections.length === 1 && hasWriteAccess
       },
       history: {
         action: selected => {
@@ -54,7 +56,7 @@ export const mapDispatchToProps = (dispatch, ownProps) => {
           )
         },
         displayCondition: selections =>
-          selections.length === 1 && isFile(selections[0])
+          selections.length === 1 && isFile(selections[0]) && hasWriteAccess
       }
     })
   }
