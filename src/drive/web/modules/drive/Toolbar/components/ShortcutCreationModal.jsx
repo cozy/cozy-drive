@@ -55,11 +55,11 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
     }
     try {
       await client.collection('io.cozy.files.shortcuts').create(data)
-      Alerter.success('Shortcut.created')
+      Alerter.success(t('Shortcut.created'))
       onCreated()
       onClose()
     } catch (e) {
-      Alerter.error('Shortcut.errored')
+      Alerter.error(t('Shortcut.errored'))
     }
   }
 
