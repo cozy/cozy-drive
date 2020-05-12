@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import FileList from 'drive/web/modules/filelist/FileList'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
@@ -23,7 +24,10 @@ const LightFileList = ({
   </>
 )
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LightFileList)
+export default withRouter(
+  //router is used in mapDispatchToProps
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(LightFileList)
+)
