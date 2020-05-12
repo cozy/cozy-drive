@@ -30,9 +30,12 @@ const UploadItem = ({ t, isDisabled, onUpload }) => (
   </FileInput>
 )
 
-const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
+const mapDispatchToProps = (
+  dispatch,
+  { displayedFolder, sharingState, onUploaded }
+) => ({
   onUpload: files => {
-    dispatch(uploadFiles(files, displayedFolder.id, sharingState))
+    dispatch(uploadFiles(files, displayedFolder.id, sharingState, onUploaded))
   }
 })
 
