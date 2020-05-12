@@ -104,12 +104,12 @@ const init = async () => {
       initCozyBar(dataset)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
-          {isFile ? (
-            <PublicLayout>
-              <LightFileViewer files={[data]} isFile={true} />
-            </PublicLayout>
-          ) : (
-            <SharingProvider>
+          <SharingProvider>
+            {isFile ? (
+              <PublicLayout>
+                <LightFileViewer files={[data]} isFile={true} />
+              </PublicLayout>
+            ) : (
               <Router history={hashHistory}>
                 <Route component={PublicLayout}>
                   <Route path="files(/:folderId)" component={LightFolderView}>
@@ -122,8 +122,8 @@ const init = async () => {
                 <Route path="external/:fileId" component={ExternalRedirect} />
                 <Redirect from="/*" to={`files/${sharedDocumentId}`} />
               </Router>
-            </SharingProvider>
-          )}
+            )}
+          </SharingProvider>
         </App>,
         root
       )
