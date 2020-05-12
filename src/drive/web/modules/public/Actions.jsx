@@ -2,11 +2,7 @@ import React from 'react'
 import { showModal } from 'react-cozy-helpers'
 import { downloadFiles, trashFiles } from 'drive/web/modules/navigation/duck'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
-import {
-  isRenaming,
-  getRenamingFile,
-  startRenamingAsync
-} from 'drive/web/modules/drive/rename'
+import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 import { isFile, isReferencedByAlbum } from 'drive/web/modules/drive/files'
 
 const isAnyFileReferencedByAlbum = files => {
@@ -15,11 +11,6 @@ const isAnyFileReferencedByAlbum = files => {
   }
   return false
 }
-
-export const mapStateToProps = state => ({
-  isRenaming: isRenaming(state),
-  renamingFile: getRenamingFile(state)
-})
 
 export const mapDispatchToProps = (dispatch, ownProps) => {
   const { onFileDelete, hasWriteAccess } = ownProps
