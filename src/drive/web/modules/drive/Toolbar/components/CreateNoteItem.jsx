@@ -17,22 +17,32 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 
-const CreateNoteItem = ({ client, t, displayedFolder }) => {
+const CreateNoteItem = ({
+  client,
+  t,
+  displayedFolder,
+  hasAppsPermissions = true
+}) => {
   const capabilities = useCapabilities(client)
   const isFlatDomain = get(
     capabilities,
     'capabilities.data.attributes.flat_subdomains'
   )
 
-  let notesAppUrl = ''
-  const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
-    'notes',
-    client
-  )
-  if (fetchStatus === 'loaded') {
-    notesAppUrl = url
-  } else if (fetchStatus === 'errored') {
-    notesAppUrl = returnUrl = generateWebLink({
+  let notesAppUrl = undefined
+  let notesAppIsInstalled = true
+
+  if (hasAppsPermissions) {
+    const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
+      'notes',
+      client
+    )
+    if (fetchStatus === 'loaded') {
+      notesAppUrl = url
+      notesAppIsInstalled = isInstalled
+    }
+  } else {
+    notesAppUrl = generateWebLink({
       slug: 'notes',
       cozyUrl: client.getStackClient().uri,
       subDomainType: isFlatDomain ? 'flat' : 'nested'
@@ -54,8 +64,8 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
       data-test-id="create-a-note"
       left={<Icon icon="note" />}
       onClick={async () => {
-        if (!fetchStatus) return
-        if (isInstalled) {
+        if (notesAppUrl === undefined) return
+        if (notesAppIsInstalled) {
           const { data: file } = await client.create('io.cozy.notes', {
             dir_id: displayedFolder.id
           })

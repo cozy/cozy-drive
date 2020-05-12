@@ -107,7 +107,7 @@ const MoreMenu = withBreakpoints()(
                 : t('toolbar.menu_download_folder')}
             </ActionMenuItem>
             {hasWriteAccess && <AddFolderItem />}
-            {hasWriteAccess && <CreateNoteItem />}
+            {hasWriteAccess && <CreateNoteItem hasAppsPermissions={false} />}
             {hasWriteAccess && (
               <CreateShortcut onCreated={refreshFolderContent} />
             )}
