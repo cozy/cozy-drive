@@ -9,8 +9,6 @@ import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from '../../../../../../../test/components/AppLike'
 const tMock = jest.fn()
-jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
-  getCssVariableValue: () => '#fff'
 }))
 
 function createMatchMedia(width) {
@@ -36,7 +34,7 @@ describe('ShortcutCreationModal', () => {
     tMock.mockImplementation(key => key)
   })
 
-  it('should show the new account form', async () => {
+  it('should show the new shortcut form', async () => {
     const { getByLabelText, getByText } = render(
       <AppLike client={client}>
         <MuiCozyTheme>
