@@ -32,15 +32,15 @@ exports[`Unlink should render the Component 1`] = `
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": "mobile.settings.unlink.title",
         },
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": "mobile.settings.unlink.description",
         },
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": "mobile.settings.unlink.button",
         },
       ],

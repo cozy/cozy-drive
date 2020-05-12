@@ -51,35 +51,35 @@ exports[`Public view should render children when they are present 1`] = `
                 ],
                 "results": Array [
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                 ],
@@ -200,19 +200,19 @@ exports[`Public view should render the album 1`] = `
                 ],
                 "results": Array [
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                 ],
