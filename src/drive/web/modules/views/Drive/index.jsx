@@ -13,7 +13,7 @@ import SelectionBar from './SelectionBarWithActions'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
-import Toolbar from 'drive/web/modules/drive/Toolbar.jsx'
+import Toolbar from 'drive/web/modules/drive/Toolbar'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 
 import { FileListv2 } from 'drive/web/modules/filelist/FileList'
