@@ -1,14 +1,19 @@
 /* eslint-env jest */
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import mediaQuery from 'css-mediaquery'
 
 import { createMockClient } from 'cozy-client'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from '../../../../../../../test/components/AppLike'
 const tMock = jest.fn()
+
+jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
+  error: jest.fn(),
+  success: jest.fn()
 }))
 
 function createMatchMedia(width) {
@@ -20,7 +25,7 @@ function createMatchMedia(width) {
 }
 const client = new createMockClient({})
 const onCloseSpy = jest.fn()
-const props = {
+const defaultProps = {
   displayedFolder: {
     id: 'id'
   },
@@ -30,11 +35,12 @@ const props = {
 
 describe('ShortcutCreationModal', () => {
   beforeEach(() => {
+    jest.resetAllMocks()
     window.matchMedia = createMatchMedia(window.innerWidth)
     tMock.mockImplementation(key => key)
   })
 
-  it('should show the new shortcut form', async () => {
+  const setup = props => {
     const { getByLabelText, getByText } = render(
       <AppLike client={client}>
         <MuiCozyTheme>
@@ -46,12 +52,25 @@ describe('ShortcutCreationModal', () => {
     const urlInput = getByLabelText('URL')
     const filenameInput = getByLabelText('Filename')
     const submitButton = getByText('Create')
+
+    return {
+      urlInput,
+      filenameInput,
+      submitButton
+    }
+  }
+
+  it('should show the new shortcut form', async () => {
+    const { urlInput, filenameInput, submitButton } = setup(defaultProps)
     fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
 
     fireEvent.click(submitButton)
     expect(client.stackClient.fetchJSON).not.toHaveBeenCalled()
-    fireEvent.change(filenameInput, { target: { value: 'filename' } })
+    expect(Alerter.error).toHaveBeenCalledTimes(1)
+    expect(Alerter.success).not.toHaveBeenCalled()
 
+    client.stackClient.fetchJSON.mockResolvedValue({ data: {} })
+    fireEvent.change(filenameInput, { target: { value: 'filename' } })
     fireEvent.click(submitButton)
 
     expect(client.stackClient.fetchJSON).toHaveBeenCalledWith(
@@ -69,6 +88,8 @@ describe('ShortcutCreationModal', () => {
         }
       }
     )
+    expect(Alerter.error).toHaveBeenCalledTimes(1)
+    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(1))
 
     fireEvent.change(filenameInput, { target: { value: 'filename.url' } })
     fireEvent.click(submitButton)
@@ -87,5 +108,22 @@ describe('ShortcutCreationModal', () => {
         }
       }
     )
+    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(2))
+  })
+
+  it('should call the optional onCreated prop', async () => {
+    const onCreatedMock = jest.fn()
+    const { urlInput, filenameInput, submitButton } = setup({
+      ...defaultProps,
+      onCreated: onCreatedMock
+    })
+
+    client.stackClient.fetchJSON.mockResolvedValue({ data: {} })
+    fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
+    fireEvent.change(filenameInput, { target: { value: 'filename' } })
+    fireEvent.click(submitButton)
+
+    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(1))
+    expect(onCreatedMock).toHaveBeenCalled()
   })
 })
