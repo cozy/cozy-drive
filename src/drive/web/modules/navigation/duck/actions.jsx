@@ -236,13 +236,18 @@ export const getFileDownloadUrl = async id => {
  * @param {Object} sharingState - The sharing context (provided by SharingContext.Provider)
  * @returns {function} - A function that dispatches addToUploadQueue action
  */
-export const uploadFiles = (files, dirId, sharingState) => dispatch => {
+export const uploadFiles = (
+  files,
+  dirId,
+  sharingState,
+  fileUploadedCallback = () => null
+) => dispatch => {
   dispatch(
     addToUploadQueue(
       files,
       dirId,
       sharingState, // used to know if files are shared for conflicts management
-      () => null,
+      fileUploadedCallback,
       (loaded, quotas, conflicts, networkErrors, errors, updated) =>
         dispatch(
           uploadQueueProcessed(
