@@ -14,6 +14,7 @@ import {
   getTracker
 } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
+import { registerClientPlugins } from 'drive/mobile/lib/cozy-helper'
 
 import appMetadata from 'drive/appMetadata'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
@@ -21,7 +22,6 @@ import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
 import { hot } from 'react-hot-loader'
 import { Document } from 'cozy-doctypes'
-import { RealtimePlugin } from 'cozy-realtime'
 
 import App from 'components/App/App'
 document.addEventListener('DOMContentLoaded', () => {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
-  client.registerPlugin(RealtimePlugin)
+  registerClientPlugins(client)
   const polyglot = initTranslation(data.cozyLocale, lang =>
     require(`drive/locales/${lang}`)
   )

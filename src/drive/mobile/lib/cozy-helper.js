@@ -1,6 +1,8 @@
 /* global cozy, document */
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient from 'cozy-client'
+import { RealtimePlugin } from 'cozy-realtime'
+
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { disableBackgroundService } from './background'
 import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
@@ -96,3 +98,7 @@ export const getToken = async () => {
 }
 
 export const getClientUrl = () => cozy.client._url
+
+export const registerClientPlugins = client => {
+  client.registerPlugin(RealtimePlugin)
+}

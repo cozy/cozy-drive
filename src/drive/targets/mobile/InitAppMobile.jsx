@@ -22,7 +22,11 @@ import {
   startHeartBeat,
   stopHeartBeat
 } from 'drive/mobile/lib/tracker'
-import { getLang, initClient } from 'drive/mobile/lib/cozy-helper'
+import {
+  getLang,
+  initClient,
+  registerClientPlugins
+} from 'drive/mobile/lib/cozy-helper'
 import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
 import { backupImages } from 'drive/mobile/modules/mediaBackup/duck'
 import {
@@ -231,6 +235,7 @@ class InitAppMobile {
 
     const store = await this.getStore()
     const client = await this.getClient()
+    registerClientPlugins(client)
     const polyglot = await this.getPolyglot()
     //needed to migrate from cozy-drive auth to cozy-authenticate.
     //@TODO should be remove one day. It has been added for the migration
