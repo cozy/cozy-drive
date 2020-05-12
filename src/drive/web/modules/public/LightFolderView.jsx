@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import get from 'lodash/get'
 
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -91,11 +90,11 @@ class DumbFolderView extends React.Component {
 
   loadPermissions = async () => {
     const { client } = this.props
-    const response = await client
-      .collection('io.cozy.permissions')
-      .getOwnPermissions()
-    const permission = get(response, 'data.attributes.permissions.files', {})
-    this.setState({ hasWriteAccess: !models.permission.isReadOnly(permission) })
+
+    const permissions = await models.permission.fetchOwn(client)
+    this.setState({
+      hasWriteAccess: !models.permission.isReadOnly(permissions[0])
+    })
   }
 
   navigateToFolder = async folderId => {
