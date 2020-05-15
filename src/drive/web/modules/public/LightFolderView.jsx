@@ -125,7 +125,7 @@ class DumbFolderView extends React.Component {
           <LightFileList
             onFileOpen={this.handleFileOpen}
             onFolderOpen={this.navigateToFolder}
-            onFileDelete={this.loadCurrentFolder}
+            onFileDelete={this.loadCurrentFolder} // TODO: remove this once we have realtime notifications on public view
             fileListProps={fileListProps}
             hasWriteAccess={hasWriteAccess}
           />
