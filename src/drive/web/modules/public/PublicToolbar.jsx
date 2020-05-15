@@ -129,7 +129,8 @@ const toolbarProptypes = {
   onDownload: PropTypes.func.isRequired,
   discoveryLink: PropTypes.string,
   isFile: PropTypes.bool.isRequired,
-  hasWriteAccess: PropTypes.bool
+  hasWriteAccess: PropTypes.bool,
+  reloadView: PropTypes.func.isRequired
 }
 const openExternalLink = url => (window.location = url)
 
