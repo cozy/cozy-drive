@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react'
 
 import { MoreButton } from 'components/Button'
 import { isMobileApp } from 'cozy-device-helper'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
 import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
@@ -74,4 +73,4 @@ const MoreMenu = ({
   )
 }
 
-export default withBreakpoints()(translate()(MoreMenu))
+export default withBreakpoints()(MoreMenu)
