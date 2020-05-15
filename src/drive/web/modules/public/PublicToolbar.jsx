@@ -58,7 +58,7 @@ const MoreMenu = withBreakpoints()(
     onCreateCozy,
     isFile,
     hasWriteAccess,
-    reloadView,
+    refreshFolderContent,
     breakpoints: { isMobile }
   }) => {
     const anchorRef = React.createRef()
@@ -108,8 +108,10 @@ const MoreMenu = withBreakpoints()(
             </ActionMenuItem>
             {hasWriteAccess && <AddFolderItem />}
             {hasWriteAccess && <CreateNoteItem />}
-            {hasWriteAccess && <CreateShortcut afterCreation={reloadView} />}
-            {hasWriteAccess && <UploadItem afterUpload={reloadView} />}
+            {hasWriteAccess && (
+              <CreateShortcut onCreated={refreshFolderContent} />
+            )}
+            {hasWriteAccess && <UploadItem onUploaded={refreshFolderContent} />}
             <SelectableItem />
           </ActionMenu>
         )}
@@ -130,12 +132,12 @@ const toolbarProptypes = {
   discoveryLink: PropTypes.string,
   isFile: PropTypes.bool.isRequired,
   hasWriteAccess: PropTypes.bool,
-  reloadView: PropTypes.func.isRequired
+  refreshFolderContent: PropTypes.func.isRequired
 }
 const openExternalLink = url => (window.location = url)
 
 const MobileToolbar = (
-  { onDownload, discoveryLink, isFile, hasWriteAccess, reloadView },
+  { onDownload, discoveryLink, isFile, hasWriteAccess, refreshFolderContent },
   { store }
 ) => {
   const client = useClient()
@@ -147,7 +149,7 @@ const MobileToolbar = (
           isFile={isFile}
           hasWriteAccess={hasWriteAccess}
           t={t}
-          reloadView={reloadView}
+          refreshFolderContent={refreshFolderContent}
           onDownload={onDownload}
           onOpenInCozy={
             discoveryLink ? () => openExternalLink(discoveryLink) : false
@@ -203,7 +205,7 @@ CozybarToolbar.contextTypes = {
 CozybarToolbar.propTypes = toolbarProptypes
 
 const DesktopToolbar = (
-  { onDownload, discoveryLink, isFile, hasWriteAccess, reloadView },
+  { onDownload, discoveryLink, isFile, hasWriteAccess, refreshFolderContent },
   { t }
 ) => (
   <div
@@ -219,7 +221,7 @@ const DesktopToolbar = (
     <MoreMenu
       isFile={isFile}
       hasWriteAccess={hasWriteAccess}
-      reloadView={reloadView}
+      refreshFolderContent={refreshFolderContent}
       t={t}
       onDownload={onDownload}
       onOpenInCozy={
@@ -281,7 +283,7 @@ class PublicToolbar extends React.Component {
       renderInBar = false,
       isFile,
       hasWriteAccess,
-      reloadView
+      refreshFolderContent
     } = this.props
     const { discoveryLink } = this.state
 
@@ -292,7 +294,7 @@ class PublicToolbar extends React.Component {
           discoveryLink={discoveryLink}
           isFile={isFile}
           hasWriteAccess={hasWriteAccess}
-          reloadView={reloadView}
+          refreshFolderContent={refreshFolderContent}
         />
       )
     } else if (renderInBar) {
@@ -310,7 +312,7 @@ class PublicToolbar extends React.Component {
           discoveryLink={discoveryLink}
           isFile={isFile}
           hasWriteAccess={hasWriteAccess}
-          reloadView={reloadView}
+          refreshFolderContent={refreshFolderContent}
         />
       )
     }
@@ -322,7 +324,7 @@ PublicToolbar.propTypes = {
   breakpoints: PropTypes.object.isRequired,
   files: PropTypes.array.isRequired,
   hasWriteAccess: PropTypes.bool,
-  reloadView: PropTypes.func.isRequired
+  refreshFolderContent: PropTypes.func.isRequired
 }
 const mapDispatchToProps = dispatch => ({
   onDownload: files => dispatch(downloadFiles(files))
