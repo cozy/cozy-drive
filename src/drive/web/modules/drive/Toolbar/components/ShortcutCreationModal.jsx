@@ -32,7 +32,7 @@ const makeURLValid = str => {
   else if (isURLValid(`https://${str}`)) return `https://${str}`
   return false
 }
-const ShortcutCreationModal = ({ onClose, afterCreation, displayedFolder }) => {
+const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
   const { t } = useI18n()
   const [filename, setFilename] = useState('')
   const [url, setUrl] = useState('')
@@ -56,7 +56,7 @@ const ShortcutCreationModal = ({ onClose, afterCreation, displayedFolder }) => {
     try {
       await client.collection('io.cozy.files.shortcuts').create(data)
       Alerter.success('Shortcut.created')
-      afterCreation()
+      onCreated()
       onClose()
     } catch (e) {
       Alerter.error('Shortcut.errored')

@@ -23,9 +23,7 @@ const CreateShortcutWrapper = ({ openModal }) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openModal: () =>
     dispatch(
-      showModal(
-        <ShortcutCreationModal afterCreation={ownProps.afterCreation} />
-      )
+      showModal(<ShortcutCreationModal onCreated={ownProps.onCreated} />)
     )
 })
 
