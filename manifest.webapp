@@ -1,8 +1,8 @@
 {
   "name": "Drive",
   "name_prefix": "Cozy",
-  "slug": "app",
-  "version": "1.23.0",
+  "slug": "drive",
+  "version": "1.24.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -16,25 +16,185 @@
     "url": "https://cozy.io"
   },
   "locales": {
+    "ar": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "cs_CZ": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "de": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
     "en": {
-      "short_description": "Cozy Drive helps you to save, sync and secure your files on your Cozy.",
-      "long_description": "With Cozy Drive, you can easily:\n- Store your important files and keep them secure in your Cozy\n- Access to all your documents online & offline, from your desktop, and on your smartphone or tablet\n- Share links to files ans folders with who you like;\n- Automatically retrieve bills, payrolls, tax notices and other data from your main online services (internet, energy, retail, mobile, energy, travel...)\n- Upload files to your Cozy from your Android",
-      "screenshots": [
-        "screenshots/en/screenshot01.png",
-        "screenshots/en/screenshot02.png",
-        "screenshots/en/screenshot03.png",
-        "screenshots/en/screenshot04.png"
-      ]
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "es": {
+      "permissions": {
+        "contacts": {
+          "description": "Necesario para compartir archivos con sus contactos"
+        },
+        "groups": {
+          "description": "Necesario para compartir archivos con sus grupos"
+        }
+      }
+    },
+    "eu": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
     },
     "fr": {
-      "short_description": "Cozy Drive est l’application de sauvegarde, de synchronisation et de sécurisation de tous vos fichiers sur Cozy.",
-      "long_description": "Avec Cozy Drive vous pourrez :\n- Sauvegarder et synchroniser gratuitement tous vos documents importants (carte d’identité, photos de vacances, avis d’imposition, fiches de salaires…);\n- Accéder à vos documents n’importe quand, n’importe ou même en mode avion depuis votre bureau, votre smartphone ou tablette;\n- Partager vos fichiers et dossiers par lien avec qui vous le souhaitez;\n- Récupérer automatiquement vos documents administratifs de vos principaux fournisseurs de service (opérateur mobile, fournisseur d’énergie, assureur, internet, santé…);\n- Rester synchronisé·e lors de vos voyages et déplacements professionnels avec nos applications mobiles.",
-      "screenshots": [
-        "screenshots/fr/screenshot01.png",
-        "screenshots/fr/screenshot02.png",
-        "screenshots/fr/screenshot03.png",
-        "screenshots/fr/screenshot04.png"
-      ]
+      "permissions": {
+        "contacts": {
+          "description": "Utilisé pour partager des éléments à vos contacts"
+        },
+        "groups": {
+          "description": "Utilisé pour partager des éléments à vos groupes"
+        }
+      }
+    },
+    "id_ID": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "it": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "ja": {
+      "permissions": {
+        "contacts": {
+          "description": "連絡先とファイルを共有するために必要です"
+        },
+        "groups": {
+          "description": "グループとファイルを共有するために必要です"
+        }
+      }
+    },
+    "ko": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "nl": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "nl_NL": {
+      "permissions": {
+        "contacts": {
+          "description": "Vereist om bestanden te kunnen delen met je contactpersonen"
+        },
+        "groups": {
+          "description": "Vereist om bestanden te kunnen delen in je groepen"
+        }
+      }
+    },
+    "pl": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "pl_PL": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "ru": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "zh_CN": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
+    },
+    "zh_TW": {
+      "permissions": {
+        "contacts": {
+          "description": "Required to share files with your contacts"
+        },
+        "groups": {
+          "description": "Required to share files with your groups"
+        }
+      }
     }
   },
   "screenshots": [
@@ -44,8 +204,24 @@
     "screenshots/fr/screenshot04.png"
   ],
   "langs": [
+    "ar",
+    "cs_CZ",
+    "de",
     "en",
-    "fr"
+    "es",
+    "eu",
+    "fr",
+    "id_ID",
+    "it",
+    "ja",
+    "ko",
+    "nl",
+    "nl_NL",
+    "pl",
+    "pl_PL",
+    "ru",
+    "zh_CN",
+    "zh_TW"
   ],
   "platforms": [
     {
