@@ -24,7 +24,6 @@ import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
-import CreateNoteItem from 'drive/web/modules/drive/Toolbar/components/CreateNoteItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 
 const { BarRight } = cozy.bar
@@ -107,7 +106,6 @@ const MoreMenu = withBreakpoints()(
                 : t('toolbar.menu_download_folder')}
             </ActionMenuItem>
             {hasWriteAccess && <AddFolderItem />}
-            {hasWriteAccess && <CreateNoteItem hasAppsPermissions={false} />}
             {hasWriteAccess && (
               <CreateShortcut onCreated={refreshFolderContent} />
             )}
