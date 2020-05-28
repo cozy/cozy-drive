@@ -27,7 +27,7 @@ import { FILES_FETCH_LIMIT } from 'drive/constants/config'
 import Viewer from 'drive/web/modules/viewer/PublicViewer'
 import { isMobileApp } from 'cozy-device-helper'
 
-class DumbFolderView extends React.Component {
+export class DumbFolderView extends React.Component {
   state = {
     revoked: false,
     viewerOpened: false,
@@ -112,7 +112,7 @@ class DumbFolderView extends React.Component {
     return (
       <Main isPublic>
         <Topbar>
-          <Breadcrumb isPublic onFolderOpen={this.props.fetchFolder} />
+          <Breadcrumb isPublic onFolderOpen={this.navigateToFolder} />
           <PublicToolbar
             files={[this.props.displayedFolder]}
             isFile={false}
