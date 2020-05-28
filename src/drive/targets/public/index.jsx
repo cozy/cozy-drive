@@ -112,7 +112,8 @@ const init = async () => {
             ) : (
               <Router history={hashHistory}>
                 <Route component={PublicLayout}>
-                  <Route path="files(/:folderId)" component={LightFolderView}>
+                  <Redirect from="/files/:folderId" to="/folder/:folderId" />
+                  <Route path="folder(/:folderId)" component={LightFolderView}>
                     <Route
                       path="file/:fileId/revision"
                       component={FileHistory}
