@@ -164,6 +164,27 @@ export const fetchMoreFiles = (folderId, skip, limit) => {
     }
   }
 }
+/**
+ *
+ * @param {Array} files
+ * @param {Array} parentFolders
+ */
+export const mergeFilesWithParents = (files, parentFolders) => {
+  const filesWithPath = files.map(file => {
+    const parentFolder = parentFolders.rows.find(row => row.id === file.dir_id)
+    /* We can have FSCK's issue mostly index_orphan_tree or filesystem_missing.
+      In that case, we can receive an empty doc without path. So let's be
+      more defensive to not crash the recent view */
+    //!TODO Here we are able to detect an FSCK error. We should add a flag to the file
+    //to inform the user
+    const path =
+      parentFolder && parentFolder.doc && parentFolder.doc.path
+        ? parentFolder.doc.path
+        : ''
+    return { ...file, path, id: file._id }
+  })
+  return filesWithPath
+}
 
 export const fetchRecentFiles = () => {
   return async (dispatch, getState) => {
@@ -182,14 +203,8 @@ export const fetchRecentFiles = () => {
       const parentFolders = await getAdapter(getState()).getFilesInBatch(
         parentDirIds
       )
+      const filesWithPath = mergeFilesWithParents(files, parentFolders)
 
-      const filesWithPath = files.map(file => {
-        const parentFolder = parentFolders.rows.find(
-          row => row.id === file.dir_id
-        )
-        const path = parentFolder ? parentFolder.doc.path : ''
-        return { ...file, path, id: file._id }
-      })
       return dispatch({
         type: FETCH_RECENT_SUCCESS,
         fileCount: filesWithPath.length,
