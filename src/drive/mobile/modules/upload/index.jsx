@@ -21,6 +21,10 @@ import Loader from 'drive/web/modules/move/Loader'
 import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
+import {
+  startMediaBackup,
+  cancelMediaBackup
+} from 'drive/mobile/modules/mediaBackup/duck'
 
 export const generateForQueue = files => {
   const filesForQueue = []
@@ -36,6 +40,8 @@ export class DumbUpload extends Component {
     folderId: ROOT_DIR_ID
   }
   async componentDidMount() {
+    const { stopMediaBackup } = this.props
+    stopMediaBackup()
     const items = await localforage.getItem('importedFiles')
     this.setState({ items })
   }
@@ -53,9 +59,10 @@ export class DumbUpload extends Component {
 
   callbackSuccess = () => {
     const { items } = this.state
-    const { t } = this.props
+    const { t, startMediaBackup } = this.props
     Alerter.success(t('ImportToDrive.success', { smart_count: items.length }))
     localforage.removeItem('importedFiles')
+    startMediaBackup()
   }
 
   navigateTo = folder => {
@@ -152,7 +159,9 @@ DumbUpload.propTypes = {
 }
 const mapDispatchToProps = dispatch => ({
   uploadFilesFromNative: (files, folderId, successCallback) =>
-    dispatch(uploadFilesFromNative(files, folderId, successCallback))
+    dispatch(uploadFilesFromNative(files, folderId, successCallback)),
+  stopMediaBackup: () => dispatch(cancelMediaBackup()),
+  startMediaBackup: () => dispatch(startMediaBackup())
 })
 
 export default compose(
