@@ -17,9 +17,6 @@ jest.mock(
   'drive/mobile/modules/authorization/DriveMobileRouter',
   () => () => {}
 )
-jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
-  getCssVariableValue: () => '#fff'
-}))
 jest.mock('react-dom', () => {
   return {
     render: jest.fn((app, node, afterRender) => {
