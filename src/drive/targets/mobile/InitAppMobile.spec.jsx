@@ -4,7 +4,13 @@ import localforage from 'localforage'
 import { hashHistory } from 'react-router'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
-jest.mock('drive/mobile/lib/cozy-helper')
+jest.mock('drive/mobile/lib/cozy-helper', () => {
+  return {
+    getLang: () => 'en',
+    initClient: jest.fn(),
+    registerClientPlugins: jest.fn()
+  }
+})
 jest.mock('drive/store/configureStore')
 jest.mock('drive/lib/reporter')
 jest.mock(
