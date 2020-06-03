@@ -3,8 +3,6 @@ import {
   saveFileWithCordova,
   openOfflineFile,
   deleteOfflineFile,
-  temporarySave,
-  getNativeFile,
   createTemporaryLocalFile,
   openFileWithCordova
 } from 'drive/mobile/lib/filesystem'
@@ -80,17 +78,6 @@ export const openLocalFile = file => async (dispatch, getState) => {
     logger.error('openLocalFile', error)
     Alerter.error('mobile.error.make_available_offline.noapp')
   })
-}
-
-export const getLocalFileCopyUrl = file => async (dispatch, getState) => {
-  if (isAvailableOffline(getState(), file.id)) {
-    const localFile = await getNativeFile(file)
-    return localFile.nativeURL
-  }
-  const response = await cozy.client.files.downloadById(file.id)
-  const blob = await response.blob()
-  const localFile = await temporarySave(blob, file.name)
-  return localFile.nativeURL
 }
 
 export const openLocalFileCopy = file => async (dispatch, getState) => {
