@@ -13,10 +13,11 @@ import { EditDocumentQualification } from 'cozy-scanner'
 import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 
-import { isIOSApp } from 'cozy-device-helper'
+import { isIOSApp, isIOS } from 'cozy-device-helper'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
 import { forceFileDownload } from 'cozy-stack-client/dist/utils'
+import { saveFileWithCordova } from 'drive/mobile/lib/filesystem'
 
 const { file: fileModel } = models
 const { isFile, isDirectory } = fileModel
@@ -26,6 +27,13 @@ const isAnyFileReferencedByAlbum = files => {
     if (isReferencedByAlbum(files[i])) return true
   }
   return false
+}
+
+const downloadFileError = error => {
+  const isMissingFile = error.status === 404
+  return isMissingFile
+    ? 'error.download_file.missing'
+    : 'error.download_file.offline'
 }
 
 const downloadFiles = async (files, client) => {
@@ -43,11 +51,7 @@ const downloadFiles = async (files, client) => {
         filename
       )
     } catch (error) {
-      const isMissingFile = error.status === 404
-      const errorMessage = isMissingFile
-        ? 'error.download_file.missing'
-        : 'error.download_file.offline'
-      Alerter.error(errorMessage)
+      Alerter.error(downloadFileError(error))
       throw error
     }
   } else {
@@ -83,6 +87,95 @@ const trashFiles = async (files, client) => {
   } catch (err) {
     if (!isAlreadyInTrash(err)) {
       Alerter.error('alert.try_again')
+    }
+  }
+}
+
+export const exportFilesNative = async (files, client, filename) => {
+  const downloadAllFiles = files.map(async file => {
+    const response = await client
+      .collection('io.cozy.files')
+      .fetchFileContent(file)
+
+    const blob = await response.blob()
+    const filenameToUse = filename ? filename : file.name
+    const localFile = await saveFileWithCordova(blob, filenameToUse)
+    return localFile.nativeURL
+  })
+
+  try {
+    Alerter.info('alert.preparing', {
+      duration: Math.min(downloadAllFiles.length * 2000, 6000)
+    })
+    const urls = await Promise.all(downloadAllFiles)
+    if (urls.length === 1 && isIOS()) {
+      //TODO
+      //It seems that files: is not well supported on iOS. url seems to work well
+      //at with one file. Need to check when severals
+      window.plugins.socialsharing.shareWithOptions(
+        {
+          url: urls[0]
+        },
+        result => {
+          if (result.completed === true) {
+            Alerter.success('mobile.download.success')
+          }
+        },
+        error => {
+          throw error
+        }
+      )
+    } else {
+      window.plugins.socialsharing.shareWithOptions(
+        {
+          files: urls
+        },
+        null,
+        error => {
+          throw error
+        }
+      )
+    }
+  } catch (error) {
+    Alerter.error(downloadFileError(error))
+  }
+}
+
+    try {
+      Alerter.info('alert.preparing', {
+        duration: Math.min(downloadAllFiles.length * 2000, 6000)
+      })
+      const urls = await Promise.all(downloadAllFiles)
+      if (urls.length === 1 && isIOS()) {
+        //TODO
+        //It seems that files: is not well supported on iOS. url seems to work well
+        //at with one file. Need to check when severals
+        window.plugins.socialsharing.shareWithOptions(
+          {
+            url: urls[0]
+          },
+          result => {
+            if (result.completed === true) {
+              Alerter.success('mobile.download.success')
+            }
+          },
+          error => {
+            throw error
+          }
+        )
+      } else {
+        window.plugins.socialsharing.shareWithOptions(
+          {
+            files: urls
+          },
+          null,
+          error => {
+            throw error
+          }
+        )
+      }
+    } catch (error) {
+      Alerter.error(downloadFileError(error))
     }
   }
 }
@@ -123,7 +216,7 @@ const useActions = (documentId, { canMove } = {}) => {
                 true
               )
             },
-            action: files => alert('not implemented') //dispatch(exportFilesNative(files)),
+            action: files => exportFilesNative(files, client)
           }
         : {
             icon: 'download',
