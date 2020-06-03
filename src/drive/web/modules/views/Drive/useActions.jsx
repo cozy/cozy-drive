@@ -13,11 +13,14 @@ import { EditDocumentQualification } from 'cozy-scanner'
 import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 
-import { isIOSApp, isIOS } from 'cozy-device-helper'
+import { isMobileApp, isIOSApp, isIOS } from 'cozy-device-helper'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
 import { forceFileDownload } from 'cozy-stack-client/dist/utils'
-import { saveFileWithCordova } from 'drive/mobile/lib/filesystem'
+import {
+  saveFileWithCordova,
+  saveAndOpenWithCordova
+} from 'drive/mobile/lib/filesystem'
 
 const { file: fileModel } = models
 const { isFile, isDirectory } = fileModel
@@ -29,11 +32,18 @@ const isAnyFileReferencedByAlbum = files => {
   return false
 }
 
+const isMissingFileError = error => error.status === 404
+
 const downloadFileError = error => {
-  const isMissingFile = error.status === 404
-  return isMissingFile
+  return isMissingFileError(error)
     ? 'error.download_file.missing'
     : 'error.download_file.offline'
+}
+
+const openFileDownloadError = error => {
+  return isMissingFileError(error)
+    ? 'mobile.error.open_with.missing'
+    : 'mobile.error.open_with.offline'
 }
 
 const downloadFiles = async (files, client) => {
@@ -141,42 +151,24 @@ export const exportFilesNative = async (files, client, filename) => {
   }
 }
 
+export const openFileWith = async (file, client, filename) => {
+  if (isMobileApp() && window.cordova.plugins.fileOpener2) {
+    let fileData
     try {
-      Alerter.info('alert.preparing', {
-        duration: Math.min(downloadAllFiles.length * 2000, 6000)
-      })
-      const urls = await Promise.all(downloadAllFiles)
-      if (urls.length === 1 && isIOS()) {
-        //TODO
-        //It seems that files: is not well supported on iOS. url seems to work well
-        //at with one file. Need to check when severals
-        window.plugins.socialsharing.shareWithOptions(
-          {
-            url: urls[0]
-          },
-          result => {
-            if (result.completed === true) {
-              Alerter.success('mobile.download.success')
-            }
-          },
-          error => {
-            throw error
-          }
-        )
-      } else {
-        window.plugins.socialsharing.shareWithOptions(
-          {
-            files: urls
-          },
-          null,
-          error => {
-            throw error
-          }
-        )
-      }
+      fileData = await client.collection('io.cozy.files').fetchFileContent(file)
     } catch (error) {
-      Alerter.error(downloadFileError(error))
+      Alerter.error(openFileDownloadError(error))
+      throw error
     }
+
+    const blob = await fileData.blob()
+    try {
+      await saveAndOpenWithCordova(blob, filename)
+    } catch (error) {
+      Alerter.error('mobile.error.open_with.noapp')
+    }
+  } else {
+    Alerter.error('mobile.error.open_with.noapp')
   }
 }
 
@@ -246,7 +238,7 @@ const useActions = (documentId, { canMove } = {}) => {
         __TARGET__ === 'mobile' &&
         selection.length === 1 &&
         isFile(selection[0]),
-      action: files => alert('not implemented') //dispatch(openFileWith(files[0].id, files[0].name)),
+      action: files => openFileWith(files[0], client, files[0].name)
     },
     rename: {
       icon: 'rename',
