@@ -1,4 +1,3 @@
-/* global cozy */
 import {
   saveFileWithCordova,
   openOfflineFile,
@@ -37,10 +36,13 @@ export const getAvailableOfflineIds = ({ availableOffline }) => availableOffline
 export const isAvailableOffline = ({ availableOffline: state }, id) =>
   Array.isArray(state) && state.indexOf(id) !== -1
 
-export const toggleAvailableOffline = file => async (dispatch, getState) =>
+export const toggleAvailableOffline = (file, client) => async (
+  dispatch,
+  getState
+) =>
   isAvailableOffline(getState(), file.id)
     ? dispatch(forgetDownloadedFile(file))
-    : dispatch(makeAvailableOffline(file))
+    : dispatch(makeAvailableOffline(file, client))
 
 const forgetDownloadedFile = file => async dispatch => {
   const filename = file.id
@@ -50,24 +52,26 @@ const forgetDownloadedFile = file => async dispatch => {
   dispatch(markAsUnavailableOffline(file.id))
 }
 
-const makeAvailableOffline = file => async dispatch => {
-  await saveOfflineFileCopy(file)
+const makeAvailableOffline = (file, client) => async dispatch => {
+  await saveOfflineFileCopy(file, client)
   dispatch(markAsAvailableOffline(file.id))
 }
 
-const saveOfflineFileCopy = async file => {
+const saveOfflineFileCopy = async (file, client) => {
   if (!isMobileApp() || !window.cordova.file) {
     return
   }
-  const response = await cozy.client.files
-    .downloadById(file.id)
-    .catch(error => {
-      Alerter.error('mobile.error.make_available_offline.offline')
-      throw error
-    })
-  const blob = await response.blob()
-  const filename = file.id
-  saveFileWithCordova(blob, filename)
+  try {
+    const response = await client
+      .collection('io.cozy.files')
+      .fetchFileContent(file)
+    const blob = await response.blob()
+    const filename = file.id
+    saveFileWithCordova(blob, filename)
+  } catch (error) {
+    Alerter.error('mobile.error.make_available_offline.offline')
+    throw error
+  }
 }
 
 export const openLocalFile = file => async (dispatch, getState) => {
@@ -88,14 +92,15 @@ export const openLocalFileCopy = file => async (dispatch, getState) => {
   return openFileWithCordova(localFile.nativeURL, file.mime)
 }
 
-export const updateOfflineFileCopyIfNecessary = (file, prevFile) => async (
-  _,
-  getState
-) => {
+export const updateOfflineFileCopyIfNecessary = (
+  file,
+  prevFile,
+  client
+) => async (_, getState) => {
   if (
     isAvailableOffline(getState(), file.id) &&
     file.md5sum !== prevFile.md5sum
   ) {
-    await saveOfflineFileCopy(file)
+    await saveOfflineFileCopy(file, client)
   }
 }

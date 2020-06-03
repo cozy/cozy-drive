@@ -53,7 +53,8 @@ export class RealtimeFiles extends React.Component {
     else if (!previousDoc && docIsInCurrentView) this.props.addFile(doc)
     else if (previousDoc && docIsInCurrentView) {
       this.props.updateFile(doc)
-      this.props.updateOfflineFileCopyIfNecessary(doc, previousDoc)
+      const { client } = this.props
+      this.props.updateOfflineFileCopyIfNecessary(doc, previousDoc, client)
     }
   }
 
@@ -112,8 +113,8 @@ const mapDispatchToProps = dispatch => ({
   addFile: file => dispatch(addFile(file)),
   updateFile: file => dispatch(updateFile(file)),
   deleteFile: file => dispatch(deleteFile(file)),
-  updateOfflineFileCopyIfNecessary: (file, prevFile) =>
-    dispatch(updateOfflineFileCopyIfNecessary(file, prevFile))
+  updateOfflineFileCopyIfNecessary: (file, prevFile, client) =>
+    dispatch(updateOfflineFileCopyIfNecessary(file, prevFile, client))
 })
 
 const RealtimeFilesConnected = connect(
