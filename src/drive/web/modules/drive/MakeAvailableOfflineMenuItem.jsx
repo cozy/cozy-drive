@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
+import { useClient } from 'cozy-client'
 import Toggle from 'cozy-ui/transpiled/react/Toggle'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 import {
@@ -12,13 +13,18 @@ const MakeAvailableOfflineMenuItem = connect(
     checked: isAvailableOffline(state, ownProps.file.id)
   }),
   (dispatch, ownProps) => ({
-    onToggle: () => dispatch(toggleAvailableOffline(ownProps.file))
+    toggleOfflineAvailability: client =>
+      dispatch(toggleAvailableOffline(ownProps.file, client))
   })
-)(({ checked, onToggle, children, ...rest }) => (
-  <MenuItem {...rest}>
-    {children}
-    <Toggle id={children} checked={checked} onToggle={onToggle} />
-  </MenuItem>
-))
+)(({ checked, toggleOfflineAvailability, children, ...rest }) => {
+  const client = useClient()
+  const onToggle = useCallback(() => toggleOfflineAvailability(client))
+  return (
+    <MenuItem {...rest}>
+      {children}
+      <Toggle id={children} checked={checked} onToggle={onToggle} />
+    </MenuItem>
+  )
+})
 
 export default MakeAvailableOfflineMenuItem
