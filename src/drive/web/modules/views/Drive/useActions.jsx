@@ -271,7 +271,7 @@ const useActions = (documentId, { canMove } = {}) => {
       icon: 'history',
       displayCondition: selection =>
         selection.length === 1 && isFile(selection[0]),
-      action: files => {
+      action: () => {
         alert('not implemented')
         // trackEvent()
         // return ownProps.router.push(
