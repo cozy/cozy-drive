@@ -73,11 +73,11 @@ const DriveView = ({ params, router, children }) => {
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const navigateToFolder = useCallback(folderId => {
-    router.push(`/v2/${folderId}`)
+    router.push(`/folder/${folderId}`)
   })
 
   const navigateToFile = useCallback(file => {
-    router.push(`/v2/${currentFolderId}/file/${file.id}`)
+    router.push(`/folder/${currentFolderId}/file/${file.id}`)
   })
 
   const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
