@@ -30,7 +30,7 @@ const AppRoute = (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
-      {flag('v2') ? (
+      {flag('drive.client-migration.enabled') ? (
         <Route path="folder(/:folderId)" component={DriveView}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
