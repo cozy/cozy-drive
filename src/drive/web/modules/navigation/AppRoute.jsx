@@ -29,24 +29,27 @@ const AppRoute = (
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
-      {flag('v2') && (
-        <Route path="v2(/:folderId)" component={DriveView}>
+      <Redirect from="/files/:folderId" to="/folder/:folderId" />
+      {flag('v2') ? (
+        <Route path="folder(/:folderId)" component={DriveView}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
-      )}
-      <Redirect from="/files/:folderId" to="/folder/:folderId" />
-      <Route component={FileExplorer}>
-        <Redirect from="/" to="folder" />
-        <Route path="folder" component={Folder}>
-          <Route path=":folderId">
+      ) : (
+        <Route component={FileExplorer}>
+          <Route path="folder" component={Folder}>
+            <Route path=":folderId">
+              <Route path="file/:fileId" component={FilesViewer} />
+              <Route path="file/:fileId/revision" component={FileHistory} />
+            </Route>
+            {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
+          next url will be /folder/file/:fileId/ */}
             <Route path="file/:fileId" component={FilesViewer} />
             <Route path="file/:fileId/revision" component={FileHistory} />
           </Route>
-          {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
-          next url will be /folder/file/:fileId/ */}
-          <Route path="file/:fileId" component={FilesViewer} />
-          <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
+      )}
+      <Route component={FileExplorer}>
+        <Redirect from="/" to="folder" />
         <Route path="recent" component={Recent}>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
