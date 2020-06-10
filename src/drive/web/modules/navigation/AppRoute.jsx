@@ -22,6 +22,12 @@ import UploadFromMobile from 'drive/mobile/modules/upload'
 import ExternalRedirect from './ExternalRedirect'
 import DriveView from '../views/Drive'
 
+const LegacyDriveView = routerProps => (
+  <FileExplorer {...routerProps}>
+    <Folder {...routerProps} />
+  </FileExplorer>
+)
+
 const AppRoute = (
   <Route>
     <Route path="external/:fileId" component={ExternalRedirect} />
@@ -30,31 +36,23 @@ const AppRoute = (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
-      {flag('drive.client-migration.enabled') ? (
-        <Route path="folder" component={DriveView}>
-          <Route path=":folderId">
-            <Route path="file/:fileId" component={FilesViewer} />
-            <Route path="file/:fileId/revision" component={FileHistory} />
-          </Route>
-          {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
-        next url will be /folder/file/:fileId/ */}
+
+      <Route
+        path="folder"
+        component={
+          flag('drive.client-migration.enabled') ? DriveView : LegacyDriveView
+        }
+      >
+        <Route path=":folderId">
           <Route path="file/:fileId" component={FilesViewer} />
           <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
-      ) : (
-        <Route component={FileExplorer}>
-          <Route path="folder" component={Folder}>
-            <Route path=":folderId">
-              <Route path="file/:fileId" component={FilesViewer} />
-              <Route path="file/:fileId/revision" component={FileHistory} />
-            </Route>
-            {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
+        {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
           next url will be /folder/file/:fileId/ */}
-            <Route path="file/:fileId" component={FilesViewer} />
-            <Route path="file/:fileId/revision" component={FileHistory} />
-          </Route>
-        </Route>
-      )}
+        <Route path="file/:fileId" component={FilesViewer} />
+        <Route path="file/:fileId/revision" component={FileHistory} />
+      </Route>
+
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
         <Route path="recent" component={Recent}>
