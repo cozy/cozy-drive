@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { models, useClient } from 'cozy-client'
 import { SharingContext, ShareModal } from 'cozy-sharing'
 import { ModalContext } from 'drive/lib/ModalContext'
+import { RouterContext } from 'drive/lib/RouterContext'
 import keyBy from 'lodash/keyBy'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
@@ -175,6 +176,7 @@ export const openFileWith = async (file, client, filename) => {
 const useActions = (documentId, { canMove } = {}) => {
   const { pushModal, popModal } = useContext(ModalContext)
   const { hasWriteAccess, refresh } = useContext(SharingContext)
+  const { router, location } = useContext(RouterContext)
   const client = useClient()
   const dispatch = useDispatch()
 
@@ -271,12 +273,9 @@ const useActions = (documentId, { canMove } = {}) => {
       icon: 'history',
       displayCondition: selection =>
         selection.length === 1 && isFile(selection[0]),
-      action: () => {
-        alert('not implemented')
+      action: files => {
         // trackEvent()
-        // return ownProps.router.push(
-        //   `${ownProps.location.pathname}/file/${files[0].id}/revision`
-        // )
+        return router.push(`${location.pathname}/file/${files[0].id}/revision`)
       }
     },
     offline: {
