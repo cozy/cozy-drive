@@ -31,8 +31,15 @@ const AppRoute = (
       )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       {flag('drive.client-migration.enabled') ? (
-        <Route path="folder(/:folderId)" component={DriveView}>
+        <Route path="folder" component={DriveView}>
+          <Route path=":folderId">
+            <Route path="file/:fileId" component={FilesViewer} />
+            <Route path="file/:fileId/revision" component={FileHistory} />
+          </Route>
+          {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
+        next url will be /folder/file/:fileId/ */}
           <Route path="file/:fileId" component={FilesViewer} />
+          <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
       ) : (
         <Route component={FileExplorer}>
