@@ -130,11 +130,11 @@ class InitAppMobile {
     const client = await this.getClient()
     const polyglot = this.getPolyglot()
     const persistedState = await this.getPersistedState()
-    this.store = configureStore(
-      client,
-      polyglot.t.bind(polyglot),
-      persistedState
-    )
+    this.store = configureStore({
+      client: client,
+      t: polyglot.t.bind(polyglot),
+      initialState: persistedState
+    })
     return this.store
   }
 

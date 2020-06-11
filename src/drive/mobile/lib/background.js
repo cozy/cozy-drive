@@ -98,11 +98,11 @@ const backgroundService = () =>
         const cozyURL = persistedState.mobile.settings.serverUrl
         configureReporter()
         const client = initClient(cozyURL)
-        const store = configureStore(
+        const store = configureStore({
           client,
-          getTranslateFunction(),
-          persistedState
-        )
+          t: getTranslateFunction(),
+          initialState: persistedState
+        })
         return store.dispatch(startMediaBackup())
       })
       .then(resolve)

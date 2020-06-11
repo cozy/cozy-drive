@@ -22,6 +22,16 @@ import UploadFromMobile from 'drive/mobile/modules/upload'
 import ExternalRedirect from './ExternalRedirect'
 import DriveView from '../views/Drive'
 
+// To keep in sync with AppRoute below, used to extract params
+// in the "router" redux slice. Innermost routes should be
+// first
+export const routes = [
+  '/folder/:folderId/file/:fileId',
+  '/files/:folderId/file/:fileId',
+  '/files/:folderId',
+  '/folder/:folderId'
+]
+
 const AppRoute = (
   <Route>
     <Route path="external/:fileId" component={ExternalRedirect} />

@@ -47,7 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const polyglot = initTranslation(data.cozyLocale, lang =>
     require(`drive/locales/${lang}`)
   )
-  const store = configureStore(client, polyglot.t.bind(polyglot))
+  let history = hashHistory
+
+  const store = configureStore({
+    client,
+    t: polyglot.t.bind(polyglot),
+    history
+  })
 
   cozy.client.init({
     cozyURL: cozyUrl,
@@ -63,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     replaceTitleOnMobile: false
   })
 
-  let history = hashHistory
   if (shouldEnableTracking() && getTracker()) {
     let trackerInstance = getTracker()
     history = trackerInstance.connectToHistory(hashHistory)
