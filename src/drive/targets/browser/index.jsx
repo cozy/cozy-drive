@@ -1,4 +1,4 @@
-/* global cozy */
+/* global cozy, __DEVELOPMENT__ */
 // eslint-disable-next-line no-unused-vars
 import mainStyles from 'drive/styles/main.styl'
 
@@ -24,6 +24,13 @@ import { hot } from 'react-hot-loader'
 import { Document } from 'cozy-doctypes'
 
 import App from 'components/App/App'
+
+import flag from 'cozy-flags'
+
+if (__DEVELOPMENT__) {
+  window.flag = flag
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
