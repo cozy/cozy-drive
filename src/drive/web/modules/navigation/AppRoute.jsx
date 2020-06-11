@@ -43,12 +43,11 @@ const AppRoute = (
           flag('drive.client-migration.enabled') ? DriveView : LegacyDriveView
         }
       >
+        {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
         <Route path=":folderId">
           <Route path="file/:fileId" component={FilesViewer} />
           <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
-        {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
-          next url will be /folder/file/:fileId/ */}
         <Route path="file/:fileId" component={FilesViewer} />
         <Route path="file/:fileId/revision" component={FileHistory} />
       </Route>
