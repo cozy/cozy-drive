@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { withRouter } from 'react-router'
 
 export const RouterContext = React.createContext()
@@ -12,3 +12,7 @@ export const RouterContextProvider = withRouter(
     )
   }
 )
+
+export const useRouter = () => {
+  return useContext(RouterContext)
+}
