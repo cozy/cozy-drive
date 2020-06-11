@@ -5,4 +5,3 @@ export const getCurrentFolderId = rootState => {
 export const getCurrentFileId = rootState => {
   return rootState.router.params.fileId
 }
-
