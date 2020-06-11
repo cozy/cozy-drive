@@ -45,8 +45,6 @@ export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
     const folderSyncPhoto = await client
       .collection('io.cozy.files')
       .statByPath(pathSavedFromMobileFolder)
-    //eslint-disable-next-line
-    console.log('folderSyncPhoto', folderSyncPhoto)
 
     const hasEmptyRightFolder =
       folderSyncPhoto.included && folderSyncPhoto.included.length === 0
@@ -87,7 +85,7 @@ export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
       ])
   } catch (e) {
     //eslint-disable-next-line
-    console.log('error stat remove ref', e)
+    console.warn('error stat remove ref', e)
   }
 
   await getOrCreateFolderWithReference(client, photosRootPath, REF_PHOTOS)
