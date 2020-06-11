@@ -30,12 +30,12 @@ import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
 import File from './FileWithActions'
 import { buildQuery } from 'drive/web/modules/queries'
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
 
-const DriveView = ({ params, router, children }) => {
+const DriveView = ({ folderId, router, children }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
-  const { folderId } = params
   const [sortOrder, setSortOder] = useState({ attribute: 'name', order: 'asc' })
   const currentFolderId = folderId || ROOT_DIR_ID
 
@@ -180,4 +180,6 @@ const DriveViewWithProvider = props => (
   </SharingProvider>
 )
 
-export default DriveViewWithProvider
+export default connect(state => ({
+  folderId: getCurrentFolderId(state)
+}))(DriveViewWithProvider)
