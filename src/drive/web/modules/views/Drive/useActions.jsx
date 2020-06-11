@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { models, useClient } from 'cozy-client'
 import { SharingContext, ShareModal } from 'cozy-sharing'
 import { ModalContext } from 'drive/lib/ModalContext'
-import { RouterContext } from 'drive/lib/RouterContext'
+import { useRouter } from 'drive/lib/RouterContext'
 import keyBy from 'lodash/keyBy'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
@@ -176,7 +176,7 @@ export const openFileWith = async (file, client, filename) => {
 const useActions = (documentId, { canMove } = {}) => {
   const { pushModal, popModal } = useContext(ModalContext)
   const { hasWriteAccess, refresh } = useContext(SharingContext)
-  const { router, location } = useContext(RouterContext)
+  const { router, location } = useRouter()
   const client = useClient()
   const dispatch = useDispatch()
 
