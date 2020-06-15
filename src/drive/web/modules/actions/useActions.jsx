@@ -94,7 +94,7 @@ const useActions = (documentId, { canMove } = {}) => {
         __TARGET__ === 'mobile' &&
         selection.length === 1 &&
         isFile(selection[0]),
-      action: files => openFileWith(files[0], client, files[0].name)
+      action: files => openFileWith(files[0], client)
     },
     rename: {
       icon: 'rename',
