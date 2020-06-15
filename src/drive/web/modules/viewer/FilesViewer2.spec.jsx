@@ -40,6 +40,12 @@ describe('FilesViewer', () => {
     const store = {
       subscribe: () => {},
       getState: () => ({
+        view: {
+          sort: {
+            sortAttribute: 'name',
+            sortOrder: 'desc'
+          }
+        },
         router: {
           params: {
             fileId: 'foobar',
@@ -48,17 +54,7 @@ describe('FilesViewer', () => {
         }
       })
     }
-    const root = mount(
-      <AppLike client={client} store={store}>
-        <FilesViewer client={client} fileId="foobar" files={filesFixture} />
-      </AppLike>
-    )
-    return {
-      root
-    }
-  }
 
-  it('should render a Viewer', () => {
     useQuery.mockReturnValue({
       data: filesFixture,
       count: filesFixture.length,
@@ -66,8 +62,31 @@ describe('FilesViewer', () => {
         throw new Error('Fetch more should not be called')
       })
     })
+
+    const root = mount(
+      <AppLike client={client} store={store}>
+        <FilesViewer client={client} fileId="foobar" files={filesFixture} />
+      </AppLike>
+    )
+
+    return {
+      root
+    }
+  }
+
+  it('should render a Viewer', () => {
     const { root } = setup()
     expect(root.find(Overlay).length).toBe(1)
     expect(root.find(Viewer).length).toBe(1)
+  })
+
+  it('should use sort attribute/order from state', () => {
+    const { root } = setup()
+    expect(root.find(Overlay).length).toBe(1)
+    expect(root.find(Viewer).length).toBe(1)
+    expect(useQuery).toHaveBeenCalledWith(expect.any(Function), {
+      as: 'file-folder-id-name-desc',
+      fetchPolicy: expect.any(Function)
+    })
   })
 })

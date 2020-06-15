@@ -8,6 +8,7 @@ import {
   SORT_FOLDER,
   SORT_FOLDER_SUCCESS,
   SORT_FOLDER_FAILURE,
+  SORT_FOLDER_V2,
   FETCH_RECENT,
   FETCH_RECENT_SUCCESS,
   FETCH_RECENT_FAILURE,
@@ -181,6 +182,11 @@ const fileCount = (state = null, action) => {
 const sort = (state = null, action) => {
   switch (action.type) {
     case SORT_FOLDER:
+      return {
+        attribute: action.sortAttribute,
+        order: action.sortOrder
+      }
+    case SORT_FOLDER_V2:
       return {
         attribute: action.sortAttribute,
         order: action.sortOrder

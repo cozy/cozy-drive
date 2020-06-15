@@ -8,6 +8,7 @@ import logger from 'lib/logger'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { buildQuery } from 'drive/web/modules/queries'
+import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import {
   getCurrentFolderId,
   getCurrentFileId
@@ -131,11 +132,12 @@ const mapStateToProps = state => ({
 })
 
 const FilesViewerWithQuery = ({ ...props }) => {
+  const [{ sortAttribute, sortOrder }] = useFolderSort()
   const filesQuery = buildQuery({
     currentFolderId: props.folderId,
     type: 'file',
-    sortAttribute: 'name',
-    sortOrder: 'asc'
+    sortAttribute: sortAttribute,
+    sortOrder: sortOrder
   })
   const results = useQuery(filesQuery.definition, filesQuery.options)
   if (results.data) {

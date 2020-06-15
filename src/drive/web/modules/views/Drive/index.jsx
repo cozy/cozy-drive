@@ -1,5 +1,5 @@
 /* global __TARGET__ */
-import React, { useCallback, useState, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
 import { useQuery } from 'cozy-client'
 
@@ -31,13 +31,14 @@ import Breadcrumb from './Breadcrumb'
 import File from './FileWithActions'
 import { buildQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useFolderSort } from 'drive/web/modules/navigation/duck'
 
 const DriveView = ({ folderId, router, children }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
-  const [sortOrder, setSortOder] = useState({ attribute: 'name', order: 'asc' })
   const currentFolderId = folderId || ROOT_DIR_ID
+  const [sortOrder, setSortOrder] = useFolderSort(folderId)
 
   const folderQuery = buildQuery({
     currentFolderId,
@@ -64,7 +65,7 @@ const DriveView = ({ folderId, router, children }) => {
   })
 
   const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
-    setSortOder({ attribute, order })
+    setSortOrder({ sortAttribute: attribute, sortOrder: order })
   )
 
   const isInError =

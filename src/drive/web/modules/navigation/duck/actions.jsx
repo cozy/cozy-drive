@@ -26,6 +26,11 @@ export const OPEN_FOLDER_FAILURE = 'OPEN_FOLDER_FAILURE'
 export const SORT_FOLDER = 'SORT_FOLDER'
 export const SORT_FOLDER_SUCCESS = 'SORT_FOLDER_SUCCESS'
 export const SORT_FOLDER_FAILURE = 'SORT_FOLDER_FAILURE'
+
+// Difference with previous SORT_FOLDER is that the following action
+// will not have effect on a fetch status of the folder
+export const SORT_FOLDER_V2 = 'SORT_FOLDER_V2'
+
 export const FETCH_RECENT = 'FETCH_RECENT'
 export const FETCH_RECENT_SUCCESS = 'FETCH_RECENT_SUCCESS'
 export const FETCH_RECENT_FAILURE = 'FETCH_RECENT_FAILURE'
@@ -128,6 +133,15 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
       })
       return dispatch({ type: SORT_FOLDER_FAILURE, error: err })
     }
+  }
+}
+
+export const sortFolderV2 = (folderId, sortAttribute, sortOrder = 'asc') => {
+  return {
+    type: SORT_FOLDER,
+    folderId,
+    sortAttribute,
+    sortOrder
   }
 }
 
