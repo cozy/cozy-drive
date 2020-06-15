@@ -31,6 +31,7 @@
   "testEnvironment": "jest-environment-jsdom-sixteen",
   "testMatch": ["**/(*.)(spec|test).js?(x)"],
   "globals": {
-    "__APP_SLUG__": "drive"
+    "__APP_SLUG__": "drive",
+    "__TARGET__": "browser"
   }
 }
