@@ -137,7 +137,7 @@ export const exportFilesNative = async (files, client, filename) => {
   }
 }
 
-export const openFileWith = async (file, client, filename) => {
+export const openFileWith = async (file, client) => {
   if (isMobileApp() && window.cordova.plugins.fileOpener2) {
     let fileData
     try {
@@ -149,7 +149,7 @@ export const openFileWith = async (file, client, filename) => {
 
     const blob = await fileData.blob()
     try {
-      await saveAndOpenWithCordova(blob, filename)
+      await saveAndOpenWithCordova(blob, file.name)
     } catch (error) {
       Alerter.error('mobile.error.open_with.noapp')
     }
