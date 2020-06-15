@@ -1,5 +1,5 @@
 import React from 'react'
-import useActions from './useActions'
+import useActions from 'drive/web/modules/actions/useActions'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 
 const SelectionBarWithActions = ({ documentId, ...props }) => {
