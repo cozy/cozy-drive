@@ -63,15 +63,23 @@ class FilesViewer extends Component {
     }
   }
 
-  fetchMoreIfNecessary() {
-    const { files, fileId, filesQuery } = this.props
-    const fileCount = filesQuery.count
-    // If we get close of the last file fetched, but we know there are more in the folder
-    // (it shouldn't happen in /recent), we fetch more files
-    const currentIndex = files.findIndex(f => f.id === fileId)
+  async fetchMoreIfNecessary() {
+    if (this.fetchingMore) {
+      return
+    }
+    this.fetchingMore = true
+    try {
+      const { files, fileId, filesQuery } = this.props
+      const fileCount = filesQuery.count
+      // If we get close of the last file fetched, but we know there are more in the folder
+      // (it shouldn't happen in /recent), we fetch more files
+      const currentIndex = files.findIndex(f => f.id === fileId)
 
-    if (files.length !== fileCount && files.length - currentIndex <= 5) {
-      filesQuery.fetchMore()
+      if (files.length !== fileCount && files.length - currentIndex <= 5) {
+        await filesQuery.fetchMore()
+      }
+    } finally {
+      this.fetchingMore = false
     }
   }
 
