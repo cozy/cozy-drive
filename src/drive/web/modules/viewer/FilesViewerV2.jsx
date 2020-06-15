@@ -122,10 +122,6 @@ class FilesViewer extends Component {
   }
 }
 
-const getViewableFiles = files => {
-  return files.filter(f => f.type !== 'directory')
-}
-
 const mapStateToProps = state => ({
   folderId: getCurrentFolderId(state),
   fileId: getCurrentFileId(state)
@@ -141,7 +137,7 @@ const FilesViewerWithQuery = ({ ...props }) => {
   })
   const results = useQuery(filesQuery.definition, filesQuery.options)
   if (results.data) {
-    const viewableFiles = getViewableFiles(results.data)
+    const viewableFiles = results.data
     return <FilesViewer {...props} files={viewableFiles} filesQuery={results} />
   } else {
     return <FilesViewerLoading />
