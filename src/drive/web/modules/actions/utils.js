@@ -32,6 +32,17 @@ const openFileDownloadError = error => {
     : 'mobile.error.open_with.offline'
 }
 
+/**
+ * An instance of cozy-client
+ * @typedef {object} CozyClient
+ */
+
+/**
+ * downloadFiles - Triggers the download of one or multiple files by the browser
+ *
+ * @param {CozyClient} client
+ * @param {array} files  One or more files to download
+ */
 export const downloadFiles = async (client, files) => {
   if (files.length === 1 && !isDirectory(files[0])) {
     const file = files[0]
@@ -72,6 +83,12 @@ const isAlreadyInTrash = err => {
   return false
 }
 
+/**
+ * trashFiles - Moves a set of files to the cozy trash
+ *
+ * @param {CozyClient} client
+ * @param {array} files  One or more files to trash
+ */
 export const trashFiles = async (client, files) => {
   try {
     for (const file of files) {
@@ -87,6 +104,13 @@ export const trashFiles = async (client, files) => {
   }
 }
 
+/**
+ * exportFilesNative - Triggers a prompt to download a file on mobile devices
+ *
+ * @param {CozyClient} client
+ * @param {array} files    One or more files to download
+ * @param {string} filename The name of the file that will be saved
+ */
 export const exportFilesNative = async (client, files, filename) => {
   const downloadAllFiles = files.map(async file => {
     const response = await client
@@ -137,6 +161,12 @@ export const exportFilesNative = async (client, files, filename) => {
   }
 }
 
+/**
+ * openFileWith - Opens a file on a mobile device
+ *
+ * @param {CozyClient} client
+ * @param {object} file   io.cozy.files document
+ */
 export const openFileWith = async (client, file) => {
   if (isMobileApp() && window.cordova.plugins.fileOpener2) {
     let fileData
