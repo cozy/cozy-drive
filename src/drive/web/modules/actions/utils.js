@@ -59,7 +59,6 @@ export const downloadFiles = async (client, files) => {
       )
     } catch (error) {
       Alerter.error(downloadFileError(error))
-      throw error
     }
   } else {
     const ids = files.map(f => f.id)
