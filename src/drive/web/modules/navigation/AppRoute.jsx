@@ -36,6 +36,11 @@ export const routes = [
 const FilesViewer = flag('drive.client-migration.enabled')
   ? FilesViewerV2
   : FilesViewerV1
+const LegacyDriveView = routerProps => (
+  <FileExplorer {...routerProps}>
+    <Folder {...routerProps} />
+  </FileExplorer>
+)
 
 const AppRoute = (
   <Route>
@@ -45,24 +50,22 @@ const AppRoute = (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
-      {flag('drive.client-migration.enabled') ? (
-        <Route path="folder(/:folderId)" component={DriveView}>
+
+      <Route
+        path="folder"
+        component={
+          flag('drive.client-migration.enabled') ? DriveView : LegacyDriveView
+        }
+      >
+        {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
+        <Route path=":folderId">
           <Route path="file/:fileId" component={FilesViewer} />
+          <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
-      ) : (
-        <Route component={FileExplorer}>
-          <Route path="folder" component={Folder}>
-            <Route path=":folderId">
-              <Route path="file/:fileId" component={FilesViewer} />
-              <Route path="file/:fileId/revision" component={FileHistory} />
-            </Route>
-            {/* Those 2 following routes are needed for the root directory since the url is only /folder, so 
-          next url will be /folder/file/:fileId/ */}
-            <Route path="file/:fileId" component={FilesViewer} />
-            <Route path="file/:fileId/revision" component={FileHistory} />
-          </Route>
-        </Route>
-      )}
+        <Route path="file/:fileId" component={FilesViewer} />
+        <Route path="file/:fileId/revision" component={FileHistory} />
+      </Route>
+
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
         <Route path="recent" component={Recent}>
