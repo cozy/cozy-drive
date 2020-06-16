@@ -10,56 +10,27 @@ import {
   hideNewFolderInput
 } from 'drive/web/modules/filelist/duck'
 import { createFolder } from 'drive/web/modules/navigation/duck'
+import Cell from 'drive/web/modules/filelist/Cell'
 import styles from 'drive/styles/filelist.styl'
 
 const AddFolder = ({ f, visible, onSubmit, onAbort }) =>
   !visible ? null : (
     <div className={styles['fil-content-row']}>
-      <div
+      <Cell className={styles['fil-content-file-select']} />
+      <Cell
         className={classNames(
-          styles['fil-content-cell'],
-          styles['fil-content-file-select']
-        )}
-      />
-      <div
-        className={classNames(
-          styles['fil-content-cell'],
           styles['fil-content-file'],
           styles['fil-file-folder']
         )}
       >
         <FilenameInput onSubmit={onSubmit} onAbort={onAbort} />
-      </div>
-      <div
-        className={classNames(
-          styles['fil-content-cell'],
-          styles['fil-content-date']
-        )}
-      >
+      </Cell>
+      <Cell className={styles['fil-content-date']}>
         <time dateTime="">{f(Date.now(), 'MMM D, YYYY')}</time>
-      </div>
-      <div
-        className={classNames(
-          styles['fil-content-cell'],
-          styles['fil-content-size']
-        )}
-      >
-        —
-      </div>
-      <div
-        className={classNames(
-          styles['fil-content-cell'],
-          styles['fil-content-status']
-        )}
-      >
-        —
-      </div>
-      <div
-        className={classNames(
-          styles['fil-content-cell'],
-          styles['fil-content-file-action']
-        )}
-      />
+      </Cell>
+      <Cell className={styles['fil-content-size']}>—</Cell>
+      <Cell className={styles['fil-content-status']}>—</Cell>
+      <Cell className={styles['fil-content-file-action']} />
     </div>
   )
 
