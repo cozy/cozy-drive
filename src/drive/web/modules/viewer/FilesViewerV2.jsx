@@ -21,6 +21,14 @@ const FilesViewerLoading = () => (
   </Overlay>
 )
 
+/**
+ * Shows a set of files through cozy-ui's Viewer
+ *
+ * - Re-uses the cozy-client's Query for the current directory files
+ *   with the same sort order.
+ * - If the file to show is not present in the query results, will call
+ *   fetchMore() on the query
+ */
 class FilesViewer extends Component {
   state = {
     currentFile: null
