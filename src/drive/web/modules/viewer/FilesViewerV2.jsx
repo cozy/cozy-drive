@@ -42,9 +42,10 @@ class FilesViewer extends Component {
     this._mounted = false
   }
 
-  // If we can't find the file in the loaded files, that's probably because the user is trying to open
-  // a direct link to a file that wasn't in the first 50 files of the containing folder
-  // (it comes from a fetchMore...) ; we load the file attributes directly as a contingency measure
+  // If we can't find the file in the loaded files, that's probably because the user
+  // is trying to open a direct link to a file that wasn't in the first 50 files of
+  // the containing folder (it comes from a fetchMore...) ; we load the file attributes
+  // directly as a contingency measure
   async fetchFileIfNecessary() {
     if (this.getCurrentIndex() !== -1) return
     if (this.state.currentFile && this._mounted) {
