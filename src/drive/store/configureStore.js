@@ -50,19 +50,20 @@ const configureStore = options => {
   )
 
   if (__TARGET__ === 'mobile') {
-    store.subscribe(() =>
+    store.subscribe(() => {
+      const currentState = store.getState()
       saveState({
         mobile: {
-          authorization: store.getState().mobile.authorization,
-          settings: store.getState().mobile.settings,
-          replication: store.getState().mobile.replication,
+          authorization: currentState.mobile.authorization,
+          settings: currentState.mobile.settings,
+          replication: currentState.mobile.replication,
           mediaBackup: {
-            uploaded: store.getState().mobile.mediaBackup.uploaded
+            uploaded: currentState.mobile.mediaBackup.uploaded
           }
         },
-        availableOffline: store.getState().availableOffline
+        availableOffline: currentState.availableOffline
       })
-    )
+    })
   }
 
   if (history) {
