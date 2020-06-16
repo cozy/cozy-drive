@@ -136,7 +136,7 @@ const mapStateToProps = state => ({
   fileId: getCurrentFileId(state)
 })
 
-const FilesViewerWithQuery = ({ ...props }) => {
+const FilesViewerWithQuery = props => {
   const [{ sortAttribute, sortOrder }] = useFolderSort()
   const filesQuery = buildQuery({
     currentFolderId: props.folderId,
