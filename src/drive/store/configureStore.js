@@ -41,7 +41,7 @@ const configureStore = options => {
   const composeEnhancers =
     (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
-  const rootReducer = createRootReducer(client, history)
+  const rootReducer = createRootReducer(client)
 
   const store = createStore(
     rootReducer,
