@@ -38,7 +38,7 @@ export const createReducer = options => {
   }
 }
 
-export const locationChanged = (location, action) => ({
+const locationChanged = (location, action) => ({
   type: LOCATION_CHANGED,
   location: location,
   action: action
