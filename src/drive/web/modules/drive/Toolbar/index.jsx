@@ -93,6 +93,12 @@ const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
+/**
+ * Provides the Toolbar with sharing properties of the current folder.
+ *
+ * In views where the displayed folder is virtual (eg: Recent files, Sharings),
+ * no sharing information is provided to the Toolbar.
+ */
 const ToolbarWithSharingContext = props =>
   !props.displayedFolder ? (
     <Toolbar {...props} />
