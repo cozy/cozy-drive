@@ -64,11 +64,11 @@ const useActions = (documentId, { canMove } = {}) => {
                 true
               )
             },
-            action: files => exportFilesNative(files, client)
+            action: files => exportFilesNative(client, files)
           }
         : {
             icon: 'download',
-            action: files => downloadFiles(files, client)
+            action: files => downloadFiles(client, files)
           },
     trash: {
       icon: 'trash',
@@ -80,7 +80,7 @@ const useActions = (documentId, { canMove } = {}) => {
             referenced={isAnyFileReferencedByAlbum(files)}
             onConfirm={() => {
               refresh()
-              trashFiles(files, client) // TODO faire le trash a proprement parler dans la modale de confirmation
+              trashFiles(client, files) // TODO faire le trash a proprement parler dans la modale de confirmation
               // TODO supprimer les fichiers de la sélection
               popModal()
             }}
@@ -94,7 +94,7 @@ const useActions = (documentId, { canMove } = {}) => {
         __TARGET__ === 'mobile' &&
         selection.length === 1 &&
         isFile(selection[0]),
-      action: files => openFileWith(files[0], client)
+      action: files => openFileWith(client, files[0])
     },
     rename: {
       icon: 'rename',

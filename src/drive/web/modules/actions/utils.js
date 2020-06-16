@@ -32,7 +32,7 @@ const openFileDownloadError = error => {
     : 'mobile.error.open_with.offline'
 }
 
-export const downloadFiles = async (files, client) => {
+export const downloadFiles = async (client, files) => {
   if (files.length === 1 && !isDirectory(files[0])) {
     const file = files[0]
 
@@ -72,7 +72,7 @@ const isAlreadyInTrash = err => {
   return false
 }
 
-export const trashFiles = async (files, client) => {
+export const trashFiles = async (client, files) => {
   try {
     for (const file of files) {
       await client.collection('io.cozy.files').destroy(file)
@@ -87,7 +87,7 @@ export const trashFiles = async (files, client) => {
   }
 }
 
-export const exportFilesNative = async (files, client, filename) => {
+export const exportFilesNative = async (client, files, filename) => {
   const downloadAllFiles = files.map(async file => {
     const response = await client
       .collection('io.cozy.files')
@@ -137,7 +137,7 @@ export const exportFilesNative = async (files, client, filename) => {
   }
 }
 
-export const openFileWith = async (file, client) => {
+export const openFileWith = async (client, file) => {
   if (isMobileApp() && window.cordova.plugins.fileOpener2) {
     let fileData
     try {

@@ -136,7 +136,7 @@ describe('useActions', () => {
         ]
 
         downloadAction.action(mockDocuments)
-        expect(downloadFiles).toHaveBeenCalledWith(mockDocuments, mockClient)
+        expect(downloadFiles).toHaveBeenCalledWith(mockClient, mockDocuments)
       })
     })
 
@@ -197,8 +197,8 @@ describe('useActions', () => {
         ]
         downloadAction.action(mockDocuments)
         expect(exportFilesNative).toHaveBeenCalledWith(
-          mockDocuments,
-          mockClient
+          mockClient,
+          mockDocuments
         )
       })
     })
@@ -266,7 +266,7 @@ describe('useActions', () => {
       const mockDocument = { id: 'abc', name: 'my-file.md' }
 
       openAction.action([mockDocument])
-      expect(openFileWith).toHaveBeenCalledWith(mockDocument, mockClient)
+      expect(openFileWith).toHaveBeenCalledWith(mockClient, mockDocument)
     })
   })
 
