@@ -37,5 +37,11 @@ describe('connectedRouter', () => {
     const state3 = store.getState()
     expect(state3.params.folderId).toEqual('12345')
     expect(state3.params.fileId).toEqual('67890')
+
+    history.push({
+      pathname: '/recents'
+    })
+    const state4 = store.getState()
+    expect(Object.keys(state4.params).length).toBe(0)
   })
 })
