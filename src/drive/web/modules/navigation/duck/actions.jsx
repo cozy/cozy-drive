@@ -19,6 +19,10 @@ import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import { getOpenedFolderId } from 'drive/web/modules/navigation/duck'
+import {
+  getCurrentFolderId,
+  getFolderContent
+} from 'drive/web/modules/selectors'
 
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
@@ -364,6 +368,54 @@ export const createFolder = name => {
         folder: extractFileAttributes(folder),
         currentFileCount,
         currentSort: sort
+      })
+    } catch (err) {
+      if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
+        Alerter.error('alert.folder_name', { folderName: name })
+      } else {
+        Alerter.error('alert.folder_generic')
+      }
+      throw err
+    }
+  }
+}
+
+/**
+ * Given a folderId, checks the current known state to return if
+ * a folder with the same name exist in the given folderId.
+ *
+ * The local state can be incomplete so this can return false
+ * negatives.
+ */
+const doesFolderExistByName = (state, parentFolderId, name) => {
+  const filesInCurrentView = getFolderContent(state, parentFolderId)
+
+  const existingFolder = filesInCurrentView.find(f => {
+    return isDirectory(f) && f.name === name
+  })
+
+  return Boolean(existingFolder)
+}
+
+/**
+ * Creates a folder in the current view
+ */
+export const createFolderV2 = (client, name) => {
+  return async (dispatch, getState) => {
+    const state = getState()
+    const currentFolderId = getCurrentFolderId(state)
+    const existingFolder = doesFolderExistByName(state, currentFolderId, name)
+
+    if (existingFolder) {
+      Alerter.error('alert.folder_name', { folderName: name })
+      throw new Error('alert.folder_name')
+    }
+
+    try {
+      await client.create('io.cozy.files', {
+        name: name,
+        dirId: currentFolderId,
+        type: 'directory'
       })
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {

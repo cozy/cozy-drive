@@ -21,6 +21,7 @@ export {
   getFileDownloadUrl,
   uploadFiles,
   createFolder,
+  createFolderV2,
   trashFiles,
   downloadFiles,
   exportFilesNative,
