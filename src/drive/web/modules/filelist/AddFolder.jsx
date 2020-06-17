@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 
+import compose from 'lodash/flowRight'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
@@ -49,9 +50,11 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default translate()(
+export default compose(
+  withClient,
+  translate(),
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(AddFolder)
-)
+  )
+)(AddFolder)
