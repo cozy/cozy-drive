@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { models, useClient } from 'cozy-client'
 import { SharingContext, ShareModal } from 'cozy-sharing'
+import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { ModalContext } from 'drive/lib/ModalContext'
 import { useRouter } from 'drive/lib/RouterContext'
 import keyBy from 'lodash/keyBy'
@@ -128,7 +129,15 @@ const useActions = (documentId, { canMove } = {}) => {
       displayCondition: selection =>
         selection.length === 1 && isFile(selection[0]),
       action: files => {
-        // trackEvent()
+        const tracker = getTracker()
+        if (tracker) {
+          tracker.push([
+            'trackEvent',
+            'Drive',
+            'Versioning',
+            'ClickFromMenuFile'
+          ])
+        }
         return router.push(`${location.pathname}/file/${files[0].id}/revision`)
       }
     },
