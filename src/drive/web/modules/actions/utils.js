@@ -126,6 +126,7 @@ export const exportFilesNative = async (client, files, filename) => {
     Alerter.info('alert.preparing', {
       duration: Math.min(downloadAllFiles.length * 2000, 6000)
     })
+    // TODO use a promise pool here
     const urls = await Promise.all(downloadAllFiles)
     if (urls.length === 1 && isIOS()) {
       //TODO
