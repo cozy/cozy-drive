@@ -108,12 +108,13 @@ class FilesViewer extends Component {
 
   getCurrentIndex() {
     const { files, fileId } = this.props
+    // console.log({ files, fileId })
     return files.findIndex(f => f.id === fileId)
   }
 
   render() {
     const { t, files } = this.props
-    const currentIndex = this.getCurrentIndex(files)
+    const currentIndex = this.getCurrentIndex()
 
     // If we can't find the file, we fallback to the (potentially loading)
     // direct stat made by the viewer
