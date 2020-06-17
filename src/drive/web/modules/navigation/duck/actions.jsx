@@ -328,12 +328,17 @@ const uploadQueueProcessed = (
   }
 }
 
+/**
+ * Creates a folder in the current view
+ */
 export const createFolder = name => {
   return async (dispatch, getState) => {
-    const existingFolder = getState().view.files.folder.find(
+    const currentViewState = getState().view
+
+    const existingFolder = currentViewState.files.folder.find(
       f => isDirectory(f) && f.name === name
     )
-    const currentFileCount = getState().view.fileCount
+    const currentFileCount = currentViewState.fileCount
     if (existingFolder) {
       Alerter.error('alert.folder_name', { folderName: name })
       dispatch({
@@ -351,7 +356,7 @@ export const createFolder = name => {
     try {
       const folder = await cozy.client.files.createDirectory({
         name: name,
-        dirID: getState().view.displayedFolder.id
+        dirID: currentViewState.displayedFolder.id
       })
       const sort = getSort(getState())
       dispatch({
