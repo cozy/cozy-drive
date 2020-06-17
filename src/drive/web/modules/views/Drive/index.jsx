@@ -89,14 +89,8 @@ const DriveView = ({ folderId, router, children }) => {
           currentFolderId={currentFolderId}
           navigateToFolder={navigateToFolder}
         />
-        {false && (
-          <Toolbar
-            folderId={null}
-            canUpload={true}
-            canCreateFolder={true}
-            disabled={false}
-          />
-        )}
+        {/* TODO do not have props hardcoded */}
+        <Toolbar canUpload={true} canCreateFolder={true} disabled={false} />
       </Topbar>
       <Dropzone
         role="main"
