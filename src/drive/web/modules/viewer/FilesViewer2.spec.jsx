@@ -86,7 +86,7 @@ describe('FilesViewer', () => {
     expect(root.find(Overlay).length).toBe(1)
     expect(root.find(Viewer).length).toBe(1)
     expect(useQuery).toHaveBeenCalledWith(expect.any(Function), {
-      as: 'file-folder-id-name-desc',
+      as: 'file folder-id name desc',
       fetchPolicy: expect.any(Function)
     })
   })
