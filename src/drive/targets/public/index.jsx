@@ -85,7 +85,11 @@ const init = async () => {
     require(`drive/locales/${lang}`)
   )
 
-  const store = configureStore(client, polyglot.t.bind(polyglot))
+  const store = configureStore({
+    client,
+    t: polyglot.t.bind(polyglot),
+    history: hashHistory
+  })
 
   try {
     const sharedDocumentId = await getSharedDocument(client)

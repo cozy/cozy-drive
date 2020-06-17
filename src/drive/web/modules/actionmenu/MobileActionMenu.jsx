@@ -27,13 +27,13 @@ const Menu = props => {
       {actionNames.map(actionName => {
         const Component = actions[actionName].Component || MenuItem
         const action = actions[actionName].action
-        const onClick = !action
-          ? undefined
-          : () => {
+        const onClick = action
+          ? () => {
               const promise = action([file])
               onClose()
               return promise
             }
+          : null
         return (
           <Component
             key={actionName}

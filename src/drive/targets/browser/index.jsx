@@ -1,4 +1,4 @@
-/* global cozy */
+/* global cozy, __DEVELOPMENT__ */
 // eslint-disable-next-line no-unused-vars
 import mainStyles from 'drive/styles/main.styl'
 
@@ -24,6 +24,13 @@ import { hot } from 'react-hot-loader'
 import { Document } from 'cozy-doctypes'
 
 import App from 'components/App/App'
+
+import flag from 'cozy-flags'
+
+if (__DEVELOPMENT__) {
+  window.flag = flag
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
@@ -47,7 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const polyglot = initTranslation(data.cozyLocale, lang =>
     require(`drive/locales/${lang}`)
   )
-  const store = configureStore(client, polyglot.t.bind(polyglot))
+  let history = hashHistory
+
+  const store = configureStore({
+    client,
+    t: polyglot.t.bind(polyglot),
+    history
+  })
 
   cozy.client.init({
     cozyURL: cozyUrl,
@@ -63,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
     replaceTitleOnMobile: false
   })
 
-  let history = hashHistory
   if (shouldEnableTracking() && getTracker()) {
     let trackerInstance = getTracker()
     history = trackerInstance.connectToHistory(hashHistory)

@@ -11,8 +11,23 @@ import thunkMiddleware from 'redux-thunk'
 import createRootReducer from './rootReducer'
 import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
+import { connectStoreToHistory } from './connectedRouter'
 
-const configureStore = (client, t, initialState = {}) => {
+/**
+ * Creates the redux store
+ *
+ * Contains cozy-client's state and router state
+ *
+ * @param  {Object} options Options
+ * @param  {Object} options.client CozyClient
+ * @param  {Object} options.t Polygot t function
+ * @param  {Object} options.history History
+ *
+ * @return {ReduxStore}
+ */
+const configureStore = options => {
+  const { client, t, initialState = {}, history } = options
+
   const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
   if (__TARGET__ === 'mobile') {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
@@ -48,6 +63,10 @@ const configureStore = (client, t, initialState = {}) => {
         availableOffline: store.getState().availableOffline
       })
     )
+  }
+
+  if (history) {
+    connectStoreToHistory(store, history)
   }
 
   client.setStore(store)

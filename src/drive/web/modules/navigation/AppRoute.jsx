@@ -8,7 +8,8 @@ import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
 import Layout from 'drive/web/modules/layout/Layout'
 import FileExplorer from './FileExplorer'
-import FilesViewer from 'drive/web/modules/viewer/FilesViewer'
+import FilesViewerV1 from 'drive/web/modules/viewer/FilesViewer'
+import FilesViewerV2 from 'drive/web/modules/viewer/FilesViewerV2'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import {
   FolderContainer as Folder,
@@ -22,6 +23,19 @@ import UploadFromMobile from 'drive/mobile/modules/upload'
 import ExternalRedirect from './ExternalRedirect'
 import DriveView from '../views/Drive'
 
+// To keep in sync with AppRoute below, used to extract params
+// in the "router" redux slice. Innermost routes should be
+// first
+export const routes = [
+  '/folder/:folderId/file/:fileId',
+  '/files/:folderId/file/:fileId',
+  '/files/:folderId',
+  '/folder/:folderId'
+]
+
+const FilesViewer = flag('drive.client-migration.enabled')
+  ? FilesViewerV2
+  : FilesViewerV1
 const LegacyDriveView = routerProps => (
   <FileExplorer {...routerProps}>
     <Folder {...routerProps} />

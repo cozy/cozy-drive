@@ -12,6 +12,7 @@ export {
 export {
   openFolder,
   sortFolder,
+  sortFolderV2,
   fetchMoreFiles,
   fetchRecentFiles,
   addFile,
@@ -25,3 +26,5 @@ export {
   exportFilesNative,
   openFileWith
 } from './actions'
+
+export { useFolderSort } from './hooks'

@@ -1,6 +1,7 @@
 /* global __TARGET__ */
-import React, { useCallback, useState, useContext } from 'react'
-import { useQuery, Q } from 'cozy-client'
+import React, { useCallback, useContext } from 'react'
+import { connect } from 'react-redux'
+import { useQuery } from 'cozy-client'
 
 import SharingProvider from 'cozy-sharing'
 import {
@@ -15,7 +16,7 @@ import Dropzone from 'drive/web/modules/upload/Dropzone'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'drive/constants/config'
 
 import { FileListv2 } from 'drive/web/modules/filelist/FileList'
 import { ConnectedFileListBodyV2 as FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
@@ -29,33 +30,16 @@ import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
 import File from './FileWithActions'
+import { buildQuery } from 'drive/web/modules/queries'
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useFolderSort } from 'drive/web/modules/navigation/duck'
 
-const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
-  definition: () =>
-    Q('io.cozy.files')
-      .where({
-        dir_id: currentFolderId,
-        _id: { $ne: TRASH_DIR_ID },
-        type
-      })
-      .indexFields(['dir_id', 'type', sortAttribute])
-      .sortBy([
-        { dir_id: sortOrder },
-        { type: sortOrder },
-        { [sortAttribute]: sortOrder }
-      ]),
-  options: {
-    as: `${type}-${currentFolderId}-${sortAttribute}-${sortOrder}`
-  }
-})
-
-const DriveView = ({ params, router, children }) => {
+const DriveView = ({ folderId, router, children }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
-  const { folderId } = params
-  const [sortOrder, setSortOder] = useState({ attribute: 'name', order: 'asc' })
   const currentFolderId = folderId || ROOT_DIR_ID
+  const [sortOrder, setSortOrder] = useFolderSort(folderId)
 
   const folderQuery = buildQuery({
     currentFolderId,
@@ -82,7 +66,7 @@ const DriveView = ({ params, router, children }) => {
   })
 
   const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
-    setSortOder({ attribute, order })
+    setSortOrder({ sortAttribute: attribute, sortOrder: order })
   )
 
   const isInError =
@@ -200,4 +184,6 @@ const DriveViewWithProvider = props => (
   </SharingProvider>
 )
 
-export default DriveViewWithProvider
+export default connect(state => ({
+  folderId: getCurrentFolderId(state)
+}))(DriveViewWithProvider)

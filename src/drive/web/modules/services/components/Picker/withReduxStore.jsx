@@ -11,7 +11,10 @@ const withReduxStore = WrappedComponent => {
     }
     render() {
       const { client, t } = this.context
-      const store = configureStore(client, t)
+      const store = configureStore({
+        client,
+        t
+      })
 
       return (
         <Provider store={store}>
