@@ -41,8 +41,6 @@ export const FETCH_MORE_FILES = 'FETCH_MORE_FILES'
 export const FETCH_MORE_FILES_SUCCESS = 'FETCH_MORE_FILES_SUCCESS'
 export const FETCH_MORE_FILES_FAILURE = 'FETCH_MORE_FILES_FAILURE'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
-export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
-export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const TRASH_FILES = 'TRASH_FILES'
 export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
@@ -347,10 +345,6 @@ export const createFolder = name => {
     const currentFileCount = currentViewState.fileCount
     if (existingFolder) {
       Alerter.error('alert.folder_name', { folderName: name })
-      dispatch({
-        type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        folderName: name
-      })
       throw new Error('alert.folder_name')
     }
 
@@ -374,15 +368,8 @@ export const createFolder = name => {
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
         Alerter.error('alert.folder_name', { folderName: name })
-        dispatch({
-          type: CREATE_FOLDER_FAILURE_DUPLICATE,
-          folderName: name
-        })
       } else {
         Alerter.error('alert.folder_generic')
-        dispatch({
-          type: CREATE_FOLDER_FAILURE_GENERIC
-        })
       }
       throw err
     }
