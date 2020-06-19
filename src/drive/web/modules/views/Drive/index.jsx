@@ -34,6 +34,8 @@ import { buildQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 
+import RealTimeQueries from './RealTimeQueries'
+
 const DriveView = ({ folderId, router, children }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
@@ -83,6 +85,7 @@ const DriveView = ({ folderId, router, children }) => {
 
   return (
     <Main>
+      <RealTimeQueries doctype="io.cozy.files" />
       <ModalStack />
       <Topbar>
         <Breadcrumb
