@@ -1,5 +1,6 @@
 import maxBy from 'lodash/maxBy'
-import { parseFolderQueryId } from './queries'
+import { getDocumentFromState } from 'cozy-client/dist/store'
+import { getMirrorQueryId, parseFolderQueryId } from './queries'
 
 export const getCurrentFolderId = rootState => {
   if (rootState.router.params.folderId) {
@@ -39,7 +40,14 @@ export const getFolderContent = (rootState, folderId) => {
       folderContentQueries,
       x => x.lastUpdate
     )
-    return mostRecentQueryResults.data
+    const otherQueryId = getMirrorQueryId(mostRecentQueryResults.id)
+    const otherQueryResults = rootState.cozy.queries[otherQueryId]
+    const allContent = mostRecentQueryResults.data.concat(
+      otherQueryResults ? otherQueryResults.data : []
+    )
+    return allContent.map(fileId => {
+      return getDocumentFromState(rootState, 'io.cozy.files', fileId)
+    })
   } else {
     return null
   }

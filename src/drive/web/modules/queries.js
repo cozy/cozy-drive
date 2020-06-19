@@ -16,7 +16,12 @@ export const parseFolderQueryId = maybeFolderQueryId => {
   }
 }
 
-const formatFolderQueryId = (type, folderId, sortAttribute, sortOrder) => {
+export const formatFolderQueryId = (
+  type,
+  folderId,
+  sortAttribute,
+  sortOrder
+) => {
   return `${type} ${folderId} ${sortAttribute} ${sortOrder}`
 }
 
@@ -41,5 +46,26 @@ const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
     )
   }
 })
+
+/**
+ * Get the query for folder if given the query for files
+ * and vice versa.
+ *
+ * If given the queryId `directory id123 name desc`, will return
+ * the query `files id123 name desc`.
+ */
+export const getMirrorQueryId = queryId => {
+  const { type, folderId, sortAttribute, sortOrder } = parseFolderQueryId(
+    queryId
+  )
+  const otherType = type === 'directory' ? 'file' : 'directory'
+  const otherQueryId = formatFolderQueryId(
+    otherType,
+    folderId,
+    sortAttribute,
+    sortOrder
+  )
+  return otherQueryId
+}
 
 export { buildQuery }

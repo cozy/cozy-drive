@@ -10,12 +10,12 @@ beforeEach(() => {
   const files = Array(10)
     .fill(null)
     .map((x, i) => generateFile({ i }))
-
+  const directories = Array(3)
+    .fill(null)
+    .map((x, i) => generateFile({ i, type: 'directory' }))
+  const fileAndDirs = directories.concat(files)
   jest.spyOn(CozyClient.prototype, 'requestQuery').mockResolvedValue({
-    data: files.map(x => ({
-      ...x,
-      _type: 'io.cozy.files'
-    }))
+    data: fileAndDirs
   })
 })
 
@@ -29,6 +29,6 @@ describe('getFolderContent', () => {
     const { store } = await setupFolderContent({ folderId })
     const state = store.getState()
     const files = getFolderContent(state, 'folderid123456')
-    expect(files.length).toBe(10)
+    expect(files.length).toBe(13)
   })
 })
