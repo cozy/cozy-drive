@@ -1,12 +1,13 @@
 import maxBy from 'lodash/maxBy'
 import { getDocumentFromState } from 'cozy-client/dist/store'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
+import { ROOT_DIR_ID } from 'drive/constants/config'
 
 export const getCurrentFolderId = rootState => {
   if (rootState.router.params.folderId) {
     return rootState.router.params.folderId
   } else if (rootState.router.location.pathname == '/folder') {
-    return 'io.cozy.files.root-dir'
+    return ROOT_DIR_ID
   }
   return null
 }
