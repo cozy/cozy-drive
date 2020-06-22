@@ -10,6 +10,6 @@ const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-const toolbarContainer = component => connect(mapStateToProps)(component)
+const toolbarContainer = connect(mapStateToProps)
 
 export default toolbarContainer
