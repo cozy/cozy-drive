@@ -12,7 +12,7 @@ import FolderContent from 'test/components/FolderContent'
 
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
-export const setupStoreAndClient = ({ initialStoreState }) => {
+export const setupStoreAndClient = ({ initialStoreState } = {}) => {
   const client = new CozyClient({})
 
   const store = configureStore({

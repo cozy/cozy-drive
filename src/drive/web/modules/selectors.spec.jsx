@@ -1,7 +1,7 @@
 import CozyClient from 'cozy-client'
 import { generateFile } from 'test/generate'
 import { getFolderContent } from './selectors'
-import { setupFolderContent } from 'test/setup'
+import { setupFolderContent, setupStoreAndClient } from 'test/setup'
 
 jest.mock('cozy-sharing', () => ({}))
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({ routes: [] }))
@@ -24,11 +24,19 @@ afterEach(() => {
 })
 
 describe('getFolderContent', () => {
+  it('should return an empty list if queries have not been loaded', async () => {
+    const folderId = 'folderid123456'
+    const { store } = setupStoreAndClient()
+    const state = store.getState()
+    const files = getFolderContent(state, folderId)
+    expect(files).toEqual(null)
+  })
+
   it('should return content from cozy client queries', async () => {
     const folderId = 'folderid123456'
     const { store } = await setupFolderContent({ folderId })
     const state = store.getState()
-    const files = getFolderContent(state, 'folderid123456')
+    const files = getFolderContent(state, folderId)
     expect(files.length).toBe(13)
   })
 })
