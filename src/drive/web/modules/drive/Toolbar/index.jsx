@@ -12,7 +12,7 @@ import { withClient } from 'cozy-client'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar.styl'
-
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
 
 import UploadButtonItem from './components/UploadButtonItem'
@@ -24,6 +24,12 @@ import SharedRecipients from './share/SharedRecipients'
 class Toolbar extends Component {
   static contextTypes = {
     store: PropTypes.object.isRequired
+  }
+
+  static defaultProps = {
+    canUpload: false,
+    canCreateFolder: false,
+    hasWriteAccess: false
   }
 
   render() {
@@ -88,25 +94,37 @@ class Toolbar extends Component {
     )
   }
 }
+
 const mapStateToProps = state => ({
-  displayedFolder: state.view.displayedFolder,
+  folderId: getCurrentFolderId(state),
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-const ToolbarWithSharingContext = props =>
-  !props.displayedFolder ? (
+/**
+ * Provides the Toolbar with sharing properties of the current folder.
+ *
+ * In views where the displayed folder is virtual (eg: Recent files, Sharings),
+ * no sharing information is provided to the Toolbar.
+ */
+const ToolbarWithSharingContext = props => {
+  return !props.folderId ? (
     <Toolbar {...props} />
   ) : (
-    <SharedDocument docId={props.displayedFolder.id}>
-      {({ isShared, hasWriteAccess }) => (
-        <Toolbar
-          {...props}
-          hasWriteAccess={hasWriteAccess}
-          isShared={isShared}
-        />
-      )}
+    <SharedDocument docId={props.folderId}>
+      {sharingProps => {
+        const { isShared, hasWriteAccess } = sharingProps
+        return (
+          <Toolbar
+            {...props}
+            hasWriteAccess={hasWriteAccess}
+            isShared={isShared}
+          />
+        )
+      }}
     </SharedDocument>
   )
+}
+
 ToolbarWithSharingContext.displayName = 'ToolbarWithSharingContext'
 
 export default compose(

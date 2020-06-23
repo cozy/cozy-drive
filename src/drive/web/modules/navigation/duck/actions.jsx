@@ -19,6 +19,10 @@ import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import { getOpenedFolderId } from 'drive/web/modules/navigation/duck'
+import {
+  getCurrentFolderId,
+  getFolderContent
+} from 'drive/web/modules/selectors'
 
 export const OPEN_FOLDER = 'OPEN_FOLDER'
 export const OPEN_FOLDER_SUCCESS = 'OPEN_FOLDER_SUCCESS'
@@ -41,8 +45,6 @@ export const FETCH_MORE_FILES = 'FETCH_MORE_FILES'
 export const FETCH_MORE_FILES_SUCCESS = 'FETCH_MORE_FILES_SUCCESS'
 export const FETCH_MORE_FILES_FAILURE = 'FETCH_MORE_FILES_FAILURE'
 export const CREATE_FOLDER = 'CREATE_FOLDER'
-export const CREATE_FOLDER_FAILURE_GENERIC = 'CREATE_FOLDER_FAILURE_GENERIC'
-export const CREATE_FOLDER_FAILURE_DUPLICATE = 'CREATE_FOLDER_FAILURE_DUPLICATE'
 export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS'
 export const TRASH_FILES = 'TRASH_FILES'
 export const TRASH_FILES_SUCCESS = 'TRASH_FILES_SUCCESS'
@@ -54,6 +56,12 @@ export const ADD_FILE = 'ADD_FILE'
 export const UPDATE_FILE = 'UPDATE_FILE'
 export const DELETE_FILE = 'DELETE_FILE'
 export const TOGGLE_THUMBNAIL_SIZE = 'TOGGLE_THUMBNAIL_SIZE'
+
+export const OPEN_FOLDER_FROM_SHARINGS = 'OPEN_FOLDER_FROM_SHARINGS'
+export const OPEN_FOLDER_FROM_SHARINGS_SUCCESS =
+  'OPEN_FOLDER_FROM_SHARINGS_SUCCESS'
+export const OPEN_FOLDER_FROM_SHARINGS_FAILURE =
+  'OPEN_FOLDER_FROM_SHARINGS_FAILURE'
 
 const HTTP_CODE_CONFLICT = 409
 
@@ -328,18 +336,19 @@ const uploadQueueProcessed = (
   }
 }
 
+/**
+ * Creates a folder in the current view
+ */
 export const createFolder = name => {
   return async (dispatch, getState) => {
-    const existingFolder = getState().view.files.folder.find(
+    const currentViewState = getState().view
+
+    const existingFolder = currentViewState.files.folder.find(
       f => isDirectory(f) && f.name === name
     )
-    const currentFileCount = getState().view.fileCount
+    const currentFileCount = currentViewState.fileCount
     if (existingFolder) {
       Alerter.error('alert.folder_name', { folderName: name })
-      dispatch({
-        type: CREATE_FOLDER_FAILURE_DUPLICATE,
-        folderName: name
-      })
       throw new Error('alert.folder_name')
     }
 
@@ -351,7 +360,7 @@ export const createFolder = name => {
     try {
       const folder = await cozy.client.files.createDirectory({
         name: name,
-        dirID: getState().view.displayedFolder.id
+        dirID: currentViewState.displayedFolder.id
       })
       const sort = getSort(getState())
       dispatch({
@@ -363,15 +372,56 @@ export const createFolder = name => {
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
         Alerter.error('alert.folder_name', { folderName: name })
-        dispatch({
-          type: CREATE_FOLDER_FAILURE_DUPLICATE,
-          folderName: name
-        })
       } else {
         Alerter.error('alert.folder_generic')
-        dispatch({
-          type: CREATE_FOLDER_FAILURE_GENERIC
-        })
+      }
+      throw err
+    }
+  }
+}
+
+/**
+ * Given a folderId, checks the current known state to return if
+ * a folder with the same name exist in the given folderId.
+ *
+ * The local state can be incomplete so this can return false
+ * negatives.
+ */
+const doesFolderExistByName = (state, parentFolderId, name) => {
+  const filesInCurrentView = getFolderContent(state, parentFolderId)
+
+  const existingFolder = filesInCurrentView.find(f => {
+    return isDirectory(f) && f.name === name
+  })
+
+  return Boolean(existingFolder)
+}
+
+/**
+ * Creates a folder in the current view
+ */
+export const createFolderV2 = (client, name) => {
+  return async (dispatch, getState) => {
+    const state = getState()
+    const currentFolderId = getCurrentFolderId(state)
+    const existingFolder = doesFolderExistByName(state, currentFolderId, name)
+
+    if (existingFolder) {
+      Alerter.error('alert.folder_name', { folderName: name })
+      throw new Error('alert.folder_name')
+    }
+
+    try {
+      await client.create('io.cozy.files', {
+        name: name,
+        dirId: currentFolderId,
+        type: 'directory'
+      })
+    } catch (err) {
+      if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
+        Alerter.error('alert.folder_name', { folderName: name })
+      } else {
+        Alerter.error('alert.folder_generic')
       }
       throw err
     }

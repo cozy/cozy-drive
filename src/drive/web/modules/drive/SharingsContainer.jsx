@@ -8,7 +8,10 @@ import Container from 'drive/web/modules/drive/Container'
 import {
   FETCH_SHARINGS,
   FETCH_SHARINGS_SUCCESS,
-  FETCH_SHARINGS_FAILURE
+  FETCH_SHARINGS_FAILURE,
+  OPEN_FOLDER_FROM_SHARINGS,
+  OPEN_FOLDER_FROM_SHARINGS_SUCCESS,
+  OPEN_FOLDER_FROM_SHARINGS_FAILURE
 } from 'drive/web/modules/navigation/duck/actions'
 import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 
@@ -180,9 +183,5 @@ const SharingsContainer = props => (
     )}
   </SharedDocuments>
 )
-export const OPEN_FOLDER_FROM_SHARINGS = 'OPEN_FOLDER_FROM_SHARINGS'
-export const OPEN_FOLDER_FROM_SHARINGS_SUCCESS =
-  'OPEN_FOLDER_FROM_SHARINGS_SUCCESS'
-export const OPEN_FOLDER_FROM_SHARINGS_FAILURE =
-  'OPEN_FOLDER_FROM_SHARINGS_FAILURE'
+
 export default SharingsContainer

@@ -21,7 +21,10 @@ import {
   ADD_FILE,
   UPDATE_FILE,
   DELETE_FILE,
-  TOGGLE_THUMBNAIL_SIZE
+  TOGGLE_THUMBNAIL_SIZE,
+  OPEN_FOLDER_FROM_SHARINGS_FAILURE,
+  OPEN_FOLDER_FROM_SHARINGS,
+  OPEN_FOLDER_FROM_SHARINGS_SUCCESS
 } from './actions'
 
 import {
@@ -35,11 +38,6 @@ import {
   OPEN_FOLDER_FROM_TRASH_FAILURE
 } from 'drive/web/modules/trash/actions'
 
-import {
-  OPEN_FOLDER_FROM_SHARINGS_FAILURE,
-  OPEN_FOLDER_FROM_SHARINGS,
-  OPEN_FOLDER_FROM_SHARINGS_SUCCESS
-} from 'drive/web/modules/drive/SharingsContainer'
 import { RENAME_SUCCESS } from 'drive/web/modules/drive/rename'
 import { isDirectory } from 'drive/web/modules/drive/files'
 
