@@ -183,11 +183,11 @@ class InitAppMobile {
     //it's just here to have a few logs in sentry if needed
     function initSuccess() {
       //eslint-disable-next-line
-      console.log("init success!");
+      console.log('init success!')
     }
     function initError(err) {
       //eslint-disable-next-line
-      console.log("init failed: " + err);
+      console.log('init failed: ' + err)
     }
 
     cordova.openwith && cordova.openwith.init(initSuccess, initError)
