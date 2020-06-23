@@ -1,7 +1,9 @@
 /* global cozy, document */
 import { LocalStorage as Storage } from 'cozy-client-js'
-import CozyClient from 'cozy-client'
+import CozyClient, { StackLink } from 'cozy-client'
+import PouchLink from 'cozy-pouch-link'
 import { RealtimePlugin } from 'cozy-realtime'
+import { isMobileApp, isIOSApp } from 'cozy-device-helper'
 
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { disableBackgroundService } from './background'
@@ -26,12 +28,31 @@ export const getOauthOptions = () => {
 }
 
 export const initClient = url => {
+  const stackLink = new StackLink()
+
+  const pouchLinkOptions = {
+    doctypes: [DOCTYPE_FILES],
+    initialSync: true
+  }
+
+  if (isMobileApp() && isIOSApp()) {
+    pouchLinkOptions.pouch = {
+      plugins: [require('pouchdb-adapter-cordova-sqlite')],
+      options: {
+        adapter: 'cordova-sqlite',
+        location: 'default'
+      }
+    }
+  }
+
+  const pouchLink = new PouchLink(pouchLinkOptions)
+
   return new CozyClient({
     uri: url,
     oauth: getOauthOptions(),
-    offline: { doctypes: [DOCTYPE_FILES] },
     appMetadata,
-    schema
+    schema,
+    links: [pouchLink, stackLink]
   })
 }
 
