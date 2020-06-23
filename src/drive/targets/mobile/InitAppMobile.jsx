@@ -133,7 +133,8 @@ class InitAppMobile {
     this.store = configureStore({
       client: client,
       t: polyglot.t.bind(polyglot),
-      initialState: persistedState
+      initialState: persistedState,
+      history: hashHistory
     })
     return this.store
   }
