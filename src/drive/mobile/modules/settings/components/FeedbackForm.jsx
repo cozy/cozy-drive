@@ -1,9 +1,11 @@
-/* global cozy */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import compose from 'lodash/flowRight'
+import { withClient } from 'cozy-client'
 import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
 import { Button } from 'cozy-ui/transpiled/react/Button'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import styles from '../styles.styl'
 import { logInfo } from 'drive/lib/reporter'
@@ -15,13 +17,10 @@ class FeedbackForm extends Component {
   state = {
     sending: false
   }
-  static contextTypes = {
-    t: PropTypes.func.isRequired
-  }
 
   submitForm = async e => {
     e.preventDefault()
-    const { t } = this.context
+    const { t, client } = this.props
     const envInfo =
       `Cozy Drive Mobile v${appMetadata.version}` +
       `\nOn ${navigator.platform}` +
@@ -42,11 +41,14 @@ class FeedbackForm extends Component {
       this.setState({ sending: true })
       logInfo(
         `feedback logs: ${this.textarea.value.toString().substr(0, 40)}`,
-        cozy.client._url
+        client.stackClient.uri
       )
-      await cozy.client.jobs.create('sendmail', mailData)
+      const jobCollection = client.collection('io.cozy.jobs')
+      await jobCollection.create('sendmail', mailData)
     } catch (e) {
       // Sending the email failed; this can happen because of insuficient permissions for example. Not a big deal either in this context.
+      // eslint-disable-next-line no-console
+      console.error(e)
     }
     this.clearInput()
     this.setState({ sending: false })
@@ -56,13 +58,14 @@ class FeedbackForm extends Component {
   registerElement(element) {
     this.textarea = element
   }
+
   clearInput() {
     this.textarea.value = ''
   }
+
   render() {
-    const { onClose } = this.props
+    const { onClose, t } = this.props
     const { sending } = this.state
-    const { t } = this.context
     return (
       <Modal
         title={t('mobile.rating.feedback.title')}
@@ -96,8 +99,14 @@ class FeedbackForm extends Component {
     )
   }
 }
+
 FeedbackForm.propTypes = {
   onClose: PropTypes.func.isRequired
 }
 
-export default FeedbackForm
+export { FeedbackForm }
+
+export default compose(
+  withClient,
+  translate()
+)(FeedbackForm)
