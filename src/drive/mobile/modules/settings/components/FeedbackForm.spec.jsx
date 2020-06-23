@@ -4,7 +4,6 @@ import CozyClient from 'cozy-client'
 
 import FeedbackForm, { FeedbackForm as DumbFeedbackForm } from './FeedbackForm'
 import AppLike from 'test/components/AppLike'
-import JobCollection from 'cozy-stack-client/dist/JobCollection'
 
 describe('FeedbackForm', () => {
   const setup = () => {
