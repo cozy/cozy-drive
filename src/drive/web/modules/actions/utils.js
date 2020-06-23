@@ -1,4 +1,5 @@
 import { models } from 'cozy-client'
+import { receiveQueryResult } from 'cozy-client/dist/store'
 import { isMobileApp, isIOS } from 'cozy-device-helper'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
@@ -91,8 +92,15 @@ const isAlreadyInTrash = err => {
 export const trashFiles = async (client, files) => {
   try {
     for (const file of files) {
-      await client.collection('io.cozy.files').destroy(file)
+      const { data: updatedFile } = await client
+        .collection('io.cozy.files')
+        .destroy(file)
       client.collection('io.cozy.permissions').revokeSharingLink(file)
+      client.store.dispatch(
+        receiveQueryResult(null, {
+          data: updatedFile
+        })
+      )
     }
 
     Alerter.success('alert.trash_file_success')
