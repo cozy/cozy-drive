@@ -1,6 +1,6 @@
 import CozyClient from 'cozy-client'
 import { generateFile } from 'test/generate'
-import { getFolderContent } from './selectors'
+import { getFolderContent, getDisplayedFolder } from './selectors'
 import { setupFolderContent, setupStoreAndClient } from 'test/setup'
 
 jest.mock('cozy-sharing', () => ({}))
@@ -24,7 +24,7 @@ afterEach(() => {
 })
 
 describe('getFolderContent', () => {
-  it('should return an empty list if queries have not been loaded', async () => {
+  it('should return an empty list if queries have not been loaded', () => {
     const folderId = 'folderid123456'
     const { store } = setupStoreAndClient()
     const state = store.getState()
@@ -38,5 +38,25 @@ describe('getFolderContent', () => {
     const state = store.getState()
     const files = getFolderContent(state, folderId)
     expect(files.length).toBe(13)
+  })
+})
+
+describe('getDisplayedFolder', () => {
+  it('should return the currently displayed folder as a io.cozy.file', async () => {
+    const folderId = 'directory-foobar0'
+    const { store } = await setupFolderContent({
+      folderId,
+      initialStoreState: {
+        router: {
+          params: {
+            folderId: folderId
+          }
+        }
+      }
+    })
+    const state = store.getState()
+    const folder = getDisplayedFolder(state)
+    expect(folder._id).toEqual(folderId)
+    expect(folder.name).toEqual('foobar0')
   })
 })
