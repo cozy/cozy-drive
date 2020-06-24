@@ -45,7 +45,11 @@ class Toolbar extends Component {
       breakpoints: { isMobile },
       client
     } = this.props
+
     const isDisabled = disabled || selectionModeActive
+    if (disabled) {
+      return null
+    }
     const { BarRight } = cozy.bar
 
     return (
