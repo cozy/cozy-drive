@@ -28,6 +28,8 @@ import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
 import File from '../FileWithActions'
+import RealTimeQueries from '../Drive/RealTimeQueries'
+
 import {
   buildRecentQuery,
   buildParentsByIdsQuery
@@ -79,6 +81,7 @@ const RecentView = ({ router, children }) => {
 
   return (
     <Main>
+      <RealTimeQueries doctype="io.cozy.files" />
       <ModalStack />
       <Topbar>
         <Breadcrumb />
