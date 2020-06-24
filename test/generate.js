@@ -10,6 +10,7 @@ const generateFile = ({ i, prefix = 'foobar', type = 'file', ext } = {}) => {
     dir_id: 'io.cozy.files.root-dir',
     displayedPath: '/',
     id: `${type}-${prefix}${i}`,
+    _id: `${type}-${prefix}${i}`,
     name: `${prefix}${i}${ext}`,
     path: `/${prefix}${i}${ext}`,
     type,
