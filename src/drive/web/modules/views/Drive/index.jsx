@@ -30,7 +30,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
 import File from './FileWithActions'
-import { buildQuery } from 'drive/web/modules/queries'
+import { buildDriveQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { ModalManager } from 'react-cozy-helpers'
@@ -44,13 +44,13 @@ const DriveView = ({ folderId, router, children }) => {
   const currentFolderId = folderId || ROOT_DIR_ID
   const [sortOrder, setSortOrder] = useFolderSort(folderId)
 
-  const folderQuery = buildQuery({
+  const folderQuery = buildDriveQuery({
     currentFolderId,
     type: 'directory',
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  const fileQuery = buildQuery({
+  const fileQuery = buildDriveQuery({
     currentFolderId,
     type: 'file',
     sortAttribute: sortOrder.attribute,

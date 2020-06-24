@@ -28,7 +28,12 @@ export const formatFolderQueryId = (
   return `${type} ${folderId} ${sortAttribute} ${sortOrder}`
 }
 
-const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
+const buildDriveQuery = ({
+  currentFolderId,
+  type,
+  sortAttribute,
+  sortOrder
+}) => ({
   definition: () =>
     Q('io.cozy.files')
       .where({

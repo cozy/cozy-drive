@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react'
 import { useQuery } from 'cozy-client'
-import { buildQuery } from 'drive/web/modules/queries'
+import { buildDriveQuery } from 'drive/web/modules/queries'
 
 /** A simple component firing the same queries as DriveView */
 const Component = ({ folderId, sortOrder }) => {
   const fileQuery = useMemo(
     () =>
-      buildQuery({
+      buildDriveQuery({
         currentFolderId: folderId,
         type: 'file',
         sortAttribute: sortOrder.attribute,
@@ -16,7 +16,7 @@ const Component = ({ folderId, sortOrder }) => {
   )
   const folderQuery = useMemo(
     () =>
-      buildQuery({
+      buildDriveQuery({
         currentFolderId: folderId,
         type: 'directory',
         sortAttribute: sortOrder.attribute,
