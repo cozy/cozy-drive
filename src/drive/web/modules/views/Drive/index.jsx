@@ -11,7 +11,7 @@ import {
 import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
 import { RouterContextProvider } from 'drive/lib/RouterContext'
 
-import SelectionBar from './SelectionBarWithActions'
+import SelectionBar from '../SelectionBarWithActions'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
@@ -29,7 +29,7 @@ import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlac
 import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
-import File from './FileWithActions'
+import File from '../FileWithActions'
 import { buildDriveQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
