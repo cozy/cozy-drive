@@ -1,7 +1,7 @@
 /* global __TARGET__ */
 import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
-import { useQuery, Q } from 'cozy-client'
+import { useQuery } from 'cozy-client'
 
 import SharingProvider from 'cozy-sharing'
 import {
@@ -77,8 +77,8 @@ const DriveView = ({ folderId, router, children }) => {
     ((foldersResult.data && foldersResult.data.length > 0) ||
       (filesResult.data && filesResult.data.length > 0))
   const isLoading =
-    foldersResult.fetchStatus === 'loading' ||
-    filesResult.fetchStatus === 'loading'
+    (foldersResult.fetchStatus === 'loading' && !foldersResult.lastUpdate) ||
+    (filesResult.fetchStatus === 'loading' && !filesResult.lastUpdate)
   const isPending =
     foldersResult.fetchStatus === 'pending' ||
     filesResult.fetchStatus === 'pending'
