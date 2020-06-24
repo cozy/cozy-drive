@@ -1,7 +1,15 @@
+import React from 'react'
+import { mount } from 'enzyme'
 import CozyClient from 'cozy-client'
 import { generateFile } from 'test/generate'
-import { getFolderContent, getDisplayedFolder } from './selectors'
+import {
+  getFolderContent,
+  getDisplayedFolder,
+  getCurrentViewFetchStatus
+} from './selectors'
 import { setupFolderContent, setupStoreAndClient } from 'test/setup'
+import AppLike from 'test/components/AppLike'
+import FolderContent from 'test/components/FolderContent'
 
 jest.mock('cozy-sharing', () => ({}))
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({ routes: [] }))
@@ -58,5 +66,42 @@ describe('getDisplayedFolder', () => {
     const folder = getDisplayedFolder(state)
     expect(folder._id).toEqual(folderId)
     expect(folder.name).toEqual('foobar0')
+  })
+})
+
+const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
+
+describe('getCurrentViewFetchStatus', () => {
+  it('should return the fetch status', async () => {
+    const folderId = 'directory-foobar0'
+    const initialStoreState = {
+      router: {
+        params: {
+          folderId: folderId
+        }
+      }
+    }
+
+    const { client, store } = setupStoreAndClient({ initialStoreState })
+
+    const sortOrder = {
+      attribute: 'name',
+      order: 'desc'
+    }
+    mount(
+      <AppLike store={store} client={client}>
+        <FolderContent folderId={folderId} sortOrder={sortOrder} />
+      </AppLike>
+    )
+
+    const state = store.getState()
+    const status = getCurrentViewFetchStatus(state)
+    expect(status).toEqual('loading')
+
+    await sleep(1)
+
+    const state2 = store.getState()
+    const status2 = getCurrentViewFetchStatus(state2)
+    expect(status2).toEqual('loaded')
   })
 })
