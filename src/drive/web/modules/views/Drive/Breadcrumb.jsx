@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
-import { useQuery, Q } from 'cozy-client'
+import { useQuery } from 'cozy-client'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 import { useI18n } from 'cozy-ui/react/I18n'
 import { MobileAwareBreadcrumbV2 as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import { ROOT_DIR_ID } from 'drive/constants/config'
+import { buildFolderQuery } from 'drive/web/modules/queries'
 
 const getBreadcrumbPath = (t, displayedFolder) =>
   uniqBy(
@@ -32,13 +33,12 @@ const getBreadcrumbPath = (t, displayedFolder) =>
 
 const DriveBreadcrumb = ({ currentFolderId, navigateToFolder }) => {
   const { t } = useI18n()
-  const currentFolderQuery = useQuery(
-    () => Q('io.cozy.files').getById(currentFolderId),
-    {
-      as: 'folder-' + currentFolderId
-    }
+  const currentFolderQuery = buildFolderQuery(currentFolderId)
+  const currentFolderQueryResults = useQuery(
+    currentFolderQuery.definition,
+    currentFolderQuery.options
   )
-  const currentFolder = get(currentFolderQuery, 'data[0]')
+  const currentFolder = get(currentFolderQueryResults, 'data[0]')
   const path = currentFolder ? getBreadcrumbPath(t, currentFolder) : []
 
   const onBreadcrumbClick = useCallback(({ id }) => navigateToFolder(id), [
