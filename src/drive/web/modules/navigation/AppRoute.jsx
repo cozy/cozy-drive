@@ -22,6 +22,7 @@ import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
 import DriveView from '../views/Drive'
+import RecentView from '../views/Recent'
 
 // To keep in sync with AppRoute below, used to extract params
 // in the "router" redux slice. Innermost routes should be
@@ -39,6 +40,12 @@ const FilesViewer = flag('drive.client-migration.enabled')
 const LegacyDriveView = routerProps => (
   <FileExplorer {...routerProps}>
     <Folder {...routerProps} />
+  </FileExplorer>
+)
+
+const LegacyRecentView = routerProps => (
+  <FileExplorer {...routerProps}>
+    <Recent {...routerProps} />
   </FileExplorer>
 )
 
@@ -66,11 +73,19 @@ const AppRoute = (
         <Route path="file/:fileId/revision" component={FileHistory} />
       </Route>
 
+      <Route
+        path="recent"
+        component={
+          flag('drive.client-migration.enabled') ? RecentView : LegacyRecentView
+        }
+      >
+        <Route path="file/:fileId" component={FilesViewer} />
+        <Route path="file/:fileId/revision" component={FileHistory} />
+      </Route>
+
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
-        <Route path="recent" component={Recent}>
-          <Route path="file/:fileId" component={FilesViewer} />
-        </Route>
+
         <Route path="sharings" component={Sharings}>
           <Route path=":folderId">
             <Route path="file/:fileId" component={FilesViewer} />

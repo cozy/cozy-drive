@@ -53,6 +53,30 @@ const buildDriveQuery = ({
   }
 })
 
+const buildRecentQuery = () => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        trashed: false,
+        type: 'file',
+        updated_at: { $gt: null }
+      })
+      .indexFields(['updated_at', 'type', 'trashed'])
+      .sortBy([{ updated_at: 'desc' }]),
+  options: {
+    as: 'recent-view-query',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+const buildParentsByIdsQuery = ids => ({
+  definition: () => Q('io.cozy.files').getByIds(ids),
+  options: {
+    as: `parents-by-ids-${ids.join('')}`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 /**
  * Get the query for folder if given the query for files
  * and vice versa.
@@ -85,4 +109,4 @@ export const buildFolderQuery = folderId => ({
   }
 })
 
-export { buildQuery }
+export { buildDriveQuery, buildRecentQuery, buildParentsByIdsQuery }
