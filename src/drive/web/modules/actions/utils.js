@@ -92,15 +92,18 @@ const isAlreadyInTrash = err => {
 export const trashFiles = async (client, files) => {
   try {
     for (const file of files) {
+      // TODO we should not go through a FileCollection to destroy the file, but
+      // only do client.destroy(), I do not know what it did not update the internal
+      // store correctly when I tried
       const { data: updatedFile } = await client
         .collection('io.cozy.files')
         .destroy(file)
-      client.collection('io.cozy.permissions').revokeSharingLink(file)
       client.store.dispatch(
         receiveQueryResult(null, {
           data: updatedFile
         })
       )
+      client.collection('io.cozy.permissions').revokeSharingLink(file)
     }
 
     Alerter.success('alert.trash_file_success')
