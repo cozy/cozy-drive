@@ -1,8 +1,9 @@
-import CozyClient from 'cozy-client'
+import CozyClient, { createMockClient } from 'cozy-client'
+import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
 import configureStore from 'drive/store/configureStore'
 import { generateFile } from 'test/generate'
-import { trashFiles } from './utils'
+import { trashFiles, downloadFiles } from './utils'
 import FileCollection from 'cozy-stack-client/dist/FileCollection'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 
@@ -15,6 +16,10 @@ jest.mock('cozy-stack-client/dist/FileCollection', () => {
   FileCollection.prototype.destroy = jest.fn()
   return FileCollection
 })
+
+jest.mock('cozy-stack-client/dist/utils', () => ({
+  forceFileDownload: jest.fn()
+}))
 
 describe('trashFiles', () => {
   const setup = () => {
@@ -58,5 +63,78 @@ describe('trashFiles', () => {
     const state2 = store.getState()
     const updatedFile = state2.cozy.documents['io.cozy.files'][file._id]
     expect(updatedFile.dir_id).toEqual('io.cozy.files.trash-dir')
+  })
+})
+
+describe('downloadFiles', () => {
+  const mockClient = createMockClient({})
+  mockClient.stackClient.uri = 'http://cozy.tools'
+  const mockGetDownloadLinkById = jest.fn()
+  const mockGetArchiveLinkByIds = jest.fn()
+
+  beforeEach(() => {
+    mockClient.collection = () => ({
+      getDownloadLinkById: mockGetDownloadLinkById,
+      getArchiveLinkByIds: mockGetArchiveLinkByIds
+    })
+  })
+
+  it('downloads a single file', async () => {
+    const file = {
+      id: 'file-id-1',
+      name: 'my-file.pdf',
+      type: 'file'
+    }
+    const fileDownloadUrl = 'http://cozy.tools/download/url'
+    mockGetDownloadLinkById.mockResolvedValueOnce(fileDownloadUrl)
+    await downloadFiles(mockClient, [file])
+
+    expect(forceFileDownload).toHaveBeenCalledWith(
+      `${fileDownloadUrl}?Dl=1`,
+      file.name
+    )
+  })
+
+  it('downloads a folder', async () => {
+    const folder = {
+      id: 'folder-id-1',
+      name: 'Classified',
+      type: 'directory'
+    }
+    const folderDownloadUrl = '/download/url'
+    mockGetArchiveLinkByIds.mockResolvedValueOnce(folderDownloadUrl)
+    await downloadFiles(mockClient, [folder])
+
+    expect(forceFileDownload).toHaveBeenCalledWith(
+      `http://cozy.tools${folderDownloadUrl}`,
+      'files.zip'
+    )
+  })
+
+  it('downloads multiple files', async () => {
+    const files = [
+      {
+        id: 'file-id-1',
+        name: 'my-file-1.pdf',
+        type: 'file'
+      },
+      {
+        id: 'file-id-2',
+        name: 'my-file-2.pdf',
+        type: 'file'
+      }
+    ]
+    const folderDownloadUrl = '/download/url'
+    mockGetArchiveLinkByIds.mockResolvedValueOnce(folderDownloadUrl)
+    await downloadFiles(mockClient, files)
+
+    expect(mockGetArchiveLinkByIds).toHaveBeenCalledWith([
+      'file-id-1',
+      'file-id-2'
+    ])
+    expect(forceFileDownload).toHaveBeenCalledWith(
+      `http://cozy.tools${folderDownloadUrl}`,
+      'files.zip'
+    )
   })
 })

@@ -49,15 +49,12 @@ export const downloadFiles = async (client, files) => {
     const file = files[0]
 
     try {
+      const filename = file.name
       const downloadURL = await client
         .collection('io.cozy.files')
-        .getDownloadLinkById(file.id)
-      const filename = file.name
+        .getDownloadLinkById(file.id, filename)
 
-      forceFileDownload(
-        `${client.getStackClient().uri}${downloadURL}?Dl=1`,
-        filename
-      )
+      forceFileDownload(`${downloadURL}?Dl=1`, filename)
     } catch (error) {
       Alerter.error(downloadFileError(error))
     }
