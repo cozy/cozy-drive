@@ -15,15 +15,16 @@ import {
   RecentContainer as Recent,
   SharingsContainer as Sharings
 } from 'drive/web/modules/drive'
-import { Container as Trash } from 'drive/web/modules/trash'
+import { Container as LegacyTrash } from 'drive/web/modules/trash'
 import FileHistory from '../../../../components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
 import DriveView from '../views/Drive'
 import FilesViewerDrive from '../views/Drive/FilesViewerDrive'
-
 import RecentView from '../views/Recent'
+import TrashView from '../views/Trash'
+
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // To keep in sync with AppRoute below, used to extract params
 // in the "router" redux slice. Innermost routes should be
@@ -99,7 +100,12 @@ const AppRoute = (
           </Route>
           <Route path="file/:fileId" component={FilesViewer} />
         </Route>
-        <Route path="trash" component={Trash}>
+        <Route
+          path="trash"
+          component={
+            flag('drive.client-migration.enabled') ? TrashView : LegacyTrash
+          }
+        >
           <Route path=":folderId">
             <Route path="file/:fileId" component={FilesViewer} />
           </Route>
