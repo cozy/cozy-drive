@@ -3,6 +3,7 @@ import styles from './pushClient.styl'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import React, { Component } from 'react'
+import { withClient } from 'cozy-client'
 import localforage from 'localforage'
 import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'drive/config/config.json'
@@ -22,7 +23,7 @@ class ButtonClient extends Component {
     // we want to show the button if the banner has been marked as seen *and*
     // the client hasn't been already installed
     if (seen) {
-      const mustSee = !(await isClientAlreadyInstalled())
+      const mustSee = !(await isClientAlreadyInstalled(this.props.client))
       if (mustSee) {
         this.setState(state => ({ ...state, mustShow: true }))
       }
@@ -52,4 +53,4 @@ class ButtonClient extends Component {
   }
 }
 
-export default translate()(ButtonClient)
+export default translate()(withClient(ButtonClient))
