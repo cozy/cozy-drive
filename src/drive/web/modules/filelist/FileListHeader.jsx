@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { useI18n } from 'cozy-ui/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import iconList from 'drive/assets/icons/icon-list.svg'

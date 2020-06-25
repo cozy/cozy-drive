@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import cx from 'classnames'
-import { useI18n } from 'cozy-ui/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import MobileSortMenu from './MobileSortMenu'
