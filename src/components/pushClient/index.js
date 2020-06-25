@@ -1,4 +1,3 @@
-/* global cozy */
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 export const track = element => {
