@@ -21,8 +21,8 @@ export const isIOS = () =>
 export const DESKTOP_BANNER = 'desktop_banner'
 export const NOVIEWER_DESKTOP_CTA = 'noviewer_desktop_cta'
 
-export const isClientAlreadyInstalled = async () => {
-  const resp = await cozy.client.fetchJSON('GET', '/settings/clients')
+export const isClientAlreadyInstalled = async client => {
+  const resp = await client.query(client.get('io.cozy.settings', 'clients'))
   return resp.some(
     device =>
       device.attributes.software_id === 'github.com/cozy-labs/cozy-desktop'

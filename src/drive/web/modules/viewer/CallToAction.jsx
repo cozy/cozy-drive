@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-
+import { withClient } from 'cozy-client'
 import localforage from 'localforage'
 import {
   isClientAlreadyInstalled,
@@ -11,7 +11,7 @@ import styles from './styles.styl'
 import Config from 'drive/config/config.json'
 import palette from 'cozy-ui/transpiled/react/palette'
 
-export default class CallToAction extends Component {
+class CallToAction extends Component {
   state = {
     mustShow: false
   }
@@ -21,7 +21,7 @@ export default class CallToAction extends Component {
     const seen = (await localforage.getItem(NOVIEWER_DESKTOP_CTA)) || false
     if (!seen) {
       try {
-        const mustSee = !(await isClientAlreadyInstalled())
+        const mustSee = !(await isClientAlreadyInstalled(this.props.client))
         if (mustSee) {
           this.setState({ mustShow: true })
         }
@@ -67,3 +67,4 @@ export default class CallToAction extends Component {
     )
   }
 }
+export default withClient(CallToAction)
