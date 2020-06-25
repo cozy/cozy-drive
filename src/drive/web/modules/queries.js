@@ -77,6 +77,22 @@ const buildParentsByIdsQuery = ids => ({
   }
 })
 
+const buildTrashQuery = () => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        type: { $gt: null },
+        dir_id: TRASH_DIR_ID
+      })
+      .indexFields(['type', 'name'])
+      .sortBy([{ type: 'asc' }, { name: 'asc' }]),
+  options: {
+    as: 'trash-view-query',
+    fetchPolicy: CozyClient.fetchPolicies.olderThan(
+      DEFAULT_CACHE_TIMEOUT_QUERIES
+    )
+  }
+})
 /**
  * Get the query for folder if given the query for files
  * and vice versa.
@@ -109,4 +125,9 @@ export const buildFolderQuery = folderId => ({
   }
 })
 
-export { buildDriveQuery, buildRecentQuery, buildParentsByIdsQuery }
+export {
+  buildDriveQuery,
+  buildRecentQuery,
+  buildParentsByIdsQuery,
+  buildTrashQuery
+}
