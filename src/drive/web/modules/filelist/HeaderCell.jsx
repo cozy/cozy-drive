@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import cx from 'classnames'
-import { useI18n } from 'cozy-ui/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import styles from 'drive/styles/filelist.styl'
 
 const HeaderCell = ({
