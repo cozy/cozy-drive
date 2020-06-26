@@ -6,7 +6,6 @@ import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'cozy-sharing'
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { ModalContextProvider } from 'drive/lib/ModalContext'
-import { RouterContextProvider } from 'drive/lib/RouterContext'
 
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
@@ -17,11 +16,9 @@ const App = props => {
         <CozyProvider client={props.client}>
           <SharingProvider doctype="io.cozy.files" documentType="Files">
             <ThumbnailSizeContextProvider>
-              <RouterContextProvider>
-                <ModalContextProvider>
-                  <StyledApp>{props.children}</StyledApp>
-                </ModalContextProvider>
-              </RouterContextProvider>
+              <ModalContextProvider>
+                <StyledApp>{props.children}</StyledApp>
+              </ModalContextProvider>
             </ThumbnailSizeContextProvider>
           </SharingProvider>
         </CozyProvider>
