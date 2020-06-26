@@ -1,50 +1,51 @@
-/* global __TARGET__ */
 import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
 import { useQuery } from 'cozy-client'
+import get from 'lodash/get'
+import uniqBy from 'lodash/uniqBy'
 
-import SharingProvider, { SharingContext } from 'cozy-sharing'
-import {
-  ThumbnailSizeContext,
-  ThumbnailSizeContextProvider
-} from 'drive/lib/ThumbnailSizeContext'
-import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
-import { RouterContextProvider } from 'drive/lib/RouterContext'
+import { SharingContext } from 'cozy-sharing'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useActions from 'drive/web/modules/actions/useActions'
 
-import SelectionBar from 'drive/web/modules/selection/SelectionBar'
-import Dropzone from 'drive/web/modules/upload/Dropzone'
-import Main from 'drive/web/modules/layout/Main'
-import Topbar from 'drive/web/modules/layout/Topbar'
+import FolderView from '../Folder/FolderView'
+import FolderViewHeader from '../Folder/FolderViewHeader'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 
-import { FileListv2 } from 'drive/web/modules/filelist/FileList'
-import { ConnectedFileListBodyV2 as FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
-import AddFolder from 'drive/web/modules/filelist/AddFolder'
-import FileListHeader from 'drive/web/modules/filelist/FileListHeader'
-import MobileFileListHeader from 'drive/web/modules/filelist/MobileFileListHeader'
-import Oops from 'components/Error/Oops'
-import { EmptyDrive } from 'components/Error/Empty'
-import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
-import { isMobileApp } from 'cozy-device-helper'
-import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
-import Breadcrumb from './Breadcrumb'
-import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
 import { buildDriveQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
-import { ModalManager } from 'react-cozy-helpers'
 
-import useActions from 'drive/web/modules/actions/useActions'
-
-import RealTimeQueries from './RealTimeQueries'
+const getBreadcrumbPath = (t, displayedFolder) =>
+  uniqBy(
+    [
+      {
+        id: ROOT_DIR_ID
+      },
+      {
+        id: get(displayedFolder, 'dir_id')
+      },
+      {
+        id: displayedFolder.id,
+        name: displayedFolder.name
+      }
+    ],
+    'id'
+  )
+    .filter(({ id }) => Boolean(id))
+    .map(breadcrumb => ({
+      id: breadcrumb.id,
+      name:
+        breadcrumb.name ||
+        (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
+    }))
 
 const DriveView = ({ folderId, router, children }) => {
-  const { isBigThumbnail, toggleThumbnailSize } = useContext(
-    ThumbnailSizeContext
-  )
   const currentFolderId = folderId || ROOT_DIR_ID
-  const [sortOrder, setSortOrder] = useFolderSort(folderId)
+  const [sortOrder] = useFolderSort(folderId)
 
   const folderQuery = buildDriveQuery({
     currentFolderId,
@@ -62,6 +63,15 @@ const DriveView = ({ folderId, router, children }) => {
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
+  const isInError =
+    foldersResult.fetchStatus === 'error' || filesResult.fetchStatus === 'error'
+  const isLoading =
+    (foldersResult.fetchStatus === 'loading' && !foldersResult.lastUpdate) ||
+    (filesResult.fetchStatus === 'loading' && !filesResult.lastUpdate)
+  const isPending =
+    foldersResult.fetchStatus === 'pending' ||
+    filesResult.fetchStatus === 'pending'
+
   const navigateToFolder = useCallback(folderId => {
     router.push(`/folder/${folderId}`)
   })
@@ -70,135 +80,44 @@ const DriveView = ({ folderId, router, children }) => {
     router.push(`/folder/${currentFolderId}/file/${file.id}`)
   })
 
-  const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
-    setSortOrder({ sortAttribute: attribute, sortOrder: order })
-  )
-
-  const isInError =
-    foldersResult.fetchStatus === 'error' || filesResult.fetchStatus === 'error'
-  const hasDataToShow =
-    !isInError &&
-    ((foldersResult.data && foldersResult.data.length > 0) ||
-      (filesResult.data && filesResult.data.length > 0))
-  const isLoading =
-    (foldersResult.fetchStatus === 'loading' && !foldersResult.lastUpdate) ||
-    (filesResult.fetchStatus === 'loading' && !filesResult.lastUpdate)
-  const isPending =
-    foldersResult.fetchStatus === 'pending' ||
-    filesResult.fetchStatus === 'pending'
-
-  const isEmpty = !isLoading && !hasDataToShow
-
   const { hasWriteAccess } = useContext(SharingContext)
   const actions = useActions({
     hasWriteAccess: hasWriteAccess(currentFolderId),
     canMove: true
   })
 
+  const { t } = useI18n()
+  const geTranslatedBreadcrumbPath = useCallback(
+    displayedFolder => getBreadcrumbPath(t, displayedFolder),
+    [t]
+  )
+
   return (
-    <Main>
-      <RealTimeQueries doctype="io.cozy.files" />
-      <ModalStack />
-      <Topbar>
-        <Breadcrumb
+    <FolderView>
+      <FolderViewHeader>
+        <FolderViewBreadcrumb
+          getBreadcrumbPath={geTranslatedBreadcrumbPath}
           currentFolderId={currentFolderId}
           navigateToFolder={navigateToFolder}
         />
-        {/* TODO do not have props hardcoded */}
         <Toolbar
           canUpload={true}
           canCreateFolder={true}
           disabled={isLoading || isInError || isPending}
         />
-      </Topbar>
-      <Dropzone
-        role="main"
-        disabled={__TARGET__ === 'mobile'}
-        displayedFolder={null}
-      >
-        <SelectionBar actions={actions} />
-        <FileListv2>
-          <MobileFileListHeader
-            folderId={null}
-            canSort={true}
-            sort={sortOrder}
-            onFolderSort={changeSortOrder}
-            thumbnailSizeBig={isBigThumbnail}
-            toggleThumbnailSize={toggleThumbnailSize}
-          />
-          <FileListHeader
-            folderId={null}
-            canSort={true}
-            sort={sortOrder}
-            onFolderSort={changeSortOrder}
-            thumbnailSizeBig={isBigThumbnail}
-            toggleThumbnailSize={toggleThumbnailSize}
-          />
-          <FileListBodyV2 selectionModeActive={false}>
-            <AddFolder />
-            {isInError && <Oops />}
-            {isLoading && <FileListRowsPlaceholder />}
-            {isEmpty && <EmptyDrive canUpload={true} />}
-            {hasDataToShow && (
-              <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
-                {foldersResult.data.map(file => (
-                  <File
-                    key={file._id}
-                    attributes={file}
-                    displayedFolder={null}
-                    onFolderOpen={navigateToFolder}
-                    onFileOpen={navigateToFile}
-                    withSelectionCheckbox={true}
-                    withFilePath={false}
-                    withSharedBadge={true}
-                    isFlatDomain={true}
-                    thumbnailSizeBig={isBigThumbnail}
-                    actions={actions}
-                  />
-                ))}
-                {foldersResult.hasMore && (
-                  <LoadMore fetchMore={foldersResult.fetchMore} />
-                )}
-                {filesResult.data.map(file => (
-                  <File
-                    key={file._id}
-                    attributes={file}
-                    displayedFolder={null}
-                    onFolderOpen={navigateToFolder}
-                    onFileOpen={navigateToFile}
-                    withSelectionCheckbox={true}
-                    withFilePath={false}
-                    withSharedBadge={true}
-                    isFlatDomain={true}
-                    thumbnailSizeBig={isBigThumbnail}
-                  />
-                ))}
-                {filesResult.hasMore && (
-                  <LoadMore fetchMore={filesResult.fetchMore} />
-                )}
-              </div>
-            )}
-          </FileListBodyV2>
-        </FileListv2>
-        {children}
-      </Dropzone>
-      <ModalManager />
-    </Main>
+      </FolderViewHeader>
+      <FolderViewBody
+        navigateToFolder={navigateToFolder}
+        navigateToFile={navigateToFile}
+        actions={actions}
+        queryResults={[foldersResult, filesResult]}
+        canSort
+      />
+      {children}
+    </FolderView>
   )
 }
 
-const DriveViewWithProvider = props => (
-  <SharingProvider doctype="io.cozy.files" documentType="Files">
-    <ThumbnailSizeContextProvider>
-      <RouterContextProvider>
-        <ModalContextProvider>
-          <DriveView {...props} />
-        </ModalContextProvider>
-      </RouterContextProvider>
-    </ThumbnailSizeContextProvider>
-  </SharingProvider>
-)
-
 export default connect(state => ({
   folderId: getCurrentFolderId(state)
-}))(DriveViewWithProvider)
+}))(DriveView)
