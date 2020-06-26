@@ -51,7 +51,7 @@ export const RecentView = ({ router, children }) => {
     router.push(`/recent/file/${file.id}`)
   })
 
-  const actions = useActions(null, { canMove: true })
+  const actions = useActions({ hasWriteAccess: false, canMove: true })
 
   return (
     <Main>

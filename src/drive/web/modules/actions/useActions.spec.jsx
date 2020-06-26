@@ -29,7 +29,6 @@ jest.mock('cozy-ui/transpiled/react/helpers/tracker', () => ({
 }))
 
 describe('useActions', () => {
-  const mockFolderId = '123'
   const mockStore = createStore(() => ({
     mobile: {
       url: 'cozy-url://'
@@ -39,7 +38,6 @@ describe('useActions', () => {
     pushModal: jest.fn()
   }
   const mockSharingContextValue = {
-    hasWriteAccess: jest.fn(),
     refresh: jest.fn()
   }
   const mockRouterContextValue = {
@@ -55,7 +53,7 @@ describe('useActions', () => {
     global.__TARGET__ = 'browser'
   })
 
-  const renderActionsHook = (...hookParams) => {
+  const renderActionsHook = hookArgs => {
     const wrapper = ({ children }) => (
       <AppLike client={mockClient} store={mockStore}>
         <ModalContext.Provider value={mockModalContextValue}>
@@ -67,24 +65,23 @@ describe('useActions', () => {
         </ModalContext.Provider>
       </AppLike>
     )
-    return renderHook(() => useActions(...hookParams), {
+    return renderHook(() => useActions(hookArgs), {
       wrapper
     })
   }
 
-  const defaultHookArgs = [
-    mockFolderId,
-    {
-      canMove: true
-    }
-  ]
+  const defaultHookArgs = {
+    hasWriteAccess: true,
+    canMove: true
+  }
+
   const getAction = (actionKey, hookArgs = defaultHookArgs) => {
-    const { result } = renderActionsHook(...hookArgs)
+    const { result } = renderActionsHook(hookArgs)
     return result.current[actionKey]
   }
 
   it('returns actions keyed by icon', () => {
-    const { result } = renderActionsHook(mockFolderId, {
+    const { result } = renderActionsHook({
       canMove: true
     })
     expect(Object.keys(result.current)).toEqual([
@@ -102,8 +99,9 @@ describe('useActions', () => {
 
   describe('share action', () => {
     it('is only visible with write access and a single selected item', () => {
-      mockSharingContextValue.hasWriteAccess.mockReturnValue(false)
-      const shareActionWithoutWriteAccess = getAction('share')
+      const shareActionWithoutWriteAccess = getAction('share', {
+        hasWriteAccess: false
+      })
       expect(shareActionWithoutWriteAccess.displayCondition(['abc'])).toBe(
         false
       )
@@ -111,8 +109,7 @@ describe('useActions', () => {
         shareActionWithoutWriteAccess.displayCondition(['abc', 'def'])
       ).toBe(false)
 
-      mockSharingContextValue.hasWriteAccess.mockReturnValue(true)
-      const shareAction = getAction('share')
+      const shareAction = getAction('share', { hasWriteAccess: true })
       expect(shareAction.displayCondition(['abc'])).toBe(true)
       expect(shareAction.displayCondition(['abc', 'def'])).toBe(false)
     })
@@ -211,8 +208,9 @@ describe('useActions', () => {
 
   describe('trash action', () => {
     it('is only visible with write access', () => {
-      mockSharingContextValue.hasWriteAccess.mockReturnValue(false)
-      const trashActionWithoutWriteAccess = getAction('trash')
+      const trashActionWithoutWriteAccess = getAction('trash', {
+        hasWriteAccess: false
+      })
       expect(trashActionWithoutWriteAccess.displayCondition(['abc'])).toBe(
         false
       )
@@ -220,8 +218,7 @@ describe('useActions', () => {
         trashActionWithoutWriteAccess.displayCondition(['abc', 'def'])
       ).toBe(false)
 
-      mockSharingContextValue.hasWriteAccess.mockReturnValue(true)
-      const trashAction = getAction('trash')
+      const trashAction = getAction('trash', { hasWriteAccess: true })
       expect(trashAction.displayCondition(['abc'])).toBe(true)
       expect(trashAction.displayCondition(['abc', 'def'])).toBe(true)
     })
@@ -277,8 +274,9 @@ describe('useActions', () => {
 
   describe('rename action', () => {
     it('is only visible with write access and a single selected item', () => {
-      mockSharingContextValue.hasWriteAccess.mockReturnValue(false)
-      const renameActionWithoutWriteAccess = getAction('rename')
+      const renameActionWithoutWriteAccess = getAction('rename', {
+        hasWriteAccess: false
+      })
       expect(renameActionWithoutWriteAccess.displayCondition(['abc'])).toBe(
         false
       )
@@ -286,8 +284,7 @@ describe('useActions', () => {
         renameActionWithoutWriteAccess.displayCondition(['abc', 'def'])
       ).toBe(false)
 
-      mockSharingContextValue.hasWriteAccess.mockReturnValue(true)
-      const renameAction = getAction('rename')
+      const renameAction = getAction('rename', { hasWriteAccess: true })
       expect(renameAction.displayCondition(['abc'])).toBe(true)
       expect(renameAction.displayCondition(['abc', 'def'])).toBe(false)
     })
@@ -302,20 +299,14 @@ describe('useActions', () => {
 
   describe('move action', () => {
     it('is only displayed when we can move files', () => {
-      const moveAction = getAction('moveto', [
-        mockFolderId,
-        {
-          canMove: true
-        }
-      ])
+      const moveAction = getAction('moveto', {
+        canMove: true
+      })
       expect(moveAction.displayCondition()).toBe(true)
 
-      const cantMove = getAction('moveto', [
-        mockFolderId,
-        {
-          canMove: false
-        }
-      ])
+      const cantMove = getAction('moveto', {
+        canMove: false
+      })
       expect(cantMove.displayCondition()).toBe(false)
     })
 
