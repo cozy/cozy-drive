@@ -93,6 +93,17 @@ const buildTrashQuery = () => ({
     )
   }
 })
+
+const buildSharingsQuery = ids => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .getByIds(ids)
+      .sortBy([{ type: 'asc' }, { name: 'asc' }]),
+  options: {
+    as: `sharings-by-ids-${ids.join('')}`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
 /**
  * Get the query for folder if given the query for files
  * and vice versa.
@@ -129,5 +140,6 @@ export {
   buildDriveQuery,
   buildRecentQuery,
   buildParentsByIdsQuery,
-  buildTrashQuery
+  buildTrashQuery,
+  buildSharingsQuery
 }
