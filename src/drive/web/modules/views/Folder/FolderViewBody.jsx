@@ -21,6 +21,7 @@ const FolderViewBody = ({
   queryResults,
   actions,
   canSort,
+  withFilePath = false,
   navigateToFolder,
   navigateToFile
 }) => {
@@ -71,25 +72,25 @@ const FolderViewBody = ({
           {isEmpty && <EmptyDrive canUpload={true} />}
           {hasDataToShow && (
             <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
-              {queryResults.map(query => (
-                <>
+              {queryResults.map((query, queryIndex) => (
+                <React.Fragment key={queryIndex}>
                   {query.data.map(file => (
                     <File
                       key={file._id}
                       attributes={file}
                       displayedFolder={null}
-                      onFolderOpen={navigateToFolder}
-                      onFileOpen={navigateToFile}
                       withSelectionCheckbox={true}
-                      withFilePath={false}
                       withSharedBadge={true}
                       isFlatDomain={true}
+                      onFolderOpen={navigateToFolder}
+                      onFileOpen={navigateToFile}
+                      withFilePath={withFilePath}
                       thumbnailSizeBig={isBigThumbnail}
                       actions={actions}
                     />
                   ))}
                   {query.hasMore && <LoadMore fetchMore={query.fetchMore} />}
-                </>
+                </React.Fragment>
               ))}
             </div>
           )}
