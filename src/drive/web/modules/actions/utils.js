@@ -195,3 +195,14 @@ export const openFileWith = async (client, file) => {
     Alerter.error('mobile.error.open_with.noapp')
   }
 }
+
+export const restoreFiles = async (client, files) => {
+  for (const file of files) {
+    await client.collection('io.cozy.files').restore(file.id)
+  }
+}
+export const deleteFilesPermanently = async (client, files) => {
+  for (const file of files) {
+    await client.collection('io.cozy.files').deleteFilePermanently(file.id)
+  }
+}

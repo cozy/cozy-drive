@@ -4,6 +4,7 @@ import { SharingContext } from 'cozy-sharing'
 import { useClient } from 'cozy-client'
 import { ModalContext } from 'drive/lib/ModalContext'
 import keyBy from 'lodash/keyBy'
+import { restoreFiles } from 'drive/web/modules/actions/utils'
 
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 
@@ -17,28 +18,14 @@ const useActions = () => {
     restore: {
       icon: 'restore',
       action: async files => {
-        for (const file of files) {
-          await client.collection('io.cozy.files').restore(file.id)
-        }
+        await restoreFiles(client, files)
         refresh()
       }
     },
     destroy: {
       icon: 'destroy',
       action: files =>
-        pushModal(
-          <DestroyConfirm
-            fileCount={files.length}
-            confirm={async () => {
-              for (const file of files) {
-                await client
-                  .collection('io.cozy.files')
-                  .deleteFilePermanently(file.id)
-              }
-            }}
-            onClose={popModal}
-          />
-        )
+        pushModal(<DestroyConfirm files={files} onClose={popModal} />)
     }
   }
 
