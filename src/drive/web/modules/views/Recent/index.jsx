@@ -8,7 +8,7 @@ import {
 import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
 import { RouterContextProvider } from 'drive/lib/RouterContext'
 
-import SelectionBar from '../SelectionBarWithActions'
+import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
@@ -23,8 +23,10 @@ import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlac
 import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
-import File from '../FileWithActions'
+import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
 import RealTimeQueries from '../Drive/RealTimeQueries'
+
+import useActions from 'drive/web/modules/actions/useActions'
 
 import { buildRecentQuery } from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
@@ -49,6 +51,8 @@ export const RecentView = ({ router, children }) => {
     router.push(`/recent/file/${file.id}`)
   })
 
+  const actions = useActions(null, { canMove: true })
+
   return (
     <Main>
       <RealTimeQueries doctype="io.cozy.files" />
@@ -57,7 +61,7 @@ export const RecentView = ({ router, children }) => {
         <Breadcrumb />
       </Topbar>
 
-      <SelectionBar />
+      <SelectionBar actions={actions} />
       <FileListv2>
         <MobileFileListHeader
           folderId={null}
@@ -89,6 +93,7 @@ export const RecentView = ({ router, children }) => {
                   withSharedBadge={true}
                   isFlatDomain={true}
                   thumbnailSizeBig={isBigThumbnail}
+                  actions={actions}
                 />
               ))}
               {result.hasMore && <LoadMore fetchMore={result.fetchMore} />}
