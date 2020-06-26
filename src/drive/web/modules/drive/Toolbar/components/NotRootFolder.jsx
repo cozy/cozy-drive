@@ -1,9 +1,13 @@
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
-const NotRootFolder = ({ notRootfolder, children }) => {
-  if (notRootfolder) {
-    return children
+
+/**
+ * Displays its children only if we are not displaying the root folder
+ */
+const NotRootFolder = ({ insideRootFolder, children }) => {
+  if (insideRootFolder) {
+    return null
   }
-  return null
+  return children
 }
 
 export default toolbarContainer(NotRootFolder)

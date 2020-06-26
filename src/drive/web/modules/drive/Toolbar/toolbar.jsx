@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
   return {
     displayedFolder,
-    notRootfolder: !displayedFolder || displayedFolder.id !== ROOT_DIR_ID,
+    insideRootFolder: displayedFolder && displayedFolder.id === ROOT_DIR_ID,
     selectionModeActive: isSelectionBarVisible(state)
   }
 }
