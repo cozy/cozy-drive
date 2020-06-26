@@ -16,15 +16,16 @@ import { getFolderPath } from 'drive/web/modules/routeUtils'
 
 const FilesViewerWithQuery = props => {
   const { router } = useRouter()
+  const [sortOrder] = useFolderSort()
 
-  const [{ sortAttribute, sortOrder }] = useFolderSort()
   const filesQuery = buildDriveQuery({
     currentFolderId: props.folderId,
     type: 'file',
-    sortAttribute: sortAttribute,
-    sortOrder: sortOrder
+    sortAttribute: sortOrder.attribute,
+    sortOrder: sortOrder.order
   })
   const results = useQuery(filesQuery.definition, filesQuery.options)
+
   if (results.data) {
     const viewableFiles = results.data
     return (
