@@ -3,15 +3,14 @@ import React, { useCallback } from 'react'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { connect } from 'react-redux'
 import { useQuery } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import { buildDriveQuery } from 'drive/web/modules/queries'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
-
 import useActions from './useActions'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import { buildDriveQuery } from 'drive/web/modules/queries'
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
