@@ -9,6 +9,26 @@ import CozyClient from 'cozy-client'
 import configureStore from '../src/drive/store/configureStore'
 import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
+import { generateFile } from './generate'
+
+export const mockCozyClientRequestQuery = () => {
+  beforeEach(() => {
+    const files = Array(10)
+      .fill(null)
+      .map((x, i) => generateFile({ i }))
+    const directories = Array(3)
+      .fill(null)
+      .map((x, i) => generateFile({ i, type: 'directory' }))
+    const fileAndDirs = directories.concat(files)
+    jest.spyOn(CozyClient.prototype, 'requestQuery').mockResolvedValue({
+      data: fileAndDirs
+    })
+  })
+
+  afterEach(() => {
+    CozyClient.prototype.requestQuery.mockRestore()
+  })
+}
 
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
