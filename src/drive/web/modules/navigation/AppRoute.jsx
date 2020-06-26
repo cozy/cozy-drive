@@ -6,6 +6,7 @@ import flag from 'cozy-flags'
 import Settings from 'drive/mobile/modules/settings/Settings'
 import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
+import { RouterContextProvider } from 'drive/lib/RouterContext'
 import Layout from 'drive/web/modules/layout/Layout'
 import FileExplorer from './FileExplorer'
 import FilesViewerV1 from 'drive/web/modules/viewer/FilesViewer'
@@ -60,10 +61,16 @@ const LegacyRecentView = routerProps => (
   </FileExplorer>
 )
 
+const RootComponent = routerProps => (
+  <Layout>
+    <RouterContextProvider {...routerProps} />
+  </Layout>
+)
+
 const AppRoute = (
   <Route>
     <Route path="external/:fileId" component={ExternalRedirect} />
-    <Route component={Layout}>
+    <Route component={RootComponent}>
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
