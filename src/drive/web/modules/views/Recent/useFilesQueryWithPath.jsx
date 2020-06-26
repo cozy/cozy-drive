@@ -11,13 +11,13 @@ export const useFilesQueryWithPath = query => {
   const dirIds = uniq(resultData.map(({ dir_id }) => dir_id))
   const parentsQuery = buildParentsByIdsQuery(dirIds)
   const parentsResult = useQuery(parentsQuery.definition, parentsQuery.options)
-
+  const parentsResultData = parentsResult.data || []
   let parentsDocsById = {}
-
-  if (parentsResult.fetchStatus === 'loaded' && parentsResult.data.length > 0) {
+  const isLoading =
+    parentsResult.fetchStatus === 'loading' && !parentsResult.lastUpdate
+  if (!isLoading && parentsResultData.length > 0) {
     parentsDocsById = keyBy(parentsResult.data, '_id')
   }
-
   return {
     ...result,
     data: resultData.map(file => ({
