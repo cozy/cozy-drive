@@ -12,6 +12,16 @@ import FolderContent from 'test/components/FolderContent'
 
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
+const getStoreStateWhenViewingFolder = folderId => {
+  return {
+    router: {
+      params: {
+        folderId
+      }
+    }
+  }
+}
+
 export const setupStoreAndClient = ({ initialStoreState } = {}) => {
   const client = new CozyClient({})
 
@@ -32,7 +42,12 @@ export const setupStoreAndClient = ({ initialStoreState } = {}) => {
  * - After mount, the store should have content in .cozy.queries
  */
 const setupFolderContent = async ({ folderId, initialStoreState }) => {
-  const { client, store } = setupStoreAndClient({ initialStoreState })
+  const { client, store } = setupStoreAndClient({
+    initialStoreState: {
+      ...getStoreStateWhenViewingFolder(folderId),
+      ...initialStoreState
+    }
+  })
 
   const sortOrder = {
     attribute: 'name',

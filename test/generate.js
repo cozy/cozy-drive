@@ -1,4 +1,9 @@
-const generateFile = ({ i, prefix = 'foobar', type = 'file', ext } = {}) => {
+export const generateFile = ({
+  i,
+  prefix = 'foobar',
+  type = 'file',
+  ext
+} = {}) => {
   if (ext === undefined) {
     if (type === 'file') {
       ext = '.pdf'
@@ -18,4 +23,12 @@ const generateFile = ({ i, prefix = 'foobar', type = 'file', ext } = {}) => {
   }
 }
 
-export { generateFile }
+export const getStoreStateWhenViewingFolder = folderId => {
+  return {
+    router: {
+      params: {
+        folderId
+      }
+    }
+  }
+}
