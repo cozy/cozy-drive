@@ -2,9 +2,7 @@ import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import { createMockClient } from 'cozy-client'
 
-import { ModalContext } from 'drive/lib/ModalContext'
-import { SharingContext, ShareModal } from 'cozy-sharing'
-import { RouterContext } from 'drive/lib/RouterContext'
+import { ShareModal } from 'cozy-sharing'
 import AppLike from '../../../../../test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
@@ -55,14 +53,14 @@ describe('useActions', () => {
 
   const renderActionsHook = hookArgs => {
     const wrapper = ({ children }) => (
-      <AppLike client={mockClient} store={mockStore}>
-        <ModalContext.Provider value={mockModalContextValue}>
-          <SharingContext.Provider value={mockSharingContextValue}>
-            <RouterContext.Provider value={mockRouterContextValue}>
-              {children}
-            </RouterContext.Provider>
-          </SharingContext.Provider>
-        </ModalContext.Provider>
+      <AppLike
+        client={mockClient}
+        store={mockStore}
+        routerContextValue={mockRouterContextValue}
+        modalContextValue={mockModalContextValue}
+        sharingContextValue={mockSharingContextValue}
+      >
+        {children}
       </AppLike>
     )
     return renderHook(() => useActions(hookArgs), {
