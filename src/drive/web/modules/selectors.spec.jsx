@@ -12,6 +12,7 @@ import {
 import { setupFolderContent, setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 
 jest.mock('cozy-sharing', () => ({}))
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({ routes: [] }))
@@ -108,8 +109,17 @@ describe('getCurrentViewFetchStatus', () => {
   })
 })
 describe('getCurrentFolderId', () => {
-  it('will not crash if there is no router state', () => {
+  it('test the getCurrentFolderId behavior', () => {
     expect(getCurrentFolderId('')).toBeNull()
+    expect(
+      getCurrentFolderId({ router: { location: { pathname: '/trash' } } })
+    ).toEqual(TRASH_DIR_ID)
+    expect(
+      getCurrentFolderId({ router: { location: { pathname: '/folder' } } })
+    ).toEqual(ROOT_DIR_ID)
+    expect(
+      getCurrentFolderId({ router: { params: { folderId: 'folderID' } } })
+    ).toEqual('folderID')
   })
 })
 
