@@ -14,7 +14,6 @@ import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 
-jest.mock('cozy-sharing', () => ({}))
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({ routes: [] }))
 
 beforeEach(() => {
