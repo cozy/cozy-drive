@@ -9,7 +9,6 @@ import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 import Layout from 'drive/web/modules/layout/Layout'
 import FileExplorer from './FileExplorer'
 import FilesViewerV1 from 'drive/web/modules/viewer/FilesViewer'
-import FilesViewerV2 from 'drive/web/modules/viewer/FilesViewerV2'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import {
   FolderContainer as Folder,
@@ -22,8 +21,10 @@ import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
 import DriveView from '../views/Drive'
-import RecentView from '../views/Recent'
+import FilesViewerDrive from '../views/Drive/FilesViewerDrive'
 
+import RecentView from '../views/Recent'
+import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // To keep in sync with AppRoute below, used to extract params
 // in the "router" redux slice. Innermost routes should be
 // first
@@ -31,12 +32,18 @@ export const routes = [
   '/folder/:folderId/file/:fileId',
   '/files/:folderId/file/:fileId',
   '/files/:folderId',
-  '/folder/:folderId'
+  '/folder/:folderId',
+  '/recent/file/:fileId'
 ]
 
 const FilesViewer = flag('drive.client-migration.enabled')
-  ? FilesViewerV2
+  ? FilesViewerDrive
   : FilesViewerV1
+
+const RecentFilesViewer = flag('drive.client-migration.enabled')
+  ? FilesViewerRecent
+  : FilesViewerV1
+
 const LegacyDriveView = routerProps => (
   <FileExplorer {...routerProps}>
     <Folder {...routerProps} />
@@ -79,7 +86,7 @@ const AppRoute = (
           flag('drive.client-migration.enabled') ? RecentView : LegacyRecentView
         }
       >
-        <Route path="file/:fileId" component={FilesViewer} />
+        <Route path="file/:fileId" component={RecentFilesViewer} />
         <Route path="file/:fileId/revision" component={FileHistory} />
       </Route>
 
