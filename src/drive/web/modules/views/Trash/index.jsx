@@ -8,6 +8,7 @@ import {
 } from 'drive/lib/ThumbnailSizeContext'
 import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
 import { RouterContextProvider } from 'drive/lib/RouterContext'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import Main from 'drive/web/modules/layout/Main'
@@ -23,7 +24,7 @@ import { EmptyDrive } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
-import Breadcrumb from './Breadcrumb'
+import { MobileAwareBreadcrumbV2 as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
 import RealTimeQueries from '../Drive/RealTimeQueries'
 
@@ -52,12 +53,14 @@ export const TrashView = ({ router, children }) => {
   })
 
   const actions = useActions()
+  const { t } = useI18n()
+
   return (
     <Main>
       <RealTimeQueries doctype="io.cozy.files" />
       <ModalStack />
       <Topbar>
-        <Breadcrumb />
+        <Breadcrumb path={[{ name: t('breadcrumb.title_trash') }]} />
         <Toolbar canUpload={false} canCreateFolder={false} disabled={false} />
       </Topbar>
 
