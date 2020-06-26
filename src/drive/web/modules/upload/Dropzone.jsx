@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Dropzone from 'react-dropzone'
+import UIDropzone from 'react-dropzone'
 import { compose } from 'redux'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
@@ -9,7 +9,7 @@ import styles from 'drive/styles/dropzone.styl'
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import DropzoneTeaser from 'drive/web/modules/upload/DropzoneTeaser'
 
-class StatefulDropzone extends Component {
+export class Dropzone extends Component {
   state = {
     dropzoneActive: false
   }
@@ -35,13 +35,13 @@ class StatefulDropzone extends Component {
     const {
       displayedFolder,
       children,
-      /* don't pass these props to Dropzone */
+      /* don't pass these props to UIDropzone */
       sharingState, // eslint-disable-line no-unused-vars
       uploadFiles, // eslint-disable-line no-unused-vars
       ...rest
     } = this.props
     return (
-      <Dropzone
+      <UIDropzone
         {...rest}
         className={dropzoneActive ? styles['fil-dropzone-active'] : ''}
         disableClick
@@ -52,7 +52,7 @@ class StatefulDropzone extends Component {
       >
         {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
         {children}
-      </Dropzone>
+      </UIDropzone>
     )
   }
 }
@@ -83,4 +83,4 @@ export default compose(
     null,
     mapDispatchToProps
   )
-)(StatefulDropzone)
+)(Dropzone)
