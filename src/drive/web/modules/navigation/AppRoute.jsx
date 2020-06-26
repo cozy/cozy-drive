@@ -1,6 +1,6 @@
 /* global __TARGET__ */
 import React from 'react'
-import { Route, Redirect } from 'react-router'
+import { Route, IndexRoute, Redirect } from 'react-router'
 import flag from 'cozy-flags'
 
 import Settings from 'drive/mobile/modules/settings/Settings'
@@ -101,15 +101,15 @@ const AppRoute = (
         <Route path="file/:fileId/revision" component={FileHistory} />
       </Route>
 
-      <Route
-        path="trash"
-        component={
-          flag('drive.client-migration.enabled') ? TrashView : LegacyTrash
-        }
-      >
+      <Route path="trash">
+        <IndexRoute
+          component={
+            flag('drive.client-migration.enabled') ? TrashView : LegacyTrash
+          }
+        />
         <Route path="file/:fileId" component={FilesViewer} />
+        <Route path=":folderId" component={TrashFolderView} />
       </Route>
-      <Route path="trash/:folderId" component={TrashFolderView} />
 
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
