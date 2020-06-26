@@ -7,7 +7,6 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import logger from 'lib/logger'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import palette from 'cozy-ui/transpiled/react/palette'
-import { getFolderPath, getViewerPath } from 'drive/web/modules/routeUtils'
 
 export const FilesViewerLoading = () => (
   <Overlay>
@@ -100,7 +99,6 @@ class FilesViewer extends Component {
 
   getCurrentIndex() {
     const { files, fileId } = this.props
-    // console.log({ files, fileId })
     return files.findIndex(f => f.id === fileId)
   }
 
