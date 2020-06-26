@@ -24,11 +24,14 @@ const DestroyConfirm = ({ t, fileCount, confirm, onClose }) => {
       secondaryAction={onClose}
       primaryType="danger"
       primaryText={t('destroyconfirmation.delete')}
-      primaryAction={() =>
-        confirm()
-          .then(onClose)
-          .catch(onClose)
-      }
+      primaryAction={async () => {
+        try {
+          await confirm()
+          onClose()
+        } catch {
+          onClose()
+        }
+      }}
     />
   )
 }
