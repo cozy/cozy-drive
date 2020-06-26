@@ -26,6 +26,8 @@ import FilesViewerDrive from '../views/Drive/FilesViewerDrive'
 import RecentView from '../views/Recent'
 import TrashView from '../views/Trash'
 import TrashFolderView from '../views/Trash/TrashFolderView'
+import SharingsView from '../views/Sharings'
+import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // To keep in sync with AppRoute below, used to extract params
@@ -38,7 +40,8 @@ export const routes = [
   '/folder/:folderId',
   '/recent/file/:fileId',
   '/trash/:folderId',
-  '/trash/file/:fileId'
+  '/trash/file/:fileId',
+  '/sharings/file/:fileId'
 ]
 
 const FilesViewer = flag('drive.client-migration.enabled')
@@ -58,6 +61,12 @@ const LegacyDriveView = routerProps => (
 const LegacyRecentView = routerProps => (
   <FileExplorer {...routerProps}>
     <Recent {...routerProps} />
+  </FileExplorer>
+)
+
+const LegacySharingsView = routerProps => (
+  <FileExplorer {...routerProps}>
+    <Sharings {...routerProps} />
   </FileExplorer>
 )
 
@@ -111,15 +120,19 @@ const AppRoute = (
         <Route path=":folderId" component={TrashFolderView} />
       </Route>
 
+      <Route
+        path="sharings"
+        component={
+          flag('drive.client-migration.enabled')
+            ? SharingsView
+            : LegacySharingsView
+        }
+      >
+        <Route path="file/:fileId" component={SharingsFilesViewer} />
+      </Route>
+
       <Route component={FileExplorer}>
         <Redirect from="/" to="folder" />
-
-        <Route path="sharings" component={Sharings}>
-          <Route path=":folderId">
-            <Route path="file/:fileId" component={FilesViewer} />
-          </Route>
-          <Route path="file/:fileId" component={FilesViewer} />
-        </Route>
       </Route>
       {__TARGET__ === 'mobile' && (
         <Route path="settings" component={Settings} />
