@@ -39,7 +39,7 @@ export const RecentView = ({ router, children }) => {
   const result = useFilesQueryWithPath(query)
   const isInError = result.fetchStatus === 'error'
   const hasDataToShow = !isInError && (result.data && result.data.length > 0)
-  const isLoading = !hasDataToShow && result.fetchStatus === 'loading'
+  const isLoading = result.fetchStatus === 'loading' && !result.lastUpdate
   const isEmpty = !isLoading && !hasDataToShow
 
   const navigateToFolder = useCallback(folderId => {
