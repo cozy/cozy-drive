@@ -9,9 +9,10 @@ const mapStateToProps = state => {
   const displayedFolder = flag('drive.client-migration.enabled')
     ? getDisplayedFolder(state)
     : state.view.displayedFolder
+
   return {
     displayedFolder,
-    notRootfolder: displayedFolder && displayedFolder.id !== ROOT_DIR_ID,
+    notRootfolder: !displayedFolder || displayedFolder.id !== ROOT_DIR_ID,
     selectionModeActive: isSelectionBarVisible(state)
   }
 }

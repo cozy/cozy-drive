@@ -428,6 +428,7 @@ export const createFolderV2 = (client, name) => {
   }
 }
 
+// TODO remove when cozy-client migration is finished
 export const trashFiles = files => async (dispatch, _, { client }) => {
   dispatch({ type: TRASH_FILES, files, meta: META_DEFAULTS })
   const trashed = []
@@ -483,6 +484,7 @@ export const downloadFileError = error => {
     : 'error.download_file.offline'
 }
 
+// TODO remove when cozy-client migration is finished
 export const downloadFiles = files => {
   const meta = META_DEFAULTS
   return async dispatch => {

@@ -1,7 +1,7 @@
 import CozyClient from 'cozy-client'
 
 import { setupFolderContent } from 'test/setup'
-import { generateFile } from 'test/generate'
+import { generateFile, getStoreStateWhenViewingFolder } from 'test/generate'
 
 import { createFolderV2 } from './actions'
 
@@ -20,16 +20,6 @@ beforeEach(() => {
 afterEach(() => {
   CozyClient.prototype.requestQuery.mockRestore()
 })
-
-const getStoreStateWhenViewingFolder = folderId => {
-  return {
-    router: {
-      params: {
-        folderId
-      }
-    }
-  }
-}
 
 describe('createFolderV2', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-const generateFile = ({
+export const generateFile = ({
   i,
   prefix = 'foobar',
   type = 'file',
@@ -40,4 +40,12 @@ const generateFile = ({
   }
 }
 
-export { generateFile }
+export const getStoreStateWhenViewingFolder = folderId => {
+  return {
+    router: {
+      params: {
+        folderId
+      }
+    }
+  }
+}
