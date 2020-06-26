@@ -16,6 +16,12 @@ export const getCurrentFileId = rootState => {
   return rootState.router.params.fileId
 }
 
+export const getDisplayedFolder = rootState => {
+  const folderId = getCurrentFolderId(rootState)
+  const doc = getDocumentFromState(rootState, 'io.cozy.files', folderId)
+  return doc
+}
+
 const getFolderContentQueries = (rootState, folderId) => {
   const queries = rootState.cozy.queries
   const folderContentQueries = Object.entries(queries)
@@ -34,15 +40,37 @@ const getFolderContentQueries = (rootState, folderId) => {
   return folderContentQueries
 }
 
-export const getFolderContent = (rootState, folderId) => {
+export const getLatestFolderQueryResults = (rootState, folderId) => {
   const folderContentQueries = getFolderContentQueries(rootState, folderId)
   if (folderContentQueries.length > 0) {
-    const mostRecentQueryResults = maxBy(
-      folderContentQueries,
-      x => x.lastUpdate
-    )
+    const mostRecentQueryResults =
+      maxBy(folderContentQueries, x => x.lastUpdate) || folderContentQueries[0]
     const otherQueryId = getMirrorQueryId(mostRecentQueryResults.id)
     const otherQueryResults = rootState.cozy.queries[otherQueryId]
+    return [mostRecentQueryResults, otherQueryResults]
+  }
+  return []
+}
+
+const fetchStatusPriorities = {
+  pending: 0,
+  loading: 1,
+  loaded: 2
+}
+export const getCurrentViewFetchStatus = rootState => {
+  const folderId = getCurrentFolderId(rootState)
+  const results = getLatestFolderQueryResults(rootState, folderId)
+  if (!results || !results.length) {
+    return 'loading'
+  } else {
+    return maxBy(results, r => fetchStatusPriorities[r.fetchStatus]).fetchStatus
+  }
+}
+
+export const getFolderContent = (rootState, folderId) => {
+  const results = getLatestFolderQueryResults(rootState, folderId)
+  if (results.length > 0) {
+    const [mostRecentQueryResults, otherQueryResults] = results
     const allContent = mostRecentQueryResults.data.concat(
       otherQueryResults ? otherQueryResults.data : []
     )

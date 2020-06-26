@@ -33,6 +33,7 @@ import File from './FileWithActions'
 import { buildQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
+import { ModalManager } from 'react-cozy-helpers'
 
 import RealTimeQueries from './RealTimeQueries'
 
@@ -78,9 +79,12 @@ const DriveView = ({ folderId, router, children }) => {
     ((foldersResult.data && foldersResult.data.length > 0) ||
       (filesResult.data && filesResult.data.length > 0))
   const isLoading =
-    !hasDataToShow &&
-    foldersResult.fetchStatus === 'loading' &&
-    filesResult.fetchStatus === 'loading'
+    (foldersResult.fetchStatus === 'loading' && !foldersResult.lastUpdate) ||
+    (filesResult.fetchStatus === 'loading' && !filesResult.lastUpdate)
+  const isPending =
+    foldersResult.fetchStatus === 'pending' ||
+    filesResult.fetchStatus === 'pending'
+
   const isEmpty = !isLoading && !hasDataToShow
 
   return (
@@ -93,7 +97,11 @@ const DriveView = ({ folderId, router, children }) => {
           navigateToFolder={navigateToFolder}
         />
         {/* TODO do not have props hardcoded */}
-        <Toolbar canUpload={true} canCreateFolder={true} disabled={false} />
+        <Toolbar
+          canUpload={true}
+          canCreateFolder={true}
+          disabled={isLoading || isInError || isPending}
+        />
       </Topbar>
       <Dropzone
         role="main"
@@ -165,6 +173,7 @@ const DriveView = ({ folderId, router, children }) => {
         </FileListv2>
         {children}
       </Dropzone>
+      <ModalManager />
     </Main>
   )
 }

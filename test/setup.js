@@ -18,7 +18,8 @@ export const setupStoreAndClient = ({ initialStoreState } = {}) => {
   const store = configureStore({
     client,
     t: x => x,
-    initialState: initialStoreState
+    initialState: initialStoreState,
+    logger: false
   })
   return { store, client }
 }

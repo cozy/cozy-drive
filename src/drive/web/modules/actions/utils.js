@@ -1,4 +1,5 @@
 import { models } from 'cozy-client'
+import { receiveQueryResult } from 'cozy-client/dist/store'
 import { isMobileApp, isIOS } from 'cozy-device-helper'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
@@ -91,7 +92,17 @@ const isAlreadyInTrash = err => {
 export const trashFiles = async (client, files) => {
   try {
     for (const file of files) {
-      await client.collection('io.cozy.files').destroy(file)
+      // TODO we should not go through a FileCollection to destroy the file, but
+      // only do client.destroy(), I do not know what it did not update the internal
+      // store correctly when I tried
+      const { data: updatedFile } = await client
+        .collection('io.cozy.files')
+        .destroy(file)
+      client.store.dispatch(
+        receiveQueryResult(null, {
+          data: updatedFile
+        })
+      )
       client.collection('io.cozy.permissions').revokeSharingLink(file)
     }
 

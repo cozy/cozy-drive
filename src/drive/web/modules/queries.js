@@ -2,6 +2,9 @@ import CozyClient, { Q } from 'cozy-client'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 
 const DEFAULT_CACHE_TIMEOUT_QUERIES = 30 * 60 * 1000
+const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
+  DEFAULT_CACHE_TIMEOUT_QUERIES
+)
 
 export const parseFolderQueryId = maybeFolderQueryId => {
   const splitted = maybeFolderQueryId.split(' ')
@@ -41,9 +44,7 @@ const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
       ]),
   options: {
     as: formatFolderQueryId(type, currentFolderId, sortAttribute, sortOrder),
-    fetchPolicy: CozyClient.fetchPolicies.olderThan(
-      DEFAULT_CACHE_TIMEOUT_QUERIES
-    )
+    fetchPolicy: defaultFetchPolicy
   }
 })
 
@@ -67,5 +68,16 @@ export const getMirrorQueryId = queryId => {
   )
   return otherQueryId
 }
+
+export const buildFolderQuery = folderId => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .getById(folderId)
+      .include(['parent']),
+  options: {
+    as: 'folder-' + folderId,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
 
 export { buildQuery }
