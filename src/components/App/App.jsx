@@ -3,6 +3,10 @@ import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
 import { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
+import SharingProvider from 'cozy-sharing'
+import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
+import { ModalContextProvider } from 'drive/lib/ModalContext'
+import { RouterContextProvider } from 'drive/lib/RouterContext'
 
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
@@ -11,7 +15,15 @@ const App = props => {
     <Provider store={props.store}>
       <I18n lang={props.lang} polyglot={props.polyglot}>
         <CozyProvider client={props.client}>
-          <StyledApp>{props.children}</StyledApp>
+          <SharingProvider doctype="io.cozy.files" documentType="Files">
+            <ThumbnailSizeContextProvider>
+              <RouterContextProvider>
+                <ModalContextProvider>
+                  <StyledApp>{props.children}</StyledApp>
+                </ModalContextProvider>
+              </RouterContextProvider>
+            </ThumbnailSizeContextProvider>
+          </SharingProvider>
         </CozyProvider>
       </I18n>
     </Provider>
