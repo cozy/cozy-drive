@@ -3,7 +3,7 @@ import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
 import { useQuery } from 'cozy-client'
 
-import SharingProvider from 'cozy-sharing'
+import SharingProvider, { SharingContext } from 'cozy-sharing'
 import {
   ThumbnailSizeContext,
   ThumbnailSizeContextProvider
@@ -11,7 +11,7 @@ import {
 import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
 import { RouterContextProvider } from 'drive/lib/RouterContext'
 
-import SelectionBar from './SelectionBarWithActions'
+import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
@@ -29,11 +29,13 @@ import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlac
 import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
-import File from './FileWithActions'
-import { buildQuery } from 'drive/web/modules/queries'
+import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
+import { buildDriveQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { ModalManager } from 'react-cozy-helpers'
+
+import useActions from 'drive/web/modules/actions/useActions'
 
 import RealTimeQueries from './RealTimeQueries'
 
@@ -44,13 +46,13 @@ const DriveView = ({ folderId, router, children }) => {
   const currentFolderId = folderId || ROOT_DIR_ID
   const [sortOrder, setSortOrder] = useFolderSort(folderId)
 
-  const folderQuery = buildQuery({
+  const folderQuery = buildDriveQuery({
     currentFolderId,
     type: 'directory',
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  const fileQuery = buildQuery({
+  const fileQuery = buildDriveQuery({
     currentFolderId,
     type: 'file',
     sortAttribute: sortOrder.attribute,
@@ -87,6 +89,12 @@ const DriveView = ({ folderId, router, children }) => {
 
   const isEmpty = !isLoading && !hasDataToShow
 
+  const { hasWriteAccess } = useContext(SharingContext)
+  const actions = useActions({
+    hasWriteAccess: hasWriteAccess(currentFolderId),
+    canMove: true
+  })
+
   return (
     <Main>
       <RealTimeQueries doctype="io.cozy.files" />
@@ -108,7 +116,7 @@ const DriveView = ({ folderId, router, children }) => {
         disabled={__TARGET__ === 'mobile'}
         displayedFolder={null}
       >
-        <SelectionBar documentId={currentFolderId} />
+        <SelectionBar actions={actions} />
         <FileListv2>
           <MobileFileListHeader
             folderId={null}
@@ -145,6 +153,7 @@ const DriveView = ({ folderId, router, children }) => {
                     withSharedBadge={true}
                     isFlatDomain={true}
                     thumbnailSizeBig={isBigThumbnail}
+                    actions={actions}
                   />
                 ))}
                 {foldersResult.hasMore && (

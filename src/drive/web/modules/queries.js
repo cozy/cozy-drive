@@ -28,7 +28,12 @@ export const formatFolderQueryId = (
   return `${type} ${folderId} ${sortAttribute} ${sortOrder}`
 }
 
-const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
+const buildDriveQuery = ({
+  currentFolderId,
+  type,
+  sortAttribute,
+  sortOrder
+}) => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -44,6 +49,30 @@ const buildQuery = ({ currentFolderId, type, sortAttribute, sortOrder }) => ({
       ]),
   options: {
     as: formatFolderQueryId(type, currentFolderId, sortAttribute, sortOrder),
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+const buildRecentQuery = () => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        trashed: false,
+        type: 'file',
+        updated_at: { $gt: null }
+      })
+      .indexFields(['updated_at', 'type', 'trashed'])
+      .sortBy([{ updated_at: 'desc' }]),
+  options: {
+    as: 'recent-view-query',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+const buildParentsByIdsQuery = ids => ({
+  definition: () => Q('io.cozy.files').getByIds(ids),
+  options: {
+    as: `parents-by-ids-${ids.join('')}`,
     fetchPolicy: defaultFetchPolicy
   }
 })
@@ -80,4 +109,4 @@ export const buildFolderQuery = folderId => ({
   }
 })
 
-export { buildQuery }
+export { buildDriveQuery, buildRecentQuery, buildParentsByIdsQuery }

@@ -1,21 +1,14 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+
 import compose from 'lodash/flowRight'
-import { useQuery, withClient } from 'cozy-client'
+import { withClient } from 'cozy-client'
 import { Overlay, Spinner, Viewer } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import logger from 'lib/logger'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import palette from 'cozy-ui/transpiled/react/palette'
-import { buildQuery } from 'drive/web/modules/queries'
-import { useFolderSort } from 'drive/web/modules/navigation/duck'
-import {
-  getCurrentFolderId,
-  getCurrentFileId
-} from 'drive/web/modules/selectors'
-import { getFolderPath, getViewerPath } from 'drive/web/modules/routeUtils'
 
-const FilesViewerLoading = () => (
+export const FilesViewerLoading = () => (
   <Overlay>
     <Spinner size="xxlarge" middle noMargin color={palette.white} />
   </Overlay>
@@ -93,22 +86,19 @@ class FilesViewer extends Component {
   }
 
   onClose = () => {
-    const { router, folderId } = this.props
-    router.push({
-      pathname: getFolderPath(folderId)
-    })
+    if (this.props.onClose) {
+      this.props.onClose()
+    }
   }
 
   onChange = nextFile => {
-    const { router, folderId } = this.props
-    router.push({
-      pathname: getViewerPath(folderId, nextFile.id)
-    })
+    if (this.props.onChange) {
+      this.props.onChange(nextFile.id)
+    }
   }
 
   getCurrentIndex() {
     const { files, fileId } = this.props
-    // console.log({ files, fileId })
     return files.findIndex(f => f.id === fileId)
   }
 
@@ -140,30 +130,7 @@ class FilesViewer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  folderId: getCurrentFolderId(state),
-  fileId: getCurrentFileId(state)
-})
-
-const FilesViewerWithQuery = props => {
-  const [{ sortAttribute, sortOrder }] = useFolderSort()
-  const filesQuery = buildQuery({
-    currentFolderId: props.folderId,
-    type: 'file',
-    sortAttribute: sortAttribute,
-    sortOrder: sortOrder
-  })
-  const results = useQuery(filesQuery.definition, filesQuery.options)
-  if (results.data) {
-    const viewableFiles = results.data
-    return <FilesViewer {...props} files={viewableFiles} filesQuery={results} />
-  } else {
-    return <FilesViewerLoading />
-  }
-}
-
 export default compose(
   withClient,
-  connect(mapStateToProps),
   translate()
-)(FilesViewerWithQuery)
+)(FilesViewer)

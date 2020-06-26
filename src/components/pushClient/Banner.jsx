@@ -14,7 +14,7 @@ import {
   DESKTOP_BANNER
 } from '.'
 import { Button, ButtonLink, Icon } from 'cozy-ui/transpiled/react'
-
+import { withClient } from 'cozy-client'
 import Config from 'drive/config/config.json'
 import localforage from 'localforage'
 
@@ -31,7 +31,7 @@ class BannerClient extends Component {
     this.willUnmount = false
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     if (!seen) {
-      const mustSee = !(await isClientAlreadyInstalled())
+      const mustSee = !(await isClientAlreadyInstalled(this.props.client))
       if (mustSee && !this.willUnmount) {
         this.setState({ mustShow: true })
       }
@@ -103,4 +103,4 @@ class BannerClient extends Component {
   }
 }
 
-export default translate()(BannerClient)
+export default translate()(withClient(BannerClient))

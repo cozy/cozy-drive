@@ -5,7 +5,9 @@ import { generateFile } from 'test/generate'
 import {
   getFolderContent,
   getDisplayedFolder,
-  getCurrentViewFetchStatus
+  getCurrentViewFetchStatus,
+  getCurrentFolderId,
+  getCurrentFileId
 } from './selectors'
 import { setupFolderContent, setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
@@ -103,5 +105,16 @@ describe('getCurrentViewFetchStatus', () => {
     const state2 = store.getState()
     const status2 = getCurrentViewFetchStatus(state2)
     expect(status2).toEqual('loaded')
+  })
+})
+describe('getCurrentFolderId', () => {
+  it('will not crash if there is no router state', () => {
+    expect(getCurrentFolderId('')).toBeNull()
+  })
+})
+
+describe('getCurrentFileId', () => {
+  it('will not crash if there is no router state', () => {
+    expect(getCurrentFileId('')).toBeNull()
   })
 })

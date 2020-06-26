@@ -40,22 +40,23 @@ describe('FilesViewer', () => {
     const filesFixture = Array(nbFiles)
       .fill(null)
       .map((x, i) => generateFile({ i, type: 'file' }))
-
-    useQuery.mockReturnValue({
+    const mockedUseQueryReturnedValues = {
       data: filesFixture,
       count: totalCount || filesFixture.length,
       fetchMore: jest.fn().mockImplementation(() => {
         throw new Error('Fetch more should not be called')
       }),
       ...useQueryResultAttributes
-    })
+    }
+    useQuery.mockReturnValue(mockedUseQueryReturnedValues)
 
     const root = mount(
       <AppLike client={client} store={store}>
         <FilesViewer
           client={client}
-          fileId="file-foobar0"
+          fileId={fileId}
           files={filesFixture}
+          filesQuery={mockedUseQueryReturnedValues}
         />
       </AppLike>
     )
@@ -71,16 +72,6 @@ describe('FilesViewer', () => {
     expect(root.find(Viewer).length).toBe(1)
   })
 
-  it('should use sort attribute/order from state', () => {
-    const { root } = setup()
-    expect(root.find(Overlay).length).toBe(1)
-    expect(root.find(Viewer).length).toBe(1)
-    expect(useQuery).toHaveBeenCalledWith(expect.any(Function), {
-      as: 'file folder-id name desc',
-      fetchPolicy: expect.any(Function)
-    })
-  })
-
   it('should fetch the file if necessary', async () => {
     const client = new CozyClient({})
     client.query = jest.fn().mockResolvedValue({
@@ -92,14 +83,9 @@ describe('FilesViewer', () => {
       totalCount: 100,
       fileId: 'file-foobar51'
     })
-
-    expect(root.find(Viewer).length).toBe(0)
-
-    // Let promise resolve
     await sleep(0)
 
     root.update()
-
     expect(root.find(Overlay).length).toBe(1)
     expect(root.find(Viewer).length).toBe(1)
     expect(client.query).toHaveBeenCalledWith(
