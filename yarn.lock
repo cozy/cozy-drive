@@ -5161,15 +5161,15 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@13.9.0:
-  version "13.9.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.9.0.tgz#3f8d0e7a7893ef312c600fdbd88815c75f097ec6"
-  integrity sha512-TUmkHr4u02PkHZ8Pbin3jjh6mHtTBbRupDTqjKSnlrS7agBPYi8dUnC2jnRGur3L8lcVJMaR1+P/ZqD19ZXurw==
+cozy-client@13.11.0:
+  version "13.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.11.0.tgz#692a259db777dc8bc595fd5d24549ddc61ffbefc"
+  integrity sha512-vdLiCcSkK098nrRrQEIFYgNOKnxalmRNkvGcsch3IrRHoIfdalXc2tiY1dNELNmoi5WHyu4//az251oKwKrLUA==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^13.9.0"
+    cozy-stack-client "^13.11.0"
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -5388,7 +5388,7 @@ cozy-sharing@1.11.0:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@13.9.0, cozy-stack-client@^13.9.0:
+cozy-stack-client@13.9.0:
   version "13.9.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.9.0.tgz#ec8e9ba67fc91d6acb4d1c5deb96b90923ba74f9"
   integrity sha512-uUKt+cJazdFZ43r1AgExqy7LktIgjYcJ582scOYfxaliBhOwCBQD5zC0nA2iT1iTSOGDn4L6IyiTtzmTufFluw==
@@ -5401,6 +5401,15 @@ cozy-stack-client@^13.1.0, cozy-stack-client@^13.8.3:
   version "13.8.3"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.8.3.tgz#7e87b18b853ae60b0df5bee1b78203d04e5ebc4a"
   integrity sha512-ffSC6DVCi+LU8KP6dhV+A7u5aMeRtSvrhEGTdeZn1AbrS6cD11OZPOveCzMHYUXzuAwbov8sRLi0BF8cTENWfQ==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^13.11.0:
+  version "13.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.11.0.tgz#1879233e77d0cad7798bee65b757f9db5029e290"
+  integrity sha512-VLhczhASEo15q7R+JoY0flzBzbsazxPPHo0O0GCQfGrjGpjzp+ed5usl7IJkV6ikO0v62wbQTCFskZGjUXvBzg==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
