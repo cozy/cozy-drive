@@ -1,5 +1,5 @@
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
-
+export const DESKTOP_SOFTWARE_ID = 'github.com/cozy-labs/cozy-desktop'
 export const track = element => {
   const tracker = getTracker()
   tracker &&
@@ -23,7 +23,6 @@ export const NOVIEWER_DESKTOP_CTA = 'noviewer_desktop_cta'
 export const isClientAlreadyInstalled = async client => {
   const resp = await client.query(client.get('io.cozy.settings', 'clients'))
   return resp.some(
-    device =>
-      device.attributes.software_id === 'github.com/cozy-labs/cozy-desktop'
+    device => device.attributes.software_id === DESKTOP_SOFTWARE_ID
   )
 }
