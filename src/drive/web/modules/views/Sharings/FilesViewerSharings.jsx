@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
 
 const FilesViewerWithFolderId = connect(mapStateToProps)(FilesViewerWithQuery)
 
-const SharingsContainer = props => (
+const FilesViewerSharing = props => (
   <SharedDocuments>
     {({ sharedDocuments }) => (
       <FilesViewerWithFolderId {...props} sharedDocumentIds={sharedDocuments} />
@@ -47,4 +47,4 @@ const SharingsContainer = props => (
   </SharedDocuments>
 )
 
-export default SharingsContainer
+export default FilesViewerSharing
