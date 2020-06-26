@@ -18,21 +18,24 @@ const FilesViewerWithQuery = props => {
   const { router } = useRouter()
   const [sortOrder] = useFolderSort()
 
-  const filesQuery = buildDriveQuery({
+  const buildedFilesQuery = buildDriveQuery({
     currentFolderId: props.folderId,
     type: 'file',
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  const results = useQuery(filesQuery.definition, filesQuery.options)
+  const filesQuery = useQuery(
+    buildedFilesQuery.definition,
+    buildedFilesQuery.options
+  )
 
-  if (results.data) {
-    const viewableFiles = results.data
+  if (filesQuery.data) {
+    const viewableFiles = filesQuery.data
     return (
       <FilesViewer
         {...props}
         files={viewableFiles}
-        filesQuery={results}
+        filesQuery={filesQuery}
         onClose={() =>
           router.push({
             pathname: getFolderPath(props.folderId)
