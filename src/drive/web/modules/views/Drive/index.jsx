@@ -43,9 +43,8 @@ const getBreadcrumbPath = (t, displayedFolder) =>
         (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
     }))
 
-const DriveView = ({ folderId, router, children }) => {
-  const currentFolderId = folderId || ROOT_DIR_ID
-  const [sortOrder] = useFolderSort(folderId)
+const DriveView = ({ currentFolderId, router, children }) => {
+  const [sortOrder] = useFolderSort(currentFolderId)
 
   const folderQuery = buildDriveQuery({
     currentFolderId,
@@ -112,6 +111,7 @@ const DriveView = ({ folderId, router, children }) => {
         actions={actions}
         queryResults={[foldersResult, filesResult]}
         canSort
+        currentFolderId={currentFolderId}
       />
       {children}
     </FolderView>
@@ -119,5 +119,5 @@ const DriveView = ({ folderId, router, children }) => {
 }
 
 export default connect(state => ({
-  folderId: getCurrentFolderId(state)
+  currentFolderId: getCurrentFolderId(state) || ROOT_DIR_ID
 }))(DriveView)
