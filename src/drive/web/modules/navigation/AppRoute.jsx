@@ -28,6 +28,7 @@ import TrashView from '../views/Trash'
 import TrashFolderView from '../views/Trash/TrashFolderView'
 import SharingsView from '../views/Sharings'
 import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
+import SharingsFolderView from '../views/Sharings/SharingsFolderView'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // To keep in sync with AppRoute below, used to extract params
@@ -41,6 +42,7 @@ export const routes = [
   '/recent/file/:fileId',
   '/trash/:folderId',
   '/trash/file/:fileId',
+  '/sharings/:folderId',
   '/sharings/file/:fileId'
 ]
 
@@ -120,15 +122,16 @@ const AppRoute = (
         <Route path=":folderId" component={TrashFolderView} />
       </Route>
 
-      <Route
-        path="sharings"
-        component={
-          flag('drive.client-migration.enabled')
-            ? SharingsView
-            : LegacySharingsView
-        }
-      >
+      <Route path="sharings">
+        <IndexRoute
+          component={
+            flag('drive.client-migration.enabled')
+              ? SharingsView
+              : LegacySharingsView
+          }
+        />
         <Route path="file/:fileId" component={SharingsFilesViewer} />
+        <Route path=":folderId" component={SharingsFolderView} />
       </Route>
 
       <Route component={FileExplorer}>
