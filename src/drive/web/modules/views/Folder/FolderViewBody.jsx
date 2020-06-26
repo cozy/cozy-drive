@@ -54,18 +54,18 @@ const FolderViewBody = ({
         {hasDataToShow && (
           <>
             <MobileFileListHeader
-              folderId={null}
               canSort={canSort}
-              sort={sortOrder}
+              folderId={null}
               onFolderSort={changeSortOrder}
+              sort={sortOrder}
               thumbnailSizeBig={isBigThumbnail}
               toggleThumbnailSize={toggleThumbnailSize}
             />
             <FileListHeader
-              folderId={null}
               canSort={canSort}
-              sort={sortOrder}
+              folderId={null}
               onFolderSort={changeSortOrder}
+              sort={sortOrder}
               thumbnailSizeBig={isBigThumbnail}
               toggleThumbnailSize={toggleThumbnailSize}
             />
