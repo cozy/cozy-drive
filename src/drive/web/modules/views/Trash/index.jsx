@@ -9,10 +9,10 @@ import {
 import { ModalStack, ModalContextProvider } from 'drive/lib/ModalContext'
 import { RouterContextProvider } from 'drive/lib/RouterContext'
 
-import SelectionBar from '../SelectionBarWithActions'
+import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
-import Toolbar from 'drive/web/modules/drive/Toolbar'
+import Toolbar from 'drive/web/modules/trash/Toolbar'
 
 import { FileListv2 } from 'drive/web/modules/filelist/FileList'
 import { ConnectedFileListBodyV2 as FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
@@ -24,8 +24,10 @@ import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlac
 import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import Breadcrumb from './Breadcrumb'
-import File from '../FileWithActions'
+import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
 import RealTimeQueries from '../Drive/RealTimeQueries'
+
+import useActions from './useActions'
 
 import { buildTrashQuery } from 'drive/web/modules/queries'
 
@@ -49,6 +51,7 @@ export const TrashView = ({ router, children }) => {
     router.push(`/trash/file/${file.id}`)
   })
 
+  const actions = useActions()
   return (
     <Main>
       <RealTimeQueries doctype="io.cozy.files" />
@@ -58,7 +61,7 @@ export const TrashView = ({ router, children }) => {
         <Toolbar canUpload={false} canCreateFolder={false} disabled={false} />
       </Topbar>
 
-      <SelectionBar />
+      <SelectionBar actions={actions} />
       <FileListv2>
         <MobileFileListHeader
           folderId={null}
@@ -90,6 +93,7 @@ export const TrashView = ({ router, children }) => {
                   withSharedBadge={true}
                   isFlatDomain={true}
                   thumbnailSizeBig={isBigThumbnail}
+                  actions={actions}
                 />
               ))}
               {result.hasMore && <LoadMore fetchMore={result.fetchMore} />}
