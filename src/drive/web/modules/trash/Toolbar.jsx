@@ -10,7 +10,7 @@ import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { showModal } from 'react-cozy-helpers'
-
+import flag from 'cozy-flags'
 import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
@@ -50,7 +50,11 @@ const Toolbar = ({
           {isMobile && (
             <>
               <ActionMenuItem
-                onClick={() => emptyTrash()}
+                onClick={() =>
+                  flag('drive.client-migration.enabled')
+                    ? client.collection('io.cozy.files').emptyTrash()
+                    : emptyTrash()
+                }
                 left={<Icon icon="trash" color="var(--pomegranate)" />}
               >
                 <span className="u-pomegranate">
@@ -75,7 +79,11 @@ const Toolbar = ({
       <Button
         theme="danger-outline"
         className="u-hide--mob"
-        onClick={() => emptyTrash()}
+        onClick={() =>
+          flag('drive.client-migration.enabled')
+            ? client.collection('io.cozy.files').emptyTrash()
+            : emptyTrash()
+        }
         disabled={disabled || selectionModeActive}
         icon="trash"
         label={t('toolbar.empty_trash')}
