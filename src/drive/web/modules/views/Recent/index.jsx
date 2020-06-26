@@ -11,7 +11,6 @@ import { RouterContextProvider } from 'drive/lib/RouterContext'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import Main from 'drive/web/modules/layout/Main'
 import Topbar from 'drive/web/modules/layout/Topbar'
-import Toolbar from 'drive/web/modules/drive/Toolbar'
 
 import { FileListv2 } from 'drive/web/modules/filelist/FileList'
 import { ConnectedFileListBodyV2 as FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
