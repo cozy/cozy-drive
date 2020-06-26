@@ -55,7 +55,6 @@ export const RecentView = ({ router, children }) => {
       <ModalStack />
       <Topbar>
         <Breadcrumb />
-        <Toolbar canUpload={false} canCreateFolder={false} disabled={false} />
       </Topbar>
 
       <SelectionBar />

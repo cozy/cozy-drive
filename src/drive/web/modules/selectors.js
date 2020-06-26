@@ -19,8 +19,11 @@ export const getCurrentFileId = rootState => {
 
 export const getDisplayedFolder = rootState => {
   const folderId = getCurrentFolderId(rootState)
-  const doc = getDocumentFromState(rootState, 'io.cozy.files', folderId)
-  return doc
+  if (folderId) {
+    const doc = getDocumentFromState(rootState, 'io.cozy.files', folderId)
+    return doc
+  }
+  return null
 }
 
 const getFolderContentQueries = (rootState, folderId) => {
