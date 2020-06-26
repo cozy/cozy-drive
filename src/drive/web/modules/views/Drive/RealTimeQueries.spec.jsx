@@ -51,11 +51,13 @@ describe('RealTimeQueries', () => {
     realtimeCallbacks['deleted']({ id: 'mock-deleted' })
     expect(client.dispatch).toHaveBeenCalledWith({
       definition: {
-        document: { id: 'mock-deleted' },
+        document: { id: 'mock-deleted', _deleted: true },
         mutationType: 'DELETE_DOCUMENT'
       },
       mutationId: 3,
-      response: { data: { _type: 'io.cozy.files', id: 'mock-deleted' } },
+      response: {
+        data: { _deleted: true, _type: 'io.cozy.files', id: 'mock-deleted' }
+      },
       type: 'RECEIVE_MUTATION_RESULT'
     })
 

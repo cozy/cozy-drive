@@ -29,7 +29,10 @@ const RealTimeQueries = ({ doctype }) => {
         dispatchChange(document, Mutations.updateDocument)
       }
       const dispatchDelete = document => {
-        dispatchChange(document, Mutations.deleteDocument)
+        dispatchChange(
+          { ...document, _deleted: true },
+          Mutations.deleteDocument
+        )
       }
 
       const subscribe = async () => {
