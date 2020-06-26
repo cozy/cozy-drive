@@ -28,19 +28,17 @@ import {
   openFileWith
 } from './utils'
 
-const useActions = (documentId, { canMove } = {}) => {
+const useActions = ({ hasWriteAccess, canMove } = {}) => {
   const { pushModal, popModal } = useContext(ModalContext)
-  const { hasWriteAccess, refresh } = useContext(SharingContext)
+  const { refresh } = useContext(SharingContext)
   const { router, location } = useRouter()
   const client = useClient()
   const dispatch = useDispatch()
 
-  const isWritable = hasWriteAccess(documentId)
-
   const actions = {
     share: {
       icon: 'share',
-      displayCondition: selection => isWritable && selection.length === 1,
+      displayCondition: selection => hasWriteAccess && selection.length === 1,
       action: selected =>
         pushModal(
           <ShareModal
@@ -73,7 +71,7 @@ const useActions = (documentId, { canMove } = {}) => {
           },
     trash: {
       icon: 'trash',
-      displayCondition: () => isWritable,
+      displayCondition: () => hasWriteAccess,
       action: files =>
         pushModal(
           <DeleteConfirm
@@ -99,7 +97,7 @@ const useActions = (documentId, { canMove } = {}) => {
     },
     rename: {
       icon: 'rename',
-      displayCondition: selection => isWritable && selection.length === 1,
+      displayCondition: selection => hasWriteAccess && selection.length === 1,
       action: files => dispatch(startRenamingAsync(files[0]))
     },
     move: {

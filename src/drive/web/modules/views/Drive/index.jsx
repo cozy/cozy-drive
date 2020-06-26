@@ -3,7 +3,7 @@ import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
 import { useQuery } from 'cozy-client'
 
-import SharingProvider from 'cozy-sharing'
+import SharingProvider, { SharingContext } from 'cozy-sharing'
 import {
   ThumbnailSizeContext,
   ThumbnailSizeContextProvider
@@ -89,7 +89,11 @@ const DriveView = ({ folderId, router, children }) => {
 
   const isEmpty = !isLoading && !hasDataToShow
 
-  const actions = useActions(currentFolderId, { canMove: true })
+  const { hasWriteAccess } = useContext(SharingContext)
+  const actions = useActions({
+    hasWriteAccess: hasWriteAccess(currentFolderId),
+    canMove: true
+  })
 
   return (
     <Main>
