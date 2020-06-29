@@ -258,7 +258,10 @@ class InitAppMobile {
     await this.migrateToCozyAuth()
 
     if (!__DEVELOPMENT__) configureReporter()
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useHistoryForTracker(hashHistory)
+
     if (isAnalyticsOn(store.getState())) {
       startTracker(getServerUrl(store.getState()))
     }
