@@ -62,15 +62,21 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
-  const navigateToFolder = useCallback(folderId => {
-    setNeedsToWait(true)
-    router.push(`/trash/${folderId}`)
-  })
+  const navigateToFolder = useCallback(
+    folderId => {
+      setNeedsToWait(true)
+      router.push(`/trash/${folderId}`)
+    },
+    [router, setNeedsToWait]
+  )
 
-  const navigateToFile = useCallback(file => {
-    setNeedsToWait(true)
-    router.push(`/trash/${currentFolderId}/file/${file.id}`)
-  })
+  const navigateToFile = useCallback(
+    file => {
+      setNeedsToWait(true)
+      router.push(`/trash/${currentFolderId}/file/${file.id}`)
+    },
+    [router, setNeedsToWait]
+  )
 
   const { refresh } = useContext(SharingContext)
   const client = useClient()
