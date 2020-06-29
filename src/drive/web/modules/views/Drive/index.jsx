@@ -1,12 +1,24 @@
 import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
-import { useQuery } from 'cozy-client'
+import { useQuery, useClient } from 'cozy-client'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 
 import { SharingContext } from 'cozy-sharing'
+import { ModalContext } from 'drive/lib/ModalContext'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useActions from 'drive/web/modules/actions/useActions'
+import {
+  share,
+  download,
+  trash,
+  open,
+  rename,
+  move,
+  qualify,
+  versions,
+  offline
+} from 'drive/web/modules/actions'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -18,6 +30,7 @@ import { ROOT_DIR_ID } from 'drive/constants/config'
 import { buildDriveQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
+import { useDispatch } from 'react-redux'
 
 const getBreadcrumbPath = (t, displayedFolder) =>
   uniqBy(
@@ -43,7 +56,7 @@ const getBreadcrumbPath = (t, displayedFolder) =>
         (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
     }))
 
-const DriveView = ({ currentFolderId, router, children }) => {
+const DriveView = ({ currentFolderId, router, location, children }) => {
   const [sortOrder] = useFolderSort(currentFolderId)
 
   const folderQuery = buildDriveQuery({
@@ -80,10 +93,26 @@ const DriveView = ({ currentFolderId, router, children }) => {
   })
 
   const { hasWriteAccess } = useContext(SharingContext)
-  const actions = useActions({
+  const client = useClient()
+  const { pushModal, popModal } = useContext(ModalContext)
+  const { refresh } = useContext(SharingContext)
+  const dispatch = useDispatch()
+
+  const actionsOptions = {
+    client,
+    pushModal,
+    popModal,
+    refresh,
+    dispatch,
+    router,
+    location,
     hasWriteAccess: hasWriteAccess(currentFolderId),
     canMove: true
-  })
+  }
+  const actions = useActions(
+    [share, download, trash, open, rename, move, qualify, versions, offline],
+    actionsOptions
+  )
 
   const { t } = useI18n()
   const geTranslatedBreadcrumbPath = useCallback(

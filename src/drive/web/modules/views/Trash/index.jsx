@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
 
 import FolderView from '../Folder/FolderView'
@@ -7,10 +7,13 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import Toolbar from 'drive/web/modules/trash/Toolbar'
 import { MobileAwareBreadcrumbV2 as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { SharingContext } from 'cozy-sharing'
+import { ModalContext } from 'drive/lib/ModalContext'
 
-import { useQuery } from 'cozy-client'
+import { useQuery, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import useActions from './useActions'
+import useActions from 'drive/web/modules/actions/useActions'
+import { restore, destroy } from 'drive/web/modules/actions'
 
 import { buildTrashQuery } from 'drive/web/modules/queries'
 
@@ -27,7 +30,16 @@ const TrashView = ({ router, children, currentFolderId }) => {
     router.push(`/trash/file/${file.id}`)
   })
 
-  const actions = useActions()
+  const { refresh } = useContext(SharingContext)
+  const client = useClient()
+  const { pushModal, popModal } = useContext(ModalContext)
+  const actionsOptions = {
+    client,
+    refresh,
+    pushModal,
+    popModal
+  }
+  const actions = useActions([restore, destroy], actionsOptions)
   const { t } = useI18n()
 
   return (
