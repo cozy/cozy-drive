@@ -3,10 +3,12 @@ import { connectStoreToHistory, createReducer } from './connectedRouter'
 import { hashHistory as history } from 'react-router'
 
 const routes = [
-  '/folder/:folderId/file/:fileId',
-  '/files/:folderId/file/:fileId',
   '/files/:folderId',
-  '/folder/:folderId'
+  '/folder/:folderId',
+  '/files/:folderId/file/:fileId',
+  '/folder/:folderId/file/:fileId',
+  '/sharings/files/:fileId',
+  '/sharings/:folderId'
 ]
 
 describe('connectedRouter', () => {
@@ -43,5 +45,20 @@ describe('connectedRouter', () => {
     })
     const state4 = store.getState()
     expect(Object.keys(state4.params).length).toBe(0)
+
+    history.push({
+      pathname: '/sharings/12345'
+    })
+
+    const state5 = store.getState()
+    expect(state5.params.folderId).toEqual('12345')
+
+    history.push({
+      pathname: '/sharings/files/67890'
+    })
+
+    const state6 = store.getState()
+    expect(state6.params.fileId).toEqual('67890')
+    expect(state6.params.folderId).toBeFalsy()
   })
 })

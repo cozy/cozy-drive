@@ -1,7 +1,8 @@
 /**
  * Tools to store part of the react-router state inside redux
  */
-import { getParams } from 'react-router/lib/PatternUtils'
+import { matchPattern } from 'react-router/lib/PatternUtils'
+import fromPairs from 'lodash/fromPairs'
 
 const LOCATION_CHANGED = 'HISTORY.LOCATION_CHANGED'
 
@@ -13,10 +14,14 @@ const createParamsExtractor = routes => {
   return location => {
     const pathname = location.pathname
     for (let route of routes) {
-      const params = getParams(route, pathname)
-      if (params) {
-        return params
-      }
+      const match = matchPattern(route, pathname)
+      if (match && match.remainingPathname === '')
+        return fromPairs(
+          match.paramNames.map((paramName, index) => [
+            paramName,
+            match.paramValues[index]
+          ])
+        )
     }
     return {}
   }
