@@ -1,24 +1,26 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
+import { connect } from 'react-redux'
 
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 
-import { connect } from 'react-redux'
-import { useQuery } from 'cozy-client'
+import { useQuery, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { SharingContext } from 'cozy-sharing'
+
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import useActions from 'drive/web/modules/actions/useActions'
 import { restore, destroy } from 'drive/web/modules/actions'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
-import { buildDriveQuery } from 'drive/web/modules/queries'
+import { buildTrashQueryFolder } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { ModalContext } from 'drive/lib/ModalContext'
+import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-
-import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 
 const getBreadcrumbPath = (t, displayedFolder) =>
   uniqBy(
@@ -43,13 +45,13 @@ const getBreadcrumbPath = (t, displayedFolder) =>
 const TrashFolderView = ({ currentFolderId, router, children }) => {
   const [sortOrder] = useFolderSort(currentFolderId)
 
-  const folderQuery = buildDriveQuery({
+  const folderQuery = buildTrashQueryFolder({
     currentFolderId,
     type: 'directory',
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  const fileQuery = buildDriveQuery({
+  const fileQuery = buildTrashQueryFolder({
     currentFolderId,
     type: 'file',
     sortAttribute: sortOrder.attribute,
@@ -64,10 +66,19 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
   })
 
   const navigateToFile = useCallback(file => {
-    router.push(`/trash/file/${file.id}`)
+    router.push(`/trash/${currentFolderId}/file/${file.id}`)
   })
 
-  const actions = useActions([restore, destroy])
+  const { refresh } = useContext(SharingContext)
+  const client = useClient()
+  const { pushModal, popModal } = useContext(ModalContext)
+  const actionsOptions = {
+    client,
+    refresh,
+    pushModal,
+    popModal
+  }
+  const actions = useActions([restore, destroy], actionsOptions)
 
   const { t } = useI18n()
   const geTranslatedBreadcrumbPath = useCallback(

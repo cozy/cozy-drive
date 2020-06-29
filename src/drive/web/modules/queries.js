@@ -77,23 +77,6 @@ const buildParentsByIdsQuery = ids => ({
   }
 })
 
-const buildTrashQuery = () => ({
-  definition: () =>
-    Q('io.cozy.files')
-      .where({
-        type: { $gt: null },
-        dir_id: TRASH_DIR_ID
-      })
-      .indexFields(['type', 'name'])
-      .sortBy([{ type: 'asc' }, { name: 'asc' }]),
-  options: {
-    as: 'trash-view-query',
-    fetchPolicy: CozyClient.fetchPolicies.olderThan(
-      DEFAULT_CACHE_TIMEOUT_QUERIES
-    )
-  }
-})
-
 const buildSharingsQuery = ids => ({
   definition: () =>
     Q('io.cozy.files')
@@ -102,6 +85,37 @@ const buildSharingsQuery = ids => ({
   options: {
     as: `sharings-by-ids-${ids.join('')}`,
     fetchPolicy: defaultFetchPolicy
+  }
+})
+
+const buildTrashQueryFolder = ({
+  currentFolderId,
+  sortAttribute,
+  sortOrder,
+  type
+}) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        dir_id: currentFolderId,
+        type
+      })
+      .indexFields(['dir_id', 'type', sortAttribute])
+      .sortBy([
+        { dir_id: sortOrder },
+        { type: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ]),
+  options: {
+    as: `trash-${formatFolderQueryId(
+      type,
+      currentFolderId,
+      sortAttribute,
+      sortOrder
+    )}`,
+    fetchPolicy: CozyClient.fetchPolicies.olderThan(
+      DEFAULT_CACHE_TIMEOUT_QUERIES
+    )
   }
 })
 /**
@@ -140,6 +154,6 @@ export {
   buildDriveQuery,
   buildRecentQuery,
   buildParentsByIdsQuery,
-  buildTrashQuery,
-  buildSharingsQuery
+  buildSharingsQuery,
+  buildTrashQueryFolder
 }

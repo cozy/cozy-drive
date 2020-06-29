@@ -24,7 +24,7 @@ import ExternalRedirect from './ExternalRedirect'
 import DriveView from '../views/Drive'
 import FilesViewerDrive from '../views/Drive/FilesViewerDrive'
 import RecentView from '../views/Recent'
-import TrashView from '../views/Trash'
+import FilesViewerTrash from '../views/Trash/FilesViewerTrash'
 import TrashFolderView from '../views/Trash/TrashFolderView'
 import SharingsView from '../views/Sharings'
 import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
@@ -40,11 +40,11 @@ export const routes = [
   '/files/:folderId',
   '/folder/:folderId',
   '/recent/file/:fileId',
-  '/trash/:folderId',
-  '/trash/file/:fileId',
   '/sharings/:folderId/file/:fileId',
   '/sharings/file/:fileId',
-  '/sharings/:folderId'
+  '/sharings/:folderId',
+  '/trash/:folderId/file/:fileId',
+  '/trash/:folderId'
 ]
 
 const FilesViewer = flag('drive.client-migration.enabled')
@@ -116,11 +116,21 @@ const AppRoute = (
       <Route path="trash">
         <IndexRoute
           component={
-            flag('drive.client-migration.enabled') ? TrashView : LegacyTrash
+            flag('drive.client-migration.enabled')
+              ? TrashFolderView
+              : LegacyTrash
           }
         />
-        <Route path="file/:fileId" component={FilesViewer} />
-        <Route path=":folderId" component={TrashFolderView} />
+        <Route path=":folderId" component={TrashFolderView}>
+          <Route
+            path="file/:fileId"
+            component={
+              flag('drive.client-migration.enabled')
+                ? FilesViewerTrash
+                : FilesViewer
+            }
+          />
+        </Route>
       </Route>
 
       <Route path="sharings">

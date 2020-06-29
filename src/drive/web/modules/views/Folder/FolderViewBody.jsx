@@ -35,7 +35,6 @@ const FolderViewBody = ({
   const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
     setSortOrder({ sortAttribute: attribute, sortOrder: order })
   )
-
   const isInError = queryResults.some(query => query.fetchStatus === 'error')
 
   const hasDataToShow =
