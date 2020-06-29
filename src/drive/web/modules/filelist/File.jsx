@@ -221,26 +221,33 @@ const Status = React.memo(({ isAvailableOffline, id }) => (
   </div>
 ))
 
-const FileAction = forwardRef(({ t, onClick }, ref) => (
-  <div
-    className={classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-file-action']
-    )}
-    ref={ref}
-  >
-    <Button
-      theme="action"
-      onClick={onClick}
-      extension="narrow"
-      icon={
-        <Icon icon="dots" color={palette.charcoalGrey} width="17" height="17" />
-      }
-      iconOnly
-      label={t('Toolbar.more')}
-    />
-  </div>
-))
+const FileAction = forwardRef(function FileAction({ t, onClick }, ref) {
+  return (
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-file-action']
+      )}
+      ref={ref}
+    >
+      <Button
+        theme="action"
+        onClick={onClick}
+        extension="narrow"
+        icon={
+          <Icon
+            icon="dots"
+            color={palette.charcoalGrey}
+            width="17"
+            height="17"
+          />
+        }
+        iconOnly
+        label={t('Toolbar.more')}
+      />
+    </div>
+  )
+})
 
 const File = props => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
