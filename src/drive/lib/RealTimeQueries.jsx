@@ -2,39 +2,39 @@ import { memo, useEffect } from 'react'
 import { useClient, Mutations, models } from 'cozy-client'
 import { receiveMutationResult } from 'cozy-client/dist/store'
 
+const dispatchChange = (document, mutationDefinitionCreator, client) => {
+  const response = {
+    data: models.file.normalize(document)
+  }
+  const options = {}
+  client.dispatch(
+    receiveMutationResult(
+      client.generateId(),
+      response,
+      options,
+      mutationDefinitionCreator(document)
+    )
+  )
+}
+
 const RealTimeQueries = ({ doctype }) => {
   const client = useClient()
-
-  const dispatchChange = (document, mutationDefinitionCreator) => {
-    const response = {
-      data: models.file.normalize(document)
-    }
-
-    const options = {}
-    client.dispatch(
-      receiveMutationResult(
-        client.generateId(),
-        response,
-        options,
-        mutationDefinitionCreator(document)
-      )
-    )
-  }
 
   useEffect(
     () => {
       const realtime = client.plugins.realtime
 
       const dispatchCreate = document => {
-        dispatchChange(document, Mutations.createDocument)
+        dispatchChange(document, Mutations.createDocument, client)
       }
       const dispatchUpdate = document => {
-        dispatchChange(document, Mutations.updateDocument)
+        dispatchChange(document, Mutations.updateDocument, client)
       }
       const dispatchDelete = document => {
         dispatchChange(
           { ...document, _deleted: true },
-          Mutations.deleteDocument
+          Mutations.deleteDocument,
+          client
         )
       }
 
@@ -51,7 +51,7 @@ const RealTimeQueries = ({ doctype }) => {
         realtime.unsubscribe('deleted', doctype, dispatchDelete)
       }
     },
-    [client, dispatchChange]
+    [client, doctype]
   )
 
   return null
