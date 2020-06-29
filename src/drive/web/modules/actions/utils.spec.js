@@ -1,21 +1,13 @@
-import CozyClient, { createMockClient } from 'cozy-client'
+import { createMockClient } from 'cozy-client'
 import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
-import configureStore from 'drive/store/configureStore'
 import { generateFile } from 'test/generate'
 import { trashFiles, downloadFiles } from './utils'
-import FileCollection from 'cozy-stack-client/dist/FileCollection'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({
   routes: []
 }))
-
-jest.mock('cozy-stack-client/dist/FileCollection', () => {
-  class FileCollection {}
-  FileCollection.prototype.destroy = jest.fn()
-  return FileCollection
-})
 
 jest.mock('cozy-stack-client/dist/utils', () => ({
   forceFileDownload: jest.fn()
@@ -23,10 +15,9 @@ jest.mock('cozy-stack-client/dist/utils', () => ({
 
 describe('trashFiles', () => {
   const setup = () => {
-    const client = new CozyClient()
-    const store = configureStore({
-      client
-    })
+    const client = new createMockClient({})
+    const store = client.store
+
     store.dispatch(
       initQuery('files', {
         doctype: 'io.cozy.files'
@@ -43,13 +34,17 @@ describe('trashFiles', () => {
   }
   it('should destroy the file and update queries', async () => {
     const { store, client, file } = setup()
-    FileCollection.prototype.destroy.mockImplementation(async file => ({
+    const mockedDestroy = jest.fn()
+    client.collection = jest.fn(() => ({
+      destroy: mockedDestroy
+    }))
+
+    mockedDestroy.mockResolvedValue({
       data: {
         ...file,
         dir_id: TRASH_DIR_ID
       }
-    }))
-
+    })
     const state = store.getState()
 
     // Make sure that the state is OK
@@ -58,7 +53,7 @@ describe('trashFiles', () => {
     )
 
     await trashFiles(client, [file])
-    expect(FileCollection.prototype.destroy).toHaveBeenCalledWith(file)
+    expect(mockedDestroy).toHaveBeenCalledWith(file)
 
     const state2 = store.getState()
     const updatedFile = state2.cozy.documents['io.cozy.files'][file._id]
