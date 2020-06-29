@@ -29,18 +29,24 @@ const MoreMenu = ({
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
 
-  const openMenu = useCallback(() => {
-    if (window.StatusBar && isIOSApp()) {
-      window.StatusBar.backgroundColorByHexString('#989AA0')
-    }
-    setMenuVisible(true)
-  })
-  const closeMenu = useCallback(() => {
-    if (window.StatusBar && isIOSApp()) {
-      window.StatusBar.backgroundColorByHexString('#FFFFFF')
-    }
-    setMenuVisible(false)
-  })
+  const openMenu = useCallback(
+    () => {
+      if (window.StatusBar && isIOSApp()) {
+        window.StatusBar.backgroundColorByHexString('#989AA0')
+      }
+      setMenuVisible(true)
+    },
+    [setMenuVisible]
+  )
+  const closeMenu = useCallback(
+    () => {
+      if (window.StatusBar && isIOSApp()) {
+        window.StatusBar.backgroundColorByHexString('#FFFFFF')
+      }
+      setMenuVisible(false)
+    },
+    [setMenuVisible]
+  )
 
   return (
     <div>
