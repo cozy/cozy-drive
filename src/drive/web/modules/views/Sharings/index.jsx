@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react'
 
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
+import withSharedDocumentIds from './withSharedDocumentIds'
 
 import { MobileAwareBreadcrumbV2 as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 
@@ -49,12 +49,4 @@ export const SharingsView = ({ router, sharedDocumentIds, children }) => {
   )
 }
 
-const SharingsViewWithDocs = props => (
-  <SharedDocuments>
-    {({ sharedDocuments }) => (
-      <SharingsView {...props} sharedDocumentIds={sharedDocuments} />
-    )}
-  </SharedDocuments>
-)
-
-export default SharingsViewWithDocs
+export default withSharedDocumentIds(SharingsView)
