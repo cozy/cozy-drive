@@ -36,13 +36,19 @@ export const RecentView = ({ router, location, children }) => {
   const query = buildRecentQuery()
   const result = useFilesQueryWithPath(query)
 
-  const navigateToFolder = useCallback(folderId => {
-    router.push(`/folder/${folderId}`)
-  })
+  const navigateToFolder = useCallback(
+    folderId => {
+      router.push(`/folder/${folderId}`)
+    },
+    [router]
+  )
 
-  const navigateToFile = useCallback(file => {
-    router.push(`/recent/file/${file.id}`)
-  })
+  const navigateToFile = useCallback(
+    file => {
+      router.push(`/recent/file/${file.id}`)
+    },
+    [router]
+  )
 
   const client = useClient()
   const { pushModal, popModal } = useContext(ModalContext)

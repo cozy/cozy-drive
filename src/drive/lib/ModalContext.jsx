@@ -4,14 +4,20 @@ export const ModalContext = React.createContext()
 
 export const ModalContextProvider = ({ children }) => {
   const [modalStack, setModalStack] = useState([])
-  const pushModal = useCallback(modal => {
-    modalStack.push(modal)
-    setModalStack([...modalStack])
-  })
-  const popModal = useCallback(() => {
-    modalStack.pop()
-    setModalStack([...modalStack])
-  })
+  const pushModal = useCallback(
+    modal => {
+      modalStack.push(modal)
+      setModalStack([...modalStack])
+    },
+    [modalStack]
+  )
+  const popModal = useCallback(
+    () => {
+      modalStack.pop()
+      setModalStack([...modalStack])
+    },
+    [modalStack]
+  )
 
   return (
     <ModalContext.Provider value={{ modalStack, pushModal, popModal }}>

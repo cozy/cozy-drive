@@ -38,30 +38,33 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
   const [url, setUrl] = useState('')
   const client = useClient()
 
-  const createShortcut = async () => {
-    if (!filename || !url) {
-      Alerter.error(t('Shortcut.needs_info'))
-      return
-    }
-    const makedURL = makeURLValid(url)
-    if (!makedURL) {
-      Alerter.error(t('Shortcut.url_badformat'))
-      return
-    }
-    const data = {
-      name: filename.endsWith('.url') ? filename : filename + '.url',
-      dir_id: displayedFolder.id,
-      url: makedURL
-    }
-    try {
-      await client.collection('io.cozy.files.shortcuts').create(data)
-      Alerter.success(t('Shortcut.created'))
-      if (onCreated) onCreated()
-      onClose()
-    } catch (e) {
-      Alerter.error(t('Shortcut.errored'))
-    }
-  }
+  const createShortcut = useCallback(
+    async () => {
+      if (!filename || !url) {
+        Alerter.error(t('Shortcut.needs_info'))
+        return
+      }
+      const makedURL = makeURLValid(url)
+      if (!makedURL) {
+        Alerter.error(t('Shortcut.url_badformat'))
+        return
+      }
+      const data = {
+        name: filename.endsWith('.url') ? filename : filename + '.url',
+        dir_id: displayedFolder.id,
+        url: makedURL
+      }
+      try {
+        await client.collection('io.cozy.files.shortcuts').create(data)
+        Alerter.success(t('Shortcut.created'))
+        if (onCreated) onCreated()
+        onClose()
+      } catch (e) {
+        Alerter.error(t('Shortcut.errored'))
+      }
+    },
+    [client, filename, onClose, onCreated, t, url, displayedFolder]
+  )
 
   const handleKeyDown = e => {
     if (e.keyCode === ENTER_KEY) {
@@ -117,7 +120,7 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
         <Button
           theme="primary"
           label={t('Shortcut.create')}
-          onClick={useCallback(createShortcut)}
+          onClick={createShortcut}
         />
       </ExperimentalDialogActions>
     </ExperimentalDialog>
