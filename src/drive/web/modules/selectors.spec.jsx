@@ -1,7 +1,5 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import CozyClient from 'cozy-client'
-import { generateFile } from 'test/generate'
 import {
   getFolderContent,
   getDisplayedFolder,

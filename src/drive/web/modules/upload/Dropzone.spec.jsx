@@ -32,7 +32,7 @@ describe('Dropzone', () => {
     })
     const root = mount(
       <AppLike client={client} store={store}>
-        <Dropzone displayedFolder={displayedFolder}/>
+        <Dropzone displayedFolder={displayedFolder} />
       </AppLike>
     )
 
