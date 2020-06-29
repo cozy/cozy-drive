@@ -42,8 +42,9 @@ export const routes = [
   '/recent/file/:fileId',
   '/trash/:folderId',
   '/trash/file/:fileId',
-  '/sharings/:folderId',
-  '/sharings/file/:fileId'
+  '/sharings/:folderId/file/:fileId',
+  '/sharings/file/:fileId',
+  '/sharings/:folderId'
 ]
 
 const FilesViewer = flag('drive.client-migration.enabled')
@@ -130,8 +131,10 @@ const AppRoute = (
               : LegacySharingsView
           }
         />
+        <Route path=":folderId" component={SharingsFolderView}>
+          <Route path="file/:fileId" component={SharingsFilesViewer} />
+        </Route>
         <Route path="file/:fileId" component={SharingsFilesViewer} />
-        <Route path=":folderId" component={SharingsFolderView} />
       </Route>
 
       <Route component={FileExplorer}>

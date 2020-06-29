@@ -68,7 +68,7 @@ const SharingsFolderView = ({
   })
 
   const navigateToFile = useCallback(file => {
-    router.push(`/sharings/file/${file.id}`)
+    router.push(`/sharings/${currentFolderId}/file/${file.id}`)
   })
 
   const { hasWriteAccess } = useContext(SharingContext)
