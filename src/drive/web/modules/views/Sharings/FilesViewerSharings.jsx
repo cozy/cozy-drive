@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewerV2'
-import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
+import withSharedDocumentIds from './withSharedDocumentIds'
 
 const FilesViewerWithQuery = ({ sharedDocumentIds, ...props }) => {
   const filesQuery = buildSharingsQuery(sharedDocumentIds)
@@ -39,12 +39,4 @@ const mapStateToProps = state => ({
 
 const FilesViewerWithFolderId = connect(mapStateToProps)(FilesViewerWithQuery)
 
-const FilesViewerSharing = props => (
-  <SharedDocuments>
-    {({ sharedDocuments }) => (
-      <FilesViewerWithFolderId {...props} sharedDocumentIds={sharedDocuments} />
-    )}
-  </SharedDocuments>
-)
-
-export default FilesViewerSharing
+export default withSharedDocumentIds(FilesViewerWithFolderId)
