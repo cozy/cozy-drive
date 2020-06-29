@@ -39,8 +39,10 @@ const FolderViewBody = ({
   )
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
 
-  const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
-    setSortOrder({ sortAttribute: attribute, sortOrder: order })
+  const changeSortOrder = useCallback(
+    (folderId_legacy, attribute, order) =>
+      setSortOrder({ sortAttribute: attribute, sortOrder: order }),
+    [setSortOrder]
   )
 
   const capabilities = useCapabilities(client)
