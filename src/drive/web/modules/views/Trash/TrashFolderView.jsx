@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 import { useQuery } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
-import useActions from './useActions'
+import useActions from 'drive/web/modules/actions/useActions'
+import { restore, destroy } from 'drive/web/modules/actions'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { buildDriveQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
@@ -66,7 +67,7 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
     router.push(`/trash/file/${file.id}`)
   })
 
-  const actions = useActions()
+  const actions = useActions([restore, destroy])
 
   const { t } = useI18n()
   const geTranslatedBreadcrumbPath = useCallback(

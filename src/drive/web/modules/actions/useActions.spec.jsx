@@ -7,19 +7,39 @@ import AppLike from '../../../../../test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
 import { EditDocumentQualification } from 'cozy-scanner'
+import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { createStore } from 'redux'
-import { exportFilesNative, downloadFiles, openFileWith } from './utils'
+import {
+  exportFilesNative,
+  downloadFiles,
+  openFileWith,
+  restoreFiles
+} from './utils'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
-import * as rename from 'drive/web/modules/drive/rename'
+import * as renameModule from 'drive/web/modules/drive/rename'
 
 import useActions from './useActions'
+import {
+  share,
+  download,
+  trash,
+  open,
+  rename,
+  move,
+  qualify,
+  versions,
+  offline,
+  restore,
+  destroy
+} from './index'
 
 jest.mock('./utils', () => ({
   isAnyFileReferencedByAlbum: jest.fn(),
   exportFilesNative: jest.fn(),
   downloadFiles: jest.fn(),
   trashFiles: jest.fn(),
-  openFileWith: jest.fn()
+  openFileWith: jest.fn(),
+  restoreFiles: jest.fn()
 }))
 
 jest.mock('cozy-ui/transpiled/react/helpers/tracker', () => ({
@@ -63,18 +83,44 @@ describe('useActions', () => {
         {children}
       </AppLike>
     )
-    return renderHook(() => useActions(hookArgs), {
-      wrapper
-    })
+    return renderHook(
+      () =>
+        useActions(
+          [
+            share,
+            download,
+            trash,
+            open,
+            rename,
+            move,
+            qualify,
+            versions,
+            offline,
+            restore,
+            destroy
+          ],
+          hookArgs
+        ),
+      {
+        wrapper
+      }
+    )
   }
 
   const defaultHookArgs = {
     hasWriteAccess: true,
-    canMove: true
+    canMove: true,
+    client: mockClient,
+    pushModal: mockModalContextValue.pushModal,
+    popModal: mockModalContextValue.popModal,
+    refresh: mockSharingContextValue.refresh,
+    dispatch: jest.fn(),
+    router: mockRouterContextValue.router,
+    location: mockRouterContextValue.location
   }
 
-  const getAction = (actionKey, hookArgs = defaultHookArgs) => {
-    const { result } = renderActionsHook(hookArgs)
+  const getAction = (actionKey, hookArgs) => {
+    const { result } = renderActionsHook({ ...defaultHookArgs, ...hookArgs })
     return result.current[actionKey]
   }
 
@@ -91,7 +137,9 @@ describe('useActions', () => {
       'moveto',
       'qualify',
       'history',
-      'phone-download'
+      'phone-download',
+      'restore',
+      'destroy'
     ])
   })
 
@@ -289,7 +337,7 @@ describe('useActions', () => {
 
     it('dispatches a rename action when activated', async () => {
       const renameAction = getAction('rename')
-      const spy = jest.spyOn(rename, 'startRenamingAsync')
+      const spy = jest.spyOn(renameModule, 'startRenamingAsync')
       await renameAction.action(['abc'])
       expect(spy).toHaveBeenCalled()
     })
@@ -437,6 +485,32 @@ describe('useActions', () => {
       expect(
         offlineAction.displayCondition([{ type: 'folder', id: 'abc' }])
       ).toBe(false)
+    })
+  })
+
+  describe('restore action', () => {
+    it('restores files', async () => {
+      const restoreAction = getAction('restore')
+      const mockDocuments = [{ id: 'abc' }]
+      await restoreAction.action(mockDocuments)
+      expect(restoreFiles).toHaveBeenCalledWith(mockClient, mockDocuments)
+      expect(mockSharingContextValue.refresh).toHaveBeenCalled()
+    })
+  })
+
+  describe('destroy action', () => {
+    it('Shows a confirmation modal when activated', async () => {
+      const destroyAction = getAction('destroy')
+      const mockDocuments = [{ id: 'abc' }]
+      await destroyAction.action(mockDocuments)
+      const actuallyCalledModal =
+        mockModalContextValue.pushModal.mock.calls[0][0]
+      expect(mockModalContextValue.pushModal).toHaveBeenCalledWith(
+        <DestroyConfirm
+          files={mockDocuments}
+          onClose={actuallyCalledModal.props.onClose}
+        />
+      )
     })
   })
 })
