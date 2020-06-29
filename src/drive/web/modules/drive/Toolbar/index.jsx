@@ -43,7 +43,8 @@ class Toolbar extends Component {
       hasWriteAccess,
       isShared,
       breakpoints: { isMobile },
-      client
+      client,
+      folderId
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -61,12 +62,16 @@ class Toolbar extends Component {
         {!isShared &&
           canUpload &&
           hasWriteAccess && <UploadButtonItem disabled={isDisabled} />}
-        <NotRootFolder>
-          <SharedRecipients />
-        </NotRootFolder>
-        <NotRootFolder>
-          <ShareButton isDisabled={isDisabled} />
-        </NotRootFolder>
+        {folderId !== null && (
+          <NotRootFolder>
+            <SharedRecipients />
+          </NotRootFolder>
+        )}
+        {folderId !== null && (
+          <NotRootFolder>
+            <ShareButton isDisabled={isDisabled} />
+          </NotRootFolder>
+        )}
 
         {isMobile ? (
           <BarRight>
