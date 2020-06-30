@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import get from 'lodash/get'
 
 import { SharedStatus } from 'cozy-sharing'
-
+import flag from 'cozy-flags'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -15,7 +15,8 @@ import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
 
-import RenameInput from 'drive/web/modules/drive/RenameInput'
+import RenameInputV2 from 'drive/web/modules/drive/RenameInputV2'
+import RenameInputLegacy from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
 import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -25,7 +26,7 @@ import {
   toggleItemSelection,
   isSelected
 } from 'drive/web/modules/selection/duck'
-import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/rename'
+import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/renameV2'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
@@ -125,10 +126,15 @@ const FileName = ({
     { [styles['fil-content-file-openable']]: !isRenaming && interactive }
   )
   const { filename, extension } = CozyFile.splitFilename(attributes)
+
   return (
     <div className={classes}>
       {isRenaming ? (
-        <RenameInput />
+        flag('drive.client-migration.enabled') ? (
+          <RenameInputV2 file={attributes} />
+        ) : (
+          <RenameInputLegacy />
+        )
       ) : (
         <div className={styles['fil-file']}>
           <div className={styles['fil-file-filename']}>

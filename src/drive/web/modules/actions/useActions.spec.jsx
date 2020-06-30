@@ -16,7 +16,7 @@ import {
   restoreFiles
 } from './utils'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
-import * as renameModule from 'drive/web/modules/drive/rename'
+import * as renameModule from 'drive/web/modules/drive/renameV2'
 
 import useActions from './useActions'
 import {
