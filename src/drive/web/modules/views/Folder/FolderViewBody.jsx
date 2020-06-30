@@ -45,7 +45,7 @@ const FolderViewBody = ({
     query => query.fetchStatus === 'loading' && !query.lastUpdate
   )
 
-  const isEmpty = !isLoading && !hasDataToShow
+  const isEmpty = !isInError && !isLoading && !hasDataToShow
 
   return (
     <>
