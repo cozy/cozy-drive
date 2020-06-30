@@ -25,7 +25,8 @@ const FolderViewBody = ({
   canUpload = true,
   withFilePath = false,
   navigateToFolder,
-  navigateToFile
+  navigateToFile,
+  refreshFolderContent = false
 }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
@@ -71,7 +72,7 @@ const FolderViewBody = ({
           </>
         )}
         <FileListBodyV2 selectionModeActive={false}>
-          <AddFolder />
+          <AddFolder refreshFolderContent={refreshFolderContent} />
           {isInError && <Oops />}
           {isLoading && <FileListRowsPlaceholder />}
           {/* TODO FolderViewBody should not have the responsability to chose 
@@ -103,6 +104,7 @@ const FolderViewBody = ({
                       withFilePath={withFilePath}
                       thumbnailSizeBig={isBigThumbnail}
                       actions={actions}
+                      refreshFolderContent={refreshFolderContent}
                     />
                   ))}
                   {query.hasMore && <LoadMore fetchMore={query.fetchMore} />}

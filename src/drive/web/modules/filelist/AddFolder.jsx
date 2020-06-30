@@ -43,9 +43,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: name => {
     if (flag('drive.client-migration.enabled')) {
-      dispatch(createFolderV2(ownProps.client, name)).then(() =>
-        dispatch(hideNewFolderInput())
-      )
+      dispatch(createFolderV2(ownProps.client, name)).then(() => {
+        if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
+        return dispatch(hideNewFolderInput())
+      })
     } else {
       dispatch(createFolder(name)).then(() => dispatch(hideNewFolderInput()))
     }

@@ -118,7 +118,8 @@ const FileName = ({
   withFilePath,
   isMobile,
   formattedSize,
-  formattedUpdatedAt
+  formattedUpdatedAt,
+  refreshFolderContent
 }) => {
   const classes = classNames(
     styles['fil-content-cell'],
@@ -131,7 +132,10 @@ const FileName = ({
     <div className={classes}>
       {isRenaming ? (
         flag('drive.client-migration.enabled') ? (
-          <RenameInputV2 file={attributes} />
+          <RenameInputV2
+            file={attributes}
+            refreshFolderContent={refreshFolderContent}
+          />
         ) : (
           <RenameInputLegacy />
         )
@@ -286,6 +290,7 @@ const File = props => {
     thumbnailSizeBig,
     selectionModeActive,
     isFlatDomain,
+    refreshFolderContent,
     breakpoints: { isExtraLarge, isMobile }
   } = props
 
@@ -336,6 +341,7 @@ const File = props => {
           isMobile={isMobile}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
+          refreshFolderContent={refreshFolderContent}
         />
         <LastUpdate
           date={updatedAt}
@@ -386,7 +392,8 @@ File.propTypes = {
   /** onFileOpen : When a user click on a File */
   onFileOpen: PropTypes.func.isRequired,
   onCheckboxToggle: PropTypes.func.isRequired,
-  isFlatDomain: PropTypes.bool
+  isFlatDomain: PropTypes.bool,
+  refreshFolderContent: PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({

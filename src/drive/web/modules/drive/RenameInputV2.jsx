@@ -13,7 +13,7 @@ const updateFileNameQuery = async (client, file, newName) => {
   return client.save({ ...file, name: newName, _rev: file.meta.rev })
 }
 
-export const RenameInput = ({ onAbort, file }) => {
+export const RenameInput = ({ onAbort, file, refreshFolderContent }) => {
   const client = useClient()
   return (
     <FilenameInput
@@ -21,6 +21,7 @@ export const RenameInput = ({ onAbort, file }) => {
       onSubmit={async newName => {
         try {
           await updateFileNameQuery(client, file, newName)
+          if (refreshFolderContent) refreshFolderContent()
         } catch {
           Alerter.error('alert.file_name', { fileName: newName })
         } finally {
