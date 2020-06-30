@@ -284,6 +284,7 @@
     "empty_trash_progress": "Your trash is being emptied. This might take a few moments.",
     "empty_trash_success": "The trash has been emptied.",
     "folder_name": "The element %{folderName} already exists, please choose a new name.",
+    "file_name": "The element %{fileName} already exists, please choose a new name.",
     "folder_generic": "An error occurred, please try again.",
     "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
     "offline": "This feature is not available offline.",
