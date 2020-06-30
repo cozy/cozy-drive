@@ -1,7 +1,5 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import CozyClient from 'cozy-client'
-import { generateFile } from 'test/generate'
 import {
   getFolderContent,
   getDisplayedFolder,
@@ -9,29 +7,18 @@ import {
   getCurrentFolderId,
   getCurrentFileId
 } from './selectors'
-import { setupFolderContent, setupStoreAndClient } from 'test/setup'
+import {
+  setupFolderContent,
+  setupStoreAndClient,
+  mockCozyClientRequestQuery
+} from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({ routes: [] }))
 
-beforeEach(() => {
-  const files = Array(10)
-    .fill(null)
-    .map((x, i) => generateFile({ i }))
-  const directories = Array(3)
-    .fill(null)
-    .map((x, i) => generateFile({ i, type: 'directory' }))
-  const fileAndDirs = directories.concat(files)
-  jest.spyOn(CozyClient.prototype, 'requestQuery').mockResolvedValue({
-    data: fileAndDirs
-  })
-})
-
-afterEach(() => {
-  CozyClient.prototype.requestQuery.mockRestore()
-})
+mockCozyClientRequestQuery()
 
 describe('getFolderContent', () => {
   it('should return an empty list if queries have not been loaded', () => {
