@@ -3,13 +3,27 @@ import React, { useCallback, useContext } from 'react'
 import get from 'lodash/get'
 
 import { connect } from 'react-redux'
-import { useQuery } from 'cozy-client'
+import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
+import { ModalContext } from 'drive/lib/ModalContext'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useDispatch } from 'react-redux'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
-import useActions from 'drive/web/modules/actions/useActions'
 import { buildDriveQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
+
+import useActions from 'drive/web/modules/actions/useActions'
+import {
+  share,
+  download,
+  trash,
+  open,
+  rename,
+  move,
+  qualify,
+  versions,
+  offline
+} from 'drive/web/modules/actions'
 
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import FolderView from '../Folder/FolderView'
@@ -71,11 +85,26 @@ const SharingsFolderView = ({
     router.push(`/sharings/${currentFolderId}/file/${file.id}`)
   })
 
+  const client = useClient()
   const { hasWriteAccess } = useContext(SharingContext)
-  const actions = useActions({
+  const { pushModal, popModal } = useContext(ModalContext)
+  const { refresh } = useContext(SharingContext)
+  const dispatch = useDispatch()
+  const actionsOptions = {
+    client,
+    pushModal,
+    popModal,
+    refresh,
+    dispatch,
+    router,
+    location,
     hasWriteAccess: hasWriteAccess(currentFolderId),
     canMove: true
-  })
+  }
+  const actions = useActions(
+    [share, download, trash, open, rename, move, qualify, versions, offline],
+    actionsOptions
+  )
 
   const { t } = useI18n()
   const geTranslatedBreadcrumbPath = useCallback(
