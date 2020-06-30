@@ -13,7 +13,7 @@ const updateFileNameQuery = async (client, file, newName) => {
   return client.save({ ...file, name: newName, _rev: file.meta.rev })
 }
 
-const RenameInput = ({ onAbort, file }) => {
+export const RenameInput = ({ onAbort, file }) => {
   const client = useClient()
   return (
     <FilenameInput

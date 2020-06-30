@@ -105,7 +105,7 @@ class FilenameInput extends Component {
     const { value, working, error } = this.state
     const { t } = this.props
     return (
-      <div data-test-id="name-input" className={styles['fil-file-name-input']}>
+      <div data-testid="name-input" className={styles['fil-file-name-input']}>
         <input
           type="text"
           value={value}
