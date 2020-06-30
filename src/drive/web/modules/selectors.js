@@ -28,6 +28,14 @@ export const getDisplayedFolder = rootState => {
   return null
 }
 
+export const getParentFolder = (rootState, parentFolderId) => {
+  if (parentFolderId) {
+    const doc = getDocumentFromState(rootState, 'io.cozy.files', parentFolderId)
+    return doc
+  }
+  return null
+}
+
 const getFolderContentQueries = (rootState, folderId) => {
   const queries = rootState.cozy.queries
   const folderContentQueries = Object.entries(queries)
