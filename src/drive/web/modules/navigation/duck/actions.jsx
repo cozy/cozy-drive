@@ -388,7 +388,7 @@ export const createFolder = name => {
  * negatives.
  */
 const doesFolderExistByName = (state, parentFolderId, name) => {
-  const filesInCurrentView = getFolderContent(state, parentFolderId)
+  const filesInCurrentView = getFolderContent(state, parentFolderId) || [] // TODO in the public view we don't use a query, so getFolderContent returns null. We could look inside the cozy-client store with a predicate to find folders with a matching dir_id.
 
   const existingFolder = filesInCurrentView.find(f => {
     return isDirectory(f) && f.name === name
