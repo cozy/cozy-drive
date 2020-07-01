@@ -8,21 +8,13 @@ import {
   useAppLinkWithStoreFallback,
   useCapabilities
 } from 'cozy-client'
-import {
-  generateUniversalLink,
-  generateWebLink
-} from 'cozy-ui/transpiled/react/AppLinker/native'
+import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 
-const CreateNoteItem = ({
-  client,
-  t,
-  displayedFolder,
-  hasAppsPermissions = true
-}) => {
+const CreateNoteItem = ({ client, t, displayedFolder }) => {
   const capabilities = useCapabilities(client)
   const isFlatDomain = get(
     capabilities,
@@ -32,21 +24,13 @@ const CreateNoteItem = ({
   let notesAppUrl = undefined
   let notesAppIsInstalled = true
 
-  if (hasAppsPermissions) {
-    const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
-      'notes',
-      client
-    )
-    if (fetchStatus === 'loaded') {
-      notesAppUrl = url
-      notesAppIsInstalled = isInstalled
-    }
-  } else {
-    notesAppUrl = generateWebLink({
-      slug: 'notes',
-      cozyUrl: client.getStackClient().uri,
-      subDomainType: isFlatDomain ? 'flat' : 'nested'
-    })
+  const { fetchStatus, url, isInstalled } = useAppLinkWithStoreFallback(
+    'notes',
+    client
+  )
+  if (fetchStatus === 'loaded') {
+    notesAppUrl = url
+    notesAppIsInstalled = isInstalled
   }
 
   let returnUrl = ''
