@@ -77,14 +77,20 @@ const SharingsFolderView = ({
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
-  const navigateToFolder = useCallback(folderId => {
-    if (folderId) router.push(`/sharings/${folderId}`)
-    else router.push('/sharings')
-  })
+  const navigateToFolder = useCallback(
+    folderId => {
+      if (folderId) router.push(`/sharings/${folderId}`)
+      else router.push('/sharings')
+    },
+    [router]
+  )
 
-  const navigateToFile = useCallback(file => {
-    router.push(`/sharings/${currentFolderId}/file/${file.id}`)
-  })
+  const navigateToFile = useCallback(
+    file => {
+      router.push(`/sharings/${currentFolderId}/file/${file.id}`)
+    },
+    [router]
+  )
 
   const client = useClient()
   const { hasWriteAccess } = useContext(SharingContext)

@@ -75,7 +75,7 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
       setNeedsToWait(true)
       router.push(`/trash/${currentFolderId}/file/${file.id}`)
     },
-    [router, setNeedsToWait]
+    [router, setNeedsToWait, currentFolderId]
   )
 
   const { refresh } = useContext(SharingContext)

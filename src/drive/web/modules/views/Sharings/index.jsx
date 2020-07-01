@@ -41,13 +41,19 @@ export const SharingsView = ({
   const query = buildSharingsQuery(sharedDocumentIds)
   const result = useFilesQueryWithPath(query)
 
-  const navigateToFolder = useCallback(folderId => {
-    router.push(`/sharings/${folderId}`)
-  })
+  const navigateToFolder = useCallback(
+    folderId => {
+      router.push(`/sharings/${folderId}`)
+    },
+    [router]
+  )
 
-  const navigateToFile = useCallback(file => {
-    router.push(`/sharings/file/${file.id}`)
-  })
+  const navigateToFile = useCallback(
+    file => {
+      router.push(`/sharings/file/${file.id}`)
+    },
+    [router]
+  )
 
   const client = useClient()
   const { pushModal, popModal } = useContext(ModalContext)
