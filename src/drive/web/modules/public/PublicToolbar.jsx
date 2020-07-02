@@ -120,7 +120,7 @@ const MoreMenu = withBreakpoints()(
 MoreMenu.propTypes = {
   t: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
-  onOpenInCozy: PropTypes.func,
+  onOpenInCozy: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   onCreateCozy: PropTypes.func,
   isFile: PropTypes.bool.isRequired
 }

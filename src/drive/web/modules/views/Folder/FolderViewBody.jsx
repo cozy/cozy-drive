@@ -26,7 +26,7 @@ const FolderViewBody = ({
   withFilePath = false,
   navigateToFolder,
   navigateToFile,
-  refreshFolderContent = false
+  refreshFolderContent = null
 }) => {
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
