@@ -11,9 +11,10 @@ const statById = async (client, folderId, cursorToUse) => {
       'page[cursor]': cursorToUse
     })
 
-  const nextLink = get(links, 'next', '')
-  const nextLinkURL = new URL(`http://example.com${nextLink}`)
-  const cursor = nextLinkURL.searchParams.get('page[cursor]')
+  const nextRelativeLink = get(links, 'next', '')
+  const dummyURL = 'http://example.com' // we're only interested in the query string, the base url doesn't matter
+  const nextAbsoluteLinkURL = new URL(`${dummyURL}${nextRelativeLink}`)
+  const cursor = nextAbsoluteLinkURL.searchParams.get('page[cursor]')
 
   return { included, cursor }
 }
