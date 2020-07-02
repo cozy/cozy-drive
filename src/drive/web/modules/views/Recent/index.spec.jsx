@@ -1,14 +1,13 @@
 import React from 'react'
-import { useQuery } from 'cozy-client'
 import { render, fireEvent } from '@testing-library/react'
 import { Router, hashHistory, Route } from 'react-router'
 
 import { setupStoreAndClient } from 'test/setup'
-import { generateFile } from 'test/generate'
 import AppLike from 'test/components/AppLike'
 
 import RecentViewWithProvider from './index'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
+import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('./useFilesQueryWithPath', () => ({
@@ -16,39 +15,42 @@ jest.mock('./useFilesQueryWithPath', () => ({
   useFilesQueryWithPath: jest.fn()
 }))
 
+const setup = () => {
+  const { store, client } = setupStoreAndClient()
+
+  client.plugins.realtime = {
+    subscribe: jest.fn(),
+    unsubscribe: jest.fn()
+  }
+  client.query = jest.fn().mockReturnValue([])
+  client.stackClient.fetchJSON = jest
+    .fn()
+    .mockReturnValue({ data: [], rows: [] })
+
+  const rendered = render(
+    <AppLike client={client} store={store}>
+      <Router history={hashHistory}>
+        <Route path="/" component={RecentViewWithProvider} />
+      </Router>
+    </AppLike>
+  )
+  return { ...rendered, client }
+}
+
 describe('Recent View', () => {
-  const setup = ({
-    nbFiles = 5,
-    totalCount,
-    useQueryResultAttributes,
-    path = '/test',
-    dir_id = 'io.cozy.files.root-dir',
-    updated_at = '2020-05-14T10:33:31.365224+02:00'
-  } = {}) => {
-    const { store, client } = setupStoreAndClient()
+  it('tests the recent view', async () => {
+    const nbFiles = 2
+    const path = '/test'
+    const dir_id = 'dirIdParent'
+    const updated_at = '2020-05-14T10:33:31.365224+02:00'
 
-    client.plugins.realtime = {
-      subscribe: jest.fn(),
-      unsubscribe: jest.fn()
-    }
-    client.query = jest.fn().mockReturnValue([])
-    client.stackClient.fetchJSON = jest
-      .fn()
-      .mockReturnValue({ data: [], rows: [] })
-    const filesFixture = Array(nbFiles)
-      .fill(null)
-      .map((x, i) =>
-        generateFile({ i, type: 'file', path, dir_id, updated_at })
-      )
-
-    useQuery.mockReturnValue({
-      data: filesFixture,
-      count: totalCount || filesFixture.length,
-      fetchMore: jest.fn().mockImplementation(() => {
-        throw new Error('Fetch more should not be called')
-      }),
-      ...useQueryResultAttributes
+    const filesFixture = generateFileFixtures({
+      nbFiles,
+      path,
+      dir_id,
+      updated_at
     })
+
     const filesFixtureWithPath = {
       data: filesFixture.map(f => {
         return {
@@ -58,41 +60,18 @@ describe('Recent View', () => {
       })
     }
     useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
-    const rendered = render(
-      <AppLike client={client} store={store}>
-        <Router history={hashHistory}>
-          <Route path="/" component={RecentViewWithProvider} />
-          <Route path="/folder/:id" component={() => null} />
-        </Router>
-      </AppLike>
-    )
-    return { ...rendered, client }
-  }
 
-  it('test the recent view', async () => {
-    const nbFiles = 2
-    const path = '/test'
-    const dir_id = 'dirIdParent'
-    const updated_at = '2020-05-14T10:33:31.365224+02:00'
     const { getByText } = setup({
       nbFiles,
       path,
       dir_id,
       updated_at
     })
-    const getByTextWithMarkup = text => {
-      getByText((content, node) => {
-        const hasText = node => node.textContent === text
-        const childrenDontHaveText = Array.from(node.children).every(
-          child => !hasText(child)
-        )
-        return hasText(node) && childrenDontHaveText
-      })
-    }
+
     // Get the HTMLElement containing the filename if exist. If not throw
     const el0 = getByText(`foobar0`)
     // Check if the filename is displayed with the extension. If not throw
-    getByTextWithMarkup(`foobar0.pdf`)
+    getByTextWithMarkup(getByText, `foobar0.pdf`)
     //get the FileRow element
     const fileRow0 = el0.closest('.fil-content-row')
     //check if the date is right
