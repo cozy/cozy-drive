@@ -12,19 +12,13 @@ import {
   FETCH_RECENT,
   FETCH_RECENT_SUCCESS,
   FETCH_RECENT_FAILURE,
-  FETCH_SHARINGS,
-  FETCH_SHARINGS_SUCCESS,
-  FETCH_SHARINGS_FAILURE,
   FETCH_MORE_FILES_SUCCESS,
   TRASH_FILES_SUCCESS,
   CREATE_FOLDER_SUCCESS,
   ADD_FILE,
   UPDATE_FILE,
   DELETE_FILE,
-  TOGGLE_THUMBNAIL_SIZE,
-  OPEN_FOLDER_FROM_SHARINGS_FAILURE,
-  OPEN_FOLDER_FROM_SHARINGS,
-  OPEN_FOLDER_FROM_SHARINGS_SUCCESS
+  TOGGLE_THUMBNAIL_SIZE
 } from './actions'
 
 import {
@@ -58,12 +52,10 @@ const isOpening = (state = false, action) => {
   switch (action.type) {
     case OPEN_FOLDER:
     case FETCH_RECENT:
-    case FETCH_SHARINGS:
     case OPEN_FOLDER_FROM_TRASH:
       return true
     case OPEN_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
-    case FETCH_SHARINGS_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
       return false
     default:
@@ -89,11 +81,8 @@ const displayedFolder = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
-    case OPEN_FOLDER_FROM_SHARINGS_SUCCESS:
       return action.folder
     case FETCH_RECENT_SUCCESS:
-    case FETCH_SHARINGS_SUCCESS:
-    case FETCH_SHARINGS:
     case FETCH_RECENT:
       return null
     default:
@@ -126,12 +115,8 @@ const currentView = (state = '', action) => {
       return FOLDER_VIEW
     case FETCH_RECENT:
       return RECENT_VIEW
-    case FETCH_SHARINGS:
-      return SHARINGS_VIEW
     case OPEN_FOLDER_FROM_TRASH:
       return TRASH_VIEW
-    case OPEN_FOLDER_FROM_SHARINGS:
-      return SHARINGS_VIEW
     default:
       return state
   }
@@ -141,11 +126,8 @@ const openedFolderId = (state = null, action) => {
   switch (action.type) {
     case OPEN_FOLDER:
     case OPEN_FOLDER_FROM_TRASH:
-    case OPEN_FOLDER_FROM_SHARINGS:
       return action.folderId
     case FETCH_RECENT:
-    case FETCH_SHARINGS:
-      return null
     default:
       return state
   }
@@ -156,9 +138,6 @@ const fileCount = (state = null, action) => {
     case OPEN_FOLDER_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
     case FETCH_RECENT_SUCCESS:
-    case FETCH_SHARINGS_SUCCESS:
-    case OPEN_FOLDER_FROM_SHARINGS_SUCCESS:
-      return action.fileCount
     case CREATE_FOLDER_SUCCESS:
     case ADD_FILE:
       return state + 1
@@ -192,9 +171,7 @@ const sort = (state = null, action) => {
     case FETCH_RECENT_SUCCESS:
       return { attribute: 'updated_at', order: 'desc' }
     case OPEN_FOLDER_SUCCESS:
-    case FETCH_SHARINGS_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
-    case OPEN_FOLDER_FROM_SHARINGS_SUCCESS:
       return null
     default:
       return state
@@ -266,11 +243,6 @@ const files = (
   action
 ) => {
   switch (action.type) {
-    case OPEN_FOLDER_FROM_SHARINGS_SUCCESS:
-      return {
-        ...state,
-        shared: action.files
-      }
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
       return {
         ...state,
@@ -285,11 +257,6 @@ const files = (
       return {
         ...state,
         recent: action.files
-      }
-    case FETCH_SHARINGS_SUCCESS:
-      return {
-        ...state,
-        shared: action.files
       }
     case SORT_FOLDER_SUCCESS:
       return {
@@ -372,18 +339,14 @@ const fetchStatus = (state = 'pending', action) => {
     case OPEN_FOLDER_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_FAILURE:
-    case OPEN_FOLDER_FROM_SHARINGS_SUCCESS:
-    case OPEN_FOLDER_FROM_SHARINGS_FAILURE:
     case SORT_FOLDER_SUCCESS:
     case FETCH_RECENT_SUCCESS:
-    case FETCH_SHARINGS_SUCCESS:
     case EMPTY_TRASH_SUCCESS:
     case EMPTY_TRASH_FAILURE:
       return 'loaded'
     case OPEN_FOLDER_FAILURE:
     case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_FAILURE:
-    case FETCH_SHARINGS_FAILURE:
       return 'failed'
     default:
       return state
@@ -396,14 +359,10 @@ const lastFetch = (state = null, action) => {
     case OPEN_FOLDER_FAILURE:
     case OPEN_FOLDER_FROM_TRASH_SUCCESS:
     case OPEN_FOLDER_FROM_TRASH_FAILURE:
-    case OPEN_FOLDER_FROM_SHARINGS_SUCCESS:
-    case OPEN_FOLDER_FROM_SHARINGS_FAILURE:
     case SORT_FOLDER_SUCCESS:
     case SORT_FOLDER_FAILURE:
     case FETCH_RECENT_SUCCESS:
     case FETCH_RECENT_FAILURE:
-    case FETCH_SHARINGS_SUCCESS:
-    case FETCH_SHARINGS_FAILURE:
       return Date.now()
     default:
       return state
@@ -456,7 +415,6 @@ const deduplicateCreateDeleteActions = originalReducer => {
       case OPEN_FOLDER_SUCCESS:
       case OPEN_FOLDER_FROM_TRASH_SUCCESS:
       case FETCH_RECENT_SUCCESS:
-      case FETCH_SHARINGS_SUCCESS:
         return clearInternalCache(state, action)
       default:
         return originalReducer(state, action)

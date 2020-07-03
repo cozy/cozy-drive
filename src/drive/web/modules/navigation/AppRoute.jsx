@@ -12,8 +12,7 @@ import FileExplorer from './FileExplorer'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import {
   FolderContainer as Folder,
-  RecentContainer as Recent,
-  SharingsContainer as Sharings
+  RecentContainer as Recent
 } from 'drive/web/modules/drive'
 import { Container as LegacyTrash } from 'drive/web/modules/trash'
 import FileHistory from '../../../../components/FileHistory'
@@ -55,12 +54,6 @@ const LegacyDriveView = routerProps => (
 const LegacyRecentView = routerProps => (
   <FileExplorer {...routerProps}>
     <Recent {...routerProps} />
-  </FileExplorer>
-)
-
-const LegacySharingsView = routerProps => (
-  <FileExplorer {...routerProps}>
-    <Sharings {...routerProps} />
   </FileExplorer>
 )
 
@@ -118,13 +111,7 @@ const AppRoute = (
       </Route>
 
       <Route path="sharings">
-        <IndexRoute
-          component={
-            flag('drive.client-migration.enabled')
-              ? SharingsView
-              : LegacySharingsView
-          }
-        />
+        <IndexRoute component={SharingsView} />
         <Route path=":folderId" component={SharingsFolderView}>
           <Route path="file/:fileId" component={SharingsFilesViewer} />
         </Route>
