@@ -9,7 +9,6 @@ import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 import { RouterContextProvider } from 'drive/lib/RouterContext'
 import Layout from 'drive/web/modules/layout/Layout'
 import FileExplorer from './FileExplorer'
-import FilesViewerV1 from 'drive/web/modules/viewer/FilesViewer'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import {
   FolderContainer as Folder,
@@ -46,14 +45,6 @@ export const routes = [
   '/trash/:folderId/file/:fileId',
   '/trash/:folderId'
 ]
-
-const FilesViewer = flag('drive.client-migration.enabled')
-  ? FilesViewerDrive
-  : FilesViewerV1
-
-const RecentFilesViewer = flag('drive.client-migration.enabled')
-  ? FilesViewerRecent
-  : FilesViewerV1
 
 const LegacyDriveView = routerProps => (
   <FileExplorer {...routerProps}>
@@ -96,10 +87,10 @@ const AppRoute = (
       >
         {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
         <Route path=":folderId">
-          <Route path="file/:fileId" component={FilesViewer} />
+          <Route path="file/:fileId" component={FilesViewerDrive} />
           <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
-        <Route path="file/:fileId" component={FilesViewer} />
+        <Route path="file/:fileId" component={FilesViewerDrive} />
         <Route path="file/:fileId/revision" component={FileHistory} />
       </Route>
 
@@ -109,7 +100,7 @@ const AppRoute = (
           flag('drive.client-migration.enabled') ? RecentView : LegacyRecentView
         }
       >
-        <Route path="file/:fileId" component={RecentFilesViewer} />
+        <Route path="file/:fileId" component={FilesViewerRecent} />
         <Route path="file/:fileId/revision" component={FileHistory} />
       </Route>
 
@@ -122,14 +113,7 @@ const AppRoute = (
           }
         />
         <Route path=":folderId" component={TrashFolderView}>
-          <Route
-            path="file/:fileId"
-            component={
-              flag('drive.client-migration.enabled')
-                ? FilesViewerTrash
-                : FilesViewer
-            }
-          />
+          <Route path="file/:fileId" component={FilesViewerTrash} />
         </Route>
       </Route>
 
