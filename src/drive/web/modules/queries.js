@@ -39,14 +39,16 @@ const buildDriveQuery = ({
       .where({
         dir_id: currentFolderId,
         _id: { $ne: TRASH_DIR_ID },
-        type
+        type,
+        [sortAttribute]: { $gt: null }
       })
       .indexFields(['dir_id', 'type', sortAttribute])
       .sortBy([
         { dir_id: sortOrder },
         { type: sortOrder },
         { [sortAttribute]: sortOrder }
-      ]),
+      ])
+      .limitBy(100),
   options: {
     as: formatFolderQueryId(type, currentFolderId, sortAttribute, sortOrder),
     fetchPolicy: defaultFetchPolicy
@@ -62,7 +64,8 @@ const buildRecentQuery = () => ({
         updated_at: { $gt: null }
       })
       .indexFields(['updated_at', 'type', 'trashed'])
-      .sortBy([{ updated_at: 'desc' }]),
+      .sortBy([{ updated_at: 'desc' }])
+      .limitBy(100),
   options: {
     as: 'recent-view-query',
     fetchPolicy: defaultFetchPolicy
