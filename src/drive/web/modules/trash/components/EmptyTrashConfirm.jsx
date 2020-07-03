@@ -24,11 +24,10 @@ const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {
       secondaryAction={onClose}
       primaryType="danger"
       primaryText={t('emptytrashconfirmation.delete')}
-      primaryAction={() =>
-        onConfirm()
-          .then(onClose)
-          .catch(onClose)
-      }
+      primaryAction={async () => {
+        await onConfirm()
+        onClose()
+      }}
     />
   )
 }

@@ -1,5 +1,5 @@
 /* global cozy */
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { useClient } from 'cozy-client'
@@ -10,6 +10,7 @@ import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { showModal } from 'react-cozy-helpers'
+import { ModalContext } from 'drive/lib/ModalContext'
 import flag from 'cozy-flags'
 import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
@@ -21,7 +22,7 @@ import styles from 'drive/styles/toolbar.styl'
 
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 
-const Toolbar = ({
+export const Toolbar = ({
   t,
   disabled,
   selectionModeActive,
@@ -34,6 +35,21 @@ const Toolbar = ({
   const anchorRef = React.createRef()
   const openMenu = useCallback(() => setMenuVisible(true))
   const closeMenu = useCallback(() => setMenuVisible(false))
+
+  const { pushModal, popModal } = useContext(ModalContext)
+
+  const onEmptyTrash = flag('drive.client-migration.enabled')
+    ? useCallback(() => {
+        pushModal(
+          <EmptyTrashConfirm
+            onClose={popModal}
+            onConfirm={() => {
+              client.collection('io.cozy.files').emptyTrash()
+            }}
+          />
+        )
+      })
+    : emptyTrash()
 
   const MoreMenu = (
     <div>
@@ -50,11 +66,7 @@ const Toolbar = ({
           {isMobile && (
             <>
               <ActionMenuItem
-                onClick={() =>
-                  flag('drive.client-migration.enabled')
-                    ? client.collection('io.cozy.files').emptyTrash()
-                    : emptyTrash()
-                }
+                onClick={onEmptyTrash}
                 left={<Icon icon="trash" color="var(--pomegranate)" />}
               >
                 <span className="u-pomegranate">
@@ -79,11 +91,7 @@ const Toolbar = ({
       <Button
         theme="danger-outline"
         className="u-hide--mob"
-        onClick={() =>
-          flag('drive.client-migration.enabled')
-            ? client.collection('io.cozy.files').emptyTrash()
-            : emptyTrash()
-        }
+        onClick={onEmptyTrash}
         disabled={disabled || selectionModeActive}
         icon="trash"
         label={t('toolbar.empty_trash')}
