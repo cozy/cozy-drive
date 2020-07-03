@@ -5282,10 +5282,18 @@ cozy-realtime@3.2.1:
   dependencies:
     minilog "3.1.0"
 
-cozy-realtime@3.8.0, cozy-realtime@^3.8.0:
+cozy-realtime@3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.8.0.tgz#b161b105433d957f7cb68332ee3fe58e082d7cb4"
   integrity sha512-VCgffHdMcqO8LRHnUZijR0UXE5FwdLGh9BOP0WKN6lP5eOEaRFL+OPfJuHJasgN5r1YfXautbze1wRQZByAcEg==
+  dependencies:
+    cozy-device-helper "^1.9.2"
+    minilog "https://github.com/cozy/minilog.git#master"
+
+cozy-realtime@^3.8.1:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.8.1.tgz#9df951cde52cf2c2e83c30abb50021cb4a9ff7ca"
+  integrity sha512-oCZgKIYJ9l0TJe9Oua0mujqdftEBzqaiBfY/zKHsMsptz7ut/PWroOoEYZShqKgYEWc5Ey3N+9B7bZFHuWCyMg==
   dependencies:
     cozy-device-helper "^1.9.2"
     minilog "https://github.com/cozy/minilog.git#master"
@@ -5349,17 +5357,17 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-sharing@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.11.0.tgz#de30fffa73c17f7e0c4d8c98824e77dd75622ac0"
-  integrity sha512-T92ST1OsGB/hC7ZS/fxWX14SIqqX16IMQptf6Oi63dQYDu+J2vMLj2W6/6KFgB9TDUqu98wP7pYWYM54DKnKOQ==
+cozy-sharing@1.11.4:
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.11.4.tgz#ddd8df6387e2969a06512b08ef03f0904f10fcb9"
+  integrity sha512-v5/DOSzqGXYlNzSGs0GruTakW6ZNjmpqsFaFu8gAL1EW+unrikd+aYo1ft5XubSykhfoD6Wj0/di0wNs+RFMAg==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
     cozy-device-helper "^1.9.2"
     cozy-doctypes "^1.72.2"
-    cozy-realtime "^3.8.0"
+    cozy-realtime "^3.8.1"
     lodash "^4.17.15"
     minilog "https://github.com/cozy/minilog.git#master"
     react-autosuggest "^9.4.3"
@@ -11625,6 +11633,13 @@ mini-css-extract-plugin@0.5.0:
 minilog@3.1.0, "minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
   resolved "https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
+  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
