@@ -1,12 +1,15 @@
+/* global __TARGET__ */
+
 import React, { useCallback, useContext } from 'react'
-import { connect } from 'react-redux'
-import { useQuery, useClient } from 'cozy-client'
+import { connect, useDispatch } from 'react-redux'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 
 import { SharingContext } from 'cozy-sharing'
-import { ModalContext } from 'drive/lib/ModalContext'
+import { useQuery, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+
+import { ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
 import {
   share,
@@ -19,18 +22,19 @@ import {
   versions,
   offline
 } from 'drive/web/modules/actions'
+import Toolbar from 'drive/web/modules/drive/Toolbar'
+import { ROOT_DIR_ID } from 'drive/constants/config'
+import MediaBackupProgression from 'drive/mobile/modules/mediaBackup/MediaBackupProgression'
+import RatingModal from 'drive/mobile/modules/settings/RatingModal'
+import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
+import { buildDriveQuery } from 'drive/web/modules/queries'
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useFolderSort } from 'drive/web/modules/navigation/duck'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-import Toolbar from 'drive/web/modules/drive/Toolbar'
-import { ROOT_DIR_ID } from 'drive/constants/config'
-
-import { buildDriveQuery } from 'drive/web/modules/queries'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
-import { useFolderSort } from 'drive/web/modules/navigation/duck'
-import { useDispatch } from 'react-redux'
 
 const getBreadcrumbPath = (t, displayedFolder) =>
   uniqBy(
@@ -134,6 +138,13 @@ const DriveView = ({ currentFolderId, router, location, children }) => {
           disabled={isLoading || isInError || isPending}
         />
       </FolderViewHeader>
+      {__TARGET__ === 'mobile' && (
+        <div>
+          {currentFolderId === ROOT_DIR_ID && <MediaBackupProgression />}
+          <FirstUploadModal />
+          <RatingModal />
+        </div>
+      )}
       <FolderViewBody
         navigateToFolder={navigateToFolder}
         navigateToFile={navigateToFile}
@@ -142,6 +153,7 @@ const DriveView = ({ currentFolderId, router, location, children }) => {
         canSort
         currentFolderId={currentFolderId}
       />
+
       {children}
     </FolderView>
   )
