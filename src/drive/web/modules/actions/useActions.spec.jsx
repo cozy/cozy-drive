@@ -17,6 +17,7 @@ import {
 } from './utils'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import * as renameModule from 'drive/web/modules/drive/renameV2'
+import * as selectionModule from 'drive/web/modules/selection/duck'
 
 import useActions from './useActions'
 import {
@@ -125,9 +126,7 @@ describe('useActions', () => {
   }
 
   it('returns actions keyed by icon', () => {
-    const { result } = renderActionsHook({
-      canMove: true
-    })
+    const { result } = renderActionsHook(defaultHookArgs)
     expect(Object.keys(result.current)).toEqual([
       'share',
       'download',
@@ -141,6 +140,19 @@ describe('useActions', () => {
       'restore',
       'destroy'
     ])
+  })
+
+  it('always hides the selection bar after an action is activated', () => {
+    const { result } = renderActionsHook(defaultHookArgs)
+
+    Object.values(result.current).forEach(action => {
+      if (action.action) {
+        const hideSelectionBar = jest.spyOn(selectionModule, 'hideSelectionBar')
+        action.action([{ id: 'abc', name: 'my-file.md' }])
+        expect(hideSelectionBar).toHaveBeenCalled()
+        hideSelectionBar.mockRestore()
+      }
+    })
   })
 
   describe('share action', () => {
