@@ -101,7 +101,8 @@ const buildTrashQueryFolder = ({
     Q('io.cozy.files')
       .where({
         dir_id: currentFolderId,
-        type
+        type,
+        [sortAttribute]: { $gt: null }
       })
       .indexFields(['dir_id', 'type', sortAttribute])
       .sortBy([
