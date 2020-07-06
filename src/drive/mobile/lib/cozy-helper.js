@@ -32,6 +32,9 @@ export const initClient = url => {
 
   const pouchLinkOptions = {
     doctypes: [DOCTYPE_FILES],
+    doctypesReplicationOptions: {
+      [DOCTYPE_FILES]: { strategy: 'fromRemote' }
+    },
     initialSync: true
   }
 
