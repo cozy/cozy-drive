@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import Button from 'cozy-ui/transpiled/react/Button'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+
 import withPersistentState from '../../lib/withPersistentState'
 import { SOFTWARE_NAME, APP_STORE_ID, APP_MARKET_ID } from '../../lib/constants'
 import FeedbackForm from './components/FeedbackForm'
@@ -23,13 +25,10 @@ class RatingModal extends Component {
   state = {
     screen: SCREEN_ENJOY
   }
-  static contextTypes = {
-    t: PropTypes.func.isRequired
-  }
   onUserReply = async enjoyed => {
     if (enjoyed) {
       try {
-        const { t } = this.context
+        const { t } = this.props
         const buttonIndex = await promptRating({
           title: t('mobile.rating.rate.title'),
           message: '',
@@ -66,10 +65,11 @@ class RatingModal extends Component {
   }
 
   render() {
+    const { t } = this.props
     return this.state.screen === SCREEN_ENJOY ? (
-      <EnjoyCozy onReply={this.onUserReply} />
+      <EnjoyCozy onReply={this.onUserReply} t={t} />
     ) : (
-      <FeedbackForm onClose={this.onCloseFeedback} />
+      <FeedbackForm onClose={this.onCloseFeedback} t={t} />
     )
   }
 }
@@ -80,9 +80,9 @@ RatingModal.propTypes = {
 }
 
 // sub-components
-const EnjoyCozy = (props, context) => {
-  const { onReply } = props
-  const { t } = context
+const EnjoyCozy = props => {
+  const { onReply, t } = props
+
   return (
     <Modal title={t('mobile.rating.enjoy.title')} withCross={false}>
       <ModalContent>
@@ -101,9 +101,7 @@ const EnjoyCozy = (props, context) => {
     </Modal>
   )
 }
-EnjoyCozy.contextTypes = {
-  t: PropTypes.func.isRequired
-}
+
 EnjoyCozy.propTypes = {
   onReply: PropTypes.func.isRequired
 }
@@ -207,7 +205,10 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
   return WithBootDelay
 }
 
-const DelayedRatingModal = withBootDelay(RatingModal, PROMPT_AFTER_BOOTS)
+const DelayedRatingModal = withBootDelay(
+  translate()(RatingModal),
+  PROMPT_AFTER_BOOTS
+)
 const PersistentRatingModal = withPersistentState(
   DelayedRatingModal,
   'DelayedRatingModal'
