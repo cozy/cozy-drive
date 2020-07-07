@@ -46,6 +46,7 @@ $ cordova run android
 On iOS: open the src/drive/targets/mobile/platforms/ios/Cozy Drive.xcworkspace in Xcode, update the Swift syntax if needed, set your signing certificate on the target (if you're testing on a device), then:
 
 ```sh
+$ npm install -g ios-deploy
 $ cd src/drive/targets/mobile
 $ cordova run ios
 ```
