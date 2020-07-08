@@ -6,7 +6,7 @@ import Main from 'drive/web/modules/layout/Main'
 
 import { ModalManager } from 'react-cozy-helpers'
 
-import RealTimeQueries from '../Drive/RealTimeQueries'
+import RealTimeQueries from 'drive/lib/RealTimeQueries'
 
 const FolderView = ({ children }) => {
   return (
