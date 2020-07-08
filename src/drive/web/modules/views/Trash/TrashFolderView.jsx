@@ -97,6 +97,7 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
         <TrashToolbar />
       </FolderViewHeader>
       <FolderViewBody
+        currentFolderId={currentFolderId}
         navigateToFolder={navigateToFolder}
         navigateToFile={navigateToFile}
         actions={actions}

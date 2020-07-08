@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from 'cozy-client'
 import { render } from '@testing-library/react'
-import { Router, hashHistory, Route } from 'react-router'
+import { Router, hashHistory, Route, Redirect } from 'react-router'
 
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
@@ -13,7 +13,11 @@ jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 
 describe('TrashFolderView', () => {
   const setup = () => {
-    const { store, client } = setupStoreAndClient()
+    const { store, client } = setupStoreAndClient({
+      initialStoreState: {
+        router: { location: { pathname: '/trash' } }
+      }
+    })
 
     client.plugins.realtime = {
       subscribe: jest.fn(),
@@ -27,7 +31,8 @@ describe('TrashFolderView', () => {
     const rendered = render(
       <AppLike client={client} store={store}>
         <Router history={hashHistory}>
-          <Route path="/" component={TrashFolderView} />
+          <Redirect from="/" to="/trash" />
+          <Route path="/trash" component={TrashFolderView} />
           <Route path="/folder/:id" component={TrashFolderView} />
         </Router>
       </AppLike>
@@ -73,5 +78,16 @@ describe('TrashFolderView', () => {
     // Check if we display the folder and the file
     getByText(`folder0`)
     getByText(`foobar0`)
+  })
+
+  it('renders the empty trash view', () => {
+    useQuery.mockReturnValue({
+      data: [],
+      count: 0
+    })
+
+    const { getByText } = setup()
+
+    getByText(`You don’t have any deleted files.`)
   })
 })
