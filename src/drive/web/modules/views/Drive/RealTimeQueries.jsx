@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { useClient, Mutations } from 'cozy-client'
 import { receiveMutationResult } from 'cozy-client/dist/store'
 
@@ -54,4 +54,4 @@ const RealTimeQueries = ({ doctype }) => {
   return null
 }
 
-export default RealTimeQueries
+export default memo(RealTimeQueries)
