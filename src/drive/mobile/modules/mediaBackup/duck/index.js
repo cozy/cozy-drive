@@ -1,4 +1,3 @@
-/* global cozy */
 import throttle from 'lodash/throttle'
 import {
   getPhotos,
@@ -143,11 +142,11 @@ export const startMediaBackup = (isManualBackup = false) => async (
             break
           }
           dispatch(currentMediaUpload(photo, uploadCounter++, totalUpload))
-          await dispatch(uploadPhoto(uploadDirPath, uploadDirId, photo))
+          await dispatch(uploadPhoto(uploadDirPath, uploadDirId, photo, client))
         }
       }
 
-      cozy.client.settings.updateLastSync()
+      client.fetchJSON('POST', '/settings/synchonized')
     } catch (e) {
       dispatch({ type: MEDIA_UPLOAD_ABORT })
       if (!e.message.match(/Failed to fetch/))
@@ -165,9 +164,11 @@ const mediaUploadSucceed = ({ id }) => ({
   id
 })
 
-const uploadPhoto = (dirName, dirID, photo) => async dispatch => {
+const uploadPhoto = (dirName, dirID, photo, client) => async dispatch => {
   try {
-    await cozy.client.files.statByPath(dirName + '/' + photo.fileName)
+    const path = dirName + '/' + photo.fileName
+    await client.collection('io.cozy.files').statByPath(path)
+
     dispatch(mediaUploadSucceed(photo))
     return
   } catch (_) {
