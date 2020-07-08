@@ -49,7 +49,7 @@ export const Toolbar = ({
           />
         )
       })
-    : emptyTrash()
+    : useCallback(emptyTrash)
 
   const MoreMenu = (
     <div>
