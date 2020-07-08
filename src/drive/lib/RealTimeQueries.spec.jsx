@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import RealTimeQueries from './RealTimeQueries'
-import AppLike from '../../../../../../test/components/AppLike'
+import AppLike from 'test/components/AppLike'
 import { createMockClient } from 'cozy-client'
 
 describe('RealTimeQueries', () => {
