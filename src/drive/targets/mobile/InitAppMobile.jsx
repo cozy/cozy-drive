@@ -5,6 +5,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
 import localforage from 'localforage'
+import { saveState } from 'drive/store/persistedState'
 
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import { isIOSApp } from 'cozy-device-helper'
@@ -173,6 +174,18 @@ class InitAppMobile {
         text: t('mobile.notifications.backup_paused')
       })
     } */
+    const currentState = store.getState()
+    saveState({
+      mobile: {
+        authorization: currentState.mobile.authorization,
+        settings: currentState.mobile.settings,
+        replication: currentState.mobile.replication,
+        mediaBackup: {
+          uploaded: currentState.mobile.mediaBackup.uploaded
+        }
+      },
+      availableOffline: currentState.availableOffline
+    })
   }
 
   /**
