@@ -9,7 +9,6 @@ import {
 } from 'cozy-ui/transpiled/react/helpers/tracker'
 import thunkMiddleware from 'redux-thunk'
 import createRootReducer from './rootReducer'
-import { saveState } from './persistedState'
 import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
 import { connectStoreToHistory } from './connectedRouter'
 
@@ -51,23 +50,6 @@ const configureStore = options => {
     initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
-
-  if (__TARGET__ === 'mobile') {
-    store.subscribe(() => {
-      const currentState = store.getState()
-      saveState({
-        mobile: {
-          authorization: currentState.mobile.authorization,
-          settings: currentState.mobile.settings,
-          replication: currentState.mobile.replication,
-          mediaBackup: {
-            uploaded: currentState.mobile.mediaBackup.uploaded
-          }
-        },
-        availableOffline: currentState.availableOffline
-      })
-    })
-  }
 
   if (history) {
     connectStoreToHistory(store, history)
