@@ -1,4 +1,3 @@
-/* global cozy */
 import { isAndroidApp } from 'cozy-device-helper'
 import logger from 'lib/logger'
 import { isIOS } from 'cozy-device-helper/dist/platform'
@@ -121,9 +120,11 @@ export const openOfflineFile = async file => {
   return openFileWithCordova(fileEntry.nativeURL, file.mime)
 }
 
-export const createTemporaryLocalFile = async (id, filename) => {
-  const response = await cozy.client.files.downloadById(id)
+export const createTemporaryLocalFile = async (client, file) => {
+  const response = await client
+    .collection('io.cozy.files')
+    .fetchFileContent(file)
   const blob = await response.blob()
-  const localFile = await temporarySave(blob, filename)
+  const localFile = await temporarySave(blob, file.name)
   return localFile
 }
