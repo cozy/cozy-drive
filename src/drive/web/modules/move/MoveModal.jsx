@@ -25,6 +25,8 @@ import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 
+import { getDisplayedFolder } from 'drive/web/modules/selectors'
+
 export class MoveModal extends React.Component {
   constructor(props) {
     super(props)
@@ -195,14 +197,12 @@ export class MoveModal extends React.Component {
             return (
               <Explorer>
                 <Loader fetchStatus={fetchStatus} hasNoData={data.length === 0}>
-                  <div>
-                    <FileList
-                      files={data}
-                      targets={entries}
-                      navigateTo={this.navigateTo}
-                    />
-                    <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
-                  </div>
+                  <FileList
+                    files={data}
+                    targets={entries}
+                    navigateTo={this.navigateTo}
+                  />
+                  <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
                 </Loader>
               </Explorer>
             )
@@ -234,7 +234,7 @@ MoveModal.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  displayedFolder: state.view.displayedFolder
+  displayedFolder: getDisplayedFolder(state)
 })
 
 export default compose(
