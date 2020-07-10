@@ -16,7 +16,7 @@ const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
 mockCozyClientRequestQuery()
 
-describe('MoreMenu v2', () => {
+describe('MoreMenu', () => {
   const setup = async () => {
     const folderId = 'directory-foobar0'
     const { client, store } = await setupFolderContent({

@@ -5,7 +5,7 @@ import { default as view } from 'drive/web/modules/navigation/duck'
 import { default as selection } from 'drive/web/modules/selection/duck'
 import { default as filelist } from 'drive/web/modules/filelist/duck'
 // TODO: Get rid of this, local state would be better
-import { default as rename } from 'drive/web/modules/drive/renameV2'
+import { default as rename } from 'drive/web/modules/drive/rename'
 import { default as upload } from 'drive/web/modules/upload'
 // TODO: Move this to his own module/duck?
 import { default as availableOffline } from 'drive/mobile/modules/offline/duck'

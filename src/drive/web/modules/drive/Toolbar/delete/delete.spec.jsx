@@ -4,7 +4,7 @@ import { mount } from 'enzyme'
 import CozyClient from 'cozy-client'
 import configureStore from 'drive/store/configureStore'
 import { EnhancedDeleteConfirm } from './delete'
-import { trashFiles as trashFilesV2 } from 'drive/web/modules/actions/utils'
+import { trashFiles } from 'drive/web/modules/actions/utils'
 import DeleteConfirm from '../../DeleteConfirm'
 
 jest.mock('drive/web/modules/actions/utils', () => ({
@@ -46,7 +46,7 @@ describe('EnhancedDeleteConfirm', () => {
     const { root, client, folder, router } = setup()
     const confirmProps = root.find(DeleteConfirm).props()
     await confirmProps.onConfirm()
-    expect(trashFilesV2).toHaveBeenCalledWith(client, [folder])
+    expect(trashFiles).toHaveBeenCalledWith(client, [folder])
     expect(router.push).toHaveBeenCalledWith('/folder/parent-folder-id')
   })
 })

@@ -6,7 +6,7 @@ import { withClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { downloadFiles as downloadFilesV2 } from 'drive/web/modules/actions/utils'
+import { downloadFiles } from 'drive/web/modules/actions/utils'
 
 import toolbarContainer from '../toolbar'
 
@@ -24,7 +24,7 @@ const DownloadButtonItem = ({ t, displayedFolder, downloadAll }) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   downloadAll: folder => {
     const client = ownProps.client
-    return downloadFilesV2(client, folder)
+    return downloadFiles(client, folder)
   }
 })
 

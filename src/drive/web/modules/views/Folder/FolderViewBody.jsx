@@ -2,8 +2,8 @@ import React, { useCallback, useContext } from 'react'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
 
-import { FileListv2 } from 'drive/web/modules/filelist/FileList'
-import { ConnectedFileListBodyV2 as FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
+import { FileList } from 'drive/web/modules/filelist/FileList'
+import { ConnectedFileListBody as FileListBody } from 'drive/web/modules/filelist/FileListBody'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
 import FileListHeader from 'drive/web/modules/filelist/FileListHeader'
 import MobileFileListHeader from 'drive/web/modules/filelist/MobileFileListHeader'
@@ -52,7 +52,7 @@ const FolderViewBody = ({
   return (
     <>
       <SelectionBar actions={actions} />
-      <FileListv2>
+      <FileList>
         {hasDataToShow && (
           <>
             <MobileFileListHeader
@@ -73,7 +73,7 @@ const FolderViewBody = ({
             />
           </>
         )}
-        <FileListBodyV2 selectionModeActive={false}>
+        <FileListBody selectionModeActive={false}>
           <AddFolder refreshFolderContent={refreshFolderContent} />
           {isInError && <Oops />}
           {isLoading && <FileListRowsPlaceholder />}
@@ -114,8 +114,8 @@ const FolderViewBody = ({
               ))}
             </div>
           )}
-        </FileListBodyV2>
-      </FileListv2>
+        </FileListBody>
+      </FileList>
     </>
   )
 }

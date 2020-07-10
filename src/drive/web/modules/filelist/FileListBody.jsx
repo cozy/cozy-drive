@@ -7,7 +7,7 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist.styl'
 
-export const FileListBodyV2 = ({ children, selectionModeActive }) => (
+export const FileListBody = ({ children, selectionModeActive }) => (
   <div
     data-test-id="fil-content-body"
     className={cx(styles['fil-content-body'], {
@@ -18,7 +18,7 @@ export const FileListBodyV2 = ({ children, selectionModeActive }) => (
   </div>
 )
 
-FileListBodyV2.propTypes = {
+FileListBody.propTypes = {
   selectionModeActive: PropTypes.bool
 }
 
@@ -26,4 +26,4 @@ const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-export const ConnectedFileListBodyV2 = connect(mapStateToProps)(FileListBodyV2)
+export const ConnectedFileListBody = connect(mapStateToProps)(FileListBody)

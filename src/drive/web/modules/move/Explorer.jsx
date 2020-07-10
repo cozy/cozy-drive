@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { FileListv2 } from 'drive/web/modules/filelist/FileList'
+import { FileList } from 'drive/web/modules/filelist/FileList'
 import FileListHeader from 'drive/web/modules/filelist/FileListHeader'
 import MobileFileListHeader from 'drive/web/modules/filelist/MobileFileListHeader'
-import { ConnectedFileListBodyV2 as FileListBodyV2 } from 'drive/web/modules/filelist/FileListBody'
+import { ConnectedFileListBody as FileListBody } from 'drive/web/modules/filelist/FileListBody'
 
 const Explorer = ({ children }) => (
-  <FileListv2>
+  <FileList>
     <>
       <MobileFileListHeader folderId={null} canSort={false} />
       <FileListHeader folderId={null} canSort={false} />
     </>
-    <FileListBodyV2 selectionModeActive={false}>{children}</FileListBodyV2>
-  </FileListv2>
+    <FileListBody selectionModeActive={false}>{children}</FileListBody>
+  </FileList>
 )
 
 Explorer.propTypes = {

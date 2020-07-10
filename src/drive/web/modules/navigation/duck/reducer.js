@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 
-import { SORT_FOLDER_V2 } from './actions'
+import { SORT_FOLDER } from './actions'
 
 const sort = (state = null, action) => {
   switch (action.type) {
-    case SORT_FOLDER_V2:
+    case SORT_FOLDER:
       return {
         attribute: action.sortAttribute,
         order: action.sortOrder

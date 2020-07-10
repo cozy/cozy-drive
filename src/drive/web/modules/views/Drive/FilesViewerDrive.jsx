@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux'
 import FilesViewer, {
   FilesViewerLoading
-} from 'drive/web/modules/viewer/FilesViewerV2'
+} from 'drive/web/modules/viewer/FilesViewer'
 import { getFolderPath } from 'drive/web/modules/routeUtils'
 
 const FilesViewerWithQuery = props => {

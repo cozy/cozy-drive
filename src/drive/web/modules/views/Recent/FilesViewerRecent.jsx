@@ -6,7 +6,7 @@ import { getCurrentFileId } from 'drive/web/modules/selectors'
 import { connect } from 'react-redux'
 import FilesViewer, {
   FilesViewerLoading
-} from 'drive/web/modules/viewer/FilesViewerV2'
+} from 'drive/web/modules/viewer/FilesViewer'
 const FilesViewerWithQuery = props => {
   const filesQuery = buildRecentQuery()
   const results = useQuery(filesQuery.definition, filesQuery.options)

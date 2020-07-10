@@ -11,7 +11,7 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { connect } from 'react-redux'
 import FilesViewer, {
   FilesViewerLoading
-} from 'drive/web/modules/viewer/FilesViewerV2'
+} from 'drive/web/modules/viewer/FilesViewer'
 const FilesViewerWithQuery = props => {
   const currentFolderId = props.currentFolderId
   const [sortOrder] = useFolderSort(currentFolderId)

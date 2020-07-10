@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { sortFolderV2, getSort } from 'drive/web/modules/navigation/duck'
+import { sortFolder, getSort } from 'drive/web/modules/navigation/duck'
 
 const useFolderSort = folderId => {
   const defaultSort = { attribute: 'name', order: 'asc' }
@@ -9,7 +9,7 @@ const useFolderSort = folderId => {
   const currentSort = useSelector(getSort) || defaultSort
   const setOrder = useCallback(
     ({ sortAttribute, sortOrder }) => {
-      dispatch(sortFolderV2(folderId, sortAttribute, sortOrder))
+      dispatch(sortFolder(folderId, sortAttribute, sortOrder))
     },
     [dispatch, folderId]
   )

@@ -10,7 +10,7 @@ import {
   isTypingNewFolderName,
   hideNewFolderInput
 } from 'drive/web/modules/filelist/duck'
-import { createFolderV2 } from 'drive/web/modules/navigation/duck'
+import { createFolder } from 'drive/web/modules/navigation/duck'
 import Cell from 'drive/web/modules/filelist/Cell'
 import styles from 'drive/styles/filelist.styl'
 
@@ -41,7 +41,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: name => {
-    dispatch(createFolderV2(ownProps.client, name)).then(() => {
+    dispatch(createFolder(ownProps.client, name)).then(() => {
       if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
       return dispatch(hideNewFolderInput())
     })
