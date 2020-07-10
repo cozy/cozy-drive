@@ -10,7 +10,7 @@ const isValidMoveTarget = (subjects, target) => {
 }
 
 const FileList = ({ targets, files, navigateTo }) => (
-  <div>
+  <>
     {files.map(file => (
       <File
         key={file.id}
@@ -26,7 +26,7 @@ const FileList = ({ targets, files, navigateTo }) => (
         withSharedBadge
       />
     ))}
-  </div>
+  </>
 )
 
 FileList.propTypes = {
