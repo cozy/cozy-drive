@@ -84,11 +84,15 @@ export const openLocalFile = file => async (dispatch, getState) => {
   })
 }
 
-export const openLocalFileCopy = file => async (dispatch, getState) => {
+export const openLocalFileCopy = file => async (
+  dispatch,
+  getState,
+  { client }
+) => {
   if (isAvailableOffline(getState(), file.id)) {
     return openOfflineFile(file)
   }
-  const localFile = await createTemporaryLocalFile(file.id, file.name)
+  const localFile = await createTemporaryLocalFile(client, file)
   return openFileWithCordova(localFile.nativeURL, file.mime)
 }
 
