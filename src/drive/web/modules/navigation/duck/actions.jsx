@@ -1,4 +1,3 @@
-/* global cozy */
 import React from 'react'
 
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -22,11 +21,6 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
     sortAttribute,
     sortOrder
   }
-}
-
-export const getFileDownloadUrl = async id => {
-  const link = await cozy.client.files.getDownloadLinkById(id)
-  return `${cozy.client._url}${link}`
 }
 
 /*

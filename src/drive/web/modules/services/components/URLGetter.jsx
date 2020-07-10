@@ -1,5 +1,10 @@
+/* global cozy */
 import React from 'react'
-import { getFileDownloadUrl } from 'drive/web/modules/navigation/duck'
+
+const getFileDownloadUrl = async id => {
+  const link = await cozy.client.files.getDownloadLinkById(id)
+  return `${cozy.client._url}${link}`
+}
 
 class URLGetter extends React.Component {
   componentDidMount() {
