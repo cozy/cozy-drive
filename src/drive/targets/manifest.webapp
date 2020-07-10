@@ -81,11 +81,6 @@
       "href": "/intents"
     },
     {
-      "action": "PICK",
-      "type": ["io.cozy.files"],
-      "href": "/intents"
-    },
-    {
       "action": "GET_URL",
       "type": ["io.cozy.files"],
       "href": "/intents"
