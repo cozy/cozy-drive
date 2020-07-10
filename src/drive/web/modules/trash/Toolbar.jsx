@@ -9,13 +9,10 @@ import Button from 'cozy-ui/transpiled/react/Button'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
-import { showModal } from 'react-cozy-helpers'
 import { ModalContext } from 'drive/lib/ModalContext'
-import flag from 'cozy-flags'
 import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
-import { emptyTrash } from './actions'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar.styl'
@@ -26,7 +23,6 @@ export const Toolbar = ({
   t,
   disabled,
   selectionModeActive,
-  emptyTrash,
   breakpoints: { isMobile }
 }) => {
   const client = useClient()
@@ -38,18 +34,16 @@ export const Toolbar = ({
 
   const { pushModal, popModal } = useContext(ModalContext)
 
-  const onEmptyTrash = flag('drive.client-migration.enabled')
-    ? useCallback(() => {
-        pushModal(
-          <EmptyTrashConfirm
-            onClose={popModal}
-            onConfirm={() => {
-              client.collection('io.cozy.files').emptyTrash()
-            }}
-          />
-        )
-      })
-    : useCallback(emptyTrash)
+  const onEmptyTrash = useCallback(() => {
+    pushModal(
+      <EmptyTrashConfirm
+        onClose={popModal}
+        onConfirm={() => {
+          client.collection('io.cozy.files').emptyTrash()
+        }}
+      />
+    )
+  })
 
   const MoreMenu = (
     <div>
@@ -114,18 +108,11 @@ const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  emptyTrash: () =>
-    dispatch(
-      showModal(<EmptyTrashConfirm onConfirm={() => dispatch(emptyTrash())} />)
-    )
-})
-
 export default compose(
   translate(),
   withBreakpoints(),
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
   )
 )(Toolbar)

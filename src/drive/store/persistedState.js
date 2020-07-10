@@ -4,7 +4,7 @@ import logger from 'lib/logger'
 const shouldMigrateSettings = state => state.hasOwnProperty('settings')
 
 const migrateSettings = async prevState => {
-  const { firstReplication, client, indexes, offline } = prevState.settings
+  const { client, offline } = prevState.settings
   const {
     authorized,
     token,
@@ -28,10 +28,6 @@ const migrateSettings = async prevState => {
         backupImages,
         analytics,
         wifiOnly
-      },
-      replication: {
-        firstReplication,
-        indexes
       },
       mediaBackup: prevState.mobile.mediaBackup
     },

@@ -1,6 +1,5 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import flag from 'cozy-flags'
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 import Dropzone, { Dropzone as DumbDropzone } from './Dropzone'
 import AppLike from 'test/components/AppLike'
@@ -15,14 +14,6 @@ jest.mock('drive/web/modules/navigation/duck', () => ({
 mockCozyClientRequestQuery()
 
 describe('Dropzone', () => {
-  beforeEach(() => {
-    flag('drive.client-migration.enabled', true)
-  })
-
-  afterEach(() => {
-    flag('drive.client-migration.enabled', null)
-  })
-
   it('should dispatch the uploadFiles action', async () => {
     const displayedFolder = {
       id: 'directory-foobar0'

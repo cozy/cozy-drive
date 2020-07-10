@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { withClient } from 'cozy-client'
-import flag from 'cozy-flags'
 import compose from 'lodash/flowRight'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -11,7 +10,7 @@ import {
   isTypingNewFolderName,
   hideNewFolderInput
 } from 'drive/web/modules/filelist/duck'
-import { createFolder, createFolderV2 } from 'drive/web/modules/navigation/duck'
+import { createFolderV2 } from 'drive/web/modules/navigation/duck'
 import Cell from 'drive/web/modules/filelist/Cell'
 import styles from 'drive/styles/filelist.styl'
 
@@ -42,14 +41,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: name => {
-    if (flag('drive.client-migration.enabled')) {
-      dispatch(createFolderV2(ownProps.client, name)).then(() => {
-        if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
-        return dispatch(hideNewFolderInput())
-      })
-    } else {
-      dispatch(createFolder(name)).then(() => dispatch(hideNewFolderInput()))
-    }
+    dispatch(createFolderV2(ownProps.client, name)).then(() => {
+      if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
+      return dispatch(hideNewFolderInput())
+    })
   },
   onAbort: accidental => {
     if (accidental) {

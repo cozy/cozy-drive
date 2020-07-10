@@ -1,6 +1,5 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import flag from 'cozy-flags'
 import { act } from 'react-dom/test-utils'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
@@ -18,14 +17,6 @@ const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 mockCozyClientRequestQuery()
 
 describe('MoreMenu v2', () => {
-  beforeEach(() => {
-    flag('drive.client-migration.enabled', true)
-  })
-
-  afterEach(() => {
-    flag('drive.client-migration.enabled', null)
-  })
-
   const setup = async () => {
     const folderId = 'directory-foobar0'
     const { client, store } = await setupFolderContent({

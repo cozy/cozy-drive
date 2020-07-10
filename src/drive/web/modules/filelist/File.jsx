@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import get from 'lodash/get'
 
 import { SharedStatus } from 'cozy-sharing'
-import flag from 'cozy-flags'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -16,7 +15,6 @@ import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
 
 import RenameInputV2 from 'drive/web/modules/drive/RenameInputV2'
-import RenameInputLegacy from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
 import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -131,14 +129,10 @@ const FileName = ({
   return (
     <div className={classes}>
       {isRenaming ? (
-        flag('drive.client-migration.enabled') ? (
-          <RenameInputV2
-            file={attributes}
-            refreshFolderContent={refreshFolderContent}
-          />
-        ) : (
-          <RenameInputLegacy />
-        )
+        <RenameInputV2
+          file={attributes}
+          refreshFolderContent={refreshFolderContent}
+        />
       ) : (
         <div className={styles['fil-file']}>
           <div className={styles['fil-file-filename']}>
@@ -396,13 +390,6 @@ File.propTypes = {
   refreshFolderContent: PropTypes.func
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  selected: isSelected(state, ownProps.attributes.id),
-  isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
-  thumbnailSizeBig: state.view.thumbnailSize,
-  selectionModeActive: isSelectionBarVisible(state)
-})
-
 const mapStateToPropsV2 = (state, ownProps) => ({
   selected: isSelected(state, ownProps.attributes.id),
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
@@ -420,10 +407,5 @@ const mapDispatchToProps = dispatch => ({
 export const DumbFile = withBreakpoints()(translate()(File))
 export const FileWithSelection = connect(
   mapStateToPropsV2,
-  mapDispatchToProps
-)(DumbFile)
-
-export default connect(
-  mapStateToProps,
   mapDispatchToProps
 )(DumbFile)
