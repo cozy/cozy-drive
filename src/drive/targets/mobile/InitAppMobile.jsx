@@ -5,6 +5,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
 import localforage from 'localforage'
+import { saveState } from 'drive/store/persistedState'
 
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import { isIOSApp } from 'cozy-device-helper'
@@ -161,7 +162,12 @@ class InitAppMobile {
     store.dispatch(backupImages())
     if (isAnalyticsOn(store.getState())) startHeartBeat()
   }
-
+  /**
+   * onPause is called when the app goes to background.
+   * So it's also called when we kill an application since
+   * we've to put the app in background (multi-task for instance)
+   * to kill it
+   */
   onPause = async () => {
     const store = await this.getStore()
     if (isAnalyticsOn(store.getState())) stopHeartBeat()
@@ -173,6 +179,18 @@ class InitAppMobile {
         text: t('mobile.notifications.backup_paused')
       })
     } */
+    const currentState = store.getState()
+    saveState({
+      mobile: {
+        authorization: currentState.mobile.authorization,
+        settings: currentState.mobile.settings,
+        replication: currentState.mobile.replication,
+        mediaBackup: {
+          uploaded: currentState.mobile.mediaBackup.uploaded
+        }
+      },
+      availableOffline: currentState.availableOffline
+    })
   }
 
   /**
