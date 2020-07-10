@@ -11,13 +11,13 @@ import {
   getFolderContent
 } from 'drive/web/modules/selectors'
 
-export const SORT_FOLDER_V2 = 'SORT_FOLDER_V2'
+export const SORT_FOLDER = 'SORT_FOLDER'
 
 const HTTP_CODE_CONFLICT = 409
 
-export const sortFolderV2 = (folderId, sortAttribute, sortOrder = 'asc') => {
+export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
   return {
-    type: SORT_FOLDER_V2,
+    type: SORT_FOLDER,
     folderId,
     sortAttribute,
     sortOrder
@@ -134,7 +134,7 @@ const doesFolderExistByName = (state, parentFolderId, name) => {
 /**
  * Creates a folder in the current view
  */
-export const createFolderV2 = (client, name) => {
+export const createFolder = (client, name) => {
   return async (dispatch, getState) => {
     const state = getState()
     const currentFolderId = getCurrentFolderId(state)

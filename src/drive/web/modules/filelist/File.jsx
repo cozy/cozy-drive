@@ -14,7 +14,7 @@ import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
 
-import RenameInputV2 from 'drive/web/modules/drive/RenameInputV2'
+import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
 import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -24,7 +24,7 @@ import {
   toggleItemSelection,
   isSelected
 } from 'drive/web/modules/selection/duck'
-import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/renameV2'
+import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/rename'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
@@ -129,7 +129,7 @@ const FileName = ({
   return (
     <div className={classes}>
       {isRenaming ? (
-        <RenameInputV2
+        <RenameInput
           file={attributes}
           refreshFolderContent={refreshFolderContent}
         />
@@ -390,7 +390,7 @@ File.propTypes = {
   refreshFolderContent: PropTypes.func
 }
 
-const mapStateToPropsV2 = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
   selected: isSelected(state, ownProps.attributes.id),
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
   selectionModeActive: isSelectionBarVisible(state),
@@ -406,6 +406,6 @@ const mapDispatchToProps = dispatch => ({
 
 export const DumbFile = withBreakpoints()(translate()(File))
 export const FileWithSelection = connect(
-  mapStateToPropsV2,
+  mapStateToProps,
   mapDispatchToProps
 )(DumbFile)

@@ -12,7 +12,7 @@ import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableO
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 
 import { isIOSApp } from 'cozy-device-helper'
-import { startRenamingAsync } from 'drive/web/modules/drive/renameV2'
+import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
 const { file: fileModel } = models
 const { isFile } = fileModel

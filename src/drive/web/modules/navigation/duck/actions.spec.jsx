@@ -3,7 +3,7 @@ import CozyClient from 'cozy-client'
 import { setupFolderContent } from 'test/setup'
 import { generateFile, getStoreStateWhenViewingFolder } from 'test/generate'
 
-import { createFolderV2 } from './actions'
+import { createFolder } from './actions'
 
 beforeEach(() => {
   const folders = Array(3)
@@ -21,7 +21,7 @@ afterEach(() => {
   CozyClient.prototype.requestQuery.mockRestore()
 })
 
-describe('createFolderV2', () => {
+describe('createFolder', () => {
   beforeEach(() => {
     jest.spyOn(CozyClient.prototype, 'create').mockImplementation(() => {})
   })
@@ -37,7 +37,7 @@ describe('createFolderV2', () => {
       initialStoreState: getStoreStateWhenViewingFolder(folderId)
     })
     await expect(
-      store.dispatch(createFolderV2(client, 'foobar2'))
+      store.dispatch(createFolder(client, 'foobar2'))
     ).rejects.toEqual(new Error('alert.folder_name'))
   })
 
@@ -47,7 +47,7 @@ describe('createFolderV2', () => {
       folderId,
       initialStoreState: getStoreStateWhenViewingFolder(folderId)
     })
-    await store.dispatch(createFolderV2(client, 'foobar5'))
+    await store.dispatch(createFolder(client, 'foobar5'))
     expect(client.create).toHaveBeenCalledWith('io.cozy.files', {
       dirId: 'folder123456',
       name: 'foobar5',

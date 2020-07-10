@@ -4,12 +4,12 @@ import AppLike from 'test/components/AppLike'
 import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
 import CozyClient from 'cozy-client'
 import flag from 'cozy-flags'
-import { createFolderV2 } from 'drive/web/modules/navigation/duck/actions'
+import { createFolder } from 'drive/web/modules/navigation/duck/actions'
 import configureStore from 'drive/store/configureStore'
 const originalFlag = jest.requireActual('cozy-flags')
 
 jest.mock('drive/web/modules/navigation/duck/actions', () => ({
-  createFolderV2: jest.fn(() => async () => {})
+  createFolder: jest.fn(() => async () => {})
 }))
 
 jest.mock('cozy-flags', () => jest.fn())
@@ -45,10 +45,10 @@ describe('AddFolder', () => {
       flag.mockReset()
     })
 
-    it('should dispatch a createFolderV2 action on submit', () => {
+    it('should dispatch a createFolder action on submit', () => {
       const { component, client } = setup()
       expect(component.props().onSubmit('Mes photos de chat'))
-      expect(createFolderV2).toHaveBeenCalledWith(client, 'Mes photos de chat')
+      expect(createFolder).toHaveBeenCalledWith(client, 'Mes photos de chat')
     })
   })
 })

@@ -6,9 +6,9 @@ import { createMockClient } from 'cozy-client'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
-import { RenameInput } from './RenameInputV2'
+import { RenameInput } from './RenameInput'
 
-describe('RenameInputV2', () => {
+describe('RenameInput', () => {
   it('test the component', async () => {
     const client = createMockClient({})
     const file = generateFile({ i: '10', type: 'file' })

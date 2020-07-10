@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useQuery } from 'cozy-client'
 import get from 'lodash/get'
-import { MobileAwareBreadcrumbV2 as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
+import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import { buildFolderQuery } from 'drive/web/modules/queries'
 
 const FolderViewBreadcrumb = ({

@@ -1,10 +1,10 @@
 export { default, getSort } from './reducer'
 
 export {
-  sortFolderV2,
+  sortFolder,
   getFileDownloadUrl,
   uploadFiles,
-  createFolderV2
+  createFolder
 } from './actions'
 
 export { useFolderSort } from './hooks'

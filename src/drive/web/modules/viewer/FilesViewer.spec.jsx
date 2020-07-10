@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { Overlay, Viewer } from 'cozy-ui/transpiled/react'
-import FilesViewer from './FilesViewerV2'
+import FilesViewer from './FilesViewer'
 import CozyClient, { useQuery } from 'cozy-client'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'

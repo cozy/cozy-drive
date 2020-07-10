@@ -5,7 +5,7 @@ import { useClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
-import { abortRenaming } from './renameV2'
+import { abortRenaming } from './rename'
 
 // If we set the _rev then CozyClient tries to update. Else
 // it tries to create

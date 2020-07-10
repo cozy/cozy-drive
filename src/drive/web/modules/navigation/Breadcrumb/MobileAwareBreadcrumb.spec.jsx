@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 import { createMockClient } from 'cozy-client'
 import AppLike from 'test/components/AppLike'
 
-import { MobileAwareBreadcrumb } from './MobileAwareBreadcrumb'
+import { MobileBreadcrumb } from './MobileAwareBreadcrumb'
 
 describe('MobileAwareBreadcrumb', () => {
   it('works', async () => {
@@ -21,7 +21,7 @@ describe('MobileAwareBreadcrumb', () => {
 
     const { findByText } = render(
       <AppLike client={createMockClient({})}>
-        <MobileAwareBreadcrumb
+        <MobileBreadcrumb
           breakpoints={{ isMobile: true }}
           path={path}
           onBreadcrumbClick={onBreadcrumbClick}
