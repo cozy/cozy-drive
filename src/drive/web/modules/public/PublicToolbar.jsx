@@ -1,6 +1,5 @@
 /* global cozy */
 import React, { useState, useCallback } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import logger from 'lib/logger'
 import { withClient, useClient } from 'cozy-client'
@@ -11,7 +10,7 @@ import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 
 import { MoreButton } from 'components/Button'
 import DownloadButton from './DownloadButton'
-import { downloadFiles } from 'drive/web/modules/navigation/duck'
+import { downloadFiles } from 'drive/web/modules/actions/utils'
 import toolbarstyles from 'drive/styles/toolbar.styl'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyHomeLink from 'components/Button/CozyHomeLink'
@@ -82,7 +81,7 @@ const MoreMenu = withBreakpoints()(
             {onOpenInCozy &&
               isMobile && (
                 <ActionMenuItem
-                  onSelect={onOpenInCozy}
+                  onClick={onOpenInCozy}
                   left={<Icon icon={'to-the-cloud'} />}
                 >
                   {t('toolbar.menu_open_cozy')}
@@ -91,14 +90,14 @@ const MoreMenu = withBreakpoints()(
             {onCreateCozy &&
               isMobile && (
                 <ActionMenuItem
-                  onSelect={onCreateCozy}
+                  onClick={onCreateCozy}
                   left={<Icon icon={'cloud'} />}
                 >
                   {t('Share.create-cozy')}
                 </ActionMenuItem>
               )}
             <ActionMenuItem
-              onSelect={onDownload}
+              onClick={onDownload}
               left={<Icon icon={DownloadIcon} />}
             >
               {isFile
@@ -272,7 +271,7 @@ class PublicToolbar extends React.Component {
   }
 
   downloadFiles = () => {
-    this.props.onDownload(this.props.files)
+    downloadFiles(this.props.client, this.props.files)
   }
 
   render() {
@@ -324,13 +323,5 @@ PublicToolbar.propTypes = {
   hasWriteAccess: PropTypes.bool,
   refreshFolderContent: PropTypes.func.isRequired
 }
-const mapDispatchToProps = dispatch => ({
-  onDownload: files => dispatch(downloadFiles(files))
-})
 
-export default withClient(
-  connect(
-    null,
-    mapDispatchToProps
-  )(withBreakpoints()(PublicToolbar))
-)
+export default withClient(withBreakpoints()(PublicToolbar))
