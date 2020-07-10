@@ -4,25 +4,20 @@ import { connect } from 'react-redux'
 import { showModal } from 'react-cozy-helpers'
 import { withRouter } from 'react-router'
 
-import flag from 'cozy-flags'
 import { useClient } from 'cozy-client'
-import { trashFiles } from 'drive/web/modules/navigation/duck'
-import { trashFiles as trashFilesV2 } from 'drive/web/modules/actions/utils'
+import { trashFiles } from 'drive/web/modules/actions/utils'
 
 import DeleteConfirm from '../../DeleteConfirm'
 import toolbarContainer from '../toolbar'
 
-const EnhancedDeleteConfirm = ({ folder, dispatch, router, ...rest }) => {
+const EnhancedDeleteConfirm = ({ folder, router, ...rest }) => {
   const client = useClient()
   return (
     <DeleteConfirm
       files={[folder]}
       onConfirm={async () => {
-        if (flag('drive.client-migration.enabled')) {
-          await trashFilesV2(client, [folder])
-        } else {
-          await dispatch(trashFiles([folder]))
-        }
+        await trashFiles(client, [folder])
+
         router.push(`/folder/${folder.dir_id}`)
       }}
       {...rest}

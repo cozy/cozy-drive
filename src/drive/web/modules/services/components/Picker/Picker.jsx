@@ -4,19 +4,13 @@ import { IntentHeader, Button, withBreakpoints } from 'cozy-ui/transpiled/react'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import FileList from 'drive/web/modules/filelist/FileList'
-import {
-  Breadcrumb,
-  PreviousButton
-} from 'drive/web/modules/navigation/Breadcrumb'
+import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb/Breadcrumb'
+import PreviousButton from 'drive/web/modules/navigation/Breadcrumb/PreviousButton'
 import { connect } from 'react-redux'
 import withReduxStore from './withReduxStore'
 import AddFolderButton from './AddFolderButton'
 import OriginHint from './OriginHint'
-import {
-  openFolder,
-  getOpenedFolderId,
-  getVisibleFiles
-} from 'drive/web/modules/navigation/duck'
+
 import styles from './picker.styl'
 
 class Picker extends Component {
@@ -121,19 +115,3 @@ class Picker extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  openedFolderId: getOpenedFolderId(state),
-  files: getVisibleFiles(state)
-})
-
-const mapDispatchToProps = dispatch => ({
-  fetchFolder: folderId => dispatch(openFolder(folderId))
-})
-
-export default withReduxStore(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withBreakpoints()(Picker))
-)

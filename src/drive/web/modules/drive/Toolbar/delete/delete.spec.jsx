@@ -4,7 +4,6 @@ import { mount } from 'enzyme'
 import CozyClient from 'cozy-client'
 import configureStore from 'drive/store/configureStore'
 import { EnhancedDeleteConfirm } from './delete'
-import flag from 'cozy-flags'
 import { trashFiles as trashFilesV2 } from 'drive/web/modules/actions/utils'
 import DeleteConfirm from '../../DeleteConfirm'
 
@@ -13,7 +12,6 @@ jest.mock('drive/web/modules/actions/utils', () => ({
 }))
 
 describe('EnhancedDeleteConfirm', () => {
-  flag('drive.client-migration.enabled', true)
   const setup = () => {
     const folder = {
       _id: 'folder-id',

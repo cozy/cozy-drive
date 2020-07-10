@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
 import { waitForElementToBeRemoved } from '@testing-library/dom'
-import flag from 'cozy-flags'
 import { createMockClient } from 'cozy-client'
 import { ModalContextProvider, ModalStack } from 'drive/lib/ModalContext'
 
@@ -12,14 +11,6 @@ describe('Toolbar', () => {
   const client = createMockClient({})
   client.collection = jest.fn(() => client)
   client.emptyTrash = jest.fn()
-
-  beforeEach(() => {
-    flag('drive.client-migration.enabled', true)
-  })
-
-  afterEach(() => {
-    flag('drive.client-migration.enabled', null)
-  })
 
   it('asks for confirmation before emptying the trash', async () => {
     const { getByText } = render(

@@ -1,19 +1,4 @@
-import React from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
-
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
-
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
-import { openFolder, getFolderUrl } from 'drive/web/modules/navigation/duck'
-import getFolderPath from 'drive/web/modules/navigation/Breadcrumb/getFolderPath'
-import MobileAwareBreadcrumb from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
-
-import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb/Breadcrumb'
-import PreviousButton from 'drive/web/modules/navigation/Breadcrumb/PreviousButton'
-
-export { Breadcrumb, PreviousButton }
 
 export const renamePathNames = (path, pathname, t) => {
   if (pathname === '/recent') {
@@ -38,45 +23,3 @@ export const renamePathNames = (path, pathname, t) => {
 
   return path
 }
-
-const mapStateToProps = (state, ownProps) => ({
-  path: renamePathNames(
-    getFolderPath(
-      state.view.displayedFolder,
-      state.view.currentView,
-      ownProps.isPublic,
-      ownProps.sharedDocuments
-    ),
-    ownProps.location.pathname,
-    ownProps.t
-  ),
-  getFolderUrl
-})
-
-const mapDispatchToProps = dispatch => ({
-  goToFolder: folderId => dispatch(openFolder(folderId, 'ACTION_SUCCESS'))
-})
-
-const withSharedDocuments = Wrapped =>
-  class withSharedDocumentsClass extends React.Component {
-    render() {
-      return (
-        <SharedDocuments>
-          {({ sharedDocuments }) => (
-            <Wrapped sharedDocuments={sharedDocuments} {...this.props} />
-          )}
-        </SharedDocuments>
-      )
-    }
-  }
-
-export default withRouter(
-  translate()(
-    withSharedDocuments(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(MobileAwareBreadcrumb)
-    )
-  )
-)

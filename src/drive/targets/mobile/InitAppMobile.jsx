@@ -184,7 +184,6 @@ class InitAppMobile {
       mobile: {
         authorization: currentState.mobile.authorization,
         settings: currentState.mobile.settings,
-        replication: currentState.mobile.replication,
         mediaBackup: {
           uploaded: currentState.mobile.mediaBackup.uploaded
         }
