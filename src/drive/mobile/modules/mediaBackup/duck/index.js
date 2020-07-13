@@ -41,6 +41,7 @@ export const startMediaBackup = (isManualBackup = false) => async (
   { client }
 ) => {
   dispatch({ type: MEDIA_UPLOAD_START })
+  client.getStackClient().fetchJSON('POST', '/settings/synchronized')
   if (!(await isAuthorized())) {
     const promptForPermissions = isManualBackup
     const receivedAuthorisation = await updateValueAfterRequestAuthorization(
