@@ -12,6 +12,7 @@ import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { ModalContext } from 'drive/lib/ModalContext'
 import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
+import { emptyTrash } from 'drive/web/modules/actions/utils'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
@@ -39,7 +40,7 @@ export const Toolbar = ({
       <EmptyTrashConfirm
         onClose={popModal}
         onConfirm={() => {
-          client.collection('io.cozy.files').emptyTrash()
+          emptyTrash(client)
         }}
       />
     )
