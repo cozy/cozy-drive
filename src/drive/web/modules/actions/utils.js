@@ -201,8 +201,19 @@ export const restoreFiles = async (client, files) => {
     await client.collection('io.cozy.files').restore(file.id)
   }
 }
+
 export const deleteFilesPermanently = async (client, files) => {
   for (const file of files) {
     await client.collection('io.cozy.files').deleteFilePermanently(file.id)
   }
+}
+
+export const emptyTrash = async client => {
+  Alerter.info('alert.empty_trash_progress')
+  try {
+    await client.collection('io.cozy.files').emptyTrash()
+  } catch (err) {
+    Alerter.error('alert.try_again')
+  }
+  Alerter.info('alert.empty_trash_success')
 }
