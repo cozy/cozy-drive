@@ -5174,7 +5174,29 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@13.13.0, cozy-client@^13.13.0, cozy-client@^13.8.2:
+cozy-client@13.14.1:
+  version "13.14.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.14.1.tgz#0c4cb31585cbd40dc1ce07f6586a96978221a4ff"
+  integrity sha512-1WhhDuE3wcNh2bWn5E0foTtF2bMfHDm6JHPSTyIft2/vxqXgntPC+4dLXurgnpA9WQs6TmmNOM+Q2+/ZJ/cA6w==
+  dependencies:
+    btoa "^1.2.1"
+    cozy-device-helper "^1.7.3"
+    cozy-logger "^1.6.0"
+    cozy-stack-client "^13.12.1"
+    isomorphic-fetch "^2.2.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    minilog "https://github.com/cozy/minilog.git#master"
+    open "^7.0.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "^3.7.2"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^7.0.0"
+
+cozy-client@^13.13.0, cozy-client@^13.8.2:
   version "13.13.0"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.13.0.tgz#9fdc59e293c3486cbc5257d30f907e3cdc3a3c1a"
   integrity sha512-etcA/9rQoqzsvC6T+FtabDysRB1w8B7igBWTgtlxmyTT9VWGE5Q0ca22AVVb3SDLuf33VCpBLbOY6IRSfLtxYw==
@@ -5313,7 +5335,7 @@ cozy-realtime@3.9.0, cozy-realtime@^3.9.0:
   integrity sha512-5TqHDrxKUyNIAxrOb/DlTkhMJj7UnsbKmAriOq6359HjXVlvIUfVMSght44xik3KLQ8inUSmF+1TAFeKe9tBGA==
   dependencies:
     cozy-device-helper "^1.9.2"
-    minilog "git+https://github.com/cozy/minilog.git#master"
+    minilog "https://github.com/cozy/minilog.git#master"
 
 cozy-scanner@^0.3.2:
   version "0.3.3"
