@@ -1,25 +1,22 @@
 import compose from 'lodash/flowRight'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
 import { showModal } from 'react-cozy-helpers'
 import { withRouter } from 'react-router'
-
-import { useClient } from 'cozy-client'
-import { trashFiles } from 'drive/web/modules/actions/utils'
 
 import DeleteConfirm from '../../DeleteConfirm'
 import toolbarContainer from '../toolbar'
 
 const EnhancedDeleteConfirm = ({ folder, router, ...rest }) => {
-  const client = useClient()
+  const navigateToParentFolder = useCallback(
+    () => router.push(`/folder/${folder.dir_id}`),
+    [router, folder]
+  )
+
   return (
     <DeleteConfirm
       files={[folder]}
-      onConfirm={async () => {
-        await trashFiles(client, [folder])
-
-        router.push(`/folder/${folder.dir_id}`)
-      }}
+      afterConfirmation={navigateToParentFolder}
       {...rest}
     />
   )

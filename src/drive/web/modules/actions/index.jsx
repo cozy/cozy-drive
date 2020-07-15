@@ -21,7 +21,6 @@ import {
   isAnyFileReferencedByAlbum,
   exportFilesNative,
   downloadFiles,
-  trashFiles,
   openFileWith,
   restoreFiles
 } from './utils'
@@ -65,7 +64,6 @@ export const download = ({ client }) => {
 }
 
 export const trash = ({
-  client,
   pushModal,
   popModal,
   hasWriteAccess,
@@ -79,11 +77,9 @@ export const trash = ({
         <DeleteConfirm
           files={files}
           referenced={isAnyFileReferencedByAlbum(files)}
-          onConfirm={() => {
+          afterConfirmation={() => {
             refresh()
-            trashFiles(client, files) // TODO faire le trash a proprement parler dans la modale de confirmation
             // TODO supprimer les fichiers de la sélection
-            popModal()
           }}
           onClose={popModal}
         />

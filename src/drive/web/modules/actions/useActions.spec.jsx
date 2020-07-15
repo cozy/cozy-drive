@@ -293,7 +293,7 @@ describe('useActions', () => {
       expect(mockModalContextValue.pushModal).toHaveBeenCalledWith(
         <DeleteConfirm
           files={mockDocuments}
-          onConfirm={actuallyCalledModal.props.onConfirm} // needs exact comparison
+          afterConfirmation={actuallyCalledModal.props.afterConfirmation} // needs exact comparison
         />
       )
     })

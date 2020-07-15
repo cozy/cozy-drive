@@ -1,27 +1,45 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import classNames from 'classnames'
+import { useClient } from 'cozy-client'
 import Modal, { ModalDescription } from 'cozy-ui/transpiled/react/Modal'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
 
+import { trashFiles } from 'drive/web/modules/actions/utils'
 import styles from 'drive/styles/confirms.styl'
 
-const Message = translate()(({ t, type, fileCount }) => (
-  <p className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}>
-    {t(`deleteconfirmation.${type}`, fileCount)}
-  </p>
-))
+const Message = ({ type, fileCount }) => {
+  const { t } = useI18n()
+  return (
+    <p
+      className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
+    >
+      {t(`deleteconfirmation.${type}`, fileCount)}
+    </p>
+  )
+}
 
-const DeleteConfirm = ({
-  t,
+export const DeleteConfirm = ({
   files,
   referenced,
-  onConfirm,
+  afterConfirmation,
   onClose,
   children
 }) => {
+  const { t } = useI18n()
   const fileCount = files.length
+  const client = useClient()
+
+  const onDelete = useCallback(
+    async () => {
+      await trashFiles(client, files)
+      afterConfirmation()
+      onClose()
+    },
+    [trashFiles, client, files]
+  )
+
   return (
     <Modal
       title={t('deleteconfirmation.title', fileCount)}
@@ -30,7 +48,7 @@ const DeleteConfirm = ({
       secondaryType="secondary"
       primaryType="danger"
       primaryText={t('deleteconfirmation.delete')}
-      primaryAction={() => onConfirm().then(onClose)}
+      primaryAction={onDelete}
     >
       <ModalDescription>
         <Message type="trash" fileCount={fileCount} />
@@ -61,4 +79,4 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
     </SharedDocument>
   )
 
-export default translate()(DeleteConfirmWithSharingContext)
+export default DeleteConfirmWithSharingContext
