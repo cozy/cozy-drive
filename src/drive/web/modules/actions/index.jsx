@@ -67,7 +67,8 @@ export const trash = ({
   pushModal,
   popModal,
   hasWriteAccess,
-  refresh
+  refresh,
+  refreshFolderContent
 }) => {
   return {
     icon: 'trash',
@@ -79,6 +80,7 @@ export const trash = ({
           referenced={isAnyFileReferencedByAlbum(files)}
           afterConfirmation={() => {
             refresh()
+            if (refreshFolderContent) refreshFolderContent()
             // TODO supprimer les fichiers de la sélection
           }}
           onClose={popModal}

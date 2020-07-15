@@ -296,6 +296,25 @@ describe('useActions', () => {
           afterConfirmation={actuallyCalledModal.props.afterConfirmation} // needs exact comparison
         />
       )
+
+      actuallyCalledModal.props.afterConfirmation()
+      expect(mockSharingContextValue.refresh).toHaveBeenCalled()
+    })
+
+    it('calls refreshFolderContent when present', () => {
+      const refreshFolderContent = jest.fn()
+      const trashAction = getAction('trash', { refreshFolderContent })
+      const mockDocuments = [
+        { id: 'abc', name: 'my-file.md' },
+        { id: 'def', name: 'my-file-2.md' }
+      ]
+      trashAction.action(mockDocuments)
+      const actuallyCalledModal =
+        mockModalContextValue.pushModal.mock.calls[0][0]
+
+      actuallyCalledModal.props.afterConfirmation()
+      expect(mockSharingContextValue.refresh).toHaveBeenCalled()
+      expect(refreshFolderContent).toHaveBeenCalled()
     })
   })
 
