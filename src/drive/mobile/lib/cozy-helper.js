@@ -2,7 +2,6 @@
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient, { StackLink } from 'cozy-client'
 import PouchLink from 'cozy-pouch-link'
-import { RealtimePlugin } from 'cozy-realtime'
 import { isMobileApp, isIOSApp, getDeviceName } from 'cozy-device-helper'
 
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
@@ -123,7 +122,3 @@ export const getToken = async () => {
 }
 
 export const getClientUrl = () => cozy.client._url
-
-export const registerClientPlugins = client => {
-  client.registerPlugin(RealtimePlugin)
-}

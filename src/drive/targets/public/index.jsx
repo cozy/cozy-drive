@@ -14,7 +14,7 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import SharingProvider from 'cozy-sharing'
 
 import { getQueryParameter } from 'react-cozy-helpers'
-import { registerClientPlugins } from 'drive/mobile/lib/cozy-helper'
+import registerClientPlugins from 'drive/lib/registerClientPlugins'
 
 import { schema } from 'drive/lib/doctypes'
 import configureStore from 'drive/store/configureStore'
