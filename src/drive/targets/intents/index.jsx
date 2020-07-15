@@ -9,7 +9,7 @@ import CozyClient, { CozyProvider } from 'cozy-client'
 
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
-import { registerClientPlugins } from 'drive/mobile/lib/cozy-helper'
+import registerClientPlugins from 'drive/lib/registerClientPlugins'
 import appMetadata from 'drive/appMetadata'
 import { schema } from 'drive/lib/doctypes'
 import StyledApp from 'drive/web/modules/drive/StyledApp'

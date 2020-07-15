@@ -23,11 +23,8 @@ import {
   startHeartBeat,
   stopHeartBeat
 } from 'drive/mobile/lib/tracker'
-import {
-  getLang,
-  initClient,
-  registerClientPlugins
-} from 'drive/mobile/lib/cozy-helper'
+import { getLang, initClient } from 'drive/mobile/lib/cozy-helper'
+import registerClientPlugins from 'drive/lib/registerClientPlugins'
 import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
 import { backupImages } from 'drive/mobile/modules/mediaBackup/duck'
 import {

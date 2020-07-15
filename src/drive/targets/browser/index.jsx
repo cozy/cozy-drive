@@ -14,7 +14,7 @@ import {
   getTracker
 } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
-import { registerClientPlugins } from 'drive/mobile/lib/cozy-helper'
+import registerClientPlugins from 'drive/lib/registerClientPlugins'
 
 import appMetadata from 'drive/appMetadata'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
