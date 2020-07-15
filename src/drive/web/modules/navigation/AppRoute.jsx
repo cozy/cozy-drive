@@ -73,6 +73,7 @@ const AppRoute = (
         <IndexRoute component={TrashFolderView} />
         <Route path=":folderId" component={TrashFolderView}>
           <Route path="file/:fileId" component={FilesViewerTrash} />
+          <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
       </Route>
 
@@ -80,8 +81,10 @@ const AppRoute = (
         <IndexRoute component={SharingsView} />
         <Route path=":folderId" component={SharingsFolderView}>
           <Route path="file/:fileId" component={SharingsFilesViewer} />
+          <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
         <Route path="file/:fileId" component={SharingsFilesViewer} />
+        <Route path="file/:fileId/revision" component={FileHistory} />
       </Route>
 
       {__TARGET__ === 'mobile' && (
