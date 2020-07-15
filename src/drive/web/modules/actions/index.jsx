@@ -81,7 +81,6 @@ export const trash = ({
           afterConfirmation={() => {
             refresh()
             if (refreshFolderContent) refreshFolderContent()
-            // TODO supprimer les fichiers de la sélection
           }}
           onClose={popModal}
         />
