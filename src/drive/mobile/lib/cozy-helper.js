@@ -1,18 +1,19 @@
-/* global cozy, document */
+/* global cozy, */
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient, { StackLink } from 'cozy-client'
 import PouchLink from 'cozy-pouch-link'
 import { RealtimePlugin } from 'cozy-realtime'
-import { isMobileApp, isIOSApp } from 'cozy-device-helper'
+import { isMobileApp, isIOSApp, getDeviceName } from 'cozy-device-helper'
 
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { disableBackgroundService } from './background'
 import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
-export const getLang = () =>
-  navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
-import { getDeviceName } from 'cozy-device-helper'
 import appMetadata from 'drive/appMetadata'
 import { getRedirectUri } from 'drive/mobile/lib/redirect'
+
+export const getLang = () =>
+  navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
+
 export const getOauthOptions = () => {
   return {
     redirectURI: getRedirectUri(appMetadata.slug),
