@@ -107,7 +107,7 @@
     "cozy-authentication": "^2.0.5",
     "cozy-bar": "7.12.2",
     "cozy-ci": "0.4.1",
-    "cozy-client": "13.13.0",
+    "cozy-client": "13.14.1",
     "cozy-client-js": "0.16.4",
     "cozy-device-helper": "1.9.2",
     "cozy-doctypes": "1.72.2",
