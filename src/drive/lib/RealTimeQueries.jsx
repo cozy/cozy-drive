@@ -1,12 +1,15 @@
 import { memo, useEffect } from 'react'
-import { useClient, Mutations } from 'cozy-client'
+import { useClient, Mutations, models } from 'cozy-client'
 import { receiveMutationResult } from 'cozy-client/dist/store'
 
 const RealTimeQueries = ({ doctype }) => {
   const client = useClient()
 
   const dispatchChange = (document, mutationDefinitionCreator) => {
-    const response = { data: { ...document, _type: doctype } }
+    const response = {
+      data: models.file.normalize(document)
+    }
+
     const options = {}
     client.dispatch(
       receiveMutationResult(
