@@ -56,9 +56,7 @@ describe('useActions', () => {
   const mockModalContextValue = {
     pushModal: jest.fn()
   }
-  const mockSharingContextValue = {
-    refresh: jest.fn()
-  }
+  const mockRefresh = jest.fn()
   const mockRouterContextValue = {
     router: {
       push: jest.fn()
@@ -79,7 +77,6 @@ describe('useActions', () => {
         store={mockStore}
         routerContextValue={mockRouterContextValue}
         modalContextValue={mockModalContextValue}
-        sharingContextValue={mockSharingContextValue}
       >
         {children}
       </AppLike>
@@ -114,7 +111,7 @@ describe('useActions', () => {
     client: mockClient,
     pushModal: mockModalContextValue.pushModal,
     popModal: mockModalContextValue.popModal,
-    refresh: mockSharingContextValue.refresh,
+    refresh: mockRefresh,
     dispatch: jest.fn(),
     router: mockRouterContextValue.router,
     location: mockRouterContextValue.location
@@ -298,23 +295,7 @@ describe('useActions', () => {
       )
 
       actuallyCalledModal.props.afterConfirmation()
-      expect(mockSharingContextValue.refresh).toHaveBeenCalled()
-    })
-
-    it('calls refreshFolderContent when present', () => {
-      const refreshFolderContent = jest.fn()
-      const trashAction = getAction('trash', { refreshFolderContent })
-      const mockDocuments = [
-        { id: 'abc', name: 'my-file.md' },
-        { id: 'def', name: 'my-file-2.md' }
-      ]
-      trashAction.action(mockDocuments)
-      const actuallyCalledModal =
-        mockModalContextValue.pushModal.mock.calls[0][0]
-
-      actuallyCalledModal.props.afterConfirmation()
-      expect(mockSharingContextValue.refresh).toHaveBeenCalled()
-      expect(refreshFolderContent).toHaveBeenCalled()
+      expect(mockRefresh).toHaveBeenCalled()
     })
   })
 
@@ -525,7 +506,7 @@ describe('useActions', () => {
       const mockDocuments = [{ id: 'abc' }]
       await restoreAction.action(mockDocuments)
       expect(restoreFiles).toHaveBeenCalledWith(mockClient, mockDocuments)
-      expect(mockSharingContextValue.refresh).toHaveBeenCalled()
+      expect(mockRefresh).toHaveBeenCalled()
     })
   })
 

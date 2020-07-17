@@ -110,17 +110,21 @@ const PublicFolderView = ({
   const { refresh } = useContext(SharingContext)
   const dispatch = useDispatch()
 
+  const refreshAfterChange = () => {
+    refresh()
+    refreshFolderContent()
+  }
+
   const actionOptions = {
     client,
     pushModal,
     popModal,
-    refresh,
+    refresh: refreshAfterChange,
     dispatch,
     router,
     location,
     hasWriteAccess: hasWritePermissions,
-    canMove: false,
-    refreshFolderContent: refreshFolderContent
+    canMove: false
   }
   const actions = useActions([download, trash, rename, versions], actionOptions)
 

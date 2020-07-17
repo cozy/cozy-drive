@@ -63,13 +63,7 @@ export const download = ({ client }) => {
       }
 }
 
-export const trash = ({
-  pushModal,
-  popModal,
-  hasWriteAccess,
-  refresh,
-  refreshFolderContent
-}) => {
+export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
   return {
     icon: 'trash',
     displayCondition: () => hasWriteAccess,
@@ -80,7 +74,6 @@ export const trash = ({
           referenced={isAnyFileReferencedByAlbum(files)}
           afterConfirmation={() => {
             refresh()
-            if (refreshFolderContent) refreshFolderContent()
           }}
           onClose={popModal}
         />
