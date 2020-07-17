@@ -1,4 +1,4 @@
-/* global cozy, */
+/* global cozy */
 import { LocalStorage as Storage } from 'cozy-client-js'
 import CozyClient, { StackLink } from 'cozy-client'
 import PouchLink from 'cozy-pouch-link'
