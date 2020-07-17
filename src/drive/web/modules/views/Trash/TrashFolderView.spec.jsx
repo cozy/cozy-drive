@@ -10,6 +10,7 @@ import { generateFileFixtures } from '../testUtils'
 import TrashFolderView from './TrashFolderView'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+jest.mock('components/pushClient')
 
 describe('TrashFolderView', () => {
   const setup = () => {

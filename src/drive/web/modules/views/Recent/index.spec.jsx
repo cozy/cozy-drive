@@ -9,6 +9,7 @@ import RecentViewWithProvider from './index'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
+jest.mock('components/pushClient')
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('./useFilesQueryWithPath', () => ({
   ...jest.requireActual('./useFilesQueryWithPath'),

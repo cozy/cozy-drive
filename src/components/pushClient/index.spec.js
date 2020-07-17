@@ -7,25 +7,29 @@ describe('isClientAlreadyInstalled', () => {
   })
   test('isClientAlreadyInstalled is true', async () => {
     const client = new CozyClient({})
-    client.query = jest.fn().mockResolvedValue([
-      {
-        attributes: {
-          software_id: DESKTOP_SOFTWARE_ID
+    client.query = jest.fn().mockResolvedValue({
+      data: {
+        0: {
+          attributes: {
+            software_id: DESKTOP_SOFTWARE_ID
+          }
         }
       }
-    ])
+    })
     const isInstalled = await isClientAlreadyInstalled(client)
     expect(isInstalled).toBe(true)
   })
   test('isClientAlreadyInstalled is not installed', async () => {
     const client = new CozyClient({})
-    client.query = jest.fn().mockResolvedValue([
-      {
-        attributes: {
-          software_id: 'test'
+    client.query = jest.fn().mockResolvedValue({
+      data: {
+        0: {
+          attributes: {
+            software_id: test
+          }
         }
       }
-    ])
+    })
     const isInstalled = await isClientAlreadyInstalled(client)
     expect(isInstalled).toBe(false)
   })
