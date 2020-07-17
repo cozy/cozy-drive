@@ -12,6 +12,7 @@ import PublicFolderView from './index'
 jest.mock('./usePublicFilesQuery', () => {
   return jest.fn()
 })
+jest.mock('components/pushClient')
 
 describe('Recent View', () => {
   const setup = () => {
