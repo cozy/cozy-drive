@@ -56,6 +56,7 @@ const PublicFolderView = ({
   currentFolderId,
   parentFolder,
   router,
+  location,
   children
 }) => {
   const client = useClient()

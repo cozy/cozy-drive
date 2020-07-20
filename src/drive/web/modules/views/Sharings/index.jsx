@@ -31,7 +31,12 @@ import {
 import { buildSharingsQuery } from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from '../Recent/useFilesQueryWithPath'
 
-export const SharingsView = ({ router, sharedDocumentIds, children }) => {
+export const SharingsView = ({
+  router,
+  location,
+  sharedDocumentIds = [],
+  children
+}) => {
   const { t } = useI18n()
   const query = buildSharingsQuery(sharedDocumentIds)
   const result = useFilesQueryWithPath(query)

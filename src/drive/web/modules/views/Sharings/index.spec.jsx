@@ -1,20 +1,20 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import { Router, hashHistory, Route, Redirect } from 'react-router'
+import { Router, hashHistory, Route, Redirect, IndexRoute } from 'react-router'
 import FileHistory from 'components/FileHistory'
 
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 
-import RecentViewWithProvider from './index'
-import { useFilesQueryWithPath } from './useFilesQueryWithPath'
+import { SharingsView } from './index'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
+import { useFilesQueryWithPath } from '../Recent/useFilesQueryWithPath'
 
 jest.mock('components/pushClient')
-jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('components/FileHistory', () => () => <div>FileHistory stub</div>)
-jest.mock('./useFilesQueryWithPath', () => ({
-  ...jest.requireActual('./useFilesQueryWithPath'),
+jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+jest.mock('../Recent/useFilesQueryWithPath', () => ({
+  ...jest.requireActual('../Recent/useFilesQueryWithPath'),
   useFilesQueryWithPath: jest.fn()
 }))
 
@@ -33,9 +33,12 @@ const setup = () => {
   const rendered = render(
     <AppLike client={client} store={store}>
       <Router history={hashHistory}>
-        <Redirect from="/" to="/recent" />
-        <Route path="/recent" component={RecentViewWithProvider}>
-          <Route path="file/:fileId/revision" component={FileHistory} />
+        <Redirect from="/" to="/sharings" />
+        <Route path="sharings">
+          <IndexRoute component={SharingsView} />
+          <Route component={SharingsView}>
+            <Route path="file/:fileId/revision" component={FileHistory} />
+          </Route>
         </Route>
       </Router>
     </AppLike>
@@ -43,8 +46,8 @@ const setup = () => {
   return { ...rendered, client }
 }
 
-describe('Recent View', () => {
-  it('tests the recent view', async () => {
+describe('Sharings View', () => {
+  it('tests the sharings view', async () => {
     const nbFiles = 2
     const path = '/test'
     const dir_id = 'dirIdParent'

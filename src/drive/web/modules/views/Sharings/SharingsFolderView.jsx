@@ -56,6 +56,7 @@ const SharingsFolderView = ({
   currentFolderId,
   sharedDocumentIds,
   router,
+  location,
   children
 }) => {
   const [sortOrder] = useFolderSort(currentFolderId)

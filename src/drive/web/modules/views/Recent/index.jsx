@@ -29,7 +29,7 @@ import {
 import { buildRecentQuery } from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
 
-export const RecentView = ({ router, children }) => {
+export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
   const query = buildRecentQuery()
   const result = useFilesQueryWithPath(query)
