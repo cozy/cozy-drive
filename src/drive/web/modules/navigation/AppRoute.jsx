@@ -82,12 +82,17 @@ const AppRoute = (
 
       <Route path="sharings">
         <IndexRoute component={SharingsView} />
-        <Route path=":folderId" component={SharingsFolderView}>
-          <Route path="file/:fileId" component={SharingsFilesViewer} />
+        <Route component={SharingsView}>
+          <Route path="file/:fileId" component={() => SharingsFilesViewer} />
+          {/* This route must be a child of SharingsView so the modal opens on top of the sharing view */}
           <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
-        <Route path="file/:fileId" component={SharingsFilesViewer} />
-        <Route path="file/:fileId/revision" component={FileHistory} />
+        {/* This route must be inside the /sharing path for the nav to have an activate state */}
+        <Route path=":folderId" component={SharingsFolderView}>
+          <Route path="file/:fileId" component={SharingsFilesViewer} />
+          {/* This route must be a child of SharingsFolderView so the modal opens on top of the folder view */}
+          <Route path="file/:fileId/revision" component={FileHistory} />
+        </Route>
       </Route>
 
       {__TARGET__ === 'mobile' && (
