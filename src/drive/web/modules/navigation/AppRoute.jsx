@@ -26,16 +26,19 @@ import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // in the "router" redux slice. Innermost routes should be
 // first
 export const routes = [
-  '/folder/:folderId/file/:fileId',
-  '/files/:folderId/file/:fileId',
-  '/files/:folderId',
   '/folder/:folderId',
+  '/folder/:folderId/file/:fileId',
+  '/folder/:folderId/file/:fileId/revision',
   '/recent/file/:fileId',
-  '/sharings/:folderId/file/:fileId',
-  '/sharings/file/:fileId',
+  '/recent/file/:fileId/revision',
   '/sharings/:folderId',
+  '/sharings/:folderId/file/:fileId',
+  '/sharings/:folderId/file/:fileId/revision',
+  '/sharings/file/:fileId',
+  '/sharings/file/:fileId/revision',
   '/trash/:folderId/file/:fileId',
-  '/trash/:folderId'
+  '/trash/:folderId',
+  '/file/:fileId'
 ]
 
 const RootComponent = routerProps => (
