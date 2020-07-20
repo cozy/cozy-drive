@@ -1,9 +1,11 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
+import { Router, hashHistory, Route, Redirect } from 'react-router'
 
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
+import FileHistory from 'components/FileHistory'
 
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
@@ -12,9 +14,10 @@ import PublicFolderView from './index'
 jest.mock('./usePublicFilesQuery', () => {
   return jest.fn()
 })
+jest.mock('components/FileHistory', () => () => <div>FileHistory stub</div>)
 jest.mock('components/pushClient')
 
-describe('Recent View', () => {
+describe('Public View', () => {
   const setup = () => {
     const { store, client } = setupStoreAndClient()
 
@@ -26,7 +29,12 @@ describe('Recent View', () => {
 
     const rendered = render(
       <AppLike client={client} store={store}>
-        <PublicFolderView />
+        <Router history={hashHistory}>
+          <Redirect from="/" to="/folder/123" />
+          <Route path="folder(/:folderId)" component={PublicFolderView}>
+            <Route path="file/:fileId/revision" component={FileHistory} />
+          </Route>
+        </Router>
       </AppLike>
     )
     return { ...rendered, client }
@@ -51,7 +59,7 @@ describe('Recent View', () => {
       refreshFolderContent: jest.fn()
     })
 
-    const { getByText } = setup()
+    const { getByText, findByText } = setup()
     // Get the HTMLElement containing the filename if exist. If not throw
     const el0 = getByText(`foobar0`)
     // Check if the filename is displayed with the extension. If not throw
@@ -68,5 +76,11 @@ describe('Recent View', () => {
     expect(
       document.querySelectorAll("[data-test-id='fil-actionmenu-inner']").length
     ).toEqual(1)
+
+    // navigates  to the history view
+    const historyItem = getByText('History')
+    fireEvent.click(historyItem)
+
+    await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
   })
 })

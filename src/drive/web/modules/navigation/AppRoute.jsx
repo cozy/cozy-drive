@@ -8,7 +8,7 @@ import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 import { RouterContextProvider } from 'drive/lib/RouterContext'
 import Layout from 'drive/web/modules/layout/Layout'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
-import FileHistory from '../../../../components/FileHistory'
+import FileHistory from 'components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
