@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import uniqBy from 'lodash/uniqBy'
+import omit from 'lodash/omit'
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
@@ -10,11 +10,12 @@ const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 
 // selectors
 export const isSelected = (state, file) =>
-  state.selection.selected.find(({ id }) => id === file.id) !== undefined
+  state.selection.selected[file.id] !== undefined
 export const isSelectionBarVisible = state =>
-  state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
+  Object.keys(state.selection.selected).length !== 0 ||
+  state.selection.isSelectionBarOpened
 export const getSelectedFiles = state => {
-  return state.selection.selected
+  return Object.values(state.selection.selected)
 }
 
 // actions
@@ -27,18 +28,18 @@ export const toggleItemSelection = (file, selected) => ({
 })
 
 // reducers
-const selected = (state = [], action) => {
+const selected = (state = {}, action) => {
   if (action.meta && action.meta.cancelSelection) {
-    return []
+    return {}
   }
   switch (action.type) {
     case SELECT_ITEM:
-      return uniqBy([...state, action.file], 'id')
+      return { ...state, [action.file.id]: action.file }
     case UNSELECT_ITEM: {
-      return state.filter(({ id }) => action.file.id !== id)
+      return omit(state, [action.file.id])
     }
     case HIDE_SELECTION_BAR:
-      return []
+      return {}
     default:
       return state
   }
