@@ -81,7 +81,7 @@ export const startMediaBackup = (isManualBackup = false) => async (
         }
       }
 
-      client.getStackClient().fetchJSON('POST', '/settings/synchonized')
+      client.getStackClient().fetchJSON('POST', '/settings/synchronized')
     } catch (e) {
       dispatch({ type: MEDIA_UPLOAD_ABORT })
       if (!e.message.match(/Failed to fetch/))

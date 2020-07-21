@@ -109,7 +109,7 @@ describe('StartMediaBackup', () => {
     expect(uploadPhoto).not.toHaveBeenCalled()
     expect(client.getStackClient().fetchJSON).toHaveBeenCalledWith(
       'POST',
-      '/settings/synchonized'
+      '/settings/synchronized'
     )
   })
 
