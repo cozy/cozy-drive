@@ -256,7 +256,7 @@ const File = props => {
   const toggle = e => {
     e.stopPropagation()
     const { attributes, onCheckboxToggle, selected } = props
-    onCheckboxToggle(attributes.id, selected)
+    onCheckboxToggle(attributes, selected)
   }
 
   const open = (e, attributes) => {
@@ -391,7 +391,7 @@ File.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selected: isSelected(state, ownProps.attributes.id),
+  selected: isSelected(state, ownProps.attributes),
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
   selectionModeActive: isSelectionBarVisible(state),
   isRenaming:
