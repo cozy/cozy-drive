@@ -17,7 +17,6 @@ import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigatio
 
 import useActions from 'drive/web/modules/actions/useActions'
 import {
-  share,
   download,
   trash,
   open,
@@ -56,11 +55,11 @@ export const SharingsView = ({ router, sharedDocumentIds, children }) => {
     dispatch,
     router,
     location,
-    hasWriteAccess: false,
+    hasWriteAccess: true,
     canMove: true
   }
   const actions = useActions(
-    [share, download, trash, open, rename, move, qualify, versions, offline],
+    [download, trash, open, rename, move, qualify, versions, offline],
     actionsOptions
   )
 
