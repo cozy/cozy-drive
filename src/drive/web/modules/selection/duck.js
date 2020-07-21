@@ -1,8 +1,5 @@
 import { combineReducers } from 'redux'
-import get from 'lodash/get'
-
-const getFileByIdFromCozyClient = (state, id) =>
-  get(state, ['cozy', 'documents', 'io.cozy.files', id])
+import uniqBy from 'lodash/uniqBy'
 
 // constants
 const SELECT_ITEM = 'SELECT_ITEM'
@@ -12,21 +9,21 @@ const SHOW_SELECTION_BAR = 'SHOW_SELECTION_BAR'
 const HIDE_SELECTION_BAR = 'HIDE_SELECTION_BAR'
 
 // selectors
-export const isSelected = (state, id) =>
-  state.selection.selected.find(_id => _id === id) !== undefined
-export const getSelectedIds = state => state.selection.selected
+export const isSelected = (state, file) =>
+  state.selection.selected.find(({ id }) => id === file.id) !== undefined
 export const isSelectionBarVisible = state =>
   state.selection.selected.length !== 0 || state.selection.isSelectionBarOpened
-export const getSelectedFiles = state =>
-  getSelectedIds(state).map(id => getFileByIdFromCozyClient(state, id))
+export const getSelectedFiles = state => {
+  return state.selection.selected
+}
 
 // actions
 export const showSelectionBar = () => ({ type: SHOW_SELECTION_BAR })
 export const hideSelectionBar = () => ({ type: HIDE_SELECTION_BAR })
 export const toggleSelectionBar = () => ({ type: TOGGLE_SELECTION_BAR })
-export const toggleItemSelection = (id, selected) => ({
+export const toggleItemSelection = (file, selected) => ({
   type: selected ? UNSELECT_ITEM : SELECT_ITEM,
-  id
+  file
 })
 
 // reducers
@@ -36,10 +33,9 @@ const selected = (state = [], action) => {
   }
   switch (action.type) {
     case SELECT_ITEM:
-      return [...state, action.id]
+      return uniqBy([...state, action.file], 'id')
     case UNSELECT_ITEM: {
-      const idx = state.indexOf(action.id)
-      return [...state.slice(0, idx), ...state.slice(idx + 1)]
+      return state.filter(({ id }) => action.file.id !== id)
     }
     case HIDE_SELECTION_BAR:
       return []
