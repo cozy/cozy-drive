@@ -14,7 +14,13 @@ import PublicFolderView from './index'
 jest.mock('./usePublicFilesQuery', () => {
   return jest.fn()
 })
-jest.mock('components/FileHistory', () => () => <div>FileHistory stub</div>)
+jest.mock(
+  'components/FileHistory',
+  () =>
+    function FileHistoryStub() {
+      return <div>FileHistory stub</div>
+    }
+)
 jest.mock('components/pushClient')
 
 describe('Public View', () => {

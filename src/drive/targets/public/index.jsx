@@ -139,7 +139,7 @@ const init = async () => {
                       path="external/:fileId"
                       component={ExternalRedirect}
                     />
-                    <Redirect from="/*" to={`files/${sharedDocumentId}`} />
+                    <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
                   </Router>
                 )}
               </ModalContextProvider>
