@@ -397,11 +397,11 @@
     "error": {
       "open_with": {
         "offline": "You should be connected to open this file",
-        "noapp": "No application can open this file"
+        "noapp": "No application on your device can open this file with mime type: %{fileMime} "
       },
       "make_available_offline": {
         "offline": "You should be connected to open this file",
-        "noapp": "No application can open this file"
+        "noapp": "No application on your device can open this file with mime type: %{fileMime} "
       }
     },
     "revoked": {
