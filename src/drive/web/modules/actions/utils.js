@@ -122,7 +122,7 @@ export const exportFilesNative = async (client, files, filename) => {
   const downloadAllFiles = files.map(async file => {
     const response = await client
       .collection('io.cozy.files')
-      .fetchFileContent(file)
+      .fetchFileContent(file.id)
 
     const blob = await response.blob()
     const filenameToUse = filename ? filename : file.name
@@ -179,7 +179,9 @@ export const openFileWith = async (client, file) => {
   if (isMobileApp() && window.cordova.plugins.fileOpener2) {
     let fileData
     try {
-      fileData = await client.collection('io.cozy.files').fetchFileContent(file)
+      fileData = await client
+        .collection('io.cozy.files')
+        .fetchFileContent(file.id)
     } catch (error) {
       Alerter.error(openFileDownloadError(error))
       throw error
