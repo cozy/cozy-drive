@@ -5447,16 +5447,17 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@35.17.0:
-  version "35.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-35.17.0.tgz#b91caf07f7c2ba9fd8588fa38b7a360d81fb69c8"
-  integrity sha512-qtlDgd3zGpjldpwcvqJBRcxtvUMWd1WjT9NrvPyw2jCy5LjpPwHY1SSBtzsi0ZlqH6QSU73Wh1VG7p16akrzOg==
+cozy-ui@35.33.2:
+  version "35.33.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-35.33.2.tgz#8d49ed9b95d5805f8f6f61f0406107f09e6a36e8"
+  integrity sha512-pis95Wg+XLbCEPPUCpupaVe1zFzXWFsttIEV9n0OmQFJJoI6hyUf51YP97Ov228GTv1zrVYaDA3P4QI1aFQuTw==
   dependencies:
     "@babel/runtime" "^7.3.4"
     body-scroll-lock "^2.5.8"
     classnames "^2.2.5"
     date-fns "^1.28.5"
     hammerjs "^2.0.8"
+    intersection-observer "0.11.0"
     node-polyglot "^2.2.2"
     normalize.css "^7.0.0"
     react-hot-loader "^4.3.11"
@@ -9094,10 +9095,10 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
   integrity sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
 
-intersection-observer@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.5.0.tgz#9fe8bee3953c755b1485c38efd9633d535775ea6"
-  integrity sha512-8Zgt4ijlyvIrQVTA7MPb2W9+KhoetrAbxlh0RmTGxpx0+ZsAXvy7IsbNnZIrqZ6TddAdWeQj49x7Ph7Ir6KRkA==
+intersection-observer@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.11.0.tgz#f4ea067070326f68393ee161cc0a2ca4c0040c6f"
+  integrity sha512-KZArj2QVnmdud9zTpKf279m2bbGfG+4/kn16UU0NL3pTVl52ZHiJ9IRNSsnn6jaHrL9EGLFM5eWjTx2fz/+zoQ==
 
 invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
