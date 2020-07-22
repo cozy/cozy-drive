@@ -15,6 +15,7 @@ import CreateNoteItem from './CreateNoteItem'
 import CreateShortcut from './CreateShortcut'
 import DownloadButtonItem from './DownloadButtonItem'
 import ShareItem from '../share/ShareItem'
+import StartScanner from './StartScanner'
 import ScanWrapper from './ScanWrapper'
 
 const MoreMenu = ({
@@ -35,40 +36,43 @@ const MoreMenu = ({
       <div ref={anchorRef}>
         <MoreButton onClick={openMenu} />
       </div>
-      {menuIsVisible && (
-        <ActionMenu
-          placement="bottom-end"
-          anchorElRef={anchorRef}
-          onClose={closeMenu}
-          autoclose
-        >
-          {canCreateFolder && hasWriteAccess && <AddFolderItem />}
-          {hasWriteAccess && <CreateNoteItem />}
-          {hasWriteAccess && <CreateShortcut />}
-          {canUpload && hasWriteAccess && <UploadItem disabled={isDisabled} />}
-          {isMobileApp() &&
-            canUpload &&
-            hasWriteAccess && (
-              <ScanWrapper insideMoreMenu disabled={isDisabled} />
+      <ScanWrapper>
+        {menuIsVisible && (
+          <ActionMenu
+            placement="bottom-end"
+            anchorElRef={anchorRef}
+            onClose={closeMenu}
+            autoclose
+          >
+            {canCreateFolder && hasWriteAccess && <AddFolderItem />}
+            {hasWriteAccess && <CreateNoteItem />}
+            {hasWriteAccess && <CreateShortcut />}
+            {canUpload &&
+              hasWriteAccess && <UploadItem disabled={isDisabled} />}
+            {isMobileApp() &&
+              canUpload &&
+              hasWriteAccess && (
+                <StartScanner insideMoreMenu disabled={isDisabled} />
+              )}
+            {hasWriteAccess && <hr />}
+            {isMobile && (
+              <NotRootFolder>
+                <ShareItem />
+              </NotRootFolder>
             )}
-          {hasWriteAccess && <hr />}
-          {isMobile && (
             <NotRootFolder>
-              <ShareItem />
+              <DownloadButtonItem />
             </NotRootFolder>
-          )}
-          <NotRootFolder>
-            <DownloadButtonItem />
-          </NotRootFolder>
-          <SelectableItem />
-          {hasWriteAccess && (
-            <NotRootFolder>
-              <hr />
-              <DeleteItem />
-            </NotRootFolder>
-          )}
-        </ActionMenu>
-      )}
+            <SelectableItem />
+            {hasWriteAccess && (
+              <NotRootFolder>
+                <hr />
+                <DeleteItem />
+              </NotRootFolder>
+            )}
+          </ActionMenu>
+        )}
+      </ScanWrapper>
     </div>
   )
 }
