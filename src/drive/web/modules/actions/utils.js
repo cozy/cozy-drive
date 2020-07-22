@@ -186,15 +186,14 @@ export const openFileWith = async (client, file) => {
       Alerter.error(openFileDownloadError(error))
       throw error
     }
-
     const blob = await fileData.blob()
     try {
-      await saveAndOpenWithCordova(blob, file.name)
+      await saveAndOpenWithCordova(blob, file)
     } catch (error) {
-      Alerter.error('mobile.error.open_with.noapp')
+      Alerter.info('mobile.error.open_with.noapp', { fileMime: file.mime })
     }
   } else {
-    Alerter.error('mobile.error.open_with.noapp')
+    Alerter.info('mobile.error.open_with.noapp', { fileMime: file.mime })
   }
 }
 

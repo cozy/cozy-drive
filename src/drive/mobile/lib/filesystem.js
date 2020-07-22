@@ -104,12 +104,16 @@ export const temporarySave = (file, filename) =>
   getEntry(getTemporaryRootPath()).then(entry =>
     saveFile(entry, file, filename)
   )
-
-export const saveAndOpenWithCordova = (file, filename) =>
-  temporarySave(file, filename).then(entry =>
-    openFileWithCordova(entry.nativeURL, file.type)
+/**
+ *
+ * @param {Blob} blob Binary of the file
+ * @param {Object} file io.cozy.files object
+ */
+export const saveAndOpenWithCordova = (blob, file) => {
+  return temporarySave(blob, file.name).then(entry =>
+    openFileWithCordova(entry.nativeURL, file.mime)
   )
-
+}
 export const getNativeFile = async file => {
   const entry = await getCozyEntry()
   return getEntry(`${entry.nativeURL}${file.id}`)
