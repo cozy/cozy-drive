@@ -37,7 +37,7 @@ export const usePublicFilesQuery = currentFolderId => {
           setFetchStatus('loading')
           const { included, cursor } = await statById(client, currentFolderId)
           nextCursor.current = cursor
-          setData(included)
+          setData(included || [])
           setHasMore(!!cursor)
           setFetchStatus('loaded')
         } catch (error) {

@@ -44,6 +44,22 @@ describe('usePublicFilesQuery', () => {
     expect(result.current.data).toEqual(mockData)
   })
 
+  it('works even without included files', async () => {
+    statByIdMock.mockResolvedValue({
+      links: {}
+    })
+    const { result, waitForNextUpdate } = setup()
+
+    expect(result.current.data).toEqual([])
+    expect(result.current.fetchStatus).toEqual('loading')
+    expect(result.current.hasMore).toBe(false)
+
+    await act(() => waitForNextUpdate())
+
+    expect(result.current.fetchStatus).toEqual('loaded')
+    expect(result.current.data).toEqual([])
+  })
+
   it('paginate results', async () => {
     const nextPageData = [{ id: 3 }, { id: 4 }]
     const cursor = '123abc'
