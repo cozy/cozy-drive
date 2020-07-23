@@ -49,7 +49,13 @@ const FileOpener = ({
       }
       return () => gesturesHandler && gesturesHandler.destroy()
     },
-    [linkRef.current]
+    [
+      linkRef.current,
+      selectionModeActive,
+      actionMenuVisible,
+      disabled,
+      shouldOpenInANewTab
+    ]
   )
 
   if (shouldOpenInANewTab && isActive) {
