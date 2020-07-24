@@ -7,12 +7,7 @@ import { SharedBadge } from 'cozy-sharing'
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import styles from 'drive/styles/filelist.styl'
 
-const FileThumbnail = ({
-  file,
-  withSharedBadge,
-  breakpoints: { isMobile },
-  size
-}) => {
+const FileThumbnail = ({ file, breakpoints: { isMobile }, size }) => {
   const isImage = file.class === 'image'
   return (
     <div
@@ -44,14 +39,13 @@ const FileThumbnail = ({
        * sharing and we'll remove this badge from here. In the meantime, we take this
        * workaround
        */}
-      {withSharedBadge &&
-        file.class !== 'shortcut' && (
-          <SharedBadge
-            docId={file.id}
-            className={styles['fil-content-shared']}
-            xsmall
-          />
-        )}
+      {file.class !== 'shortcut' && (
+        <SharedBadge
+          docId={file.id}
+          className={styles['fil-content-shared']}
+          xsmall
+        />
+      )}
     </div>
   )
 }
@@ -62,7 +56,6 @@ FileThumbnail.propTypes = {
     mime: PropTypes.string,
     name: PropTypes.string
   }).isRequired,
-  withSharedBadge: PropTypes.bool,
   breakpoints: PropTypes.shape({
     isMobile: PropTypes.bool
   }).isRequired,

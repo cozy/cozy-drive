@@ -278,7 +278,6 @@ const File = props => {
     isRenaming,
     withSelectionCheckbox,
     withFilePath,
-    withSharedBadge,
     isAvailableOffline,
     disabled,
     thumbnailSizeBig,
@@ -322,7 +321,6 @@ const File = props => {
       >
         <FileThumbnail
           file={attributes}
-          withSharedBadge={withSharedBadge}
           size={thumbnailSizeBig ? 96 : undefined}
         />
         <FileName
@@ -374,7 +372,6 @@ File.propTypes = {
   isRenaming: PropTypes.bool,
   withSelectionCheckbox: PropTypes.bool.isRequired,
   withFilePath: PropTypes.bool,
-  withSharedBadge: PropTypes.bool.isRequired,
   isAvailableOffline: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,
   breakpoints: PropTypes.object.isRequired,
