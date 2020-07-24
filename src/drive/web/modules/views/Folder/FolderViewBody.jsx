@@ -178,7 +178,6 @@ const FolderViewBody = ({
                     <File
                       key={file._id}
                       attributes={file}
-                      displayedFolder={null}
                       withSelectionCheckbox={true}
                       withSharedBadge={true}
                       onFolderOpen={navigateToFolder}
