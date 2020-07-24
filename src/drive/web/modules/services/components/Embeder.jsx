@@ -1,6 +1,6 @@
 import React from 'react'
 import { Spinner, IntentHeader } from 'cozy-ui/transpiled/react'
-import FileOpener from 'drive/web/modules/viewer/FileOpenerExternal'
+import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
 
 class Embeder extends React.Component {
@@ -38,7 +38,10 @@ class Embeder extends React.Component {
           <pre className="u-error">{this.state.error.toString()}</pre>
         )}
         {this.state.fileId && (
-          <FileOpener fileId={this.state.fileId} withCloseButtton={false} />
+          <FileOpenerExternal
+            fileId={this.state.fileId}
+            withCloseButtton={false}
+          />
         )}
         <IconSprite />
       </div>
