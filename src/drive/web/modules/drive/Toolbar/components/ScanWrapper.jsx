@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { Scanner, SCANNER_DONE } from 'cozy-scanner'
 import { isMobileApp } from 'cozy-device-helper'
@@ -22,71 +22,67 @@ export const ScannerContext = React.createContext()
  * - Dispatching some events before and after the scan
  * - make the scan infos available through a context
  */
-class ScanWrapper extends Component {
-  render() {
-    const {
-      displayedFolder,
-      stopMediaBackup,
-      startMediaBackup,
-      children
-    } = this.props
+const ScanWrapper = ({
+  displayedFolder,
+  stopMediaBackup,
+  startMediaBackup,
+  children
+}) => {
+  if (!isMobileApp()) return children
 
-    if (!isMobileApp()) return children
-
-    return (
-      <MuiCozyTheme>
-        <Scanner
-          dirId={displayedFolder.id} //Pour savoir où uploader
-          pluginConfig={{
-            sourceType: 1 // Camera
-          }}
-          generateName={() => {
-            const date = new Date()
-            //We had to replace : by - since the Cordova File plugin doesn't support : in the filename
-            //https://github.com/apache/cordova-plugin-file/issues/289#issuecomment-477954331
-            return `Scan_${date.toISOString().replace(/:/g, '-')}.jpg`
-          }}
-          onConflict={'rename'}
-          //We need to cancel the MediaBackup before doing the upload since the scanned file will be
-          //inserted we don't know where in the queue resulting in a non uploaded file if the queue is
-          //big enough
-          onBeforeUpload={() => stopMediaBackup()}
-          onFinish={() => {
-            const tracker = getTracker()
-            if (tracker) {
-              tracker.push(['trackEvent', 'Drive', 'Scanner', 'Finished'])
-            }
-            startMediaBackup()
-          }}
-        >
-          {({ status, error, startScanner, filename, onClear, online }) => {
-            return (
-              <ScannerContext.Provider
-                value={{ startScanner, status, error, online }}
-              >
-                {children}
-                {filename && (
-                  <PortaledQueue
-                    file={{
-                      file: {
-                        name: filename,
-                        isDirectory: false,
-                        status
-                      }
-                    }}
-                    successCount={status === SCANNER_DONE ? 1 : 0}
-                    doneCount={1}
-                    key={filename}
-                    onClear={onClear}
-                  />
-                )}
-              </ScannerContext.Provider>
-            )
-          }}
-        </Scanner>
-      </MuiCozyTheme>
-    )
-  }
+  return (
+    <MuiCozyTheme>
+      <Scanner
+        dirId={displayedFolder.id} //Pour savoir où uploader
+        pluginConfig={{
+          sourceType: 1 // Camera
+        }}
+        generateName={() => {
+          const date = new Date()
+          //We had to replace : by - since the Cordova File plugin doesn't support : in the filename
+          //https://github.com/apache/cordova-plugin-file/issues/289#issuecomment-477954331
+          return `Scan_${date.toISOString().replace(/:/g, '-')}.jpg`
+        }}
+        onConflict={'rename'}
+        //We need to cancel the MediaBackup before doing the upload since the scanned file will be
+        //inserted we don't know where in the queue resulting in a non uploaded file if the queue is
+        //big enough
+        onBeforeUpload={() => stopMediaBackup()}
+        onFinish={() => {
+          const tracker = getTracker()
+          if (tracker) {
+            tracker.push(['trackEvent', 'Drive', 'Scanner', 'Finished'])
+          }
+          startMediaBackup()
+        }}
+      >
+        {({ status, error, startScanner, filename, onClear, online }) => {
+          return (
+            <ScannerContext.Provider
+              value={{ startScanner, status, error, online }}
+            >
+              {children}
+              {filename && (
+                <PortaledQueue
+                  file={{
+                    file: {
+                      name: filename,
+                      isDirectory: false,
+                      status
+                    }
+                  }}
+                  successCount={status === SCANNER_DONE ? 1 : 0}
+                  doneCount={1}
+                  key={filename}
+                  onClear={onClear}
+                />
+              )}
+            </ScannerContext.Provider>
+          )
+        }}
+      </Scanner>
+    </MuiCozyTheme>
+  )
 }
 
 const mapDispatchToProps = dispatch => ({
