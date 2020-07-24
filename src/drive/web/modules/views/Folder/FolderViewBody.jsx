@@ -1,7 +1,14 @@
 import React, { useCallback, useContext } from 'react'
+import get from 'lodash/get'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import { models, useClient, Q, generateWebLink } from 'cozy-client'
+import {
+  models,
+  useClient,
+  Q,
+  generateWebLink,
+  useCapabilities
+} from 'cozy-client'
 import { useDispatch } from 'react-redux'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
@@ -56,6 +63,7 @@ const FolderViewBody = ({
   navigateToFile,
   refreshFolderContent = null
 }) => {
+  const client = useClient()
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
@@ -65,8 +73,13 @@ const FolderViewBody = ({
     setSortOrder({ sortAttribute: attribute, sortOrder: order })
   )
 
+  const capabilities = useCapabilities(client)
+  const isFlatDomain = get(
+    capabilities,
+    'capabilities.data.attributes.flat_subdomains'
+  )
+
   const dispatch = useDispatch()
-  const client = useClient()
 
   const handleFileOpen = useCallback(
     async (file, availableOffline) => {
@@ -88,7 +101,7 @@ const FolderViewBody = ({
             Alerter.error('alert.could_not_open_file')
           }
         } else {
-          const url = generateFileUrl({ file, client, isFlatDomain: true })
+          const url = generateFileUrl({ file, client, isFlatDomain })
           window.open(url, '_blank')
         }
       } else if (isNote) {
