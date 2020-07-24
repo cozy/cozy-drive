@@ -80,8 +80,6 @@ describe('MoreMenu', () => {
     it('opens and closes the scanner', async () => {
       const { getByText, queryByText } = await setup()
 
-      isMobileApp
-
       // opens the scanner
       fireEvent.click(getByText('Scan a doc'))
       expect(queryByText('Save the doc')).not.toBeNull()
