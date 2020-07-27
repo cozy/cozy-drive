@@ -4,12 +4,15 @@
 
 import React from 'react'
 import { mount } from 'enzyme'
+import { configure } from '@testing-library/react'
 import CozyClient from 'cozy-client'
 
 import configureStore from '../src/drive/store/configureStore'
 import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
 import { generateFile } from './generate'
+
+configure({ testIdAttribute: 'data-test-id' })
 
 export const mockCozyClientRequestQuery = () => {
   beforeEach(() => {
