@@ -2,9 +2,8 @@ import React, { useCallback, useContext } from 'react'
 import get from 'lodash/get'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import { models, useClient, Q, useCapabilities } from 'cozy-client'
+import { useClient, useCapabilities } from 'cozy-client'
 import { useDispatch } from 'react-redux'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import { FileList } from 'drive/web/modules/filelist/FileList'
 import { ConnectedFileListBody as FileListBody } from 'drive/web/modules/filelist/FileListBody'
@@ -20,8 +19,7 @@ import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
-import { openLocalFile } from 'drive/mobile/modules/offline/duck'
-import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
+import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -53,39 +51,15 @@ const FolderViewBody = ({
   const dispatch = useDispatch()
 
   const handleFileOpen = useCallback(
-    async (file, availableOffline) => {
-      if (availableOffline) {
-        return dispatch(openLocalFile(file))
-      }
-
-      const isNote = models.file.isNote(file)
-      const isShortcut = models.file.isShortcut(file)
-
-      if (isShortcut) {
-        if (isMobileApp()) {
-          try {
-            const resp = await client.query(
-              Q('io.cozy.files.shortcuts').getById(file.id)
-            )
-            window.location.href = resp.data.attributes.url
-          } catch (error) {
-            Alerter.error('alert.could_not_open_file')
-          }
-        } else {
-          const url = generateShortcutUrl({ file, client, isFlatDomain })
-          window.open(url, '_blank')
-        }
-      } else if (isNote) {
-        try {
-          window.location.href = await models.note.fetchURL(client, file)
-        } catch (e) {
-          Alerter.error('alert.offline')
-        }
-      } else {
-        navigateToFile(file)
-      }
-    },
-    [dispatch, client]
+    createFileOpeningHandler({
+      client,
+      isFlatDomain,
+      dispatch,
+      navigateToFile,
+      replaceCurrentUrl: url => (window.location.href = url),
+      openInNewTab: url => window.open(url, '_blank')
+    }),
+    [client, dispatch, navigateToFile, isFlatDomain]
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'error')
