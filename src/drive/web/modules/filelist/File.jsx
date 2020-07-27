@@ -283,7 +283,6 @@ const File = props => {
     disabled,
     thumbnailSizeBig,
     selectionModeActive,
-    isFlatDomain,
     refreshFolderContent,
     breakpoints: { isExtraLarge, isMobile }
   } = props
@@ -319,7 +318,6 @@ const File = props => {
         selectionModeActive={selectionModeActive}
         open={open}
         toggle={toggle}
-        isFlatDomain={isFlatDomain}
         isActive={!isRenaming}
       >
         <FileThumbnail
@@ -386,7 +384,6 @@ File.propTypes = {
   /** onFileOpen : When a user click on a File */
   onFileOpen: PropTypes.func.isRequired,
   onCheckboxToggle: PropTypes.func.isRequired,
-  isFlatDomain: PropTypes.bool,
   refreshFolderContent: PropTypes.func
 }
 

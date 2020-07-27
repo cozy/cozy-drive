@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import { models, useClient, Q } from 'cozy-client'
+import { models, useClient, Q, generateWebLink } from 'cozy-client'
 import { useDispatch } from 'react-redux'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
@@ -20,6 +20,30 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
+
+const generateFileUrl = ({ file, client, isFlatDomain }) => {
+  const currentURL = new URL(window.location)
+  let webLink = ''
+  if (currentURL.pathname === '/public') {
+    webLink = generateWebLink({
+      cozyUrl: client.getStackClient().uri,
+      pathname: '/public',
+      slug: 'drive',
+      hash: `external/${file.id}`,
+      searchParams: currentURL.searchParams,
+      subDomainType: isFlatDomain ? 'flat' : 'nested'
+    })
+  } else {
+    webLink = generateWebLink({
+      cozyUrl: client.getStackClient().uri,
+      pathname: '/',
+      slug: 'drive',
+      hash: `external/${file.id}`,
+      subDomainType: isFlatDomain ? 'flat' : 'nested'
+    })
+  }
+  return webLink
+}
 
 const FolderViewBody = ({
   currentFolderId,
@@ -53,12 +77,20 @@ const FolderViewBody = ({
       const isNote = models.file.isNote(file)
       const isShortcut = models.file.isShortcut(file)
 
-      //Should only be called if mobile
       if (isShortcut) {
-        const resp = await client.query(
-          Q('io.cozy.files.shortcuts').getById(file.id)
-        )
-        window.location.href = resp.data.attributes.url
+        if (isMobileApp()) {
+          try {
+            const resp = await client.query(
+              Q('io.cozy.files.shortcuts').getById(file.id)
+            )
+            window.location.href = resp.data.attributes.url
+          } catch (error) {
+            Alerter.error('alert.could_not_open_file')
+          }
+        } else {
+          const url = generateFileUrl({ file, client, isFlatDomain: true })
+          window.open(url, '_blank')
+        }
       } else if (isNote) {
         try {
           window.location.href = await models.note.fetchURL(client, file)
@@ -136,7 +168,6 @@ const FolderViewBody = ({
                       displayedFolder={null}
                       withSelectionCheckbox={true}
                       withSharedBadge={true}
-                      isFlatDomain={true}
                       onFolderOpen={navigateToFolder}
                       onFileOpen={handleFileOpen}
                       withFilePath={withFilePath}

@@ -1,11 +1,7 @@
 import React, { useRef, useEffect } from 'react'
-import { useClient } from 'cozy-client'
 import Hammer from 'hammerjs'
-import { isMobileApp } from 'cozy-device-helper'
-import cx from 'classnames'
 
 import { enableTouchEvents } from './File'
-import { generateFileUrl } from './generateFileUrl'
 import styles from './fileopener.styl'
 
 const FileOpener = ({
@@ -16,13 +12,9 @@ const FileOpener = ({
   toggle,
   open,
   selectionModeActive,
-  isFlatDomain,
   isActive
 }) => {
   const linkRef = useRef(null)
-  const client = useClient()
-  const fileUrl = generateFileUrl({ client, isFlatDomain, file })
-  const shouldOpenInANewTab = file.class === 'shortcut' && !isMobileApp()
 
   useEffect(
     () => {
@@ -40,9 +32,7 @@ const FileOpener = ({
               toggle(ev.srcEvent)
             } else {
               ev.srcEvent.stopImmediatePropagation()
-              if (!shouldOpenInANewTab) {
-                open(ev.srcEvent, file)
-              }
+              if (isActive) open(ev.srcEvent, file)
             }
           }
         })
@@ -54,29 +44,15 @@ const FileOpener = ({
       selectionModeActive,
       actionMenuVisible,
       disabled,
-      shouldOpenInANewTab
+      isActive
     ]
   )
 
-  if (shouldOpenInANewTab && isActive) {
-    return (
-      <a
-        href={fileUrl}
-        rel="noopener noreferrer"
-        target="_blank"
-        className={cx(styles['file-opener'], styles['file-opener__a'])}
-        ref={linkRef}
-      >
-        {children}
-      </a>
-    )
-  } else {
-    return (
-      <span className={styles['file-opener']} ref={linkRef} id={file.id}>
-        {children}
-      </span>
-    )
-  }
+  return (
+    <span className={styles['file-opener']} ref={linkRef} id={file.id}>
+      {children}
+    </span>
+  )
 }
 
 export default FileOpener
