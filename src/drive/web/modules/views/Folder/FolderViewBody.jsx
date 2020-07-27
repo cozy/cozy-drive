@@ -2,13 +2,7 @@ import React, { useCallback, useContext } from 'react'
 import get from 'lodash/get'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import {
-  models,
-  useClient,
-  Q,
-  generateWebLink,
-  useCapabilities
-} from 'cozy-client'
+import { models, useClient, Q, useCapabilities } from 'cozy-client'
 import { useDispatch } from 'react-redux'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
@@ -27,30 +21,7 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
-
-const generateFileUrl = ({ file, client, isFlatDomain }) => {
-  const currentURL = new URL(window.location)
-  let webLink = ''
-  if (currentURL.pathname === '/public') {
-    webLink = generateWebLink({
-      cozyUrl: client.getStackClient().uri,
-      pathname: '/public',
-      slug: 'drive',
-      hash: `external/${file.id}`,
-      searchParams: currentURL.searchParams,
-      subDomainType: isFlatDomain ? 'flat' : 'nested'
-    })
-  } else {
-    webLink = generateWebLink({
-      cozyUrl: client.getStackClient().uri,
-      pathname: '/',
-      slug: 'drive',
-      hash: `external/${file.id}`,
-      subDomainType: isFlatDomain ? 'flat' : 'nested'
-    })
-  }
-  return webLink
-}
+import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -101,7 +72,7 @@ const FolderViewBody = ({
             Alerter.error('alert.could_not_open_file')
           }
         } else {
-          const url = generateFileUrl({ file, client, isFlatDomain })
+          const url = generateShortcutUrl({ file, client, isFlatDomain })
           window.open(url, '_blank')
         }
       } else if (isNote) {
