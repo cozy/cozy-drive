@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, configure } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 import MoreMenu from './MoreMenu'
@@ -19,8 +19,6 @@ jest.mock('cozy-device-helper', () => ({
 }))
 
 mockCozyClientRequestQuery()
-
-configure({ testIdAttribute: 'data-test-id' })
 
 describe('MoreMenu', () => {
   const setup = async () => {
