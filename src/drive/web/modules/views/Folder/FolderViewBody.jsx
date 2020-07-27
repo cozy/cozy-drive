@@ -1,6 +1,9 @@
 import React, { useCallback, useContext } from 'react'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
+import { models, useClient, Q } from 'cozy-client'
+import { useDispatch } from 'react-redux'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import { FileList } from 'drive/web/modules/filelist/FileList'
 import { ConnectedFileListBody as FileListBody } from 'drive/web/modules/filelist/FileListBody'
@@ -16,6 +19,7 @@ import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
+import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -36,6 +40,38 @@ const FolderViewBody = ({
   const changeSortOrder = useCallback((folderId_legacy, attribute, order) =>
     setSortOrder({ sortAttribute: attribute, sortOrder: order })
   )
+
+  const dispatch = useDispatch()
+  const client = useClient()
+
+  const handleFileOpen = useCallback(
+    async (file, availableOffline) => {
+      if (availableOffline) {
+        return dispatch(openLocalFile(file))
+      }
+
+      const isNote = models.file.isNote(file)
+      const isShortcut = models.file.isShortcut(file)
+
+      //Should only be called if mobile
+      if (isShortcut) {
+        const resp = await client.query(
+          Q('io.cozy.files.shortcuts').getById(file.id)
+        )
+        window.location.href = resp.data.attributes.url
+      } else if (isNote) {
+        try {
+          window.location.href = await models.note.fetchURL(client, file)
+        } catch (e) {
+          Alerter.error('alert.offline')
+        }
+      } else {
+        navigateToFile(file)
+      }
+    },
+    [dispatch, client]
+  )
+
   const isInError = queryResults.some(query => query.fetchStatus === 'error')
 
   const hasDataToShow =
@@ -102,7 +138,7 @@ const FolderViewBody = ({
                       withSharedBadge={true}
                       isFlatDomain={true}
                       onFolderOpen={navigateToFolder}
-                      onFileOpen={navigateToFile}
+                      onFileOpen={handleFileOpen}
                       withFilePath={withFilePath}
                       thumbnailSizeBig={isBigThumbnail}
                       actions={actions}
