@@ -11,6 +11,8 @@ import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 
+import Toolbar from 'drive/web/modules/drive/Toolbar'
+
 import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 
 import useActions from 'drive/web/modules/actions/useActions'
@@ -66,6 +68,7 @@ export const RecentView = ({ router, location, children }) => {
     <FolderView>
       <FolderViewHeader>
         <Breadcrumb path={[{ name: t('breadcrumb.title_recent') }]} />
+        <Toolbar canUpload={false} canCreateFolder={false} />
       </FolderViewHeader>
       <FolderViewBody
         navigateToFolder={navigateToFolder}
