@@ -6,9 +6,14 @@
 
 - Node v10 (on macOS: `brew install node@10 && brew link node@10`)
 - ImageMagick (on macOS: `brew install imagemagick`)
-- Android SDK >= 25.0.0 to deploy on android
-- Xcode >= 8.1  to deploy on ios
 - Cordova v7 CLI (`npm install cordova@7 -g`)
+### Android
+- Android SDK >= 25.0.0 to deploy on android
+- JDK 1.8
+- Gradle
+- Define your JAVA_HOME
+### iOS 
+- Xcode >= 8.1  
 
 ### :package: Install and run in dev mode
 
