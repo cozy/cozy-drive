@@ -317,7 +317,7 @@ const File = props => {
         selectionModeActive={selectionModeActive}
         open={open}
         toggle={toggle}
-        isActive={!isRenaming}
+        isRenaming={isRenaming}
       >
         <FileThumbnail
           file={attributes}
