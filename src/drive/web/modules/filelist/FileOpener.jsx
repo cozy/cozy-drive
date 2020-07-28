@@ -12,7 +12,7 @@ const FileOpener = ({
   toggle,
   open,
   selectionModeActive,
-  isActive
+  isRenaming
 }) => {
   const linkRef = useRef(null)
 
@@ -32,7 +32,7 @@ const FileOpener = ({
               toggle(ev.srcEvent)
             } else {
               ev.srcEvent.stopImmediatePropagation()
-              if (isActive) open(ev.srcEvent, file)
+              if (!isRenaming) open(ev.srcEvent, file)
             }
           }
         })
@@ -44,7 +44,7 @@ const FileOpener = ({
       selectionModeActive,
       actionMenuVisible,
       disabled,
-      isActive
+      isRenaming
     ]
   )
 
