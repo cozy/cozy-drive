@@ -7,7 +7,9 @@ import { SCANNER_UPLOADING } from 'cozy-scanner'
 import { ScannerContext } from './ScanWrapper'
 
 const StartScanner = ({ t }) => {
-  const { status, online, startScanner } = useContext(ScannerContext)
+  const scannerContextValue = useContext(ScannerContext)
+  if (!scannerContextValue) return null
+  const { status, online, startScanner } = scannerContextValue
 
   const offlineMessage = () => {
     return alert(t('Scan.error.offlinee'))
