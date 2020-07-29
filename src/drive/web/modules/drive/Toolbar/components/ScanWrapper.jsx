@@ -28,7 +28,8 @@ const ScanWrapper = ({
   startMediaBackup,
   children
 }) => {
-  if (!isMobileApp()) return children
+  const isFolderOnMobileApp = isMobileApp() && displayedFolder
+  if (!isFolderOnMobileApp) return children
 
   return (
     <MuiCozyTheme>

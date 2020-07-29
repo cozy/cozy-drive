@@ -21,8 +21,9 @@ jest.mock('cozy-device-helper', () => ({
 mockCozyClientRequestQuery()
 
 describe('MoreMenu', () => {
-  const setup = async () => {
-    const folderId = 'directory-foobar0'
+  const folderId = 'directory-foobar0'
+
+  const setup = async ({ folderId }) => {
     const { client, store } = await setupFolderContent({
       folderId
     })
@@ -48,7 +49,7 @@ describe('MoreMenu', () => {
 
   describe('DownloadButton', () => {
     it('download files', async () => {
-      const { getByText } = await setup()
+      const { getByText } = await setup({ folderId })
 
       fireEvent.click(getByText('Download folder'))
       expect(downloadFiles).toHaveBeenCalled()
@@ -59,7 +60,6 @@ describe('MoreMenu', () => {
     let cameraObject
 
     beforeAll(() => {
-      isMobileApp.mockReturnValue(true)
       cameraObject = window.navigator.camera
       window.navigator.camera = {
         DestinationType: {},
@@ -76,7 +76,8 @@ describe('MoreMenu', () => {
     })
 
     it('opens and closes the scanner', async () => {
-      const { getByText, queryByText } = await setup()
+      isMobileApp.mockReturnValue(true)
+      const { getByText, queryByText } = await setup({ folderId })
 
       // opens the scanner
       fireEvent.click(getByText('Scan a doc'))
@@ -85,6 +86,20 @@ describe('MoreMenu', () => {
       // closes the scanner and the menu
       fireEvent.click(getByText('Cancel'))
       expect(queryByText('Save the doc')).toBeNull()
+      expect(queryByText('Scan a doc')).toBeNull()
+    })
+
+    it('is not displayed outsie of a folder', async () => {
+      isMobileApp.mockReturnValue(true)
+      const { queryByText } = await setup({ folderId: null })
+
+      expect(queryByText('Scan a doc')).toBeNull()
+    })
+
+    it('is not displayed on desktop', async () => {
+      isMobileApp.mockReturnValue(false)
+      const { queryByText } = await setup({ folderId })
+
       expect(queryByText('Scan a doc')).toBeNull()
     })
   })
