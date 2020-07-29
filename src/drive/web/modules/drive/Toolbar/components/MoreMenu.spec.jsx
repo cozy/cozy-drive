@@ -89,7 +89,7 @@ describe('MoreMenu', () => {
       expect(queryByText('Scan a doc')).toBeNull()
     })
 
-    it('is not displayed outsie of a folder', async () => {
+    it('is not displayed outside of a folder', async () => {
       isMobileApp.mockReturnValue(true)
       const { queryByText } = await setup({ folderId: null })
 
