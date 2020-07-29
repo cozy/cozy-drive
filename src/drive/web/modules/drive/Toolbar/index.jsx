@@ -13,7 +13,7 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar.styl'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
-import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
+import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
 
 import UploadButtonItem from './components/UploadButtonItem'
 import MoreMenu from './components/MoreMenu'
@@ -43,8 +43,7 @@ class Toolbar extends Component {
       hasWriteAccess,
       isShared,
       breakpoints: { isMobile },
-      client,
-      folderId
+      client
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -62,16 +61,12 @@ class Toolbar extends Component {
         {!isShared &&
           canUpload &&
           hasWriteAccess && <UploadButtonItem disabled={isDisabled} />}
-        {folderId !== null && (
-          <NotRootFolder>
-            <SharedRecipients />
-          </NotRootFolder>
-        )}
-        {folderId !== null && (
-          <NotRootFolder>
-            <ShareButton isDisabled={isDisabled} />
-          </NotRootFolder>
-        )}
+        <InsideRegularFolder>
+          <SharedRecipients />
+        </InsideRegularFolder>
+        <InsideRegularFolder>
+          <ShareButton isDisabled={isDisabled} />
+        </InsideRegularFolder>
 
         {isMobile ? (
           <BarRight>

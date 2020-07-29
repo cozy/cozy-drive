@@ -5,7 +5,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
-import NotRootFolder from 'drive/web/modules/drive/Toolbar/components/NotRootFolder'
+import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
 
 import UploadItem from './UploadItem'
 import DeleteItem from '../delete/DeleteItem'
@@ -56,19 +56,19 @@ const MoreMenu = ({
               )}
             {hasWriteAccess && <hr />}
             {isMobile && (
-              <NotRootFolder>
+              <InsideRegularFolder>
                 <ShareItem />
-              </NotRootFolder>
+              </InsideRegularFolder>
             )}
-            <NotRootFolder>
+            <InsideRegularFolder>
               <DownloadButtonItem />
-            </NotRootFolder>
+            </InsideRegularFolder>
             <SelectableItem />
             {hasWriteAccess && (
-              <NotRootFolder>
+              <InsideRegularFolder>
                 <hr />
                 <DeleteItem />
-              </NotRootFolder>
+              </InsideRegularFolder>
             )}
           </ActionMenu>
         )}
