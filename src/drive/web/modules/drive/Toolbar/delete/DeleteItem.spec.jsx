@@ -5,10 +5,14 @@ import configureStore from 'drive/store/configureStore'
 import AppLike from 'test/components/AppLike'
 import DeleteItem from './DeleteItem'
 import { EnhancedDeleteConfirm } from './delete'
-import { getDisplayedFolder } from 'drive/web/modules/selectors'
+import {
+  getDisplayedFolder,
+  getCurrentFolderId
+} from 'drive/web/modules/selectors'
 
 jest.mock('drive/web/modules/selectors', () => ({
-  getDisplayedFolder: jest.fn()
+  getDisplayedFolder: jest.fn(),
+  getCurrentFolderId: jest.fn()
 }))
 
 jest.mock('drive/web/modules/actions/utils', () => ({
@@ -23,6 +27,7 @@ describe('DeleteItem', () => {
       name: 'My Folder'
     }
     getDisplayedFolder.mockReturnValue(displayedFolder)
+    getCurrentFolderId.mockReturnValue(displayedFolder._id)
     const store = configureStore({
       client
     })
