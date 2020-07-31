@@ -10,7 +10,11 @@ import { abortRenaming } from './rename'
 // If we set the _rev then CozyClient tries to update. Else
 // it tries to create
 const updateFileNameQuery = async (client, file, newName) => {
-  return client.save({ ...file, name: newName, _rev: file.meta.rev })
+  return client.save({
+    ...file,
+    name: newName,
+    _rev: file._rev || file.meta.rev
+  })
 }
 
 export const RenameInput = ({ onAbort, file, refreshFolderContent }) => {

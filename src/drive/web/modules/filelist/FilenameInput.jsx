@@ -98,7 +98,8 @@ class FilenameInput extends Component {
     //Since we're mounting the component and focusing it at the same time
     // let's add a small timeout to be sure the ref is populated
     setTimeout(() => {
-      this.textInput.current.setSelectionRange(0, filename.length)
+      if (this.textInput.current)
+        this.textInput.current.setSelectionRange(0, filename.length)
     }, 5)
   }
   render() {
