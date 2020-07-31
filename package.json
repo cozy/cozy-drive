@@ -76,7 +76,7 @@
     "@testing-library/react-hooks": "^3.3.0",
     "babel-core": "7.0.0-bridge.0",
     "chrome-remote-interface": "0.27.1",
-    "cordova": "7.1.0",
+    "cordova": "9.0.0",
     "cordova-android": "7.1.4",
     "cozy-jobs-cli": "1.13.0",
     "css-mediaquery": "^0.1.2",
