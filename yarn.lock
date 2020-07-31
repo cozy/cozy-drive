@@ -5174,10 +5174,10 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@13.16.1:
-  version "13.16.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.16.1.tgz#e1bfd07f28186bbf340c0275e0e2aeb5ab51766f"
-  integrity sha512-+6r4it1L78IyvDNBewqci7MdzEZRNzsos0KJQpQM6guBx05tz1K7h5VH+6QL+wAB47LlIa7nBWuIY7hqtOrg5w==
+cozy-client@13.18.0:
+  version "13.18.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.18.0.tgz#5ba2d3f5654f4c6d12b9c3bd02a46fe66300c68a"
+  integrity sha512-TTszkhc006zJKY27Np/J1Pd/FZKcVoeMbg2I1CbARbYjHiTJQXwjlVUGpTuMvihXroSDjc++IJ1Tn9XHAbScvQ==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
@@ -5186,7 +5186,7 @@ cozy-client@13.16.1:
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
-    minilog "https://github.com/cozy/minilog.git#master"
+    minilog "git+https://github.com/cozy/minilog.git#master"
     open "^7.0.2"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
