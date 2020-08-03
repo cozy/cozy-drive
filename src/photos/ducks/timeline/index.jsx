@@ -26,9 +26,11 @@ const TIMELINE_QUERY = client =>
       trashed: false
     })
     .select(['dir_id', 'name', 'size', 'updated_at', 'metadata'])
-    .sortBy({
-      'metadata.datetime': 'desc'
-    })
+    .sortBy([
+      {
+        'metadata.datetime': 'desc'
+      }
+    ])
     .include(['albums'])
 
 const TIMELINE_MUTATIONS = client => ({
