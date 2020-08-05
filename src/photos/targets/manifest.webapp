@@ -73,7 +73,8 @@
         "GET",
         "POST",
         "PUT",
-        "DELETE"
+        "DELETE",
+        "PATCH"
       ]
     },
     "photos_settings": {
