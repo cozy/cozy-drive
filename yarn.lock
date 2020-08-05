@@ -5174,10 +5174,10 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@13.18.0:
-  version "13.18.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.18.0.tgz#5ba2d3f5654f4c6d12b9c3bd02a46fe66300c68a"
-  integrity sha512-TTszkhc006zJKY27Np/J1Pd/FZKcVoeMbg2I1CbARbYjHiTJQXwjlVUGpTuMvihXroSDjc++IJ1Tn9XHAbScvQ==
+cozy-client@13.18.1, cozy-client@^13.18.1:
+  version "13.18.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.18.1.tgz#fc5c049004d6e6892e1aa7128007ffabaf37deb8"
+  integrity sha512-zo6YC9nHh5zjw5OGAg33rfOYk/KIGOgXZ0/eMYVVfedhh1CoGQT0BoDYtqdcrMx10A5eNQOynIMSaKPrDrSePg==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
@@ -5186,7 +5186,7 @@ cozy-client@13.18.0:
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
-    minilog "git+https://github.com/cozy/minilog.git#master"
+    minilog "https://github.com/cozy/minilog.git#master"
     open "^7.0.2"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
@@ -5196,7 +5196,7 @@ cozy-client@13.18.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@^13.13.0, cozy-client@^13.8.2:
+cozy-client@^13.8.2:
   version "13.13.0"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-13.13.0.tgz#9fdc59e293c3486cbc5257d30f907e3cdc3a3c1a"
   integrity sha512-etcA/9rQoqzsvC6T+FtabDysRB1w8B7igBWTgtlxmyTT9VWGE5Q0ca22AVVb3SDLuf33VCpBLbOY6IRSfLtxYw==
@@ -5232,7 +5232,14 @@ cozy-device-helper@1.9.2, cozy-device-helper@^1.7.3, cozy-device-helper@^1.9.2:
   dependencies:
     lodash "4.17.15"
 
-cozy-doctypes@1.72.2, cozy-doctypes@^1.72.0, cozy-doctypes@^1.72.2:
+cozy-device-helper@^1.10.1:
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.10.1.tgz#91ec60d67248489738b2daaafe83db8f6a6e1e9f"
+  integrity sha512-BrjZNK5JDQwnihRDV4ZBUj3JbNuGD08m3OS8FkA9yUnBf6vOJZABG3tYyAVLNEIo8gZaMt+XCPwmqfzPqgPXNQ==
+  dependencies:
+    lodash "4.17.19"
+
+cozy-doctypes@1.72.2, cozy-doctypes@^1.72.0:
   version "1.72.2"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.72.2.tgz#ac3d6813780008e5a4115a70679a0f25cf7efd81"
   integrity sha512-ITrfljuDBsRQ4AaDUup+0Weh7K+QlZfX38R1YFw9nsLWZMy8GCvUvaJ6vLk7UWj9SmoO/+A2Dwz2T/p9je+DZA==
@@ -5242,6 +5249,18 @@ cozy-doctypes@1.72.2, cozy-doctypes@^1.72.0, cozy-doctypes@^1.72.2:
     date-fns "1.30.1"
     es6-promise-pool "2.5.0"
     lodash "4.17.15"
+    prop-types "^15.7.2"
+
+cozy-doctypes@^1.74.2:
+  version "1.74.2"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.74.2.tgz#215f56f73bc399fa26fa8edc11da988731ad5156"
+  integrity sha512-bhVTggOJWoDhcuEAWsYEXfIRkG56WnpPgcZLh7073cytQc9ZyJ+DmVIHcY3kISPqGorsJUkMspHj9Dm+7yUuiA==
+  dependencies:
+    "@babel/runtime" "7.5.5"
+    cozy-logger "^1.6.0"
+    date-fns "1.30.1"
+    es6-promise-pool "2.5.0"
+    lodash "4.17.19"
     prop-types "^15.7.2"
 
 cozy-flags@1.11.0:
@@ -5311,12 +5330,12 @@ cozy-logger@1.6.0, cozy-logger@^1.6.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@13.13.1:
-  version "13.13.1"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-13.13.1.tgz#fac6d4f2754a4daaa99c8b1f086ed9a21a241718"
-  integrity sha512-wykickYzeGNwPK7PClLW35WAU86dibcj3W9hHXyZ7Z1FIdtgHSr2px1VAuEgHGsaxKmc2nY06lIagS7U+M2svQ==
+cozy-pouch-link@13.18.2:
+  version "13.18.2"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-13.18.2.tgz#9082ae46009a970f96938f5370f44261f8d49900"
+  integrity sha512-1tGeN16rItXiB0Q4FxTmVJXow0G6nRY1OMZH5oEVqP+Ks0OMGx4k5oz8ZPU9Aqc7mUK0cyCqY5FQWs1D1wua1g==
   dependencies:
-    cozy-client "^13.13.0"
+    cozy-client "^13.18.1"
     cozy-device-helper "^1.7.3"
     minilog "^3.1.0"
     pouchdb-browser "^7.0.0"
@@ -5329,12 +5348,20 @@ cozy-realtime@3.2.1:
   dependencies:
     minilog "3.1.0"
 
-cozy-realtime@3.9.0, cozy-realtime@^3.9.0:
+cozy-realtime@3.9.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.9.0.tgz#4aa09ac74c973b720d0249ad1c2173ed123b28db"
   integrity sha512-5TqHDrxKUyNIAxrOb/DlTkhMJj7UnsbKmAriOq6359HjXVlvIUfVMSght44xik3KLQ8inUSmF+1TAFeKe9tBGA==
   dependencies:
     cozy-device-helper "^1.9.2"
+    minilog "https://github.com/cozy/minilog.git#master"
+
+cozy-realtime@^3.10.2:
+  version "3.10.2"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.10.2.tgz#f0f7420d2cddad46c01c28eebbd6dd4abc3b56a2"
+  integrity sha512-ELIhlORNbnEDkaintjPQhBHL6KEd4Oi8YMM3TcLu3H9zURBMhhYS5mnkkUWMWNvdA5z9IHnbEyDS7B9GZFSrCA==
+  dependencies:
+    cozy-device-helper "^1.10.1"
     minilog "https://github.com/cozy/minilog.git#master"
 
 cozy-scanner@^0.3.2:
@@ -5396,18 +5423,18 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-sharing@1.11.7:
-  version "1.11.7"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.11.7.tgz#7a1d9ae78db93d883aae358b61c4c33d24a4781a"
-  integrity sha512-cVFSVkroAKQOb4AHh3GsNkj5F7Kn5L95p5MPZqUj1CnAHOSlj/ppyb7CJbkfclgAwBtKo9J98ulX9vAMiwqcWw==
+cozy-sharing@1.13.4:
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.13.4.tgz#d13f03aee3d736c8ba16ece79650396b019f62d4"
+  integrity sha512-OBEMaHx5xZBklApNy02PJOXMLL8cvn5Etb1skTPaO1VoKpyUS2sypxBkwIYYK/Ugc//4cWbUIzuM9SJ1rRberQ==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
-    cozy-device-helper "^1.9.2"
-    cozy-doctypes "^1.72.2"
-    cozy-realtime "^3.9.0"
-    lodash "^4.17.15"
+    cozy-device-helper "^1.10.1"
+    cozy-doctypes "^1.74.2"
+    cozy-realtime "^3.10.2"
+    lodash "^4.17.19"
     minilog "https://github.com/cozy/minilog.git#master"
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
@@ -11227,7 +11254,7 @@ lodash@4, lodash@4.17.15, "lodash@4.6.1 || ^4.16.1", lodash@^4.14.0, lodash@^4.1
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
-lodash@4.17.19:
+lodash@4.17.19, lodash@^4.17.19:
   version "4.17.19"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
