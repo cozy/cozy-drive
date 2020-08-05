@@ -51,6 +51,7 @@ const generatePayloadForNative = async ({
     libraryId: file['id'],
     mimeType: file['mimeType'],
     filePath: file['filePath'],
+    createdDate: file['creationDate'],
     httpMethod: method,
     headers: {
       Authorization: 'Bearer ' + token,
