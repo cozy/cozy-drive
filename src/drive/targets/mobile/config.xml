@@ -125,10 +125,10 @@
         <variable name="PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION" value="This app requires photo library access to function properly." />
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="This app requires photo library access to function properly." />
     </plugin>
-    <plugin name="cordova-plugin-statusbar" spec="git+https://github.com/apache/cordova-plugin-statusbar.git" />
     <plugin name="cordova-plugin-openwith" spec="git+https://github.com/cozy/cordova-plugin-openwith.git">
         <variable name="IOS_URL_SCHEME" value="cozydrive" />
         <variable name="IOS_BUNDLE_IDENTIFIER" value="io.cozy.drive.mobile" />
     </plugin>
     <plugin name="cordova-sqlite-storage" spec="^5.0.0" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
 </widget>
