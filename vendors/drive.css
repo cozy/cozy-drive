@@ -774,6 +774,18 @@ input[type=text] {
   --navTextActiveColor: var(--slateGrey);
   --navTextHoverColor: var(--charcoalGrey);
 }
+.recipient__recipient___2FlkK {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
 .recipient__recipients-list-light___1Rt5q .recipient__recipient___2FlkK {
   margin: 1rem 0;
 }
@@ -1618,6 +1630,11 @@ input[type=text] {
   }
   .u-fs-italic-s {
     font-style: italic !important;
+  }
+  .recipient__recipient___2FlkK {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
   }
 }
 
