@@ -40,7 +40,7 @@ export const requestAuthorization = async () => {
 }
 /**
  * Generates an http payload for the native part.
- * The uri and file variables are from the native part, 
+ * The uri and file variables are from the native part,
  * used to return a payload with headers.
  * @param {any} file - The file to upload, used to get the id, mimeType, and filePath.
  * @param {any} uri - The uri, used to get the serverUrl.
