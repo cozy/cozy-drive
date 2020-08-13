@@ -7,7 +7,6 @@ import {
   REF_BACKUP
 } from 'folder-references'
 import { fixMagicFolderName } from './fixBackupFolderNamesBug'
-import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { logException } from 'drive/lib/reporter'
 
 import {
@@ -20,7 +19,7 @@ import logger from 'lib/logger'
 
 const ERROR_CODE_TOO_LARGE = 413
 
-export const getUploadDir = async client => {
+export const getUploadDir = async (client, t) => {
   const uploadedFolders = await getReferencedFolders(client, REF_BACKUP)
   if (uploadedFolders.length >= 1) {
     //Let's fix the bug introduced between 1.18.18 and 1.18.24
@@ -28,7 +27,6 @@ export const getUploadDir = async client => {
     // There can be more than one referenced folder in case of consecutive delete/restores. We always want to return the most recently used.
     return uploadedFolders[0]
   } else {
-    const t = getTranslateFunction()
     const mediaFolderName = t('mobile.settings.media_backup.media_folder')
     const uploadFolderName = t('mobile.settings.media_backup.backup_folder')
     const legacyUploadFolderName = t(
