@@ -38,7 +38,7 @@ const canBackup = (isManualBackup, getState) => {
 export const startMediaBackup = (isManualBackup = false) => async (
   dispatch,
   getState,
-  { client }
+  { client, t }
 ) => {
   dispatch({ type: MEDIA_UPLOAD_START })
   client.getStackClient().fetchJSON('POST', '/settings/synchronized')
@@ -66,7 +66,7 @@ export const startMediaBackup = (isManualBackup = false) => async (
         const {
           _id: uploadDirId,
           attributes: { path: uploadDirPath }
-        } = await getUploadDir(client)
+        } = await getUploadDir(client, t)
         let uploadCounter = 0
         for (const photo of photosToUpload) {
           if (
