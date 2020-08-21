@@ -9,6 +9,7 @@ import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
+import Dropzone from 'drive/web/modules/upload/Dropzone'
 import { ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
 import {
@@ -28,7 +29,10 @@ import MediaBackupProgression from 'drive/mobile/modules/mediaBackup/MediaBackup
 import RatingModal from 'drive/mobile/modules/settings/RatingModal'
 import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
 import { buildDriveQuery } from 'drive/web/modules/queries'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import {
+  getCurrentFolderId,
+  getDisplayedFolder
+} from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 
 import FolderView from '../Folder/FolderView'
@@ -60,7 +64,13 @@ const getBreadcrumbPath = (t, displayedFolder) =>
         (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
     }))
 
-const DriveView = ({ currentFolderId, router, location, children }) => {
+const DriveView = ({
+  currentFolderId,
+  router,
+  location,
+  children,
+  displayedFolder
+}) => {
   const [sortOrder] = useFolderSort(currentFolderId)
 
   const folderQuery = buildDriveQuery({
@@ -101,7 +111,7 @@ const DriveView = ({ currentFolderId, router, location, children }) => {
   const { pushModal, popModal } = useContext(ModalContext)
   const { refresh } = useContext(SharingContext)
   const dispatch = useDispatch()
-
+  const hasTheWriteAccess = hasWriteAccess(currentFolderId)
   const actionsOptions = {
     client,
     pushModal,
@@ -110,7 +120,7 @@ const DriveView = ({ currentFolderId, router, location, children }) => {
     dispatch,
     router,
     location,
-    hasWriteAccess: hasWriteAccess(currentFolderId),
+    hasWriteAccess: hasTheWriteAccess,
     canMove: true
   }
   const actions = useActions(
@@ -145,20 +155,27 @@ const DriveView = ({ currentFolderId, router, location, children }) => {
           <RatingModal />
         </div>
       )}
-      <FolderViewBody
-        navigateToFolder={navigateToFolder}
-        navigateToFile={navigateToFile}
-        actions={actions}
-        queryResults={[foldersResult, filesResult]}
-        canSort
-        currentFolderId={currentFolderId}
-      />
+      <Dropzone
+        role="main"
+        disabled={__TARGET__ === 'mobile' || !hasTheWriteAccess}
+        displayedFolder={displayedFolder}
+      >
+        <FolderViewBody
+          navigateToFolder={navigateToFolder}
+          navigateToFile={navigateToFile}
+          actions={actions}
+          queryResults={[foldersResult, filesResult]}
+          canSort
+          currentFolderId={currentFolderId}
+        />
 
-      {children}
+        {children}
+      </Dropzone>
     </FolderView>
   )
 }
 
 export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state) || ROOT_DIR_ID
+  currentFolderId: getCurrentFolderId(state) || ROOT_DIR_ID,
+  displayedFolder: getDisplayedFolder(state)
 }))(DriveView)
