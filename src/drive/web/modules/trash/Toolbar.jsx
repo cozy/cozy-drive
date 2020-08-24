@@ -83,14 +83,15 @@ export const Toolbar = ({
       className={styles['fil-toolbar-trash']}
       role="toolbar"
     >
-      <Button
-        theme="danger-outline"
-        className="u-hide--mob"
-        onClick={onEmptyTrash}
-        disabled={disabled || selectionModeActive}
-        icon="trash"
-        label={t('toolbar.empty_trash')}
-      />
+      {!isMobile && (
+        <Button
+          theme="danger-outline"
+          onClick={onEmptyTrash}
+          disabled={disabled || selectionModeActive}
+          icon="trash"
+          label={t('toolbar.empty_trash')}
+        />
+      )}
 
       {isMobile ? (
         <BarRight>
