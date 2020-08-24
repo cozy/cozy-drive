@@ -111,7 +111,7 @@ const DriveView = ({
   const { pushModal, popModal } = useContext(ModalContext)
   const { refresh } = useContext(SharingContext)
   const dispatch = useDispatch()
-  const hasTheWriteAccess = hasWriteAccess(currentFolderId)
+  const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
   const actionsOptions = {
     client,
     pushModal,
@@ -120,7 +120,7 @@ const DriveView = ({
     dispatch,
     router,
     location,
-    hasWriteAccess: hasTheWriteAccess,
+    hasWriteAccess: canWriteToCurrentFolder,
     canMove: true
   }
   const actions = useActions(
@@ -157,7 +157,7 @@ const DriveView = ({
       )}
       <Dropzone
         role="main"
-        disabled={__TARGET__ === 'mobile' || !hasTheWriteAccess}
+        disabled={__TARGET__ === 'mobile' || !canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
       >
         <FolderViewBody
