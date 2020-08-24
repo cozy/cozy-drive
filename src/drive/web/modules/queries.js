@@ -1,7 +1,10 @@
 import CozyClient, { Q } from 'cozy-client'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 
-const DEFAULT_CACHE_TIMEOUT_QUERIES = 30 * 60 * 1000
+//Needs to be less than 10 minutes, since "thumbnails" links
+//are only valid for 10 minutes.
+//cf https://github.com/cozy/cozy-doctypes/blob/master/docs/io.cozy.files.md#files
+const DEFAULT_CACHE_TIMEOUT_QUERIES = 9 * 60 * 1000
 const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
   DEFAULT_CACHE_TIMEOUT_QUERIES
 )
