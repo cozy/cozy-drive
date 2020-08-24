@@ -116,8 +116,6 @@ export const uploadLibraryItem = async (
       file: libraryItem,
       uri
     })
-    console.log("JS PART: The id of asset is: " + libraryItem['id']);
-    console.log("JS PART: The device name is: " + libraryItem['deviceName']);
     return uploadNativeItem(payload, progressCallback, thumbnailCallback)
   }
 
