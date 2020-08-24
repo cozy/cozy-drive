@@ -51,6 +51,7 @@ const generatePayloadForNative = async ({
     libraryId: file['id'],
     mimeType: file['mimeType'],
     filePath: file['filePath'],
+    deviceName: file['deviceName'],
     httpMethod: method,
     headers: {
       Authorization: 'Bearer ' + token,
@@ -115,6 +116,8 @@ export const uploadLibraryItem = async (
       file: libraryItem,
       uri
     })
+    console.log("JS PART: The id of asset is: " + libraryItem['id']);
+    console.log("JS PART: The device name is: " + libraryItem['deviceName']);
     return uploadNativeItem(payload, progressCallback, thumbnailCallback)
   }
 
