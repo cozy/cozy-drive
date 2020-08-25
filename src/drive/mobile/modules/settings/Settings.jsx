@@ -12,6 +12,7 @@ import MediaBackup from './components/MediaBackup'
 import Unlink from './components/Unlink'
 import FeedbackForm from './components/FeedbackForm'
 import ScrollToTop from 'drive/web/modules/navigation/ScrollToTop'
+import RealTimeQueries from 'drive/lib/RealTimeQueries'
 import styles from './styles.styl'
 
 const { BarCenter } = cozy.bar
@@ -44,6 +45,7 @@ class Settings extends Component {
     return (
       <Main>
         <ScrollToTop />
+        <RealTimeQueries doctype="io.cozy.files" />
         <BarCenter>
           <h2 className={styles['settings__title']}>
             {t('mobile.settings.title')}
