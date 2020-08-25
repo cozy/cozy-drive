@@ -60,9 +60,11 @@ const MoreMenu = ({
                 <ShareItem />
               </InsideRegularFolder>
             )}
-            <InsideRegularFolder>
-              <DownloadButtonItem />
-            </InsideRegularFolder>
+            {!isMobileApp() && (
+              <InsideRegularFolder>
+                <DownloadButtonItem />
+              </InsideRegularFolder>
+            )}
             <SelectableItem />
             {hasWriteAccess && (
               <InsideRegularFolder>
