@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'cozy-ui/transpiled/react/Button'
-import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme'
+import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
 
 import styles from '../styles.styl'
 export const ELEMENT_TEXT = 'ELEMENT_TEXT'
