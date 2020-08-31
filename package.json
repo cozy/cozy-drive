@@ -101,7 +101,7 @@
   },
   "dependencies": {
     "@material-ui/core": "3.9.4",
-    "babel-preset-cozy-app": "1.9.0",
+    "babel-preset-cozy-app": "1.9.1",
     "classnames": "2.2.6",
     "copy-text-to-clipboard": "1.0.4",
     "cozy-authentication": "^2.0.5",
