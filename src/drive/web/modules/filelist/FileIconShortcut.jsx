@@ -1,9 +1,10 @@
 import React from 'react'
-import { withClient, useFetchShortcut } from 'cozy-client'
+import { useClient, useFetchShortcut } from 'cozy-client'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import palette from 'cozy-ui/transpiled/react/palette'
 
-const FileIconShortcut = ({ file, size = 32, client }) => {
+const FileIconShortcut = ({ file, size = 32 }) => {
+  const client = useClient()
   const { shortcutImg } = useFetchShortcut(client, file.id)
   return (
     <>
@@ -21,4 +22,4 @@ const FileIconShortcut = ({ file, size = 32, client }) => {
   )
 }
 
-export default withClient(FileIconShortcut)
+export default FileIconShortcut

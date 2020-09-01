@@ -6,12 +6,13 @@ import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import useBreakpoints from 'cozy-ui/react/hooks/useBreakpoints'
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import SharingShortcutBadge from 'drive/web/modules/filelist/SharingShortcutBadge'
 import styles from 'drive/styles/filelist.styl'
 
-const FileThumbnail = ({ file, breakpoints: { isMobile }, size }) => {
+const FileThumbnail = ({ file, size }) => {
+  const { isMobile } = useBreakpoints()
   const isSharingShorcut = Boolean(get(file, 'metadata.sharing'))
   const isRegularShortcut = !isSharingShorcut && file.class === 'shortcut'
   const isSimpleFile = !isSharingShorcut && !isRegularShortcut
@@ -62,4 +63,4 @@ FileThumbnail.propTypes = {
   size: PropTypes.number
 }
 
-export default withBreakpoints()(FileThumbnail)
+export default FileThumbnail
