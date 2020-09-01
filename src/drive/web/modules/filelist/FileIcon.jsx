@@ -1,29 +1,31 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Icon } from 'cozy-ui/transpiled/react'
-import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
-import { isDirectory } from 'drive/web/modules/drive/files'
+import FileIconMime from 'drive/web/modules/filelist/FileIconMime'
 import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortcut'
+import { ImageLoader } from 'components/Image'
+import styles from 'drive/styles/filelist.styl'
 
-const FileIcon = ({ file, size = 32 }) => {
-  if (file.class === 'shortcut') {
-    return <FileIconShortcut file={file} size={size} />
-  }
-  return (
-    <Icon
-      icon={getMimeTypeIcon(isDirectory(file), file.name, file.mime)}
-      size={size}
-    />
-  )
-}
+const FileIcon = ({ file, size }) => {
+  const isImage = file.class === 'image'
+  const isShortcut = file.class === 'shortcut'
 
-FileIcon.propTypes = {
-  file: PropTypes.shape({
-    class: PropTypes.string,
-    mime: PropTypes.string,
-    name: PropTypes.string
-  }).isRequired,
-  size: PropTypes.number
+  if (isImage)
+    return (
+      <ImageLoader
+        file={file}
+        size="small"
+        render={src => (
+          <img
+            src={src}
+            width={size || 32}
+            height={size || 32}
+            className={styles['fil-file-thumbnail-image']}
+          />
+        )}
+        renderFallback={() => <FileIconMime file={file} size={size} />}
+      />
+    )
+  else if (isShortcut) return <FileIconShortcut file={file} size={size} />
+  else return <FileIconMime file={file} size={size} />
 }
 
 export default FileIcon
