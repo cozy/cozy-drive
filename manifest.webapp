@@ -2,7 +2,7 @@
   "name": "Mes Fichiers",
   "name_prefix": "",
   "slug": "drive",
-  "version": "1.27.0",
+  "version": "1.27.1",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
