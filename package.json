@@ -128,7 +128,7 @@
     "justified-layout": "2.1.2",
     "kd-tree-javascript": "1.0.3",
     "localforage": "1.7.3",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "log-prefix": "0.1.1",
     "mime-types": "2.1.24",
     "minilog": "https://github.com/cozy/minilog.git#master",
