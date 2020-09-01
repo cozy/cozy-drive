@@ -1,17 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import { SharedBadge } from 'cozy-sharing'
-import FileIcon from 'drive/web/modules/filelist/FileIcon'
-import styles from 'drive/styles/filelist.styl'
-import Badge from 'cozy-ui/transpiled/react/Badge'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import get from 'lodash/get'
+import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
+import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
+import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import FileIcon from 'drive/web/modules/filelist/FileIcon'
+import SharingShortcutBadge from 'drive/web/modules/filelist/SharingShortcutBadge'
+import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({ file, breakpoints: { isMobile }, size }) => {
-  const isRegularShortcut = file.class === 'shortcut'
-  const isSimpleFile = !isRegularShortcut
+  const isSharingShorcut = Boolean(get(file, 'metadata.sharing'))
+  const isRegularShortcut = !isSharingShorcut && file.class === 'shortcut'
+  const isSimpleFile = !isSharingShorcut && !isRegularShortcut
+
   return (
     <div
       className={cx(styles['fil-content-cell'], styles['fil-file-thumbnail'], {
@@ -20,13 +24,16 @@ const FileThumbnail = ({ file, breakpoints: { isMobile }, size }) => {
     >
       {isSimpleFile && <FileIcon file={file} size={size} />}
       {isRegularShortcut && (
-        <Badge
-          badgeContent={<Icon icon="link" size={10} />}
-          anchorOrigin={{ vertical: 'bottom' }}
-          variant={'qualifier'}
-        >
+        <InfosBadge badgeContent={<Icon icon="link" size={10} />}>
           <FileIcon file={file} size={size} />
-        </Badge>
+        </InfosBadge>
+      )}
+      {isSharingShorcut && (
+        <GhostFileBadge
+          badgeContent={<SharingShortcutBadge file={file} size={16} />}
+        >
+          <SharingOwnerAvatar docId={file.id} size={'small'} />
+        </GhostFileBadge>
       )}
       {/**
        * @todo
@@ -51,9 +58,6 @@ FileThumbnail.propTypes = {
     class: PropTypes.string,
     mime: PropTypes.string,
     name: PropTypes.string
-  }).isRequired,
-  breakpoints: PropTypes.shape({
-    isMobile: PropTypes.bool
   }).isRequired,
   size: PropTypes.number
 }
