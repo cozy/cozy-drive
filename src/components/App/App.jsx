@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
 import { CozyProvider } from 'cozy-client'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
+import { BreakpointsProvider } from 'cozy-ui/react/hooks/useBreakpoints'
 import SharingProvider from 'cozy-sharing'
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { ModalContextProvider } from 'drive/lib/ModalContext'
@@ -17,7 +18,9 @@ const App = props => {
           <SharingProvider doctype="io.cozy.files" documentType="Files">
             <ThumbnailSizeContextProvider>
               <ModalContextProvider>
-                <StyledApp>{props.children}</StyledApp>
+                <BreakpointsProvider>
+                  <StyledApp>{props.children}</StyledApp>
+                </BreakpointsProvider>
               </ModalContextProvider>
             </ThumbnailSizeContextProvider>
           </SharingProvider>
