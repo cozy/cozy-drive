@@ -286,11 +286,14 @@ const File = props => {
     breakpoints: { isExtraLarge, isMobile }
   } = props
 
+  const isImage = attributes.class === 'image'
+  const isLargeRow = isImage && thumbnailSizeBig
+
   const filContentRowSelected = classNames(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
     [styles['fil-content-row-disabled']]: disabled,
-    [styles['fil-content-row-bigger']]: thumbnailSizeBig
+    [styles['fil-content-row-bigger']]: isLargeRow
   })
   const formattedSize = isDirectory(attributes)
     ? undefined
@@ -319,10 +322,7 @@ const File = props => {
         toggle={toggle}
         isRenaming={isRenaming}
       >
-        <FileThumbnail
-          file={attributes}
-          size={thumbnailSizeBig ? 96 : undefined}
-        />
+        <FileThumbnail file={attributes} size={isLargeRow ? 96 : undefined} />
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
