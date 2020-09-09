@@ -123,6 +123,13 @@
         "GET"
       ]
     },
+    "sharings": {
+      "description": "Required to have access to the sharings in realtime",
+      "type": "io.cozy.sharings",
+      "verbs": [
+        "GET"
+      ]
+    },
     "albums": {
       "description": "Required to manage photos albums",
       "type": "io.cozy.photos.albums",
