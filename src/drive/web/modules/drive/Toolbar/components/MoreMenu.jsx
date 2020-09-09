@@ -34,7 +34,7 @@ const MoreMenu = ({
   return (
     <div>
       <div ref={anchorRef}>
-        <MoreButton onClick={openMenu} />
+        <MoreButton onClick={openMenu} disabled={isDisabled} />
       </div>
       <ScanWrapper>
         {menuIsVisible && (
