@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import get from 'lodash/get'
+import { models } from 'cozy-client'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
@@ -13,7 +13,7 @@ import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({ file, size }) => {
   const { isMobile } = useBreakpoints()
-  const isSharingShorcut = Boolean(get(file, 'metadata.sharing.status'))
+  const isSharingShorcut = models.file.isSharingShorcut(file)
   const isRegularShortcut = !isSharingShorcut && file.class === 'shortcut'
   const isSimpleFile = !isSharingShorcut && !isRegularShortcut
 
