@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import get from 'lodash/get'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
-import Badge from 'cozy-ui/transpiled/react/Badge'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -14,9 +13,7 @@ import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({ file, size }) => {
   const { isMobile } = useBreakpoints()
-  const sharingStatus = get(file, 'metadata.sharing.status')
-  const isSharingShorcut = Boolean(sharingStatus)
-  const isNewSharingShortcut = sharingStatus === 'new'
+  const isSharingShorcut = Boolean(get(file, 'metadata.sharing.status'))
   const isRegularShortcut = !isSharingShorcut && file.class === 'shortcut'
   const isSimpleFile = !isSharingShorcut && !isRegularShortcut
 
@@ -34,15 +31,7 @@ const FileThumbnail = ({ file, size }) => {
       )}
       {isSharingShorcut && (
         <GhostFileBadge
-          badgeContent={
-            isNewSharingShortcut ? (
-              <Badge variant="dot" color="error">
-                <SharingShortcutBadge file={file} size={16} />
-              </Badge>
-            ) : (
-              <SharingShortcutBadge file={file} size={16} />
-            )
-          }
+          badgeContent={<SharingShortcutBadge file={file} size={16} />}
         >
           <SharingOwnerAvatar docId={file.id} size={'small'} />
         </GhostFileBadge>
