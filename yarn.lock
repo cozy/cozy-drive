@@ -5298,10 +5298,10 @@ cozy-doctypes@1.72.2, cozy-doctypes@^1.72.0:
     lodash "4.17.15"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.74.4:
-  version "1.74.4"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.74.4.tgz#658f8ce8086b0b59130ed6dc431d097c52d79cdf"
-  integrity sha512-+XC2SyJYIhHAduEvQ9vbkf2UNZJbzRXkDMlj7473zcfBm4G0vKFUqjkbz/uoQchdvksjuiJxSCcC9yNLFg6CnA==
+cozy-doctypes@^1.74.5:
+  version "1.74.5"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.74.5.tgz#e1baa9482452a992fcaff9f44cb5cff413f9bb5b"
+  integrity sha512-YRMXAxtCcoXbqoF0A4W8vPO1wGYqFOAwbe/ue2F4gSkLE0K40gmWchRICPG3A1VjFWCmfKLLCOUBZV4N4cPwKw==
   dependencies:
     "@babel/runtime" "7.5.5"
     cozy-logger "^1.6.0"
@@ -5408,10 +5408,10 @@ cozy-realtime@3.9.0:
     cozy-device-helper "^1.9.2"
     minilog "https://github.com/cozy/minilog.git#master"
 
-cozy-realtime@^3.10.3:
-  version "3.10.3"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.10.3.tgz#2587e352b8376849802b92ff226ece8ff7448c1f"
-  integrity sha512-xYGPskHY1eFEaw3samE/HIjZfGyC2e9wXX4ICZKjbgiWwE/yF24Ai90nJbpWHNw5h5OB8OhX9Xho1gxzhFXgww==
+cozy-realtime@^3.10.4:
+  version "3.10.4"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.10.4.tgz#2ecec98141ed9d00b71829f3064c9cc40dce90ad"
+  integrity sha512-87MR+ECZU0QDHhhpSmVbQU1TypAtKacarjpmbOVwM0MEBcpAou3MyuJCTN+ZFBKMSmUNbb4UkPTLG4POqk9nZg==
   dependencies:
     cozy-device-helper "^1.10.1"
     minilog "https://github.com/cozy/minilog.git#master"
@@ -5475,17 +5475,17 @@ cozy-scripts@1.13.2:
     webpack-dev-server "3.1.10"
     webpack-merge "4.2.1"
 
-cozy-sharing@1.15.1:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.15.1.tgz#2cd9cef2b67cb8a171b885872f3e9d1675f3b1e3"
-  integrity sha512-bS1k3T+caYH8v/jwInTnrCJms9vftUJ/ARQ3GBf6tr3janK31jA99v5nP2N967OU4UbWYjmBUrheUmJVHp+t5g==
+cozy-sharing@1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-1.16.0.tgz#c836ddede697bcd87262cd266ca24b6009276be4"
+  integrity sha512-qPjKtXWpIlElLXz4pURI3oOXS+aBN3j91BnzhSp7P5b3iajKKjMmJ30F4e8o7q0GsRE+2Iivh/TnUmL2B4fj7w==
   dependencies:
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
     cozy-device-helper "^1.10.1"
-    cozy-doctypes "^1.74.4"
-    cozy-realtime "^3.10.3"
+    cozy-doctypes "^1.74.5"
+    cozy-realtime "^3.10.4"
     lodash "^4.17.19"
     minilog "https://github.com/cozy/minilog.git#master"
     react-autosuggest "^9.4.3"
