@@ -1,5 +1,5 @@
 import React from 'react'
-import get from 'lodash/get'
+import { models } from 'cozy-client'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Badge from 'cozy-ui/transpiled/react/Badge'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
@@ -7,8 +7,8 @@ import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortcut'
 
 const SharingShortcutBadge = ({ file, size }) => {
-  const targetMimeType = get(file, 'metadata.target.mime')
-  const targetDoctype = get(file, 'metadata.target._type')
+  const targetMimeType = models.file.getSharingShortcutTargetMime(file)
+  const targetDoctype = models.file.getSharingShortcutTargetDoctype(file)
   const isShortcut = targetMimeType === 'application/internet-shortcut'
   const targetIsDirectory =
     targetMimeType === '' && targetDoctype === DOCTYPE_FILES
@@ -26,7 +26,7 @@ const SharingShortcutBadge = ({ file, size }) => {
 const withNewStatusBadge = WrappedComponent => {
   const ComponentWithNewStatusBadge = props => {
     const { file } = props
-    const isNewSharingShortcut = get(file, 'metadata.sharing.status') === 'new'
+    const isNewSharingShortcut = models.file.isSharingShorcutNew(file)
 
     return isNewSharingShortcut ? (
       <Badge variant="dot" color="error">
