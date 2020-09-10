@@ -6,16 +6,17 @@ import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortcut'
 
 const SharingShortcutBadge = ({ file, size }) => {
-  const actualFileMime = get(file, 'metadata.target.mime')
-  const doctype = get(file, 'metadata.target._type')
-  const isShortcut = actualFileMime === 'application/internet-shortcut'
-  const isDirectory = actualFileMime === '' && doctype === DOCTYPE_FILES
+  const targetMimeType = get(file, 'metadata.target.mime')
+  const targetDoctype = get(file, 'metadata.target._type')
+  const isShortcut = targetMimeType === 'application/internet-shortcut'
+  const targetIsDirectory =
+    targetMimeType === '' && targetDoctype === DOCTYPE_FILES
 
   return isShortcut ? (
     <FileIconShortcut file={file} size={size} />
   ) : (
     <Icon
-      icon={getMimeTypeIcon(isDirectory, file.name, actualFileMime)}
+      icon={getMimeTypeIcon(targetIsDirectory, file.name, targetMimeType)}
       size={size}
     />
   )
