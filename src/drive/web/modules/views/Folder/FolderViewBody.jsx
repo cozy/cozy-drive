@@ -62,7 +62,7 @@ const FolderViewBody = ({
     [client, dispatch, navigateToFile, isFlatDomain]
   )
 
-  const isInError = queryResults.some(query => query.fetchStatus === 'error')
+  const isInError = queryResults.some(query => query.fetchStatus === 'failed')
 
   const hasDataToShow =
     !isInError &&
