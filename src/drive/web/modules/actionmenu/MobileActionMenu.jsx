@@ -59,9 +59,9 @@ const MenuHeaderFile = ({ file, lang }) => {
         <Icon
           icon={getMimeTypeIcon(isDirectory(file), file.name, file.mime)}
           size={32}
-          className="u-mr-1"
+          className="u-flex-shrink-0 u-mr-1"
         />
-        <div>
+        <div className="u-w-100">
           <div className={classNames(styles['fil-mobileactionmenu-header'])}>
             <span className={styles['fil-mobileactionmenu-file-name']}>
               {filename}
