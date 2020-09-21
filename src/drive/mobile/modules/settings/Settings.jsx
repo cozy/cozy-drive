@@ -61,7 +61,7 @@ class Settings extends Component {
             <About onTap={this.incrementTapCount} />
             <Unlink />
 
-            {__DEVELOPMENT__ && [
+            {(__DEVELOPMENT__ || isDebug) && [
               <hr key={1} />,
               <h3 key={2}>Debug Zone</h3>,
               <DebugTools key={3} />
