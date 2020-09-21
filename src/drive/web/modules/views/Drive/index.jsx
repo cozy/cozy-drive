@@ -90,7 +90,8 @@ const DriveView = ({
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const isInError =
-    foldersResult.fetchStatus === 'error' || filesResult.fetchStatus === 'error'
+    foldersResult.fetchStatus === 'failed' ||
+    filesResult.fetchStatus === 'failed'
   const isLoading =
     (foldersResult.fetchStatus === 'loading' && !foldersResult.lastUpdate) ||
     (filesResult.fetchStatus === 'loading' && !filesResult.lastUpdate)
