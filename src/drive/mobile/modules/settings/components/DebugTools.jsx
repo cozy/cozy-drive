@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'cozy-ui/transpiled/react'
 import { logException, logInfo } from 'drive/lib/reporter'
@@ -10,39 +10,45 @@ const Checkbox = ({ onChange, value, title }) => (
   </div>
 )
 
-class DebugTools extends Component {
-  sendSentryException() {
-    logException('a debug exception')
-  }
+const sendSentryException = () => logException('a debug exception')
 
-  sendSentryMessage() {
-    logInfo('a debug message')
-  }
+const sendSentryMessage = () => logInfo('a debug message')
 
-  render() {
-    return (
-      <div>
-        <h4>Sentry</h4>
-        <Button
-          onClick={() => this.sendSentryException()}
-          label="send exception"
-        />
-        <Button onClick={() => this.sendSentryMessage()} label="send message" />
-        <h4>Offline</h4>
-        <Checkbox
-          title="First Replication"
-          value={this.props.firstReplication}
-          onChange={this.props.setFirstReplication}
-        />
-        <Checkbox
-          title="Offline"
-          value={this.props.offline}
-          onChange={this.props.setOffline}
-        />
-        <hr />
-      </div>
-    )
-  }
+const getPersistedDoctypes = () => {
+  return JSON.parse(
+    window.localStorage.getItem('cozy-client-pouch-link-synced')
+  )
+}
+const getPersistedWarmupedQueries = () => {
+  return window.localStorage.getItem('cozy-client-pouch-link-warmupedqueries')
+}
+const DebugTools = ({ offline, setOffline }) => {
+  return (
+    <div>
+      <h4>Sentry</h4>
+      <Button onClick={() => sendSentryException()} label="send exception" />
+      <Button onClick={() => sendSentryMessage()} label="send message" />
+      <h4>Offline</h4>
+      <Checkbox title="Offline" value={offline} onChange={setOffline} />
+      <h4
+        onClick={() => {
+          const doctypes = getPersistedDoctypes()
+          alert(doctypes)
+        }}
+      >
+        Doctypes Persistés (aka synchronisés au moins une fois)
+      </h4>
+      <h4
+        onClick={() => {
+          const queries = getPersistedWarmupedQueries()
+          alert(queries)
+        }}
+      >
+        Queries de préchauffe (si listées, déjà exécutées)
+      </h4>
+      <hr />
+    </div>
+  )
 }
 
 const mapStateToProps = state => ({
