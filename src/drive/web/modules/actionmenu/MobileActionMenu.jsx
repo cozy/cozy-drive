@@ -13,7 +13,7 @@ import styles from 'drive/styles/actionmenu.styl'
 
 import { getBoundT } from 'cozy-scanner'
 const Menu = props => {
-  const { t, file, actions, onClose } = props
+  const { t, lang, file, actions, onClose } = props
   const actionNames = Object.keys(actions).filter(actionName => {
     const action = actions[actionName]
     return (
@@ -22,7 +22,7 @@ const Menu = props => {
   })
   return (
     <ActionMenu className={styles['fil-mobileactionmenu']} onClose={onClose}>
-      <MenuHeaderFile file={file} t={t} />
+      <MenuHeaderFile file={file} lang={lang} />
       <hr />
       {actionNames.map(actionName => {
         const Component = actions[actionName].Component || MenuItem
