@@ -28,7 +28,7 @@ const configureStore = options => {
   const { client, t, initialState = {}, history } = options
 
   const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
-  if (__TARGET__ === 'mobile') {
+  if (__TARGET__ === 'mobile' && !__DEVELOPMENT__) {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
   }
   if (shouldEnableTracking() && getTracker()) {
