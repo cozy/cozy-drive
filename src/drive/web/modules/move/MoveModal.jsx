@@ -157,6 +157,8 @@ export class MoveModal extends React.Component {
       .find('io.cozy.files')
       .where({
         dir_id: this.state.folderId,
+        type: { $gt: null },
+        name: { $gt: null },
         _id: {
           $ne: TRASH_DIR_ID
         }
