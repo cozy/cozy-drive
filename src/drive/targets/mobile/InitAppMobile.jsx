@@ -257,7 +257,7 @@ class InitAppMobile {
     //from 1.18.17 to 1.18.18
     await this.migrateToCozyAuth()
 
-    configureReporter()
+    if (!__DEVELOPMENT__) configureReporter()
     useHistoryForTracker(hashHistory)
     if (isAnalyticsOn(store.getState())) {
       startTracker(getServerUrl(store.getState()))
