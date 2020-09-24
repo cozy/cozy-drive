@@ -98,11 +98,12 @@ const buildSharingsQuery = ids => ({
   }
 })
 
-const buildTrashQueryFolder = ({
+const buildTrashQuery = ({
   currentFolderId,
   sortAttribute,
   sortOrder,
-  type
+  type,
+  limit
 }) => ({
   definition: () =>
     Q('io.cozy.files')
@@ -116,7 +117,8 @@ const buildTrashQueryFolder = ({
         { dir_id: sortOrder },
         { type: sortOrder },
         { [sortAttribute]: sortOrder }
-      ]),
+      ])
+      .limitBy(limit ? limit : 100),
   options: {
     as: `trash-${formatFolderQueryId(
       type,
@@ -168,5 +170,5 @@ export {
   buildRecentQuery,
   buildParentsByIdsQuery,
   buildSharingsQuery,
-  buildTrashQueryFolder
+  buildTrashQuery
 }

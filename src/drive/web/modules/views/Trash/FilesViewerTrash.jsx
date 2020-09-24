@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from 'cozy-client'
 import { useRouter } from 'drive/lib/RouterContext'
-import { buildTrashQueryFolder } from 'drive/web/modules/queries'
+import { buildTrashQuery } from 'drive/web/modules/queries'
 import {
   getCurrentFileId,
   getCurrentFolderId
@@ -16,7 +16,7 @@ const FilesViewerWithQuery = props => {
   const currentFolderId = props.currentFolderId
   const [sortOrder] = useFolderSort(currentFolderId)
 
-  const fileQuery = buildTrashQueryFolder({
+  const fileQuery = buildTrashQuery({
     currentFolderId,
     type: 'file',
     sortAttribute: sortOrder.attribute,

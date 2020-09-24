@@ -12,7 +12,7 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import useActions from 'drive/web/modules/actions/useActions'
 import { restore, destroy } from 'drive/web/modules/actions'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
-import { buildTrashQueryFolder } from 'drive/web/modules/queries'
+import { buildTrashQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
@@ -44,18 +44,18 @@ const getBreadcrumbPath = (t, displayedFolder) =>
 
 const TrashFolderView = ({ currentFolderId, router, children }) => {
   const [sortOrder] = useFolderSort(currentFolderId)
-
-  const folderQuery = buildTrashQueryFolder({
+  const folderQuery = buildTrashQuery({
     currentFolderId,
     type: 'directory',
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  const fileQuery = buildTrashQueryFolder({
+  const fileQuery = buildTrashQuery({
     currentFolderId,
     type: 'file',
     sortAttribute: sortOrder.attribute,
-    sortOrder: sortOrder.order
+    sortOrder: sortOrder.order,
+    limit: 50
   })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
