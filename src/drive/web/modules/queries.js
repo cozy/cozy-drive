@@ -63,12 +63,14 @@ const buildRecentQuery = () => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
-        trashed: false,
         type: 'file',
-        updated_at: { $gt: null }
+        trashed: false,
+        updated_at: {
+          $gt: null
+        }
       })
-      .indexFields(['updated_at', 'type', 'trashed'])
-      .sortBy([{ updated_at: 'desc' }])
+      .indexFields(['type', 'trashed', 'updated_at'])
+      .sortBy([{ type: 'desc' }, { trashed: 'desc' }, { updated_at: 'desc' }])
       .limitBy(50),
   options: {
     as: 'recent-view-query',
