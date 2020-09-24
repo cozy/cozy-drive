@@ -32,6 +32,21 @@ class Toolbar extends Component {
     hasWriteAccess: false
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      nextProps.disabled !== this.props.disabled ||
+      nextProps.selectionModeActive !== this.props.selectionModeActive ||
+      nextProps.canUpload !== this.props.canUpload ||
+      nextProps.canCreateFolder !== this.props.canCreateFolder ||
+      nextProps.hasWriteAccess !== this.props.hasWriteAccess ||
+      nextProps.isShared !== this.props.isShared ||
+      nextProps.breakpoints.isMobile !== this.props.breakpoints.isMobile
+    ) {
+      return true
+    }
+    return false
+  }
+
   render() {
     const {
       t,
