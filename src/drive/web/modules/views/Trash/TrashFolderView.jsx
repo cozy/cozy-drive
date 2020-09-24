@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import get from 'lodash/get'
@@ -16,6 +16,7 @@ import { buildTrashQuery } from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
+import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -62,10 +63,12 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const navigateToFolder = useCallback(folderId => {
+    setNeedsToWait(true)
     router.push(`/trash/${folderId}`)
   })
 
   const navigateToFile = useCallback(file => {
+    setNeedsToWait(true)
     router.push(`/trash/${currentFolderId}/file/${file.id}`)
   })
 
@@ -85,7 +88,18 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
     displayedFolder => getBreadcrumbPath(t, displayedFolder),
     [t]
   )
-
+  const [needsToWait, setNeedsToWait] = useState(true)
+  useEffect(
+    () => {
+      let timeout = null
+      if (currentFolderId === TRASH_DIR_ID) setNeedsToWait(false)
+      timeout = setTimeout(() => {
+        setNeedsToWait(false)
+      }, 50)
+      return () => clearTimeout(timeout)
+    },
+    [currentFolderId]
+  )
   return (
     <FolderView>
       <FolderViewHeader>
@@ -96,14 +110,18 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
         />
         <TrashToolbar />
       </FolderViewHeader>
-      <FolderViewBody
-        currentFolderId={currentFolderId}
-        navigateToFolder={navigateToFolder}
-        navigateToFile={navigateToFile}
-        actions={actions}
-        queryResults={[foldersResult, filesResult]}
-        canSort
-      />
+      {needsToWait && <FileListRowsPlaceholder />}
+
+      {!needsToWait && (
+        <FolderViewBody
+          currentFolderId={currentFolderId}
+          navigateToFolder={navigateToFolder}
+          navigateToFile={navigateToFile}
+          actions={actions}
+          queryResults={[foldersResult, filesResult]}
+          canSort
+        />
+      )}
       {children}
     </FolderView>
   )
