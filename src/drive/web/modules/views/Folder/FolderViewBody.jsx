@@ -128,7 +128,7 @@ const FolderViewBody = ({
         <FileListBody selectionModeActive={false}>
           <AddFolder refreshFolderContent={refreshFolderContent} />
           {isInError && <Oops />}
-          {needsToWait && <FileListRowsPlaceholder />}
+          {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
           {/* TODO FolderViewBody should not have the responsability to chose 
           which empty component to display. It should be done by the "view" itself. 
           But adding a new prop like <FolderViewBody emptyComponent={} 
