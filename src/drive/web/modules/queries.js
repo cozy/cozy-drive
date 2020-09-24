@@ -69,7 +69,7 @@ const buildRecentQuery = () => ({
       })
       .indexFields(['updated_at', 'type', 'trashed'])
       .sortBy([{ updated_at: 'desc' }])
-      .limitBy(100),
+      .limitBy(50),
   options: {
     as: 'recent-view-query',
     fetchPolicy: defaultFetchPolicy,
