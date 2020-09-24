@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useState, useEffect } from 'react'
 import get from 'lodash/get'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
@@ -75,6 +75,32 @@ const FolderViewBody = ({
 
   const isEmpty = !isInError && !isLoading && !hasDataToShow
 
+  /**
+   * When we mount the component when we already have data in cache,
+   * the mount is time consuming since we'll render at least 100 lines
+   * of File.
+   *
+   * React seems to batch together the fact that :
+   * - we change a route
+   * - we want to render 100 files
+   * resulting in a non smooth transition between views (Drive / Recent / ...)
+   *
+   * In order to bypass this batch, we use a state to first display a much
+   * more simpler component and then the files
+   */
+  const [needsToWait, setNeedsToWait] = useState(true)
+  useEffect(
+    () => {
+      let timeout = null
+      if (!isLoading) {
+        timeout = setTimeout(() => {
+          setNeedsToWait(false)
+        }, 50)
+      }
+      return () => clearTimeout(timeout)
+    },
+    [isLoading]
+  )
   return (
     <>
       <SelectionBar actions={actions} />
@@ -102,7 +128,7 @@ const FolderViewBody = ({
         <FileListBody selectionModeActive={false}>
           <AddFolder refreshFolderContent={refreshFolderContent} />
           {isInError && <Oops />}
-          {isLoading && <FileListRowsPlaceholder />}
+          {needsToWait && <FileListRowsPlaceholder />}
           {/* TODO FolderViewBody should not have the responsability to chose 
           which empty component to display. It should be done by the "view" itself. 
           But adding a new prop like <FolderViewBody emptyComponent={} 
@@ -115,28 +141,29 @@ const FolderViewBody = ({
             currentFolderId === TRASH_DIR_ID && (
               <EmptyTrash canUpload={canUpload} />
             )}
-          {hasDataToShow && (
-            <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
-              {queryResults.map((query, queryIndex) => (
-                <React.Fragment key={queryIndex}>
-                  {query.data.map(file => (
-                    <File
-                      key={file._id}
-                      attributes={file}
-                      withSelectionCheckbox
-                      onFolderOpen={navigateToFolder}
-                      onFileOpen={handleFileOpen}
-                      withFilePath={withFilePath}
-                      thumbnailSizeBig={isBigThumbnail}
-                      actions={actions}
-                      refreshFolderContent={refreshFolderContent}
-                    />
-                  ))}
-                  {query.hasMore && <LoadMore fetchMore={query.fetchMore} />}
-                </React.Fragment>
-              ))}
-            </div>
-          )}
+          {hasDataToShow &&
+            !needsToWait && (
+              <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
+                {queryResults.map((query, queryIndex) => (
+                  <React.Fragment key={queryIndex}>
+                    {query.data.map(file => (
+                      <File
+                        key={file._id}
+                        attributes={file}
+                        withSelectionCheckbox
+                        onFolderOpen={navigateToFolder}
+                        onFileOpen={handleFileOpen}
+                        withFilePath={withFilePath}
+                        thumbnailSizeBig={isBigThumbnail}
+                        actions={actions}
+                        refreshFolderContent={refreshFolderContent}
+                      />
+                    ))}
+                    {query.hasMore && <LoadMore fetchMore={query.fetchMore} />}
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
         </FileListBody>
       </FileList>
     </>
