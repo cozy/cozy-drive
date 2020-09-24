@@ -49,6 +49,7 @@
     <platform name="ios">
         <preference name="deployment-target" value="11.0" />
         <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarStyle" value="default" />
         <preference name="Suppresses3DTouchGesture" value="true" />
         <preference name="DisallowOverscroll" value="true" />
         <allow-intent href="itms:*" />
@@ -82,7 +83,6 @@
         </host>
         <ios-team-id value="3AKXFMV43J" />
     </universal-links>
-    <preference name="StatusBarBackgroundColor" value="#95999D" />
     <engine name="ios" spec="~4.5.5" />
     <engine name="android" spec="^7.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/cozy/cordova-plugin-splashscreen.git#e10cadcd07b613f745370ba023ac0c52cf415648" />
