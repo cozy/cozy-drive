@@ -5164,15 +5164,15 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@14.6.0, cozy-client@^14.6.0:
-  version "14.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-14.6.0.tgz#634d6b545a8a7c5e0e07878c50247ec256677e07"
-  integrity sha512-IbaED4CMPpFbiNoceGex+J5LfbnVgiLiYPcyDR/xrwoc4P2gjZ4XFuNfoM7LDe17iSGGetsY+XVaim+UVpzejw==
+cozy-client@15.0.0, cozy-client@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-15.0.0.tgz#6f8cb118a52fe9d983cd6562cb6d167690ec80d4"
+  integrity sha512-5JRsy0k4G4HrAIIBhGuzLSUPFfut9KGTtsx8d1C6WxV+KPxA9JLpLFh0oP5eivWPJ0yJy4OT062jlslva3IAxQ==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^14.1.2"
+    cozy-stack-client "^15.0.0"
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -5325,12 +5325,12 @@ cozy-logger@1.6.0, cozy-logger@^1.6.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@14.7.0:
-  version "14.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-14.7.0.tgz#22ecc4d3126af2e523f524757edf4cfb8ebc226d"
-  integrity sha512-umrRIBKEsc9iwkPXO8vYm4OdUhoer/FQlLqmrSnCQI1tfVOkJnIgtRu+Vpww0C/UnpMrchvtiUvaSdAuopgIsg==
+cozy-pouch-link@15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-15.0.0.tgz#d13ee278ae925c662a021eeaa54c0863e8b5e72a"
+  integrity sha512-BMoCKigRCKwSckbDnMbIwg65JyqZgTe1DpI+nn6mena2LTEGcqwJIANMgd5onNCP4pqJLxSEOMZm9G4hR+FXLg==
   dependencies:
-    cozy-client "^14.6.0"
+    cozy-client "^15.0.0"
     cozy-device-helper "^1.7.3"
     minilog "^3.1.0"
     pouchdb-browser "^7.0.0"
@@ -5434,7 +5434,7 @@ cozy-sharing@1.16.0:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@14.1.2, cozy-stack-client@^14.1.2:
+cozy-stack-client@14.1.2:
   version "14.1.2"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-14.1.2.tgz#606ce89cabf4def2875cb8749b28b3ee8b96d18f"
   integrity sha512-0IyYvBQu+vuwN9qe6PHA7khXBQT8TGSjVia7SVTGQ88tEFSLLGXjfZe3pkZQ1ihBdJvmeon12dm0BWeEb+9KZw==
@@ -5447,6 +5447,15 @@ cozy-stack-client@^13.1.0, cozy-stack-client@^13.12.1:
   version "13.12.1"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.12.1.tgz#9de6e2cbe3202e351f935d5e16faf2fa27cfa3af"
   integrity sha512-lZhWm3XB3YpvJ6dP1IPLioSJvVQLbPl3eeIrqI6RmGWi4KyIEES6jw1xEWaO7BNLT6p27BboGedqxeZzMXoBjw==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-15.0.0.tgz#782903286e3ad89bb09586c78dd8a7cc5fff8d7e"
+  integrity sha512-yRXCIOu2XmgO9ziyYt3AB6Fl1cxGeLgih9dPtYGsUUH0NQdC9QcD4qmrF8MxxLD6i3+S+lmANE41205jIi4Tgg==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -5469,10 +5478,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@36.1.2:
-  version "36.1.2"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-36.1.2.tgz#db2c47e77be94a90bf2bedb131399148e56b83bf"
-  integrity sha512-OH2Ql1afVRMFw6hV5wYHBmr2umVj85V6g5IaGloBAbp4cMJya7pUV8Zj/ZswjZPzcyTZGzSV1vu1JMmrFsJWVA==
+cozy-ui@37.2.1:
+  version "37.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-37.2.1.tgz#27bc54aabbf32cd8ed70262b9a7238c73f3136ab"
+  integrity sha512-2Ne8CO/Hm3HZJn5qvetZeVJDTtiGPb+TG237ElZZrxlgOY9VTUykv8pB6iW3/r4YfIq3/Sk/Q0J13D/v4ESfeA==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
@@ -13944,6 +13953,13 @@ pouchdb-collections@7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/pouchdb-collections/-/pouchdb-collections-7.2.1.tgz#768c2c578b22eda9ac0c92a4b1106d18f3c113fb"
   integrity sha512-cqe3GY3wDq2j59tnh+5ZV0bZj1O+YWiBz4qM7HEcgrEXnc29ADvXXPp71tmcpZUCR39bzLKyYtadAQu7FpOeOA==
+
+pouchdb-debug@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/pouchdb-debug/-/pouchdb-debug-7.2.1.tgz#f5f869f6113c12ccb97cddf5b0a32b6e0e67e961"
+  integrity sha512-eP3ht/AKavLF2RjTzBM6S9gaI2/apcW6xvaKRQhEdOfiANqerFuksFqHCal3aikVQuDO+cB/cw+a4RyJn/glBw==
+  dependencies:
+    debug "3.1.0"
 
 pouchdb-errors@7.0.0:
   version "7.0.0"
