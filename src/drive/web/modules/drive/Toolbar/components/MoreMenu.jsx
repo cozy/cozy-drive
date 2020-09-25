@@ -4,6 +4,7 @@ import { MoreButton } from 'components/Button'
 import { isMobileApp } from 'cozy-device-helper'
 import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import { isIOSApp } from 'cozy-device-helper'
 
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
 
@@ -28,8 +29,18 @@ const MoreMenu = ({
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
 
-  const openMenu = useCallback(() => setMenuVisible(true))
-  const closeMenu = useCallback(() => setMenuVisible(false))
+  const openMenu = useCallback(() => {
+    if (window.StatusBar && isIOSApp()) {
+      window.StatusBar.backgroundColorByHexString('#989AA0')
+    }
+    setMenuVisible(true)
+  })
+  const closeMenu = useCallback(() => {
+    if (window.StatusBar && isIOSApp()) {
+      window.StatusBar.backgroundColorByHexString('#FFFFFF')
+    }
+    setMenuVisible(false)
+  })
 
   return (
     <div>
