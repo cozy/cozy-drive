@@ -4,6 +4,9 @@ import compose from 'lodash/flowRight'
 import { withClient } from 'cozy-client'
 import { Overlay, Spinner, Viewer } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+
+import { isIOSApp } from 'cozy-device-helper'
+
 import logger from 'lib/logger'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import palette from 'cozy-ui/transpiled/react/palette'
@@ -28,7 +31,12 @@ class FilesViewer extends Component {
   }
 
   _mounted = false
-
+  componentWillMount() {
+    if (window.StatusBar && isIOSApp()) {
+      window.StatusBar.backgroundColorByHexString('#32363F')
+      window.StatusBar.styleLightContent()
+    }
+  }
   componentDidMount() {
     this._mounted = true
     this.fetchFileIfNecessary()
@@ -41,6 +49,10 @@ class FilesViewer extends Component {
 
   componentWillUnmount() {
     this._mounted = false
+    if (window.StatusBar && isIOSApp()) {
+      window.StatusBar.backgroundColorByHexString('#FFFFFF')
+      window.StatusBar.styleDefault()
+    }
   }
 
   // If we can't find the file in the loaded files, that's probably because the user
