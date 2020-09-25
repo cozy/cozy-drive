@@ -13,6 +13,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
+import { isIOSApp } from 'cozy-device-helper'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
@@ -246,10 +247,16 @@ const File = props => {
   const filerowMenuToggleRef = useRef()
 
   const showActionMenu = () => {
+    if (window.StatusBar && isIOSApp()) {
+      window.StatusBar.backgroundColorByHexString('#989AA0')
+    }
     setActionMenuVisible(true)
   }
 
   const hideActionMenu = () => {
+    if (window.StatusBar && isIOSApp()) {
+      window.StatusBar.backgroundColorByHexString('#FFFFFF')
+    }
     setActionMenuVisible(false)
   }
 
