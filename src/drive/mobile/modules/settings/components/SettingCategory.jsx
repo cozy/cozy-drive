@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'cozy-ui/transpiled/react/Button'
-import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
+import Toggle from 'cozy-ui/transpiled/react/Toggle'
 
 import styles from '../styles.styl'
 export const ELEMENT_TEXT = 'ELEMENT_TEXT'
@@ -51,10 +51,10 @@ const SettingCategory = ({ title, elements }) => (
                   htmlFor={element.id}
                   className={styles['settings__subcategory__item']}
                 >
-                  <Switch
-                    checked={element.checked}
+                  <Toggle
                     id={element.id}
-                    onClick={ev => element.onChange(ev.target.checked)}
+                    checked={element.checked}
+                    onToggle={element.onChange}
                   />
                 </label>
               </div>

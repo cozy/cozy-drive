@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
 import { useClient } from 'cozy-client'
-
-import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
-
+import Toggle from 'cozy-ui/transpiled/react/Toggle'
 import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
 import {
   isAvailableOffline,
@@ -24,14 +22,7 @@ const MakeAvailableOfflineMenuItem = connect(
   return (
     <MenuItem {...rest}>
       {children}
-      <Switch
-        id={children}
-        checked={checked}
-        onClick={ev => onToggle(ev.target.checked)}
-        classes={{
-          switchBase: 'u-h-half'
-        }}
-      />
+      <Toggle id={children} checked={checked} onToggle={onToggle} />
     </MenuItem>
   )
 })
