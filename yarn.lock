@@ -5325,10 +5325,10 @@ cozy-logger@1.6.0, cozy-logger@^1.6.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@15.0.1:
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-15.0.1.tgz#b9a20ca87149fe1c406ee475d1894f8c0622b45b"
-  integrity sha512-BVplpxxnHQb9R1DUj3HLSHzsGiW73b0Vk5NFkDpUnS5l5zx7gfP5B5JQl+aMp26Q8JXKHoeJ+cNjnyTpANtNmQ==
+cozy-pouch-link@15.0.2:
+  version "15.0.2"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-15.0.2.tgz#620ff04616e05416d7a763e8cb606c2d73115c7e"
+  integrity sha512-86mbCKOOkU+jgk5BQk3wa7raxkU+FeezTqI7VIA5DsthlLAze/MlC3V1Ay85gSmkbkY8HYW3S9RLweTIsLwa1A==
   dependencies:
     cozy-client "^15.0.0"
     cozy-device-helper "^1.7.3"
