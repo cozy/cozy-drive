@@ -123,12 +123,3 @@ export const openOfflineFile = async file => {
   const fileEntry = await getNativeFile(file)
   return openFileWithCordova(fileEntry.nativeURL, file.mime)
 }
-
-export const createTemporaryLocalFile = async (client, file) => {
-  const response = await client
-    .collection('io.cozy.files')
-    .fetchFileContent(file)
-  const blob = await response.blob()
-  const localFile = await temporarySave(blob, file.name)
-  return localFile
-}
