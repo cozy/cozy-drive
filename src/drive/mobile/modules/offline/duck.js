@@ -1,12 +1,10 @@
 import {
   saveFileWithCordova,
   openOfflineFile,
-  deleteOfflineFile,
-  createTemporaryLocalFile,
-  openFileWithCordova
+  deleteOfflineFile
 } from 'drive/mobile/lib/filesystem'
 import { isMobileApp } from 'cozy-device-helper'
-
+import { openFileWith } from 'drive/web/modules/actions/utils'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import logger from 'lib/logger'
 const MAKE_AVAILABLE_OFFLINE = 'MAKE_AVAILABLE_OFFLINE'
@@ -84,6 +82,7 @@ export const openLocalFile = file => async (dispatch, getState) => {
   })
 }
 
+// TODO remove this one ? Only used in the No supportedViewer
 export const openLocalFileCopy = file => async (
   dispatch,
   getState,
@@ -92,8 +91,7 @@ export const openLocalFileCopy = file => async (
   if (isAvailableOffline(getState(), file.id)) {
     return openOfflineFile(file)
   }
-  const localFile = await createTemporaryLocalFile(client, file)
-  return openFileWithCordova(localFile.nativeURL, file.mime)
+  return openFileWith(client, file)
 }
 
 export const updateOfflineFileCopyIfNecessary = (
