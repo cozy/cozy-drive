@@ -16,7 +16,7 @@ import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
 import FileList from 'drive/web/modules/move/FileList'
@@ -26,6 +26,10 @@ import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 
 import { getDisplayedFolder } from 'drive/web/modules/selectors'
+import {
+  buildMoveOrImportQuery,
+  buildOnlyFolderQuery
+} from 'drive/web/modules/queries'
 
 export class MoveModal extends React.Component {
   constructor(props) {
@@ -152,28 +156,11 @@ export class MoveModal extends React.Component {
     }
   }
 
-  contentQuery = client => {
-    return client
-      .find('io.cozy.files')
-      .where({
-        dir_id: this.state.folderId,
-        type: { $gt: null },
-        name: { $gt: null },
-        _id: {
-          $ne: TRASH_DIR_ID
-        }
-      })
-      .indexFields(['dir_id', 'type', 'name'])
-      .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }])
-  }
-
-  breadcrumbQuery = client => {
-    return client.get('io.cozy.files', this.state.folderId)
-  }
-
   render() {
-    const { onClose, entries, t } = this.props
+    const { onClose, entries, t, client } = this.props
     const { folderId, isMoveInProgress } = this.state
+    const contentQuery = buildMoveOrImportQuery(client, folderId)
+    const folderQuery = buildOnlyFolderQuery(client, folderId)
     return (
       <Modal
         size={'xlarge'}
@@ -185,7 +172,12 @@ export class MoveModal extends React.Component {
         className={'u-mih-100'}
       >
         <Header entries={entries} onClose={onClose} />
-        <Query query={this.breadcrumbQuery} key={`breadcrumb-${folderId}`}>
+        <Query
+          query={folderQuery.definition()}
+          fetchPolicy={folderQuery.options.fetchPolicy}
+          as={folderQuery.options.as}
+          key={`breadcrumb-${folderId}`}
+        >
           {({ data, fetchStatus }) => (
             <Topbar
               navigateTo={this.navigateTo}
@@ -194,7 +186,12 @@ export class MoveModal extends React.Component {
             />
           )}
         </Query>
-        <Query query={this.contentQuery} key={`content-${folderId}`}>
+        <Query
+          query={contentQuery.definition()}
+          fetchPolicy={contentQuery.options.fetchPolicy}
+          as={contentQuery.options.as}
+          key={`content-${folderId}`}
+        >
           {({ data, fetchStatus, hasMore, fetchMore }) => {
             return (
               <Explorer>

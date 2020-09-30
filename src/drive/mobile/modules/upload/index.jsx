@@ -13,7 +13,7 @@ import { Modal } from 'cozy-ui/transpiled/react'
 
 import { uploadFilesFromNative } from 'drive/web/modules/upload'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
 import FileList from 'drive/web/modules/move/FileList'
@@ -25,6 +25,10 @@ import {
   startMediaBackup,
   cancelMediaBackup
 } from 'drive/mobile/modules/mediaBackup/duck'
+import {
+  buildMoveOrImportQuery,
+  buildOnlyFolderQuery
+} from 'drive/web/modules/queries'
 
 export const generateForQueue = files => {
   const filesForQueue = []
@@ -69,21 +73,6 @@ export class DumbUpload extends Component {
     this.setState({ folderId: folder.id })
   }
 
-  contentQuery = client => {
-    return client
-      .find('io.cozy.files')
-      .where({
-        dir_id: this.state.folderId,
-        _id: {
-          $ne: TRASH_DIR_ID
-        }
-      })
-      .indexFields(['dir_id', 'type', 'name', '_id'])
-      .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }])
-  }
-  breadcrumbQuery = client => {
-    return client.get('io.cozy.files', this.state.folderId)
-  }
   onClose = () => {
     const { router } = this.props
     localforage.removeItem('importedFiles')
@@ -94,7 +83,10 @@ export class DumbUpload extends Component {
 
   render() {
     const { items, folderId, uploadInProgress } = this.state
-    const { t } = this.props
+    const { t, client } = this.props
+    const contentQuery = buildMoveOrImportQuery(client, folderId)
+    const folderQuery = buildOnlyFolderQuery(client, folderId)
+
     return (
       <Modal
         size={'xlarge'}
@@ -111,7 +103,12 @@ export class DumbUpload extends Component {
           title={t('ImportToDrive.title', { smart_count: items.length })}
           subTitle={t('ImportToDrive.to')}
         />
-        <Query query={this.breadcrumbQuery} key={`breadcrumb-${folderId}`}>
+        <Query
+          query={folderQuery.definition()}
+          fetchPolicy={folderQuery.options.fetchPolicy}
+          as={folderQuery.options.as}
+          key={`breadcrumb-${folderId}`}
+        >
           {({ data, fetchStatus }) => (
             <Topbar
               navigateTo={this.navigateTo}
@@ -120,7 +117,12 @@ export class DumbUpload extends Component {
             />
           )}
         </Query>
-        <Query query={this.contentQuery} key={`content-${folderId}`}>
+        <Query
+          key={`content-${folderId}`}
+          query={contentQuery.definition()}
+          fetchPolicy={contentQuery.options.fetchPolicy}
+          as={contentQuery.options.as}
+        >
           {({ data, fetchStatus, hasMore, fetchMore }) => {
             return (
               <Explorer>
