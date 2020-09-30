@@ -134,6 +134,29 @@ const buildTrashQuery = ({
     singleDocData: false
   }
 })
+
+export const buildMoveOrImportQuery = (client, dirId) => ({
+  definition: () =>
+    client
+      .find('io.cozy.files')
+      .where({
+        dir_id: dirId,
+        _id: {
+          $ne: TRASH_DIR_ID
+        },
+        type: { $gt: null },
+        name: { $gt: null }
+      })
+      .indexFields(['dir_id', 'type', 'name'])
+      .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }])
+      .limitBy(100),
+  options: {
+    as: `moveOrImport-${dirId}`,
+    fetchPolicy: CozyClient.fetchPolicies.olderThan(
+      DEFAULT_CACHE_TIMEOUT_QUERIES
+    )
+  }
+})
 /**
  * Get the query for folder if given the query for files
  * and vice versa.
@@ -164,6 +187,15 @@ export const buildFolderQuery = folderId => ({
     as: 'folder-' + folderId,
     fetchPolicy: defaultFetchPolicy,
     singleDocData: false
+  }
+})
+
+export const buildOnlyFolderQuery = (client, folderId) => ({
+  definition: () => client.get('io.cozy.files', folderId),
+  options: {
+    as: 'onlyfolder-' + folderId,
+    fetchPolicies: defaultFetchPolicy,
+    singleDocData: true
   }
 })
 
