@@ -5164,10 +5164,10 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@15.0.0, cozy-client@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-15.0.0.tgz#6f8cb118a52fe9d983cd6562cb6d167690ec80d4"
-  integrity sha512-5JRsy0k4G4HrAIIBhGuzLSUPFfut9KGTtsx8d1C6WxV+KPxA9JLpLFh0oP5eivWPJ0yJy4OT062jlslva3IAxQ==
+cozy-client@15.1.0, cozy-client@^15.1.0:
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-15.1.0.tgz#b23dfba29f5142ffd7b510a15e12e767cb564292"
+  integrity sha512-7bsIJLbjqOZ1iuOj00YTPsDYRGa42++GU9JpIaGqgLNJggjqkZBWQq4ZFTaOQHQ/70lfbu8n/J3slCnz7S14Nw==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
@@ -5176,7 +5176,7 @@ cozy-client@15.0.0, cozy-client@^15.0.0:
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
-    minilog "git+https://github.com/cozy/minilog.git#master"
+    minilog "https://github.com/cozy/minilog.git#master"
     open "^7.0.2"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
@@ -5325,12 +5325,12 @@ cozy-logger@1.6.0, cozy-logger@^1.6.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@15.0.2:
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-15.0.2.tgz#620ff04616e05416d7a763e8cb606c2d73115c7e"
-  integrity sha512-86mbCKOOkU+jgk5BQk3wa7raxkU+FeezTqI7VIA5DsthlLAze/MlC3V1Ay85gSmkbkY8HYW3S9RLweTIsLwa1A==
+cozy-pouch-link@15.1.0:
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-15.1.0.tgz#8140bc70b8d2183e3942d8ab9bdd7eeb9891d0c1"
+  integrity sha512-E5uWv8eIXF9YLpzZJFvOYGhsz68IGLbjZDp7zD7kcMa5NdMJZTRctcsK2b6awjvEJpxZpwQbUdJxfsEhUFnObg==
   dependencies:
-    cozy-client "^15.0.0"
+    cozy-client "^15.1.0"
     cozy-device-helper "^1.7.3"
     minilog "^3.1.0"
     pouchdb-browser "^7.0.0"
