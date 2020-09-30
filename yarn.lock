@@ -3166,10 +3166,10 @@ babel-preset-cozy-app@1.7.0:
     browserslist-config-cozy "^0.3.0"
     lodash "4.17.15"
 
-babel-preset-cozy-app@1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-cozy-app/-/babel-preset-cozy-app-1.9.1.tgz#a190df4702feaaea5560eafa2e506d5816024f2a"
-  integrity sha512-zi2NCe1WSWrC0fKU9C9MTiY0XGXQ9EdEZqK3rLTk7mr8M2hRWjWEUwH2HyOMd0ZkL25c29YSUpmYJXk7xBIIWw==
+babel-preset-cozy-app@1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/babel-preset-cozy-app/-/babel-preset-cozy-app-1.9.2.tgz#eb072c931828b2cacf84fd8dac57f345b5b608d8"
+  integrity sha512-fNECVqgGUjj/O0jbH25EqoWAeXRN+4voVZecG794BqmXYejvW0dPIIzLtMlsIDXR/YAYVWefF6faJegRI1xSTQ==
   dependencies:
     "@babel/core" "7.2.2"
     "@babel/helper-plugin-utils" "7.0.0"
@@ -11809,13 +11809,6 @@ mini-css-extract-plugin@0.5.0:
 minilog@3.1.0, minilog@^3.1.0, "minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
   resolved "https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
-  dependencies:
-    microee "0.0.6"
-
-"minilog@git+https://github.com/cozy/minilog.git#master":
-  version "3.1.0"
-  uid f01f7d9dfe20981177dd34b9662c2f077d818f82
-  resolved "git+https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
   dependencies:
     microee "0.0.6"
 
