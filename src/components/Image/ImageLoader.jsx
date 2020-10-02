@@ -38,7 +38,6 @@ class ImageLoader extends React.Component {
     const { file, size } = this.props
     if (file._id === doc._id && doc.format === size) {
       this.loadLink()
-      this.unsubscribeRealtime()
     }
   }
 
