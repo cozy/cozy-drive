@@ -1,4 +1,3 @@
-/* global __TARGET__ */
 import React from 'react'
 import { models } from 'cozy-client'
 import { ShareModal } from 'cozy-sharing'
@@ -11,7 +10,7 @@ import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 
-import { isIOSApp } from 'cozy-device-helper'
+import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
 const { file: fileModel } = models
@@ -45,7 +44,7 @@ export const share = ({ hasWriteAccess, pushModal, popModal }) => {
 }
 
 export const download = ({ client }) => {
-  return __TARGET__ === 'mobile'
+  return isMobileApp()
     ? {
         icon: 'download',
         displayCondition: files => {
@@ -85,7 +84,7 @@ export const open = ({ client }) => {
   return {
     icon: 'openWith',
     displayCondition: selection =>
-      __TARGET__ === 'mobile' && selection.length === 1 && isFile(selection[0]),
+      isMobileApp() && selection.length === 1 && isFile(selection[0]),
     action: files => openFileWith(client, files[0])
   }
 }
@@ -144,9 +143,7 @@ export const offline = () => {
   return {
     icon: 'phone-download',
     displayCondition: selections =>
-      __TARGET__ === 'mobile' &&
-      selections.length === 1 &&
-      isFile(selections[0]),
+      isMobileApp() && selections.length === 1 && isFile(selections[0]),
     Component: function MakeAvailableOfflineMenuItemInMenu({ files, ...rest }) {
       return <MakeAvailableOfflineMenuItem file={files[0]} {...rest} />
     }
