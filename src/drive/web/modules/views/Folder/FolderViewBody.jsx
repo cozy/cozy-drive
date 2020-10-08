@@ -1,10 +1,11 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import get from 'lodash/get'
-
-import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import { useClient, useCapabilities } from 'cozy-client'
 import { useDispatch } from 'react-redux'
 
+import { useClient, useCapabilities } from 'cozy-client'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+
+import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
 import { FileList } from 'drive/web/modules/filelist/FileList'
 import { ConnectedFileListBody as FileListBody } from 'drive/web/modules/filelist/FileListBody'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
@@ -13,7 +14,6 @@ import MobileFileListHeader from 'drive/web/modules/filelist/MobileFileListHeade
 import Oops from 'components/Error/Oops'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
-import { isMobileApp } from 'cozy-device-helper'
 import LoadMore from 'drive/web/modules/filelist/LoadMoreV2'
 import { FileWithSelection as File } from 'drive/web/modules/filelist/File'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
@@ -30,7 +30,8 @@ const FolderViewBody = ({
   withFilePath = false,
   navigateToFolder,
   navigateToFile,
-  refreshFolderContent = null
+  refreshFolderContent = null,
+  breakpoints: { isDesktop }
 }) => {
   const client = useClient()
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
@@ -143,7 +144,7 @@ const FolderViewBody = ({
             )}
           {hasDataToShow &&
             !needsToWait && (
-              <div className={isMobileApp() ? 'u-ov-hidden' : ''}>
+              <div className={!isDesktop ? 'u-ov-hidden' : ''}>
                 {queryResults.map((query, queryIndex) => (
                   <React.Fragment key={queryIndex}>
                     {query.data.map(file => (
@@ -170,4 +171,4 @@ const FolderViewBody = ({
   )
 }
 
-export default FolderViewBody
+export default withBreakpoints()(FolderViewBody)
