@@ -7,44 +7,18 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { CozyFile } from 'models'
 import { isDirectory } from 'drive/web/modules/drive/files'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
-import MenuItem from './MenuItem'
-
+import { ActionsItems } from './ActionsItems'
 import styles from 'drive/styles/actionmenu.styl'
 
 import { getBoundT } from 'cozy-scanner'
+
 const Menu = props => {
-  const { t, lang, file, actions, onClose } = props
-  const actionNames = Object.keys(actions).filter(actionName => {
-    const action = actions[actionName]
-    return (
-      action.displayCondition === undefined || action.displayCondition([file])
-    )
-  })
+  const { lang, file, actions, onClose } = props
   return (
     <ActionMenu className={styles['fil-mobileactionmenu']} onClose={onClose}>
       <MenuHeaderFile file={file} lang={lang} />
       <hr />
-      {actionNames.map(actionName => {
-        const Component = actions[actionName].Component || MenuItem
-        const action = actions[actionName].action
-        const onClick = action
-          ? () => {
-              const promise = action([file])
-              onClose()
-              return promise
-            }
-          : null
-        return (
-          <Component
-            key={actionName}
-            className={styles[`fil-action-${actionName}`]}
-            onClick={onClick}
-            files={[file]}
-          >
-            {t(`SelectionBar.${actionName}`)}
-          </Component>
-        )
-      })}
+      <ActionsItems actions={actions} file={file} onClose={onClose} />
     </ActionMenu>
   )
 }

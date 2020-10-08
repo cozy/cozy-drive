@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import cx from 'classnames'
 import PopperJS from 'popper.js'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
-import MenuItem from './MenuItem'
+import { ActionsItems } from './ActionsItems'
 
 import styles from 'drive/styles/actionmenu.styl'
 
@@ -25,14 +24,7 @@ class Menu extends Component {
   }
 
   render() {
-    const { t, file, actions, onClose } = this.props
-    const actionNames = Object.keys(actions).filter(actionName => {
-      const action = actions[actionName]
-      // TODO: is it really necessary?
-      return (
-        action.displayCondition === undefined || action.displayCondition([file])
-      )
-    })
+    const { file, actions, onClose } = this.props
     return (
       <div className={styles['fil-actionmenu']}>
         <Overlay
@@ -47,34 +39,11 @@ class Menu extends Component {
             this.menuEl = el
           }}
         >
-          {actionNames.map(actionName => {
-            const Component = actions[actionName].Component || MenuItem
-            const action = actions[actionName].action
-            const onClick = !action
-              ? undefined
-              : () => {
-                  const promise = action([file])
-                  onClose()
-                  return promise
-                }
-            return (
-              <Component
-                key={actionName}
-                className={cx(
-                  styles['fil-action'],
-                  styles[`fil-action-${actionName}`]
-                )}
-                onClick={onClick}
-                files={[file]}
-              >
-                {t(`SelectionBar.${actionName}`)}
-              </Component>
-            )
-          })}
+          <ActionsItems actions={actions} file={file} onClose={onClose} />
         </div>
       </div>
     )
   }
 }
 
-export default translate()(Menu)
+export default Menu
