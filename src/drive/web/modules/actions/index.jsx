@@ -54,12 +54,17 @@ export const download = ({ client }) => {
             true
           )
         },
-        action: files => exportFilesNative(client, files)
+        action: files => exportFilesNative(client, files),
+        label: 'sendto'
       }
     : {
         icon: 'download',
         action: files => downloadFiles(client, files)
       }
+}
+
+export const hr = () => {
+  return { icon: 'hr' }
 }
 
 export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
@@ -79,7 +84,6 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
       )
   }
 }
-
 export const open = ({ client }) => {
   return {
     icon: 'openWith',

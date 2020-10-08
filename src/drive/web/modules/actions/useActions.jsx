@@ -1,4 +1,3 @@
-import keyBy from 'lodash/keyBy'
 import { useDispatch } from 'react-redux'
 import { hideSelectionBar } from 'drive/web/modules/selection/duck'
 
@@ -19,13 +18,17 @@ const withHideSelectionBarDispatch = (action, dispatch) => {
 
 const useActions = (actionCreators, actionOptions = {}) => {
   const dispatch = useDispatch()
+  let actions = []
+  actionCreators.map(createAction => {
+    const enhancedAction = withHideSelectionBarDispatch(
+      createAction(actionOptions),
+      dispatch
+    )
+    const name = enhancedAction.icon
 
-  return keyBy(
-    actionCreators.map(createAction =>
-      withHideSelectionBarDispatch(createAction(actionOptions), dispatch)
-    ),
-    'icon'
-  )
+    actions.push({ [name]: enhancedAction })
+  })
+  return actions
 }
 
 export default useActions

@@ -21,7 +21,8 @@ import {
   move,
   qualify,
   versions,
-  offline
+  offline,
+  hr
 } from 'drive/web/modules/actions'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import { ROOT_DIR_ID } from 'drive/constants/config'
@@ -125,7 +126,20 @@ const DriveView = ({
     canMove: true
   }
   const actions = useActions(
-    [share, download, trash, open, rename, move, qualify, versions, offline],
+    [
+      share,
+      download,
+      hr,
+      qualify,
+      rename,
+      move,
+      hr,
+      offline,
+      open,
+      versions,
+      hr,
+      trash
+    ],
     actionsOptions
   )
 
