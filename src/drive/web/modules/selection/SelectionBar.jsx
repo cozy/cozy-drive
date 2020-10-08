@@ -29,7 +29,7 @@ export default connect(
 })
 
 const DriveActionToSelectionBarAction = driveActions => {
-  let actions = []
+  let actions = {}
   driveActions.map(driveAction => {
     const actionName = Object.keys(driveAction)[0]
     if (actionName !== 'hr') {

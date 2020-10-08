@@ -22,7 +22,7 @@ export const ActionsItems = ({ actions, file, onClose }) => {
     } else {
       previousAction = actionName
     }
-    if (actionName === 'hr') return <hr />
+    if (actionName === 'hr') return <hr key={'hr' + i} />
     const Component = actionDefinition.Component || MenuItem
     const action = actionDefinition.action
     const onClick = action
