@@ -32,7 +32,7 @@ class Toolbar extends Component {
     hasWriteAccess: false
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (
       nextProps.disabled !== this.props.disabled ||
       nextProps.selectionModeActive !== this.props.selectionModeActive ||
