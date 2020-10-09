@@ -17,6 +17,7 @@ const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {
 
   return (
     <Modal
+      dismissAction={onClose}
       title={t('emptytrashconfirmation.title')}
       description={confirmationTexts}
       secondaryType="secondary"

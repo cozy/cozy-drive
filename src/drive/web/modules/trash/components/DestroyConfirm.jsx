@@ -23,6 +23,7 @@ const DestroyConfirm = ({ t, files, onClose }) => {
       description={confirmationTexts}
       secondaryType="secondary"
       secondaryText={t('destroyconfirmation.cancel')}
+      dismissAction={onClose}
       secondaryAction={onClose}
       primaryType="danger"
       primaryText={t('destroyconfirmation.delete')}
