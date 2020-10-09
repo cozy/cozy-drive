@@ -1,20 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SharedDocument, SharedRecipients } from 'cozy-sharing'
-import MenuItem from 'drive/web/modules/actionmenu/MenuItem'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+
 import styles from 'drive/styles/actionmenu.styl'
 
-const ShareMenuItem = ({ docId, ...rest }, { t }) => (
+const ShareMenuItem = ({ docId, onClick }, { t }) => (
   <SharedDocument docId={docId}>
     {({ isSharedWithMe }) => (
-      <MenuItem {...rest}>
+      <ActionMenuItem
+        className={'u-flex-items-center u-pos-relative'}
+        onClick={onClick}
+        left={<Icon icon="share" />}
+        right={
+          <SharedRecipients
+            className={styles['fil-actionmenu-recipients']}
+            docId={docId}
+            size="small"
+          />
+        }
+      >
         {isSharedWithMe ? t('Files.share.sharedWithMe') : t('Files.share.cta')}
-        <SharedRecipients
-          className={styles['fil-actionmenu-recipients']}
-          docId={docId}
-          size="small"
-        />
-      </MenuItem>
+      </ActionMenuItem>
     )}
   </SharedDocument>
 )

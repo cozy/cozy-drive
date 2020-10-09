@@ -2,7 +2,6 @@ import React from 'react'
 import cx from 'classnames'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
-import MenuItem from './MenuItem'
 import styles from 'drive/styles/actionmenu.styl'
 
 export const ActionsItems = ({ actions, file, onClose }) => {
@@ -23,7 +22,7 @@ export const ActionsItems = ({ actions, file, onClose }) => {
       previousAction = actionName
     }
     if (actionName === 'hr') return <hr key={'hr' + i} />
-    const Component = actionDefinition.Component || MenuItem
+    const Component = actionDefinition.Component
     const action = actionDefinition.action
     const onClick = action
       ? () => {
