@@ -40,7 +40,7 @@ export const share = ({ hasWriteAccess, pushModal, popModal }) => {
           onClose={popModal}
         />
       ),
-    Component: function ShareMenuItemInMenu({ files, selected, ...rest }) {
+    Component: function ShareMenuItemInMenu({ files, ...rest }) {
       return <ShareMenuItem docId={files[0].id} {...rest} />
     }
   }
