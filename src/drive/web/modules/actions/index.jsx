@@ -68,7 +68,7 @@ export const download = ({ client }) => {
               }}
               left={<Icon icon="download" />}
             >
-              {t('toolbar.menu_download_folder')}
+              {t('SelectionBar.sendto')}
             </ActionMenuItem>
           )
         }
@@ -85,7 +85,7 @@ export const download = ({ client }) => {
               }}
               left={<Icon icon="download" />}
             >
-              {t('toolbar.menu_download_folder')}
+              {t('SelectionBar.download')}
             </ActionMenuItem>
           )
         }
@@ -146,7 +146,7 @@ export const open = ({ client }) => {
       return (
         <ActionMenuItem
           onClick={() => openFileWith(client, props.files[0])}
-          left={<Icon icon="openWith" />}
+          left={<Icon icon="link-out" />}
         >
           {t('SelectionBar.openWith')}
         </ActionMenuItem>
@@ -280,7 +280,7 @@ export const offline = () => {
   return {
     icon: 'phone-download',
     displayCondition: selections =>
-      /*isMobileApp() && */ selections.length === 1 && isFile(selections[0]),
+      isMobileApp() && selections.length === 1 && isFile(selections[0]),
     Component: function MakeAvailableOfflineMenuItemInMenu({ files, ...rest }) {
       return <MakeAvailableOfflineMenuItem file={files[0]} {...rest} />
     }
