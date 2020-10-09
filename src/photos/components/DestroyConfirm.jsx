@@ -19,6 +19,7 @@ const DestroyConfirm = ({ t, confirm, abort }) => {
       title={t('destroyconfirmation.title')}
       description={confirmationTexts}
       secondaryType="secondary"
+      dismissAction={abort}
       secondaryText={t('destroyconfirmation.cancel')}
       secondaryAction={abort}
       primaryType="danger"
