@@ -7,19 +7,27 @@ import styles from 'drive/styles/actionmenu.styl'
 export const ActionsItems = ({ actions, file, onClose }) => {
   const { t } = useI18n()
   let previousAction = ''
-  return actions.map((actionObject, i) => {
-    const actionName = Object.keys(actionObject)[0]
+  const displayableActions = actions.filter(actionObject => {
     const actionDefinition = Object.values(actionObject)[0]
-    if (
+    return !(
       actionDefinition.displayCondition !== undefined &&
       !actionDefinition.displayCondition([file])
     )
-      return null
+  })
+
+  return displayableActions.map((actionObject, i) => {
+    const actionName = Object.keys(actionObject)[0]
+    const actionDefinition = Object.values(actionObject)[0]
+
     if (previousAction === actionName) {
       previousAction = actionName
       return null
     } else {
       previousAction = actionName
+    }
+
+    if (actionName === 'hr' && i + 1 === displayableActions.length) {
+      return null
     }
     if (actionName === 'hr') return <hr key={'hr' + i} />
     const Component = actionDefinition.Component
