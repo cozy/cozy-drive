@@ -20,7 +20,7 @@ import styles from './styles.styl'
 
 import { CozyFile } from 'models'
 import { isMobile } from 'cozy-device-helper/dist/platform'
-import { exportFilesNative } from 'drive/web/modules/navigation/duck/actions'
+import { exportFilesNative } from 'drive/web/modules/actions/utils'
 
 const formatDate = (date, f) => {
   return f(date, 'DD MMMM - HH:mm')
@@ -69,7 +69,7 @@ const HistoryModal = ({
               if (!isMobile()) {
                 fileCollection.download(file)
               } else {
-                exportFilesNative([file._id], client, file.name)()
+                exportFilesNative(client, [file], file.name)
               }
             }}
           />
@@ -94,10 +94,10 @@ const HistoryModal = ({
                       )
                     } else {
                       exportFilesNative(
-                        [revision._id],
                         client,
+                        [revision],
                         CozyFile.generateFileNameForRevision(file, revision, f)
-                      )()
+                      )
                     }
                   }}
                 />
