@@ -24,7 +24,8 @@ import {
   move,
   qualify,
   versions,
-  offline
+  offline,
+  hr
 } from 'drive/web/modules/actions'
 
 import { buildRecentQuery } from 'drive/web/modules/queries'
@@ -59,8 +60,21 @@ export const RecentView = ({ router, location, children }) => {
     hasWriteAccess: true,
     canMove: true
   }
+
   const actions = useActions(
-    [download, trash, open, rename, move, qualify, versions, offline],
+    [
+      download,
+      hr,
+      qualify,
+      rename,
+      move,
+      hr,
+      offline,
+      open,
+      versions,
+      hr,
+      trash
+    ],
     actionsOptions
   )
 

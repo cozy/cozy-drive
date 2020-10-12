@@ -23,7 +23,9 @@ import {
   move,
   qualify,
   versions,
-  offline
+  offline,
+  share,
+  hr
 } from 'drive/web/modules/actions'
 
 import { buildSharingsQuery } from 'drive/web/modules/queries'
@@ -62,8 +64,9 @@ export const SharingsView = ({
     hasWriteAccess: true,
     canMove: true
   }
+
   const actions = useActions(
-    [download, open, rename, move, qualify, versions, offline],
+    [share, download, hr, qualify, rename, move, hr, offline, open, versions],
     actionsOptions
   )
 
