@@ -314,6 +314,7 @@ export const restore = ({ refresh, client }) => {
 export const destroy = ({ pushModal, popModal }) => {
   return {
     icon: 'trash',
+    label: 'destroy',
     action: files =>
       pushModal(<DestroyConfirm files={files} onClose={popModal} />),
     Component: function Destroy(props) {

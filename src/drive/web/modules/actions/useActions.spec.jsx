@@ -1,6 +1,7 @@
 import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import { createMockClient } from 'cozy-client'
+import { isMobileApp } from 'cozy-device-helper'
 
 import { ShareModal } from 'cozy-sharing'
 import AppLike from '../../../../../test/components/AppLike'
@@ -46,7 +47,10 @@ jest.mock('./utils', () => ({
 jest.mock('cozy-ui/transpiled/react/helpers/tracker', () => ({
   getTracker: jest.fn()
 }))
-
+jest.mock('cozy-device-helper', () => ({
+  ...jest.requireActual('cozy-device-helper'),
+  isMobileApp: jest.fn()
+}))
 describe('useActions', () => {
   const mockStore = createStore(() => ({
     mobile: {
@@ -119,12 +123,21 @@ describe('useActions', () => {
 
   const getAction = (actionKey, hookArgs) => {
     const { result } = renderActionsHook({ ...defaultHookArgs, ...hookArgs })
-    return result.current[actionKey]
+    let action
+    result.current.map((actionObject, i) => {
+      if (Object.keys(actionObject)[0] === actionKey) {
+        action = result.current[i][actionKey]
+      }
+    })
+    return action
   }
 
   it('returns actions keyed by icon', () => {
     const { result } = renderActionsHook(defaultHookArgs)
-    expect(Object.keys(result.current)).toEqual([
+    const keys = result.current.map(actionObject => {
+      return Object.keys(actionObject)[0]
+    })
+    expect(keys).toEqual([
       'share',
       'download',
       'trash',
@@ -157,6 +170,7 @@ describe('useActions', () => {
       const shareActionWithoutWriteAccess = getAction('share', {
         hasWriteAccess: false
       })
+
       expect(shareActionWithoutWriteAccess.displayCondition(['abc'])).toBe(
         false
       )
@@ -199,7 +213,7 @@ describe('useActions', () => {
 
     describe('mobile', () => {
       beforeEach(() => {
-        global.__TARGET__ = 'mobile'
+        isMobileApp.mockReturnValue(true)
       })
 
       afterEach(() => {
@@ -208,7 +222,7 @@ describe('useActions', () => {
 
       it('is visible for a single file on iOS', () => {
         global.window.cordova = { platformId: 'ios' }
-        const downloadAction = getAction('download')
+        const downloadAction = getAction('sendto')
         expect(
           downloadAction.displayCondition([{ id: 'abc', type: 'file' }])
         ).toBe(true)
@@ -231,7 +245,7 @@ describe('useActions', () => {
 
       it('is visible if only files are selected on android', () => {
         global.window.cordova = { platformId: 'android' }
-        const downloadAction = getAction('download')
+        const downloadAction = getAction('sendto')
         expect(
           downloadAction.displayCondition([
             { id: 'abc', type: 'file' },
@@ -247,7 +261,7 @@ describe('useActions', () => {
       })
 
       it('export files to the device when activated', () => {
-        const downloadAction = getAction('download')
+        const downloadAction = getAction('sendto')
         const mockDocuments = [
           { id: 'abc', name: 'my-file.md' },
           { id: 'def', name: 'my-file-2.md' }
@@ -304,11 +318,11 @@ describe('useActions', () => {
       const openAction = getAction('openWith')
 
       const validSelection = [{ type: 'file', id: 'abc' }]
+      isMobileApp.mockReturnValue(true)
 
-      global.__TARGET__ = 'mobile'
       expect(openAction.displayCondition(validSelection)).toBe(true)
 
-      global.__TARGET__ = 'browser'
+      isMobileApp.mockReturnValue(false)
       expect(openAction.displayCondition(validSelection)).toBe(false)
       expect(
         openAction.displayCondition([
@@ -483,10 +497,10 @@ describe('useActions', () => {
 
       const validSelection = [{ type: 'file', id: 'abc' }]
 
-      global.__TARGET__ = 'mobile'
+      isMobileApp.mockReturnValue(true)
       expect(offlineAction.displayCondition(validSelection)).toBe(true)
 
-      global.__TARGET__ = 'browser'
+      isMobileApp.mockReturnValue(false)
       expect(offlineAction.displayCondition(validSelection)).toBe(false)
       expect(
         offlineAction.displayCondition([
