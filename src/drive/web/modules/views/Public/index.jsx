@@ -70,40 +70,51 @@ const PublicFolderView = ({
 
   const refreshFolderContent = () => filesResult.forceRefetch() // We don't have enough permissions to rely on the realtime notifications or on a cozy-client query to update the view when something changes, so we relaod the view instead
 
-  const navigateToFolder = useCallback(folderId => {
-    router.push(`/folder/${folderId}`)
-  })
+  const navigateToFolder = useCallback(
+    folderId => {
+      router.push(`/folder/${folderId}`)
+    },
+    [router]
+  )
 
-  const navigateToFile = useCallback(async file => {
-    const isNote = models.file.isNote(file)
-    if (isNote) {
-      try {
-        const noteUrl = await models.note.fetchURL(client, file)
-        const url = new URL(noteUrl)
-        if (!isMobileApp()) {
-          url.searchParams.set('returnUrl', window.location.href)
+  const navigateToFile = useCallback(
+    async file => {
+      const isNote = models.file.isNote(file)
+      if (isNote) {
+        try {
+          const noteUrl = await models.note.fetchURL(client, file)
+          const url = new URL(noteUrl)
+          if (!isMobileApp()) {
+            url.searchParams.set('returnUrl', window.location.href)
+          }
+          window.location.href = url.toString()
+        } catch (e) {
+          Alerter.error('alert.offline')
         }
-        window.location.href = url.toString()
-      } catch (e) {
-        Alerter.error('alert.offline')
+      } else {
+        setViewerOpened(true)
+        showInViewer(file)
       }
-    } else {
-      setViewerOpened(true)
-      showInViewer(file)
-    }
-  })
+    },
+    [setViewerOpened, showInViewer, client]
+  )
 
-  const showInViewer = file => {
-    const currentIndex = viewableFiles.findIndex(f => f.id === file.id)
-    setCurrentViewerIndex(currentIndex)
+  const showInViewer = useCallback(
+    file => {
+      const currentIndex = viewableFiles.findIndex(f => f.id === file.id)
+      setCurrentViewerIndex(currentIndex)
 
-    const currentIndexInResults = files.findIndex(f => f.id === file.id)
-    if (filesResult.hasMore && files.length - currentIndexInResults <= 5) {
-      filesResult.fetchMore()
-    }
-  }
+      const currentIndexInResults = files.findIndex(f => f.id === file.id)
+      if (filesResult.hasMore && files.length - currentIndexInResults <= 5) {
+        filesResult.fetchMore()
+      }
+    },
+    [viewableFiles, files, filesResult]
+  )
 
-  const closeViewer = useCallback(() => setViewerOpened(false))
+  const closeViewer = useCallback(() => setViewerOpened(false), [
+    setViewerOpened
+  ])
 
   const { hasWritePermissions } = usePublicWritePermissions()
 

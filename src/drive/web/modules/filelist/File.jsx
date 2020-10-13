@@ -178,7 +178,7 @@ const FileName = ({
   )
 }
 
-const LastUpdate = React.memo(({ date, formatted = '-' }) => (
+const _LastUpdate = ({ date, formatted = '-' }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -187,9 +187,10 @@ const LastUpdate = React.memo(({ date, formatted = '-' }) => (
   >
     <time dateTime={date}>{formatted}</time>
   </div>
-))
+)
 
-const Size = React.memo(({ filesize = '-' }) => (
+const LastUpdate = React.memo(_LastUpdate)
+const _Size = ({ filesize = '-' }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -198,9 +199,11 @@ const Size = React.memo(({ filesize = '-' }) => (
   >
     {filesize}
   </div>
-))
+)
 
-const Status = React.memo(({ isAvailableOffline, id }) => (
+const Size = React.memo(_Size)
+
+const _Status = ({ isAvailableOffline, id }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -219,7 +222,8 @@ const Status = React.memo(({ isAvailableOffline, id }) => (
     )}
     <SharedStatus docId={id} className={styles['fil-content-sharestatus']} />
   </div>
-))
+)
+const Status = React.memo(_Status)
 
 const FileAction = forwardRef(function FileAction({ t, onClick }, ref) {
   return (

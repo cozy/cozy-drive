@@ -48,7 +48,8 @@ const FileOpener = ({
       file,
       open,
       selectionModeActive,
-      toggle
+      toggle,
+      isRenaming
     ]
   )
 
