@@ -54,14 +54,15 @@ const FolderViewBody = ({
   const dispatch = useDispatch()
 
   const handleFileOpen = useCallback(
-    createFileOpeningHandler({
-      client,
-      isFlatDomain,
-      dispatch,
-      navigateToFile,
-      replaceCurrentUrl: url => (window.location.href = url),
-      openInNewTab: url => window.open(url, '_blank')
-    }),
+    () =>
+      createFileOpeningHandler({
+        client,
+        isFlatDomain,
+        dispatch,
+        navigateToFile,
+        replaceCurrentUrl: url => (window.location.href = url),
+        openInNewTab: url => window.open(url, '_blank')
+      }),
     [client, dispatch, navigateToFile, isFlatDomain]
   )
 

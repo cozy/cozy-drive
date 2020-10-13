@@ -37,7 +37,7 @@ export const DeleteConfirm = ({
       afterConfirmation()
       onClose()
     },
-    [trashFiles, client, files]
+    [client, files, afterConfirmation, onClose]
   )
 
   return (

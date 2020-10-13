@@ -89,7 +89,7 @@ const SharingsFolderView = ({
     file => {
       router.push(`/sharings/${currentFolderId}/file/${file.id}`)
     },
-    [router]
+    [router, currentFolderId]
   )
 
   const client = useClient()
