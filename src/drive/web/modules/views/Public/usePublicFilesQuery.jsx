@@ -46,7 +46,7 @@ export const usePublicFilesQuery = currentFolderId => {
       }
       initialFetch()
     },
-    [currentFolderId, fetchCounter]
+    [currentFolderId, fetchCounter, client]
   )
 
   const fetchMore = async () => {
