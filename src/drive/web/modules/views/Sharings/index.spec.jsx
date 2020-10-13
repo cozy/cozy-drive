@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import { Router, hashHistory, Route, Redirect, IndexRoute } from 'react-router'
 import FileHistory from 'components/FileHistory'
 
@@ -82,7 +82,11 @@ describe('Sharings View', () => {
       dir_id,
       updated_at
     })
-
+    const sleep = duration =>
+      new Promise(resolve => setTimeout(resolve, duration))
+    await act(async () => {
+      await sleep(100)
+    })
     // Get the HTMLElement containing the filename if exist. If not throw
     const el0 = getByText(`foobar0`)
     // Check if the filename is displayed with the extension. If not throw
