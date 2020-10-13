@@ -1,7 +1,9 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render } from '@testing-library/react'
 import Header from './Header'
-
+import { TestI18n } from 'test/components/AppLike'
+import en from 'drive/locales/en.json'
+import Polyglot from 'node-polyglot'
 const onCloseSpy = jest.fn()
 describe('Header', () => {
   const setupComponent = ({ entries = [], onClose, title, subTitle }) => {
@@ -11,25 +13,31 @@ describe('Header', () => {
       title,
       subTitle
     }
-    return shallow(<Header {...props} />, {
-      context: {
-        t: jest.fn(x => x)
-      }
-    })
+    const polyglot = new Polyglot()
+    polyglot.extend(en)
+    const t = polyglot.t.bind(polyglot)
+    return {
+      ...render(
+        <TestI18n>
+          <Header {...props} />
+        </TestI18n>
+      ),
+      t
+    }
   }
   it('should fallback to Move title if no title is given', () => {
-    const component = setupComponent({ onClose: onCloseSpy })
-    expect(component).toMatchSnapshot()
+    const { getByText, t } = setupComponent({ onClose: onCloseSpy })
+    expect(getByText(t('Move.title', { smart_count: 0 })))
   })
   it('should display title if title is given and no file', () => {
-    const component = setupComponent({
+    const { getByText } = setupComponent({
       onClose: onCloseSpy,
       title: 'My Title'
     })
-    expect(component).toMatchSnapshot()
+    expect(getByText('My Title'))
   })
   it('should display the right title if only one file', () => {
-    const component = setupComponent({
+    const { getByText } = setupComponent({
       onClose: onCloseSpy,
       title: 'My Title',
       entries: [
@@ -38,10 +46,11 @@ describe('Header', () => {
         }
       ]
     })
-    expect(component).toMatchSnapshot()
+    expect(getByText('FileName.txt'))
+    //expect(component).toMatchSnapshot()
   })
   it('should display the right title if more than one files', () => {
-    const component = setupComponent({
+    const { getByText } = setupComponent({
       onClose: onCloseSpy,
       title: 'My Title',
       entries: [
@@ -53,6 +62,6 @@ describe('Header', () => {
         }
       ]
     })
-    expect(component).toMatchSnapshot()
+    expect(getByText('My Title'))
   })
 })
