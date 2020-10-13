@@ -140,11 +140,13 @@ const PublicFolderView = ({
       <ModalStack />
       <ModalManager />
       <FolderViewHeader>
-        <FolderViewBreadcrumb
-          getBreadcrumbPath={geTranslatedBreadcrumbPath}
-          currentFolderId={currentFolderId}
-          navigateToFolder={navigateToFolder}
-        />
+        {currentFolderId && (
+          <FolderViewBreadcrumb
+            getBreadcrumbPath={geTranslatedBreadcrumbPath}
+            currentFolderId={currentFolderId}
+            navigateToFolder={navigateToFolder}
+          />
+        )}
         <PublicToolbar
           files={files}
           isFile={false}
