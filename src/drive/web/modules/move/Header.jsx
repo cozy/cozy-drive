@@ -13,6 +13,8 @@ import {
   Bold
 } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/stylus/settings/palette.json'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+
 import DriveIcon from 'drive/assets/icons/icon-drive.svg'
 
 const HeaderIlustration = ({ count }) => {
@@ -25,7 +27,8 @@ const HeaderIlustration = ({ count }) => {
   )
 }
 
-const Header = ({ entries, onClose, title, subTitle }, { t }) => {
+const Header = ({ entries, onClose, title, subTitle }) => {
+  const { t } = useI18n()
   const titleToUse = title
     ? title
     : t('Move.title', { smart_count: entries.length })
@@ -47,6 +50,8 @@ const Header = ({ entries, onClose, title, subTitle }, { t }) => {
           onClick={onClose}
           extension="narrow"
           type="button"
+          iconOnly
+          label="back"
         >
           <Icon
             icon="cross"
@@ -69,10 +74,6 @@ Header.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   subTitle: PropTypes.string
-}
-
-Header.contextTypes = {
-  t: PropTypes.func.isRequired
 }
 
 export default Header
