@@ -93,7 +93,13 @@ export const download = ({ client }) => {
 }
 
 export const hr = () => {
-  return { icon: 'hr' }
+  return {
+    icon: 'hr',
+    displayInSelectionBar: false,
+    Component: function hr() {
+      return <hr />
+    }
+  }
 }
 
 export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
