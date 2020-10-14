@@ -1,22 +1,30 @@
 import React, { useCallback } from 'react'
-import classNames from 'classnames'
 import { useClient } from 'cozy-client'
 import Modal, { ModalDescription } from 'cozy-ui/transpiled/react/Modal'
+import { Media, Img, Bd } from 'cozy-ui/transpiled/react/Media'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import Stack from 'cozy-ui/transpiled/react/Stack'
+
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
 
 import { trashFiles } from 'drive/web/modules/actions/utils'
-import styles from 'drive/styles/confirms.styl'
 
 const Message = ({ type, fileCount }) => {
+  const ico =
+    type === 'referenced' ? 'album' : type === 'shared' ? 'share' : type
+
   const { t } = useI18n()
   return (
-    <p
-      className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
-    >
-      {t(`deleteconfirmation.${type}`, fileCount)}
-    </p>
+    <Media>
+      <Img>
+        <Icon icon={ico} color="var(--coolGrey)" />
+      </Img>
+      <Bd className={'u-pl-1-half'}>
+        {t(`deleteconfirmation.${type}`, fileCount)}
+      </Bd>
+    </Media>
   )
 }
 
@@ -51,10 +59,12 @@ export const DeleteConfirm = ({
       primaryAction={onDelete}
     >
       <ModalDescription>
-        <Message type="trash" fileCount={fileCount} />
-        <Message type="restore" fileCount={fileCount} />
-        {referenced && <Message type="referenced" fileCount={fileCount} />}
-        {children}
+        <Stack>
+          <Message type="trash" fileCount={fileCount} />
+          <Message type="restore" fileCount={fileCount} />
+          {referenced && <Message type="referenced" fileCount={fileCount} />}
+          {children}
+        </Stack>
       </ModalDescription>
     </Modal>
   )
@@ -65,15 +75,18 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
     <DeleteConfirm files={files} {...rest} />
   ) : (
     <SharedDocument docId={files[0].id}>
-      {({ isSharedByMe }) => (
+      {({ isSharedByMe, link, recipients }) => (
         <DeleteConfirm files={files} {...rest}>
-          {isSharedByMe && <Message type="shared" fileCount={files.length} />}
-          {isSharedByMe && (
-            <SharedRecipientsList
-              className={styles['fil-confirm-recipients']}
-              docId={files[0].id}
-            />
-          )}
+          {isSharedByMe &&
+            link && <Message type="link" fileCount={files.length} />}
+          {isSharedByMe &&
+            recipients.length > 0 && (
+              <Message type="shared" fileCount={files.length} />
+            )}
+          {isSharedByMe &&
+            recipients.length > 0 && (
+              <SharedRecipientsList className={'u-ml-1'} docId={files[0].id} />
+            )}
         </DeleteConfirm>
       )}
     </SharedDocument>
