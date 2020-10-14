@@ -25,9 +25,6 @@ const MakeAvailableOfflineMenuItem = connect(
   })
   return (
     <ActionMenuItem
-      onClick={e => {
-        alert(e)
-      }}
       {...rest}
       left={<Icon icon="phone-download" />}
       right={
