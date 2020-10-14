@@ -26,7 +26,7 @@ module.exports = {
   },
   snapshotSerializers: ['enzyme-to-json/serializer'],
   transform: {
-    '^.+\\.(js|jsx)?$': '<rootDir>/test/jestLib/babel-transformer.js',
+    '^.+\\.jsx?$': 'babel-jest',
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js'
   },
   transformIgnorePatterns: ['node_modules/(?!cozy-ui)/'],
