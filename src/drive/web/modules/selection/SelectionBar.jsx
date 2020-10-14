@@ -21,9 +21,9 @@ export default connect(
   mapDispatchToProps
 )(({ selectionModeActive, actions, ...rest }) => {
   const convertedActions = driveActionsToSelectionBarActions(actions)
-
+  const style = selectionModeActive ? {} : { display: 'none' }
   return (
-    <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
+    <div style={style}>
       <SelectionBar actions={convertedActions} {...rest} />
     </div>
   )
