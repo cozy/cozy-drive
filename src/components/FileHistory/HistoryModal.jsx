@@ -89,7 +89,7 @@ const HistoryModal = ({
                     if (!isMobile()) {
                       fileCollection.download(
                         file,
-                        revision._id,
+                        revision.id,
                         CozyFile.generateFileNameForRevision(file, revision, f)
                       )
                     } else {

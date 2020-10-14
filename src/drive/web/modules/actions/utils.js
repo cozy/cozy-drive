@@ -122,7 +122,7 @@ export const exportFilesNative = async (client, files, filename) => {
   const downloadAllFiles = files.map(async file => {
     const response = await client
       .collection('io.cozy.files')
-      .fetchFileContent(file.id || file._id)
+      .fetchFileContent(file.id)
 
     const blob = await response.blob()
     const filenameToUse = filename ? filename : file.name
