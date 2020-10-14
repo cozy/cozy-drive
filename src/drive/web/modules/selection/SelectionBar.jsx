@@ -6,7 +6,7 @@ import {
   hideSelectionBar,
   isSelectionBarVisible
 } from './duck'
-
+import { getActionName } from 'drive/web/modules/actionmenu/ActionsItems'
 const mapStateToProps = state => ({
   selected: getSelectedFiles(state),
   selectionModeActive: isSelectionBarVisible(state)
@@ -20,7 +20,8 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(({ selectionModeActive, actions, ...rest }) => {
-  const convertedActions = DriveActionToSelectionBarAction(actions)
+  const convertedActions = driveActionsToSelectionBarActions(actions)
+
   return (
     <div style={{ display: selectionModeActive ? 'inherit' : 'none' }}>
       <SelectionBar actions={convertedActions} {...rest} />
@@ -28,13 +29,17 @@ export default connect(
   )
 })
 
-const DriveActionToSelectionBarAction = driveActions => {
+const driveActionsToSelectionBarActions = driveActions => {
   let actions = {}
+
   driveActions.map(driveAction => {
-    const actionName = Object.keys(driveAction)[0]
-    if (actionName !== 'hr') {
-      actions[actionName] = Object.values(driveAction)[0]
-    }
+    const actionName = getActionName(driveAction)
+    const actionDefinition = Object.values(driveAction)[0]
+    if (
+      actionDefinition.displayInSelectionBar === undefined ||
+      actionDefinition.displayInSelectionBar
+    )
+      actions[actionName] = actionDefinition
   })
   return actions
 }
