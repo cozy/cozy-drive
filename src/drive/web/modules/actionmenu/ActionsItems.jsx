@@ -55,9 +55,8 @@ export const ActionsItems = ({ actions, file, onClose }) => {
 
     const onClick = action
       ? () => {
-          const promise = action([file])
+          action([file])
           onClose()
-          return promise
         }
       : null
     return (
