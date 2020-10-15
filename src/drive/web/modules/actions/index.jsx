@@ -133,9 +133,9 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
               />
             )
           }
-          left={<Icon icon="trash" color="var(--pomegranate)" />}
+          left={<Icon icon="trash" color="var(--dangerColor)" />}
         >
-          <span className="u-pomegranate">{t('SelectionBar.trash')}</span>
+          <span className="u-danger">{t('SelectionBar.trash')}</span>
         </ActionMenuItem>
       )
     }
@@ -330,9 +330,9 @@ export const destroy = ({ pushModal, popModal }) => {
           onClick={() =>
             pushModal(<DestroyConfirm files={props.files} onClose={popModal} />)
           }
-          left={<Icon icon="trash" color="var(--pomegranate)" />}
+          left={<Icon icon="trash" color="var(--dangerColor)" />}
         >
-          <span className="u-pomegranate">{t('SelectionBar.destroy')}</span>
+          <span className="u-danger">{t('SelectionBar.destroy')}</span>
         </ActionMenuItem>
       )
     }
