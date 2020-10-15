@@ -34,12 +34,16 @@ export const getOnlyNeededActions = (actions, file) => {
     cleanedActions.push(actionObject)
   })
   // We don't want to have an hr as the latest actions available
-  while (getActionName(cleanedActions.slice(-1)[0]) === 'hr') {
+  while (getActionName(cleanedActions[cleanedActions.length - 1]) === 'hr') {
     cleanedActions.pop()
   }
   return cleanedActions
 }
-
+/**
+ *
+ * ActionsItems only shows `actions` that are  suitable for the given
+ * `file`.
+ */
 export const ActionsItems = ({ actions, file, onClose }) => {
   const cleanedActions = useCallback(getOnlyNeededActions(actions, file), [
     actions,

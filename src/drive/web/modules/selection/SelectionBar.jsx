@@ -32,7 +32,7 @@ export default connect(
 const driveActionsToSelectionBarActions = driveActions => {
   let actions = {}
 
-  driveActions.map(driveAction => {
+  driveActions.forEach(driveAction => {
     const actionName = getActionName(driveAction)
     const actionDefinition = Object.values(driveAction)[0]
     if (
