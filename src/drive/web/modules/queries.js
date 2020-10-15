@@ -54,8 +54,7 @@ const buildDriveQuery = ({
       .limitBy(100),
   options: {
     as: formatFolderQueryId(type, currentFolderId, sortAttribute, sortOrder),
-    fetchPolicy: defaultFetchPolicy,
-    singleDocData: false
+    fetchPolicy: defaultFetchPolicy
   }
 })
 
@@ -74,8 +73,7 @@ const buildRecentQuery = () => ({
       .limitBy(50),
   options: {
     as: 'recent-view-query',
-    fetchPolicy: defaultFetchPolicy,
-    singleDocData: false
+    fetchPolicy: defaultFetchPolicy
   }
 })
 
@@ -83,8 +81,7 @@ const buildParentsByIdsQuery = ids => ({
   definition: () => Q('io.cozy.files').getByIds(ids),
   options: {
     as: `parents-by-ids-${ids.join('')}`,
-    fetchPolicy: defaultFetchPolicy,
-    singleDocData: false
+    fetchPolicy: defaultFetchPolicy
   }
 })
 
@@ -95,8 +92,7 @@ const buildSharingsQuery = ids => ({
       .sortBy([{ type: 'asc' }, { name: 'asc' }]),
   options: {
     as: `sharings-by-ids-${ids.join('')}`,
-    fetchPolicy: defaultFetchPolicy,
-    singleDocData: false
+    fetchPolicy: defaultFetchPolicy
   }
 })
 
@@ -130,8 +126,7 @@ const buildTrashQuery = ({
     )}`,
     fetchPolicy: CozyClient.fetchPolicies.olderThan(
       DEFAULT_CACHE_TIMEOUT_QUERIES
-    ),
-    singleDocData: false
+    )
   }
 })
 
@@ -185,8 +180,7 @@ export const buildFolderQuery = folderId => ({
       .include(['parent']),
   options: {
     as: 'folder-' + folderId,
-    fetchPolicy: defaultFetchPolicy,
-    singleDocData: false
+    fetchPolicy: defaultFetchPolicy
   }
 })
 
