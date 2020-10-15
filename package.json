@@ -15,7 +15,7 @@
     "build:photos": "npm-run-all --parallel build:photos:browser",
     "build:photos:browser": "COZY_APP_SLUG=photos cozy-scripts build --manifest src/photos/targets/manifest.webapp --build-dir build/photos --src-dir src/photos",
     "watch:photos": "npm run watch:photos:browser",
-    "watch:photos:browser": "COZY_APP_SLUG=photos cozy-scripts watch --debug --manifest src/photos/targets/manifest.webapp --build-dir build/photos --src-dir src/photos",
+    "watch:photos:browser": "COZY_APP_SLUG=photos cozy-scripts start --no-stack --hot --manifest src/photos/targets/manifest.webapp --build-dir build/photos --src-dir src/photos",
     "deploy:drive": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/drive/' --prepublish downcloud --postpublish mattermost",
     "deploy:photos": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/photos/' --prepublish downcloud --postpublish mattermost",
     "tx": "tx pull --all || true",

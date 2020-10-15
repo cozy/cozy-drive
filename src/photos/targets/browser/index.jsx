@@ -23,13 +23,14 @@ import {
   getTracker,
   createTrackerMiddleware
 } from 'cozy-ui/transpiled/react/helpers/tracker'
+import memoize from 'lodash/memoize'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import appMetadata from 'photos/appMetadata'
 import doctypes from './doctypes'
 const loggerMiddleware = createLogger()
 
-document.addEventListener('DOMContentLoaded', () => {
+const setupAppContext = memoize(() => {
   const root = document.querySelector('[role=application]')
   const data = root.dataset
   const lang = document.documentElement.getAttribute('lang') || 'en'
@@ -69,27 +70,60 @@ document.addEventListener('DOMContentLoaded', () => {
     composeEnhancers(applyMiddleware.apply(this, middlewares))
   )
   client.setStore(store)
-
+  const locale = data.cozyLocale
   cozy.bar.init({
     appName: data.cozyAppName,
     appEditor: data.cozyAppEditor,
     cozyClient: client,
     iconPath: data.cozyIconPath,
-    lang: data.cozyLocale,
+    lang: lang,
     replaceTitleOnMobile: true
   })
-  render(
-    <Provider store={store}>
-      <I18n lang={lang} dictRequire={lang => require(`photos/locales/${lang}`)}>
-        <CozyProvider client={client}>
+  return { store, locale, client, history, root }
+})
+
+const App = props => {
+  return (
+    <Provider store={props.store}>
+      <I18n
+        lang={props.locale}
+        dictRequire={lang => require(`photos/locales/${lang}`)}
+      >
+        <CozyProvider client={props.client}>
           <StyledApp>
             <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
-              <Router history={history} routes={AppRoute} />
+              {props.children}
             </SharingProvider>
           </StyledApp>
         </CozyProvider>
       </I18n>
-    </Provider>,
+    </Provider>
+  )
+}
+
+const AppWithRouter = props => (
+  <App {...props}>
+    <Router history={props.history} routes={AppRoute} />
+  </App>
+)
+
+const init = () => {
+  const { store, locale, client, history, root } = setupAppContext()
+  render(
+    <AppWithRouter
+      store={store}
+      locale={locale}
+      client={client}
+      history={history}
+    />,
     root
   )
+}
+document.addEventListener('DOMContentLoaded', () => {
+  init()
 })
+
+if (module.hot) {
+  init()
+  module.hot.accept()
+}
