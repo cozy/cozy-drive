@@ -5197,15 +5197,15 @@ cozy-client@13.1.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@15.1.0, cozy-client@^15.1.0:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-15.1.0.tgz#b23dfba29f5142ffd7b510a15e12e767cb564292"
-  integrity sha512-7bsIJLbjqOZ1iuOj00YTPsDYRGa42++GU9JpIaGqgLNJggjqkZBWQq4ZFTaOQHQ/70lfbu8n/J3slCnz7S14Nw==
+cozy-client@15.3.1, cozy-client@^15.3.1:
+  version "15.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-15.3.1.tgz#3976fdbb357f55ae6d7c5626f72e1c6bd86b51ea"
+  integrity sha512-mhkSlNIBE6qw/g7nNtOOpkJJusoeQ0AMEw9/uFLOz3PCDmwHG3/IUOCAay42sgA+4ExCVaLO0YTXYoKU1S/GnA==
   dependencies:
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^15.0.0"
+    cozy-stack-client "^15.2.0"
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -5358,12 +5358,12 @@ cozy-logger@1.6.0, cozy-logger@^1.6.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@15.1.0:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-15.1.0.tgz#8140bc70b8d2183e3942d8ab9bdd7eeb9891d0c1"
-  integrity sha512-E5uWv8eIXF9YLpzZJFvOYGhsz68IGLbjZDp7zD7kcMa5NdMJZTRctcsK2b6awjvEJpxZpwQbUdJxfsEhUFnObg==
+cozy-pouch-link@15.3.1:
+  version "15.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-15.3.1.tgz#6d704444c0170f366cafddeb196fc2864c6977bd"
+  integrity sha512-1vqfwzmNMgEiybfOGVKKJhvGJQHBQXA3WFaYF1UVjRmtqRXkKKMTmG0LvkTVnoTZEPI1c1nQoJuCoAZm4d2+JQ==
   dependencies:
-    cozy-client "^15.1.0"
+    cozy-client "^15.3.1"
     cozy-device-helper "^1.7.3"
     minilog "^3.1.0"
     pouchdb-browser "^7.0.0"
@@ -5467,10 +5467,10 @@ cozy-sharing@1.16.0:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@14.1.2:
-  version "14.1.2"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-14.1.2.tgz#606ce89cabf4def2875cb8749b28b3ee8b96d18f"
-  integrity sha512-0IyYvBQu+vuwN9qe6PHA7khXBQT8TGSjVia7SVTGQ88tEFSLLGXjfZe3pkZQ1ihBdJvmeon12dm0BWeEb+9KZw==
+cozy-stack-client@15.2.0, cozy-stack-client@^15.2.0:
+  version "15.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-15.2.0.tgz#677f56e38e7a1b25f0574241da6caff441046b38"
+  integrity sha512-QldK+uQ2GZCLAlHwxFR3tb+4R83MG3huw43kGGVXono2XavBOqDU40Ms2imkUlCyzMXulY1UkInsSQBPO8mVgQ==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -5480,15 +5480,6 @@ cozy-stack-client@^13.1.0, cozy-stack-client@^13.12.1:
   version "13.12.1"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-13.12.1.tgz#9de6e2cbe3202e351f935d5e16faf2fa27cfa3af"
   integrity sha512-lZhWm3XB3YpvJ6dP1IPLioSJvVQLbPl3eeIrqI6RmGWi4KyIEES6jw1xEWaO7BNLT6p27BboGedqxeZzMXoBjw==
-  dependencies:
-    detect-node "^2.0.4"
-    mime "^2.4.0"
-    qs "^6.7.0"
-
-cozy-stack-client@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-15.0.0.tgz#782903286e3ad89bb09586c78dd8a7cc5fff8d7e"
-  integrity sha512-yRXCIOu2XmgO9ziyYt3AB6Fl1cxGeLgih9dPtYGsUUH0NQdC9QcD4qmrF8MxxLD6i3+S+lmANE41205jIi4Tgg==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -5511,10 +5502,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@37.9.0:
-  version "37.9.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-37.9.0.tgz#6983ba63308f3e23e50948889ae518caabb0baeb"
-  integrity sha512-JSAD8MkPFkYGjxybZnVQw4gkREOKSJVc6AwkTKT3i5xPw7LrRigrDvw3KKCxb6eRkF15HrixQdCN7wX3zXQcGA==
+cozy-ui@38.2.0:
+  version "38.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-38.2.0.tgz#252363727b2aeb4b427a69315d45a85d9490adc1"
+  integrity sha512-SFotqf11ai+3UoZuyYLtaCwyqEzfk/db2qIBWCsUtNRxdvE2lWCvUyfVsvKjoD4JA90AXPKgHZsjOqweotcbXA==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
@@ -5526,7 +5517,6 @@ cozy-ui@37.9.0:
     intersection-observer "0.11.0"
     node-polyglot "^2.2.2"
     normalize.css "^7.0.0"
-    react-hot-loader "^4.3.11"
     react-markdown "^4.0.8"
     react-pdf "^4.0.5"
     react-popper "^2.2.3"
@@ -11703,6 +11693,12 @@ mini-css-extract-plugin@0.5.0:
 minilog@3.1.0, minilog@^3.1.0, "minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
   resolved "https://github.com/cozy/minilog.git#f01f7d9dfe20981177dd34b9662c2f077d818f82"
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  resolved "git+https://github.com/cozy/minilog.git#6da0aa58759c4f1a1a7e0fd093dbe2a67c035c55"
   dependencies:
     microee "0.0.6"
 
