@@ -13,7 +13,6 @@ import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import App from 'components/App/App'
 import setupApp from './setupAppContext'
 
-
 if (__DEVELOPMENT__) {
   window.flag = flag
 }
