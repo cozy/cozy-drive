@@ -5,12 +5,12 @@ import keyBy from 'lodash/keyBy'
 import { buildParentsByIdsQuery } from 'drive/web/modules/queries'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 
-export const excludeTrashedFiles = files => {
-  return files.filter(f => f.dir_id !== TRASH_DIR_ID && f.trashed !== true)
-}
+export const isFileTrashed = file =>
+  file.dir_id !== TRASH_DIR_ID && file.trashed !== true
+
 export const useFilesQueryWithPath = query => {
   const result = useQuery(query.definition, query.options)
-  const resultData = excludeTrashedFiles(result.data || []) 
+  const resultData = (result.data || []).filter(isFileTrashed)
 
   const dirIds = uniq(resultData.map(({ dir_id }) => dir_id))
   const parentsQuery = buildParentsByIdsQuery(dirIds)
