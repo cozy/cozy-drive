@@ -21,8 +21,9 @@ module.exports = {
     '^folder-references(.*)': '<rootDir>/src/folder-references$1',
     '^lib(.*)': '<rootDir>/src/lib$1',
     'react-pdf/dist/pdf.worker.entry.js':
-      '<rootDir>/jestHelpers/mocks/pdfjsWorkerMock.js',
-    '^cozy-client$': 'cozy-client/dist/index.js'
+    '<rootDir>/jestHelpers/mocks/pdfjsWorkerMock.js',
+    '^cozy-client$': 'cozy-client/dist/index.js',
+    '^react-redux': '<rootDir>/node_modules/react-redux'
   },
   snapshotSerializers: ['enzyme-to-json/serializer'],
   transform: {
