@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useMemo } from 'react'
 import cx from 'classnames'
 
 import styles from 'drive/styles/actionmenu.styl'
@@ -45,7 +45,7 @@ export const getOnlyNeededActions = (actions, file) => {
  * `file`.
  */
 export const ActionsItems = ({ actions, file, onClose }) => {
-  const cleanedActions = useCallback(getOnlyNeededActions(actions, file), [
+  const cleanedActions = useMemo(() => getOnlyNeededActions(actions, file), [
     actions,
     file
   ])
