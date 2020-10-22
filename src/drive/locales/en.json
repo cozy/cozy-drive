@@ -87,6 +87,14 @@
         "action": "Authorize access",
         "success": "The application has access to your contacts"
       }
+    },
+    "banner": {
+      "shared_from": "Shared from the cozy of",
+      "synchronise": "Synchronise this content in your cozy to be able to modify it or to keep it in case of cancellation of sharing.",
+      "whats_cozy": "Cozy is a secure digital home for all your data, hosted in France - ",
+      "know_more": "More information",
+      "sync_to_mine": "Synchronise in my Cozy",
+      "add_to_mine": "Add to my Cozy"
     }
   },
   "Sharings": {
@@ -644,7 +652,7 @@
   },
   "External": {
     "redirection": {
-      "title": "Redirection", 
+      "title": "Redirection",
       "text": "You're about to be redirected…",
       "error": "Error during the redirection. Generally, this means that the content of the file is not in the correct format."
     }
