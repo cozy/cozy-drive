@@ -147,48 +147,51 @@ const PublicFolderView = ({
   )
 
   return (
-    <Main>
-      <ModalStack />
-      <ModalManager />
-      <FolderViewHeader>
-        {currentFolderId && (
-          <FolderViewBreadcrumb
-            getBreadcrumbPath={geTranslatedBreadcrumbPath}
-            currentFolderId={currentFolderId}
-            navigateToFolder={navigateToFolder}
-          />
-        )}
+    <>
+      <Main isPublic={true}>
+        <ModalStack />
+        <ModalManager />
         <PublicToolbar
-          files={files}
-          isFile={false}
-          hasWriteAccess={hasWritePermissions}
-          refreshFolderContent={refreshFolderContent}
-        />
-      </FolderViewHeader>
-      <Content>
-        <FolderViewBody
-          navigateToFolder={navigateToFolder}
-          navigateToFile={navigateToFile}
-          actions={actions}
-          queryResults={[filesResult]}
-          canSort={false}
-          currentFolderId={currentFolderId}
-          refreshFolderContent={refreshFolderContent}
-        />
-
-        {viewerOpened && (
-          <Overlay>
-            <PublicViewer
-              files={viewableFiles}
-              currentIndex={currentViewerIndex}
-              onChangeRequest={showInViewer}
-              onCloseRequest={closeViewer}
+        files={files}
+        hasWriteAccess={hasWritePermissions}
+        refreshFolderContent={refreshFolderContent}
+      />
+      <div className="u-pt-2">
+        <FolderViewHeader>
+          {currentFolderId && (
+            <FolderViewBreadcrumb
+              getBreadcrumbPath={geTranslatedBreadcrumbPath}
+              currentFolderId={currentFolderId}
+              navigateToFolder={navigateToFolder}
             />
-          </Overlay>
-        )}
-        {children}
-      </Content>
-    </Main>
+          )}
+        </FolderViewHeader>
+        <Content>
+          <FolderViewBody
+            navigateToFolder={navigateToFolder}
+            navigateToFile={navigateToFile}
+            actions={actions}
+            queryResults={[filesResult]}
+            canSort={false}
+            currentFolderId={currentFolderId}
+            refreshFolderContent={refreshFolderContent}
+          />
+
+          {viewerOpened && viewableFiles.length > 0 && (
+            <Overlay>
+              <PublicViewer
+                files={viewableFiles}
+                currentIndex={currentViewerIndex}
+                onChangeRequest={showInViewer}
+                onCloseRequest={closeViewer}
+              />
+            </Overlay>
+          )}
+          {children}
+        </Content>
+        </div>
+      </Main>
+    </>
   )
 }
 
