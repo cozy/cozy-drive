@@ -1,10 +1,11 @@
 import React from 'react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Button } from 'cozy-ui/transpiled/react'
 
 import styles from './index.styl'
 
-const MoreButton = ({ t, disabled, onClick }) => {
+const MoreButton = ({ disabled, onClick }) => {
+  const { t } = useI18n()
   return (
     <Button
       data-test-id="more-button"
@@ -20,4 +21,4 @@ const MoreButton = ({ t, disabled, onClick }) => {
   )
 }
 
-export default translate()(MoreButton)
+export default MoreButton
