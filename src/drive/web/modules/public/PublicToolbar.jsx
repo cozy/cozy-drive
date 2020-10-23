@@ -26,6 +26,7 @@ import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 
 const { BarRight } = cozy.bar
+import PublicToolbarByLink from './PublicToolbarByLink'
 
 const DownloadFilesButton = ({ t, onDownload, size, isFile }) => (
   <DownloadButton
@@ -292,6 +293,15 @@ class PublicToolbar extends React.Component {
     } = this.props
     const { discoveryLink , isSharingShortcutCreated} = this.state
 
+    if (!discoveryLink) {
+      return (
+        <PublicToolbarByLink
+          files={files}
+          hasWriteAccess={hasWriteAccess}
+          refreshFolderContent={refreshFolderContent}
+        />
+      )
+    }
     if (isMobile) {
       return (
         <MobileToolbar
