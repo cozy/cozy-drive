@@ -1,10 +1,16 @@
 /* global localStorage */
 
-import styles from './pushClient.styl'
-
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-
 import React, { Component } from 'react'
+import localforage from 'localforage'
+import flow from 'lodash/flow'
+
+import { withClient } from 'cozy-client'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Banner from 'cozy-ui/transpiled/react/Banner'
+import Button, { ButtonLink } from 'cozy-ui/transpiled/react/Button'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import palette from 'cozy-ui/transpiled/react/palette'
+
 import {
   track,
   isLinux,
@@ -13,10 +19,8 @@ import {
   isClientAlreadyInstalled,
   DESKTOP_BANNER
 } from '.'
-import { Button, ButtonLink, Icon } from 'cozy-ui/transpiled/react'
-import { withClient } from 'cozy-client'
 import Config from 'drive/config/config.json'
-import localforage from 'localforage'
+import styles from './pushClient.styl'
 
 class BannerClient extends Component {
   state = {
@@ -50,57 +54,52 @@ class BannerClient extends Component {
   render() {
     if (Config.promoteDesktop.isActivated !== true || !this.state.mustShow)
       return null
+
     const { t } = this.props
 
-    const mobileLink = isIOS()
+    const link = isIOS()
       ? 'Nav.link-client-ios'
       : isAndroid()
         ? 'Nav.link-client-android'
-        : 'Nav.link-client'
-    const desktopLink = isLinux()
-      ? 'Nav.link-client'
-      : 'Nav.link-client-desktop'
+        : isLinux()
+          ? 'Nav.link-client'
+          : 'Nav.link-client-desktop'
+
+    const text =
+      isIOS() || isAndroid() ? 'Nav.btn-client-mobile' : 'Nav.banner-txt-client'
 
     return (
       <div className={styles['coz-banner-client']}>
-        <ButtonLink
-          href={t(mobileLink)}
-          target="_blank"
-          className={styles['coz-btn-clientMobile']}
-          onClick={() => {
-            this.markAsSeen('banner')
-          }}
-          label={t('Nav.btn-client-mobile')}
-        />
-        <div className={styles['coz-banner-text']}>
-          <figure>
-            <Icon icon="cozy" width="44" height="44" />
-          </figure>
-          <span>{t('Nav.banner-txt-client')}</span>
-          <ButtonLink
-            href={t(desktopLink)}
-            target="_blank"
-            theme="alpha"
-            onClick={() => {
-              this.markAsSeen('banner')
-            }}
-            label={t('Nav.banner-btn-client')}
-          />
-        </div>
-        <Button
-          theme="close"
-          extension="narrow"
-          className={styles['close-banner']}
-          onClick={() => {
-            this.markAsSeen('close')
-          }}
-          icon={<Icon icon="cross" width="24" height="24" />}
-          iconOnly
-          label={t('SelectionBar.close')}
+        <Banner
+          inline
+          icon={<Icon icon="device-laptop" size="100%" />}
+          text={t(text)}
+          bgcolor={palette['paleGrey']}
+          buttonOne={
+            <ButtonLink
+              href={t(link)}
+              theme="text"
+              icon="download"
+              label={t('Nav.banner-btn-client')}
+              onClick={() => this.markAsSeen('banner')}
+            />
+          }
+          buttonTwo={
+            <Button
+              theme="text"
+              label={t('SelectionBar.close')}
+              onClick={() => {
+                this.markAsSeen('close')
+              }}
+            />
+          }
         />
       </div>
     )
   }
 }
 
-export default translate()(withClient(BannerClient))
+export default flow(
+  translate(),
+  withClient
+)(BannerClient)
