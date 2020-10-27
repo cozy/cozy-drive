@@ -5,7 +5,7 @@
 .coz-btn-client
     @extend $button-client
     margin 1rem
-    
+
     +medium-screen()
         display none
 
@@ -16,29 +16,3 @@
     +small-screen('min')
         margin-top     -1.875rem
         margin-bottom  1.875rem
-
-    .coz-btn-clientMobile
-        @extend $button-client-mobile
-        margin  0
-
-        +medium-screen('min')
-            display none
-
-    .coz-banner-text
-        @extend $button-client-mobile
-        margin 0
-        cursor default
-
-        +medium-screen()
-            display none
-
-        > span
-            padding-right 2rem
-            justify-content flex-start
-
-    .close-banner
-        position   absolute
-        right      0
-        top        50%
-        transform  translateY(-50%)
-        margin     0
