@@ -9,6 +9,7 @@ import { Router, Redirect, hashHistory, Route } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
 
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
@@ -74,14 +75,16 @@ async function init() {
     app = (
       <Provider store={store}>
         <CozyProvider client={client}>
-          <StyledApp>
-            <Router history={hashHistory}>
-              <Route path="shared/:albumId" component={App}>
-                <Route path=":photoId" component={PhotosViewer} />
-              </Route>
-              <Redirect from="/*" to={`shared/${id}`} />
-            </Router>
-          </StyledApp>
+          <BreakpointsProvider>
+            <StyledApp>
+              <Router history={hashHistory}>
+                <Route path="shared/:albumId" component={App}>
+                  <Route path=":photoId" component={PhotosViewer} />
+                </Route>
+                <Redirect from="/*" to={`shared/${id}`} />
+              </Router>
+            </StyledApp>
+          </BreakpointsProvider>
         </CozyProvider>
       </Provider>
     )

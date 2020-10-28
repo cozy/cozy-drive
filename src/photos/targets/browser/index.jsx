@@ -10,6 +10,7 @@ import { Router, hashHistory } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
 
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'cozy-sharing'
 
@@ -90,11 +91,13 @@ const App = props => {
         dictRequire={lang => require(`photos/locales/${lang}`)}
       >
         <CozyProvider client={props.client}>
-          <StyledApp>
-            <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
-              {props.children}
-            </SharingProvider>
-          </StyledApp>
+          <BreakpointsProvider>
+            <StyledApp>
+              <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
+                {props.children}
+              </SharingProvider>
+            </StyledApp>
+          </BreakpointsProvider>
         </CozyProvider>
       </I18n>
     </Provider>
