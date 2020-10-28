@@ -77,27 +77,24 @@ const PublicFolderView = ({
     [router]
   )
 
-  const navigateToFile = useCallback(
-    async file => {
-      const isNote = models.file.isNote(file)
-      if (isNote) {
-        try {
-          const noteUrl = await models.note.fetchURL(client, file)
-          const url = new URL(noteUrl)
-          if (!isMobileApp()) {
-            url.searchParams.set('returnUrl', window.location.href)
-          }
-          window.location.href = url.toString()
-        } catch (e) {
-          Alerter.error('alert.offline')
+  const navigateToFile = async file => {
+    const isNote = models.file.isNote(file)
+    if (isNote) {
+      try {
+        const noteUrl = await models.note.fetchURL(client, file)
+        const url = new URL(noteUrl)
+        if (!isMobileApp()) {
+          url.searchParams.set('returnUrl', window.location.href)
         }
-      } else {
-        setViewerOpened(true)
-        showInViewer(file)
+        window.location.href = url.toString()
+      } catch (e) {
+        Alerter.error('alert.offline')
       }
-    },
-    [setViewerOpened, showInViewer, client]
-  )
+    } else {
+      setViewerOpened(true)
+      showInViewer(file)
+    }
+  }
 
   const showInViewer = useCallback(
     file => {
@@ -152,43 +149,44 @@ const PublicFolderView = ({
         <ModalStack />
         <ModalManager />
         <PublicToolbar
-        files={files}
-        hasWriteAccess={hasWritePermissions}
-        refreshFolderContent={refreshFolderContent}
-      />
-      <div className="u-pt-2">
-        <FolderViewHeader>
-          {currentFolderId && (
-            <FolderViewBreadcrumb
-              getBreadcrumbPath={geTranslatedBreadcrumbPath}
-              currentFolderId={currentFolderId}
-              navigateToFolder={navigateToFolder}
-            />
-          )}
-        </FolderViewHeader>
-        <Content>
-          <FolderViewBody
-            navigateToFolder={navigateToFolder}
-            navigateToFile={navigateToFile}
-            actions={actions}
-            queryResults={[filesResult]}
-            canSort={false}
-            currentFolderId={currentFolderId}
-            refreshFolderContent={refreshFolderContent}
-          />
-
-          {viewerOpened && viewableFiles.length > 0 && (
-            <Overlay>
-              <PublicViewer
-                files={viewableFiles}
-                currentIndex={currentViewerIndex}
-                onChangeRequest={showInViewer}
-                onCloseRequest={closeViewer}
+          files={files}
+          hasWriteAccess={hasWritePermissions}
+          refreshFolderContent={refreshFolderContent}
+        />
+        <div className="u-pt-2">
+          <FolderViewHeader>
+            {currentFolderId && (
+              <FolderViewBreadcrumb
+                getBreadcrumbPath={geTranslatedBreadcrumbPath}
+                currentFolderId={currentFolderId}
+                navigateToFolder={navigateToFolder}
               />
-            </Overlay>
-          )}
-          {children}
-        </Content>
+            )}
+          </FolderViewHeader>
+          <Content>
+            <FolderViewBody
+              navigateToFolder={navigateToFolder}
+              navigateToFile={navigateToFile}
+              actions={actions}
+              queryResults={[filesResult]}
+              canSort={false}
+              currentFolderId={currentFolderId}
+              refreshFolderContent={refreshFolderContent}
+            />
+
+            {viewerOpened &&
+              viewableFiles.length > 0 && (
+                <Overlay>
+                  <PublicViewer
+                    files={viewableFiles}
+                    currentIndex={currentViewerIndex}
+                    onChangeRequest={showInViewer}
+                    onCloseRequest={closeViewer}
+                  />
+                </Overlay>
+              )}
+            {children}
+          </Content>
         </div>
       </Main>
     </>
