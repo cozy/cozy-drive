@@ -7,8 +7,10 @@ import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const LightFileViewer = ({ files, isFile }) => (
   <div className={styles['viewer-wrapper-with-bar']}>
-    <PublicToolbar files={files} renderInBar isFile={isFile} />
-    <Viewer files={files} currentIndex={0} dark={false} showToolbar={false} />
+    <PublicToolbar files={files} isFile={isFile} />
+    <div className={'u-pos-relative u-h-100'}>
+      <Viewer files={files} currentIndex={0} dark={false} showToolbar={false} />
+    </div>
   </div>
 )
 
