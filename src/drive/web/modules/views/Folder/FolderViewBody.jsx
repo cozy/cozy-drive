@@ -3,7 +3,7 @@ import get from 'lodash/get'
 import { useDispatch } from 'react-redux'
 
 import { useClient, useCapabilities } from 'cozy-client'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
 import { FileList } from 'drive/web/modules/filelist/FileList'
@@ -30,9 +30,9 @@ const FolderViewBody = ({
   withFilePath = false,
   navigateToFolder,
   navigateToFile,
-  refreshFolderContent = null,
-  breakpoints: { isDesktop }
+  refreshFolderContent = null
 }) => {
+  const { isDesktop } = useBreakpoints()
   const client = useClient()
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
@@ -175,4 +175,4 @@ const FolderViewBody = ({
   )
 }
 
-export default withBreakpoints()(FolderViewBody)
+export default FolderViewBody

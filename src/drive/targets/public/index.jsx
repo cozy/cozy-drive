@@ -6,6 +6,8 @@ import { render } from 'react-dom'
 
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { models } from 'cozy-client'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { ModalContextProvider } from 'drive/lib/ModalContext'
 
@@ -112,38 +114,40 @@ const init = async () => {
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
           <SharingProvider>
-            <ThumbnailSizeContextProvider>
-              <ModalContextProvider>
-                {isFile ? (
-                  <PublicLayout>
-                    <LightFileViewer files={[data]} isFile={true} />
-                  </PublicLayout>
-                ) : (
-                  <Router history={hashHistory}>
-                    <Route component={PublicLayout}>
-                      <Redirect
-                        from="/files/:folderId"
-                        to="/folder/:folderId"
-                      />
-                      <Route
-                        path="folder(/:folderId)"
-                        component={PublicFolderView}
-                      >
-                        <Route
-                          path="file/:fileId/revision"
-                          component={FileHistory}
+            <BreakpointsProvider>
+              <ThumbnailSizeContextProvider>
+                <ModalContextProvider>
+                  {isFile ? (
+                    <PublicLayout>
+                      <LightFileViewer files={[data]} isFile={true} />
+                    </PublicLayout>
+                  ) : (
+                    <Router history={hashHistory}>
+                      <Route component={PublicLayout}>
+                        <Redirect
+                          from="/files/:folderId"
+                          to="/folder/:folderId"
                         />
+                        <Route
+                          path="folder(/:folderId)"
+                          component={PublicFolderView}
+                        >
+                          <Route
+                            path="file/:fileId/revision"
+                            component={FileHistory}
+                          />
+                        </Route>
                       </Route>
-                    </Route>
-                    <Route
-                      path="external/:fileId"
-                      component={ExternalRedirect}
-                    />
-                    <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
-                  </Router>
-                )}
-              </ModalContextProvider>
-            </ThumbnailSizeContextProvider>
+                      <Route
+                        path="external/:fileId"
+                        component={ExternalRedirect}
+                      />
+                      <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
+                    </Router>
+                  )}
+                </ModalContextProvider>
+              </ThumbnailSizeContextProvider>
+            </BreakpointsProvider>
           </SharingProvider>
         </App>,
         root
