@@ -5140,10 +5140,10 @@ cozy-scanner@0.5.5:
   dependencies:
     "@babel/runtime" "^7.5.2"
 
-cozy-scripts@5.1.3:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-5.1.3.tgz#efc7f5bd4faa1d107d5ada5f73aa749708345f82"
-  integrity sha512-zjeAVS0y6yS0RlHpMdLYq4JSaa7oiIoP7sBjFmOeF3Qn2Nz91wkP8VJxfZznU8FZkdYchmRk9Ug93NeKPqoKPQ==
+cozy-scripts@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-5.1.1.tgz#8bbd7d752221d059c76d389953c1127982a4e7f0"
+  integrity sha512-wGTE61VMaoI6v7kNA44Zu7Ec2YALWecVo2hzvUkHzY7+VSNgAzo3wKKUbIqeMKHIv1uHLlRC9SuzL7fnHrQKBA==
   dependencies:
     "@babel/core" "7.9.0"
     "@babel/polyfill" "^7.10.4"
