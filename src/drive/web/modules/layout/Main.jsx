@@ -7,10 +7,10 @@ import BannerClient from 'components/pushClient/Banner'
 
 import styles from 'drive/styles/main.styl'
 
-const Main = ({ children, working = false, isPublic = false }) => (
+const Main = ({ children, isPublic = false }) => (
   <MainUI
-    className={classNames(styles['fil-content'], {
-      [styles['--working']]: working
+    className={classNames({
+      [styles['fil-content']]: !isPublic
     })}
   >
     {__TARGET__ !== 'mobile' && !isPublic && <BannerClient />}
@@ -20,7 +20,6 @@ const Main = ({ children, working = false, isPublic = false }) => (
 
 Main.propTypes = {
   isPublic: PropTypes.bool,
-  working: PropTypes.bool,
   children: PropTypes.array
 }
 export default Main
