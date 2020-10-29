@@ -69,18 +69,18 @@ const MoreMenu = ({
         <ActionMenu onClose={closeMenu}>
           {isMobile && (
             <ActionMenuItem
-              onClick={() => downloadFiles(client, files)}
-              left={<Icon icon={'download'} />}
+              onClick={() => getHomeLinkHref('sharing-drive')}
+              left={<Icon icon={'to-the-cloud'} />}
             >
-              {t('toolbar.menu_downlad')}
+              {t('Share.create-cozy')}
             </ActionMenuItem>
           )}
           {isMobile && (
             <ActionMenuItem
-              onClick={() => getHomeLinkHref('sharing-drive')}
-              left={<Icon icon={'to-the-cloud'} />}
+              onClick={() => downloadFiles(client, files)}
+              left={<Icon icon={'download'} />}
             >
-              {'open cozy'}
+              {t('toolbar.menu_download')}
             </ActionMenuItem>
           )}
           {hasWriteAccess && <AddFolderItem />}

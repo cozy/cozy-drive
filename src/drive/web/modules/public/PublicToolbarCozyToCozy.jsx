@@ -38,26 +38,23 @@ const MoreMenu = ({
 
       {menuIsVisible && (
         <ActionMenu onClose={closeMenu} autoclose>
-          {isMobile && (
-            <ActionMenuItem
-              onClick={() => openExternalLink(discoveryLink)}
-              left={
-                <Icon
-                  icon={isSharingShortcutCreated ? 'sync' : 'to-the-cloud'}
-                />
-              }
-            >
-              {isSharingShortcutCreated
-                ? t('toolbar.menu_sync_cozy')
-                : t('toolbar.menu_open_cozy')}
-            </ActionMenuItem>
-          )}
+          <ActionMenuItem
+            onClick={() => openExternalLink(discoveryLink)}
+            left={
+              <Icon icon={isSharingShortcutCreated ? 'sync' : 'to-the-cloud'} />
+            }
+          >
+            {isSharingShortcutCreated
+              ? t('toolbar.menu_sync_cozy')
+              : t('toolbar.add_to_mine')}
+          </ActionMenuItem>
+
           {isMobile && (
             <ActionMenuItem
               onClick={() => downloadFiles(client, files)}
               left={<Icon icon={'download'} />}
             >
-              {t('toolbar.menu_downlad')}
+              {t('toolbar.menu_download')}
             </ActionMenuItem>
           )}
           {files.length > 1 && <SelectableItem />}
