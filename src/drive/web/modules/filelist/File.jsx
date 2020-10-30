@@ -203,7 +203,7 @@ const _Size = ({ filesize = '-' }) => (
 
 const Size = React.memo(_Size)
 
-const _Status = ({ isAvailableOffline, id }) => (
+const Status = ({ isAvailableOffline, id }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -223,7 +223,6 @@ const _Status = ({ isAvailableOffline, id }) => (
     <SharedStatus docId={id} className={styles['fil-content-sharestatus']} />
   </div>
 )
-const Status = React.memo(_Status)
 
 const FileAction = forwardRef(function FileAction({ t, onClick }, ref) {
   return (
