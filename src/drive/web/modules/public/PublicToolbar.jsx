@@ -232,9 +232,25 @@ const DesktopToolbar = (
 
 DesktopToolbar.propTypes = toolbarProptypes
 
+       /**
+ * Returns if the shortcut for the sharing is created on the recipient's cozy
+ * 
+ * To check that, if the `instance` attribute is set to the sharing member then
+ * we know that the shortcut is already created 
+ * 
+ * @param {Array} included 
+ */
+const hasSharingShorcutCreated = (included) => {
+  const sharingMember = included.find(item => item.type === "io.cozy.sharings.members")
+  if(sharingMember && sharingMember.attributes.instance){
+    return true
+  }
+  return false
+}
 class PublicToolbar extends React.Component {
   state = {
-    discoveryLink: null
+    discoveryLink: null,
+    isSharingShortcutCreated: false
   }
 
   componentDidMount() {
@@ -247,6 +263,8 @@ class PublicToolbar extends React.Component {
       const response = await client
         .collection('io.cozy.permissions')
         .getOwnPermissions()
+
+      const isSharingShortcutCreated =  hasSharingShorcutCreated(response.included)
       const sourceId = response.data.attributes.source_id
       const sharingId = sourceId.split('/')[1]
       const { sharecode } = getQueryParameter()
@@ -254,7 +272,7 @@ class PublicToolbar extends React.Component {
       const link = client
         .collection('io.cozy.sharings')
         .getDiscoveryLink(sharingId, sharecode)
-      this.setState({ discoveryLink: link })
+      this.setState({ discoveryLink: link, isSharingShortcutCreated })
     } catch (err) {
       logger.warn('Failed to load sharing discovery link', err)
     }
@@ -272,7 +290,7 @@ class PublicToolbar extends React.Component {
       hasWriteAccess,
       refreshFolderContent
     } = this.props
-    const { discoveryLink } = this.state
+    const { discoveryLink , isSharingShortcutCreated} = this.state
 
     if (isMobile) {
       return (
