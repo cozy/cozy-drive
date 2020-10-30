@@ -88,7 +88,6 @@ export class App extends Component {
                   >
                     <CozyHomeLink
                       from="sharing-photos"
-                      t={t}
                       className={styles['pho-public-mycozy']}
                     />
                     <Button

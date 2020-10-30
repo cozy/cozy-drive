@@ -20,71 +20,6 @@ exports[`Public view should render children when they are present 1`] = `
           <CozyHomeLink
             className="pho-public-mycozy"
             from="sharing-photos"
-            size="normal"
-            t={
-              [MockFunction] {
-                "calls": Array [
-                  Array [
-                    "Toolbar.album_download",
-                  ],
-                  Array [
-                    "Toolbar.more",
-                  ],
-                  Array [
-                    "Share.create-cozy",
-                  ],
-                  Array [
-                    "Toolbar.album_download",
-                  ],
-                  Array [
-                    "Toolbar.album_download",
-                  ],
-                  Array [
-                    "Toolbar.more",
-                  ],
-                  Array [
-                    "Share.create-cozy",
-                  ],
-                  Array [
-                    "Toolbar.album_download",
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              }
-            }
           />
           <Button
             align="center"
@@ -181,43 +116,6 @@ exports[`Public view should render the album 1`] = `
           <CozyHomeLink
             className="pho-public-mycozy"
             from="sharing-photos"
-            size="normal"
-            t={
-              [MockFunction] {
-                "calls": Array [
-                  Array [
-                    "Toolbar.album_download",
-                  ],
-                  Array [
-                    "Toolbar.more",
-                  ],
-                  Array [
-                    "Share.create-cozy",
-                  ],
-                  Array [
-                    "Toolbar.album_download",
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              }
-            }
           />
           <Button
             align="center"
