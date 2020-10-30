@@ -99,7 +99,7 @@ exports[`Public view should render children when they are present 1`] = `
           />
           <Menu
             className="u-hide--desk"
-            component={<withI18n(MoreButton) />}
+            component={<MoreButton />}
             position="right"
           >
             <MenuItem
@@ -232,7 +232,7 @@ exports[`Public view should render the album 1`] = `
           />
           <Menu
             className="u-hide--desk"
-            component={<withI18n(MoreButton) />}
+            component={<MoreButton />}
             position="right"
           >
             <MenuItem
