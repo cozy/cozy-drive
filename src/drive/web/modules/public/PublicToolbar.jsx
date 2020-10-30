@@ -134,14 +134,13 @@ const toolbarProptypes = {
 const openExternalLink = url => (window.location = url)
 
 const MobileToolbar = (
-  { onDownload, discoveryLink, isFile, hasWriteAccess, refreshFolderContent },
-  { store }
+  { onDownload, discoveryLink, isFile, hasWriteAccess, refreshFolderContent }
 ) => {
   const client = useClient()
   const { t } = useI18n()
   return (
     <BarRight>
-      <BarContextProvider client={client} t={t} store={store}>
+      <BarContextProvider client={client} t={t} store={client.store}>
         <MoreMenu
           isFile={isFile}
           hasWriteAccess={hasWriteAccess}
@@ -162,18 +161,15 @@ const MobileToolbar = (
   )
 }
 
-MobileToolbar.contextTypes = {
-  store: PropTypes.object.isRequired
-}
 
 MobileToolbar.propTypes = toolbarProptypes
 
-const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { store }) => {
+const CozybarToolbar = ({ onDownload, discoveryLink, isFile }) => {
   const client = useClient()
   const { t } = useI18n()
   return (
     <BarRight>
-      <BarContextProvider client={client} t={t} store={store}>
+      <BarContextProvider client={client} t={t} store={client.store}>
         <div
           data-test-id="toolbar-viewer-public"
           className={toolbarstyles['toolbar-inside-bar']}
@@ -195,16 +191,13 @@ const CozybarToolbar = ({ onDownload, discoveryLink, isFile }, { store }) => {
   )
 }
 
-CozybarToolbar.contextTypes = {
-  store: PropTypes.object.isRequired
-}
-
 CozybarToolbar.propTypes = toolbarProptypes
 
 const DesktopToolbar = (
-  { onDownload, discoveryLink, isFile, hasWriteAccess, refreshFolderContent },
-  { t }
-) => (
+  { onDownload, discoveryLink, isFile, hasWriteAccess, refreshFolderContent }
+) => {
+  const { t } = useI18n()
+  return (
   <div
     data-test-id="toolbar-files-public"
     className={toolbarstyles['fil-toolbar-files']}
@@ -234,11 +227,8 @@ const DesktopToolbar = (
       <div />
     </BarRight>
   </div>
-)
+)}
 
-DesktopToolbar.contextTypes = {
-  t: PropTypes.func.isRequired
-}
 
 DesktopToolbar.propTypes = toolbarProptypes
 
