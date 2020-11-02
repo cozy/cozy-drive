@@ -3,14 +3,13 @@ import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
 import Banner from 'cozy-ui/transpiled/react/Banner'
-import Button, { ButtonLink } from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/Button'
 import Avatar from 'cozy-ui/transpiled/react/Avatar'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { useI18n } from 'cozy-ui/transpiled/react'
 
 const getPublicNameFromSharing = sharing =>
   sharing.attributes.members[0].public_name
-
 
 const PublicBannerCozyToCozyContent = ({
   sharing,
@@ -22,16 +21,17 @@ const PublicBannerCozyToCozyContent = ({
   const text = isSharingShortcutCreated
     ? t('Share.banner.synchronise')
     : t('Share.banner.whats_cozy')
-  const knowMore = isSharingShortcutCreated ? null : (
-    <ButtonLink
-      subtle
+  const avatarURL = `${client.options.uri}/public/avatar?fallback=initials`
+  const knowMore = (
+    <a
       href="https://cozy.io"
       target="_blank"
-      size="small"
-      label={t('Share.banner.know_more')}
-    />
+      className={'u-link'}
+      rel="noopener noreferrer"
+    >
+      {t('Share.banner.know_more')}
+    </a>
   )
-  const avatarURL = `${client.options.uri}/public/avatar?fallback=initials`
 
   return (
     <>
@@ -102,16 +102,17 @@ const SharingBannerCozyToCozy = ({
 
 const SharingBannerByLinkText = () => {
   const { t } = useI18n()
+  const text = t('Share.banner.whats_cozy')
   const knowMore = (
-    <ButtonLink
-      subtle
+    <a
       href="https://cozy.io"
       target="_blank"
-      size="small"
-      label={t('Share.banner.know_more')}
-    />
+      className={'u-link'}
+      rel="noopener noreferrer"
+    >
+      {t('Share.banner.know_more')}
+    </a>
   )
-  const text = t('Share.banner.whats_cozy')
   return (
     <span className={'u-charcoalGrey'}>
       {text} {knowMore}
