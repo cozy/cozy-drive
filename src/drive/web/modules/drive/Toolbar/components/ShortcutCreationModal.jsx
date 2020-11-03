@@ -3,13 +3,7 @@ import React, { useState, useCallback } from 'react'
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
-import ExperimentalDialog, {
-  ExperimentalDialogTitle,
-  ExperimentalDialogActions
-} from 'cozy-ui/transpiled/react/Labs/ExperimentalDialog'
-import DialogContent from '@material-ui/core/DialogContent'
-import Divider from '@material-ui/core/Divider'
-import DialogCloseButton from 'cozy-ui/transpiled/react/MuiCozyTheme/Dialog/DialogCloseButton'
+import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import TextField from 'cozy-ui/transpiled/react/MuiCozyTheme/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -72,13 +66,11 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
     }
   }
   return (
-    <ExperimentalDialog onClose={onClose}>
-      <DialogCloseButton onClick={onClose} />
-      <ExperimentalDialogTitle>
-        {t('Shortcut.title_modal')}
-      </ExperimentalDialogTitle>
-      <Divider />
-      <DialogContent>
+    <Dialog
+      onClose={onClose}
+      title={t('Shortcut.title_modal')}
+      opened={true}
+      content={
         <Stack>
           <div>
             <TextField
@@ -109,21 +101,22 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
             />
           </div>
         </Stack>
-      </DialogContent>
-
-      <ExperimentalDialogActions>
-        <Button
-          theme="secondary"
-          onClick={onClose}
-          label={t('Shortcut.cancel')}
-        />
-        <Button
-          theme="primary"
-          label={t('Shortcut.create')}
-          onClick={createShortcut}
-        />
-      </ExperimentalDialogActions>
-    </ExperimentalDialog>
+      }
+      actions={
+        <>
+          <Button
+            theme="secondary"
+            onClick={onClose}
+            label={t('Shortcut.cancel')}
+          />
+          <Button
+            theme="primary"
+            label={t('Shortcut.create')}
+            onClick={createShortcut}
+          />
+        </>
+      }
+    />
   )
 }
 
