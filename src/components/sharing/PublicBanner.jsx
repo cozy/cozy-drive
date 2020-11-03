@@ -4,9 +4,11 @@ import PropTypes from 'prop-types'
 import { useClient } from 'cozy-client'
 import Banner from 'cozy-ui/transpiled/react/Banner'
 import Button from 'cozy-ui/transpiled/react/Button'
-import Avatar from 'cozy-ui/transpiled/react/Avatar'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { useI18n } from 'cozy-ui/transpiled/react'
+import ReactMarkdown from 'react-markdown'
+
+import styles from './publicBanner.styl'
 
 const getPublicNameFromSharing = sharing =>
   sharing.attributes.members[0].public_name
@@ -35,15 +37,12 @@ const PublicBannerCozyToCozyContent = ({
 
   return (
     <>
-      <span className="u-fw-bold">
-        {t('Share.banner.shared_from')}{' '}
-        <Avatar
-          image={avatarURL}
-          size="xsmall"
-          style={{ verticalAlign: 'text-bottom' }}
-        />{' '}
-        {name}.
-      </span>
+      <ReactMarkdown className={styles['bannermarkdown']}>
+        {t('Share.banner.shared_from', {
+          name: name,
+          image: avatarURL
+        })}
+      </ReactMarkdown>
       <span>
         {' '}
         {text} {knowMore}
