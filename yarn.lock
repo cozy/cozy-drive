@@ -5183,10 +5183,10 @@ cozy-scripts@5.1.1:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.2.0.tgz#e7fb55034f957bfeffc27fc1943084c6a623a213"
-  integrity sha512-bEVpBoUeaIC8s1RoNT89ldT09DK//SLF834xAww6h6LD6ImraDD71L6+ra8P4Ronrm3wifJRDEpfW4pqpLqfgQ==
+cozy-sharing@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.3.0.tgz#10ba86d76ce8ff5c7bfeb14b3d4e6c1e239f5b9a"
+  integrity sha512-vPmuJHFa3+OH99mW8HnYaPWIpaTkm/H7q+PsZdlYntWUNDs85bAchmKwdFAoEOfIflLXbmbuUErzQa4Fd1QJ7A==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     babel-plugin-inline-react-svg "^1.1.0"
