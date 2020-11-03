@@ -11,12 +11,17 @@ import PublicToolbarCozyToCozy from './PublicToolbarCozyToCozy'
 /**
  * Returns if the shortcut for the sharing is created on the recipient's cozy
  *
- * To check that, if the `instance` attribute is set to the sharing member then
- * we know that the shortcut is already created
+ * To know if the shortcut is created on the recipient's cozy, we need to check
+ * the presence of the `instance` attribute on the sharing member. (since we
+ * are in a cozy to cozy sharing, we have only one member per "token")
+ *
+ * If this field is setted, it means the stack knows the url of the recipient's
+ * cozy. And if the stack knows that, we're sure that the stack has already created
+ * the shortcut on the recipient's cozy.
  *
  * @param {Array} included
  */
-const hasSharingShorcutCreated = included => {
+const isShortcutCreatedOnTheRecipientCozy = included => {
   const sharingMember = included.find(
     item => item.type === 'io.cozy.sharings.members'
   )
@@ -42,7 +47,7 @@ class PublicToolbar extends React.Component {
         .collection('io.cozy.permissions')
         .getOwnPermissions()
 
-      const isSharingShortcutCreated = hasSharingShorcutCreated(
+      const isSharingShortcutCreated = isShortcutCreatedOnTheRecipientCozy(
         response.included
       )
       const sourceId = response.data.attributes.source_id
