@@ -3,13 +3,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { CozyFile } from 'cozy-doctypes'
 import styles from 'drive/styles/filenameinput.styl'
 
-import ExperimentalDialog, {
-  ExperimentalDialogTitle,
-  ExperimentalDialogActions
-} from 'cozy-ui/transpiled/react/Labs/ExperimentalDialog'
-import DialogCloseButton from 'cozy-ui/transpiled/react/MuiCozyTheme/Dialog/DialogCloseButton'
-import DialogContent from '@material-ui/core/DialogContent'
-
+import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
@@ -120,28 +114,28 @@ class FilenameInput extends Component {
           autoFocus="autofocus"
         />
         {working && <Spinner />}
-        <ExperimentalDialog
+        <Dialog
           onClose={this.abort}
-          open={this.state.isModalOpened}
-        >
-          <DialogCloseButton onClick={this.abort} />
-          <ExperimentalDialogTitle>
-            {t('RenameModal.title')}
-          </ExperimentalDialogTitle>
-          <DialogContent>{t('RenameModal.description')}</DialogContent>
-          <ExperimentalDialogActions layout="row">
-            <Button
-              theme="secondary"
-              onClick={this.abort}
-              label={t('RenameModal.cancel')}
-            />
-            <Button
-              theme="primary"
-              label={t('RenameModal.continue')}
-              onClick={this.save}
-            />
-          </ExperimentalDialogActions>
-        </ExperimentalDialog>
+          opened={this.state.isModalOpened}
+          title={t('RenameModal.title')}
+          content={t('RenameModal.description')}
+          actions={
+            <>
+              {' '}
+              <Button
+                theme="secondary"
+                onClick={this.abort}
+                label={t('RenameModal.cancel')}
+              />
+              <Button
+                theme="primary"
+                label={t('RenameModal.continue')}
+                onClick={this.save}
+              />
+            </>
+          }
+          actionsLayout="row"
+        />
       </div>
     )
   }

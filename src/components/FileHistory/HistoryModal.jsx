@@ -1,12 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
-import DialogContent from '@material-ui/core/DialogContent'
-
-import ExperimentalDialog, {
-  ExperimentalDialogTitle
-} from 'cozy-ui/transpiled/react/Labs/ExperimentalDialog'
-import DialogCloseButton from 'cozy-ui/transpiled/react/MuiCozyTheme/Dialog/DialogCloseButton'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -21,7 +15,7 @@ import styles from './styles.styl'
 import { CozyFile } from 'models'
 import { isMobile } from 'cozy-device-helper/dist/platform'
 import { exportFilesNative } from 'drive/web/modules/actions/utils'
-
+import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 const formatDate = (date, f) => {
   return f(date, 'DD MMMM - HH:mm')
 }
@@ -42,10 +36,11 @@ const HistoryModal = ({
     'capabilities.data.attributes.file_versioning'
   )
   return (
-    <ExperimentalDialog onClose={router.goBack}>
-      <DialogCloseButton onClick={router.goBack} />
-      <ExperimentalDialogTitle>{file.name}</ExperimentalDialogTitle>
-      <DialogContent>
+    <Dialog
+      onClose={router.goBack}
+      opened={true}
+      title={file.name}
+      content={
         <>
           <Caption className={styles.HistoryRowCaption}>
             {capabilities.fetchStatus === 'loading' && (
@@ -104,8 +99,8 @@ const HistoryModal = ({
               )
             })}
         </>
-      </DialogContent>
-    </ExperimentalDialog>
+      }
+    />
   )
 }
 
