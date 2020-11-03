@@ -40,7 +40,7 @@
     "menu_select": "Select items",
     "menu_share_folder": "Share folder",
     "menu_download": "Download",
-    "menu_sync_cozy": "Synchronise in my Cozy",
+    "menu_sync_cozy": "Synchronise to my Cozy",
     "add_to_mine": "Add to my Cozy",
     "menu_download_folder": "Download folder",
     "menu_download_file": "Download this file",
@@ -92,7 +92,7 @@
       }
     },
     "banner": {
-      "shared_from": "Shared from the cozy of",
+      "shared_from": "Shared from ![avatar](%{image}) %{name}'s cozy.",
       "synchronise": "Synchronise this content in your cozy to be able to modify it or to keep it in case of cancellation of sharing.",
       "whats_cozy": "Cozy is a secure digital home for all your data, hosted in France - ",
       "know_more": "More information",
