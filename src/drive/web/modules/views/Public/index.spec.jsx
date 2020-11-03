@@ -85,10 +85,6 @@ describe('Public View', () => {
 
     //check if the ActionMenu is displayed
     fireEvent.click(fileRow0.getElementsByTagName('button')[0])
-    expect(
-      document.querySelectorAll("[data-test-id='fil-actionmenu-inner']").length
-    ).toEqual(1)
-
     // navigates  to the history view
     const historyItem = getByText('History')
     fireEvent.click(historyItem)

@@ -16,8 +16,8 @@ import palette from 'cozy-ui/transpiled/react/palette'
 import { isIOSApp } from 'cozy-device-helper'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
-import { default as DesktopActionMenu } from 'drive/web/modules/actionmenu/ActionMenu'
-import MobileActionMenu from 'drive/web/modules/actionmenu/MobileActionMenu'
+
+import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
 import { isDirectory } from 'drive/web/modules/drive/files'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import { CozyFile } from 'models'
@@ -31,15 +31,6 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
 
 import styles from 'drive/styles/filelist.styl'
-
-const ActionMenu = withBreakpoints()(
-  ({ breakpoints: { isMobile }, ...props }) =>
-    isMobile ? (
-      <MobileActionMenu {...props} />
-    ) : (
-      <DesktopActionMenu {...props} />
-    )
-)
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
@@ -369,7 +360,7 @@ const File = props => {
       )}
       {actions &&
         actionMenuVisible && (
-          <ActionMenu
+          <ActionMenuWithHeader
             file={attributes}
             reference={filerowMenuToggleRef.current}
             actions={actions}
