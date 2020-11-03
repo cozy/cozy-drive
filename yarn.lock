@@ -5123,10 +5123,10 @@ cozy-realtime@^3.11.0:
     "@cozy/minilog" "^1.0.0"
     cozy-device-helper "^1.10.3"
 
-cozy-scanner@0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.5.5.tgz#53bb64a5493a594f90b7aa6215730a65758da0e5"
-  integrity sha512-J8ObgEdi25MT3eqbjFQE5ScUcGm4wWaOcI2M5+joBmT/546yDt28pbMq9htNjejuCdxoHrCuJlO3i9lNOgRXpQ==
+cozy-scanner@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.6.0.tgz#0e85aca811aff95f3d4906e62fac912133a22bf1"
+  integrity sha512-yD3TDIGTm9dpeyrbayTs5XXeTjXc1e0MqzHLOqk+jOALkfSZGUsB4V7Prm3rjKue3uklN620QvQpw4E0yyz/gw==
   dependencies:
     "@babel/runtime" "^7.5.2"
 
@@ -5185,10 +5185,10 @@ cozy-scripts@5.1.1:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.3.0.tgz#10ba86d76ce8ff5c7bfeb14b3d4e6c1e239f5b9a"
-  integrity sha512-vPmuJHFa3+OH99mW8HnYaPWIpaTkm/H7q+PsZdlYntWUNDs85bAchmKwdFAoEOfIflLXbmbuUErzQa4Fd1QJ7A==
+cozy-sharing@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.3.1.tgz#3f5cad696e26498abc30be3cfb0052c62c9d9aac"
+  integrity sha512-zqII5f1e3Aj1U7QBgofpmX62uNOoSth3C/z8UPL9zHze1V6kNEd7sBnYawLm8ev6ykiie9JR3GeYta8Vwl3deA==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     babel-plugin-inline-react-svg "^1.1.0"
@@ -5246,10 +5246,10 @@ cozy-ui@35.22.0:
     react-select "2.2.0"
     react-swipeable-views "0.13.3"
 
-cozy-ui@39.2.0:
-  version "39.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-39.2.0.tgz#e0f5ae0a5d7511d08c0db256cb9e4c123641c492"
-  integrity sha512-dvHl/PudTpins4pGxIsvB0DTtPbJp8y3vKPnvazr5zRWj4USpgbYPTGOU7BGVJattn8R9LMBXDZXz+BCfXuNTg==
+cozy-ui@40.1.1:
+  version "40.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-40.1.1.tgz#679c489f4d2be080f67649a1fefffc75968f1f28"
+  integrity sha512-lfRaBCE/D43T/ZmxXRSfExnMmuaN2GKIcE6bvck/1Uj2O14gFbm2+c0Qvq5DJQ4KEGKBUKMziuppTuxfnHtP2w==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
