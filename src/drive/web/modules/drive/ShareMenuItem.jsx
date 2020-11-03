@@ -4,11 +4,12 @@ import { SharedDocument, SharedRecipients } from 'cozy-sharing'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import styles from 'drive/styles/actionmenu.styl'
 
 const ShareMenuItem = ({ docId, onClick }) => {
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
   return (
     <SharedDocument docId={docId}>
       {({ isSharedWithMe }) => (
@@ -17,11 +18,13 @@ const ShareMenuItem = ({ docId, onClick }) => {
           onClick={onClick}
           left={<Icon icon="share" />}
           right={
-            <SharedRecipients
-              className={styles['fil-actionmenu-recipients']}
-              docId={docId}
-              size="small"
-            />
+            isMobile ? (
+              <SharedRecipients
+                className={styles['fil-actionmenu-recipients']}
+                docId={docId}
+                size="small"
+              />
+            ) : null
           }
         >
           {isSharedWithMe

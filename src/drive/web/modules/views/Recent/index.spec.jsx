@@ -102,10 +102,6 @@ describe('Recent View', () => {
 
     //check if the ActionMenu is displayed
     fireEvent.click(fileRow0.getElementsByTagName('button')[0])
-    expect(
-      document.querySelectorAll("[data-test-id='fil-actionmenu-inner']").length
-    ).toEqual(1)
-
     const el1 = getByText(`foobar1`)
     const parentDiv1 = el1.closest('.fil-file')
     expect(

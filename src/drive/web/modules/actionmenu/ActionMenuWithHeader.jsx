@@ -1,9 +1,12 @@
 import React from 'react'
 import classNames from 'classnames'
-import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
+import ActionMenu, {
+  ActionMenuHeader
+} from 'cozy-ui/transpiled/react/ActionMenu'
+
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { Caption } from 'cozy-ui/transpiled/react/Text'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { CozyFile } from 'models'
 import { isDirectory } from 'drive/web/modules/drive/files'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
@@ -12,12 +15,13 @@ import styles from 'drive/styles/actionmenu.styl'
 
 import { getBoundT } from 'cozy-scanner'
 
-const Menu = props => {
-  const { lang, file, actions, onClose } = props
+export const ActionMenuWithHeader = ({ file, actions, onClose }) => {
+  const { lang } = useI18n()
   return (
-    <ActionMenu className={styles['fil-mobileactionmenu']} onClose={onClose}>
-      <MenuHeaderFile file={file} lang={lang} />
-      <hr />
+    <ActionMenu onClose={onClose} autoclose={true}>
+      <ActionMenuHeader>
+        <MenuHeaderFile file={file} lang={lang} />
+      </ActionMenuHeader>
       <ActionsItems actions={actions} file={file} onClose={onClose} />
     </ActionMenu>
   )
@@ -62,5 +66,3 @@ const MenuHeaderFile = ({ file, lang }) => {
     </div>
   )
 }
-
-export default translate()(Menu)
