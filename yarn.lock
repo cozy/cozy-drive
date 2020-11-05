@@ -4925,17 +4925,17 @@ cozy-client@13.8.3:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-16.0.0.tgz#8e3333f7ee42e996c79d1d150651c0e480d02495"
-  integrity sha512-Q8owRCIVxfeDZiAvokcIvduA9Ei1dtbNGSnYQcYOKLh3dDcKVQ12KmuodgyFj4792eruNy3oR43xLqi7wccAmg==
+cozy-client@16.1.1:
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-16.1.1.tgz#6434b7c6a1776d44da95bc1e7e552ca3a5d23fd8"
+  integrity sha512-cb4VE1F9qkLC0LPhPMyMLq5IZ5nW0ntJz8gYjkeW5KcSFfjkTmrG7qwudfxTOW3GCs4hnS2vhQRaFN7QxO5nrw==
   dependencies:
     "@cozy/minilog" "1.0.0"
     btoa "^1.2.1"
     cozy-device-helper "^1.7.3"
     cozy-logger "^1.6.0"
     cozy-stack-client "^16.0.0"
-    isomorphic-fetch "^2.2.1"
+    isomorphic-fetch "^3.0.0"
     lodash "^4.17.13"
     microee "^0.0.6"
     open "^7.0.2"
@@ -5185,10 +5185,10 @@ cozy-scripts@5.1.1:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.3.1.tgz#3f5cad696e26498abc30be3cfb0052c62c9d9aac"
-  integrity sha512-zqII5f1e3Aj1U7QBgofpmX62uNOoSth3C/z8UPL9zHze1V6kNEd7sBnYawLm8ev6ykiie9JR3GeYta8Vwl3deA==
+cozy-sharing@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.5.1.tgz#c6b0d8338716acd054c3fcfd0740c820528d3e7a"
+  integrity sha512-gjFb3o1L8bGGQExzp0IDANQpDNWU3Wi/c/8kT1p95we+wGipgAaKPvZMhyLHQMahqs6ws5sciDexW3RkL1JaWg==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     babel-plugin-inline-react-svg "^1.1.0"
@@ -5246,10 +5246,10 @@ cozy-ui@35.22.0:
     react-select "2.2.0"
     react-swipeable-views "0.13.3"
 
-cozy-ui@40.1.1:
-  version "40.1.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-40.1.1.tgz#679c489f4d2be080f67649a1fefffc75968f1f28"
-  integrity sha512-lfRaBCE/D43T/ZmxXRSfExnMmuaN2GKIcE6bvck/1Uj2O14gFbm2+c0Qvq5DJQ4KEGKBUKMziuppTuxfnHtP2w==
+cozy-ui@40.4.0:
+  version "40.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-40.4.0.tgz#1b5f302bab116e6348f07c192deeeb27f2e8ca73"
+  integrity sha512-dinvj4BrPHKc36ade4R+EsOAOV1/FQNFbyWcZG7CYf1BgQSDY4bnKN0ehsMhJmy0JPESZAxqagNcCGdLyc8YVQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
@@ -9327,6 +9327,14 @@ isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
     node-fetch "^1.0.1"
     whatwg-fetch ">=0.10.0"
 
+isomorphic-fetch@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-3.0.0.tgz#0267b005049046d2421207215d45d6a262b8b8b4"
+  integrity sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==
+  dependencies:
+    node-fetch "^2.6.1"
+    whatwg-fetch "^3.4.1"
+
 isstream@0.1.x, isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -11299,7 +11307,7 @@ node-fetch@2.6.0:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
-node-fetch@2.6.1, node-fetch@^2.0.0, node-fetch@^2.1.2:
+node-fetch@2.6.1, node-fetch@^2.0.0, node-fetch@^2.1.2, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
@@ -17234,7 +17242,7 @@ whatwg-fetch@3.0.0:
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
 
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.4.1.tgz#e5f871572d6879663fa5674c8f833f15a8425ab3"
   integrity sha512-sofZVzE1wKwO+EYPbWfiwzaKovWiZXf4coEzjGP9b2GBVgQRLQUZ2QcuPpQExGDAW5GItpEm6Tl4OU5mywnAoQ==
