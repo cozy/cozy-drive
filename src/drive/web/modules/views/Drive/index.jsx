@@ -41,6 +41,8 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 
+import { useTrashRedirect } from './useTrashRedirect'
+
 const getBreadcrumbPath = (t, displayedFolder) =>
   uniqBy(
     [
@@ -72,6 +74,8 @@ const DriveView = ({
   children,
   displayedFolder
 }) => {
+  useTrashRedirect(displayedFolder)
+
   const [sortOrder] = useFolderSort(currentFolderId)
 
   const folderQuery = buildDriveQuery({
