@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import snarkdown from 'snarkdown'
 
 import { useClient } from 'cozy-client'
 import Banner from 'cozy-ui/transpiled/react/Banner'
 import Button from 'cozy-ui/transpiled/react/Button'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { useI18n } from 'cozy-ui/transpiled/react'
-import ReactMarkdown from 'react-markdown'
 
 import styles from './publicBanner.styl'
 
@@ -34,15 +34,18 @@ const PublicBannerCozyToCozyContent = ({
       {t('Share.banner.know_more')}
     </a>
   )
-
+  const withAvatar = snarkdown(
+    t('Share.banner.shared_from', {
+      name: name,
+      image: avatarURL
+    })
+  )
   return (
     <>
-      <ReactMarkdown className={styles['bannermarkdown']}>
-        {t('Share.banner.shared_from', {
-          name: name,
-          image: avatarURL
-        })}
-      </ReactMarkdown>
+      <span
+        className={styles['bannermarkdown']}
+        dangerouslySetInnerHTML={{ __html: withAvatar }}
+      />
       <span>
         {' '}
         {text} {knowMore}

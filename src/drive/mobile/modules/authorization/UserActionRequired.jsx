@@ -1,8 +1,10 @@
 /* global __TARGET__ */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ReactMarkdown from 'react-markdown'
+
+import snarkdown from 'snarkdown'
 import PropTypes from 'prop-types'
+
 import {
   Modal,
   Icon,
@@ -14,32 +16,37 @@ import tosIcon from 'drive/mobile/assets/icons/icon-tos.svg'
 import { unlink, getClientSettings } from './duck'
 import styles from './styles.styl'
 
-const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => (
-  <Modal closable={false}>
-    <Modal.ModalHeader />
-    <Modal.ModalDescription className={styles['tosupdated']}>
-      <Icon icon={tosIcon} width={96} height={96} />
-      <h2 className={styles['tosupdated-title']}>{t('TOS.updated.title')}</h2>
-      <ReactMarkdown
-        className={styles['tosupdated-desc']}
-        source={t('TOS.updated.detail', { link: newTosLink })}
-      />
-      <Button
-        extension="full"
-        label={t('TOS.updated.cta')}
-        onClick={onAccept}
-      />
-      <Button
-        subtle
-        size="small"
-        extension="full"
-        style={{ marginTop: '1.5rem' }}
-        label={t('TOS.updated.disconnect')}
-        onClick={onRefuse}
-      />
-    </Modal.ModalDescription>
-  </Modal>
-))
+const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => {
+  const updatedDetails = snarkdown(
+    t('TOS.updated.detail', { link: newTosLink })
+  )
+  return (
+    <Modal closable={false}>
+      <Modal.ModalHeader />
+      <Modal.ModalDescription className={styles['tosupdated']}>
+        <Icon icon={tosIcon} width={96} height={96} />
+        <h2 className={styles['tosupdated-title']}>{t('TOS.updated.title')}</h2>
+        <div
+          className={styles['tosupdated-desc']}
+          dangerouslySetInnerHTML={{ __html: updatedDetails }}
+        />
+        <Button
+          extension="full"
+          label={t('TOS.updated.cta')}
+          onClick={onAccept}
+        />
+        <Button
+          subtle
+          size="small"
+          extension="full"
+          style={{ marginTop: '1.5rem' }}
+          label={t('TOS.updated.disconnect')}
+          onClick={onRefuse}
+        />
+      </Modal.ModalDescription>
+    </Modal>
+  )
+})
 
 class UserActionRequired extends Component {
   static contextTypes = {
