@@ -124,7 +124,13 @@ const SharingBannerByLink = ({ onClose }) => {
     <Banner
       bgcolor={palette['paleGrey']}
       text={<SharingBannerByLinkText />}
-      buttonOne={<Button theme="text" label={t('Share.banner.close')} onClick={onClose} />}
+      buttonOne={
+        <Button
+          theme="text"
+          label={t('Share.banner.close')}
+          onClick={onClose}
+        />
+      }
       inline
     />
   )
