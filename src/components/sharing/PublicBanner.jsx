@@ -119,11 +119,12 @@ const SharingBannerByLinkText = () => {
   )
 }
 const SharingBannerByLink = ({ onClose }) => {
+  const { t } = useI18n()
   return (
     <Banner
       bgcolor={palette['paleGrey']}
       text={<SharingBannerByLinkText />}
-      buttonOne={<Button theme="text" label="Close" onClick={onClose} />}
+      buttonOne={<Button theme="text" label={t('Share.banner.close')} onClick={onClose} />}
       inline
     />
   )
