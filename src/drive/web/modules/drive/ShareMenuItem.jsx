@@ -12,7 +12,7 @@ const ShareMenuItem = ({ docId, onClick }) => {
   const { isMobile } = useBreakpoints()
   return (
     <SharedDocument docId={docId}>
-      {({ isSharedWithMe }) => (
+      {({ isShared, isSharedWithMe }) => (
         <ActionMenuItem
           className={'u-flex-items-center u-pos-relative'}
           onClick={onClick}
@@ -29,7 +29,9 @@ const ShareMenuItem = ({ docId, onClick }) => {
         >
           {isSharedWithMe
             ? t('Files.share.sharedWithMe')
-            : t('Files.share.cta')}
+            : isShared
+              ? t('Files.share.shared')
+              : t('Files.share.cta')}
         </ActionMenuItem>
       )}
     </SharedDocument>

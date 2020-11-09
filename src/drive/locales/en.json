@@ -121,6 +121,7 @@
           "rw": "You can view, update, delete and add this content to your Cozy. Updates you make will be seen on other Cozies."
         }
       },
+      "shared": "Shared",
       "sharedByMe": "Shared by me",
       "sharedWithMe": "Shared with me",
       "sharedBy": "Shared by %{name}",
