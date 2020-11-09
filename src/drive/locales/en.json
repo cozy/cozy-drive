@@ -192,7 +192,7 @@
     "head_name": "Name",
     "head_update": "Last update",
     "head_size": "Size",
-    "head_status": "Status",
+    "head_status": "Share",
     "head_thumbnail_size": "Switch thumbnail size",
     "row_update_format": "MMM D, YYYY",
     "row_update_format_full": "MMMM D, YYYY",
@@ -656,7 +656,7 @@
   },
   "External": {
     "redirection": {
-      "title": "Redirection", 
+      "title": "Redirection",
       "text": "You're about to be redirected…",
       "error": "Error during the redirection. Generally, this means that the content of the file is not in the correct format."
     }
