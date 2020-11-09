@@ -72,10 +72,9 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
 
   const navigateToFile = useCallback(
     file => {
-      setNeedsToWait(true)
       router.push(`/trash/${currentFolderId}/file/${file.id}`)
     },
-    [router, setNeedsToWait, currentFolderId]
+    [router, currentFolderId]
   )
 
   const { refresh } = useContext(SharingContext)
@@ -98,7 +97,6 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
   useEffect(
     () => {
       let timeout = null
-      if (currentFolderId === TRASH_DIR_ID) setNeedsToWait(false)
       timeout = setTimeout(() => {
         setNeedsToWait(false)
       }, 50)
