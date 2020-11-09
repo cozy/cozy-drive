@@ -39,7 +39,7 @@ const FilesViewerWithQuery = props => {
         }
         onChange={fileId =>
           router.push({
-            pathname: `trash/${props.currentFolderId}/file/${fileId}`
+            pathname: `/trash/${props.currentFolderId}/file/${fileId}`
           })
         }
       />
