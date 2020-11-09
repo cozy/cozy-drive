@@ -39,17 +39,18 @@ const FileThumbnail = ({ file, size }) => {
       {/**
        * @todo
        * Since for shortcut we already display a kind of badge we're currently just
-       * not displaying the sharedBadge. The next functionnal's task is to work on
-       * sharing and we'll remove this badge from here. In the meantime, we take this
-       * workaround
+       * not displaying the sharedBadge. Besides on desktop we have added sharing avatars.
+       * The next functionnal's task is to work on sharing and we'll remove
+       * this badge from here. In the meantime, we take this workaround
        */}
-      {file.class !== 'shortcut' && (
-        <SharedBadge
-          docId={file.id}
-          className={styles['fil-content-shared']}
-          xsmall
-        />
-      )}
+      {file.class !== 'shortcut' &&
+        isMobile && (
+          <SharedBadge
+            docId={file.id}
+            className={styles['fil-content-shared']}
+            xsmall
+          />
+        )}
     </div>
   )
 }
