@@ -94,12 +94,8 @@
   "permissions": {
     "files": {
       "description": "Required to access the files",
-      "type": "io.cozy.files",
+      "type": "io.cozy.files.*",
       "verbs": ["ALL"]
-    },
-    "filesversions": {
-      "type": "io.cozy.files.versions",
-      "vebrs": ["ALL"]
     },
     "apps": {
       "description": "Required by the cozy-bar to display the icons of the apps",
