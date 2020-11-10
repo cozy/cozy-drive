@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import Hammer from 'hammerjs'
+import Hammer from '@egjs/hammerjs'
 
 const shouldListenToSwipe = handlers =>
   Object.keys(handlers).find(h => /^swipe/.test(h)) !== undefined
