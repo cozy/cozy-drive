@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useRef } from 'react'
+import React, { useState, forwardRef, useRef, useContext } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import filesize from 'filesize'
@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
 
-import { SharedStatus } from 'cozy-sharing'
+import { SharedStatus, ShareModal } from 'cozy-sharing'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -16,6 +16,7 @@ import palette from 'cozy-ui/transpiled/react/palette'
 import { isIOSApp } from 'cozy-device-helper'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
+import { ModalContext } from 'drive/lib/ModalContext'
 
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -32,6 +33,7 @@ import FileOpener from 'drive/web/modules/filelist/FileOpener'
 
 import styles from 'drive/styles/filelist.styl'
 
+import HammerComponent from './HammerComponent'
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
     return element
@@ -194,26 +196,46 @@ const _Size = ({ filesize = '-' }) => (
 
 const Size = React.memo(_Size)
 
-const Status = ({ isAvailableOffline, id }) => (
-  <div
-    className={classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-status']
-    )}
-  >
-    {isAvailableOffline && (
-      <span className={styles['fil-content-offline']}>
-        <Icon
-          icon="phone-download"
-          color={palette.white}
-          width="14"
-          height="14"
+const Status = ({ isAvailableOffline, file }) => {
+  const { pushModal, popModal } = useContext(ModalContext)
+
+  return (
+    <div
+      className={classNames(
+        styles['fil-content-cell'],
+        styles['fil-content-status']
+      )}
+    >
+      {isAvailableOffline && (
+        <span className={styles['fil-content-offline']}>
+          <Icon
+            icon="phone-download"
+            color={palette.white}
+            width="14"
+            height="14"
+          />
+        </span>
+      )}
+      <HammerComponent
+        onClick={() => {
+          pushModal(
+            <ShareModal
+              document={file}
+              documentType="Files"
+              sharingDesc={file.name}
+              onClose={popModal}
+            />
+          )
+        }}
+      >
+        <SharedStatus
+          docId={file.id}
+          className={styles['fil-content-sharestatus']}
         />
-      </span>
-    )}
-    <SharedStatus docId={id} className={styles['fil-content-sharestatus']} />
-  </div>
-)
+      </HammerComponent>
+    </div>
+  )
+}
 
 const FileAction = forwardRef(function FileAction({ t, onClick }, ref) {
   return (
@@ -346,7 +368,7 @@ const File = props => {
           formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
         />
         <Size filesize={formattedSize} />
-        <Status id={attributes.id} isAvailableOffline={isAvailableOffline} />
+        <Status file={attributes} isAvailableOffline={isAvailableOffline} />
       </FileOpener>
       {actions && (
         <FileAction
