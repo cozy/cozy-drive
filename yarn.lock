@@ -5005,10 +5005,22 @@ cozy-device-helper@1.8.0:
   dependencies:
     lodash "4.17.15"
 
-cozy-doctypes@1.74.7, cozy-doctypes@^1.73.0, cozy-doctypes@^1.74.7:
+cozy-doctypes@1.74.7, cozy-doctypes@^1.73.0:
   version "1.74.7"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.74.7.tgz#c85833699aba6a547bbd643b141f851553584221"
   integrity sha512-5cOUHWkYSF/7F0lUCkG056j+7vtToC1k1m8iNujLd19wRY1gfUJDMgduZUpwoYXIdtX3C6R10ijrOLSAj7J5Cw==
+  dependencies:
+    "@babel/runtime" "7.5.5"
+    cozy-logger "^1.6.0"
+    date-fns "1.30.1"
+    es6-promise-pool "2.5.0"
+    lodash "4.17.19"
+    prop-types "^15.7.2"
+
+cozy-doctypes@^1.74.8:
+  version "1.74.8"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.74.8.tgz#82a7bc40771ff1181f0b772e509e88b65cda04dd"
+  integrity sha512-3BNy+ivSWOu4TQz9EHYF+DQhlZLAE/HNJekg6cUCflD5lAQUrRqT2IfYydlebgVswrSlDodbI8f+KC5eXBfSOw==
   dependencies:
     "@babel/runtime" "7.5.5"
     cozy-logger "^1.6.0"
@@ -5185,17 +5197,17 @@ cozy-scripts@5.1.1:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.5.1.tgz#c6b0d8338716acd054c3fcfd0740c820528d3e7a"
-  integrity sha512-gjFb3o1L8bGGQExzp0IDANQpDNWU3Wi/c/8kT1p95we+wGipgAaKPvZMhyLHQMahqs6ws5sciDexW3RkL1JaWg==
+cozy-sharing@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.6.0.tgz#2f1fce10f08539310037bc2d9531a7f1c4f61837"
+  integrity sha512-J82AO6R/QET6rpC3htWMQ+7395EH/kMQCK7tSI633h4b3OmT1mwcUOZ167JTtTJFyy69hkhA+Y3B0T+75ba17Q==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     babel-plugin-inline-react-svg "^1.1.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
     cozy-device-helper "^1.10.3"
-    cozy-doctypes "^1.74.7"
+    cozy-doctypes "^1.74.8"
     cozy-realtime "^3.11.0"
     lodash "^4.17.19"
     react-autosuggest "^9.4.3"
@@ -5246,10 +5258,10 @@ cozy-ui@35.22.0:
     react-select "2.2.0"
     react-swipeable-views "0.13.3"
 
-cozy-ui@40.4.2:
-  version "40.4.2"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-40.4.2.tgz#08cc4cefbc374d79867817ba52c3dec926efcca7"
-  integrity sha512-dYi/6ThGAhX2UVbscLCrJh/6XSkDJ5KPGSW538En1MiPyAN7n0OkEk7xkSa6Vsby5HJ7T5on757i29p69Q35+w==
+cozy-ui@40.6.0:
+  version "40.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-40.6.0.tgz#e7616aa91295daad3513c775219390ce9739f361"
+  integrity sha512-ShjZRLczlZBYbAj5oduBnMMCuDOs/Ec7uoQHu6f5UHQNinrS+onZqRkpJdFKohvCbyCtrHRJZ5jrq9fnJ36DiQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
