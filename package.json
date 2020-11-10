@@ -103,6 +103,7 @@
   },
   "dependencies": {
     "@cozy/minilog": "1.0.0",
+    "@egjs/hammerjs": "^2.0.17",
     "@material-ui/core": "3.9.4",
     "@material-ui/styles": "4.10.0",
     "classnames": "2.2.6",
@@ -126,7 +127,6 @@
     "diacritics": "1.3.0",
     "fastclick": "1.0.6",
     "filesize": "3.6.1",
-    "hammerjs": "2.0.8",
     "jest": "^24.9.0",
     "justified-layout": "2.1.2",
     "kd-tree-javascript": "1.0.3",
@@ -141,6 +141,7 @@
     "pouchdb-adapter-cordova-sqlite": "^2.0.7",
     "pouchdb-debug": "^7.2.1",
     "prop-types": "15.7.2",
+    "propagating-hammerjs": "^2.0.1",
     "raven-js": "3.26.4",
     "react": "16.13.1",
     "react-autosuggest": "9.3.4",
