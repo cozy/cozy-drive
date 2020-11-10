@@ -91,6 +91,14 @@
       "href": "/intents"
     }
   ],
+  "services": {
+    "qualificationMigration": {
+      "type": "node",
+      "file": "services/qualificationMigration/drive.js",
+      "trigger": "@event io.cozy.files:CREATED,UPDATED",
+      "debounce": "24h"
+    }
+  },
   "permissions": {
     "files": {
       "description": "Required to access the files",
