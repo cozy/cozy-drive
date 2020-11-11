@@ -15,10 +15,15 @@ import styles from 'drive/styles/actionmenu.styl'
 
 import { getBoundT } from 'cozy-scanner'
 
-export const ActionMenuWithHeader = ({ file, actions, onClose }) => {
+export const ActionMenuWithHeader = ({
+  file,
+  actions,
+  onClose,
+  anchorElRef
+}) => {
   const { lang } = useI18n()
   return (
-    <ActionMenu onClose={onClose} autoclose={true}>
+    <ActionMenu onClose={onClose} anchorElRef={anchorElRef}>
       <ActionMenuHeader>
         <MenuHeaderFile file={file} lang={lang} />
       </ActionMenuHeader>
