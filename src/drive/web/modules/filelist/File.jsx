@@ -247,6 +247,10 @@ const File = props => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
 
+  const toggleActionMenu = () => {
+    if (actionMenuVisible) return hideActionMenu()
+    else showActionMenu()
+  }
   const showActionMenu = () => {
     if (window.StatusBar && isIOSApp()) {
       window.StatusBar.backgroundColorByHexString('#989AA0')
@@ -352,9 +356,8 @@ const File = props => {
         <FileAction
           t={t}
           ref={filerowMenuToggleRef}
-          onClick={e => {
-            showActionMenu()
-            e.stopPropagation()
+          onClick={() => {
+            toggleActionMenu()
           }}
         />
       )}
@@ -362,7 +365,7 @@ const File = props => {
         actionMenuVisible && (
           <ActionMenuWithHeader
             file={attributes}
-            reference={filerowMenuToggleRef.current}
+            anchorElRef={filerowMenuToggleRef}
             actions={actions}
             onClose={hideActionMenu}
           />
