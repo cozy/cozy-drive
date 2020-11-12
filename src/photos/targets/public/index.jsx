@@ -15,6 +15,7 @@ import { getQueryParameter } from 'react-cozy-helpers'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 import { IconSprite } from 'cozy-ui/transpiled/react'
+import cozyBar from 'lib/cozyBar'
 
 import appMetadata from 'photos/appMetadata'
 import doctypes from '../browser/doctypes'
@@ -60,7 +61,7 @@ async function init() {
     data.cozyIconPath &&
     data.cozyLocale
   ) {
-    cozy.bar.init({
+    cozyBar.init({
       appName: data.cozyAppName,
       appEditor: data.cozyAppEditor,
       cozyClient: client,
