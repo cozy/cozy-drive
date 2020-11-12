@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useRef, useContext } from 'react'
+import React, { useState, forwardRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import filesize from 'filesize'
@@ -16,7 +16,6 @@ import palette from 'cozy-ui/transpiled/react/palette'
 import { isIOSApp } from 'cozy-device-helper'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
-import { ModalContext } from 'drive/lib/ModalContext'
 
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -197,43 +196,45 @@ const _Size = ({ filesize = '-' }) => (
 const Size = React.memo(_Size)
 
 const Status = ({ isAvailableOffline, file }) => {
-  const { pushModal, popModal } = useContext(ModalContext)
-
+  const [displayedModal, setDisplayedModal] = useState(false)
   return (
-    <div
-      className={classNames(
-        styles['fil-content-cell'],
-        styles['fil-content-status']
-      )}
-    >
-      {isAvailableOffline && (
-        <span className={styles['fil-content-offline']}>
-          <Icon
-            icon="phone-download"
-            color={palette.white}
-            width="14"
-            height="14"
-          />
-        </span>
-      )}
-      <HammerComponent
-        onClick={() => {
-          pushModal(
-            <ShareModal
-              document={file}
-              documentType="Files"
-              sharingDesc={file.name}
-              onClose={popModal}
-            />
-          )
-        }}
-      >
-        <SharedStatus
-          docId={file.id}
-          className={styles['fil-content-sharestatus']}
+    <>
+      {displayedModal && (
+        <ShareModal
+          document={file}
+          documentType="Files"
+          sharingDesc={file.name}
+          onClose={() => setDisplayedModal(false)}
         />
-      </HammerComponent>
-    </div>
+      )}
+      <div
+        className={classNames(
+          styles['fil-content-cell'],
+          styles['fil-content-status']
+        )}
+      >
+        {isAvailableOffline && (
+          <span className={styles['fil-content-offline']}>
+            <Icon
+              icon="phone-download"
+              color={palette.white}
+              width="14"
+              height="14"
+            />
+          </span>
+        )}
+        <HammerComponent
+          onClick={() => {
+            setDisplayedModal(true)
+          }}
+        >
+          <SharedStatus
+            docId={file.id}
+            className={styles['fil-content-sharestatus']}
+          />
+        </HammerComponent>
+      </div>
+    </>
   )
 }
 
