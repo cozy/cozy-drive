@@ -1,16 +1,12 @@
-import styles from './pushClient.styl'
-
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-
 import React, { Component } from 'react'
 import { withClient } from 'cozy-client'
 import localforage from 'localforage'
+
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { default as UIButtonClient } from 'cozy-ui/transpiled/react/PushClientButton'
+
 import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'drive/config/config.json'
-
-import { Icon } from 'cozy-ui/transpiled/react'
-//@TODO Use PushClient button from cozy-ui
-import DeviceIcon from 'cozy-ui/assets/icons/illus/device-laptop.svg'
 
 class ButtonClient extends Component {
   state = {
@@ -35,20 +31,12 @@ class ButtonClient extends Component {
       return null
     const { t } = this.props
     return (
-      <a
+      <UIButtonClient
+        label={t('Nav.btn-client')}
         href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
-        //eslint-disable-next-line react/jsx-no-target-blank
-        target="_blank"
-        className={styles['coz-btn-client']}
-        onClick={() => {
-          track('button')
-        }}
-      >
-        <figure>
-          <Icon width="32" height="32" icon={DeviceIcon} />
-        </figure>
-        <span>{t('Nav.btn-client')}</span>
-      </a>
+        onClick={() => track('button')}
+        className={'u-m-1 u-dn-m'}
+      />
     )
   }
 }
