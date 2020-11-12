@@ -1,99 +1,120 @@
 /* global __TARGET__ */
-import React, { Component } from 'react'
-import { Link } from 'react-router'
+import React, { useState } from 'react'
+import { withRouter } from 'react-router'
+import cx from 'classnames'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-import Icon from 'cozy-ui/transpiled/react/Icon'
+import { useI18n } from 'cozy-ui/transpiled/react'
 
-import styles from 'drive/styles/nav.styl'
+import UINav, {
+  NavItem,
+  NavIcon,
+  NavText,
+  NavLink as UINavLink
+} from 'cozy-ui/transpiled/react/Nav'
 
-class Nav extends Component {
-  render() {
-    const { t } = this.props
-
-    return (
-      <nav data-test-id="driveSidebar">
-        <ul className={styles['c-nav']}>
-          <li className={styles['c-nav-item']}>
-            <Link
-              data-test-id="navToFolder"
-              to={{ pathname: '/folder' }}
-              className={styles['c-nav-link']}
-              activeClassName={styles['is-active']}
-            >
-              <span className={styles['c-nav-icon']}>
-                <Icon icon="folder" />
-              </span>
-              <span className={styles['c-nav-text']}>
-                {t('Nav.item_drive')}
-              </span>
-            </Link>
-          </li>
-          <li className={styles['c-nav-item']}>
-            <Link
-              data-test-id="navToRecent"
-              to="/recent"
-              className={styles['c-nav-link']}
-              activeClassName={styles['is-active']}
-            >
-              <span className={styles['c-nav-icon']}>
-                <Icon icon="clock" />
-              </span>
-              <span className={styles['c-nav-text']}>
-                {t('Nav.item_recent')}
-              </span>
-            </Link>
-          </li>
-          <li className={styles['c-nav-item']}>
-            <Link
-              data-test-id="navToSharing"
-              to="/sharings"
-              className={styles['c-nav-link']}
-              activeClassName={styles['is-active']}
-            >
-              <span className={styles['c-nav-icon']}>
-                <Icon icon="share" />
-              </span>
-              <span className={styles['c-nav-text']}>
-                {t('Nav.item_sharings')}
-              </span>
-            </Link>
-          </li>
-          <li className={styles['c-nav-item']}>
-            <Link
-              data-test-id="navToTrash"
-              to="/trash"
-              className={styles['c-nav-link']}
-              activeClassName={styles['is-active']}
-            >
-              <span className={styles['c-nav-icon']}>
-                <Icon icon="trash" />
-              </span>
-              <span className={styles['c-nav-text']}>
-                {t('Nav.item_trash')}
-              </span>
-            </Link>
-          </li>
-          {__TARGET__ === 'mobile' && (
-            <li className={styles['c-nav-item']}>
-              <Link
-                to="/settings"
-                className={styles['c-nav-link']}
-                activeClassName={styles['is-active']}
-              >
-                <span className={styles['c-nav-icon']}>
-                  <Icon icon="gear" />
-                </span>
-                <span className={styles['c-nav-text']}>
-                  {t('Nav.item_settings')}
-                </span>
-              </Link>
-            </li>
-          )}
-        </ul>
-      </nav>
-    )
-  }
+/**
+ * Returns true if `to` and `pathname` match
+ * Supports `rx` for regex matches.
+ */
+const navLinkMatch = (rx, to, pathname) => {
+  return rx ? rx.test(pathname) : pathname.slice(1) === to
 }
 
-export default translate()(Nav)
+/**
+ * Like react-router NavLink but sets the lastClicked state (passed in props)
+ * to have a faster change of active (not waiting for the route to completely
+ * change).
+ */
+export const NavLink = withRouter(props => {
+  const {
+    children,
+    to,
+    rx,
+    location,
+    clickState: [lastClicked, setLastClicked]
+  } = props
+
+  const pathname = lastClicked ? lastClicked : location.pathname
+  const isActive = navLinkMatch(rx, to, pathname)
+  return (
+    <a
+      style={{ outline: 'none' }}
+      onClick={() => setLastClicked(to)}
+      href={`#${to}`}
+      className={cx(
+        UINavLink.className,
+        isActive ? UINavLink.activeClassName : null
+      )}
+    >
+      {children}
+    </a>
+  )
+})
+
+const NavItems = ({ items }) => {
+  const clickState = useState(null)
+  return (
+    <>
+      {items.map(
+        (item, i) =>
+          item ? (
+            <NavItem key={i} secondary={item.secondary}>
+              <NavLink to={item.to} rx={item.rx} clickState={clickState}>
+                {item.icon ? <NavIcon icon={item.icon} /> : null}
+                <NavText>{item.label}</NavText>
+              </NavLink>
+            </NavItem>
+          ) : null
+      )}
+    </>
+  )
+}
+const folderRoute = /\/folder(\/.*)?/
+const settingsRoute = /\/settings(\/.*)?/
+const recentRoute = /\/recent(\/.*)?/
+const sharingRoute = /\/sharings(\/.*)?/
+const trashRoute = /\/trash(\/.*)?/
+export const Nav = () => {
+  const { t } = useI18n()
+  const routes = [
+    {
+      to: '/folder',
+      icon: 'folder',
+      label: t('Nav.item_drive'),
+      rx: folderRoute
+    },
+    {
+      to: '/recent',
+      icon: 'clock',
+      label: t('Nav.item_recent'),
+      rx: recentRoute
+    },
+    {
+      to: '/sharings',
+      icon: 'share',
+      label: t('Nav.item_sharings'),
+      rx: sharingRoute
+    },
+    {
+      to: '/trash',
+      icon: 'trash',
+      label: t('Nav.item_trash'),
+      rx: trashRoute
+    }
+  ]
+  if (__TARGET__ === 'mobile') {
+    routes.push({
+      to: '/settings',
+      icon: 'gear',
+      label: t('Nav.item_settings'),
+      rx: settingsRoute
+    })
+  }
+  return (
+    <UINav>
+      <NavItems items={routes} />
+    </UINav>
+  )
+}
+
+export default Nav
