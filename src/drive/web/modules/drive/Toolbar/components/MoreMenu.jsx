@@ -47,11 +47,18 @@ const MoreMenu = ({
     },
     [setMenuVisible]
   )
+  const toggleMenu = useCallback(
+    () => {
+      if (menuIsVisible) return closeMenu()
+      openMenu()
+    },
+    [closeMenu, openMenu, menuIsVisible]
+  )
 
   return (
     <div>
       <div ref={anchorRef}>
-        <MoreButton onClick={openMenu} disabled={isDisabled} />
+        <MoreButton onClick={toggleMenu} disabled={isDisabled} />
       </div>
       <ScanWrapper>
         {menuIsVisible && (
