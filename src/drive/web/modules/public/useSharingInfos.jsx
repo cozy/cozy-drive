@@ -1,19 +1,9 @@
 import { useState, useEffect } from 'react'
 
-import { useClient, Q } from 'cozy-client'
+import { useClient, Q, models } from 'cozy-client'
 
 import logger from 'lib/logger'
 import { getQueryParameter } from 'react-cozy-helpers'
-
-const isShortcutCreatedOnTheRecipientCozy = included => {
-  const sharingMember = included.find(
-    item => item.type === 'io.cozy.sharings.members'
-  )
-  if (sharingMember && sharingMember.attributes.instance) {
-    return true
-  }
-  return false
-}
 
 export const useSharingInfos = () => {
   const client = useClient()
@@ -32,9 +22,9 @@ export const useSharingInfos = () => {
         try {
           const response = await client
             .collection('io.cozy.permissions')
-            .getOwnPermissions()
-          const isSharingShortcutCreated = isShortcutCreatedOnTheRecipientCozy(
-            response.included
+            .fetchOwnPermissions()
+          const isSharingShortcutCreated = models.permission.isShortcutCreatedOnTheRecipientCozy(
+            response
           )
           const sourceId = response.data.attributes.source_id
           const sharingId = sourceId.split('/')[1]
