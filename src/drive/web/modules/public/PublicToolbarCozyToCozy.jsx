@@ -28,16 +28,26 @@ const MoreMenu = ({
 }) => {
   const { t } = useI18n()
   const client = useClient()
+  const anchorRef = React.createRef()
+
   const [menuIsVisible, setMenuVisible] = useState(false)
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
-
+  const toggleMenu = useCallback(
+    () => {
+      if (menuIsVisible) return closeMenu()
+      openMenu()
+    },
+    [closeMenu, openMenu, menuIsVisible]
+  )
   return (
     <>
-      <MoreButton onClick={openMenu} />
+      <div ref={anchorRef}>
+        <MoreButton onClick={toggleMenu} />
+      </div>
 
       {menuIsVisible && (
-        <ActionMenu onClose={closeMenu} autoclose>
+        <ActionMenu onClose={closeMenu} autoclose anchorElRef={anchorRef}>
           <ActionMenuItem
             onClick={() => openExternalLink(discoveryLink)}
             left={
