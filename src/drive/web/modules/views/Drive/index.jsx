@@ -162,11 +162,13 @@ const DriveView = ({
   return (
     <FolderView>
       <FolderViewHeader>
-        <FolderViewBreadcrumb
-          getBreadcrumbPath={geTranslatedBreadcrumbPath}
-          currentFolderId={currentFolderId}
-          navigateToFolder={navigateToFolder}
-        />
+        {currentFolderId && (
+          <FolderViewBreadcrumb
+            getBreadcrumbPath={geTranslatedBreadcrumbPath}
+            currentFolderId={currentFolderId}
+            navigateToFolder={navigateToFolder}
+          />
+        )}
         <Toolbar
           canUpload={true}
           canCreateFolder={true}
