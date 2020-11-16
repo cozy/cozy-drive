@@ -10,11 +10,11 @@ describe('useSharingInfos', () => {
   const { location } = window
 
   const mockClient = createMockClient({})
-  const getOwnPermissionsMock = jest.fn()
+  const fetchOwnPermissionsMock = jest.fn()
   const getDiscoveryLinkMock = jest.fn()
   const queryMock = jest.fn()
   mockClient.collection = () => ({
-    getOwnPermissions: getOwnPermissionsMock,
+    fetchOwnPermissions: fetchOwnPermissionsMock,
     getDiscoveryLink: getDiscoveryLinkMock
   })
   mockClient.query = queryMock
@@ -83,7 +83,7 @@ describe('useSharingInfos', () => {
   it('returns the right infos when using useSharingInfo', async () => {
     const discoveryLink = '/link'
     getDiscoveryLinkMock.mockReturnValue(discoveryLink)
-    getOwnPermissionsMock.mockResolvedValue(mockedPermissionsWithInstance)
+    fetchOwnPermissionsMock.mockResolvedValue(mockedPermissionsWithInstance)
     queryMock.mockResolvedValue(mockSharing)
     const { result, waitForNextUpdate } = setup()
     //default state
@@ -99,7 +99,7 @@ describe('useSharingInfos', () => {
   it('returns the right infos when using useSharingInfo', async () => {
     const discoveryLink = false
     getDiscoveryLinkMock.mockReturnValue(discoveryLink)
-    getOwnPermissionsMock.mockResolvedValue(mockedPermissionsWithoutInstance)
+    fetchOwnPermissionsMock.mockResolvedValue(mockedPermissionsWithoutInstance)
     queryMock.mockResolvedValue(mockSharing)
     const { result, waitForNextUpdate } = setup()
     //default state
