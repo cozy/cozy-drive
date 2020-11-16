@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react'
 import { useClient } from 'cozy-client'
-import Modal, { ModalDescription } from 'cozy-ui/transpiled/react/Modal'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Button from 'cozy-ui/transpiled/react/Button'
+
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/Media'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
@@ -49,24 +51,33 @@ export const DeleteConfirm = ({
   )
 
   return (
-    <Modal
+    <ConfirmDialog
+      open={true}
+      onClose={onClose}
       title={t('deleteconfirmation.title', fileCount)}
-      secondaryText={t('deleteconfirmation.cancel')}
-      secondaryAction={onClose}
-      secondaryType="secondary"
-      primaryType="danger"
-      primaryText={t('deleteconfirmation.delete')}
-      primaryAction={onDelete}
-    >
-      <ModalDescription>
+      content={
         <Stack>
           <Message type="trash" fileCount={fileCount} />
           <Message type="restore" fileCount={fileCount} />
           {referenced && <Message type="referenced" fileCount={fileCount} />}
           {children}
         </Stack>
-      </ModalDescription>
-    </Modal>
+      }
+      actions={
+        <>
+          <Button
+            theme="secondary"
+            onClick={onClose}
+            label={t('deleteconfirmation.cancel')}
+          />
+          <Button
+            theme="danger"
+            label={t('deleteconfirmation.delete')}
+            onClick={onDelete}
+          />
+        </>
+      }
+    />
   )
 }
 
