@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { SharedDocument, SharedRecipients } from 'cozy-sharing'
+import { SharedRecipients } from 'cozy-sharing'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -11,33 +10,22 @@ const ShareMenuItem = ({ docId, onClick }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   return (
-    <SharedDocument docId={docId}>
-      {({ isSharedWithMe }) => (
-        <ActionMenuItem
-          className={'u-flex-items-center u-pos-relative'}
-          onClick={onClick}
-          left={<Icon icon="share" />}
-          right={
-            isMobile ? (
-              <SharedRecipients
-                className={styles['fil-actionmenu-recipients']}
-                docId={docId}
-                size="small"
-              />
-            ) : null
-          }
-        >
-          {isSharedWithMe
-            ? t('Files.share.sharedWithMe')
-            : t('Files.share.cta')}
-        </ActionMenuItem>
-      )}
-    </SharedDocument>
+    <ActionMenuItem
+      onClick={onClick}
+      left={<Icon icon="share" />}
+      right={
+        isMobile ? (
+          <SharedRecipients
+            className={styles['fil-actionmenu-recipients']}
+            docId={docId}
+            size="small"
+          />
+        ) : null
+      }
+    >
+      {t('Files.share.cta')}
+    </ActionMenuItem>
   )
-}
-
-ShareMenuItem.contextTypes = {
-  t: PropTypes.func.isRequired
 }
 
 export default ShareMenuItem
