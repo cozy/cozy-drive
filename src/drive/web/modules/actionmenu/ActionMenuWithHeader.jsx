@@ -23,7 +23,7 @@ export const ActionMenuWithHeader = ({
 }) => {
   const { lang } = useI18n()
   return (
-    <ActionMenu onClose={onClose} anchorElRef={anchorElRef}>
+    <ActionMenu onClose={onClose} anchorElRef={anchorElRef} autoclose={true}>
       <ActionMenuHeader>
         <MenuHeaderFile file={file} lang={lang} />
       </ActionMenuHeader>
