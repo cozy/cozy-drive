@@ -24,10 +24,16 @@ const EnhancedDeleteConfirm = ({ folder, router, ...rest }) => {
 
 export { EnhancedDeleteConfirm }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   trashFolder: folder =>
     dispatch(
-      showModal(<EnhancedDeleteConfirm folder={folder} dispatch={dispatch} />)
+      showModal(
+        <EnhancedDeleteConfirm
+          folder={folder}
+          dispatch={dispatch}
+          router={ownProps.router}
+        />
+      )
     )
 })
 
