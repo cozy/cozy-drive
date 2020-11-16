@@ -58,15 +58,26 @@ const MoreMenu = ({
 }) => {
   const { t } = useI18n()
   const client = useClient()
+  const anchorRef = React.createRef()
+
   const [menuIsVisible, setMenuVisible] = useState(false)
 
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
+  const toggleMenu = useCallback(
+    () => {
+      if (menuIsVisible) return closeMenu()
+      openMenu()
+    },
+    [closeMenu, openMenu, menuIsVisible]
+  )
   return (
     <>
-      <MoreButton onClick={() => openMenu()} autoclose />
+      <div ref={anchorRef}>
+        <MoreButton onClick={toggleMenu} />
+      </div>
       {menuIsVisible && (
-        <ActionMenu onClose={closeMenu}>
+        <ActionMenu onClose={closeMenu} autoclose>
           {isMobile && (
             <ActionMenuItem
               onClick={() => getHomeLinkHref('sharing-drive')}
