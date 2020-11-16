@@ -96,7 +96,13 @@ const SharingBannerCozyToCozy = ({
           onClick={buttonOne.action}
         />
       }
-      buttonTwo={<Button theme="text" label="Close" onClick={onClose} />}
+      buttonTwo={
+        <Button
+          theme="text"
+          label={t('Share.banner.close')}
+          onClick={onClose}
+        />
+      }
       inline
     />
   )
