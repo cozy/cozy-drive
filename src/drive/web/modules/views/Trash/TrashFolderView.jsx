@@ -107,11 +107,13 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
   return (
     <FolderView>
       <FolderViewHeader>
-        <FolderViewBreadcrumb
-          getBreadcrumbPath={geTranslatedBreadcrumbPath}
-          currentFolderId={currentFolderId}
-          navigateToFolder={navigateToFolder}
-        />
+        {currentFolderId && (
+          <FolderViewBreadcrumb
+            getBreadcrumbPath={geTranslatedBreadcrumbPath}
+            currentFolderId={currentFolderId}
+            navigateToFolder={navigateToFolder}
+          />
+        )}
         <TrashToolbar />
       </FolderViewHeader>
       {needsToWait && <FileListRowsPlaceholder />}
