@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
-import Modal from 'cozy-ui/transpiled/react/Modal'
+
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Button from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import styles from 'drive/styles/confirms.styl'
@@ -14,21 +16,29 @@ const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {
       {t(`emptytrashconfirmation.${type}`)}
     </p>
   ))
-
   return (
-    <Modal
-      dismissAction={onClose}
+    <ConfirmDialog
+      open={true}
+      onClose={onClose}
       title={t('emptytrashconfirmation.title')}
-      description={confirmationTexts}
-      secondaryType="secondary"
-      secondaryText={t('emptytrashconfirmation.cancel')}
-      secondaryAction={onClose}
-      primaryType="danger"
-      primaryText={t('emptytrashconfirmation.delete')}
-      primaryAction={async () => {
-        await onConfirm()
-        onClose()
-      }}
+      content={confirmationTexts}
+      actions={
+        <>
+          <Button
+            theme="secondary"
+            onClick={onClose}
+            label={t('emptytrashconfirmation.cancel')}
+          />
+          <Button
+            theme="danger"
+            label={t('emptytrashconfirmation.delete')}
+            onClick={async () => {
+              await onConfirm()
+              onClose()
+            }}
+          />
+        </>
+      }
     />
   )
 }
