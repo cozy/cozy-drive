@@ -11,7 +11,6 @@ import { withClient } from 'cozy-client'
 import { isMobileApp } from 'cozy-device-helper'
 
 import withInstance from 'drive/web/modules/upload/withInstance'
-import { buildPremiumLink } from 'drive/web/modules/upload/QuotaAlert'
 
 import withDiskUsage from './withDiskUsage'
 import styles from './supportUs.styl'
@@ -24,6 +23,10 @@ const trackEvent = () => {
     tracker.push(['trackEvent', 'Drive', 'CTAOffers', 'LEFT_BUTTON'])
   }
 }
+
+
+const buildPremiumLink = (uuid, managerUrl) =>
+  `${managerUrl}/cozy/instances/${uuid}/premium`
 
 //TODO use cozy-client helpers after https://github.com/cozy/cozy-client/pull/567 merge
 const SupportUs = ({ t, client }) => {
