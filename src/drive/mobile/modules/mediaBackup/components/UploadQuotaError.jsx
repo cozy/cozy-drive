@@ -1,25 +1,26 @@
 import React from 'react'
-import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import styles from '../styles.styl'
+
+import ProgressionBanner from 'cozy-ui/transpiled/react/ProgressionBanner'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import Button from 'cozy-ui/transpiled/react/Button'
+import PaperplaneIcon from 'cozy-ui/transpiled/react/Icons/Paperplane'
+import uploadErrorIcon from '../../../assets/icons/icon-upload-error.svg'
 
 const UploadQuotaError = ({ t, url }) => (
-  <div
-    className={classnames(
-      styles['coz-upload-status'],
-      styles['coz-upload-status--error']
-    )}
-  >
-    <div className={styles['coz-upload-status-content']}>
-      <div>{t('mobile.settings.media_backup.quota')}</div>
-      <button
-        className={styles['coz-upload-status-link']}
+  <ProgressionBanner
+    icon={<Icon icon={uploadErrorIcon} />}
+    text={t('mobile.settings.media_backup.quota')}
+    button={
+      <Button
+        theme="text"
+        icon={PaperplaneIcon}
+        label={t('mobile.settings.media_backup.quota_contact')}
         onClick={() => window.open(url, '_system')}
-      >
-        {t('mobile.settings.media_backup.quota_contact')}
-      </button>
-    </div>
-  </div>
+      />
+    }
+    progressBar={false}
+  />
 )
 
 UploadQuotaError.propTypes = {
