@@ -1,30 +1,33 @@
 import React from 'react'
-import classNames from 'classnames'
 
 import { useClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Stack from 'cozy-ui/transpiled/react/Stack'
 
 import { deleteFilesPermanently } from 'drive/web/modules/actions/utils'
-import styles from 'drive/styles/confirms.styl'
 
+import { Message } from 'drive/web/modules/confirm/Message'
 const DestroyConfirm = ({ t, files, onClose }) => {
   const client = useClient()
-  const confirmationTexts = ['forbidden', 'restore'].map(type => (
-    <p
-      className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
-      key={`key_destroy_${type}`}
-    >
-      {t(`destroyconfirmation.${type}`, files.length)}
-    </p>
-  ))
   return (
     <ConfirmDialog
       open={true}
       onClose={onClose}
       title={t('destroyconfirmation.title', files.length)}
-      content={confirmationTexts}
+      content={
+        <Stack>
+          <Message
+            icon="forbidden"
+            text={t(`destroyconfirmation.forbidden`, files.length)}
+          />
+          <Message
+            icon="restore"
+            text={t(`destroyconfirmation.restore`, files.length)}
+          />
+        </Stack>
+      }
       actions={
         <>
           <Button
