@@ -96,7 +96,7 @@ describe('useSharingInfos', () => {
     expect(result.current.discoveryLink).toEqual(discoveryLink)
   })
 
-  it('returns the right infos when using useSharingInfo', async () => {
+  it('returns the right infos when using useSharingInfo without discoveryLink', async () => {
     const discoveryLink = false
     getDiscoveryLinkMock.mockReturnValue(discoveryLink)
     fetchOwnPermissionsMock.mockResolvedValue(mockedPermissionsWithoutInstance)

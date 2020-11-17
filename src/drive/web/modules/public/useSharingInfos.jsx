@@ -5,6 +5,11 @@ import { useClient, Q, models } from 'cozy-client'
 import logger from 'lib/logger'
 import { getQueryParameter } from 'react-cozy-helpers'
 
+const getSharingId = permission => {
+  const sourceId = permission.data.attributes.source_id
+  const sharingId = sourceId.split('/')[1]
+  return sharingId
+}
 export const useSharingInfos = () => {
   const client = useClient()
 
@@ -26,8 +31,7 @@ export const useSharingInfos = () => {
           const isSharingShortcutCreated = models.permission.isShortcutCreatedOnTheRecipientCozy(
             response
           )
-          const sourceId = response.data.attributes.source_id
-          const sharingId = sourceId.split('/')[1]
+          const sharingId = getSharingId(response)
           const { sharecode } = getQueryParameter()
 
           const link = client
