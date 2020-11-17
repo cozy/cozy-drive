@@ -1,4 +1,4 @@
-import { models } from 'cozy-client'
+import { models, Q } from 'cozy-client'
 import log from 'cozy-logger'
 const { Qualification } = models.document
 const { saveFileQualification } = models.file
@@ -12,8 +12,7 @@ import { get, has, isEmpty, omit, sortBy } from 'lodash'
  * @param {number} limit - The maximum number of files to return
  */
 export const queryFilesFromDate = async (client, date, limit) => {
-  const query = client
-    .find('io.cozy.files')
+  const query = Q('io.cozy.files')
     .where({
       type: 'file',
       'cozyMetadata.updatedAt': { $gt: date },

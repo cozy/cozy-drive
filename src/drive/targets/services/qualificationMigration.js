@@ -1,5 +1,5 @@
 import log from 'cozy-logger'
-import CozyClient from 'cozy-client'
+import CozyClient, { Q } from 'cozy-client'
 import { schema, DOCTYPE_FILES_SETTINGS } from 'drive/lib/doctypes'
 import {
   migrateQualifiedFiles,
@@ -23,9 +23,7 @@ export const migrateQualifications = async () => {
   const client = CozyClient.fromEnv(process.env, { schema })
 
   // Get last processed file date from the settings
-  const filesSettings = await client.query(
-    client.find(DOCTYPE_FILES_SETTINGS).limitBy(1)
-  )
+  const filesSettings = await client.query(Q(DOCTYPE_FILES_SETTINGS).limitBy(1))
   const settings =
     filesSettings && filesSettings.data.length > 0
       ? filesSettings.data[0]
