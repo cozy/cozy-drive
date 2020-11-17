@@ -1,19 +1,16 @@
 import React from 'react'
-import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import styles from '../styles.styl'
+
+import ProgressionBanner from 'cozy-ui/transpiled/react/ProgressionBanner'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import uploadOkIcon from '../../../assets/icons/icon-upload-OK.svg'
 
 const UploadUptodate = ({ t }) => (
-  <div
-    className={classnames(
-      styles['coz-upload-status'],
-      styles['coz-upload-status--success']
-    )}
-  >
-    <div className={styles['coz-upload-status-content']}>
-      {t('mobile.settings.media_backup.media_uptodate')}
-    </div>
-  </div>
+  <ProgressionBanner
+    icon={<Icon icon={uploadOkIcon} />}
+    text={t('mobile.settings.media_backup.media_uptodate')}
+    progressBar={false}
+  />
 )
 
 UploadUptodate.propTypes = {
