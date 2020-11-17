@@ -1,27 +1,26 @@
 import React from 'react'
-import classNames from 'classnames'
 
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Stack from 'cozy-ui/transpiled/react/Stack'
 
-import styles from 'drive/styles/confirms.styl'
-
+import { Message } from 'drive/web/modules/confirm/Message'
 const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {
-  const confirmationTexts = ['forbidden', 'restore'].map(type => (
-    <p
-      className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
-      key={type}
-    >
-      {t(`emptytrashconfirmation.${type}`)}
-    </p>
-  ))
   return (
     <ConfirmDialog
       open={true}
       onClose={onClose}
       title={t('emptytrashconfirmation.title')}
-      content={confirmationTexts}
+      content={
+        <Stack>
+          <Message
+            icon="forbidden"
+            text={t(`emptytrashconfirmation.forbidden`)}
+          />
+          <Message icon="restore" text={t(`emptytrashconfirmation.restore`)} />
+        </Stack>
+      }
       actions={
         <>
           <Button
