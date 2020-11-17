@@ -24,7 +24,6 @@ const trackEvent = () => {
   }
 }
 
-
 const buildPremiumLink = (uuid, managerUrl) =>
   `${managerUrl}/cozy/instances/${uuid}/premium`
 
