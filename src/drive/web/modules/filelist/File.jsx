@@ -170,7 +170,7 @@ const FileName = ({
   )
 }
 
-const _LastUpdate = ({ date, formatted = '-' }) => (
+const _LastUpdate = ({ date, formatted = '—' }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
@@ -182,7 +182,7 @@ const _LastUpdate = ({ date, formatted = '-' }) => (
 )
 
 const LastUpdate = React.memo(_LastUpdate)
-const _Size = ({ filesize = '-' }) => (
+const _Size = ({ filesize = '—' }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
