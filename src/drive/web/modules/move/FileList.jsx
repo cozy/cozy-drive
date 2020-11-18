@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
 
-const isValidMoveTarget = (subjects, target) => {
+const isInvalidMoveTarget = (subjects, target) => {
   const isASubject = subjects.find(subject => subject._id === target._id)
   const isAFile = target.type === 'file'
 
@@ -14,7 +14,8 @@ const FileList = ({ targets, files, navigateTo }) => (
     {files.map(file => (
       <File
         key={file.id}
-        disabled={isValidMoveTarget(targets, file)}
+        disabled={isInvalidMoveTarget(targets, file)}
+        styleDisabled={isInvalidMoveTarget(targets, file)}
         attributes={file}
         displayedFolder={null}
         actions={null}
