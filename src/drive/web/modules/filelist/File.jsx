@@ -315,6 +315,7 @@ const File = props => {
     withFilePath,
     isAvailableOffline,
     disabled,
+    styleDisabled,
     thumbnailSizeBig,
     selectionModeActive,
     refreshFolderContent,
@@ -327,7 +328,7 @@ const File = props => {
   const filContentRowSelected = classNames(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
-    [styles['fil-content-row-disabled']]: disabled,
+    [styles['fil-content-row-disabled']]: styleDisabled,
     [styles['fil-content-row-bigger']]: isLargeRow
   })
   const formattedSize = isDirectory(attributes)
@@ -407,7 +408,10 @@ File.propTypes = {
   withSelectionCheckbox: PropTypes.bool.isRequired,
   withFilePath: PropTypes.bool,
   isAvailableOffline: PropTypes.bool.isRequired,
+  /** Disables row actions */
   disabled: PropTypes.bool,
+  /** Apply disabled style on row */
+  styleDisabled: PropTypes.bool,
   breakpoints: PropTypes.object.isRequired,
   selectionModeActive: PropTypes.bool.isRequired,
   /** When a user click on a Folder */
