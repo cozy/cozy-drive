@@ -102,6 +102,11 @@
   "permissions": {
     "files": {
       "description": "Required to access the files",
+      "type": "io.cozy.files",
+      "verbs": ["ALL"]
+    },
+    "allFiles": {
+      "description": "Required to access the files",
       "type": "io.cozy.files.*",
       "verbs": ["ALL"]
     },
