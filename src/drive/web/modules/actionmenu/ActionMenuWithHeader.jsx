@@ -45,7 +45,7 @@ const MenuHeaderFile = ({ file, lang }) => {
   const scannerT = getBoundT(lang)
   return (
     <div>
-      <div className={'u-p-1 u-flex u-flex-items-center'}>
+      <div className={'u-flex u-flex-items-center'}>
         <Icon
           icon={getMimeTypeIcon(isDirectory(file), file.name, file.mime)}
           size={32}
