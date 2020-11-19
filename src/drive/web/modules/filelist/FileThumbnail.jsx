@@ -1,21 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+
 import { models } from 'cozy-client'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
+
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import SharingShortcutBadge from 'drive/web/modules/filelist/SharingShortcutBadge'
 import styles from 'drive/styles/filelist.styl'
 
-const FileThumbnail = ({ file, size }) => {
+const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
   const { isMobile } = useBreakpoints()
-  const isSharingShorcut = models.file.isSharingShorcut(file)
-  const isRegularShortcut = !isSharingShorcut && file.class === 'shortcut'
-  const isSimpleFile = !isSharingShorcut && !isRegularShortcut
+  const isSharingShorcut =
+    models.file.isSharingShorcut(file) && !isInSyncFromSharing
+  const isRegularShortcut =
+    !isSharingShorcut && file.class === 'shortcut' && !isInSyncFromSharing
+  const isSimpleFile =
+    !isSharingShorcut && !isRegularShortcut && !isInSyncFromSharing
 
   return (
     <div
@@ -36,6 +42,14 @@ const FileThumbnail = ({ file, size }) => {
           <SharingOwnerAvatar docId={file.id} size={'small'} />
         </GhostFileBadge>
       )}
+      {isInSyncFromSharing && (
+        <span data-testid="fil-file-thumbnail--spinner">
+          <Spinner
+            size="large"
+            className={styles['fil-file-thumbnail--spinner']}
+          />
+        </span>
+      )}
       {/**
        * @todo
        * Since for shortcut we already display a kind of badge we're currently just
@@ -44,7 +58,8 @@ const FileThumbnail = ({ file, size }) => {
        * this badge from here. In the meantime, we take this workaround
        */}
       {file.class !== 'shortcut' &&
-        isMobile && (
+        isMobile &&
+        !isInSyncFromSharing && (
           <SharedBadge
             docId={file.id}
             className={styles['fil-content-shared']}

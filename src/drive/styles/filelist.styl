@@ -13,6 +13,7 @@
 
 .fil-content-cell
     @extend $table-cell
+    display flex
 
 .fil-content-row-head
     @extend $table-row-head
@@ -146,10 +147,13 @@ column-width-thumbnail-bigger = 7rem
     flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
 
 .fil-file-thumbnail
-  position relative
-  flex 0 0 column-width-thumbnail - 1rem //width without padding
-  svg
-    display block
+    position relative
+    flex 0 0 column-width-thumbnail - 1rem //width without padding
+    svg
+        display block
+
+    &--spinner
+        margin 0 .25rem !important // to override default cozy-ui margin
 
 .fil-file-thumbnail-image
   object-fit cover
