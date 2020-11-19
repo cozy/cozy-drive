@@ -134,6 +134,7 @@
     "lodash": "4.17.19",
     "log-prefix": "0.1.1",
     "mime-types": "2.1.24",
+    "node-fetch": "2.6.1",
     "node-polyglot": "2.4.0",
     "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",

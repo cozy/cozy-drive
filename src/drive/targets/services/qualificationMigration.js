@@ -10,6 +10,9 @@ import {
 
 const BATCH_FILES_LIMIT = 1000 // to avoid processing too many files and get timeouts
 
+// fixes an import problem of isomorphic fetch in cozy-client
+global.fetch = require('node-fetch').default
+
 /**
  * This services migrates files qualified with the old model.
  * The up-to-date qualification model is now saved [here](https://github.com/cozy/cozy-client/blob/master/packages/cozy-client/src/assets/qualifications.json)
@@ -20,6 +23,8 @@ const BATCH_FILES_LIMIT = 1000 // to avoid processing too many files and get tim
  * service time-out.
  */
 export const migrateQualifications = async () => {
+  log('info', `Start qualification migration`)
+
   const client = CozyClient.fromEnv(process.env, { schema })
 
   // Get last processed file date from the settings
