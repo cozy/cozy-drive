@@ -16,11 +16,11 @@
     .fil-actionmenu-recipients
         display none
 
-.fil-actionmenu-inner
-    .fil-action:hover
-        background-color var(--paleGrey)
-    .fil-action:active
-        background-color var(--silver)
+    .fil-action
+        &:hover
+            background-color var(--paleGrey)
+        &:active
+            background-color var(--silver)
 
 .fil-actionmenu-overlay
   opacity 0
@@ -34,7 +34,7 @@
 .fil-mobileactionmenu-header
     font-weight bold
     max-width 100%
-    display flex 
+    display flex
 
 .fil-mobileactionmenu-file-name
     overflow hidden
@@ -44,12 +44,12 @@
 
 .fil-mobileactionmenu-file-ext
     color var(--coolGrey)
+
 .fil-mobileactionmenu-category
     padding-left rem(4)
     line-height rem(18)
 
-
 .fil-actionmenu-recipients
     position absolute
     right    1rem
-    top      .1rem
+    top      .2rem
