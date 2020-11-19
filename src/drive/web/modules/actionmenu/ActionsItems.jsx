@@ -6,6 +6,7 @@ import styles from 'drive/styles/actionmenu.styl'
 export const getActionName = actionObject => {
   return Object.keys(actionObject)[0]
 }
+
 // We need to clean Actions since action has a displayable
 // conditions and we can't know from the begining what the
 // behavior will be. For instance, we can't know that
@@ -39,6 +40,7 @@ export const getOnlyNeededActions = (actions, file) => {
   }
   return cleanedActions
 }
+
 /**
  *
  * ActionsItems only shows `actions` that are  suitable for the given
@@ -64,12 +66,16 @@ export const ActionsItems = ({ actions, file, onClose }) => {
         }
       : null
     return (
-      <Component
+      <div
+        className={cx(
+          'u-pos-relative',
+          styles['fil-action'],
+          styles[`fil-action-${actionName}`]
+        )}
         key={actionName + i}
-        className={cx(styles['fil-action'], styles[`fil-action-${actionName}`])}
-        onClick={onClick}
-        files={[file]}
-      />
+      >
+        <Component onClick={onClick} files={[file]} />
+      </div>
     )
   })
 }
