@@ -51,6 +51,8 @@ export const useSharingInfos = () => {
       }
       if (window.location.pathname === '/preview') {
         loadSharingDiscoveryLink()
+      } else {
+        setLoading(false)
       }
     },
     [client]

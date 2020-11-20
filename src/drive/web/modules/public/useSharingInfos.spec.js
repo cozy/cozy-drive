@@ -111,4 +111,14 @@ describe('useSharingInfos', () => {
     expect(result.current.sharing).toEqual(mockSharing.data)
     expect(result.current.discoveryLink).toEqual(discoveryLink)
   })
+
+  it('returns loading false if there is nothing to do aka sharing by link', () => {
+    delete window.location
+    window.location = {
+      pathname: '/public',
+      search: '?sharecode=5FAZbBB4Iy0k'
+    }
+    const { result } = setup()
+    expect(result.current.loading).toEqual(false)
+  })
 })
