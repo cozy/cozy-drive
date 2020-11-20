@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import cx from 'classnames'
+
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -70,7 +72,7 @@ class Toolbar extends Component {
     return (
       <div
         data-test-id="fil-toolbar-files"
-        className={styles['fil-toolbar-files']}
+        className={cx(styles['fil-toolbar-files'], 'u-flex-items-center')}
         role="toolbar"
       >
         {!isShared &&
