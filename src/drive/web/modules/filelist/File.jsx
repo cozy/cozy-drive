@@ -6,7 +6,6 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
 
-import flag from 'cozy-flags'
 import { SharedStatus, ShareModal } from 'cozy-sharing'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
@@ -34,8 +33,6 @@ import FileOpener from 'drive/web/modules/filelist/FileOpener'
 import styles from 'drive/styles/filelist.styl'
 
 import HammerComponent from './HammerComponent'
-
-const isInSyncFromSharing = () => flag('isInSyncFromSharing') // TODO: remove flag and use real function
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
@@ -474,10 +471,6 @@ File.propTypes = {
   onCheckboxToggle: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
   isInSyncFromSharing: PropTypes.bool
-}
-
-File.defaultProps = {
-  isInSyncFromSharing: isInSyncFromSharing()
 }
 
 const mapStateToProps = (state, ownProps) => ({

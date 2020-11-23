@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useState, useEffect } from 'react'
 import get from 'lodash/get'
 import { useDispatch } from 'react-redux'
 
+import flag from 'cozy-flags'
 import { useClient, useCapabilities } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
@@ -20,6 +21,8 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
+
+const isInSyncFromSharing = () => flag('isInSyncFromSharing') // TODO: remove flag and use real function
 
 const FolderViewBody = ({
   currentFolderId,
@@ -162,6 +165,7 @@ const FolderViewBody = ({
                         thumbnailSizeBig={isBigThumbnail}
                         actions={actions}
                         refreshFolderContent={refreshFolderContent}
+                        isInSyncFromSharing={isInSyncFromSharing()}
                       />
                     ))}
                     {query.hasMore && <LoadMore fetchMore={query.fetchMore} />}
