@@ -1,7 +1,7 @@
 /* global __TARGET__ */
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
-
+import { useClient } from 'cozy-client'
 import Settings from 'drive/mobile/modules/settings/Settings'
 import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
@@ -46,9 +46,50 @@ const RootComponent = routerProps => (
     <RouterContextProvider {...routerProps} />
   </Layout>
 )
+const Test = () => {
+  const client = useClient()
+  const parameters = {
+    "data": {
+        "attributes": {
+          "title": "Notification",
+          "message": "coucou",
+          "preferred_channels": ["sms"],
+          "category": "sms-access"
+        }
+    }
+  }
+
+  return <div>
+      <button onClick={async () => {
+       const notif = await client.getStackClient().fetchJSON('POST', '/notifications', parameters)
+       console.log('notif', notif)
+      }}>
+      test
+      </button>
+      <button onClick={async() => {
+         const attrs = {
+          type: '@webhook',
+          worker: 'service',
+          message: {
+            name: 'qualificationMigration',
+            slug: 'drive'
+          }
+        }
+       const trigger = await client
+          .getStackClient()
+          .collection('io.cozy.triggers')
+          .create(attrs)
+          console.log("trigger", trigger)
+      }
+        
+      }>Webhook</button>
+      </div>
+}
+
 
 const AppRoute = (
   <Route>
+    <Route path='test' component={Test} />
     <Route path="external/:fileId" component={ExternalRedirect} />
     <Route component={RootComponent}>
       {__TARGET__ === 'mobile' && (

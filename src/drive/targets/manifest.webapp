@@ -159,6 +159,19 @@
       "description": "Required to have access to the sharings in realtime",
       "type": "io.cozy.sharings",
       "verbs": ["GET"]
-    }	
+    },
+    "triggers": {
+      "description": "Required to re-execute the clustering",
+      "type": "io.cozy.triggers"
+    }
+  },
+  "notifications": {
+    "sms-access": {
+      "description": "Send notification to the Usager in order to transfert the sharecode received",
+      "collapsible": true,
+      "stateful": false,
+      "default_priority": "high",
+      "templates": {}
+    }
   }
 }

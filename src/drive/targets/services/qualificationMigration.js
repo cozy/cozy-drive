@@ -20,6 +20,7 @@ const BATCH_FILES_LIMIT = 1000 // to avoid processing too many files and get tim
  * service time-out.
  */
 export const migrateQualifications = async () => {
+  log('critical', 'coucou')
   const client = CozyClient.fromEnv(process.env, { schema })
 
   // Get last processed file date from the settings
