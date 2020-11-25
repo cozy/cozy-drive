@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
 import { useClient } from 'cozy-client'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+
 import {
   isAvailableOffline,
   toggleAvailableOffline
 } from 'drive/mobile/modules/offline/duck'
 
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
 const MakeAvailableOfflineMenuItem = connect(
   (state, ownProps) => ({
     checked: isAvailableOffline(state, ownProps.file.id)
@@ -17,7 +19,8 @@ const MakeAvailableOfflineMenuItem = connect(
     toggleOfflineAvailability: client =>
       dispatch(toggleAvailableOffline(ownProps.file, client))
   })
-)(({ checked, toggleOfflineAvailability, children, ...rest }) => {
+)(({ checked, toggleOfflineAvailability, ...rest }) => {
+  const { t } = useI18n()
   const client = useClient()
   const onToggle = useCallback(
     e => {
@@ -32,7 +35,7 @@ const MakeAvailableOfflineMenuItem = connect(
       left={<Icon icon="phone-download" />}
       right={
         <Switch
-          id={children}
+          id={'offline-switch'}
           checked={checked}
           onClick={ev => onToggle(ev)}
           classes={{
@@ -41,7 +44,7 @@ const MakeAvailableOfflineMenuItem = connect(
         />
       }
     >
-      {children}
+      {t('SelectionBar.phone-download')}
     </ActionMenuItem>
   )
 })
