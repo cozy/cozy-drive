@@ -7,6 +7,9 @@ import {
   queryFilesFromDate,
   getMostRecentUpdatedDate
 } from 'drive/lib/migration/qualification'
+import fetch from 'node-fetch'
+
+global.fetch = fetch
 
 const BATCH_FILES_LIMIT = 1000 // to avoid processing too many files and get timeouts
 
@@ -20,6 +23,7 @@ const BATCH_FILES_LIMIT = 1000 // to avoid processing too many files and get tim
  * service time-out.
  */
 export const migrateQualifications = async () => {
+  log('info', 'Start qualification migration service')
   const client = CozyClient.fromEnv(process.env, { schema })
 
   // Get last processed file date from the settings
