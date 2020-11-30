@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react'
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
-import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import TextField from 'cozy-ui/transpiled/react/MuiCozyTheme/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -65,8 +65,8 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
       createShortcut()
     }
   }
-  return (
-    <Dialog
+  return ( 
+    <FixedDialog
       onClose={onClose}
       title={t('Shortcut.title_modal')}
       opened={true}
