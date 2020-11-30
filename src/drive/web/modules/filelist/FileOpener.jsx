@@ -12,17 +12,18 @@ class FileOpener extends Component {
   }
 
   componentDidMount() {
-    const {
-      file,
-      disabled,
-      actionMenuVisible,
-      toggle,
-      open,
-      selectionModeActive,
-      isRenaming
-    } = this.props
     this.gesturesHandler = propagating(new Hammer(this.myRef.current))
     this.gesturesHandler.on('tap onpress singletap', ev => {
+      //don't read the props to early. Read them only in the callback
+      const {
+        file,
+        disabled,
+        actionMenuVisible,
+        toggle,
+        open,
+        selectionModeActive,
+        isRenaming
+      } = this.props
       if (actionMenuVisible || disabled) return
       if (enableTouchEvents(ev)) {
         ev.preventDefault() // prevent a ghost click
