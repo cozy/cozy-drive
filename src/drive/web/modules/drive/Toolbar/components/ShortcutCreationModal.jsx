@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 
 import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { isIOS } from 'cozy-device-helper'
 
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import TextField from 'cozy-ui/transpiled/react/MuiCozyTheme/TextField'
@@ -65,6 +66,15 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
       createShortcut()
     }
   }
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if(isIOS()) window.scrollTo(0,0)
+     }, 30);
+ 
+    return () => clearTimeout(timeout);
+   },[]);
+
   return ( 
     <FixedDialog
       onClose={onClose}
