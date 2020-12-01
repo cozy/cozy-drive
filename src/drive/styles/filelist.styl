@@ -23,7 +23,7 @@
         .fil-content-file-select
             opacity 1
         .fil-content-sharestatus
-            span > div:first-child
+            span > div:first-child // targets sharing avatars
                 border-color var(--paleGrey)
     &--center
         justify-content center
@@ -123,32 +123,34 @@ column-width-thumbnail-bigger = 7rem
     background-repeat no-repeat
     background-size rem(32) rem(32)
 
+    &-openable
+        cursor pointer
+
 .fil-content-header.fil-content-file
     padding-left 0
 
-.fil-content-cell.fil-content-file
-    flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail)
-    display flex
-    align-items center
-    padding   0 2rem 0 0
-    font-size      1rem
-    line-height    1.3
-    white-space    nowrap
-    overflow       hidden
-    color var(--charcoalGrey)
-    height 100%
+.fil-content-cell
+    &.fil-content-file
+        flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail)
+        display flex
+        align-items center
+        padding   0 2rem 0 0
+        font-size      1rem
+        line-height    1.3
+        white-space    nowrap
+        overflow       hidden
+        color var(--charcoalGrey)
+        height 100%
 
 .fil-content-row-bigger .fil-content-cell.fil-content-file
     flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
-
-.fil-content-file-openable
-    cursor pointer
 
 .fil-file-thumbnail
   position relative
   flex 0 0 column-width-thumbnail - 1rem //width without padding
   svg
     display block
+
 .fil-file-thumbnail-image
   object-fit cover
 
@@ -313,6 +315,9 @@ column-width-thumbnail-bigger = 7rem
 
 .fil-content-sharestatus
     cursor pointer
+    &--disabled
+        cursor default
+
 +medium-screen()
     .fil-content-table-selection
         .fil-content-body
@@ -387,6 +392,11 @@ column-width-thumbnail-bigger = 7rem
 
 .fil-content-file-action
     opacity 1
+    &--disabled
+        opacity .4
+        button
+            cursor default
+
 .fil-content-row-actioned
     .fil-content-file-action
         button
