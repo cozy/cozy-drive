@@ -11,7 +11,7 @@ import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { ModalContext } from 'drive/lib/ModalContext'
 import { RouterContext } from 'drive/lib/RouterContext'
-import { SharingsContextProvider } from 'drive/lib/SharingsContext'
+import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -61,7 +61,7 @@ const AppLike = ({
         <SharingContext.Provider
           value={sharingContextValue || mockSharingContextValue}
         >
-          <SharingsContextProvider>
+          <AcceptingSharingProvider>
             <RouterContext.Provider
               value={routerContextValue || mockRouterContextValue}
             >
@@ -75,7 +75,7 @@ const AppLike = ({
                 </BreakpointsProvider>
               </ThumbnailSizeContextProvider>
             </RouterContext.Provider>
-          </SharingsContextProvider>
+          </AcceptingSharingProvider>
         </SharingContext.Provider>
       </TestI18n>
     </CozyProvider>

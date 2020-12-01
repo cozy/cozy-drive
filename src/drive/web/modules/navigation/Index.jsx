@@ -4,7 +4,7 @@ import { useClient, Q, models } from 'cozy-client'
 
 import { getSharingIdFromUrl } from './duck'
 import { SHAREDWITHME_DIR_ID } from 'drive/constants/config'
-import SharingsContext from 'drive/lib/SharingsContext'
+import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 
 /**
  * Compute sharing object according to the sharing found in io.cozy.sharings and the sharing context
@@ -91,7 +91,7 @@ export const fetchSharing = async ({
 const Index = ({ router }) => {
   const client = useClient()
   const { sharingsValue, setFileValue, setSharingsValue } = useContext(
-    SharingsContext
+    AcceptingSharingContext
   )
 
   const sharingId = getSharingIdFromUrl(window.location)

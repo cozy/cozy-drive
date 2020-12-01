@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react'
 
-const SharingsContext = createContext()
+const AcceptingSharingContext = createContext()
 
-const SharingsContextProvider = ({ children }) => {
+const AcceptingSharingProvider = ({ children }) => {
   const [sharingsValue, setSharingsValue] = useState({})
   const [fileValue, setFileValue] = useState()
   const contextValue = {
@@ -13,12 +13,12 @@ const SharingsContextProvider = ({ children }) => {
   }
 
   return (
-    <SharingsContext.Provider value={contextValue}>
+    <AcceptingSharingContext.Provider value={contextValue}>
       {children}
-    </SharingsContext.Provider>
+    </AcceptingSharingContext.Provider>
   )
 }
 
-export default SharingsContext
+export default AcceptingSharingContext
 
-export { SharingsContextProvider }
+export { AcceptingSharingProvider }
