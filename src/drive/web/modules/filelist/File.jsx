@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
 
+import flag from 'cozy-flags'
 import { SharedStatus, ShareModal } from 'cozy-sharing'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
@@ -33,6 +34,9 @@ import FileOpener from 'drive/web/modules/filelist/FileOpener'
 import styles from 'drive/styles/filelist.styl'
 
 import HammerComponent from './HammerComponent'
+
+const isInSyncFromSharing = () => flag('isInSyncFromSharing') // TODO: remove flag and use real function
+
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
     return element
@@ -79,26 +83,27 @@ export const enableTouchEvents = ev => {
   return true
 }
 
-const SelectBox = ({ withSelectionCheckbox, selected, onClick }) => (
+const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
   <div
     className={classNames(
       styles['fil-content-cell'],
       styles['fil-content-file-select']
     )}
-    onClick={onClick}
+    {...!disabled && { onClick }}
   >
-    {withSelectionCheckbox && (
-      <span data-input="checkbox">
-        <input
-          onChange={() => {
-            // handled by onClick on the <div>
-          }}
-          type="checkbox"
-          checked={selected}
-        />
-        <label />
-      </span>
-    )}
+    {withSelectionCheckbox &&
+      !disabled && (
+        <span data-input="checkbox">
+          <input
+            onChange={() => {
+              // handled by onClick on the <div>
+            }}
+            type="checkbox"
+            checked={selected}
+          />
+          <label />
+        </span>
+      )}
   </div>
 )
 
@@ -110,12 +115,14 @@ const FileName = ({
   isMobile,
   formattedSize,
   formattedUpdatedAt,
-  refreshFolderContent
+  refreshFolderContent,
+  isInSyncFromSharing
 }) => {
   const classes = classNames(
     styles['fil-content-cell'],
     styles['fil-content-file'],
-    { [styles['fil-content-file-openable']]: !isRenaming && interactive }
+    { [styles['fil-content-file-openable']]: !isRenaming && interactive },
+    { [styles['fil-content-row-disabled']]: isInSyncFromSharing }
   )
   const { filename, extension } = CozyFile.splitFilename(attributes)
 
@@ -195,7 +202,37 @@ const _Size = ({ filesize = '—' }) => (
 
 const Size = React.memo(_Size)
 
-const Status = ({ isAvailableOffline, file }) => {
+const ShareContent = ({
+  file,
+  setDisplayedModal,
+  disabled,
+  isInSyncFromSharing
+}) => (
+  <div
+    className={classNames(styles['fil-content-sharestatus'], {
+      [styles['fil-content-sharestatus--disabled']]: disabled
+    })}
+  >
+    {isInSyncFromSharing ? (
+      <span data-testid="fil-content-sharestatus--noAvatar">—</span>
+    ) : (
+      <HammerComponent
+        onClick={() => {
+          !disabled && setDisplayedModal(true) // should be only disabled
+        }}
+      >
+        <SharedStatus docId={file.id} />
+      </HammerComponent>
+    )}
+  </div>
+)
+
+const Status = ({
+  isAvailableOffline,
+  file,
+  disabled,
+  isInSyncFromSharing
+}) => {
   const [displayedModal, setDisplayedModal] = useState(false)
   return (
     <>
@@ -213,43 +250,44 @@ const Status = ({ isAvailableOffline, file }) => {
           styles['fil-content-status']
         )}
       >
-        {isAvailableOffline && (
-          <span className={styles['fil-content-offline']}>
-            <Icon
-              icon="phone-download"
-              color={palette.white}
-              width="14"
-              height="14"
-            />
-          </span>
-        )}
-        <HammerComponent
-          onClick={() => {
-            setDisplayedModal(true)
-          }}
-        >
-          <SharedStatus
-            docId={file.id}
-            className={styles['fil-content-sharestatus']}
-          />
-        </HammerComponent>
+        {isAvailableOffline &&
+          !disabled && (
+            <span className={styles['fil-content-offline']}>
+              <Icon
+                icon="phone-download"
+                color={palette.white}
+                width="14"
+                height="14"
+              />
+            </span>
+          )}
+        <ShareContent
+          file={file}
+          setDisplayedModal={setDisplayedModal}
+          disabled={disabled}
+          isInSyncFromSharing={isInSyncFromSharing}
+        />
       </div>
     </>
   )
 }
 
-const FileAction = forwardRef(function FileAction({ t, onClick }, ref) {
+const FileAction = forwardRef(function FileAction(
+  { t, onClick, disabled, isInSyncFromSharing },
+  ref
+) {
   return (
     <div
       className={classNames(
         styles['fil-content-cell'],
-        styles['fil-content-file-action']
+        styles['fil-content-file-action'],
+        { [styles['fil-content-file-action--disabled']]: isInSyncFromSharing }
       )}
       ref={ref}
     >
       <Button
         theme="action"
-        onClick={onClick}
+        {...!disabled && { onClick }}
         extension="narrow"
         icon={
           <Icon
@@ -319,11 +357,13 @@ const File = props => {
     thumbnailSizeBig,
     selectionModeActive,
     refreshFolderContent,
+    isInSyncFromSharing,
     breakpoints: { isExtraLarge, isMobile }
   } = props
 
   const isImage = attributes.class === 'image'
   const isLargeRow = isImage && thumbnailSizeBig
+  const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
   const filContentRowSelected = classNames(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
@@ -348,38 +388,51 @@ const File = props => {
         withSelectionCheckbox={withSelectionCheckbox}
         selected={selected}
         onClick={e => toggle(e)}
+        disabled={isRowDisabledOrInSyncFromSharing}
       />
       <FileOpener
         file={attributes}
-        disabled={disabled}
+        disabled={isRowDisabledOrInSyncFromSharing}
         actionMenuVisible={actionMenuVisible}
         selectionModeActive={selectionModeActive}
         open={open}
         toggle={toggle}
         isRenaming={isRenaming}
       >
-        <FileThumbnail file={attributes} size={isLargeRow ? 96 : undefined} />
+        <FileThumbnail
+          file={attributes}
+          size={isLargeRow ? 96 : undefined}
+          isInSyncFromSharing={isInSyncFromSharing}
+        />
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
-          interactive={!disabled}
+          interactive={!isRowDisabledOrInSyncFromSharing}
           withFilePath={withFilePath}
           isMobile={isMobile}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
           refreshFolderContent={refreshFolderContent}
+          isInSyncFromSharing={isInSyncFromSharing}
         />
         <LastUpdate
           date={updatedAt}
           formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
         />
         <Size filesize={formattedSize} />
-        <Status file={attributes} isAvailableOffline={isAvailableOffline} />
+        <Status
+          file={attributes}
+          isAvailableOffline={isAvailableOffline}
+          disabled={isRowDisabledOrInSyncFromSharing}
+          isInSyncFromSharing={isInSyncFromSharing}
+        />
       </FileOpener>
       {actions && (
         <FileAction
           t={t}
           ref={filerowMenuToggleRef}
+          disabled={isRowDisabledOrInSyncFromSharing}
+          isInSyncFromSharing={isInSyncFromSharing}
           onClick={() => {
             toggleActionMenu()
           }}
@@ -419,7 +472,12 @@ File.propTypes = {
   /** onFileOpen : When a user click on a File */
   onFileOpen: PropTypes.func.isRequired,
   onCheckboxToggle: PropTypes.func.isRequired,
-  refreshFolderContent: PropTypes.func
+  refreshFolderContent: PropTypes.func,
+  isInSyncFromSharing: PropTypes.bool
+}
+
+File.defaultProps = {
+  isInSyncFromSharing: isInSyncFromSharing()
 }
 
 const mapStateToProps = (state, ownProps) => ({
