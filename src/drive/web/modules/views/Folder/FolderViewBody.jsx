@@ -21,7 +21,7 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
-import SharingsContext from 'drive/lib/SharingsContext'
+import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 
 const FolderViewBody = ({
@@ -40,7 +40,7 @@ const FolderViewBody = ({
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
-  const { sharingsValue } = useContext(SharingsContext)
+  const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
 
   const changeSortOrder = useCallback(

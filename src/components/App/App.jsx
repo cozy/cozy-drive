@@ -7,7 +7,7 @@ import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoin
 import SharingProvider from 'cozy-sharing'
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { ModalContextProvider } from 'drive/lib/ModalContext'
-import { SharingsContextProvider } from 'drive/lib/SharingsContext'
+import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
@@ -17,7 +17,7 @@ const App = props => {
       <I18n lang={props.lang} polyglot={props.polyglot}>
         <CozyProvider client={props.client}>
           <SharingProvider doctype="io.cozy.files" documentType="Files">
-            <SharingsContextProvider>
+            <AcceptingSharingProvider>
               <ThumbnailSizeContextProvider>
                 <ModalContextProvider>
                   <BreakpointsProvider>
@@ -25,7 +25,7 @@ const App = props => {
                   </BreakpointsProvider>
                 </ModalContextProvider>
               </ThumbnailSizeContextProvider>
-            </SharingsContextProvider>
+            </AcceptingSharingProvider>
           </SharingProvider>
         </CozyProvider>
       </I18n>
