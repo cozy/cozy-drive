@@ -4971,12 +4971,12 @@ cozy-client@^16.2.0:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-device-helper@1.10.3, cozy-device-helper@^1.10.3, cozy-device-helper@^1.7.3, cozy-device-helper@^1.9.2:
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.10.3.tgz#c2ee5b9891b7865d97125ad7e71a1f7af9c639c6"
-  integrity sha512-n1GR1X6D00e6G0b4GD0PpMDbvbxltAboVLN2RWfYURg0bOlVb2QC7ay6WrIlGHc+rVVY8FPBvuV/87A3vEEuiQ==
+cozy-device-helper@1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.11.0.tgz#1dc9441b23c9bfd1f62b947f65334334a2f78cdc"
+  integrity sha512-Xw9Zah3ML8ORnKzOTFj8CPXVjLKOvFwwy1ue8KoHzrdkraHctyQ6pdm0Jm8qLuxV6oa0BexOilqnq849OR7ZdA==
   dependencies:
-    lodash "4.17.19"
+    lodash "^4.17.19"
 
 cozy-device-helper@1.8.0:
   version "1.8.0"
@@ -4984,6 +4984,13 @@ cozy-device-helper@1.8.0:
   integrity sha512-XomsjdCCWcS01x1QK/Wc4EI4zTxJN8Ouh7956wm2AEQyjj4lN+7cj8tqEBlb8fLWm68/3S3Z4V3iSJDgnJHu6A==
   dependencies:
     lodash "4.17.15"
+
+cozy-device-helper@^1.10.3, cozy-device-helper@^1.7.3, cozy-device-helper@^1.9.2:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.10.3.tgz#c2ee5b9891b7865d97125ad7e71a1f7af9c639c6"
+  integrity sha512-n1GR1X6D00e6G0b4GD0PpMDbvbxltAboVLN2RWfYURg0bOlVb2QC7ay6WrIlGHc+rVVY8FPBvuV/87A3vEEuiQ==
+  dependencies:
+    lodash "4.17.19"
 
 cozy-doctypes@1.74.7:
   version "1.74.7"
