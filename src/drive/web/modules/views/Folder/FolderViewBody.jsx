@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
-import get from 'lodash/get'
 import { useDispatch } from 'react-redux'
+import get from 'lodash/get'
 
-import flag from 'cozy-flags'
 import { useClient, useCapabilities } from 'cozy-client'
+import { isSharingShorcut } from 'cozy-client/dist/models/file'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
@@ -21,8 +21,8 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
-
-const isInSyncFromSharing = () => flag('isInSyncFromSharing') // TODO: remove flag and use real function
+import SharingsContext from 'drive/lib/SharingsContext'
+import { useSyncingFakeFile } from './useSyncingFakeFile'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -40,6 +40,7 @@ const FolderViewBody = ({
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
+  const { sharingsValue } = useContext(SharingsContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
 
   const changeSortOrder = useCallback(
@@ -53,7 +54,6 @@ const FolderViewBody = ({
     capabilities,
     'capabilities.data.attributes.flat_subdomains'
   )
-
   const dispatch = useDispatch()
 
   const handleFileOpen = useCallback(
@@ -71,7 +71,6 @@ const FolderViewBody = ({
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
-
   const hasDataToShow =
     !isInError &&
     queryResults.some(query => query.data && query.data.length > 0)
@@ -80,8 +79,10 @@ const FolderViewBody = ({
     queryResults.some(
       query => query.fetchStatus === 'loading' && !query.lastUpdate
     )
-
   const isEmpty = !isInError && !isLoading && !hasDataToShow
+  const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
+
+  const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
 
   /**
    * When we mount the component when we already have data in cache,
@@ -109,6 +110,7 @@ const FolderViewBody = ({
     },
     [isLoading]
   )
+
   return (
     <>
       <SelectionBar actions={actions} />
@@ -152,25 +154,41 @@ const FolderViewBody = ({
           {hasDataToShow &&
             !needsToWait && (
               <div className={!isDesktop ? 'u-ov-hidden' : ''}>
-                {queryResults.map((query, queryIndex) => (
-                  <React.Fragment key={queryIndex}>
-                    {query.data.map(file => (
-                      <File
-                        key={file._id}
-                        attributes={file}
-                        withSelectionCheckbox
-                        onFolderOpen={navigateToFolder}
-                        onFileOpen={handleFileOpen}
-                        withFilePath={withFilePath}
-                        thumbnailSizeBig={isBigThumbnail}
-                        actions={actions}
-                        refreshFolderContent={refreshFolderContent}
-                        isInSyncFromSharing={isInSyncFromSharing()}
-                      />
-                    ))}
-                    {query.hasMore && <LoadMore fetchMore={query.fetchMore} />}
-                  </React.Fragment>
-                ))}
+                <>
+                  {syncingFakeFile && (
+                    <File
+                      attributes={syncingFakeFile}
+                      withSelectionCheckbox={false}
+                      onFolderOpen={() => {}}
+                      onFileOpen={() => {}}
+                      actions={[]}
+                      isInSyncFromSharing={true}
+                    />
+                  )}
+                  {queryResults.map((query, queryIndex) => (
+                    <React.Fragment key={queryIndex}>
+                      {query.data.map(file => (
+                        <File
+                          key={file._id}
+                          attributes={file}
+                          withSelectionCheckbox
+                          onFolderOpen={navigateToFolder}
+                          onFileOpen={handleFileOpen}
+                          withFilePath={withFilePath}
+                          thumbnailSizeBig={isBigThumbnail}
+                          actions={actions}
+                          refreshFolderContent={refreshFolderContent}
+                          isInSyncFromSharing={
+                            !isSharingContextEmpty && isSharingShorcut(file)
+                          }
+                        />
+                      ))}
+                      {query.hasMore && (
+                        <LoadMore fetchMore={query.fetchMore} />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </>
               </div>
             )}
         </FileListBody>
