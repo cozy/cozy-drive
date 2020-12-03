@@ -69,13 +69,13 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if(isIOS()) window.scrollTo(0,0)
-     }, 30);
- 
-    return () => clearTimeout(timeout);
-   },[]);
+      if (isIOS()) window.scrollTo(0, 0)
+    }, 30)
 
-  return ( 
+    return () => clearTimeout(timeout)
+  }, [])
+
+  return (
     <FixedDialog
       onClose={onClose}
       title={t('Shortcut.title_modal')}
