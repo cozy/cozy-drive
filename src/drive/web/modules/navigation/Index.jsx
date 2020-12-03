@@ -81,6 +81,7 @@ export const fetchSharing = async ({
     }
     return router.push(`/folder/${referencedFile.dir_id}`)
   } catch (e) {
+    // eslint-disable-next-line
     console.warn(
       `fetchSharing error : ${e}. Redirect to /folder/${SHAREDWITHME_DIR_ID}`
     )
