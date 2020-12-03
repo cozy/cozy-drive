@@ -12,6 +12,7 @@ import FileHistory from 'components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
+import Index from './Index'
 import DriveView from '../views/Drive'
 import FilesViewerDrive from '../views/Drive/FilesViewerDrive'
 import RecentView from '../views/Recent'
@@ -55,7 +56,7 @@ const AppRoute = (
         <Route path="uploadfrommobile" component={UploadFromMobile} />
       )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
-      <Redirect from="/" to="folder" />
+      <Route path="/" component={Index} />
 
       <Route path="folder" component={DriveView}>
         {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
