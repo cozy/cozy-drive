@@ -2,6 +2,8 @@
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 
+import flag from 'cozy-flags'
+
 import Settings from 'drive/mobile/modules/settings/Settings'
 import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
@@ -21,6 +23,7 @@ import TrashFolderView from '../views/Trash/TrashFolderView'
 import SharingsView from '../views/Sharings'
 import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
 import SharingsFolderView from '../views/Sharings/SharingsFolderView'
+import NotesView from '../views/Notes'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // To keep in sync with AppRoute below, used to extract params
@@ -39,7 +42,8 @@ export const routes = [
   '/sharings/file/:fileId/revision',
   '/trash/:folderId/file/:fileId',
   '/trash/:folderId',
-  '/file/:fileId'
+  '/file/:fileId',
+  '/notes'
 ]
 
 const RootComponent = routerProps => (
@@ -57,7 +61,9 @@ const AppRoute = (
       )}
       <Redirect from="/files/:folderId" to="/folder/:folderId" />
       <Route path="/" component={Index} />
-
+      {flag('drive.views.notes') && (
+        <Route path="/notes" component={NotesView} />
+      )}
       <Route path="folder" component={DriveView}>
         {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
         <Route path=":folderId">

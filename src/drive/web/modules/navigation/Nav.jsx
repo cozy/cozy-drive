@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 import cx from 'classnames'
 
+import flag from 'cozy-flags'
+
 import { useI18n } from 'cozy-ui/transpiled/react'
 
 import UINav, {
@@ -74,6 +76,7 @@ const settingsRoute = /\/settings(\/.*)?/
 const recentRoute = /\/recent(\/.*)?/
 const sharingRoute = /\/sharings(\/.*)?/
 const trashRoute = /\/trash(\/.*)?/
+const notesRoute = /\/notes(\/.*)?/
 export const Nav = () => {
   const { t } = useI18n()
   const routes = [
@@ -102,6 +105,14 @@ export const Nav = () => {
       rx: trashRoute
     }
   ]
+  if (flag('drive.views.notes')) {
+    routes.push({
+      to: '/notes',
+      icon: 'note',
+      label: t('Nav.item_notes'),
+      rx: notesRoute
+    })
+  }
   if (__TARGET__ === 'mobile') {
     routes.push({
       to: '/settings',

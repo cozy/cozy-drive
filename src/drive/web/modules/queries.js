@@ -77,6 +77,29 @@ const buildRecentQuery = () => ({
   }
 })
 
+const buildNotesQuery = ({ sortAttribute, sortOrder }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        mime: 'text/vnd.cozy.note+markdown',
+        type: 'file',
+        trashed: false,
+        [sortAttribute]: { $gt: null }
+      })
+      .indexFields(['mime', 'type', 'trashed', sortAttribute])
+      .sortBy([
+        { mime: sortOrder },
+        { type: sortOrder },
+        { trashed: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ])
+      .limitBy(50),
+  options: {
+    as: `notes-view-query-${sortAttribute}-${sortOrder}`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 const buildParentsByIdsQuery = ids => ({
   definition: () => Q('io.cozy.files').getByIds(ids),
   options: {
@@ -198,5 +221,6 @@ export {
   buildRecentQuery,
   buildParentsByIdsQuery,
   buildSharingsQuery,
-  buildTrashQuery
+  buildTrashQuery,
+  buildNotesQuery
 }
