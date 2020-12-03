@@ -115,7 +115,7 @@ const PublicToolbarByLink = ({
   const client = useClient()
   const { isMobile } = useBreakpoints()
 
-  const shouldDisplayMoreMenu = isMobile || !isFile
+  const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0) || hasWriteAccess
   const [isOpened, setIsOpened] = useState(true)
   const onClose = useCallback(() => setIsOpened(false), [setIsOpened])
 
