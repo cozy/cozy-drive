@@ -172,6 +172,7 @@ const PublicFolderView = ({
               canSort={false}
               currentFolderId={currentFolderId}
               refreshFolderContent={refreshFolderContent}
+              canUpload={hasWritePermissions}
             />
 
             {viewerOpened &&
