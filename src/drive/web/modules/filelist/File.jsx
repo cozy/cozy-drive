@@ -14,7 +14,7 @@ import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { isIOSApp } from 'cozy-device-helper'
-import { TableRow } from 'cozy-ui/transpiled/react/Table'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 
@@ -82,7 +82,7 @@ export const enableTouchEvents = ev => {
 }
 
 const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
-  <div
+  <TableCell
     className={cx(
       styles['fil-content-cell'],
       styles['fil-content-file-select']
@@ -94,7 +94,7 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
         <span data-input="checkbox">
           <input
             onChange={() => {
-              // handled by onClick on the <div>
+              // handled by onClick on the <TableCell>
             }}
             type="checkbox"
             checked={selected}
@@ -102,7 +102,7 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
           <label />
         </span>
       )}
-  </div>
+  </TableCell>
 )
 
 const FileName = ({
@@ -125,7 +125,7 @@ const FileName = ({
   const { filename, extension } = CozyFile.splitFilename(attributes)
 
   return (
-    <div className={classes}>
+    <TableCell className={classes}>
       {isRenaming ? (
         <RenameInput
           file={attributes}
@@ -171,21 +171,25 @@ const FileName = ({
             ))}
         </div>
       )}
-    </div>
+    </TableCell>
   )
 }
 
 const _LastUpdate = ({ date, formatted = '—' }) => (
-  <div className={cx(styles['fil-content-cell'], styles['fil-content-date'])}>
+  <TableCell
+    className={cx(styles['fil-content-cell'], styles['fil-content-date'])}
+  >
     <time dateTime={date}>{formatted}</time>
-  </div>
+  </TableCell>
 )
 
 const LastUpdate = React.memo(_LastUpdate)
 const _Size = ({ filesize = '—' }) => (
-  <div className={cx(styles['fil-content-cell'], styles['fil-content-size'])}>
+  <TableCell
+    className={cx(styles['fil-content-cell'], styles['fil-content-size'])}
+  >
     {filesize}
-  </div>
+  </TableCell>
 )
 
 const Size = React.memo(_Size)
@@ -232,7 +236,7 @@ const Status = ({
           onClose={() => setDisplayedModal(false)}
         />
       )}
-      <div
+      <TableCell
         className={cx(styles['fil-content-cell'], styles['fil-content-status'])}
       >
         {isAvailableOffline &&
@@ -252,7 +256,7 @@ const Status = ({
           disabled={disabled}
           isInSyncFromSharing={isInSyncFromSharing}
         />
-      </div>
+      </TableCell>
     </>
   )
 }
@@ -262,30 +266,31 @@ const FileAction = forwardRef(function FileAction(
   ref
 ) {
   return (
-    <div
+    <TableCell
       className={cx(
         styles['fil-content-cell'],
         styles['fil-content-file-action'],
         { [styles['fil-content-file-action--disabled']]: isInSyncFromSharing }
       )}
-      ref={ref}
     >
-      <Button
-        theme="action"
-        {...!disabled && { onClick }}
-        extension="narrow"
-        icon={
-          <Icon
-            icon="dots"
-            color={palette.charcoalGrey}
-            width="17"
-            height="17"
-          />
-        }
-        iconOnly
-        label={t('Toolbar.more')}
-      />
-    </div>
+      <span ref={ref}>
+        <Button
+          theme="action"
+          {...!disabled && { onClick }}
+          extension="narrow"
+          icon={
+            <Icon
+              icon="dots"
+              color={palette.charcoalGrey}
+              width="17"
+              height="17"
+            />
+          }
+          iconOnly
+          label={t('Toolbar.more')}
+        />
+      </span>
+    </TableCell>
   )
 })
 

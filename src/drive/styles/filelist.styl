@@ -5,7 +5,6 @@
     overflow auto
 
 .fil-content-cell
-    @extend $table-cell
     display flex
 
 .fil-content-row
@@ -127,6 +126,9 @@ column-width-thumbnail-bigger = 7rem
         overflow       hidden
         color var(--charcoalGrey)
         height 100%
+
+    &.fil-content-file-select
+        padding .9375rem .5rem
 
 .fil-content-row-bigger .fil-content-cell.fil-content-file
     flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
@@ -355,12 +357,19 @@ column-width-thumbnail-bigger = 7rem
         flex       0 0 3rem
         padding    0
 
-    .fil-content-cell.fil-content-file
-        padding-right 0
+    .fil-content-cell
+        &.fil-content-status
+            padding 0
 
-    .fil-content-cell.fil-content-file-select
-        display none
-        padding .9375rem 0 .9375rem .9375rem
+        &.fil-content-file-action
+            padding 0
+
+        &.fil-content-file
+            padding-right 0
+
+        &.fil-content-file-select
+            display none
+            padding .9375rem 0 .9375rem .9375rem
 
     .fil-content-body--selectable
         .fil-content-file-select

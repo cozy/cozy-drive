@@ -9,9 +9,11 @@ import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import { TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import SharingShortcutBadge from 'drive/web/modules/filelist/SharingShortcutBadge'
+
 import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
@@ -24,7 +26,7 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
     !isSharingShorcut && !isRegularShortcut && !isInSyncFromSharing
 
   return (
-    <div
+    <TableCell
       className={cx(styles['fil-content-cell'], styles['fil-file-thumbnail'], {
         'u-pl-0': !isMobile
       })}
@@ -66,7 +68,7 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
             xsmall
           />
         )}
-    </div>
+    </TableCell>
   )
 }
 
