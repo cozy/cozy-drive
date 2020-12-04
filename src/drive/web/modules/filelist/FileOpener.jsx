@@ -2,8 +2,53 @@ import React, { Component } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
 
-import { enableTouchEvents } from './File'
 import styles from './fileopener.styl'
+
+const getParentDiv = element => {
+  if (element.nodeName.toLowerCase() === 'div') {
+    return element
+  }
+  return getParentDiv(element.parentNode)
+}
+
+export const getParentLink = element => {
+  if (!element) {
+    return null
+  }
+
+  if (element.nodeName.toLowerCase() === 'a') {
+    return element
+  }
+
+  return getParentLink(element.parentNode)
+}
+
+const enableTouchEvents = ev => {
+  // remove event when you rename a file
+  if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
+    return false
+  }
+
+  const parentDiv = getParentDiv(ev.target)
+  // remove event when it's the checkbox or the more button
+  if (
+    parentDiv.className.indexOf(styles['fil-content-file-select']) !== -1 ||
+    parentDiv.className.indexOf(styles['fil-content-file-action']) !== -1
+  ) {
+    return false
+  }
+
+  // remove events when they are on the file's path, because it's a different behavior
+  const parentLink = getParentLink(ev.target)
+  if (
+    parentLink &&
+    parentLink.className.indexOf(styles['fil-file-path']) >= 0
+  ) {
+    return false
+  }
+
+  return true
+}
 
 class FileOpener extends Component {
   constructor(props) {

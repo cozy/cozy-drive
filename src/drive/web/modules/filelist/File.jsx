@@ -1,27 +1,18 @@
-import React, { useState, forwardRef, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import cx from 'classnames'
 import filesize from 'filesize'
-import { Link } from 'react-router'
-import { connect } from 'react-redux'
 import get from 'lodash/get'
 
-import { SharedStatus, ShareModal } from 'cozy-sharing'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import Button from 'cozy-ui/transpiled/react/Button'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
-import palette from 'cozy-ui/transpiled/react/palette'
 import { isIOSApp } from 'cozy-device-helper'
-import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
-
-import RenameInput from 'drive/web/modules/drive/RenameInput'
+import { TableRow } from 'cozy-ui/transpiled/react/Table'
 
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
 import { isDirectory } from 'drive/web/modules/drive/files'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
-import { CozyFile } from 'models'
 import {
   toggleItemSelection,
   isSelected
@@ -30,269 +21,16 @@ import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/rename'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
+import {
+  SelectBox,
+  FileName,
+  LastUpdate,
+  Size,
+  Status,
+  FileAction
+} from './cells'
 
 import styles from 'drive/styles/filelist.styl'
-
-import HammerComponent from './HammerComponent'
-
-const getParentDiv = element => {
-  if (element.nodeName.toLowerCase() === 'div') {
-    return element
-  }
-  return getParentDiv(element.parentNode)
-}
-
-export const getParentLink = element => {
-  if (!element) {
-    return null
-  }
-
-  if (element.nodeName.toLowerCase() === 'a') {
-    return element
-  }
-
-  return getParentLink(element.parentNode)
-}
-
-export const enableTouchEvents = ev => {
-  // remove event when you rename a file
-  if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
-    return false
-  }
-
-  const parentDiv = getParentDiv(ev.target)
-  // remove event when it's the checkbox or the more button
-  if (
-    parentDiv.className.indexOf(styles['fil-content-file-select']) !== -1 ||
-    parentDiv.className.indexOf(styles['fil-content-file-action']) !== -1
-  ) {
-    return false
-  }
-
-  // remove events when they are on the file's path, because it's a different behavior
-  const parentLink = getParentLink(ev.target)
-  if (
-    parentLink &&
-    parentLink.className.indexOf(styles['fil-file-path']) >= 0
-  ) {
-    return false
-  }
-
-  return true
-}
-
-const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
-  <TableCell
-    className={cx(
-      styles['fil-content-cell'],
-      styles['fil-content-file-select']
-    )}
-    {...!disabled && { onClick }}
-  >
-    {withSelectionCheckbox &&
-      !disabled && (
-        <span data-input="checkbox">
-          <input
-            onChange={() => {
-              // handled by onClick on the <TableCell>
-            }}
-            type="checkbox"
-            checked={selected}
-          />
-          <label />
-        </span>
-      )}
-  </TableCell>
-)
-
-const FileName = ({
-  attributes,
-  isRenaming,
-  interactive,
-  withFilePath,
-  isMobile,
-  formattedSize,
-  formattedUpdatedAt,
-  refreshFolderContent,
-  isInSyncFromSharing
-}) => {
-  const classes = cx(
-    styles['fil-content-cell'],
-    styles['fil-content-file'],
-    { [styles['fil-content-file-openable']]: !isRenaming && interactive },
-    { [styles['fil-content-row-disabled']]: isInSyncFromSharing }
-  )
-  const { filename, extension } = CozyFile.splitFilename(attributes)
-
-  return (
-    <TableCell className={classes}>
-      {isRenaming ? (
-        <RenameInput
-          file={attributes}
-          refreshFolderContent={refreshFolderContent}
-        />
-      ) : (
-        <div className={styles['fil-file']}>
-          <div className={styles['fil-file-filename']}>
-            <div className={styles['fil-file-filename-wrapper']}>
-              <div
-                data-test-id="fil-file-filename-and-ext"
-                className={styles['fil-file-filename-and-ext']}
-              >
-                {filename}
-                {extension && (
-                  <span className={styles['fil-content-ext']}>{extension}</span>
-                )}
-              </div>
-            </div>
-          </div>
-          {withFilePath &&
-            attributes.displayedPath &&
-            (isMobile ? (
-              <MidEllipsis
-                className={styles['fil-file-path']}
-                text={attributes.displayedPath}
-              />
-            ) : (
-              <Link
-                to={`/folder/${attributes.dir_id}`}
-                className={styles['fil-file-path']}
-              >
-                <MidEllipsis text={attributes.displayedPath} />
-              </Link>
-            ))}
-          {!withFilePath &&
-            (isDirectory(attributes) || (
-              <div className={styles['fil-file-infos']}>
-                {`${formattedUpdatedAt}${
-                  formattedSize ? ` - ${formattedSize}` : ''
-                }`}
-              </div>
-            ))}
-        </div>
-      )}
-    </TableCell>
-  )
-}
-
-const _LastUpdate = ({ date, formatted = '—' }) => (
-  <TableCell
-    className={cx(styles['fil-content-cell'], styles['fil-content-date'])}
-  >
-    <time dateTime={date}>{formatted}</time>
-  </TableCell>
-)
-
-const LastUpdate = React.memo(_LastUpdate)
-const _Size = ({ filesize = '—' }) => (
-  <TableCell
-    className={cx(styles['fil-content-cell'], styles['fil-content-size'])}
-  >
-    {filesize}
-  </TableCell>
-)
-
-const Size = React.memo(_Size)
-
-const ShareContent = ({
-  file,
-  setDisplayedModal,
-  disabled,
-  isInSyncFromSharing
-}) => (
-  <div
-    className={cx(styles['fil-content-sharestatus'], {
-      [styles['fil-content-sharestatus--disabled']]: disabled
-    })}
-  >
-    {isInSyncFromSharing ? (
-      <span data-testid="fil-content-sharestatus--noAvatar">—</span>
-    ) : (
-      <HammerComponent
-        onClick={() => {
-          !disabled && setDisplayedModal(true) // should be only disabled
-        }}
-      >
-        <SharedStatus docId={file.id} />
-      </HammerComponent>
-    )}
-  </div>
-)
-
-const Status = ({
-  isAvailableOffline,
-  file,
-  disabled,
-  isInSyncFromSharing
-}) => {
-  const [displayedModal, setDisplayedModal] = useState(false)
-  return (
-    <>
-      {displayedModal && (
-        <ShareModal
-          document={file}
-          documentType="Files"
-          sharingDesc={file.name}
-          onClose={() => setDisplayedModal(false)}
-        />
-      )}
-      <TableCell
-        className={cx(styles['fil-content-cell'], styles['fil-content-status'])}
-      >
-        {isAvailableOffline &&
-          !disabled && (
-            <span className={styles['fil-content-offline']}>
-              <Icon
-                icon="phone-download"
-                color={palette.white}
-                width="14"
-                height="14"
-              />
-            </span>
-          )}
-        <ShareContent
-          file={file}
-          setDisplayedModal={setDisplayedModal}
-          disabled={disabled}
-          isInSyncFromSharing={isInSyncFromSharing}
-        />
-      </TableCell>
-    </>
-  )
-}
-
-const FileAction = forwardRef(function FileAction(
-  { t, onClick, disabled, isInSyncFromSharing },
-  ref
-) {
-  return (
-    <TableCell
-      className={cx(
-        styles['fil-content-cell'],
-        styles['fil-content-file-action'],
-        { [styles['fil-content-file-action--disabled']]: isInSyncFromSharing }
-      )}
-    >
-      <span ref={ref}>
-        <Button
-          theme="action"
-          {...!disabled && { onClick }}
-          extension="narrow"
-          icon={
-            <Icon
-              icon="dots"
-              color={palette.charcoalGrey}
-              width="17"
-              height="17"
-            />
-          }
-          iconOnly
-          label={t('Toolbar.more')}
-        />
-      </span>
-    </TableCell>
-  )
-})
 
 const File = props => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
