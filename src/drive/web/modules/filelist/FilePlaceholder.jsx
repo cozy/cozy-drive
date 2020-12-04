@@ -3,7 +3,7 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import { TableRow } from 'cozy-ui/transpiled/react/Table'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -29,33 +29,39 @@ PlaceholderBlock.defaultProps = {
 
 const FilePlaceholder = ({ index, breakpoints: { isMobile } }) => (
   <TableRow className={styles['fil-content-row']}>
-    <div
+    <TableCell
       className={cx(
         styles['fil-content-cell'],
         styles['fil-content-file-select']
       )}
     />
-    <div
+    <TableCell
       className={cx(styles['fil-content-cell'], styles['fil-file-thumbnail'], {
         'u-pl-0': !isMobile
       })}
     >
       <PlaceholderBlock width="2rem" />
-    </div>
-    <div className={cx(styles['fil-content-cell'], styles['fil-content-file'])}>
+    </TableCell>
+    <TableCell
+      className={cx(styles['fil-content-cell'], styles['fil-content-file'])}
+    >
       <PlaceholderBlock width={`${seededRandomBetween(3, 12, index)}rem`} />
-    </div>
-    <div className={cx(styles['fil-content-cell'], styles['fil-content-date'])}>
+    </TableCell>
+    <TableCell
+      className={cx(styles['fil-content-cell'], styles['fil-content-date'])}
+    >
       <PlaceholderBlock width="5rem" />
-    </div>
-    <div className={cx(styles['fil-content-cell'], styles['fil-content-size'])}>
+    </TableCell>
+    <TableCell
+      className={cx(styles['fil-content-cell'], styles['fil-content-size'])}
+    >
       <PlaceholderBlock width={`${seededRandomBetween(3.75, 5, index)}rem`} />
-    </div>
-    <div
+    </TableCell>
+    <TableCell
       className={cx(styles['fil-content-cell'], styles['fil-content-status'])}
     >
       <PlaceholderBlock width="1.25rem" />
-    </div>
+    </TableCell>
   </TableRow>
 )
 

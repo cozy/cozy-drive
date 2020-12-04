@@ -7,7 +7,7 @@ import { withClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { TableRow } from 'cozy-ui/transpiled/react/Table'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
 import {
@@ -15,9 +15,9 @@ import {
   hideNewFolderInput
 } from 'drive/web/modules/filelist/duck'
 import { createFolder } from 'drive/web/modules/navigation/duck'
-import Cell from 'drive/web/modules/filelist/Cell'
-import styles from 'drive/styles/filelist.styl'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
+
+import styles from 'drive/styles/filelist.styl'
 
 const AddFolder = ({
   f,
@@ -28,21 +28,52 @@ const AddFolder = ({
 }) =>
   !visible ? null : (
     <TableRow className={styles['fil-content-row']}>
-      <Cell className={styles['fil-content-file-select']} />
+      <TableCell
+        className={cx(
+          styles['fil-content-cell'],
+          styles['fil-content-file-select']
+        )}
+      />
       <FileThumbnail file={{ type: 'directory' }} />
-      <Cell className={cx(styles['fil-content-file'])}>
+      <TableCell
+        className={cx(styles['fil-content-cell'], styles['fil-content-file'])}
+      >
         <FilenameInput onSubmit={onSubmit} onAbort={onAbort} />
-      </Cell>
+      </TableCell>
       {!isMobile && (
         <>
-          <Cell className={styles['fil-content-date']}>
+          <TableCell
+            className={cx(
+              styles['fil-content-cell'],
+              styles['fil-content-date']
+            )}
+          >
             <time dateTime="">{f(Date.now(), 'MMM D, YYYY')}</time>
-          </Cell>
-          <Cell className={styles['fil-content-size']}>—</Cell>
-          <Cell className={styles['fil-content-status']}>—</Cell>
+          </TableCell>
+          <TableCell
+            className={cx(
+              styles['fil-content-cell'],
+              styles['fil-content-size']
+            )}
+          >
+            —
+          </TableCell>
+          <TableCell
+            className={cx(
+              styles['fil-content-cell'],
+              styles['fil-content-status']
+            )}
+          >
+            —
+          </TableCell>
         </>
       )}
-      <Cell className={styles['fil-content-file-action']} />
+      <TableCell
+        className={cx(
+          styles['fil-content-cell'],
+          styles['fil-content-file-action']
+        )}
+      />
     </TableRow>
   )
 
