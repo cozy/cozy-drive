@@ -4,18 +4,12 @@
 .fil-content-table
     overflow auto
 
-.fil-content-head
-    @extend $table-head
-
 .fil-content-body
     @extend $table-body
 
 .fil-content-cell
     @extend $table-cell
     display flex
-
-.fil-content-row-head
-    @extend $table-row-head
 
 .fil-content-row
     @extend $table-row
@@ -48,17 +42,13 @@
     color var(--coolGrey)
 
 .fil-content-header
-    @extend $table-header
-
     &:first-child
         padding .5rem
 
 .fil-content-mobile-head
-    @extend $table-head
     display none
 
 .fil-content-mobile-header
-    @extend $table-header
     padding 1rem
 
 .fil-sort-menu

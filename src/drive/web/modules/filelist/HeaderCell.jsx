@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react'
 import cx from 'classnames'
+
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { TableHeader } from 'cozy-ui/transpiled/react/Table'
+
 import styles from 'drive/styles/filelist.styl'
 
 const HeaderCell = ({
@@ -19,7 +22,7 @@ const HeaderCell = ({
     [onSort, attr, order, defaultOrder]
   )
   return (
-    <div
+    <TableHeader
       onClick={sortCallback}
       className={cx(
         styles['fil-content-header'],
@@ -35,7 +38,7 @@ const HeaderCell = ({
       )}
     >
       {t(`table.head_${label}`)}
-    </div>
+    </TableHeader>
   )
 }
 
