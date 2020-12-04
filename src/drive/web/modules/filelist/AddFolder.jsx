@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
-import { withClient } from 'cozy-client'
+import cx from 'classnames'
 import compose from 'lodash/flowRight'
+
+import { withClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { TableRow } from 'cozy-ui/transpiled/react/Table'
+
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
 import {
   isTypingNewFolderName,
@@ -25,10 +27,10 @@ const AddFolder = ({
   breakpoints: { isMobile }
 }) =>
   !visible ? null : (
-    <div className={styles['fil-content-row']}>
+    <TableRow className={styles['fil-content-row']}>
       <Cell className={styles['fil-content-file-select']} />
       <FileThumbnail file={{ type: 'directory' }} />
-      <Cell className={classNames(styles['fil-content-file'])}>
+      <Cell className={cx(styles['fil-content-file'])}>
         <FilenameInput onSubmit={onSubmit} onAbort={onAbort} />
       </Cell>
       {!isMobile && (
@@ -41,7 +43,7 @@ const AddFolder = ({
         </>
       )}
       <Cell className={styles['fil-content-file-action']} />
-    </div>
+    </TableRow>
   )
 
 const mapStateToProps = state => ({

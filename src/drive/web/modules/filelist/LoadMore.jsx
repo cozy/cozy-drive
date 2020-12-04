@@ -1,23 +1,23 @@
 import React from 'react'
-import classnames from 'classnames'
+import cx from 'classnames'
 import PropTypes from 'prop-types'
+
 import { Button, Spinner } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { TableRow } from 'cozy-ui/transpiled/react/Table'
+
 import styles from 'drive/styles/filelist.styl'
 
 const LoadMore = ({ onClick, isLoading, text }) => (
-  <div
-    className={classnames(
-      styles['fil-content-row'],
-      styles['fil-content-row--center']
-    )}
+  <TableRow
+    className={cx(styles['fil-content-row'], styles['fil-content-row--center'])}
   >
     <Button
       theme="secondary"
       onClick={onClick}
       label={isLoading ? <Spinner noMargin /> : text}
     />
-  </div>
+  </TableRow>
 )
 
 LoadMore.propTypes = {
