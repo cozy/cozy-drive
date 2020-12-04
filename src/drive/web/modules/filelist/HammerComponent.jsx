@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
+
 import styles from './fileopener.styl'
 
 /**
