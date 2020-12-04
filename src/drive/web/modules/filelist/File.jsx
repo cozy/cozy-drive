@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useRef } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import cx from 'classnames'
 import filesize from 'filesize'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
@@ -14,6 +14,7 @@ import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { isIOSApp } from 'cozy-device-helper'
+import { TableRow } from 'cozy-ui/transpiled/react/Table'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 
@@ -82,7 +83,7 @@ export const enableTouchEvents = ev => {
 
 const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
   <div
-    className={classNames(
+    className={cx(
       styles['fil-content-cell'],
       styles['fil-content-file-select']
     )}
@@ -115,7 +116,7 @@ const FileName = ({
   refreshFolderContent,
   isInSyncFromSharing
 }) => {
-  const classes = classNames(
+  const classes = cx(
     styles['fil-content-cell'],
     styles['fil-content-file'],
     { [styles['fil-content-file-openable']]: !isRenaming && interactive },
@@ -175,24 +176,14 @@ const FileName = ({
 }
 
 const _LastUpdate = ({ date, formatted = '—' }) => (
-  <div
-    className={classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-date']
-    )}
-  >
+  <div className={cx(styles['fil-content-cell'], styles['fil-content-date'])}>
     <time dateTime={date}>{formatted}</time>
   </div>
 )
 
 const LastUpdate = React.memo(_LastUpdate)
 const _Size = ({ filesize = '—' }) => (
-  <div
-    className={classNames(
-      styles['fil-content-cell'],
-      styles['fil-content-size']
-    )}
-  >
+  <div className={cx(styles['fil-content-cell'], styles['fil-content-size'])}>
     {filesize}
   </div>
 )
@@ -206,7 +197,7 @@ const ShareContent = ({
   isInSyncFromSharing
 }) => (
   <div
-    className={classNames(styles['fil-content-sharestatus'], {
+    className={cx(styles['fil-content-sharestatus'], {
       [styles['fil-content-sharestatus--disabled']]: disabled
     })}
   >
@@ -242,10 +233,7 @@ const Status = ({
         />
       )}
       <div
-        className={classNames(
-          styles['fil-content-cell'],
-          styles['fil-content-status']
-        )}
+        className={cx(styles['fil-content-cell'], styles['fil-content-status'])}
       >
         {isAvailableOffline &&
           !disabled && (
@@ -275,7 +263,7 @@ const FileAction = forwardRef(function FileAction(
 ) {
   return (
     <div
-      className={classNames(
+      className={cx(
         styles['fil-content-cell'],
         styles['fil-content-file-action'],
         { [styles['fil-content-file-action--disabled']]: isInSyncFromSharing }
@@ -362,7 +350,7 @@ const File = props => {
   const isLargeRow = isImage && thumbnailSizeBig
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
-  const filContentRowSelected = classNames(styles['fil-content-row'], {
+  const filContentRowSelected = cx(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
     [styles['fil-content-row-disabled']]: styleDisabled,
@@ -380,7 +368,7 @@ const File = props => {
       : t('table.row_update_format')
   )
   return (
-    <div className={filContentRowSelected}>
+    <TableRow className={filContentRowSelected}>
       <SelectBox
         withSelectionCheckbox={withSelectionCheckbox}
         selected={selected}
@@ -444,7 +432,7 @@ const File = props => {
             onClose={hideActionMenu}
           />
         )}
-    </div>
+    </TableRow>
   )
 }
 
