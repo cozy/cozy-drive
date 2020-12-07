@@ -26,7 +26,7 @@ const SharingShortcutBadge = ({ file, size }) => {
 const withNewStatusBadge = WrappedComponent => {
   const ComponentWithNewStatusBadge = props => {
     const { file } = props
-    const isNewSharingShortcut = models.file.isSharingShorcutNew(file)
+    const isNewSharingShortcut = models.file.isSharingShortcutNew(file)
 
     return isNewSharingShortcut ? (
       <Badge variant="dot" color="error">

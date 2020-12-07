@@ -18,12 +18,12 @@ import styles from 'drive/styles/filelist.styl'
 
 const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
   const { isMobile } = useBreakpoints()
-  const isSharingShorcut =
-    models.file.isSharingShorcut(file) && !isInSyncFromSharing
+  const isSharingShortcut =
+    models.file.isSharingShortcut(file) && !isInSyncFromSharing
   const isRegularShortcut =
-    !isSharingShorcut && file.class === 'shortcut' && !isInSyncFromSharing
+    !isSharingShortcut && file.class === 'shortcut' && !isInSyncFromSharing
   const isSimpleFile =
-    !isSharingShorcut && !isRegularShortcut && !isInSyncFromSharing
+    !isSharingShortcut && !isRegularShortcut && !isInSyncFromSharing
 
   return (
     <TableCell
@@ -37,7 +37,7 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
           <FileIcon file={file} size={size} />
         </InfosBadge>
       )}
-      {isSharingShorcut && (
+      {isSharingShortcut && (
         <GhostFileBadge
           badgeContent={<SharingShortcutBadge file={file} size={16} />}
         >
