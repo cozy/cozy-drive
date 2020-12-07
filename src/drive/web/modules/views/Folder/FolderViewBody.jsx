@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
 
 import { useClient, useCapabilities } from 'cozy-client'
-import { isSharingShorcut } from 'cozy-client/dist/models/file'
+import { isSharingShortcut } from 'cozy-client/dist/models/file'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
@@ -179,7 +179,7 @@ const FolderViewBody = ({
                           actions={actions}
                           refreshFolderContent={refreshFolderContent}
                           isInSyncFromSharing={
-                            !isSharingContextEmpty && isSharingShorcut(file)
+                            !isSharingContextEmpty && isSharingShortcut(file)
                           }
                         />
                       ))}

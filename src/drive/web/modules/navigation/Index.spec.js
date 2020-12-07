@@ -16,7 +16,7 @@ const setup = async ({ sharingId, withReferencedFiles, withShortcut } = {}) => {
   client.query = jest
     .fn()
     .mockReturnValue(sharingId ? sharingRes : { data: [] })
-  mockFileModels.isSharingShorcut = () => (withShortcut ? true : false)
+  mockFileModels.isSharingShortcut = () => (withShortcut ? true : false)
   client.collection = jest.fn(() => ({
     findReferencedBy: jest
       .fn()

@@ -60,7 +60,7 @@ export const fetchSharing = async ({
     const referencedFile = hasReferencedFile ? referencedFiles[0] : null
 
     const isSharingShortcut = hasReferencedFile
-      ? models.file.isSharingShorcut(referencedFile)
+      ? models.file.isSharingShortcut(referencedFile)
       : false
 
     if (isSharingShortcut) {
