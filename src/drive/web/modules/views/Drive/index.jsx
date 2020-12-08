@@ -226,7 +226,8 @@ const DriveView = ({
                 carbonCopyResult.data.length > 0,
               className: '',
               label: 'carbonCopy',
-              icon: <Icon icon={iconCertified} size={16} />
+              icon: <Icon icon={iconCertified} size={16} />,
+              tooltip: true
             },
             electronicSafe: {
               condition:
@@ -234,7 +235,8 @@ const DriveView = ({
                 electronicSafeResult.data.length > 0,
               className: '',
               label: 'electronicSafe',
-              icon: <Icon icon={iconSafe} size={16} />
+              icon: <Icon icon={iconSafe} size={16} />,
+              tooltip: true
             }
           }}
         />
