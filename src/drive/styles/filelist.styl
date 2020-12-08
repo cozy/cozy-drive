@@ -140,7 +140,7 @@ column-width-thumbnail-bigger = 7rem
         margin 0 .25rem !important // to override default cozy-ui margin
 
 .fil-file-thumbnail-image
-  object-fit cover
+    object-fit cover
 
 .fil-content-shared
     position    absolute
@@ -168,12 +168,11 @@ column-width-thumbnail-bigger = 7rem
 .fil-content-file-action
 .fil-content-header-action
     flex 0 0 5%
-
-.fil-content-header-action
     text-align right
     width 1.5rem
     padding 0 0 0 .5rem
 
+.fil-content-header-action
     button
         opacity 1
         color var(--coolGrey)
@@ -192,9 +191,6 @@ column-width-thumbnail-bigger = 7rem
 
 .fil-content-file-action
     opacity     0
-    text-align  right
-    width   1.5rem
-    padding 0 0 0 .5rem
 
 .fil-content-body--selectable
     .fil-content-file-select
@@ -306,6 +302,21 @@ column-width-thumbnail-bigger = 7rem
     &--disabled
         cursor default
 
+.fil-content-file-action
+    opacity 1
+    &--disabled
+        opacity .4
+        button
+            cursor default
+
+.fil-content-row-actioned
+    .fil-content-file-action
+        button
+            background silver
+            opacity: 1
+
+// -- responsive
+
 +medium-screen()
     .fil-content-table-selection
         .fil-content-body
@@ -383,17 +394,3 @@ column-width-thumbnail-bigger = 7rem
         &:hover,
         &:focus
             text-decoration none
-
-
-.fil-content-file-action
-    opacity 1
-    &--disabled
-        opacity .4
-        button
-            cursor default
-
-.fil-content-row-actioned
-    .fil-content-file-action
-        button
-            background silver
-            opacity: 1
