@@ -1,7 +1,10 @@
 import { useQuery } from 'cozy-client'
 
 import { TRASH_DIR_ID } from 'drive/constants/config'
-import { useFilesQueryWithPath, isFileTrashed } from './useFilesQueryWithPath'
+import {
+  useFilesQueryWithPath,
+  isFileNotTrashed
+} from './useFilesQueryWithPath'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 
@@ -65,7 +68,7 @@ test('excludeTrashedFiles', () => {
   }
   expect(
     [trashedFile1, trashedFile2, trashedFolder, folder1, file1, file2].filter(
-      isFileTrashed
+      isFileNotTrashed
     )
   ).toEqual([folder1, file1, file2])
 })
