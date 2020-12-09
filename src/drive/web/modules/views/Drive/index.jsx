@@ -8,10 +8,7 @@ import uniqBy from 'lodash/uniqBy'
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 
-import iconCertified from 'drive/assets/icons/icon-certified.svg'
-import iconSafe from 'drive/assets/icons/icon-safe.svg'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import { ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
@@ -41,6 +38,10 @@ import {
   getDisplayedFolder
 } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
+import {
+  makeCarbonCopy,
+  makeElectronicSafe
+} from 'drive/web/modules/filelist/certifications'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -115,6 +116,12 @@ const DriveView = ({
     electronicSafeQuery.definition,
     electronicSafeQuery.options
   )
+  const isCarbonCopy =
+    carbonCopyResult.fetchStatus === 'loaded' &&
+    carbonCopyResult.data.length > 0
+  const isElectronicSafe =
+    electronicSafeResult.fetchStatus === 'loaded' &&
+    electronicSafeResult.data.length > 0
 
   const allResults = [
     foldersResult,
@@ -220,24 +227,8 @@ const DriveView = ({
           canSort
           currentFolderId={currentFolderId}
           optionalsColumns={{
-            carbonCopy: {
-              condition:
-                carbonCopyResult.fetchStatus === 'loaded' &&
-                carbonCopyResult.data.length > 0,
-              className: '',
-              label: 'carbonCopy',
-              icon: <Icon icon={iconCertified} size={16} />,
-              tooltip: true
-            },
-            electronicSafe: {
-              condition:
-                electronicSafeResult.fetchStatus === 'loaded' &&
-                electronicSafeResult.data.length > 0,
-              className: '',
-              label: 'electronicSafe',
-              icon: <Icon icon={iconSafe} size={16} />,
-              tooltip: true
-            }
+            carbonCopy: makeCarbonCopy(isCarbonCopy),
+            electronicSafe: makeElectronicSafe(isElectronicSafe)
           }}
         />
         {children}
