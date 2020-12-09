@@ -205,6 +205,7 @@ const FolderViewBody = ({
                               sharingsValue
                             )
                           }
+                          optionalsColumns={optColumns}
                         />
                       ))}
                       {query.hasMore && (
