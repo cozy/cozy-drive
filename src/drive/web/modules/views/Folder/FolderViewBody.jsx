@@ -151,7 +151,10 @@ const FolderViewBody = ({
           </>
         )}
         <FileListBody selectionModeActive={false}>
-          <AddFolder refreshFolderContent={refreshFolderContent} />
+          <AddFolder
+            refreshFolderContent={refreshFolderContent}
+            optionalsColumns={optColumns}
+          />
           {isInError && <Oops />}
           {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
           {/* TODO FolderViewBody should not have the responsability to chose

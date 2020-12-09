@@ -24,6 +24,7 @@ const AddFolder = ({
   visible,
   onSubmit,
   onAbort,
+  optionalsColumns,
   breakpoints: { isMobile }
 }) =>
   !visible ? null : (
@@ -58,6 +59,19 @@ const AddFolder = ({
           >
             —
           </TableCell>
+          {!isMobile &&
+            optionalsColumns &&
+            optionalsColumns.map(column => (
+              <TableCell
+                key={column.label}
+                className={cx(
+                  styles['fil-content-cell'],
+                  styles['fil-content-certification']
+                )}
+              >
+                —
+              </TableCell>
+            ))}
           <TableCell
             className={cx(
               styles['fil-content-cell'],
