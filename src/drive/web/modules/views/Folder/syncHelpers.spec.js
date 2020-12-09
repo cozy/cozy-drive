@@ -2,7 +2,8 @@ import {
   isThereFileReferencedBySharingId,
   createSyncingFakeFile,
   computeSyncingFakeFile,
-  checkSyncingFakeFileObsolescence
+  checkSyncingFakeFileObsolescence,
+  isReferencedByShareInSharingContext
 } from './syncHelpers'
 
 const queryResults = [
@@ -197,6 +198,43 @@ describe('syncHelpers', () => {
         id: 'id1',
         type: 'directory'
       })
+    })
+  })
+
+  describe('isReferencedByShareInSharingContext', () => {
+    it('should return true or false if the file is referenced or not by a share in sharing context', () => {
+      const referencedFile = {
+        id: 'fileId',
+        relationships: {
+          referenced_by: {
+            data: [{ id: 'file-with-sharing-id', type: 'io.cozy.sharings' }]
+          }
+        }
+      }
+      const notReferencedFile = {
+        id: 'fileId',
+        relationships: {
+          referenced_by: {
+            data: [{ id: 'file-without-sharing-id', type: 'io.cozy.sharings' }]
+          }
+        }
+      }
+      const FileWithNoReference = {
+        id: 'fileId',
+        relationships: {
+          referenced_by: undefined
+        }
+      }
+
+      expect(
+        isReferencedByShareInSharingContext(referencedFile, sharingsValue)
+      ).toBeTruthy()
+      expect(
+        isReferencedByShareInSharingContext(notReferencedFile, sharingsValue)
+      ).toBeFalsy()
+      expect(
+        isReferencedByShareInSharingContext(FileWithNoReference, sharingsValue)
+      ).toBeFalsy()
     })
   })
 })

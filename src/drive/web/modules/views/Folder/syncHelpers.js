@@ -1,3 +1,5 @@
+import get from 'lodash/get'
+
 /**
  * Whether there is a file referenced by a share id
  * @param {array} queryResults - List of folders and files
@@ -133,4 +135,21 @@ export const computeSyncingFakeFile = ({
   })
 
   return updatedSyncingFakeFile
+}
+
+/**
+ * Whether the file is referenced by a share in the sharing context
+ * @param {object} file - An io.cozy.files doc
+ * @param {object} sharingsValue - Sharing Context value
+ * @returns {bool}
+ */
+export const isReferencedByShareInSharingContext = (file, sharingsValue) => {
+  const fileReferences = get(file, 'relationships.referenced_by.data')
+  if (!fileReferences) return false
+
+  const fileSharingId = fileReferences.find(
+    reference => reference.type === 'io.cozy.sharings'
+  ).id
+
+  return get(sharingsValue, fileSharingId, false) !== false
 }
