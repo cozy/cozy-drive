@@ -1,27 +1,25 @@
 import React, { useState, useCallback, useContext } from 'react'
-import { connect } from 'react-redux'
-import { useClient, models } from 'cozy-client'
+import { connect, useDispatch } from 'react-redux'
+import { ModalManager } from 'react-cozy-helpers'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 
-import Main from 'drive/web/modules/layout/Main'
-import { Content, Overlay } from 'cozy-ui/transpiled/react'
-
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { ModalStack, ModalContext } from 'drive/lib/ModalContext'
-import { ModalManager } from 'react-cozy-helpers'
+import { useClient, models } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
-
+import { isMobileApp } from 'cozy-device-helper'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import useActions from 'drive/web/modules/actions/useActions'
-import { download, trash, rename, versions } from 'drive/web/modules/actions'
+import { Content, Overlay } from 'cozy-ui/transpiled/react'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
+import { ModalStack, ModalContext } from 'drive/lib/ModalContext'
+import useActions from 'drive/web/modules/actions/useActions'
+import Main from 'drive/web/modules/layout/Main'
+import { download, trash, rename, versions } from 'drive/web/modules/actions'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
-
 import {
   getCurrentFolderId,
   getDisplayedFolder,
@@ -29,8 +27,11 @@ import {
 } from 'drive/web/modules/selectors'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
-import { useDispatch } from 'react-redux'
-import { isMobileApp } from 'cozy-device-helper'
+import { isThereFileWithThisMetadata } from 'drive/web/modules/filelist/duck'
+import {
+  makeCarbonCopy,
+  makeElectronicSafe
+} from 'drive/web/modules/filelist/certifications'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -66,6 +67,10 @@ const PublicFolderView = ({
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
+
+  const isCarbonCopy = isThereFileWithThisMetadata(files, 'carbonCopy')
+  const isElectronicSafe = isThereFileWithThisMetadata(files, 'electronicSafe')
+
   const viewableFiles = files.filter(f => f.type !== 'directory')
 
   const refreshFolderContent = () => filesResult.forceRefetch() // We don't have enough permissions to rely on the realtime notifications or on a cozy-client query to update the view when something changes, so we relaod the view instead
@@ -173,6 +178,10 @@ const PublicFolderView = ({
               currentFolderId={currentFolderId}
               refreshFolderContent={refreshFolderContent}
               canUpload={hasWritePermissions}
+              optionalsColumns={{
+                carbonCopy: makeCarbonCopy(isCarbonCopy),
+                electronicSafe: makeElectronicSafe(isElectronicSafe)
+              }}
             />
 
             {viewerOpened &&
