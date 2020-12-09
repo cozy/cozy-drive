@@ -1,3 +1,5 @@
+import get from 'lodash/get'
+
 const SHOW_NEW_FOLDER_INPUT = 'SHOW_NEW_FOLDER_INPUT'
 const HIDE_NEW_FOLDER_INPUT = 'HIDE_NEW_FOLDER_INPUT'
 
@@ -28,3 +30,6 @@ export default filelist
 
 export const isTypingNewFolderName = state =>
   state.filelist.isTypingNewFolderName
+
+export const isThereFileWithThisMetadata = (files, attribute) =>
+  files.some(file => get(file, `metadata.${attribute}`))
