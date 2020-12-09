@@ -23,6 +23,7 @@ import { TRASH_DIR_ID } from 'drive/constants/config'
 import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
+import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -179,7 +180,12 @@ const FolderViewBody = ({
                           actions={actions}
                           refreshFolderContent={refreshFolderContent}
                           isInSyncFromSharing={
-                            !isSharingContextEmpty && isSharingShortcut(file)
+                            !isSharingContextEmpty &&
+                            isSharingShortcut(file) &&
+                            isReferencedByShareInSharingContext(
+                              file,
+                              sharingsValue
+                            )
                           }
                         />
                       ))}
