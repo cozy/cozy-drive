@@ -21,7 +21,7 @@ export const queryFilesFromDate = async (client, date, limit) => {
     .indexFields(['type', 'cozyMetadata.updatedAt'])
     .limitBy(limit)
     .sortBy([{ type: 'asc' }, { 'cozyMetadata.updatedAt': 'asc' }])
-  return client.queryAll(query)
+  return client.query(query)
 }
 
 /**
