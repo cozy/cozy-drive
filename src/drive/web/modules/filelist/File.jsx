@@ -27,7 +27,8 @@ import {
   LastUpdate,
   Size,
   Status,
-  FileAction
+  FileAction,
+  OptionalCell
 } from './cells'
 
 import styles from 'drive/styles/filelist.styl'
@@ -86,6 +87,7 @@ const File = props => {
     selectionModeActive,
     refreshFolderContent,
     isInSyncFromSharing,
+    optionalsColumns,
     breakpoints: { isExtraLarge, isMobile }
   } = props
 
@@ -148,6 +150,15 @@ const File = props => {
           formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
         />
         <Size filesize={formattedSize} />
+        {!isMobile &&
+          optionalsColumns &&
+          optionalsColumns.map(column => (
+            <OptionalCell
+              key={column.label}
+              tag={column.label}
+              file={attributes}
+            />
+          ))}
         <Status
           file={attributes}
           isAvailableOffline={isAvailableOffline}
@@ -201,7 +212,8 @@ File.propTypes = {
   onFileOpen: PropTypes.func.isRequired,
   onCheckboxToggle: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
-  isInSyncFromSharing: PropTypes.bool
+  isInSyncFromSharing: PropTypes.bool,
+  optionalsColumns: PropTypes.array
 }
 
 const mapStateToProps = (state, ownProps) => ({
