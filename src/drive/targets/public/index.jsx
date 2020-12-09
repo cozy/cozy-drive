@@ -4,6 +4,8 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 
+import 'cozy-ui/transpiled/react/stylesheet.css'
+
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import CozyClient, { models } from 'cozy-client'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'

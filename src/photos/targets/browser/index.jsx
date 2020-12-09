@@ -1,5 +1,7 @@
 /* global cozy __DEVELOPMENT__ */
 
+import 'cozy-ui/transpiled/react/stylesheet.css'
+
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'

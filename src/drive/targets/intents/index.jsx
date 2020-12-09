@@ -1,5 +1,7 @@
 /* global cozy */
 
+import 'cozy-ui/transpiled/react/stylesheet.css'
+
 import 'whatwg-fetch'
 
 import React from 'react'
