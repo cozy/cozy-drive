@@ -5,9 +5,9 @@ import cx from 'classnames'
 import filesize from 'filesize'
 import get from 'lodash/get'
 
+import { isIOSApp } from 'cozy-device-helper'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import { isIOSApp } from 'cozy-device-helper'
 import { TableRow } from 'cozy-ui/transpiled/react/Table'
 
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
@@ -15,11 +15,11 @@ import { isDirectory } from 'drive/web/modules/drive/files'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import {
   toggleItemSelection,
-  isSelected
+  isSelected,
+  isSelectionBarVisible
 } from 'drive/web/modules/selection/duck'
 import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/rename'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
-import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
 import {
   SelectBox,
