@@ -1,4 +1,6 @@
 /* global __DEVELOPMENT__ */
+
+import 'cozy-ui/transpiled/react/stylesheet.css'
 // eslint-disable-next-line no-unused-vars
 import mainStyles from 'drive/styles/main.styl'
 
