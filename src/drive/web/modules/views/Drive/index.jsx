@@ -8,7 +8,10 @@ import uniqBy from 'lodash/uniqBy'
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 
+import iconCertified from 'drive/assets/icons/icon-certified.svg'
+import iconSafe from 'drive/assets/icons/icon-safe.svg'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import { ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
@@ -29,7 +32,10 @@ import { ROOT_DIR_ID } from 'drive/constants/config'
 import MediaBackupProgression from 'drive/mobile/modules/mediaBackup/MediaBackupProgression'
 import RatingModal from 'drive/mobile/modules/settings/RatingModal'
 import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
-import { buildDriveQuery } from 'drive/web/modules/queries'
+import {
+  buildDriveQuery,
+  buildFileWithSpecificMetadataAttributeQuery
+} from 'drive/web/modules/queries'
 import {
   getCurrentFolderId,
   getDisplayedFolder
@@ -90,19 +96,38 @@ const DriveView = ({
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
+  const carbonCopyQuery = buildFileWithSpecificMetadataAttributeQuery({
+    currentFolderId,
+    attribute: 'carbonCopy'
+  })
+  const electronicSafeQuery = buildFileWithSpecificMetadataAttributeQuery({
+    currentFolderId,
+    attribute: 'electronicSafe'
+  })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
+  const carbonCopyResult = useQuery(
+    carbonCopyQuery.definition,
+    carbonCopyQuery.options
+  )
+  const electronicSafeResult = useQuery(
+    electronicSafeQuery.definition,
+    electronicSafeQuery.options
+  )
 
-  const isInError =
-    foldersResult.fetchStatus === 'failed' ||
-    filesResult.fetchStatus === 'failed'
-  const isLoading =
-    (foldersResult.fetchStatus === 'loading' && !foldersResult.lastUpdate) ||
-    (filesResult.fetchStatus === 'loading' && !filesResult.lastUpdate)
-  const isPending =
-    foldersResult.fetchStatus === 'pending' ||
-    filesResult.fetchStatus === 'pending'
+  const allResults = [
+    foldersResult,
+    filesResult,
+    carbonCopyResult,
+    electronicSafeResult
+  ]
+
+  const isInError = allResults.some(result => result.fetchStatus === 'failed')
+  const isLoading = allResults.some(
+    result => result.fetchStatus === 'loading' && !result.lastUpdate
+  )
+  const isPending = allResults.some(result => result.fetchStatus === 'pending')
 
   const navigateToFolder = useCallback(
     folderId => {
@@ -194,8 +219,25 @@ const DriveView = ({
           queryResults={[foldersResult, filesResult]}
           canSort
           currentFolderId={currentFolderId}
+          optionalsColumns={{
+            carbonCopy: {
+              condition:
+                carbonCopyResult.fetchStatus === 'loaded' &&
+                carbonCopyResult.data.length > 0,
+              className: '',
+              label: 'carbonCopy',
+              icon: <Icon icon={iconCertified} size={16} />
+            },
+            electronicSafe: {
+              condition:
+                electronicSafeResult.fetchStatus === 'loaded' &&
+                electronicSafeResult.data.length > 0,
+              className: '',
+              label: 'electronicSafe',
+              icon: <Icon icon={iconSafe} size={16} />
+            }
+          }}
         />
-
         {children}
       </Dropzone>
     </FolderView>

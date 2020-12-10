@@ -99,7 +99,7 @@ column-width-thumbnail = 3rem
 column-width-thumbnail-bigger = 7rem
 
 .fil-content-file
-    flex        0 0 column-width-large
+    flex 0 1 column-width-large
     user-select none
     background-position 0 center
     background-repeat no-repeat
@@ -113,7 +113,7 @@ column-width-thumbnail-bigger = 7rem
 
 .fil-content-cell
     &.fil-content-file
-        flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail)
+        flex 0 1 "calc(%s - %s)" % (column-width-large column-width-thumbnail)
         display flex
         align-items center
         padding   0 2rem 0 0
@@ -128,7 +128,7 @@ column-width-thumbnail-bigger = 7rem
         padding .9375rem .5rem
 
 .fil-content-row-bigger .fil-content-cell.fil-content-file
-    flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
+    flex 0 1 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
 
 .fil-file-thumbnail
     position relative
@@ -171,6 +171,7 @@ column-width-thumbnail-bigger = 7rem
     text-align right
     width 1.5rem
     padding 0 0 0 .5rem
+    margin-right .5rem
 
 .fil-content-header-action
     button
