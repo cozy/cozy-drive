@@ -12,11 +12,18 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import useActions from 'drive/web/modules/actions/useActions'
 import { restore, destroy } from 'drive/web/modules/actions'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
-import { buildTrashQuery } from 'drive/web/modules/queries'
+import {
+  buildTrashQuery,
+  buildFileWithSpecificMetadataAttributeQuery
+} from 'drive/web/modules/queries'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
+import {
+  makeCarbonCopy,
+  makeElectronicSafe
+} from 'drive/web/modules/filelist/certifications'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -58,9 +65,31 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
     sortOrder: sortOrder.order,
     limit: 50
   })
+  const carbonCopyQuery = buildFileWithSpecificMetadataAttributeQuery({
+    currentFolderId,
+    attribute: 'carbonCopy'
+  })
+  const electronicSafeQuery = buildFileWithSpecificMetadataAttributeQuery({
+    currentFolderId,
+    attribute: 'electronicSafe'
+  })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
+  const carbonCopyResult = useQuery(
+    carbonCopyQuery.definition,
+    carbonCopyQuery.options
+  )
+  const electronicSafeResult = useQuery(
+    electronicSafeQuery.definition,
+    electronicSafeQuery.options
+  )
+  const isCarbonCopy =
+    carbonCopyResult.fetchStatus === 'loaded' &&
+    carbonCopyResult.data.length > 0
+  const isElectronicSafe =
+    electronicSafeResult.fetchStatus === 'loaded' &&
+    electronicSafeResult.data.length > 0
 
   const navigateToFolder = useCallback(
     folderId => {
@@ -126,6 +155,10 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
           actions={actions}
           queryResults={[foldersResult, filesResult]}
           canSort
+          optionalsColumns={{
+            carbonCopy: makeCarbonCopy(isCarbonCopy),
+            electronicSafe: makeElectronicSafe(isElectronicSafe)
+          }}
         />
       )}
       {children}
