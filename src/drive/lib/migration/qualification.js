@@ -262,7 +262,7 @@ export const migrateQualifiedFiles = async (client, files) => {
         const cleanedFile = removeOldQualificationAttributes(file)
         return saveFileQualification(client, cleanedFile, newQualification)
       } else {
-        log('warn', 'No migration case found for this file')
+        log('warn', `No migration case found for the file ${file._id}`)
         return null
       }
     })
