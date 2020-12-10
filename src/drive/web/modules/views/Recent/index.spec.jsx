@@ -11,7 +11,12 @@ import { useFilesQueryWithPath } from './useFilesQueryWithPath'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
 jest.mock('components/pushClient')
-jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+jest.mock('cozy-client/dist/hooks/useQuery', () =>
+  jest.fn(() => ({
+    fetchStatus: '',
+    data: []
+  }))
+)
 jest.mock(
   'components/FileHistory',
   () =>

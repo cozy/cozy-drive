@@ -18,7 +18,12 @@ jest.mock(
       return <div>FileHistory stub</div>
     }
 )
-jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+jest.mock('cozy-client/dist/hooks/useQuery', () =>
+  jest.fn(() => ({
+    fetchStatus: '',
+    data: []
+  }))
+)
 jest.mock('../Recent/useFilesQueryWithPath', () => ({
   ...jest.requireActual('../Recent/useFilesQueryWithPath'),
   useFilesQueryWithPath: jest.fn()

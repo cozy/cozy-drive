@@ -1,20 +1,16 @@
 import React, { useCallback, useContext } from 'react'
-
-import { SharingContext } from 'cozy-sharing'
-import { ModalContext } from 'drive/lib/ModalContext'
-
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import { useClient } from 'cozy-client'
 import { useDispatch } from 'react-redux'
+
+import { useClient, useQuery } from 'cozy-client'
+import { SharingContext } from 'cozy-sharing'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
-
+import { ModalContext } from 'drive/lib/ModalContext'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
-
 import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
-
 import useActions from 'drive/web/modules/actions/useActions'
 import {
   download,
@@ -27,14 +23,41 @@ import {
   offline,
   hr
 } from 'drive/web/modules/actions'
-
-import { buildRecentQuery } from 'drive/web/modules/queries'
+import {
+  buildRecentQuery,
+  buildRecentWithMetadataAttributeQuery
+} from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
+import {
+  makeCarbonCopy,
+  makeElectronicSafe
+} from 'drive/web/modules/filelist/certifications'
 
 export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
   const query = buildRecentQuery()
+  const carbonCopyQuery = buildRecentWithMetadataAttributeQuery({
+    attribute: 'carbonCopy'
+  })
+  const electronicSafeQuery = buildRecentWithMetadataAttributeQuery({
+    attribute: 'electronicSafe'
+  })
+
   const result = useFilesQueryWithPath(query)
+  const carbonCopyResult = useQuery(
+    carbonCopyQuery.definition,
+    carbonCopyQuery.options
+  )
+  const electronicSafeResult = useQuery(
+    electronicSafeQuery.definition,
+    electronicSafeQuery.options
+  )
+  const isCarbonCopy =
+    carbonCopyResult.fetchStatus === 'loaded' &&
+    carbonCopyResult.data.length > 0
+  const isElectronicSafe =
+    electronicSafeResult.fetchStatus === 'loaded' &&
+    electronicSafeResult.data.length > 0
 
   const navigateToFolder = useCallback(
     folderId => {
@@ -97,6 +120,10 @@ export const RecentView = ({ router, location, children }) => {
         queryResults={[result]}
         canSort={false}
         withFilePath={true}
+        optionalsColumns={{
+          carbonCopy: makeCarbonCopy(isCarbonCopy),
+          electronicSafe: makeElectronicSafe(isElectronicSafe)
+        }}
       />
       {children}
     </FolderView>
