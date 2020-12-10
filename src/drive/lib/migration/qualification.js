@@ -217,6 +217,11 @@ const getNewQualificationSetFromKonnector = file => {
       return Qualification.getByLabel('tax_return')
     } else if (classification === 'tax_timetable') {
       return Qualification.getByLabel('tax_timetable')
+    } else if (classification === 'mail') {
+      return Qualification.getByLabel('receipt')
+        .setSourceCategory('gov')
+        .setSourceSubCategory('tax')
+        .setSubjects(['tax'])
     }
   }
   return null
