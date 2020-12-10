@@ -77,6 +77,32 @@ const buildRecentQuery = () => ({
   }
 })
 
+/**
+ * Returns one file with specific metadata for Recent view
+ * Only one file is necessary because it allows us to know whether or not to display
+ * the column for this specific metadata (like carbonCopy or electronicSafe).
+ * @param {object} params - Params
+ * @param {string} params.attribute - Metadata attribute
+ */
+export const buildRecentWithMetadataAttributeQuery = ({ attribute }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        type: 'file',
+        trashed: false,
+        [`metadata.${attribute}`]: true,
+        updated_at: {
+          $gt: null
+        }
+      })
+      .indexFields([`metadata.${attribute}`, 'type', 'trashed', 'updated_at'])
+      .limitBy(1),
+  options: {
+    as: `recent-view-query-with-${attribute}`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 const buildParentsByIdsQuery = ids => ({
   definition: () => Q('io.cozy.files').getByIds(ids),
   options: {
@@ -92,6 +118,29 @@ const buildSharingsQuery = ids => ({
       .sortBy([{ type: 'asc' }, { name: 'asc' }]),
   options: {
     as: `sharings-by-ids-${ids.join('')}`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+/**
+ * Returns one file with specific metadata for Sharing view.
+ * Only one file is necessary because it allows us to know whether or not to display
+ * the column for this specific metadata (like carbonCopy or electronicSafe).
+ * @param {object} params - Params
+ * @param {array} params.ids - Ids of shared documents
+ * @param {string} params.attribute - Metadata attribute
+ */
+export const buildSharingsWithMetadataAttributeQuery = ({
+  ids,
+  attribute
+}) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .getByIds(ids)
+      .where({ [`metadata.${attribute}`]: true })
+      .limitBy(1),
+  options: {
+    as: `sharings-by-ids-${ids.join('')}-with-${attribute}`,
     fetchPolicy: defaultFetchPolicy
   }
 })
@@ -152,6 +201,7 @@ export const buildMoveOrImportQuery = (client, dirId) => ({
     )
   }
 })
+
 /**
  * Get the query for folder if given the query for files
  * and vice versa.
@@ -190,6 +240,32 @@ export const buildOnlyFolderQuery = (client, folderId) => ({
     as: 'onlyfolder-' + folderId,
     fetchPolicies: defaultFetchPolicy,
     singleDocData: true
+  }
+})
+
+/**
+ * Returns one file with specific metadata.
+ * Only one file is necessary because it allows us to know whether or not to display
+ * the column for this specific metadata (like carbonCopy or electronicSafe).
+ * @param {string} currentFolderId - Id of the current folder
+ * @param {string} attribute - Metadata attribute
+ */
+export const buildFileWithSpecificMetadataAttributeQuery = ({
+  currentFolderId,
+  attribute
+}) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        dir_id: currentFolderId,
+        [`metadata.${attribute}`]: true,
+        type: 'file'
+      })
+      .indexFields(['dir_id', `metadata.${attribute}`, 'type'])
+      .limitBy(1),
+  options: {
+    as: `specific-metadata-${attribute}-for-${currentFolderId}`,
+    fetchPolicies: defaultFetchPolicy
   }
 })
 
