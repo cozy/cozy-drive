@@ -47,7 +47,7 @@ const FileListHeader = ({
   onFolderSort,
   thumbnailSizeBig,
   toggleThumbnailSize,
-  optionalsColumns
+  additionalColumns
 }) => {
   const { t } = useI18n()
   const actualSort = sort || DEFAULT_SORT
@@ -88,8 +88,8 @@ const FileListHeader = ({
         >
           {t('table.head_size')}
         </TableHeader>
-        {optionalsColumns &&
-          optionalsColumns.map(column => (
+        {additionalColumns &&
+          additionalColumns.map(column => (
             <TableHeader
               key={column.label}
               className={cx(styles['fil-content-header'], column.className)}

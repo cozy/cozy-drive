@@ -155,7 +155,7 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
           actions={actions}
           queryResults={[foldersResult, filesResult]}
           canSort
-          optionalsColumns={{
+          additionalColumns={{
             carbonCopy: makeCarbonCopy(isCarbonCopy),
             electronicSafe: makeElectronicSafe(isElectronicSafe)
           }}

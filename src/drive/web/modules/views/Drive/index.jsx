@@ -226,7 +226,7 @@ const DriveView = ({
           queryResults={[foldersResult, filesResult]}
           canSort
           currentFolderId={currentFolderId}
-          optionalsColumns={{
+          additionalColumns={{
             carbonCopy: makeCarbonCopy(isCarbonCopy),
             electronicSafe: makeElectronicSafe(isElectronicSafe)
           }}
