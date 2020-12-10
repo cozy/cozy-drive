@@ -37,11 +37,12 @@ export const migrateQualifications = async () => {
     lastProcessedFileDate = settings.lastProcessedFileDate
   }
   // Get a batch of sorted files starting from the date
-  const filesByDate = await queryFilesFromDate(
+  const res = await queryFilesFromDate(
     client,
     lastProcessedFileDate,
     BATCH_FILES_LIMIT
   )
+  const filesByDate = res.data
   if (filesByDate.length < 1) {
     log('warn', 'No new file to process')
     return
