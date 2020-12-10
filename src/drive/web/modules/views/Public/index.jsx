@@ -178,7 +178,7 @@ const PublicFolderView = ({
               currentFolderId={currentFolderId}
               refreshFolderContent={refreshFolderContent}
               canUpload={hasWritePermissions}
-              optionalsColumns={{
+              additionalColumns={{
                 carbonCopy: makeCarbonCopy(isCarbonCopy),
                 electronicSafe: makeElectronicSafe(isElectronicSafe)
               }}

@@ -42,7 +42,7 @@ const FolderViewBody = ({
   navigateToFolder,
   navigateToFile,
   refreshFolderContent = null,
-  optionalsColumns
+  additionalColumns
 }) => {
   const { isDesktop } = useBreakpoints()
   const client = useClient()
@@ -93,9 +93,9 @@ const FolderViewBody = ({
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
 
-  const optColumns = useMemo(
-    () => filter(optionalsColumns, column => column.condition === true),
-    [optionalsColumns]
+  const filteredColumns = useMemo(
+    () => filter(additionalColumns, column => column.condition === true),
+    [additionalColumns]
   )
 
   /**
@@ -146,14 +146,14 @@ const FolderViewBody = ({
               onFolderSort={changeSortOrder}
               thumbnailSizeBig={isBigThumbnail}
               toggleThumbnailSize={toggleThumbnailSize}
-              optionalsColumns={optColumns}
+              additionalColumns={filteredColumns}
             />
           </>
         )}
         <FileListBody selectionModeActive={false}>
           <AddFolder
             refreshFolderContent={refreshFolderContent}
-            optionalsColumns={optColumns}
+            additionalColumns={filteredColumns}
           />
           {isInError && <Oops />}
           {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
@@ -181,7 +181,7 @@ const FolderViewBody = ({
                       onFileOpen={() => {}}
                       actions={[]}
                       isInSyncFromSharing={true}
-                      optionalsColumns={optColumns}
+                      additionalColumns={filteredColumns}
                     />
                   )}
                   {queryResults.map((query, queryIndex) => (
@@ -205,7 +205,7 @@ const FolderViewBody = ({
                               sharingsValue
                             )
                           }
-                          optionalsColumns={optColumns}
+                          additionalColumns={filteredColumns}
                         />
                       ))}
                       {query.hasMore && (

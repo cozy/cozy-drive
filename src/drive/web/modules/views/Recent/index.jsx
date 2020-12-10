@@ -120,7 +120,7 @@ export const RecentView = ({ router, location, children }) => {
         queryResults={[result]}
         canSort={false}
         withFilePath={true}
-        optionalsColumns={{
+        additionalColumns={{
           carbonCopy: makeCarbonCopy(isCarbonCopy),
           electronicSafe: makeElectronicSafe(isElectronicSafe)
         }}

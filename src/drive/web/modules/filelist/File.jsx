@@ -87,7 +87,7 @@ const File = props => {
     selectionModeActive,
     refreshFolderContent,
     isInSyncFromSharing,
-    optionalsColumns,
+    additionalColumns,
     breakpoints: { isExtraLarge, isMobile }
   } = props
 
@@ -151,8 +151,8 @@ const File = props => {
         />
         <Size filesize={formattedSize} />
         {!isMobile &&
-          optionalsColumns &&
-          optionalsColumns.map(column => (
+          additionalColumns &&
+          additionalColumns.map(column => (
             <OptionalCell
               key={column.label}
               tag={column.label}
@@ -213,7 +213,7 @@ File.propTypes = {
   onCheckboxToggle: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
   isInSyncFromSharing: PropTypes.bool,
-  optionalsColumns: PropTypes.array
+  additionalColumns: PropTypes.array
 }
 
 const mapStateToProps = (state, ownProps) => ({

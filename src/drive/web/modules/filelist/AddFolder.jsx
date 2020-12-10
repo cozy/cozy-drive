@@ -24,7 +24,7 @@ const AddFolder = ({
   visible,
   onSubmit,
   onAbort,
-  optionalsColumns,
+  additionalColumns,
   breakpoints: { isMobile }
 }) =>
   !visible ? null : (
@@ -60,8 +60,8 @@ const AddFolder = ({
             —
           </TableCell>
           {!isMobile &&
-            optionalsColumns &&
-            optionalsColumns.map(column => (
+            additionalColumns &&
+            additionalColumns.map(column => (
               <TableCell
                 key={column.label}
                 className={cx(
