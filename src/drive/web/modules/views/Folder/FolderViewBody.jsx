@@ -1,6 +1,13 @@
-import React, { useCallback, useContext, useState, useEffect } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useState,
+  useEffect,
+  useMemo
+} from 'react'
 import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
+import filter from 'lodash/filter'
 
 import { useClient, useCapabilities } from 'cozy-client'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
@@ -34,7 +41,8 @@ const FolderViewBody = ({
   withFilePath = false,
   navigateToFolder,
   navigateToFile,
-  refreshFolderContent = null
+  refreshFolderContent = null,
+  optionalsColumns
 }) => {
   const { isDesktop } = useBreakpoints()
   const client = useClient()
@@ -85,6 +93,11 @@ const FolderViewBody = ({
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
 
+  const optColumns = useMemo(
+    () => filter(optionalsColumns, column => column.condition === true),
+    [optionalsColumns]
+  )
+
   /**
    * When we mount the component when we already have data in cache,
    * the mount is time consuming since we'll render at least 100 lines
@@ -133,6 +146,7 @@ const FolderViewBody = ({
               onFolderSort={changeSortOrder}
               thumbnailSizeBig={isBigThumbnail}
               toggleThumbnailSize={toggleThumbnailSize}
+              optionalsColumns={optColumns}
             />
           </>
         )}
@@ -164,6 +178,7 @@ const FolderViewBody = ({
                       onFileOpen={() => {}}
                       actions={[]}
                       isInSyncFromSharing={true}
+                      optionalsColumns={optColumns}
                     />
                   )}
                   {queryResults.map((query, queryIndex) => (
