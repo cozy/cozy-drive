@@ -23,7 +23,7 @@ import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlac
 import {
   makeCarbonCopy,
   makeElectronicSafe
-} from 'drive/web/modules/filelist/certifications'
+} from 'drive/web/modules/certifications'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'

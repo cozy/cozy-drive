@@ -34,7 +34,7 @@ import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import {
   makeCarbonCopy,
   makeElectronicSafe
-} from 'drive/web/modules/filelist/certifications'
+} from 'drive/web/modules/certifications'
 
 const getBreadcrumbPath = (t, displayedFolder, sharedDocumentIds) => {
   const breadcrumbs = [

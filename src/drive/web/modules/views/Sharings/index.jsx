@@ -32,7 +32,7 @@ import { useFilesQueryWithPath } from '../Recent/useFilesQueryWithPath'
 import {
   makeCarbonCopy,
   makeElectronicSafe
-} from 'drive/web/modules/filelist/certifications'
+} from 'drive/web/modules/certifications'
 
 export const SharingsView = ({
   router,

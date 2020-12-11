@@ -31,7 +31,7 @@ import { useFilesQueryWithPath } from './useFilesQueryWithPath'
 import {
   makeCarbonCopy,
   makeElectronicSafe
-} from 'drive/web/modules/filelist/certifications'
+} from 'drive/web/modules/certifications'
 
 export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()

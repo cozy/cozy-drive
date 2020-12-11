@@ -31,7 +31,7 @@ import { isThereFileWithThisMetadata } from 'drive/web/modules/filelist/duck'
 import {
   makeCarbonCopy,
   makeElectronicSafe
-} from 'drive/web/modules/filelist/certifications'
+} from 'drive/web/modules/certifications'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(

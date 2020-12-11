@@ -30,7 +30,7 @@ import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileO
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
-import { filterCertificationColumns } from 'drive/web/modules/filelist/certifications'
+import { filterCertificationColumns } from 'drive/web/modules/certifications/helpers'
 
 const FolderViewBody = ({
   currentFolderId,
