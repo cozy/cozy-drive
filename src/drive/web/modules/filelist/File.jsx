@@ -27,8 +27,7 @@ import {
   LastUpdate,
   Size,
   Status,
-  FileAction,
-  OptionalCell
+  FileAction
 } from './cells'
 
 import styles from 'drive/styles/filelist.styl'
@@ -153,11 +152,7 @@ const File = props => {
         {!isMobile &&
           additionalColumns &&
           additionalColumns.map(column => (
-            <OptionalCell
-              key={column.label}
-              tag={column.label}
-              file={attributes}
-            />
+            <column.CellComponent key={column.label} file={attributes} />
           ))}
         <Status
           file={attributes}
