@@ -7,8 +7,8 @@ import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
-import Typography from 'cozy-ui/transpiled/react/Typography'
+
+import CertificationTooltip from 'drive/web/modules/certifications/CertificationTooltip'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -35,22 +35,11 @@ const CarbonCopy = ({ file }) => {
       )}
     >
       {hasDataToshow ? (
-        <Tooltip
-          title={
-            <div className="u-p-half">
-              <Typography variant="body1">
-                {t('table.row_carbonCopy.title')}
-              </Typography>
-              <Typography variant="caption" color="textSecondary">
-                {t('table.row_carbonCopy.caption', { connectorName })}
-              </Typography>
-            </div>
-          }
-        >
-          <span>
-            <CarbonCopyIcon file={file} />
-          </span>
-        </Tooltip>
+        <CertificationTooltip
+          body={t('table.row_carbonCopy.title')}
+          caption={t('table.row_carbonCopy.caption', { connectorName })}
+          content={<CarbonCopyIcon file={file} />}
+        />
       ) : (
         '—'
       )}

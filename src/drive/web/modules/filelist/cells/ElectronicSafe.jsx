@@ -5,8 +5,8 @@ import cx from 'classnames'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
-import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
-import Typography from 'cozy-ui/transpiled/react/Typography'
+
+import CertificationTooltip from 'drive/web/modules/certifications/CertificationTooltip'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -24,22 +24,11 @@ const ElectronicSafe = ({ file }) => {
       )}
     >
       {hasDataToshow ? (
-        <Tooltip
-          title={
-            <div className="u-p-half">
-              <Typography variant="body1">
-                {t('table.row_electronicSafe.title')}
-              </Typography>
-              <Typography variant="caption" color="textSecondary">
-                {t('table.row_electronicSafe.caption', { connectorName })}
-              </Typography>
-            </div>
-          }
-        >
-          <span>
-            <AppIcon app={connectorName} />
-          </span>
-        </Tooltip>
+        <CertificationTooltip
+          body={t('table.row_electronicSafe.title')}
+          caption={t('table.row_electronicSafe.caption', { connectorName })}
+          content={<AppIcon app={connectorName} />}
+        />
       ) : (
         '—'
       )}
