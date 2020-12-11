@@ -9,8 +9,6 @@ import {
   TableHeader,
   TableRow
 } from 'cozy-ui/transpiled/react/Table'
-import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import iconList from 'drive/assets/icons/icon-list.svg'
 import iconListMin from 'drive/assets/icons/icon-list-min.svg'
@@ -18,27 +16,6 @@ import HeaderCell from './HeaderCell'
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'drive/config/sort'
 
 import styles from 'drive/styles/filelist.styl'
-
-const HeaderTooltip = ({ label, content }) => {
-  const { t } = useI18n()
-
-  return (
-    <Tooltip
-      title={
-        <div className="u-p-half">
-          <Typography variant="body1">
-            {t(`table.head_${label}.title`)}
-          </Typography>
-          <Typography variant="caption" color="textSecondary">
-            {t(`table.head_${label}.caption`)}
-          </Typography>
-        </div>
-      }
-    >
-      {content}
-    </Tooltip>
-  )
-}
 
 const FileListHeader = ({
   folderId,
@@ -90,16 +67,7 @@ const FileListHeader = ({
         </TableHeader>
         {additionalColumns &&
           additionalColumns.map(column => (
-            <TableHeader
-              key={column.label}
-              className={cx(styles['fil-content-header'], column.className)}
-            >
-              {column.tooltip ? (
-                <HeaderTooltip label={column.label} content={column.icon} />
-              ) : (
-                column.icon
-              )}
-            </TableHeader>
+            <column.HeaderComponent key={column.label} />
           ))}
         <TableHeader
           className={cx(
