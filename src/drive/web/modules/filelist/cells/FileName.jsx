@@ -1,12 +1,16 @@
 import React from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router'
+import get from 'lodash/get'
 
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { isDirectory } from 'drive/web/modules/drive/files'
+import iconCertified from 'drive/assets/icons/icon-certified.svg'
 import { CozyFile } from 'models'
 
 import styles from 'drive/styles/filelist.styl'
@@ -29,6 +33,8 @@ const FileName = ({
     { [styles['fil-content-row-disabled']]: isInSyncFromSharing }
   )
   const { filename, extension } = CozyFile.splitFilename(attributes)
+  const isCarbonCopy = get(attributes, 'metadata.carbonCopy')
+  const isElectronicSafe = get(attributes, 'metadata.electronicSafe')
 
   return (
     <TableCell className={classes}>
@@ -73,6 +79,19 @@ const FileName = ({
                 {`${formattedUpdatedAt}${
                   formattedSize ? ` - ${formattedSize}` : ''
                 }`}
+                {(isCarbonCopy || isElectronicSafe) && ' - '}
+                {isCarbonCopy && (
+                  <Icon
+                    icon={iconCertified}
+                    className={`u-mr-half ${styles['fil-file-infos--icon']}`}
+                  />
+                )}
+                {isElectronicSafe && (
+                  <AppIcon
+                    app={attributes.cozyMetadata.uploadedBy.slug}
+                    className={styles['fil-file-infos--icon']}
+                  />
+                )}
               </div>
             ))}
         </div>
