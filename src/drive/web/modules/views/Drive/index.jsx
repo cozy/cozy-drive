@@ -8,6 +8,7 @@ import uniqBy from 'lodash/uniqBy'
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import { ModalContext } from 'drive/lib/ModalContext'
@@ -38,10 +39,15 @@ import {
   getDisplayedFolder
 } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
+import { MakeConditionWithQuery } from 'drive/web/modules/certifications'
 import {
-  makeCarbonCopy,
-  makeElectronicSafe
-} from 'drive/web/modules/certifications'
+  CarbonCopy as CarbonCopyCell,
+  ElectronicSafe as ElectronicSafeCell
+} from 'drive/web/modules/filelist/cells'
+import {
+  CarbonCopy as CarbonCopyHeader,
+  ElectronicSafe as ElectronicSafeHeader
+} from 'drive/web/modules/filelist/headers'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -82,6 +88,9 @@ const DriveView = ({
   displayedFolder
 }) => {
   useTrashRedirect(displayedFolder)
+  const { isMobile } = useBreakpoints()
+
+  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
 
   const [sortOrder] = useFolderSort(currentFolderId)
 
@@ -97,38 +106,11 @@ const DriveView = ({
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  const carbonCopyQuery = buildFileWithSpecificMetadataAttributeQuery({
-    currentFolderId,
-    attribute: 'carbonCopy'
-  })
-  const electronicSafeQuery = buildFileWithSpecificMetadataAttributeQuery({
-    currentFolderId,
-    attribute: 'electronicSafe'
-  })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
-  const carbonCopyResult = useQuery(
-    carbonCopyQuery.definition,
-    carbonCopyQuery.options
-  )
-  const electronicSafeResult = useQuery(
-    electronicSafeQuery.definition,
-    electronicSafeQuery.options
-  )
-  const isCarbonCopy =
-    carbonCopyResult.fetchStatus === 'loaded' &&
-    carbonCopyResult.data.length > 0
-  const isElectronicSafe =
-    electronicSafeResult.fetchStatus === 'loaded' &&
-    electronicSafeResult.data.length > 0
 
-  const allResults = [
-    foldersResult,
-    filesResult,
-    carbonCopyResult,
-    electronicSafeResult
-  ]
+  const allResults = [foldersResult, filesResult]
 
   const isInError = allResults.some(result => result.fetchStatus === 'failed')
   const isLoading = allResults.some(
@@ -226,9 +208,31 @@ const DriveView = ({
           queryResults={[foldersResult, filesResult]}
           canSort
           currentFolderId={currentFolderId}
-          additionalColumns={{
-            carbonCopy: makeCarbonCopy(isCarbonCopy),
-            electronicSafe: makeElectronicSafe(isElectronicSafe)
+          {...showAdditionalColumns && {
+            additionalColumns: {
+              carbonCopy: {
+                condition: MakeConditionWithQuery({
+                  query: buildFileWithSpecificMetadataAttributeQuery({
+                    currentFolderId,
+                    attribute: 'carbonCopy'
+                  })
+                }),
+                label: 'carbonCopy',
+                HeaderComponent: CarbonCopyHeader,
+                CellComponent: CarbonCopyCell
+              },
+              electronicSafe: {
+                condition: MakeConditionWithQuery({
+                  query: buildFileWithSpecificMetadataAttributeQuery({
+                    currentFolderId,
+                    attribute: 'electronicSafe'
+                  })
+                }),
+                label: 'electronicSafe',
+                HeaderComponent: ElectronicSafeHeader,
+                CellComponent: ElectronicSafeCell
+              }
+            }
           }}
         />
         {children}

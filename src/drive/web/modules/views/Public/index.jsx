@@ -1,3 +1,5 @@
+/* global __TARGET__ */
+
 import React, { useState, useCallback, useContext } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { ModalManager } from 'react-cozy-helpers'
@@ -10,6 +12,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ModalStack, ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
@@ -29,9 +32,13 @@ import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
 import { isThereFileWithThisMetadata } from 'drive/web/modules/filelist/duck'
 import {
-  makeCarbonCopy,
-  makeElectronicSafe
-} from 'drive/web/modules/certifications'
+  CarbonCopy as CarbonCopyCell,
+  ElectronicSafe as ElectronicSafeCell
+} from 'drive/web/modules/filelist/cells'
+import {
+  CarbonCopy as CarbonCopyHeader,
+  ElectronicSafe as ElectronicSafeHeader
+} from 'drive/web/modules/filelist/headers'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -61,15 +68,15 @@ const PublicFolderView = ({
   children
 }) => {
   const client = useClient()
+  const { isMobile } = useBreakpoints()
+
+  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
 
   const [viewerOpened, setViewerOpened] = useState(false)
   const [currentViewerIndex, setCurrentViewerIndex] = useState(null)
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
-
-  const isCarbonCopy = isThereFileWithThisMetadata(files, 'carbonCopy')
-  const isElectronicSafe = isThereFileWithThisMetadata(files, 'electronicSafe')
 
   const viewableFiles = files.filter(f => f.type !== 'directory')
 
@@ -178,12 +185,26 @@ const PublicFolderView = ({
               currentFolderId={currentFolderId}
               refreshFolderContent={refreshFolderContent}
               canUpload={hasWritePermissions}
-              additionalColumns={{
-                carbonCopy: makeCarbonCopy(isCarbonCopy),
-                electronicSafe: makeElectronicSafe(isElectronicSafe)
+              {...showAdditionalColumns && {
+                additionalColumns: {
+                  carbonCopy: {
+                    condition: isThereFileWithThisMetadata(files, 'carbonCopy'),
+                    label: 'carbonCopy',
+                    HeaderComponent: CarbonCopyHeader,
+                    CellComponent: CarbonCopyCell
+                  },
+                  electronicSafe: {
+                    condition: isThereFileWithThisMetadata(
+                      files,
+                      'electronicSafe'
+                    ),
+                    label: 'electronicSafe',
+                    HeaderComponent: ElectronicSafeHeader,
+                    CellComponent: ElectronicSafeCell
+                  }
+                }
               }}
             />
-
             {viewerOpened &&
               viewableFiles.length > 0 && (
                 <Overlay>

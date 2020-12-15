@@ -1,9 +1,12 @@
+/* global __TARGET__ */
+
 import React, { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { useClient, useQuery } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ModalContext } from 'drive/lib/ModalContext'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
@@ -29,10 +32,15 @@ import {
   buildSharingsWithMetadataAttributeQuery
 } from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from '../Recent/useFilesQueryWithPath'
+import { MakeConditionWithQuery } from 'drive/web/modules/certifications'
 import {
-  makeCarbonCopy,
-  makeElectronicSafe
-} from 'drive/web/modules/certifications'
+  CarbonCopy as CarbonCopyCell,
+  ElectronicSafe as ElectronicSafeCell
+} from 'drive/web/modules/filelist/cells'
+import {
+  CarbonCopy as CarbonCopyHeader,
+  ElectronicSafe as ElectronicSafeHeader
+} from 'drive/web/modules/filelist/headers'
 
 export const SharingsView = ({
   router,
@@ -41,31 +49,12 @@ export const SharingsView = ({
   children
 }) => {
   const { t } = useI18n()
-  const query = buildSharingsQuery(sharedDocumentIds)
-  const carbonCopyQuery = buildSharingsWithMetadataAttributeQuery({
-    ids: sharedDocumentIds,
-    attribute: 'carbonCopy'
-  })
-  const electronicSafeQuery = buildSharingsWithMetadataAttributeQuery({
-    ids: sharedDocumentIds,
-    attribute: 'electronicSafe'
-  })
+  const { isMobile } = useBreakpoints()
 
+  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
+
+  const query = buildSharingsQuery(sharedDocumentIds)
   const result = useFilesQueryWithPath(query)
-  const carbonCopyResult = useQuery(
-    carbonCopyQuery.definition,
-    carbonCopyQuery.options
-  )
-  const electronicSafeResult = useQuery(
-    electronicSafeQuery.definition,
-    electronicSafeQuery.options
-  )
-  const isCarbonCopy =
-    carbonCopyResult.fetchStatus === 'loaded' &&
-    carbonCopyResult.data.length > 0
-  const isElectronicSafe =
-    electronicSafeResult.fetchStatus === 'loaded' &&
-    electronicSafeResult.data.length > 0
 
   const navigateToFolder = useCallback(
     folderId => {
@@ -115,9 +104,31 @@ export const SharingsView = ({
         queryResults={[result]}
         canSort={false}
         withFilePath={true}
-        additionalColumns={{
-          carbonCopy: makeCarbonCopy(isCarbonCopy),
-          electronicSafe: makeElectronicSafe(isElectronicSafe)
+        {...showAdditionalColumns && {
+          additionalColumns: {
+            carbonCopy: {
+              condition: MakeConditionWithQuery({
+                query: buildSharingsWithMetadataAttributeQuery({
+                  ids: sharedDocumentIds,
+                  attribute: 'carbonCopy'
+                })
+              }),
+              label: 'carbonCopy',
+              HeaderComponent: CarbonCopyHeader,
+              CellComponent: CarbonCopyCell
+            },
+            electronicSafe: {
+              condition: MakeConditionWithQuery({
+                query: buildSharingsWithMetadataAttributeQuery({
+                  ids: sharedDocumentIds,
+                  attribute: 'electronicSafe'
+                })
+              }),
+              label: 'electronicSafe',
+              HeaderComponent: ElectronicSafeHeader,
+              CellComponent: ElectronicSafeCell
+            }
+          }
         }}
       />
       {children}
