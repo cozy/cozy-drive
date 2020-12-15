@@ -1,9 +1,12 @@
+/* global __TARGET__ */
+
 import React, { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { useClient, useQuery } from 'cozy-client'
+import { useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -28,36 +31,23 @@ import {
   buildRecentWithMetadataAttributeQuery
 } from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
+import { MakeConditionWithQuery } from 'drive/web/modules/certifications'
 import {
-  makeCarbonCopy,
-  makeElectronicSafe
-} from 'drive/web/modules/certifications'
+  CarbonCopy as CarbonCopyCell,
+  ElectronicSafe as ElectronicSafeCell
+} from 'drive/web/modules/filelist/cells'
+import {
+  CarbonCopy as CarbonCopyHeader,
+  ElectronicSafe as ElectronicSafeHeader
+} from 'drive/web/modules/filelist/headers'
 
 export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
-  const query = buildRecentQuery()
-  const carbonCopyQuery = buildRecentWithMetadataAttributeQuery({
-    attribute: 'carbonCopy'
-  })
-  const electronicSafeQuery = buildRecentWithMetadataAttributeQuery({
-    attribute: 'electronicSafe'
-  })
+  const { isMobile } = useBreakpoints()
 
+  const query = buildRecentQuery()
   const result = useFilesQueryWithPath(query)
-  const carbonCopyResult = useQuery(
-    carbonCopyQuery.definition,
-    carbonCopyQuery.options
-  )
-  const electronicSafeResult = useQuery(
-    electronicSafeQuery.definition,
-    electronicSafeQuery.options
-  )
-  const isCarbonCopy =
-    carbonCopyResult.fetchStatus === 'loaded' &&
-    carbonCopyResult.data.length > 0
-  const isElectronicSafe =
-    electronicSafeResult.fetchStatus === 'loaded' &&
-    electronicSafeResult.data.length > 0
+  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
 
   const navigateToFolder = useCallback(
     folderId => {
@@ -120,9 +110,29 @@ export const RecentView = ({ router, location, children }) => {
         queryResults={[result]}
         canSort={false}
         withFilePath={true}
-        additionalColumns={{
-          carbonCopy: makeCarbonCopy(isCarbonCopy),
-          electronicSafe: makeElectronicSafe(isElectronicSafe)
+        {...showAdditionalColumns && {
+          additionalColumns: {
+            carbonCopy: {
+              condition: MakeConditionWithQuery({
+                query: buildRecentWithMetadataAttributeQuery({
+                  attribute: 'carbonCopy'
+                })
+              }),
+              label: 'carbonCopy',
+              HeaderComponent: CarbonCopyHeader,
+              CellComponent: CarbonCopyCell
+            },
+            electronicSafe: {
+              condition: MakeConditionWithQuery({
+                query: buildRecentWithMetadataAttributeQuery({
+                  attribute: 'electronicSafe'
+                })
+              }),
+              label: 'electronicSafe',
+              HeaderComponent: ElectronicSafeHeader,
+              CellComponent: ElectronicSafeCell
+            }
+          }
         }}
       />
       {children}

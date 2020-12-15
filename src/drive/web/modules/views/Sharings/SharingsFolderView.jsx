@@ -1,11 +1,14 @@
+/* global __TARGET__ */
+
 import React, { useCallback, useContext } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import get from 'lodash/get'
 
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ModalContext } from 'drive/lib/ModalContext'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
@@ -31,10 +34,15 @@ import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
+import { MakeConditionWithQuery } from 'drive/web/modules/certifications'
 import {
-  makeCarbonCopy,
-  makeElectronicSafe
-} from 'drive/web/modules/certifications'
+  CarbonCopy as CarbonCopyCell,
+  ElectronicSafe as ElectronicSafeCell
+} from 'drive/web/modules/filelist/cells'
+import {
+  CarbonCopy as CarbonCopyHeader,
+  ElectronicSafe as ElectronicSafeHeader
+} from 'drive/web/modules/filelist/headers'
 
 const getBreadcrumbPath = (t, displayedFolder, sharedDocumentIds) => {
   const breadcrumbs = [
@@ -63,7 +71,10 @@ const SharingsFolderView = ({
   location,
   children
 }) => {
+  const { isMobile } = useBreakpoints()
   const [sortOrder] = useFolderSort(currentFolderId)
+
+  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
 
   const folderQuery = buildDriveQuery({
     currentFolderId,
@@ -77,31 +88,8 @@ const SharingsFolderView = ({
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  const carbonCopyQuery = buildFileWithSpecificMetadataAttributeQuery({
-    currentFolderId,
-    attribute: 'carbonCopy'
-  })
-  const electronicSafeQuery = buildFileWithSpecificMetadataAttributeQuery({
-    currentFolderId,
-    attribute: 'electronicSafe'
-  })
-
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
-  const carbonCopyResult = useQuery(
-    carbonCopyQuery.definition,
-    carbonCopyQuery.options
-  )
-  const electronicSafeResult = useQuery(
-    electronicSafeQuery.definition,
-    electronicSafeQuery.options
-  )
-  const isCarbonCopy =
-    carbonCopyResult.fetchStatus === 'loaded' &&
-    carbonCopyResult.data.length > 0
-  const isElectronicSafe =
-    electronicSafeResult.fetchStatus === 'loaded' &&
-    electronicSafeResult.data.length > 0
 
   const navigateToFolder = useCallback(
     folderId => {
@@ -163,9 +151,31 @@ const SharingsFolderView = ({
         actions={actions}
         queryResults={[foldersResult, filesResult]}
         canSort
-        additionalColumns={{
-          carbonCopy: makeCarbonCopy(isCarbonCopy),
-          electronicSafe: makeElectronicSafe(isElectronicSafe)
+        {...showAdditionalColumns && {
+          additionalColumns: {
+            carbonCopy: {
+              condition: MakeConditionWithQuery({
+                query: buildFileWithSpecificMetadataAttributeQuery({
+                  currentFolderId,
+                  attribute: 'carbonCopy'
+                })
+              }),
+              label: 'carbonCopy',
+              HeaderComponent: CarbonCopyHeader,
+              CellComponent: CarbonCopyCell
+            },
+            electronicSafe: {
+              condition: MakeConditionWithQuery({
+                query: buildFileWithSpecificMetadataAttributeQuery({
+                  currentFolderId,
+                  attribute: 'electronicSafe'
+                })
+              }),
+              label: 'electronicSafe',
+              HeaderComponent: ElectronicSafeHeader,
+              CellComponent: ElectronicSafeCell
+            }
+          }
         }}
       />
       {children}
