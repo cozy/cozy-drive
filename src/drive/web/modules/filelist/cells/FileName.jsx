@@ -7,10 +7,10 @@ import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
+import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { isDirectory } from 'drive/web/modules/drive/files'
-import iconCertified from 'drive/assets/icons/icon-certified.svg'
 import { CozyFile } from 'models'
 
 import styles from 'drive/styles/filelist.styl'
@@ -82,7 +82,7 @@ const FileName = ({
                 {(isCarbonCopy || isElectronicSafe) && ' - '}
                 {isCarbonCopy && (
                   <Icon
-                    icon={iconCertified}
+                    icon={CarbonCopyIcon}
                     className={`u-mr-half ${styles['fil-file-infos--icon']}`}
                   />
                 )}
