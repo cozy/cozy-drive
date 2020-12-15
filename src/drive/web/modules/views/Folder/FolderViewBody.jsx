@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
-import filter from 'lodash/filter'
 
 import { useClient, useCapabilities } from 'cozy-client'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
@@ -31,6 +30,7 @@ import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileO
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
+import { filterCertificationColumns } from 'drive/web/modules/filelist/certifications'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -93,8 +93,12 @@ const FolderViewBody = ({
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
 
+  // TODO: filteredColumns is then passed to 'FileListHeader', 'AddFolder',
+  // and 'File' (this one from a 'syncingFakeFile' and a normal file).
+  // It is easy to forget to update one of these components when modifying 'additionalColumns'.
+  // It would be ideal to centralize it somewhere.
   const filteredColumns = useMemo(
-    () => filter(additionalColumns, column => column.condition === true),
+    () => filterCertificationColumns(additionalColumns),
     [additionalColumns]
   )
 
