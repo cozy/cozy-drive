@@ -127,20 +127,20 @@ const buildSharingsQuery = ids => ({
  * Only one file is necessary because it allows us to know whether or not to display
  * the column for this specific metadata (like carbonCopy or electronicSafe).
  * @param {object} params - Params
- * @param {array} params.ids - Ids of shared documents
+ * @param {array} params.sharedDocumentsIds - Ids of shared documents
  * @param {string} params.attribute - Metadata attribute
  */
 export const buildSharingsWithMetadataAttributeQuery = ({
-  ids,
+  sharedDocumentIds,
   attribute
 }) => ({
   definition: () =>
     Q('io.cozy.files')
-      .getByIds(ids)
+      .getByIds(sharedDocumentIds)
       .where({ [`metadata.${attribute}`]: true })
       .limitBy(1),
   options: {
-    as: `sharings-by-ids-${ids.join('')}-with-${attribute}`,
+    as: `sharings-by-ids-${sharedDocumentIds.join('')}-with-${attribute}`,
     fetchPolicy: defaultFetchPolicy
   }
 })
