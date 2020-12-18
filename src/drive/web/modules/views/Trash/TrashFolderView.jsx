@@ -22,15 +22,7 @@ import {
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
-import { MakeConditionWithQuery } from 'drive/web/modules/certifications'
-import {
-  CarbonCopy as CarbonCopyCell,
-  ElectronicSafe as ElectronicSafeCell
-} from 'drive/web/modules/filelist/cells'
-import {
-  CarbonCopy as CarbonCopyHeader,
-  ElectronicSafe as ElectronicSafeHeader
-} from 'drive/web/modules/filelist/headers'
+import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -57,10 +49,24 @@ const getBreadcrumbPath = (t, displayedFolder) =>
       name: breadcrumb.name || '…'
     }))
 
+const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumns = []
+
 const TrashFolderView = ({ currentFolderId, router, children }) => {
   const { isMobile } = useBreakpoints()
+
+  const extraColumnsNames =
+    isMobile || __TARGET__ === 'mobile'
+      ? mobileExtraColumns
+      : desktopExtraColumns
+
+  const extraColumns = useExtraColumns({
+    columnsNames: extraColumnsNames,
+    queryBuilder: buildFileWithSpecificMetadataAttributeQuery,
+    currentFolderId
+  })
+
   const [sortOrder] = useFolderSort(currentFolderId)
-  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
 
   const folderQuery = buildTrashQuery({
     currentFolderId,
@@ -129,32 +135,7 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
         actions={actions}
         queryResults={[foldersResult, filesResult]}
         canSort
-        {...showAdditionalColumns && {
-          additionalColumns: {
-            carbonCopy: {
-              condition: MakeConditionWithQuery({
-                query: buildFileWithSpecificMetadataAttributeQuery({
-                  currentFolderId,
-                  attribute: 'carbonCopy'
-                })
-              }),
-              label: 'carbonCopy',
-              HeaderComponent: CarbonCopyHeader,
-              CellComponent: CarbonCopyCell
-            },
-            electronicSafe: {
-              condition: MakeConditionWithQuery({
-                query: buildFileWithSpecificMetadataAttributeQuery({
-                  currentFolderId,
-                  attribute: 'electronicSafe'
-                })
-              }),
-              label: 'electronicSafe',
-              HeaderComponent: ElectronicSafeHeader,
-              CellComponent: ElectronicSafeCell
-            }
-          }
-        }}
+        extraColumns={extraColumns}
       />
       {children}
     </FolderView>
