@@ -86,7 +86,7 @@ const File = props => {
     selectionModeActive,
     refreshFolderContent,
     isInSyncFromSharing,
-    additionalColumns,
+    extraColumns,
     breakpoints: { isExtraLarge, isMobile }
   } = props
 
@@ -149,9 +149,8 @@ const File = props => {
           formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
         />
         <Size filesize={formattedSize} />
-        {!isMobile &&
-          additionalColumns &&
-          additionalColumns.map(column => (
+        {extraColumns &&
+          extraColumns.map(column => (
             <column.CellComponent key={column.label} file={attributes} />
           ))}
         <Status
@@ -208,7 +207,7 @@ File.propTypes = {
   onCheckboxToggle: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
   isInSyncFromSharing: PropTypes.bool,
-  additionalColumns: PropTypes.array
+  extraColumns: PropTypes.array
 }
 
 const mapStateToProps = (state, ownProps) => ({
