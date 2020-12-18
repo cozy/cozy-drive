@@ -16,6 +16,7 @@ import {
 } from 'drive/web/modules/filelist/duck'
 import { createFolder } from 'drive/web/modules/navigation/duck'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
+import { Empty as EmptyCell } from 'drive/web/modules/filelist/cells'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -51,34 +52,15 @@ const AddFolder = ({
           >
             <time dateTime="">{f(Date.now(), 'MMM D, YYYY')}</time>
           </TableCell>
-          <TableCell
-            className={cx(
-              styles['fil-content-cell'],
-              styles['fil-content-size']
-            )}
-          >
-            —
-          </TableCell>
+          <EmptyCell className={styles['fil-content-size']} />
           {extraColumns &&
             extraColumns.map(column => (
-              <TableCell
+              <EmptyCell
                 key={column.label}
-                className={cx(
-                  styles['fil-content-cell'],
-                  styles['fil-content-certification']
-                )}
-              >
-                —
-              </TableCell>
+                className={styles['fil-content-narrow']}
+              />
             ))}
-          <TableCell
-            className={cx(
-              styles['fil-content-cell'],
-              styles['fil-content-status']
-            )}
-          >
-            —
-          </TableCell>
+          <EmptyCell className={styles['fil-content-status']} />
         </>
       )}
       <TableCell
