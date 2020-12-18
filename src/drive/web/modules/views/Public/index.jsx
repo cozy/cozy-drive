@@ -31,14 +31,7 @@ import {
 import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
 import { isThereFileWithThisMetadata } from 'drive/web/modules/filelist/duck'
-import {
-  CarbonCopy as CarbonCopyCell,
-  ElectronicSafe as ElectronicSafeCell
-} from 'drive/web/modules/filelist/cells'
-import {
-  CarbonCopy as CarbonCopyHeader,
-  ElectronicSafe as ElectronicSafeHeader
-} from 'drive/web/modules/filelist/headers'
+import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -60,6 +53,9 @@ const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
       name: breadcrumb.name || '…'
     }))
 
+const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumns = []
+
 const PublicFolderView = ({
   currentFolderId,
   parentFolder,
@@ -70,13 +66,22 @@ const PublicFolderView = ({
   const client = useClient()
   const { isMobile } = useBreakpoints()
 
-  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
-
   const [viewerOpened, setViewerOpened] = useState(false)
   const [currentViewerIndex, setCurrentViewerIndex] = useState(null)
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
+
+  const extraColumnsNames =
+    isMobile || __TARGET__ === 'mobile'
+      ? mobileExtraColumns
+      : desktopExtraColumns
+
+  const extraColumns = useExtraColumns({
+    columnsNames: extraColumnsNames,
+    conditionBuilder: isThereFileWithThisMetadata,
+    files
+  })
 
   const viewableFiles = files.filter(f => f.type !== 'directory')
 
@@ -185,25 +190,7 @@ const PublicFolderView = ({
               currentFolderId={currentFolderId}
               refreshFolderContent={refreshFolderContent}
               canUpload={hasWritePermissions}
-              {...showAdditionalColumns && {
-                additionalColumns: {
-                  carbonCopy: {
-                    condition: isThereFileWithThisMetadata(files, 'carbonCopy'),
-                    label: 'carbonCopy',
-                    HeaderComponent: CarbonCopyHeader,
-                    CellComponent: CarbonCopyCell
-                  },
-                  electronicSafe: {
-                    condition: isThereFileWithThisMetadata(
-                      files,
-                      'electronicSafe'
-                    ),
-                    label: 'electronicSafe',
-                    HeaderComponent: ElectronicSafeHeader,
-                    CellComponent: ElectronicSafeCell
-                  }
-                }
-              }}
+              extraColumns={extraColumns}
             />
             {viewerOpened &&
               viewableFiles.length > 0 && (

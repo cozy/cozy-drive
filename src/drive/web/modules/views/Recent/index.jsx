@@ -31,23 +31,27 @@ import {
   buildRecentWithMetadataAttributeQuery
 } from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
-import { MakeConditionWithQuery } from 'drive/web/modules/certifications'
-import {
-  CarbonCopy as CarbonCopyCell,
-  ElectronicSafe as ElectronicSafeCell
-} from 'drive/web/modules/filelist/cells'
-import {
-  CarbonCopy as CarbonCopyHeader,
-  ElectronicSafe as ElectronicSafeHeader
-} from 'drive/web/modules/filelist/headers'
+import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
+
+const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumns = []
 
 export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
+  const extraColumnsNames =
+    isMobile || __TARGET__ === 'mobile'
+      ? mobileExtraColumns
+      : desktopExtraColumns
+
+  const extraColumns = useExtraColumns({
+    columnsNames: extraColumnsNames,
+    queryBuilder: buildRecentWithMetadataAttributeQuery
+  })
+
   const query = buildRecentQuery()
   const result = useFilesQueryWithPath(query)
-  const showAdditionalColumns = !isMobile && __TARGET__ !== 'mobile'
 
   const navigateToFolder = useCallback(
     folderId => {
@@ -110,30 +114,7 @@ export const RecentView = ({ router, location, children }) => {
         queryResults={[result]}
         canSort={false}
         withFilePath={true}
-        {...showAdditionalColumns && {
-          additionalColumns: {
-            carbonCopy: {
-              condition: MakeConditionWithQuery({
-                query: buildRecentWithMetadataAttributeQuery({
-                  attribute: 'carbonCopy'
-                })
-              }),
-              label: 'carbonCopy',
-              HeaderComponent: CarbonCopyHeader,
-              CellComponent: CarbonCopyCell
-            },
-            electronicSafe: {
-              condition: MakeConditionWithQuery({
-                query: buildRecentWithMetadataAttributeQuery({
-                  attribute: 'electronicSafe'
-                })
-              }),
-              label: 'electronicSafe',
-              HeaderComponent: ElectronicSafeHeader,
-              CellComponent: ElectronicSafeCell
-            }
-          }
-        }}
+        extraColumns={extraColumns}
       />
       {children}
     </FolderView>
