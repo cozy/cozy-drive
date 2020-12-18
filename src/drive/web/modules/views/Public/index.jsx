@@ -1,5 +1,3 @@
-/* global __TARGET__ */
-
 import React, { useState, useCallback, useContext } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { ModalManager } from 'react-cozy-helpers'
@@ -32,6 +30,7 @@ import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
 import { hasMetadataAttribute } from 'drive/web/modules/drive/files'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
+import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -53,8 +52,8 @@ const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
       name: breadcrumb.name || '…'
     }))
 
-const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
-const mobileExtraColumns = []
+const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumnsNames = []
 
 const PublicFolderView = ({
   currentFolderId,
@@ -72,10 +71,11 @@ const PublicFolderView = ({
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
 
-  const extraColumnsNames =
-    isMobile || __TARGET__ === 'mobile'
-      ? mobileExtraColumns
-      : desktopExtraColumns
+  const extraColumnsNames = makeExtraColumnsNamesFromMedia({
+    isMobile,
+    desktopExtraColumnsNames,
+    mobileExtraColumnsNames
+  })
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,

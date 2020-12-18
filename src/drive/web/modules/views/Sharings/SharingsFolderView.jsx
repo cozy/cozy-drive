@@ -1,5 +1,3 @@
-/* global __TARGET__ */
-
 import React, { useCallback, useContext } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import get from 'lodash/get'
@@ -35,6 +33,7 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
+import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
 const getBreadcrumbPath = (t, displayedFolder, sharedDocumentIds) => {
   const breadcrumbs = [
@@ -56,8 +55,8 @@ const getBreadcrumbPath = (t, displayedFolder, sharedDocumentIds) => {
   }))
 }
 
-const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
-const mobileExtraColumns = []
+const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumnsNames = []
 
 const SharingsFolderView = ({
   currentFolderId,
@@ -68,10 +67,11 @@ const SharingsFolderView = ({
 }) => {
   const { isMobile } = useBreakpoints()
 
-  const extraColumnsNames =
-    isMobile || __TARGET__ === 'mobile'
-      ? mobileExtraColumns
-      : desktopExtraColumns
+  const extraColumnsNames = makeExtraColumnsNamesFromMedia({
+    isMobile,
+    desktopExtraColumnsNames,
+    mobileExtraColumnsNames
+  })
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,

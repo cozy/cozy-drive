@@ -1,5 +1,3 @@
-/* global __TARGET__ */
-
 import React, { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -32,18 +30,20 @@ import {
 } from 'drive/web/modules/queries'
 import { useFilesQueryWithPath } from './useFilesQueryWithPath'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
+import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
-const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
-const mobileExtraColumns = []
+const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumnsNames = []
 
 export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  const extraColumnsNames =
-    isMobile || __TARGET__ === 'mobile'
-      ? mobileExtraColumns
-      : desktopExtraColumns
+  const extraColumnsNames = makeExtraColumnsNamesFromMedia({
+    isMobile,
+    desktopExtraColumnsNames,
+    mobileExtraColumnsNames
+  })
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,

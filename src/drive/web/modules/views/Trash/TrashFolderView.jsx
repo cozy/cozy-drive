@@ -1,5 +1,3 @@
-/* global __TARGET__ */
-
 import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
 
@@ -23,6 +21,7 @@ import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
+import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -49,16 +48,17 @@ const getBreadcrumbPath = (t, displayedFolder) =>
       name: breadcrumb.name || '…'
     }))
 
-const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
-const mobileExtraColumns = []
+const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumnsNames = []
 
 const TrashFolderView = ({ currentFolderId, router, children }) => {
   const { isMobile } = useBreakpoints()
 
-  const extraColumnsNames =
-    isMobile || __TARGET__ === 'mobile'
-      ? mobileExtraColumns
-      : desktopExtraColumns
+  const extraColumnsNames = makeExtraColumnsNamesFromMedia({
+    isMobile,
+    desktopExtraColumnsNames,
+    mobileExtraColumnsNames
+  })
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,
