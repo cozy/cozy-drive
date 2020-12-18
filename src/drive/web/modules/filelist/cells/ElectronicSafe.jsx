@@ -18,10 +18,7 @@ const ElectronicSafe = ({ file }) => {
 
   return (
     <TableCell
-      className={cx(
-        styles['fil-content-cell'],
-        styles['fil-content-certification']
-      )}
+      className={cx(styles['fil-content-cell'], styles['fil-content-narrow'])}
     >
       {hasDataToshow ? (
         <CertificationTooltip
