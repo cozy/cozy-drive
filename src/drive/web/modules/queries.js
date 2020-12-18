@@ -77,6 +77,9 @@ const buildRecentQuery = () => ({
   }
 })
 
+// TODO: since this query is almost the same as buildRecentQuery
+// we can probably refactor a bit
+// see https://github.com/cozy/cozy-drive/pull/2193#pullrequestreview-553766674
 /**
  * Returns one file with specific metadata for Recent view
  * Only one file is necessary because it allows us to know whether or not to display
@@ -122,6 +125,9 @@ const buildSharingsQuery = ids => ({
   }
 })
 
+// TODO: since this query is almost the same as buildSharingsQuery
+// we can probably refactor a bit
+// see https://github.com/cozy/cozy-drive/pull/2193#pullrequestreview-553766674
 /**
  * Returns one file with specific metadata for Sharing view.
  * Only one file is necessary because it allows us to know whether or not to display
@@ -243,6 +249,9 @@ export const buildOnlyFolderQuery = (client, folderId) => ({
   }
 })
 
+// TODO: since this query is almost the same as buildDriveQuery
+// we can probably refactor a bit
+// see https://github.com/cozy/cozy-drive/pull/2193#pullrequestreview-553766674
 /**
  * Returns one file with specific metadata.
  * Only one file is necessary because it allows us to know whether or not to display
