@@ -24,7 +24,7 @@ const FileListHeader = ({
   onFolderSort,
   thumbnailSizeBig,
   toggleThumbnailSize,
-  additionalColumns
+  extraColumns
 }) => {
   const { t } = useI18n()
   const actualSort = sort || DEFAULT_SORT
@@ -65,8 +65,8 @@ const FileListHeader = ({
         >
           {t('table.head_size')}
         </TableHeader>
-        {additionalColumns &&
-          additionalColumns.map(column => (
+        {extraColumns &&
+          extraColumns.map(column => (
             <column.HeaderComponent key={column.label} />
           ))}
         <TableHeader

@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useState,
-  useEffect,
-  useMemo
-} from 'react'
+import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
 
@@ -30,8 +24,11 @@ import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileO
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
-import { filterCertificationColumns } from 'drive/web/modules/certifications/helpers'
 
+// TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
+// and 'File' (this one from a 'syncingFakeFile' and a normal file).
+// It is easy to forget to update one of these components to pass 'extraColumns'.
+// It would be ideal to centralize it somewhere.
 const FolderViewBody = ({
   currentFolderId,
   queryResults,
@@ -42,7 +39,7 @@ const FolderViewBody = ({
   navigateToFolder,
   navigateToFile,
   refreshFolderContent = null,
-  additionalColumns
+  extraColumns
 }) => {
   const { isDesktop } = useBreakpoints()
   const client = useClient()
@@ -93,15 +90,6 @@ const FolderViewBody = ({
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
 
-  // TODO: filteredColumns is then passed to 'FileListHeader', 'AddFolder',
-  // and 'File' (this one from a 'syncingFakeFile' and a normal file).
-  // It is easy to forget to update one of these components when modifying 'additionalColumns'.
-  // It would be ideal to centralize it somewhere.
-  const filteredColumns = useMemo(
-    () => filterCertificationColumns(additionalColumns),
-    [additionalColumns]
-  )
-
   /**
    * When we mount the component when we already have data in cache,
    * the mount is time consuming since we'll render at least 100 lines
@@ -150,14 +138,14 @@ const FolderViewBody = ({
               onFolderSort={changeSortOrder}
               thumbnailSizeBig={isBigThumbnail}
               toggleThumbnailSize={toggleThumbnailSize}
-              additionalColumns={filteredColumns}
+              extraColumns={extraColumns}
             />
           </>
         )}
         <FileListBody selectionModeActive={false}>
           <AddFolder
             refreshFolderContent={refreshFolderContent}
-            additionalColumns={filteredColumns}
+            extraColumns={extraColumns}
           />
           {isInError && <Oops />}
           {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
@@ -185,7 +173,7 @@ const FolderViewBody = ({
                       onFileOpen={() => {}}
                       actions={[]}
                       isInSyncFromSharing={true}
-                      additionalColumns={filteredColumns}
+                      extraColumns={extraColumns}
                     />
                   )}
                   {queryResults.map((query, queryIndex) => (
@@ -209,7 +197,7 @@ const FolderViewBody = ({
                               sharingsValue
                             )
                           }
-                          additionalColumns={filteredColumns}
+                          extraColumns={extraColumns}
                         />
                       ))}
                       {query.hasMore && (
