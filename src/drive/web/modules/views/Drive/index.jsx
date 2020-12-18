@@ -40,6 +40,7 @@ import {
 } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
+import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -72,8 +73,8 @@ const getBreadcrumbPath = (t, displayedFolder) =>
         (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
     }))
 
-const desktopExtraColumns = ['carbonCopy', 'electronicSafe']
-const mobileExtraColumns = []
+const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
+const mobileExtraColumnsNames = []
 
 const DriveView = ({
   currentFolderId,
@@ -84,10 +85,11 @@ const DriveView = ({
 }) => {
   const { isMobile } = useBreakpoints()
 
-  const extraColumnsNames =
-    isMobile || __TARGET__ === 'mobile'
-      ? mobileExtraColumns
-      : desktopExtraColumns
+  const extraColumnsNames = makeExtraColumnsNamesFromMedia({
+    isMobile,
+    desktopExtraColumnsNames,
+    mobileExtraColumnsNames
+  })
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,

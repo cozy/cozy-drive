@@ -1,3 +1,5 @@
+/* global __TARGET__ */
+
 import {
   CarbonCopy as CarbonCopyCell,
   ElectronicSafe as ElectronicSafeCell
@@ -27,3 +29,20 @@ export const extraColumnsSpecs = {
     CellComponent: ElectronicSafeCell
   }
 }
+
+/**
+ * Returns the columns names according to the media
+ * @param {object} params - Params
+ * @param {bool} params.isMobile - Whether the breakpoint is mobile
+ * @param {array} params.mobileExtraColumnsNames - Names of the columns to be shown in mobile
+ * @param {array} params.desktopExtraColumnsNames - Names of the columns to be shown in desktop
+ * @returns {array} Names of the columns
+ */
+export const makeExtraColumnsNamesFromMedia = ({
+  isMobile,
+  mobileExtraColumnsNames,
+  desktopExtraColumnsNames
+}) =>
+  isMobile || __TARGET__ === 'mobile'
+    ? mobileExtraColumnsNames
+    : desktopExtraColumnsNames
