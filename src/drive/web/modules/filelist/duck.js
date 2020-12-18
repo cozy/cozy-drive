@@ -31,5 +31,10 @@ export default filelist
 export const isTypingNewFolderName = state =>
   state.filelist.isTypingNewFolderName
 
-export const isThereFileWithThisMetadata = (files, attribute) =>
-  files.some(file => get(file, `metadata.${attribute}`))
+export const isThereFileWithThisMetadata = ({ files, attribute }) => {
+  return (
+    files &&
+    files.length > 0 &&
+    files.some(file => get(file, `metadata.${attribute}`))
+  )
+}

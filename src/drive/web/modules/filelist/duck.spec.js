@@ -15,7 +15,9 @@ describe('isThereFileWithThisMetadata', () => {
   })
 
   it('should return false if no file with metadata', () => {
-    expect(isThereFileWithThisMetadata(files, 'specificMetadata')).toBeFalsy()
+    expect(
+      isThereFileWithThisMetadata({ files, attribute: 'specificMetadata' })
+    ).toBeFalsy()
   })
 
   it('should return false if no file with specific metadata', () => {
@@ -23,7 +25,9 @@ describe('isThereFileWithThisMetadata', () => {
       id: 'file02',
       metadata: {}
     })
-    expect(isThereFileWithThisMetadata(files, 'specificMetadata')).toBeFalsy()
+    expect(
+      isThereFileWithThisMetadata({ files, attribute: 'specificMetadata' })
+    ).toBeFalsy()
   })
 
   it('should return true if at least one file have specific metadata', () => {
@@ -31,6 +35,22 @@ describe('isThereFileWithThisMetadata', () => {
       id: 'file03',
       metadata: { specificMetadata: true }
     })
-    expect(isThereFileWithThisMetadata(files, 'specificMetadata')).toBeTruthy()
+    expect(
+      isThereFileWithThisMetadata({ files, attribute: 'specificMetadata' })
+    ).toBeTruthy()
+  })
+
+  it('should return false if files are empty', () => {
+    files = []
+    expect(
+      isThereFileWithThisMetadata({ files, attribute: 'specificMetadata' })
+    ).toBeFalsy()
+  })
+
+  it('should return false if files are undefined', () => {
+    files = undefined
+    expect(
+      isThereFileWithThisMetadata({ files, attribute: 'specificMetadata' })
+    ).toBeFalsy()
   })
 })
