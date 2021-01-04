@@ -34,7 +34,7 @@ const addRefs = async (client, ids, album) => {
     _id: id,
     _type: 'io.cozy.files'
   }))
-  await client.mutate(album.photos.insertDocuments(relations))
+  await client.mutate(album.photos.addReferences(relations))
 }
 
 //TODO: we should probably use removeById from HasManyFiles. However, it causes
