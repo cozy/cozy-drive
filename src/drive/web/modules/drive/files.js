@@ -1,5 +1,7 @@
 //!TODO Put this to cozy-client/models/files
 
+import has from 'lodash/has'
+
 const FILE_TYPE = 'file'
 const DIR_TYPE = 'directory'
 export const ALBUMS_DOCTYPE = 'io.cozy.photos.albums'
@@ -22,3 +24,12 @@ export const isReferencedByAlbum = file => {
   }
   return false
 }
+
+/**
+ * Whether the file's metadata attribute exists
+ * @param {object} params - Param
+ * @param {object} params.file - An io.cozy.files document
+ * @param {string} params.attribute - Metadata attribute to check
+ */
+export const hasMetadataAttribute = ({ file, attribute }) =>
+  has(file, `metadata.${attribute}`)
