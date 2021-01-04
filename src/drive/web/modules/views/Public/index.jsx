@@ -30,7 +30,7 @@ import {
 } from 'drive/web/modules/selectors'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
-import { isThereFileWithThisMetadata } from 'drive/web/modules/filelist/duck'
+import { hasMetadataAttribute } from 'drive/web/modules/drive/files'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
@@ -79,7 +79,8 @@ const PublicFolderView = ({
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,
-    conditionBuilder: isThereFileWithThisMetadata,
+    conditionBuilder: ({ files, attribute }) =>
+      files.some(file => hasMetadataAttribute({ file, attribute })),
     files
   })
 
