@@ -29,6 +29,7 @@ import {
   Status,
   FileAction
 } from './cells'
+import { extraColumnsPropTypes } from 'drive/web/modules/certifications'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -207,7 +208,7 @@ File.propTypes = {
   onCheckboxToggle: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
   isInSyncFromSharing: PropTypes.bool,
-  extraColumns: PropTypes.array
+  extraColumns: extraColumnsPropTypes
 }
 
 const mapStateToProps = (state, ownProps) => ({

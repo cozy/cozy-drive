@@ -1,5 +1,7 @@
 /* global __TARGET__ */
 
+import PropTypes from 'prop-types'
+
 import {
   CarbonCopy as CarbonCopyCell,
   ElectronicSafe as ElectronicSafeCell
@@ -29,6 +31,16 @@ export const extraColumnsSpecs = {
     CellComponent: ElectronicSafeCell
   }
 }
+
+const extraColumnPropTypes = PropTypes.shape({
+  query: PropTypes.func,
+  condition: PropTypes.func,
+  label: PropTypes.string,
+  HeaderComponent: PropTypes.func,
+  CellComponent: PropTypes.func
+})
+
+export const extraColumnsPropTypes = PropTypes.arrayOf(extraColumnPropTypes)
 
 /**
  * Returns the columns names according to the media
