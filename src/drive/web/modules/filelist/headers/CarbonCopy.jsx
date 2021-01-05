@@ -15,8 +15,8 @@ const CarbonCopyHeader = () => {
   return (
     <TableHeader className={styles['fil-content-header']}>
       <CertificationTooltip
-        body={t('table.head_carbonCopy.title')}
-        caption={t('table.head_carbonCopy.caption')}
+        body={t('table.tooltip.carbonCopy.title')}
+        caption={t('table.tooltip.carbonCopy.caption')}
         content={<Icon icon={CarbonCopyIcon} size={16} />}
       />
     </TableHeader>

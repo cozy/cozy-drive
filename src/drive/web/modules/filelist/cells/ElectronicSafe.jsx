@@ -22,8 +22,8 @@ const ElectronicSafe = ({ file }) => {
     >
       {hasDataToshow ? (
         <CertificationTooltip
-          body={t('table.row_electronicSafe.title')}
-          caption={t('table.row_electronicSafe.caption', { connectorName })}
+          body={t('table.tooltip.electronicSafe.title')}
+          caption={t('table.tooltip.electronicSafe.caption')}
           content={<AppIcon app={connectorName} />}
         />
       ) : (

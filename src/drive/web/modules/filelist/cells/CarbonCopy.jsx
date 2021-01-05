@@ -25,7 +25,6 @@ const CarbonCopyIcon = ({ file }) => {
 const CarbonCopy = ({ file }) => {
   const { t } = useI18n()
   const hasDataToshow = get(file, 'metadata.carbonCopy')
-  const connectorName = get(file, 'cozyMetadata.uploadedBy.slug')
 
   return (
     <TableCell
@@ -33,8 +32,8 @@ const CarbonCopy = ({ file }) => {
     >
       {hasDataToshow ? (
         <CertificationTooltip
-          body={t('table.row_carbonCopy.title')}
-          caption={t('table.row_carbonCopy.caption', { connectorName })}
+          body={t('table.tooltip.carbonCopy.title')}
+          caption={t('table.tooltip.carbonCopy.caption')}
           content={<CarbonCopyIcon file={file} />}
         />
       ) : (
