@@ -15,7 +15,7 @@ const CertificationTooltip = ({ body, caption, content }) => {
         </div>
       }
     >
-      <span>{content}</span>
+      <span className="u-w-100">{content}</span>
     </Tooltip>
   )
 }
