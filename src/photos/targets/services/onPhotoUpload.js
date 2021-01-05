@@ -60,45 +60,40 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
   log('info', `Start clustering on ${dataset.length} photos`)
 
   let clusteredCount = 0
-  try {
-    if (albums && albums.length > 0) {
-      // Build the clusterize Map, based on the dataset and existing photos
-      const clusterize = await albumsToClusterize(client, dataset, albums)
-      if (clusterize) {
-        for (const [clusterAlbums, photos] of clusterize.entries()) {
-          // Retrieve the relevant parameters to compute this cluster
-          const params = getMatchingParameters(setting.parameters, photos)
-          const paramsMode = getDefaultParametersMode(params)
-          if (!paramsMode) {
-            log('warn', 'No parameters for clustering found')
-            continue
-          }
-          // Actual clustering
-          clusteredCount += await createNewClusters(
-            client,
-            paramsMode,
-            clusterAlbums,
-            photos
-          )
-          setting = await updateParamsPeriod(client, setting, params, dataset)
+  if (albums && albums.length > 0) {
+    // Build the clusterize Map, based on the dataset and existing photos
+    const clusterize = await albumsToClusterize(client, dataset, albums)
+    if (clusterize) {
+      for (const [clusterAlbums, photos] of clusterize.entries()) {
+        // Retrieve the relevant parameters to compute this cluster
+        const params = getMatchingParameters(setting.parameters, photos)
+        const paramsMode = getDefaultParametersMode(params)
+        if (!paramsMode) {
+          log('warn', 'No parameters for clustering found')
+          continue
         }
-      } else {
-        return
+        // Actual clustering
+        clusteredCount += await createNewClusters(
+          client,
+          paramsMode,
+          clusterAlbums,
+          photos
+        )
+        setting = await updateParamsPeriod(client, setting, params, dataset)
       }
     } else {
-      // No album found: this is an initialization
-      const params = setting.parameters[setting.parameters.length - 1]
-      const paramsMode = getDefaultParametersMode(params)
-      if (!paramsMode) {
-        log('warn', 'No parameters for clustering found')
-        return
-      }
-      clusteredCount = await createInitialClusters(client, paramsMode, dataset)
-      setting = await updateParamsPeriod(client, setting, params, dataset)
+      return
     }
-  } catch (e) {
-    log('critical', String(e).substr(0, LOG_ERROR_MSG_LIMIT))
-    return
+  } else {
+    // No album found: this is an initialization
+    const params = setting.parameters[setting.parameters.length - 1]
+    const paramsMode = getDefaultParametersMode(params)
+    if (!paramsMode) {
+      log('warn', 'No parameters for clustering found')
+      return
+    }
+    clusteredCount = await createInitialClusters(client, paramsMode, dataset)
+    setting = await updateParamsPeriod(client, setting, params, dataset)
   }
   return { setting, clusteredCount }
 }
@@ -282,6 +277,7 @@ export const onPhotoUpload = async () => {
     // Release the lock in case of error
     log('critical', String(e).substr(0, LOG_ERROR_MSG_LIMIT))
     await client.save({ ...setting, jobStatus: '' })
+    process.exit(1)
   }
 }
 
