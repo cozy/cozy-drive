@@ -51,30 +51,26 @@ const removeRefs = async (client, ids, album) => {
 
 const addAutoAlbumReferences = async (client, photos, album) => {
   let refCount = 0
-  try {
-    const refsIds = []
-    for (const photo of photos) {
-      if (photo.clusterId === album._id) {
-        continue
-      }
-      if (photo.clusterId && photo.clusterId !== album._id) {
-        // The photo references another album: remove it
-        await removeRefs(client, photo.clusterId, album)
-      }
-      refsIds.push(photo.id)
+  const refsIds = []
+  for (const photo of photos) {
+    if (photo.clusterId === album._id) {
+      continue
     }
-    if (refsIds.length > 0) {
-      await addRefs(client, refsIds, album)
-      log(
-        'info',
-        `${refsIds.length} photos clustered into: ${JSON.stringify(album._id)}`
-      )
-      refCount = refsIds.length
-    } else {
-      log('info', `Nothing to clusterize for ${album._id}`)
+    if (photo.clusterId && photo.clusterId !== album._id) {
+      // The photo references another album: remove it
+      await removeRefs(client, photo.clusterId, album)
     }
-  } catch (e) {
-    log('error', e)
+    refsIds.push(photo.id)
+  }
+  if (refsIds.length > 0) {
+    await addRefs(client, refsIds, album)
+    log(
+      'info',
+      `${refsIds.length} photos clustered into: ${JSON.stringify(album._id)}`
+    )
+    refCount = refsIds.length
+  } else {
+    log('info', `Nothing to clusterize for ${album._id}`)
   }
   return refCount
 }
