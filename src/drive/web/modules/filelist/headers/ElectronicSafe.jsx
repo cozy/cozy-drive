@@ -15,8 +15,8 @@ const ElectronicSafeHeader = () => {
   return (
     <TableHeader className={styles['fil-content-header']}>
       <CertificationTooltip
-        body={t('table.head_electronicSafe.title')}
-        caption={t('table.head_electronicSafe.caption')}
+        body={t('table.tooltip.electronicSafe.title')}
+        caption={t('table.tooltip.electronicSafe.caption')}
         content={<Icon icon={SafeIcon} size={16} />}
       />
     </TableHeader>

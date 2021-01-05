@@ -192,26 +192,10 @@
     "head_name": "Name",
     "head_update": "Last update",
     "head_size": "Size",
-    "head_carbonCopy": {
-      "title": "Carbon Copy",
-      "caption": "Indicates whether the document is defined as \"authentic and original\" by Cozy Cloud, the host of your Cozy, as it can claim that it comes directly from a third-party service, without having undergone any modification."
-    },
-    "head_electronicSafe": {
-      "title": "Electronic Safe",
-      "caption": "Indicates whether the original document is secured by your personal digital safe with the certifications that give it probative value and a 50-year retention guarantee beyond its deposit."
-    },
     "head_status": "Share",
     "head_thumbnail_size": "Switch thumbnail size",
     "row_update_format": "MMM D, YYYY",
     "row_update_format_full": "MMMM D, YYYY",
-    "row_carbonCopy": {
-      "title": "Carbon Copy",
-      "caption": "This document is defined \"authentic and original\" by Cozy Cloud, your Cozy's host, because it can affirm that it comes directly from the %{connectorName} service, without having undergone any modification."
-    },
-    "row_electronicSafe": {
-      "title": "Electronic Safe",
-      "caption": "The original document is secured by your personal digital safe %{connectorName} with certifications that give it probative value and a 50-year conservation guarantee beyond its deposit."
-    },
     "row_read_only": "Share (Read only)",
     "row_read_write": "Share (Read & Write)",
     "row_size_symbols": {
@@ -233,6 +217,16 @@
       "head_updated_at_desc": "Most recent first",
       "head_size_asc": "Lightest first",
       "head_size_desc": "Heavier first"
+    },
+    "tooltip": {
+      "carbonCopy": {
+        "title": "Carbon Copy",
+        "caption": "Indicates whether the document is defined as \"authentic and original\" by Cozy Cloud, the host of your Cozy, as it can claim that it comes directly from a third-party service, without having undergone any modification."
+      },
+      "electronicSafe": {
+        "title": "Electronic Safe",
+        "caption": "Indicates whether the original document is secured by your personal digital safe with the certifications that give it probative value and a 50-year retention guarantee beyond its deposit."
+      }
     }
   },
   "SelectionBar": {
