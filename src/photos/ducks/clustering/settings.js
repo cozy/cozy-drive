@@ -1,4 +1,5 @@
 import log from 'cozy-logger'
+import { Q } from 'cozy-client'
 import { DOCTYPE_PHOTOS_SETTINGS } from 'drive/lib/doctypes'
 import {
   SETTING_TYPE,
@@ -20,7 +21,7 @@ export const createSetting = async (client, initParameters) => {
 }
 
 export const readSetting = async client => {
-  const settings = await client.query(client.find(DOCTYPE_PHOTOS_SETTINGS))
+  const settings = await client.query(Q(DOCTYPE_PHOTOS_SETTINGS))
   return settings.data.find(doc => doc.type === SETTING_TYPE)
 }
 

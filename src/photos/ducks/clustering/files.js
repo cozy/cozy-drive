@@ -1,5 +1,6 @@
 import log from 'cozy-logger'
 import { DOCTYPE_FILES, DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import { Q } from 'cozy-client'
 
 export const getFilesFromDate = async (
   client,
@@ -8,7 +9,7 @@ export const getFilesFromDate = async (
 ) => {
   log('info', `Get files from ${date}`)
   const dateField = indexDateField || 'metadata.datetime'
-  const query = client.find(DOCTYPE_FILES).where({
+  const query = Q(DOCTYPE_FILES).where({
     [dateField]: { $gt: date },
     class: 'image',
     trashed: false
@@ -39,7 +40,7 @@ export const getAllPhotos = async client => {
   // This does not use pagination but is significantly faster as it queries
   // the _all_docs endpoint
   // Note this is only used once, for init
-  const query = client.find(DOCTYPE_FILES).limitBy(null)
+  const query = Q(DOCTYPE_FILES).limitBy(null)
   const results = await client.query(query)
   const files = results.data
   return files.filter(file => file.class === 'image' && !file.trashed)

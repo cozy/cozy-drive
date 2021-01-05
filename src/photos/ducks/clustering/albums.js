@@ -1,6 +1,7 @@
 import log from 'cozy-logger'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import uniq from 'lodash/uniq'
+import { Q } from 'cozy-client'
 
 // An auto album name is the date of the first photo
 const albumName = photos => {
@@ -104,14 +105,16 @@ const removeAutoAlbumReferences = async (client, photos, album) => {
 }
 
 export const findAutoAlbums = async client => {
-  const query = client
-    .find(DOCTYPE_ALBUMS)
-    .where({ auto: true })
+  const query = Q(DOCTYPE_ALBUMS)
+    .where({
+      auto: true
+    })
     .sortBy([
       {
         name: 'desc'
       }
     ])
+    .indexFields(['name'])
   const results = await client.queryAll(query)
   return client.hydrateDocuments(DOCTYPE_ALBUMS, results)
 }
