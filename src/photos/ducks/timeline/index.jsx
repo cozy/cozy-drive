@@ -23,10 +23,19 @@ const TIMELINE_QUERY = client =>
     .find(FILES_DOCTYPE)
     .where({
       class: 'image',
+      'metadata.datetime': {
+        $gt: null
+      }
+    })
+    .partialIndex({
       trashed: false
     })
+    .indexFields(['class', 'metadata.datetime'])
     .select(['dir_id', 'name', 'size', 'updated_at', 'metadata'])
     .sortBy([
+      {
+        class: 'desc'
+      },
       {
         'metadata.datetime': 'desc'
       }
