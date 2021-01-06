@@ -15,6 +15,35 @@ import { CozyFile } from 'models'
 
 import styles from 'drive/styles/filelist.styl'
 
+const CertificationsIcons = ({ attributes }) => {
+  const isCarbonCopy = get(attributes, 'metadata.carbonCopy')
+  const isElectronicSafe = get(attributes, 'metadata.electronicSafe')
+
+  return (
+    <>
+      {(isCarbonCopy || isElectronicSafe) && ' - '}
+      {isCarbonCopy &&
+        (isElectronicSafe ? (
+          <Icon
+            icon={CarbonCopyIcon}
+            className={`u-mr-half ${styles['fil-file-infos--icon']}`}
+          />
+        ) : (
+          <AppIcon
+            app={attributes.cozyMetadata.uploadedBy.slug}
+            className={styles['fil-file-infos--icon']}
+          />
+        ))}
+      {isElectronicSafe && (
+        <AppIcon
+          app={attributes.cozyMetadata.uploadedBy.slug}
+          className={styles['fil-file-infos--icon']}
+        />
+      )}
+    </>
+  )
+}
+
 const FileName = ({
   attributes,
   isRenaming,
@@ -33,8 +62,6 @@ const FileName = ({
     { [styles['fil-content-row-disabled']]: isInSyncFromSharing }
   )
   const { filename, extension } = CozyFile.splitFilename(attributes)
-  const isCarbonCopy = get(attributes, 'metadata.carbonCopy')
-  const isElectronicSafe = get(attributes, 'metadata.electronicSafe')
 
   return (
     <TableCell className={classes}>
@@ -79,19 +106,7 @@ const FileName = ({
                 {`${formattedUpdatedAt}${
                   formattedSize ? ` - ${formattedSize}` : ''
                 }`}
-                {(isCarbonCopy || isElectronicSafe) && ' - '}
-                {isCarbonCopy && (
-                  <Icon
-                    icon={CarbonCopyIcon}
-                    className={`u-mr-half ${styles['fil-file-infos--icon']}`}
-                  />
-                )}
-                {isElectronicSafe && (
-                  <AppIcon
-                    app={attributes.cozyMetadata.uploadedBy.slug}
-                    className={styles['fil-file-infos--icon']}
-                  />
-                )}
+                <CertificationsIcons attributes={attributes} />
               </div>
             ))}
         </div>
