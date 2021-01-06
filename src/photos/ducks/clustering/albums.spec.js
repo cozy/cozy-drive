@@ -12,19 +12,19 @@ client.create = jest.fn().mockImplementation((doctype, album) => {
 client.mutate = jest.fn()
 
 describe('album', () => {
-  const photos = [
-    {
-      datetime: '2020-01-01',
-      clusterId: 'fakeAlbumId1',
-      id: '1'
-    },
-    {
-      datetime: '2020-01-01',
-      clusterId: 'fakeAlbumId1',
-      id: '2'
-    }
-  ]
   it('should save clustering if no existing auto-album', async () => {
+    const photos = [
+      {
+        datetime: '2020-01-01',
+        clusterId: 'fakeAlbumId1',
+        id: '1'
+      },
+      {
+        datetime: '2020-01-01',
+        clusterId: 'fakeAlbumId1',
+        id: '2'
+      }
+    ]
     const clusters = [photos]
     const clustered = await saveClustering(client, clusters)
     expect(clustered).toBe(photos.length)
