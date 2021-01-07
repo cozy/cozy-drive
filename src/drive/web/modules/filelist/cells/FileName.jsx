@@ -20,27 +20,31 @@ const CertificationsIcons = ({ attributes }) => {
   const isElectronicSafe = get(attributes, 'metadata.electronicSafe')
 
   return (
-    <>
-      {(isCarbonCopy || isElectronicSafe) && ' - '}
+    <div className={styles['fil-file-certifications']}>
+      {(isCarbonCopy || isElectronicSafe) && (
+        <span className={styles['fil-file-certifications--separator']}>
+          {' - '}
+        </span>
+      )}
       {isCarbonCopy &&
         (isElectronicSafe ? (
           <Icon
             icon={CarbonCopyIcon}
-            className={`u-mr-half ${styles['fil-file-infos--icon']}`}
+            className={`u-mr-half ${styles['fil-file-certifications--icon']}`}
           />
         ) : (
           <AppIcon
             app={attributes.cozyMetadata.uploadedBy.slug}
-            className={styles['fil-file-infos--icon']}
+            className={styles['fil-file-certifications--icon']}
           />
         ))}
       {isElectronicSafe && (
         <AppIcon
           app={attributes.cozyMetadata.uploadedBy.slug}
-          className={styles['fil-file-infos--icon']}
+          className={styles['fil-file-certifications--icon']}
         />
       )}
-    </>
+    </div>
   )
 }
 
@@ -88,10 +92,13 @@ const FileName = ({
           {withFilePath &&
             attributes.displayedPath &&
             (isMobile ? (
-              <MidEllipsis
-                className={styles['fil-file-path']}
-                text={attributes.displayedPath}
-              />
+              <div className={styles['fil-file-description']}>
+                <MidEllipsis
+                  className={styles['fil-file-description--path']}
+                  text={attributes.displayedPath}
+                />
+                <CertificationsIcons attributes={attributes} />
+              </div>
             ) : (
               <Link
                 to={`/folder/${attributes.dir_id}`}
@@ -106,7 +113,7 @@ const FileName = ({
                 {`${formattedUpdatedAt}${
                   formattedSize ? ` - ${formattedSize}` : ''
                 }`}
-                <CertificationsIcons attributes={attributes} />
+                {isMobile && <CertificationsIcons attributes={attributes} />}
               </div>
             ))}
         </div>
