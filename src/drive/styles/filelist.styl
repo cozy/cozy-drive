@@ -231,24 +231,43 @@ column-width-thumbnail-bigger = 7rem
         display table-cell
         white-space nowrap
 
-.fil-file-path
-.fil-file-infos
-    flex 0 0 1rem
-    color var(--coolGrey)
-    font-size .75rem
-    position relative
-    overflow hidden
-    text-overflow ellipsis
-    white-space nowrap
-    text-decoration none
+.fil-file-description
+    display flex
+    justify-content flex-start
+    align-items baseline
 
-    &:hover,
-    &:focus
-        text-decoration underline
+    &--path
+        display contents !important // to take content width
+
+.fil-file-certifications
+    flex-shrink 0
+    color var(--coolGrey)
+
+    &--separator
+        margin-left 0.25rem
 
     &--icon
         width rem(10)
         height rem(10)
+
+.fil-file-path
+.fil-file-infos
+.fil-file-description--path
+    color var(--coolGrey)
+    font-size .75rem
+    text-decoration none
+
+.fil-file-path
+.fil-file-infos
+    flex 0 0 1rem
+    position relative
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+
+    &:hover,
+    &:focus
+        text-decoration underline
 
 .fil-file-infos
     display none
@@ -397,7 +416,7 @@ column-width-thumbnail-bigger = 7rem
             opacity 0
 
     .fil-file-infos
-        display block
+        display flex
 
     .fil-file-path
         &:hover,
