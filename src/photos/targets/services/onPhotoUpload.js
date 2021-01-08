@@ -130,7 +130,6 @@ const recomputeParameters = async (client, setting) => {
 const runClustering = async (client, setting) => {
   const sinceDate = setting.lastDate ? setting.lastDate : 0
   const photos = await getFilesFromDate(client, sinceDate, {
-    indexDateField: 'created_at',
     limit: CHANGES_RUN_LIMIT
   })
   if (photos.length < 1) {
@@ -145,7 +144,8 @@ const runClustering = async (client, setting) => {
   }
 
   log('info', `${result.clusteredCount} photos clustered since ${sinceDate}`)
-  const newLastDate = photos[photos.length - 1].attributes.created_at
+  const newLastDate =
+    photos[photos.length - 1].attributes.cozyMetadata.createdAt
   // The oldest photo in the dataset is older or equal than the last photo used
   // to compute the parameters: do not count this dataset in the evaluation
   // as it has been already used to compute parameters
