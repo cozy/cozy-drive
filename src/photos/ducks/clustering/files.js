@@ -2,38 +2,21 @@ import log from 'cozy-logger'
 import { DOCTYPE_FILES, DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import { Q } from 'cozy-client'
 
-export const getFilesFromDate = async (
-  client,
-  date,
-  { indexDateField, limit = 0 } = {}
-) => {
+export const getFilesFromDate = async (client, date, { limit = 0 } = {}) => {
   log('info', `Get files from ${date}`)
-  const dateField = indexDateField || 'metadata.datetime'
-  const query = Q(DOCTYPE_FILES).where({
-    [dateField]: { $gt: date },
-    class: 'image',
-    trashed: false
-  })
+  const query = Q(DOCTYPE_FILES)
+    .where({
+      class: 'image',
+      'cozyMetadata.createdAt': { $gt: date }
+    })
+    .partialIndex({
+      trashed: false
+    })
+    .sortBy([{ class: 'asc' }, { 'cozyMetadata.createdAt': 'asc' }])
+    .limitBy(limit)
 
-  // The results are paginated
-  let next = true
-  let skip = 0
-  let files = []
-  while (next) {
-    const result = await client.query(query.offset(skip))
-    const data = client.hydrateDocuments(DOCTYPE_FILES, result.data)
-    files = files.concat(data)
-    if (limit > 0 && files.length >= limit) {
-      next = false
-      files = files.slice(0, limit)
-    }
-    skip = files.length
-    // NOTE: this is because of https://github.com/cozy/cozy-stack/pull/598
-    if (result.meta.count < Math.pow(2, 31) - 2) {
-      next = false
-    }
-  }
-  return files
+  const result = await client.queryAll(query)
+  return client.hydrateDocuments(DOCTYPE_FILES, result)
 }
 
 export const getAllPhotos = async client => {
