@@ -1,4 +1,5 @@
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import { DAY_DURATION_IN_MS } from './consts'
 import get from 'lodash/get'
 
 /**
@@ -72,4 +73,16 @@ export const convertDurationInMilliseconds = duration => {
   const minutes = offsetM > 0 ? duration.substring(offsetH + 1, offsetM) : 0
   const seconds = offsetS > 0 ? duration.substring(offsetM + 1, offsetS) : 0
   return seconds * 1000 + minutes * 60 * 1000 + hours * 3600 * 1000
+}
+
+/**
+ * Check if the duration between the 2 dates is more than 24h
+ * @param {Date} date1 - The first date
+ * @param {Date} date2 - The second date
+ * @returns {bool} Whether or not the duration is more than 24h
+ */
+export const isDurationMoreThan24Hours = (date1, date2) => {
+  const d1 = new Date(date1).getTime()
+  const d2 = new Date(date2).getTime()
+  return Math.abs(d1 - d2) > DAY_DURATION_IN_MS
 }
