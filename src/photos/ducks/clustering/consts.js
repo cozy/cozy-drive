@@ -13,6 +13,7 @@ export const EVALUATION_THRESHOLD = 500
 export const CHANGES_RUN_LIMIT = 1000
 export const TRIGGER_ELAPSED = '20m'
 export const LOG_ERROR_MSG_LIMIT = 32 * 1024 - 1 // Avoid unreadable logs by the stack
+export const DAY_DURATION_IN_MS = 24 * 60 * 60 * 1000
 
 export const DEFAULT_SETTING = {
   type: SETTING_TYPE,

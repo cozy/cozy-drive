@@ -11,6 +11,7 @@ import {
   COARSE_COEFFICIENT
 } from './consts'
 import { gradientAngle } from 'photos/ducks/clustering/gradient'
+import { isDurationMoreThan24Hours } from './utils'
 
 export const createSetting = async (client, initParameters) => {
   log('info', 'Create setting')
@@ -113,6 +114,13 @@ export const updateParamsPeriod = async (client, setting, params, photos) => {
 
   const newSetting = await client.save({ ...setting, parameters })
   return newSetting.data
+}
+
+export const shouldReleaseLock = setting => {
+  return (
+    setting.jobStatus === 'running' &&
+    isDurationMoreThan24Hours(setting.lastExecution, Date.now())
+  )
 }
 
 export const updateSettingStatus = async (client, setting, count, lastDate) => {

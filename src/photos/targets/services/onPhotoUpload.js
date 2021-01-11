@@ -10,7 +10,8 @@ import {
   createParameter,
   updateSettingStatus,
   getDefaultParametersMode,
-  updateParamsPeriod
+  updateParamsPeriod,
+  shouldReleaseLock
 } from 'photos/ducks/clustering/settings'
 import {
   computeEpsTemporal,
@@ -171,7 +172,6 @@ export const onPhotoUpload = async () => {
     schema: doctypes
   }
   const client = CozyClient.fromEnv(null, options)
-
   let setting = await readSetting(client)
   if (!setting) {
     // Create setting
@@ -199,8 +199,11 @@ export const onPhotoUpload = async () => {
     To avoid this, we use a lock which is set to true during the execution
   */
   if (setting.jobStatus === 'running') {
-    log('warn', 'The service is already executed. Abort.')
-    return
+    // Safeguard to avoid never-released locks
+    if (!shouldReleaseLock(setting)) {
+      log('warn', 'The service is already executed. Abort.')
+      return
+    }
   } else if (setting.jobStatus === 'postponed') {
     const duration = convertDurationInMilliseconds(TRIGGER_ELAPSED)
     // Stop if a trigger is planned later
