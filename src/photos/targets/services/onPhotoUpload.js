@@ -201,14 +201,15 @@ export const onPhotoUpload = async () => {
   if (setting.jobStatus === 'running') {
     // Safeguard to avoid never-released locks
     if (!shouldReleaseLock(setting)) {
-      log('warn', 'The service is already executed. Abort.')
+      log('info', 'The service is already executed. Abort.')
       return
     }
+    log('warn', 'The job status is marked as running for too long.')
   } else if (setting.jobStatus === 'postponed') {
     const duration = convertDurationInMilliseconds(TRIGGER_ELAPSED)
     // Stop if a trigger is planned later
     if (setting.lastExecution + duration > Date.now()) {
-      log('warn', 'The service is already planned later. Abort.')
+      log('info', 'The service is already planned later. Abort.')
       return
     }
   }
