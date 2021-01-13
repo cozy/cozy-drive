@@ -2,7 +2,7 @@ import React from 'react'
 import get from 'lodash/get'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { Caption } from 'cozy-ui/transpiled/react/Text'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import { ButtonLink } from 'cozy-ui/transpiled/react/Button'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
@@ -55,9 +55,12 @@ const SupportUs = ({ t, client }) => {
   )
     return (
       <Stack className={styles['SupportUs__wrapper']} spacing="s">
-        <Caption className={styles['SupportUs__description']}>
+        <Typography
+          variant="caption"
+          className={styles['SupportUs__description']}
+        >
           {t('Nav.support-us-description')}
-        </Caption>
+        </Typography>
         <ButtonLink
           size="tiny"
           href={buildPremiumLink(uuid, managerUrl)}

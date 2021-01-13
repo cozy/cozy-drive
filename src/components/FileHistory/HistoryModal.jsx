@@ -4,7 +4,7 @@ import get from 'lodash/get'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { Caption } from 'cozy-ui/transpiled/react/Text'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { withClient, useCapabilities } from 'cozy-client'
 import { withRouter } from 'react-router'
@@ -42,7 +42,7 @@ const HistoryModal = ({
       title={file.name}
       content={
         <>
-          <Caption className={styles.HistoryRowCaption}>
+          <Typography variant="caption" className={styles.HistoryRowCaption}>
             {capabilities.fetchStatus === 'loading' && (
               <span>{t('History.loading')}</span>
             )}
@@ -55,7 +55,7 @@ const HistoryModal = ({
                 capabilities.fetchStatus !== 'loading')) && (
               <span>{t('History.noFileVersionEnabled')}</span>
             )}
-          </Caption>
+          </Typography>
           <HistoryRow
             tag={t('History.current_version')}
             primaryText={formatDate(file.updated_at, f)}
