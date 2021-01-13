@@ -1,19 +1,18 @@
 /* global __TARGET__ */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
 import snarkdown from 'snarkdown'
 import PropTypes from 'prop-types'
 
-import {
-  Modal,
-  Icon,
-  Button,
-  translate,
-  Alerter
-} from 'cozy-ui/transpiled/react'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import Button from 'cozy-ui/transpiled/react/Button'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { translate } from 'cozy-ui/transpiled/react'
+import Modal from 'cozy-ui/transpiled/react/Modal'
+
 import tosIcon from 'drive/mobile/assets/icons/icon-tos.svg'
 import { unlink, getClientSettings } from './duck'
+
 import styles from './styles.styl'
 
 const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => {
