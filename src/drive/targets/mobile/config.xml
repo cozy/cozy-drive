@@ -27,6 +27,9 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </custom-config-file>
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:requestLegacyExternalStorage="true" />
+        </edit-config>
         <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
         <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png" />
         <icon density="hdpi" src="res/icons/android/icon-72-hdpi.png" />
