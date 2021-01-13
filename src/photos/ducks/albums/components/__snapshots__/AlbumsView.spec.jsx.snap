@@ -89,23 +89,19 @@ exports[`AlbumsView displays an empty Component 1`] = `
         href="#icon-0"
       />
     </svg>
-    <div
-      class="styles__Stack--xs___2R5lW"
+    <h3
+      class="MuiTypography-root-1 MuiTypography-h3-15 MuiTypography-colorTextPrimary-33 MuiTypography-gutterBottom-28"
     >
-      <h3
-        class="MuiTypography-root-1 MuiTypography-h3-15 MuiTypography-colorTextPrimary-33"
-      >
-        empty.albums_title
-      </h3>
-      <p
-        class="MuiTypography-root-1 MuiTypography-body1-10 MuiTypography-colorTextSecondary-34"
-      >
-        empty.albums_text
-      </p>
-      <div
-        class="styles__c-empty-text___3HnvR"
-      />
-    </div>
+      empty.albums_title
+    </h3>
+    <p
+      class="MuiTypography-root-1 MuiTypography-body1-10 MuiTypography-colorTextSecondary-34 MuiTypography-gutterBottom-28"
+    >
+      empty.albums_text
+    </p>
+    <div
+      class="styles__c-empty-text___3HnvR"
+    />
   </div>
 </div>
 `;
