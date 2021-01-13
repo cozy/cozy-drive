@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-
 import compose from 'lodash/flowRight'
+
 import { withClient } from 'cozy-client'
-import { Overlay, Spinner, Viewer } from 'cozy-ui/transpiled/react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-
 import { isIOSApp } from 'cozy-device-helper'
-
 import logger from 'lib/logger'
-import Fallback from 'drive/web/modules/viewer/Fallback'
+import Overlay from 'cozy-ui/transpiled/react/Overlay'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import Viewer from 'cozy-ui/transpiled/react/Viewer'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 import palette from 'cozy-ui/transpiled/react/palette'
+
+import Fallback from 'drive/web/modules/viewer/Fallback'
 
 export const FilesViewerLoading = () => (
   <Overlay>
