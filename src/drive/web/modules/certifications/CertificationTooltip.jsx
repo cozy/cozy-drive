@@ -7,12 +7,14 @@ const CertificationTooltip = ({ body, caption, content }) => {
   return (
     <Tooltip
       title={
-        <div className="u-p-half">
-          <Typography variant="body1">{body}</Typography>
-          <Typography variant="caption" color="textSecondary">
+        <>
+          <Typography variant="body1" color="inherit">
+            {body}
+          </Typography>
+          <Typography variant="caption" color="inherit">
             {caption}
           </Typography>
-        </div>
+        </>
       }
     >
       <span className="u-w-100">{content}</span>
