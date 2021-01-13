@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ModalFooter, ModalButtons, Button } from 'cozy-ui/transpiled/react'
+
+import { ModalFooter, ModalButtons } from 'cozy-ui/transpiled/react/Modal'
+import Button from 'cozy-ui/transpiled/react/Button'
 
 const areTargetsInCurrentDir = (targets, currentDirId) => {
   const targetsInCurrentDir = targets.filter(

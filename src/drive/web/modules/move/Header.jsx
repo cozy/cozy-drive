@@ -1,17 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Well,
-  Media,
-  Img,
-  Bd,
-  Circle,
-  Counter,
-  Icon,
-  Button,
-  Caption,
-  Bold
-} from 'cozy-ui/transpiled/react'
+
+import { Media, Img, Bd } from 'cozy-ui/transpiled/react/Media'
+import Circle from 'cozy-ui/transpiled/react/Circle'
+import Button from 'cozy-ui/transpiled/react/Button'
+import Counter from 'cozy-ui/transpiled/react/Counter'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import Card from 'cozy-ui/transpiled/react/Card'
 import palette from 'cozy-ui/stylus/settings/palette.json'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
@@ -34,16 +30,18 @@ const Header = ({ entries, onClose, title, subTitle }) => {
     : t('Move.title', { smart_count: entries.length })
   const subTitleToUse = subTitle ? subTitle : t('Move.to')
   return (
-    <Well>
+    <Card inset className="u-bg-paleGrey">
       <Media>
         <Img className="u-mr-1">
           <HeaderIlustration count={entries.length} />
         </Img>
         <Bd>
-          <Bold ellipsis>
+          <Typography variant="h6" ellipsis>
             {entries.length !== 1 ? titleToUse : entries[0].name}
-          </Bold>
-          <Caption ellipsis>{subTitleToUse}</Caption>
+          </Typography>
+          <Typography variant="caption" color="textSecondary" ellipsis>
+            {subTitleToUse}
+          </Typography>
         </Bd>
         <Button
           theme="close"
@@ -61,7 +59,7 @@ const Header = ({ entries, onClose, title, subTitle }) => {
           />
         </Button>
       </Media>
-    </Well>
+    </Card>
   )
 }
 

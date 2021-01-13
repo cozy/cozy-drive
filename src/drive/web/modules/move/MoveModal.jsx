@@ -3,18 +3,15 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
-import { Modal } from 'cozy-ui/transpiled/react'
+import { Query, cancelable, withClient } from 'cozy-client'
+import { CozyFile } from 'models'
+import logger from 'lib/logger'
+import { RefreshableSharings } from 'cozy-sharing'
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+import Modal from 'cozy-ui/transpiled/react/Modal'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
-
-import { Query, cancelable, withClient } from 'cozy-client'
-
-import { RefreshableSharings } from 'cozy-sharing'
-import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
-
-import { CozyFile } from 'models'
-import logger from 'lib/logger'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
