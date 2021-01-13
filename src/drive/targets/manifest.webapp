@@ -2,7 +2,7 @@
   "name": "Drive",
   "name_prefix": "Cozy",
   "slug": "drive",
-  "version": "1.30.0",
+  "version": "1.31.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -159,6 +159,6 @@
       "description": "Required to have access to the sharings in realtime",
       "type": "io.cozy.sharings",
       "verbs": ["GET"]
-    }	
+    }
   }
 }
