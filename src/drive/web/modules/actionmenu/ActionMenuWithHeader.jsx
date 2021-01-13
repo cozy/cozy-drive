@@ -5,7 +5,7 @@ import ActionMenu, {
 } from 'cozy-ui/transpiled/react/ActionMenu'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { Caption } from 'cozy-ui/transpiled/react/Text'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { CozyFile } from 'models'
 import { isDirectory } from 'drive/web/modules/drive/files'
@@ -64,13 +64,14 @@ const MenuHeaderFile = ({ file, lang }) => {
             file.metadata.label && (
               <div className="u-coolGrey u-fz-tiny u-fs-normal u-flex u-flex-items-center">
                 <Icon icon="qualify" size="10" />
-                <Caption
+                <Typography
+                  variant="caption"
                   className={classNames(
                     styles['fil-mobileactionmenu-category']
                   )}
                 >
                   {scannerT(`Scan.items.${file.metadata.label}`)}
-                </Caption>
+                </Typography>
               </div>
             )}
         </div>
