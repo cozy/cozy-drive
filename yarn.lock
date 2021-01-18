@@ -5130,10 +5130,10 @@ cozy-realtime@^3.11.0:
     "@cozy/minilog" "^1.0.0"
     cozy-device-helper "^1.10.3"
 
-cozy-scanner@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.10.0.tgz#5d6c10a0b9a97f918d8cb365930ab2c80c74997a"
-  integrity sha512-hkMQU1mx9WTTS8brpqAuvhR0espM934B1SmJ/60nP5cymcbG8+VPt9EN7LzQoQf8R0KWZ4bFZ0BZKitUzBSGMA==
+cozy-scanner@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-0.11.0.tgz#4479e66a57883236f11602c4823810610bbb8ca3"
+  integrity sha512-pIT0uTWE9tyaek5yhZqFUA47TZtI/FGpTyO/0KU0RcTKRUxGiqCKsY75+mOQTaYx/unP6juaYqUg/oVySLy6vw==
   dependencies:
     cozy-device-helper "^1.11.0"
 
