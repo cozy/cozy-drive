@@ -11,7 +11,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import palette from 'cozy-ui/transpiled/react/palette'
 
 import Fallback from 'drive/web/modules/viewer/Fallback'
-import { isInfoPanel } from './helpers'
+import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
 
 export const FilesViewerLoading = () => (
@@ -139,10 +139,8 @@ class FilesViewer extends Component {
             onCloseRequest={this.onClose}
             renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
             panelInfoProps={{
-              showPanel: ({ currentFile }) => isInfoPanel(currentFile),
-              PanelContent: ({ currentFile }) => (
-                <PanelContent file={currentFile} />
-              )
+              showPanel,
+              PanelContent
             }}
           />
         </Overlay>
