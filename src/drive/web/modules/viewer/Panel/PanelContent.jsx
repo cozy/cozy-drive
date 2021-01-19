@@ -25,7 +25,7 @@ const PanelContent = ({ file }) => {
       {panelBlocks.map((PanelBlock, index) => (
         <Paper
           key={index}
-          className={cx('u-ph-2 u-pv-1-half', {
+          className={cx({
             'u-flex-grow-1': index === panelBlocks.length - 1
           })}
           elevation={2}
