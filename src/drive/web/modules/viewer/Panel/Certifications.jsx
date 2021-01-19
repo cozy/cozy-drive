@@ -38,7 +38,7 @@ const Certifications = ({ file }) => {
   const hasElectronicSafe = has(file, 'metadata.electronicSafe')
 
   return (
-    <>
+    <div className="u-pv-1-half u-ph-2">
       {hasCarbonCopy && (
         <Certification
           icon={CarbonCopyIcon}
@@ -53,7 +53,7 @@ const Certifications = ({ file }) => {
           caption={t('table.tooltip.electronicSafe.caption')}
         />
       )}
-    </>
+    </div>
   )
 }
 
