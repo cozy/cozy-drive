@@ -532,6 +532,9 @@
       "noapp": "No application found to handle this file.",
       "generic": "An error occurred when opening this file, please try again.",
       "noNetwork": "You're currently offline."
+    },
+    "panel": {
+      "title": "Useful information"
     }
   },
   "Move": {
