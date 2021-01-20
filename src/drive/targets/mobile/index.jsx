@@ -1,4 +1,5 @@
 import 'cozy-ui/dist/cozy-ui.utils.min.css'
+import 'cozy-ui/transpiled/react/stylesheet.css'
 import mobileStyles from 'drive/styles/mobile.styl'
 
 import 'whatwg-fetch'
