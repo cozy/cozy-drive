@@ -206,9 +206,10 @@ export const onPhotoUpload = async () => {
     }
     log('warn', 'The job status is marked as running for too long.')
   } else if (setting.jobStatus === 'postponed') {
-    const duration = convertDurationInMilliseconds(TRIGGER_ELAPSED)
+    const lastUpdatedDate = new Date(setting.cozyMetadata.updatedAt).getTime()
+    const elapsedDuration = convertDurationInMilliseconds(TRIGGER_ELAPSED)
     // Stop if a trigger is planned later
-    if (setting.lastExecution + duration > Date.now()) {
+    if (lastUpdatedDate + elapsedDuration > Date.now()) {
       log('info', 'The service is already planned later. Abort.')
       return
     }
@@ -270,8 +271,7 @@ export const onPhotoUpload = async () => {
         .create(attrs)
       await client.save({
         ...newSetting,
-        jobStatus: 'postponed',
-        lastExecution: Date.now()
+        jobStatus: 'postponed'
       })
       log('info', `The service will be run again in ${TRIGGER_ELAPSED}`)
     } else {

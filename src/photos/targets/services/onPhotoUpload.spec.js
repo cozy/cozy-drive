@@ -29,7 +29,12 @@ describe('onPhotoUpload', () => {
   })
 
   it('Should stop if other execution is running', async () => {
-    readSetting.mockReturnValueOnce({ jobStatus: 'running' })
+    readSetting.mockReturnValueOnce({
+      jobStatus: 'running',
+      cozyMetadata: {
+        updatedAt: 500
+      }
+    })
     await onPhotoUpload()
     expect(client.save).toHaveBeenCalledTimes(0)
   })
@@ -37,7 +42,9 @@ describe('onPhotoUpload', () => {
   it('Should stop if execution is postponed', async () => {
     readSetting.mockReturnValueOnce({
       jobStatus: 'postponed',
-      lastExecution: 500
+      cozyMetadata: {
+        updatedAt: 500
+      }
     })
     convertDurationInMilliseconds.mockReturnValueOnce(600)
     await onPhotoUpload()
@@ -53,7 +60,9 @@ describe('onPhotoUpload', () => {
     ]
     readSetting.mockReturnValueOnce({
       jobStatus: 'running',
-      lastExecution: 0,
+      cozyMetadata: {
+        updatedAt: 0
+      },
       parameters: params
     })
     await onPhotoUpload()

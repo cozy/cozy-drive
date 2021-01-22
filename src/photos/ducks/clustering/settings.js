@@ -117,9 +117,10 @@ export const updateParamsPeriod = async (client, setting, params, photos) => {
 }
 
 export const shouldReleaseLock = setting => {
+  const lastUpdatedDate = new Date(setting.cozyMetadata.updatedAt).getTime()
   return (
     setting.jobStatus === 'running' &&
-    isDurationMoreThan24Hours(setting.lastExecution, Date.now())
+    isDurationMoreThan24Hours(lastUpdatedDate, Date.now())
   )
 }
 
