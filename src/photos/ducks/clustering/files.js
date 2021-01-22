@@ -12,6 +12,7 @@ export const getFilesFromDate = async (client, date, { limit = 0 } = {}) => {
     .partialIndex({
       trashed: false
     })
+    .indexFields(['class', 'cozyMetadata.createdAt'])
     .sortBy([{ class: 'asc' }, { 'cozyMetadata.createdAt': 'asc' }])
     .limitBy(limit)
 
@@ -31,8 +32,7 @@ export const getAllPhotos = async client => {
 
 export const getFilesByAutoAlbum = async (client, album) => {
   let allPhotos = []
-  const query = client
-    .find(DOCTYPE_ALBUMS)
+  const query = Q(DOCTYPE_ALBUMS)
     .getById(album._id)
     .include(['photos'])
   const resp = await client.query(query)
