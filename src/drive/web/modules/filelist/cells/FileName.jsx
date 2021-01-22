@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router'
 import get from 'lodash/get'
+
+import { useClient } from 'cozy-client'
 
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
@@ -18,6 +20,20 @@ import styles from 'drive/styles/filelist.styl'
 const CertificationsIcons = ({ attributes }) => {
   const isCarbonCopy = get(attributes, 'metadata.carbonCopy')
   const isElectronicSafe = get(attributes, 'metadata.electronicSafe')
+  const client = useClient()
+
+  //TODO To be removed when UI's AppIcon use getIconURL from Cozy-Client
+  //instead of its own see https://github.com/cozy/cozy-ui/issues/1723
+  const fetchIcon = useCallback(
+    () => {
+      return client.getStackClient().getIconURL({
+        type: 'konnector',
+        slug: attributes.cozyMetadata.uploadedBy.slug,
+        priority: 'registry'
+      })
+    },
+    [client, attributes.cozyMetadata.uploadedBy.slug]
+  )
 
   return (
     <div className={styles['fil-file-certifications']}>
@@ -36,12 +52,14 @@ const CertificationsIcons = ({ attributes }) => {
           <AppIcon
             app={attributes.cozyMetadata.uploadedBy.slug}
             className={styles['fil-file-certifications--icon']}
+            fetchIcon={fetchIcon}
           />
         ))}
       {isElectronicSafe && (
         <AppIcon
           app={attributes.cozyMetadata.uploadedBy.slug}
           className={styles['fil-file-certifications--icon']}
+          fetchIcon={fetchIcon}
         />
       )}
     </div>
