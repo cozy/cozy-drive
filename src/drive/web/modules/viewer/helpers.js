@@ -3,9 +3,9 @@ import has from 'lodash/has'
 export const hasCertifications = ({ file }) =>
   has(file, 'metadata.carbonCopy') || has(file, 'metadata.electronicSafe')
 
-export const showPanel = ({ file }) => {
-  // TODO add rules for connectors
+export const isFromConnector = ({ file }) =>
+  has(file, 'cozyMetadata.sourceAccount')
 
-  // for now we just need to return result for certifications
-  return hasCertifications({ file })
+export const showPanel = ({ file }) => {
+  return hasCertifications({ file }) || isFromConnector({ file })
 }
