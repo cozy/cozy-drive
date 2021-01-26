@@ -103,14 +103,19 @@ const removeAutoAlbumReferences = async (client, photos, album) => {
 export const findAutoAlbums = async client => {
   const query = Q(DOCTYPE_ALBUMS)
     .where({
+      name: {
+        $gt: null
+      }
+    })
+    .partialIndex({
       auto: true
     })
+    .indexFields(['name'])
     .sortBy([
       {
         name: 'desc'
       }
     ])
-    .indexFields(['name'])
   const results = await client.queryAll(query)
   return client.hydrateDocuments(DOCTYPE_ALBUMS, results)
 }
