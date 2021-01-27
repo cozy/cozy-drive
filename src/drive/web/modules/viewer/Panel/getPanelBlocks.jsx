@@ -2,13 +2,13 @@ import KonnectorBlock from 'cozy-harvest-lib/dist/components/KonnectorBlock'
 
 import {
   hasCertifications,
-  isFromConnector
+  isFromKonnector
 } from 'drive/web/modules/viewer/helpers'
 import Certifications from './Certifications'
 
 export const panelBlocksSpecs = {
-  connector: {
-    condition: isFromConnector,
+  konnector: {
+    condition: isFromKonnector,
     component: KonnectorBlock
   },
   certifications: {

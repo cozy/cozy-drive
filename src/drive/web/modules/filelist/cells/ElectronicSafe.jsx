@@ -14,7 +14,7 @@ const ElectronicSafe = ({ file }) => {
   const { t } = useI18n()
 
   const hasDataToshow = get(file, 'metadata.electronicSafe')
-  const connectorName = get(file, 'cozyMetadata.uploadedBy.slug')
+  const konnectorName = get(file, 'cozyMetadata.uploadedBy.slug')
 
   return (
     <TableCell
@@ -24,7 +24,7 @@ const ElectronicSafe = ({ file }) => {
         <CertificationTooltip
           body={t('table.tooltip.electronicSafe.title')}
           caption={t('table.tooltip.electronicSafe.caption')}
-          content={<AppIcon app={connectorName} />}
+          content={<AppIcon app={konnectorName} />}
         />
       ) : (
         '—'

@@ -14,12 +14,12 @@ import styles from 'drive/styles/filelist.styl'
 
 const CarbonCopyIcon = ({ file }) => {
   const hasElectronicSafe = get(file, 'metadata.electronicSafe')
-  const connectorName = get(file, 'cozyMetadata.uploadedBy.slug')
+  const konnectorName = get(file, 'cozyMetadata.uploadedBy.slug')
 
   if (hasElectronicSafe) {
     return <Icon icon={CheckIcon} />
   }
-  return <AppIcon app={connectorName} />
+  return <AppIcon app={konnectorName} />
 }
 
 const CarbonCopy = ({ file }) => {
