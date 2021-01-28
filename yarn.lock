@@ -5215,10 +5215,10 @@ cozy-sharing@2.8.2:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@16.14.0:
-  version "16.14.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-16.14.0.tgz#bccfd41aef96d8e5b97c29be7e8e7478ad759feb"
-  integrity sha512-6qtwGXw2x+M/vwDooh5nIj8gznYTp5FuDgYtoYzlMZk5yBEsQ84JME8TTwrs+DHXfEsaB3dn8Pu9peqymecpqw==
+cozy-stack-client@16.17.0, cozy-stack-client@^16.17.0:
+  version "16.17.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-16.17.0.tgz#0b7e78473de86b81f6bf143b66b284ddbcc89544"
+  integrity sha512-tjpZrnjBcvFA/X9lcUxomfhxt3/BVJoEygSzWrBUJlrzi/lFYxSN9Rg75Q72Bd30+i3BuDFugZe6056yYjxVvg==
   dependencies:
     cozy-flags "^2.5.0"
     detect-node "^2.0.4"
@@ -5248,16 +5248,6 @@ cozy-stack-client@^16.0.0, cozy-stack-client@^16.4.0:
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-16.4.0.tgz#74d0cef715f78789ee88511789f644c90931d0b7"
   integrity sha512-28czI/rZo1VGvKYDHLGMgNb0akTORONEDCPLY0ADDN2y9+vSs9aERmqp44rakpDnEjQk1VmcfdSCfEsmilIDzw==
   dependencies:
-    detect-node "^2.0.4"
-    mime "^2.4.0"
-    qs "^6.7.0"
-
-cozy-stack-client@^16.17.0:
-  version "16.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-16.17.0.tgz#0b7e78473de86b81f6bf143b66b284ddbcc89544"
-  integrity sha512-tjpZrnjBcvFA/X9lcUxomfhxt3/BVJoEygSzWrBUJlrzi/lFYxSN9Rg75Q72Bd30+i3BuDFugZe6056yYjxVvg==
-  dependencies:
-    cozy-flags "^2.5.0"
     detect-node "^2.0.4"
     mime "^2.4.0"
     qs "^6.7.0"
