@@ -36,7 +36,7 @@ desktop.ini
 .brackets.json
 
 # Mobile
-src/drive/targets/mobile/hooks
+src/drive/targets/mobile/hooksrez
 src/drive/targets/mobile/platforms
 src/drive/targets/mobile/plugins
 src/drive/targets/mobile/www
