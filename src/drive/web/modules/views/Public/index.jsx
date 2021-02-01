@@ -109,8 +109,8 @@ const PublicFolderView = ({
         Alerter.error('alert.offline')
       }
     } else {
-      setViewerOpened(true)
       showInViewer(file)
+      setViewerOpened(true)
     }
   }
 
@@ -160,7 +160,6 @@ const PublicFolderView = ({
     displayedFolder => getBreadcrumbPath(t, displayedFolder, parentFolder),
     [t, parentFolder]
   )
-
   return (
     <>
       <Main isPublic={true}>
