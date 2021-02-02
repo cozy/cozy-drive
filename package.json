@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.32.0",
+  "version": "1.33.0",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "npm run build:drive:browser",
