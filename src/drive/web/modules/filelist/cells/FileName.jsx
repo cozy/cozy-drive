@@ -17,9 +17,10 @@ import { CozyFile } from 'models'
 
 import styles from 'drive/styles/filelist.styl'
 
-const CertificationsIcons = ({ attributes }) => {
+export const CertificationsIcons = ({ attributes }) => {
   const isCarbonCopy = get(attributes, 'metadata.carbonCopy')
   const isElectronicSafe = get(attributes, 'metadata.electronicSafe')
+  const slug = get(attributes, 'cozyMetadata.uploadedBy.slug')
   const client = useClient()
 
   //TODO To be removed when UI's AppIcon use getIconURL from Cozy-Client
@@ -28,11 +29,11 @@ const CertificationsIcons = ({ attributes }) => {
     () => {
       return client.getStackClient().getIconURL({
         type: 'konnector',
-        slug: attributes.cozyMetadata.uploadedBy.slug,
+        slug,
         priority: 'registry'
       })
     },
-    [client, attributes.cozyMetadata.uploadedBy.slug]
+    [client, slug]
   )
 
   return (
@@ -44,23 +45,29 @@ const CertificationsIcons = ({ attributes }) => {
       )}
       {isCarbonCopy &&
         (isElectronicSafe ? (
-          <Icon
-            icon={CarbonCopyIcon}
-            className={`u-mr-half ${styles['fil-file-certifications--icon']}`}
-          />
+          <span data-testid="certificationsIcons-carbonCopyIcon">
+            <Icon
+              icon={CarbonCopyIcon}
+              className={`u-mr-half ${styles['fil-file-certifications--icon']}`}
+            />
+          </span>
         ) : (
+          <span data-testid="certificationsIcons-carbonCopyAppIcon">
+            <AppIcon
+              app={slug}
+              className={styles['fil-file-certifications--icon']}
+              fetchIcon={fetchIcon}
+            />
+          </span>
+        ))}
+      {isElectronicSafe && (
+        <span data-testid="certificationsIcons-electronicSafeAppIcon">
           <AppIcon
-            app={attributes.cozyMetadata.uploadedBy.slug}
+            app={slug}
             className={styles['fil-file-certifications--icon']}
             fetchIcon={fetchIcon}
           />
-        ))}
-      {isElectronicSafe && (
-        <AppIcon
-          app={attributes.cozyMetadata.uploadedBy.slug}
-          className={styles['fil-file-certifications--icon']}
-          fetchIcon={fetchIcon}
-        />
+        </span>
       )}
     </div>
   )
