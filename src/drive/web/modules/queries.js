@@ -41,9 +41,13 @@ const buildDriveQuery = ({
     Q('io.cozy.files')
       .where({
         dir_id: currentFolderId,
-        _id: { $ne: TRASH_DIR_ID },
         type,
         [sortAttribute]: { $gt: null }
+      })
+      .partialIndex({
+        _id: {
+          $ne: TRASH_DIR_ID
+        }
       })
       .indexFields(['dir_id', 'type', sortAttribute])
       .sortBy([
@@ -190,11 +194,13 @@ export const buildMoveOrImportQuery = (client, dirId) => ({
     Q('io.cozy.files')
       .where({
         dir_id: dirId,
-        _id: {
-          $ne: TRASH_DIR_ID
-        },
         type: { $gt: null },
         name: { $gt: null }
+      })
+      .partialIndex({
+        _id: {
+          $ne: TRASH_DIR_ID
+        }
       })
       .indexFields(['dir_id', 'type', 'name'])
       .sortBy([{ dir_id: 'asc' }, { type: 'asc' }, { name: 'asc' }])
