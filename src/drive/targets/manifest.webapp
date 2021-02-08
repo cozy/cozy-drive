@@ -164,6 +164,16 @@
       "description": "Required to display additional information in the viewer for files automatically retrieved by services",
       "type": "io.cozy.konnectors",
       "verbs": ["GET"]
+    },
+    "accounts": {
+      "description": "Required to display additional information in the viewer for files automatically retrieved by services",
+      "type": "io.cozy.accounts",
+      "verbs": ["GET"]
+    },
+    "triggers": {
+      "description": "Required to display additional information in the viewer for files automatically retrieved by services",
+      "type": "io.cozy.triggers",
+      "verbs": ["GET"]
     }
   }
 }
