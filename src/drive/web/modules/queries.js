@@ -187,8 +187,7 @@ const buildTrashQuery = ({
 
 export const buildMoveOrImportQuery = (client, dirId) => ({
   definition: () =>
-    client
-      .find('io.cozy.files')
+    Q('io.cozy.files')
       .where({
         dir_id: dirId,
         _id: {
