@@ -58,14 +58,9 @@ export class FileOpener extends Component {
     }
   }
 
-  navigateToDrive = () => {
-    const parentDir = get(this.state, 'file.dir_id', '')
-    this.props.router.push(`/folder/${parentDir}`)
-  }
-
   render() {
     const { file, loading, fileNotFound } = this.state
-    const { withCloseButtton = true, t } = this.props
+    const { t } = this.props
 
     return (
       <div className={styles['viewer-wrapper-with-bar']}>
@@ -77,7 +72,7 @@ export class FileOpener extends Component {
               files={[file]}
               currentIndex={0}
               onChangeRequest={doNothing}
-              onCloseRequest={withCloseButtton ? this.navigateToDrive : null}
+              onCloseRequest={null}
               renderFallbackExtraContent={file => (
                 <Fallback file={file} t={t} />
               )}
@@ -98,8 +93,7 @@ FileOpener.propTypes = {
   routeParams: PropTypes.shape({
     fileId: PropTypes.string
   }),
-  fileId: PropTypes.string,
-  withCloseButtton: PropTypes.bool
+  fileId: PropTypes.string
 }
 
 export default translate()(withRouter(FileOpener))
