@@ -1,7 +1,9 @@
 import React from 'react'
-import { Spinner } from 'cozy-ui/transpiled/react'
+
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
+
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
-import { IconSprite } from 'cozy-ui/transpiled/react/'
 
 class Embeder extends React.Component {
   constructor(props) {
@@ -28,6 +30,7 @@ class Embeder extends React.Component {
   }
 
   render() {
+    const { service } = this.props
     return (
       <div>
         {this.state.loading && (
@@ -36,7 +39,9 @@ class Embeder extends React.Component {
         {this.state.error && (
           <pre className="u-error">{this.state.error.toString()}</pre>
         )}
-        {this.state.fileId && <FileOpenerExternal fileId={this.state.fileId} />}
+        {this.state.fileId && (
+          <FileOpenerExternal service={service} fileId={this.state.fileId} />
+        )}
         <IconSprite />
       </div>
     )

@@ -11,12 +11,14 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import get from 'lodash/get'
 
-import { Spinner, Alerter, translate } from 'cozy-ui/transpiled/react'
-import { Viewer } from 'cozy-ui/transpiled/react'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Viewer from 'cozy-ui/transpiled/react/Viewer'
+import Overlay from 'cozy-ui/transpiled/react/Overlay'
+
 import styles from 'drive/web/modules/viewer/barviewer.styl'
 import Fallback from 'drive/web/modules/viewer/Fallback'
-
-const doNothing = () => {}
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
@@ -60,7 +62,7 @@ export class FileOpener extends Component {
 
   render() {
     const { file, loading, fileNotFound } = this.state
-    const { t } = this.props
+    const { t, service } = this.props
 
     return (
       <div className={styles['viewer-wrapper-with-bar']}>
@@ -68,15 +70,17 @@ export class FileOpener extends Component {
         {fileNotFound && <FileNotFoundError />}
         {!loading &&
           !fileNotFound && (
-            <Viewer
-              files={[file]}
-              currentIndex={0}
-              onChangeRequest={doNothing}
-              onCloseRequest={null}
-              renderFallbackExtraContent={file => (
-                <Fallback file={file} t={t} />
-              )}
-            />
+            <Overlay>
+              <Viewer
+                files={[file]}
+                currentIndex={0}
+                onChangeRequest={() => {}}
+                onCloseRequest={() => service.terminate()}
+                renderFallbackExtraContent={file => (
+                  <Fallback file={file} t={t} />
+                )}
+              />
+            </Overlay>
           )}
       </div>
     )
