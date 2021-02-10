@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spinner, IntentHeader } from 'cozy-ui/transpiled/react'
+import { Spinner } from 'cozy-ui/transpiled/react'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import { IconSprite } from 'cozy-ui/transpiled/react/'
 
@@ -30,7 +30,6 @@ class Embeder extends React.Component {
   render() {
     return (
       <div>
-        <IntentHeader appName="Drive" appEditor="Cozy" />
         {this.state.loading && (
           <Spinner size="xxlarge" loadingType="message" middle />
         )}
