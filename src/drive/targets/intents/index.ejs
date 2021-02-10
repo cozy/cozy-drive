@@ -35,6 +35,7 @@
   </head>
   <div
     id="main"
+    role="application"
     data-cozy-token="{{.Token}}"
     data-cozy-domain="{{.Domain}}"
     data-cozy-locale="{{.Locale}}"
@@ -43,6 +44,7 @@
     data-cozy-app-editor="{{.AppEditor}}"
     data-cozy-app-slug="{{.AppSlug}}"
     data-cozy-icon-path="{{.IconPath}}"
+    data-cozy-subdomain-type="{{.SubDomain}}"
   ></div>
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
     <script src="<%- file %>"></script>

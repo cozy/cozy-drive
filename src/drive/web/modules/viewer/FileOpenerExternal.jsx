@@ -17,8 +17,10 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 
-import styles from 'drive/web/modules/viewer/barviewer.styl'
+import { showPanel } from './helpers'
+import PanelContent from './Panel/PanelContent'
 import Fallback from 'drive/web/modules/viewer/Fallback'
+import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
@@ -79,6 +81,10 @@ export class FileOpener extends Component {
                 renderFallbackExtraContent={file => (
                   <Fallback file={file} t={t} />
                 )}
+                panelInfoProps={{
+                  showPanel,
+                  PanelContent
+                }}
               />
             </Overlay>
           )}
