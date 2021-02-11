@@ -249,7 +249,7 @@ export const buildOnlyFolderQuery = (client, folderId) => ({
   definition: () => client.get('io.cozy.files', folderId),
   options: {
     as: 'onlyfolder-' + folderId,
-    fetchPolicies: defaultFetchPolicy,
+    fetchPolicy: defaultFetchPolicy,
     singleDocData: true
   }
 })
@@ -279,7 +279,7 @@ export const buildFileWithSpecificMetadataAttributeQuery = ({
       .limitBy(1),
   options: {
     as: `specific-metadata-${attribute}-for-${currentFolderId}`,
-    fetchPolicies: defaultFetchPolicy
+    fetchPolicy: defaultFetchPolicy
   }
 })
 
