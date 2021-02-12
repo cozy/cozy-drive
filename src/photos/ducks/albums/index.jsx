@@ -1,11 +1,13 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import { Query, withMutations } from 'cozy-client'
+
+import { Query, withMutations, Q } from 'cozy-client'
+import { Alerter } from 'cozy-ui/transpiled/react/'
+
 import AlbumsView from './components/AlbumsView'
 import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
-import { Alerter } from 'cozy-ui/transpiled/react/'
 import Loading from '../../components/Loading'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
@@ -21,7 +23,9 @@ const ALBUMS_QUERY = client =>
     .sortBy([{ created_at: 'desc' }])
 
 export const ALBUM_QUERY = (client, ownProps) =>
-  client.get(DOCTYPE_ALBUMS, ownProps.router.params.albumId).include(['photos'])
+  Q(DOCTYPE_ALBUMS)
+    .getById(ownProps.router.params.albumId)
+    .include(['photos'])
 
 const addPhotos = async (album, photos) => {
   try {
