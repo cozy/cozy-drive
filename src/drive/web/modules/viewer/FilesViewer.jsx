@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import compose from 'lodash/flowRight'
 
-import { withClient } from 'cozy-client'
+import { withClient, Q } from 'cozy-client'
 import { isIOSApp } from 'cozy-device-helper'
 import logger from 'lib/logger'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
@@ -70,7 +70,7 @@ class FilesViewer extends Component {
 
     const { fileId, client } = this.props
     try {
-      const { data } = await client.query(client.get('io.cozy.files', fileId))
+      const { data } = await client.query(Q('io.cozy.files').getById(fileId))
       this.setState({
         currentFile: data
       })

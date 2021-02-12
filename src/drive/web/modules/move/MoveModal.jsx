@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
-import { Query, cancelable, withClient } from 'cozy-client'
+import { Query, cancelable, withClient, Q } from 'cozy-client'
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
 import { RefreshableSharings } from 'cozy-sharing'
@@ -82,7 +82,7 @@ export class MoveModal extends React.Component {
       )
 
       const response = await this.registerCancelable(
-        client.query(client.get('io.cozy.files', folderId))
+        client.query(Q('io.cozy.files').getById(folderId))
       )
       const targetName = response.data.name
       Alerter.info('Move.success', {
@@ -154,10 +154,10 @@ export class MoveModal extends React.Component {
   }
 
   render() {
-    const { onClose, entries, t, client } = this.props
+    const { onClose, entries, t } = this.props
     const { folderId, isMoveInProgress } = this.state
-    const contentQuery = buildMoveOrImportQuery(client, folderId)
-    const folderQuery = buildOnlyFolderQuery(client, folderId)
+    const contentQuery = buildMoveOrImportQuery(folderId)
+    const folderQuery = buildOnlyFolderQuery(folderId)
     return (
       <Modal
         size={'xlarge'}
