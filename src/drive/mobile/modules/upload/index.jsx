@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { Query, withClient } from 'cozy-client'
+import { Query } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react'
 import { Modal } from 'cozy-ui/transpiled/react'
@@ -83,9 +83,9 @@ export class DumbUpload extends Component {
 
   render() {
     const { items, folderId, uploadInProgress } = this.state
-    const { t, client } = this.props
-    const contentQuery = buildMoveOrImportQuery(client, folderId)
-    const folderQuery = buildOnlyFolderQuery(client, folderId)
+    const { t } = this.props
+    const contentQuery = buildMoveOrImportQuery(folderId)
+    const folderQuery = buildOnlyFolderQuery(folderId)
 
     return (
       <Modal
@@ -168,7 +168,6 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   translate(),
-  withClient,
   withRouter,
   connect(
     null,

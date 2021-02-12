@@ -1,6 +1,9 @@
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
-export const DESKTOP_SOFTWARE_ID = 'github.com/cozy-labs/cozy-desktop'
 import get from 'lodash/get'
+
+import { Q } from 'cozy-client'
+import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
+
+export const DESKTOP_SOFTWARE_ID = 'github.com/cozy-labs/cozy-desktop'
 
 export const track = element => {
   const tracker = getTracker()
@@ -23,7 +26,7 @@ export const DESKTOP_BANNER = 'desktop_banner'
 export const NOVIEWER_DESKTOP_CTA = 'noviewer_desktop_cta'
 
 export const isClientAlreadyInstalled = async client => {
-  const { data } = await client.query(client.get('io.cozy.settings', 'clients'))
+  const { data } = await client.query(Q('io.cozy.settings').getById('clients'))
   return Object.values(data).some(
     device => get(device, 'attributes.software_id') === DESKTOP_SOFTWARE_ID
   )

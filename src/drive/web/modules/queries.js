@@ -189,7 +189,7 @@ const buildTrashQuery = ({
   }
 })
 
-export const buildMoveOrImportQuery = (client, dirId) => ({
+export const buildMoveOrImportQuery = dirId => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -245,8 +245,8 @@ export const buildFolderQuery = folderId => ({
   }
 })
 
-export const buildOnlyFolderQuery = (client, folderId) => ({
-  definition: () => client.get('io.cozy.files', folderId),
+export const buildOnlyFolderQuery = folderId => ({
+  definition: () => Q('io.cozy.files').getById(folderId),
   options: {
     as: 'onlyfolder-' + folderId,
     fetchPolicy: defaultFetchPolicy,
