@@ -9,7 +9,11 @@ const LightFileViewer = ({ files, isFile }) => (
   <div className={styles['viewer-wrapper-with-bar']}>
     <PublicToolbar files={files} isFile={isFile} />
     <div className={'u-pos-relative u-h-100'}>
-      <Viewer files={files} currentIndex={0} dark={false} showToolbar={false} />
+      <Viewer
+        files={files}
+        currentIndex={0}
+        toolbarProps={{ showToolbar: false }}
+      />
     </div>
   </div>
 )
