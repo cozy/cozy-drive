@@ -9,7 +9,7 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { Query } from 'cozy-client'
 
 import { translate } from 'cozy-ui/transpiled/react'
-import { Modal } from 'cozy-ui/transpiled/react'
+import Modal from 'cozy-ui/transpiled/react/Modal'
 
 import { uploadFilesFromNative } from 'drive/web/modules/upload'
 
