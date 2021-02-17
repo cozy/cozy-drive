@@ -7,13 +7,17 @@
 - Node v10 (on macOS: `brew install node@10 && brew link node@10`)
 - ImageMagick (on macOS: `brew install imagemagick`)
 - Cordova v7 CLI (`npm install cordova@7 -g`)
+
 ### Android
+
 - Android SDK >= 25.0.0 to deploy on android
 - JDK 1.8
 - Gradle
 - Define your JAVA_HOME
-### iOS 
-- Xcode >= 8.1  
+
+### iOS
+
+- Xcode >= 8.1
 
 ### :package: Install and run in dev mode
 
@@ -21,17 +25,12 @@
 $ git clone https://github.com/cozy/cozy-drive.git
 $ cd cozy-drive
 $ yarn install
-```
-
-mobile specific:
-
-```sh
 $ yarn genicon:drive:mobile
 $ yarn build:drive:mobile
 $ yarn prepare:drive:mobile
 ```
 
-or if you develop :loop::
+and if you develop :loop::
 
 ```sh
 $ yarn watch:drive:mobile
@@ -48,7 +47,9 @@ $ cd src/drive/targets/mobile
 $ cordova run android
 ```
 
-On iOS: open the src/drive/targets/mobile/platforms/ios/Cozy Drive.xcworkspace in Xcode, update the Swift syntax if needed, set your signing certificate on the target (if you're testing on a device), then:
+On iOS:
+
+Open the src/drive/targets/mobile/platforms/ios/Cozy Drive.xcworkspace in Xcode, update the Swift syntax if needed, set your signing certificate on the target (if you're testing on a device), then:
 
 ```sh
 $ npm install -g ios-deploy
@@ -61,13 +62,13 @@ $ cordova run ios
 You need to export your local host IP address
 
 ```sh
-export DEV_HOST=10.1.3.252
+export DEV_HOST=[YOUR_LOCAL_IP_ADDRESS]
 ```
 
 Then you have to watch in `hot` mode:
 
 ```sh
-yarn watch:drive:mobile:hot
+yarn start:drive:mobile
 ```
 
 Once the previous command is finished a first time then run on Android / iOS :
