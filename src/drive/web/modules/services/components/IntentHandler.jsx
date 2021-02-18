@@ -60,7 +60,9 @@ class IntentHandler extends React.Component {
 
     return ServiceComponent ? (
       <ServiceComponent service={service} intent={intent} />
-    ) : null
+    ) : (
+      <div className="u-w-100 u-bg-charcoalGrey" />
+    )
   }
 }
 
