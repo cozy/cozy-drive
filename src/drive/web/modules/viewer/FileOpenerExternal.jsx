@@ -20,7 +20,6 @@ import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
 import Fallback from 'drive/web/modules/viewer/Fallback'
-import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
@@ -67,8 +66,8 @@ export class FileOpener extends Component {
     const { t, service } = this.props
 
     return (
-      <div className={styles['viewer-wrapper-with-bar']}>
-        {loading && <Spinner size="xxlarge" loadingType="message" middle />}
+      <div className="u-pos-absolute u-w-100 u-h-100 u-bg-charcoalGrey">
+        {loading && <Spinner size="xxlarge" middle noMargin color="white" />}
         {fileNotFound && <FileNotFoundError />}
         {!loading &&
           !fileNotFound && (

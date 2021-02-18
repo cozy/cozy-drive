@@ -34,7 +34,7 @@ class Embeder extends React.Component {
     return (
       <div>
         {this.state.loading && (
-          <Spinner size="xxlarge" loadingType="message" middle />
+          <Spinner size="xxlarge" middle noMargin color="white" />
         )}
         {this.state.error && (
           <pre className="u-error">{this.state.error.toString()}</pre>
