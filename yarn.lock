@@ -4939,28 +4939,6 @@ cozy-client@13.8.3:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@16.17.0:
-  version "16.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-16.17.0.tgz#60721acc2fd7cb5cb09f69dc3dc433bfa4d74ae9"
-  integrity sha512-PicLBQJK73vmYMxaXUrOJopMWRnyBgkmWqp8k9rK6XJg0gNQweIGz74b/yjlb2sQacANR6ewcbxR4Kk0SJ8yng==
-  dependencies:
-    "@cozy/minilog" "1.0.0"
-    btoa "^1.2.1"
-    cozy-device-helper "^1.7.3"
-    cozy-logger "^1.6.0"
-    cozy-stack-client "^16.17.0"
-    lodash "^4.17.13"
-    microee "^0.0.6"
-    node-fetch "^2.6.1"
-    open "^7.0.2"
-    prop-types "^15.6.2"
-    react-redux "^7.2.0"
-    redux "^3.7.2"
-    redux-thunk "^2.3.0"
-    server-destroy "^1.0.1"
-    sift "^6.0.0"
-    url-search-params-polyfill "^7.0.0"
-
 cozy-client@16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-16.2.0.tgz#6b1168cf2a91592da5a4dde1d237084dd90aa338"
@@ -4974,6 +4952,28 @@ cozy-client@16.2.0:
     isomorphic-fetch "^3.0.0"
     lodash "^4.17.13"
     microee "^0.0.6"
+    open "^7.0.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "^3.7.2"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^7.0.0"
+
+cozy-client@17.1.1:
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-17.1.1.tgz#8f92550cc4f84d19c403aa4e292b149579d6d3c0"
+  integrity sha512-ponDgkYHrZrKVajhTZQtyQIBw7QE1Vd/xMV+oqjECDcygWmFWnRsj00uyZ2iVlYvU5dMVCH/I4GR3far2v04aA==
+  dependencies:
+    "@cozy/minilog" "1.0.0"
+    btoa "^1.2.1"
+    cozy-device-helper "^1.7.3"
+    cozy-logger "^1.6.0"
+    cozy-stack-client "^17.1.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    node-fetch "^2.6.1"
     open "^7.0.2"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
@@ -5311,10 +5311,10 @@ cozy-sharing@2.11.7:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@16.17.0, cozy-stack-client@^16.17.0:
-  version "16.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-16.17.0.tgz#0b7e78473de86b81f6bf143b66b284ddbcc89544"
-  integrity sha512-tjpZrnjBcvFA/X9lcUxomfhxt3/BVJoEygSzWrBUJlrzi/lFYxSN9Rg75Q72Bd30+i3BuDFugZe6056yYjxVvg==
+cozy-stack-client@17.1.1, cozy-stack-client@^17.1.1:
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-17.1.1.tgz#496a391143e22f9fa5540500e26f12ebe9f04aee"
+  integrity sha512-80ViiYz4TvbxRMRvADC6nyeeRsiyW27soJslEMcBaQPA6EgBFeLr3cHGL1KEaQ8Uj/pfZIUX4VBH2gFw6CLDXQ==
   dependencies:
     cozy-flags "^2.5.0"
     detect-node "^2.0.4"
