@@ -5103,7 +5103,6 @@ cozy-client@16.10.2:
     cozy-stack-client "^16.8.0"
     lodash "^4.17.13"
     microee "^0.0.6"
-    node-fetch "^2.6.1"
     open "^7.0.2"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
