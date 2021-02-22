@@ -4,9 +4,12 @@
 
 ### :wrench: Requirements
 
-- Node v10 (on macOS: `brew install node@10 && brew link node@10`)
-- ImageMagick (on macOS: `brew install imagemagick`)
-- Cordova v7 CLI (`npm install cordova@7 -g`)
+- Node v10
+  - on macOS: `brew install node@10 && brew link node@10`
+- ImageMagick
+  - on macOS: `brew install imagemagick`
+- Cordova v7 CLI
+  - `npm install cordova@7 -g`
 
 ### Android
 
@@ -19,7 +22,7 @@
 
 - Xcode >= 8.1
 
-### :package: Install and run in dev mode
+### :package: Install and prepare
 
 ```sh
 $ git clone https://github.com/cozy/cozy-drive.git
@@ -30,15 +33,15 @@ $ yarn build:drive:mobile
 $ yarn prepare:drive:mobile
 ```
 
-and if you develop :loop::
+### :helicopter: Run
+
+After that, you need to run to build native and js files and deploy them on the simulator :
 
 ```sh
-$ yarn watch:drive:mobile
+yarn run:drive:[android || ios]
 ```
 
-### :helicopter: Deploy
-
-After that, you can deploy with one of these commands:
+You can also do that manually :
 
 On Android:
 
@@ -57,7 +60,23 @@ $ cd src/drive/targets/mobile
 $ cordova run ios
 ```
 
-### HMR mode on a smartphone
+### :loop: Run in dev mode
+
+Only js files are build in dev mode. So don't forget to `run` first (see the section above).
+
+There is 3 ways to run in dev mode :
+
+- watch with cold reload
+- start with hot reload (HMR - hot module replacement)
+- standalone mode
+
+#### Watch with cold reload
+
+```sh
+$ yarn watch:drive:mobile
+```
+
+#### HMR mode on a smartphone
 
 You need to export your local host IP address
 
@@ -71,23 +90,22 @@ Then you have to watch in `hot` mode:
 yarn start:drive:mobile
 ```
 
-Once the previous command is finished a first time then run on Android / iOS :
-
-```sh
-yarn run:drive:android
-```
-
-Enjoy
-
-### Standalone mode
+#### Standalone mode
 
 - Open your browser with web-security CORS disabled
-- launch `$ yarn watch:mobile:standalone`
+- launch `$ yarn start:mobile:standalone`
 - Go to localhost:8084 in your browser and open the console
 - Follow the onboarding and after giving your cozy URL, click on the link logged in the console
 - Log yourself, accept permissions and copy the url you've been redirected to.
 - Return to your previous tab and paste the url in the prompt (be quick, or take your time, whatever, because the prompt may be blocked when it pops if you're still on the permissions tab)
-- Profit!
+
+## Launch the simulator
+
+On iOS:
+
+- Open the project in Xcode : `open "src/drive/targets/mobile/platforms/ios/Cozy Drive.xcodeproj"`
+- Select "Cozy Drive" app and the device you want
+- Click "Play" button
 
 ## :lock: Create Release
 
