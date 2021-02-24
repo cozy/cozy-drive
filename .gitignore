@@ -37,6 +37,7 @@ desktop.ini
 
 # Mobile
 src/drive/targets/mobile/hooks
+src/drive/targets/mobile/ul_web_hooks
 src/drive/targets/mobile/platforms
 src/drive/targets/mobile/plugins
 src/drive/targets/mobile/www
