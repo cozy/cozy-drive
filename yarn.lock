@@ -4980,13 +4980,13 @@ cozy-ci@0.4.1:
   resolved "https://registry.yarnpkg.com/cozy-ci/-/cozy-ci-0.4.1.tgz#f5991f9acc8fb81480003441e190d4be3a0f8446"
   integrity sha512-SKlFoecbneXe4ctop0Al3jQ6jts8bu5pJij9XU5HjhxwKx4whkzwPOkpJ+F1k5lkgstfNU7k9YQPE+nizp6W9Q==
 
-cozy-client-js@0.17.3:
-  version "0.17.3"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.17.3.tgz#88dc6db1d9f7d092c30fe0e23c38a3374016b5f1"
-  integrity sha512-+uIdMID7xWckNN1E8PFJXnkD0vYl4lsIoHMaTJBffRa32xVGyLkdBfNa3HZH1myM6q6TCO/9iHuv10tGtgB3Hg==
+cozy-client-js@0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.19.0.tgz#ccfb0572d6c6f3aa7c187978c23dd89f04caf796"
+  integrity sha512-3EPLxLu7mg/GSmAHauW7rfdVMynCQb9Yj1vHvDO1Rpda/CV0xN04HRH1eq+3HhZiIx1g1L76zSh0jN1shgCknQ==
   dependencies:
     core-js "^3.6.5"
-    isomorphic-fetch "^2.2.1"
+    cross-fetch "^3.0.6"
     pouchdb-browser "7.0.0"
     pouchdb-find "7.0.0"
 
